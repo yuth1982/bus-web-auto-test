@@ -1,0 +1,3 @@
+default: --color --format pretty
+autotest: --format progress --tag @smoke_test
+output: --verbose --quiet --no-color --no-profile
