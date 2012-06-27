@@ -6,8 +6,8 @@ Feature:
   @15448
   Scenario: BILL.11000 List HTML email and Printable (no email) notification methods in Aria
     Given I log in aria admin console as aria admin
-    When I search aria account by qa1+Isaac+Paucek@mozy.com *
-    And I navigate to notification method view *
+    When I search aria account by qa1+Isaac+Paucek@mozy.com
+    And I navigate to notification method view
     Then Notification methods should be HTML Email,Printable (no Email)
 
   @BILL.11000
@@ -25,8 +25,11 @@ Feature:
 
   @BILL.11500
   Scenario: Verify UI of invoice setting in BUS
-    Given I log in bus admin console as polly kuhn admin
-    When I navigate to account details view
+    Given I log in bus admin console as administrator
+    When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan
+    Then Partner creation successful message should be New partner created
+    When I masquerade as the new partner
+    And I navigate to account details view
     Then I should see Receive Mozy Pro Newsletter? invoice setting
     And I should see Receive Mozy Email Notifications? invoice setting
     And I should see Receive Mozy Account Statements? invoice setting

@@ -62,6 +62,7 @@ module Bus
     elements(:aria_errors_li, {:xpath => "//div[@id='ariaErrors']//li"})
 
     def add_new_account(partner)
+      puts partner.to_s
       fill_company_info(partner)
       fill_admin_info(partner)
       fill_partner_info(partner)

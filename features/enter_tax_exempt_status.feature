@@ -6,17 +6,18 @@
   @TC.15328
   Scenario: BILL.101000 Verify default tax-exempt status of a new partner created in BUS
     Given I log in bus admin console as administrator
-    And I add a MozyPro partner with 10 GB (10293349) plan, 24 month(s) period, has server add-on, Italy country, IT03018900245 VAT number
+    When I add a MozyPro partner with 1 month(s) period, 100 GB, $39.99 plan, has server plan, Belgium country, BE0883236072 VAT number
+    Then Partner creation successful message should be New partner created
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
     And I navigate to taxpayer information view
-    Then Taxpayer id should be IT03018900245
+    Then Taxpayer id should be BE0883236072
     And Tax exemption status should be Account is exempt from both federal/national and state/province taxation.
 
   @TC.15381
   Scenario: BILL.101000 Set Exempt from Federal/National taxes to false in Aria
     Given I log in bus admin console as administrator
-    And I add a MozyPro partner with 100 GB (10293353) plan, 24 month(s) period, no server add-on, Belgium country, BE0883236072 VAT number
+    And I add a MozyPro partner with 100 GB (10293353) plan, 24 month(s) period, no server add-on, Italy country, IT03018900245 VAT number
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
     And I navigate to taxpayer information view
