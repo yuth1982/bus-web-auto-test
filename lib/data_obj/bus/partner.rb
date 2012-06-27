@@ -1,6 +1,8 @@
 module Bus
   class Partner
-    attr_accessor :name, :company_name, :street_address, :city, :state, :state_abbrev, :country, :zip, :phone, :email, :vat_num,
+    attr_accessor :name, :company_name,
+                  :street_address, :city, :state, :state_abbrev, :country, :zip, :phone, :email,
+                  :vat_num,
                   :has_initial_purchase,
                   :subscription_period, :supp_plan, :has_server_plan,
                   :num_enterprise_users,
@@ -58,12 +60,8 @@ module Bus
       @net_term_payment = false
     end
 
-    #def total_licence_num
-    #  (server_lic_num + desktop_lic_num).to_s
-    #end
-
-    #def total_quota
-    #  (server_quota + desktop_quota).to_s
-    #end
+    def to_s
+      "name: #{@name}\ncompany: #{@company_name}\naddress: #{@street_address}\ncity: #{@city}\nstate: #{@state}\nstate abbrev: #{@state_abbrev}\ncountry: #{@country}\nzip: #{@zip}\nphone: #{@phone}\nemail: #{@email}\nvat_num: #{@vat_num}\nhas initial purchase: #{has_initial_purchase}\nsubscription period: #{@subscription_period}\nsupp plan: #{@supp_plan}\nhas server plan: #{@has_server_plan}\nnum of enterprise users: #{@num_enterprise_users}\nreseller type: #{@reseller_type}\nreseller quota: #{@reseller_quota}\nreseller add-on quota #{@reseller_add_on_quota}\nparent partner: #{@parent_partner}\ncompany type: #{@company_type}\ncouple code: #{@couple_code}\nuse company info: #{@use_company_info}\nnet term payment: #{@net_term_payment}\ncredit card name: #{@credit_card_name}\ncredit card number: #{@credit_card_number}\ncredit card cvv: #{@credit_card_cvv}\ncredit card exp mm: #{@credit_card_exp_mm}\ncredit card exp yyyy: #{@credit_card_exp_yyyy}"
+    end
   end
 end

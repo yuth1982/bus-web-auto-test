@@ -1,12 +1,28 @@
 
-When /^I switch subscription to (.+)$/ do |link_text|
+When /^I change subscription up to (.+)$/ do |link_text|
   step "I navigate to billing information view"
   step "I navigate to change subscription view"
-  @bus_admin_console_page.billing_info_view.switch_subscription(link_text)
+  @bus_admin_console_page.billing_info_view.change_subscription_up(link_text)
+end
+
+When /^I change subscription down to (.+)$/ do |link_text|
+  step "I navigate to billing information view"
+  step "I navigate to change subscription view"
+  @bus_admin_console_page.billing_info_view.change_subscription_down(link_text)
+end
+
+When /^I try to change subscription to (.+)$/ do |link_text|
+  step "I navigate to billing information view"
+  step "I navigate to change subscription view"
+  @bus_admin_console_page.billing_info_view.try_to_change_subscription(link_text)
+end
+
+Then /^Change subscription confirmation message should include (.+)$/ do |message|
+  @bus_admin_console_page.billing_info_view.change_confirmation_div.text.should include(message)
 end
 
 Then /^Subscription changed message should be (.+)$/ do |message|
-  @bus_admin_console_page.billing_info_view.subscription_changed_txt.text.should == message
+  @bus_admin_console_page.billing_info_view.change_status_txt.text.should == message
 end
 
 Then /^The subscription period should change to (\w+)$/ do |period|
@@ -15,26 +31,30 @@ Then /^The subscription period should change to (\w+)$/ do |period|
   @bus_admin_console_page.billing_info_view.period_span.text.downcase.should == period.downcase
 end
 
-Then /^Next Renewal (.+) property should set to (.+)$/ do |property, value|
-  @bus_admin_console_page.billing_info_view.next_renewal_h4.style(property).should == value
+Then /^Next Renewal text align is set to left justify$/ do
+  @bus_admin_console_page.billing_info_view.next_renewal_h4.style("text-align").should == "start"
 end
 
-Then /^Overdraft Protection (.+) property should set to (.+)$/ do |property, value|
-  @bus_admin_console_page.billing_info_view.overdraft_status_th.style(property).should == value
+Then /^Autogrow status text's should be (.+)$/ do |value|
+  @bus_admin_console_page.billing_info_view.autogrow_status_td.text.should == value
 end
 
-Then /^Overdraft Protection status text's should be (.+)$/ do |value|
-  @bus_admin_console_page.billing_info_view.overdraft_status_td.text.should == value
+Then /^Next renewal supplemental plan details should be:$/ do |plan_table|
+  @bus_admin_console_page.billing_info_view.supplemental_plan_table.body_rows_text.should == plan_table.hashes.map { |el| el.values }
 end
 
-Then /^Partner can change their subscription period$/ do
-  @bus_admin_console_page.billing_info_view.change_subscription_link.displayed?.should == true
+Then /^Next renewal master plan period should be (.+)$/ do |period|
+  @bus_admin_console_page.billing_info_view.master_plan_table.body_rows_text[0][1].should == period
 end
 
-Then /^Next renewal amount should be:$/ do |table|
-  @bus_admin_console_page.billing_info_view.next_renewal_tds.map{ |el| el.text }.should == table.hashes.first.map{ |el| el.values }
+Then /^Next renewal master plan date should be (.+)$/ do |date|
+  @bus_admin_console_page.billing_info_view.master_plan_table.body_rows_text[1][1].should == (DateTime.now >> date.match(/(\d+)/).to_s.to_i).strftime("%b %d, %Y")
 end
 
-Then /^Current plan price list should be:$/ do |price_table|
-  @bus_admin_console_page.billing_info_view.plan_prices_tb.body_rows_text.should == price_table.hashes.map { |el| el.values }
+Then /^Next renewal master plan amount should be (.+)$/ do |amount|
+  @bus_admin_console_page.billing_info_view.master_plan_table.body_rows_text[2][1].should == amount
+end
+
+Then /^Next renewal master plan payment type should be (.+)$/ do |type|
+  @bus_admin_console_page.billing_info_view.master_plan_table.body_rows_text[3][1].should == type
 end

@@ -35,5 +35,9 @@ When /^I navigate to account details view$/ do
   @bus_admin_console_page.account_details_link.click
 end
 
+When /^I navigate to order data shuttle view$/ do
+  @bus_admin_console_page.order_data_shuttle_link.click
+end
+
 
 

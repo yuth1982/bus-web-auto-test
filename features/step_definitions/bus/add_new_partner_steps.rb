@@ -5,7 +5,6 @@ When /^I add a MozyPro partner with (\d+) month\(s\) period, (.+) plan, (has|no)
   @partner.company_type = Bus::COMPANY_TYPE[:mozypro]
   @partner.subscription_period = period
   @partner.supp_plan = supp_plan
-  #@partner.supp_plan_id = supp_plan.match(/\((\d+)\)/)[1]
   @partner.has_server_plan = has_server_plan.eql?("has")
   @bus_admin_console_page.add_new_partner_view.add_new_account(@partner)
 end
@@ -66,10 +65,10 @@ When /^I add a Reseller partner with (\d+) month\(s\) period, (\w+ Reseller), (\
 end
 
 
-
-Then /^Partner created message should be (.+)$/ do |message|
-  @bus_admin_console_page.add_new_partner_view.partner_created_txt.text.should == message
-  @bus_admin_console_page.add_new_partner_view.refresh_page
+Then /^Partner creation successful message should be (.+)$/ do |message|
+  @bus_admin_console_page.add_new_partner_view.creation_status_msg.should start_with(message)
+  #@bus_admin_console_page.add_new_partner_view.refresh_page
+  puts @partner.to_s
 end
 
 

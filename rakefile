@@ -4,10 +4,9 @@ require 'cucumber/rake/task'
 desc 'Run Cucumber features and generate an HTML summary and a plain text log'
 
 Cucumber::Rake::Task.new(:smoke_test) do |t|
-  t.cucumber_opts = "--color --format html -out log/features_#{DateTime.now.strftime("%F_%H-%M")}.html --format pretty --tags @smoke_test"
+  t.cucumber_opts = "--color --format html --out logs/smoke_test_#{DateTime.now.strftime("%F_%H_%M")}.html --tags @smoke_test"
 end
 
-Cucumber::Rake::Task.new(:aria) do |t|
-  t.cucumber_opts = "--color --format html -out log/features_#{DateTime.now.strftime("%F_%H-%M")}.html --format pretty --tags @aria"
+Cucumber::Rake::Task.new(:change_subscription_period) do |t|
+  t.cucumber_opts = "--color --format html --out logs/change_subscription_period_#{DateTime.now.strftime("%F_%H_%M")}.html --format pretty --tags @change_subscription_period"
 end
-

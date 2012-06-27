@@ -6,7 +6,7 @@ DEMETER = "host=10.29.29.135 port=5432 dbname=demeter user=bus password="
   BUS_LOGIN_URL = "https://www.mozypro.com/login/admin?old_school=1"
 
   # Browser settings
-  BROWSER_IMPLICIT_WAIT = 300
+  BROWSER_IMPLICIT_WAIT = 600
 
   COMPANY_TYPE =
   {

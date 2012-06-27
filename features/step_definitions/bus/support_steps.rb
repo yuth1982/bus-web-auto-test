@@ -27,8 +27,8 @@ Transform /^the new partner email$/ do |step_arg|
   @partner.email
 end
 
-Transform /^MozyPro 10 GB Plan \(Monthly\) test partner$/ do |step_arg|
-  Bus::Admin.new "272860","qa1+Kelly+Jenkins@mozy.com","Kelly Jenkins","test1234"
+Transform /^MozyPro 250 GB Plan \(Monthly\) test partner$/ do |step_arg|
+  Bus::Admin.new "302369","qa1+Anthony+Ward@mozy.com","Thoughtworks Company","test1234"
 end
 
 Transform /^MozyPro 50 GB Plan \(Yearly\) test partner$/ do |step_arg|
@@ -40,6 +40,6 @@ Transform /^MozyPro 100 GB Plan \(Biennially\) test partner$/ do |step_arg|
 end
 
 Transform /^MozyPro 250 GB Plan \(Yearly\) test partner$/ do |step_arg|
-  Bus::Admin.new "272863","qa1+Irene+Mendoza@mozy.com","Irene Mendoza","test1234"
+  Bus::Admin.new "272863","qa1+reg4@mozy.com","shipu","test1234"
 end
 

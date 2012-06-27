@@ -3,18 +3,17 @@ Feature: Search and list partner
   Background:
     Given I log in bus admin console as administrator
 
-  Scenario: Display search results table header
-    Given I log in bus admin console as administrator
-    When I search partner by Roob, Sanford and Braun
-    Then Search results content should be ,Roob, Sanford and Braun,02/13/12,qa6+violette+emmerich@mozy.com,Business,0,20,540 GB
+  @smoke_test @search_partner_basic
+  Scenario: Search partner by company name
+    When I search partner by Centizu Company
     Then Search results table header should be External ID,Partner,Created,Root Admin,Type,Users,Licenses,Quota
+    Then Search results content should be ,Centizu Company,06/18/12,qa1+anna+willis@mozy.com,MozyPro,0,200,50 GB
 
-  @test-1111
   Scenario Outline: Search partner by keywords
     When I search partner by <search keywords>
     Then Search results content should be <expected content>
 
   Scenarios:
-    | search keywords          | expected content                                                                       |
-    | Roob, Sanford and Braun  | ,Roob, Sanford and Braun,02/13/12,qa6+violette+emmerich@mozy.com,Business,0,20,540 GB  |
-    | qa6+Polly+Kuhn@mozy.com  | ,Grady-Hegmann,02/14/12,qa6+polly+kuhn@mozy.com,Business,0,20,1240 GB                  |
+    | search keywords           | expected content                                                                      |
+    | Tanoodle Company          | ,Tanoodle Company,05/30/12,qa1+martha+garcia@mozy.com,MozyEnterprise,0,201,25 GB      |
+    | qa1+andrea+rose@mozy.com  | ,Yambee Company,06/20/12,qa1+andrea+rose@mozy.com,MozyEnterprise,0,1,25 GB            |

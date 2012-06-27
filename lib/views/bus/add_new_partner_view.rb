@@ -2,7 +2,6 @@ module Bus
   class AddNewPartnerView < PageObject
 
     US = "United States"
-    element(:partner_new_form, {:id => "partner_new_form"})
     element(:next_btn, {:id => "next-button"})
     element(:create_partner_btn, {:xpath => "//div[@id='cc-details']//input[@id='submit_button']"})
     element(:partner_created_txt, {:xpath => "//div[@id='partner-new-errors']/ul[@class='flash successes']"})
@@ -60,10 +59,9 @@ module Bus
 
     # Order summary
     element(:order_summary_tb, {:xpath => "//div[@id='order-summary']/table"})
+    elements(:aria_errors_li, {:xpath => "//div[@id='ariaErrors']//li"})
 
     def add_new_account(partner)
-      partner_new_form.displayed?
-
       fill_company_info(partner)
       fill_admin_info(partner)
       fill_partner_info(partner)
@@ -81,6 +79,14 @@ module Bus
       else
         include_initial_purchase_cb.uncheck
         next_btn.click
+      end
+    end
+
+    def creation_status_msg
+      begin
+        partner_created_txt.text
+      rescue
+        aria_errors_li.map { |cell| cell.text }
       end
     end
 
@@ -149,6 +155,7 @@ module Bus
       driver.find_element(:id => "billing_period_#{partner.subscription_period}").click
       sleep 5 # Wait for loading supp plans
       driver.find_element(:id, "base_plan_select").select_by(:text, partner.supp_plan)
+      sleep 5 # Wait for loading add-on
       server_plan_cb.check if partner.has_server_plan
     end
 
@@ -156,6 +163,7 @@ module Bus
       driver.find_element(:id, "billing_period_#{partner.subscription_period}").click
       sleep 5 # Wait for loading supp plans
       mozyenterprise_base_plan_tb.next_sibling.type_text(partner.num_enterprise_users)
+      sleep 5 # Wait for loading add-on
       driver.find_element(:id, "add_on_plan_select").select_by(:text, partner.supp_plan)
     end
 

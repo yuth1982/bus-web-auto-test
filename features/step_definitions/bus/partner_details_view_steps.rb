@@ -12,6 +12,16 @@ When /^I masquerade as the new partner$/ do
   step "I masquerade as the partner #{@partner.company_name}"
 end
 
+#When /^I navigate to (.+) partner billing information through partner detail view$/ do |partner_name|
+#  if partner_name == "the new"
+#    partner_name = @partner.company_name
+#  end
+#  step "I search partner by #{partner_name}"
+#  step "I view partner details by #{partner_name}"
+#  @bus_admin_console_page.partner_details_view.billing_info_link.click
+#  sleep 10
+#end
+
 When /^I view the top one invoice in partner details view$/ do
   @bus_admin_console_page.partner_details_view.top_one_invoice_link.click
 end

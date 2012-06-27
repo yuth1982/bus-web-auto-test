@@ -11,6 +11,7 @@ module Bus
   component(:return_resources_view, ReturnResourcesView)
   component(:admin_details_view, AdminDetailsView)
   component(:account_details_view, AccountDetailsView)
+  component(:order_data_shuttle_view, OrderDataShuttleView)
 
   # Internal tools links
   #
