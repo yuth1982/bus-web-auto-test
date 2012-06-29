@@ -23,7 +23,7 @@ module Bus
       @city = Forgery::Address.city
       @zip = "12345" #Forgery::Address.zip
       @phone = "1234567890" #Forgery::Address.phone
-      @email = "qa1+#{first_name}+#{last_name}@mozy.com"
+      @email = "#{Bus::EMAIL_PREFIX}+#{first_name}+#{last_name}@mozy.com"
       @vat_num = ""
 
       @parent_partner = Bus::MOZY_ROOT_PARTNER[:mozy_pro]
@@ -47,7 +47,7 @@ module Bus
     end
 
     def to_s
-      "name: #{@name}\ncompany: #{@company_name}\naddress: #{@street_address}\ncity: #{@city}\nstate: #{@state}\nstate abbrev: #{@state_abbrev}\ncountry: #{@country}\nzip: #{@zip}\nphone: #{@phone}\nemail: #{@email}\nvat_num: #{@vat_num}\nparent partner: #{@parent_partner}\ncompany type: #{@company_type}\ncouple code: #{@couple_code}\nuse company info: #{@use_company_info}\nsubscription period: #{@subscription_period}\nhas initial purchase: #{has_initial_purchase}\nnet term payment: #{@net_term_payment}\ncredit card name: #{@credit_card_name}\ncredit card number: #{@credit_card_number}\ncredit card cvv: #{@credit_card_cvv}\ncredit card exp mm: #{@credit_card_exp_mm}\ncredit card exp yyyy: #{@credit_card_exp_yyyy}"
+      "company: #{@company_name}\naddress: #{@street_address}\ncity: #{@city}\nstate: #{@state}\nstate abbrev: #{@state_abbrev}\ncountry: #{@country}\nzip: #{@zip}\nphone: #{@phone}\nname: #{@name}\nemail: #{@email}\nvat_num: #{@vat_num}\nparent partner: #{@parent_partner}\ncompany type: #{@company_type}\ncouple code: #{@couple_code}\nuse company info: #{@use_company_info}\nsubscription period: #{@subscription_period}\nhas initial purchase: #{has_initial_purchase}\nnet term payment: #{@net_term_payment}\ncredit card name: #{@credit_card_name}\ncredit card number: #{@credit_card_number}\ncredit card cvv: #{@credit_card_cvv}\ncredit card exp mm: #{@credit_card_exp_mm}\ncredit card exp yyyy: #{@credit_card_exp_yyyy}"
     end
   end
 end

@@ -1,12 +1,12 @@
 module Bus
-# Database
-DEMETER = "host=10.29.29.135 port=5432 dbname=demeter user=bus password="
+  # Database
+  #DEMETER = "host=10.29.29.135 port=5432 dbname=demeter user=bus password="
 
-  # Bus enter page
+  # Bus login page
   BUS_LOGIN_URL = "https://www.mozypro.com/login/admin?old_school=1"
 
-  # Browser settings
-  BROWSER_IMPLICIT_WAIT = 600
+  # Browser time out in seconds
+  BROWSER_IMPLICIT_WAIT = 300
 
   COMPANY_TYPE =
   {
@@ -23,8 +23,11 @@ DEMETER = "host=10.29.29.135 port=5432 dbname=demeter user=bus password="
     :mozy_pro_ireland     => 'MozyPro Ireland',
     :mozy_pro_uk          => 'MozyPro UK',
   }
-
+  # Default password for all password field
   DEFAULT_PWD = "test1234"
-
-
+  # partner user email prefix, e.g qa1+reg+test@mozy.com, suffix is fixed
+  EMAIL_PREFIX = "qa1"
+  # Log level control, e.g display partner.to_s
+  DEBUG = true
 end
+

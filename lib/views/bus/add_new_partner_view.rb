@@ -42,10 +42,16 @@ module Bus
     element(:cc_zip_tb, {:id => "cc_zip"})
 
     element(:include_initial_purchase_cb, {:id =>"include_initial_purchase"})
-    element(:server_plan_cb, {:id => "add_on_plan_check_box"})
-    element(:mozyenterprise_base_plan_tb, {:id => "base_plan"})
+    # MozyPro
     element(:base_plan_select, {:id => "base_plan_select"})
-    #element(:reseller_add_on_quota_hidden, {:id =>"add_on_plan"})
+    element(:add_on_plan_select, {:id => "add_on_plan_select"})
+    # MozyPro, Reseller
+    element(:server_plan_cb, {:id => "add_on_plan_check_box"})
+    # MozyEnterprise
+    element(:mozyenterprise_base_plan_tb, {:id => "base_plan"})
+    # MozyEnterprise, Reseller
+    element(:num_server_add_on_hidden, {:id =>"add_on_plan"})
+
     # Credit Card Info
     #
     element(:cc_name_tb, {:id => "cc_name"})
@@ -58,15 +64,20 @@ module Bus
     element(:back_btn, {:id =>"back_button"})
 
     # Order summary
-    element(:order_summary_tb, {:xpath => "//div[@id='order-summary']/table"})
+    element(:order_summary_table, {:xpath => "//div[@id='order-summary']/table"})
+
     elements(:aria_errors_li, {:xpath => "//div[@id='ariaErrors']//li"})
 
     def add_new_account(partner)
-      puts partner.to_s
+      puts partner.to_s if Bus::DEBUG
+
       fill_company_info(partner)
       fill_admin_info(partner)
       fill_partner_info(partner)
       fill_billing_info(partner)
+
+      # define master plan subscription period
+      fill_subscription_period(partner)
 
       if(partner.has_initial_purchase)
         fill_initial_purchase(partner)
@@ -87,7 +98,13 @@ module Bus
       begin
         partner_created_txt.text
       rescue
-        aria_errors_li.map { |cell| cell.text }
+          err_msg = aria_errors_li.map { |cell| cell.text }
+          create_partner_rescue(err_msg, 1)
+          begin
+            partner_created_txt.text
+          rescue
+            aria_errors_li.map { |cell| cell.text }
+          end
       end
     end
 
@@ -141,6 +158,10 @@ module Bus
       end
     end
 
+    def fill_subscription_period(partner)
+      driver.find_element(:id => "billing_period_#{partner.subscription_period}").click
+      sleep 5 # Wait for loading supp plans
+    end
     def fill_initial_purchase(partner)
       case partner.company_type
         when Bus::COMPANY_TYPE[:mozypro]
@@ -153,24 +174,19 @@ module Bus
     end
 
     def fill_mozypro_purchase(partner)
-      driver.find_element(:id => "billing_period_#{partner.subscription_period}").click
-      sleep 5 # Wait for loading supp plans
-      driver.find_element(:id, "base_plan_select").select_by(:text, partner.supp_plan)
+      base_plan_select.select_by(:text, partner.supp_plan)
       sleep 5 # Wait for loading add-on
       server_plan_cb.check if partner.has_server_plan
     end
 
     def fill_mozyenterprise_purchase(partner)
-      driver.find_element(:id, "billing_period_#{partner.subscription_period}").click
-      sleep 5 # Wait for loading supp plans
       mozyenterprise_base_plan_tb.next_sibling.type_text(partner.num_enterprise_users)
       sleep 5 # Wait for loading add-on
-      driver.find_element(:id, "add_on_plan_select").select_by(:text, partner.supp_plan)
+      add_on_plan_select.select_by(:text, partner.supp_plan)
+      num_server_add_on_hidden.next_sibling.type_text(partner.num_server_add_on)
     end
 
     def fill_reseller_purchase(partner)
-      driver.find_element(:id, "billing_period_#{partner.subscription_period}").click
-      sleep 5 # Wait for loading supp plans
       type_label = driver.find_element(:xpath, "//label[contains(text(), '#{partner.reseller_type}')]")
       # type radio button
       type_label.previous_sibling.previous_sibling.click
@@ -178,7 +194,7 @@ module Bus
       type_label.previous_sibling.type_text(partner.reseller_quota)
       sleep 5 # Wait for loading add-on
       server_plan_cb.check if partner.has_server_plan
-      driver.find_element(:id, "add_on_plan").next_sibling.type_text(partner.reseller_add_on_quota) if partner.reseller_add_on_quota.to_i > 0
+      num_server_add_on_hidden.next_sibling.type_text(partner.reseller_add_on_quota) if partner.reseller_add_on_quota.to_i > 0
     end
 
     def fill_credit_card_info(partner)
@@ -187,6 +203,16 @@ module Bus
       cvv_tb.type_text(partner.credit_card_cvv)
       cc_exp_mm_select.select_by(:text,partner.credit_card_exp_mm)
       cc_exp_yyyy_select.select_by(:text,partner.credit_card_exp_yyyy)
+    end
+
+    def create_partner_rescue(err_msg, times)
+      while(times > 0)
+        puts "try rescue #{times}"
+        if err_msg.include?("Could not validate payment information.")
+          create_partner_btn.click
+        end
+        times -= 1
+      end
     end
   end
 end

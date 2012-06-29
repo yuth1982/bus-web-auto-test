@@ -1,11 +1,11 @@
 module Bus
   class MozyEnterprise < Partner
-    attr_accessor :num_enterprise_users, :supp_plan, :has_server_plan
+    attr_accessor :num_enterprise_users, :supp_plan, :num_server_add_on
 
     def initialize
       super
       @num_enterprise_users = true
-      @supp_plan = ""
+      @supp_plan = "None"
       @num_server_add_on = 0
     end
 
