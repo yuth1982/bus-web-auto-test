@@ -149,7 +149,7 @@ Feature: Change subscription period
     And I navigate to billing information view
     Then Next renewal master plan amount should be $19.99(including VAT)
 
-  @TC.15258 @change_subscription_period
+  @TC.15258
   Scenario: Mozy-15258 Verify Next Renewal text align is set to left justify
     Given I log in bus admin console as administrator
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, credit card payment
@@ -158,7 +158,7 @@ Feature: Change subscription period
     And I navigate to billing information view
     Then Next Renewal text align is set to left justify
 
-  @TC.15259 @change_subscription_period
+  @TC.15259
   Scenario: Mozy-15259 Verify Autogrow status is set to disabled by default (mozyenterprise)
     When I add a MozyEnterprise partner with 12 month(s) period, 1 user(s), no server plan, 0 server add-on, no coupon, credit card payment
     Then Partner creation successful message should be New partner created
@@ -166,7 +166,7 @@ Feature: Change subscription period
     And I navigate to billing information view
     Then Autogrow status text's should be Disabled (more info)
 
-  @TC.15260 @change_subscription_period
+  @TC.15260
   Scenario: Mozy-15260 Verify Autogrow status is set to disabled by default (reseller)
     When I add a Reseller partner with 1 month(s) period, Silver Reseller, 100 GB plan, no server plan, 0 add-on, no coupon, credit card payment
     Then Partner creation successful message should be New partner created
@@ -174,7 +174,7 @@ Feature: Change subscription period
     And I navigate to billing information view
     Then Autogrow status text's should be Disabled (more info)
 
-  @TC.15383 @change_subscription_period
+  @TC.15383
   Scenario: Mozy-15383 Verify confirmation message when move subscription period to yearly (reseller)
     When I add a Reseller partner with 1 month(s) period, Silver Reseller, 100 GB plan, no server plan, 0 add-on, no coupon, credit card payment
     Then Partner creation successful message should be New partner created
@@ -184,7 +184,7 @@ Feature: Change subscription period
     And Change subscription confirmation message should include If you choose to continue, your account will be credited for the remainder of your monthly Subscription, then charged for a new yearly subscription beginning today. By choosing yearly billing, you will receive 1 free month(s) of Mozy service.
     And Change subscription confirmation message should include Any resources you scheduled for return in your next subscription have been deducted from the new subscription total.
 
-  @TC.15384 @change_subscription_period
+  @TC.15384
   Scenario: Mozy-15384 Verify confirmation message when move subscription period to biennially (mozypro)
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, credit card payment
     Then Partner creation successful message should be New partner created
@@ -194,7 +194,7 @@ Feature: Change subscription period
     And Change subscription confirmation message should include If you choose to continue, your account will be credited for the remainder of your monthly Subscription, then charged for a new biennial subscription beginning today. By choosing biennial billing, you will receive 3 free month(s) of Mozy service.
     And Change subscription confirmation message should include Any resources you scheduled for return in your next subscription have been deducted from the new subscription total.
 
-  @TC.15385 @change_subscription_period
+  @TC.15385
   Scenario: Mozy-15385 Verify confirmation message when move subscription period to 3 years (mozyenterprise)
     When I add a MozyEnterprise partner with 12 month(s) period, 1 user(s), no server plan, 0 server add-on, no coupon, credit card payment
     Then Partner creation successful message should be New partner created
@@ -204,7 +204,7 @@ Feature: Change subscription period
     And Change subscription confirmation message should include If you choose to continue, your account will be credited for the remainder of your yearly Subscription, then charged for a new 3-year subscription beginning today. By choosing 3-year billing, you will receive 4 free month(s) of Mozy service.
     And Change subscription confirmation message should include Any resources you scheduled for return in your next subscription have been deducted from the new subscription total.
 
-  @TC.16658 @change_subscription_period
+  @TC.16658
   Scenario: Mozy-16658 Verify MozyPro partner supplemental plan section details
     When I add a MozyPro partner with 1 month(s) period, 250 GB, $94.99 plan, no server plan, no coupon, credit card payment
     Then Partner creation successful message should be New partner created
@@ -214,7 +214,7 @@ Feature: Change subscription period
     | description             | amount   |
     | Total price for 250 GB  | $94.99  |
 
-  @TC.16659 @change_subscription_period
+  @TC.16659
   Scenario: Mozy-16659 Verify MozyEnterprise partner supplemental plan section details
     When I add a MozyEnterprise partner with 12 month(s) period, 1 user(s), no server plan, 0 server add-on, no coupon, credit card payment
     Then Partner creation successful message should be New partner created
@@ -224,7 +224,7 @@ Feature: Change subscription period
     | description                         | amount   |
     | Total price for MozyEnterprise User | $95.00  |
 
-  @TC.16660 @change_subscription_period
+  @TC.16660
   Scenario: Mozy-16660 Verify Reseller partner supplemental plan section details
     When I add a Reseller partner with 1 month(s) period, Silver Reseller, 100 GB plan, no server plan, 0 add-on, no coupon, credit card payment
     Then Partner creation successful message should be New partner created
