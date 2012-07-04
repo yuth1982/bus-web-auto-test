@@ -2,7 +2,6 @@ module Aria
   class AccountsPage < PageObject
     component(:search_account_view, SearchAccountView)
     component(:account_overview_view, AccountOverviewView)
-    component(:create_account_view, CreateAccountView)
     component(:notification_method_view, NotificationMethodView)
 
     element(:search_link,{:xpath => "//a[@title='Search']"})

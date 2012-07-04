@@ -8,5 +8,9 @@ Cucumber::Rake::Task.new(:smoke_test) do |t|
 end
 
 Cucumber::Rake::Task.new(:change_subscription_period) do |t|
-  t.cucumber_opts = "--color --format html --out logs/change_subscription_period_#{DateTime.now.strftime("%F_%H_%M")}.html --format pretty --tags @change_subscription_period"
+  t.cucumber_opts = "--color --format html --out logs/change_subscription_period_#{DateTime.now.strftime("%F_%H_%M")}.html --format pretty features/change_subscription_period.feature"
+end
+
+Cucumber::Rake::Task.new(:invoice_setting) do |t|
+  t.cucumber_opts = "--color --format html --out logs/manage_invoice_comm_setting_#{DateTime.now.strftime("%F_%H_%M")}.html --format pretty features/manage_invoice_comm_settings.feature"
 end

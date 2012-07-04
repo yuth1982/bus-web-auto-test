@@ -1,11 +1,15 @@
 
 When /^I search partner by (.+)$/ do |search_key|
   step "I navigate to search list partner view"
-  @bus_admin_console_page.search_list_partner_view.search_partner search_key
+  @bus_admin_console_page.search_list_partner_view.search_partner(search_key)
 end
 
 When /^I view partner details by (.+)$/ do |search_key|
-  @bus_admin_console_page.search_list_partner_view.view_partner_detail search_key
+  @bus_admin_console_page.search_list_partner_view.view_partner_detail(search_key)
+end
+
+When /^I view admin details by email (.+)$/ do |partner_email|
+  @bus_admin_console_page.search_list_partner_view.view_partner_detail(partner_email)
 end
 
 Then /^Search results table header should be (.+)$/ do |header|

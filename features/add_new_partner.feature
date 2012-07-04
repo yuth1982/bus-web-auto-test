@@ -72,12 +72,12 @@ Feature:
 
   @add_enterprise_vat
   Scenario: Add a new biennially MozyEnterprise partner
-    When I add a MozyEnterprise partner with 24 month(s) period, 1 user(s), 100 GB Server Plan, $1,112.58 plan, 1 server add-on, no coupon, Belgium country, BE0883236072 VAT number, credit card payment
+    When I add a MozyEnterprise partner with 24 month(s) period, 1 user(s), 100 GB Server Plan, $1,112.58 server plan, 1 server add-on, no coupon, Belgium country, BE0883236072 VAT number, credit card payment
     Then Partner creation successful message should be New partner created
 
   @add_enterprise_vat_coupon
   Scenario: Add a new biennially MozyEnterprise partner
-    When I add a MozyEnterprise partner with 24 month(s) period, 1 user(s), 100 GB Server Plan, $1,112.58 plan, 1 server add-on, Coupon5DollarsOff coupon, Belgium country, BE0883236072 VAT number, credit card payment
+    When I add a MozyEnterprise partner with 24 month(s) period, 1 user(s), 100 GB Server Plan, $1,112.58 server plan, 1 server add-on, Coupon5DollarsOff coupon, Belgium country, BE0883236072 VAT number, credit card payment
     Then Order summary details should be:
     | Description           | Amount   | Price Each | Total Price |
     | MozyEnterprise User   | 1        | $181.00    | $181.00     |

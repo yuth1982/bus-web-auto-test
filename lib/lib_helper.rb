@@ -2,7 +2,7 @@ $:.unshift(File.dirname(__FILE__))
 
 require 'rubygems'
 require 'bundler'
-#Bundler.setup
+Bundler.setup
 require "selenium-webdriver"
 require 'nokogiri'
 require 'forgery'
@@ -43,7 +43,6 @@ require "views/bus/order_data_shuttle_view"
 
 require "views/aria/search_account_view"
 require "views/aria/account_overview_view"
-require "views/aria/create_account_view"
 require "views/aria/notification_method_view"
 
 require "pages/bus/login_page"

@@ -13,7 +13,10 @@ module AutomationWebDriver
           begin
             driver.find_element(element_hash)
           rescue => ex
-            raise "#{ex.class}: Could not find element #{element_sym}"
+            wait = Selenium::WebDriver::Wait.new(:timeout => Bus::BROWSER_RESCUE_WAIT) # seconds
+            wait.until { driver.find_element(element_hash) }
+            #driver.find_element(element_hash)
+            #raise "#{ex.class}: Could not find element #{element_sym}"
           end
         end
       end

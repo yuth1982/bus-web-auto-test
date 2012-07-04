@@ -3,10 +3,12 @@
   I want provide tax-exempt information to Mozy
   so that I am not charged taxes if they should not apply to my business
 
-  @TC.15328
-  Scenario: BILL.101000 Verify default tax-exempt status of a new partner created in BUS
+  Background:
     Given I log in bus admin console as administrator
-    When I add a MozyPro partner with 1 month(s) period, 100 GB, $39.99 plan, has server plan, Belgium country, BE0883236072 VAT number
+
+  @TC.17526
+  Scenario: Mozy-17526 Verify default tax-exemtp status of a new partner (MozyPro / Yearly)
+    When I add a MozyPro partner with 12 month(s) period, 500 GB, $2,089.89 plan, has server plan, no coupon, Belgium country, BE0883236072 VAT number, credit card payment
     Then Partner creation successful message should be New partner created
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
@@ -14,49 +16,94 @@
     Then Taxpayer id should be BE0883236072
     And Tax exemption status should be Account is exempt from both federal/national and state/province taxation.
 
-  @TC.15381
-  Scenario: BILL.101000 Set Exempt from Federal/National taxes to false in Aria
-    Given I log in bus admin console as administrator
-    And I add a MozyPro partner with 100 GB (10293353) plan, 24 month(s) period, no server add-on, Italy country, IT03018900245 VAT number
+  @TC.17527
+  Scenario: Mozy-17527 Verify default tax-exemtp status of a new partner (MozyEnterprise / Biennially)
+    When I add a MozyEnterprise partner with 24 month(s) period, 1 user(s), no server plan, 0 server add-on, no coupon, Belgium country, BE0883236072 VAT number, credit card payment
+    Then Partner creation successful message should be New partner created
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
     And I navigate to taxpayer information view
-    And I set Exempt from Federal and National taxes to false
-    And Tax exemption status should be Account is exempt from state/province taxation.
+    Then Taxpayer id should be BE0883236072
+    And Tax exemption status should be Account is exempt from both federal/national and state/province taxation.
 
-  @TC.15380
-  Scenario: BILL.101000 Set Exempt from State/Province taxes to false in Aria
-    Given I log in bus admin console as administrator
-    And I add a MozyPro partner with 250 GB (10293355) plan, 24 month(s) period, has server add-on, Belgium country, BE0883236072 VAT number
+  @TC.17528
+  Scenario: Mozy-17528 Verify default tax-exemtp status of a new partner (Reseller / Monthly)
+    When I add a Reseller partner with 1 month(s) period, Gold Reseller, 100 GB plan, has server plan, 1 add-on, no coupon, Italy country, IT03018900245 VAT number, credit card payment
+    Then Partner creation successful message should be New partner created
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
     And I navigate to taxpayer information view
+    Then Taxpayer id should be IT03018900245
+    And Tax exemption status should be Account is exempt from both federal/national and state/province taxation.
+
+  @TC.17533
+  Scenario: Mozy-17533 Set both Exempt from State and Federal taxes to false in Aria (Mozypro / Biennially)
+    When I add a MozyPro partner with 24 month(s) period, 50 GB, $419.79 plan, has server plan, no coupon, Belgium country, BE0883236072 VAT number, credit card payment
+    Then Partner creation successful message should be New partner created
+    When I log in aria admin console as aria admin
+    And I search aria account by the new partner email
+    And I navigate to taxpayer information view
+    Then Taxpayer id should be BE0883236072
+    When I set Exempt from Federal and National taxes to false
     And I set Exempt from State and Province taxes to false
-    And Tax exemption status should be Account is exempt from federal/national taxation.
+    Then Tax exemption status should be Account is not exempt from taxation.
 
-  @TC.15277
-  Scenario: BILL.101000 Set both Exempt from State and Federal taxes to false in Ara
-    Given I log in bus admin console as administrator
-    And I add a MozyPro partner with 500 GB (10293357) plan, 24 month(s) period, no server add-on, Belgium country, BE0883236072 VAT number
+  @TC.17537
+  Scenario: Mozy-17537 Set Exempt from State/Province taxes to false in Aria (MozyEnterprise / 3-years)
+    When I add a MozyEnterprise partner with 36 month(s) period, 1 user(s), no server plan, 0 server add-on, no coupon, Belgium country, BE0883236072 VAT number, credit card payment
+    Then Partner creation successful message should be New partner created
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
     And I navigate to taxpayer information view
-    And I set Exempt from Federal and National taxes to false
-    And I set Exempt from State and Province taxes to false
-    And Tax exemption status should be Account is not exempt from taxation.
+    Then Taxpayer id should be BE0883236072
+    When I set Exempt from State and Province taxes to false
+    Then Tax exemption status should be Account is exempt from federal/national taxation.
 
-  @TC.15835
-  Scenario: BILL.101003 No taxes charged when purchasing new resource in bus
-    Given I log in bus admin console as Schamberger-Cole admin
-    And I add a MozyPro partner with 1 TB (10293359) plan, 24 month(s) period, has server add-on, Italy country, IT03018900245 VAT number
-    And I view price details of my purchased resource 1 server licence, 10G server quota, 1 desktop licence, 10G desktop quota
-    Then I should see tax total price is $0.00
+  @TC.17539
+  Scenario: Mozy-17539 Set Exempt from Federal/National taxes to false in Aria (Reseller / Yearly)
+    When I add a Reseller partner with 1 month(s) period, Silver Reseller, 100 GB plan, no server plan, 0 add-on, no coupon, Italy country, IT03018900245 VAT number, credit card payment
+    Then Partner creation successful message should be New partner created
+    When I log in aria admin console as aria admin
+    And I search aria account by the new partner email
+    And I navigate to taxpayer information view
+    Then Taxpayer id should be IT03018900245
+    When I set Exempt from Federal and National taxes to false
+    Then Tax exemption status should be Account is exempt from state/province taxation.
 
-  @TC.15456
-  Scenario: BILL.101003 No taxes charged when creating new partner in bus
-    Given I log in bus admin console as administrator
-    And I add a MozyPro partner with 2 TB (10293361) plan, 24 month(s) period, no server add-on, Belgium country, BE0883236072 VAT number
-    And I view the new partner order summary when adding partner
-    Then I should see taxes total price of initial order is $0.00
+   @TC.17547
+   Scenario: Mozy-17547 No taxes charged when creating a new partner (Mozypro / Monthly)
+    When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, Belgium country, BE0883236072 VAT number, credit card payment
+    Then Order summary details should be:
+    | Description       | Amount   | Price Each | Total Price |
+    | 50 GB             | 1        | $19.99     | $19.99      |
+    | Pre-tax Subtotal  |          |            | $19.99      |
+    | Total Charges     |          |            | $19.99      |
+    And Partner creation successful message should be New partner created
 
-    #    | 4 TB (10293363)     | 24     | no      |
+  @TC.17555
+  Scenario: Mozy-17555 No taxes charged when creating a new partner (MozyEnterprise / Yearly)
+    When I add a MozyEnterprise partner with 12 month(s) period, 1 user(s), no server plan, 0 server add-on, no coupon, Belgium country, BE0883236072 VAT number, credit card payment
+    Then Order summary details should be:
+    | Description           | Amount   | Price Each | Total Price |
+    | MozyEnterprise User   | 1        | $95.00     | $95.00      |
+    | Pre-tax Subtotal      |          |            | $95.00      |
+    | Total Charges         |          |            | $95.00      |
+    And Partner creation successful message should be New partner created
+
+  @TC.17556
+  Scenario: Mozy-17556 No taxes charged when creating a new partner (Reseller / Monthly)
+    When I add a Reseller partner with 1 month(s) period, Platinum Reseller, 100 GB plan, no server plan, 0 add-on, no coupon, Italy country, IT03018900245 VAT number, credit card payment
+    Then Order summary details should be:
+    | Description            | Amount   | Price Each | Total Price |
+    | GB - Platinum Reseller | 100      | $0.30      | $30.00      |
+    | Pre-tax Subtotal       |          |            | $30.00      |
+    | Total Charges          |          |            | $30.00      |
+    And Partner creation successful message should be New partner created
+
+  #@TC.17556
+  #Scenario: No taxes charged when creating a new partner (Reseller / Monthly)
+  #  When I add a MozyPro partner with 1 month(s) period, 250 GB, $94.99 plan, no server plan, no coupon, credit card payment
+  # Then Partner creation successful message should be New partner created
+  #  When I act as the new partner on admin details panel
+  # And I change subscription up to MozyPro with 250 GB of space to distribute however you want amongst unlimited desktop computers - billed annually
+  #  Then Subscription changed message should be Your account has been changed to yearly billing.

@@ -7,9 +7,9 @@ Feature: View billing history
   @billing_history_1 @smoke_test
   Scenario: Display new partner billing history table in billing history view
     Given I log in bus admin console as administrator
-    When I add a MozyPro partner with 1 month(s) period, 250 GB, $94.99 plan, no server plan
+    When I add a MozyPro partner with 1 month(s) period, 250 GB, $94.99 plan, no server plan, no coupon, credit card payment
     Then Partner creation successful message should be New partner created
-    When I masquerade as the new partner
+    When I act as the new partner on admin details panel
     And I navigate to billing history view
     Then The statements table header in billing history view should be Date,Amount,Total Paid,Balance Due
     And The number of statements in billing history view should be 1

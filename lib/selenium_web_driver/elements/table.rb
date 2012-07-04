@@ -20,7 +20,7 @@ module AutomationWebDriver
 
       # Public: Element array of table body rows
       #
-      # Examples
+      # Examples             invoice_settings_dt
       #
       #   table.body_rows
       #   # => Array[Array<Element>]]

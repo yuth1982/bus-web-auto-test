@@ -1,32 +1,27 @@
 module Aria
   class AccountOverviewView < PageObject
 
-    # Navigation links
+    element(:master_plan_link, {:link => "Master Plan"})
+    element(:change_master_plan_link, {:link => "Change Master Service Plan"})
+
+    element(:supplemental_plans_link, {:link => "Supplemental Plans"})
+    element(:save_plan_btn, {:id => "submit-button"})
+    element(:plan_saved_msg_div, {:class => "error-box"})
+
+    element(:replace_plan_links, {:link => "REPLACE"})
+
+    element(:save_supp_plan_btn, {:xpath => "//input[@value='Save Changes']"})
+
+    element(:assign_option_select, {:id => "inAssignOptionsIgnore"})
 
 
-    # View links
-    element :master_plan_link, {:link => "Master Plan"}
-    element :change_master_plan_link, {:link => "Change Master Service Plan"}
+    element(:taxpayer_id_dd, {:xpath => "//form/fieldset/dl/dd[1]"})
+    element(:tax_exempt_status_dd, {:xpath => "//form/fieldset/dl/dd[2]"})
+    element(:edit_tax_exempt_btn, {:xpath =>"//input[@value='Edit Fields']"})
+    element(:save_tax_exempt_btn, {:xpath =>"//input[@value='Save Changes']"})
 
-    element :supplemental_plans_link, {:link => "Supplemental Plans"}
-    element :save_plan_btn, {:id => "submit-button"}
-    element :plan_saved_msg_div, {:class => "error-box"}
-
-    element :replace_plan_links, {:link => "REPLACE"}
-
-    element :save_supp_plan_btn, {:xpath => "//input[@value='Save Changes']"}
-
-    element :assign_option_select, {:id => "inAssignOptionsIgnore"}
-
-
-    element :taxpayer_id_dd, {:xpath => "//form/fieldset/dl/dd[1]"}
-    element :tax_exempt_status_dd, {:xpath => "//form/fieldset/dl/dd[2]"}
-    element :edit_tax_exempt_btn, {:xpath =>"//input[@value='Edit Fields']"}
-    element :save_tax_exempt_btn, {:xpath =>"//input[@value='Save Changes']"}
-
-    element :federal_tax_exempt_cb, {:xpath =>"//input[@name='inFederalTaxExempt']"}
-    element :state_tax_exempt_cb, {:xpath =>"//input[@name='inStateProvTaxExempt']"}
-
+    element(:federal_tax_exempt_cb, {:xpath =>"//input[@name='inFederalTaxExempt']"})
+    element(:state_tax_exempt_cb, {:xpath =>"//input[@name='inStateProvTaxExempt']"})
 
 
     def set_federal_exempt_taxes status

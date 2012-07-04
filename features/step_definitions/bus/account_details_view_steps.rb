@@ -1,5 +1,6 @@
-Then /^I should see (.+) invoice setting$/ do |setting|
-  @bus_admin_console_page.account_details_view.invoice_settings_text.include?(setting).should == true
+
+Then /^Invoice setting details should be (.+)$/ do |setting_descriptions|
+  @bus_admin_console_page.account_details_view.invoice_settings_text.join(",").should == setting_descriptions
 end
 
 Then /^I should see Receive Mozy Account Statements option is set to (\w+)$/ do |status|
@@ -15,7 +16,7 @@ Then /^I should see Receive Mozy Email Notifications option is set to (\w+)$/ do
 end
 
 Then /^I set Receive Mozy Account Statements option to (\w+)$/ do |status|
-  @bus_admin_console_page.account_details_view.set_receive_statement_status status
+  @bus_admin_console_page.account_details_view.set_receive_statement_status(status)
 end
 
 Then /^I should see setting saved message is (.+)$/ do |message|

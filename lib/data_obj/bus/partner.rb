@@ -23,7 +23,7 @@ module Bus
       @city = Forgery::Address.city
       @zip = "12345" #Forgery::Address.zip
       @phone = "1234567890" #Forgery::Address.phone
-      @email = "#{Bus::EMAIL_PREFIX}+#{first_name}+#{last_name}@mozy.com"
+      @email = "#{Bus::EMAIL_PREFIX}+#{first_name}+#{last_name}@mozy.com".downcase
       @vat_num = ""
 
       @parent_partner = Bus::MOZY_ROOT_PARTNER[:mozy_pro]

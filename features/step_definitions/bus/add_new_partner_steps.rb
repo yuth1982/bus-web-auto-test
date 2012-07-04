@@ -50,7 +50,7 @@ When /^I add a MozyEnterprise partner with (\d+) month\(s\) period, (\d+) user\(
   @bus_admin_console_page.add_new_partner_view.add_new_account(@partner)
 end
 
-When /^I add a MozyEnterprise partner with (\d+) month\(s\) period, (\d+) user\(s\), (no|.+) plan, (\d+) server add-on, (no|.+) coupon, (.+) country, (.+) VAT number, (credit card|net terms) payment$/ do |period, num_users, supp_plan, num_add_on, coupon, country, vat_number, payment|
+When /^I add a MozyEnterprise partner with (\d+) month\(s\) period, (\d+) user\(s\), (no|.+) server plan, (\d+) server add-on, (no|.+) coupon, (.+) country, (.+) VAT number, (credit card|net terms) payment$/ do |period, num_users, supp_plan, num_add_on, coupon, country, vat_number, payment|
   step "I navigate to add new partner view"
   @partner = Bus::MozyEnterprise.new
   @partner.company_type = Bus::COMPANY_TYPE[:mozyenterprise]
@@ -121,7 +121,7 @@ Then /^Partner creation successful message should be (.+)$/ do |message|
   @bus_admin_console_page.add_new_partner_view.creation_status_msg.should start_with(message)
 end
 
-When /^Order summary details should be:$/ do |order_summary_table|
+Then /^Order summary details should be:$/ do |order_summary_table|
   @bus_admin_console_page.add_new_partner_view.order_summary_table.body_rows_text[1..-1].should == order_summary_table.hashes.map { |el| el.values }
 end
 

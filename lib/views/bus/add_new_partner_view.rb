@@ -9,7 +9,7 @@ module Bus
     # Company Info
     #
     element(:new_partner_name_tb, {:id => "new_partner_name"})
-    element(:contact_country_select, {:id => "contact_country"})
+    element(:contact_country_select, {:id => "partner_new_contact_country"})
     element(:contact_state_tb, {:id => "contact_state"})
     element(:contact_state_us_select, {:id => "contact_state_us"})
     element(:contact_state_ca_select, {:id => "contact_state_ca"})
@@ -82,6 +82,7 @@ module Bus
       if(partner.has_initial_purchase)
         fill_initial_purchase(partner)
         next_btn.click
+        sleep 5
         if(partner.net_term_payment)
           net_term_payment.click
         else
@@ -98,13 +99,13 @@ module Bus
       begin
         partner_created_txt.text
       rescue
-          err_msg = aria_errors_li.map { |cell| cell.text }
-          create_partner_rescue(err_msg, 1)
-          begin
-            partner_created_txt.text
-          rescue
-            aria_errors_li.map { |cell| cell.text }
-          end
+        err_msg = aria_errors_li.map { |cell| cell.text }
+        create_partner_rescue(err_msg, 1)
+        begin
+          partner_created_txt.text
+        rescue
+          aria_errors_li.map { |cell| cell.text }
+        end
       end
     end
 
@@ -130,7 +131,6 @@ module Bus
       parent_partner_select.select_by(:text,partner.parent_partner)
       company_type_select.select_by(:text,partner.company_type)
       coupon_code_tb.type_text(partner.couple_code) unless partner.couple_code.nil?
-      sleep 5
     end
 
     def fill_admin_info(partner)
@@ -159,6 +159,7 @@ module Bus
     end
 
     def fill_subscription_period(partner)
+      sleep 5 # Wait for loading subscription period
       driver.find_element(:id => "billing_period_#{partner.subscription_period}").click
       sleep 5 # Wait for loading supp plans
     end
@@ -207,9 +208,10 @@ module Bus
 
     def create_partner_rescue(err_msg, times)
       while(times > 0)
-        puts "try rescue #{times}"
         if err_msg.include?("Could not validate payment information.")
+          puts "Known error occurred, try create partner rescue #{times}"
           create_partner_btn.click
+          sleep 5
         end
         times -= 1
       end
