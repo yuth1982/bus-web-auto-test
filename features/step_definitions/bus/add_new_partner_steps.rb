@@ -119,6 +119,7 @@ end
 
 Then /^Partner creation successful message should be (.+)$/ do |message|
   @bus_admin_console_page.add_new_partner_view.creation_status_msg.should start_with(message)
+  step "I activate new partner admin with default password"
 end
 
 Then /^Order summary details should be:$/ do |order_summary_table|

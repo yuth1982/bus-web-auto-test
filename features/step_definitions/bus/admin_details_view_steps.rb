@@ -1,7 +1,9 @@
 
-When /^I activate parther's admin with default password$/ do
+When /^I activate new partner admin with default password$/ do
+  step "I search partner by #{@partner.email}"
+  step "I view admin details by email #{@partner.email}"
   @bus_admin_console_page.admin_details_view.activate_admin_link.click
-  @bus_admin_console_page.admin_details_view.update_password DEFAULT_PWD,DEFAULT_PWD
+  @bus_admin_console_page.admin_details_view.update_password Bus::DEFAULT_PWD,Bus::DEFAULT_PWD
 end
 
 When /^I act as the partner by email (.+) on admin details panel$/ do |partner_email|
@@ -9,8 +11,7 @@ When /^I act as the partner by email (.+) on admin details panel$/ do |partner_e
   step "I view admin details by email #{partner_email}"
   @bus_admin_console_page.admin_details_view.act_as_link.click
   # wait for left navigation menu to be loaded
-  @bus_admin_console_page.machines_view.export_excel.displayed?
-  sleep 10
+  @bus_admin_console_page.stop_masquerading.displayed?
 end
 
 When /^I act as the new partner on admin details panel$/ do

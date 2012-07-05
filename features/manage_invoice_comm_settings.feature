@@ -10,7 +10,7 @@ Feature:
   Scenario: Verify UI of invoice settings in BUS
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, credit card payment
     Then Partner creation successful message should be New partner created
-    When I act as the new partner on admin details panel
+    When I log in bus admin console as the new partner account
     And I navigate to account details view
     Then Invoice setting details should be Receive Mozy Pro Newsletter?,Receive Mozy Email Notifications?,Receive Mozy Account Statements?
 
@@ -18,7 +18,7 @@ Feature:
   Scenario: Verify 'Receive Mozy Account Statements' set to Yes for new partner in Bus
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, credit card payment
     Then Partner creation successful message should be New partner created
-    When I act as the new partner on admin details panel
+    When I log in bus admin console as the new partner account
     And I navigate to account details view
     Then I should see Receive Mozy Pro Newsletter option is set to No
     And I should see Receive Mozy Email Notifications option is set to No
@@ -49,7 +49,7 @@ Feature:
   Scenario: Verify aria notification method when set 'Receive Mozy Account Statements' to No
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, credit card payment
     Then Partner creation successful message should be New partner created
-    When I act as the new partner on admin details panel
+    When I log in bus admin console as the new partner account
     And I navigate to account details view
     And I set Receive Mozy Account Statements option to No
     Then I should see setting saved message is Successfully saved Account Statement preference.
@@ -90,7 +90,7 @@ Feature:
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, credit card payment
     Then Partner creation successful message should be New partner created
     # Aria sends registration email and initial purchase invoice email
-    When I act as the new partner on admin details panel
+    When I log in bus admin console as the new partner account
     And I change subscription up to MozyPro with 250 GB of space to distribute however you want amongst unlimited desktop computers - billed annually
     Then Subscription changed message should be Your account has been changed to yearly billing.
     # Aria sends invoice email

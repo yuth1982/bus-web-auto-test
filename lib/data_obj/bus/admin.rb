@@ -1,9 +1,8 @@
 module Bus
   class Admin
-    attr_accessor :id, :user_name, :name, :password
+    attr_accessor :user_name, :name, :password
 
-    def initialize(id,user_name,name,password)
-      @id = id
+    def initialize(user_name,name,password)
       @user_name = user_name
       @name = name
       @password = password

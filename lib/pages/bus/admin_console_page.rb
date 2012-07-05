@@ -14,6 +14,9 @@ module Bus
   component(:order_data_shuttle_view, OrderDataShuttleView)
   component(:machines_view, MachinesView)
 
+  # Top identify section
+  element(:stop_masquerading, {:link => "stop masquerading"})
+
   # Internal tools links
   #
   element(:add_new_promo_link, {:link => "Add New Promotion"})
