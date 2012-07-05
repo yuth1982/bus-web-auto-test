@@ -6,8 +6,8 @@ module Bus
   BUS_LOGIN_URL = "https://www.mozypro.com/login/admin?old_school=1"
 
   # Browser time out in seconds
-  BROWSER_IMPLICIT_WAIT = 60
-  BROWSER_RESCUE_WAIT = 60
+  BROWSER_IMPLICIT_WAIT = 90
+  BROWSER_RESCUE_WAIT = 30
 
   COMPANY_TYPE =
   {

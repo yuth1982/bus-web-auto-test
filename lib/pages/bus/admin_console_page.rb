@@ -12,6 +12,7 @@ module Bus
   component(:admin_details_view, AdminDetailsView)
   component(:account_details_view, AccountDetailsView)
   component(:order_data_shuttle_view, OrderDataShuttleView)
+  component(:machines_view, MachinesView)
 
   # Internal tools links
   #

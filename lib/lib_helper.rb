@@ -40,6 +40,7 @@ require "views/bus/return_resources_view"
 require "views/bus/admin_details_view"
 require "views/bus/account_details_view"
 require "views/bus/order_data_shuttle_view"
+require "views/bus/machines_view"
 
 require "views/aria/search_account_view"
 require "views/aria/account_overview_view"

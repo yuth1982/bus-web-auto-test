@@ -85,6 +85,27 @@ Feature:
     And I navigate to notification method view
     Then Notification message should be This account is currently notified via method "HTML Email".
 
+  @emails
+  Scenario: Verify aria sends emails
+    When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, credit card payment
+    Then Partner creation successful message should be New partner created
+    # Aria sends registration email and initial purchase invoice email
+    When I act as the new partner on admin details panel
+    And I change subscription up to MozyPro with 250 GB of space to distribute however you want amongst unlimited desktop computers - billed annually
+    Then Subscription changed message should be Your account has been changed to yearly billing.
+    # Aria sends invoice email
+    When I log in aria admin console as aria admin
+    # I change status to active dunning 1
+    # Aria sends dunning email
+    # I change status to active dunning 2
+    # Aria sends dunning email
+    # I change status to active dunning 3
+    # Aria sends dunning email
+    # I change status to suspended
+
+
+
+
 
 
 
