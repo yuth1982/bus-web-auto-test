@@ -5,7 +5,7 @@ Feature: Notify about and collect past-due balances
   so that customers have as much opportunity as possible to make their account current before Mozy disables and eventually removes their service.
 
   Background:
-      Given I log in bus admin console as administrator
+    Given I log in bus admin console as administrator
 
   @create_partner_email
   Scenario: Verify aria sends email when create a new MozyPro partner
@@ -17,7 +17,7 @@ Feature: Notify about and collect past-due balances
     | New partner's email | Today   | MozyPro Account Created! |
     Then I should see 1 email(s) displayed in search results
 
-   @change-1
+  @change-1
   Scenario: Verify aria sends email when change subscription peiod
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, credit card payment
     Then Partner created successful message should be New partner created
@@ -59,7 +59,7 @@ Feature: Notify about and collect past-due balances
     Then I should see 1 email(s) displayed in search results
 
   @TC.16149
-  Scenario: Mozy-16149 Verify aria sends email when change account status to Active Dunning 3
+  Scenario: Mozy-16149 Verify aria sends email when change MozyPro account status to Active Dunning 3
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, credit card payment
     Then Partner created successful message should be New partner created
     When I log in aria admin console as aria admin
@@ -73,7 +73,7 @@ Feature: Notify about and collect past-due balances
     Then I should see 1 email(s) displayed in search results
 
   @TC.16243
-  Scenario: Mozy-16243 Verify aria sends email when change account status to suspended
+  Scenario: Mozy-16243 Verify aria sends email when change MozyPro account status to suspended
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, credit card payment
     Then Partner created successful message should be New partner created
     When I log in aria admin console as aria admin

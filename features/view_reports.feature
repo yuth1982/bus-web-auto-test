@@ -4,7 +4,7 @@ Feature: View Report
   so that I can understand why I was charged what I was charged and for which partner or usergroup, update my records, or re-bill my sub-partners and usergroups.
 
   @TC.16255
-  Scenario: Verify 6 available reports in report builder view (UI)
+  Scenario: Verify 6 available reports in report builder view UI
     Given I log in bus admin console as administrator
     When I add a MozyEnterprise partner with 12 month(s) period, 1 user(s), no server plan, 0 server add-on, no coupon, credit card payment
     Then Partner created successful message should be New partner created
@@ -16,7 +16,7 @@ Feature: View Report
     | Billing Detail     | Provides a breakdown of resources and usage by user and device.                                                                    |
     | Machine Watchlist  | Calls out problems with backups on each device, signaling issues and potential issues that need attention.                         |
     | Machine Status     | Provides the state of the backup service by device, including the time of the most recent backup and the amount of quota consumed. |
-    | Resources Added    | Lists all purchases of resources (licenses and storage) by Mozy administrators and storage added by Overdraft.                     |
+    | Resources Added    | Lists all purchases of resources (licenses and storage) by Mozy administrators and storage added by Autogrow.                     |
     | Machine Over Quota | Provides a list of users that have exceeded a user determined threshold.                                                           |
 
   @TC.16245
@@ -55,7 +55,7 @@ Feature: View Report
    #| Daily     | Resources Added     | Resources Added Test Report     | Created Resources Added Report.     |
 
   @TC.16251
-  Scenario: Verify billing summary report csv all fields (MozyEtnerprise)
+  Scenario: Verify MozyEtnerprise billing summary report csv all fields
     Given I log in bus admin console as administrator
     When I add a MozyEnterprise partner with 12 month(s) period, 1 user(s), 100 GB Server Plan, $582.78 server plan, 2 server add-on, no coupon, credit card payment
     Then Partner created successful message should be New partner created
@@ -70,7 +70,7 @@ Feature: View Report
     | (default user group)  |              | 625                | 200                   | 600                 | 1                      | 25                   |                                    |                                     | $0.369008              |
 
   #@not complete need to change report file details
-  Scenario: Verify billing summary report csv all fields (Reseller)
+  Scenario: Verify Reseller billing summary report csv all fields
     Given I log in bus admin console as administrator
     When I add a Reseller partner with 1 month(s) period, Silver Reseller, 100 GB plan, has server plan, 2 add-on, no coupon, credit card payment
     Then Partner created successful message should be New partner created
@@ -82,10 +82,10 @@ Feature: View Report
     Then Billing Summary report file details should be:
     | Column B              | Column C     | Column D           | Column E              | Column F            | Column G               | Column H             | Column I                           | Column J                            | Column K               |
     | User Group            | Billing Code | Total GB Purchased | Server Keys Purchased | Server GB Purchased | Desktop Keys Purchased | Desktop GB Purchased | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
-    | (default user group)  |              | 625                | 200                   | 600                 | 1                      | 25                   |                                    |                                     | $0.369008              |
+    | (default user group)  |              | 140                |                       |                     |                        |                      |                                    |                                     | $0.598571428571429     |
 
   @TC.16252
-  Scenario: Verify billing detail report csv all fields (MozyEtnerprise)
+  Scenario: Verify MozyEtnerprise billing detail report csv all fields
     Given I log in bus admin console as administrator
     When I add a MozyEnterprise partner with 24 month(s) period, 1 user(s), 100 GB Server Plan, $1,112.58 server plan, 2 server add-on, no coupon, credit card payment
     Then Partner created successful message should be New partner created
@@ -100,7 +100,7 @@ Feature: View Report
     | (default user group)  |              | 625                | 600                         | 0                           | 0                      | 200                   | 0                     | 0                                      | 25                           | 0                            | 0                       | 1                      | 0                      | 0                                       |                                    |                                     | $0.352210666666667     |
 
   #@not complete need to change report file details
-  Scenario: Verify billing detail report csv all fields (Reseller)
+  Scenario: Verify Reseller billing detail report csv all fields
     Given I log in bus admin console as administrator
     When I add a Reseller partner with 1 month(s) period, Silver Reseller, 100 GB plan, has server plan, 2 add-on, no coupon, credit card payment
     Then Partner created successful message should be New partner created
@@ -112,4 +112,4 @@ Feature: View Report
     Then Billing Detail report file details should be:
     | Column B              | Column C     | Column D           | Column E                    | Column F                    | Column G               | Column H              | Column I              | Column J                               | Column K                     | Column L                     | Column M                | Column N               | Column O               | Column P                                | Column Q                           | Column R                            | Column S               |
     | User Group            | Billing Code | Total GB Purchased | Server Quota Purchased (GB) | Server Quota Allocated (GB) | Server Quota Used (GB) | Server Keys Purchased | Server Keys Activated | Server Keys Assigned But Not Activated | Desktop Quota Purchased (GB) | Desktop Quota Allocated (GB) | Desktop Quota Used (GB) | Desktop Keys Purchased | Desktop Keys Activated | Desktop Keys Assigned But Not Activated | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
-    | (default user group)  |              | 625                | 600                         | 0                           | 0                      | 200                   | 0                     | 0                                      | 25                           | 0                            | 0                       | 1                      | 0                      | 0                                       |                                    |                                     | $0.352210666666667     |
+    | (default user group)  |              | 140                |                             |                             |                        |                       |                       |                                        |                              | 0                            | 0                       |                        | 0                      | 0                                       |                                    |                                     | $0.598571428571429     |
