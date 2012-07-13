@@ -13,6 +13,8 @@ module Bus
   component(:account_details_view, AccountDetailsView)
   component(:order_data_shuttle_view, OrderDataShuttleView)
   component(:machines_view, MachinesView)
+  component(:scheduled_reports_view, ScheduledReportsView)
+  component(:report_builder_view, ReportBuilderView)
 
   # Top identify section
   element(:stop_masquerading, {:link => "stop masquerading"})

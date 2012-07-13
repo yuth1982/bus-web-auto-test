@@ -6,6 +6,7 @@ Bundler.setup
 require "selenium-webdriver"
 require 'nokogiri'
 require 'forgery'
+require 'csv'
 
 require "selenium_web_driver/create_selenium_web_driver"
 require "selenium_web_driver/selenium_helper"
@@ -41,8 +42,11 @@ require "views/bus/admin_details_view"
 require "views/bus/account_details_view"
 require "views/bus/order_data_shuttle_view"
 require "views/bus/machines_view"
+require "views/bus/scheduled_reports_view"
+require "views/bus/report_builder_view"
 
 require "views/aria/search_account_view"
+require "views/aria/account_status_view"
 require "views/aria/account_overview_view"
 require "views/aria/notification_method_view"
 
@@ -52,6 +56,8 @@ require "pages/bus/invoice_page"
 require "pages/aria/login_page"
 require "pages/aria/accounts_page"
 require "pages/aria/admin_console_page"
+require "pages/zimbra/login_page"
+require "pages/zimbra/mail_main_page"
 
 include AutomationWebDriver::CreateSeleniumWebDriver
 include AutomationWebDriver::Elements

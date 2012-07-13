@@ -8,6 +8,7 @@ module AutomationWebDriver
       # Returns nothing
       def type_text(value)
         self.clear
+        self.value = ""
         self.send_keys(value.to_s)
       end
 

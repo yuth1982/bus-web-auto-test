@@ -13,8 +13,7 @@ module AutomationWebDriver
           begin
             driver.find_element(element_hash)
           rescue => ex
-            wait = Selenium::WebDriver::Wait.new(:timeout => Bus::BROWSER_RESCUE_WAIT) # seconds
-            wait.until { driver.find_element(element_hash) }
+            driver.find_element(element_hash)
           end
         end
       end
@@ -24,8 +23,7 @@ module AutomationWebDriver
           begin
             driver.find_elements(element_hash)
           rescue => ex
-            wait = Selenium::WebDriver::Wait.new(:timeout => Bus::BROWSER_RESCUE_WAIT) # seconds
-            wait.until { driver.find_elements(element_hash) }
+            driver.find_elements(element_hash)
           end
         end
       end

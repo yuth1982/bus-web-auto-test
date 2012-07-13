@@ -11,12 +11,6 @@ When /^I change subscription down to (.+)$/ do |link_text|
   @bus_admin_console_page.billing_info_view.change_subscription_down(link_text)
 end
 
-When /^I try to change subscription to (.+)$/ do |link_text|
-  step "I navigate to billing information view"
-  step "I navigate to change subscription view"
-  @bus_admin_console_page.billing_info_view.try_to_change_subscription(link_text)
-end
-
 Then /^Change subscription confirmation message should include (.+)$/ do |message|
   @bus_admin_console_page.billing_info_view.change_confirmation_div.text.should include(message)
 end
@@ -48,7 +42,9 @@ Then /^Next renewal master plan period should be (.+)$/ do |period|
 end
 
 Then /^Next renewal master plan date should be (.+)$/ do |date|
-  @bus_admin_console_page.billing_info_view.master_plan_table.body_rows_text[1][1].should == (DateTime.now >> date.match(/(\d+)/).to_s.to_i).strftime("%b %d, %Y")
+  # Set Time.now mto qa6 local time
+  next_month = DateTime.now >> date.match(/(\d+)/).to_s.to_i
+  @bus_admin_console_page.billing_info_view.master_plan_table.body_rows_text[1][1].should == next_month.to_time.localtime("-06:00").strftime("%b %d, %Y")
 end
 
 Then /^Next renewal master plan amount should be (.+)$/ do |amount|
@@ -56,5 +52,5 @@ Then /^Next renewal master plan amount should be (.+)$/ do |amount|
 end
 
 Then /^Next renewal master plan payment type should be (.+)$/ do |type|
-  @bus_admin_console_page.billing_info_view.master_plan_table.body_rows_text[3][1].should == type
+  @bus_admin_console_page.billing_info_view.master_plan_table.body_rows_text[3][1].should == type.gsub(/XXXX/, @partner.credit_card_number[12..-1])
 end

@@ -52,6 +52,10 @@ class Selenium::WebDriver::Element
     find_elements(:xpath, "child::*")
   end
 
+  def first_child
+    find_element(:xpath, "child::*[1]")
+  end
+
   def descendant
     find_elements(:xpath, "descendant::*")
   end

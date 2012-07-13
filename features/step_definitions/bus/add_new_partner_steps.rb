@@ -9,6 +9,7 @@ When /^I add a MozyPro partner with (\d+) month\(s\) period, (.+) plan, (has|no)
   @partner.has_server_plan = has_server_plan.eql?("has")
   @partner.couple_code = coupon unless coupon.eql?("no")
   @partner.net_term_payment = payment.eql?("net terms")
+  puts @partner.to_s
   @bus_admin_console_page.add_new_partner_view.add_new_account(@partner)
 end
 
@@ -23,6 +24,7 @@ When /^I add a MozyPro partner with (\d+) month\(s\) period, (.+) plan, (has|no)
   @partner.country = country
   @partner.vat_num = vat_number
   @partner.net_term_payment = payment.eql?("net terms")
+  puts @partner.to_s
   @bus_admin_console_page.add_new_partner_view.add_new_account(@partner)
 end
 
@@ -32,6 +34,7 @@ When /^I add a MozyPro partner with (\d+) month\(s\) period, no initial purchase
   @partner.company_type = Bus::COMPANY_TYPE[:mozypro]
   @partner.subscription_period = period
   @partner.has_initial_purchase = false
+  puts @partner.to_s
   @bus_admin_console_page.add_new_partner_view.add_new_account(@partner)
 end
 
@@ -47,6 +50,7 @@ When /^I add a MozyEnterprise partner with (\d+) month\(s\) period, (\d+) user\(
   @partner.num_server_add_on = num_add_on
   @partner.couple_code = coupon unless coupon.eql?("no")
   @partner.net_term_payment = payment.eql?("net terms")
+  puts @partner.to_s
   @bus_admin_console_page.add_new_partner_view.add_new_account(@partner)
 end
 
@@ -62,6 +66,7 @@ When /^I add a MozyEnterprise partner with (\d+) month\(s\) period, (\d+) user\(
   @partner.vat_num = vat_number
   @partner.couple_code = coupon unless coupon.eql?("no")
   @partner.net_term_payment = payment.eql?("net terms")
+  puts @partner.to_s
   @bus_admin_console_page.add_new_partner_view.add_new_account(@partner)
 end
 
@@ -71,6 +76,7 @@ When /^I add a MozyEnterprise partner with (\d+) month\(s\) period, no initial p
   @partner.company_type = Bus::COMPANY_TYPE[:mozyenterprise]
   @partner.subscription_period = period
   @partner.has_initial_purchase = false
+  puts @partner.to_s
   @bus_admin_console_page.add_new_partner_view.add_new_account(@partner)
 end
 
@@ -87,6 +93,7 @@ When /^I add a Reseller partner with (\d+) month\(s\) period, (\w+ Reseller), (\
   @partner.reseller_add_on_quota = add_on_quota
   @partner.couple_code = coupon unless coupon.eql?("no")
   @partner.net_term_payment = payment.eql?("net terms")
+  puts @partner.to_s
   @bus_admin_console_page.add_new_partner_view.add_new_account(@partner)
 end
 
@@ -103,6 +110,7 @@ When /^I add a Reseller partner with (\d+) month\(s\) period, (\w+ Reseller), (\
   @partner.vat_num = vat_number
   @partner.couple_code = coupon unless coupon.eql?("no")
   @partner.net_term_payment = payment.eql?("net terms")
+  puts @partner.to_s
   @bus_admin_console_page.add_new_partner_view.add_new_account(@partner)
 end
 
@@ -112,13 +120,14 @@ When /^I add a Reseller partner with (\d+) month\(s\) period, no initial purchas
   @partner.company_type = Bus::COMPANY_TYPE[:reseller]
   @partner.subscription_period = period
   @partner.has_initial_purchase = false
+  puts @partner.to_s
   @bus_admin_console_page.add_new_partner_view.add_new_account(@partner)
 end
 
 # Other Steps
 
-Then /^Partner creation successful message should be (.+)$/ do |message|
-  @bus_admin_console_page.add_new_partner_view.creation_status_msg.should start_with(message)
+Then /^Partner created successful message should be (.+)$/ do |message|
+  @bus_admin_console_page.add_new_partner_view.partner_created_msg.should start_with(message)
   step "I activate new partner admin with default password"
 end
 

@@ -4,6 +4,7 @@ When /^I activate new partner admin with default password$/ do
   step "I view admin details by email #{@partner.email}"
   @bus_admin_console_page.admin_details_view.activate_admin_link.click
   @bus_admin_console_page.admin_details_view.update_password Bus::DEFAULT_PWD,Bus::DEFAULT_PWD
+  sleep 10
 end
 
 When /^I act as the partner by email (.+) on admin details panel$/ do |partner_email|

@@ -7,13 +7,19 @@ module Bus
 
   # Browser time out in seconds
   BROWSER_IMPLICIT_WAIT = 60
-  BROWSER_RESCUE_WAIT = 30
 
   COMPANY_TYPE =
   {
     :reseller             => 'Reseller',
     :mozypro              => 'MozyPro',
     :mozyenterprise       => 'MozyEnterprise',
+  }
+
+  RESELLER_TYPE =
+  {
+    :silver               => 'Silver Reseller',
+    :gold                 => 'Gold Reseller',
+    :platinum             => 'Platinum Reseller',
   }
 
   MOZY_ROOT_PARTNER =

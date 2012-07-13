@@ -42,15 +42,6 @@ module Bus
     element(:cc_zip_tb, {:id => "cc_zip"})
 
     element(:include_initial_purchase_cb, {:id =>"include_initial_purchase"})
-    # MozyPro
-    element(:base_plan_select, {:id => "base_plan_select"})
-    element(:add_on_plan_select, {:id => "add_on_plan_select"})
-    # MozyPro, Reseller
-    element(:server_plan_cb, {:id => "add_on_plan_check_box"})
-    # MozyEnterprise
-    element(:mozyenterprise_base_plan_tb, {:id => "base_plan"})
-    # MozyEnterprise, Reseller
-    element(:num_server_add_on_hidden, {:id =>"add_on_plan"})
 
     # Credit Card Info
     #
@@ -69,21 +60,20 @@ module Bus
     elements(:aria_errors_li, {:xpath => "//div[@id='ariaErrors']//li"})
 
     def add_new_account(partner)
-      puts partner.to_s if Bus::DEBUG
-
+      #puts partner.to_s if Bus::DEBUG
       fill_company_info(partner)
       fill_admin_info(partner)
       fill_partner_info(partner)
       fill_billing_info(partner)
 
       # define master plan subscription period
-      fill_subscription_period(partner)
+      fill_subscription_period(partner.subscription_period)
 
-      if(partner.has_initial_purchase)
+      if partner.has_initial_purchase
         fill_initial_purchase(partner)
         next_btn.click
         sleep 5
-        if(partner.net_term_payment)
+        if partner.net_term_payment
           net_term_payment.click
         else
           fill_credit_card_info(partner)
@@ -95,7 +85,7 @@ module Bus
       end
     end
 
-    def creation_status_msg
+    def partner_created_msg
       begin
         partner_created_txt.text
       rescue
@@ -115,7 +105,7 @@ module Bus
       new_partner_name_tb.type_text(partner.company_name)
       contact_country_select.select_by(:text,partner.country)
 
-      if(partner.country.eql?(US)) then
+      if partner.country.eql?(US)
         contact_state_us_select.select_by(:text,partner.state_abbrev)
       else
         contact_state_tb.type_text(partner.state)
@@ -131,6 +121,7 @@ module Bus
       parent_partner_select.select_by(:text,partner.parent_partner)
       company_type_select.select_by(:text,partner.company_type)
       coupon_code_tb.type_text(partner.couple_code) unless partner.couple_code.nil?
+      sleep 10 # wait for load all supp plans
     end
 
     def fill_admin_info(partner)
@@ -144,7 +135,7 @@ module Bus
       else
         cc_country_select.select_by(:text,partner.country)
 
-        if(partner.country.eql?(US)) then
+        if partner.country.eql?(US)
           cc_state_us_select.select_by(:text,partner.state_abbrev)
         else
           cc_state_tb.type_text(partner.state)
@@ -158,11 +149,10 @@ module Bus
       end
     end
 
-    def fill_subscription_period(partner)
-      sleep 5 # Wait for loading subscription period
-      driver.find_element(:id => "billing_period_#{partner.subscription_period}").click
-      sleep 5 # Wait for loading supp plans
+    def fill_subscription_period(period)
+      driver.find_element(:id => "billing_period_#{period}").click
     end
+
     def fill_initial_purchase(partner)
       case partner.company_type
         when Bus::COMPANY_TYPE[:mozypro]
@@ -171,31 +161,57 @@ module Bus
           fill_mozyenterprise_purchase(partner)
         when Bus::COMPANY_TYPE[:reseller]
           fill_reseller_purchase(partner)
+      else
+        raise "Unable to find partner type of #{partner.company_type}"
       end
     end
 
     def fill_mozypro_purchase(partner)
+      base_plan_select = driver.find_element(:id => "#{partner.subscription_period}_base_plan_select")
       base_plan_select.select_by(:text, partner.supp_plan)
-      sleep 5 # Wait for loading add-on
-      server_plan_cb.check if partner.has_server_plan
+      base_plan_id = base_plan_select.first_selected_option.value
+      driver.find_element(:id => "#{base_plan_id}_add_on_plan_check_box").check if partner.has_server_plan
     end
 
     def fill_mozyenterprise_purchase(partner)
-      mozyenterprise_base_plan_tb.next_sibling.type_text(partner.num_enterprise_users)
-      sleep 5 # Wait for loading add-on
-      add_on_plan_select.select_by(:text, partner.supp_plan)
-      num_server_add_on_hidden.next_sibling.type_text(partner.num_server_add_on)
+      base_plan_locator = driver.find_element(:id, "#{partner.subscription_period}_base_plan")
+      base_plan_id = base_plan_locator.value
+      # Base plan number of users
+      driver.find_element(:id, "#{partner.subscription_period}_base_plan_#{base_plan_id}").type_text(partner.num_enterprise_users)
+      # Add ons drop down list
+      driver.find_element(:id, "#{base_plan_id}_add_on_plan_select").select_by(:text, partner.supp_plan)
+      # Num of server add ons
+      server_add_on_locator = driver.find_element(:id, "#{base_plan_id}_add_on_plan")
+      server_add_on_id = server_add_on_locator.value
+      driver.find_element(:id, "#{base_plan_id}_add_on_plan_#{server_add_on_id}").type_text(partner.num_server_add_on)
     end
 
     def fill_reseller_purchase(partner)
-      type_label = driver.find_element(:xpath, "//label[contains(text(), '#{partner.reseller_type}')]")
-      # type radio button
-      type_label.previous_sibling.previous_sibling.click
-      # quota text box
-      type_label.previous_sibling.type_text(partner.reseller_quota)
-      sleep 5 # Wait for loading add-on
-      server_plan_cb.check if partner.has_server_plan
-      num_server_add_on_hidden.next_sibling.type_text(partner.reseller_add_on_quota) if partner.reseller_add_on_quota.to_i > 0
+      inputs = driver.find_elements(:xpath, "//div[@id='base_plan_section_#{partner.subscription_period}']/div/div/input")
+      base_plan_id = ""
+      case partner.reseller_type
+        when Bus::RESELLER_TYPE[:silver]
+          inputs[0].click # Silver plan
+          base_plan_id = inputs[0].value
+          inputs[1].type_text(partner.reseller_quota) # Silver plan quota
+        when Bus::RESELLER_TYPE[:gold]
+          inputs[2].click # Gold plan
+          base_plan_id = inputs[2].value
+          inputs[3].type_text(partner.reseller_quota) # Gold plan quota
+        when Bus::RESELLER_TYPE[:platinum]
+          inputs[4].click # Platinum plan
+          base_plan_id = inputs[4].value
+          inputs[5].type_text(partner.reseller_quota) # Platinum plan quota
+        else
+          raise "Unable to find reseller type of #{partner.reseller_type}"
+      end
+
+      # Add ons server plan
+      driver.find_element(:id, "#{base_plan_id}_add_on_plan_check_box").check if partner.has_server_plan
+      # Num of server add ons
+      server_add_on_locator = driver.find_element(:id, "#{base_plan_id}_add_on_plan")
+      server_add_on_id = server_add_on_locator.value
+      driver.find_element(:id, "#{base_plan_id}_add_on_plan_#{server_add_on_id}").type_text(partner.reseller_add_on_quota) if partner.reseller_add_on_quota.to_i > 0
     end
 
     def fill_credit_card_info(partner)
@@ -207,7 +223,7 @@ module Bus
     end
 
     def create_partner_rescue(err_msg, times)
-      while(times > 0)
+      while times > 0
         if err_msg.include?("Could not validate payment information.")
           puts "Known error occurred, try create partner rescue #{times}"
           create_partner_btn.click

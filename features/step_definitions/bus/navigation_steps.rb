@@ -39,5 +39,12 @@ When /^I navigate to order data shuttle view$/ do
   @bus_admin_console_page.order_data_shuttle_link.click
 end
 
+When /^I navigate to report builder view$/ do
+  @bus_admin_console_page.report_builder_link.click
+end
+
+When /^I navigate to scheduled report view$/ do
+  @bus_admin_console_page.scheduled_reports_link.click
+end
 
 
