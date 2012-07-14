@@ -47,4 +47,8 @@ When /^I navigate to scheduled report view$/ do
   @bus_admin_console_page.scheduled_reports_link.click
 end
 
+When /^I navigate to change payment information view$/ do
+  @bus_admin_console_page.change_payment_info_link.click
+end
+
 

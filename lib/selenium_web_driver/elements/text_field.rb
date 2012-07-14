@@ -8,8 +8,7 @@ module AutomationWebDriver
       # Returns nothing
       def type_text(value)
         self.clear
-        self.value = ""
-        self.send_keys(value.to_s)
+        self.send_keys([:control, 'a'], :delete,value.to_s)
       end
 
       # Public: append text into text field

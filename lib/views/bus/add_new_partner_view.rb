@@ -1,11 +1,5 @@
 module Bus
   class AddNewPartnerView < PageObject
-
-    US = "United States"
-    element(:next_btn, {:id => "next-button"})
-    element(:create_partner_btn, {:xpath => "//div[@id='cc-details']//input[@id='submit_button']"})
-    element(:partner_created_txt, {:xpath => "//div[@id='partner-new-errors']/ul[@class='flash successes']"})
-
     # Company Info
     #
     element(:new_partner_name_tb, {:id => "new_partner_name"})
@@ -41,7 +35,13 @@ module Bus
     element(:cc_phone_tb, {:id => "cc_phone"})
     element(:cc_zip_tb, {:id => "cc_zip"})
 
+    element(:initial_purchase_options, {:id => "initial_purchase_options"})
     element(:include_initial_purchase_cb, {:id =>"include_initial_purchase"})
+    element(:next_btn, {:id => "next-button"})
+
+    # Order summary
+    element(:order_summary_table, {:xpath => "//div[@id='order-summary']/table"})
+    elements(:aria_message_div, {:xpath => "//div[@id='ariaErrors']//li"})
 
     # Credit Card Info
     #
@@ -52,18 +52,15 @@ module Bus
     element(:cc_exp_yyyy_select, {:id => "cc_exp_yyyy"})
     element(:net_term_payment, {:id =>"formOfPaymentNT"})
 
+    element(:message_div, {:xpath => "//div[@id='partner-new-errors']/ul"})
+    element(:create_partner_btn, {:xpath => "//div[@id='cc-details']//input[@id='submit_button']"})
     element(:back_btn, {:id =>"back_button"})
 
-    # Order summary
-    element(:order_summary_table, {:xpath => "//div[@id='order-summary']/table"})
-
-    elements(:aria_errors_li, {:xpath => "//div[@id='ariaErrors']//li"})
 
     def add_new_account(partner)
-      #puts partner.to_s if Bus::DEBUG
-      fill_company_info(partner)
-      fill_admin_info(partner)
-      fill_partner_info(partner)
+      fill_company_info(partner.company_info)
+      fill_partner_info(partner.partner_info)
+      fill_admin_info(partner.admin_info)
       fill_billing_info(partner)
 
       # define master plan subscription period
@@ -72,80 +69,65 @@ module Bus
       if partner.has_initial_purchase
         fill_initial_purchase(partner)
         next_btn.click
-        sleep 5
+        sleep 10 # wait for fill credit card info
         if partner.net_term_payment
           net_term_payment.click
         else
-          fill_credit_card_info(partner)
+          fill_credit_card_info(partner.credit_card)
         end
         create_partner_btn.click
       else
         include_initial_purchase_cb.uncheck
         next_btn.click
       end
-    end
-
-    def partner_created_msg
-      begin
-        partner_created_txt.text
-      rescue
-        err_msg = aria_errors_li.map { |cell| cell.text }
-        create_partner_rescue(err_msg, 1)
-        begin
-          partner_created_txt.text
-        rescue
-          aria_errors_li.map { |cell| cell.text }
-        end
-      end
+      sleep 15 # wait for create the new partner
     end
 
     private
 
-    def fill_company_info(partner)
-      new_partner_name_tb.type_text(partner.company_name)
-      contact_country_select.select_by(:text,partner.country)
+    def fill_company_info(company_info)
+      new_partner_name_tb.type_text(company_info.name)
 
-      if partner.country.eql?(US)
-        contact_state_us_select.select_by(:text,partner.state_abbrev)
+      if company_info.country.empty?
+        contact_state_us_select.select_by(:text,company_info.state_abbrev)
       else
-        contact_state_tb.type_text(partner.state)
-        vat_number_tb.type_text(partner.vat_num)
+        contact_country_select.select_by(:text,company_info.country)
+        contact_state_tb.type_text(company_info.state)
+        vat_number_tb.type_text(company_info.vat_num)
       end
-      contact_city_tb.type_text(partner.city)
-      contact_address_tb.type_text(partner.street_address)
-      contact_zip_tb.type_text(partner.zip)
-      contact_phone_tb.type_text(partner.phone)
+      contact_address_tb.type_text(company_info.address)
+      contact_city_tb.type_text(company_info.city)
+      contact_zip_tb.type_text(company_info.zip)
+      contact_phone_tb.type_text(company_info.phone)
     end
 
-    def fill_partner_info(partner)
-      parent_partner_select.select_by(:text,partner.parent_partner)
-      company_type_select.select_by(:text,partner.company_type)
-      coupon_code_tb.type_text(partner.couple_code) unless partner.couple_code.nil?
-      sleep 10 # wait for load all supp plans
+    def fill_partner_info(partner_info)
+      company_type_select.select_by(:text,partner_info.type)
+      parent_partner_select.select_by(:text,partner_info.parent)
+      coupon_code_tb.type_text(partner_info.coupon_code) unless partner_info.coupon_code.nil?
+      sleep 10 unless partner_info.type.eql?(COMPANY_TYPE[:mozypro]) # wait for load all supp plans
     end
 
-    def fill_admin_info(partner)
-      new_admin_display_name_tb.type_text(partner.name)
-      new_admin_username_tb.type_text(partner.email)
+    def fill_admin_info(admin_info)
+      new_admin_display_name_tb.type_text(admin_info.full_name)
+      new_admin_username_tb.type_text(admin_info.email)
     end
 
     def fill_billing_info(partner)
       if partner.use_company_info
         use_company_info_cb.check
       else
-        cc_country_select.select_by(:text,partner.country)
-
-        if partner.country.eql?(US)
-          cc_state_us_select.select_by(:text,partner.state_abbrev)
-        else
-          cc_state_tb.type_text(partner.state)
-        end
-
-        cc_city_tb.type_text(partner.city)
-        cc_address_tb.type_text(partner.street_address)
-        cc_email_tb.type_text(partner.email)
-        cc_phone_tb.type_text(partner.phone)
-        cc_zip_tb.type_text(partner.zip)
+        #cc_country_select.select_by(:text,company_info.country)
+        #if partner.country.eql?(US)
+        #  cc_state_us_select.select_by(:text,company_info.state_abbrev)
+        #else
+        #  cc_state_tb.type_text(company_info.state)
+        #end
+        #cc_city_tb.type_text(company_info.city)
+        #cc_address_tb.type_text(company_info.street_address)
+        #cc_email_tb.type_text(partner.email)
+        #cc_phone_tb.type_text(company_info.phone)
+        #cc_zip_tb.type_text(company_info.zip)
       end
     end
 
@@ -154,7 +136,7 @@ module Bus
     end
 
     def fill_initial_purchase(partner)
-      case partner.company_type
+      case partner.partner_info.type
         when Bus::COMPANY_TYPE[:mozypro]
           fill_mozypro_purchase(partner)
         when Bus::COMPANY_TYPE[:mozyenterprise]
@@ -162,7 +144,7 @@ module Bus
         when Bus::COMPANY_TYPE[:reseller]
           fill_reseller_purchase(partner)
       else
-        raise "Unable to find partner type of #{partner.company_type}"
+        raise "Unable to find partner type of #{partner.partner_info.type}"
       end
     end
 
@@ -214,24 +196,14 @@ module Bus
       driver.find_element(:id, "#{base_plan_id}_add_on_plan_#{server_add_on_id}").type_text(partner.reseller_add_on_quota) if partner.reseller_add_on_quota.to_i > 0
     end
 
-    def fill_credit_card_info(partner)
-      cc_name_tb.type_text(partner.credit_card_name)
-      cc_no_tb.type_text(partner.credit_card_number)
-      cvv_tb.type_text(partner.credit_card_cvv)
-      cc_exp_mm_select.select_by(:text,partner.credit_card_exp_mm)
-      cc_exp_yyyy_select.select_by(:text,partner.credit_card_exp_yyyy)
+    def fill_credit_card_info(credit_card)
+      cc_name_tb.type_text(credit_card.name)
+      cc_no_tb.type_text(credit_card.number)
+      cvv_tb.type_text(credit_card.cvv)
+      cc_exp_mm_select.select_by(:text,credit_card.expire_month)
+      cc_exp_yyyy_select.select_by(:text,credit_card.expire_year)
     end
 
-    def create_partner_rescue(err_msg, times)
-      while times > 0
-        if err_msg.include?("Could not validate payment information.")
-          puts "Known error occurred, try create partner rescue #{times}"
-          create_partner_btn.click
-          sleep 5
-        end
-        times -= 1
-      end
-    end
   end
 end
 

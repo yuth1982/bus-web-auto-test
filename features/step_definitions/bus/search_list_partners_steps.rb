@@ -9,7 +9,7 @@ When /^I view partner details by (.+)$/ do |search_key|
   @bus_admin_console_page.search_list_partner_view.view_partner_detail(search_key)
 end
 
-When /^I view admin details by email (.+)$/ do |partner_email|
+When /^I view admin details by (.+)$/ do |partner_email|
   @bus_admin_console_page.search_list_partner_view.view_partner_detail(partner_email)
 end
 

@@ -1,28 +1,26 @@
 
-# login steps support
-
 Transform /^administrator$/ do |step_arg|
-  Bus::Admin.new "shipuy@mozy.com","Shipu Yao","test1234"
+  Hash[:user_name => "shipuy@mozy.com", :password => "test1234"]
 end
 
 Transform /^aria admin$/ do |step_arg|
-  Aria::Admin.new "shipu","1234test"
+  Hash[:user_name => "shipu", :password => "1234test"]
 end
 
 Transform /^mozypro test account$/ do |step_arg|
-  Bus::Admin.new "qa1+robin+perkins@mozy.com","Shawn Cole",Bus::DEFAULT_PWD
+  Hash[:user_name => "qa1+robin+perkins@mozy.com", :password => Bus::DEFAULT_PWD]
 end
 
 Transform /^mozyenterprise test account$/ do |step_arg|
-  Bus::Admin.new "qa1+teresa+spencer@mozy.com","Teresa Spencer",Bus::DEFAULT_PWD
+  Hash[:user_name => "qa1+teresa+spencer@mozy.com", :password => Bus::DEFAULT_PWD]
 end
 
 Transform /^the new partner email$/ do |step_arg|
-  @partner.email
+  @partner.admin_info.email
 end
 
 Transform /^the new partner account$/ do |step_arg|
-  Bus::Admin.new @partner.email,@partner.name,Bus::DEFAULT_PWD
+  Hash[:user_name => @partner.admin_info.email, :password => Bus::DEFAULT_PWD]
 end
 
 Transform /^MozyPro monthly billing period$/ do |step_arg|
@@ -56,3 +54,4 @@ end
 Transform /^Reseller annual billing period$/ do |step_arg|
   "Switch to annual billing (includes 1 free month!)"
 end
+

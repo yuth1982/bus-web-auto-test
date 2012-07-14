@@ -86,3 +86,14 @@ Feature: Notify about and collect past-due balances
     | ar@mozy.com | Today   | There was a problem with your Mozy payment | Dear First_Name, |
     Then I should see 1 email(s) displayed in search results
 
+  @TC.16108
+  Scenario: MozyPro account suspended in aria should be backup-suspended in bus
+    When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, credit card payment
+    Then Partner created successful message should be New partner created
+    When I log in aria admin console as aria admin
+    And I search aria account by the new partner email
+    And I change account status to Suspended
+    Then Status changed successful message should be Account status changed
+    When I wait for 10 seconds
+    And I log in bus admin console as the new partner account
+    Then Message displayed on change payment information view should be Your account is backup-suspended. You will not be able to access your account until your credit card is billed.

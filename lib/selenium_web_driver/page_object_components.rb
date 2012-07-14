@@ -10,21 +10,13 @@ module AutomationWebDriver
       # define a new method with the name of the symbol after locator that returns the value
       def element(element_sym,element_hash, opt = {})
         send(:define_method, element_sym) do
-          begin
-            driver.find_element(element_hash)
-          rescue => ex
-            driver.find_element(element_hash)
-          end
+          driver.find_element(element_hash)
         end
       end
 
       def elements(element_sym,element_hash)
         send(:define_method, element_sym) do
-          begin
-            driver.find_elements(element_hash)
-          rescue => ex
-            driver.find_elements(element_hash)
-          end
+          driver.find_elements(element_hash)
         end
       end
 

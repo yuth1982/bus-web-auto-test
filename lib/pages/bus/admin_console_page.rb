@@ -2,7 +2,6 @@ module Bus
   class AdminConsolePage < PageObject
 
   component(:add_new_partner_view, AddNewPartnerView)
-  component(:add_new_promo_view, AddNewPromoView)
   component(:search_list_partner_view, SearchListPartnerView)
   component(:partner_details_view, PartnerDetailsView)
   component(:billing_info_view, BillingInfoView)
@@ -15,6 +14,7 @@ module Bus
   component(:machines_view, MachinesView)
   component(:scheduled_reports_view, ScheduledReportsView)
   component(:report_builder_view, ReportBuilderView)
+  component(:change_payment_view, ChangePaymentInfoView)
 
   # Top identify section
   element(:stop_masquerading, {:link => "stop masquerading"})
@@ -64,6 +64,7 @@ module Bus
   element(:purchase_resources_link, {:link => "Purchase Resources"})
   element(:billing_information_link, {:link => "Billing Information"})
   element(:billing_history_link, {:link => "Billing History"})
+  element(:change_payment_info_link, {:link => "Change Payment Information"})
   element(:assign_keys_link, {:link => "Assign Keys"})
   element(:transfer_resources_link, {:link => "Transfer Resources"})
   element(:return_unused_resources_link, {:link => "Return Unused Resources"})

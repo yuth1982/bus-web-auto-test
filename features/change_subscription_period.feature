@@ -228,7 +228,7 @@ Feature: Change subscription period
     | Total price for GB - Silver Reseller  | $42.00  |
 
   @TC.17517
-  Scenario: Mozy-15254 Verify MozyPro VAT information in the billing information view
+  Scenario: Mozy-17517 Verify MozyPro VAT information in the billing information view
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, Belgium country, BE0883236072 VAT number, credit card payment
     Then Partner created successful message should be New partner created
     When I log in bus admin console as the new partner account
