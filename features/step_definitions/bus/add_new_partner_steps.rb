@@ -118,12 +118,13 @@ end
 # Other Steps
 
 Then /^Partner created successful message should be (.+)$/ do |message|
+  sleep 20 # wait for create the new partner
   @bus_admin_console_page.add_new_partner_view.message_div.text.should == message
   step "I activate new partner admin with default password"
 end
 
 Then /^Order summary details should be:$/ do |order_summary_table|
-  @bus_admin_console_page.add_new_partner_view.order_summary_table.body_rows_text[1..-1].should == order_summary_table.hashes.map { |el| el.values }
+  @bus_admin_console_page.add_new_partner_view.order_summary_table.body_rows_text.should == order_summary_table.rows
 end
 
 Then /^I should see taxes total price of initial order is (.+)$/ do |price|

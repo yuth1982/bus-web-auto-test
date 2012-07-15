@@ -80,7 +80,6 @@ module Bus
         include_initial_purchase_cb.uncheck
         next_btn.click
       end
-      sleep 15 # wait for create the new partner
     end
 
     private
@@ -197,7 +196,7 @@ module Bus
     end
 
     def fill_credit_card_info(credit_card)
-      cc_name_tb.type_text(credit_card.name)
+      cc_name_tb.type_text("#{credit_card.first_name} #{credit_card.last_name}")
       cc_no_tb.type_text(credit_card.number)
       cvv_tb.type_text(credit_card.cvv)
       cc_exp_mm_select.select_by(:text,credit_card.expire_month)

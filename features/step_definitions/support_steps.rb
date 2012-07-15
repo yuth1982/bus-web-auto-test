@@ -8,7 +8,7 @@ Transform /^aria admin$/ do |step_arg|
 end
 
 Transform /^mozypro test account$/ do |step_arg|
-  Hash[:user_name => "qa1+robin+perkins@mozy.com", :password => Bus::DEFAULT_PWD]
+  Hash[:user_name => "qa1+frank+moreno+2012@mozy.com", :password => Bus::DEFAULT_PWD]
 end
 
 Transform /^mozyenterprise test account$/ do |step_arg|
@@ -17,6 +17,10 @@ end
 
 Transform /^the new partner email$/ do |step_arg|
   @partner.admin_info.email
+end
+
+Transform /^the new partner company name$/ do |step_arg|
+  @partner.company_info.name
 end
 
 Transform /^the new partner account$/ do |step_arg|
@@ -55,3 +59,6 @@ Transform /^Reseller annual billing period$/ do |step_arg|
   "Switch to annual billing (includes 1 free month!)"
 end
 
+When /^I wait for (\d+) seconds$/ do |seconds|
+  sleep seconds.to_i
+end

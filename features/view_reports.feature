@@ -7,7 +7,7 @@ Feature: View Report
   Scenario: Verify 6 available reports in report builder view UI
     Given I log in bus admin console as administrator
     When I add a MozyEnterprise partner with 12 month(s) period, 1 user(s), no server plan, 0 server add-on, no coupon, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
     When I log in bus admin console as the new partner account
     And I navigate to report builder view
     Then I should see available reports are:
@@ -23,7 +23,7 @@ Feature: View Report
   Scenario: Verify create then delete billing summary report
     Given I log in bus admin console as administrator
     When I add a MozyEnterprise partner with 12 month(s) period, 1 user(s), 100 GB Server Plan, $582.78 server plan, 2 server add-on, no coupon, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
     When I log in bus admin console as the new partner account
     And I navigate to report builder view
     And I build a new Active Daily billing summary report named Billing Summary Test Report start Today
@@ -38,7 +38,7 @@ Feature: View Report
   Scenario: Verify create and delete billing detail report
     Given I log in bus admin console as administrator
     When I add a MozyEnterprise partner with 12 month(s) period, 1 user(s), 100 GB Server Plan, $582.78 server plan, 2 server add-on, no coupon, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
     When I log in bus admin console as the new partner account
     And I navigate to report builder view
     And I build a new Active Daily billing detail report named Billing Detail Test Report start Today
@@ -58,7 +58,7 @@ Feature: View Report
   Scenario: Verify MozyEtnerprise billing summary report csv all fields
     Given I log in bus admin console as administrator
     When I add a MozyEnterprise partner with 12 month(s) period, 1 user(s), 100 GB Server Plan, $582.78 server plan, 2 server add-on, no coupon, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
     When I log in bus admin console as the new partner account
     And I navigate to report builder view
     And I build a new Active Daily billing summary report named Billing Summary Test Report start Today
@@ -73,7 +73,7 @@ Feature: View Report
   Scenario: Verify Reseller billing summary report csv all fields
     Given I log in bus admin console as administrator
     When I add a Reseller partner with 1 month(s) period, Silver Reseller, 100 GB plan, has server plan, 2 add-on, no coupon, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
     When I log in bus admin console as the new partner account
     And I navigate to report builder view
     And I build a new Active Daily billing summary report named Billing Summary Test Report start Today
@@ -88,7 +88,7 @@ Feature: View Report
   Scenario: Verify MozyEtnerprise billing detail report csv all fields
     Given I log in bus admin console as administrator
     When I add a MozyEnterprise partner with 24 month(s) period, 1 user(s), 100 GB Server Plan, $1,112.58 server plan, 2 server add-on, no coupon, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
     When I log in bus admin console as the new partner account
     And I navigate to report builder view
     And I build a new Active Daily billing detail report named Billing Detail Test Report start Today
@@ -103,7 +103,7 @@ Feature: View Report
   Scenario: Verify Reseller billing detail report csv all fields
     Given I log in bus admin console as administrator
     When I add a Reseller partner with 1 month(s) period, Silver Reseller, 100 GB plan, has server plan, 2 add-on, no coupon, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
     When I log in bus admin console as the new partner account
     And I navigate to report builder view
     And I build a new Active Daily billing detail report named Billing Detail Test Report start Today

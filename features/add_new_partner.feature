@@ -16,9 +16,10 @@ Feature: Add a new partner
   Scenario: Add a new yearly MozyPro partner with coupon
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, Coupon5DollarsOff coupon, credit card payment
     Then Order summary details should be:
-    | Description       | Amount   | Price Each | Total Price |
+    | Column A          | Column B | Column C   | Column D    |
+    | Description       | Quantity | Price Each | Total Price |
     | 50 GB             | 1        | $19.99     | $19.99      |
-    | Discounts Applied |          |            | -$5.00      |
+    | Discounts Applied |          |            | $-5.00      |
     | Pre-tax Subtotal  |          |            | $14.99      |
     | Taxes             |          |            | $1.20       |
     | Total Charges     |          |            | $16.19      |
@@ -33,10 +34,11 @@ Feature: Add a new partner
     Scenario: Add a new yearly MozyPro partner with vat and coupon
     When I add a MozyPro partner with 12 month(s) period, 500 GB, $2,089.89 plan, has server plan, Coupon5DollarsOff coupon, Belgium country, BE0883236072 VAT number, credit card payment
     Then Order summary details should be:
-    | Description       | Amount   | Price Each | Total Price |
+    | Column A          | Column B | Column C   | Column D    |
+    | Description       | Quantity | Price Each | Total Price |
     | 500 GB            | 1        | $2,089.89  | $2,089.89   |
     | Server Plan       | 1        | $219.89    | $219.89     |
-    | Discounts Applied |          |            | -$5.00      |
+    | Discounts Applied |          |            | $-5.00      |
     | Pre-tax Subtotal  |          |            | $2,304.78   |
     | Total Charges     |          |            | $2,304.78   |
     Then Partner created successful message should be New partner created.
@@ -63,7 +65,8 @@ Feature: Add a new partner
   Scenario: Add a new yearly MozyEnterprise partner
     When I add a MozyEnterprise partner with 12 month(s) period, 1 user(s), no server plan, 0 server add-on, Coupon5DollarsOff coupon, credit card payment
     Then Order summary details should be:
-    | Description         | Amount   | Price Each | Total Price |
+    | Column A            | Column B | Column C   | Column D    |
+    | Description         | Quantity | Price Each | Total Price |
     | MozyEnterprise User | 1        | $95.00     | $95.00      |
     | Discounts Applied   |          |            | -$5.00      |
     | Pre-tax Subtotal    |          |            | $90.00      |
@@ -80,11 +83,12 @@ Feature: Add a new partner
   Scenario: Add a new biennially MozyEnterprise partner with vat and coupon
     When I add a MozyEnterprise partner with 24 month(s) period, 1 user(s), 100 GB Server Plan, $1,112.58 server plan, 1 server add-on, Coupon5DollarsOff coupon, Belgium country, BE0883236072 VAT number, credit card payment
     Then Order summary details should be:
-    | Description           | Amount   | Price Each | Total Price |
+    | Column A              | Column B | Column C   | Column D    |
+    | Description           | Quantity | Price Each | Total Price |
     | MozyEnterprise User   | 1        | $181.00    | $181.00     |
     | 100 GB Server Plan    | 1        | $1,112.58  | $1,112.58   |
     | 250 GB Server Add-on  | 1        | $1,994.79  | $1,994.79   |
-    | Discounts Applied     |          |            | -$5.00      |
+    | Discounts Applied     |          |            | $-5.00      |
     | Pre-tax Subtotal      |          |            | $3,283.37   |
     | Total Charges         |          |            | $3,283.37   |
     Then Partner created successful message should be New partner created.
@@ -111,7 +115,8 @@ Feature: Add a new partner
   Scenario: Add a new Silver Reseller partner with coupon
     When I add a Reseller partner with 1 month(s) period, Silver Reseller, 100 GB plan, no server plan, 0 add-on, Coupon5DollarsOff coupon, credit card payment
     Then Order summary details should be:
-    | Description           | Amount   | Price Each | Total Price |
+    | Column A              | Column B | Column C   | Column D    |
+    | Description           | Quantity | Price Each | Total Price |
     | GB - Silver Reseller  | 100      | $0.42      | $42.00      |
     | Discounts Applied     |          |            | -$5.00      |
     | Pre-tax Subtotal      |          |            | $37.00      |
@@ -128,11 +133,12 @@ Feature: Add a new partner
   Scenario: Add a new Gold Reseller partner with vat and coupon
     When I add a Reseller partner with 1 month(s) period, Gold Reseller, 100 GB plan, has server plan, 1 add-on, Coupon5DollarsOff coupon, Italy country, IT03018900245 VAT number, credit card payment
     Then Order summary details should be:
-    | Description           | Amount   | Price Each | Total Price |
+    | Column A              | Column B | Column C   | Column D    |
+    | Description           | Quantity | Price Each | Total Price |
     | GB - Gold Reseller    | 100      | $0.35      | $35.00      |
     | Server Plan           | 1        | $100.00    | $100.00     |
     | 50 GB add-on          | 1        | $17.50     | $17.50      |
-    | Discounts Applied     |          |            | -$5.00      |
+    | Discounts Applied     |          |            | $-5.00      |
     | Pre-tax Subtotal      |          |            | $147.50     |
     | Total Charges         |          |            | $147.50     |
     Then Partner created successful message should be New partner created.

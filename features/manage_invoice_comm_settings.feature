@@ -9,7 +9,7 @@ Feature:
   @TC.15228
   Scenario: Mozy-15228 Verify UI of invoice settings in BUS
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
     When I log in bus admin console as the new partner account
     And I navigate to account details view
     Then Invoice setting details should be Receive Mozy Pro Newsletter?,Receive Mozy Email Notifications?,Receive Mozy Account Statements?
@@ -17,7 +17,7 @@ Feature:
   @TC.15229
   Scenario: Mozy-15229 Verify Receive Mozy Account Statements set to Yes for new partner in Bus
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
     When I log in bus admin console as the new partner account
     And I navigate to account details view
     Then I should see Receive Mozy Pro Newsletter option is set to No
@@ -27,7 +27,7 @@ Feature:
   @TC.15230
   Scenario: Mozy-15230 Alter notification method between HTML email and Printable no email in Aria
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
     And I navigate to notification method view
@@ -39,7 +39,7 @@ Feature:
   @TC.15448
   Scenario: Mozy-15448 Verify notification methods have HTML email and Printable no email
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
     And I navigate to notification method view
@@ -48,7 +48,7 @@ Feature:
   @TC.15495
   Scenario: Mozy-15495 Verify aria notification method when set Receive Mozy Account Statements to No
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
     When I log in bus admin console as the new partner account
     And I navigate to account details view
     And I set Receive Mozy Account Statements option to No
@@ -59,9 +59,9 @@ Feature:
     Then Notification message should be This account is currently notified via method "Printable (no Email)".
 
   @TC.15718
-  Scenario: Mozy-15718 Verify notification method set to "HTML Email" for new Monthly MozyPro partner
+  Scenario: Mozy-15718 Verify notification method set to HTML Email for new Monthly MozyPro partner
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
     And I navigate to notification method view
@@ -70,16 +70,16 @@ Feature:
   @TC.17590
   Scenario: Mozy-17590 Verify notification method set to HTML Email for new Monthly MozyEnterprise partner
     When I add a MozyEnterprise partner with 12 month(s) period, 1 user(s), no server plan, 0 server add-on, no coupon, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
     And I navigate to notification method view
     Then Notification message should be This account is currently notified via method "HTML Email".
 
   @TC.17591
-  Scenario: Verify notification method set to "HTML Email" for new Monthly Reseller partner
+  Scenario: Verify notification method set to HTML Email for new Monthly Reseller partner
     When I add a Reseller partner with 1 month(s) period, Silver Reseller, 100 GB plan, no server plan, 0 add-on, no coupon, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
     And I navigate to notification method view

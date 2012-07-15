@@ -1,8 +1,9 @@
 module Bus
   class CreditCard
-    attr_accessor :name, :number, :cvv, :expire_month, :expire_year
+    attr_accessor :first_name, :last_name, :number, :cvv, :expire_month, :expire_year
     def initialize
-      @name = Forgery::Name.full_name
+      @first_name = Forgery::Name.first_name
+      @last_name = Forgery::Name.last_name
       @number = Forgery::CreditCard.number(:type => 'Visa', :length => 16).to_s #"4111111111111111"
       @cvv = Random.rand(100..999).to_s
       @expire_month = Forgery::Date.month(:numerical => true).to_s

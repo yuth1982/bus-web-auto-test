@@ -29,6 +29,7 @@ end
 
 When /^I navigate to change subscription view$/ do
   @bus_admin_console_page.billing_info_view.change_subscription_link.click
+  sleep 10 # wait for load change subscription period view
 end
 
 When /^I navigate to account details view$/ do

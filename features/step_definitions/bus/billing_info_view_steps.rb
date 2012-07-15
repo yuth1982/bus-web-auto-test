@@ -52,5 +52,9 @@ Then /^Next renewal master plan amount should be (.+)$/ do |amount|
 end
 
 Then /^Next renewal master plan payment type should be (.+)$/ do |type|
-  @bus_admin_console_page.billing_info_view.master_plan_table.body_rows_text[3][1].should == type.gsub(/XXXX/, @partner.credit_card_number[12..-1])
+  @bus_admin_console_page.billing_info_view.master_plan_table.body_rows_text[3][1].should == type.gsub(/XXXX/, @partner.credit_card.number[12..-1])
+end
+
+Then /^VAT table should be:$/ do |vat_num_table|
+  @bus_admin_console_page.billing_info_view.tables[1].body_rows_text.should == vat_num_table.rows.map{|row| row.delete_if{|cell| cell.empty? }}
 end

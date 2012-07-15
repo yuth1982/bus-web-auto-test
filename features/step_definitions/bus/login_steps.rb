@@ -4,8 +4,3 @@ Given /^I log in bus admin console as (.+)$/ do |admin|
   @bus_login_page.login(admin)
   @bus_admin_console_page = Bus::AdminConsolePage.new(driver)
 end
-
-
-When /^I wait for (\d+) seconds$/ do |seconds|
-  sleep seconds.to_i
-end

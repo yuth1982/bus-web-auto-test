@@ -50,6 +50,7 @@ require "views/bus/change_payment_info"
 
 require "views/aria/search_account_view"
 require "views/aria/account_status_view"
+require "views/aria/taxpayer_view"
 require "views/aria/account_overview_view"
 require "views/aria/notification_method_view"
 

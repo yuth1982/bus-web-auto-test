@@ -6,7 +6,7 @@ module Bus
   BUS_LOGIN_URL = "https://www.mozypro.com/login/admin?old_school=1"
 
   # Browser time out in seconds
-  BROWSER_IMPLICIT_WAIT = 90
+  BROWSER_IMPLICIT_WAIT = 120
 
   COMPANY_TYPE = { :mozypro => "MozyPro", :mozyenterprise => "MozyEnterprise", :reseller => "Reseller" }
 

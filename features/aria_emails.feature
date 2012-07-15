@@ -10,7 +10,8 @@ Feature: Notify about and collect past-due balances
   @create_partner_email
   Scenario: Verify aria sends email when create a new MozyPro partner
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
+    When I wait for 30 seconds
     When I log in zimbra as default account
     And I search email to match all keywords:
     | to                  | date    | subject                  |
@@ -20,10 +21,11 @@ Feature: Notify about and collect past-due balances
   @change-1
   Scenario: Verify aria sends email when change subscription peiod
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
     When I log in bus admin console as the new partner account
     And I change subscription up to MozyPro annual billing period
     Then Subscription changed message should be Your account has been changed to yearly billing.
+    When I wait for 30 seconds
     When I log in zimbra as default account
     And I search email to match all keywords:
     | to            | date    | subject                  | content                       |
@@ -33,11 +35,12 @@ Feature: Notify about and collect past-due balances
   @TC.16147
   Scenario: Mozy-16147 Verify aria sends email when change MozyPro account status to Active Dunning 1
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
     And I change account status to Active Dunning 1
     Then Status changed successful message should be Account status changed
+    When I wait for 30 seconds
     When I log in zimbra as default account
     And I search email to match all keywords:
     | from                    | date    | subject                                          | content                                    |
@@ -47,11 +50,12 @@ Feature: Notify about and collect past-due balances
   @TC.16148
   Scenario: Mozy-16148 Verify aria sends email when change MozyPro account status to Active Dunning 2
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
     And I change account status to Active Dunning 2
     Then Status changed successful message should be Account status changed
+    When I wait for 30 seconds
     When I log in zimbra as default account
     And I search email to match all keywords:
     | from                    | date    | subject               | content                                    |
@@ -61,11 +65,12 @@ Feature: Notify about and collect past-due balances
   @TC.16149
   Scenario: Mozy-16149 Verify aria sends email when change MozyPro account status to Active Dunning 3
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
     And I change account status to Active Dunning 3
     Then Status changed successful message should be Account status changed
+    When I wait for 30 seconds
     When I log in zimbra as default account
     And I search email to match all keywords:
     | from                    | date    | subject                                          | content        |
@@ -75,12 +80,13 @@ Feature: Notify about and collect past-due balances
   @TC.16243
   Scenario: Mozy-16243 Verify aria sends email when change MozyPro account status to suspended
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
     And I change account status to Suspended
     Then Status changed successful message should be Account status changed
-    When I log in zimbra as default account
+    When I wait for 30 seconds
+    And I log in zimbra as default account
     And I search email to match all keywords:
     | from        | date    | subject                                    | content          |
     | ar@mozy.com | Today   | There was a problem with your Mozy payment | Dear First_Name, |
@@ -89,11 +95,22 @@ Feature: Notify about and collect past-due balances
   @TC.16108
   Scenario: MozyPro account suspended in aria should be backup-suspended in bus
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
     And I change account status to Suspended
     Then Status changed successful message should be Account status changed
-    When I wait for 10 seconds
+    When I wait for 60 seconds
     And I log in bus admin console as the new partner account
+    And I navigate to change payment information view
     Then Message displayed on change payment information view should be Your account is backup-suspended. You will not be able to access your account until your credit card is billed.
+
+  @TC.16107
+  Scenario: MozyPro account deleted in bus but history will remain in aria
+    When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, credit card payment
+    Then Partner created successful message should be New partner created.
+    When I delete the partner by the new partner company name
+    And I log in aria admin console as aria admin
+    And I search aria account by the new partner email
+    Then Account status should be Cancelled
+

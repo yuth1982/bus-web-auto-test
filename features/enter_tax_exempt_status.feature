@@ -9,7 +9,7 @@
   @TC.17526
   Scenario: Mozy-17526 Verify default tax-exemtp status of a new Yearly MozyPro partner
     When I add a MozyPro partner with 12 month(s) period, 500 GB, $2,089.89 plan, has server plan, no coupon, Belgium country, BE0883236072 VAT number, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
     And I navigate to taxpayer information view
@@ -19,7 +19,7 @@
   @TC.17527
   Scenario: Mozy-17527 Verify default tax-exemtp status of a new Biennially MozyEnterprise partner
     When I add a MozyEnterprise partner with 24 month(s) period, 1 user(s), no server plan, 0 server add-on, no coupon, Belgium country, BE0883236072 VAT number, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
     And I navigate to taxpayer information view
@@ -29,7 +29,7 @@
   @TC.17528
   Scenario: Mozy-17528 Verify default tax-exemtp status of a new Monthly Reseller partner
     When I add a Reseller partner with 1 month(s) period, Gold Reseller, 100 GB plan, has server plan, 1 add-on, no coupon, Italy country, IT03018900245 VAT number, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
     And I navigate to taxpayer information view
@@ -39,7 +39,7 @@
   @TC.17533
   Scenario: Mozy-17533 Set both Exempt from State and Federal taxes to false for a new Biennially Mozypro partner
     When I add a MozyPro partner with 24 month(s) period, 50 GB, $419.79 plan, has server plan, no coupon, Belgium country, BE0883236072 VAT number, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
     And I navigate to taxpayer information view
@@ -49,9 +49,9 @@
     Then Tax exemption status should be Account is not exempt from taxation.
 
   @TC.17537
-  Scenario: Mozy-17537 Set Exempt from State/Province taxes to false for a new 3-years MozyEnterprise partner
+  Scenario: Mozy-17537 Set Exempt from State taxes to false for a new 3-years MozyEnterprise partner
     When I add a MozyEnterprise partner with 36 month(s) period, 1 user(s), no server plan, 0 server add-on, no coupon, Belgium country, BE0883236072 VAT number, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
     And I navigate to taxpayer information view
@@ -60,9 +60,9 @@
     Then Tax exemption status should be Account is exempt from federal/national taxation.
 
   @TC.17539
-  Scenario: Mozy-17539 Set Exempt from Federal/National taxes to false for a new Yearly Reseller partner
+  Scenario: Mozy-17539 Set Exempt from Federal taxes to false for a new Yearly Reseller partner
     When I add a Reseller partner with 1 month(s) period, Silver Reseller, 100 GB plan, no server plan, 0 add-on, no coupon, Italy country, IT03018900245 VAT number, credit card payment
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
     And I navigate to taxpayer information view
@@ -72,14 +72,13 @@
 
    @TC.17547
    Scenario: Mozy-17547 No taxes charged when create a new Monthly MozyPro partner
-
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, Belgium country, BE0883236072 VAT number, credit card payment
     Then Order summary details should be:
     | Description       | Amount   | Price Each | Total Price |
     | 50 GB             | 1        | $19.99     | $19.99      |
     | Pre-tax Subtotal  |          |            | $19.99      |
     | Total Charges     |          |            | $19.99      |
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
 
   @TC.17555
   Scenario: Mozy-17555 No taxes charged when create a new Yearly MozyEnterprise partner
@@ -89,7 +88,7 @@
     | MozyEnterprise User   | 1        | $95.00     | $95.00      |
     | Pre-tax Subtotal      |          |            | $95.00      |
     | Total Charges         |          |            | $95.00      |
-    Then Partner created successful message should be New partner created
+    Then Partner created successful message should be New partner created.
 
   @TC.17556
   Scenario: Mozy-17556 No taxes charged when create a new Monthly Reseller partner
@@ -99,7 +98,7 @@
     | GB - Platinum Reseller | 100      | $0.30      | $30.00      |
     | Pre-tax Subtotal       |          |            | $30.00      |
     | Total Charges          |          |            | $30.00      |
-    And Partner created successful message should be New partner created
+    And Partner created successful message should be New partner created.
 
   #@TC.17556
   #Scenario: No taxes charged when creating a new partner (Reseller / Monthly)

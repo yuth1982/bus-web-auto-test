@@ -15,7 +15,7 @@ module AutomationWebDriver
       #
       # Returns elements of table header row
       def header_row
-        find_element(:tag_name, "thead").find_element(:tag_name, "tr").child.compact
+        find_element(:tag_name, "thead").find_element(:tag_name, "tr").child
       end
 
       # Public: Element array of table body rows
@@ -28,7 +28,7 @@ module AutomationWebDriver
       # Returns an array element of table body rows
       def body_rows
         #rows.map { |row| row.child if row.child.first.tag_name == "td" }.compact
-        find_element(:tag_name, "tbody").find_elements(:tag_name, "tr").map{ |row| row.child }.compact
+        find_element(:tag_name, "tbody").find_elements(:tag_name, "tr").map{ |row| row.child }
       end
 
       # Public: Elements of table foot row
@@ -40,7 +40,7 @@ module AutomationWebDriver
       #
       # Returns elements of table foot row
       def foot_row
-        find_element(:tag_name, "tfoot").find_element(:tag_name, "tr").child.compact
+        find_element(:tag_name, "tfoot").find_element(:tag_name, "tr").child
       end
 
       # Public: String array of table header row
