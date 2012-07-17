@@ -3,7 +3,7 @@ When /^I navigate to add (.+) report view$/ do |report_type|
 end
 
 Then /^I should see available reports are:$/ do |reports_description|
-  @bus_admin_console_page.report_builder_view.available_reports_table.body_rows_text.should == reports_description.hashes.map { |el| el.values }
+  @bus_admin_console_page.report_builder_view.available_reports_table.body_rows_text.should == reports_description.rows
 end
 
 When /^I build a new (Active|Inactive) (Daily|Weekly|Monthly) billing summary report named (.+) start (.+)$/ do |is_active, frequency, report_name, start_date|
@@ -34,7 +34,7 @@ When /^I download report by name (.+)$/ do |report_name|
 end
 
 Then /^(.+) report file details should be:$/ do |report_type, report_content|
-  @bus_admin_console_page.scheduled_reports_view.read_csv_report(report_type).should == report_content.hashes.map { |el| el.values }
+  @bus_admin_console_page.scheduled_reports_view.read_csv_report(report_type).should == report_content.rows
 end
 
 When /^I search report by name (.+)$/ do |report_name|
@@ -42,5 +42,5 @@ When /^I search report by name (.+)$/ do |report_name|
 end
 
 Then /^Scheduled report list should be:$/ do |results|
-  @bus_admin_console_page.scheduled_reports_view.reports_table.body_rows_text.map{|row| row[0..4]}.should == results.hashes.map{|el| el.values.map{|x| x.gsub("New partner's email",@partner.email)}}
+  @bus_admin_console_page.scheduled_reports_view.reports_table.body_rows_text.map{|row| row[0..4]}.should == results.rows.map{ |row| row.map{ |x| x.gsub("New partner's email",@partner.admin_info.email)}}
 end

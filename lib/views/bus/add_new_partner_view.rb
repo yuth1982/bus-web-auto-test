@@ -87,7 +87,7 @@ module Bus
     def fill_company_info(company_info)
       new_partner_name_tb.type_text(company_info.name)
 
-      if company_info.country.empty?
+      if company_info.country.eql?("United States")
         contact_state_us_select.select_by(:text,company_info.state_abbrev)
       else
         contact_country_select.select_by(:text,company_info.country)

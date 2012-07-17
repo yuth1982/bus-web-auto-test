@@ -20,7 +20,7 @@ When /^I add a MozyPro partner with (\d+) month\(s\) period, (.+) plan, (has|no)
   @partner.has_server_plan = has_server_plan.eql?("has")
   @partner.partner_info.coupon_code = coupon unless coupon.eql?("no")
   @partner.company_info.country = country
-  @partner.company_info.vat_num = vat_number
+  @partner.company_info.vat_num = vat_number unless vat_number.eql?("no")
   @partner.net_term_payment = payment.eql?("net terms")
   puts @partner.to_s
   @bus_admin_console_page.add_new_partner_view.add_new_account(@partner)
@@ -58,7 +58,7 @@ When /^I add a MozyEnterprise partner with (\d+) month\(s\) period, (\d+) user\(
   @partner.supp_plan = supp_plan unless supp_plan.eql?("no")
   @partner.num_server_add_on = num_add_on
   @partner.company_info.country = country
-  @partner.company_info.vat_num = vat_number
+  @partner.company_info.vat_num = vat_number unless vat_number.eql?("no")
   @partner.partner_info.coupon_code = coupon unless coupon.eql?("no")
   @partner.net_term_payment = payment.eql?("net terms")
   puts @partner.to_s
@@ -99,7 +99,7 @@ When /^I add a Reseller partner with (\d+) month\(s\) period, (\w+ Reseller), (\
   @partner.has_server_plan = has_server_plan.eql?("has")
   @partner.reseller_add_on_quota = add_on_quota
   @partner.company_info.country = country
-  @partner.company_info.vat_num = vat_number
+  @partner.company_info.vat_num = vat_number unless vat_number.eql?("no")
   @partner.partner_info.coupon_code = coupon unless coupon.eql?("no")
   @partner.net_term_payment = payment.eql?("net terms")
   puts @partner.to_s
@@ -123,10 +123,6 @@ Then /^Partner created successful message should be (.+)$/ do |message|
   step "I activate new partner admin with default password"
 end
 
-Then /^Order summary details should be:$/ do |order_summary_table|
+Then /^Order summary table should be:$/ do |order_summary_table|
   @bus_admin_console_page.add_new_partner_view.order_summary_table.body_rows_text.should == order_summary_table.rows
-end
-
-Then /^I should see taxes total price of initial order is (.+)$/ do |price|
-  @bus_admin_console_page.add_new_partner_view.tax_total_span.text.should == price
 end

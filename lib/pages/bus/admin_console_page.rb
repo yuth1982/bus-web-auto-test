@@ -5,6 +5,7 @@ module Bus
   component(:search_list_partner_view, SearchListPartnerView)
   component(:partner_details_view, PartnerDetailsView)
   component(:billing_info_view, BillingInfoView)
+  component(:change_period_view, ChangePeriodView)
   component(:billing_history_view, BillingHistoryView)
   component(:purchase_resources_view, PurchaseResourcesView)
   component(:return_resources_view, ReturnResourcesView)

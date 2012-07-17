@@ -103,7 +103,7 @@ Feature: Change subscription period
     And I change subscription down to MozyEnterprise annual billing period
     Then Subscription changed message should be Your account will be switched to yearly billing schedule at your next renewal.
 
-  @TC.15245
+  @TC.15245 @smoke_test
   Scenario: Mozy-15245 Reseller change subscription period from Monthly to Yearly
     When I add a Reseller partner with 1 month(s) period, Silver Reseller, 100 GB plan, no server plan, 0 add-on, no coupon, credit card payment
     Then Partner created successful message should be New partner created.
@@ -111,7 +111,7 @@ Feature: Change subscription period
     And I change subscription up to Reseller annual billing period
     Then Subscription changed message should be Your account has been changed to yearly billing.
 
-  @TC.15246
+  @TC.15246 @smoke_test
   Scenario: Mozy-15246 Reseller change subscription period from Yearly to Monthly
     When I add a Reseller partner with 12 month(s) period, Gold Reseller, 500 GB plan, has server plan, 10 add-on, no coupon, credit card payment
     Then Partner created successful message should be New partner created.
@@ -179,6 +179,11 @@ Feature: Change subscription period
     Then Change subscription confirmation message should include Are you sure that you want to change your subscription period from monthly to yearly billing?
     And Change subscription confirmation message should include If you choose to continue, your account will be credited for the remainder of your monthly Subscription, then charged for a new yearly subscription beginning today. By choosing yearly billing, you will receive 1 free month(s) of Mozy service.
     And Change subscription confirmation message should include Any resources you scheduled for return in your next subscription have been deducted from the new subscription total.
+    And Change subscription price table should be:
+    | Description                                   | Amount   |
+    | Credit for remainder of monthly subscription  | $42.00   |
+    | Charge for new yearly subscription            | $462.00  |
+    | Total amount to be charged                    | $420.00  |
 
   @TC.15384
   Scenario: Mozy-15384 Verify MozyPro confirmation message when change subscription period to biennially
@@ -189,6 +194,11 @@ Feature: Change subscription period
     Then Change subscription confirmation message should include Are you sure that you want to change your subscription period from monthly to biennial billing?
     And Change subscription confirmation message should include If you choose to continue, your account will be credited for the remainder of your monthly Subscription, then charged for a new biennial subscription beginning today. By choosing biennial billing, you will receive 3 free month(s) of Mozy service.
     And Change subscription confirmation message should include Any resources you scheduled for return in your next subscription have been deducted from the new subscription total.
+    And Change subscription price table should be:
+    | Description                                   | Amount   |
+    | Credit for remainder of monthly subscription  | $19.99   |
+    | Charge for new biennial subscription          | $419.79  |
+    | Total amount to be charged                    | $399.80  |
 
   @TC.15385
   Scenario: Mozy-15385 Verify MozyEnterprise confirmation message when change subscription period to 3 years
@@ -199,6 +209,11 @@ Feature: Change subscription period
     Then Change subscription confirmation message should include Are you sure that you want to change your subscription period from yearly to 3-year billing?
     And Change subscription confirmation message should include If you choose to continue, your account will be credited for the remainder of your yearly Subscription, then charged for a new 3-year subscription beginning today. By choosing 3-year billing, you will receive 0 free month(s) of Mozy service.
     And Change subscription confirmation message should include Any resources you scheduled for return in your next subscription have been deducted from the new subscription total.
+    And Change subscription price table should be:
+    | Description                                   | Amount   |
+    | Credit for remainder of yearly subscription   | $95.00   |
+    | Charge for new 3-year subscription            | $259.00  |
+    | Total amount to be charged                    | $164.00  |
 
   @TC.16658
   Scenario: Mozy-16658 Verify MozyPro partner supplemental plan section details
@@ -208,7 +223,7 @@ Feature: Change subscription period
     And I navigate to billing information view
     Then Next renewal supplemental plan details should be:
     | description             | amount   |
-    | Total price for 250 GB  | $94.99  |
+    | Total price for 250 GB  | $94.99   |
 
   @TC.16659
   Scenario: Mozy-16659 Verify MozyEnterprise partner supplemental plan section details
