@@ -1,6 +1,7 @@
 module Bus
   class ReportBuilderView < PageObject
 
+    element(:report_filter, {:id => "job_filter"})
     element(:available_reports_table, {:xpath => "//div[@id='jobs-report_builder-content']/table"})
 
     # Shared Report Settings section
@@ -26,9 +27,12 @@ module Bus
 
     element(:report_created_txt, {:xpath => "//div[@id='jobs-new-errors']/ul[@class='flash successes']"})
 
-    def get_add_report_view(report_type)
-      driver.find_element(:link, report_type).click
+    def report_filters_text
+      report_filter.options.map{ |option| option.text}
+    end
 
+    def navigate_to_add_report_view(report_type)
+      driver.find_element(:link, report_type).click
     end
 
     def build_billing_summary_report(report_name, frequency, start_date, is_active)

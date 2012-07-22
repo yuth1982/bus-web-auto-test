@@ -1,13 +1,11 @@
 
 When /^I change subscription up to (.+)$/ do |link_text|
-  step "I navigate to billing information view"
-  step "I navigate to change subscription view"
+  @bus_admin_console_page.billing_info_view.change_subscription_link.click
   @bus_admin_console_page.change_period_view.change_subscription_up(link_text)
 end
 
 When /^I change subscription down to (.+)$/ do |link_text|
-  step "I navigate to billing information view"
-  step "I navigate to change subscription view"
+  @bus_admin_console_page.billing_info_view.change_subscription_link.click
   @bus_admin_console_page.change_period_view.change_subscription_down(link_text)
 end
 

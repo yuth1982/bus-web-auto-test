@@ -1,5 +1,5 @@
 class PageObject
-  include AutomationWebDriver::PageObjectComponents
+  extend AutomationWebDriver::PageObjectComponents
   include AutomationWebDriver::CreateSeleniumWebDriver
 
   def initialize(driver)

@@ -1,3 +1,8 @@
+When /^I navigate to (.+) view from Accounts page$/ do |link_name|
+  @aria_admin_console_page.switch_to_work_frame
+  @aria_admin_console_page.accounts_page.navigate_to_link(link_name)
+end
+
 # Taxpayer information steps
 #
 Then /^Taxpayer id should be (.+)$/ do |id|
@@ -36,3 +41,21 @@ Then /^Account status should be (.+)$/ do |status|
   @aria_admin_console_page.switch_to_inner_work_frame
   @aria_admin_console_page.accounts_page.account_overview_view.account_status
 end
+
+# Account groups steps
+When /I change collections account group to (.+)$/ do |account_group|
+  @aria_admin_console_page.switch_to_inner_work_frame
+  @aria_admin_console_page.accounts_page.account_groups_view.change_to_cag(account_group)
+end
+
+Then /^Change account group message should be (.+)$/ do |message|
+  @aria_admin_console_page.accounts_page.account_groups_view.message_div.text == message
+end
+
+# General steps
+
+When /^I navigate to notification method view$/ do
+  @aria_admin_console_page.switch_to_work_frame
+  @aria_admin_console_page.accounts_page.navigate_to_link("Notification Method")
+end
+

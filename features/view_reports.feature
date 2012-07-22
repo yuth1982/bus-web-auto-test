@@ -3,13 +3,10 @@ Feature: View Report
   I want to view reports on the services I have purchased
   so that I can understand why I was charged what I was charged and for which partner or usergroup, update my records, or re-bill my sub-partners and usergroups.
 
-  @TC.16255
-  Scenario: Verify 6 available reports in report builder view UI
-    Given I log in bus admin console as administrator
-    When I add a MozyEnterprise partner with 12 month(s) period, 1 user(s), no server plan, 0 server add-on, no coupon, credit card payment
-    Then Partner created successful message should be New partner created.
-    When I log in bus admin console as the new partner account
-    And I navigate to report builder view
+  @TC.16255 @require_test_account
+  Scenario: Mozy-16255 Verify available report links and descriptions in report builder view UI
+    Given I log in bus admin console as mozyenterprise test account
+    When I navigate to Report Builder view from bus admin console page
     Then I should see available reports are:
     | Report Type        | Description                                                                                                                        |
     | Billing Summary    | Gives a summary of resources and usage by partner and user group.                                                                  |
@@ -19,13 +16,28 @@ Feature: View Report
     | Resources Added    | Lists all purchases of resources (licenses and storage) by Mozy administrators and storage added by Autogrow.                     |
     | Machine Over Quota | Provides a list of users that have exceeded a user determined threshold.                                                           |
 
+  @TC.17846 @require_test_account
+  Scenario: Mozy-17846:Verify quick report links and descriptions in quick reports view UI
+    Given I log in bus admin console as mozyenterprise test account
+    When I navigate to Quick Reports view from bus admin console page
+    Then I should see quick reports are:
+    | Report Type                    | Description                                               |
+    | Users (CSV)                    | List of all users (does not include users in subpartners) |
+    | Machines (CSV)                 | List of all machines                                      |
+    | UserGroups (CSV)               | List of all user groups                                   |
+    | Roles (CSV)                    | List of administrative roles                              |
+    | Credit Card Transactions (CSV) | List of all credit card transactions                      |
+    | Billing History (CSV)          | List of all invoices after 2012-07-05                     |
+    | Mozy Pro Keys (CSV)            | List of all unassigned Mozy Pro keys                      |
+    | Machine Details (CSV)          | List of all Machine Details                               |
+
   @TC.16245
-  Scenario: Verify create then delete billing summary report
+  Scenario: Mozy-16245 Verify create then delete billing summary report
     Given I log in bus admin console as administrator
     When I add a MozyEnterprise partner with 12 month(s) period, 1 user(s), 100 GB Server Plan, $582.78 server plan, 2 server add-on, no coupon, credit card payment
     Then Partner created successful message should be New partner created.
     When I log in bus admin console as the new partner account
-    And I navigate to report builder view
+    And I navigate to Report Builder view from bus admin console page
     And I build a new Active Daily billing summary report named Billing Summary Test Report start Today
     Then Report created successful message should be Created Billing Summary Report.
     And Scheduled report list should be:
@@ -35,12 +47,12 @@ Feature: View Report
     Then I should see No results found in scheduled reports list
 
   @TC.16250
-  Scenario: Verify create and delete billing detail report
+  Scenario: Mozy-16250 Verify create and delete billing detail report
     Given I log in bus admin console as administrator
     When I add a MozyEnterprise partner with 12 month(s) period, 1 user(s), 100 GB Server Plan, $582.78 server plan, 2 server add-on, no coupon, credit card payment
     Then Partner created successful message should be New partner created.
     When I log in bus admin console as the new partner account
-    And I navigate to report builder view
+    And I navigate to Report Builder view from bus admin console page
     And I build a new Active Daily billing detail report named Billing Detail Test Report start Today
     Then Report created successful message should be Created Billing Detail Report.
     And Scheduled report list should be:
@@ -55,12 +67,12 @@ Feature: View Report
    #| Daily     | Resources Added     | Resources Added Test Report     | Created Resources Added Report.     |
 
   @TC.16251
-  Scenario: Verify MozyEtnerprise billing summary report csv all fields
+  Scenario: Mozy-16251 Verify MozyEtnerprise billing summary report csv all fields
     Given I log in bus admin console as administrator
     When I add a MozyEnterprise partner with 12 month(s) period, 1 user(s), 100 GB Server Plan, $582.78 server plan, 2 server add-on, no coupon, credit card payment
     Then Partner created successful message should be New partner created.
     When I log in bus admin console as the new partner account
-    And I navigate to report builder view
+    And I navigate to Report Builder view from bus admin console page
     And I build a new Active Daily billing summary report named Billing Summary Test Report start Today
     Then Report created successful message should be Created Billing Summary Report.
     When I download report by name Billing Summary Test Report
@@ -69,13 +81,13 @@ Feature: View Report
     | User Group            | Billing Code | Total GB Purchased | Server Keys Purchased | Server GB Purchased | Desktop Keys Purchased | Desktop GB Purchased | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
     | (default user group)  |              | 625                | 200                   | 600                 | 1                      | 25                   |                                    |                                     | $0.369008              |
 
-  #@not complete need to change report file details
-  Scenario: Verify Reseller billing summary report csv all fields
+  @TC.17847
+  Scenario: Mozy-17847 Verify Reseller billing summary report csv all fields
     Given I log in bus admin console as administrator
-    When I add a Reseller partner with 1 month(s) period, Silver Reseller, 100 GB plan, has server plan, 2 add-on, no coupon, credit card payment
+    When I add a Reseller partner with 1 month(s) period, Silver Reseller, 100 GB base plan, has server plan, 2 add-on, no coupon, credit card payment
     Then Partner created successful message should be New partner created.
     When I log in bus admin console as the new partner account
-    And I navigate to report builder view
+    And I navigate to Report Builder view from bus admin console page
     And I build a new Active Daily billing summary report named Billing Summary Test Report start Today
     Then Report created successful message should be Created Billing Summary Report.
     When I download report by name Billing Summary Test Report
@@ -85,12 +97,12 @@ Feature: View Report
     | (default user group)  |              | 140                |                       |                     |                        |                      |                                    |                                     | $0.598571428571429     |
 
   @TC.16252
-  Scenario: Verify MozyEtnerprise billing detail report csv all fields
+  Scenario: Mozy-16252 Verify MozyEtnerprise billing detail report csv all fields
     Given I log in bus admin console as administrator
     When I add a MozyEnterprise partner with 24 month(s) period, 1 user(s), 100 GB Server Plan, $1,112.58 server plan, 2 server add-on, no coupon, credit card payment
     Then Partner created successful message should be New partner created.
     When I log in bus admin console as the new partner account
-    And I navigate to report builder view
+    And I navigate to Report Builder view from bus admin console page
     And I build a new Active Daily billing detail report named Billing Detail Test Report start Today
     Then Report created successful message should be Created Billing Detail Report.
     When I download report by name Billing Detail Test Report
@@ -99,17 +111,32 @@ Feature: View Report
     | User Group            | Billing Code | Total GB Purchased | Server Quota Purchased (GB) | Server Quota Allocated (GB) | Server Quota Used (GB) | Server Keys Purchased | Server Keys Activated | Server Keys Assigned But Not Activated | Desktop Quota Purchased (GB) | Desktop Quota Allocated (GB) | Desktop Quota Used (GB) | Desktop Keys Purchased | Desktop Keys Activated | Desktop Keys Assigned But Not Activated | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
     | (default user group)  |              | 625                | 600                         | 0                           | 0                      | 200                   | 0                     | 0                                      | 25                           | 0                            | 0                       | 1                      | 0                      | 0                                       |                                    |                                     | $0.352210666666667     |
 
-  #@not complete need to change report file details
-  Scenario: Verify Reseller billing detail report csv all fields
+  @TC.17848
+  Scenario: Mozy-17484 Verify Reseller billing detail report csv all fields
     Given I log in bus admin console as administrator
-    When I add a Reseller partner with 1 month(s) period, Silver Reseller, 100 GB plan, has server plan, 2 add-on, no coupon, credit card payment
+    When I add a Reseller partner with 1 month(s) period, Silver Reseller, 100 GB base plan, has server plan, 2 add-on, no coupon, credit card payment
     Then Partner created successful message should be New partner created.
     When I log in bus admin console as the new partner account
-    And I navigate to report builder view
+    And I navigate to Report Builder view from bus admin console page
     And I build a new Active Daily billing detail report named Billing Detail Test Report start Today
     Then Report created successful message should be Created Billing Detail Report.
     When I download report by name Billing Detail Test Report
     Then Billing Detail report file details should be:
     | Column B              | Column C     | Column D           | Column E                    | Column F                    | Column G               | Column H              | Column I              | Column J                               | Column K                     | Column L                     | Column M                | Column N               | Column O               | Column P                                | Column Q                           | Column R                            | Column S               |
     | User Group            | Billing Code | Total GB Purchased | Server Quota Purchased (GB) | Server Quota Allocated (GB) | Server Quota Used (GB) | Server Keys Purchased | Server Keys Activated | Server Keys Assigned But Not Activated | Desktop Quota Purchased (GB) | Desktop Quota Allocated (GB) | Desktop Quota Used (GB) | Desktop Keys Purchased | Desktop Keys Activated | Desktop Keys Assigned But Not Activated | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
-    | (default user group)  |              | 140                |                             |                             |                        |                       |                       |                                        |                              | 0                            | 0                       |                        | 0                      | 0                                       |                                    |                                     | $0.598571428571429     |
+    | (default user group)  |              | 140                |                             | 0                           | 0                      |                       | 0                     | 0                                      |                              | 0                            | 0                       |                        | 0                      | 0                                       |                                    |                                     | $0.598571428571429     |
+
+  @TC.17849 @require_test_account
+  Scenario: Mozy-17849 Verify report type drop down list values in scheduled report view
+    Given I log in bus admin console as mozyenterprise test account
+    When I navigate to Scheduled Reports view from bus admin console page
+    Then I should see report filters are:
+    | Report Type        |
+    | None               |
+    | Billing Summary    |
+    | Billing Detail     |
+    | Machine Watchlist  |
+    | Machine Status     |
+    | Outdated Clients   |
+    | Resources Added    |
+    | Machine Over Quota |

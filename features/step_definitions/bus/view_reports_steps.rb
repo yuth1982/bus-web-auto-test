@@ -1,18 +1,26 @@
-When /^I navigate to add (.+) report view$/ do |report_type|
-  @bus_admin_console_page.report_builder_view.get_add_report_view(report_type)
+When /^I navigate to add report view for (.+)/ do |report_type|
+  @bus_admin_console_page.report_builder_view.navigate_to_add_report_view(report_type)
 end
 
-Then /^I should see available reports are:$/ do |reports_description|
-  @bus_admin_console_page.report_builder_view.available_reports_table.body_rows_text.should == reports_description.rows
+Then /^I should see available reports are:$/ do |link_desc_link|
+  @bus_admin_console_page.report_builder_view.available_reports_table.body_rows_text.should == link_desc_link.rows
+end
+
+Then /^I should see report filters are:$/ do |link_desc_link|
+  @bus_admin_console_page.report_builder_view.report_filters_text.should == link_desc_link.rows.map{|row|row.first}
+end
+
+Then /^I should see quick reports are:$/ do |link_desc_table|
+  @bus_admin_console_page.quick_reports_view.link_desc_table.body_rows_text.should == link_desc_table.rows
 end
 
 When /^I build a new (Active|Inactive) (Daily|Weekly|Monthly) billing summary report named (.+) start (.+)$/ do |is_active, frequency, report_name, start_date|
-  step "I navigate to add Billing Summary report view"
+  step "I navigate to add report view for Billing Summary"
   @bus_admin_console_page.report_builder_view.build_billing_summary_report(report_name, frequency, start_date, is_active)
 end
 
 When /^I build a new (Active|Inactive) (Daily|Weekly|Monthly) billing detail report named (.+) start (.+)$/ do |is_active, frequency, report_name, start_date|
-  step "I navigate to add Billing Detail report view"
+  step "I navigate to add report view for Billing Detail"
   @bus_admin_console_page.report_builder_view.build_billing_detail_report(report_name, frequency, start_date, is_active)
 end
 
@@ -29,7 +37,7 @@ Then /^I should see (.+) in scheduled reports list$/ do |message|
 end
 
 When /^I download report by name (.+)$/ do |report_name|
-  step "I navigate to scheduled report view"
+  step "I navigate to Scheduled Reports view from bus admin console page"
   @bus_admin_console_page.scheduled_reports_view.download_report(report_name)
 end
 

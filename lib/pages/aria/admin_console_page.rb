@@ -1,6 +1,6 @@
 module Aria
   class AdminConsolePage < PageObject
-    component(:accounts_page, AccountsPage)
+    section(:accounts_page, AccountsPage)
 
     # Top level navigation links
     element(:dashboard_link, {:xpath => "//a[@title='Dashboard']"})

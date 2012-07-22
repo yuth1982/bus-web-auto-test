@@ -28,5 +28,5 @@ Cucumber::Rake::Task.new(:invoice_setting) do |t|
 end
 
 Cucumber::Rake::Task.new(:aria_emails) do |t|
-  t.cucumber_opts = "--color --format html --out logs/aria_emails_#{Time.now.strftime("%Y%m%dT%H%M")}.html --format pretty features/aria_emails.feature"
+  t.cucumber_opts = "--color --format html --out logs/aria_emails_#{Time.now.strftime("%Y%m%dT%H%M")}.html --format pretty features/notify_and_collect_past_due_balances.feature"
 end

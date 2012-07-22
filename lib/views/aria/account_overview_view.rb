@@ -1,7 +1,8 @@
 module Aria
   class AccountOverviewView < PageObject
-    component(:account_status_view, AccountStatusView)
-    component(:taxpayer_view, TaxpayerView)
+
+    section(:account_status_view, AccountStatusView)
+    section(:taxpayer_view, TaxpayerView)
 
     # Links
     element(:master_plan_link, {:link => "Master Plan"})

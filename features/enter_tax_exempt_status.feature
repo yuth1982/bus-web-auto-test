@@ -8,11 +8,11 @@
 
   @TC.17526
   Scenario: Mozy-17526 Verify default tax-exemtp status of a new Yearly MozyPro partner
-    When I add a MozyPro partner with 12 month(s) period, 500 GB, $2,089.89 plan, has server plan, no coupon, Belgium country, BE0883236072 VAT number, credit card payment
+    When I add a MozyPro partner with 12 month(s) period, 500 GB, $2,089.89 base plan, has server plan, no coupon, Belgium country, BE0883236072 VAT number, credit card payment
     Then Partner created successful message should be New partner created.
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
-    And I navigate to taxpayer information view
+    And I navigate to Taxpayer Information view from Accounts page
     Then Taxpayer id should be BE0883236072
     And Tax exemption status should be Account is exempt from both federal/national and state/province taxation.
 
@@ -22,27 +22,27 @@
     Then Partner created successful message should be New partner created.
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
-    And I navigate to taxpayer information view
+    And I navigate to Taxpayer Information view from Accounts page
     Then Taxpayer id should be BE0883236072
     And Tax exemption status should be Account is exempt from both federal/national and state/province taxation.
 
   @TC.17528
   Scenario: Mozy-17528 Verify default tax-exemtp status of a new Monthly Reseller partner
-    When I add a Reseller partner with 1 month(s) period, Gold Reseller, 100 GB plan, has server plan, 1 add-on, no coupon, Italy country, IT03018900245 VAT number, credit card payment
+    When I add a Reseller partner with 1 month(s) period, Gold Reseller, 100 GB base plan, has server plan, 1 add-on, no coupon, Italy country, IT03018900245 VAT number, credit card payment
     Then Partner created successful message should be New partner created.
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
-    And I navigate to taxpayer information view
+    And I navigate to Taxpayer Information view from Accounts page
     Then Taxpayer id should be IT03018900245
     And Tax exemption status should be Account is exempt from both federal/national and state/province taxation.
 
   @TC.17533
   Scenario: Mozy-17533 Set both Exempt from State and Federal taxes to false for a new Biennially Mozypro partner
-    When I add a MozyPro partner with 24 month(s) period, 50 GB, $419.79 plan, has server plan, no coupon, Belgium country, BE0883236072 VAT number, credit card payment
+    When I add a MozyPro partner with 24 month(s) period, 50 GB, $419.79 base plan, has server plan, no coupon, Belgium country, BE0883236072 VAT number, credit card payment
     Then Partner created successful message should be New partner created.
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
-    And I navigate to taxpayer information view
+    And I navigate to Taxpayer Information view from Accounts page
     Then Taxpayer id should be BE0883236072
     When I set Exempt from Federal and National taxes to false
     And I set Exempt from State and Province taxes to false
@@ -54,25 +54,25 @@
     Then Partner created successful message should be New partner created.
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
-    And I navigate to taxpayer information view
+    And I navigate to Taxpayer Information view from Accounts page
     Then Taxpayer id should be BE0883236072
     When I set Exempt from State and Province taxes to false
     Then Tax exemption status should be Account is exempt from federal/national taxation.
 
   @TC.17539
   Scenario: Mozy-17539 Set Exempt from Federal taxes to false for a new Yearly Reseller partner
-    When I add a Reseller partner with 1 month(s) period, Silver Reseller, 100 GB plan, no server plan, 0 add-on, no coupon, Italy country, IT03018900245 VAT number, credit card payment
+    When I add a Reseller partner with 1 month(s) period, Silver Reseller, 100 GB base plan, no server plan, 0 add-on, no coupon, Italy country, IT03018900245 VAT number, credit card payment
     Then Partner created successful message should be New partner created.
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
-    And I navigate to taxpayer information view
+    And I navigate to Taxpayer Information view from Accounts page
     Then Taxpayer id should be IT03018900245
     When I set Exempt from Federal and National taxes to false
     Then Tax exemption status should be Account is exempt from state/province taxation.
 
    @TC.17547
    Scenario: Mozy-17547 No taxes charged when create a new Monthly MozyPro partner
-    When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 plan, no server plan, no coupon, Belgium country, BE0883236072 VAT number, credit card payment
+    When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 base plan, no server plan, no coupon, Belgium country, BE0883236072 VAT number, credit card payment
     Then Order summary table should be:
     | Column A          | Column B | Column C   | Column D    |
     | Description       | Quantity | Price Each | Total Price |
@@ -94,7 +94,7 @@
 
   @TC.17556
   Scenario: Mozy-17556 No taxes charged when create a new Monthly Reseller partner
-    When I add a Reseller partner with 1 month(s) period, Platinum Reseller, 100 GB plan, no server plan, 0 add-on, no coupon, Italy country, IT03018900245 VAT number, credit card payment
+    When I add a Reseller partner with 1 month(s) period, Platinum Reseller, 100 GB base plan, no server plan, 0 add-on, no coupon, Italy country, IT03018900245 VAT number, credit card payment
     Then Order summary table should be:
     | Column A               | Column B | Column C   | Column D    |
     | Description            | Quantity | Price Each | Total Price |

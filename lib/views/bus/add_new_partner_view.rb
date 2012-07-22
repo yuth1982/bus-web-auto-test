@@ -4,9 +4,9 @@ module Bus
     #
     element(:new_partner_name_tb, {:id => "new_partner_name"})
     element(:contact_country_select, {:id => "partner_new_contact_country"})
-    element(:contact_state_tb, {:id => "contact_state"})
-    element(:contact_state_us_select, {:id => "contact_state_us"})
-    element(:contact_state_ca_select, {:id => "contact_state_ca"})
+    element(:contact_state_tb, {:id => "partner_new_contact_state"})
+    element(:contact_state_us_select, {:id => "partner_new_contact_state_us"})
+    element(:contact_state_ca_select, {:id => "partner_new_contact_state_ca"})
     element(:contact_city_tb, {:id => "contact_city"})
     element(:contact_address_tb, {:id => "contact_address"})
     element(:contact_zip_tb, {:id => "contact_zip"})
@@ -149,7 +149,7 @@ module Bus
 
     def fill_mozypro_purchase(partner)
       base_plan_select = driver.find_element(:id => "#{partner.subscription_period}_base_plan_select")
-      base_plan_select.select_by(:text, partner.supp_plan)
+      base_plan_select.select_by(:text, partner.base_plan)
       base_plan_id = base_plan_select.first_selected_option.value
       driver.find_element(:id => "#{base_plan_id}_add_on_plan_check_box").check if partner.has_server_plan
     end
@@ -159,8 +159,8 @@ module Bus
       base_plan_id = base_plan_locator.value
       # Base plan number of users
       driver.find_element(:id, "#{partner.subscription_period}_base_plan_#{base_plan_id}").type_text(partner.num_enterprise_users)
-      # Add ons drop down list
-      driver.find_element(:id, "#{base_plan_id}_add_on_plan_select").select_by(:text, partner.supp_plan)
+      # Server Add ons drop down list
+      driver.find_element(:id, "#{base_plan_id}_add_on_plan_select").select_by(:text, partner.server_plan)
       # Num of server add ons
       server_add_on_locator = driver.find_element(:id, "#{base_plan_id}_add_on_plan")
       server_add_on_id = server_add_on_locator.value

@@ -1,7 +1,7 @@
 
 When /^I search partner by (.+)$/ do |search_key|
   @bus_admin_console_page.refresh_page
-  step "I navigate to search list partner view"
+  step "I navigate to Search / List Partners view from bus admin console page"
   @bus_admin_console_page.search_list_partner_view.search_partner(search_key)
 end
 
