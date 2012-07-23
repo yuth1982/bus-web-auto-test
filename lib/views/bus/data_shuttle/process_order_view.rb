@@ -3,6 +3,7 @@ module Bus
     # Verify shipping address section
     element(:verify_shipping_address_table, {:xpath => "//form[@id='resource-create_new_seed_form']/div/ul[2]/li/table"})
 
+    element(:all_msg_div, {:xpath => "//ul[@class='flash successes' or @class='flash errors']"})
     element(:message_div, {:xpath => "//ul[@class='flash successes' or @class='flash errors']/li"})
 
     element(:name_tb, {:id => "seed_device_order_name"})
@@ -91,10 +92,12 @@ module Bus
       order_assign_to_tb.type_text(assign_to)
       go_to_summary_section
       sleep 10 # wait for load summary section
+
       # fill summary section
-      if message_div.nil?
+      if all_msg_div.text.empty?
         discount_tb.type_text(discount) unless discount.to_i == 0
-        num_win_driver_tb.click
+        num_win_driver_tb.click # make discount value change
+        sleep 2
         submit_order_btn.click
       end
       sleep 10 # wait for complete ordering data shuttle

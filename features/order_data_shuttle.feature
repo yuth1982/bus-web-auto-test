@@ -111,7 +111,7 @@ Feature:
     Then The latest order status should be Cancelled
 
   @TC.16212 @slow
-  Scenario: Mozy-16211 Canceling orders that were created using the Add Link
+  Scenario: Mozy-16212 Canceling orders that were created using the Add New Key Link
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 base plan, no server plan, no coupon, credit card payment
     Then Partner created successful message should be New partner created.
     And I order data shuttle for the new partner company name
