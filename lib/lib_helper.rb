@@ -28,6 +28,7 @@ require "data_obj/bus/credit_card"
 require "data_obj/bus/company_info"
 require "data_obj/bus/partner_info"
 require "data_obj/bus/admin_info"
+require "data_obj/bus/data_shuttle_order"
 
 require "data_obj/aria/admin"
 require "data_obj/aria/account"

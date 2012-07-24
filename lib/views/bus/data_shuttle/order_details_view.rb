@@ -14,6 +14,10 @@ module Bus
       tables[0]
     end
 
+    def shipping_tracking_table
+      tables[1]
+    end
+
     def latest_order_status
       orders_table.body_rows.first[1].text
     end
