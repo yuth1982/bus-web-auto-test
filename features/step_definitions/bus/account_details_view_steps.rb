@@ -1,18 +1,10 @@
 
-Then /^Invoice setting details should be (.+)$/ do |setting_descriptions|
-  @bus_admin_console_page.account_details_view.invoice_settings_text.join(",").should == setting_descriptions
-end
-
-Then /^I should see Receive Mozy Account Statements option is set to (\w+)$/ do |status|
-  @bus_admin_console_page.account_details_view.receive_statement_status.should == status
-end
-
-Then /^I should see Receive Mozy Pro Newsletter option is set to (\w+)$/ do |status|
-  @bus_admin_console_page.account_details_view.receive_newsletter_status.should == status
-end
-
-Then /^I should see Receive Mozy Email Notifications option is set to (\w+)$/ do |status|
-  @bus_admin_console_page.account_details_view.receive_email_status.should == status
+Then /^Account details table should be:$/ do |acc_details_table|
+  acc_details_table.map_column!('value') do |value|
+    value.gsub(/@name/,@partner.admin_info.full_name).gsub(/@email/,@partner.admin_info.email)
+  end
+  @bus_admin_console_page.account_details_view.acc_details_desc_column_text.should == acc_details_table.hashes.map{ |row| row[:description] }
+  @bus_admin_console_page.account_details_view.acc_details_value_column_text.should == acc_details_table.hashes.map{ |row| row[:value] }
 end
 
 Then /^I set Receive Mozy Account Statements option to (\w+)$/ do |status|
@@ -21,5 +13,4 @@ end
 
 Then /^I should see setting saved message is (.+)$/ do |message|
   @bus_admin_console_page.account_details_view.setting_saved_div.text.should == message.to_s
-
 end

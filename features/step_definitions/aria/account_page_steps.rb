@@ -44,6 +44,7 @@ end
 
 # Account groups steps
 When /I change collections account group to (.+)$/ do |account_group|
+  step "I navigate to Account Groups view from Accounts page"
   @aria_admin_console_page.switch_to_inner_work_frame
   @aria_admin_console_page.accounts_page.account_groups_view.change_to_cag(account_group)
 end

@@ -6,23 +6,20 @@ Feature:
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.15228
-  Scenario: Mozy-15228 Verify UI of invoice settings in BUS
-    When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 base plan, no server plan, no coupon, credit card payment
-    Then Partner created successful message should be New partner created.
-    When I log in bus admin console as the new partner account
-    And I navigate to Account Details view from bus admin console page
-    Then Invoice setting details should be Receive Mozy Pro Newsletter?,Receive Mozy Email Notifications?,Receive Mozy Account Statements?
-
   @TC.15229
   Scenario: Mozy-15229 Verify Receive Mozy Account Statements set to Yes for new partner in Bus
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 base plan, no server plan, no coupon, credit card payment
     Then Partner created successful message should be New partner created.
     When I log in bus admin console as the new partner account
     And I navigate to Account Details view from bus admin console page
-    Then I should see Receive Mozy Pro Newsletter option is set to No
-    And I should see Receive Mozy Email Notifications option is set to No
-    And I should see Receive Mozy Account Statements option is set to Yes
+    Then Account details table should be:
+    | description                       | value             |
+    | Name:                             | @name (change)    |
+    | Username/Email:                   | @email (change)   |
+    | Password:                         | (hidden) (change) |
+    | Receive Mozy Pro Newsletter?      | No (change)       |
+    | Receive Mozy Email Notifications? | No (change)       |
+    | Receive Mozy Account Statements?  | Yes (change)      |
 
   @TC.15230
   Scenario: Mozy-15230 Alter notification method between HTML email and Printable no email in Aria
@@ -84,8 +81,6 @@ Feature:
     And I search aria account by the new partner email
     And I navigate to notification method view
     Then Notification message should be This account is currently notified via method "HTML Email".
-
-
 
 
 

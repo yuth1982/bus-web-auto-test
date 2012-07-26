@@ -18,9 +18,14 @@ Feature: Corporate Invoices
     When I wait for 30 seconds
     When I log in zimbra as default account
     And I search email to match all keywords:
-    | to                  | date    | subject                  |
-    | New partner's email | Today   | MozyPro Account Created! |
+    | to     | date    | subject                  |
+    | @email | @today  | MozyPro Account Created! |
     Then I should see 1 email(s) displayed in search results
+    When I search email to match all keywords:
+    | from        | to     | date    | subject                  |
+    | ar@mozy.com | @email | @today  | MozyQA Account Statement |
+    Then I should see 1 email(s) displayed in search results
+
 
   @TC.15687 @slow
   Scenario: Mozy-15687 Verify Aria sends invoice email when change subscription period of a MozyPro partner
@@ -33,8 +38,8 @@ Feature: Corporate Invoices
     When I wait for 30 seconds
     And I log in zimbra as default account
     And I search email to match all keywords:
-    | to            | date    | subject                  | content                       |
-    | qa1@mozy.com  | Today   | MozyQA Account Statement | New partner's company address |
+    | to            | date    | subject                  | content  |
+    | qa1@mozy.com  | @today  | MozyQA Account Statement | @address |
     Then I should see 2 email(s) displayed in search results
 
   @TC.17841 @slow
@@ -44,8 +49,12 @@ Feature: Corporate Invoices
     When I wait for 30 seconds
     And I log in zimbra as default account
     And I search email to match all keywords:
-    | to                  | date    | subject                  |
-    | New partner's email | Today   | MozyEnterprise Account Created! |
+    | to     | date    | subject                         |
+    | @email | @today  | MozyEnterprise Account Created! |
+    Then I should see 1 email(s) displayed in search results
+    When I search email to match all keywords:
+    | from        | to     | date    | subject                  |
+    | ar@mozy.com | @email | @today  | MozyQA Account Statement |
     Then I should see 1 email(s) displayed in search results
 
   @TC.17842 @slow
@@ -59,6 +68,6 @@ Feature: Corporate Invoices
     When I wait for 30 seconds
     And I log in zimbra as default account
     And I search email to match all keywords:
-    | to            | date    | subject                  | content                       |
-    | qa1@mozy.com  | Today   | MozyQA Account Statement | New partner's company address |
+    | to            | date    | subject                  | content  |
+    | qa1@mozy.com  | @today  | MozyQA Account Statement | @address |
     Then I should see 2 email(s) displayed in search results

@@ -18,7 +18,7 @@ end
 Then /^Next renewal master plan date should be (.+)$/ do |date|
   # Set Time.now mto qa6 local time
   next_month = DateTime.now >> date.match(/(\d+)/).to_s.to_i
-  @bus_admin_console_page.billing_info_view.master_plan_table.body_rows_text[1][1].should == next_month.to_time.localtime("-06:00").strftime("%b %d, %Y")
+  @bus_admin_console_page.billing_info_view.master_plan_table.body_rows_text[1][1].should == (next_month+1).to_time.localtime("-06:00").strftime("%b %d, %Y")
 end
 
 Then /^Next renewal master plan amount should be (.+)$/ do |amount|

@@ -41,8 +41,8 @@ Feature: View Report
     And I build a new Active Daily billing summary report named Billing Summary Test Report start Today
     Then Report created successful message should be Created Billing Summary Report.
     And Scheduled report list should be:
-    | Name                        | Type             | Recipients          | Schedule | Actions |
-    | Billing Summary Test Report | Billing Summary  | New partner's email | Daily    | Run     |
+    | Name                        | Type             | Recipients | Schedule | Actions |
+    | Billing Summary Test Report | Billing Summary  | @email     | Daily    | Run     |
     When I delete report by name Billing Summary Test Report
     Then I should see No results found in scheduled reports list
 
@@ -56,8 +56,8 @@ Feature: View Report
     And I build a new Active Daily billing detail report named Billing Detail Test Report start Today
     Then Report created successful message should be Created Billing Detail Report.
     And Scheduled report list should be:
-    | Name                       | Type            | Recipients          | Schedule | Actions |
-    | Billing Detail Test Report | Billing Detail  | New partner's email | Daily    | Run     |
+    | Name                       | Type            | Recipients  | Schedule | Actions |
+    | Billing Detail Test Report | Billing Detail  | @email      | Daily    | Run     |
     When I delete report by name Billing Detail Test Report
     Then I should see No results found in scheduled reports list
 

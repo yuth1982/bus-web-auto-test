@@ -22,7 +22,7 @@ module Bus
     section(:scheduled_reports_view, ScheduledReportsView)
     section(:quick_reports_view, QuickReportsView)
 
-    section(:change_payment_view, ChangePaymentInfoView)
+    section(:change_payment_info_view, ChangePaymentInfoView)
 
     element(:corporate_invoices_link, {:link => "Corporate Invoices"}) # This link should not exist
 

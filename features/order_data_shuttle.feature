@@ -80,7 +80,7 @@ Feature:
     When I add a MozyEnterprise partner with 12 month(s) period, 1 user(s), no server plan, 0 server add-on, no coupon, credit card payment
     Then Partner created successful message should be New partner created.
     And I order data shuttle for the new partner company name
-    And I order a available key with Data Shuttle US power adapter, Win OS, 10 GB quota, assigned to the new partner email, 50 discount
+    And I order a available key with Data Shuttle US power adapter, Win OS, 10 GB quota, assigned to the new partner company name, 50 discount
     Then Data shuttle order summary should match:
     | Description         | Quantity | Total    |
     | Data Shuttle 1.8 TB | 1        | $137.50  |
@@ -93,10 +93,10 @@ Feature:
     Then Partner created successful message should be New partner created.
     And I order data shuttle for the new partner company name
     And I order a available key with Data Shuttle US power adapter, Win OS, 10 GB quota, assigned to the new partner email, 100 discount
-    #Then Data shuttle order summary should match:
-    #| Description         | Quantity | Total  |
-    #| Data Shuttle 1.8 TB | 1        | $0.00  |
-    #| Total Price         |          | $0.00  |
+    Then Data shuttle order summary should match:
+    | Description         | Quantity | Total  |
+    | Data Shuttle 1.8 TB | 1        | $0.00  |
+    | Total Price         |          | $0.00  |
     And Order data shuttle successful message should match: Data Shuttle Device for Pro Partner the new partner company name created.
 
   @TC.16211 @slow
@@ -172,5 +172,5 @@ Feature:
     When I navigate to Billing History view from bus admin console page
     And Billing history table should be:
     | Date    | Amount  | Total Paid | Balance Due |
-    | Today   | $275.00 | $275.00    | 0.00        |
-    | Today   | $95.00  | $95.00     | 0.00        |
+    | @today  | $275.00 | $275.00    | 0.00        |
+    | @today  | $95.00  | $95.00     | 0.00        |

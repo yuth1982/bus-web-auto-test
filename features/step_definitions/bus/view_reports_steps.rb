@@ -50,5 +50,5 @@ When /^I search report by name (.+)$/ do |report_name|
 end
 
 Then /^Scheduled report list should be:$/ do |results|
-  @bus_admin_console_page.scheduled_reports_view.reports_table.body_rows_text.map{|row| row[0..4]}.should == results.rows.map{ |row| row.map{ |x| x.gsub("New partner's email",@partner.admin_info.email)}}
+  @bus_admin_console_page.scheduled_reports_view.reports_table.body_rows_text.map{|row| row[0..4]}.should == results.rows.map{ |row| row.map{ |x| x.gsub(/@email/,@partner.admin_info.email)}}
 end
