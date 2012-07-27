@@ -4,7 +4,7 @@ module Bus
     element(:search_partner_btn, {:xpath => "//div[@id='partner-list-content']//input[@value='Submit']"})
     element(:search_results_table, {:xpath => "//div[@id='partner-list-content']//table[@class='table-view']"})
     element(:clear_search_link, {:link => "Clear search"})
-
+    element(:include_sub_partners_cb, {:id => "include_subpartners"})
     # Public: Search partner by search text
     #
     # Examples
@@ -13,6 +13,7 @@ module Bus
     #
     # Returns Nothing
     def search_partner(search_key)
+      include_sub_partners_cb.check
       search_partner_tb.type_text(search_key)
       search_partner_btn.click
       raise "error on search / list partners action" unless clear_search_link.displayed?

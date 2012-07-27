@@ -139,15 +139,12 @@ Feature: Change subscription period
     Then Partner created successful message should be New partner created.
     When I log in bus admin console as the new partner account
     And I navigate to Billing Information view from bus admin console page
-    #Then Next renewal table should be:
-    #| Period        | Monthly (change)                    |
-    #| Date          | +1 month(s)                         |
-    #| Amount        | $19.99 (Without taxes or discounts) |
-    #| Payment Type  | Visa ending in XXXX (change)        |
-    Then Next renewal master plan period should be Monthly (change)
-    And Next renewal master plan date should be +1 month(s)
-    And Next renewal master plan amount should be $94.99 (Without taxes or discounts)
-    And Next renewal master plan payment type should be Visa ending in XXXX (change)
+    Then Next renewal info table should be:
+    | description   | value                               |
+    | Period        | Monthly (change)                    |
+    | Date          | +1 month(s)                         |
+    | Amount        | $94.99 (Without taxes or discounts) |
+    | Payment Type  | Visa ending in @XXXX (change)       |
 
   @TC.15254 @smoke_test
   Scenario: Mozy-15254 Verify MozyEnterprise partner master plan section details
@@ -155,10 +152,12 @@ Feature: Change subscription period
     Then Partner created successful message should be New partner created.
     When I log in bus admin console as the new partner account
     And I navigate to Billing Information view from bus admin console page
-    Then Next renewal master plan period should be 3-year (change)
-    And Next renewal master plan date should be +36 month(s)
-    And Next renewal master plan amount should be $259.00 (Without taxes or discounts)
-    And Next renewal master plan payment type should be Visa ending in XXXX (change)
+    Then Next renewal info table should be:
+    | description   | value                                |
+    | Period        | 3-year (change)                      |
+    | Date          | +36 month(s)                         |
+    | Amount        | $259.00 (Without taxes or discounts) |
+    | Payment Type  | Visa ending in @XXXX (change)        |
 
   @TC.15258
   Scenario: Mozy-15258 Verify Next Renewal text align is set to left justify

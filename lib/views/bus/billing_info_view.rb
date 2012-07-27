@@ -13,7 +13,7 @@ module Bus
 
     elements(:tables, {:xpath => "//div[@id='#{BILLING_INFO_LOC}']//table"})
 
-    def master_plan_table
+    def next_renewal_info_table
        tables[0]
     end
 
