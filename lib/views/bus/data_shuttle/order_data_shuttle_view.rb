@@ -1,5 +1,9 @@
 module Bus
+  # This class provides actions for order data shuttle view
   class OrderDataShuttleView < PageObject
+
+    # Private elements
+    #
     # Search section elements
     element(:search_partner_tb, {:id => "pro_partner_search"})
     element(:search_partner_btn, {:xpath => "//div[@id='resource-choose_pro_partner_for_new_seed-content']//input[@value='Submit']"})

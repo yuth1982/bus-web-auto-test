@@ -5,7 +5,6 @@ When /^I search email to match all keywords:$/ do |keywords|
 end
 
 Then /^I should see (\d+) email\(s\) displayed in search results$/ do |num_emails|
-  rows = @mail_main_page.search_results.body_rows
-  rows_length = rows.nil? ? 0 : rows.length
+  rows_length = @mail_main_page.mail_list_rows.nil? ? 0 : @mail_main_page.mail_list_rows.length
   rows_length.should == num_emails.to_i
 end

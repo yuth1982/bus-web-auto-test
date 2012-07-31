@@ -1,5 +1,9 @@
 module Bus
+  # This class provides actions for add new partner view
   class AddNewPartnerView < PageObject
+
+    # Private elements
+    #
     # Company Info
     #
     element(:new_partner_name_tb, {:id => "new_partner_name"})
@@ -56,7 +60,12 @@ module Bus
     element(:create_partner_btn, {:xpath => "//div[@id='cc-details']//input[@id='submit_button']"})
     element(:back_btn, {:id =>"back_button"})
 
-
+    # Public: Add a new partner account
+    #
+    # Example
+    #   @bus_admin_console_page.add_new_partner_view.add_new_account(partner_object)
+    #
+    # Return nothing
     def add_new_account(partner)
       fill_company_info(partner.company_info)
       fill_partner_info(partner.partner_info)
@@ -80,6 +89,32 @@ module Bus
         include_initial_purchase_cb.uncheck
         next_btn.click
       end
+    end
+
+    # Public: Messages for change account details actions
+    #
+    # Example
+    #  @bus_admin_console_page.add_new_partner_view.message_text
+    #  # => "New partner created."
+    #
+    # Return: success or error message text
+    def message_text
+      message_div.text
+    end
+
+    # Public: Add new partner order summary table rows text
+    #
+    # Example
+    #   @bus_admin_console_page.add_new_partner_view.order_summary_tb_rows_text
+    #   # => [["Description","Quantity","Price Each","Total Price"],
+    #         ["50 GB","1","$19.99","$19.99"],
+    #         ["Discounts Applied","","","$-1.00"],
+    #         ["Pre-tax Subtotal","","","$18.99"],
+    #         ["Total Charges","","","$18.99"]]
+    #
+    # Return order summary table rows text
+    def order_summary_tb_rows_text
+      order_summary_table.body_rows_text
     end
 
     private
@@ -202,7 +237,6 @@ module Bus
       cc_exp_mm_select.select_by(:text,credit_card.expire_month)
       cc_exp_yyyy_select.select_by(:text,credit_card.expire_year)
     end
-
   end
 end
 

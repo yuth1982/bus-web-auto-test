@@ -7,10 +7,10 @@ Then /^Account details table should be:$/ do |acc_details_table|
   @bus_admin_console_page.account_details_view.acc_details_value_column_text.should == acc_details_table.hashes.map{ |row| row[:value] }
 end
 
-Then /^I set Receive Mozy Account Statements option to (\w+)$/ do |status|
+Then /^I set Receive Mozy Account Statements option to (Yes|No)$/ do |status|
   @bus_admin_console_page.account_details_view.set_receive_statement_status(status)
 end
 
 Then /^I should see setting saved message is (.+)$/ do |message|
-  @bus_admin_console_page.account_details_view.setting_saved_div.text.should == message.to_s
+  @bus_admin_console_page.account_details_view.message_text.should == message.to_s
 end

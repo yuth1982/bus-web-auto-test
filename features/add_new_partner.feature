@@ -24,10 +24,9 @@ Feature: Add a new partner
     | Column A          | Column B | Column C   | Column D    |
     | Description       | Quantity | Price Each | Total Price |
     | 50 GB             | 1        | $19.99     | $19.99      |
-    | Discounts Applied |          |            | $-1.00      |
+    | Discounts Applied |          |            | -$1.00      |
     | Pre-tax Subtotal  |          |            | $18.99      |
-    | Taxes             |          |            | $1.20       |
-    | Total Charges     |          |            | $19.19      |
+    | Total Charges     |          |            | $18.99      |
     Then Partner created successful message should be New partner created.
 
   @add_pro_european @smoke_test
@@ -50,7 +49,7 @@ Feature: Add a new partner
     | Description       | Quantity | Price Each | Total Price |
     | 500 GB            | 1        | $2,089.89  | $2,089.89   |
     | Server Plan       | 1        | $219.89    | $219.89     |
-    | Discounts Applied |          |            | $-2.00      |
+    | Discounts Applied |          |            | -$2.00      |
     | Pre-tax Subtotal  |          |            | $2,307.78   |
     | Total Charges     |          |            | $2,307.78   |
     Then Partner created successful message should be New partner created.
@@ -82,10 +81,9 @@ Feature: Add a new partner
     | Column A            | Column B | Column C   | Column D    |
     | Description         | Quantity | Price Each | Total Price |
     | MozyEnterprise User | 1        | $95.00     | $95.00      |
-    | Discounts Applied   |          |            | $-1.00      |
+    | Discounts Applied   |          |            | -$1.00      |
     | Pre-tax Subtotal    |          |            | $94.00      |
-    | Taxes               |          |            | $7.20       |
-    | Total Charges       |          |            | $101.20      |
+    | Total Charges       |          |            | $94.00      |
     Then Partner created successful message should be New partner created.
 
   @add_enterprise_european
@@ -111,7 +109,7 @@ Feature: Add a new partner
     | MozyEnterprise User   | 1        | $181.00    | $181.00     |
     | 100 GB Server Plan    | 1        | $1,112.58  | $1,112.58   |
     | 250 GB Server Add-on  | 1        | $1,994.79  | $1,994.79   |
-    | Discounts Applied     |          |            | $-3.00      |
+    | Discounts Applied     |          |            | -$3.00      |
     | Pre-tax Subtotal      |          |            | $3,285.37   |
     | Total Charges         |          |            | $3,285.37   |
     Then Partner created successful message should be New partner created.
@@ -143,10 +141,9 @@ Feature: Add a new partner
     | Column A              | Column B | Column C   | Column D    |
     | Description           | Quantity | Price Each | Total Price |
     | GB - Silver Reseller  | 100      | $0.42      | $42.00      |
-    | Discounts Applied     |          |            | $-1.00      |
+    | Discounts Applied     |          |            | -$1.00      |
     | Pre-tax Subtotal      |          |            | $41.00      |
-    | Taxes                 |          |            | $2.96       |
-    | Total Charges         |          |            | $43.96      |
+    | Total Charges         |          |            | $41.00      |
     And Partner created successful message should be New partner created.
 
   @add_reseller_european

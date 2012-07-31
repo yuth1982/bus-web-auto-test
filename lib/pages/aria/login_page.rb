@@ -1,5 +1,9 @@
 module Aria
+  # This class provides actions for aira login page
   class LoginPage < PageObject
+
+    # Private elements
+    #
     element(:username_tb, {:id => "username"})
     element(:password_tb, {:id => "password"})
     element(:login_btn, {:xpath => "//input[@value='Login']"})

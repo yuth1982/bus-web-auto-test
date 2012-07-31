@@ -16,7 +16,7 @@ module AutomationWebDriver
       # do not create a new browser instance
       if @driver.nil?
         @driver = Selenium::WebDriver.for(:firefox, :profile => custom_profile)
-        @driver.manage.timeouts.implicit_wait = Bus::BROWSER_IMPLICIT_WAIT
+        @driver.manage.timeouts.implicit_wait = BROWSER_IMPLICIT_WAIT
       end
       @driver.navigate.to(url)
     end
@@ -28,7 +28,7 @@ module AutomationWebDriver
       profile['browser.download.dir'] = "#{dir}"
       profile['browser.download.manager.showWhenStarting'] = false
       profile['browser.download.manager.closeWhenDone'] = true
-      profile['browser.helperApps.neverAsk.saveToDisk'] = "application/csv"
+      profile['browser.helperApps.neverAsk.saveToDisk'] = "application/csv;text/csv"
       profile
     end
   end

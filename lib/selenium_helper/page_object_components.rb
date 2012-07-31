@@ -1,7 +1,16 @@
 module AutomationWebDriver
   module PageObjectComponents
+    def add_element_name element_name
+      @element_names ||= []
+      @element_names << element_name
+    end
+
+    def element_names
+      @element_names
+    end
+
   # define a new method with the name of the symbol after locator that returns the value
-    def element(element_sym,element_hash, opt = {})
+    def element(element_sym,element_hash)
       send(:define_method, element_sym) do
         begin
           driver.find_element(element_hash)
@@ -10,6 +19,8 @@ module AutomationWebDriver
           nil
         end
       end
+      add_element_name(element_sym)
+      private element_sym
     end
 
     def elements(element_sym,element_hash)
@@ -21,6 +32,8 @@ module AutomationWebDriver
           nil
         end
       end
+      add_element_name(element_sym)
+      private element_sym
     end
 
     def section(page_sym,page_class)

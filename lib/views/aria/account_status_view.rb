@@ -1,5 +1,9 @@
 module Aria
+  # This class provides actions for account status view
   class AccountStatusView < PageObject
+
+    # Private elements
+    #
     element(:change_acc_status_link, {:link => "Change Account Status"})
     element(:remove_queued_req_link, {:link => "Remove Queued Status Change Request"})
     element(:change_acc_status_btn, {:xpath => "//input[@value='Change Account Status']"})
@@ -14,5 +18,8 @@ module Aria
       sleep 10 # wait for status to take effect
     end
 
+    def message_text
+      message_div.text
+    end
   end
 end

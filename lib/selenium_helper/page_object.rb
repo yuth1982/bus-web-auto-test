@@ -1,5 +1,6 @@
 class PageObject
   extend AutomationWebDriver::PageObjectComponents
+  include AutomationWebDriver::PageValidator
   include AutomationWebDriver::CreateSeleniumWebDriver
 
   def initialize(driver)

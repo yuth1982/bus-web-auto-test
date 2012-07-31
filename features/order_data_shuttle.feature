@@ -172,5 +172,5 @@ Feature:
     When I navigate to Billing History view from bus admin console page
     And Billing history table should be:
     | Date    | Amount  | Total Paid | Balance Due |
-    | @today  | $275.00 | $275.00    | 0.00        |
-    | @today  | $95.00  | $95.00     | 0.00        |
+    | @today  | $275.00 | $275.00    | $0.00       |
+    | @today  | $95.00  | $95.00     | $0.00       |

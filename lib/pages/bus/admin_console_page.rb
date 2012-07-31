@@ -1,4 +1,5 @@
 module Bus
+  # This class provides actions for bus admin console page
   class AdminConsolePage < PageObject
 
     section(:add_new_partner_view, AddNewPartnerView)
@@ -7,8 +8,6 @@ module Bus
     section(:billing_info_view, BillingInfoView)
     section(:change_period_view, ChangePeriodView)
     section(:billing_history_view, BillingHistoryView)
-    section(:purchase_resources_view, PurchaseResourcesView)
-    section(:return_resources_view, ReturnResourcesView)
     section(:admin_details_view, AdminDetailsView)
     section(:account_details_view, AccountDetailsView)
 
@@ -17,17 +16,22 @@ module Bus
     section(:view_data_shuttle_orders_view, ViewDataShuttleOrdersView)
     section(:order_details_view, OrderDetailsView)
 
-    section(:machines_view, MachinesView)
     section(:report_builder_view, ReportBuilderView)
     section(:scheduled_reports_view, ScheduledReportsView)
     section(:quick_reports_view, QuickReportsView)
 
     section(:change_payment_info_view, ChangePaymentInfoView)
 
-    element(:corporate_invoices_link, {:link => "Corporate Invoices"}) # This link should not exist
 
+    # Public: Click the link on admin console navigation menu
+    #
+    # Example
+    #   @bus_admin_console_page.navigate_to_link("Add New Partner")
+    #
+    # Return nothing
     def navigate_to_link(link_name)
       driver.find_element(:link, link_name).click
     end
+
   end
 end

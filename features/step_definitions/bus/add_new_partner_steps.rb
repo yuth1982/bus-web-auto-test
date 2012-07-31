@@ -88,10 +88,10 @@ end
 
 Then /^Partner created successful message should be (.+)$/ do |message|
   sleep 20 # wait for create the new partner
-  @bus_admin_console_page.add_new_partner_view.message_div.text.should == message
+  @bus_admin_console_page.add_new_partner_view.message_text.should == message
   step "I activate new partner admin with default password"
 end
 
 Then /^Order summary table should be:$/ do |order_summary_table|
-  @bus_admin_console_page.add_new_partner_view.order_summary_table.body_rows_text.should == order_summary_table.rows
+  @bus_admin_console_page.add_new_partner_view.order_summary_tb_rows_text.should == order_summary_table.rows
 end

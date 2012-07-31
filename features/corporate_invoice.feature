@@ -7,10 +7,6 @@ Feature: Corporate Invoices
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.15679
-  Scenario: Mozy-15679 Verify "Corporate Invoices" link in mozy admin console should be removed
-    Then Corporate Invoices link should not exist in Internal Tools menu
-
   @TC.15686 @slow
   Scenario: Mozy-15686 Verify Aria sends email when create a new MozyPro partner
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 base plan, no server plan, no coupon, credit card payment

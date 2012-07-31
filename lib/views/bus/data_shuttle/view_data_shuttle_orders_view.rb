@@ -1,5 +1,9 @@
 module Bus
+  # This class provides actions for view data shuttle orders view
   class ViewDataShuttleOrdersView < PageObject
+
+    # Private elements
+    #
     element(:search_order_tb, {:id => "seed_device_order_search"})
     element(:search_order_btn, {:xpath => "//div[@id='resource-view_seed_device_orders-content']//input[@value='Submit']"})
     element(:order_results_table, {:xpath => "//div[@id='resource-view_seed_device_orders-content']//table[@class='table-view']"})

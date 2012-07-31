@@ -40,7 +40,10 @@ Feature:
     When I log in aria admin console as aria admin
     And I search aria account by the new partner email
     And I navigate to notification method view
-    Then Notification methods should be HTML Email,Printable (no Email)
+    Then Notification methods should be:
+    | Methods              |
+    | HTML Email           |
+    | Printable (no Email) |
 
   @TC.15495
   Scenario: Mozy-15495 Verify aria notification method when set Receive Mozy Account Statements to No

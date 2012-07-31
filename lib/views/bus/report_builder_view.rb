@@ -1,6 +1,9 @@
 module Bus
+  # This class provides actions for report builder view
   class ReportBuilderView < PageObject
 
+    # Private elements
+    #
     element(:report_filter, {:id => "job_filter"})
     element(:available_reports_table, {:xpath => "//div[@id='jobs-report_builder-content']/table"})
 
@@ -24,8 +27,15 @@ module Bus
 
     #Email Options Section
     element(:recipients_tb, {:id => "job_subscribers"})
-
     element(:report_created_txt, {:xpath => "//div[@id='jobs-new-errors']/ul[@class='flash successes']"})
+
+    def message_text
+      report_created_txt.text
+    end
+
+    def available_reports_tb_rows_text
+      available_reports_table.body_rows_text
+    end
 
     def report_filters_text
       report_filter.options.map{ |option| option.text}

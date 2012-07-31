@@ -1,5 +1,9 @@
 module Bus
+  # This class provides actions for order details view
   class OrderDetailsView < PageObject
+
+    # Private elements
+    #
     elements(:cancel_order_links, {:link => "cancel"})
 
     def cancel_latest_order
@@ -14,11 +18,11 @@ module Bus
       tables[0]
     end
 
-    def shipping_tracking_table
-      tables[1]
+    def shipping_tracking_tb_rows_text
+      tables[1].body_rows_text
     end
 
-    def latest_order_status
+    def latest_order_status_text
       orders_table.body_rows.first[1].text
     end
   end

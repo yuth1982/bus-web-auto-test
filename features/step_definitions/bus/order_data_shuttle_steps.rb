@@ -16,8 +16,8 @@ When /^I order a (available|new) key with (.+) power adapter, (Win|Mac) OS, (\d+
 end
 
 When /^Verify shipping address table should match:$/ do |address_table|
-  @bus_admin_console_page.process_order_view.verify_shipping_address_table.body_rows_text.map{ |row| row[0]}.should == address_table.rows.map{ |row| row.first}
-  @bus_admin_console_page.process_order_view.shipping_address.should == address_table.rows.map{ |row| row[1]}
+  @bus_admin_console_page.process_order_view.address_desc_column_text.should == address_table.rows.map{ |row| row.first}
+  @bus_admin_console_page.process_order_view.shipping_address_text.should == address_table.rows.map{ |row| row[1]}
 end
 
 When /^I go to next section without select power adapter in verify shipping address section$/ do
@@ -25,15 +25,15 @@ When /^I go to next section without select power adapter in verify shipping addr
 end
 
 Then /^Order data shuttle error message should match: (.+)$/ do |err_message|
-  @bus_admin_console_page.process_order_view.message_div.text.should match(err_message)
+  @bus_admin_console_page.process_order_view.message_text.should match(err_message)
 end
 
 Then /^Order data shuttle successful message should match: Data Shuttle Device for Pro Partner (.+) created\.$/ do |company_name|
-  @bus_admin_console_page.process_order_view.message_div.text.should == "Data Shuttle Device for Pro Partner #{company_name} created."
+  @bus_admin_console_page.process_order_view.message_text.should == "Data Shuttle Device for Pro Partner #{company_name} created."
 end
 
 Then /^Data shuttle order summary should match:$/ do |summary_table|
-  @bus_admin_console_page.process_order_view.order_summary_table.body_rows_text.should == summary_table.rows
+  @bus_admin_console_page.process_order_view.order_summary_tb_rows_text.should == summary_table.rows
 end
 
 When /^I search data shuttle order by (.+)$/ do |company_name|
@@ -48,9 +48,9 @@ When /^I cancel the latest data shuttle order$/ do
 end
 
 Then /^The latest order status should be (.+)$/ do |status|
-  @bus_admin_console_page.order_details_view.latest_order_status == status
+  @bus_admin_console_page.order_details_view.latest_order_status_text == status
 end
 
 Then /^The number of driver in shipping tracking table should be (\d+)$/ do |num_drivers|
-  @bus_admin_console_page.order_details_view.shipping_tracking_table.body_rows.length.should == num_drivers.to_i
+  @bus_admin_console_page.order_details_view.shipping_tracking_tb_rows_text.length.should == num_drivers.to_i
 end

@@ -14,6 +14,6 @@ When /^I view admin details by (.+)$/ do |partner_email|
 end
 
 Then /^Search results should be:$/ do |results|
-  @bus_admin_console_page.search_list_partner_view.search_results_table.header_row_text.should == results.headers
-  @bus_admin_console_page.search_list_partner_view.search_results_table.body_rows_text.should == results.rows
+  @bus_admin_console_page.search_list_partner_view.search_results_tb_header_text.should == results.headers
+  @bus_admin_console_page.search_list_partner_view.search_results_tb_rows_text.should == results.rows
 end

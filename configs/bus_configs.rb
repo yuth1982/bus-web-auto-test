@@ -5,9 +5,6 @@ module Bus
   # Bus login page
   BUS_LOGIN_URL = "https://www.mozypro.com/login/admin?old_school=1"
 
-  # Browser time out in seconds
-  BROWSER_IMPLICIT_WAIT = 90
-
   COMPANY_TYPE =
   {
       :mozypro => "MozyPro",
@@ -35,7 +32,5 @@ module Bus
   DEFAULT_PWD = "test1234"
   # partner user email prefix, e.g qa1+reg+test@mozy.com, suffix is fixed
   EMAIL_PREFIX = "qa1"
-  # Log level control, e.g display partner.to_s
-  DEBUG = true
 end
 

@@ -14,7 +14,7 @@ Feature: Notify about and collect past-due balances
     When I delete the partner by the new partner company name
     And I log in aria admin console as aria admin
     And I search aria account by the new partner email
-    Then Account status should be Cancelled
+    Then Account status should be CANCELLED
 
   @TC.16108 @slow
   Scenario: Mozy-16108 MozyPro account without server plan suspended in aria should be backup-suspended in bus
