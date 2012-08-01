@@ -4,7 +4,7 @@ require 'cucumber/rake/task'
 desc 'Run Cucumber features and generate an HTML summary and a plain text log'
 
 Cucumber::Rake::Task.new(:all) do |t|
-  t.cucumber_opts = "--color --format html --out logs/add_new_partner_#{Time.now.strftime("%Y%m%dT%H%M")}.html features"
+  t.cucumber_opts = "--color --format html --out logs/all_features_#{Time.now.strftime("%Y%m%dT%H%M")}.html features"
 end
 
 Cucumber::Rake::Task.new(:smoke_test) do |t|

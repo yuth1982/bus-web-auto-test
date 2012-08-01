@@ -21,16 +21,15 @@ module AutomationWebDriver
       @driver.navigate.to(url)
     end
 
-    # Public:
-    #
-    #
+    # Public: Define a customer profile for firefox, specify download folder, file type
     #
     # Returns firefox profile
     def custom_profile
-      dir = File.expand_path("../../downloads", File.dirname(__FILE__))
       profile = Selenium::WebDriver::Firefox::Profile.new
       profile['browser.download.folderList'] = 2
-      profile['browser.download.dir'] = "#{dir}"
+      profile['browser.download.dir'] = FileHelper.instance.default_download_path
+      profile['browser.download.downloadDir'] = FileHelper.instance.default_download_path
+      profile['browser.download.lastDir'] = FileHelper.instance.default_download_path
       profile['browser.download.manager.showWhenStarting'] = false
       profile['browser.download.manager.closeWhenDone'] = true
       profile['browser.helperApps.neverAsk.saveToDisk'] = "application/csv;text/csv"
