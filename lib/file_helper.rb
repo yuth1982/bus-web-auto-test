@@ -7,6 +7,10 @@ class FileHelper
     File.expand_path("../downloads", File.dirname(__FILE__))
   end
 
+  def ff_download_path
+    default_download_path.gsub(File::SEPARATOR, File::ALT_SEPARATOR || File::SEPARATOR)
+  end
+
   # Public: read csv file
   #
   # Example
