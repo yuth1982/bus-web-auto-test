@@ -18,7 +18,7 @@ module Bus
     # Example
     #   @bus_admin_console_page.change_payment_info_view.update_credit_card_info(credit_card_object)
     #
-    # Return nothing
+    # Returns nothing
     def update_credit_card_info(credit_card)
       modify_credit_card_cb.check
       cc_name_tb.type_text("#{credit_card.first_name} #{credit_card.last_name}")
@@ -36,7 +36,7 @@ module Bus
     #  @bus_admin_console_page.change_payment_info_view.message_text
     #  # => "Your account is backup-suspended. You will not be able to access your account until your credit card is billed."
     #
-    # Return: success or error message text
+    # Returns success or error message text
     def message_text
       message_div.text
     end

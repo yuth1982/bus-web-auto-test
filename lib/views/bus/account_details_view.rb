@@ -19,7 +19,7 @@ module Bus
     #   @bus_admin_console_page.account_details_view.acc_details_desc_column_text
     #   # => ["Name:","Username/Email:","Password:","Receive Mozy Pro Newsletter?","Receive Mozy Email Notifications?","Receive Mozy Account Statements?"]
     #
-    # Return account details description column text array
+    # Returns account details description column text array
     def acc_details_desc_column_text
       driver.find_elements(:xpath, "//div[@id='#{ACC_SETTINGS_DIV_ID}']/div/dl/span/dt").map{ |span| span.text}
     end
@@ -40,7 +40,7 @@ module Bus
     # Example
     #  @bus_admin_console_page.account_details_view.set_receive_statement_status("No")
     #
-    # Return nothing
+    # Returns nothing
     def set_receive_statement_status(status)
       change_receive_statement_link.click
       receives_statement_input.select_by(:text,status)
@@ -53,7 +53,7 @@ module Bus
     #  @bus_admin_console_page.account_details_view.message_text
     #  # => "Successfully saved Account Statement preference."
     #
-    # Return: success or error message text
+    # Returns success or error message text
     def message_text
       setting_saved_div.text
     end

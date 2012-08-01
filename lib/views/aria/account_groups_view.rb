@@ -10,7 +10,13 @@ module Aria
     element(:change_cag, {:id => "submit-button"})
     element(:message_div, {:class => "error-box"})
 
-    def change_to_cag(cag_name)
+    # Public: Change account CAG type
+    #
+    # Example
+    #  @aria_admin_console_page.accounts_page.account_groups_view.change_cag("CyberSource Credit Card")
+    #
+    # Returns nothing
+    def change_cag(cag_name)
        case cag_name
          when "Fail Test CAG"
            fail_test_cag.click
@@ -21,6 +27,13 @@ module Aria
        change_cag.click
     end
 
+    # Public: Messages for change account group actions
+    #
+    # Example
+    #  @bus_admin_console_page.account_groups_view.message_text
+    #  # => "Account group changes saved."
+    #
+    # Returns success or error message text
     def message_text
       message_div.text
     end

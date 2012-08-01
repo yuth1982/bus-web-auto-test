@@ -7,7 +7,7 @@ end
 When /^I order a (available|new) key with (.+) power adapter, (Win|Mac) OS, (\d+) GB quota, assigned to (.+), (\d+) discount, (\d+) win drivers, (\d+) mac drivers, (ship|no ship) drivers$/ do |from, adapter_type, os, quota, assign_to, discount, win_drivers, mac_drivers, is_ship|
   assign_to = assign_to.include?("@") ? assign_to : ""
   is_ship = is_ship.eql?("ship") ? true : false
-  @order = Bus::DataShuttleOrder.new(adapter_type, os, quota, assign_to, from, discount, win_drivers, mac_drivers, is_ship)
+  @order = Bus::DataObj::DataShuttleOrder.new(adapter_type, os, quota, assign_to, from, discount, win_drivers, mac_drivers, is_ship)
   @bus_admin_console_page.process_order_view.create_order(@order)
 end
 

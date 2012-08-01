@@ -17,7 +17,7 @@ module Bus
     #  @@bus_admin_console_page.search_list_partner_view.search_results_tb_header_text
     #  # => ["External ID", "Partner", "Created", "Root Admin", "Type", "Users", "Licenses", "Quota"]
     #
-    # Return search results table rows text array
+    # Returns search results table rows text array
     def search_results_tb_header_text
       search_results_table.header_row_text
     end
@@ -40,7 +40,7 @@ module Bus
     #
     #  @bus_admin_console_page.search_list_partner_view.search_partner("qa1+test@mozy.com")
     #
-    # Returns Nothing
+    # Returns nothing
     def search_partner(search_key)
       include_sub_partners_cb.check
       search_partner_tb.type_text(search_key)
@@ -54,7 +54,7 @@ module Bus
     #
     #  @bus_admin_console_page.search_list_partner_view.view_partner_detail("Lego Company")
     #
-    # Returns Nothing
+    # Returns nothing
     def view_partner_detail(search_key)
       driver.find_element(:link, search_key).click
     end
@@ -65,7 +65,7 @@ module Bus
     #
     #  @bus_admin_console_page.search_list_partner_view.view_root_admin_detail("qa1+test@mozy.com")
     #
-    # Returns Nothing
+    # Returns nothing
     def view_root_admin_detail(search_key)
       driver.find_element(:link, search_key).click
     end

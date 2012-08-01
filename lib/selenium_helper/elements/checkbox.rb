@@ -4,7 +4,6 @@ module AutomationWebDriver
       # Public: Is the CheckBox checked?
       #
       # Examples
-      #
       #   checkbox.checked?
       #   # => true
       #

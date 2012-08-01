@@ -2,14 +2,9 @@ module AutomationWebDriver
   module Elements
     module Table
 
-      #def rows
-      #  find_elements(:tag_name, "tr")
-      #end
-
       # Public: Elements of table header row
       #
       # Examples
-      #
       #   header_row
       #   # => Array<Element>]
       #
@@ -24,8 +19,7 @@ module AutomationWebDriver
 
       # Public: Element array of table body rows
       #
-      # Examples             invoice_settings_dt
-      #
+      # Examples
       #   table.body_rows
       #   # => Array[Array<Element>]]
       #
@@ -41,7 +35,6 @@ module AutomationWebDriver
       # Public: Elements of table foot row
       #
       # Examples
-      #
       #   foot_row
       #   # => Array<Element>]
       #
@@ -57,11 +50,10 @@ module AutomationWebDriver
       # Public: String array of table header row
       #
       # Examples
-      #
       #   table.header_row_text
       #   # => [["Plan","Price"]]
       #
-      # Returns an string array of first header row
+      # Returns an string array of header row
       def header_row_text
         header_row.map { |cell| cell.text } unless header_row.nil?
       end
@@ -69,7 +61,6 @@ module AutomationWebDriver
       # Public: String array of table body rows
       #
       # Examples
-      #
       #   table.body_row_text
       #   # => [["total","$200.00"],["tax","$15.00"]]
       #
@@ -83,9 +74,9 @@ module AutomationWebDriver
       # Examples
       #
       #   table.foot_row_text
-      #   # => [["Plan","Price"]]
+      #   # => [["footer 1","footer 2"]]
       #
-      # Returns an string array of first foot row
+      # Returns an string array of foot row
       def foot_row_text
         header_row.map { |cell| cell.text } unless header_row.nil?
       end

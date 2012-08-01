@@ -107,9 +107,9 @@ Feature: View Report
     Then Report created successful message should be Created Billing Summary Report.
     When I download report by name Billing Summary Test Report
     Then Scheduled Billing Summary report csv file details should be:
-    | Column B              | Column C     | Column D           | Column E              | Column F            | Column G               | Column H             | Column I                           | Column J                            | Column K               |
-    | User Group            | Billing Code | Total GB Purchased | Server Keys Purchased | Server GB Purchased | Desktop Keys Purchased | Desktop GB Purchased | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
-    | (default user group)  |              | 625                | 200                   | 600                 | 1                      | 25                   |                                    |                                     | $0.369008              |
+    | Column A | Column B              | Column C     | Column D           | Column E              | Column F            | Column G               | Column H             | Column I                           | Column J                            | Column K               |
+    | Partner  | User Group            | Billing Code | Total GB Purchased | Server Keys Purchased | Server GB Purchased | Desktop Keys Purchased | Desktop GB Purchased | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
+    | @name    | (default user group)  |              | 625                | 200                   | 600                 | 1                      | 25                   |                                    |                                     | $0.369008              |
 
   @TC.17939
   Scenario: Mozy-17939 Verify MozyEtnerprise billing summary report csv all fields download from email
@@ -121,16 +121,16 @@ Feature: View Report
     And I build a new Active Monthly billing summary report named Billing Summary Test Report start Today
     Then Report created successful message should be Created Billing Summary Report.
     When I wait for 30 seconds
-    And I log in zimbra as default account
+    And I log in zimbra as default zimbra account
     And I search email to match all keywords:
     | from                       | to     | date   | subject                      |
     | support@mozyenterprise.com | @email | @today | Billing Summary Test Report  |
     Then I should see 1 email(s) displayed in search results
     When I download report from email attachment
     Then Scheduled Billing Summary report csv file details should be:
-    | Column B              | Column C     | Column D           | Column E              | Column F            | Column G               | Column H             | Column I                           | Column J                            | Column K               |
-    | User Group            | Billing Code | Total GB Purchased | Server Keys Purchased | Server GB Purchased | Desktop Keys Purchased | Desktop GB Purchased | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
-    | (default user group)  |              | 625                | 200                   | 600                 | 1                      | 25                   |                                    |                                     | $0.369008              |
+    | Column A | Column B              | Column C     | Column D           | Column E              | Column F            | Column G               | Column H             | Column I                           | Column J                            | Column K               |
+    | Partner  | User Group            | Billing Code | Total GB Purchased | Server Keys Purchased | Server GB Purchased | Desktop Keys Purchased | Desktop GB Purchased | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
+    | @name    | (default user group)  |              | 625                | 200                   | 600                 | 1                      | 25                   |                                    |                                     | $0.369008              |
 
   @TC.17847
   Scenario: Mozy-17847 Verify Reseller billing summary report csv all fields
@@ -143,9 +143,9 @@ Feature: View Report
     Then Report created successful message should be Created Billing Summary Report.
     When I download report by name Billing Summary Test Report
     Then Scheduled Billing Summary report csv file details should be:
-    | Column B              | Column C     | Column D           | Column E              | Column F            | Column G               | Column H             | Column I                           | Column J                            | Column K               |
-    | User Group            | Billing Code | Total GB Purchased | Server Keys Purchased | Server GB Purchased | Desktop Keys Purchased | Desktop GB Purchased | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
-    | (default user group)  |              | 140                |                       |                     |                        |                      |                                    |                                     | $0.598571428571429     |
+    | Column A | Column B              | Column C     | Column D           | Column E              | Column F            | Column G               | Column H             | Column I                           | Column J                            | Column K               |
+    | Partner  | User Group            | Billing Code | Total GB Purchased | Server Keys Purchased | Server GB Purchased | Desktop Keys Purchased | Desktop GB Purchased | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
+    | @name    | (default user group)  |              | 140                |                       |                     |                        |                      |                                    |                                     | $0.598571428571429     |
 
   @TC.17941
   Scenario: Mozy-17941 Verify Reseller billing summary report csv all fields download from email
@@ -157,16 +157,16 @@ Feature: View Report
     And I build a new Active Daily billing summary report named Billing Summary Test Report start Today
     Then Report created successful message should be Created Billing Summary Report.
     When I wait for 30 seconds
-    And I log in zimbra as default account
+    And I log in zimbra as default zimbra account
     And I search email to match all keywords:
     | from                                  | to     | date   | subject                      |
     | redacted-3364@notarealdomain.mozy.com | @email | @today | Billing Summary Test Report  |
     Then I should see 1 email(s) displayed in search results
     When I download report from email attachment
     Then Scheduled Billing Summary report csv file details should be:
-    | Column B              | Column C     | Column D           | Column E              | Column F            | Column G               | Column H             | Column I                           | Column J                            | Column K               |
-    | User Group            | Billing Code | Total GB Purchased | Server Keys Purchased | Server GB Purchased | Desktop Keys Purchased | Desktop GB Purchased | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
-    | (default user group)  |              | 140                |                       |                     |                        |                      |                                    |                                     | $0.598571428571429     |
+    | Column A | Column B              | Column C     | Column D           | Column E              | Column F            | Column G               | Column H             | Column I                           | Column J                            | Column K               |
+    | Partner  | User Group            | Billing Code | Total GB Purchased | Server Keys Purchased | Server GB Purchased | Desktop Keys Purchased | Desktop GB Purchased | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
+    | @name    | (default user group)  |              | 140                |                       |                     |                        |                      |                                    |                                     | $0.598571428571429     |
 
   @TC.16252
   Scenario: Mozy-16252 Verify MozyEtnerprise billing detail report csv all fields
@@ -179,9 +179,9 @@ Feature: View Report
     Then Report created successful message should be Created Billing Detail Report.
     When I download report by name Billing Detail Test Report
     Then Scheduled Billing Detail report csv file details should be:
-    | Column B              | Column C     | Column D           | Column E                    | Column F                    | Column G               | Column H              | Column I              | Column J                               | Column K                     | Column L                     | Column M                | Column N               | Column O               | Column P                                | Column Q                           | Column R                            | Column S               |
-    | User Group            | Billing Code | Total GB Purchased | Server Quota Purchased (GB) | Server Quota Allocated (GB) | Server Quota Used (GB) | Server Keys Purchased | Server Keys Activated | Server Keys Assigned But Not Activated | Desktop Quota Purchased (GB) | Desktop Quota Allocated (GB) | Desktop Quota Used (GB) | Desktop Keys Purchased | Desktop Keys Activated | Desktop Keys Assigned But Not Activated | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
-    | (default user group)  |              | 625                | 600                         | 0                           | 0                      | 200                   | 0                     | 0                                      | 25                           | 0                            | 0                       | 1                      | 0                      | 0                                       |                                    |                                     | $0.352210666666667     |
+    | Column A | Column B              | Column C     | Column D           | Column E                    | Column F                    | Column G               | Column H              | Column I              | Column J                               | Column K                     | Column L                     | Column M                | Column N               | Column O               | Column P                                | Column Q                           | Column R                            | Column S               |
+    | Partner  | User Group            | Billing Code | Total GB Purchased | Server Quota Purchased (GB) | Server Quota Allocated (GB) | Server Quota Used (GB) | Server Keys Purchased | Server Keys Activated | Server Keys Assigned But Not Activated | Desktop Quota Purchased (GB) | Desktop Quota Allocated (GB) | Desktop Quota Used (GB) | Desktop Keys Purchased | Desktop Keys Activated | Desktop Keys Assigned But Not Activated | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
+    | @name    | (default user group)  |              | 625                | 600                         | 0                           | 0                      | 200                   | 0                     | 0                                      | 25                           | 0                            | 0                       | 1                      | 0                      | 0                                       |                                    |                                     | $0.352210666666667     |
 
   @TC.17940
   Scenario: Mozy-17940 Verify MozyEtnerprise billing detail report csv all fields download from email
@@ -193,16 +193,16 @@ Feature: View Report
     And I build a new Active Daily billing detail report named Billing Detail Test Report start Today
     Then Report created successful message should be Created Billing Detail Report.
     When I wait for 30 seconds
-    And I log in zimbra as default account
+    And I log in zimbra as default zimbra account
     And I search email to match all keywords:
     | from                       | to     | date   | subject                      |
     | support@mozyenterprise.com | @email | @today | Billing Detail Test Report  |
     Then I should see 1 email(s) displayed in search results
     When I download report from email attachment
     Then Scheduled Billing Detail report csv file details should be:
-    | Column B              | Column C     | Column D           | Column E                    | Column F                    | Column G               | Column H              | Column I              | Column J                               | Column K                     | Column L                     | Column M                | Column N               | Column O               | Column P                                | Column Q                           | Column R                            | Column S               |
-    | User Group            | Billing Code | Total GB Purchased | Server Quota Purchased (GB) | Server Quota Allocated (GB) | Server Quota Used (GB) | Server Keys Purchased | Server Keys Activated | Server Keys Assigned But Not Activated | Desktop Quota Purchased (GB) | Desktop Quota Allocated (GB) | Desktop Quota Used (GB) | Desktop Keys Purchased | Desktop Keys Activated | Desktop Keys Assigned But Not Activated | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
-    | (default user group)  |              | 625                | 600                         | 0                           | 0                      | 200                   | 0                     | 0                                      | 25                           | 0                            | 0                       | 1                      | 0                      | 0                                       |                                    |                                     | $0.352210666666667     |
+    | Column A | Column B              | Column C     | Column D           | Column E                    | Column F                    | Column G               | Column H              | Column I              | Column J                               | Column K                     | Column L                     | Column M                | Column N               | Column O               | Column P                                | Column Q                           | Column R                            | Column S               |
+    | Partner  | User Group            | Billing Code | Total GB Purchased | Server Quota Purchased (GB) | Server Quota Allocated (GB) | Server Quota Used (GB) | Server Keys Purchased | Server Keys Activated | Server Keys Assigned But Not Activated | Desktop Quota Purchased (GB) | Desktop Quota Allocated (GB) | Desktop Quota Used (GB) | Desktop Keys Purchased | Desktop Keys Activated | Desktop Keys Assigned But Not Activated | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
+    | @name    | (default user group)  |              | 625                | 600                         | 0                           | 0                      | 200                   | 0                     | 0                                      | 25                           | 0                            | 0                       | 1                      | 0                      | 0                                       |                                    |                                     | $0.352210666666667     |
 
   @TC.17848
   Scenario: Mozy-17484 Verify Reseller billing detail report csv all fields
@@ -215,9 +215,9 @@ Feature: View Report
     Then Report created successful message should be Created Billing Detail Report.
     When I download report by name Billing Detail Test Report
     Then Scheduled Billing Detail report csv file details should be:
-    | Column B              | Column C     | Column D           | Column E                    | Column F                    | Column G               | Column H              | Column I              | Column J                               | Column K                     | Column L                     | Column M                | Column N               | Column O               | Column P                                | Column Q                           | Column R                            | Column S               |
-    | User Group            | Billing Code | Total GB Purchased | Server Quota Purchased (GB) | Server Quota Allocated (GB) | Server Quota Used (GB) | Server Keys Purchased | Server Keys Activated | Server Keys Assigned But Not Activated | Desktop Quota Purchased (GB) | Desktop Quota Allocated (GB) | Desktop Quota Used (GB) | Desktop Keys Purchased | Desktop Keys Activated | Desktop Keys Assigned But Not Activated | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
-    | (default user group)  |              | 140                |                             | 0                           | 0                      |                       | 0                     | 0                                      |                              | 0                            | 0                       |                        | 0                      | 0                                       |                                    |                                     | $0.598571428571429     |
+    | Column A | Column B              | Column C     | Column D           | Column E                    | Column F                    | Column G               | Column H              | Column I              | Column J                               | Column K                     | Column L                     | Column M                | Column N               | Column O               | Column P                                | Column Q                           | Column R                            | Column S               |
+    | Partner  | User Group            | Billing Code | Total GB Purchased | Server Quota Purchased (GB) | Server Quota Allocated (GB) | Server Quota Used (GB) | Server Keys Purchased | Server Keys Activated | Server Keys Assigned But Not Activated | Desktop Quota Purchased (GB) | Desktop Quota Allocated (GB) | Desktop Quota Used (GB) | Desktop Keys Purchased | Desktop Keys Activated | Desktop Keys Assigned But Not Activated | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
+    | @name    | (default user group)  |              | 140                |                             | 0                           | 0                      |                       | 0                     | 0                                      |                              | 0                            | 0                       |                        | 0                      | 0                                       |                                    |                                     | $0.598571428571429     |
 
   @TC.17849 @require_test_account
   Scenario: Mozy-17849 Verify report type drop down list values in scheduled report view

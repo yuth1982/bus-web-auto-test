@@ -21,6 +21,11 @@ module AutomationWebDriver
       @driver.navigate.to(url)
     end
 
+    # Public:
+    #
+    #
+    #
+    # Returns firefox profile
     def custom_profile
       dir = File.expand_path("../../downloads", File.dirname(__FILE__))
       profile = Selenium::WebDriver::Firefox::Profile.new

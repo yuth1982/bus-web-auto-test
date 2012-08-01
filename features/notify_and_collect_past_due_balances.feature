@@ -51,7 +51,7 @@ Feature: Notify about and collect past-due balances
     And I change account status to Active Dunning 1
     Then Status changed successful message should be Account status changed
     When I wait for 30 seconds
-    When I log in zimbra as default account
+    When I log in zimbra as default zimbra account
     And I search email to match all keywords:
     | from                    | date    | subject                                          | content                                      |
     | AccountManager@mozy.com | @today  | [Mozy] Your credit card payment was unsuccessful | Hi, @first_name AND (Visa) ************@XXXX |
@@ -66,7 +66,7 @@ Feature: Notify about and collect past-due balances
     And I change account status to Active Dunning 2
     Then Status changed successful message should be Account status changed
     When I wait for 30 seconds
-    When I log in zimbra as default account
+    When I log in zimbra as default zimbra account
     And I search email to match all keywords:
     | from                    | date    | subject               | content                                      |
     | AccountManager@mozy.com | @today  | [Mozy] SECOND NOTICE  | Hi, @first_name AND (Visa) ************@XXXX |
@@ -81,7 +81,7 @@ Feature: Notify about and collect past-due balances
     And I change account status to Active Dunning 3
     Then Status changed successful message should be Account status changed
     When I wait for 30 seconds
-    When I log in zimbra as default account
+    When I log in zimbra as default zimbra account
     And I search email to match all keywords:
     | from                    | date    | subject                                          | content         |
     | AccountManager@mozy.com | @today  | [Mozy] Your account will be suspended in 7 days  | Hi, @first_name |
@@ -96,7 +96,7 @@ Feature: Notify about and collect past-due balances
     And I change account status to Suspended
     Then Status changed successful message should be Account status changed
     When I wait for 60 seconds
-    And I log in zimbra as default account
+    And I log in zimbra as default zimbra account
     And I search email to match all keywords:
     | from        | date    | subject                                    | content           |
     | ar@mozy.com | @today  | There was a problem with your Mozy payment | Dear @first_name, |

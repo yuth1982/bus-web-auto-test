@@ -10,6 +10,12 @@ module Aria
     element(:save_status_change_btn, {:id => "submit-button"})
     element(:message_div, {:class => "error-box"})
 
+    # Public: Change aria account status
+    #
+    # Example
+    #   @aria_admin_console_page.accounts_page.account_overview_view.account_status_view.change_account_status("Active Dunning 1")
+    #
+    # Returns nothing
     def change_account_status(status_code)
       change_acc_status_link.click
       driver.find_element(:xpath, "//td[text() = '#{status_code.upcase}']").previous_sibling.first_child.click
@@ -18,6 +24,13 @@ module Aria
       sleep 10 # wait for status to take effect
     end
 
+    # Public: Messages for change account status actions
+    #
+    # Example
+    #   @aria_admin_console_page.accounts_page.account_overview_view.account_status_view.message_text
+    #  # => "Account status changed"
+    #
+    # Returns success or error message text
     def message_text
       message_div.text
     end

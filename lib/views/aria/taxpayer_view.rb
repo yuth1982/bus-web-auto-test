@@ -12,20 +12,46 @@ module Aria
     element(:federal_tax_exempt_cb, {:xpath =>"//input[@name='inFederalTaxExempt']"})
     element(:state_tax_exempt_cb, {:xpath =>"//input[@name='inStateProvTaxExempt']"})
 
-    def taxpayer_id_text
+    # Public: Account VAT number
+    #
+    # Example
+    #   @aria_admin_console_page.accounts_page.account_overview_view.taxpayer_view
+    #   # => "BE0883236072"
+    #
+    # Returns taxpayer VAT number text
+    def vat_number_text
       taxpayer_id_dd.text
     end
 
+    # Public: Account tax exempt status
+    #
+    # Example
+    #   @aria_admin_console_page.accounts_page.account_overview_view.tax_exempt_status_text
+    #   # => "Account is exempt from both federal/national and state/province taxation."
+    #
+    # Returns account tax exempt status
     def tax_exempt_status_text
       tax_exempt_status_dd.text
     end
 
+    # Public: Change federal exempt taxes status to true/false
+    #
+    # Example
+    #   @aria_admin_console_page.accounts_page.account_overview_view.set_federal_exempt_taxes(true)
+    #
+    # Returns nothing
     def set_federal_exempt_taxes(status)
       edit_tax_exempt_btn.click
       federal_tax_exempt_cb.uncheck unless status
       save_tax_exempt_btn.click
     end
 
+    # Public: Change state exempt taxes status to true/false
+    #
+    # Example
+    #   @aria_admin_console_page.accounts_page.account_overview_view.set_state_exempt_taxes(true)
+    #
+    # Returns nothing
     def set_state_exempt_taxes(status)
       edit_tax_exempt_btn.click
       state_tax_exempt_cb.uncheck unless status

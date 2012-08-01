@@ -15,7 +15,7 @@ module Bus
     #   @bus_admin_console_page.billing_history_view.billing_history_tb_header_text
     #   # => ["Date", "Amount", "Total Paid", "Balance Due"]
     #
-    # Return the billing history table header row text array
+    # Returns the billing history table header row text array
     def billing_history_tb_header_text
       billing_history_table.header_row_text
     end
@@ -27,7 +27,7 @@ module Bus
     #   @bus_admin_console_page.billing_history_view.billing_history_tb_header_text
     #   # => [["07/30/12", "$439.89", "$439.89", "$0.00"], ["07/31/12", "95.00", "95.00", "$0.00"]]
     #
-    # Return the billing history table body rows text array
+    # Returns the billing history table body rows text array
     def billing_history_tb_rows_text
       billing_history_table.body_rows_text
     end

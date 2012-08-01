@@ -36,19 +36,36 @@ module Bus
       verify_shipping_address_table.body_rows_text.map{ |row| row[0] }
     end
 
+    # Public: Click create order tab
+    #
+    # Example
+    #    @bus_admin_console_page.process_order_view.go_to_create_order_section
+    #
+    # Return nothing
     def go_to_create_order_section
         next_btns[0].click
     end
 
+    # Public: Click summary tab
+    #
+    # Example
+    #    @bus_admin_console_page.process_order_view.go_to_summary_section
+    #
+    # Return nothing
     def go_to_summary_section
       next_btns[1].click
     end
 
-    # Array[string]
     def shipping_address_text
       [name_tb.value,address1_tb.value,address2_tb.value,city_tb.value,state_tb.value,country_select.first_selected_option.text,zip_tb.value,phone_tb.value,power_adapter_select.first_selected_option.text]
     end
 
+    # Public: Process a data shuttle order
+    #
+    #  Example
+    #    @bus_admin_console_page.process_order_view.create_order(order_object)
+    #
+    # Return nothing
     def create_order(order)
       # fill shipping address section
       power_adapter_select.select_by(:text, order.adapter_type)
@@ -84,10 +101,25 @@ module Bus
       sleep 10 # wait for complete ordering data shuttle
     end
 
+    # Public: Messages for process order actions
+    #
+    # Example
+    #  @bus_admin_console_page.process_order_view.message_text
+    #  # => "Please select the power adapter type."
+    #
+    # Returns success or error message text
     def message_text
       message_div.text
     end
 
+    # Public: Data shuttle order summary table rows text
+    #
+    # Example
+    #   @bus_admin_console_page.add_new_partner_view.order_summary_tb_rows_text
+    #   # => [["Data Shuttle 1.8 TB","1","$137.50"],
+    #         ["Total Price","","$137.50"]]
+    #
+    # Returns order summary table rows text
     def order_summary_tb_rows_text
       summary_tables[1].body_rows_text
     end
@@ -125,7 +157,6 @@ module Bus
     def discount_tb
       licence_key_table.body_rows.first.last.find_element(:tag_name, "input")
     end
-
 
   end
 end

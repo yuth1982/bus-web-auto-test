@@ -2,7 +2,7 @@
 
 When /^I add a MozyPro partner with (\d+) month\(s\) period, (.+) base plan, (has|no) server plan, (no|.+) coupon, (.+) country, (.+) VAT number, (credit card|net terms) payment$/ do |period, base_plan, has_server_plan, coupon, country, vat_number, payment|
   step "I navigate to Add New Partner view from bus admin console page"
-  @partner = Bus::MozyPro.new
+  @partner = Bus::DataObj::MozyPro.new
   @partner.subscription_period = period
   if base_plan.eql?("no")
     @partner.has_initial_purchase = false
@@ -30,7 +30,7 @@ end
 
 When /^I add a MozyEnterprise partner with (\d+) month\(s\) period, (\d+) user\(s\), (no|.+) server plan, (\d+) server add-on, (no|.+) coupon, (.+) country, (.+) VAT number, (credit card|net terms) payment$/ do |period, num_users, server_plan, num_add_on, coupon, country, vat_number, payment|
   step "I navigate to Add New Partner view from bus admin console page"
-  @partner = Bus::MozyEnterprise.new
+  @partner = Bus::DataObj::MozyEnterprise.new
   @partner.subscription_period = period
   if num_users.to_i == 0 and server_plan.eql?("no") and num_add_on.to_i == 0
     @partner.has_initial_purchase = false
@@ -58,7 +58,7 @@ end
 # Create Reseller Partner Steps
 When /^I add a Reseller partner with (\d+) month\(s\) period, (\w+ Reseller), (\d+) GB base plan, (has|no) server plan, (\d+) add-on, (no|.+) coupon, (.+) country, (.+) VAT number, (credit card|net terms) payment$/ do |period, reseller_type, reseller_quota, has_server_plan, add_on_quota, coupon, country, vat_number,payment|
   step "I navigate to Add New Partner view from bus admin console page"
-  @partner = Bus::Reseller.new
+  @partner = Bus::DataObj::Reseller.new
   @partner.subscription_period = period
   if reseller_quota.to_i == 0 and has_server_plan.eql?("no") and add_on_quota.to_i == 0
     @partner.has_initial_purchase = false

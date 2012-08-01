@@ -13,16 +13,37 @@ module Aria
     elements(:notify_methods_td, {:xpath => "#{NOTIFY_METHODS_TXT_LOC}"})
     elements(:notify_methods_rb, {:xpath => "#{NOTIFY_METHODS_TXT_LOC}/input"})
 
+    # Public: List notification methods text
+    #
+    # Example
+    #    @aria_admin_console_page.accounts_page.notification_method_view.notify_methods_text
+    #    # => ["HTML Email", "Printable (no Email)"]
+    #
+    # Returns notification methods text array
     def notify_methods_text
       notify_methods_td.map{ |cell| cell.text }
     end
 
+    # Public: List notification methods text
+    #
+    # Example
+    #    @aria_admin_console_page.accounts_page.notification_method_view.change_notify_method
+    #    # => ["HTML Email", "Printable (no Email)"]
+    #
+    # Returns notification methods text array
     def change_notify_method(method)
       index = notify_methods_text.index(method)
       notify_methods_rb[index].click
       change_notify_method_btn.click
     end
 
+    # Public: Messages for change notification method actions
+    #
+    # Example
+    #  @bus_admin_console_page.accounts_page.notification_method_view.message_text
+    #  # => "This account is currently notified via method "Printable (no Email)"."
+    #
+    # Returns success or error message text
     def message_text
       notify_msg_div.text
     end

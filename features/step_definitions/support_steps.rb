@@ -7,6 +7,10 @@ Transform /^aria admin$/ do |step_arg|
   Hash[:user_name => "shipu", :password => "1234test"]
 end
 
+Transform /^default zimbra account$/ do |step_arg|
+  Hash[:user_name => "qa1@mozy.com", :password => "QAwelcome"]
+end
+
 Transform /^mozypro test account$/ do |step_arg|
   Hash[:user_name => "qa1+frank+moreno+2012@mozy.com", :password => Bus::DEFAULT_PWD]
 end

@@ -13,10 +13,10 @@ class Unused < Cucumber::Formatter::Stepdefs
   def print_summary(features)
     add_unused_stepdefs
     keys = @stepdef_to_match.keys.sort {|a,b| a.regexp_source <=> b.regexp_source}
-    puts "The following steps are unused...\n---------"
+    puts "The following steps are unused:"
     keys.each do |stepdef_key|
       if @stepdef_to_match[stepdef_key].none?
-        puts "#{stepdef_key.regexp_source}\n#{stepdef_key.file_colon_line}\n---"
+        puts "#{stepdef_key.regexp_source}\n#{stepdef_key.file_colon_line}\n"
       end
     end
   end

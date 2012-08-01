@@ -27,7 +27,7 @@ module Bus
     # Example
     #   @bus_admin_console_page.partner_details_view.act_as_partner
     #
-    # Return nothing
+    # Returns nothing
     def act_as_partner
       act_as_link.click
     end
@@ -37,7 +37,7 @@ module Bus
     # Example
     #   @bus_admin_console_page.partner_details_view.delete_partner("test1234")
     #
-    # Return nothing
+    # Returns nothing
     def delete_partner(password)
       delete_partner_link.click
       cancellation_submit_btn.click

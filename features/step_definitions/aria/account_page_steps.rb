@@ -7,7 +7,7 @@ end
 #
 Then /^Taxpayer id should be (.+)$/ do |id|
   @aria_admin_console_page.switch_to_inner_work_frame
-  @aria_admin_console_page.accounts_page.account_overview_view.taxpayer_view.taxpayer_id_text.should == id
+  @aria_admin_console_page.accounts_page.account_overview_view.taxpayer_view.vat_number_text.should == id
 end
 
 Then /^Tax exemption status should be (.+)$/ do |status|
@@ -29,7 +29,7 @@ end
 #
 When /^I change account status to (.+)$/ do |status_code|
   @aria_admin_console_page.switch_to_inner_work_frame
-  @aria_admin_console_page.accounts_page.account_overview_view.navigate_to_change_status_view
+  @aria_admin_console_page.accounts_page.account_overview_view.navigate_to_link("Status")
   @aria_admin_console_page.accounts_page.account_overview_view.account_status_view.change_account_status(status_code)
 end
 
@@ -46,7 +46,7 @@ end
 When /I change collections account group to (.+)$/ do |account_group|
   step "I navigate to Account Groups view from Accounts page"
   @aria_admin_console_page.switch_to_inner_work_frame
-  @aria_admin_console_page.accounts_page.account_groups_view.change_to_cag(account_group)
+  @aria_admin_console_page.accounts_page.account_groups_view.change_cag(account_group)
 end
 
 Then /^Change account group message should be (.+)$/ do |message|

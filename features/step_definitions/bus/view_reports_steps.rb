@@ -46,12 +46,18 @@ When /^I download (.+) quick report$/ do |report_name|
   @bus_admin_console_page.quick_reports_view.download_report(report_name)
 end
 
-Then /^Scheduled (.+) report csv file details should be:$/ do |report_type, report_content|
-  @bus_admin_console_page.scheduled_reports_view.read_scheduled_report(report_type).should == report_content.rows
+Then /^Scheduled (.+) report csv file details should be:$/ do |report_type, report_table|
+  report_table.map_column!('Column A') do |value|
+    value.gsub(/@name/,@partner.company_info.name)
+  end
+  @bus_admin_console_page.scheduled_reports_view.read_scheduled_report(report_type).should == report_table.rows
 end
 
-Then /^Quick report (.+) csv file details should be:$/ do |report_type, report_content|
-  @bus_admin_console_page.quick_reports_view.read_csv_report(report_type).should == report_content.rows
+Then /^Quick report (.+) csv file details should be:$/ do |report_type, report_table|
+  report_table.map_column!('Column A') do |value|
+    value.gsub(/@name/,@partner.company_info.name)
+  end
+  @bus_admin_console_page.quick_reports_view.read_quick_report(report_type).should == report_table.rows
 end
 
 When /^I search report by name (.+)$/ do |report_name|

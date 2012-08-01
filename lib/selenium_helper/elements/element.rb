@@ -48,14 +48,23 @@ class Selenium::WebDriver::Element
     find_element(:xpath, "preceding-sibling::*[1]")
   end
 
+  # Public: Get all child elements of current element
+  #
+  # Returns all child elements of current element
   def child
     find_elements(:xpath, "child::*")
   end
 
+  # Public: Get first child element of current element
+  #
+  # Returns first child element of current element
   def first_child
     find_element(:xpath, "child::*[1]")
   end
 
+  # Public: Get descendant elements of current element
+  #
+  # Returns descendant elements of current element
   def descendant
     find_elements(:xpath, "descendant::*")
   end

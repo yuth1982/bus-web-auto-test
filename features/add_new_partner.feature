@@ -169,7 +169,7 @@ Feature: Add a new partner
     | GB - Gold Reseller    | 100      | $3.85      | $385.00     |
     | Server Plan           | 1        | $1,100.00  | $1,100.00   |
     | 50 GB add-on          | 1        | $192.50    | $192.50     |
-    | Discounts Applied     |          |            | $-3.00      |
+    | Discounts Applied     |          |            | -$3.00      |
     | Pre-tax Subtotal      |          |            | $1,674.50   |
     | Total Charges         |          |            | $1,674.50   |
     Then Partner created successful message should be New partner created.

@@ -14,7 +14,7 @@ module Bus
     # Example
     #   @bus_admin_console_page.change_period_view.change_subscription_up("MozyPro annual billing period")
     #
-    # Return nothing
+    # Returns nothing
     def change_subscription_up(link_text)
       driver.find_element(:link, link_text).click
       continue_btn.click
@@ -26,7 +26,7 @@ module Bus
     # Example
     #   @bus_admin_console_page.change_period_view.change_subscription_down("Reseller monthly billing period")
     #
-    # Return nothing
+    # Returns nothing
     def change_subscription_down(link_text)
       driver.find_element(:link, link_text).click
       sleep 10 #wait for change subscription period
@@ -38,7 +38,7 @@ module Bus
     #   @bus_admin_console_page.change_period_view.change_confirmation_text
     #   # => "Are you sure that you want to change your subscription period from yearly to 3-year billing? ... ..."
     #
-    # Return confirmation text
+    # Returns confirmation text
     def change_confirmation_text
       change_confirmation_div.text
     end
@@ -49,7 +49,7 @@ module Bus
     #  @bus_admin_console_page.change_period_view.message_text
     #  # => "Your account has been changed to yearly billing."
     #
-    # Return: success or error message text
+    # Returns success or error message text
     def message_text
       message_div.text
     end
@@ -60,7 +60,7 @@ module Bus
     #   @bus_admin_console_page.change_period_view.price_tb_header_text
     #   # => ["Description", "Amount"]
     #
-    # Return price table header text
+    # Returns price table header text
     def price_tb_header_text
       price_table.header_row_text
     end
@@ -73,7 +73,7 @@ module Bus
     #         ["Charge for new yearly subscription", "$420.00"]
     #         ["Total amount to be charged", "$420.00"]]
     #
-    # Return price table rows text
+    # Returns price table rows text
     def price_tb_rows_text
       price_table.body_rows_text
     end

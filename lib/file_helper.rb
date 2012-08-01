@@ -4,7 +4,7 @@ class FileHelper
   include Singleton
 
   def default_download_path
-    File.expand_path("../../../downloads", File.dirname(__FILE__))
+    File.expand_path("../downloads", File.dirname(__FILE__))
   end
 
   # Public: read csv file
@@ -12,7 +12,7 @@ class FileHelper
   # Example
   #   FileHelper.read_csv_file("Billing_summary.csv","download_folder")
   #
-  # Return cvs rows array
+  # Returns cvs rows array
   def read_csv_file(file_name, file_path = default_download_path)
     report_file = Dir.glob("#{file_path}/#{file_name}.csv").first
     rows = []

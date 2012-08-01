@@ -3,7 +3,8 @@ module AutomationWebDriver
     module TextField
       # Public: type text into text field
       #
-      # value - input text
+      # Example
+      #   element.type_text("hello")
       #
       # Returns nothing
       def type_text(value)
@@ -13,7 +14,8 @@ module AutomationWebDriver
 
       # Public: append text into text field
       #
-      # value - input text
+      # Example
+      #   element.append_text("hello")
       #
       # Returns nothing
       def append_text(value)

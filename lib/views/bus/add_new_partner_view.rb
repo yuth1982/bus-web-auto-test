@@ -65,7 +65,7 @@ module Bus
     # Example
     #   @bus_admin_console_page.add_new_partner_view.add_new_account(partner_object)
     #
-    # Return nothing
+    # Returns nothing
     def add_new_account(partner)
       fill_company_info(partner.company_info)
       fill_partner_info(partner.partner_info)
@@ -97,7 +97,7 @@ module Bus
     #  @bus_admin_console_page.add_new_partner_view.message_text
     #  # => "New partner created."
     #
-    # Return: success or error message text
+    # Returns success or error message text
     def message_text
       message_div.text
     end
@@ -112,7 +112,7 @@ module Bus
     #         ["Pre-tax Subtotal","","","$18.99"],
     #         ["Total Charges","","","$18.99"]]
     #
-    # Return order summary table rows text
+    # Returns order summary table rows text
     def order_summary_tb_rows_text
       order_summary_table.body_rows_text
     end

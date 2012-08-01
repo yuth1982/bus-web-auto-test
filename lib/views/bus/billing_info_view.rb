@@ -15,9 +15,9 @@ module Bus
     element(:vat_info_table, {:xpath => "//div[starts-with(@id,'partner-billing-info-vat-')]/table"})
     elements(:tables, {:xpath => "//div[@id='#{BILLING_INFO_LOC}']//table"})
 
-    # Public: Click change link, and the page will be taken to change period view
+    # Public: Click change link
     #
-    # Return nothing
+    # Returns nothing
     def navigate_to_change_period_view
       change_subscription_link.click
     end
@@ -32,7 +32,7 @@ module Bus
     #        ["Amount", "$39.99 (Without taxes or discounts)"],
     #        ["Payment Type", "Visa ending in 7014 (change)"]]
     #
-    # Return next renewal table rows text array
+    # Returns next renewal table rows text array
     def next_renewal_tb_rows_text
       tables[0].body_rows_text
     end
@@ -44,7 +44,7 @@ module Bus
     #  @bus_admin_console_page.billing_info_view.supp_plan_tb_rows_text
     #  # => [["Total price for 50 GB", "$19.99"]]
     #
-    # Return supplemental table rows text array
+    # Returns supplemental table rows text array
     def supp_plan_tb_rows_text
       tables[1].body_rows_text
     end
@@ -57,7 +57,7 @@ module Bus
     #  # => [["VAT Number", "BE0883236072"]]
     #
     #
-    # Return next renewal table rows text array
+    # Returns next renewal table rows text array
     def vat_tb_rows_text
       vat_info_table.body_rows_text
     end
@@ -69,7 +69,7 @@ module Bus
     #  @bus_admin_console_page.billing_info_view.autogrow_status_text
     #  # => "Disabled (more info)"
     #
-    # Return the auto grow status text
+    # Returns the auto grow status text
     def autogrow_status_text
       autogrow_status_th.next_sibling.text
     end
@@ -81,7 +81,7 @@ module Bus
     #  @bus_admin_console_page.billing_info_view.next_renewal_text_align_css
     #  # => "left"
     #
-    # Return Next renewal label text align style
+    # Returns Next renewal label text align style
     def next_renewal_text_align_css
       next_renewal_h4.style("text-align")
     end

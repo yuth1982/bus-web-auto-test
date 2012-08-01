@@ -22,13 +22,12 @@ module Bus
 
     section(:change_payment_info_view, ChangePaymentInfoView)
 
-
-    # Public: Click the link on admin console navigation menu
+    # Public: Click link on bus admin console navigation menu
     #
     # Example
     #   @bus_admin_console_page.navigate_to_link("Add New Partner")
     #
-    # Return nothing
+    # Returns nothing
     def navigate_to_link(link_name)
       driver.find_element(:link, link_name).click
     end
