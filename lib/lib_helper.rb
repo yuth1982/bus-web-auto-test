@@ -9,7 +9,6 @@ require 'forgery'
 require 'csv'
 
 require "selenium_helper/create_selenium_web_driver"
-require "selenium_helper/driver_ext"
 require "selenium_helper/page_object_components"
 require "selenium_helper/page_validator"
 require "selenium_helper/page_object"

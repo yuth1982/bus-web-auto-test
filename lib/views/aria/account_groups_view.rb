@@ -7,7 +7,7 @@ module Aria
     element(:cybersource_credit_card, {:xpath => "//input[@value='10026095']"})
     element(:fail_test_cag, {:xpath => "//input[@value='10030097']"})
 
-    element(:change_cag, {:id => "submit-button"})
+    element(:submit_cag_btn, {:id => "submit-button"})
     element(:message_div, {:class => "error-box"})
 
     # Public: Change account CAG type
@@ -24,7 +24,7 @@ module Aria
            cybersource_credit_card.click
          else
        end
-       change_cag.click
+       submit_cag_btn.click
     end
 
     # Public: Messages for change account group actions

@@ -3,10 +3,16 @@ require 'singleton'
 class FileHelper
   include Singleton
 
+  # Public: Default download folder for files
+  #
+  # Returns default download path
   def default_download_path
     File.expand_path("../downloads", File.dirname(__FILE__))
   end
 
+  # Public: Download folder for Firefox
+  #
+  # Returns firefox download folder
   def ff_download_path
     default_download_path.gsub(File::SEPARATOR, File::ALT_SEPARATOR || File::SEPARATOR)
   end

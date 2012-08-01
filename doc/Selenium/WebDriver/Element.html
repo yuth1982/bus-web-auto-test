@@ -1,0 +1,865 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: Selenium::WebDriver::Element
+  
+    &mdash; Documentation by YARD 0.8.2.1
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../../';
+  framesUrl = "../../frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (E)</a> &raquo;
+    <span class='title'>Selenium</span> &raquo; <span class='title'>WebDriver</span>
+     &raquo; 
+    <span class="title">Element</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: Selenium::WebDriver::Element
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Selenium::WebDriver::Element</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+      <dt class="r2">Includes:</dt>
+      <dd class="r2"><span class='object_link'><a href="../../AutomationWebDriver/Elements/CheckBox.html" title="AutomationWebDriver::Elements::CheckBox (module)">AutomationWebDriver::Elements::CheckBox</a></span>, <span class='object_link'><a href="../../AutomationWebDriver/Elements/Link.html" title="AutomationWebDriver::Elements::Link (module)">AutomationWebDriver::Elements::Link</a></span>, <span class='object_link'><a href="../../AutomationWebDriver/Elements/Table.html" title="AutomationWebDriver::Elements::Table (module)">AutomationWebDriver::Elements::Table</a></span>, <span class='object_link'><a href="../../AutomationWebDriver/Elements/TextField.html" title="AutomationWebDriver::Elements::TextField (module)">AutomationWebDriver::Elements::TextField</a></span></dd>
+      
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/selenium_helper/elements/element.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Add extension method to Element class</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#child-instance_method" title="#child (instance method)">- (Object) <strong>child</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Get all child elements of current element.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#descendant-instance_method" title="#descendant (instance method)">- (Object) <strong>descendant</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Get descendant elements of current element.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#first_child-instance_method" title="#first_child (instance method)">- (Object) <strong>first_child</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Get first child element of current element.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#id-instance_method" title="#id (instance method)">- (Object) <strong>id</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: element's id attribute value.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#method_missing-instance_method" title="#method_missing (instance method)">- (Object) <strong>method_missing</strong>(method_name, *args) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#name-instance_method" title="#name (instance method)">- (Object) <strong>name</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: element's name attribute value.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#next_sibling-instance_method" title="#next_sibling (instance method)">- (Object) <strong>next_sibling</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Get next sibling element of current element.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parent-instance_method" title="#parent (instance method)">- (Object) <strong>parent</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Get parent element of current element.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#previous_sibling-instance_method" title="#previous_sibling (instance method)">- (Object) <strong>previous_sibling</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Get previous sibling element of current element.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#value-instance_method" title="#value (instance method)">- (Object) <strong>value</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: element's value attribute value.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../../AutomationWebDriver/Elements/TextField.html" title="AutomationWebDriver::Elements::TextField (module)">AutomationWebDriver::Elements::TextField</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../../AutomationWebDriver/Elements/TextField.html#append_text-instance_method" title="AutomationWebDriver::Elements::TextField#append_text (method)">#append_text</a></span>, <span class='object_link'><a href="../../AutomationWebDriver/Elements/TextField.html#type_text-instance_method" title="AutomationWebDriver::Elements::TextField#type_text (method)">#type_text</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../../AutomationWebDriver/Elements/Table.html" title="AutomationWebDriver::Elements::Table (module)">AutomationWebDriver::Elements::Table</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../../AutomationWebDriver/Elements/Table.html#body_rows-instance_method" title="AutomationWebDriver::Elements::Table#body_rows (method)">#body_rows</a></span>, <span class='object_link'><a href="../../AutomationWebDriver/Elements/Table.html#body_rows_text-instance_method" title="AutomationWebDriver::Elements::Table#body_rows_text (method)">#body_rows_text</a></span>, <span class='object_link'><a href="../../AutomationWebDriver/Elements/Table.html#foot_row-instance_method" title="AutomationWebDriver::Elements::Table#foot_row (method)">#foot_row</a></span>, <span class='object_link'><a href="../../AutomationWebDriver/Elements/Table.html#foot_row_text-instance_method" title="AutomationWebDriver::Elements::Table#foot_row_text (method)">#foot_row_text</a></span>, <span class='object_link'><a href="../../AutomationWebDriver/Elements/Table.html#header_row-instance_method" title="AutomationWebDriver::Elements::Table#header_row (method)">#header_row</a></span>, <span class='object_link'><a href="../../AutomationWebDriver/Elements/Table.html#header_row_text-instance_method" title="AutomationWebDriver::Elements::Table#header_row_text (method)">#header_row_text</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../../AutomationWebDriver/Elements/Link.html" title="AutomationWebDriver::Elements::Link (module)">AutomationWebDriver::Elements::Link</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../../AutomationWebDriver/Elements/Link.html#href-instance_method" title="AutomationWebDriver::Elements::Link#href (method)">#href</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../../AutomationWebDriver/Elements/CheckBox.html" title="AutomationWebDriver::Elements::CheckBox (module)">AutomationWebDriver::Elements::CheckBox</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../../AutomationWebDriver/Elements/CheckBox.html#check-instance_method" title="AutomationWebDriver::Elements::CheckBox#check (method)">#check</a></span>, <span class='object_link'><a href="../../AutomationWebDriver/Elements/CheckBox.html#checked%3F-instance_method" title="AutomationWebDriver::Elements::CheckBox#checked? (method)">#checked?</a></span>, <span class='object_link'><a href="../../AutomationWebDriver/Elements/CheckBox.html#uncheck-instance_method" title="AutomationWebDriver::Elements::CheckBox#uncheck (method)">#uncheck</a></span></p>
+<div id="method_missing_details" class="method_details_list">
+  <h2>Dynamic Method Handling</h2>
+  <p class="notice this">
+    This class handles dynamic methods through the <tt>method_missing</tt> method
+    
+  </p>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="method_missing-instance_method">
+  
+    - (<tt>Object</tt>) <strong>method_missing</strong>(method_name, *args) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+72
+73
+74
+75
+76
+77</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/selenium_helper/elements/element.rb', line 72</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_method_missing'>method_missing</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_select_methods'>select_methods</span> <span class='op'>=</span> <span class='const'>Selenium</span><span class='op'>::</span><span class='const'>WebDriver</span><span class='op'>::</span><span class='const'>Support</span><span class='op'>::</span><span class='const'>Select</span><span class='period'>.</span><span class='id identifier rubyid_instance_methods'>instance_methods</span> <span class='op'>-</span> <span class='const'>Object</span><span class='period'>.</span><span class='id identifier rubyid_methods'>methods</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_select_methods'>select_methods</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rparen'>)</span>
+    <span class='const'>Selenium</span><span class='op'>::</span><span class='const'>WebDriver</span><span class='op'>::</span><span class='const'>Support</span><span class='op'>::</span><span class='const'>Select</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="child-instance_method">
+  
+    - (<tt>Object</tt>) <strong>child</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Get all child elements of current element</p>
+
+<p>Returns all child elements of current element</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+54
+55
+56</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/selenium_helper/elements/element.rb', line 54</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_child'>child</span>
+  <span class='id identifier rubyid_find_elements'>find_elements</span><span class='lparen'>(</span><span class='symbol'>:xpath</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>child::*</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="descendant-instance_method">
+  
+    - (<tt>Object</tt>) <strong>descendant</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Get descendant elements of current element</p>
+
+<p>Returns descendant elements of current element</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+68
+69
+70</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/selenium_helper/elements/element.rb', line 68</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_descendant'>descendant</span>
+  <span class='id identifier rubyid_find_elements'>find_elements</span><span class='lparen'>(</span><span class='symbol'>:xpath</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>descendant::*</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="first_child-instance_method">
+  
+    - (<tt>Object</tt>) <strong>first_child</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Get first child element of current element</p>
+
+<p>Returns first child element of current element</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+61
+62
+63</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/selenium_helper/elements/element.rb', line 61</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_first_child'>first_child</span>
+  <span class='id identifier rubyid_find_element'>find_element</span><span class='lparen'>(</span><span class='symbol'>:xpath</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>child::*[1]</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="id-instance_method">
+  
+    - (<tt>Object</tt>) <strong>id</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: element's id attribute value</p>
+
+<p>Returns a string of element's id attribute value</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+12
+13
+14</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/selenium_helper/elements/element.rb', line 12</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_id'>id</span>
+  <span class='id identifier rubyid_attribute'>attribute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>id</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="name-instance_method">
+  
+    - (<tt>Object</tt>) <strong>name</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: element's name attribute value</p>
+
+<p>Returns a string of element's name attribute value</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+19
+20
+21</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/selenium_helper/elements/element.rb', line 19</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_name'>name</span>
+  <span class='id identifier rubyid_attribute'>attribute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>name</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="next_sibling-instance_method">
+  
+    - (<tt>Object</tt>) <strong>next_sibling</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Get next sibling element of current element</p>
+
+<p>Returns next sibling element of current element</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+40
+41
+42</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/selenium_helper/elements/element.rb', line 40</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_next_sibling'>next_sibling</span>
+  <span class='id identifier rubyid_find_element'>find_element</span><span class='lparen'>(</span><span class='symbol'>:xpath</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>following-sibling::*[1]</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="parent-instance_method">
+  
+    - (<tt>Object</tt>) <strong>parent</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Get parent element of current element</p>
+
+<p>Returns parent element of current element</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+33
+34
+35</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/selenium_helper/elements/element.rb', line 33</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_parent'>parent</span>
+  <span class='id identifier rubyid_find_element'>find_element</span><span class='lparen'>(</span><span class='symbol'>:xpath</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>..</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>  <span class='comment'>#parent::*[1]
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="previous_sibling-instance_method">
+  
+    - (<tt>Object</tt>) <strong>previous_sibling</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Get previous sibling element of current element</p>
+
+<p>Returns previous sibling element of current element</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+47
+48
+49</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/selenium_helper/elements/element.rb', line 47</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_previous_sibling'>previous_sibling</span>
+  <span class='id identifier rubyid_find_element'>find_element</span><span class='lparen'>(</span><span class='symbol'>:xpath</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>preceding-sibling::*[1]</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="value-instance_method">
+  
+    - (<tt>Object</tt>) <strong>value</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: element's value attribute value</p>
+
+<p>Returns a string of element's value attribute value</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+26
+27
+28</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/selenium_helper/elements/element.rb', line 26</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_value'>value</span>
+  <span class='id identifier rubyid_attribute'>attribute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>value</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Wed Aug  1 21:53:50 2012 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.2.1 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>

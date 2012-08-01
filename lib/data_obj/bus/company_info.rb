@@ -1,7 +1,11 @@
 module Bus
   module DataObj
+    # This class contains attributes for company information
     class CompanyInfo
       attr_accessor :name, :address, :city, :state_abbrev, :state, :country, :zip, :phone, :vat_num
+
+      # Public: Initialize a CompanyInfo Object
+      #
       def initialize
         @name = "#{Forgery::Name.company_name} #{Forgery::Name.industry} Company"
         @address= Forgery::Address.street_address

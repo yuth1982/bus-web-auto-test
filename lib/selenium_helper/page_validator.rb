@@ -1,5 +1,9 @@
 module AutomationWebDriver
   module PageValidator
+
+    # Public: Validate all element in page object
+    #
+    # Returns nothing
     def validate_elements
       page_class = self.class
       raise("Cannot find driver") if driver.nil?

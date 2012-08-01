@@ -1,7 +1,11 @@
 module Bus
   module DataObj
+    # This class contains attributes for credit card information
     class CreditCard
       attr_accessor :first_name, :last_name, :number, :cvv, :expire_month, :expire_year
+
+      # Public: Initialize a CreditCard Object
+      #
       def initialize
         @first_name = Forgery::Name.first_name
         @last_name = Forgery::Name.last_name
