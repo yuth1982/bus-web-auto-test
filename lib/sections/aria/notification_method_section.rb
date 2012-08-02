@@ -1,5 +1,5 @@
 module Aria
-  # This class provides actions for notification method view
+  # This class provides actions for notification method page section
   class NotificationMethodSection < PageObject
 
     # Constants

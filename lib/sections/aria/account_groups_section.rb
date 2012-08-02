@@ -1,5 +1,5 @@
 module Aria
-  # This class provides actions for account groups view
+  # This class provides actions for account groups page section
   class AccountGroupsSection < PageObject
 
     # Private elements

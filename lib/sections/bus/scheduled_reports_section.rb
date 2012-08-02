@@ -1,5 +1,5 @@
 module Bus
-  # This class provides actions for scheduled reports view
+  # This class provides actions for scheduled reports page section
   class ScheduledReportsSection < PageObject
 
     # Private elements
@@ -26,7 +26,7 @@ module Bus
     #
     # Returns first 6 columns of report table rows text
     def reports_tb_rows_text
-      reports_table.body_rows_text.map{|row| row[0..5]}
+      reports_table.rows_text.map{|row| row[0..5]}
     end
 
     # Public: Find first matched report row text by report name
@@ -37,7 +37,7 @@ module Bus
     #
     # Returns first matched report row text
     def find_report(report_name)
-      reports_table.body_rows.select{ |row| row[0].text == report_name}.first
+      reports_table.rows.select{ |row| row[0].text == report_name}.first
     end
 
     # Public: Download latest report to download folder

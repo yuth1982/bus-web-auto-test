@@ -1,12 +1,12 @@
 module Bus
-  # This class provides actions for search list partner view
+  # This class provides actions for search list partner page section
   class SearchListPartnerSection < PageObject
 
     # Private elements
     #
-    element(:search_partner_tb, {:id => "pro_partner_search1"})
+    element(:search_partner_tb, {:id => "pro_partner_search"})
     element(:search_partner_btn, {:xpath => "//div[@id='partner-list-content']//input[@value='Submit']"})
-    element(:search_results_table, {:xpath => "//div[@id='partner-list-content']//table[@class='table-view']"})
+    element(:search_results_table, {:xpath => "//div[@id='partner-list-content']/div/table"})
     element(:clear_search_link, {:link => "Clear search"})
     element(:include_sub_partners_cb, {:id => "include_subpartners"})
 
@@ -18,8 +18,8 @@ module Bus
     #  # => ["External ID", "Partner", "Created", "Root Admin", "Type", "Users", "Licenses", "Quota"]
     #
     # Returns search results table rows text array
-    def search_results_tb_header_text
-      search_results_table.header_row_text
+    def search_results_tb_headers_text
+      search_results_table.headers_text
     end
 
     # Public: search results table body rows text
@@ -31,7 +31,7 @@ module Bus
     #
     # Return search results table body rows text array
     def search_results_tb_rows_text
-      search_results_table.body_rows_text
+      search_results_table.rows_text
     end
 
     # Public: Search partner by search text

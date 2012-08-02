@@ -1,5 +1,5 @@
 module Aria
-  # This class provides actions for search account view
+  # This class provides actions for search account page section
   class SearchAccountSection < PageObject
 
     # Private elements

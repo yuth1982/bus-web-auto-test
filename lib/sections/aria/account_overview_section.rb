@@ -1,5 +1,5 @@
 module Aria
-  # This class provides actions for account overview view
+  # This class provides actions for account overview page section
   class AccountOverviewSection < PageObject
 
     section(:account_status_section, AccountStatusSection)
@@ -27,7 +27,7 @@ module Aria
     #
     # Returns account status text
     def account_status_text
-      overview_table.body_rows_text[1][3]
+      overview_table.rows_text[1][3]
     end
   end
 end

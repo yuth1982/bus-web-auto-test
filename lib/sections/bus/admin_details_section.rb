@@ -1,5 +1,5 @@
 module Bus
-  # This class provides actions for admin details view
+  # This class provides actions for admin details page section
   class AdminDetailsSection < PageObject
 
     # Private elements

@@ -1,5 +1,5 @@
 module Bus
-  # This class provides actions for order data shuttle view
+  # This class provides actions for order data shuttle page section
   class OrderDataShuttleSection < PageObject
 
     # Private elements

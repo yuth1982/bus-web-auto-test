@@ -1,5 +1,5 @@
 module Bus
-  # This class provides actions for change billing period view
+  # This class provides actions for change billing period page section
   class ChangePeriodSection < PageObject
 
     # Private elements
@@ -61,8 +61,8 @@ module Bus
     #   # => ["Description", "Amount"]
     #
     # Returns price table header text
-    def price_tb_header_text
-      price_table.header_row_text
+    def price_tb_headers_text
+      price_table.headers_text
     end
 
     # Public: Change subscription period price table rows text
@@ -75,7 +75,7 @@ module Bus
     #
     # Returns price table rows text
     def price_tb_rows_text
-      price_table.body_rows_text
+      price_table.rows_text
     end
   end
 end

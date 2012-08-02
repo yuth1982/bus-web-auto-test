@@ -1,5 +1,5 @@
 module Bus
-  # This class provides actions for billing information view
+  # This class provides actions for billing information page section
   class BillingInfoSection < PageObject
 
     # Constants
@@ -34,7 +34,7 @@ module Bus
     #
     # Returns next renewal table rows text array
     def next_renewal_tb_rows_text
-      tables[0].body_rows_text
+      tables[0].rows_text
     end
 
     # Public: supplemental table info in billing information view
@@ -46,7 +46,7 @@ module Bus
     #
     # Returns supplemental table rows text array
     def supp_plan_tb_rows_text
-      tables[1].body_rows_text
+      tables[1].rows_text
     end
 
     # Public: Next renewal table info in billing information view
@@ -59,7 +59,7 @@ module Bus
     #
     # Returns next renewal table rows text array
     def vat_tb_rows_text
-      vat_info_table.body_rows_text
+      vat_info_table.rows_text
     end
 
     # Public: Auto grow status text in billing information view

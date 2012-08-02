@@ -1,5 +1,5 @@
 module Bus
-  # This class provides actions for change payment information view
+  # This class provides actions for change payment information page section
   class ChangePaymentInfoSection < PageObject
 
     # Private elements

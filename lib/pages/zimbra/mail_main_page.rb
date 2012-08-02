@@ -25,7 +25,7 @@ module Zimbra
     #
     # Returns mail table rows element
     def mail_list_rows
-      mail_list.body_rows
+      mail_list.rows
     end
 
     # Public: Click to view first matched email in search results list
@@ -35,7 +35,7 @@ module Zimbra
     #
     # Returns nothing
     def open_first_mail
-      mail_list.body_rows.first[7].find_element(:tag_name,"a").click
+      mail_list.rows.first[7].find_element(:tag_name,"a").click
     end
 
     # Public: Click download link in mail body view

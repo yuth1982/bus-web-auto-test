@@ -1,5 +1,5 @@
 module Bus
-  # This class provides actions for view data shuttle orders view
+  # This class provides actions for view data shuttle orders page section
   class ViewDataShuttleOrdersSection < PageObject
 
     # Private elements
@@ -29,7 +29,7 @@ module Bus
     # Returns Nothing
     def view_latest_order
       sleep 5 # wait until search complete
-      order_results_table.body_rows.first[0].find_element(:tag_name, "a").click
+      order_results_table.rows.first[0].find_element(:tag_name, "a").click
     end
   end
 end

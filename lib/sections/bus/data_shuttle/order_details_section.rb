@@ -1,5 +1,5 @@
 module Bus
-  # This class provides actions for order details view
+  # This class provides actions for order details page section
   class OrderDetailsSection < PageObject
 
     # Private elements
@@ -25,7 +25,7 @@ module Bus
     #
     # Returns Shipping tracking table rows text
     def shipping_tracking_tb_rows_text
-      order_detail_tables[1].body_rows_text
+      order_detail_tables[1].rows_text
     end
 
     # Public: Last created order status
@@ -36,7 +36,7 @@ module Bus
     #
     # Returns status text
     def latest_order_status_text
-      orders_table.body_rows.first[1].text
+      orders_table.rows.first[1].text
     end
 
     private

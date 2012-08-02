@@ -1,5 +1,5 @@
 module Bus
-  # This class provides actions for add new partner view
+  # This class provides actions for add new partner page section
   class AddNewPartnerSection < PageObject
 
     # Private elements
@@ -114,7 +114,7 @@ module Bus
     #
     # Returns order summary table rows text
     def order_summary_tb_rows_text
-      order_summary_table.body_rows_text
+      order_summary_table.rows_text
     end
 
     private

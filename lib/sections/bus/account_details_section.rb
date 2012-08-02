@@ -1,5 +1,5 @@
 module Bus
-  # This class provides actions for account details view
+  # This class provides actions for account details page section
   class AccountDetailsSection < PageObject
 
     # Constants

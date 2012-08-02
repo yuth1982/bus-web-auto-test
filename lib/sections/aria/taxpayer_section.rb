@@ -1,5 +1,5 @@
 module Aria
-  # This class provides actions for s view
+  # This class provides actions for taxpayer page section
   class TaxpayerSection < PageObject
 
     # Private elements

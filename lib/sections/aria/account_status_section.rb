@@ -1,5 +1,5 @@
 module Aria
-  # This class provides actions for account status view
+  # This class provides actions for account status page section
   class AccountStatusSection < PageObject
 
     # Private elements

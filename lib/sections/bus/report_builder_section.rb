@@ -1,5 +1,5 @@
 module Bus
-  # This class provides actions for report builder view
+  # This class provides actions for report builder page section
   class ReportBuilderSection < PageObject
 
     # Private elements
@@ -48,7 +48,7 @@ module Bus
     #
     # Returns available report table rows text
     def available_reports_tb_rows_text
-      available_reports_table.body_rows_text
+      available_reports_table.rows_text
     end
 
     # Public: Report filter options

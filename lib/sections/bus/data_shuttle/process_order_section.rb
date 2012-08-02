@@ -1,5 +1,5 @@
 module Bus
-  # This class provides actions for order a new data shuttle view
+  # This class provides actions for order a new data shuttle page section
   class ProcessOrderSection < PageObject
 
     # Private elements
@@ -33,7 +33,7 @@ module Bus
     element(:submit_order_btn, {:id => "seed_wizard_finish_button"})
 
     def address_desc_column_text
-      verify_shipping_address_table.body_rows_text.map{ |row| row[0] }
+      verify_shipping_address_table.rows_text.map{ |row| row[0] }
     end
 
     # Public: Click create order tab
@@ -121,7 +121,7 @@ module Bus
     #
     # Returns order summary table rows text
     def order_summary_tb_rows_text
-      summary_tables[1].body_rows_text
+      summary_tables[1].rows_text
     end
 
     private
@@ -135,19 +135,19 @@ module Bus
     end
 
     def add_available_key
-      available_keys_table.body_rows.first.last.find_element(:tag_name,"a")
+      available_keys_table.rows.first.last.find_element(:tag_name,"a")
     end
 
     def os_tb
-      order_keys_table.body_rows.first[2].find_element(:tag_name,"select")
+      order_keys_table.rows.first[2].find_element(:tag_name,"select")
     end
 
     def order_quota_tb
-      order_keys_table.body_rows.first[4].find_element(:tag_name,"input")
+      order_keys_table.rows.first[4].find_element(:tag_name,"input")
     end
 
     def order_assign_to_tb
-      order_keys_table.body_rows.first[5].find_element(:tag_name,"input")
+      order_keys_table.rows.first[5].find_element(:tag_name,"input")
     end
 
     def licence_key_table
@@ -155,7 +155,7 @@ module Bus
     end
 
     def discount_tb
-      licence_key_table.body_rows.first.last.find_element(:tag_name, "input")
+      licence_key_table.rows.first.last.find_element(:tag_name, "input")
     end
 
   end

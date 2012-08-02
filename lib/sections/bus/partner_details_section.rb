@@ -1,5 +1,5 @@
 module Bus
-  # This class provides actions for partner details view
+  # This class provides actions for partner details page section
   class PartnerDetailsSection < PageObject
 
     # Constants

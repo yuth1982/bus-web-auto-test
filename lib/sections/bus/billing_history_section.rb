@@ -1,5 +1,5 @@
 module Bus
-  # This class provides actions for billing history view
+  # This class provides actions for billing history page section
   class BillingHistorySection < PageObject
 
     # Private elements
@@ -16,8 +16,8 @@ module Bus
     #   # => ["Date", "Amount", "Total Paid", "Balance Due"]
     #
     # Returns the billing history table header row text array
-    def billing_history_tb_header_text
-      billing_history_table.header_row_text
+    def billing_history_tb_headers_text
+      billing_history_table.headers_text
     end
 
     # Public: billing history table body rows text
@@ -29,7 +29,7 @@ module Bus
     #
     # Returns the billing history table body rows text array
     def billing_history_tb_rows_text
-      billing_history_table.body_rows_text
+      billing_history_table.rows_text
     end
   end
 end

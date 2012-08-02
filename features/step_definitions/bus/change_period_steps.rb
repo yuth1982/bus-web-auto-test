@@ -14,7 +14,7 @@ Then /^Change subscription confirmation message should include (.+)$/ do |messag
 end
 
 Then /^Change subscription price table should be:$/ do |price_table|
-  @bus_admin_console_page.change_period_section.price_tb_header_text.should == price_table.headers
+  @bus_admin_console_page.change_period_section.price_tb_headers_text.should == price_table.headers
   @bus_admin_console_page.change_period_section.price_tb_rows_text.should == price_table.rows
 end
 

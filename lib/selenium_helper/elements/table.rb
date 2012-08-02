@@ -1,32 +1,31 @@
 module AutomationWebDriver
   module Elements
     module Table
-
-      # Public: Elements of table header row
+      # Public: Elements of table header
       #
       # Examples
-      #   header_row
-      #   # => Array<Element>]
+      #   headers
+      #   # => Array<Selenium::WebDriver::Element>
       #
-      # Returns elements of table header row
-      def header_row
+      # Returns WebDriver elements of table header
+      def headers
         begin
-          find_element(:tag_name, "thead").find_element(:tag_name, "tr").child
+          find_elements(:xpath, ".//tr/th")
         rescue
           nil
         end
       end
 
-      # Public: Element array of table body rows
+      # Public: WebDriver elements list of table body rows
       #
       # Examples
-      #   table.body_rows
-      #   # => Array[Array<Element>]]
+      #   table.rows
+      #   # => Array[Array<Selenium::WebDriver::Element>]
       #
-      # Returns an array element of table body rows
-      def body_rows
+      # Returns list of WebDriver elements
+      def rows
         begin
-          find_element(:tag_name, "tbody").find_elements(:tag_name, "tr").map{ |row| row.child }
+          find_elements(:xpath, ".//tbody/tr").map{ |row| row.child }
         rescue
           nil
         end
@@ -35,50 +34,50 @@ module AutomationWebDriver
       # Public: Elements of table foot row
       #
       # Examples
-      #   foot_row
-      #   # => Array<Element>]
+      #   footers
+      #   # => Array<Selenium::WebDriver::Element>]
       #
       # Returns elements of table foot row
-      def foot_row
+      def footers
         begin
-          find_element(:tag_name, "tfoot").find_element(:tag_name, "tr").child
+          find_elements(:xpath, ".//tfoot/tr/td")
         rescue
           nil
         end
       end
 
-      # Public: String array of table header row
+      # Public: Table headers text
       #
       # Examples
-      #   table.header_row_text
+      #   table.headers_text
       #   # => [["Plan","Price"]]
       #
-      # Returns an string array of header row
-      def header_row_text
-        header_row.map { |cell| cell.text } unless header_row.nil?
+      # Returns headers text
+      def headers_text
+        headers.map { |cell| cell.text } unless headers.nil?
       end
 
-      # Public: String array of table body rows
+      # Public: Table body rows text
       #
       # Examples
-      #   table.body_row_text
+      #   table.rows_text
       #   # => [["total","$200.00"],["tax","$15.00"]]
       #
-      # Returns an string array of body rows
-      def body_rows_text
-        body_rows.map { |row| row.map { |cell| cell.text } } unless body_rows.nil?
+      # Returns table rows text
+      def rows_text
+        rows.map { |row| row.map { |cell| cell.text } } unless rows.nil?
       end
 
-      # Public: String array of table foot row
+      # Public: Table footers text
       #
       # Examples
       #
-      #   table.foot_row_text
-      #   # => [["footer 1","footer 2"]]
+      #   table.footers_text
+      #   # => ["footer 1","footer 2"]
       #
-      # Returns an string array of foot row
-      def foot_row_text
-        header_row.map { |cell| cell.text } unless header_row.nil?
+      # Returns table footers text
+      def footers_text
+        footers.map { |cell| cell.text } unless footers.nil?
       end
     end
   end

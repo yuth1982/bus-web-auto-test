@@ -1,5 +1,5 @@
 module Bus
-  # This class provides actions for quick reports view
+  # This class provides actions for quick reports page section
   class QuickReportsSection < PageObject
 
     # Private elements
@@ -13,7 +13,7 @@ module Bus
     #
     # Returns links and description text
     def link_desc_tb_rows_text
-      link_desc_table.body_rows_text
+      link_desc_table.rows_text
     end
 
     # Public: Click quick report name to download the report
