@@ -13,4 +13,4 @@ Feature: View billing history
     And I navigate to Billing History view from bus admin console page
     And Billing history table should be:
     | Date    | Amount  | Total Paid | Balance Due |
-    | @today  | $94.99  | $94.99     | 0.00        |
+    | @today  | $94.99  | $94.99     | $0.00       |

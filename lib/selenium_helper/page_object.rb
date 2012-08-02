@@ -1,6 +1,5 @@
 class PageObject
   extend AutomationWebDriver::PageObjectComponents
-  include AutomationWebDriver::PageValidator
   include AutomationWebDriver::CreateSeleniumWebDriver
 
   # Public: Initialize a Page Object
@@ -16,4 +15,5 @@ class PageObject
   def refresh_page
     @driver.navigate.refresh
   end
+
 end

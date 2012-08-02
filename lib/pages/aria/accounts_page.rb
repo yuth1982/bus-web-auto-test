@@ -2,10 +2,10 @@ module Aria
   # This class provides actions for accounts page
   class AccountsPage < PageObject
 
-    section(:search_account_view, SearchAccountView)
-    section(:account_overview_view, AccountOverviewView)
-    section(:notification_method_view, NotificationMethodView)
-    section(:account_groups_view, AccountGroupsView)
+    section(:search_account_section, SearchAccountSection)
+    section(:account_overview_section, AccountOverviewSection)
+    section(:notification_method_section, NotificationMethodSection)
+    section(:account_groups_section, AccountGroupsSection)
 
     # Public: Click link on aira account page top navigation menu
     #

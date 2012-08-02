@@ -15,7 +15,7 @@ When /^I add a MozyPro partner with (\d+) month\(s\) period, (.+) base plan, (ha
     @partner.net_term_payment = payment.eql?("net terms")
   end
   puts @partner.to_s
-  @bus_admin_console_page.add_new_partner_view.add_new_account(@partner)
+  @bus_admin_console_page.add_new_partner_section.add_new_account(@partner)
 end
 
 When /^I add a MozyPro partner with (\d+) month\(s\) period, (.+) base plan, (has|no) server plan, (no|.+) coupon, (credit card|net terms) payment$/ do |period, base_plan, has_server_plan, coupon, payment|
@@ -44,7 +44,7 @@ When /^I add a MozyEnterprise partner with (\d+) month\(s\) period, (\d+) user\(
     @partner.net_term_payment = payment.eql?("net terms")
   end
   puts @partner.to_s
-  @bus_admin_console_page.add_new_partner_view.add_new_account(@partner)
+  @bus_admin_console_page.add_new_partner_section.add_new_account(@partner)
 end
 
 When /^I add a MozyEnterprise partner with (\d+) month\(s\) period, (\d+) user\(s\), (no|.+) server plan, (no|.+) server add-on, (no|.+) coupon, (credit card|net terms) payment$/ do |period, num_users, server_plan, server_add_on, coupon, payment|
@@ -73,7 +73,7 @@ When /^I add a Reseller partner with (\d+) month\(s\) period, (\w+ Reseller), (\
     @partner.net_term_payment = payment.eql?("net terms")
   end
   puts @partner.to_s
-  @bus_admin_console_page.add_new_partner_view.add_new_account(@partner)
+  @bus_admin_console_page.add_new_partner_section.add_new_account(@partner)
 end
 
 When /^I add a Reseller partner with (\d+) month\(s\) period, (\w+ Reseller), (\d+) GB base plan, (has|no) server plan, (\d+) add-on, (no|.+) coupon, (credit card|net terms) payment$/ do |period, reseller_type, reseller_quota, has_server_plan, add_on_quota, coupon, payment|
@@ -88,10 +88,10 @@ end
 
 Then /^Partner created successful message should be (.+)$/ do |message|
   sleep 20 # wait for create the new partner
-  @bus_admin_console_page.add_new_partner_view.message_text.should == message
+  @bus_admin_console_page.add_new_partner_section.message_text.should == message
   step "I activate new partner admin with default password"
 end
 
 Then /^Order summary table should be:$/ do |order_summary_table|
-  @bus_admin_console_page.add_new_partner_view.order_summary_tb_rows_text.should == order_summary_table.rows
+  @bus_admin_console_page.add_new_partner_section.order_summary_tb_rows_text.should == order_summary_table.rows
 end

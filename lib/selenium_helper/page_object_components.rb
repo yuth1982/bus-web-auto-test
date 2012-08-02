@@ -10,12 +10,7 @@ module AutomationWebDriver
     # Returns element
     def element(element_sym,element_hash)
       send(:define_method, element_sym) do
-        begin
-          driver.find_element(element_hash)
-        rescue Timeout::Error => ex
-            # set element to nil is timeout
-          nil
-        end
+        driver.find_element(element_hash)
       end
       add_element_name(element_sym)
       private element_sym
@@ -30,12 +25,7 @@ module AutomationWebDriver
     # Returns elements
     def elements(element_sym,element_hash)
       send(:define_method, element_sym) do
-        begin
-          driver.find_elements(element_hash)
-        rescue Timeout::Error => ex
-          # set element to nil is timeout
-          nil
-        end
+        driver.find_elements(element_hash)
       end
       add_element_name(element_sym)
       private element_sym

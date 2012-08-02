@@ -31,8 +31,13 @@ class FileHelper
         rows << row.map{ |x| x == nil ? "" : x}
       end
     end
-    # delete file, todo: move csv file to log folder
-     File.delete(report_file)
     rows
+  end
+
+  # Public: delete *.csv files in download folder
+  #
+  # Returns nothing
+  def clean_up_csv
+    Dir.glob("#{default_download_path}/*.csv").each{ |path| File.delete(path) }
   end
 end
