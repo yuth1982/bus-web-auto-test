@@ -25,7 +25,7 @@ module AutomationWebDriver
       # Returns list of WebDriver elements
       def rows
         begin
-          find_elements(:xpath, ".//tbody/tr").map{ |row| row.child }
+          find_elements(:xpath, ".//tbody/tr/td").each_slice(headers.length).to_a
         rescue
           nil
         end

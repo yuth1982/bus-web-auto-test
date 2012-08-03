@@ -9,7 +9,7 @@ module Bus
       def initialize
         super
         partner_info.type = Bus::COMPANY_TYPE[:mozyenterprise]
-        @num_enterprise_users = true
+        @num_enterprise_users = 0
         @server_plan = "None"
         @num_server_add_on = 0
       end

@@ -9,8 +9,10 @@ Feature: Change subscription period
 
   @TC.15231 @smoke_test
   Scenario: Mozy-15231 MozyPro change subscription period from Monthly to Yearly
-    When I add a MozyPro partner with 1 month(s) period, 250 GB, $94.99 base plan, no server plan, no coupon, credit card payment
-    Then Partner created successful message should be New partner created.
+    When I add a new MozyPro partner:
+    | period | base plan     |
+    | 1      | 50 GB, $19.99 |
+    Then New partner should created
     When I log in bus admin console as the new partner account
     And I navigate to Billing Information view from bus admin console page
     And I change subscription up to MozyPro annual billing period
@@ -18,8 +20,10 @@ Feature: Change subscription period
 
   @TC.15232
   Scenario: Mozy-15232 MozyPro change subscription period from Yearly to Biennially
-    When I add a MozyPro partner with 12 month(s) period, 500 GB, $2,089.89 base plan, no server plan, no coupon, credit card payment
-    Then Partner created successful message should be New partner created.
+    When I add a new MozyPro partner:
+    | period | base plan      |
+    | 12     | 50 GB, $219.89 |
+    Then New partner should created
     When I log in bus admin console as the new partner account
     And I navigate to Billing Information view from bus admin console page
     And I change subscription up to MozyPro biennial billing period

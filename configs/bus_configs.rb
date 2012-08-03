@@ -14,9 +14,9 @@ module Bus
 
   RESELLER_TYPE =
   {
-      :silver => "Silver Reseller",
-      :gold => "Gold Reseller",
-      :platinum => "Platinum Reseller"
+      :silver => "Silver",
+      :gold => "Gold",
+      :platinum => "Platinum"
   }
 
   MOZY_ROOT_PARTNER =

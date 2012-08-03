@@ -89,6 +89,7 @@ module Bus
         include_initial_purchase_cb.uncheck
         next_btn.click
       end
+      sleep 10 # wait for create the new partner
     end
 
     # Public: Messages for change account details actions
@@ -105,9 +106,19 @@ module Bus
     # Public: Add new partner order summary table rows text
     #
     # Example
+    #   @bus_admin_console_page.add_new_partner_section.order_summary_tb_headers_text
+    #   # => ["Description","Quantity","Price Each","Total Price"]
+    #
+    # Returns order summary table rows text
+    def order_summary_tb_headers_text
+      order_summary_table.headers_text
+    end
+
+    # Public: Add new partner order summary table rows text
+    #
+    # Example
     #   @bus_admin_console_page.add_new_partner_section.order_summary_tb_rows_text
-    #   # => [["Description","Quantity","Price Each","Total Price"],
-    #         ["50 GB","1","$19.99","$19.99"],
+    #   # => [["50 GB","1","$19.99","$19.99"],
     #         ["Discounts Applied","","","$-1.00"],
     #         ["Pre-tax Subtotal","","","$18.99"],
     #         ["Total Charges","","","$18.99"]]
