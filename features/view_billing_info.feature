@@ -1,10 +1,26 @@
 Feature: View billing information 
 
+  @TC.15253
+  Scenario: 15253 Verify MozyPro partner master plan section details
+    When I add a new MozyPro partner:
+    | period | base plan      |
+    | 1      | 250 GB, $94.99 |
+    Then New partner should created
+    When I log in bus admin console as the new partner account
+    And I navigate to Billing Information view from bus admin console page
+    Then Next renewal info table should be:
+    | description   | value                               |
+    | Period        | Monthly (change)                    |
+    | Date          | +1 month(s)                         |
+    | Amount        | $94.99 (Without taxes or discounts) |
+    | Payment Type  | Visa ending in @XXXX (change)       |
+
   @TC.15254 @smoke_test
   Scenario: Mozy-15254 Verify MozyEnterprise partner master plan section details
     When I log in bus admin console as administrator
-    When I add a MozyEnterprise partner with 36 month(s) period, 1 user(s), no server plan, 0 server add-on, no coupon, credit card payment
-    Then Partner created successful message should be New partner created.
+    When I add a new MozyEnterprise partner:
+    | period | users |
+    | 36     | 1     |
     When I log in bus admin console as the new partner account
     And I navigate to Billing Information view from bus admin console page
     Then Next renewal info table should be:

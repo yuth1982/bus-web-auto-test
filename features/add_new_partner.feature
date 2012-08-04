@@ -8,7 +8,7 @@ Feature: Add a new partner
     Given I log in bus admin console as administrator
 
   @TC.17955 @smoke_test
-  Scenario: 17955 - Add a new monthly basic MozyPro partner
+  Scenario: 17955 Add a new monthly basic MozyPro partner
     When I add a new MozyPro partner:
     | period | base plan     |
     | 1      | 50 GB, $19.99 |
@@ -20,7 +20,7 @@ Feature: Add a new partner
     Then New partner should created
 
   @TC.17956 @smoke_test
-  Scenario: 17956 - Add a new monthly MozyPro partner european
+  Scenario: 17956 Add a new monthly MozyPro partner european
     When I add a new MozyPro partner:
     | period | base plan      | country        |
     | 1      | 100 GB, $39.99 | United Kingdom |
@@ -33,7 +33,7 @@ Feature: Add a new partner
     And New partner should created
 
   @TC.17957
-  Scenario: 17957 - Add a new yearly MozyPro partner european vat
+  Scenario: 17957 Add a new yearly MozyPro partner european vat
     When I add a new MozyPro partner:
     | period | base plan         | server plan | country | vat number    |
     | 12     | 500 GB, $2,089.89 | yes         | Italy   | IT03018900245 |
@@ -46,7 +46,7 @@ Feature: Add a new partner
     Then New partner should created
 
   @TC.17958 @smoke_test
-  Scenario: 17958 - Add a new monthly MozyPro partner with coupon
+  Scenario: 17958 Add a new monthly MozyPro partner with coupon
     When I add a new MozyPro partner:
     | period | base plan     | coupon           |
     | 1      | 50 GB, $19.99 | Coupon1DollarOff |
@@ -59,7 +59,7 @@ Feature: Add a new partner
     Then New partner should created
 
   @TC.17959
-  Scenario: 17959 - Add a new yearly MozyPro partner european vat coupon
+  Scenario: 17959 Add a new yearly MozyPro partner european vat coupon
     When I add a new MozyPro partner:
     | period | base plan         | server plan | country | vat number   | coupon           |
     | 12     | 500 GB, $2,089.89 | yes         | Belgium | BE0883236072 | Coupon1DollarOff |
@@ -73,21 +73,21 @@ Feature: Add a new partner
     Then New partner should created
 
   @TC.17960
-  Scenario: 17960 - Add a new biennially MozyPro partner with no initial purchase
+  Scenario: 17960 Add a new biennially MozyPro partner with no initial purchase
     When I add a new MozyPro partner:
     | period |
     | 24     |
     Then New partner should created
 
   @TC.17961
-  Scenario: 17961 - Add a new yearly MozyPro partner with net terms payment
+  Scenario: 17961 Add a new yearly MozyPro partner with net terms payment
     When I add a new MozyPro partner:
     | period | base plan         | server plan | net terms |
     | 12     | 500 GB, $2,089.89 | yes         | yes       |
     Then New partner should created
 
   @TC.17962 @smoke_test
-  Scenario: 17961 - Add a new yearly basic MozyEnterprise partner
+  Scenario: 17961 Add a new yearly basic MozyEnterprise partner
     When I add a new MozyEnterprise partner:
     | period | users |
     | 12     | 1     |
@@ -99,7 +99,7 @@ Feature: Add a new partner
     Then New partner should created
 
   @TC.17963
-  Scenario: 17963 - Add a new biennially MozyEnterprise partner european
+  Scenario: 17963 Add a new biennially MozyEnterprise partner european
     When I add a new MozyEnterprise partner:
     | period | users | server plan                   | server add-on | country        |
     | 24     | 1     | 100 GB Server Plan, $1,112.58 | 1             | United Kingdom |
@@ -114,7 +114,7 @@ Feature: Add a new partner
    Then New partner should created
 
   @TC.17964
-  Scenario: 17964 - Add a new biennially MozyEnterprise partner european vat
+  Scenario: 17964 Add a new biennially MozyEnterprise partner european vat
     When I add a new MozyEnterprise partner:
     | period | users | server plan                   | server add-on | country | vat number    |
     | 24     | 1     | 100 GB Server Plan, $1,112.58 | 1             | Italy   | IT03018900245 |
@@ -128,7 +128,7 @@ Feature: Add a new partner
     Then New partner should created
 
   @TC.17965
-  Scenario: 17965 - Add a new yearly MozyEnterprise partner with coupon
+  Scenario: 17965 Add a new yearly MozyEnterprise partner with coupon
     When I add a new MozyEnterprise partner:
     | period | users | coupon           |
     | 12     | 1     | Coupon1DollarOff |
@@ -141,7 +141,7 @@ Feature: Add a new partner
     Then New partner should created
 
   @TC.17966
-  Scenario: 17966 - Add a new biennially MozyEnterprise partner european vat coupon
+  Scenario: 17966 Add a new biennially MozyEnterprise partner european vat coupon
     When I add a new MozyEnterprise partner:
     | period | users | server plan                   | server add-on | country | vat number   | coupon           |
     | 24     | 1     | 100 GB Server Plan, $1,112.58 | 1             | Belgium | BE0883236072 | Coupon1DollarOff |
@@ -156,21 +156,21 @@ Feature: Add a new partner
     Then New partner should created
 
   @TC.17967
-  Scenario: 17967 - Add a new 3 years MozyEnterprise partner with no initial purchase
+  Scenario: 17967 Add a new 3 years MozyEnterprise partner with no initial purchase
     When I add a new MozyEnterprise partner:
     | period |
     | 36     |
     Then New partner should created
 
   @TC.17968
-  Scenario: 17968 - Add a new MozyEnterprise partner with net terms payment
+  Scenario: 17968 Add a new MozyEnterprise partner with net terms payment
     When I add a new MozyEnterprise partner:
     | period | users | server plan                   | server add-on | net terms |
     | 12     | 5     | 500 GB Server Plan, $2,309.78 | 1             | yes       |
     Then New partner should created
 
   @TC.17969 @smoke_test
-  Scenario: 17969 - Add a new monthly Silver Reseller partner
+  Scenario: 17969 Add a new monthly Silver Reseller partner
     When I add a new Reseller partner:
     | period | reseller type | reseller quota |
     | 1      | Silver        | 100            |
@@ -182,7 +182,7 @@ Feature: Add a new partner
     Then New partner should created
 
   @TC.17970
-  Scenario: 17970 - Add a new yearly Gold Reseller partner european
+  Scenario: 17970 Add a new yearly Gold Reseller partner european
     When I add a new Reseller partner:
     | period | reseller type | reseller quota | server plan | server add-on | country        |
     | 12     | Platinum      | 100            | yes         | 1             | United Kingdom |
@@ -197,7 +197,7 @@ Feature: Add a new partner
     Then New partner should created
 
   @TC.17971
-  Scenario: 17971 - Add a new monthly Gold Reseller partner european vat
+  Scenario: 17971 Add a new monthly Gold Reseller partner european vat
     When I add a new Reseller partner:
     | period | reseller type | reseller quota | server plan | server add-on | country | vat number    |
     | 1      | Gold          | 100            | yes         | 1             | Italy   | IT03018900245 |
@@ -211,7 +211,7 @@ Feature: Add a new partner
     Then New partner should created
 
   @TC.17972
-  Scenario: 17972 - Add a new monthly Silver Reseller partner with coupon
+  Scenario: 17972 Add a new monthly Silver Reseller partner with coupon
     When I add a new Reseller partner:
     | period | reseller type | reseller quota | coupon           |
     | 1      | Silver        | 100            | Coupon1DollarOff |
@@ -224,7 +224,7 @@ Feature: Add a new partner
     Then New partner should created
 
   @TC.17973
-  Scenario: 17973 - Add a new Gold Reseller partner european vat coupon
+  Scenario: 17973 Add a new Gold Reseller partner european vat coupon
     When I add a new Reseller partner:
     | period | reseller type | reseller quota | server plan | server add-on | country | vat number    | coupon           |
     | 12     | Gold          | 100            | yes         | 1             | Italy   | IT03018900245 | Coupon1DollarOff |
@@ -239,14 +239,14 @@ Feature: Add a new partner
     Then New partner should created
 
   @TC.17974
-  Scenario: 17974 - Add a new Reseller partner with no initial purchase
+  Scenario: 17974 Add a new Reseller partner with no initial purchase
     When I add a new Reseller partner:
     | period |
     | 1      |
     Then New partner should created
 
   @TC.17975
-  Scenario: 17975 - Add a new Reseller partner with net terms payment
+  Scenario: 17975 Add a new Reseller partner with net terms payment
     When I add a new Reseller partner:
     | period | reseller type | reseller quota | server plan | server add-on | net terms |
     | 12     | Platinum      | 100            | yes         | 2             | yes       |

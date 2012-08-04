@@ -1,16 +1,18 @@
 
 When /^I change subscription up to (.+)$/ do |link_text|
+  step "I navigate to Billing Information view from bus admin console page"
   @bus_admin_console_page.billing_info_section.go_to_change_period_section
   @bus_admin_console_page.change_period_section.change_subscription_up(link_text)
 end
 
 When /^I change subscription down to (.+)$/ do |link_text|
+  step "I navigate to Billing Information view from bus admin console page"
   @bus_admin_console_page.billing_info_section.go_to_change_period_section
   @bus_admin_console_page.change_period_section.change_subscription_down(link_text)
 end
 
-Then /^Change subscription confirmation message should include (.+)$/ do |message|
-  @bus_admin_console_page.change_period_section.change_confirmation_text.should include(message)
+Then /^Change subscription confirmation message should be:$/ do |message_table|
+  @bus_admin_console_page.change_period_section.confirmation_text.should == message_table.rows.flatten
 end
 
 Then /^Change subscription price table should be:$/ do |price_table|

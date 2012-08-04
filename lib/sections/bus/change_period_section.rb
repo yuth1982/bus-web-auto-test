@@ -2,12 +2,16 @@ module Bus
   # This class provides actions for change billing period page section
   class ChangePeriodSection < PageObject
 
+    # Constants
+    #
+    CHANGE_CONFIRM_LOC = "billing_change_confirmation"
+
     # Private elements
     #
-    element(:continue_btn, {:xpath => "//div[@id='billing_change_confirmation']//input[@value='Continue']"})
-    element(:change_confirmation_div, {:id => "billing_change_confirmation"})
-    element(:price_table, {:xpath => "//div[@id='billing_change_confirmation']/table"})
+    element(:continue_btn, {:xpath => "//div[@id='#{CHANGE_CONFIRM_LOC}']//input[@value='Continue']"})
+    element(:price_table, {:xpath => "//div[@id='#{CHANGE_CONFIRM_LOC}']/table"})
     element(:message_div, {:xpath => "//div[@id='resource-change_billing_period-errors']//li"})
+    elements(:confirmation_p, {:xpath => "//div[@id='#{CHANGE_CONFIRM_LOC}']/p"})
 
     # Public: Move upstream with subscription period
     #
@@ -32,15 +36,17 @@ module Bus
       sleep 10 #wait for change subscription period
     end
 
-    # Public: change subscription period confirmation text
+    # Public: Change subscription period confirmation text
     #
     # Example
-    #   @bus_admin_console_page.change_period_section.change_confirmation_text
-    #   # => "Are you sure that you want to change your subscription period from yearly to 3-year billing? ... ..."
+    #   @bus_admin_console_page.change_period_section.confirmation_text
+    #   # => ["Are you sure that you want to change your subscription period from yearly to 3-year billing? ... ...",
+    #         "If you choose to continue, your account ... ...",
+    #         "Any resources you scheduled for return in your next subscription ...."]
     #
-    # Returns confirmation text
-    def change_confirmation_text
-      change_confirmation_div.text
+    # Returns confirmation text array
+    def confirmation_text
+      confirmation_p.map{ |p| p.text }
     end
 
     # Public: Messages for change subscription period actions
@@ -62,7 +68,7 @@ module Bus
     #
     # Returns price table header text
     def price_tb_headers_text
-      price_table.headers_text
+      price_table.find_elements(:xpath, "./thead/tr/th").map { |cell| cell.text }
     end
 
     # Public: Change subscription period price table rows text
@@ -73,9 +79,11 @@ module Bus
     #         ["Charge for new yearly subscription", "$420.00"]
     #         ["Total amount to be charged", "$420.00"]]
     #
+    #
     # Returns price table rows text
     def price_tb_rows_text
-      price_table.rows_text
+      rows = price_table.find_elements(:xpath, "./tbody/tr").map{ |row| row.child }
+      rows.map { |row| row.map { |cell| cell.text } }
     end
   end
 end
