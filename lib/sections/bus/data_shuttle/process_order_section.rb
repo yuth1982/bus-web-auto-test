@@ -72,7 +72,7 @@ module Bus
       go_to_create_order_section
       sleep 10 # wait for load create order section
       # fill create order section
-      case order.from
+      case order.key_from
         when "available"
           # Add key from available keys
           add_available_key.click
@@ -93,9 +93,9 @@ module Bus
         discount_tb.type_text(order.discount)
         discount_tb.send_keys(:tab)  # focus out of discount text box, make sure discount amount changes
         sleep 2
-        num_win_drivers_tb.type_text(order.num_win_drivers)
-        num_mac_drivers_tb.type_text(order.num_mac_drivers)
-        is_ship_driver_cb.check unless order.is_ship
+        num_win_drivers_tb.type_text(order.num_win_drivers) if order.num_win_drivers > 0
+        num_mac_drivers_tb.type_text(order.num_mac_drivers) if order.num_mac_drivers > 0
+        is_ship_driver_cb.check unless order.ship_driver
         submit_order_btn.click
       end
       sleep 10 # wait for complete ordering data shuttle
@@ -122,6 +122,14 @@ module Bus
     # Returns order summary table rows text
     def order_summary_tb_rows_text
       summary_tables[1].rows_text
+    end
+
+    def num_win_driver_ordered
+      num_win_drivers_tb.value
+    end
+
+    def num_mac_driver_ordered
+      num_mac_drivers_tb.value
     end
 
     private

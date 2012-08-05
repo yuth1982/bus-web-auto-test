@@ -1,5 +1,8 @@
 module AutomationWebDriver
   module Elements
+    # This module parse html table header, body and footer elements
+    # Tests: TC.17955, TC.15385, TC.17881, TC.16184
+    #
     module Table
       # Public: Elements of table header
       #
@@ -9,9 +12,11 @@ module AutomationWebDriver
       #
       # Returns WebDriver elements of table header
       def headers
-        begin
-          find_elements(:xpath, ".//tr/th")
-        rescue
+        cell_matrix = self.find_elements(:tag_name, "tr").map{ |row| row.child}
+        size = cell_matrix.first.select{ |cell| cell.tag_name == "th"}.length
+        if size > 1
+          cell_matrix.first
+        else
           nil
         end
       end
@@ -24,11 +29,14 @@ module AutomationWebDriver
       #
       # Returns list of WebDriver elements
       def rows
-        begin
-          find_elements(:xpath, ".//tbody/tr/td").each_slice(headers.length).to_a
-        rescue
-          nil
+        cell_matrix = self.find_elements(:xpath, ".//tbody/tr").map{ |row| row.child}
+        size = cell_matrix.first.select{ |cell| cell.tag_name == "th"}.length
+        if size > 1
+          cell_matrix[1..-1]
+        else
+          cell_matrix
         end
+        #find_elements(:xpath, ".//tbody/tr/td").each_slice(headers.length).to_a
       end
 
       # Public: Elements of table foot row
@@ -39,11 +47,7 @@ module AutomationWebDriver
       #
       # Returns elements of table foot row
       def footers
-        begin
-          find_elements(:xpath, ".//tfoot/tr/td")
-        rescue
-          nil
-        end
+        find_elements(:xpath, ".//tfoot/tr").child
       end
 
       # Public: Table headers text
@@ -54,7 +58,7 @@ module AutomationWebDriver
       #
       # Returns headers text
       def headers_text
-        headers.map { |cell| cell.text } unless headers.nil?
+        headers.map { |cell| cell.text }
       end
 
       # Public: Table body rows text
@@ -65,7 +69,7 @@ module AutomationWebDriver
       #
       # Returns table rows text
       def rows_text
-        rows.map { |row| row.map { |cell| cell.text } } unless rows.nil?
+        rows.map { |row| row.map { |cell| cell.text } }
       end
 
       # Public: Table footers text
@@ -77,7 +81,7 @@ module AutomationWebDriver
       #
       # Returns table footers text
       def footers_text
-        footers.map { |cell| cell.text } unless footers.nil?
+        footers.map { |cell| cell.text }
       end
     end
   end

@@ -15,22 +15,7 @@ Cucumber::Rake::Task.new(:smoke_test) do |t|
   t.cucumber_opts = "--color --format html --out logs/smoke_test_#{Time.now.strftime("%Y%m%dT%H%M")}.html --tags @smoke_test"
 end
 
-Cucumber::Rake::Task.new(:add_new_partner) do |t|
-  t.cucumber_opts = "--color --format html --out logs/add_new_partner_#{Time.now.strftime("%Y%m%dT%H%M")}.html features/add_new_partner.feature"
-end
 
-Cucumber::Rake::Task.new(:change_subscription_period) do |t|
-  t.cucumber_opts = "--color --format html --out logs/change_subscription_period_#{Time.now.strftime("%Y%m%dT%H%M")}.html --format pretty features/change_subscription_period.feature"
-end
-
-Cucumber::Rake::Task.new(:tax_exempt_status) do |t|
-  t.cucumber_opts = "--color --format html --out logs/tax_exempt_status_#{Time.now.strftime("%Y%m%dT%H%M")}.html features/enter_tax_exempt_status.feature"
-end
-
-Cucumber::Rake::Task.new(:invoice_setting) do |t|
-  t.cucumber_opts = "--color --format html --out logs/manage_invoice_comm_setting_#{Time.now.strftime("%Y%m%dT%H%M")}.html --format pretty features/manage_invoice_comm_settings.feature"
-end
-
-Cucumber::Rake::Task.new(:aria_emails) do |t|
-  t.cucumber_opts = "--color --format html --out logs/aria_emails_#{Time.now.strftime("%Y%m%dT%H%M")}.html --format pretty features/notify_and_collect_past_due_balances.feature"
+Cucumber::Rake::Task.new(:verify_table ) do |t|
+  t.cucumber_opts = "--tags @TC.17955,@TC.15385,@TC.17881,@TC.16184"
 end

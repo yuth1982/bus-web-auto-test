@@ -7,7 +7,7 @@ Feature: Add a new partner
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.17955 @smoke_test
+  @TC.17955 @smoke
   Scenario: 17955 Add a new monthly basic MozyPro partner
     When I add a new MozyPro partner:
     | period | base plan     |
@@ -19,7 +19,7 @@ Feature: Add a new partner
     | Total Charges    |          |            | $19.99      |
     Then New partner should created
 
-  @TC.17956 @smoke_test
+  @TC.17956 @smoke
   Scenario: 17956 Add a new monthly MozyPro partner european
     When I add a new MozyPro partner:
     | period | base plan      | country        |
@@ -45,7 +45,7 @@ Feature: Add a new partner
     | Total Charges    |          |            | $2,309.78   |
     Then New partner should created
 
-  @TC.17958 @smoke_test
+  @TC.17958 @smoke
   Scenario: 17958 Add a new monthly MozyPro partner with coupon
     When I add a new MozyPro partner:
     | period | base plan     | coupon           |
@@ -86,7 +86,7 @@ Feature: Add a new partner
     | 12     | 500 GB, $2,089.89 | yes         | yes       |
     Then New partner should created
 
-  @TC.17962 @smoke_test
+  @TC.17962 @smoke
   Scenario: 17961 Add a new yearly basic MozyEnterprise partner
     When I add a new MozyEnterprise partner:
     | period | users |
@@ -169,7 +169,7 @@ Feature: Add a new partner
     | 12     | 5     | 500 GB Server Plan, $2,309.78 | 1             | yes       |
     Then New partner should created
 
-  @TC.17969 @smoke_test
+  @TC.17969 @smoke
   Scenario: 17969 Add a new monthly Silver Reseller partner
     When I add a new Reseller partner:
     | period | reseller type | reseller quota |

@@ -12,11 +12,11 @@ Transform /^default zimbra account$/ do |step_arg|
 end
 
 Transform /^mozypro test account$/ do |step_arg|
-  Hash[:user_name => "qa1+frank+moreno+2012@mozy.com", :password => Bus::DEFAULT_PWD]
+  Hash[:user_name => "qa1+frank+moreno+2012@mozy.com", :password => Bus::DEFAULT_PWD, :company_name => "Fliptune Major Airlines Company"]
 end
 
 Transform /^mozyenterprise test account$/ do |step_arg|
-  Hash[:user_name => "qa1+teresa+spencer@mozy.com", :password => Bus::DEFAULT_PWD]
+  Hash[:user_name => "qa1+teresa+spencer@mozy.com", :password => Bus::DEFAULT_PWD, :company_name => "Lajo Company"]
 end
 
 Transform /^MozyEnterprise test company name$/ do |step_arg|
@@ -37,7 +37,7 @@ Transform /^the new partner company name$/ do |step_arg|
 end
 
 Transform /^the new partner account$/ do |step_arg|
-  Hash[:user_name => @partner.admin_info.email, :password => Bus::DEFAULT_PWD]
+  Hash[:user_name => @partner.admin_info.email, :password => Bus::DEFAULT_PWD, :company_name => @partner.company_info.name]
 end
 
 Transform /^MozyPro monthly billing period$/ do |step_arg|

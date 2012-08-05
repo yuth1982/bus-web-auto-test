@@ -26,10 +26,10 @@ module Bus
     #
     # Examples
     #
-    #  process_order("Lego Company")
+    #  view_order_detail("Lego Company")
     #
     # Returns Nothing
-    def process_order(company_name)
+    def view_order_detail(company_name)
       driver.find_element(:link, company_name).click
     end
   end
