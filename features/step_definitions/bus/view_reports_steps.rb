@@ -37,12 +37,12 @@ Then /^I should see (.+) in scheduled reports list$/ do |message|
 end
 
 When /^I download report by name (.+)$/ do |report_name|
-  step "I navigate to Scheduled Reports view from bus admin console page"
+  step "I navigate to Scheduled Reports section from bus admin console page"
   @bus_admin_console_page.scheduled_reports_section.download_report(report_name)
 end
 
 When /^I download (.+) quick report$/ do |report_name|
-  step "I navigate to Quick Reports view from bus admin console page"
+  step "I navigate to Quick Reports section from bus admin console page"
   @bus_admin_console_page.quick_reports_section.download_report(report_name)
 end
 

@@ -28,8 +28,8 @@ Feature: Corporate Invoices
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 base plan, no server plan, no coupon, credit card payment
     Then Partner created successful message should be New partner created.
     When I log in bus admin console as the new partner account
-    And I navigate to Billing Information view from bus admin console page
-    And I change subscription up to MozyPro annual billing period
+    And I navigate to Billing Information section from bus admin console page
+    And I change account subscription up to MozyPro annual billing period
     Then Subscription changed message should be Your account has been changed to yearly billing.
     When I wait for 30 seconds
     And I log in zimbra as default zimbra account
@@ -58,8 +58,8 @@ Feature: Corporate Invoices
     When I add a MozyEnterprise partner with 12 month(s) period, 1 user(s), no server plan, 0 server add-on, no coupon, credit card payment
     Then Partner created successful message should be New partner created.
     When I log in bus admin console as the new partner account
-    And I navigate to Billing Information view from bus admin console page
-    And I change subscription up to MozyEnterprise biennial billing period
+    And I navigate to Billing Information section from bus admin console page
+    And I change account subscription up to MozyEnterprise biennial billing period
     Then Subscription changed message should be Your account has been changed to biennial billing.
     When I wait for 30 seconds
     And I log in zimbra as default zimbra account

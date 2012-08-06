@@ -221,7 +221,7 @@ Feature:
     | available | 20    |
     Then Data shuttle order should be created
     When I log in bus admin console as the new partner account
-    And I navigate to Billing History view from bus admin console page
+    And I navigate to Billing History section from bus admin console page
     Then Billing history table should be:
     | Date    | Amount  | Total Paid | Balance Due |
     | @today  | $275.00 | $275.00    | $0.00       |

@@ -11,7 +11,7 @@ Feature:
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 base plan, no server plan, no coupon, credit card payment
     Then Partner created successful message should be New partner created.
     When I log in bus admin console as the new partner account
-    And I navigate to Account Details view from bus admin console page
+    And I navigate to Account Details section from bus admin console page
     Then Account details table should be:
     | description                       | value             |
     | Name:                             | @name (change)    |
@@ -50,7 +50,7 @@ Feature:
     When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 base plan, no server plan, no coupon, credit card payment
     Then Partner created successful message should be New partner created.
     When I log in bus admin console as the new partner account
-    And I navigate to Account Details view from bus admin console page
+    And I navigate to Account Details section from bus admin console page
     And I set Receive Mozy Account Statements option to No
     Then I should see setting saved message is Successfully saved Account Statement preference.
     When I log in aria admin console as aria admin

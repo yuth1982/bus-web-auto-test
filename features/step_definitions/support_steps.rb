@@ -4,7 +4,7 @@ Transform /^administrator$/ do |step_arg|
 end
 
 Transform /^aria admin$/ do |step_arg|
-  Hash[:user_name => "shipu", :password => "1234test"]
+  Hash[:user_name => "shipu", :password => "shipu1234"]
 end
 
 Transform /^default zimbra account$/ do |step_arg|
@@ -19,13 +19,13 @@ Transform /^mozyenterprise test account$/ do |step_arg|
   Hash[:user_name => "qa1+teresa+spencer@mozy.com", :password => Bus::DEFAULT_PWD, :company_name => "Lajo Company"]
 end
 
-Transform /^MozyEnterprise test company name$/ do |step_arg|
-  "Ntags Diversified Machinery Company"
-end
+#Transform /^MozyEnterprise test company name$/ do |step_arg|
+#  "Ntags Diversified Machinery Company"
+#end
 
-Transform /^MozyPro test company name$/ do |step_arg|
-  "Skibox Diversified Communication Services Company"
-end
+#Transform /^MozyPro test company name$/ do |step_arg|
+#  "Skibox Diversified Communication Services Company"
+#end
 
 
 Transform /^the new partner email$/ do |step_arg|

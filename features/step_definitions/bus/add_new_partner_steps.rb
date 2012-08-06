@@ -10,7 +10,7 @@
 # | period | reseller type | reseller quota | server plan | server add-on | coupon | country | vat number | net terms |
 #
 When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partner_table|
-  step "I navigate to Add New Partner view from bus admin console page"
+  step "I navigate to Add New Partner section from bus admin console page"
   attributes = partner_table.hashes.first
   case type
     when "MozyPro"

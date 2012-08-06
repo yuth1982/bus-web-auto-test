@@ -27,7 +27,8 @@ end
 
 # Account status steps
 #
-When /^I change account status to (.+)$/ do |status_code|
+When /^I change (.+) status to (.+)$/ do |account, status_code|
+  step "I search aria account by #{account[:user_name]}"
   @aria_admin_console_page.switch_to_inner_work_frame
   @aria_admin_console_page.accounts_page.account_overview_section.navigate_to_link("Status")
   @aria_admin_console_page.accounts_page.account_overview_section.account_status_section.change_account_status(status_code)
@@ -37,19 +38,21 @@ Then /^Status changed successful message should be (.+)$/ do |message|
   @aria_admin_console_page.accounts_page.account_overview_section.account_status_section.message_text.should == message
 end
 
-Then /^Account status should be (.+)$/ do |status|
+Then /^(.+) status should be (.+)$/ do |account, status|
+  step "I search aria account by #{account[:user_name]}"
   @aria_admin_console_page.switch_to_inner_work_frame
   @aria_admin_console_page.accounts_page.account_overview_section.account_status_text.should == status
 end
 
 # Account groups steps
-When /I change collections account group to (.+)$/ do |account_group|
+When /I change (.+) CAG to (.+)$/ do |account, account_group|
+  step "I search aria account by #{account[:user_name]}"
   step "I navigate to Account Groups view from Accounts page"
   @aria_admin_console_page.switch_to_inner_work_frame
   @aria_admin_console_page.accounts_page.account_groups_section.change_cag(account_group)
 end
 
-Then /^Change account group message should be (.+)$/ do |message|
+Then /^CAG message should be (.+)$/ do |message|
   @aria_admin_console_page.accounts_page.account_groups_section.message_text == message
 end
 
