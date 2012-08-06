@@ -32,7 +32,7 @@ module AutomationWebDriver
       profile['browser.download.lastDir'] = FileHelper.instance.ff_download_path
       profile['browser.download.manager.showWhenStarting'] = false
       profile['browser.download.manager.closeWhenDone'] = true
-      profile['browser.helperApps.neverAsk.saveToDisk'] = "application/csv;text/csv"
+      profile['browser.helperApps.neverAsk.saveToDisk'] = "application/csv;text/csv;application/vnd.ms-excel;"
       profile
     end
   end

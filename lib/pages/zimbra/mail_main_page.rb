@@ -46,7 +46,7 @@ module Zimbra
     # Returns nothing
     def download_attachment
       download_att_link.click
-      puts "Wait 10 seconds to download csv report file"
+      puts "Wait 10 seconds to download csv reports file"
       sleep 10
     end
 

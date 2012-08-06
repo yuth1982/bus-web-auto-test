@@ -8,16 +8,16 @@ Feature:
   Scenario: 16188 Verify Shipping Address Section Populated Fields Correctly
     When I navigate to process data shuttle order section for mozyenterprise test account
     Then Verify shipping address table should be:
-    | description            | value                        |
-    | Name:                  | Teresa Spencer               |
-    | Address 1:             | 44939 International Crossing |
-    | Address 2:             |                              |
-    | City:                  | Seaside                      |
-    | State/Province/Region: | NV                           |
-    | Country:               | United States                |
-    | Zip/Postal Code:       | 12345                        |
-    | Phone Number:          | 1234567890                   |
-    | Power Adapter:         |                              |
+    | description            | value                  |
+    | Name:                  | Ruth Phillips          |
+    | Address 1:             | 5 Armistice Drive      |
+    | Address 2:             |                        |
+    | City:                  | Brawley                |
+    | State/Province/Region: | IL                     |
+    | Country:               | United States          |
+    | Zip/Postal Code:       | 12345                  |
+    | Phone Number:          | 1234567890             |
+    | Power Adapter:         |                        |
 
   @TC.16190 @require_test_account
   Scenario: 16190 Verify shipping address power adapter field validate

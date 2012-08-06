@@ -1,5 +1,5 @@
 module Bus
-  # This class provides actions for report builder page section
+  # This class provides actions for reports builder page section
   class ReportBuilderSection < PageObject
 
     # Private elements
@@ -29,7 +29,7 @@ module Bus
     element(:recipients_tb, {:id => "job_subscribers"})
     element(:report_created_txt, {:xpath => "//div[@id='jobs-new-errors']/ul[@class='flash successes']"})
 
-    # Public: Messages for report builder actions
+    # Public: Messages for reports builder actions
     #
     # Example
     #  @bus_admin_console_page.report_builder_section.message_text
@@ -40,13 +40,13 @@ module Bus
       report_created_txt.text
     end
 
-    # Public: Available report and description table rows text (UI)
+    # Public: Available reports and description table rows text (UI)
     #
     # Example
     #    @bus_admin_console_page.report_builder_section.available_reports_tb_rows_text
     #    # =>  [["Billing Summary", "Gives a summary of resources and usage by partner and user group."]]
     #
-    # Returns available report table rows text
+    # Returns available reports table rows text
     def available_reports_tb_rows_text
       available_reports_table.rows_text
     end
@@ -57,12 +57,12 @@ module Bus
     #    @bus_admin_console_page.report_builder_section.report_filters_text
     #    # =>  ["None", "Billing Summary","Billing Detail","Machine Watchlist","Machine Status" ... ...]
     #
-    # Returns report filter options
+    # Returns reports filter options
     def report_filters_text
       report_filter.options.map{ |option| option.text}
     end
 
-    # Public: Click report name and display add report view
+    # Public: Click reports name and display add reports view
     #
     # Example
     #    @bus_admin_console_page.navigate_to_add_report_section
@@ -72,7 +72,7 @@ module Bus
       driver.find_element(:link, report_type).click
     end
 
-    # Public: Find and delete a scheduled report
+    # Public: Find and delete a scheduled reports
     #
     # Example
     #
@@ -87,34 +87,35 @@ module Bus
       sleep 10
     end
 
-    def build_billing_summary_report(report_name, frequency, start_date, is_active)
-      report_name_tb.type_text(report_name)
-      frequency_select.select_by(:text, frequency)
-      is_active_cb.uncheck unless is_active
+    # Public: Build a report
+    #
+    # Example
+    #
+    # Returns nothing
+    def build_report(report)
+      case report
+        when Bus::DataObj::BillingSummaryReport
+          report_name_tb.type_text(report.name)
+          frequency_select.select_by(:text, report.frequency)
+          set_report_start_date(report.start_date)
+          is_active_cb.uncheck unless report.is_active
+        when Bus::DataObj::BillingDetailReport
+          report_name_tb.type_text(report.name)
+          frequency_select.select_by(:text, report.frequency)
+          set_report_start_date(report.start_date)
+          is_active_cb.uncheck unless report.is_active
+        else
+          raise "Unknown report class"
+      end
       save_btn.click
     end
 
-    def build_billing_detail_report(report_name, frequency, start_date, is_active)
-      report_name_tb.type_text(report_name)
-      frequency_select.select_by(:text, frequency)
-      is_active_cb.uncheck unless is_active
-      save_btn.click
-    end
-
-    def build_machine_watchlist_report
-      raise "No implementation error"
-    end
-
-    def build_machine_status_report
-      raise "No implementation error"
-    end
-
-    def build_resource_added_report
-      raise "No implementation error"
-    end
-
-    def build_machine_over_quota_report
-      raise "No implementation error"
+    private
+    def set_report_start_date(date)
+      yyyy_mm_dd = date.split
+      year_select.select_by(:text, yyyy_mm_dd[0])
+      month_select.select_by(:text, yyyy_mm_dd[1])
+      day_select.select_by(:text, yyyy_mm_dd[2])
     end
   end
 end

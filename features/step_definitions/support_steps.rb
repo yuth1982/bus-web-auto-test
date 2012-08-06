@@ -16,7 +16,7 @@ Transform /^mozypro test account$/ do |step_arg|
 end
 
 Transform /^mozyenterprise test account$/ do |step_arg|
-  Hash[:user_name => "qa1+teresa+spencer@mozy.com", :password => Bus::DEFAULT_PWD, :company_name => "Lajo Company"]
+  Hash[:user_name => "qa1+ruth+phillips+1107@mozy.com", :password => Bus::DEFAULT_PWD, :company_name => "Tagchat Closed-End Fund - Equity Company"]
 end
 
 #Transform /^MozyEnterprise test company name$/ do |step_arg|

@@ -13,34 +13,34 @@ module Bus
     #   @bus_admin_console_page.scheduled_reports_section.reports_tb_text
     #   # => "No results found"
     #
-    # Returns report table text
+    # Returns reports table text
     def reports_tb_text
       reports_table.text
     end
 
-    # Public: First 6 columns of report table body rows text
+    # Public: First 6 columns of reports table body rows text
     #
     # Example
     #   @bus_admin_console_page.scheduled_reports_section.reports_tb_rows_text
     #   # => [["Billing Summary Test Report", "Billing Summary", "@email", "Daily", "Run", "@next_day"]]
     #
-    # Returns first 6 columns of report table rows text
+    # Returns first 6 columns of reports table rows text
     def reports_tb_rows_text
       reports_table.rows_text.map{|row| row[0..5]}
     end
 
-    # Public: Find first matched report row text by report name
+    # Public: Find first matched reports row text by reports name
     #
     # Example
     #   @bus_admin_console_page.scheduled_reports_section.find_report("Billing Summary Test Report")
     #   # => ["Billing Summary Test Report", "Billing Summary", "qa1+ronald+parker+2237@mozy.com", "Daily", "Run", "Wed Aug 01, 2012", "Download", "-"]
     #
-    # Returns first matched report row text
+    # Returns first matched reports row text
     def find_report(report_name)
       reports_table.rows.select{ |row| row[0].text == report_name}.first
     end
 
-    # Public: Download latest report to download folder
+    # Public: Download latest reports to download folder
     #
     # Example
     #   @bus_admin_console_page.scheduled_reports_section.download_report("Billing Summary Test Report")
@@ -63,16 +63,16 @@ module Bus
         sleep 1
       end
       report_row[6].find_element(:link, "Download").click
-      puts "Wait 10 seconds to download csv report file"
+      puts "Wait 10 seconds to download csv reports file"
       sleep 10
     end
 
-    # Public: Read downloaded scheduled report
+    # Public: Read downloaded scheduled reports
     #
     # Example
     #   @bus_admin_console_page.scheduled_reports_section.read_scheduled_report("Billing Summary Test Report")
     #
-    # Returns report csv file rows
+    # Returns reports csv file rows
     def read_scheduled_report(report_type)
       partial_file_name = "#{report_type.gsub(" ","-").downcase}.*"
       FileHelper.instance.read_csv_file(partial_file_name)
