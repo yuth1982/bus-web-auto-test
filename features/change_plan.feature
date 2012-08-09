@@ -21,7 +21,7 @@ Feature: Change plan
     | Total amount to be charged      | $16.99   |
     Then Account plan should be changed
 
-  @TC.16741
+  @TC.16841
   Scenario: 16841 MozyPro Enterprise Yearly to 50 GB Add-on
     When I add a new MozyEnterprise partner:
     | period | users |
