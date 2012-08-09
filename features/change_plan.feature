@@ -12,7 +12,7 @@ Feature: Change plan
     When I log in bus admin console as the new partner account
     When I change MozyPro account plan to:
     | base plan       | server plan | coupon |
-    | 50 GB, $19.99 | yes         |        |
+    | 50 GB, $19.99   | yes         |        |
     Then Change plan charge summary should be:
     | Description                     | Amount   |
     | Credit for remainder of 10 GB   | -$9.99   |

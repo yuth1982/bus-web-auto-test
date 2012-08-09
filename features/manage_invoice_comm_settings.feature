@@ -30,12 +30,10 @@ Feature:
     | 1      | 50 GB, $19.99 |
     Then New partner should created
     When I log in aria admin console as aria admin
-    And I search aria account by the new partner email
-    And I navigate to notification method view
-    And I set notification method to Printable (no Email)
-    Then Notification message should be Change Saved! This account is currently notified via method "Printable (no Email)".
-    When I set notification method to HTML Email
-    Then Notification message should be Change Saved! This account is currently notified via method "HTML Email".
+    When I set the new partner account notification method to Printable (no Email)
+    Then the new partner account current notification method is set to Printable (no Email)
+    When I set the new partner account notification method to HTML Email
+    Then the new partner account current notification method is set to HTML Email
 
   @TC.15448
   Scenario: 15448 Verify notification methods have HTML email and Printable no email
@@ -44,10 +42,8 @@ Feature:
     | 1      | 50 GB, $19.99 |
     Then New partner should created
     When I log in aria admin console as aria admin
-    And I search aria account by the new partner email
-    And I navigate to notification method view
-    Then Notification methods should be:
-    | Methods              |
+    Then the new partner account notification methods should be:
+    | methods              |
     | HTML Email           |
     | Printable (no Email) |
 
@@ -58,13 +54,10 @@ Feature:
     | 1      | 50 GB, $19.99 |
     Then New partner should created
     When I log in bus admin console as the new partner account
-    And I navigate to Account Details section from bus admin console page
-    And I set Receive Mozy Account Statements option to No
-    Then I should see setting saved message is Successfully saved Account Statement preference.
+    And I set account Receive Mozy Account Statements option to No
+    Then Account statement preference should be changed
     When I log in aria admin console as aria admin
-    And I search aria account by the new partner email
-    And I navigate to notification method view
-    Then Notification message should be This account is currently notified via method "Printable (no Email)".
+    Then the new partner account current notification method is set to Printable (no Email)
 
   @TC.15718
   Scenario: 15718 Verify notification method set to HTML Email for new Monthly MozyPro partner
@@ -73,9 +66,7 @@ Feature:
     | 1      | 50 GB, $19.99 |
     Then New partner should created
     When I log in aria admin console as aria admin
-    And I search aria account by the new partner email
-    And I navigate to notification method view
-    Then Notification message should be This account is currently notified via method "HTML Email".
+    Then the new partner account current notification method is set to HTML Email
 
   @TC.17590
   Scenario: 17590 Verify notification method set to HTML Email for new Monthly MozyEnterprise partner
@@ -84,9 +75,7 @@ Feature:
     | 12     | 1     |
     Then New partner should created
     When I log in aria admin console as aria admin
-    And I search aria account by the new partner email
-    And I navigate to notification method view
-    Then Notification message should be This account is currently notified via method "HTML Email".
+    Then the new partner account current notification method is set to HTML Email
 
   @TC.17591
   Scenario: 17591 Verify notification method set to HTML Email for new Monthly Reseller partner
@@ -95,9 +84,8 @@ Feature:
     | 1      | Silver        | 100            |
     Then New partner should created
     When I log in aria admin console as aria admin
-    And I search aria account by the new partner email
-    And I navigate to notification method view
-    Then Notification message should be This account is currently notified via method "HTML Email".
+    Then the new partner account current notification method is set to HTML Email
+
 
 
 

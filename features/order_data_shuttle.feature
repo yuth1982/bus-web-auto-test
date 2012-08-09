@@ -44,7 +44,7 @@ Feature:
     When I order data shuttle for mozyenterprise test account
     | key from | discount |
     | new      | 110      |
-    Then Order data shuttle error message should be The resources added in this Data Shuttle order exceed those available for this partner. Please visit the Change Plan page to add more resources.
+    Then Order data shuttle error message should be The resources added includes new key. Please use only existing keys for this partner
 
   @TC.16209 @slow @smoke
   Scenario: 16209 Ordering data shuttle for MozyEnterprise using the Add Link with Unassigned email

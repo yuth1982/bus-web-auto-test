@@ -46,7 +46,12 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partne
 end
 
 Then /^New partner should created/ do
-  @bus_admin_console_page.add_new_partner_section.message_text.should == "New partner created."
+  begin
+    @bus_admin_console_page.add_new_partner_section.message_text.should == "New partner created."
+    puts "After partner created successful: #{DateTime.now.to_s}"
+  rescue
+    puts "After partner created failed: #{DateTime.now.to_s}"
+  end
   step "I activate new partner admin with default password"
 end
 
