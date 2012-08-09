@@ -88,6 +88,7 @@ module Bus
         create_partner_btn.click
       else
         include_initial_purchase_cb.uncheck
+        puts "Before click create partner: #{DateTime.now.to_s}"
         next_btn.click
       end
       sleep 20 # force wait for create the new partner
