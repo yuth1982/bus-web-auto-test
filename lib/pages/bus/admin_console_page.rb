@@ -5,6 +5,7 @@ module Bus
     section(:add_new_partner_section, AddNewPartnerSection)
     section(:search_list_partner_section, SearchListPartnerSection)
     section(:partner_details_section, PartnerDetailsSection)
+    section(:change_plan_section, ChangePlanSection)
     section(:billing_info_section, BillingInfoSection)
     section(:change_period_section, ChangePeriodSection)
     section(:billing_history_section, BillingHistorySection)

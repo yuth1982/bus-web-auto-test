@@ -16,6 +16,7 @@ module Aria
     #
     # Returns nothing
     def navigate_to_link(link_name)
+      driver.switch_to.default_content
       driver.find_element(:xpath, "//a[@title='#{link_name}']").click
     end
 

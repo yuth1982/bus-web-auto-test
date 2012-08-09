@@ -9,8 +9,10 @@ Feature: Corporate Invoices
 
   @TC.15686 @slow
   Scenario: Mozy-15686 Verify Aria sends email when create a new MozyPro partner
-    When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 base plan, no server plan, no coupon, credit card payment
-    Then Partner created successful message should be New partner created.
+    When I add a new MozyPro partner:
+    | period | base plan     |
+    | 1      | 50 GB, $19.99 |
+    Then New partner should created
     When I wait for 30 seconds
     When I log in zimbra as default zimbra account
     And I search email to match all keywords:
@@ -25,10 +27,11 @@ Feature: Corporate Invoices
 
   @TC.15687 @slow
   Scenario: Mozy-15687 Verify Aria sends invoice email when change subscription period of a MozyPro partner
-    When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 base plan, no server plan, no coupon, credit card payment
-    Then Partner created successful message should be New partner created.
+    When I add a new MozyPro partner:
+    | period | base plan     |
+    | 1      | 50 GB, $19.99 |
+    Then New partner should created
     When I log in bus admin console as the new partner account
-    And I navigate to Billing Information section from bus admin console page
     And I change account subscription up to MozyPro annual billing period
     Then Subscription changed message should be Your account has been changed to yearly billing.
     When I wait for 30 seconds
@@ -40,8 +43,10 @@ Feature: Corporate Invoices
 
   @TC.17841 @slow
   Scenario: Mozy-15686 Verify Aria sends email when create a new MozyEnterprise partner
-    When I add a MozyEnterprise partner with 12 month(s) period, 1 user(s), no server plan, 0 server add-on, no coupon, credit card payment
-    Then Partner created successful message should be New partner created.
+    When I add a new MozyEnterprise partner:
+    | period | users |
+    | 12     | 1     |
+    Then New partner should created
     When I wait for 30 seconds
     And I log in zimbra as default zimbra account
     And I search email to match all keywords:
@@ -55,10 +60,11 @@ Feature: Corporate Invoices
 
   @TC.17842 @slow
   Scenario: Mozy-17842 Verify Aria sends invoice email when change subscription period of a MozyEnterprise partner
-    When I add a MozyEnterprise partner with 12 month(s) period, 1 user(s), no server plan, 0 server add-on, no coupon, credit card payment
-    Then Partner created successful message should be New partner created.
+    When I add a new MozyEnterprise partner:
+    | period | users |
+    | 12     | 1     |
+    Then New partner should created
     When I log in bus admin console as the new partner account
-    And I navigate to Billing Information section from bus admin console page
     And I change account subscription up to MozyEnterprise biennial billing period
     Then Subscription changed message should be Your account has been changed to biennial billing.
     When I wait for 30 seconds

@@ -99,10 +99,6 @@ When /^I search report by name (.+)$/ do |report_name|
 end
 
 Then /^Scheduled report list should be:$/ do |results_table|
-  results_table.map_column!('Next Run') do |value|
-    value.gsub(/@next_day/, (DateTime.now + 1).strftime("%a %b %d, %Y")).gsub(/@next_week/, (DateTime.now + 7).strftime("%a %b %d, %Y")).gsub(/@next_month/, (DateTime.now >> 1).to_time.localtime("-06:00").strftime("%a %b %d, %Y"))
-  end
-
   results_table.map_column!('Recipients') do |value|
       value.gsub(/@email/,@partner.admin_info.email)
   end

@@ -5,25 +5,32 @@ end
 
 # Taxpayer information steps
 #
-Then /^Taxpayer id should be (.+)$/ do |id|
+# Available columns names:
+# | id | status |
+#
+Then /^(.+) taxpayer information should be:$/ do |account, info_table|
+  step "I search aria account by #{account[:user_name]}"
+  step "I navigate to Taxpayer Information view from Accounts page"
   @aria_admin_console_page.switch_to_inner_work_frame
-  @aria_admin_console_page.accounts_page.account_overview_section.taxpayer_section.vat_number_text.should == id
+  attributes = info_table.hashes.first
+  @aria_admin_console_page.accounts_page.account_overview_section.taxpayer_section.vat_number_text.should == attributes["id"] unless attributes["id"].nil?
+  @aria_admin_console_page.accounts_page.account_overview_section.taxpayer_section.tax_exempt_status_text.should == attributes["status"] unless attributes["status"].nil?
 end
 
-Then /^Tax exemption status should be (.+)$/ do |status|
+# Available columns names:
+# | id | exempt state | exempt federal|
+#
+When /^I set (.+) taxpayer information to:$/ do |account, info_table|
+  step "I search aria account by #{account[:user_name]}"
+  step "I navigate to Taxpayer Information view from Accounts page"
   @aria_admin_console_page.switch_to_inner_work_frame
-  @aria_admin_console_page.accounts_page.account_overview_section.taxpayer_section.tax_exempt_status_text.should == status
+  attributes = info_table.hashes.first
+
+  @aria_admin_console_page.accounts_page.account_overview_section.taxpayer_section.set_state_exempt_taxes(attributes["exempt state"].eql?("yes")) unless attributes["exempt state"].nil?
+  @aria_admin_console_page.accounts_page.account_overview_section.taxpayer_section.set_federal_exempt_taxes(attributes["exempt federal"].eql?("yes")) unless attributes["exempt federal"].nil?
+
 end
 
-When /^I set Exempt from State and Province taxes to (true|false)$/ do |status|
-  @aria_admin_console_page.switch_to_inner_work_frame
-  @aria_admin_console_page.accounts_page.account_overview_section.taxpayer_section.set_state_exempt_taxes(status == "true")
-end
-
-When /^I set Exempt from Federal and National taxes to (true|false)$/ do |status|
-  @aria_admin_console_page.switch_to_inner_work_frame
-  @aria_admin_console_page.accounts_page.account_overview_section.taxpayer_section.set_federal_exempt_taxes(status == "true")
-end
 
 # Account status steps
 #

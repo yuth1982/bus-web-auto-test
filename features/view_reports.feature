@@ -27,7 +27,7 @@ Feature: View Report
     | UserGroups (CSV)               | List of all user groups                                   |
     | Roles (CSV)                    | List of administrative roles                              |
     | Credit Card Transactions (CSV) | List of all credit card transactions                      |
-    | Billing History (CSV)          | List of all invoices after 2012-07-05                     |
+    | Billing History (CSV)          | List of all invoices after 2012-08-05                     |
     | Mozy Pro Keys (CSV)            | List of all unassigned Mozy Pro keys                      |
     | Machine Details (CSV)          | List of all Machine Details                               |
 
@@ -44,8 +44,8 @@ Feature: View Report
     | Billing Summary | billing summary test  | Daily     |
     Then Billing summary report should be created
     Then Scheduled report list should be:
-    | Name                 | Type             | Recipients | Schedule | Actions | Next Run   |
-    | billing summary test | Billing Summary  | @email     | Daily    | Run     | @next_day  |
+    | Name                 | Type             | Recipients | Schedule | Actions |
+    | billing summary test | Billing Summary  | @email     | Daily    | Run     |
     When I delete billing summary test scheduled report
     Then I should see No results found in scheduled reports list
 
@@ -62,8 +62,8 @@ Feature: View Report
     | Billing Summary | billing summary test  | Weekly    |
     Then Billing summary report should be created
     Then Scheduled report list should be:
-    | Name                 | Type             | Recipients | Schedule | Actions | Next Run   |
-    | billing summary test | Billing Summary  | @email     | Weekly   | Run     | @next_week  |
+    | Name                 | Type             | Recipients | Schedule | Actions |
+    | billing summary test | Billing Summary  | @email     | Weekly   | Run     |
     When I delete billing summary test scheduled report
     Then I should see No results found in scheduled reports list
 
@@ -80,8 +80,8 @@ Feature: View Report
     | Billing Summary | billing summary test | Monthly   |
     Then Billing summary report should be created
     Then Scheduled report list should be:
-    | Name                 | Type             | Recipients | Schedule | Actions | Next Run    |
-    | billing summary test | Billing Summary  | @email     | Monthly  | Run     | @next_month |
+    | Name                 | Type             | Recipients | Schedule | Actions |
+    | billing summary test | Billing Summary  | @email     | Monthly  | Run     |
     When I delete billing summary test scheduled report
     Then I should see No results found in scheduled reports list
 
@@ -182,8 +182,8 @@ Feature: View Report
     | Billing Detail  | billing detail test |
     Then Billing detail report should be created
     And Scheduled report list should be:
-    | Name                | Type            | Recipients  | Schedule | Actions | Next Run  |
-    | billing detail test | Billing Detail  | @email      | Daily    | Run     | @next_day |
+    | Name                | Type            | Recipients  | Schedule | Actions |
+    | billing detail test | Billing Detail  | @email      | Daily    | Run     |
     When I delete billing detail test scheduled report
     Then I should see No results found in scheduled reports list
 

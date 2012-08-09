@@ -142,6 +142,7 @@ Feature: Notify about and collect past-due balances
       | AccountManager@mozy.com | @today  | [Mozy] Mozy subscription invoice overdue | Hi, @admin_first_name |
     Then I should see 1 email(s) displayed in search results
 
+  # need update subject information
   @TC.16244 @slow
   Scenario: 16244 Verify aria sends email when change Reseller account status to Active Dunning 3 net terms
     When I add a new Reseller partner:
@@ -154,8 +155,8 @@ Feature: Notify about and collect past-due balances
     When I wait for 30 seconds
     When I log in zimbra as default zimbra account
     And I search email to match all keywords:
-    | from                    | date    | subject                                         | content               |
-    | AccountManager@mozy.com | @today  | [Mozy] Your account will be suspended in 7 days | Hi, @admin_first_name |
+    | from                    | date    | subject                                                       | content               |
+    | AccountManager@mozy.com | @today  | [Mozy] Your account is suspended all users unable to back up  | Hi, @admin_first_name |
     Then I should see 1 email(s) displayed in search results
 
   @TC.17978 @slow

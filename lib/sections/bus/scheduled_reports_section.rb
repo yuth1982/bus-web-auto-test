@@ -22,11 +22,11 @@ module Bus
     #
     # Example
     #   @bus_admin_console_page.scheduled_reports_section.reports_tb_rows_text
-    #   # => [["Billing Summary Test Report", "Billing Summary", "@email", "Daily", "Run", "@next_day"]]
+    #   # => [["Billing Summary Test Report", "Billing Summary", "@email", "Daily", "Run"]]
     #
     # Returns first 6 columns of reports table rows text
     def reports_tb_rows_text
-      reports_table.rows_text.map{|row| row[0..5]}
+      reports_table.rows_text.map{|row| row[0..4]}
     end
 
     # Public: Find first matched reports row text by reports name

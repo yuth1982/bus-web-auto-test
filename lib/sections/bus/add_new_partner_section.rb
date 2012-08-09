@@ -89,7 +89,7 @@ module Bus
         include_initial_purchase_cb.uncheck
         next_btn.click
       end
-      sleep 10 # wait for create the new partner
+      sleep 20 # force wait for create the new partner
     end
 
     # Public: Messages for change account details actions

@@ -47,6 +47,7 @@ require "sections/bus/report_builder_section"
 require "sections/bus/scheduled_reports_section"
 require "sections/bus/quick_reports_section"
 require "sections/bus/change_payment_info_section"
+require "sections/bus/change_plan_section"
 
 require "sections/aria/search_account_section"
 require "sections/aria/account_status_section"

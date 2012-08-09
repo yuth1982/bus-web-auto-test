@@ -7,7 +7,7 @@ module Bus
       #
       def initialize
         @frequency = "Daily"
-        @start_date = DateTime.now.strftime("%Y %B %-d")
+        @start_date = Time.now.localtime("-06:00").strftime("%Y %B %-d")
         @is_active = true
       end
     end

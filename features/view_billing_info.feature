@@ -21,6 +21,7 @@ Feature: View billing information
     When I add a new MozyEnterprise partner:
     | period | users |
     | 36     | 1     |
+    Then New partner should created
     When I log in bus admin console as the new partner account
     And I navigate to Billing Information section from bus admin console page
     Then Next renewal info table should be:
@@ -31,16 +32,18 @@ Feature: View billing information
     | Payment Type  | Visa ending in @XXXX (change)        |
 
   @TC.15258
-  Scenario: Mozy-15258 Verify Next Renewal text align is set to left justify
+  Scenario: 15258 Verify Next Renewal text align is set to left justify
     When I log in bus admin console as mozypro test account
     And I navigate to Billing Information section from bus admin console page
     Then Next Renewal text align is set to left justify
 
   @TC.16658
-  Scenario: Mozy-16658 Verify MozyPro partner supplemental plan section details
+  Scenario: 16658 Verify MozyPro partner supplemental plan section details
     When I log in bus admin console as administrator
-    When I add a MozyPro partner with 1 month(s) period, 250 GB, $94.99 base plan, no server plan, no coupon, credit card payment
-    Then Partner created successful message should be New partner created.
+    When I add a new MozyPro partner:
+    | period | base plan      |
+    | 1      | 250 GB, $94.99 |
+    Then New partner should created
     When I log in bus admin console as the new partner account
     And I navigate to Billing Information section from bus admin console page
     Then Next renewal supplemental plan details should be:
@@ -48,10 +51,12 @@ Feature: View billing information
     | Total price for 250 GB  | $94.99   |
 
   @TC.15259
-  Scenario: Mozy-15259 Verify MozyEnterprise Autogrow status is set to disabled by default
+  Scenario: 15259 Verify MozyEnterprise Autogrow status is set to disabled by default
     When I log in bus admin console as administrator
-    When I add a MozyEnterprise partner with 12 month(s) period, 1 user(s), no server plan, 0 server add-on, no coupon, credit card payment
-    Then Partner created successful message should be New partner created.
+    When I add a new MozyEnterprise partner:
+    | period | users |
+    | 12     | 1     |
+    Then New partner should created
     When I log in bus admin console as the new partner account
     And I navigate to Billing Information section from bus admin console page
     Then Autogrow status text's should be Disabled (more info)
@@ -59,8 +64,10 @@ Feature: View billing information
   @TC.15260
   Scenario: Mozy-15260 Verify Reseller Autogrow status is set to disabled by default
     When I log in bus admin console as administrator
-    When I add a Reseller partner with 1 month(s) period, Silver Reseller, 100 GB base plan, no server plan, 0 add-on, no coupon, credit card payment
-    Then Partner created successful message should be New partner created.
+    When I add a new Reseller partner:
+    | period | reseller type | reseller quota |
+    | 1      | Silver        | 100            |
+    Then New partner should created
     When I log in bus admin console as the new partner account
     And I navigate to Billing Information section from bus admin console page
     Then Autogrow status text's should be Disabled (more info)
@@ -68,8 +75,10 @@ Feature: View billing information
   @TC.16659
   Scenario: Mozy-16659 Verify MozyEnterprise partner supplemental plan section details
     When I log in bus admin console as administrator
-    When I add a MozyEnterprise partner with 12 month(s) period, 1 user(s), no server plan, 0 server add-on, no coupon, credit card payment
-    Then Partner created successful message should be New partner created.
+    When I add a new MozyEnterprise partner:
+    | period | users |
+    | 12     | 1     |
+    Then New partner should created
     When I log in bus admin console as the new partner account
     And I navigate to Billing Information section from bus admin console page
     Then Next renewal supplemental plan details should be:
@@ -79,8 +88,10 @@ Feature: View billing information
   @TC.16660
   Scenario: Mozy-16660 Verify Reseller partner supplemental plan section details
     When I log in bus admin console as administrator
-    When I add a Reseller partner with 1 month(s) period, Silver Reseller, 100 GB base plan, no server plan, 0 add-on, no coupon, credit card payment
-    Then Partner created successful message should be New partner created.
+    When I add a new Reseller partner:
+    | period | reseller type | reseller quota |
+    | 1      | Silver        | 100            |
+    Then New partner should created
     When I log in bus admin console as the new partner account
     And I navigate to Billing Information section from bus admin console page
     Then Next renewal supplemental plan details should be:
@@ -92,8 +103,10 @@ Feature: View billing information
   @TC.17517
   Scenario: Mozy-17517 Verify MozyPro VAT information in the billing information view
     When I log in bus admin console as administrator
-    When I add a MozyPro partner with 1 month(s) period, 50 GB, $19.99 base plan, no server plan, no coupon, Belgium country, BE0883236072 VAT number, credit card payment
-    Then Partner created successful message should be New partner created.
+    When I add a new MozyPro partner:
+      | period | base plan     |
+      | 1      | 50 GB, $19.99 |
+    Then New partner should created
     When I log in bus admin console as the new partner account
     And I navigate to Billing Information section from bus admin console page
     Then VAT table should be:
