@@ -16,7 +16,7 @@ Feature: View billing information
     | Payment Type  | Visa ending in @XXXX (change)       |
 
   @TC.15254 @smoke_test
-  Scenario: Mozy-15254 Verify MozyEnterprise partner master plan section details
+  Scenario: 15254 Verify MozyEnterprise partner master plan section details
     When I log in bus admin console as administrator
     When I add a new MozyEnterprise partner:
     | period | users |
@@ -62,7 +62,7 @@ Feature: View billing information
     Then Autogrow status text's should be Disabled (more info)
 
   @TC.15260
-  Scenario: Mozy-15260 Verify Reseller Autogrow status is set to disabled by default
+  Scenario: 15260 Verify Reseller Autogrow status is set to disabled by default
     When I log in bus admin console as administrator
     When I add a new Reseller partner:
     | period | reseller type | reseller quota |
@@ -73,7 +73,7 @@ Feature: View billing information
     Then Autogrow status text's should be Disabled (more info)
 
   @TC.16659
-  Scenario: Mozy-16659 Verify MozyEnterprise partner supplemental plan section details
+  Scenario: 16659 Verify MozyEnterprise partner supplemental plan section details
     When I log in bus admin console as administrator
     When I add a new MozyEnterprise partner:
     | period | users |
@@ -86,7 +86,7 @@ Feature: View billing information
     | Total price for MozyEnterprise User | $95.00   |
 
   @TC.16660
-  Scenario: Mozy-16660 Verify Reseller partner supplemental plan section details
+  Scenario: 16660 Verify Reseller partner supplemental plan section details
     When I log in bus admin console as administrator
     When I add a new Reseller partner:
     | period | reseller type | reseller quota |
@@ -101,7 +101,7 @@ Feature: View billing information
     | Total price for GB - Silver Reseller  | $42.00  |
 
   @TC.17517
-  Scenario: Mozy-17517 Verify MozyPro VAT information in the billing information view
+  Scenario: 17517 Verify MozyPro VAT information in the billing information view
     When I log in bus admin console as administrator
     When I add a new MozyPro partner:
       | period | base plan     |
