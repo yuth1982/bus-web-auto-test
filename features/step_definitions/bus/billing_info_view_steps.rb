@@ -19,7 +19,7 @@ Then /^Next renewal info table should be:$/ do |next_renewal_table|
   next_renewal_table.map_column!('value') do |value|
     months = value.match(/\+(\d+) month\(s\)/)
     unless months.nil?
-      value = (DateTime.now >> months[1].to_s.to_i).strftime("%b %d, %Y")
+      value = (Time.now.localtime("-06:00").to_datetime >> 1).strftime("%b %d, %Y")
     end
      value.gsub(/@XXXX/, @partner.credit_card.number[12..-1])
    end
