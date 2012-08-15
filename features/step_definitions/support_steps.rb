@@ -1,14 +1,14 @@
 
 Transform /^administrator$/ do |step_arg|
-  Hash[:user_name => "shipuy@mozy.com", :password => "test1234"]
+  Hash[:user_name => ENV["bus_user"] || "shipuy@mozy.com", :password => ENV["bus_pwd"] || "test1234" ]
 end
 
 Transform /^aria admin$/ do |step_arg|
-  Hash[:user_name => "shipu", :password => "shipu1234"]
+  Hash[:user_name => ENV["aria_user"] || "shipu", :password => ENV["aria_pwd"] || "shipu1234"]
 end
 
 Transform /^default zimbra account$/ do |step_arg|
-  Hash[:user_name => "qa1@mozy.com", :password => "QAwelcome"]
+  Hash[:user_name => ENV["zimbra_user"] || "qa1@mozy.com", :password => ENV["zimbra_pwd"] || "QAwelcome"]
 end
 
 Transform /^mozypro test account$/ do |step_arg|

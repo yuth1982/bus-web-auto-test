@@ -1,9 +1,6 @@
 module Bus
-  # Database
-  #DEMETER = "host=10.29.29.135 port=5432 dbname=demeter user=bus password="
-
   # Bus login page
-  BUS_LOGIN_URL = "https://www.mozypro.com/login/admin?old_school=1"
+  BUS_LOGIN_URL = ENV["bus_url"] || "https://www.mozypro.com/login/admin?old_school=1"
 
   COMPANY_TYPE =
   {

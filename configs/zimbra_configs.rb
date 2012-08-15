@@ -1,5 +1,5 @@
 module Zimbra
 
-  ZIMBRA_LOGIN_URL = "https://mail.dechocorp.com/zimbra/"
+  ZIMBRA_LOGIN_URL = ENV["zimbra_url"] || "https://mail.dechocorp.com/zimbra/"
 
 end
