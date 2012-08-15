@@ -39,6 +39,8 @@ module Bus
     element(:cc_phone_tb, {:id => "cc_phone"})
     element(:cc_zip_tb, {:id => "cc_zip"})
 
+    elements(:period_radios, {:xpath => "//div[@id='initial_purchase_options']/dt/input"})
+    elements(:period_labels, {:xpath => "//div[@id='initial_purchase_options']/dt/label"})
     element(:initial_purchase_options, {:id => "initial_purchase_options"})
     element(:include_initial_purchase_cb, {:id =>"include_initial_purchase"})
     element(:next_btn, {:id => "next-button"})
@@ -126,6 +128,19 @@ module Bus
     # Returns order summary table rows text
     def order_summary_tb_rows_text
       order_summary_table.rows_text
+    end
+
+    # Public: Add new partner subscription period labels text
+    #
+    # Example
+    #   @bus_admin_console_page.add_new_partner_section.period_labels_text("MozyPro")
+    #   # => ["Monthly", "Yearly", "Biennially"]
+    #
+    # Returns period labels text
+    def period_labels_text(type)
+      company_type_select.select_by(:text,type)
+      sleep 10 # force wait to load plans
+      period_labels.map{ |ele| ele.text}
     end
 
     private

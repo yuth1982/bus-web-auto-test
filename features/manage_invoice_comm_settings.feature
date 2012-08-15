@@ -11,8 +11,8 @@ Feature:
     When I add a new MozyPro partner:
     | period | base plan     |
     | 1      | 50 GB, $19.99 |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I navigate to Account Details section from bus admin console page
     Then Account details table should be:
     | description                       | value             |
@@ -28,7 +28,7 @@ Feature:
     When I add a new MozyPro partner:
     | period | base plan     |
     | 1      | 50 GB, $19.99 |
-    Then New partner should created
+    Then New partner should be created
     When I log in aria admin console as aria admin
     When I set the new partner account notification method to Printable (no Email)
     Then the new partner account current notification method is set to Printable (no Email)
@@ -40,7 +40,7 @@ Feature:
     When I add a new MozyPro partner:
     | period | base plan     |
     | 1      | 50 GB, $19.99 |
-    Then New partner should created
+    Then New partner should be created
     When I log in aria admin console as aria admin
     Then the new partner account notification methods should be:
     | methods              |
@@ -52,8 +52,8 @@ Feature:
     When I add a new MozyPro partner:
     | period | base plan     |
     | 1      | 50 GB, $19.99 |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I set account Receive Mozy Account Statements option to No
     Then Account statement preference should be changed
     When I log in aria admin console as aria admin
@@ -64,7 +64,7 @@ Feature:
     When I add a new MozyPro partner:
     | period | base plan     |
     | 1      | 50 GB, $19.99 |
-    Then New partner should created
+    Then New partner should be created
     When I log in aria admin console as aria admin
     Then the new partner account current notification method is set to HTML Email
 
@@ -73,7 +73,7 @@ Feature:
     When I add a new MozyEnterprise partner:
     | period | users |
     | 12     | 1     |
-    Then New partner should created
+    Then New partner should be created
     When I log in aria admin console as aria admin
     Then the new partner account current notification method is set to HTML Email
 
@@ -82,7 +82,7 @@ Feature:
     When I add a new Reseller partner:
     | period | reseller type | reseller quota |
     | 1      | Silver        | 100            |
-    Then New partner should created
+    Then New partner should be created
     When I log in aria admin console as aria admin
     Then the new partner account current notification method is set to HTML Email
 

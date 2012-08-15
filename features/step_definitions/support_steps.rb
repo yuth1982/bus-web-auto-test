@@ -19,15 +19,6 @@ Transform /^mozyenterprise test account$/ do |step_arg|
   Hash[:user_name => "qa1+ruth+phillips+1107@mozy.com", :password => Bus::DEFAULT_PWD, :company_name => "Tagchat Closed-End Fund - Equity Company"]
 end
 
-#Transform /^MozyEnterprise test company name$/ do |step_arg|
-#  "Ntags Diversified Machinery Company"
-#end
-
-#Transform /^MozyPro test company name$/ do |step_arg|
-#  "Skibox Diversified Communication Services Company"
-#end
-
-
 Transform /^the new partner email$/ do |step_arg|
   @partner.admin_info.email
 end

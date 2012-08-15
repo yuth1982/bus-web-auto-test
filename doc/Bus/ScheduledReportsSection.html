@@ -150,7 +150,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Public: Download latest report to download folder.</p>
+<p>Public: Download latest reports to download folder.</p>
 </div></span>
   
 </li>
@@ -174,7 +174,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Public: Find first matched report row text by report name.</p>
+<p>Public: Find first matched reports row text by reports name.</p>
 </div></span>
   
 </li>
@@ -198,7 +198,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Public: Read downloaded scheduled report.</p>
+<p>Public: Read downloaded scheduled reports.</p>
 </div></span>
   
 </li>
@@ -222,7 +222,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Public: First 6 columns of report table body rows text.</p>
+<p>Public: First 6 columns of reports table body rows text.</p>
 </div></span>
   
 </li>
@@ -312,7 +312,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Public: Download latest report to download folder</p>
+<p>Public: Download latest reports to download folder</p>
 
 <p>Example</p>
 
@@ -373,7 +373,7 @@
     <span class='id identifier rubyid_sleep'>sleep</span> <span class='int'>1</span>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_report_row'>report_row</span><span class='lbracket'>[</span><span class='int'>6</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_find_element'>find_element</span><span class='lparen'>(</span><span class='symbol'>:link</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Download</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_click'>click</span>
-  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Wait 10 seconds to download csv report file</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Wait 10 seconds to download csv reports file</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_sleep'>sleep</span> <span class='int'>10</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -393,14 +393,14 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Public: Find first matched report row text by report name</p>
+<p>Public: Find first matched reports row text by reports name</p>
 
 <p>Example</p>
 
 <pre class="code ruby"><code><span class='ivar'>@bus_admin_console_page</span><span class='period'>.</span><span class='id identifier rubyid_scheduled_reports_section'>scheduled_reports_section</span><span class='period'>.</span><span class='id identifier rubyid_find_report'>find_report</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Billing Summary Test Report</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 <span class='comment'># =&gt; [&quot;Billing Summary Test Report&quot;, &quot;Billing Summary&quot;, &quot;qa1+ronald+parker+2237@mozy.com&quot;, &quot;Daily&quot;, &quot;Run&quot;, &quot;Wed Aug 01, 2012&quot;, &quot;Download&quot;, &quot;-&quot;]</span></code></pre>
 
-<p>Returns first matched report row text</p>
+<p>Returns first matched reports row text</p>
 
 
   </div>
@@ -441,13 +441,13 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Public: Read downloaded scheduled report</p>
+<p>Public: Read downloaded scheduled reports</p>
 
 <p>Example</p>
 
 <pre class="code ruby"><code><span class='ivar'>@bus_admin_console_page</span><span class='period'>.</span><span class='id identifier rubyid_scheduled_reports_section'>scheduled_reports_section</span><span class='period'>.</span><span class='id identifier rubyid_read_scheduled_report'>read_scheduled_report</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Billing Summary Test Report</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span></code></pre>
 
-<p>Returns report csv file rows</p>
+<p>Returns reports csv file rows</p>
 
 
   </div>
@@ -490,14 +490,14 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Public: First 6 columns of report table body rows text</p>
+<p>Public: First 6 columns of reports table body rows text</p>
 
 <p>Example</p>
 
 <pre class="code ruby"><code><span class='ivar'>@bus_admin_console_page</span><span class='period'>.</span><span class='id identifier rubyid_scheduled_reports_section'>scheduled_reports_section</span><span class='period'>.</span><span class='id identifier rubyid_reports_tb_rows_text'>reports_tb_rows_text</span>
-<span class='comment'># =&gt; [[&quot;Billing Summary Test Report&quot;, &quot;Billing Summary&quot;, &quot;@email&quot;, &quot;Daily&quot;, &quot;Run&quot;, &quot;@next_day&quot;]]</span></code></pre>
+<span class='comment'># =&gt; [[&quot;Billing Summary Test Report&quot;, &quot;Billing Summary&quot;, &quot;@email&quot;, &quot;Daily&quot;, &quot;Run&quot;]]</span></code></pre>
 
-<p>Returns first 6 columns of report table rows text</p>
+<p>Returns first 6 columns of reports table rows text</p>
 
 
   </div>
@@ -519,7 +519,7 @@
       <pre class="code"><span class="info file"># File 'lib/sections/bus/scheduled_reports_section.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_reports_tb_rows_text'>reports_tb_rows_text</span>
-  <span class='id identifier rubyid_reports_table'>reports_table</span><span class='period'>.</span><span class='id identifier rubyid_rows_text'>rows_text</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>..</span><span class='int'>5</span><span class='rbracket'>]</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_reports_table'>reports_table</span><span class='period'>.</span><span class='id identifier rubyid_rows_text'>rows_text</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>..</span><span class='int'>4</span><span class='rbracket'>]</span><span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -545,7 +545,7 @@
 <pre class="code ruby"><code><span class='ivar'>@bus_admin_console_page</span><span class='period'>.</span><span class='id identifier rubyid_scheduled_reports_section'>scheduled_reports_section</span><span class='period'>.</span><span class='id identifier rubyid_reports_tb_text'>reports_tb_text</span>
 <span class='comment'># =&gt; &quot;No results found&quot;</span></code></pre>
 
-<p>Returns report table text</p>
+<p>Returns reports table text</p>
 
 
   </div>
@@ -579,7 +579,7 @@
 </div>
 
     <div id="footer">
-  Generated on Thu Aug  2 22:34:19 2012 by
+  Generated on Wed Aug 15 14:39:23 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.2.1 (ruby-1.9.3).
 </div>

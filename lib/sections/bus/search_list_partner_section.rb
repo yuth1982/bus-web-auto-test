@@ -6,15 +6,31 @@ module Bus
     #
     element(:search_partner_tb, {:id => "pro_partner_search"})
     element(:search_partner_btn, {:xpath => "//div[@id='partner-list-content']//input[@value='Submit']"})
-    element(:search_results_table, {:xpath => "//div[@id='partner-list-content']/div/table"})
-    element(:clear_search_link, {:link => "Clear search"})
+    element(:partner_filter_select, {:id => "pro_partner_filter"})
     element(:include_sub_partners_cb, {:id => "include_subpartners"})
+    element(:clear_search_link, {:link => "Clear search"})
+    element(:search_results_table, {:xpath => "//div[@id='partner-list-content']/div/table"})
 
-    # Public: search results table header row text
+    # Public: Search partner
+    #
+    # Examples
+    #
+    #  @bus_admin_console_page.search_list_partner_section.search_partner("qa1+test@mozy.com")
+    #
+    # Returns nothing
+    def search_partner(search_key, filter = "None", include_sub_partners = true)
+      search_partner_tb.type_text(search_key)
+      partner_filter_select.select_by(:text, filter)
+      include_sub_partners_cb.check if include_sub_partners
+      search_partner_btn.click
+      raise "error on search / list partners action" unless clear_search_link.displayed?
+    end
+
+    # Public: Search results table header row text
     #
     # Example
     #
-    #  @@bus_admin_console_page.search_list_partner_section.search_results_tb_header_text
+    #  @bus_admin_console_page.search_list_partner_section.search_results_tb_header_text
     #  # => ["External ID", "Partner", "Created", "Root Admin", "Type", "Users", "Licenses", "Quota"]
     #
     # Returns search results table rows text array
@@ -22,30 +38,16 @@ module Bus
       search_results_table.headers_text
     end
 
-    # Public: search results table body rows text
+    # Public: Search results table body rows text
     #
     # Example
     #
-    #  @@bus_admin_console_page.search_list_partner_section.search_results_tb_rows_text
+    #  @bus_admin_console_page.search_list_partner_section.search_results_tb_rows_text
     #  # => ["", "Izio Oil & Gas Pipelines Company", "07/11/12", "qa1+frank+hamilton@mozy.com", "MozyEnterprise", "0", "201", "625 GB"]
     #
     # Return search results table body rows text array
     def search_results_tb_rows_text
       search_results_table.rows_text
-    end
-
-    # Public: Search partner by search text
-    #
-    # Examples
-    #
-    #  @bus_admin_console_page.search_list_partner_section.search_partner("qa1+test@mozy.com")
-    #
-    # Returns nothing
-    def search_partner(search_key)
-      include_sub_partners_cb.check
-      search_partner_tb.type_text(search_key)
-      search_partner_btn.click
-      raise "error on search / list partners action" unless clear_search_link.displayed?
     end
 
     # Public: View partner detail by click partner's company name

@@ -12,6 +12,15 @@ module Bus
     section(:admin_details_section, AdminDetailsSection)
     section(:account_details_section, AccountDetailsSection)
 
+    # Users section
+    section(:add_new_user_group_section, AddNewUserGroupSection)
+    section(:add_new_user_section, AddNewUserSection)
+    section(:search_list_machines_section, SearchListMachinesSection)
+    section(:search_list_users_section, SearchListUsersSection)
+
+    # Admin section
+
+
     section(:order_data_shuttle_section, OrderDataShuttleSection)
     section(:process_order_section, ProcessOrderSection)
     section(:view_data_shuttle_orders_section, ViewDataShuttleOrdersSection)

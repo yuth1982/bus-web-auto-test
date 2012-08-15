@@ -12,8 +12,8 @@ Feature: Change subscription period
     When I add a new MozyPro partner:
     | period | base plan     |
     | 1      | 50 GB, $19.99 |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I change account subscription up to MozyPro annual billing period
     Then Subscription changed message should be Your account has been changed to yearly billing.
 
@@ -22,8 +22,8 @@ Feature: Change subscription period
     When I add a new MozyPro partner:
     | period | base plan      |
     | 12     | 50 GB, $219.89 |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I change account subscription up to MozyPro biennial billing period
     Then Subscription changed message should be Your account has been changed to biennial billing.
 
@@ -32,8 +32,8 @@ Feature: Change subscription period
     When I add a new MozyPro partner:
     | period | base plan     |
     | 1      | 50 GB, $19.99 |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I change account subscription up to MozyPro biennial billing period
     Then Subscription changed message should be Your account has been changed to biennial billing.
 
@@ -42,8 +42,8 @@ Feature: Change subscription period
     When I add a new MozyPro partner:
     | period | base plan      |
     | 24     | 50 GB, $419.79 |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I change account subscription down to MozyPro annual billing period
     Then Subscription changed message should be Your account will be switched to yearly billing schedule at your next renewal.
 
@@ -52,8 +52,8 @@ Feature: Change subscription period
     When I add a new MozyPro partner:
     | period | base plan      |
     | 12     | 50 GB, $219.89 |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I change account subscription down to MozyPro monthly billing period
     Then Subscription changed message should be Your account will be switched to monthly billing schedule at your next renewal.
 
@@ -62,8 +62,8 @@ Feature: Change subscription period
     When I add a new MozyPro partner:
     | period | base plan      |
     | 24     | 50 GB, $419.79 |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I change account subscription down to MozyPro monthly billing period
     Then Subscription changed message should be Your account will be switched to monthly billing schedule at your next renewal.
 
@@ -72,8 +72,8 @@ Feature: Change subscription period
     When I add a new MozyEnterprise partner:
     | period | users |
     | 12     | 1     |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I change account subscription up to MozyEnterprise biennial billing period
     Then Subscription changed message should be Your account has been changed to biennial billing.
 
@@ -82,8 +82,8 @@ Feature: Change subscription period
     When I add a new MozyEnterprise partner:
     | period | users |
     | 24     | 1     |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I change account subscription up to MozyEnterprise 3-year billing period
     Then Subscription changed message should be Your account has been changed to 3-year billing.
 
@@ -92,8 +92,8 @@ Feature: Change subscription period
     When I add a new MozyEnterprise partner:
     | period | users |
     | 12     | 1     |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I change account subscription up to MozyEnterprise 3-year billing period
     Then Subscription changed message should be Your account has been changed to 3-year billing.
 
@@ -102,8 +102,8 @@ Feature: Change subscription period
     When I add a new MozyEnterprise partner:
     | period | users |
     | 24     | 1     |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I change account subscription down to MozyEnterprise annual billing period
     Then Subscription changed message should be Your account will be switched to yearly billing schedule at your next renewal.
 
@@ -112,8 +112,8 @@ Feature: Change subscription period
     When I add a new MozyEnterprise partner:
     | period | users |
     | 36     | 1     |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I change account subscription down to MozyEnterprise biennial billing period
     Then Subscription changed message should be Your account will be switched to biennial billing schedule at your next renewal.
 
@@ -122,8 +122,8 @@ Feature: Change subscription period
     When I add a new MozyEnterprise partner:
     | period | users |
     | 36     | 1     |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I change account subscription down to MozyEnterprise annual billing period
     Then Subscription changed message should be Your account will be switched to yearly billing schedule at your next renewal.
 
@@ -132,8 +132,8 @@ Feature: Change subscription period
     When I add a new Reseller partner:
     | period | reseller type | reseller quota |
     | 1      | Silver        | 100            |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I change account subscription up to Reseller annual billing period
     Then Subscription changed message should be Your account has been changed to yearly billing.
 
@@ -142,8 +142,8 @@ Feature: Change subscription period
     When I add a new Reseller partner:
     | period | reseller type | reseller quota |
     | 12     | Gold          | 100            |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I change account subscription down to Reseller monthly billing period
     Then Subscription changed message should be Your account will be switched to monthly billing schedule at your next renewal.
 
@@ -152,8 +152,8 @@ Feature: Change subscription period
     When I add a new Reseller partner:
     | period | reseller type | reseller quota |
     | 1      | Silver        | 100            |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I change account subscription up to Reseller annual billing period
     Then Change subscription confirmation message should be:
     | Message                                                                                                                                                                                                                                           |
@@ -171,8 +171,8 @@ Feature: Change subscription period
     When I add a new MozyPro partner:
     | period | base plan     |
     | 1      | 50 GB, $19.99 |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I change account subscription up to MozyPro biennial billing period
     Then Change subscription confirmation message should be:
     | Message                                                                                                                                                                                                                                                |
@@ -190,8 +190,8 @@ Feature: Change subscription period
     When I add a new MozyEnterprise partner:
     | period | users |
     | 12     | 1     |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I change account subscription up to MozyEnterprise 3-year billing period
     Then Change subscription confirmation message should be:
     | Message                                                                                                                                                                                                                                           |

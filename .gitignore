@@ -3,3 +3,5 @@ Gemfile.lock
 logs/*.png
 logs/*.html
 download/*.csv
+.idea/
+.yardoc/

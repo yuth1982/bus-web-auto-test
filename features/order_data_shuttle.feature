@@ -51,7 +51,7 @@ Feature:
     When I add a new MozyEnterprise partner:
     | period | users |
     | 12     | 1     |
-    Then New partner should created
+    Then New partner should be created
     When I order data shuttle for the new partner account
     | key from  | quota |
     | available | 20    |
@@ -66,7 +66,7 @@ Feature:
     When I add a new MozyEnterprise partner:
     | period | users |
     | 12     | 1     |
-    Then New partner should created
+    Then New partner should be created
     When I order data shuttle for the new partner account
     | key from  | quota | assign to |
     | available | 20    | @email    |
@@ -77,7 +77,7 @@ Feature:
     When I add a new MozyPro partner:
     | period | base plan     |
     | 1      | 50 GB, $19.99 |
-    Then New partner should created
+    Then New partner should be created
     When I order data shuttle for the new partner account
     | key from | quota |
     | new      | 20    |
@@ -92,7 +92,7 @@ Feature:
     When I add a new MozyPro partner:
     | period | base plan     |
     | 1      | 50 GB, $19.99 |
-    Then New partner should created
+    Then New partner should be created
     When I order data shuttle for the new partner account
     | key from | quota | assign to |
     | new      | 20    | @email    |
@@ -103,7 +103,7 @@ Feature:
     When I add a new MozyEnterprise partner:
     | period | users |
     | 12     | 1     |
-    Then New partner should created
+    Then New partner should be created
     When I order data shuttle for the new partner account
     | key from  | quota | assign to | discount |
     | available | 10    | @email    | 50       |
@@ -118,7 +118,7 @@ Feature:
     When I add a new MozyEnterprise partner:
     | period | users |
     | 12     | 1     |
-    Then New partner should created
+    Then New partner should be created
     When I order data shuttle for the new partner account
     | key from  | quota | assign to | discount |
     | available | 10    | @email    | 100      |
@@ -133,7 +133,7 @@ Feature:
     When I add a new MozyEnterprise partner:
     | period | users |
     | 12     | 1     |
-    Then New partner should created
+    Then New partner should be created
     When I order data shuttle for the new partner account
     | key from  | quota |
     | available | 20    |
@@ -146,7 +146,7 @@ Feature:
     When I add a new MozyPro partner:
     | period | base plan     |
     | 1      | 50 GB, $19.99 |
-    Then New partner should created
+    Then New partner should be created
     When I order data shuttle for the new partner account
     | key from | quota |
     | new      | 20    |
@@ -159,7 +159,7 @@ Feature:
     When I add a new Reseller partner:
     | period | reseller type | reseller quota |
     | 1      | Silver        | 2000           |
-    Then New partner should created
+    Then New partner should be created
     When I order data shuttle for the new partner account
     | key from | quota |
     | new      | 2000  |
@@ -175,7 +175,7 @@ Feature:
     When I add a new MozyPro partner:
     | period | base plan       |
     | 1      | 4 TB, $1,439.99 |
-    Then New partner should created
+    Then New partner should be created
     When I order data shuttle for the new partner account
     | key from | quota |
     | new      | 3800  |
@@ -191,7 +191,7 @@ Feature:
     When I add a new Reseller partner:
     | period | reseller type | reseller quota |
     | 1      | Silver        | 2000           |
-    Then New partner should created
+    Then New partner should be created
     When I order data shuttle for the new partner account
     | key from | quota | win drivers |
     | new      | 1000  | 2           |
@@ -203,7 +203,7 @@ Feature:
     When I add a new MozyPro partner:
     | period | base plan       |
     | 1      | 1 TB, $379.99 |
-    Then New partner should created
+    Then New partner should be created
     When I order data shuttle for the new partner account
     | key from  | quota | win drivers | mac drivers |
     | available | 500   | 0           | 2           |
@@ -215,12 +215,12 @@ Feature:
     When I add a new MozyEnterprise partner:
     | period | users |
     | 12     | 1     |
-    Then New partner should created
+    Then New partner should be created
     When I order data shuttle for the new partner account
     | key from  | quota |
     | available | 20    |
     Then Data shuttle order should be created
-    When I log in bus admin console as the new partner account
+    When I act as newly created partner account
     And I navigate to Billing History section from bus admin console page
     Then Billing history table should be:
     | Date    | Amount  | Total Paid | Balance Due |

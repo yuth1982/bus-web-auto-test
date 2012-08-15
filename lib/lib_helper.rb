@@ -30,6 +30,7 @@ require "data_obj/bus/data_shuttle_order"
 require "data_obj/bus/report"
 require "data_obj/bus/billing_detail_report"
 require "data_obj/bus/billing_summary_report"
+require "data_obj/bus/user"
 
 require "sections/bus/add_new_partner_section"
 require "sections/bus/search_list_partner_section"
@@ -48,7 +49,19 @@ require "sections/bus/scheduled_reports_section"
 require "sections/bus/quick_reports_section"
 require "sections/bus/change_payment_info_section"
 require "sections/bus/change_plan_section"
+# Users section
+require "sections/bus/users/add_new_user_section"
+require "sections/bus/users/add_new_user_group_section"
+require "sections/bus/users/search_list_machines_section"
+require "sections/bus/users/search_list_users_section"
+# Admins section
+require "sections/bus/admins/add_new_admin_section"
+require "sections/bus/admins/add_new_role_section"
+require "sections/bus/admins/list_admins_section"
+require "sections/bus/admins/list_roles_section"
+require "sections/bus/admins/search_admins_section"
 
+# Aria sections
 require "sections/aria/search_account_section"
 require "sections/aria/account_status_section"
 require "sections/aria/taxpayer_section"

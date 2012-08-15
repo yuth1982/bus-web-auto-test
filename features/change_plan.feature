@@ -8,8 +8,8 @@ Feature: Change plan
     When I add a new MozyPro partner:
     | period | base plan    |
     | 1      | 10 GB, $9.99 |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     When I change MozyPro account plan to:
     | base plan       | server plan | coupon |
     | 50 GB, $19.99   | yes         |        |
@@ -26,8 +26,8 @@ Feature: Change plan
     When I add a new MozyEnterprise partner:
     | period | users |
     | 12     | 10    |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     When I change MozyEnterprise account plan to:
     | users | server plan                  | server add-on | coupon |
     | 20    | 50 GB Server Plan, $296.78   | 1             |        |
@@ -41,8 +41,8 @@ Feature: Change plan
     When I add a new Reseller partner:
     | period | reseller type | reseller quota |
     | 1      | Silver        | 100            |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     When I change Reseller account plan to:
     | server plan | server add-on | coupon |
     | yes         | 2             |        |

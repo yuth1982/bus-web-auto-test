@@ -45,12 +45,15 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partne
   @bus_admin_console_page.add_new_partner_section.add_new_account(@partner)
 end
 
-Then /^New partner should created/ do
+Then /^New partner should be created/ do
   @bus_admin_console_page.add_new_partner_section.message_text.should == "New partner created."
-  step "I activate new partner admin with default password"
 end
 
 Then /^Order summary table should be:$/ do |order_summary_table|
   @bus_admin_console_page.add_new_partner_section.order_summary_tb_headers_text.should == order_summary_table.headers
   @bus_admin_console_page.add_new_partner_section.order_summary_tb_rows_text.should == order_summary_table.rows
+end
+
+Then /^(MozyPro|MozyEnterprise|Reseller) partner subscription period options should be:$/ do |type, periods_table|
+  @bus_admin_console_page.add_new_partner_section.period_labels_text(type).should == periods_table.headers
 end

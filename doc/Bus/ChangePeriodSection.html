@@ -113,6 +113,29 @@
   
 
 </div>
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="CHANGE_CONFIRM_LOC-constant" class="">CHANGE_CONFIRM_LOC =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>Constants</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>billing_change_confirmation</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+    </dl>
+  
+
 
 
 
@@ -131,30 +154,6 @@
     </h2>
 
     <ul class="summary">
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#change_confirmation_text-instance_method" title="#change_confirmation_text (instance method)">- (Object) <strong>change_confirmation_text</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>Public: change subscription period confirmation text.</p>
-</div></span>
-  
-</li>
-
       
         <li class="public ">
   <span class="summary_signature">
@@ -199,6 +198,30 @@
   
     <span class="summary_desc"><div class='inline'>
 <p>Public: Move upstream with subscription period.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#confirmation_text-instance_method" title="#confirmation_text (instance method)">- (Object) <strong>confirmation_text</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Public: Change subscription period confirmation text.</p>
 </div></span>
   
 </li>
@@ -325,55 +348,7 @@
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="change_confirmation_text-instance_method">
-  
-    - (<tt>Object</tt>) <strong>change_confirmation_text</strong> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>Public: change subscription period confirmation text</p>
-
-<p>Example</p>
-
-<pre class="code ruby"><code><span class='ivar'>@bus_admin_console_page</span><span class='period'>.</span><span class='id identifier rubyid_change_period_section'>change_period_section</span><span class='period'>.</span><span class='id identifier rubyid_change_confirmation_text'>change_confirmation_text</span>
-<span class='comment'># =&gt; &quot;Are you sure that you want to change your subscription period from yearly to 3-year billing? ... ...&quot;</span></code></pre>
-
-<p>Returns confirmation text</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-42
-43
-44</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/sections/bus/change_period_section.rb', line 42</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_change_confirmation_text'>change_confirmation_text</span>
-  <span class='id identifier rubyid_change_confirmation_div'>change_confirmation_div</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="change_subscription_down-instance_method">
+  <h3 class="signature first" id="change_subscription_down-instance_method">
   
     - (<tt>Object</tt>) <strong>change_subscription_down</strong>(link_text) 
   
@@ -404,13 +379,13 @@
       <pre class="lines">
 
 
-30
-31
-32
-33</pre>
+34
+35
+36
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/sections/bus/change_period_section.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'lib/sections/bus/change_period_section.rb', line 34</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_change_subscription_down'>change_subscription_down</span><span class='lparen'>(</span><span class='id identifier rubyid_link_text'>link_text</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_driver'>driver</span><span class='period'>.</span><span class='id identifier rubyid_find_element'>find_element</span><span class='lparen'>(</span><span class='symbol'>:link</span><span class='comma'>,</span> <span class='id identifier rubyid_link_text'>link_text</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_click'>click</span>
@@ -453,20 +428,70 @@
       <pre class="lines">
 
 
-18
-19
-20
-21
-22</pre>
+22
+23
+24
+25
+26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/sections/bus/change_period_section.rb', line 18</span>
+      <pre class="code"><span class="info file"># File 'lib/sections/bus/change_period_section.rb', line 22</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_change_subscription_up'>change_subscription_up</span><span class='lparen'>(</span><span class='id identifier rubyid_link_text'>link_text</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_driver'>driver</span><span class='period'>.</span><span class='id identifier rubyid_find_element'>find_element</span><span class='lparen'>(</span><span class='symbol'>:link</span><span class='comma'>,</span> <span class='id identifier rubyid_link_text'>link_text</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_click'>click</span>
   <span class='id identifier rubyid_continue_btn'>continue_btn</span><span class='period'>.</span><span class='id identifier rubyid_click'>click</span>
   <span class='id identifier rubyid_sleep'>sleep</span> <span class='int'>10</span> <span class='comment'># wait for change subscription period
 </span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="confirmation_text-instance_method">
+  
+    - (<tt>Object</tt>) <strong>confirmation_text</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Public: Change subscription period confirmation text</p>
+
+<p>Example</p>
+
+<pre class="code ruby"><code>@bus_admin_console_page.change_period_section.confirmation_text
+# =&gt; [&quot;Are you sure that you want to change your subscription period from yearly to 3-year billing? ... ...&quot;,
+      &quot;If you choose to continue, your account ... ...&quot;,
+      &quot;Any resources you scheduled for return in your next subscription ....&quot;]</code></pre>
+
+<p>Returns confirmation text array</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+48
+49
+50</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sections/bus/change_period_section.rb', line 48</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_confirmation_text'>confirmation_text</span>
+  <span class='id identifier rubyid_confirmation_p'>confirmation_p</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span> <span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -505,12 +530,12 @@
       <pre class="lines">
 
 
-53
-54
-55</pre>
+59
+60
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/sections/bus/change_period_section.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/sections/bus/change_period_section.rb', line 59</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_message_text'>message_text</span>
   <span class='id identifier rubyid_message_div'>message_div</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span>
@@ -553,15 +578,15 @@
       <pre class="lines">
 
 
-64
-65
-66</pre>
+70
+71
+72</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/sections/bus/change_period_section.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'lib/sections/bus/change_period_section.rb', line 70</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_price_tb_headers_text'>price_tb_headers_text</span>
-  <span class='id identifier rubyid_price_table'>price_table</span><span class='period'>.</span><span class='id identifier rubyid_headers_text'>headers_text</span>
+  <span class='id identifier rubyid_price_table'>price_table</span><span class='period'>.</span><span class='id identifier rubyid_find_elements'>find_elements</span><span class='lparen'>(</span><span class='symbol'>:xpath</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>./thead/tr/th</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_cell'>cell</span><span class='op'>|</span> <span class='id identifier rubyid_cell'>cell</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -603,15 +628,17 @@
       <pre class="lines">
 
 
-77
-78
-79</pre>
+84
+85
+86
+87</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/sections/bus/change_period_section.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'lib/sections/bus/change_period_section.rb', line 84</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_price_tb_rows_text'>price_tb_rows_text</span>
-  <span class='id identifier rubyid_price_table'>price_table</span><span class='period'>.</span><span class='id identifier rubyid_rows_text'>rows_text</span>
+  <span class='id identifier rubyid_rows'>rows</span> <span class='op'>=</span> <span class='id identifier rubyid_price_table'>price_table</span><span class='period'>.</span><span class='id identifier rubyid_find_elements'>find_elements</span><span class='lparen'>(</span><span class='symbol'>:xpath</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>./tbody/tr</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_child'>child</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_rows'>rows</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_cell'>cell</span><span class='op'>|</span> <span class='id identifier rubyid_cell'>cell</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -623,7 +650,7 @@
 </div>
 
     <div id="footer">
-  Generated on Thu Aug  2 22:34:19 2012 by
+  Generated on Wed Aug 15 14:39:23 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.2.1 (ruby-1.9.3).
 </div>

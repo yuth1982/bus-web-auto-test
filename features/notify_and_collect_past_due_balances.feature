@@ -12,7 +12,7 @@ Feature: Notify about and collect past-due balances
     When I add a new MozyPro partner:
     | period | base plan     |
     | 1      | 50 GB, $19.99 |
-    Then New partner should created
+    Then New partner should be created
     When I delete the new partner account
     And I log in aria admin console as aria admin
     Then the new partner account status should be CANCELLED
@@ -22,12 +22,12 @@ Feature: Notify about and collect past-due balances
     When I add a new MozyPro partner:
     | period | base plan     |
     | 1      | 50 GB, $19.99 |
-    Then New partner should created
+    Then New partner should be created
     When I log in aria admin console as aria admin
     And I change the new partner account status to Suspended
     Then Status changed successful message should be Account status changed
     When I wait for 60 seconds
-    And I log in bus admin console as the new partner account
+    And I act as newly created partner account
     And I navigate to Change Payment Information section from bus admin console page
     Then Change payment information message should be Your account is backup-suspended. You will not be able to access your account until your credit card is billed.
 
@@ -36,12 +36,12 @@ Feature: Notify about and collect past-due balances
     When I add a new MozyPro partner:
     | period | base plan     |
     | 1      | 50 GB, $19.99 |
-    Then New partner should created
+    Then New partner should be created
     When I log in aria admin console as aria admin
     And I change the new partner account status to Suspended
     Then Status changed successful message should be Account status changed
     When I wait for 60 seconds
-    And I log in bus admin console as the new partner account
+    And I act as newly created partner account
     And I navigate to Change Payment Information section from bus admin console page
     Then Change payment information message should be Your account is backup-suspended. You will not be able to access your account until your credit card is billed.
 
@@ -50,7 +50,7 @@ Feature: Notify about and collect past-due balances
     When I add a new MozyEnterprise partner:
     | period | users |
     | 12     | 1     |
-    Then New partner should created
+    Then New partner should be created
     When I log in aria admin console as aria admin
     And I change the new partner account status to Active Dunning 1
     Then Status changed successful message should be Account status changed
@@ -66,7 +66,7 @@ Feature: Notify about and collect past-due balances
     When I add a new Reseller partner:
     | period | reseller type | reseller quota |
     | 1      | Silver        | 100            |
-    Then New partner should created
+    Then New partner should be created
     When I log in aria admin console as aria admin
     And I change the new partner account status to Active Dunning 2
     Then Status changed successful message should be Account status changed
@@ -82,7 +82,7 @@ Feature: Notify about and collect past-due balances
     When I add a new MozyPro partner:
     | period | base plan     |
     | 1      | 50 GB, $19.99 |
-    Then New partner should created
+    Then New partner should be created
     When I log in aria admin console as aria admin
     And I change the new partner account status to Active Dunning 3
     Then Status changed successful message should be Account status changed
@@ -98,7 +98,7 @@ Feature: Notify about and collect past-due balances
     When I add a new MozyEnterprise partner:
     | period | users |
     | 12     | 1     |
-    Then New partner should created
+    Then New partner should be created
     When I log in aria admin console as aria admin
     And I change the new partner account status to Suspended
     Then Status changed successful message should be Account status changed
@@ -115,7 +115,7 @@ Feature: Notify about and collect past-due balances
     When I add a new MozyPro partner:
     | period | base plan     | net terms |
     | 1      | 50 GB, $19.99 | yes       |
-    Then New partner should created
+    Then New partner should be created
     When I log in aria admin console as aria admin
     And I change the new partner account status to Active Dunning 1
     Then Status changed successful message should be Account status changed
@@ -131,7 +131,7 @@ Feature: Notify about and collect past-due balances
     When I add a new MozyEnterprise partner:
     | period | users     | net terms |
     | 12     | 1        | yes       |
-    Then New partner should created
+    Then New partner should be created
     When I log in aria admin console as aria admin
     And I change the new partner account status to Active Dunning 2
     Then Status changed successful message should be Account status changed
@@ -148,7 +148,7 @@ Feature: Notify about and collect past-due balances
     When I add a new Reseller partner:
     | period | reseller type | reseller quota | net terms |
     | 1      | Silver        | 100            | yes       |
-    Then New partner should created
+    Then New partner should be created
     When I log in aria admin console as aria admin
     And I change the new partner account status to Active Dunning 3
     Then Status changed successful message should be Account status changed
@@ -164,7 +164,7 @@ Feature: Notify about and collect past-due balances
     When I add a new MozyPro partner:
     | period | base plan     | net terms |
     | 1      | 50 GB, $19.99 | yes       |
-    Then New partner should created
+    Then New partner should be created
     When I log in aria admin console as aria admin
     And I change the new partner account status to Suspended
     Then Status changed successful message should be Account status changed
@@ -181,17 +181,17 @@ Feature: Notify about and collect past-due balances
 #    When I add a new MozyPro partner:
 #    | period | base plan     |
 #    | 1      | 50 GB, $19.99 |
-#    Then New partner should created
+#    Then New partner should be created
 #    When I log in aria admin console as aria admin
 #    And I change the new partner account CAG to Fail Test CAG
 #    Then CAG message should be Account group changes saved.
-#    When I log in bus admin console as the new partner account
+#    When I act as newly created partner account
 #    And I change account subscription up to MozyPro annual billing period
 #    Then Subscription changed message should be Your account has been changed to yearly billing.
 #    When I visit aria admin console page
 #    When I change the new partner account CAG to CyberSource Credit Card
 #    Then CAG message should be Account group changes saved.
-    #When I log in bus admin console as the new partner account
+    #When I act as newly created partner account
     #And I navigate to Change Payment Information section from bus admin console page
     #And I update partner credit card information with new test info
     #Then Message displayed on change payment information view should match Your billing information has been successfully updated.
@@ -204,7 +204,7 @@ Feature: Notify about and collect past-due balances
    # And I search aria account by the new partner email
    # And I change collections account group to Fail Test CAG
    # Then Change account group message should be Account group changes saved.
-   # When I log in bus admin console as the new partner account
+   # When I act as newly created partner account
    # And I navigate to Billing Information section from bus admin console page
    # And I change account subscription up to MozyPro annual billing period
    # Then Subscription changed message should be Your account has been changed to yearly billing.
@@ -214,7 +214,7 @@ Feature: Notify about and collect past-due balances
 #    Then Status changed successful message should be Account status changed
 #    When I change collections account group to CyberSource Credit Card
 #    Then Change account group message should be Account group changes saved.
-#    When I log in bus admin console as the new partner account
+#    When I act as newly created partner account
 #    And I navigate to Change Payment Information section from bus admin console page
 #    And I update partner credit card information with new test info
 #    Then Message displayed on change payment information view should match Your billing information has been successfully updated.
@@ -229,7 +229,7 @@ Feature: Notify about and collect past-due balances
 #    And I search aria account by the new partner email
 #    And I change collections account group to Fail Test CAG
 #    Then Change account group message should be Account group changes saved.
-#    When I log in bus admin console as the new partner account
+#    When I act as newly created partner account
 #    And I navigate to Billing Information section from bus admin console page
 #    And I change account subscription up to MozyPro annual billing period
 #    Then Subscription changed message should be Your account has been changed to yearly billing.
@@ -238,7 +238,7 @@ Feature: Notify about and collect past-due balances
 #    And I change account status to Active Dunning 1
 #    And I change collections account group to CyberSource Credit Card
 #    Then Change account group message should be Account group changes saved.
-#    When I log in bus admin console as the new partner account
+#    When I act as newly created partner account
 #    And I navigate to Change Payment Information section from bus admin console page
 #    And I update partner credit card information with new test info
 #    Then Message displayed on change payment information view should match Your billing information has been successfully updated.

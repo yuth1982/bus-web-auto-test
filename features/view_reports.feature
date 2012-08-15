@@ -37,8 +37,8 @@ Feature: View Report
     When I add a new MozyEnterprise partner:
     | period | users |
     | 12     | 1     |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     When I build a new report:
     | type            | name                  | frequency |
     | Billing Summary | billing summary test  | Daily     |
@@ -55,8 +55,8 @@ Feature: View Report
     When I add a new MozyEnterprise partner:
     | period | users |
     | 12     | 1     |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     When I build a new report:
     | type            | name                  | frequency |
     | Billing Summary | billing summary test  | Weekly    |
@@ -73,8 +73,8 @@ Feature: View Report
     When I add a new MozyEnterprise partner:
     | period | users |
     | 12     | 1     |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     When I build a new report:
     | type            | name                 | frequency |
     | Billing Summary | billing summary test | Monthly   |
@@ -91,8 +91,8 @@ Feature: View Report
     When I add a new MozyEnterprise partner:
     | period | users | server plan                 | server add-on |
     | 12     | 1     | 100 GB Server Plan, $582.78 | 2             |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     When I build a new report:
     | type            | name                  |
     | Billing Summary | billing summary test  |
@@ -109,8 +109,8 @@ Feature: View Report
     When I add a new Reseller partner:
     | period | reseller type | reseller quota | server plan | server add-on |
     | 1      | Silver        | 100            | yes         | 2             |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     When I build a new report:
     | type            | name                  |
     | Billing Summary | billing summary test  |
@@ -127,8 +127,8 @@ Feature: View Report
     When I add a new MozyEnterprise partner:
     | period | users | server plan                 | server add-on |
     | 12     | 1     | 100 GB Server Plan, $582.78 | 2             |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     When I build a new report:
     | type            | name                  |
     | Billing Summary | billing summary test  |
@@ -151,8 +151,8 @@ Feature: View Report
     When I add a new Reseller partner:
     | period | reseller type | reseller quota | server plan | server add-on |
     | 1      | Silver        | 100            | yes         | 2             |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     When I build a new report:
     | type            | name                  |
     | Billing Summary | billing summary test  |
@@ -175,8 +175,8 @@ Feature: View Report
     When I add a new MozyEnterprise partner:
     | period | users |
     | 12     | 1     |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     When I build a new report:
     | type            | name                |
     | Billing Detail  | billing detail test |
@@ -193,8 +193,8 @@ Feature: View Report
     When I add a new MozyEnterprise partner:
     | period | users | server plan                    | server add-on |
     | 24     | 1     | 100 GB Server Plan, $1,112.58  | 2             |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     When I build a new report:
     | type            | name                |
     | Billing Detail  | billing detail test |
@@ -211,8 +211,8 @@ Feature: View Report
     When I add a new Reseller partner:
     | period | reseller type | reseller quota | server plan | server add-on |
     | 1      | Silver        | 100            | yes         | 2             |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     When I build a new report:
     | type            | name                |
     | Billing Detail  | billing detail test |
@@ -229,8 +229,8 @@ Feature: View Report
     When I add a new MozyEnterprise partner:
     | period | users | server plan                    | server add-on |
     | 24     | 1     | 100 GB Server Plan, $1,112.58  | 2             |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     When I build a new report:
     | type            | name                |
     | Billing Detail  | billing detail test |
@@ -253,8 +253,8 @@ Feature: View Report
     When I add a new MozyEnterprise partner:
     | period | users |
     | 12     | 1     |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I change account subscription up to MozyEnterprise biennial billing period
     Then Subscription changed message should be Your account has been changed to biennial billing.
     When I download Credit Card Transactions (CSV) quick report

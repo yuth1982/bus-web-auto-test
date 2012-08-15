@@ -27,5 +27,12 @@ module Bus
       submit.click
       sleep 10 # Wait for admin to be activated
     end
+
+    # Public: As as admin
+    #
+    # Returns nothing
+    def act_as_admin
+      act_as_link.click
+    end
   end
 end

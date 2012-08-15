@@ -6,8 +6,8 @@ Feature: View billing information
     When I add a new MozyPro partner:
     | period | base plan      |
     | 1      | 250 GB, $94.99 |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I navigate to Billing Information section from bus admin console page
     Then Next renewal info table should be:
     | description   | value                               |
@@ -22,8 +22,8 @@ Feature: View billing information
     When I add a new Reseller partner:
     | period | reseller type | reseller quota |
     | 12     | Silver        | 100            |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I navigate to Billing Information section from bus admin console page
     Then Next renewal info table should be:
     | description   | value                                |
@@ -38,8 +38,8 @@ Feature: View billing information
     When I add a new MozyEnterprise partner:
     | period | users |
     | 36     | 1     |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I navigate to Billing Information section from bus admin console page
     Then Next renewal info table should be:
     | description   | value                                |
@@ -60,8 +60,8 @@ Feature: View billing information
     When I add a new MozyPro partner:
     | period | base plan      |
     | 1      | 250 GB, $94.99 |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I navigate to Billing Information section from bus admin console page
     Then Next renewal supplemental plan details should be:
     | description             | amount   |
@@ -73,8 +73,8 @@ Feature: View billing information
     When I add a new MozyEnterprise partner:
     | period | users |
     | 12     | 1     |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I navigate to Billing Information section from bus admin console page
     Then Autogrow status text's should be Disabled (more info)
 
@@ -84,8 +84,8 @@ Feature: View billing information
     When I add a new Reseller partner:
     | period | reseller type | reseller quota |
     | 1      | Silver        | 100            |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I navigate to Billing Information section from bus admin console page
     Then Autogrow status text's should be Disabled (more info)
 
@@ -95,8 +95,8 @@ Feature: View billing information
     When I add a new MozyEnterprise partner:
     | period | users |
     | 12     | 1     |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I navigate to Billing Information section from bus admin console page
     Then Next renewal supplemental plan details should be:
     | description                         | amount   |
@@ -108,8 +108,8 @@ Feature: View billing information
     When I add a new Reseller partner:
     | period | reseller type | reseller quota |
     | 1      | Silver        | 100            |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I navigate to Billing Information section from bus admin console page
     Then Next renewal supplemental plan details should be:
     | description                           | amount  |
@@ -123,8 +123,8 @@ Feature: View billing information
     When I add a new MozyPro partner:
     | period | base plan         | server plan | country | vat number    |
     | 12     | 500 GB, $2,089.89 | yes         | Italy   | IT03018900245 |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I navigate to Billing Information section from bus admin console page
     Then VAT table should be:
     | description       | value         |

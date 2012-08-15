@@ -10,8 +10,8 @@ Feature: View billing history
     When I add a new MozyPro partner:
     | period | base plan      |
     | 1      | 250 GB, $94.99 |
-    Then New partner should created
-    When I log in bus admin console as the new partner account
+    Then New partner should be created
+    When I act as newly created partner account
     And I navigate to Billing History section from bus admin console page
     And Billing history table should be:
     | Date    | Amount  | Total Paid | Balance Due |
