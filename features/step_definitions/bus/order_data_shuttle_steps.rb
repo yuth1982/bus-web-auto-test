@@ -9,19 +9,23 @@ When /^I order data shuttle for (.+)$/ do |account, order_table|
 
   attributes = order_table.hashes.first
   @order = Bus::DataObj::DataShuttleOrder.new
-  @order.adapter_type = attributes["power adapter"] unless attributes["power adapter"].nil?
-  @order.key_from = attributes["key from"] # required
+  @order.adapter_type = attributes["power adapter"] || "Data Shuttle US"
+  @order.key_from = attributes["key from"] || "new"
   @order.os = attributes["os"] || "Win"
   @order.quota = attributes["quota"] || 2
-  @order.assign_to = attributes["assign to"].gsub(/@email/,@partner.admin_info.email) unless attributes["assign to"].nil?
+  @order.assign_to = (attributes["assign to"] || "").gsub(/@email/,@partner.admin_info.email)
   @order.discount = attributes["discount"] || 0
-  @order.num_win_drivers = attributes["win drivers"].to_i unless attributes["win drivers"].nil?
-  @order.num_mac_drivers = attributes["mac drivers"].to_i unless attributes["mac drivers"].nil?
-  @order.ship_driver = attributes["ship driver"].eql?("yes") || false unless attributes["ship driver"].nil?
+  @order.num_win_drivers = (attributes["win drivers"] || 0).to_i
+  @order.num_mac_drivers = (attributes["mac drivers"] || 0).to_i
+  @order.ship_driver = (attributes["ship driver"] || "yes").eql?("yes")
   @bus_admin_console_page.process_order_section.create_order(@order)
  end
 
-When /^Verify shipping address table should be:$/ do |address_table|
+Then /^Verify shipping address table should be:$/ do |address_table|
+  address_table.map_column!('value') do |value|
+    value.gsub(/@name/, @partner.admin_info.full_name).gsub(/@address/, @partner.company_info.address).gsub(/@city/,@partner.company_info.city).gsub(/@state/,@partner.company_info.state_abbrev).gsub(/@country/,@partner.company_info.country)
+  end
+
   @bus_admin_console_page.process_order_section.address_desc_column_text.should == address_table.rows.map{ |row| row.first}
   @bus_admin_console_page.process_order_section.shipping_address_text.should == address_table.rows.map{ |row| row[1]}
 end

@@ -21,6 +21,18 @@ Feature: Change plan
     | Total amount to be charged      | $16.99   |
     Then Account plan should be changed
 
+  @TC.16488
+  Scenario: 16488 SMB 250 GB partner moves to 500 GB plan
+    When I add a new MozyPro partner:
+    | period | base plan        |
+    | 12     | 250 GB, $1,044.89 |
+    Then New partner should be created
+    When I act as newly created partner account
+    When I change MozyPro account plan to:
+    | base plan          |
+    | 500 GB, $2,089.89   |
+    Then Account plan should be changed
+
   @TC.16841
   Scenario: 16841 MozyPro Enterprise Yearly to 50 GB Add-on
     When I add a new MozyEnterprise partner:

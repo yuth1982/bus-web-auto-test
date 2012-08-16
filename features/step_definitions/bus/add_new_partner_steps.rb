@@ -17,7 +17,7 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partne
       @partner = Bus::DataObj::MozyPro.new
       @partner.has_initial_purchase = false if attributes["base plan"].nil?
       @partner.base_plan = attributes["base plan"] || ""
-      @partner.has_server_plan = attributes["server plan"].eql?("yes") unless attributes["server plan"].nil?
+      @partner.has_server_plan = (attributes["server plan"] || "no").eql?("yes")
     when "MozyEnterprise"
       @partner = Bus::DataObj::MozyEnterprise.new
       @partner.has_initial_purchase = false if attributes["users"].nil?
@@ -30,7 +30,7 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partne
       @partner.reseller_type = attributes["reseller type"] || "Silver"
       @partner.reseller_quota = attributes["reseller quota"] || 0
       @partner.reseller_add_on_quota = attributes["server add-on"] || 0
-      @partner.has_server_plan = attributes["server plan"].eql?("yes") unless attributes["server plan"].nil?
+      @partner.has_server_plan = (attributes["server plan"] || "no").eql?("yes")
     else
       raise "Error: Company type #{type} does not exist."
   end
@@ -39,7 +39,7 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partne
   @partner.company_info.country = attributes["country"] || "United States"
   @partner.company_info.vat_num = attributes["vat number"] || ""
   @partner.partner_info.coupon_code = attributes["coupon"] || ""
-  @partner.net_term_payment = attributes["net terms"].eql?("yes") unless attributes["net terms"].nil?
+  @partner.net_term_payment = (attributes["net terms"] || "no").eql?("yes")
 
   puts @partner.to_s
   @bus_admin_console_page.add_new_partner_section.add_new_account(@partner)
@@ -47,6 +47,7 @@ end
 
 Then /^New partner should be created/ do
   @bus_admin_console_page.add_new_partner_section.message_text.should == "New partner created."
+  @partner_created = true
 end
 
 Then /^Order summary table should be:$/ do |order_summary_table|

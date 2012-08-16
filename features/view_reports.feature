@@ -3,9 +3,16 @@ Feature: View Report
   I want to view reports on the services I have purchased
   so that I can understand why I was charged what I was charged and for which partner or usergroup, update my records, or re-bill my sub-partners and usergroups.
 
-  @TC.16255 @require_test_account @fast
+  Background:
+    Given I log in bus admin console as administrator
+
+  @TC.16255 @slow
   Scenario: 16255 Verify available report links and descriptions in report builder view UI
-    Given I log in bus admin console as mozyenterprise test account
+    When I add a new MozyEnterprise partner:
+    | period | users |
+    | 12     | 1     |
+    Then New partner should be created
+    When I act as newly created partner account
     When I navigate to Report Builder section from bus admin console page
     Then I should see available reports are:
     | Report Type        | Description                                                                                                                        |
@@ -16,24 +23,27 @@ Feature: View Report
     | Resources Added    | Lists all purchases of resources (licenses and storage) by Mozy administrators and storage added by Autogrow.                     |
     | Machine Over Quota | Provides a list of users that have exceeded a user determined threshold.                                                           |
 
-  @TC.17846 @require_test_account @fast
+  @TC.17846 @slow
   Scenario: 17846 Verify quick report links and descriptions in quick reports view UI
-    Given I log in bus admin console as mozyenterprise test account
+    When I add a new Reseller partner:
+    | period | reseller type | reseller quota |
+    | 1      | Silver        | 100            |
+    Then New partner should be created
+    When I act as newly created partner account
     When I navigate to Quick Reports section from bus admin console page
     Then I should see quick reports are:
-    | Report Type                    | Description                                               |
+    | report type                    | description                                               |
     | Users (CSV)                    | List of all users (does not include users in subpartners) |
     | Machines (CSV)                 | List of all machines                                      |
     | UserGroups (CSV)               | List of all user groups                                   |
     | Roles (CSV)                    | List of administrative roles                              |
     | Credit Card Transactions (CSV) | List of all credit card transactions                      |
-    | Billing History (CSV)          | List of all invoices after 2012-08-05                     |
+    | Billing History (CSV)          | List of all invoices after @today                         |
     | Mozy Pro Keys (CSV)            | List of all unassigned Mozy Pro keys                      |
     | Machine Details (CSV)          | List of all Machine Details                               |
 
   @TC.16245 @slow
   Scenario: 16245 Verify create then delete daily billing summary report
-    Given I log in bus admin console as administrator
     When I add a new MozyEnterprise partner:
     | period | users |
     | 12     | 1     |
@@ -51,7 +61,6 @@ Feature: View Report
 
   @TC.17937 @slow
   Scenario: 17937 Verify create then delete weekly billing summary report
-    Given I log in bus admin console as administrator
     When I add a new MozyEnterprise partner:
     | period | users |
     | 12     | 1     |
@@ -69,7 +78,6 @@ Feature: View Report
 
   @TC.17938 @slow
   Scenario: 17938 Verify create then delete monthly billing summary report
-    Given I log in bus admin console as administrator
     When I add a new MozyEnterprise partner:
     | period | users |
     | 12     | 1     |
@@ -87,7 +95,6 @@ Feature: View Report
 
   @TC.16251 @slow
   Scenario: 16251 Verify MozyEtnerprise billing summary report csv all fields
-    Given I log in bus admin console as administrator
     When I add a new MozyEnterprise partner:
     | period | users | server plan                 | server add-on |
     | 12     | 1     | 100 GB Server Plan, $582.78 | 2             |
@@ -105,7 +112,6 @@ Feature: View Report
 
   @TC.17847 @slow
   Scenario: 17847 Verify Reseller billing summary report csv all fields
-    Given I log in bus admin console as administrator
     When I add a new Reseller partner:
     | period | reseller type | reseller quota | server plan | server add-on |
     | 1      | Silver        | 100            | yes         | 2             |
@@ -123,7 +129,6 @@ Feature: View Report
 
   @TC.17939 @slow
   Scenario: 17939 Verify MozyEtnerprise billing summary report csv all fields download from email
-    Given I log in bus admin console as administrator
     When I add a new MozyEnterprise partner:
     | period | users | server plan                 | server add-on |
     | 12     | 1     | 100 GB Server Plan, $582.78 | 2             |
@@ -147,7 +152,6 @@ Feature: View Report
 
   @TC.17941 @slow
   Scenario: 17941 Verify Reseller billing summary report csv all fields download from email
-    Given I log in bus admin console as administrator
     When I add a new Reseller partner:
     | period | reseller type | reseller quota | server plan | server add-on |
     | 1      | Silver        | 100            | yes         | 2             |
@@ -171,7 +175,6 @@ Feature: View Report
 
   @TC.16250 @slow
   Scenario: 16250 Verify create and delete billing detail report
-    Given I log in bus admin console as administrator
     When I add a new MozyEnterprise partner:
     | period | users |
     | 12     | 1     |
@@ -189,7 +192,6 @@ Feature: View Report
 
   @TC.16252 @slow
   Scenario: 16252 Verify MozyEtnerprise billing detail report csv all fields
-    Given I log in bus admin console as administrator
     When I add a new MozyEnterprise partner:
     | period | users | server plan                    | server add-on |
     | 24     | 1     | 100 GB Server Plan, $1,112.58  | 2             |
@@ -207,7 +209,6 @@ Feature: View Report
 
   @TC.17848 @slow
   Scenario: 17484 Verify Reseller billing detail report csv all fields
-    Given I log in bus admin console as administrator
     When I add a new Reseller partner:
     | period | reseller type | reseller quota | server plan | server add-on |
     | 1      | Silver        | 100            | yes         | 2             |
@@ -225,7 +226,6 @@ Feature: View Report
 
   @TC.17940 @slow
   Scenario: 17940 Verify MozyEtnerprise billing detail report csv all fields download from email
-    Given I log in bus admin console as administrator
     When I add a new MozyEnterprise partner:
     | period | users | server plan                    | server add-on |
     | 24     | 1     | 100 GB Server Plan, $1,112.58  | 2             |
@@ -249,7 +249,6 @@ Feature: View Report
 
   @TC.16263 @slow
   Scenario: 16263 Verify all credit card transactions from the creation of the partner to the current date
-    Given I log in bus admin console as administrator
     When I add a new MozyEnterprise partner:
     | period | users |
     | 12     | 1     |
@@ -264,9 +263,13 @@ Feature: View Report
     | @today   | $86.00   | @XXXX    | Visa      |
     | @today   | $95.00   | @XXXX    | Visa      |
 
-  @TC.17849 @require_test_account @fast
+  @TC.17849 @slow
   Scenario: 17849 Verify report type drop down list values in scheduled report view
-    Given I log in bus admin console as mozyenterprise test account
+    When I add a new MozyEnterprise partner:
+    | period | users |
+    | 12     | 1     |
+    Then New partner should be created
+    When I act as newly created partner account
     When I navigate to Scheduled Reports section from bus admin console page
     Then I should see report filters are:
     | Report Type        |

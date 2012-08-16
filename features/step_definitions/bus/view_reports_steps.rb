@@ -17,13 +17,13 @@ When /^I build a new report:$/ do |report_table|
       @report.name = attributes["name"] || "billing summary test report"
       @report.frequency = attributes["frequency"] || "Daily"
       @report.start_date = attributes["start date"] unless attributes["start date"].nil?
-      @report.is_active = attributes["is active"].eql?("yes") unless attributes["is active"].nil?
+      @report.is_active = (attributes["is active"] || "yes").eql?("yes")
     when "Billing Detail"
       @report = Bus::DataObj::BillingDetailReport.new
       @report.name = attributes["name"] || "billing detail test report"
       @report.frequency = attributes["frequency"] || "Daily"
       @report.start_date = attributes["start date"] unless attributes["start date"].nil?
-      @report.is_active = attributes["is active"].eql?("yes") unless attributes["is active"].nil?
+      @report.is_active = (attributes["is active"] || "yes").eql?("yes")
     else
       raise "#{attributes["type"]} report is not implemented"
   end
@@ -42,6 +42,9 @@ Then /^I should see report filters are:$/ do |link_desc_link|
 end
 
 Then /^I should see quick reports are:$/ do |link_desc_table|
+  link_desc_table.map_column!('description') do |value|
+    value.gsub(/@today/,Time.now.localtime("-06:00").strftime("%Y-%m-%d"))
+  end
   @bus_admin_console_page.quick_reports_section.link_desc_tb_rows_text.should == link_desc_table.rows
 end
 

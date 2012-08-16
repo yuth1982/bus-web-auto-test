@@ -4,44 +4,64 @@ Feature:
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.16188 @require_test_account
+  @TC.16188
   Scenario: 16188 Verify Shipping Address Section Populated Fields Correctly
-    When I navigate to process data shuttle order section for mozyenterprise test account
+    When I add a new MozyPro partner:
+    | period | base plan     |
+    | 1      | 50 GB, $19.99 |
+    Then New partner should be created
+    When I navigate to process data shuttle order section for the new partner account
     Then Verify shipping address table should be:
-    | description            | value                  |
-    | Name:                  | Ruth Phillips          |
-    | Address 1:             | 5 Armistice Drive      |
-    | Address 2:             |                        |
-    | City:                  | Brawley                |
-    | State/Province/Region: | IL                     |
-    | Country:               | United States          |
-    | Zip/Postal Code:       | 12345                  |
-    | Phone Number:          | 1234567890             |
-    | Power Adapter:         |                        |
+    | description            | value         |
+    | Name:                  | @name         |
+    | Address 1:             | @address      |
+    | Address 2:             |               |
+    | City:                  | @city         |
+    | State/Province/Region: | @state        |
+    | Country:               | @country      |
+    | Zip/Postal Code:       | 12345         |
+    | Phone Number:          | 1234567890    |
+    | Power Adapter:         |               |
 
-  @TC.16190 @require_test_account
+  @TC.16190
   Scenario: 16190 Verify shipping address power adapter field validate
-    When I navigate to process data shuttle order section for mozyenterprise test account
+    When I add a new MozyEnterprise partner:
+    | period | users |
+    | 12     | 1     |
+    Then New partner should be created
+    When I navigate to process data shuttle order section for the new partner account
     And I go to next section without select power adapter in verify shipping address section
     Then Order data shuttle error message should be Please select the power adapter type.
 
-  @TC.16183 @require_test_account
+  @TC.16183
   Scenario: 16183 Verify ordering data shuttle exceed partner available resources
-    When I order data shuttle for mozyenterprise test account
+    When I add a new MozyEnterprise partner:
+      | period | users |
+      | 12     | 1     |
+    Then New partner should be created
+    When I order data shuttle for the new partner account
     | key from  | quota |
     | available | 5000  |
     Then Order data shuttle error message should be The resources added in this Data Shuttle order exceed those available for this partner. Please visit the Change Plan page to add more resources.
 
-  @TC.16325 @require_test_account
+  @TC.16325
   Scenario: 16325 Ordering data shuttle with 110% Discount
-    When I order data shuttle for mozyenterprise test account
+    When I add a new MozyEnterprise partner:
+    | period | users |
+    | 12     | 1     |
+    Then New partner should be created
+    When I order data shuttle for the new partner account
     | key from  | discount |
     | available | 110      |
     Then Order data shuttle error message should be Discount >100% are not allowed.
 
-  @TC.16184 @require_test_account
+  @TC.16184
   Scenario: 16184 Verify ordering data shuttle exceed partner available licence
-    When I order data shuttle for mozyenterprise test account
+    When I add a new MozyEnterprise partner:
+    | period | users |
+    | 12     | 1     |
+    Then New partner should be created
+    When I order data shuttle for the new partner account
     | key from | discount |
     | new      | 110      |
     Then Order data shuttle error message should be The resources added includes new key. Please use only existing keys for this partner

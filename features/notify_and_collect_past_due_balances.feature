@@ -27,7 +27,8 @@ Feature: Notify about and collect past-due balances
     And I change the new partner account status to Suspended
     Then Status changed successful message should be Account status changed
     When I wait for 60 seconds
-    And I act as newly created partner account
+    When I log in bus admin console as administrator
+    And I act as the partner by the new partner email on admin details panel
     And I navigate to Change Payment Information section from bus admin console page
     Then Change payment information message should be Your account is backup-suspended. You will not be able to access your account until your credit card is billed.
 
@@ -41,7 +42,8 @@ Feature: Notify about and collect past-due balances
     And I change the new partner account status to Suspended
     Then Status changed successful message should be Account status changed
     When I wait for 60 seconds
-    And I act as newly created partner account
+    When I log in bus admin console as administrator
+    And I act as the partner by the new partner email on admin details panel
     And I navigate to Change Payment Information section from bus admin console page
     Then Change payment information message should be Your account is backup-suspended. You will not be able to access your account until your credit card is billed.
 
