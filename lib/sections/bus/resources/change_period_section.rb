@@ -1,5 +1,5 @@
 module Bus
-  # This class provides actions for change billing period page section
+  # This class provides actions for change billing period section
   class ChangePeriodSection < PageObject
 
     # Constants
@@ -46,7 +46,7 @@ module Bus
     #
     # Returns confirmation text array
     def confirmation_text
-      confirmation_p.map{ |p| p.text }
+      confirmation_p.map{ |p| p.text.strip }
     end
 
     # Public: Messages for change subscription period actions

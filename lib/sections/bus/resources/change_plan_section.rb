@@ -115,6 +115,17 @@ module Bus
       charge_summary_table.headers_text
     end
 
+    # Public: MozyPro current purchase
+    #
+    def mozypro_current_purchase_text
+      pro_base_plan_select.first_selected_option.text
+    end
+
+
+    def mozyenterprise_current_purchase_text
+      enterprise_server_plan_select.first_selected_option.text
+    end
+
     private
     def confirm_change
       # Force enable submit button

@@ -1,5 +1,5 @@
 module Bus
-  # This class provides actions for billing history page section
+  # This class provides actions for billing history section
   class BillingHistorySection < PageObject
 
     # Private elements

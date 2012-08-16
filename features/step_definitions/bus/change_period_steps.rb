@@ -11,8 +11,8 @@ When /^I change account subscription down to (.+)$/ do |link_text|
   @bus_admin_console_page.change_period_section.change_subscription_down(link_text)
 end
 
-Then /^Change subscription confirmation message should be:$/ do |message_table|
-  @bus_admin_console_page.change_period_section.confirmation_text.should == message_table.rows.flatten
+Then /^Change subscription confirmation message should be:$/ do |message|
+  @bus_admin_console_page.change_period_section.confirmation_text.join(" ").should == message.to_s.gsub(/\n/," ")
 end
 
 Then /^Change subscription price table should be:$/ do |price_table|

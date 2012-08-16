@@ -10,8 +10,8 @@ Feature: Notify about and collect past-due balances
   @TC.16107
   Scenario: 16107 MozyPro account deleted in bus but history will remain in aria
     When I add a new MozyPro partner:
-    | period | base plan     |
-    | 1      | 50 GB, $19.99 |
+      | period | base plan     |
+      | 1      | 50 GB, $19.99 |
     Then New partner should be created
     When I delete the new partner account
     And I log in aria admin console as aria admin
@@ -20,14 +20,14 @@ Feature: Notify about and collect past-due balances
   @TC.16108 @slow
   Scenario: 16108 MozyPro account without server plan suspended in aria should be backup-suspended in bus
     When I add a new MozyPro partner:
-    | period | base plan     |
-    | 1      | 50 GB, $19.99 |
+      | period | base plan     |
+      | 1      | 50 GB, $19.99 |
     Then New partner should be created
     When I log in aria admin console as aria admin
     And I change the new partner account status to Suspended
     Then Status changed successful message should be Account status changed
     When I wait for 60 seconds
-    When I log in bus admin console as administrator
+    And I log in bus admin console as administrator
     And I act as the partner by the new partner email on admin details panel
     And I navigate to Change Payment Information section from bus admin console page
     Then Change payment information message should be Your account is backup-suspended. You will not be able to access your account until your credit card is billed.

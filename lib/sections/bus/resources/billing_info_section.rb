@@ -1,5 +1,5 @@
 module Bus
-  # This class provides actions for billing information page section
+  # This class provides actions for billing information section
   class BillingInfoSection < PageObject
 
     # Constants

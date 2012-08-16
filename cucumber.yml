@@ -1,2 +1,1 @@
-default: --color --format pretty
-output: --verbose --quiet --no-color --no-profile
+default: -color --format pretty --format rerun --out rerun.txt

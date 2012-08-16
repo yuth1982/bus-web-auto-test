@@ -38,3 +38,11 @@ Then /^Change plan charge summary should be:$/ do |charge_table|
   @bus_admin_console_page.change_plan_section.charge_summary_tb_headers_text.should == charge_table.headers
   @bus_admin_console_page.change_plan_section.charge_summary_tb_rows_text.should == charge_table.rows
 end
+
+Then /^MozyPro current purchase should be (.+)$/ do |new_plan|
+  @bus_admin_console_page.change_plan_section.mozypro_current_purchase_text.should == "#{new_plan} (current purchase)"
+end
+
+Then /^MozyEnterprise current purchase should be (.+)$/ do |new_plan|
+  @bus_admin_console_page.change_plan_section.mozyenterprise_current_purchase_text.should == "#{new_plan} (current purchase)"
+end
