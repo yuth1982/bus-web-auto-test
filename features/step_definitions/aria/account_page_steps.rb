@@ -42,7 +42,7 @@ When /^I change (.+) status to (.+)$/ do |account, status_code|
 end
 
 Then /^Status changed successful message should be (.+)$/ do |message|
-  @aria_admin_console_page.accounts_page.account_overview_section.account_status_section.message_text.should == message
+  @aria_admin_console_page.accounts_page.account_overview_section.account_status_section.messages.should == message
 end
 
 Then /^(.+) status should be (.+)$/ do |account, status|
@@ -60,7 +60,7 @@ When /I change (.+) CAG to (.+)$/ do |account, account_group|
 end
 
 Then /^CAG message should be (.+)$/ do |message|
-  @aria_admin_console_page.accounts_page.account_groups_section.message_text == message
+  @aria_admin_console_page.accounts_page.account_groups_section.messages == message
 end
 
 # Notification methods steps
@@ -78,7 +78,7 @@ Then /^(.+) current notification method is set to (.+)$/ do |account, method|
   @aria_admin_console_page.switch_to_work_frame
   @aria_admin_console_page.accounts_page.navigate_to_link("Notification Method")
   @aria_admin_console_page.switch_to_inner_work_frame
-  @aria_admin_console_page.accounts_page.notification_method_section.message_text.should == "This account is currently notified via method \"#{method}\"."
+  @aria_admin_console_page.accounts_page.notification_method_section.messages.should == "This account is currently notified via method \"#{method}\"."
 end
 
 When /^I set (.+) notification method to (.+)$/ do |account, notification_method|
@@ -94,7 +94,7 @@ end
 
 Then /^Notification message should be (.+)$/ do |message|
   @aria_admin_console_page.switch_to_inner_work_frame
-  @aria_admin_console_page.accounts_page.notification_method_section.message_text.should == message
+  @aria_admin_console_page.accounts_page.notification_method_section.messages.should == message
 end
 
 When /^I set notification method to (.+)$/ do |notification_method|

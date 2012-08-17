@@ -4,15 +4,15 @@ Then /^Next Renewal text align is set to left justify$/ do
 end
 
 Then /^Autogrow status text's should be (.+)$/ do |value|
-  @bus_admin_console_page.billing_info_section.autogrow_status_text.should == value
+  @bus_admin_console_page.billing_info_section.autogrow_status.should == value
 end
 
 Then /^Next renewal supplemental plan details should be:$/ do |plan_table|
-  @bus_admin_console_page.billing_info_section.supp_plan_tb_rows_text.should == plan_table.hashes.map { |el| el.values }
+  @bus_admin_console_page.billing_info_section.supp_plan_table_rows.should == plan_table.hashes.map { |el| el.values }
 end
 
 Then /^VAT table should be:$/ do |vat_num_table|
-  @bus_admin_console_page.billing_info_section.vat_tb_rows_text.should == vat_num_table.rows.map{|row| row.delete_if{|cell| cell.empty? }}
+  @bus_admin_console_page.billing_info_section.vat_table_rows.should == vat_num_table.rows.map{|row| row.delete_if{|cell| cell.empty? }}
 end
 
 Then /^Next renewal info table should be:$/ do |next_renewal_table|
@@ -23,5 +23,5 @@ Then /^Next renewal info table should be:$/ do |next_renewal_table|
     end
      value.gsub(/@XXXX/, @partner.credit_card.number[12..-1])
    end
-  @bus_admin_console_page.billing_info_section.next_renewal_tb_rows_text.should == next_renewal_table.rows
+  @bus_admin_console_page.billing_info_section.next_renewal_table_rows.should == next_renewal_table.rows
 end

@@ -9,10 +9,10 @@ module Bus
     # Public: Quick reports links and description text
     #
     # Example
-    #   @bus_admin_console_page.quick_reports_section.link_desc_tb_rows_text
+    #   @bus_admin_console_page.quick_reports_section.link_desc_table_rows
     #
     # Returns links and description text
-    def link_desc_tb_rows_text
+    def link_desc_table_rows
       link_desc_table.rows_text
     end
 

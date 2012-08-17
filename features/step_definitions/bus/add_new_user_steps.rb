@@ -15,9 +15,9 @@ When /^I add a new user:$/ do |user_table|
 end
 
 Then /^New user should be created$/ do
-  @bus_admin_console_page.add_new_user_section.message_text.should == "Created new user #{@user.email}"
+  @bus_admin_console_page.add_new_user_section.messages.should == "Created new user #{@user.email}"
 end
 
 Then /^New user created message should be (.+)$/ do |message|
-  @bus_admin_console_page.add_new_user_section.message_text.should == message
+  @bus_admin_console_page.add_new_user_section.messages.should == message
 end

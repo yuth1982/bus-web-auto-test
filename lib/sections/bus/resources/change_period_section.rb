@@ -39,49 +39,49 @@ module Bus
     # Public: Change subscription period confirmation text
     #
     # Example
-    #   @bus_admin_console_page.change_period_section.confirmation_text
-    #   # => ["Are you sure that you want to change your subscription period from yearly to 3-year billing? ... ...",
-    #         "If you choose to continue, your account ... ...",
-    #         "Any resources you scheduled for return in your next subscription ...."]
+    #   @bus_admin_console_page.change_period_section.confirmations
+    #   # => "Are you sure that you want to change your subscription period from yearly to 3-year billing? ... ...
+    #         If you choose to continue, your account ... ...
+    #         Any resources you scheduled for return in your next subscription ...."
     #
     # Returns confirmation text array
-    def confirmation_text
+    def confirmations
       confirmation_p.map{ |p| p.text.strip }
     end
 
     # Public: Messages for change subscription period actions
     #
     # Example
-    #  @bus_admin_console_page.change_period_section.message_text
+    #  @bus_admin_console_page.change_period_section.messages
     #  # => "Your account has been changed to yearly billing."
     #
     # Returns success or error message text
-    def message_text
+    def messages
       message_div.text
     end
 
     # Public: Change subscription period price table header text
     #
     # Example
-    #   @bus_admin_console_page.change_period_section.price_tb_header_text
+    #   @bus_admin_console_page.change_period_section.price_table_header
     #   # => ["Description", "Amount"]
     #
     # Returns price table header text
-    def price_tb_headers_text
+    def price_table_headers
       price_table.find_elements(:xpath, "./thead/tr/th").map { |cell| cell.text }
     end
 
     # Public: Change subscription period price table rows text
     #
     # Example
-    #   @bus_admin_console_page.change_period_section.price_tb_header_text
+    #   @bus_admin_console_page.change_period_section.price_table_header
     #   # => [["Credit for remainder of monthly subscription", "$42.00"],
     #         ["Charge for new yearly subscription", "$420.00"]
     #         ["Total amount to be charged", "$420.00"]]
     #
     #
     # Returns price table rows text
-    def price_tb_rows_text
+    def price_table_rows
       rows = price_table.find_elements(:xpath, "./tbody/tr").map{ |row| row.child }
       rows.map { |row| row.map { |cell| cell.text } }
     end

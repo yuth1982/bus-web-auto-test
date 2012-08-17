@@ -97,47 +97,47 @@ module Bus
     # Public: Messages for change account details actions
     #
     # Example
-    #  @bus_admin_console_page.add_new_partner_section.message_text
+    #  @bus_admin_console_page.add_new_partner_section.messages
     #  # => "New partner created."
     #
     # Returns success or error message text
-    def message_text
+    def messages
       message_div.text
     end
 
     # Public: Add new partner order summary table rows text
     #
     # Example
-    #   @bus_admin_console_page.add_new_partner_section.order_summary_tb_headers_text
+    #   @bus_admin_console_page.add_new_partner_section.order_summary_table_headers
     #   # => ["Description","Quantity","Price Each","Total Price"]
     #
     # Returns order summary table rows text
-    def order_summary_tb_headers_text
+    def order_summary_table_headers
       order_summary_table.headers_text
     end
 
     # Public: Add new partner order summary table rows text
     #
     # Example
-    #   @bus_admin_console_page.add_new_partner_section.order_summary_tb_rows_text
+    #   @bus_admin_console_page.add_new_partner_section.order_summary_table_rows
     #   # => [["50 GB","1","$19.99","$19.99"],
     #         ["Discounts Applied","","","$-1.00"],
     #         ["Pre-tax Subtotal","","","$18.99"],
     #         ["Total Charges","","","$18.99"]]
     #
     # Returns order summary table rows text
-    def order_summary_tb_rows_text
+    def order_summary_table_rows
       order_summary_table.rows_text
     end
 
     # Public: Add new partner subscription period labels text
     #
     # Example
-    #   @bus_admin_console_page.add_new_partner_section.period_labels_text("MozyPro")
+    #   @bus_admin_console_page.add_new_partner_section.available_periods("MozyPro")
     #   # => ["Monthly", "Yearly", "Biennially"]
     #
     # Returns period labels text
-    def period_labels_text(type)
+    def available_periods(type)
       company_type_select.select_by(:text,type)
       sleep 10 # force wait to load plans
       period_labels.map{ |ele| ele.text}

@@ -13,7 +13,7 @@ module Bus
     element(:cc_exp_yyyy_select, {:id => "cc_exp_yyyy"})
     element(:submit, {:id => "submit_button"})
 
-    # Public: update account's credit card information, but not update billing address.
+    # Public: Update account's credit card information, but not update billing address.
     #
     # Example
     #   @bus_admin_console_page.change_payment_info_section.update_credit_card_info(credit_card_object)
@@ -33,11 +33,11 @@ module Bus
     # Public: Messages for change payment information actions
     #
     # Example
-    #  @bus_admin_console_page.change_payment_info_section.message_text
+    #  @bus_admin_console_page.change_payment_info_section.messages
     #  # => "Your account is backup-suspended. You will not be able to access your account until your credit card is billed."
     #
     # Returns success or error message text
-    def message_text
+    def messages
       message_div.text
     end
   end

@@ -32,33 +32,33 @@ module Bus
     # Public: Messages for reports builder actions
     #
     # Example
-    #  @bus_admin_console_page.report_builder_section.message_text
+    #  @bus_admin_console_page.report_builder_section.messages
     #  # => "Created Billing Summary Report."
     #
     # Returns success or error message text
-    def message_text
+    def messages
       report_created_txt.text
     end
 
     # Public: Available reports and description table rows text (UI)
     #
     # Example
-    #    @bus_admin_console_page.report_builder_section.available_reports_tb_rows_text
+    #    @bus_admin_console_page.report_builder_section.available_reports_table_rows
     #    # =>  [["Billing Summary", "Gives a summary of resources and usage by partner and user group."]]
     #
     # Returns available reports table rows text
-    def available_reports_tb_rows_text
+    def available_reports_table_rows
       available_reports_table.rows_text
     end
 
     # Public: Report filter options
     #
     # Example
-    #    @bus_admin_console_page.report_builder_section.report_filters_text
+    #    @bus_admin_console_page.report_builder_section.report_filters
     #    # =>  ["None", "Billing Summary","Billing Detail","Machine Watchlist","Machine Status" ... ...]
     #
     # Returns reports filter options
-    def report_filters_text
+    def report_filters
       report_filter.options.map{ |option| option.text}
     end
 

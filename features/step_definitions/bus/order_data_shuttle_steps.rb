@@ -27,7 +27,7 @@ Then /^Verify shipping address table should be:$/ do |address_table|
   end
 
   @bus_admin_console_page.process_order_section.address_desc_column_text.should == address_table.rows.map{ |row| row.first}
-  @bus_admin_console_page.process_order_section.shipping_address_text.should == address_table.rows.map{ |row| row[1]}
+  @bus_admin_console_page.process_order_section.shipping_address.should == address_table.rows.map{ |row| row[1]}
 end
 
 When /^I navigate to process data shuttle order section for (.+)$/ do |account|
@@ -41,15 +41,15 @@ When /^I go to next section without select power adapter in verify shipping addr
 end
 
 Then /^Order data shuttle error message should be (.+)$/ do |err_message|
-  @bus_admin_console_page.process_order_section.message_text.should == err_message
+  @bus_admin_console_page.process_order_section.messages.should == err_message
 end
 
 Then /^Data shuttle order should be created$/ do
-  @bus_admin_console_page.process_order_section.message_text.should match(/Data Shuttle Device for Pro Partner (.+) created./)
+  @bus_admin_console_page.process_order_section.messages.should match(/Data Shuttle Device for Pro Partner (.+) created./)
 end
 
 Then /^Data shuttle order summary should be:$/ do |summary_table|
-  @bus_admin_console_page.process_order_section.order_summary_tb_rows_text.should == summary_table.rows
+  @bus_admin_console_page.process_order_section.order_summary_table_rows.should == summary_table.rows
 end
 
 
@@ -62,7 +62,7 @@ When /^I cancel the latest data shuttle order for (.+)$/ do |account|
 end
 
 Then /^The order should be (.+)$/ do |status|
-  @bus_admin_console_page.order_details_section.latest_order_status_text == status
+  @bus_admin_console_page.order_details_section.latest_order_status == status
 end
 
 Then /^The number of (win|mac) drivers should be (\d+)$/ do |type, num_drivers|

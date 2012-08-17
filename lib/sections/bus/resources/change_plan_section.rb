@@ -87,7 +87,7 @@ module Bus
     #  # => "Resources have been changed on your account."
     #
     # Returns success or error message text
-    def message_text
+    def messages
       message_div.text
     end
 
@@ -100,30 +100,33 @@ module Bus
     #         ["Total amount to be charged","$32.99"]]
     #
     # Returns order summary table rows text
-    def charge_summary_tb_rows_text
+    def charge_summary_table_rows
       charge_summary_table.rows_text
     end
 
     # Public: Change plan charge summary table headers text
     #
     # Example
-    #   @bus_admin_console_page.change_plan_section.charge_summary_tb_headers_text
+    #   @bus_admin_console_page.change_plan_section.charge_summary_table_headers
     #   # => ["Description", "Amount"]
     #
     # Returns order summary table rows text
-    def charge_summary_tb_headers_text
+    def charge_summary_table_headers
       charge_summary_table.headers_text
     end
 
     # Public: MozyPro current purchase
     #
-    def mozypro_current_purchase_text
+    def mozypro_current_purchase
       pro_base_plan_select.first_selected_option.text
     end
 
-
-    def mozyenterprise_current_purchase_text
+    def enterprise_current_purchase
       enterprise_server_plan_select.first_selected_option.text
+    end
+
+    def mozypro_base_plans
+      pro_base_plan_select.options.map{ |opt| opt.text.match(/(\d+) (GB|TB)/)[0]}
     end
 
     private

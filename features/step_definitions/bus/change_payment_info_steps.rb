@@ -1,5 +1,5 @@
 Then /^Change payment information message should be (.+)$/ do |message|
-  @bus_admin_console_page.change_payment_info_section.message_text.should match(message)
+  @bus_admin_console_page.change_payment_info_section.messages.should match(message)
 end
 
 When /^I update partner credit card information with new test info$/ do

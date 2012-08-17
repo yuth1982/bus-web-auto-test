@@ -12,14 +12,14 @@ When /^I change account subscription down to (.+)$/ do |link_text|
 end
 
 Then /^Change subscription confirmation message should be:$/ do |message|
-  @bus_admin_console_page.change_period_section.confirmation_text.join(" ").should == message.to_s.gsub(/\n/," ")
+  @bus_admin_console_page.change_period_section.confirmations.join(" ").should == message.to_s.gsub(/\n/," ")
 end
 
 Then /^Change subscription price table should be:$/ do |price_table|
-  @bus_admin_console_page.change_period_section.price_tb_headers_text.should == price_table.headers
-  @bus_admin_console_page.change_period_section.price_tb_rows_text.should == price_table.rows
+  @bus_admin_console_page.change_period_section.price_table_headers.should == price_table.headers
+  @bus_admin_console_page.change_period_section.price_table_rows.should == price_table.rows
 end
 
 Then /^Subscription changed message should be (.+)$/ do |message|
-  @bus_admin_console_page.change_period_section.message_text.should == message
+  @bus_admin_console_page.change_period_section.messages.should == message
 end

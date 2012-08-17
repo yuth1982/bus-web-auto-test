@@ -13,5 +13,5 @@ Then /^I set account Receive Mozy Account Statements option to (Yes|No)$/ do |st
 end
 
 Then /^Account statement preference should be changed$/ do
-  @bus_admin_console_page.account_details_section.message_text.should == "Successfully saved Account Statement preference."
+  @bus_admin_console_page.account_details_section.messages.should == "Successfully saved Account Statement preference."
 end

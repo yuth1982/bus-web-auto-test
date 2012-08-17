@@ -12,6 +12,6 @@ When /^I search user by:$/ do |search_key_table|
 end
 
 Then /^User search results should be:$/ do |results_table|
-  @bus_admin_console_page.search_list_users_section.search_results_tb_headers_text.should == results_table.headers
-  @bus_admin_console_page.search_list_users_section.search_results_tb_rows_text.should == results_table.rows
+  @bus_admin_console_page.search_list_users_section.search_results_table_headers.should == results_table.headers
+  @bus_admin_console_page.search_list_users_section.search_results_table_rows.should == results_table.rows
 end

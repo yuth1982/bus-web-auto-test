@@ -26,11 +26,11 @@ module Bus
     #
     # Example
     #
-    #  @bus_admin_console_page.search_list_users_section.search_results_tb_header_text
+    #  @bus_admin_console_page.search_list_users_section.search_results_table_headers
     #  # => ["User", "Name", "Machines", "Storage", “Storage Used", "Created", "Backed Up"]
     #
     # Returns search results table rows text array
-    def search_results_tb_headers_text
+    def search_results_table_headers
       search_results_table.headers_text
     end
 
@@ -38,11 +38,11 @@ module Bus
     #
     # Example
     #
-    #  @bus_admin_console_page.search_list_users_section.search_results_tb_rows_text
+    #  @bus_admin_console_page.search_list_users_section.search_results_table_rows
     #  # => ["", "qa1+new+user+test@mozy.com", "new user 1", "0", "0 bytes", "0", "none", "08/15/12", "never"]
     #
     # Return search results table body rows text array
-    def search_results_tb_rows_text
+    def search_results_table_rows
       search_results_table.rows_text
     end
   end

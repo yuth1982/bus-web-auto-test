@@ -20,22 +20,22 @@ module Bus
     # Public: Shipping tracking table rows text
     #
     # Example
-    #   @bus_admin_console_page.order_details_section.shipping_tracking_tb_rows_text
+    #   @bus_admin_console_page.order_details_section.shipping_tracking_table_rows
     #   # => [["1","","","Error"]]
     #
     # Returns Shipping tracking table rows text
-    def shipping_tracking_tb_rows_text
+    def shipping_tracking_table_rows
       order_detail_tables[1].rows_text
     end
 
     # Public: Last created order status
     #
     # Example
-    #   @bus_admin_console_page.order_details_section.latest_order_status_text
+    #   @bus_admin_console_page.order_details_section.latest_order_status
     #   # => "Ordered"
     #
     # Returns status text
-    def latest_order_status_text
+    def latest_order_status
       orders_table.rows.first[1].text
     end
 

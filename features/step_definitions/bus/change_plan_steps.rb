@@ -31,18 +31,22 @@ When /^I change (MozyPro|MozyEnterprise|Reseller) account plan to:$/ do |type, p
 end
 
 Then /^Account plan should be changed$/ do
-  @bus_admin_console_page.change_plan_section.message_text.should == "Resources have been changed on your account."
+  @bus_admin_console_page.change_plan_section.messages.should == "Resources have been changed on your account."
 end
 
 Then /^Change plan charge summary should be:$/ do |charge_table|
-  @bus_admin_console_page.change_plan_section.charge_summary_tb_headers_text.should == charge_table.headers
-  @bus_admin_console_page.change_plan_section.charge_summary_tb_rows_text.should == charge_table.rows
+  @bus_admin_console_page.change_plan_section.charge_summary_table_headers.should == charge_table.headers
+  @bus_admin_console_page.change_plan_section.charge_summary_table_rows.should == charge_table.rows
 end
 
 Then /^MozyPro current purchase should be (.+)$/ do |new_plan|
-  @bus_admin_console_page.change_plan_section.mozypro_current_purchase_text.should == "#{new_plan} (current purchase)"
+  @bus_admin_console_page.change_plan_section.mozypro_current_purchase.should == "#{new_plan} (current purchase)"
 end
 
 Then /^MozyEnterprise current purchase should be (.+)$/ do |new_plan|
-  @bus_admin_console_page.change_plan_section.mozyenterprise_current_purchase_text.should == "#{new_plan} (current purchase)"
+  @bus_admin_console_page.change_plan_section.enterprise_current_purchase.should == "#{new_plan} (current purchase)"
+end
+
+Then /^MozyPro base plans should be:$/ do |plans_table|
+  @bus_admin_console_page.change_plan_section.mozypro_base_plans
 end

@@ -42,11 +42,11 @@ module Bus
     #
     # Example
     #
-    #  @bus_admin_console_page.search_list_partner_section.search_results_tb_rows_text
+    #  @bus_admin_console_page.search_list_partner_section.search_results_table_rows
     #  # => ["", "Izio Oil & Gas Pipelines Company", "07/11/12", "qa1+frank+hamilton@mozy.com", "MozyEnterprise", "0", "201", "625 GB"]
     #
     # Return search results table body rows text array
-    def search_results_tb_rows_text
+    def search_results_table_rows
       search_results_table.rows_text
     end
 

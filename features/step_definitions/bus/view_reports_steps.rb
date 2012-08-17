@@ -34,30 +34,30 @@ When /^I build a new report:$/ do |report_table|
 end
 
 Then /^I should see available reports are:$/ do |link_desc_link|
-  @bus_admin_console_page.report_builder_section.available_reports_tb_rows_text.should == link_desc_link.rows
+  @bus_admin_console_page.report_builder_section.available_reports_table_rows.should == link_desc_link.rows
 end
 
 Then /^I should see report filters are:$/ do |link_desc_link|
-  @bus_admin_console_page.report_builder_section.report_filters_text.should == link_desc_link.rows.map{|row|row.first}
+  @bus_admin_console_page.report_builder_section.report_filters.should == link_desc_link.rows.map{|row|row.first}
 end
 
 Then /^I should see quick reports are:$/ do |link_desc_table|
   link_desc_table.map_column!('description') do |value|
     value.gsub(/@today/,Time.now.localtime("-06:00").strftime("%Y-%m-%d"))
   end
-  @bus_admin_console_page.quick_reports_section.link_desc_tb_rows_text.should == link_desc_table.rows
+  @bus_admin_console_page.quick_reports_section.link_desc_table_rows.should == link_desc_table.rows
 end
 
 Then /^Billing summary report should be created$/ do
-  @bus_admin_console_page.report_builder_section.message_text.should == "Created Billing Summary Report."
+  @bus_admin_console_page.report_builder_section.messages.should == "Created Billing Summary Report."
 end
 
 Then /^Billing detail report should be created$/ do
-  @bus_admin_console_page.report_builder_section.message_text.should == "Created Billing Detail Report."
+  @bus_admin_console_page.report_builder_section.messages.should == "Created Billing Detail Report."
 end
 
 Then /^Report created successful message should be (.+)$/ do |message|
-  @bus_admin_console_page.report_builder_section.message_text.should == message
+  @bus_admin_console_page.report_builder_section.messages.should == message
 end
 
 When /^I delete (.+) scheduled report$/ do |report_name|
@@ -65,7 +65,7 @@ When /^I delete (.+) scheduled report$/ do |report_name|
 end
 
 Then /^I should see (.+) in scheduled reports list$/ do |message|
-  @bus_admin_console_page.scheduled_reports_section.reports_tb_text.should include(message)
+  @bus_admin_console_page.scheduled_reports_section.reports_table_text.should include(message)
 end
 
 When /^I download (.+) scheduled report$/ do |report_name|
@@ -105,6 +105,6 @@ Then /^Scheduled report list should be:$/ do |results_table|
   results_table.map_column!('Recipients') do |value|
       value.gsub(/@email/,@partner.admin_info.email)
   end
-  @bus_admin_console_page.scheduled_reports_section.reports_tb_rows_text.should == results_table.rows
+  @bus_admin_console_page.scheduled_reports_section.reports_table_rows.should == results_table.rows
      # ach{|row| row.map{ |cell| cell.gsub(/(?:[01][0-9]|2[0-4]):[0-5][0-9]/,"xx:xx")}}.should == results_table
 end

@@ -4,5 +4,5 @@ When /^I assign MozyPro allocated quota to (\d+) GB$/ do |new_quota|
 end
 
 Then /^MozyPro resource quota should be changed$/ do
-  @bus_admin_console_page.manage_resources_section.message_text.should == "Quota changed."
+  @bus_admin_console_page.manage_resources_section.messages.should == "Quota changed."
 end

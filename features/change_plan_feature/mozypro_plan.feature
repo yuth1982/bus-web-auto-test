@@ -3,6 +3,30 @@ Feature: Change plan
   Background:
     Given I log in bus admin console as administrator
 
+  # This scenario is highly depend on our product plans, if scenario failed, please login aria and update plan table below
+  Scenario: Verify MozyPro base plan details
+    When I add a new MozyPro partner:
+      | period | base plan    |
+      | 1      | 10 GB, $9.99 |
+    Then New partner should be created
+    And MozyPro base plans should be:
+    | plan   |
+    | 10 GB  |
+    | 50 GB  |
+    | 100 GB |
+    | 250 GB |
+    | 500 GB |
+    | 1 TB   |
+    | 2 TB   |
+    | 4 TB   |
+    | 8 TB   |
+    | 12 TB  |
+    | 16 TB  |
+    | 20 TB  |
+    | 24 TB  |
+    | 28 TB  |
+    | 32 TB  |
+
   @TC.16485 @smoke
   Scenario: 16485 MozyPro monthly US partner 10 GB moves to 50 GB plan
     When I add a new MozyPro partner:

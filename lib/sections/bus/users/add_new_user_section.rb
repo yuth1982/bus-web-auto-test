@@ -31,11 +31,11 @@ module Bus
     # Public: Messages for add new user sections
     #
     # Example
-    #  @bus_admin_console_page.add_new_user_section.message_text
+    #  @bus_admin_console_page.add_new_user_section.messages
     #  # => "Created new user test@mozy.com"
     #
     # Returns success or error message text
-    def message_text
+    def messages
       message_div.text
     end
   end

@@ -56,7 +56,9 @@ module Bus
       next_btns[1].click
     end
 
-    def shipping_address_text
+    # Public: Shipping address text
+    #
+    def shipping_address
       [name_tb.value,address1_tb.value,address2_tb.value,city_tb.value,state_tb.value,country_select.first_selected_option.text,zip_tb.value,phone_tb.value,power_adapter_select.first_selected_option.text]
     end
 
@@ -104,23 +106,23 @@ module Bus
     # Public: Messages for process order actions
     #
     # Example
-    #  @bus_admin_console_page.process_order_section.message_text
+    #  @bus_admin_console_page.process_order_section.messages
     #  # => "Please select the power adapter type."
     #
     # Returns success or error message text
-    def message_text
+    def messages
       message_div.text
     end
 
     # Public: Data shuttle order summary table rows text
     #
     # Example
-    #   @bus_admin_console_page.add_new_partner_section.order_summary_tb_rows_text
+    #   @bus_admin_console_page.add_new_partner_section.order_summary_table_rows
     #   # => [["Data Shuttle 1.8 TB","1","$137.50"],
     #         ["Total Price","","$137.50"]]
     #
     # Returns order summary table rows text
-    def order_summary_tb_rows_text
+    def order_summary_table_rows
       summary_tables[1].rows_text
     end
 

@@ -29,11 +29,11 @@ module Bus
     # Public: Messages for add new user group sections
     #
     # Example
-    #  @bus_admin_console_page.add_new_user_group_section.message_text
+    #  @bus_admin_console_page.add_new_user_group_section.messages
     #  # => "Created new user group group test_group"
     #
     # Returns success or error message text
-    def message_text
+    def messages
       message_div.text
     end
   end

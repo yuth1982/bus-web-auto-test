@@ -19,7 +19,7 @@ module Bus
       assign_storage_btn.click
     end
 
-    def message_text
+    def messages
       message_div.text
     end
   end
