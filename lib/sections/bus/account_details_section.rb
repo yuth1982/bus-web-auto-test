@@ -50,11 +50,11 @@ module Bus
     # Public: Messages for change account details actions
     #
     # Example
-    #  @bus_admin_console_page.account_details_section.message_text
+    #  @bus_admin_console_page.account_details_section.messages
     #  # => "Successfully saved Account Statement preference."
     #
     # Returns success or error message text
-    def message_text
+    def messages
       setting_saved_div.text
     end
 
