@@ -16,11 +16,11 @@ module Aria
     # Public: List notification methods text
     #
     # Example
-    #    @aria_admin_console_page.accounts_page.notification_method_section.notify_methods_text
+    #    @aria_admin_console_page.accounts_page.notification_method_section.notify_methods
     #    # => ["HTML Email", "Printable (no Email)"]
     #
     # Returns notification methods text array
-    def notify_methods_text
+    def notify_methods
       notify_methods_td.map{ |cell| cell.text }
     end
 
@@ -32,7 +32,7 @@ module Aria
     #
     # Returns notification methods text array
     def change_notify_method(method)
-      index = notify_methods_text.index(method)
+      index = notify_methods.index(method)
       notify_methods_rb[index].click
       change_notify_method_btn.click
     end
@@ -40,11 +40,11 @@ module Aria
     # Public: Messages for change notification method actions
     #
     # Example
-    #  @bus_admin_console_page.accounts_page.notification_method_section.message_text
+    #  @bus_admin_console_page.accounts_page.notification_method_section.messages
     #  # => "This account is currently notified via method "Printable (no Email)"."
     #
     # Returns success or error message text
-    def message_text
+    def messages
       notify_msg_div.text
     end
   end

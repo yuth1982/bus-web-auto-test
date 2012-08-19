@@ -15,7 +15,8 @@ When /^I change (MozyPro|MozyEnterprise|Reseller) account plan to:$/ do |type, p
     when "MozyPro"
       base_plan = attributes["base plan"] || ""
       server_plan = attributes["server plan"] || ""
-      @bus_admin_console_page.change_plan_section.change_mozypro_plan(base_plan, server_plan, coupon)
+      storage_add_on = attributes["storage add on"] || 0
+      @bus_admin_console_page.change_plan_section.change_mozypro_plan(base_plan, server_plan, coupon, storage_add_on)
     when "MozyEnterprise"
       users = attributes["users"] || 0
       server_plan = attributes["server plan"] || "None"
@@ -39,14 +40,25 @@ Then /^Change plan charge summary should be:$/ do |charge_table|
   @bus_admin_console_page.change_plan_section.charge_summary_table_rows.should == charge_table.rows
 end
 
-Then /^MozyPro current purchase should be (.+)$/ do |new_plan|
-  @bus_admin_console_page.change_plan_section.mozypro_current_purchase.should == "#{new_plan} (current purchase)"
+Then /^MozyPro available base plans should be:$/ do |plans_table|
+  @bus_admin_console_page.change_plan_section.mozypro_base_plans.should == plans_table.rows.flatten
 end
 
-Then /^MozyEnterprise current purchase should be (.+)$/ do |new_plan|
-  @bus_admin_console_page.change_plan_section.enterprise_current_purchase.should == "#{new_plan} (current purchase)"
+#
+#  | base plan | server plan | storage add on |
+
+Then /^MozyPro new plan should be:$/ do |new_plan_table|
+  attributes = new_plan_table.hashes.first
+  base_plan = attributes["base plan"] || ""
+  server_plan = (attributes["server plan"] || "no").eql?("yes")
+  add_on = attributes["storage add on"] || ""
+
+  @bus_admin_console_page.change_plan_section.mozypro_base_plan.should == base_plan unless base_plan.empty?
+  @bus_admin_console_page.change_plan_section.mozypro_server_plan?.should == server_plan unless server_plan
+  @bus_admin_console_page.change_plan_section.mozypro_storage_add_on.should == add_on unless add_on.empty?
+
 end
 
-Then /^MozyPro base plans should be:$/ do |plans_table|
-  @bus_admin_console_page.change_plan_section.mozypro_base_plans
+Then /^MozyEnterprise new plan should be:$/ do |new_plan_table|
+  @bus_admin_console_page.change_plan_section.mozyenterprise_new_plan.should == new_plan_table.rows.first
 end

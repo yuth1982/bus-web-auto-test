@@ -13,8 +13,8 @@ Then /^(.+) taxpayer information should be:$/ do |account, info_table|
   step "I navigate to Taxpayer Information view from Accounts page"
   @aria_admin_console_page.switch_to_inner_work_frame
   attributes = info_table.hashes.first
-  @aria_admin_console_page.accounts_page.account_overview_section.taxpayer_section.vat_number_text.should == attributes["id"] unless attributes["id"].nil?
-  @aria_admin_console_page.accounts_page.account_overview_section.taxpayer_section.tax_exempt_status_text.should == attributes["status"] unless attributes["status"].nil?
+  @aria_admin_console_page.accounts_page.account_overview_section.taxpayer_section.vat_number.should == attributes["id"] unless attributes["id"].nil?
+  @aria_admin_console_page.accounts_page.account_overview_section.taxpayer_section.tax_exempt_status.should == attributes["status"] unless attributes["status"].nil?
 end
 
 # Available columns names:
@@ -41,14 +41,14 @@ When /^I change (.+) status to (.+)$/ do |account, status_code|
   @aria_admin_console_page.accounts_page.account_overview_section.account_status_section.change_account_status(status_code)
 end
 
-Then /^Status changed successful message should be (.+)$/ do |message|
-  @aria_admin_console_page.accounts_page.account_overview_section.account_status_section.messages.should == message
+Then /^Account status should be changed$/ do
+  @aria_admin_console_page.accounts_page.account_overview_section.account_status_section.messages.should == "Account status changed"
 end
 
-Then /^(.+) status should be (.+)$/ do |account, status|
+Then /^(.+) account status should be (.+)$/ do |account, status|
   step "I search aria account by #{account[:user_name]}"
   @aria_admin_console_page.switch_to_inner_work_frame
-  @aria_admin_console_page.accounts_page.account_overview_section.account_status_text.should == status
+  @aria_admin_console_page.accounts_page.account_overview_section.account_status.should == status
 end
 
 # Account groups steps
@@ -63,6 +63,10 @@ Then /^CAG message should be (.+)$/ do |message|
   @aria_admin_console_page.accounts_page.account_groups_section.messages == message
 end
 
+Then /^Collections account groups should be changed$/ do
+  @aria_admin_console_page.accounts_page.account_groups_section.messages == "Account group changes saved."
+end
+
 # Notification methods steps
 
 Then /^(.+) notification methods should be:$/ do |account, notify_table|
@@ -70,7 +74,7 @@ Then /^(.+) notification methods should be:$/ do |account, notify_table|
   @aria_admin_console_page.switch_to_work_frame
   @aria_admin_console_page.accounts_page.navigate_to_link("Notification Method")
   @aria_admin_console_page.switch_to_inner_work_frame
-  @aria_admin_console_page.accounts_page.notification_method_section.notify_methods_text.should == notify_table.rows.map{ |row| row.first }
+  @aria_admin_console_page.accounts_page.notification_method_section.notify_methods.should == notify_table.rows.map{ |row| row.first }
 end
 
 Then /^(.+) current notification method is set to (.+)$/ do |account, method|
@@ -88,9 +92,6 @@ When /^I set (.+) notification method to (.+)$/ do |account, notification_method
   @aria_admin_console_page.switch_to_inner_work_frame
   @aria_admin_console_page.accounts_page.notification_method_section.change_notify_method(notification_method)
 end
-
-
-
 
 Then /^Notification message should be (.+)$/ do |message|
   @aria_admin_console_page.switch_to_inner_work_frame

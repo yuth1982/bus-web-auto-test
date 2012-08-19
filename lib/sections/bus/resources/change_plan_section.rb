@@ -10,7 +10,8 @@ module Bus
     # Mozypro
     #
     element(:pro_base_plan_select, {:id => "products_base_exclusive"})
-    element(:pro_server_add_on_cb, {:xpath => "//div[@id='#{ADD_ON_LIST_LOC}']/input[starts-with(@id, 'products_addon_')]"})
+    element(:pro_server_plan_cb, {:xpath => "//div[@id='#{ADD_ON_LIST_LOC}']/input[@type='checkbox']"})
+    element(:pro_storage_add_on_tb, {:xpath => "//div[@id='#{ADD_ON_LIST_LOC}']/input[@type='text']"})
 
     # MozyEnterprise
     #
@@ -38,15 +39,23 @@ module Bus
     #   @bus_admin_console_page.change_plan_section.change_mozypro_plan("100 GB, $39.99","yes","coupon code")
     #
     # Returns nothing
-    def change_mozypro_plan(base_plan, server_plan, coupon)
-      pro_base_plan_select.displayed?
-      pro_base_plan_select.select_by(:text, base_plan)
-      sleep 5 # Wait for load server plan
-      @driver.execute_script("document.getElementById('change_billing_plan_form').onchange")
-      unless server_plan == ""
-        pro_server_add_on_cb.check if server_plan.eql?("yes")
+    def change_mozypro_plan(base_plan, server_plan, coupon, storage_add_on=0)
+      unless base_plan.empty?
+        pro_base_plan_select.displayed?
+        pro_base_plan_select.select_by(:text, base_plan, true)
       end
-      coupon_code_tb.type_text(coupon)
+      pro_storage_add_on_tb.type_text(storage_add_on) unless storage_add_on == 0
+      unless server_plan.empty?
+        pro_server_plan_cb.check if server_plan.eql?("yes")
+      end
+      unless coupon.empty?
+        coupon_code_tb.type_text(coupon)
+        # work around for trigger onchange event to enable submit button
+        sleep 1
+        coupon_code_tb.send_keys([:space])
+        #driver.execute_script("document.getElementById('submit_new_resources_btn').disabled=false")
+      end
+      sleep 5
       confirm_change
     end
 
@@ -57,9 +66,9 @@ module Bus
     #
     # Returns nothing
     def change_mozyenterprise_plan(users, server_plan, server_add_on, coupon)
-      enterprise_users_tb.type_text(users)
-      enterprise_server_plan_select.select_by(:text, server_plan)
-      enterprise_server_add_on_tb.type_text(server_add_on)
+      enterprise_users_tb.type_text(users) unless users == 0
+      enterprise_server_plan_select.select_by(:text, server_plan, true) unless server_plan.empty?
+      enterprise_server_add_on_tb.type_text(server_add_on) unless server_add_on == 0
       coupon_code_tb.type_text(coupon)
       confirm_change
     end
@@ -73,7 +82,7 @@ module Bus
     def change_reseller_plan(quota, server_plan, server_add_on, coupon)
       reseller_quota.type_text(quota) unless quota == 0
       reseller_server_add_on_tb.type_text(server_add_on)
-      unless server_plan == ""
+      unless server_plan.empty
         reseller_server_plan_cb.check if server_plan.eql?("yes")
       end
       coupon_code_tb.type_text(coupon)
@@ -83,7 +92,7 @@ module Bus
     # Public: Messages for change change plan actions
     #
     # Example
-    #  @bus_admin_console_page.change_plan_section.message_text
+    #  @bus_admin_console_page.change_plan_section.messages
     #  # => "Resources have been changed on your account."
     #
     # Returns success or error message text
@@ -94,7 +103,7 @@ module Bus
     # Public: Change plan charge summary table rows text
     #
     # Example
-    #   @bus_admin_console_page.change_plan_section.charge_summary_tb_rows_text
+    #   @bus_admin_console_page.change_plan_section.charge_summary_table_rows
     #   # => [["Discounts Applied","-$19.99"],
     #         ["Charge for upgraded plansl","$52.98"],
     #         ["Total amount to be charged","$32.99"]]
@@ -115,24 +124,40 @@ module Bus
       charge_summary_table.headers_text
     end
 
+    # Public:
+    #
+    # Example
+    #
+    #  # => ["10 GB", "50 GB", "100 GB", "250 GB", "500 GB", "1 TB", "2 TB", "4 TB", "8 TB", "12 TB", "16 TB", "20 TB", "24 TB", "28 TB", "32 TB"]
+    #
+    #
+    def mozypro_available_base_plans
+      pro_base_plan_select.options.map{ |opt| opt.text.match(/(\d+) (GB|TB)/)[0]}
+    end
+
     # Public: MozyPro current purchase
     #
-    def mozypro_current_purchase
+    def mozypro_base_plan
       pro_base_plan_select.first_selected_option.text
     end
 
-    def enterprise_current_purchase
-      enterprise_server_plan_select.first_selected_option.text
+    def mozypro_server_plan?
+      pro_server_plan_cb.checked?
     end
 
-    def mozypro_base_plans
-      pro_base_plan_select.options.map{ |opt| opt.text.match(/(\d+) (GB|TB)/)[0]}
+    def mozypro_storage_add_on
+      pro_storage_add_on_tb.value
+    end
+
+    # Public: Get MozyEnterprise new plan
+    #
+    #
+    def mozyenterprise_new_plan
+      [enterprise_users_tb.value, enterprise_server_plan_select.first_selected_option.text, enterprise_server_add_on_tb.value  ]
     end
 
     private
     def confirm_change
-      # Force enable submit button
-      driver.execute_script("document.getElementById('submit_new_resources_btn').disabled=false")
       submit_btn.click
       continue_btn.click
       sleep 20 # force wait for change plan

@@ -27,11 +27,11 @@ module Aria
     # Public: Messages for change account status actions
     #
     # Example
-    #   @aria_admin_console_page.accounts_page.account_overview_section.account_status_section.message_text
+    #   @aria_admin_console_page.accounts_page.account_overview_section.account_status_section.messages
     #  # => "Account status changed"
     #
     # Returns success or error message text
-    def message_text
+    def messages
       message_div.text
     end
   end

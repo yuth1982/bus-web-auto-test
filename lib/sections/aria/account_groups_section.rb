@@ -30,11 +30,11 @@ module Aria
     # Public: Messages for change account group actions
     #
     # Example
-    #  @bus_admin_console_page.account_groups_section.message_text
+    #  @bus_admin_console_page.account_groups_section.messages
     #  # => "Account group changes saved."
     #
     # Returns success or error message text
-    def message_text
+    def messages
       message_div.text
     end
   end

@@ -1,1 +1,1 @@
-default: -color --format pretty --format rerun --out rerun.txt
+default: -color --format pretty --format rerun --out rerun.txt -r features

@@ -15,29 +15,29 @@ module Aria
     # Public: Account VAT number
     #
     # Example
-    #   @aria_admin_console_page.accounts_page.account_overview_section.taxpayer_section
+    #   @aria_admin_console_page.accounts_page.account_overview_section.taxpayer_section.vat_number
     #   # => "BE0883236072"
     #
     # Returns taxpayer VAT number text
-    def vat_number_text
+    def vat_number
       taxpayer_id_dd.text
     end
 
     # Public: Account tax exempt status
     #
     # Example
-    #   @aria_admin_console_page.accounts_page.account_overview_section.tax_exempt_status_text
+    #   @aria_admin_console_page.accounts_page.account_overview_section.taxpayer_section.tax_exempt_status
     #   # => "Account is exempt from both federal/national and state/province taxation."
     #
     # Returns account tax exempt status
-    def tax_exempt_status_text
+    def tax_exempt_status
       tax_exempt_status_dd.text
     end
 
     # Public: Change federal exempt taxes status to true/false
     #
     # Example
-    #   @aria_admin_console_page.accounts_page.account_overview_section.set_federal_exempt_taxes(true)
+    #   @aria_admin_console_page.accounts_page.account_overview_section.taxpayer_section.set_federal_exempt_taxes(true)
     #
     # Returns nothing
     def set_federal_exempt_taxes(status)
@@ -49,7 +49,7 @@ module Aria
     # Public: Change state exempt taxes status to true/false
     #
     # Example
-    #   @aria_admin_console_page.accounts_page.account_overview_section.set_state_exempt_taxes(true)
+    #   @aria_admin_console_page.accounts_page.account_overview_section.taxpayer_section.set_state_exempt_taxes(true)
     #
     # Returns nothing
     def set_state_exempt_taxes(status)

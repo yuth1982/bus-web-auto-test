@@ -22,11 +22,11 @@ module Aria
     # Public: Aria account status on account overview page
     #
     # Example
-    #   @aria_admin_console_page.accounts_page.account_overview_section.account_status_text
+    #   @aria_admin_console_page.accounts_page.account_overview_section.account_status
     #   # => "ACTIVE"
     #
     # Returns account status text
-    def account_status_text
+    def account_status
       overview_table.rows_text[1][3]
     end
   end

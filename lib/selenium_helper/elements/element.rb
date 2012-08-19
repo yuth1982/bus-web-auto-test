@@ -5,6 +5,7 @@ class Selenium::WebDriver::Element
   include AutomationWebDriver::Elements::Link
   include AutomationWebDriver::Elements::Table
   include AutomationWebDriver::Elements::TextField
+  include AutomationWebDriver::Elements::Select
 
   # Public: element's id attribute value
   #
@@ -69,10 +70,10 @@ class Selenium::WebDriver::Element
     find_elements(:xpath, "descendant::*")
   end
 
-  def method_missing(method_name, *args)
-    select_methods = Selenium::WebDriver::Support::Select.instance_methods - Object.methods
-    if select_methods.include?(method_name.to_sym)
-      Selenium::WebDriver::Support::Select.new(self).send(method_name.to_sym, *args)
-    end
-  end
+  #def method_missing(method_name, *args)
+  #  select_methods = Selenium::WebDriver::Support::Select.instance_methods - Object.methods
+  #  if select_methods.include?(method_name.to_sym)
+  #    Selenium::WebDriver::Support::Select.new(self).send(method_name.to_sym, *args)
+  #  end
+  #end
 end

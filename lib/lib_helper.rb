@@ -16,6 +16,7 @@ require "selenium_helper/elements/text_field"
 require "selenium_helper/elements/link"
 require "selenium_helper/elements/checkbox"
 require "selenium_helper/elements/table"
+require "selenium_helper/elements/select"
 require "selenium_helper/elements/element"
 
 require "data_obj/bus/partner/partner_account"

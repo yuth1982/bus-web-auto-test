@@ -21,7 +21,7 @@ Then /^Next renewal info table should be:$/ do |next_renewal_table|
     unless months.nil?
       value = (Time.now.localtime("-06:00").to_datetime >> months[1].to_s.to_i).strftime("%b %d, %Y")
     end
-     value.gsub(/@XXXX/, @partner.credit_card.number[12..-1])
+     value.gsub(/@XXXX/, @partner.credit_card.last_four_digits)
    end
   @bus_admin_console_page.billing_info_section.next_renewal_table_rows.should == next_renewal_table.rows
 end
