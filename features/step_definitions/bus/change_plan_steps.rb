@@ -41,7 +41,7 @@ Then /^Change plan charge summary should be:$/ do |charge_table|
 end
 
 Then /^MozyPro available base plans should be:$/ do |plans_table|
-  @bus_admin_console_page.change_plan_section.mozypro_base_plans.should == plans_table.rows.flatten
+  @bus_admin_console_page.change_plan_section.mozypro_available_base_plans.should == plans_table.rows.flatten
 end
 
 #
