@@ -9,6 +9,8 @@ module Bus
     element(:assign_storage_btn, {:xpath => "//input[@name='assign_storage']"})
     element(:message_div, {:xpath => "//div[@id='resource-available_key_list-errors']/ul"}) #Quota changed.
 
+    elements(:general_info_span, {:xpath => "//div[@id='resource-available_key_list-content']/div[2]/div/div/span[@class='value']"})
+
     # Public: Assign a new quota to a MozyPro partner
     #         upgrade or downgrade
     #
@@ -17,8 +19,28 @@ module Bus
       change_link.click
       quota_tb.type_text(new_quota)
       assign_storage_btn.click
+      sleep 5
     end
 
+    def mozypro_total_storage
+      general_info_span[0].text
+    end
+
+    def mozypro_unallocated_storage
+      general_info_span[1].text
+    end
+
+    def mozypro_enable_server
+      general_info_span[2].text
+    end
+
+    # Public: Messages for manage resources actions
+    #
+    # Example
+    #  @bus_admin_console_page.manage_resources_section.messages
+    #  # => "Quota changed."
+    #
+    # Returns success or error message text
     def messages
       message_div.text
     end

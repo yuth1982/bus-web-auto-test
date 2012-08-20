@@ -46,7 +46,7 @@ Feature: Add a new partner
     And New partner should be created
 
   @TC.17958 @smoke
-  Scenario: 17958 Add a new monthly MozyPro partner with coupon
+  Scenario: 17958 Add a new monthly MozyPro partner with flat coupon
     When I add a new MozyPro partner:
       | period | base plan     | coupon           |
       | 1      | 50 GB, $19.99 | Coupon1DollarOff |
@@ -269,3 +269,28 @@ Feature: Add a new partner
     When I navigate to Add New Partner section from bus admin console page
     Then Reseller partner subscription period options should be:
       | Monthly | Yearly |
+
+  @TC.18733 @smoke
+  Scenario: 18733 Add a new monthly MozyPro partner with 10 percent inline coupon
+    When I add a new MozyPro partner:
+      | period | base plan     | coupon              |
+      | 1      | 50 GB, $19.99 | test10pctUltdInline |
+    Then Order summary table should be:
+      | Description       | Quantity | Price Each | Total Price |
+      | 50 GB             | 1        | $19.99     | $19.99      |
+      | Pre-tax Subtotal  |          |            | $17.99      |
+      | Total Charges     |          |            | $17.99      |
+    And New partner should be created
+
+  @TC.18734 @smoke
+  Scenario: 18734 Add a new monthly MozyPro partner with 10 percent outline coupon
+    When I add a new MozyPro partner:
+      | period | base plan     | coupon               |
+      | 1      | 50 GB, $19.99 | test10pctUltdOutline |
+    Then Order summary table should be:
+      | Description       | Quantity | Price Each | Total Price |
+      | 50 GB             | 1        | $19.99     | $19.99      |
+      | Discounts Applied |          |            | -$2.00      |
+      | Pre-tax Subtotal  |          |            | $17.99      |
+      | Total Charges     |          |            | $17.99      |
+    And New partner should be created

@@ -60,5 +60,6 @@ Then /^MozyPro new plan should be:$/ do |new_plan_table|
 end
 
 Then /^MozyEnterprise new plan should be:$/ do |new_plan_table|
-  @bus_admin_console_page.change_plan_section.mozyenterprise_new_plan.should == new_plan_table.rows.first
+  num_columns = new_plan_table.rows.first.length - 1
+  @bus_admin_console_page.change_plan_section.mozyenterprise_new_plan[0..num_columns].should == new_plan_table.rows.first
 end
