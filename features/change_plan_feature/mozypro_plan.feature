@@ -305,3 +305,31 @@ Feature: Change plan
     And MozyPro new plan should be:
       | base plan                          | storage add on |
       | 1 TB, $7,979.79 (current purchase) | 10             |
+
+  @test_coupon
+  Scenario: MozyPro monthly US partner 10 GB moves to 1T GB plan with 10 percent inline coupon
+    When I add a new MozyPro partner:
+      | period | base plan    |
+      | 1      | 10 GB, $9.99 |
+    Then New partner should be created
+    #When I act as newly created partner account
+    #And I change MozyPro account plan to:
+    #  | base plan       | server plan | storage add on | coupon              |
+    #  | 1 TB, $379.99   | yes         | 1              | test10pctUltdInline |
+    #Then Change plan charge summary should be:
+    #  | Description                     | Amount   |
+    #  | Credit for remainder of 10 GB   | -$9.99   |
+    #  | Charge for new 50 GB            | $454.47  |
+    #  |                                 |          |
+    #  | Total amount to be charged      | $444.48  |
+    #And Account plan should be changed
+    #And MozyPro new plan should be:
+    #  | base plan                        | server plan | storage add on |
+    #  | 50 GB, $19.99 (current purchase) | yes         | 1              |
+
+
+  #Credit for remainder of 10 GB 	-$9.99
+  #Charge for upgraded plans 	$504.97
+
+
+ # Total amount to be charged 	$494.98

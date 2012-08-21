@@ -1,1 +1,17 @@
 Please visit https://labs.dechocorp.com/projects/decholabs/wiki/New_Project_Help for information on working with both Labs and Gerrit.
+
+Environment variables:
+bus_user
+bus_pwd
+aria_user
+aria_pwd
+zimbra_user
+zimbra_pwd
+timeout
+aria_url
+bus_url
+zimbra_url
+screen_shot
+timeout
+delete_test_partner
+timestamp

@@ -294,3 +294,28 @@ Feature: Add a new partner
       | Pre-tax Subtotal  |          |            | $17.99      |
       | Total Charges     |          |            | $17.99      |
     And New partner should be created
+
+  @TC.18736 @smoke
+  Scenario: 18736 Add a new yearly MozyEnterprise partner with 20 percent inline coupon
+    When I add a new MozyEnterprise partner:
+      | period | users | coupon              |
+      | 12     | 1     | test20pctUltdInline |
+    Then Order summary table should be:
+      | Description         | Quantity | Price Each | Total Price |
+      | MozyEnterprise User | 1        | $95.00     | $95.00      |
+      | Pre-tax Subtotal    |          |            | $76.00      |
+      | Total Charges       |          |            | $76.00      |
+    And New partner should be created
+
+  @TC.18737 @smoke
+  Scenario: 18737 Add a new yearly MozyEnterprise partner with 20 percent outline coupon
+    When I add a new MozyEnterprise partner:
+      | period | users | coupon               |
+      | 12     | 1     | test20pctUltdOutline |
+    Then Order summary table should be:
+      | Description         | Quantity | Price Each | Total Price |
+      | MozyEnterprise User | 1        | $95.00     | $95.00      |
+      | Discounts Applied   |          |            | -$19.00     |
+      | Pre-tax Subtotal    |          |            | $76.00      |
+      | Total Charges       |          |            | $76.00      |
+    And New partner should be created

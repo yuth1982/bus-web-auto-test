@@ -15,5 +15,5 @@ Feature:
     | yes         | 2             |        |
     Then Change plan charge summary should be:
     | Description                | Amount |
-    Then Account plan should be changed
     | Charge for upgraded plans  | $41.80 |
+    And Account plan should be changed
