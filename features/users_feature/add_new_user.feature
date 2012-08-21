@@ -5,8 +5,8 @@ Feature: Add a new user
   Scenario: Add a new user to MozyPro partner
     Given I log in bus admin console as administrator
     When I add a new MozyPro partner:
-      | period | base plan     |
-      | 1      | 50 GB, $19.99 |
+      | period | base plan |
+      | 1      | 50 GB     |
     Then New partner should be created
     When I act as newly created partner account
     When I add a new user:

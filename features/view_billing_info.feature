@@ -6,8 +6,8 @@ Feature: View billing information
   @TC.15253
   Scenario: 15253 Verify MozyPro partner master plan section details
     When I add a new MozyPro partner:
-    | period | base plan      |
-    | 1      | 250 GB, $94.99 |
+    | period | base plan |
+    | 1      | 250 GB    |
     Then New partner should be created
     When I act as newly created partner account
     And I navigate to Billing Information section from bus admin console page
@@ -61,8 +61,8 @@ Feature: View billing information
   @TC.16658
   Scenario: 16658 Verify MozyPro partner supplemental plan section details
     When I add a new MozyPro partner:
-    | period | base plan      |
-    | 1      | 250 GB, $94.99 |
+    | period | base plan |
+    | 1      | 250 GB    |
     Then New partner should be created
     When I act as newly created partner account
     And I navigate to Billing Information section from bus admin console page
@@ -119,8 +119,8 @@ Feature: View billing information
   @TC.17517
   Scenario: 17517 Verify MozyPro VAT information in the billing information view
     When I add a new MozyPro partner:
-    | period | base plan         | server plan | country | vat number    |
-    | 12     | 500 GB, $2,089.89 | yes         | Italy   | IT03018900245 |
+    | period | base plan | server plan | country | vat number    |
+    | 12     | 500 GB    | yes         | Italy   | IT03018900245 |
     Then New partner should be created
     When I act as newly created partner account
     And I navigate to Billing Information section from bus admin console page

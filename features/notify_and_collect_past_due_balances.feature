@@ -10,8 +10,8 @@ Feature: Notify about and collect past-due balances
   @TC.16107
   Scenario: 16107 MozyPro account deleted in bus but history will remain in aria
     When I add a new MozyPro partner:
-      | period | base plan     |
-      | 1      | 50 GB, $19.99 |
+      | period | base plan |
+      | 1      | 50 GB     |
     Then New partner should be created
     When I delete the new partner account
     And I log in aria admin console as aria admin
@@ -20,8 +20,8 @@ Feature: Notify about and collect past-due balances
   @TC.16108 @slow
   Scenario: 16108 MozyPro account without server plan suspended in aria should be backup-suspended in bus
     When I add a new MozyPro partner:
-      | period | base plan     |
-      | 1      | 50 GB, $19.99 |
+      | period | base plan |
+      | 1      | 50 GB     |
     Then New partner should be created
     When I log in aria admin console as aria admin
     And I change the new partner account status to Suspended
@@ -35,8 +35,8 @@ Feature: Notify about and collect past-due balances
   @TC.17877 @slow
   Scenario: 17877 MozyPro account with server plan suspended in aria should be backup-suspended in bus
     When I add a new MozyPro partner:
-      | period | base plan     |
-      | 1      | 50 GB, $19.99 |
+      | period | base plan |
+      | 1      | 50 GB     |
     Then New partner should be created
     When I log in aria admin console as aria admin
     And I change the new partner account status to Suspended
@@ -115,8 +115,8 @@ Feature: Notify about and collect past-due balances
   @TC.16165 @slow
   Scenario: 16165 Verify aria sends email when change MozyPro account status to Active Dunning 1 net terms
     When I add a new MozyPro partner:
-    | period | base plan     | net terms |
-    | 1      | 50 GB, $19.99 | yes       |
+    | period | base plan | net terms |
+    | 1      | 50 GB     | yes       |
     Then New partner should be created
     When I log in aria admin console as aria admin
     And I change the new partner account status to Active Dunning 1
@@ -164,8 +164,8 @@ Feature: Notify about and collect past-due balances
   @TC.17978 @slow
   Scenario: 17978 Verify aria sends email when MozyPro account status sets to suspended net terms
     When I add a new MozyPro partner:
-      | period | base plan     | net terms |
-      | 1      | 50 GB, $19.99 | yes       |
+      | period | base plan | net terms |
+      | 1      | 50 GB     | yes       |
     Then New partner should be created
     When I log in aria admin console as aria admin
     And I change the new partner account status to Suspended
@@ -201,8 +201,8 @@ Feature: Notify about and collect past-due balances
   @TC.16151
   Scenario: 16151 Verify account reinstate from active dunning 1 state if charge goes through
     When I add a new MozyPro partner:
-      | period | base plan     |
-      | 1      | 50 GB, $19.99 |
+      | period | base plan |
+      | 1      | 50 GB     |
     Then New partner should be created
     When I log in aria admin console as aria admin
     And I change the new partner account CAG to Fail Test CAG
@@ -228,8 +228,8 @@ Feature: Notify about and collect past-due balances
   @TC.16152
   Scenario: 16152 Verify account reinstate from active dunning 2 state if charge goes through
     When I add a new MozyPro partner:
-      | period | base plan     |
-      | 1      | 50 GB, $19.99 |
+      | period | base plan |
+      | 1      | 50 GB     |
     Then New partner should be created
     When I log in aria admin console as aria admin
     And I change the new partner account CAG to Fail Test CAG
@@ -255,8 +255,8 @@ Feature: Notify about and collect past-due balances
   @TC.16153
   Scenario: 16153 Verify account reinstate from active dunning 3 state if charge goes through
     When I add a new MozyPro partner:
-      | period | base plan     |
-      | 1      | 50 GB, $19.99 |
+      | period | base plan |
+      | 1      | 50 GB     |
     Then New partner should be created
     When I log in aria admin console as aria admin
     And I change the new partner account CAG to Fail Test CAG

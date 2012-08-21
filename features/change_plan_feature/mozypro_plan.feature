@@ -7,8 +7,8 @@ Feature: Change plan
   @TC.18730 @Bug.83813 @Regression
   Scenario: 18730 Verify MozyPro monthly base plans info
     When I add a new MozyPro partner:
-      | period | base plan    |
-      | 1      | 10 GB, $9.99 |
+      | period | base plan |
+      | 1      | 10 GB     |
     Then New partner should be created
     When I act as newly created partner account
     And I navigate to Change Plan section from bus admin console page
@@ -34,8 +34,8 @@ Feature: Change plan
   @TC.18731 @Bug.83813 @Regression
   Scenario: 18731 Verify MozyPro yearly base plans info
     When I add a new MozyPro partner:
-      | period | base plan      |
-      | 12     | 10 GB, $109.89 |
+      | period | base plan |
+      | 12     | 10 GB     |
     Then New partner should be created
     When I act as newly created partner account
     And I navigate to Change Plan section from bus admin console page
@@ -61,8 +61,8 @@ Feature: Change plan
   @TC.18732 @Regression @Bug.83813
   Scenario: 18732 Verify MozyPro biennially base plans info
     When I add a new MozyPro partner:
-      | period | base plan      |
-      | 24     | 10 GB, $209.79 |
+      | period | base plan |
+      | 24     | 10 GB     |
     Then New partner should be created
     When I act as newly created partner account
     And I navigate to Change Plan section from bus admin console page
@@ -87,13 +87,13 @@ Feature: Change plan
   @TC.16485 @Smoke
   Scenario: 16485 MozyPro monthly US partner 10 GB moves to 50 GB plan
     When I add a new MozyPro partner:
-      | period | base plan    |
-      | 1      | 10 GB, $9.99 |
+      | period | base plan |
+      | 1      | 10 GB     |
     Then New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
-      | base plan       |
-      | 50 GB, $19.99   |
+      | base plan |
+      | 50 GB     |
     Then Change plan charge summary should be:
       | Description                     | Amount   |
       | Credit for remainder of 10 GB   | -$9.99   |
@@ -108,15 +108,15 @@ Feature: Change plan
   @TC.18424 @Smoke
   Scenario: 18424 MozyPro monthly US partner 1 TB moves to 250 GB plan
     When I add a new MozyPro partner:
-      | period | base plan     |
-      | 1      | 1 TB, $379.99 |
+      | period | base plan |
+      | 1      | 1 TB      |
     Then New partner should be created
     When I act as newly created partner account
     And I assign MozyPro allocated quota to 250 GB
     Then MozyPro resource quota should be changed
     When I change MozyPro account plan to:
-      | base plan        |
-      | 250 GB, $94.99   |
+      | base plan |
+      | 250 GB    |
     Then Account plan should be changed
     And MozyPro new plan should be:
       | base plan                         |
@@ -125,13 +125,13 @@ Feature: Change plan
   @TC.18336 @Smoke
   Scenario: 18336 MozyPro yearly UK partner 500 GB moves to 1 TB plan
     When I add a new MozyPro partner:
-      | period | base plan         | country        |
-      | 12     | 500 GB, $2,089.89 | United Kingdom |
+      | period | base plan | country        |
+      | 12     | 500 GB    | United Kingdom |
     Then New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
-      | base plan       |
-      | 1 TB, $4,179.89 |
+      | base plan |
+      | 1 TB      |
     Then Change plan charge summary should be:
       | Description                     | Amount     |
       | Credit for remainder of 500 GB  | -$2,089.89 |
@@ -146,15 +146,15 @@ Feature: Change plan
   @TC.18443 @Smoke
   Scenario: 18443 MozyPro yearly UK partner 500 GB moves to 250 GB plan
     When I add a new MozyPro partner:
-      | period | base plan         | country        |
-      | 12     | 500 GB, $2,089.89 | United Kingdom |
+      | period | base plan | country        |
+      | 12     | 500 GB    | United Kingdom |
     Then New partner should be created
     When I act as newly created partner account
     And I assign MozyPro allocated quota to 250 GB
     Then MozyPro resource quota should be changed
     When I change MozyPro account plan to:
-      | base plan         |
-      | 250 GB, $1,044.89 |
+      | base plan |
+      | 250 GB    |
     Then Account plan should be changed
     And MozyPro new plan should be:
       | base plan                            |
@@ -163,8 +163,8 @@ Feature: Change plan
   @TC.18248 @Smoke @Bug.84931
   Scenario: 18248 MozyPro biennially Ireland partner 1 TB moves to 2 TB plan
     When I add a new MozyPro partner:
-      | period | base plan       | country |
-      | 24     | 1 TB, $7,979.79 | Ireland |
+      | period | base plan | country |
+      | 24     | 1 TB      | Ireland |
     Then New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
@@ -184,8 +184,8 @@ Feature: Change plan
   @TC.18407
   Scenario: 18407 MozyPro biennially Ireland partner 2 TB moves to 1 TB plan
     When I add a new MozyPro partner:
-      | period | base plan        | country |
-      | 24     | 2 TB, $15,749.79 | Ireland |
+      | period | base plan | country |
+      | 24     | 2 TB      | Ireland |
     Then New partner should be created
     When I act as newly created partner account
     And I assign MozyPro allocated quota to 1024 GB
@@ -201,8 +201,8 @@ Feature: Change plan
   @TC.17104 @Smoke
   Scenario: 17104 Add server plan option to MozyPro monthly US partner
     When I add a new MozyPro partner:
-      | period | base plan    |
-      | 1      | 10 GB, $9.99 |
+      | period | base plan |
+      | 1      | 10 GB     |
     Then New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
@@ -219,8 +219,8 @@ Feature: Change plan
   @TC.17105 @Smoke
   Scenario: 17105 Add server storage add on to MozyPro monthly US partner
     When I add a new MozyPro partner:
-      | period | base plan     |
-      | 1      | 1 TB, $379.99 |
+      | period | base plan |
+      | 1      | 1 TB      |
     Then New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
@@ -237,8 +237,8 @@ Feature: Change plan
   @TC.17274 @Smoke
   Scenario: 17274 Add server plan option to MozyPro yearly UK partner
     When I add a new MozyPro partner:
-      | period | base plan         | country        |
-      | 12     | 500 GB, $2,089.89 | United Kingdom |
+      | period | base plan | country        |
+      | 12     | 500 GB    | United Kingdom |
     Then New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
@@ -255,8 +255,8 @@ Feature: Change plan
   @TC.17275 @Smoke
   Scenario: 17275 Add server storage add on to MozyPro yearly UK partner
     When I add a new MozyPro partner:
-      | period | base plan       | country        |
-      | 12     | 1 TB, $4,179.89 | United Kingdom |
+      | period | base plan | country        |
+      | 12     | 1 TB      | United Kingdom |
     Then New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
@@ -273,8 +273,8 @@ Feature: Change plan
   @TC.17276 @Smoke
   Scenario: 17276 Add server plan option to MozyPro biennially Ireland partner
     When I add a new MozyPro partner:
-      | period | base plan         | country |
-      | 24     | 500 GB, $3,989.79 | Ireland |
+      | period | base plan | country |
+      | 24     | 500 GB    | Ireland |
     Then New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
@@ -291,8 +291,8 @@ Feature: Change plan
   @TC.17277 @Smoke
   Scenario: 17277 Add server storage add on to MozyPro biennially Ireland partner
     When I add a new MozyPro partner:
-      | period | base plan       | country |
-      | 24     | 1 TB, $7,979.79 | Ireland |
+      | period | base plan | country |
+      | 24     | 1 TB      | Ireland |
     Then New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
@@ -306,30 +306,23 @@ Feature: Change plan
       | base plan                          | storage add on |
       | 1 TB, $7,979.79 (current purchase) | 10             |
 
-  @test_coupon
+  @test_coupon @Bug.85011 @Regression
   Scenario: MozyPro monthly US partner 10 GB moves to 1T GB plan with 10 percent inline coupon
     When I add a new MozyPro partner:
-      | period | base plan    |
-      | 1      | 10 GB, $9.99 |
+      | period | base plan |
+      | 1      | 10 GB     |
     Then New partner should be created
-    #When I act as newly created partner account
-    #And I change MozyPro account plan to:
-    #  | base plan       | server plan | storage add on | coupon              |
-    #  | 1 TB, $379.99   | yes         | 1              | test10pctUltdInline |
-    #Then Change plan charge summary should be:
-    #  | Description                     | Amount   |
-    #  | Credit for remainder of 10 GB   | -$9.99   |
-    #  | Charge for new 50 GB            | $454.47  |
-    #  |                                 |          |
-    #  | Total amount to be charged      | $444.48  |
-    #And Account plan should be changed
-    #And MozyPro new plan should be:
-    #  | base plan                        | server plan | storage add on |
-    #  | 50 GB, $19.99 (current purchase) | yes         | 1              |
-
-
-  #Credit for remainder of 10 GB 	-$9.99
-  #Charge for upgraded plans 	$504.97
-
-
- # Total amount to be charged 	$494.98
+    When I act as newly created partner account
+    And I change MozyPro account plan to:
+      | base plan | server plan | storage add on | coupon              |
+      | 1 TB      | yes         | 1              | test10pctUltdInline |
+    Then Change plan charge summary should be:
+      | Description                     | Amount   |
+      | Credit for remainder of 10 GB   | -$9.99   |
+      | Charge for new 50 GB            | $454.47  |
+      |                                 |          |
+      | Total amount to be charged      | $444.48  |
+    And Account plan should be changed
+    And MozyPro new plan should be:
+      | base plan                        | server plan | storage add on |
+      | 1 TB, $379.99 (current purchase) | yes         | 1              |

@@ -9,8 +9,8 @@ Feature:
   @TC.15229
   Scenario: 15229 Verify Receive Mozy Account Statements set to Yes for new partner in Bus
     When I add a new MozyPro partner:
-      | period | base plan     |
-      | 1      | 50 GB, $19.99 |
+      | period | base plan |
+      | 1      | 50 GB     |
     Then New partner should be created
     When I act as newly created partner account
     And I navigate to Account Details section from bus admin console page
@@ -26,8 +26,8 @@ Feature:
   @TC.15230
   Scenario: 15230 Alter notification method between HTML email and Printable no email in Aria
     When I add a new MozyPro partner:
-      | period | base plan     |
-      | 1      | 50 GB, $19.99 |
+      | period | base plan |
+      | 1      | 50 GB     |
     Then New partner should be created
     When I log in aria admin console as aria admin
     And I set the new partner account notification method to Printable (no Email)
@@ -38,8 +38,8 @@ Feature:
   @TC.15448
   Scenario: 15448 Verify notification methods have HTML email and Printable no email
     When I add a new MozyPro partner:
-      | period | base plan     |
-      | 1      | 50 GB, $19.99 |
+      | period | base plan  |
+      | 1      | 50 GB      |
     Then New partner should be created
     When I log in aria admin console as aria admin
     Then the new partner account notification methods should be:
@@ -50,8 +50,8 @@ Feature:
   @TC.15495
   Scenario: 15495 Verify aria notification method when set Receive Mozy Account Statements to No
     When I add a new MozyPro partner:
-      | period | base plan     |
-      | 1      | 50 GB, $19.99 |
+      | period | base plan |
+      | 1      | 50 GB     |
     Then New partner should be created
     When I act as newly created partner account
     And I set account Receive Mozy Account Statements option to No
@@ -62,8 +62,8 @@ Feature:
   @TC.15718
   Scenario: 15718 Verify notification method set to HTML Email for new Monthly MozyPro partner
     When I add a new MozyPro partner:
-      | period | base plan     |
-      | 1      | 50 GB, $19.99 |
+      | period | base plan |
+      | 1      | 50 GB     |
     Then New partner should be created
     When I log in aria admin console as aria admin
     Then the new partner account current notification method is set to HTML Email

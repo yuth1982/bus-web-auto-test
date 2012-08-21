@@ -71,13 +71,13 @@ module AutomationWebDriver
       private
 
       def select_by_text(what, deselect, use_arrow_key)
-        index = options_text.index(what)
+        index = options_text.index{ |opt| opt=~/#{Regexp.escape(what)}/ }
         raise Selenium::WebDriver::Error::NoSuchElementError, "Unable to find option text '#{what}' in select options" if index.nil?
         select_by_index(index, deselect, use_arrow_key)
       end
 
       def select_by_value(what, deselect, use_arrow_key)
-        index = options_values.index(what)
+        index = options_values.index{ |opt| opt=~/#{Regexp.escape(what)}/ }
         raise Selenium::WebDriver::Error::NoSuchElementError, "Unable to find option value '#{what}' in select options" if index.nil?
         select_by_index(index, deselect, use_arrow_key)
       end

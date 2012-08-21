@@ -9,8 +9,8 @@
   @TC.17526
   Scenario: 17526 Verify default tax-exemtp status of a new Yearly MozyPro partner
     When I add a new MozyPro partner:
-      | period | base plan     | server plan | country | vat number   |
-      | 1      | 50 GB, $19.99 | yes         | Belgium | BE0883236072 |
+      | period | base plan | server plan | country | vat number   |
+      | 1      | 50 GB     | yes         | Belgium | BE0883236072 |
     Then New partner should be created
     When I log in aria admin console as aria admin
     Then the new partner account taxpayer information should be:
@@ -42,8 +42,8 @@
   @TC.17533
   Scenario: 17533 Set both Exempt from State and Federal taxes to false for a new Biennially Mozypro partner
     When I add a new MozyPro partner:
-      | period | base plan      | server plan | country | vat number   |
-      | 24     | 50 GB, $419.79 | yes         | Belgium | BE0883236072 |
+      | period | base plan | server plan | country | vat number   |
+      | 24     | 50 GB     | yes         | Belgium | BE0883236072 |
     Then New partner should be created
     When I log in aria admin console as aria admin
     And I set the new partner account taxpayer information to:
@@ -84,8 +84,8 @@
   @TC.17547
   Scenario: 17547 No taxes charged when create a new Monthly MozyPro partner
     When I add a new MozyPro partner:
-      | period | base plan     | country | vat number   |
-      | 1      | 50 GB, $19.99 | Belgium | BE0883236072 |
+      | period | base plan | country | vat number   |
+      | 1      | 50 GB     | Belgium | BE0883236072 |
     Then Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
       | 50 GB             | 1        | $19.99     | $19.99      |

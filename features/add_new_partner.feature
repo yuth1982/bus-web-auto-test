@@ -10,8 +10,8 @@ Feature: Add a new partner
   @TC.17955 @smoke
   Scenario: 17955 Add a new monthly basic MozyPro partner
     When I add a new MozyPro partner:
-      | period | base plan     |
-      | 1      | 50 GB, $19.99 |
+      | period | base plan |
+      | 1      | 50 GB     |
     Then Order summary table should be:
       | Description      | Quantity | Price Each | Total Price |
       | 50 GB            | 1        | $19.99     | $19.99      |
@@ -22,8 +22,8 @@ Feature: Add a new partner
   @TC.17956 @smoke
   Scenario: 17956 Add a new monthly MozyPro partner european
     When I add a new MozyPro partner:
-      | period | base plan      | country        |
-      | 1      | 100 GB, $39.99 | United Kingdom |
+      | period | base plan | country        |
+      | 1      | 100 GB    | United Kingdom |
     Then Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
       | 100 GB            | 1        | $39.99     | $39.99      |
@@ -35,8 +35,8 @@ Feature: Add a new partner
   @TC.17957
   Scenario: 17957 Add a new yearly MozyPro partner european vat
     When I add a new MozyPro partner:
-      | period | base plan         | server plan | country | vat number    |
-      | 12     | 500 GB, $2,089.89 | yes         | Italy   | IT03018900245 |
+      | period | base plan | server plan | country | vat number    |
+      | 12     | 500 GB    | yes         | Italy   | IT03018900245 |
     Then Order summary table should be:
       | Description      | Quantity | Price Each | Total Price |
       | 500 GB           | 1        | $2,089.89  | $2,089.89   |
@@ -48,8 +48,8 @@ Feature: Add a new partner
   @TC.17958 @smoke
   Scenario: 17958 Add a new monthly MozyPro partner with flat coupon
     When I add a new MozyPro partner:
-      | period | base plan     | coupon           |
-      | 1      | 50 GB, $19.99 | Coupon1DollarOff |
+      | period | base plan | coupon           |
+      | 1      | 50 GB     | Coupon1DollarOff |
     Then Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
       | 50 GB             | 1        | $19.99     | $19.99      |
@@ -61,8 +61,8 @@ Feature: Add a new partner
   @TC.17959
   Scenario: 17959 Add a new yearly MozyPro partner european vat coupon
     When I add a new MozyPro partner:
-      | period | base plan         | server plan | country | vat number   | coupon           |
-      | 12     | 500 GB, $2,089.89 | yes         | Belgium | BE0883236072 | Coupon1DollarOff |
+      | period | base plan | server plan | country | vat number   | coupon           |
+      | 12     | 500 GB    | yes         | Belgium | BE0883236072 | Coupon1DollarOff |
     Then Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
       | 500 GB            | 1        | $2,089.89  | $2,089.89   |
@@ -82,8 +82,8 @@ Feature: Add a new partner
   @TC.17961
   Scenario: 17961 Add a new yearly MozyPro partner with net terms payment
     When I add a new MozyPro partner:
-      | period | base plan         | server plan | net terms |
-      | 12     | 500 GB, $2,089.89 | yes         | yes       |
+      | period | base plan | server plan | net terms |
+      | 12     | 500 GB    | yes         | yes       |
     Then New partner should be created
 
   @TC.17962 @smoke
@@ -101,8 +101,8 @@ Feature: Add a new partner
   @TC.17963
   Scenario: 17963 Add a new biennially MozyEnterprise partner european
     When I add a new MozyEnterprise partner:
-      | period | users | server plan                   | server add-on | country        |
-      | 24     | 1     | 100 GB Server Plan, $1,112.58 | 1             | United Kingdom |
+      | period | users | server plan        | server add-on | country        |
+      | 24     | 1     | 100 GB Server Plan | 1             | United Kingdom |
     Then Order summary table should be:
       | Description           | Quantity | Price Each | Total Price |
       | MozyEnterprise User   | 1        | $181.00    | $181.00     |
@@ -143,8 +143,8 @@ Feature: Add a new partner
   @TC.17966
   Scenario: 17966 Add a new biennially MozyEnterprise partner european vat coupon
     When I add a new MozyEnterprise partner:
-      | period | users | server plan                   | server add-on | country | vat number   | coupon           |
-      | 24     | 1     | 100 GB Server Plan, $1,112.58 | 1             | Belgium | BE0883236072 | Coupon1DollarOff |
+      | period | users | server plan        | server add-on | country | vat number   | coupon           |
+      | 24     | 1     | 100 GB Server Plan | 1             | Belgium | BE0883236072 | Coupon1DollarOff |
     Then Order summary table should be:
       | Description           | Quantity | Price Each | Total Price |
       | MozyEnterprise User   | 1        | $181.00    | $181.00     |
@@ -165,8 +165,8 @@ Feature: Add a new partner
   @TC.17968
   Scenario: 17968 Add a new MozyEnterprise partner with net terms payment
     When I add a new MozyEnterprise partner:
-      | period | users | server plan                   | server add-on | net terms |
-      | 12     | 5     | 500 GB Server Plan, $2,309.78 | 1             | yes       |
+      | period | users | server plan        | server add-on | net terms |
+      | 12     | 5     | 500 GB Server Plan | 1             | yes       |
     Then New partner should be created
 
   @TC.17969 @smoke
@@ -273,8 +273,8 @@ Feature: Add a new partner
   @TC.18733 @smoke
   Scenario: 18733 Add a new monthly MozyPro partner with 10 percent inline coupon
     When I add a new MozyPro partner:
-      | period | base plan     | coupon              |
-      | 1      | 50 GB, $19.99 | test10pctUltdInline |
+      | period | base plan | coupon              |
+      | 1      | 50 GB     | test10pctUltdInline |
     Then Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
       | 50 GB             | 1        | $19.99     | $19.99      |
@@ -285,8 +285,8 @@ Feature: Add a new partner
   @TC.18734 @smoke
   Scenario: 18734 Add a new monthly MozyPro partner with 10 percent outline coupon
     When I add a new MozyPro partner:
-      | period | base plan     | coupon               |
-      | 1      | 50 GB, $19.99 | test10pctUltdOutline |
+      | period | base plan | coupon               |
+      | 1      | 50 GB     | test10pctUltdOutline |
     Then Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
       | 50 GB             | 1        | $19.99     | $19.99      |

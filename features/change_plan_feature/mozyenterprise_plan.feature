@@ -6,13 +6,13 @@ Feature:
   @TC.16865
   Scenario: 16865 MozyEnterprise 250 GB server add-on yearly to 500 GB add-on
     When I add a new MozyEnterprise partner:
-    | period | users | server plan                   |
-    | 12     | 10    | 250 GB Server Plan, $1,220.78 |
+    | period | users | server plan        |
+    | 12     | 10    | 250 GB Server Plan |
     Then New partner should be created
     When I act as newly created partner account
     When I change MozyEnterprise account plan to:
-    | users | server plan                   | server add-on |
-    | 15    | 500 GB Server Plan, $2,309.78 | 5             |
+    | users | server plan        | server add-on |
+    | 15    | 500 GB Server Plan | 5             |
     Then Change plan charge summary should be:
     | Description                                | Amount     |
     | Credit for remainder of 250 GB Server Plan | -$1,220.78 |
@@ -32,8 +32,8 @@ Feature:
     Then New partner should be created
     When I act as newly created partner account
     When I change MozyEnterprise account plan to:
-      | users | server plan                 | server add-on |
-      | 15    | 1 TB Server Plan, $8,609.58 | 5             |
+      | users | server plan      | server add-on |
+      | 15    | 1 TB Server Plan | 5             |
     Then Change plan charge summary should be:
       | Description                                | Amount     |
       | Credit for remainder of 500 GB Server Plan | -$4,409.58 |
@@ -48,13 +48,13 @@ Feature:
   @TC.16997 @Bug.84933 @Regression
   Scenario: 16997 MozyEnterprise 1 TB server add-on 3 years to 2 TB add-on
     When I add a new MozyEnterprise partner:
-      | period | users | server plan                  |
-      | 36     | 10    | 1 TB Server Plan, $12,299.40 |
+      | period | users | server plan      |
+      | 36     | 10    | 1 TB Server Plan |
     Then New partner should be created
     When I act as newly created partner account
     When I change MozyEnterprise account plan to:
-      | uers | server plan                  | server add-on |
-      | 15   | 2 TB Server Plan, $23,699.40 | 5             |
+      | uers | server plan      | server add-on |
+      | 15   | 2 TB Server Plan | 5             |
     Then Change plan charge summary should be:
       | Description                                | Amount      |
       | Credit for remainder of 1 TB Server Plan   | -$12,299.40 |
@@ -69,8 +69,8 @@ Feature:
   @TC.17728
   Scenario: 17728 MozyEnterprise 16 TB server add-on yearly to 8 TB add-on
     When I add a new MozyEnterprise partner:
-      | period | users | server plan                   |
-      | 12     | 10    | 16 TB Server Plan, $65,559.12 |
+      | period | users | server plan       |
+      | 12     | 10    | 16 TB Server Plan |
     Then New partner should be created
     When I act as newly created partner account
     When I change MozyEnterprise account plan to:
@@ -84,13 +84,13 @@ Feature:
   @TC.17714
   Scenario: 17714 MozyEnterprise 32 TB server add-on yearly to 28 TB add-on
     When I add a new MozyEnterprise partner:
-      | period | users | server plan                    |
-      | 24     | 10    | 32 TB Server Plan, $250,316.64 |
+      | period | users | server plan       |
+      | 24     | 10    | 32 TB Server Plan |
     Then New partner should be created
     When I act as newly created partner account
     When I change MozyEnterprise account plan to:
-      | server plan                    |
-      | 28 TB Server Plan, $219,027.06 |
+      | server plan       |
+      | 28 TB Server Plan |
     And Account plan should be changed
     And MozyEnterprise new plan should be:
       | users | server plan                                       |
@@ -99,13 +99,13 @@ Feature:
   @TC.17718
   Scenario: 17718 MozyEnterprise 32 TB server add-on yearly to 28 TB add-on
     When I add a new MozyEnterprise partner:
-      | period | users | server plan                    |
-      | 36     | 10    | 28 TB Server Plan, $312,895.80 |
+      | period | users | server plan       |
+      | 36     | 10    | 28 TB Server Plan |
     Then New partner should be created
     When I act as newly created partner account
     When I change MozyEnterprise account plan to:
-      | server plan                    |
-      | 24 TB Server Plan, $268,196.40 |
+      | server plan       |
+      | 24 TB Server Plan |
     And Account plan should be changed
     And MozyEnterprise new plan should be:
       | users | server plan                                       |

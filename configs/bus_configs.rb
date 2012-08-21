@@ -28,6 +28,6 @@ module Bus
   # Default password for all password field
   DEFAULT_PWD = "test1234"
   # partner user email prefix, e.g qa1+reg+test@mozy.com, suffix is fixed
-  EMAIL_PREFIX = "qa1"
+  EMAIL_PREFIX = ENV["email_prefix"] || "qa1"
 end
 

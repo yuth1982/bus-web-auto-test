@@ -10,8 +10,8 @@ Feature: Change subscription period
   @TC.15231 @smoke
   Scenario: 15231 MozyPro change subscription period from Monthly to Yearly
     When I add a new MozyPro partner:
-      | period | base plan     |
-      | 1      | 50 GB, $19.99 |
+      | period | base plan |
+      | 1      | 50 GB     |
     Then New partner should be created
     When I act as newly created partner account
     And I change account subscription up to MozyPro annual billing period
@@ -20,8 +20,8 @@ Feature: Change subscription period
   @TC.15232
   Scenario: 15232 MozyPro change subscription period from Yearly to Biennially
     When I add a new MozyPro partner:
-      | period | base plan      |
-      | 12     | 50 GB, $219.89 |
+      | period | base plan |
+      | 12     | 50 GB     |
     Then New partner should be created
     When I act as newly created partner account
     And I change account subscription up to MozyPro biennial billing period
@@ -30,8 +30,8 @@ Feature: Change subscription period
   @TC.15233
   Scenario: 15233 MozyPro change subscription period from Monthly to Biennially
     When I add a new MozyPro partner:
-      | period | base plan     |
-      | 1      | 50 GB, $19.99 |
+      | period | base plan |
+      | 1      | 50 GB     |
     Then New partner should be created
     When I act as newly created partner account
     And I change account subscription up to MozyPro biennial billing period
@@ -40,8 +40,8 @@ Feature: Change subscription period
   @TC.15234 @smoke
   Scenario: 15234 MozyPro change subscription period from Biennially to Yearly
     When I add a new MozyPro partner:
-      | period | base plan      |
-      | 24     | 50 GB, $419.79 |
+      | period | base plan |
+      | 24     | 50 GB     |
     Then New partner should be created
     When I act as newly created partner account
     And I change account subscription down to MozyPro annual billing period
@@ -50,8 +50,8 @@ Feature: Change subscription period
   @TC.15235
   Scenario: 15235 MozyPro change subscription period from Yearly to Monthly
     When I add a new MozyPro partner:
-      | period | base plan      |
-      | 12     | 50 GB, $219.89 |
+      | period | base plan |
+      | 12     | 50 GB     |
     Then New partner should be created
     When I act as newly created partner account
     And I change account subscription down to MozyPro monthly billing period
@@ -60,8 +60,8 @@ Feature: Change subscription period
   @TC.15236
   Scenario: 15236 MozyPro change subscription period from Biennially to Monthly
     When I add a new MozyPro partner:
-      | period | base plan      |
-      | 24     | 50 GB, $419.79 |
+      | period | base plan |
+      | 24     | 50 GB     |
     Then New partner should be created
     When I act as newly created partner account
     And I change account subscription down to MozyPro monthly billing period
@@ -170,8 +170,8 @@ Feature: Change subscription period
   @TC.15384 @smoke_test
   Scenario: 15384 Verify MozyPro confirmation message when change subscription period to biennially
     When I add a new MozyPro partner:
-      | period | base plan     |
-      | 1      | 50 GB, $19.99 |
+      | period | base plan |
+      | 1      | 50 GB     |
     Then New partner should be created
     When I act as newly created partner account
     And I change account subscription up to MozyPro biennial billing period

@@ -7,8 +7,8 @@ Feature:
   @TC.16188
   Scenario: 16188 Verify Shipping Address Section Populated Fields Correctly
     When I add a new MozyPro partner:
-      | period | base plan     |
-      | 1      | 50 GB, $19.99 |
+      | period | base plan |
+      | 1      | 50 GB     |
     Then New partner should be created
     When I navigate to process data shuttle order section for the new partner account
     Then Verify shipping address table should be:
@@ -95,8 +95,8 @@ Feature:
   @TC.16207 @slow @smoke
   Scenario: 16207 Ordering data shuttle for MozyPro using the Add New Key Link with unassigned email
     When I add a new MozyPro partner:
-      | period | base plan     |
-      | 1      | 50 GB, $19.99 |
+      | period | base plan |
+      | 1      | 50 GB     |
     Then New partner should be created
     When I order data shuttle for the new partner account
       | key from | quota |
@@ -110,8 +110,8 @@ Feature:
   @TC.16205 @slow
   Scenario: 16207 Ordering data shuttle for MozyPro using the Add New Key Link with assigned email
     When I add a new MozyPro partner:
-      | period | base plan     |
-      | 1      | 50 GB, $19.99 |
+      | period | base plan |
+      | 1      | 50 GB     |
     Then New partner should be created
     When I order data shuttle for the new partner account
       | key from | quota | assign to |
@@ -193,8 +193,8 @@ Feature:
   @TC.16320 @slow
   Scenario: 17879 Ordering data shuttle over 3.6T for MozyPro using the Add New Key Link
     When I add a new MozyPro partner:
-      | period | base plan       |
-      | 1      | 4 TB, $1,439.99 |
+      | period | base plan |
+      | 1      | 4 TB      |
     Then New partner should be created
     When I order data shuttle for the new partner account
       | key from | quota |
@@ -221,8 +221,8 @@ Feature:
   @TC.16342 @slow
   Scenario: 16342 Manually change number of mac drives ordered
     When I add a new MozyPro partner:
-      | period | base plan     |
-      | 1      | 1 TB, $379.99 |
+      | period | base plan |
+      | 1      | 1 TB      |
     Then New partner should be created
     When I order data shuttle for the new partner account
       | key from  | quota | win drivers | mac drivers |

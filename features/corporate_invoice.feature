@@ -10,8 +10,8 @@ Feature: Corporate Invoices
   @TC.15686 @slow
   Scenario: 15686 Verify Aria sends email when create a new MozyPro partner
     When I add a new MozyPro partner:
-      | period | base plan     |
-      | 1      | 50 GB, $19.99 |
+      | period | base plan |
+      | 1      | 50 GB     |
     Then New partner should be created
     When I wait for 30 seconds
     And I log in zimbra as default zimbra account
@@ -28,8 +28,8 @@ Feature: Corporate Invoices
   @TC.15687 @slow
   Scenario: 15687 Verify Aria sends invoice email when change subscription period of a MozyPro partner
     When I add a new MozyPro partner:
-      | period | base plan     |
-      | 1      | 50 GB, $19.99 |
+      | period | base plan |
+      | 1      | 50 GB     |
     Then New partner should be created
     When I act as newly created partner account
     And I change account subscription up to MozyPro annual billing period
