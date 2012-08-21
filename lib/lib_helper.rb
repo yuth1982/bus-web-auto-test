@@ -4,9 +4,16 @@ require 'rubygems'
 require 'bundler'
 Bundler.setup
 require "selenium-webdriver"
+require 'rspec'
 require 'nokogiri'
 require 'forgery'
 require 'csv'
+
+require 'configs/global_configs'
+require 'configs/bus_configs'
+require 'configs/aria_configs'
+require 'configs/zimbra_configs'
+require 'file_helper'
 
 require "selenium_helper/create_selenium_web_driver"
 require "selenium_helper/page_object_components"
