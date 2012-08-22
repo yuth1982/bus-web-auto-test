@@ -88,12 +88,12 @@ module AutomationWebDriver
           diff = new_index - current_index
           if diff > 0
             diff.abs.times do
-              sleep 0.5 # wait between each arrow down movement
+              sleep 1 # wait between each arrow down movement
               self.send_keys([:arrow_down])
             end
           else
             diff.abs.times do
-              sleep 0.5 # wait between each arrow up movement
+              sleep 1 # wait between each arrow up movement
               self.send_keys([:arrow_up])
             end
           end

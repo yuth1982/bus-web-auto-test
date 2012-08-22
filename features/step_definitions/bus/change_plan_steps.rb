@@ -53,13 +53,19 @@ Then /^MozyPro new plan should be:$/ do |new_plan_table|
   server_plan = (attributes["server plan"] || "no").eql?("yes")
   add_on = attributes["storage add on"] || ""
 
-  @bus_admin_console_page.change_plan_section.mozypro_base_plan.should == base_plan unless base_plan.empty?
+  @bus_admin_console_page.change_plan_section.mozypro_base_plan.should include base_plan unless base_plan.empty?
   @bus_admin_console_page.change_plan_section.mozypro_server_plan?.should == server_plan unless server_plan
   @bus_admin_console_page.change_plan_section.mozypro_storage_add_on.should == add_on unless add_on.empty?
 
 end
 
 Then /^MozyEnterprise new plan should be:$/ do |new_plan_table|
-  num_columns = new_plan_table.rows.first.length - 1
-  @bus_admin_console_page.change_plan_section.mozyenterprise_new_plan[0..num_columns].should == new_plan_table.rows.first
+  attributes = new_plan_table.hashes.first
+  users = attributes["users"] || ""
+  server_plan = attributes["server plan"] || ""
+  add_on = attributes["server add on"] || ""
+
+  @bus_admin_console_page.change_plan_section.mozyenterprise_users.should == users unless users.empty?
+  @bus_admin_console_page.change_plan_section.mozyenterprise_server_plan.should include server_plan unless server_plan
+  @bus_admin_console_page.change_plan_section.mozyenterprise_server_add_on.should == add_on unless add_on.empty?
 end

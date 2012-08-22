@@ -149,11 +149,16 @@ module Bus
       pro_storage_add_on_tb.value
     end
 
-    # Public: Get MozyEnterprise new plan
-    #
-    #
-    def mozyenterprise_new_plan
-      [enterprise_users_tb.value, enterprise_server_plan_select.first_selected_option.text, enterprise_server_add_on_tb.value  ]
+    def mozyenterprise_users
+      enterprise_users_tb.value
+    end
+
+    def mozyenterprise_server_plan
+      enterprise_server_plan_select.first_selected_option.text
+    end
+
+    def mozyenterprise_server_add_on
+      enterprise_server_add_on_tb.value
     end
 
     private
