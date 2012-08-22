@@ -1,13 +1,16 @@
 # Public: Create a new partner
 #
-# MozyPro available column names:
-# | period | base plan | server plan | coupon | country | vat number | net terms |
+# MozyPro available columns:
+#   Required: period
+#   Optional: base plan, server plan, coupon, country, vat number, net terms
 #
-# MozyEnterprise available column names:
-# | period | users | server plan | server add-on | coupon | country | vat number | net terms |
+# MozyEnterprise available columns:
+#   Required: period
+#   Optional: users, server plan, server add-on, coupon, country, vat number, net terms
 #
-# Reseller available column names:
-# | period | reseller type | reseller quota | server plan | server add-on | coupon | country | vat number | net terms |
+# Reseller available columns:
+#   Required: period
+#   Optional: reseller type, reseller quota, server plan, server add-on, coupon,  country,  vat number, net terms
 #
 When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partner_table|
   step "I navigate to Add New Partner section from bus admin console page"

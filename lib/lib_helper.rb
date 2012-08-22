@@ -75,7 +75,7 @@ require "sections/bus/report_builder_section"
 require "sections/bus/scheduled_reports_section"
 require "sections/bus/quick_reports_section"
 
-# Aria sections
+# Aria section
 require "sections/aria/search_account_section"
 require "sections/aria/account_status_section"
 require "sections/aria/taxpayer_section"
@@ -83,6 +83,7 @@ require "sections/aria/account_groups_section"
 require "sections/aria/account_overview_section"
 require "sections/aria/notification_method_section"
 
+# Page section
 require "pages/bus/login_page"
 require "pages/bus/admin_console_page"
 require "pages/aria/login_page"

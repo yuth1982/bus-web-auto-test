@@ -13,8 +13,11 @@ module Bus
 
     # Public: Search partner
     #
-    # Examples
+    # search_key - keywords to be searched
+    # filter - select filter from drop down list
+    # include_sub_partner - search results including sub partner or not
     #
+    # Examples
     #  @bus_admin_console_page.search_list_partner_section.search_partner("qa1+test@mozy.com")
     #
     # Returns nothing

@@ -7,7 +7,7 @@ Feature: Add a new partner
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.17955 @smoke
+  @TC.17955 @smoke @create_partner_sample
   Scenario: 17955 Add a new monthly basic MozyPro partner
     When I add a new MozyPro partner:
       | period | base plan |
