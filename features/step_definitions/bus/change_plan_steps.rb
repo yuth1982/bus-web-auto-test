@@ -1,11 +1,11 @@
-# MozyPro available column names:
-# | base plan | server plan | coupon |
+# MozyPro available columns:
+# Optional: base plan, server plan, coupon
 #
-# MozyEnterprise available column names:
-# | users | server plan | server add-on | coupon |
+# MozyEnterprise available columns:
+# Optional: users, server plan, server add-on, coupon
 #
-# Reseller available column names:
-# | reseller quota | server plan | server add-on | coupon |
+# Reseller available columns:
+# Optional: reseller quota, server plan, server add-on, coupon
 
 When /^I change (MozyPro|MozyEnterprise|Reseller) account plan to:$/ do |type, plan_table|
   step "I navigate to Change Plan section from bus admin console page"
@@ -15,7 +15,7 @@ When /^I change (MozyPro|MozyEnterprise|Reseller) account plan to:$/ do |type, p
     when "MozyPro"
       base_plan = attributes["base plan"] || ""
       server_plan = attributes["server plan"] || ""
-      storage_add_on = attributes["storage add on"] || 0
+      storage_add_on = attributes["storage add-on"] || 0
       @bus_admin_console_page.change_plan_section.change_mozypro_plan(base_plan, server_plan, coupon, storage_add_on)
     when "MozyEnterprise"
       users = attributes["users"] || 0
@@ -51,7 +51,7 @@ Then /^MozyPro new plan should be:$/ do |new_plan_table|
   attributes = new_plan_table.hashes.first
   base_plan = attributes["base plan"] || ""
   server_plan = (attributes["server plan"] || "no").eql?("yes")
-  add_on = attributes["storage add on"] || ""
+  add_on = attributes["storage add-on"] || ""
 
   @bus_admin_console_page.change_plan_section.mozypro_base_plan.should include base_plan unless base_plan.empty?
   @bus_admin_console_page.change_plan_section.mozypro_server_plan?.should == server_plan unless server_plan
@@ -63,7 +63,7 @@ Then /^MozyEnterprise new plan should be:$/ do |new_plan_table|
   attributes = new_plan_table.hashes.first
   users = attributes["users"] || ""
   server_plan = attributes["server plan"] || ""
-  add_on = attributes["server add on"] || ""
+  add_on = attributes["server add-on"] || ""
 
   @bus_admin_console_page.change_plan_section.mozyenterprise_users.should == users unless users.empty?
   @bus_admin_console_page.change_plan_section.mozyenterprise_server_plan.should include server_plan unless server_plan
