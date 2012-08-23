@@ -20,7 +20,7 @@ module Bus
     #
     # Returns nothing
     def change_subscription_up(link_text)
-      driver.find_element(:link, link_text).click
+      driver.find_element(:partial_link_text, link_text).click
       continue_btn.click
       sleep 10 # wait for change subscription period
     end
@@ -32,7 +32,7 @@ module Bus
     #
     # Returns nothing
     def change_subscription_down(link_text)
-      driver.find_element(:link, link_text).click
+      driver.find_element(:partial_link_text, link_text).click
       sleep 10 #wait for change subscription period
     end
 

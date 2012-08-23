@@ -31,38 +31,6 @@ Transform /^the new partner account$/ do |step_arg|
   Hash[:user_name => @partner.admin_info.email, :password => Bus::DEFAULT_PWD, :company_name => @partner.company_info.name]
 end
 
-Transform /^MozyPro monthly billing period$/ do |step_arg|
-  "Switch to monthly billing"
-end
-
-Transform /^MozyPro annual billing period$/ do |step_arg|
-  "Switch to annual billing (includes 1 free month!)"
-end
-
-Transform /^MozyPro biennial billing period$/ do |step_arg|
-  "Switch to biennial billing (includes 3 free months!)"
-end
-
-Transform /^MozyEnterprise annual billing period$/ do |step_arg|
-  "Switch to annual billing"
-end
-
-Transform /^MozyEnterprise biennial billing period$/ do |step_arg|
-  "Switch to biennial billing"
-end
-
-Transform /^MozyEnterprise 3-year billing period/ do |step_arg|
-  "Switch to 3-year billing"
-end
-
-Transform /^Reseller monthly billing period$/ do |step_arg|
-  "Switch to monthly billing"
-end
-
-Transform /^Reseller annual billing period$/ do |step_arg|
-  "Switch to annual billing (includes 1 free month!)"
-end
-
 When /^I wait for (\d+) seconds$/ do |seconds|
   sleep seconds.to_i
 end
