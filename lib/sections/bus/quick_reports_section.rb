@@ -36,7 +36,7 @@ module Bus
     # Returns reports csv file rows
     def read_quick_report(report_type)
       partial_file_name = report_type.gsub(" ","_").downcase
-      FileHelper.instance.read_csv_file(partial_file_name)
+      FileHelper.read_csv_file(partial_file_name)
     end
   end
 end

@@ -79,7 +79,7 @@ Feature: Add a new partner
       | 24     |
     Then New partner should be created
 
-  @TC.17961
+  @TC.17961 @pro_net_terms
   Scenario: 17961 Add a new yearly MozyPro partner with net terms payment
     When I add a new MozyPro partner:
       | period | base plan | server plan | net terms |
@@ -162,7 +162,7 @@ Feature: Add a new partner
       | 36     |
     Then New partner should be created
 
-  @TC.17968
+  @TC.17968 @enterprise_net_terms
   Scenario: 17968 Add a new MozyEnterprise partner with net terms payment
     When I add a new MozyEnterprise partner:
       | period | users | server plan        | server add-on | net terms |
@@ -245,7 +245,7 @@ Feature: Add a new partner
       | 1      |
     Then New partner should be created
 
-  @TC.17975
+  @TC.17975 @reseller_net_terms
   Scenario: 17975 Add a new Reseller partner with net terms payment
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | server add-on | net terms |

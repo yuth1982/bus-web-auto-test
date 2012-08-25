@@ -56,8 +56,6 @@ Feature: Notify about and collect past-due balances
     When I log in aria admin console as aria admin
     And I change the new partner account status to Active Dunning 1
     Then Account status should be changed
-    When I wait for 30 seconds
-    And I log in zimbra as default zimbra account
     And I search email to match all keywords:
       | from                    | date    | subject                                          | content                  |
       | AccountManager@mozy.com | @today  | [Mozy] Your credit card payment was unsuccessful | (Visa) ************@XXXX |
@@ -72,8 +70,6 @@ Feature: Notify about and collect past-due balances
     When I log in aria admin console as aria admin
     And I change the new partner account status to Active Dunning 2
     Then Account status should be changed
-    When I wait for 30 seconds
-    And I log in zimbra as default zimbra account
     And I search email to match all keywords:
       | from                    | date    | subject               | content                  |
       | AccountManager@mozy.com | @today  | [Mozy] SECOND NOTICE  | (Visa) ************@XXXX |
@@ -82,14 +78,12 @@ Feature: Notify about and collect past-due balances
   @TC.16149 @slow
   Scenario: 16149 Verify aria sends email when change MozyPro account status to Active Dunning 3
     When I add a new MozyPro partner:
-      | period | base plan     |
-      | 1      | 50 GB, $19.99 |
+      | period | base plan |
+      | 1      | 50 GB     |
     Then New partner should be created
     When I log in aria admin console as aria admin
     And I change the new partner account status to Active Dunning 3
     Then Account status should be changed
-    When I wait for 30 seconds
-    When I log in zimbra as default zimbra account
     And I search email to match all keywords:
       | from                    | date    | subject                                          | content         |
       | AccountManager@mozy.com | @today  | [Mozy] Your account will be suspended in 7 days  | Hi, @first_name |
@@ -104,8 +98,6 @@ Feature: Notify about and collect past-due balances
     When I log in aria admin console as aria admin
     And I change the new partner account status to Suspended
     Then Account status should be changed
-    When I wait for 60 seconds
-    And I log in zimbra as default zimbra account
     And I search email to match all keywords:
       | from        | date    | subject                                    | content           |
       | ar@mozy.com | @today  | There was a problem with your Mozy payment | Dear @first_name, |
@@ -121,8 +113,6 @@ Feature: Notify about and collect past-due balances
     When I log in aria admin console as aria admin
     And I change the new partner account status to Active Dunning 1
     Then Account status should be changed
-    When I wait for 30 seconds
-    When I log in zimbra as default zimbra account
     And I search email to match all keywords:
       | from                    | date    | subject                                | content               |
       | AccountManager@mozy.com | @today  | [Mozy] Mozy invoice, due upon receipt  | Hi, @admin_first_name |
@@ -137,8 +127,6 @@ Feature: Notify about and collect past-due balances
     When I log in aria admin console as aria admin
     And I change the new partner account status to Active Dunning 2
     Then Account status should be changed
-    When I wait for 30 seconds
-    When I log in zimbra as default zimbra account
     And I search email to match all keywords:
       | from                    | date    | subject                                  | content               |
       | AccountManager@mozy.com | @today  | [Mozy] Mozy subscription invoice overdue | Hi, @admin_first_name |
@@ -154,8 +142,6 @@ Feature: Notify about and collect past-due balances
     When I log in aria admin console as aria admin
     And I change the new partner account status to Active Dunning 3
     Then Account status should be changed
-    When I wait for 30 seconds
-    When I log in zimbra as default zimbra account
     And I search email to match all keywords:
       | from                    | date    | subject                                                       | content               |
       | AccountManager@mozy.com | @today  | [Mozy] Your account is suspended all users unable to back up  | Hi, @admin_first_name |
@@ -170,8 +156,6 @@ Feature: Notify about and collect past-due balances
     When I log in aria admin console as aria admin
     And I change the new partner account status to Suspended
     Then Account status should be changed
-    When I wait for 60 seconds
-    And I log in zimbra as default zimbra account
     And I search email to match all keywords:
       | from        | date    | subject                    | content                |
       | ar@mozy.com | @today  | Account Suspension Notice  | Dear @admin_first_name |
@@ -210,8 +194,8 @@ Feature: Notify about and collect past-due balances
     When I log in bus admin console as administrator
     And I act as the partner by the new partner email on admin details panel
     And I change MozyPro account plan to:
-      | base plan       |
-      | 100 GB, $39.99  |
+      | base plan |
+      | 100 GB    |
     Then Account plan should be changed
     When I navigate aria admin console page
     And I change the new partner account status to Active Dunning 1
@@ -237,8 +221,8 @@ Feature: Notify about and collect past-due balances
     When I log in bus admin console as administrator
     And I act as the partner by the new partner email on admin details panel
     And I change MozyPro account plan to:
-      | base plan       |
-      | 100 GB, $39.99  |
+      | base plan |
+      | 100 GB    |
     Then Account plan should be changed
     When I navigate aria admin console page
     And I change the new partner account status to Active Dunning 2
@@ -264,8 +248,8 @@ Feature: Notify about and collect past-due balances
     When I log in bus admin console as administrator
     And I act as the partner by the new partner email on admin details panel
     And I change MozyPro account plan to:
-      | base plan       |
-      | 100 GB, $39.99  |
+      | base plan |
+      | 100 GB    |
     Then Account plan should be changed
     When I navigate aria admin console page
     And I change the new partner account status to Active Dunning 3

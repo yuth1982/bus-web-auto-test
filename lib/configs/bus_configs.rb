@@ -4,25 +4,25 @@ module Bus
 
   COMPANY_TYPE =
   {
-      :mozypro => "MozyPro",
-      :mozyenterprise => "MozyEnterprise",
-      :reseller => "Reseller"
+    mozypro: "MozyPro",
+    mozyenterprise: "MozyEnterprise",
+    reseller: "Reseller"
   }
 
   RESELLER_TYPE =
   {
-      :silver => "Silver",
-      :gold => "Gold",
-      :platinum => "Platinum"
+    silver: "Silver",
+    gold: "Gold",
+    platinum: "Platinum"
   }
 
   MOZY_ROOT_PARTNER =
   {
-      :mozypro => "MozyPro",
-      :mozypro_france => "MozyPro France",
-      :mozypro_germany => "MozyPro Germany",
-      :mozypro_ireland => "MozyPro Ireland",
-      :mozypro_uk => "MozyPro UK"
+    mozypro: "MozyPro",
+    mozypro_france: "MozyPro France",
+    mozypro_germany: "MozyPro Germany",
+    mozypro_ireland: "MozyPro Ireland",
+    mozypro_uk: "MozyPro UK"
   }
 
   # Default password for all password field

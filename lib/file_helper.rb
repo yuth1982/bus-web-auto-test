@@ -1,7 +1,5 @@
-require 'singleton'
 
-class FileHelper
-  include Singleton
+module FileHelper
 
   # Public: Default download folder for files
   #

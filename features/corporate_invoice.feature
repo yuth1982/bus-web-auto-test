@@ -13,8 +13,6 @@ Feature: Corporate Invoices
       | period | base plan |
       | 1      | 50 GB     |
     Then New partner should be created
-    When I wait for 30 seconds
-    And I log in zimbra as default zimbra account
     And I search email to match all keywords:
     | to     | date    | subject                  |
     | @email | @today  | MozyPro Account Created! |
@@ -32,10 +30,8 @@ Feature: Corporate Invoices
       | 1      | 50 GB     |
     Then New partner should be created
     When I act as newly created partner account
-    And I change account subscription up to MozyPro annual billing period
+    And I change account subscription up to annual billing period
     Then Subscription changed message should be Your account has been changed to yearly billing.
-    When I wait for 30 seconds
-    And I log in zimbra as default zimbra account
     And I search email to match all keywords:
     | to            | date    | subject                  | content  |
     | qa1@mozy.com  | @today  | MozyQA Account Statement | @address |
@@ -47,8 +43,6 @@ Feature: Corporate Invoices
       | period | users |
       | 12     | 1     |
     Then New partner should be created
-    When I wait for 30 seconds
-    And I log in zimbra as default zimbra account
     And I search email to match all keywords:
       | to     | date    | subject                         |
       | @email | @today  | MozyEnterprise Account Created! |
@@ -65,10 +59,8 @@ Feature: Corporate Invoices
       | 12     | 1     |
     Then New partner should be created
     When I act as newly created partner account
-    And I change account subscription up to MozyEnterprise biennial billing period
+    And I change account subscription up to biennial billing period
     Then Subscription changed message should be Your account has been changed to biennial billing.
-    When I wait for 30 seconds
-    And I log in zimbra as default zimbra account
     And I search email to match all keywords:
       | to            | date    | subject                  | content  |
       | qa1@mozy.com  | @today  | MozyQA Account Statement | @address |

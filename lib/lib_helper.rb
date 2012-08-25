@@ -8,12 +8,14 @@ require 'rspec'
 require 'nokogiri'
 require 'forgery'
 require 'csv'
+require 'rest_client'
 
 require 'configs/global_configs'
 require 'configs/bus_configs'
 require 'configs/aria_configs'
 require 'configs/zimbra_configs'
 require 'file_helper'
+require 'zimbra_helper'
 
 require "selenium_helper/create_selenium_web_driver"
 require "selenium_helper/page_object_components"
@@ -89,8 +91,8 @@ require "pages/bus/admin_console_page"
 require "pages/aria/login_page"
 require "pages/aria/accounts_page"
 require "pages/aria/admin_console_page"
-require "pages/zimbra/login_page"
-require "pages/zimbra/mail_main_page"
 
 include AutomationWebDriver::CreateSeleniumWebDriver
 include AutomationWebDriver::Elements
+include Zimbra::Inbox
+include FileHelper

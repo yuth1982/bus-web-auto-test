@@ -1,6 +1,6 @@
 Before do
   # Do things before each scenario.
-  FileHelper.instance.clean_up_csv
+  FileHelper.clean_up_csv
 end
 
 After do |scenario|

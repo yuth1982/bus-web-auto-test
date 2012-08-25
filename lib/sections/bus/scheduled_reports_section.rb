@@ -75,7 +75,7 @@ module Bus
     # Returns reports csv file rows
     def read_scheduled_report(report_type)
       partial_file_name = "#{report_type.gsub(" ","-").downcase}.*"
-      FileHelper.instance.read_csv_file(partial_file_name)
+      FileHelper.read_csv_file(partial_file_name)
     end
   end
 end
