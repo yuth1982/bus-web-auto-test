@@ -48,7 +48,7 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partne
   @bus_site.admin_console_page.add_new_partner_section.add_new_account(@partner)
 end
 
-Then /^New partner should be created/ do
+Then /^New partner should be created$/ do
   @bus_site.admin_console_page.add_new_partner_section.messages.should == "New partner created."
 end
 

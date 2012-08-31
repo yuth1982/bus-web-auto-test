@@ -25,6 +25,7 @@ module Bus
     # Partner Info
     element(:parent_partner_select, id: "parent_partner_id")
     element(:company_type_select, id: "extended_company_type")
+    element(:create_under_txt, id: "parent_partner_options")
     element(:coupon_code_tb, id: "coupon_code")
 
     # Billing Info
@@ -165,7 +166,7 @@ module Bus
       company_type_select.select(partner_info.type)
       parent_partner_select.select(partner_info.parent)
       coupon_code_tb.type_text(partner_info.coupon_code) unless partner_info.coupon_code.nil?
-      #sleep 10 unless partner_info.type.eql?(COMPANY_TYPE[:mozypro]) # wait for load all supp plans
+      sleep 10 unless partner_info.type.eql?(COMPANY_TYPE[:mozypro]) # wait for load all supp plans
     end
 
     def fill_admin_info(admin_info)
@@ -188,6 +189,7 @@ module Bus
         when Bus::COMPANY_TYPE[:mozypro]
           fill_mozypro_purchase(partner)
         when Bus::COMPANY_TYPE[:mozyenterprise]
+          raise("MozyEnterprise parent partner error") unless create_under_txt.text.eql?("(Creating under MozyEnterprise)")
           fill_mozyenterprise_purchase(partner)
         when Bus::COMPANY_TYPE[:reseller]
           fill_reseller_purchase(partner)

@@ -1,6 +1,6 @@
 module Aria
   # Aria enter page
-  ARIA_HOST = ENV["aria_host"] || "https://admintools.future.stage.ariasystems.net"
+  ARIA_HOST = ENV["ARIA_HOST"] || "https://admintools.future.stage.ariasystems.net"
   # Default password for all password field
   DEFAULT_PWD = "test1234"
 

@@ -1,5 +1,5 @@
 
-When /^I act as newly created partner/ do
+When /^I act as newly created partner account$/ do
   @bus_site.admin_console_page.partner_details_section.act_as_partner
 end
 

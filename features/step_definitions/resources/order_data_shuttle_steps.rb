@@ -54,7 +54,6 @@ end
 
 
 When /^I cancel the latest data shuttle order for (.+)$/ do |account|
-  @bus_site.admin_console_page.refresh_page
   step "I navigate to View Data Shuttle Orders section from bus admin console page"
   @bus_site.admin_console_page.view_data_shuttle_orders_section.search_order(account[:company_name])
   @bus_site.admin_console_page.view_data_shuttle_orders_section.view_latest_order

@@ -1,6 +1,6 @@
 module Bus
   # Bus login page
-  BUS_HOST = ENV["bus_host"] || "https://www.mozypro.com"
+  BUS_HOST = ENV["BUS_HOST"] || "https://www.mozypro.com"
 
   COMPANY_TYPE =
   {
@@ -28,6 +28,6 @@ module Bus
   # Default password for all password field
   DEFAULT_PWD = "test1234"
   # partner user email prefix, e.g qa1+reg+test@mozy.com, suffix is fixed
-  EMAIL_PREFIX = ENV["email_prefix"] || "qa1"
+  EMAIL_PREFIX = ENV["EMAIL_PREFIX"] || "qa1"
 end
 

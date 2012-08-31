@@ -1,10 +1,10 @@
 
 Transform /^administrator$/ do |step_arg|
-  Hash[:user_name => ENV["bus_user"] || "shipuy@mozy.com", :password => ENV["bus_pwd"] || "test1234" ]
+  Hash[:user_name => ENV["BUS_USER"] || "shipuy@mozy.com", :password => ENV["BUS_PWD"] || "test1234" ]
 end
 
 Transform /^aria admin$/ do |step_arg|
-  Hash[:user_name => ENV["aria_user"] || "shipu", :password => ENV["aria_pwd"] || "shipu1234"]
+  Hash[:user_name => ENV["ARIA_USER"] || "shipu", :password => ENV["ARIA_PWD"] || "shipu1234"]
 end
 
 Transform /^mozypro test account$/ do |step_arg|
