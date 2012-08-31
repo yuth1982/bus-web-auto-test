@@ -5,7 +5,9 @@ module FileHelper
   #
   # Returns default download path
   def default_download_path
-    File.expand_path("../downloads", File.dirname(__FILE__))
+    path = File.expand_path("../#{DOWNLOAD_FOLDER}", File.dirname(__FILE__))
+    Dir.mkdir(path) unless File.exists?(path)
+    path
   end
 
   # Public: Download folder for Firefox
@@ -38,4 +40,5 @@ module FileHelper
   def clean_up_csv
     Dir.glob("#{default_download_path}/*.csv").each{ |path| File.delete(path) }
   end
+
 end

@@ -1,9 +1,8 @@
 .DS_Store
 Gemfile.lock
-logs/*.png
-logs/*.html
 download/*.csv
 .idea/
 .yardoc/
 rerun.txt
 lor
+.rvmrc

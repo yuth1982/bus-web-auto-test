@@ -1,6 +1,6 @@
 module Bus
   # Bus login page
-  BUS_LOGIN_URL = ENV["bus_url"] || "https://www.mozypro.com/login/admin?old_school=1"
+  BUS_HOST = ENV["bus_host"] || "https://www.mozypro.com"
 
   COMPANY_TYPE =
   {
