@@ -3,7 +3,7 @@ Then /^Change payment information message should be (.+)$/ do |message|
 end
 
 When /^I update (.+) credit card information$/ do |account|
-  step "I navigate to Change Payment Information section from bus admin console page"
+  @bus_site.admin_console_page.click_link(Bus::MENU[:change_payment_information])
   @new_cc_info = Bus::DataObj::CreditCard.new
   @bus_site.admin_console_page.change_payment_info_section.update_credit_card_info(@new_cc_info)
 end

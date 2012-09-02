@@ -4,7 +4,7 @@
 # | # licenses | quota | # server licenses | server quota | # desktop licenses | desktop quota |
 #
 When /^I add a new user:$/ do |user_table|
-  step "I navigate to Add New User section from bus admin console page"
+  @bus_site.admin_console_page.click_link(Bus::MENU[:add_new_user])
   @user = Bus::DataObj::User.new
   attributes = user_table.hashes.first
   @user.num_server_licenses = attributes["# server licenses"] || 0

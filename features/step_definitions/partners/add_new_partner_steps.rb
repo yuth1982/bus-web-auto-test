@@ -12,8 +12,15 @@
 #   Required: period
 #   Optional: reseller type, reseller quota, server plan, server add-on, coupon,  country,  vat number, net terms
 #
+# Steps included:
+#   click 'Add New Partner' link
+#   fill in all fields
+#   click next
+#   fill in credit card information
+#   click create
+
 When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partner_table|
-  @bus_site.admin_console_page.navigate_to_link("Add New Partner")
+  @bus_site.admin_console_page.click_link(Bus::MENU[:add_new_partner])
   attributes = partner_table.hashes.first
   case type
     when "MozyPro"

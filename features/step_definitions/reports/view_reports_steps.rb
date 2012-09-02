@@ -7,7 +7,7 @@ end
 # Available columns: type, name, frequency, start date, is active, recipients, subject, email message
 #
 When /^I build a new report:$/ do |report_table|
-  step "I navigate to Report Builder section from bus admin console page"
+  @bus_site.admin_console_page.click_link(Bus::MENU[:report_builder])
   attributes = report_table.hashes.first
   @bus_site.admin_console_page.report_builder_section.navigate_to_add_report_section(attributes["type"])
   case attributes["type"]
@@ -68,12 +68,11 @@ Then /^I should see (.+) in scheduled reports list$/ do |message|
 end
 
 When /^I download (.+) scheduled report$/ do |report_name|
-  #step "I navigate to Scheduled reports section from bus admin console page"
   @bus_site.admin_console_page.scheduled_reports_section.download_report(report_name)
 end
 
 When /^I download (.+) quick report$/ do |report_name|
-  step "I navigate to Quick Reports section from bus admin console page"
+  @bus_site.admin_console_page.click_link(Bus::MENU[:quick_reports])
   @bus_site.admin_console_page.quick_reports_section.download_report(report_name)
 end
 

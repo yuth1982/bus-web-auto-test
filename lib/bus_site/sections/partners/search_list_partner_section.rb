@@ -23,7 +23,7 @@ module Bus
     # Returns nothing
     def search_partner(search_key, filter = "None", include_sub_partners = true)
       search_partner_tb.type_text(search_key)
-      partner_filter_select.select_by(:text, filter)
+      partner_filter_select.select(filter)
       include_sub_partners_cb.check if include_sub_partners
       search_partner_btn.click
     end

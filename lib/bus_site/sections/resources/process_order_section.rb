@@ -93,8 +93,8 @@ module Bus
       # fill summary section
       if all_msg_div.text.empty?
         discount_tb.type_text(order.discount)
-        #discount_tb.send_keys(:tab)  # focus out of discount text box, make sure discount amount changes
-        sleep 2
+        # focus out of discount text box, make sure discount amount changes
+        page.trigger_html_event(discount_tb.id, "change")
         num_win_drivers_tb.type_text(order.num_win_drivers) if order.num_win_drivers > 0
         num_mac_drivers_tb.type_text(order.num_mac_drivers) if order.num_mac_drivers > 0
         is_ship_driver_cb.check unless order.ship_driver

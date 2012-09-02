@@ -1,7 +1,7 @@
 $:.unshift(File.dirname(__FILE__) + '/../../lib')
 require 'lib_helper'
 
-Capybara.register_driver :selenium do |app|
+Capybara.register_driver :firefox do |app|
   profile = Selenium::WebDriver::Firefox::Profile.new
   profile['browser.download.folderList'] = 2
   profile['browser.download.dir'] = FileHelper.ff_download_path
@@ -14,8 +14,12 @@ Capybara.register_driver :selenium do |app|
   Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => profile)
 end
 
-Capybara.register_driver :selenium_chrome do |app|
+Capybara.register_driver :chrome do |app|
   Capybara::Selenium::Driver.new(app, :browser => :chrome)
+end
+
+Capybara.register_driver :ie do |app|
+  Capybara::Selenium::Driver.new(app, :browser => :internet_explorer)
 end
 
 Capybara.register_driver :webkit do |app|
@@ -26,8 +30,17 @@ Capybara.register_driver :webkit do |app|
   Capybara::Driver::Webkit.new(app, options)
 end
 
-Capybara.javascript_driver = :webkit
-
-Capybara.default_driver = :selenium
+case BROWSER
+  when "firefox"
+    Capybara.default_driver = :firefox
+  when "chrome"
+    Capybara.default_driver = :chrome
+  when "ie"
+    Capybara.default_driver = :ie
+  when "webkit"
+    Capybara.default_driver = :webkit
+  else
+    raise "Unknown browser, please check env variable br"
+end
 
 Capybara.default_wait_time = DEFAULT_WAIT_TIME

@@ -11,3 +11,7 @@ SCREEN_SHOT = (ENV["SCREEN_SHOT"] || "no").eql?("yes")
 TIMESTAMP = (ENV["TIMESTAMP"] || "no").eql?("yes")
 
 DELETE_TEST_PARTNER = (ENV["DELETE_TEST_PARTNER"] || "no").eql?("yes")
+
+# ATF uses br env variable to decide which browser will launch
+# available browser: firefox, chrome, ie, webkit
+BROWSER = ENV["br"] || "firefox"

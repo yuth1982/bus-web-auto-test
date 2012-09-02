@@ -4,7 +4,7 @@
 # Optional column: filter
 #
 When /^I search user by:$/ do |search_key_table|
-  step "I navigate to Search / List Users section from bus admin console page"
+  @bus_site.admin_console_page.click_link(Bus::MENU[:search_list_users])
   attributes = search_key_table.hashes.first
   keywords = attributes["keywords"] || ""
   filter = attributes["filter"] || "None"

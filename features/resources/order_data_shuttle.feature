@@ -118,7 +118,7 @@ Feature:
       | new      | 20    | @email    |
     Then Data shuttle order should be created
 
-  @TC.16324 @slow @browser_on_top
+  @TC.16324 @slow
   Scenario: 16324 Ordering data shuttle with 50% discount
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -133,7 +133,7 @@ Feature:
       | Total Price         |          | $137.50  |
     Then Data shuttle order should be created
 
-  @TC.16323 @slow @browser_on_top
+  @TC.16323 @slow
   Scenario: 16323 Ordering data shuttle with 100% discount
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -240,7 +240,6 @@ Feature:
       | key from  | quota |
       | available | 20    |
     Then Data shuttle order should be created
-    When I log in bus admin console as administrator
     And I act as the partner by the new partner email on admin details panel
     And I navigate to Billing History section from bus admin console page
     Then Billing history table should be:

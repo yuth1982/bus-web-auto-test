@@ -26,7 +26,7 @@ class Capybara::Node::Element
   # This might not work with webkit
   #
   def clear_value
-    driver.evaluate_script("document.getElementById('#{self[:id]}').value=''")
+    driver.execute_script("document.getElementById('#{self[:id]}').value=''")
   end
 
   # Public: Get parent element of current element

@@ -43,7 +43,7 @@ module Bus
     # Returns nothing
     def set_receive_statement_status(status)
       change_receive_statement_link.click
-      receives_statement_input.select_by(:text,status)
+      receives_statement_input.select(status)
       submit_receives_statement_btn.click
     end
 

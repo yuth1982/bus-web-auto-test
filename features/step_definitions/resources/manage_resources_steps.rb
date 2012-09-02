@@ -1,12 +1,11 @@
 When /^I assign MozyPro allocated quota to (\d+) GB$/ do |new_quota|
-  step "I navigate to Manage Resources section from bus admin console page"
+  @bus_site.admin_console_page.click_link(Bus::MENU[:manage_resources])
   @bus_site.admin_console_page.manage_resources_section.assign_mozypro_storage(new_quota)
 end
 
 Then /^MozyPro resource quota should be changed$/ do
   @bus_site.admin_console_page.manage_resources_section.messages.should == "Quota changed."
 end
-
 
 # total storage, unallocated storage, enable server
 #

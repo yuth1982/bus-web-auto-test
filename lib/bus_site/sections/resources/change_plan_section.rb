@@ -41,20 +41,18 @@ module Bus
     # Returns nothing
     def change_mozypro_plan(base_plan, server_plan, coupon, storage_add_on=0)
       unless base_plan.empty?
-        pro_base_plan_select.select_by(:text, base_plan)
+        pro_base_plan_select.select(base_plan)
+        page.trigger_html_event(pro_base_plan_select.id, 'change')
       end
-      pro_storage_add_on_tb.type_text(storage_add_on) unless storage_add_on == 0
+      unless storage_add_on == 0
+        pro_storage_add_on_tb.type_text(storage_add_on)
+        page.trigger_html_event(pro_storage_add_on_tb.id, 'change')
+      end
       unless server_plan.empty?
         pro_server_plan_cb.check if server_plan.eql?("yes")
+        page.trigger_html_event(pro_server_plan_cb.id, 'change')
       end
-
-      coupon_code_tb.type_text(coupon) unless coupon.empty?
-
-      sleep 5
-      # work around for trigger onchange event to enable submit button
-      #execute_script("changePlanForm.fireChangeEvent(document.getElementById('products_base_exclusive'))")
-      evaluate_script("document.getElementById('submit_new_resources_btn').disabled=false")
-
+      fill_in_coupon(coupon)
       confirm_change
     end
 
@@ -65,10 +63,19 @@ module Bus
     #
     # Returns nothing
     def change_mozyenterprise_plan(users, server_plan, server_add_on, coupon)
-      enterprise_users_tb.type_text(users) unless users == 0
-      enterprise_server_plan_select.select_by(:text, server_plan) unless server_plan.empty?
-      enterprise_server_add_on_tb.type_text(server_add_on) unless server_add_on == 0
-      coupon_code_tb.type_text(coupon)
+      unless users == 0
+        enterprise_users_tb.type_text(users)
+        page.trigger_html_event(enterprise_users_tb.id, 'change')
+      end
+      unless server_plan.empty?
+        enterprise_server_plan_select.select(server_plan)
+        page.trigger_html_event(enterprise_server_plan_select.id, 'change')
+      end
+      unless server_add_on == 0
+        enterprise_server_add_on_tb.type_text(server_add_on)
+        page.trigger_html_event(enterprise_server_add_on_tb.id, 'change')
+      end
+      fill_in_coupon(coupon)
       confirm_change
     end
 
@@ -79,12 +86,19 @@ module Bus
     #
     # Returns nothing
     def change_reseller_plan(quota, server_plan, server_add_on, coupon)
-      reseller_quota.set(quota) unless quota == 0
-      reseller_server_add_on_tb.type_text(server_add_on)
+      unless quota == 0
+        reseller_quota.set(quota)
+        page.trigger_html_event(reseller_quota.id, 'change')
+      end
+      unless server_add_on == 0
+        reseller_server_add_on_tb.type_text(server_add_on)
+        page.trigger_html_event(reseller_server_add_on_tb.id, 'change')
+      end
       unless server_plan.empty
         reseller_server_plan_cb.check if server_plan.eql?("yes")
+        page.trigger_html_event(reseller_server_plan_cb.id, 'change')
       end
-      coupon_code_tb.type_text(coupon)
+      fill_in_coupon(coupon)
       confirm_change
     end
 
@@ -161,7 +175,18 @@ module Bus
     end
 
     private
+
+    def fill_in_coupon(coupon)
+      unless coupon.empty?
+        coupon_code_tb.type_text(coupon)
+        page.trigger_html_event(coupon_code_tb.id, 'change')
+      end
+    end
+
     def confirm_change
+      sleep 5
+      page.execute_script("document.getElementById('submit_new_resources_btn').disabled=false")
+      sleep 2
       submit_btn.click
       continue_btn.click
       sleep 20 # force wait for change plan

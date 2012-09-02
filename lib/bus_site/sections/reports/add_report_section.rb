@@ -46,7 +46,7 @@ module Bus
     # Returns nothing
     def delete_report(report_name)
       find_element(:link, report_name).click
-      suppress_alert
+      page.suppress_alert
       delete_btn.click
       sleep 10
     end
@@ -60,12 +60,12 @@ module Bus
       case report
         when Bus::DataObj::BillingSummaryReport
           report_name_tb.type_text(report.name)
-          frequency_select.select_by(:text, report.frequency)
+          frequency_select.select(report.frequency)
           set_report_start_date(report.start_date)
           is_active_cb.uncheck unless report.is_active
         when Bus::DataObj::BillingDetailReport
           report_name_tb.type_text(report.name)
-          frequency_select.select_by(:text, report.frequency)
+          frequency_select.select(report.frequency)
           set_report_start_date(report.start_date)
           is_active_cb.uncheck unless report.is_active
         else
@@ -77,9 +77,9 @@ module Bus
     private
     def set_report_start_date(date)
       yyyy_mm_dd = date.split
-      year_select.select_by(:text, yyyy_mm_dd[0])
-      month_select.select_by(:text, yyyy_mm_dd[1])
-      day_select.select_by(:text, yyyy_mm_dd[2])
+      year_select.select(yyyy_mm_dd[0])
+      month_select.select(yyyy_mm_dd[1])
+      day_select.select(yyyy_mm_dd[2])
     end
   end
 

@@ -3,7 +3,7 @@ Feature:
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.16865 @javascript
+  @TC.16865
   Scenario: 16865 MozyEnterprise 250 GB server add-on yearly to 500 GB add-on
     When I add a new MozyEnterprise partner:
     | period | users | server plan |
@@ -45,7 +45,7 @@ Feature:
       | users | server plan | server add-on |
       | 15    | 1 TB        | 5             |
 
-  @TC.16997 @Bug.84933 @Regression
+  @TC.16997 @Bug.84933 @regression
   Scenario: 16997 MozyEnterprise 1 TB server add-on 3 years to 2 TB add-on
     When I add a new MozyEnterprise partner:
       | period | users | server plan |

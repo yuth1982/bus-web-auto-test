@@ -17,7 +17,7 @@ module Bus
     # Returns nothing
     def search_user(keywords, filter = "None")
       search_user_tb.type_text(keywords)
-      user_filter_select.select_by(:text, filter)
+      user_filter_select.select(filter)
       search_user_btn.click
       raise "error on search / list user action" unless clear_search_link.displayed?
     end

@@ -93,7 +93,7 @@ Feature: View Report
     When I delete billing summary test scheduled report
     Then I should see No results found in scheduled reports list
 
-  @TC.16251 @slow
+  @TC.16251 @slow @firefox
   Scenario: 16251 Verify MozyEtnerprise billing summary report csv all fields
     When I add a new MozyEnterprise partner:
       | period | users | server plan                 | server add-on |
@@ -110,7 +110,7 @@ Feature: View Report
       | Partner  | User Group            | Billing Code | Total GB Purchased | Server Keys Purchased | Server GB Purchased | Desktop Keys Purchased | Desktop GB Purchased | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
       | @name    | (default user group)  |              | 625                | 200                   | 600                 | 1                      | 25                   |                                    |                                     | $0.369008              |
 
-  @TC.17847 @slow
+  @TC.17847 @slow @firefox
   Scenario: 17847 Verify Reseller billing summary report csv all fields
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | server add-on |
@@ -144,7 +144,7 @@ Feature: View Report
     When I delete billing detail test scheduled report
     Then I should see No results found in scheduled reports list
 
-  @TC.16252 @slow
+  @TC.16252 @slow @firefox
   Scenario: 16252 Verify MozyEtnerprise billing detail report csv all fields
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add-on |
@@ -161,7 +161,7 @@ Feature: View Report
       | Partner  | User Group            | Billing Code | Total GB Purchased | Server Quota Purchased (GB) | Server Quota Allocated (GB) | Server Quota Used (GB) | Server Keys Purchased | Server Keys Activated | Server Keys Assigned But Not Activated | Desktop Quota Purchased (GB) | Desktop Quota Allocated (GB) | Desktop Quota Used (GB) | Desktop Keys Purchased | Desktop Keys Activated | Desktop Keys Assigned But Not Activated | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
       | @name    | (default user group)  |              | 625                | 600                         | 0                           | 0                      | 200                   | 0                     | 0                                      | 25                           | 0                            | 0                       | 1                      | 0                      | 0                                       |                                    |                                     | $0.352210666666667     |
 
-  @TC.17848 @slow
+  @TC.17848 @slow @firefox
   Scenario: 17484 Verify Reseller billing detail report csv all fields
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | server add-on |
@@ -178,7 +178,7 @@ Feature: View Report
       | Partner  | User Group            | Billing Code | Total GB Purchased | Server Quota Purchased (GB) | Server Quota Allocated (GB) | Server Quota Used (GB) | Server Keys Purchased | Server Keys Activated | Server Keys Assigned But Not Activated | Desktop Quota Purchased (GB) | Desktop Quota Allocated (GB) | Desktop Quota Used (GB) | Desktop Keys Purchased | Desktop Keys Activated | Desktop Keys Assigned But Not Activated | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
       | @name    | (default user group)  |              | 140                |                             | 0                           | 0                      |                       | 0                     | 0                                      |                              | 0                            | 0                       |                        | 0                      | 0                                       |                                    |                                     | $0.598571428571429     |
 
-  @TC.16263 @slow
+  @TC.16263 @slow @firefox
   Scenario: 16263 Verify all credit card transactions from the creation of the partner to the current date
     When I add a new MozyEnterprise partner:
       | period | users |

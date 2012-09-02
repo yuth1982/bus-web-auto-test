@@ -11,6 +11,18 @@ AfterStep do
   puts Time.now if TIMESTAMP
 end
 
-Before('@selenium_chrome') do
-  Capybara.current_driver = :selenium_chrome
+Before('@chrome') do
+  Capybara.current_driver = :chrome
+end
+
+Before('@firefox') do
+  Capybara.current_driver = :firefox
+end
+
+Before('@ie') do
+  Capybara.current_driver = :ie
+end
+
+Before('@webkit') do
+  Capybara.current_driver = :webkit
 end

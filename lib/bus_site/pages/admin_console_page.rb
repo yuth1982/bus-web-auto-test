@@ -42,14 +42,5 @@ module Bus
     section(:scheduled_reports_section, ScheduledReportsSection, id: "jobs-index")
     section(:quick_reports_section, QuickReportsSection, id: "jobs-quick_reports")
 
-    # Public: Click link on bus admin console navigation menu
-    #
-    # Example
-    #   @bus_admin_console_page.navigate_to_link("Add New Partner")
-    #
-    # Returns nothing
-    def navigate_to_link(link_name)
-      find_element(:link, link_name).click
-    end
   end
 end

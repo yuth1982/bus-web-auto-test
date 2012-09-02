@@ -4,7 +4,7 @@ Feature: Change plan
     Given I log in bus admin console as administrator
 
   # This scenario is highly depend on our product plans, if scenario failed, please login bus and update plan table below
-  @TC.18730 @Bug.83813 @Regression @javascript
+  @TC.18730 @Bug.83813 @regression
   Scenario: 18730 Verify MozyPro monthly base plans info
     When I add a new MozyPro partner:
       | period | base plan |
@@ -31,7 +31,7 @@ Feature: Change plan
       | 32 TB  |
 
   # This scenario is highly depend on our product plans, if scenario failed, please login bus and update plan table below
-  @TC.18731 @Bug.83813 @Regression @javascript
+  @TC.18731 @Bug.83813 @regression
   Scenario: 18731 Verify MozyPro yearly base plans info
     When I add a new MozyPro partner:
       | period | base plan |
@@ -58,7 +58,7 @@ Feature: Change plan
       | 32 TB  |
 
   # This scenario is highly depend on our product plans, if scenario failed, please login bus and update plan table below
-  @TC.18732 @Regression @Bug.83813 @javascript
+  @TC.18732 @Bug.83813 @regression
   Scenario: 18732 Verify MozyPro biennially base plans info
     When I add a new MozyPro partner:
       | period | base plan |
@@ -306,7 +306,7 @@ Feature: Change plan
       | base plan | storage add on |
       | 1 TB      | 10             |
 
-  @test_coupon @Bug.85011 @Regression
+  @test_coupon @Bug.85011 @regression
   Scenario: MozyPro monthly US partner 10 GB moves to 1T GB plan with 10 percent inline coupon
     When I add a new MozyPro partner:
       | period | base plan |
@@ -319,9 +319,9 @@ Feature: Change plan
     Then Change plan charge summary should be:
       | Description                     | Amount   |
       | Credit for remainder of 10 GB   | -$9.99   |
-      | Charge for new 50 GB            | $454.47  |
+      | Charge for new 1 TB             | $341.99  |
       |                                 |          |
-      | Total amount to be charged      | $444.48  |
+      | Total amount to be charged      | $332.00  |
     And Account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan | storage add on |

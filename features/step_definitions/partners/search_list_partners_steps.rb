@@ -4,7 +4,7 @@
 # Optional column: filter, including sub-partners
 #
 When /^I search partner by:$/ do |search_key_table|
-  step "I navigate to Search / List Partners section from bus admin console page"
+  @bus_site.admin_console_page.click_link(Bus::MENU[:search_list_partner])
   attributes = search_key_table.hashes.first
   keywords = attributes["keywords"] || ""
   filter = attributes["filter"] || "None"

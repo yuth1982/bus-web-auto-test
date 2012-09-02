@@ -3,7 +3,7 @@ Feature: Manage resources
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.18735 @Bug.84691 @Regression
+  @TC.18735 @Bug.84691 @regression
   Scenario: 18735 Verify unallocated storage auto refreshed when allocated storage changed
     When I add a new MozyPro partner:
       | period | base plan |
