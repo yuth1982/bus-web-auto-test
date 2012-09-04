@@ -45,7 +45,6 @@ module Aria
     #
     # Returns success or error message text
     def messages
-      switch_to_iframe(INNER_WORK_IFRAME)
       notify_msg_div.text
     end
   end

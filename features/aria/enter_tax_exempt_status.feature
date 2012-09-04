@@ -6,7 +6,7 @@
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.17526
+  @TC.17526 @firefox
   Scenario: 17526 Verify default tax-exemtp status of a new Yearly MozyPro partner
     When I add a new MozyPro partner:
       | period | base plan | server plan | country | vat number   |
@@ -17,7 +17,7 @@
       | id           | status                                                                   |
       | BE0883236072 | Account is exempt from both federal/national and state/province taxation.|
 
-  @TC.17527
+  @TC.17527 @firefox
   Scenario: 17527 Verify default tax-exemtp status of a new Biennially MozyEnterprise partner
     When I add a new MozyEnterprise partner:
       | period | users | country | vat number   |
@@ -28,7 +28,7 @@
       | id           | status                                                                   |
       | BE0883236072 | Account is exempt from both federal/national and state/province taxation.|
 
-  @TC.17528
+  @TC.17528 @firefox
   Scenario: 17528 Verify default tax-exemtp status of a new Monthly Reseller partner
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | country | vat number    |
@@ -39,7 +39,7 @@
       | id            | status                                                                   |
       | IT03018900245 | Account is exempt from both federal/national and state/province taxation.|
 
-  @TC.17533
+  @TC.17533 @firefox
   Scenario: 17533 Set both Exempt from State and Federal taxes to false for a new Biennially Mozypro partner
     When I add a new MozyPro partner:
       | period | base plan | server plan | country | vat number   |
@@ -53,7 +53,7 @@
       | id           | status                              |
       | BE0883236072 | Account is not exempt from taxation.|
 
-  @TC.17537
+  @TC.17537 @firefox
   Scenario: 17537 Set Exempt from State taxes to false for a new 3-years MozyEnterprise partner
     When I add a new MozyEnterprise partner:
       | period | users | country | vat number   |
@@ -67,7 +67,7 @@
       | id           | status                                            |
       | BE0883236072 | Account is exempt from federal/national taxation. |
 
-  @TC.17539
+  @TC.17539 @firefox
   Scenario: 17539 Set Exempt from Federal taxes to false for a new Yearly Reseller partner
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | country | vat number    |

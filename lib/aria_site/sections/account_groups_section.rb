@@ -4,8 +4,8 @@ module Aria
 
     # Private elements
     #
-    element(:cybersource_credit_card, css: "input[value='10026095']")
-    element(:fail_test_cag, css: "input[value='10030097']")
+    element(:cybersource_credit_card, xpath: "//input[@value='10026095']")
+    element(:fail_test_cag, xpath: "//input[@value='10030097']")
 
     element(:submit_cag_btn, id: "submit-button")
     element(:message_div, css: "div.error-box")

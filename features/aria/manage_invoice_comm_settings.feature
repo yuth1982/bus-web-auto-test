@@ -23,7 +23,7 @@ Feature:
       | Receive Mozy Email Notifications? | No (change)       |
       | Receive Mozy Account Statements?  | Yes (change)      |
 
-  @TC.15230
+  @TC.15230 @firefox
   Scenario: 15230 Alter notification method between HTML email and Printable no email in Aria
     When I add a new MozyPro partner:
       | period | base plan |
@@ -35,7 +35,7 @@ Feature:
     When I set the new partner account notification method to HTML Email
     Then the new partner account current notification method is set to HTML Email
 
-  @TC.15448
+  @TC.15448 @firefox
   Scenario: 15448 Verify notification methods have HTML email and Printable no email
     When I add a new MozyPro partner:
       | period | base plan  |
@@ -47,7 +47,7 @@ Feature:
       | HTML Email           |
       | Printable (no Email) |
 
-  @TC.15495
+  @TC.15495 @firefox
   Scenario: 15495 Verify aria notification method when set Receive Mozy Account Statements to No
     When I add a new MozyPro partner:
       | period | base plan |
@@ -59,7 +59,7 @@ Feature:
     When I log in aria admin console as aria admin
     Then the new partner account current notification method is set to Printable (no Email)
 
-  @TC.15718
+  @TC.15718 @firefox
   Scenario: 15718 Verify notification method set to HTML Email for new Monthly MozyPro partner
     When I add a new MozyPro partner:
       | period | base plan |
@@ -68,7 +68,7 @@ Feature:
     When I log in aria admin console as aria admin
     Then the new partner account current notification method is set to HTML Email
 
-  @TC.17590
+  @TC.17590 @firefox
   Scenario: 17590 Verify notification method set to HTML Email for new Monthly MozyEnterprise partner
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -77,7 +77,7 @@ Feature:
     When I log in aria admin console as aria admin
     Then the new partner account current notification method is set to HTML Email
 
-  @TC.17591
+  @TC.17591 @firefox
   Scenario: 17591 Verify notification method set to HTML Email for new Monthly Reseller partner
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |

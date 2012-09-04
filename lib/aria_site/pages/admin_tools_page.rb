@@ -2,7 +2,7 @@ module Aria
   # This class provides actions for aria admin console page
   class AdminToolsPage < SiteHelper::Page
 
-    set_url("/AdminTools.php")
+    set_url("#{Aria::ARIA_HOST}/AdminTools.php")
 
     # Public: Click link on aira account page top navigation menu
     #
@@ -11,7 +11,6 @@ module Aria
     #
     # Returns nothin
     def navigate_to_link(link_name)
-      switch_to_default_frame
       find_element(:xpath, "//a[@title='#{link_name}']").click
     end
 
@@ -19,6 +18,7 @@ module Aria
     #
     # Returns nothing
     def switch_to_work_frame
+      sleep 5
       switch_to_iframe(%w( outerFrame mainFrame work_frm ))
     end
 
@@ -26,6 +26,7 @@ module Aria
     #
     # Returns nothing
     def switch_to_inner_work_frame
+      sleep 5
       switch_to_iframe(%w( outerFrame mainFrame work_frm inner_work_frm ))
     end
   end

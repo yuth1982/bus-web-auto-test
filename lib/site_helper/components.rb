@@ -3,8 +3,8 @@ module SiteHelper
     # Public: Define a new method with the name of the symbol after locator returns element
     #
     # Example
-    #   element(:username_tb, {:id => "username"})
-    #   # => <WebDriver::Element>
+    #   element(:username_tb, id: "username")
+    #   # => <Capybara::Element>
     #
     # Returns element
     def element(element_name,element_hash)
@@ -17,8 +17,8 @@ module SiteHelper
     # Public: Define a new method with the name of the symbol after locator returns elements
     #
     # Example
-    #   elements(:aria_message_div, {:xpath => "//div[@id='ariaErrors']//li"})
-    #   # => <WebDriver::Elements>
+    #   elements(:aria_message_div, xpath: "//div[@id='ariaErrors']//li")
+    #   # => <Capybara::Elements>
     #
     # Returns elements
     def elements(element_name,element_hash)

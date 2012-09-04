@@ -4,6 +4,6 @@ Given /^I log in aria admin console as (.+)$/ do |admin|
   @aria_site.login_page.login(admin)
 end
 
-When /^I navigate aria admin console page$/ do
-  #@aria_site.admin_tools_page = Aria::AdminToolsPage.new
+When /^I navigate aria admin tools page$/ do
+  @aria_site.admin_tools_page.load
 end

@@ -18,6 +18,8 @@ module Aria
       search_btn.click
     end
 
+    # Public: navigate to link by link title attribute
+    #
     def navigate_to_link(link_name)
       find_element(:xpath, "//a[@title='#{link_name}']").click
     end
