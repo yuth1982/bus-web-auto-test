@@ -188,7 +188,7 @@ Feature: Notify about and collect past-due balances
       | base plan |
       | 100 GB    |
     Then Account plan should be changed
-    When I navigate aria admin tools page
+    When I log in aria admin console as aria admin
     And I change the new partner account status to Active Dunning 1
     Then Account status should be changed
     And I change the new partner account CAG to CyberSource Credit Card
@@ -197,7 +197,7 @@ Feature: Notify about and collect past-due balances
     And I act as the partner by the new partner email on admin details panel
     And I update the new partner account credit card information
     Then Credit card information should be updated
-    When I navigate aria admin tools page
+    When I log in aria admin console as aria admin
     Then the new partner account account status should be ACTIVE
 
   @TC.16152 @firefox
@@ -215,7 +215,7 @@ Feature: Notify about and collect past-due balances
       | base plan |
       | 100 GB    |
     Then Account plan should be changed
-    When I navigate aria admin tools page
+    When I log in aria admin console as aria admin
     And I change the new partner account status to Active Dunning 2
     Then Account status should be changed
     And I change the new partner account CAG to CyberSource Credit Card
@@ -224,7 +224,7 @@ Feature: Notify about and collect past-due balances
     And I act as the partner by the new partner email on admin details panel
     And I update the new partner account credit card information
     Then Credit card information should be updated
-    When I navigate aria admin tools page
+    When I log in aria admin console as aria admin
     Then the new partner account account status should be ACTIVE
 
   @TC.16153 @firefox
@@ -242,7 +242,7 @@ Feature: Notify about and collect past-due balances
       | base plan |
       | 100 GB    |
     Then Account plan should be changed
-    When I navigate aria admin tools page
+    When I log in aria admin console as aria admin
     And I change the new partner account status to Active Dunning 3
     Then Account status should be changed
     And I change the new partner account CAG to CyberSource Credit Card
@@ -251,7 +251,7 @@ Feature: Notify about and collect past-due balances
     And I act as the partner by the new partner email on admin details panel
     And I update the new partner account credit card information
     Then Credit card information should be updated
-    When I navigate aria admin tools page
+    When I log in aria admin console as aria admin
     Then the new partner account account status should be ACTIVE
 
 

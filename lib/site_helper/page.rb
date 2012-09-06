@@ -18,6 +18,7 @@ module SiteHelper
 
     def load
       raise "NoUrlForPage" if url.nil?
+      page.reset_session!
       visit(url)
     end
 

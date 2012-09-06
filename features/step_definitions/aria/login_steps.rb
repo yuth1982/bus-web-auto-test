@@ -3,7 +3,3 @@ Given /^I log in aria admin console as (.+)$/ do |admin|
   @aria_site.login_page.load
   @aria_site.login_page.login(admin)
 end
-
-When /^I navigate aria admin tools page$/ do
-  @aria_site.admin_tools_page.load
-end

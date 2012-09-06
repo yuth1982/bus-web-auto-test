@@ -6,8 +6,8 @@ module Aria
 
     # Private elements
     #
-    element(:username_tb, id: "username")
-    element(:password_tb, id: "password")
+    element(:username_tb, id: 'username')
+    element(:password_tb, id: 'password')
     element(:login_btn, css: "input[value='Login']")
 
     # Public: login aria admin console
