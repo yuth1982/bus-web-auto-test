@@ -38,7 +38,7 @@ module Bus
 
     # reports section
     section(:report_builder_section, ReportBuilderSection, id: "jobs-report_builder")
-    section(:add_report_section, AddReportSection, id: "jobs-new")
+    section(:add_report_section, AddReportSection, xpath: "*")
     section(:scheduled_reports_section, ScheduledReportsSection, id: "jobs-index")
     section(:quick_reports_section, QuickReportsSection, id: "jobs-quick_reports")
 

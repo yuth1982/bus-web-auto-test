@@ -104,5 +104,4 @@ Then /^Scheduled report list should be:$/ do |results_table|
       value.gsub(/@email/,@partner.admin_info.email)
   end
   @bus_site.admin_console_page.scheduled_reports_section.reports_table_rows.should == results_table.rows
-     # ach{|row| row.map{ |cell| cell.gsub(/(?:[01][0-9]|2[0-4]):[0-5][0-9]/,"xx:xx")}}.should == results_table
 end
