@@ -18,6 +18,9 @@ require 'bus_site/sections/admins/list_admins_section'
 require 'bus_site/sections/admins/list_roles_section'
 require 'bus_site/sections/admins/search_admins_section'
 
+#Configuration section
+require 'bus_site/sections/configuration/authentication_policy_section'
+
 # Resources section
 require 'bus_site/sections/resources/change_plan_section'
 require 'bus_site/sections/resources/billing_info_section'

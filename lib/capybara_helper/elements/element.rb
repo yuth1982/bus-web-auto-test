@@ -1,7 +1,6 @@
 # Public: Add extension method to Element class
 #
 class Capybara::Node::Element
-  include CapybaraHelper::Elements::CheckBox
   include CapybaraHelper::Elements::Table
   include CapybaraHelper::Elements::Select
   include CapybaraHelper::Elements::TextField
@@ -70,4 +69,19 @@ class Capybara::Node::Element
   def descendant
     all(:xpath, "descendant::*")
   end
+
+  # Public: Make CheckBox/RadioButton checked
+  #
+  # Returns nothing
+  def check
+    self.click unless checked?
+  end
+
+  # Public: Make CheckBox/RadioButton unchecked
+  #
+  # Returns nothing
+  def uncheck
+    self.click if checked?
+  end
 end
+

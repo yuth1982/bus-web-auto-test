@@ -43,8 +43,9 @@ module Bus
     add_new_role: 'Add New Role',
     list_capabilities: 'List Capabilities',
     #Configurations
-    accont_details: 'Account Details',
-    password_policy: 'Password Policy',
+    accont_details: "Account Details",
+    password_policy: "Password Policy", #Eliminated in 2.1
+    authentication_policy: "Authentication Policy",
     # Resources
     change_plan: 'Change Plan',
     order_data_shuttle: 'Order Data Shuttle',

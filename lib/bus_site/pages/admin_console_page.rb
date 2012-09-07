@@ -13,6 +13,7 @@ module Bus
 
     # Configuration section
     section(:account_details_section, AccountDetailsSection, id: "setting-edit_account_settings")
+    section(:authentication_policy_section, AuthenticationPolicySection, id: 'authentication_policies-edit')
 
     # Users section
     section(:search_list_users_section, SearchListUsersSection, id: "user-list")
