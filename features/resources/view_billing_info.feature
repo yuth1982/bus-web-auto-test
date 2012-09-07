@@ -3,7 +3,7 @@ Feature: View billing information
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.15253 @javascript
+  @TC.15253
   Scenario: 15253 Verify MozyPro partner master plan section details
     When I add a new MozyPro partner:
     | period | base plan |
@@ -18,7 +18,7 @@ Feature: View billing information
     | Amount        | $1,994.79 (Without taxes or discounts)  |
     | Payment Type  | Visa ending in @XXXX (change)           |
 
-  @TC.17976 @javascript
+  @TC.17976
   Scenario: 17976 Verify Reseller partner master plan section details
     When I add a new Reseller partner:
     | period | reseller type | reseller quota |
@@ -33,7 +33,7 @@ Feature: View billing information
     | Amount        | $462.00 (Without taxes or discounts) |
     | Payment Type  | Visa ending in @XXXX (change)        |
 
-  @TC.15254 @smoke_test @javascript
+  @TC.15254 @smoke_test
   Scenario: 15254 Verify MozyEnterprise partner master plan section details
     When I add a new MozyEnterprise partner:
     | period | users |
@@ -43,12 +43,12 @@ Feature: View billing information
     And I navigate to Billing Information section from bus admin console page
     Then Next renewal info table should be:
     | description   | value                                |
-    | Period        | 3-Year (change)                      |
+    | Period        | 3-year (change)                      |
     | Date          | +36 month(s)                         |
     | Amount        | $259.00 (Without taxes or discounts) |
     | Payment Type  | Visa ending in @XXXX (change)        |
 
-  @TC.16658 @javascript
+  @TC.16658
   Scenario: 16658 Verify MozyPro partner supplemental plan section details
     When I add a new MozyPro partner:
     | period | base plan |
@@ -60,7 +60,7 @@ Feature: View billing information
     | description             | amount   |
     | Total price for 250 GB  | $94.99   |
 
-  @TC.15359 @javascript
+  @TC.15359
   Scenario: 15359 Verify MozyEnterprise Autogrow status is set to disabled by default
     When I add a new MozyEnterprise partner:
     | period | users |
@@ -70,7 +70,7 @@ Feature: View billing information
     And I navigate to Billing Information section from bus admin console page
     Then Autogrow status text's should be Disabled (more info)
 
-  @TC.15360 @javascript
+  @TC.15360
   Scenario: 15360 Verify Reseller Autogrow status is set to disabled by default
     When I add a new Reseller partner:
     | period | reseller type | reseller quota |
@@ -80,7 +80,7 @@ Feature: View billing information
     And I navigate to Billing Information section from bus admin console page
     Then Autogrow status text's should be Disabled (more info)
 
-  @TC.16659 @javascript
+  @TC.16659
   Scenario: 16659 Verify MozyEnterprise partner supplemental plan section details
     When I add a new MozyEnterprise partner:
     | period | users |
@@ -92,7 +92,7 @@ Feature: View billing information
     | description                         | amount   |
     | Total price for MozyEnterprise User | $95.00   |
 
-  @TC.16660 @javascript
+  @TC.16660
   Scenario: 16660 Verify Reseller partner supplemental plan section details
     When I add a new Reseller partner:
     | period | reseller type | reseller quota |
@@ -106,7 +106,7 @@ Feature: View billing information
     | Price each                            | $0.42   |
     | Total price for GB - Silver Reseller  | $42.00  |
 
-  @TC.17517 @javascript
+  @TC.17517
   Scenario: 17517 Verify MozyPro VAT information in the billing information view
     When I add a new MozyPro partner:
     | period | base plan | server plan | country | vat number    |
