@@ -17,7 +17,7 @@ module SiteHelper
           wait_until { hidden ? !root_element.find(:css, css_str).visible? : root_element.find(:css, css_str).visible? }
           root_element.find(:css, css_str)
         else
-          wait_until { hidden ? !find(type, locator).visible? : root_element.find(type, locator).visible? }
+          wait_until { hidden ? !root_element.find(type, locator).visible? : root_element.find(type, locator).visible? }
           root_element.find(type, locator)
       end
     end

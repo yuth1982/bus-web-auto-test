@@ -20,6 +20,7 @@ module Bus
     section(:search_list_machines_section, SearchListMachinesSection, id: "machine-list")
     section(:add_new_user_group_section, AddNewUserGroupSection, id: "user_groups-list")
     section(:add_new_user_section, AddNewUserSection, id: "user_groups-new")
+    section(:machine_mapping_section, MachineMappingSection, id: "machine-machine_migration")
 
     # Admin section
 

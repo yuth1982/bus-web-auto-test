@@ -14,3 +14,16 @@ end
 Then /^Horizon Manager test connection message should be (.+)$/ do |message|
   @bus_site.admin_console_page.authentication_policy_section.test_connection_result.should == message
 end
+
+When /^I move to the Sync rules tab$/ do
+  @bus_site.admin_console_page.authentication_policy_section.move_to_sync_rules
+end
+
+When /^I add a new rule: (.+)$/ do |rule|
+  @bus_site.admin_console_page.authentication_policy_section.fill_in_rules(1, rule)
+end
+
+Then /^There should be (\d+) items:$/ do |num, table|
+  @bus_site.admin_console_page.authentication_policy_section.group_num.should == num.to_i
+  @bus_site.admin_console_page.authentication_policy_section.group_names.should == table.headers
+end

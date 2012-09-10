@@ -10,6 +10,7 @@ require 'bus_site/sections/users/add_new_user_section'
 require 'bus_site/sections/users/add_new_user_group_section'
 require 'bus_site/sections/users/search_list_machines_section'
 require 'bus_site/sections/users/search_list_users_section'
+require 'bus_site/sections/users/machine_mapping_section'
 
 # Admins section
 require 'bus_site/sections/admins/add_new_admin_section'

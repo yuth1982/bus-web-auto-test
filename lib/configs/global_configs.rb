@@ -5,7 +5,13 @@ DEFAULT_WAIT_TIME = (ENV['TIMEOUT'] || 120).to_i
 # Files downloaded location
 DOWNLOAD_FOLDER = 'downloads'
 
-SCREEN_SHOT = (ENV['SCREEN_SHOT'] || 'no').eql?('yes')
+# Files Download location
+UPLOAD_FOLDER = 'uploads'
+
+# max time to wait, especially when downloading or parsing big file
+MAX_WAIT_TIME = (ENV["MAX_WAIT_TIME"] || 1200).to_i
+
+SCREEN_SHOT = (ENV["SCREEN_SHOT"] || "no").eql?("yes")
 
 # Print out time stamp in steps
 TIMESTAMP = (ENV['TIMESTAMP'] || 'no').eql?('yes')

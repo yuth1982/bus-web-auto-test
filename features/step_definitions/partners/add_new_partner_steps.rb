@@ -45,6 +45,7 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partne
       raise "Error: Company type #{type} does not exist."
   end
   # Common attributes
+  @partner.company_info.name = attributes['company_name'] || ''
   @partner.subscription_period = attributes["period"] # required
   @partner.company_info.country = attributes["country"] || "United States"
   @partner.company_info.vat_num = attributes["vat number"] || ""
@@ -53,6 +54,28 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partne
 
   puts @partner.to_s
   @bus_site.admin_console_page.add_new_partner_section.add_new_account(@partner)
+end
+
+When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner if not exist:$/ do |type, partner_table|
+  attributes = partner_table.hashes.first
+  company_name =  attributes['company_name']
+  email = attributes['email']
+  search_result = Proc.new do |company_name, email|
+    search = email
+    compare = company_name
+    if company_name && !email
+      search = company_name
+    end
+    @bus_site.admin_console_page.search_list_partner_section.search_partner search
+    @bus_site.admin_console_page.search_list_partner_section.search_results_table_rows.first[1] == compare
+  end
+  unless company_name && search_result.call(company_name, email)
+    step %{I add a new #{type} partner:}, table(%{
+      |#{partner_table.headers.join('|')}|
+      |#{partner_table.rows.first.join('|')}|
+    })
+    @bus_site.admin_console_page.add_new_partner_section.messages.should == 'New partner created.'
+  end
 end
 
 Then /^New partner should be created$/ do

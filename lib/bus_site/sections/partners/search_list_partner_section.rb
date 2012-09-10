@@ -74,5 +74,9 @@ module Bus
     def view_root_admin_detail(search_key)
       find_element(:link, search_key).click
     end
+
+    def clear_search
+      clear_search_link.click
+    end
   end
 end

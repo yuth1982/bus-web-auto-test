@@ -7,6 +7,9 @@ module Bus
     element(:data_horizon_configs_org_name, id: "data_horizon_configs_org_name")
     element(:test_org_name, id: "test_org_name")
     element(:authentication_policies_edit_errors, xpath: "//div[@id='authentication_policies-edit-errors']/ul")
+    element(:sync_rules_tab, xpath: "//div[@id='authentication_policies-edit-tabs']/ul[1]/li[2]")
+    element(:attribute_mapping_tab, xpath: "//div[@id='authentication_policies-edit-tabs']/ul[1]/li[3]")
+    element(:add_rule, id: 'add-provision-rule')
 
     # Public: Select authentication provider
     #
@@ -60,5 +63,26 @@ module Bus
     def test_connection_result
       authentication_policies_edit_errors.text
     end
+
+    def move_to_sync_rules
+      sync_rules_tab.click
+    end
+
+    def add_rule
+      add_rule_button.click
+    end
+
+    def fill_in_rules(num, content)
+      find_element(:xpath, "//ol[@id='provision-rules']//li[#{num}]//input").set(content)
+    end
+
+    def group_num
+      find_element(:xpath, "//ol[@id='provision-rules']//select[1]").options.length
+    end
+
+    def group_names
+      find_element(:xpath, "//ol[@id='provision-rules']//select[1]").options_text
+    end
+
   end
 end

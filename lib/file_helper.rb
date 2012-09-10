@@ -10,6 +10,15 @@ module FileHelper
     path
   end
 
+  # Public: Default upload folder for files
+  #
+  # Returns default upload path
+  def default_upload_path
+    path = File.expand_path("../#{UPLOAD_FOLDER}", File.dirname(__FILE__))
+    Dir.mkdir(path) unless File.exists?(path)
+    path
+  end
+
   # Public: Download folder for Firefox
   #
   # Returns firefox download folder
@@ -34,11 +43,48 @@ module FileHelper
     rows
   end
 
+  # Public: write csv file
+  #
+  # Example
+  #   FileHelper.write_csv_file("Billing_summary.csv", [['a', 'b', 'c'],['1', '2', 3]], "download_folder")
+  #
+  # Returns null
+  def write_csv_file(file_name, data, file_path = default_download_path)
+    file = "#{file_path}/#{file_name}.csv"
+    CSV.open(file, 'w') do |writer|
+      data.each do |row|
+        writer << row
+      end
+    end
+  end
+
+  # Public: rename file
+  #
+  # Example
+  #   FileHelper.rename('a.csv', 'b.csv', "download_folder")
+  #
+  # Returns null
+  def rename(old_name, new_name, file_path = default_download_path)
+    old_file = "#{file_path}/#{old_name}"
+    new_file = "#{file_path}/#{new_name}"
+    File.rename(old_file, new_file)
+  end
+
   # Public: delete *.csv files in download folder
   #
   # Returns nothing
   def clean_up_csv
     Dir.glob("#{default_download_path}/*.csv").each{ |path| File.delete(path) }
+  end
+
+  # Public: rename file
+  #
+  # Example
+  #   FileHelper.file_exists?('a.csv', "download_folder")
+  #
+  # Return Boolean
+  def file_exists?(file_name, file_path = default_download_path)
+    File.file?("#{file_path}/#{file_name}")
   end
 
 end
