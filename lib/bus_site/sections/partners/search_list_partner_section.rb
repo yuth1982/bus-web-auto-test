@@ -26,6 +26,7 @@ module Bus
       partner_filter_select.select(filter)
       include_sub_partners_cb.check if include_sub_partners
       search_partner_btn.click
+      clear_search_link.visible? # wait until clear search link appears
     end
 
     # Public: Search results table header row text
@@ -36,7 +37,7 @@ module Bus
     #  # => ["External ID", "Partner", "Created", "Root Admin", "Type", "Users", "Licenses", "Quota"]
     #
     # Returns search results table rows text array
-    def search_results_tb_headers_text
+    def search_results_table_headers
       search_results_table.headers_text
     end
 
