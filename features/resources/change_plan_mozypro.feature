@@ -134,10 +134,10 @@ Feature: Change plan
       | 1 TB      |
     Then Change plan charge summary should be:
       | Description                     | Amount     |
-      | Credit for remainder of 500 GB  | -$2,089.89 |
+      | Credit for remainder of 500 GB  | -$2,570.56 |
       | Charge for new 1 TB             | $5,141.26  |
       |                                 |            |
-      | Total amount to be charged      | $3,051.37  |
+      | Total amount to be charged      | $2,570.70  |
     And Account plan should be changed
     And MozyPro new plan should be:
       | base plan |
@@ -172,10 +172,10 @@ Feature: Change plan
       | 2 TB      |
     Then Change plan charge summary should be:
       | Description                     | Amount     |
-      | Credit for remainder of 1 TB    | -$7,979.79 |
+      | Credit for remainder of 1 TB    | -$9,815.14 |
       | Charge for new 2 TB             | $19,372.24 |
       |                                 |            |
-      | Total amount to be charged      | $11,392.45 |
+      | Total amount to be charged      | $9,557.10  |
     And Account plan should be changed
     And MozyPro new plan should be:
       | base plan |
@@ -224,7 +224,7 @@ Feature: Change plan
     Then New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
-      | storage add on |
+      | storage add-on |
       | 10             |
     Then Change plan charge summary should be:
       | Description                  | Amount   |
@@ -260,7 +260,7 @@ Feature: Change plan
     Then New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
-      | storage add on |
+      | storage add-on |
       | 10             |
     Then Change plan charge summary should be:
       | Description                  | Amount     |
@@ -296,7 +296,7 @@ Feature: Change plan
     Then New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
-      | storage add on |
+      | storage add-on |
       | 10             |
     Then Change plan charge summary should be:
       | Description                  | Amount     |
