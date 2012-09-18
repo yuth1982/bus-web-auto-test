@@ -45,7 +45,7 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partne
       raise "Error: Company type #{type} does not exist."
   end
   # Common attributes
-  @partner.company_info.name = attributes['company_name'] || ''
+  @partner.company_info.name = attributes['company_name'] unless attributes['company_name'].nil?
   @partner.subscription_period = attributes["period"] # required
   @partner.company_info.country = attributes["country"] || "United States"
   @partner.company_info.vat_num = attributes["vat number"] || ""
