@@ -56,8 +56,8 @@ Feature: Add a new partner
       | Server Plan       | 1        | $219.89    | $219.89     |
       | Discounts Applied |          |            | -$230.98    |
       | Pre-tax Subtotal  |          |            | $2,078.80   |
-      | Taxes             |          |            | $478.13     |
-      | Total Charges     |          |            | $2,556.93   |
+      | Taxes             |          |            | $531.24     |
+      | Total Charges     |          |            | $2,610.04   |
     And New partner should be created
 
   @TC.17960 @javascript
@@ -127,8 +127,8 @@ Feature: Add a new partner
       | 250 GB Server Add-on  | 1        | $1,994.79  | $1,994.79   |
       | Discounts Applied     |          |            | -$328.84    |
       | Pre-tax Subtotal      |          |            | $2,959.53   |
-      | Taxes                 |          |            | $680.69     |
-      | Total Charges         |          |            | $3,640.22   |
+      | Taxes                 |          |            | $756.32     |
+      | Total Charges         |          |            | $3,715.85   |
     And New partner should be created
 
   @TC.17967
@@ -211,8 +211,8 @@ Feature: Add a new partner
       | 50 GB add-on          | 1        | $192.50    | $192.50     |
       | Discounts Applied     |          |            | -$167.75    |
       | Pre-tax Subtotal      |          |            | $1,509.75   |
-      | Taxes                 |          |            | $347.25     |
-      | Total Charges         |          |            | $1,857.00   |
+      | Taxes                 |          |            | $385.83     |
+      | Total Charges         |          |            | $1,895.58   |
     And New partner should be created
 
   @TC.17974
