@@ -4,8 +4,8 @@ Feature: View billing history
   I want to view itemized statements for the services I have used
   so that I can understand why I was charged what I was charged
 
-  @billing_history_1 @smoke_test
-  Scenario: Display new partner billing history table in billing history view
+  @TC.18898 @smoke
+  Scenario: Verify billing history after create MozyPro partner
     Given I log in bus admin console as administrator
     When I add a new MozyPro partner:
       | period | base plan |

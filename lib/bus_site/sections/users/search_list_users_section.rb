@@ -19,7 +19,7 @@ module Bus
       search_user_tb.type_text(keywords)
       user_filter_select.select(filter)
       search_user_btn.click
-      raise "error on search / list user action" unless clear_search_link.displayed?
+      clear_search_link.visible?
     end
 
     # Public: Search results table header row text

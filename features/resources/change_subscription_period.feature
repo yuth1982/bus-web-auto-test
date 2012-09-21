@@ -167,7 +167,7 @@ Feature: Change subscription period
       | Charge for new yearly subscription            | $462.00  |
       | Total amount to be charged                    | $420.00  |
 
-  @TC.15384 @smoke_test
+  @TC.15384 @smoke
   Scenario: 15384 Verify MozyPro confirmation message when change subscription period to biennially
     When I add a new MozyPro partner:
       | period | base plan |

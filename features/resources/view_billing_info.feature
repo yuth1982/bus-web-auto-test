@@ -33,7 +33,7 @@ Feature: View billing information
     | Amount        | $462.00 (Without taxes or discounts) |
     | Payment Type  | Visa ending in @XXXX (change)        |
 
-  @TC.15254 @smoke_test
+  @TC.15254 @smoke
   Scenario: 15254 Verify MozyEnterprise partner master plan section details
     When I add a new MozyEnterprise partner:
     | period | users |

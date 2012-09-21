@@ -3,7 +3,7 @@ Feature: Search and list partner
   Background:
     Given I log in bus admin console as administrator
 
-  @smoke_test @search_partner_basic
+  @smoke @search_partner_basic
   Scenario: Search partner by company name
     When I search partner by:
       | keywords                     | filter  | including sub-partners |

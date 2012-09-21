@@ -1,6 +1,6 @@
 Feature: Search and list user
 
-  @smoke_test
+  @smoke
   Scenario: Search user
     Given I log in bus admin console as mozypro test account
     When I search user by:
