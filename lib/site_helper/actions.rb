@@ -34,5 +34,25 @@ module SiteHelper
       page.driver.browser.switch_to.default_content
     end
 
+    # Public: alert_text
+    #
+    #
+    def alert_text
+      page.driver.browser.switch_to.alert.text
+    end
+
+    # Public: alert_accept
+    #
+    #
+    def alert_accept
+      page.driver.browser.switch_to.alert.accept
+    end
+
+    # Public: alert_dismiss
+    #
+    #
+    def alert_dismiss
+      page.driver.browser.switch_to.alert.dismiss
+    end
   end
 end

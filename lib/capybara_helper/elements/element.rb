@@ -83,5 +83,9 @@ class Capybara::Node::Element
   def uncheck
     self.click if checked?
   end
+
+  def clear
+    set('')
+  end
 end
 
