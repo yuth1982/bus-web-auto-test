@@ -6,22 +6,19 @@ When /^I select Horizon Manager with organization name (.*)$/ do |org_name|
   @bus_site.admin_console_page.authentication_policy_section.check_horizon(true)
   case org_name
   when 'nothing'
-    @bus_site.admin_console_page.authentication_policy_section.filling_org_name('')
+    @bus_site.admin_console_page.authentication_policy_section.fillin_org_name('')
   else
-    @bus_site.admin_console_page.authentication_policy_section.filling_org_name(org_name)
+    @bus_site.admin_console_page.authentication_policy_section.fillin_org_name(org_name)
   end
 end
 
 When /^I Test Connection for (Horizon Manager|AD)$/ do |provider|
-  if provider == "Horizon Manager"
+  case provider 
+  when "Horizon Manager"
     @bus_site.admin_console_page.authentication_policy_section.test_connection_horizon
-  else provider == "AD"
+  when "AD"
     @bus_site.admin_console_page.authentication_policy_section.test_connection_ad
   end
-end
-
-Then /^Horizon Manager test connection message should be (.+)$/ do |message|
-  @bus_site.admin_console_page.authentication_policy_section.test_connection_result.should == message
 end
 
 When /^I move to the Sync rules tab$/ do
@@ -35,6 +32,7 @@ end
 Then /^There should be (\d+) items:$/ do |num, table|
   @bus_site.admin_console_page.authentication_policy_section.group_num.should == num.to_i
   @bus_site.admin_console_page.authentication_policy_section.group_names.should == table.headers
+end
 
 Then /test connection message should be (.+)$/ do |message|
   @bus_site.admin_console_page.authentication_policy_section.test_connection_result.should include(message)
