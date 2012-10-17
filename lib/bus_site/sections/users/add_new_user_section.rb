@@ -5,6 +5,8 @@ module Bus
     #
     element(:name_tb, id: "user_name")
     element(:email_tb, id: "user_username")
+    element(:user_group_search_img, xpath: "//img[@alt='Search-button-icon']")
+
     element(:server_licenses_tb, id: "requested_licenses_Server")
     element(:server_quota_tb, id: "requested_quota_Server")
     element(:desktop_licenses_tb, id: "requested_licenses_Desktop")
@@ -21,9 +23,12 @@ module Bus
     def add_new_user(user)
       name_tb.type_text(user.name)
       email_tb.type_text(user.email)
-      server_licenses_tb.type_text(user.num_server_licenses) unless user.num_server_licenses == 0
+      user_group_search_img.click
+      sleep 2
+      find_element(:xpath, "//li[text()='#{user.user_group}']").click
+      server_licenses_tb.type_text(user.server_licenses) unless user.server_licenses == 0
       server_quota_tb.type_text(user.server_quota) unless user.server_quota == 0
-      desktop_licenses_tb.type_text(user.num_desktop_licenses) unless user.num_desktop_licenses == 0
+      desktop_licenses_tb.type_text(user.desktop_licenses) unless user.desktop_licenses == 0
       desktop_quota_tb.type_text(user.desktop_quota) unless user.desktop_quota == 0
       save_changes_btn.click
     end

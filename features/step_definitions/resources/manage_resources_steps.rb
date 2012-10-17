@@ -1,3 +1,15 @@
+
+When /^I assign a key in user group (.+) with email (.+)$/ do |user_group, email|
+  @test_email = email
+  @bus_site.admin_console_page.navigate_to_link(Bus::MENU[:assign_keys])
+  @bus_site.admin_console_page.manage_resources_section.select_group(user_group)
+  @bus_site.admin_console_page.manage_resources_section.assign_key(@test_email)
+end
+
+When /^Key should be assigned$/ do
+  @bus_site.admin_console_page.manage_resources_section.messages.should == "1 key has been assigned and emailed."
+end
+
 When /^I assign MozyPro allocated quota to (\d+) GB$/ do |new_quota|
   @bus_site.admin_console_page.click_link(Bus::MENU[:manage_resources])
   @bus_site.admin_console_page.manage_resources_section.assign_mozypro_storage(new_quota)

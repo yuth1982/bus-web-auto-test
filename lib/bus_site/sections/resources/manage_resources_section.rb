@@ -4,12 +4,36 @@ module Bus
 
     # Private elements
     #
+    element(:select_group, link: "Select different group")
+    element(:group_select, id: "user_group_id")
+    element(:submit_group_btn, xpath: "//input[@name='select_group']")
+
+    # MozyPro
     element(:change_link, xpath: "//div[@id='unassigned-resources']//a[text()='Change']")
     element(:quota_tb, id: "quota")
     element(:assign_storage_btn, css: "input[name='assign_storage']")
     element(:message_div, xpath: "//div[@id='resource-available_key_list-errors']/ul") #Quota changed.
 
+    # MozyEnterprise
+    element(:send_email_cb, id: "send_emails")
+    element(:assign_keys_btn, xpath: "//input[@name='assign_keys']")
+
     elements(:general_info_span, xpath: "//div[@id='resource-available_key_list-content']/div[2]/div/div/span[@class='value']")
+
+    # Manage resources / Assign keys under selected user group
+    #
+    def select_group(group_name)
+      #select_group.click
+      group_select.select(group_name)
+      submit_group_btn.click
+    end
+
+    # Assign a MozyEnterprise key to a user (email)
+    def assign_key(email, send_email = true)
+      find_element(:xpath, "//input[starts-with(@id,'key_email_')]").type_text(email)
+      send_email_cb.check if send_email
+      assign_keys_btn.click
+    end
 
     # Public: Assign a new quota to a MozyPro partner
     #         upgrade or downgrade

@@ -30,11 +30,14 @@ module Bus
     # Partners
     add_new_partner: 'Add New Partner',
     search_list_partner: 'Search / List Partners',
+
     # Users
     search_list_users: 'Search / List Users',
     search_list_machines: 'Search / List Machines',
     list_user_groups: 'List User Groups',
     add_new_user_group: 'Add New User Group',
+    add_new_user: 'Add New User',
+
     # Admins
     search_admin: 'Search Admins',
     list_admins: 'List Admins',

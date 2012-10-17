@@ -11,6 +11,8 @@ require 'bus_site/sections/users/add_new_user_group_section'
 require 'bus_site/sections/users/search_list_machines_section'
 require 'bus_site/sections/users/search_list_users_section'
 require 'bus_site/sections/users/machine_mapping_section'
+require 'bus_site/sections/users/list_user_groups_section'
+require 'bus_site/sections/users/user_group_details_section'
 
 # Admins section
 require 'bus_site/sections/admins/add_new_admin_section'
@@ -33,6 +35,7 @@ require 'bus_site/sections/resources/order_data_shuttle_section'
 require 'bus_site/sections/resources/process_order_section'
 require 'bus_site/sections/resources/view_data_shuttle_orders_section'
 require 'bus_site/sections/resources/order_details_section'
+require 'bus_site/sections/resources/transfer_resources_section'
 
 # Report section
 require 'bus_site/sections/reports/report_builder_section'

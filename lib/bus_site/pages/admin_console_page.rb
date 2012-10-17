@@ -18,9 +18,11 @@ module Bus
     # Users section
     section(:search_list_users_section, SearchListUsersSection, id: "user-list")
     section(:search_list_machines_section, SearchListMachinesSection, id: "machine-list")
-    section(:add_new_user_group_section, AddNewUserGroupSection, id: "user_groups-list")
-    section(:add_new_user_section, AddNewUserSection, id: "user_groups-new")
+    section(:add_new_user_group_section, AddNewUserGroupSection, id: "user_groups-new")
+    section(:add_new_user_section, AddNewUserSection, id: "user-new")
     section(:machine_mapping_section, MachineMappingSection, id: "machine-machine_migration")
+    section(:user_group_details_section, UserGroupDetailsSection, xpath: "//div[starts-with(@id, 'user_groups-show-')]")
+    section(:list_user_groups_section, ListUserGroupsSection, id: "user_groups-list")
 
     # Admin section
 
@@ -31,6 +33,7 @@ module Bus
     section(:billing_info_section, BillingInfoSection, id: "resource-billing")
     section(:change_period_section, ChangePeriodSection, id: "resource-change_billing_period")
     section(:manage_resources_section, ManageResourcesSection, id: "resource-available_key_list")
+    section(:transfer_resources_section, TransferResourcesSection, id: "resource-transfer_resources")
 
     # Data shuttle section
     section(:order_data_shuttle_section, OrderDataShuttleSection, id: "resource-choose_pro_partner_for_new_seed")
@@ -44,5 +47,8 @@ module Bus
     section(:scheduled_reports_section, ScheduledReportsSection, id: "jobs-index")
     section(:quick_reports_section, QuickReportsSection, id: "jobs-quick_reports")
 
+    def navigate_to_link(link)
+       find_element(:link, link).click
+    end
   end
 end

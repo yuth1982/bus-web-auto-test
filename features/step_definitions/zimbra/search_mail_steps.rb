@@ -1,6 +1,8 @@
 When /^I should see (\d+) email\(s\) when I search keywords:$/ do |num_emails, keywords|
-  keywords.map_column!('subject') do |value|
-    value.gsub(' ','+')
+  if keywords.headers.include?("subject")
+    keywords.map_column!('subject') do |value|
+      value.gsub(' ','+')
+    end
   end
   query = keywords.hashes.first.map{|key, value| "#{key}:#{value}"}.join(" AND ")
   query = query.gsub(/@today/,Time.now.localtime("-06:00").strftime("%m/%d/%Y"))

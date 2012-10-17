@@ -20,7 +20,7 @@
 #   click create
 
 When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partner_table|
-  @bus_site.admin_console_page.click_link(Bus::MENU[:add_new_partner])
+  @bus_site.admin_console_page.navigate_to_link(Bus::MENU[:add_new_partner])
   attributes = partner_table.hashes.first
   case type
     when "MozyPro"
