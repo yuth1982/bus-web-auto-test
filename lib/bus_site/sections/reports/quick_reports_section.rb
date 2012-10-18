@@ -23,7 +23,7 @@ module Bus
     #
     # Returns download file to destination folder
     def download_report(report_name)
-      find_element(:link, report_name).click
+      find(:link, report_name).click
       puts "Wait 10 seconds to download csv reports file"
       sleep 10
     end

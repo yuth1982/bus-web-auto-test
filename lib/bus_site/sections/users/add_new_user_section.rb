@@ -25,7 +25,7 @@ module Bus
       email_tb.type_text(user.email)
       user_group_search_img.click
       sleep 2
-      find_element(:xpath, "//li[text()='#{user.user_group}']").click
+      find(:xpath, "//li[text()='#{user.user_group}']").click
       server_licenses_tb.type_text(user.server_licenses) unless user.server_licenses == 0
       server_quota_tb.type_text(user.server_quota) unless user.server_quota == 0
       desktop_licenses_tb.type_text(user.desktop_licenses) unless user.desktop_licenses == 0

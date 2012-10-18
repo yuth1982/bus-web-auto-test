@@ -1,6 +1,6 @@
 
 Transform /^administrator$/ do |step_arg|
-  Hash[:user_name => ENV["BUS_USER"] || "shipuy@mozy.com", :password => ENV["BUS_PWD"] || "test1234" ]
+  @root_admin = Hash[:user_name => ENV["BUS_USER"] || "shipuy@mozy.com", :password => ENV["BUS_PWD"] || "test1234" ]
 end
 
 Transform /^aria admin$/ do |step_arg|
@@ -33,9 +33,10 @@ Transform /^the new user group$/ do |step_arg|
   #"Bonnie"
 end
 
-Transform /^a test email$/ do |step_arg|
-  "#{Bus::EMAIL_PREFIX}+Test+#{Time.now.strftime("%H%M")}@mozy.com".downcase
-end
+#Transform /^a test email$/ do |step_arg|
+#  "#{Bus::EMAIL_PREFIX}+Test+#{Time.now.strftime("%H%M")}@mozy.com".downcase
+#end
+
 When /^I wait for (\d+) seconds$/ do |seconds|
   sleep seconds.to_i
 end

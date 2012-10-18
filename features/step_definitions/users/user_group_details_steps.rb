@@ -6,8 +6,10 @@ When /^I navigate to the new user group details section$/ do
 end
 
 Then /^User group details should be:$/ do |details_table|
-  attributes = details_table.hashes.first
-  @bus_site.admin_console_page.user_group_details_section.available_keys.should ==  attributes["Available Keys"] unless attributes["Available Keys"].nil?
-  @bus_site.admin_console_page.user_group_details_section.available_quota.should == attributes["Available Quota"] unless attributes["Available Quota"].nil?
-  @bus_site.admin_console_page.user_group_details_section.default_quota.should == attributes["Default quota for new installs"] unless attributes["Default quota for new installs"].nil?
+
+  actual = @bus_site.admin_console_page.user_group_details_section.group_details_hash
+  expected = details_table.hashes.first
+  actual['ID:'].length.should == expected['ID:'].length - 1
+  actual['ID:'].match(/\d{6}/).nil?.should be_false
+  actual[1..-1].should == expected[1..-1]
 end

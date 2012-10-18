@@ -119,7 +119,7 @@ module Bus
     #
     # Returns 0 if succeed
     def refresh
-      find_element(:xpath, "//a[@class='mod-button'][3]").click
+      find(:xpath, "//a[@class='mod-button'][3]").click
     end
 
     # Public: Attach the file to be uploaded

@@ -13,7 +13,7 @@ Feature: Notify about and collect past-due balances
       | period | base plan |
       | 1      | 50 GB     |
     Then New partner should be created
-    When I delete the new partner account
+    When I search and delete the new partner account
     And I log in aria admin console as aria admin
     Then the new partner account account status should be CANCELLED
 

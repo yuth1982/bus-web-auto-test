@@ -5,7 +5,7 @@ module Aria
     # Private elements
     #
     element(:search_tb, css: "input[name='inSearchString']")
-    element(:search_btn,  css: "input[value='Search']")
+    element(:search_btn, css: "input[value='Search']")
 
     # Public: Search account by search text
     #
@@ -21,7 +21,7 @@ module Aria
     # Public: navigate to link by link title attribute
     #
     def navigate_to_link(link_name)
-      find_element(:xpath, "//a[@title='#{link_name}']").click
+      find(:xpath, "//a[@title='#{link_name}']").click
     end
   end
 end

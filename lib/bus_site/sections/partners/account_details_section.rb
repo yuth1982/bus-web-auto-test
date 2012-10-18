@@ -21,7 +21,7 @@ module Bus
     #
     # Returns account details description column text array
     def acc_details_desc_columns
-      find_elements(:xpath, "//div[@id='#{ACC_SETTINGS_DIV_ID}']/div/dl/span/dt").map{ |span| span.text}
+      all(:xpath, "//div[@id='#{ACC_SETTINGS_DIV_ID}']/div/dl/span/dt").map{ |span| span.text}
     end
 
     # Public: account details table values column
@@ -32,7 +32,7 @@ module Bus
     #
     # Return account details values column text array
     def acc_details_value_columns
-      find_elements(:xpath, "//div[@id='#{ACC_SETTINGS_DIV_ID}']/div/dl/span/dd/form/span[@class='view']").map{ |span| span.text}
+      all(:xpath, "//div[@id='#{ACC_SETTINGS_DIV_ID}']/div/dl/span/dd/form/span[@class='view']").map{ |span| span.text}
     end
 
     # Pubic: Change account's receive statement status

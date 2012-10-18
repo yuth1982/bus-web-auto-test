@@ -30,7 +30,7 @@ module Bus
 
     # Assign a MozyEnterprise key to a user (email)
     def assign_key(email, send_email = true)
-      find_element(:xpath, "//input[starts-with(@id,'key_email_')]").type_text(email)
+      find(:xpath, "//input[starts-with(@id,'key_email_')]").type_text(email)
       send_email_cb.check if send_email
       assign_keys_btn.click
     end

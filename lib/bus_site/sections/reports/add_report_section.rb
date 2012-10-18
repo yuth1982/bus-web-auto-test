@@ -45,7 +45,7 @@ module Bus
     #
     # Returns nothing
     def delete_report(report_name)
-      find_element(:link, report_name).click
+      find(:link, report_name).click
       page.suppress_alert
       delete_btn.click
       sleep 10

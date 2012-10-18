@@ -12,6 +12,9 @@
 #   Required: period
 #   Optional: reseller type, reseller quota, server plan, server add-on, coupon,  country,  vat number, net terms
 #
+# Shared available columns:
+# Optional: address, city, state, state abbrev, zip, country, phone, admin email, admin name
+#
 # Steps included:
 #   click 'Add New Partner' link
 #   fill in all fields
@@ -37,19 +40,38 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partne
     when "Reseller"
       @partner = Bus::DataObj::Reseller.new
       @partner.has_initial_purchase = false if attributes["reseller type"].nil?
-      @partner.reseller_type = attributes["reseller type"] || "Silver"
+      @partner.reseller_type = attributes["reseller type"] || attributes["reseller type"].nil?
       @partner.reseller_quota = attributes["reseller quota"] || 0
       @partner.reseller_add_on_quota = attributes["server add-on"] || 0
       @partner.has_server_plan = (attributes["server plan"] || "no").eql?("yes")
     else
       raise "Error: Company type #{type} does not exist."
   end
+
+  # Company info attributes
+  @partner.company_info.name = attributes['company name'] unless attributes['company name'].nil?
+  @partner.company_info.address = attributes['address'] unless attributes['address'].nil?
+  @partner.company_info.city = attributes['city'] unless attributes['city'].nil?
+  @partner.company_info.state = attributes['state'] unless attributes['state'].nil?
+  @partner.company_info.state_abbrev = attributes['state abbrev'] unless attributes['state abbrev'].nil?
+  @partner.company_info.country = attributes["country"] unless attributes['country'].nil?
+  @partner.company_info.zip = attributes['zip'] unless attributes['zip'].nil?
+  @partner.company_info.phone = attributes['phone'] unless attributes['phone'].nil?
+  @partner.company_info.vat_num = attributes["vat number"] unless attributes["vat number"].nil?
+
+  # Partner info attributes
+  @partner.partner_info.coupon_code = attributes["coupon"] unless attributes["coupon"].nil?
+  @partner.partner_info.parent = attributes["create under"] unless attributes["create under"].nil?
+
+  # Admin info attributes
+  @partner.admin_info.full_name = attributes["admin name"] unless attributes["admin name"].nil?
+  @partner.admin_info.email = attributes["admin email"] unless attributes["admin email"].nil?
+
+  # Billing info attributes
+  # Not implemented, always use company info
+
   # Common attributes
-  @partner.company_info.name = attributes['company_name'] unless attributes['company_name'].nil?
-  @partner.subscription_period = attributes["period"] # required
-  @partner.company_info.country = attributes["country"] || "United States"
-  @partner.company_info.vat_num = attributes["vat number"] || ""
-  @partner.partner_info.coupon_code = attributes["coupon"] || ""
+  @partner.subscription_period = attributes["period"]
   @partner.net_term_payment = (attributes["net terms"] || "no").eql?("yes")
 
   puts @partner.to_s
@@ -58,7 +80,7 @@ end
 
 When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner if not exist:$/ do |type, partner_table|
   attributes = partner_table.hashes.first
-  company_name =  attributes['company_name']
+  company_name =  attributes['company name']
   email = attributes['email']
   search_result = Proc.new do |company_name, email|
     search = email

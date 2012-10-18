@@ -12,7 +12,7 @@ module Aria
     #
     # Returns nothing
     def navigate_to_link(link_name)
-      find_element(:link, link_name).click
+      find_link(link_name).click
     end
 
     # Public: Aria account status on account overview page

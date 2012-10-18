@@ -4,21 +4,14 @@ module Bus
 
     # Private elements
     #
-    element(:available_keys_dd, xpath: "//dl[1]/dd[1]")
-    element(:available_quota_dd, xpath: "//dl[1]/dd[2]")
-    element(:default_quota_dd, xpath: "//dl[2]/dd[3]")
+    element(:delete_user_group, xpath: "//a[text()='Delete User Group']")
+    elements(:group_details_dls, xpath: "//div/dl")
 
-    def available_keys
-      available_keys_dd.text
+    def group_details_hash
+      delete_user_group.visible?
+      output = {}
+      group_details_dls.map{ |dl| output = output.merge(dl.dl_hashes) }
+      output.delete_if { |k, _| k.empty? }
     end
-
-    def available_quota
-      available_quota_dd.text
-    end
-
-    def default_quota
-      default_quota_dd.text.gsub("(change)","").strip
-    end
-
   end
 end

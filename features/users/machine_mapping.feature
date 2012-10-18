@@ -30,7 +30,7 @@ Feature: Machine migration(Test for using bifrost helper files and create partne
   @TC.16270-
   Scenario: Export a CSV file in Synchronized way after deleting one user-machine mapping
     When I add a new MozyPro partner if not exist:
-      | company_name | period | base plan |
+      | company name | period | base plan |
       |   Test00     | 1      | 50 GB     |
     And I navigate to Search / List Partners section from bus admin console page
     And I navigate to the partner_details page of Test00
@@ -48,7 +48,7 @@ Feature: Machine migration(Test for using bifrost helper files and create partne
   @TC.16271-
   Scenario: Export a CSV file in Synchronized way after adding one user-machine mapping
     When I add a new MozyPro partner if not exist:
-      | company_name | period | base plan |
+      | company name | period | base plan |
       |   Test00     | 1      | 50 GB     |
     And I navigate to Search / List Partners section from bus admin console page
     And I navigate to the partner_details page of Test00
@@ -76,7 +76,7 @@ Feature: Machine migration(Test for using bifrost helper files and create partne
   @TC.16273-
   Scenario: Export a CSV file in Synchronized way while the partner has no Mozy users before
     When I add a new MozyPro partner if not exist:
-      | company_name    | period | base plan |
+      | company name    | period | base plan |
       |   Test16273     | 1      | 50 GB     |
     And I navigate to Search / List Partners section from bus admin console page
     And I navigate to the partner_details page of Test16273
@@ -90,7 +90,7 @@ Feature: Machine migration(Test for using bifrost helper files and create partne
   @TC.16265- @positive @regression
   Scenario: Import a valid CSV file in non-passive way
     When I add a new MozyPro partner if not exist:
-      | company_name | period | base plan |
+      | company name | period | base plan |
       |   Test00     | 1      | 50 GB     |
     And I navigate to Search / List Partners section from bus admin console page
     And I navigate to the partner_details page of Test00
@@ -120,7 +120,7 @@ Feature: Machine migration(Test for using bifrost helper files and create partne
   @TC.16278-
   Scenario: Import an empty CSV file in non-passive way
     When I add a new MozyPro partner if not exist:
-      | company_name | period | base plan |
+      | company name | period | base plan |
       |   Test00     | 1      | 50 GB     |
     And I navigate to Search / List Partners section from bus admin console page
     And I navigate to the partner_details page of Test00
@@ -135,7 +135,7 @@ Feature: Machine migration(Test for using bifrost helper files and create partne
   @TC.16279-
   Scenario: Import a CSV file whose type is not CSV in non-passive way
     When I add a new MozyPro partner if not exist:
-      | company_name | period | base plan |
+      | company name | period | base plan |
       |   Test00     | 1      | 50 GB     |
     And I navigate to Search / List Partners section from bus admin console page
     And I navigate to the partner_details page of Test00
@@ -149,7 +149,7 @@ Feature: Machine migration(Test for using bifrost helper files and create partne
   @TC.16280- @TC.16281- @TC.16282-
 Scenario Outline: Import a CSV file with a column absent
   When I add a new MozyPro partner if not exist:
-    | company_name | period | base plan |
+    | company name | period | base plan |
     |   Test00     | 1      | 50 GB     |
   And I navigate to Search / List Partners section from bus admin console page
   And I navigate to the partner_details page of Test00
@@ -174,7 +174,7 @@ Examples:
   @TC.16283-
   Scenario: Import a CSV file with a column absent (new owner)
     When I add a new MozyPro partner if not exist:
-      | company_name | period | base plan |
+      | company name | period | base plan |
       |   Test00     | 1      | 50 GB     |
     And I navigate to Search / List Partners section from bus admin console page
     And I navigate to the partner_details page of Test00
@@ -193,7 +193,7 @@ Examples:
   @TC.16284- @TC.16285-
   Scenario Outline: Import a CSV file whose one column has unknown value
     When I add a new MozyPro partner if not exist:
-      | company_name | period | base plan |
+      | company name | period | base plan |
       |   Test00     | 1      | 50 GB     |
     And I navigate to Search / List Partners section from bus admin console page
     And I navigate to the partner_details page of Test00
@@ -217,7 +217,7 @@ Examples:
   @TC.16286-
   Scenario: Import a CSV file whose one column has unknown value (Current Owner)
     When I add a new MozyPro partner if not exist:
-      | company_name | period | base plan |
+      | company name | period | base plan |
       |   Test00     | 1      | 50 GB     |
     And I navigate to Search / List Partners section from bus admin console page
     And I navigate to the partner_details page of Test00
@@ -236,7 +236,7 @@ Examples:
   @TC.16287-
   Scenario: Import a CSV file whose one column has unknown value (New Owner)
     When I add a new MozyPro partner if not exist:
-      | company_name | period | base plan |
+      | company name | period | base plan |
       |   Test00     | 1      | 50 GB     |
     And I navigate to Search / List Partners section from bus admin console page
     And I navigate to the partner_details page of Test00
@@ -255,7 +255,7 @@ Examples:
   @TC.16288-
   Scenario: Import a CSV file with current owners invalid format
     When I add a new MozyPro partner if not exist:
-      | company_name | period | base plan |
+      | company name | period | base plan |
       |   Test00     | 1      | 50 GB     |
     And I navigate to Search / List Partners section from bus admin console page
     And I navigate to the partner_details page of Test00
@@ -274,7 +274,7 @@ Examples:
   @TC.16289-
   Scenario: Import a CSV file with new owners invalid format
     When I add a new MozyPro partner if not exist:
-      | company_name | period | base plan |
+      | company name | period | base plan |
       |   Test00     | 1      | 50 GB     |
     And I navigate to Search / List Partners section from bus admin console page
     And I navigate to the partner_details page of Test00
@@ -293,7 +293,7 @@ Examples:
   @TC.16290-
   Scenario: Import a CSV file with mismatched machine name and machine hash
     When I add a new MozyPro partner if not exist:
-      | company_name | period | base plan |
+      | company name | period | base plan |
       |   Test00     | 1      | 50 GB     |
     And I navigate to Search / List Partners section from bus admin console page
     And I navigate to the partner_details page of Test00
@@ -312,7 +312,7 @@ Examples:
   @TC.16291-
   Scenario: Import a CSV file with new owner an empty string in non-passive way
     When I add a new MozyPro partner if not exist:
-      | company_name | period | base plan |
+      | company name | period | base plan |
       |   Test00     | 1      | 50 GB     |
     And I navigate to Search / List Partners section from bus admin console page
     And I navigate to the partner_details page of Test00
@@ -331,7 +331,7 @@ Examples:
   @TC.16343-
   Scenario: Export a CSV file when the partner has subpartners
     When I add a new MozyPro partner if not exist:
-      | company_name | email             | period | base plan |
+      | company name | email             | period | base plan |
       |   Test01     | test1238@test.com | 1      | 50 GB     |
     And I navigate to Search / List Partners section from bus admin console page
     And I navigate to the partner_details page of Test01

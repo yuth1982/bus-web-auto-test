@@ -11,7 +11,7 @@ module Aria
     #
     # Returns nothin
     def navigate_to_link(link_name)
-      find_element(:xpath, "//a[@title='#{link_name}']").click
+      find(:xpath, "//a[@title='#{link_name}']").click
     end
 
     # Public: Switch to iframe id work_frm

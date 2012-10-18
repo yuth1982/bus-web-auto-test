@@ -48,7 +48,7 @@ module Bus
     section(:quick_reports_section, QuickReportsSection, id: "jobs-quick_reports")
 
     def navigate_to_link(link)
-       find_element(:link, link).click
+      find_link(link).click
     end
   end
 end

@@ -4,8 +4,8 @@ module Aria
 
     # Private elements
     #
-    element(:change_acc_status_link, link: "Change Account Status")
-    element(:remove_queued_req_link, link: "Remove Queued Status Change Request")
+    element(:change_acc_status_link, xpath: "//a[text()='Change Account Status']")
+    element(:remove_queued_req_link, xpath: "//a[text()='Remove Queued Status Change Request']")
     element(:change_acc_status_btn, xpath: "//input[@value='Change Account Status']")
     element(:save_status_change_btn, id: "submit-button")
     element(:message_div, css: "div.error-box")
@@ -18,7 +18,7 @@ module Aria
     # Returns nothing
     def change_account_status(status_code)
       change_acc_status_link.click
-      find_element(:xpath, "//td[text() = '#{status_code.upcase}']").previous_sibling.first_child.click
+      find(:xpath, "//td[text() = '#{status_code.upcase}']").previous_sibling.first_child.click
       change_acc_status_btn.click
       save_status_change_btn.click
       sleep 10 # wait for status to take effect

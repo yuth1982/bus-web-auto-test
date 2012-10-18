@@ -100,15 +100,15 @@ module Bus
     end
 
     def fill_in_rules(num, content)
-      find_element(:xpath, "//ol[@id='provision-rules']//li[#{num}]//input").set(content)
+      find(:xpath, "//ol[@id='provision-rules']//li[#{num}]//input").set(content)
     end
 
     def group_num
-      find_element(:xpath, "//ol[@id='provision-rules']//select[1]").options.length
+      find(:xpath, "//ol[@id='provision-rules']//select[1]").options.length
     end
 
     def group_names
-      find_element(:xpath, "//ol[@id='provision-rules']//select[1]").options_text
+      find(:xpath, "//ol[@id='provision-rules']//select[1]").options_text
     end
 
     def load_attributes_result

@@ -81,7 +81,7 @@ module Bus
       if partner.has_initial_purchase
         fill_initial_purchase(partner)
         next_btn.click
-        #sleep 10 # wait for fill credit card info
+        sleep 10 # wait for fill credit card info
         if partner.net_term_payment
           net_term_payment.click
         else
@@ -181,7 +181,7 @@ module Bus
     end
 
     def fill_subscription_period(period)
-      find_element(:id, "billing_period_#{period}").click
+      find_by_id("billing_period_#{period}").click
     end
 
     def fill_initial_purchase(partner)
@@ -199,55 +199,55 @@ module Bus
     end
 
     def fill_mozypro_purchase(partner)
-      base_plan_select = find_element(:id, "#{partner.subscription_period}_base_plan_select")
+      base_plan_select = find_by_id("#{partner.subscription_period}_base_plan_select")
       base_plan_select.select(partner.base_plan)
       base_plan_id = base_plan_select.value
-      find_element(:id, "#{base_plan_id}_add_on_plan_check_box").check if partner.has_server_plan
+      find_by_id("#{base_plan_id}_add_on_plan_check_box").check if partner.has_server_plan
     end
 
     def fill_mozyenterprise_purchase(partner)
-      base_plan_id = find_element(:id, "#{partner.subscription_period}_base_plan", true).value
+      base_plan_id = find_by_id("#{partner.subscription_period}_base_plan").value
       # Base plan number of users
-      num_user = find_element(:id, "#{partner.subscription_period}_base_plan_#{base_plan_id}")
+      num_user = find_by_id("#{partner.subscription_period}_base_plan_#{base_plan_id}")
       num_user.clear_value
-      num_user.type_text(partner.num_enterprise_users, true)
+      num_user.type_text(partner.num_enterprise_users)
 
       # Server Add ons drop down list
-      find_element(:id, "#{base_plan_id}_add_on_plan_select").select(partner.server_plan)
+      find_by_id("#{base_plan_id}_add_on_plan_select").select(partner.server_plan)
       # Num of server add ons
-      server_add_on_id = find_element(:id, "#{base_plan_id}_add_on_plan", true).value
+      server_add_on_id = find_by_id("#{base_plan_id}_add_on_plan").value
 
-      num_server = find_element(:id, "#{base_plan_id}_add_on_plan_#{server_add_on_id}")
+      num_server = find_by_id("#{base_plan_id}_add_on_plan_#{server_add_on_id}")
       num_server.clear_value
-      num_server.type_text(partner.num_server_add_on, true)
+      num_server.type_text(partner.num_server_add_on)
     end
 
     def fill_reseller_purchase(partner)
-      inputs = find_elements(:xpath, "//div[@id='base_plan_section_#{partner.subscription_period}']/div/div/input")
+      inputs = all(:xpath, "//div[@id='base_plan_section_#{partner.subscription_period}']/div/div/input")
       case partner.reseller_type
         when Bus::RESELLER_TYPE[:silver]
           inputs[0].click # Silver plan
           base_plan_id = inputs[0].value
-          inputs[1].type_text(partner.reseller_quota, true) # Silver plan quota
+          inputs[1].type_text(partner.reseller_quota) # Silver plan quota
         when Bus::RESELLER_TYPE[:gold]
           inputs[2].click # Gold plan
           base_plan_id = inputs[2].value
-          inputs[3].type_text(partner.reseller_quota, true) # Gold plan quota
+          inputs[3].type_text(partner.reseller_quota) # Gold plan quota
         when Bus::RESELLER_TYPE[:platinum]
           inputs[4].click # Platinum plan
           base_plan_id = inputs[4].value
-          inputs[5].type_text(partner.reseller_quota, true) # Platinum plan quota
+          inputs[5].type_text(partner.reseller_quota) # Platinum plan quota
         else
           raise "Unable to find reseller type of #{partner.reseller_type}"
       end
 
       # Add ons server plan
-      find_element(:id, "#{base_plan_id}_add_on_plan_check_box").check if partner.has_server_plan
+      find_by_id("#{base_plan_id}_add_on_plan_check_box").check if partner.has_server_plan
       # Num of server add ons
-      server_add_on_id = find_element(:id, "#{base_plan_id}_add_on_plan", true).value
+      server_add_on_id = find_by_id("#{base_plan_id}_add_on_plan").value
 
-      server_add_on = find_element(:id, "#{base_plan_id}_add_on_plan_#{server_add_on_id}")
-      server_add_on.type_text(partner.reseller_add_on_quota, true) if partner.reseller_add_on_quota.to_i > 0
+      server_add_on = find_by_id("#{base_plan_id}_add_on_plan_#{server_add_on_id}")
+      server_add_on.type_text(partner.reseller_add_on_quota) if partner.reseller_add_on_quota.to_i > 0
     end
 
     def fill_credit_card_info(credit_card)

@@ -5,6 +5,7 @@ class Capybara::Node::Element
   include CapybaraHelper::Elements::Select
   include CapybaraHelper::Elements::TextField
   include CapybaraHelper::Elements::Link
+  include CapybaraHelper::Elements::DefinitionList
 
   # Public: element's id attribute value
   #

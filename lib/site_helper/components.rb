@@ -9,7 +9,7 @@ module SiteHelper
     # Returns element
     def element(element_name,element_hash)
       send(:define_method, element_name) do
-        find_element(element_hash.keys[0], element_hash.values[0])
+        find(element_hash.keys[0], element_hash.values[0])
       end
       private element_name
     end
@@ -23,7 +23,7 @@ module SiteHelper
     # Returns elements
     def elements(element_name,element_hash)
       send(:define_method, element_name) do
-        find_elements(element_hash.keys[0], element_hash.values[0])
+        all(element_hash.keys[0], element_hash.values[0])
       end
       private element_name
     end
@@ -33,7 +33,7 @@ module SiteHelper
     # Returns page object
     def section(section_name, section_class, element_hash)
       send(:define_method, section_name) do
-        section_class.new(find_element(element_hash.keys[0], element_hash.values[0]))
+        section_class.new(find(element_hash.keys[0], element_hash.values[0]))
       end
     end
 

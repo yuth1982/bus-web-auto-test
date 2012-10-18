@@ -10,7 +10,7 @@ module Bus
     #
     # Returns nothing
     def view_user_group_detail(search_key)
-      find_element(:link, search_key).click
+      find_link(search_key).click
     end
   end
 end

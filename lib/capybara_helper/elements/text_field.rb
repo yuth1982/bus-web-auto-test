@@ -7,8 +7,8 @@ module CapybaraHelper
       #   element.type_text("hello")
       #
       # Returns nothing
-      def type_text(new_value, clear_original = false)
-        self.clear_value if clear_original
+      def type_text(new_value)
+        self.clear_value
         self.set(new_value)
       end
 
