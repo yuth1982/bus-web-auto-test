@@ -81,7 +81,7 @@ module Bus
       if partner.has_initial_purchase
         fill_initial_purchase(partner)
         next_btn.click
-        sleep 10 # wait for fill credit card info
+        wait_until{ back_btn.visible? } # wait for fill credit card info
         if partner.net_term_payment
           net_term_payment.click
         else

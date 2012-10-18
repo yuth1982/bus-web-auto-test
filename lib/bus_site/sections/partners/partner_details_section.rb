@@ -37,7 +37,7 @@ module Bus
     element(:contact_email_tb, id: "contact_email")
 
     def general_info_hash
-      delete_partner_link.visible?
+      wait_until{ delete_partner_link.visible? }
       output = {}
       general_info_dls[0..-2].map{ |dl| output = output.merge(dl.dl_hashes) }
       output
@@ -46,7 +46,7 @@ module Bus
     # Public: Partner contact information hash
     #
     def contact_info_hash
-      delete_partner_link.visible?
+      wait_until{ delete_partner_link.visible? }
       output = {}
       contact_info_dls.map{ |dl| output = output.merge(dl.dl_hashes) }
       output["Contact Address:"] = contact_address_tb.value

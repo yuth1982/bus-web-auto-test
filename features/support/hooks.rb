@@ -1,6 +1,7 @@
 Before do
   # Do things before each scenario.
   FileHelper.clean_up_csv
+  @start_time = Time.now
 end
 
 After do |scenario|

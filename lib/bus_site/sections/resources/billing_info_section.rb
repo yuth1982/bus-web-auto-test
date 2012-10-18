@@ -9,7 +9,7 @@ module Bus
     # Private elements
     #
     element(:next_renewal_h4, xpath: "//div[@id='#{BILLING_INFO_LOC}']/div[1]/h4")
-    element(:change_subscription_link, link: "(change)")
+    element(:change_subscription_link, css: "a[href='/resource/change_billing_period']")
     element(:autogrow_status_th, xpath: "//th[text()='Status']")
     elements(:next_renewal_tds, xpath: "//div[@id='#{BILLING_INFO_LOC}']/div/table[@class='info-table']//td")
     element(:vat_info_table, xpath: "//div[starts-with(@id,'partner-billing-info-vat-')]/table")

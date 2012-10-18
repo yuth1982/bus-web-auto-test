@@ -70,6 +70,14 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partne
   # Billing info attributes
   # Not implemented, always use company info
 
+  # Credit card info attributes
+  @partner.credit_card.first_name = attributes["cc first name"] unless attributes["cc first name"].nil?
+  @partner.credit_card.last_name = attributes["cc last name"] unless attributes["cc last name"].nil?
+  @partner.credit_card.number = attributes["cc number"] unless attributes["cc number"].nil?
+  @partner.credit_card.expire_month = attributes["expire month"] unless attributes["expire month"].nil?
+  @partner.credit_card.expire_year = attributes["expire year"] unless attributes["expire year"].nil?
+  @partner.credit_card.cvv = attributes["cvv"] unless attributes["cvv"].nil?
+
   # Common attributes
   @partner.subscription_period = attributes["period"]
   @partner.net_term_payment = (attributes["net terms"] || "no").eql?("yes")

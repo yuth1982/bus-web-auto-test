@@ -19,8 +19,3 @@ module SiteHelper
     end
   end
 end
-
-
-
-        #when :link
-         # css_str = "a:contains('#{locator}')"

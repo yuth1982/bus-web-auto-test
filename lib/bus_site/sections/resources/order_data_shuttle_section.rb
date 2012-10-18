@@ -30,7 +30,7 @@ module Bus
     #
     # Returns Nothing
     def view_order_detail(company_name)
-      find(:link, company_name).click
+      find_link(company_name).click
     end
   end
 end

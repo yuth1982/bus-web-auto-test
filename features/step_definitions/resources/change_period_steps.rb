@@ -1,12 +1,12 @@
 
 When /^I change account subscription up to (.+) period$/ do |link_text|
-  @bus_site.admin_console_page.click_link(Bus::MENU[:billing_information])
+  @bus_site.admin_console_page.navigate_to_link(Bus::MENU[:billing_information])
   @bus_site.admin_console_page.billing_info_section.go_to_change_period_section
   @bus_site.admin_console_page.change_period_section.change_subscription_up(link_text)
 end
 
 When /^I change account subscription down to (.+) period$/ do |link_text|
-  @bus_site.admin_console_page.click_link(Bus::MENU[:billing_information])
+  @bus_site.admin_console_page.navigate_to_link(Bus::MENU[:billing_information])
   @bus_site.admin_console_page.billing_info_section.go_to_change_period_section
   @bus_site.admin_console_page.change_period_section.change_subscription_down(link_text)
 end

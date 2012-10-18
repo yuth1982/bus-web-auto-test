@@ -11,7 +11,7 @@ module Bus
     #
     # Returns nothing
     def navigate_to_add_report_section(report_type)
-      find(:link, report_type).click
+      find_link(report_type).click
     end
 
     # Public: Available reports and description table rows text (UI)

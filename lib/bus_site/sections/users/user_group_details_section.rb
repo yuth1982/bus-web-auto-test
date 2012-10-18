@@ -8,7 +8,7 @@ module Bus
     elements(:group_details_dls, xpath: "//div/dl")
 
     def group_details_hash
-      delete_user_group.visible?
+      wait_until{ delete_user_group.visible? }
       output = {}
       group_details_dls.map{ |dl| output = output.merge(dl.dl_hashes) }
       output.delete_if { |k, _| k.empty? }

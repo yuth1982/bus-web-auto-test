@@ -7,7 +7,7 @@ module Bus
     element(:search_user_btn, xpath: "//div[@id='user-list-content']/div/form//input[@value='Submit']")
     element(:user_filter_select, id: "user_filter")
     element(:search_results_table, xpath: "//div[@id='user-list-content']/div/table")
-    element(:clear_search_link, link: "Clear search")
+    element(:clear_search_link, xpath: "//a[text()='Clear search']")
 
     # Public: Search user
     #
@@ -19,7 +19,7 @@ module Bus
       search_user_tb.type_text(keywords)
       user_filter_select.select(filter)
       search_user_btn.click
-      clear_search_link.visible?
+      wait_until{ clear_search_link.visible? }
     end
 
     # Public: Search results table header row text

@@ -8,7 +8,7 @@ module CapybaraHelper
       #
       # Returns nothing
       def type_text(new_value)
-        self.clear_value
+        self.clear
         self.set(new_value)
       end
 

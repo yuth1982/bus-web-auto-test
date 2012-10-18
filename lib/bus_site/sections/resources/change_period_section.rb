@@ -8,9 +8,9 @@ module Bus
 
     # Private elements
     #
-    element(:continue_btn, xpath: "//div[@id='#{CHANGE_CONFIRM_LOC}']//input[@value='Continue']")
+    element(:continue_btn, xpath: "//input[@value='Continue']")
     element(:price_table, xpath: "//div[@id='#{CHANGE_CONFIRM_LOC}']/table")
-    element(:message_div, xpath: "//div[@id='resource-change_billing_period-errors']//li")
+    element(:message_div, xpath: "//div[@id='resource-change_billing_period-errors']/ul")
     elements(:confirmation_p, xpath: "//div[@id='#{CHANGE_CONFIRM_LOC}']/p")
 
     # Public: Move upstream with subscription period
@@ -20,7 +20,7 @@ module Bus
     #
     # Returns nothing
     def change_subscription_up(link_text)
-      find(:link, link_text).click
+      find_link(link_text).click
       continue_btn.click
       #sleep 10 # wait for change subscription period
     end
@@ -32,7 +32,7 @@ module Bus
     #
     # Returns nothing
     def change_subscription_down(link_text)
-      find(:link, link_text).click
+      find_link(link_text).click
       #sleep 10 #wait for change subscription period
     end
 
