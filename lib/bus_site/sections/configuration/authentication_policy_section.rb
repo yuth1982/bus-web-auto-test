@@ -33,6 +33,7 @@ module Bus
     element(:data_saml_connection_client_endpoint, id: "data_saml_connection_client_endpoint")
     element(:data_saml_connection_signing_key, id: "data_saml_connection_signing_key")
     element(:saml_save_btn, xpath: "//div[@id='authentication_policies-edit-content']//input[@class='button']")
+    element(:data_saml_connection_encryption, id: "data_saml_connection_encryption")
 
     # Public: Select authentication provider
     #
@@ -121,6 +122,14 @@ module Bus
       end
     end
 
+    def tabs
+      tabs = []
+      tab_titles.child.each do |c|
+        tabs << c.text
+      end
+      tabs
+    end
+
     def load_attributes
       load_horizon_attrs_btn.click
     end
@@ -146,6 +155,10 @@ module Bus
 
     def certificate
       data_saml_connection_signing_key.value
+    end
+
+    def encrypted_saml?
+      data_saml_connection_encryption.checked?
     end
 
     def clear_all
@@ -179,6 +192,41 @@ module Bus
       fillin_user(connection_info.bind_user, connection_info.bind_password)
     end
 
+    def fillin_auth_url(auth_url)
+      data_saml_connection_web_endpoint.set(auth_url)
+    end
+
+    def fillin_client_endpoint(client_endpoint)
+      data_saml_connection_client_endpoint.set(client_endpoint)
+    end
+
+    def check_encrypt_saml(check)
+      if check
+        data_saml_connection_encryption.check
+      else
+        data_saml_connection_encryption.uncheck
+      end
+    end
+
+    def fillin_certificate(cert)
+      data_saml_connection_signing_key.set(cert)
+    end
+
+    def fillin_saml_settings(saml_info)
+      fillin_auth_url(saml_info.auth_url)
+      fillin_client_endpoint(saml_info.saml_endpoint)
+      fillin_certificate(saml_info.saml_cert)
+      check_encrypt_saml(saml_info.encrypted)
+    end
+
+    def saml_info
+      saml_info = Bus::DataObj::SAMLInfo.new
+      saml_info.auth_url = data_saml_connection_web_endpoint.value
+      saml_info.saml_endpoint = data_saml_connection_client_endpoint.value
+      saml_info.saml_cert = data_saml_connection_signing_key.value
+      saml_info.encrypted = data_saml_connection_encryption.value
+      saml_info
+    end
     # Public: Select protocol to connect to LDAP server
     #
     # protocol - Which protocol to use in [starttls, ldaps, false]
@@ -229,6 +277,10 @@ module Bus
       connection_info.bind_user = data_ad_connection_bind_username.value
       connection_info.bind_password = data_ad_connection_bind_password.value
       connection_info
+    end
+
+    def data_ad_connection_cert_displayed?
+      data_ad_connection_cert.visible?
     end
   end
 end

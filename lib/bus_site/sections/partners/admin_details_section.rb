@@ -4,8 +4,8 @@ module Bus
 
     # Private elements
     #
-    element(:act_as_link, link: "Act as")
-    element(:activate_admin_link, link: "Activate Admin")
+    element(:act_as_link, css: "a:contains('Act as')")
+    element(:activate_admin_link, xpath: "//a[text()='Activate Admin']")
     element(:new_pwd_txt, id: "new_password")
     element(:pwd_confirm_txt, id: "new_password_confirmation")
     element(:submit, xpath: "//div[starts-with(@id, 'admin-pass-change-')]/form//input[@value='Save Changes']")

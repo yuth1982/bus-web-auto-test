@@ -50,7 +50,7 @@ When /^I clear (SAML Authentication|Connection Settings) information exists$/ do
   step "I save the #{tab} information"
 end
 
-When /^I click (SAML Authentication|Connection Settings) tab$/ do |tab|
+When /^I click (SAML Authentication|Connection Settings|Sync Rules) tab$/ do |tab|
   @bus_site.admin_console_page.authentication_policy_section.select_tab(tab)
 end
 
@@ -69,6 +69,7 @@ Then /^SAML authentication information should include$/ do |table|
     @bus_site.admin_console_page.authentication_policy_section.auth_URL.should include(d[:URL])
     @bus_site.admin_console_page.authentication_policy_section.client_endpoint.should include(d[:Endpoint])
     @bus_site.admin_console_page.authentication_policy_section.certificate.should include(d[:Certificate])
+    @bus_site.admin_console_page.authentication_policy_section.encrypted_saml?.should == (d[:Encrypted] == 'Yes' ? true : false) if d[:Encrypted]
   end
 end
 
@@ -125,5 +126,33 @@ Then /^server connection settings information should include$/ do |table|
   data['Port'].should include(connection_info.port)
   data['Base DN'].should include(connection_info.base_dn)
   data['Bind Username'].should include(connection_info.bind_user)
-  data['Bind Password'].should include(connection_info.bind_password)
+  #data['Bind Password'].should include(connection_info.bind_password)
+end
+
+Then /^user mapping tab should be disabled$/ do
+  @bus_site.admin_console_page.authentication_policy_section.tabs().should_not include("Sync Rules")
+  @bus_site.admin_console_page.authentication_policy_section.tabs().should_not include("Arribute Mapping")
+end
+
+When /^I select Protocol as (No SSL|StartTLS|LDAPS)$/ do |p|
+  @bus_site.admin_console_page.authentication_policy_section.select_protocol(p == 'No SSL' ? 'false' : p.downcase)
+end
+
+Then /^certificate text field is (disabled|enabled)$/ do |p|
+  if p == 'disabled'
+    @bus_site.admin_console_page.authentication_policy_section.data_ad_connection_cert_displayed?.should be_false
+  else
+    @bus_site.admin_console_page.authentication_policy_section.data_ad_connection_cert_displayed?.should be_true
+  end
+end
+
+When /^I input SAML authentication information$/ do |table|
+  # table is a |sso.connect.pingidentity.com|sso.connect.pingidentity.com | abcdefghijkl     | No        |
+  auth = table.hashes.first
+  @saml_info = Bus::DataObj::SAMLInfo.new
+  @saml_info.auth_url = auth['URL']
+  @saml_info.saml_endpoint = auth['Endpoint']
+  @saml_info.saml_cert = auth['Certificate']
+  @saml_info.encrypted = (auth['Encrypted'] == 'No') ? false : true
+  @bus_site.admin_console_page.authentication_policy_section.fillin_saml_settings(@saml_info)
 end

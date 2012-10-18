@@ -8,7 +8,7 @@ module Bus
     element(:search_partner_btn, xpath: "//div[@id='partner-list-content']//input[@value='Submit']")
     element(:partner_filter_select, id: "pro_partner_filter")
     element(:include_sub_partners_cb, id: "include_subpartners")
-    element(:clear_search_link, link: "Clear search")
+    element(:clear_search_link, xpath: "//a[text()='Clear search']")
     element(:search_results_table, xpath: "//div[@id='partner-list-content']/div/table")
 
     # Public: Search partner
@@ -61,7 +61,7 @@ module Bus
     #
     # Returns nothing
     def view_partner_detail(search_key)
-      find(:link, search_key).click
+      find_link(search_key).click
     end
 
     # Public: View partner's root admin detail by click root admin email/username
@@ -72,7 +72,7 @@ module Bus
     #
     # Returns nothing
     def view_root_admin_detail(search_key)
-      find(:link, search_key).click
+      find_link(search_key).click
     end
 
     def clear_search

@@ -6,13 +6,13 @@ Feature: User sync
 
   Background:
     Given I log in bus admin console as administrator
+    And I act as the partner by usrsync@test.com on admin details panel
+    And I navigate to Authentication Policy section from bus admin console page
 
   @TC.17529-17536
   Scenario: Check the Sync rules UI is correct
-    When I act as a partner user sync regression
-    And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
-    And I move to the Sync rules tab
+    And I click Sync Rules tab
     And I add a new rule: cn=dev_test*
     Then There should be 4 items:
       | (default user group) | dev | pm | qa |
