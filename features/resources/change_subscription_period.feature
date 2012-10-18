@@ -7,7 +7,7 @@ Feature: Change subscription period
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.15231 @smoke @chrome
+  @TC.15231 @smoke
   Scenario: 15231 MozyPro change subscription period from Monthly to Yearly
     When I add a new MozyPro partner:
       | period | base plan |
