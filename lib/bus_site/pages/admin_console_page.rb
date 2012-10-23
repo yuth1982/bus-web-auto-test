@@ -23,6 +23,7 @@ module Bus
     section(:machine_mapping_section, MachineMappingSection, id: "machine-machine_migration")
     section(:user_group_details_section, UserGroupDetailsSection, xpath: "//div[starts-with(@id, 'user_groups-show-')]")
     section(:list_user_groups_section, ListUserGroupsSection, id: "user_groups-list")
+    section(:user_details_section, UserDetailsSection, xpath: "//div[starts-with(@id, 'user-show-')]")
 
     # Admin section
 

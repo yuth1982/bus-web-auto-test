@@ -10,11 +10,10 @@ module FileHelper
     path
   end
 
-  # Public: Default upload folder for files
+  # Public: Default test data folder for files
   #
-  # Returns default upload path
-  def default_upload_path
-    path = File.expand_path("../#{CONFIGS['global']['upload_folder']}", File.dirname(__FILE__))
+  def default_test_data_path
+    path = File.expand_path("../#{CONFIGS['global']['test_data_folder']}", File.dirname(__FILE__))
     Dir.mkdir(path) unless File.exists?(path)
     path
   end
@@ -24,6 +23,10 @@ module FileHelper
   # Returns firefox download folder
   def ff_download_path
     default_download_path.gsub(File::SEPARATOR, File::ALT_SEPARATOR || File::SEPARATOR)
+  end
+
+  def ff_profile_path
+    "#{default_test_data_path}/#{PROFILE_NAME}"
   end
 
   # Public: read csv file

@@ -9,7 +9,9 @@ global:
   email_prefix:                 qa1
   # Files downloaded location
   download_folder:              downloads
-  upload_folder:                uploads
+  test_data_folder:             test_data
+  # Profile name
+  profile_name:                 p3pf34d7.QAAutomation
 
 bus:
   company_type:

@@ -27,3 +27,7 @@ end
 Before('@webkit') do
   Capybara.current_driver = :webkit
 end
+
+Before('@firefox_profile') do
+  Capybara.current_driver = :firefox_profile
+end

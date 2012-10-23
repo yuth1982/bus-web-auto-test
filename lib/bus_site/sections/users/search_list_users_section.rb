@@ -45,5 +45,16 @@ module Bus
     def search_results_table_rows
       search_results_table.rows_text
     end
+
+    # Public: Click the user link to view user details
+    #
+    # Example
+    #
+    #  @bus_admin_console_page.search_list_users_section.view_user_details('qa1+new+user+test@mozy.com')
+    #
+    # Return search results table body rows text array
+    def view_user_details(user)
+      find_link(user).click
+    end
   end
 end

@@ -22,6 +22,8 @@ require 'configs/configs_helper'
 #require 'configs/zimbra_configs'
 require 'file_helper'
 require 'zimbra_helper'
+require 'db_helper'
+require 'ldap_helper'
 
 require 'data_obj/data_obj_helper'
 require 'site_helper/site_helper'
@@ -34,6 +36,8 @@ require 'aria_site/aria_site_helper'
 
 include Zimbra::Inbox
 include FileHelper
+include DBHelper
+include LDAPHelper
 
 
 

@@ -7,9 +7,9 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.16266 @regression
+  @TC.16266 @regression @smoke
   Scenario: Export the machine-user mapping csv file
-    Given I act as a partner Machine Migration Automation
+    When I act as the partner by machine_migration_auto@auto.com on admin details panel
     And I navigate to the machine mapping page
     When I click the export machine csv button
     Then There should be export message to inform that it is exporting
@@ -20,7 +20,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
 
   @TC.16270
   Scenario: Export a CSV file in Synchronized way after deleting one user-machine mapping
-    Given I act as a partner Machine Migration Add Delete Test
+    When I act as the partner by machine_migration_add_delete@auto.com on admin details panel
     And I navigate to the machine mapping page
     And I download the machine csv file
     And I refresh the machine mapping page
@@ -31,7 +31,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
 
   @TC.16271
   Scenario: Export a CSV file in Synchronized way after adding one user-machine mapping
-    Given I act as a partner Machine Migration Add Delete Test
+    When I act as the partner by machine_migration_add_delete@auto.com on admin details panel
     And I navigate to the machine mapping page
     And I download the machine csv file
     And I refresh the machine mapping page
@@ -42,7 +42,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
 
   @TC.16272
   Scenario: Export a CSV file in Synchronized way while the partner has 10000 machines before
-    Given I act as a partner Fed ID Partner
+    When I act as the partner by leongh+system@mozy.com on admin details panel
     And I navigate to the machine mapping page
     When I download the machine csv file
     Then The exported csv file should be like:(header as below, row number is 9793, order by current owner, no duplicated rows)
@@ -59,9 +59,9 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       | column 1      |  column 2                              |  column 3       | column 4  |
       | Machine Name  | Machine Hash                           | Current Owner   | New Owner |
 
-  @TC.16265 @positive @regression
+  @TC.16265 @positive @regression @smoke
   Scenario: Import a valid CSV file in non-passive way
-    Given I act as a partner Machine Migration Automation
+    When I act as the partner by machine_migration_auto@auto.com on admin details panel
     And I navigate to the machine mapping page
     And I download the machine csv file
     And I change the csv file by adding new owners to the machines
@@ -71,30 +71,9 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       | column 1      |  column 2       |  column 3                    | column 4                                   |
       |Import Results:| 3 rows imported |3 machines moved to new users | 0 machines skipped (no new user specified) |
 
-  @TC.16276
-  Scenario: Import a CSV file in no passive way while the partner has 10000 machines before
-    Given I act as a partner Machine Migration Automation
-    And I navigate to the machine mapping page
-    And I download the machine csv file
-    And I change the csv file by adding new owners to the machines
-    When I upload the machine csv file
-    Then The import result should be like:
-      | column 1      |  column 2       |  column 3                    | column 4                                   |
-      |Import Results:| 3 rows imported |3 machines moved to new users | 0 machines skipped (no new user specified) |
-
-  @TC.16278
-  Scenario: Import an empty CSV file in non-passive way
-    Given I act as a partner Machine Migration Automation
-    And I navigate to the machine mapping page
-    And I create an empty file
-    When I upload the machine csv file
-    Then The import result should be like:
-      | column 1      |  column 2       |  column 3                    | column 4                                   |
-      |Import Results:| 0 rows imported |0 machines moved to new users | 0 machines skipped (no new user specified) |
-
   @TC.16279
   Scenario: Import a CSV file whose type is not CSV in non-passive way
-    Given I act as a partner Machine Migration Automation
+    When I act as the partner by machine_migration_auto@auto.com on admin details panel
     And I navigate to the machine mapping page
     When I upload the non-csv file
     Then The import result should be like:
@@ -103,7 +82,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
 
   @TC.16280 @TC.16281 @TC.16282
   Scenario Outline: Import a CSV file with a column absent
-    Given I act as a partner Machine Migration Automation
+    When I act as the partner by machine_migration_auto@auto.com on admin details panel
     And I navigate to the machine mapping page
     And I download the machine csv file
     And I make the <column> absent
@@ -120,7 +99,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
 
   @TC.16283
   Scenario: Import a CSV file with a column absent (new owner)
-    Given I act as a partner Machine Migration Automation
+    When I act as the partner by machine_migration_auto@auto.com on admin details panel
     And I navigate to the machine mapping page
     And I download the machine csv file
     And I make the New Owner absent
@@ -131,7 +110,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
 
   @TC.16284 @TC.16285
   Scenario Outline: Import a CSV file whose one column has unknown value
-    Given I act as a partner Machine Migration Automation
+    When I act as the partner by machine_migration_auto@auto.com on admin details panel
     And I navigate to the machine mapping page
     And I download the machine csv file
     And I make the <column> an unknown value
@@ -147,7 +126,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
 
   @TC.16286
   Scenario: Import a CSV file whose one column has unknown value (current Owner)
-    Given I act as a partner Machine Migration Automation
+    When I act as the partner by machine_migration_auto@auto.com on admin details panel
     And I navigate to the machine mapping page
     And I download the machine csv file
     And I make the Current Owner an unknown value
@@ -158,7 +137,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
 
   @TC.16287
   Scenario: Import a CSV file whose one column has unknown value (New Owner)
-    Given I act as a partner Machine Migration Automation
+    When I act as the partner by machine_migration_auto@auto.com on admin details panel
     And I navigate to the machine mapping page
     And I download the machine csv file
     And I make the New Owner an unknown value
@@ -169,7 +148,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
 
   @TC.16288
   Scenario: Import a CSV file with current owners invalid format
-    Given I act as a partner Machine Migration Automation
+    When I act as the partner by machine_migration_auto@auto.com on admin details panel
     And I navigate to the machine mapping page
     And I download the machine csv file
     And I make the Current Owner an invalid value
@@ -180,7 +159,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
 
   @TC.16289
   Scenario: Import a CSV file with new owners invalid format
-    Given I act as a partner Machine Migration Automation
+    When I act as the partner by machine_migration_auto@auto.com on admin details panel
     And I navigate to the machine mapping page
     And I download the machine csv file
     And I make the New Owner an invalid value
@@ -191,7 +170,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
 
   @TC.16290
   Scenario: Import a CSV file with mismatched machine name and machine hash
-    Given I act as a partner Machine Migration Automation
+    When I act as the partner by machine_migration_auto@auto.com on admin details panel
     And I navigate to the machine mapping page
     And I download the machine csv file
     And I make a column with mismatched machine name and machine hash
@@ -202,7 +181,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
 
   @TC.16291
   Scenario: Import a CSV file with new owner an empty string in non-passive way
-    Given I act as a partner Machine Migration Automation
+    When I act as the partner by machine_migration_auto@auto.com on admin details panel
     And I navigate to the machine mapping page
     And I download the machine csv file
     And I make the new owner column with a space
@@ -226,7 +205,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
 
   @TC.17936
   Scenario: Import a CSV file while two users have same machine
-    Given I act as a partner Machine Migration for TC17936
+    When I act as the partner by machine_migraion_tc17936@auto.com on admin details panel
     And I navigate to the machine mapping page
     And I download the machine csv file
     And I change the csv file by moving the machines to new users
@@ -234,4 +213,15 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
     Then The import result should be like:
       | column 1      |  column 2       |  column 3                    | column 4                                   |
       |Import Results:| 2 rows imported |2 machines moved to new users | 0 machines skipped (no new user specified) |
+
+  @TC.16276 @slow
+  Scenario: Import a CSV file in no passive way while the partner has 10000 machines before
+    When I act as the partner by leongh+system@mozy.com on admin details panel
+    And I navigate to the machine mapping page
+    And I download the machine csv file
+    And I change the csv file by adding new owners to the machines for 9793 machines
+    When I upload the machine csv file
+    Then The import result should be like:
+      | column 1      |  column 2          |  column 3                       | column 4                                   |
+      |Import Results:| 9793 rows imported |9793 machines moved to new users | 0 machines skipped (no new user specified) |
 

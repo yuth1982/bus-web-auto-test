@@ -1,3 +1,8 @@
+# first for qa5 environment change the mozybfst.yml
+# # QA5 machine migration add delete test
+# secret: 5NDOVgE2OpdpZc5IPBEA8ZuQ6t2Ch7094MGoHg8nElxK6geBlpCFSSRxAt028Qa5
+# QA5 machine migration add delete test
+# group_id: 129736
 module Bus
   class MachineMappingSection < SiteHelper::Section
     element(:export_machine_csv_btn, id: "export_btn")
@@ -24,7 +29,7 @@ module Bus
     #
     # Returns nothing
     def wait_until_downloaded
-      MAX_WAIT_TIME.times do
+      CONFIGS['global']['default_wait_time'].times do
         return if file_exists?("machine_mapping.csv")
         sleep(1)
       end
@@ -36,14 +41,16 @@ module Bus
     #  @bus_site.admin_console_page.machine_mapping_section.export_machine_csv
     #
     # Returns nothing
-    def export_machine_csv
+    def export_machine_csv(file_name = "#{default_download_path}/machine_mapping.csv")
       export_machine_csv_btn.click
-      Log.debug(MAX_WAIT_TIME)
       i = 0
-      MAX_WAIT_TIME.times do
-        if file_exists?("machine_mapping.csv")
-          sleep(2)
-          break
+      CONFIGS['global']['default_wait_time'].times do
+        if File.size?(file_name)
+          size = File.size(file_name)
+          sleep(1)
+          if File.size(file_name) == size
+            break
+          end
         else
           sleep(1)
         end
@@ -89,7 +96,13 @@ module Bus
     #
     # Returns 0 if succeed
     def result_msg
-      page.wait_until(MAX_WAIT_TIME) { page.find(:id, 'msg_show').visible? }
+      Log.debug('begin waiting')
+      page.wait_until { p page.find(:id, 'msg_show').visible? }
+      Log.debug('msg_show visible')
+      wait_until(CONFIGS['global']['max_wait_time']) do
+        Log.debug("#{Time.now}")
+        !import_msg.visible?
+      end
       switch_to_iframe(['msg_show'])
       Log.debug('switch to the iframe')
       msg = []
@@ -261,7 +274,7 @@ module Bus
     #
     # Returns nothing
     def parse_download_csv(file_name = 'machine_mapping')
-      MAX_WAIT_TIME.times do
+      CONFIGS['global']['default_wait_time'].times do
         sleep(2)
         break if file_exists?("#{file_name}.csv")
       end
@@ -279,6 +292,17 @@ module Bus
       machine_user.delete_at(0)
       unique = machine_user.uniq == machine_user
       [header, mapping_num, order, unique]
+    end
+
+    def change_10000_machines(old_csv, new_csv)
+      r = FileHelper.read_csv_file(old_csv)
+      new_owner = r.collect { |row| (row[2]).sub(/\d/) {|s| (s.to_i + 1) % 2} }
+      first = new_owner.delete_at(1)
+      new_owner << first
+      new_owner[0] = "New Owner"
+      r.each { |row| row[3] = new_owner.shift }
+      r[0] = ['Machine Name', 'Machine Hash', 'Current Owner', 'New Owner']
+      write_csv_file(new_csv, r)
     end
 
   end

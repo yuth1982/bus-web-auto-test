@@ -9,10 +9,6 @@ module Bus
     element(:data_horizon_configs_org_name, id: "data_horizon_configs_org_name")
     element(:test_org_name, id: "test_org_name")
     element(:authentication_policies_edit_errors, xpath: "//div[@id='authentication_policies-edit-errors']/ul")
-    # Sync rules tab
-    element(:sync_rules_tab, xpath: "//div[@id='authentication_policies-edit-tabs']/ul[1]/li[2]")
-    element(:attribute_mapping_tab, xpath: "//div[@id='authentication_policies-edit-tabs']/ul[1]/li[3]")
-    element(:add_rule, id: 'add-provision-rule')
     # Connection Settings Tab without Horizon Application Manager selected
     element(:data_ad_connection_host, id: "data_ad_connection_host")
     elements(:protocol_rds, xpath: "//fieldset[@id='ad-connection']/div[2]/div/input")
@@ -34,6 +30,16 @@ module Bus
     element(:data_saml_connection_signing_key, id: "data_saml_connection_signing_key")
     element(:saml_save_btn, xpath: "//div[@id='authentication_policies-edit-content']//input[@class='button']")
     element(:data_saml_connection_encryption, id: "data_saml_connection_encryption")
+    element(:connection_settings_tab, "//div[@id='authentication_policies-edit-tabs']/ul[1]/li[1]")
+    element(:sync_rules_tab, xpath: "//div[@id='authentication_policies-edit-tabs']/ul[1]/li[2]")
+    element(:attribute_mapping_tab, xpath: "//div[@id='authentication_policies-edit-tabs']/ul[1]/li[3]")
+    element(:saml_authentication_tab, xpath: "//div[@id='authentication_policies-edit-tabs']/ul[1]/li[4]")
+    element(:save_changes_button, xpath: "//input[@value='Save Changes']")
+    element(:sync_now_button, xpath: "//input[@name='sync_now']")
+    element(:options_delete_missing_users, id: 'options_delete_missing_users')
+    element(:options_suspend_missing_users, id: 'options_suspend_missing_users')
+    element(:scheduled_sync_time, id: 'data_sync_options_schedule')
+    element(:fixed_attribute, xpath: "//ul[@class='tab-panes']/li[3]//div[4]/div/input")
 
     # Public: Select authentication provider
     #
@@ -92,12 +98,14 @@ module Bus
       authentication_policies_edit_errors.text
     end
 
-    def move_to_sync_rules
-      sync_rules_tab.click
+    # the hash to decide the action depends on provision/deprovision
+    def type_action_hash
+      type_action_hash = {'provision'=> 'user_group', 'deprovision'=> 'action'}
     end
 
-    def add_rule
-      add_rule_button.click
+    # when moving from mozy to ad and before saving changes, the xpath is different
+    def change_provider_connecting_settings
+      find(:xpath, "//div[@id='authentication_policies-change_provider-tabs']/ul[1]/li[1]").click
     end
 
     def fill_in_rules(num, content)
@@ -110,6 +118,205 @@ module Bus
 
     def group_names
       find(:xpath, "//ol[@id='provision-rules']//select[1]").options_text
+    end
+
+    # Public: Click the add rule button
+    #
+    # type - provision or deprovision
+    #
+    # Example
+    #   @bus_admin_console_page.authentication_policy_section.add_rule('provision')
+    #
+    # Returns nothing
+    def add_rule(type)
+      find(:id, "add-#{type}-rule").click
+    end
+
+    # Public: Get the number of options in the dropdownlist
+    #
+    # type - provision or deprovision
+    #
+    # Example
+    #   @bus_admin_console_page.authentication_policy_section.options_num('provision')
+    #
+    # Returns number of options
+    def options_num(type)
+      find(:xpath, "//ol[@id='#{type}-rules']//select[1]").options.length
+    end
+
+    # Public: Array of options text
+    #
+    def options_names(type)
+      find(:xpath, "//ol[@id='#{type}-rules']//select[1]").options_text
+    end
+
+    # Public: The result after synced, include status, sync time, next sync time
+    #
+    def sync_result
+      r = []
+      (1..3).each { |num| r << find(:xpath, "//fieldset[@id='sync-status']/div[#{num}]/div").text }
+      r
+    end
+
+    # Public: The layout of attribute_mapping_tab
+    #
+    def attribute_layout
+      r = [[],[]]
+      r[0] << find(:xpath, "//ul[@class='tab-panes']/li[3]//div[1]/label").text
+      r[1] << find(:xpath, "//ul[@class='tab-panes']/li[3]//div[1]/div").text
+      (2..4).each do |num|
+        r[0] << find(:xpath, "//ul[@class='tab-panes']/li[3]//div[#{num}]/label").text
+        r[1] << find(:xpath, "//ul[@class='tab-panes']/li[3]//div[#{num}]/div/input").value
+      end
+      r
+    end
+
+    # Public: Add rules
+    #
+    # type - provision or deprovision
+    # number - rule number
+    # rule - rule array
+    # drop_down_content - the action or group array
+    #
+    # Example
+    #   @bus_site.admin_console_page.authentication_policy_section.add_rules('provision', 2, ['dev_test*', 'qa_test*'], ['dev', 'qa'])
+    #
+    # Returns nothing
+    def add_rules(type, number, rule, drop_down_content)
+      (1..number).each do |num|
+        find(:id, "add-#{type}-rule").click
+        find(:xpath, "//ol[@id='#{type}-rules']//li[#{num}]//input").set(rule[num])
+        if drop_down_content[num] != ''
+          find(:xpath, "//ol[@id='#{type}-rules']//select[@name='data[rules][#{type}][#{num}][#{type_action_hash[type]}]']").select(drop_down_content[num])
+        end
+        Log.debug('add a new rule')
+      end
+    end
+
+    # Public: Click the save changes button
+    #
+    def save_changes
+      save_changes_button.click
+    end
+
+    # Public: The message show after saving changes
+    #
+    def result_message
+      authentication_policies_edit_errors.text
+    end
+
+    # Public: The number of rules that are added
+    #
+    def rule_num(type)
+      if (page.has_xpath?("//ol[@id='#{type}-rules']//li"))
+        all(:xpath,"//ol[@id='#{type}-rules']//li").length
+      else
+        0
+      end
+    end
+
+    # Public: The status of arrows
+    #
+    # type - provision or deprovision
+    # index - which number of rule
+    #
+    # Example
+    #   @bus_site.admin_console_page.authentication_policy_section.arrow_status('provision', 2)
+    #   #=> ['up', 'down', 'delete']
+    #
+    # Returns array of status
+    def arrow_status(type, index)
+      status = []
+      (1..3).each { |i| status << find(:xpath, "//ol[@id='#{type}-rules']//li[#{index}]/a[#{i}]")['class'] }
+      status
+    end
+
+    # Public: change the order of the rules
+    #
+    # type - provision or deprovision
+    # index - which number of rule
+    # action - make the rule up or down
+    #
+    # Example
+    #   @bus_site.admin_console_page.authentication_policy_section.change_order('provision', 2, 'up')
+    #
+    # Returns nothing
+    def change_order(type, index, action)
+      find(:xpath, "//ol[@id='#{type}-rules']//li[#{index}]/a[@class='#{action}']").click
+    end
+
+    # Public: The array of rules order
+    #
+    # type - provision or deprovision
+    #
+    # Example
+    #   @bus_site.admin_console_page.authentication_policy_section.rules_order('provision')
+    #   #=> [['cn=dev_test*', 'dev'], ['cn=pm_test*', 'pm']]
+    #
+    # Returns array of status
+    def rules_order(type)
+      num = rule_num(type)
+      rules = []
+      num.times {rules << []}
+      (1..num).each do |i|
+        rules[i - 1] << find(:xpath, "//ol[@id='#{type}-rules']//li[#{i}]//input").value
+        rules[i - 1] << find(:xpath, "//ol[@id='#{type}-rules']//select[@name='data[rules][#{type}][#{i}][#{type_action_hash[type]}]']").first_selected_option.text
+      end
+      rules
+    end
+
+    # Public: Delete a provision or deprovision rule
+    #
+    def delete_rule(type)
+      find(:xpath, "//ol[@id='#{type}-rules']//li[1]/a[3]").click
+      Log.debug("delete a rule")
+    end
+
+    # Public: The selected option of a dropdownlist
+    #
+    def selected_option(type)
+      find(:xpath, "//ol[@id='#{type}-rules']//select[1]").first_selected_option.text
+    end
+
+    # Public: Click the sync now button
+    #
+    def sync_now
+      sync_now_button.click
+    end
+
+    # Public: Refresh the page
+    #
+    def refresh
+#      find(:xpath, "//a[@class='mod-button']").click
+      page.find(:xpath, "//div[@id='authentication_policies-edit']//a[@class='mod-button']").click
+    end
+
+    # Public: Delete or suspend users if not synced for several days
+    #
+    def handle_user(method, days)
+      uncheck_option =  method == 'delete' ? 'suspend' : 'delete'
+      find(:id, "options_#{method}_missing_users").check
+      find(:id, "options_#{uncheck_option}_missing_users").uncheck
+      find(:id, "data_sync_options_#{method}_after_miss").set(days)
+    end
+
+    def clear_user_sync_info
+      options_delete_missing_users.uncheck
+      options_suspend_missing_users.uncheck
+    end
+
+    # Public: Set the daily sync at time
+    #
+    def sync_daily_at(hour)
+      scheduled_sync_time.set(hour)
+    end
+
+    def sync_daily_time
+      scheduled_sync_time.value
+    end
+
+    def set_fixed_attribute(attr)
+      fixed_attribute.set(attr)
     end
 
     def load_attributes_result

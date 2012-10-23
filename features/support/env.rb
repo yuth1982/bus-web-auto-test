@@ -14,6 +14,13 @@ Capybara.register_driver :firefox do |app|
   Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => profile)
 end
 
+Capybara.register_driver :firefox_profile do |app|
+  profile_address = "#{FileHelper.default_test_data_path}/#{CONFIGS['global']['profile_name']}"
+  profile = Selenium::WebDriver::Firefox::Profile.new profile_address
+  profile.add_extension("#{FileHelper.default_test_data_path}/autoauth-2.1-fx+fn.xpi")
+  Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => profile)
+end
+
 Capybara.register_driver :chrome do |app|
   Capybara::Selenium::Driver.new(app, :browser => :chrome)
 end

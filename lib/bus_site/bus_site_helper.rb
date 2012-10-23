@@ -13,6 +13,7 @@ require 'bus_site/sections/users/search_list_users_section'
 require 'bus_site/sections/users/machine_mapping_section'
 require 'bus_site/sections/users/list_user_groups_section'
 require 'bus_site/sections/users/user_group_details_section'
+require 'bus_site/sections/users/user_details_section'
 
 # Admins section
 require 'bus_site/sections/admins/add_new_admin_section'
@@ -46,4 +47,7 @@ require 'bus_site/sections/reports/quick_reports_section'
 # Pages
 require 'bus_site/pages/login_page'
 require 'bus_site/pages/admin_console_page'
+require 'bus_site/pages/user_login_page'
+require 'bus_site/pages/user_account_page'
+require 'bus_site/pages/authentication_failed_page'
 require 'bus_site/bus_site'

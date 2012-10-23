@@ -54,7 +54,7 @@ When /^I create an empty file$/ do
 end
 
 When /^I upload the non-csv file$/ do
-  @bus_site.admin_console_page.machine_mapping_section.fill_in_import_file('non_csv.png', default_upload_path)
+  @bus_site.admin_console_page.machine_mapping_section.fill_in_import_file('non_csv.png', default_test_data_path)
   @bus_site.admin_console_page.machine_mapping_section.import_machine_csv
 end
 
@@ -208,4 +208,7 @@ When /^I get the default group id by bifrost$/ do
   Log.debug(@partner_id)
   @default_group_id = BifrostHelper.get_default_group_id(@api_key, @partner_id)
   Log.debug("The default group id is #{@default_group_id}")
+end
+When /^I change the csv file by adding new owners to the machines for (\d+) machines$/ do |arg|
+  @bus_site.admin_console_page.machine_mapping_section.change_10000_machines('machine_mapping', 'import')
 end
