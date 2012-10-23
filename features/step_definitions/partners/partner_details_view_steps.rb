@@ -9,19 +9,20 @@ Given /^I act as a partner (.*)$/ do |partner_name|
   @bus_site.admin_console_page.partner_details_section.act_as_partner
 end
 
-When /^I search and delete (.+ account)$/ do |account|
-  @bus_site.admin_console_page.click_link(Bus::MENU[:search_list_partner])
-  @bus_site.admin_console_page.search_list_partner_section.search_partner(account[:company_name])
+When /^I search and delete (.+) account/ do |account_name|
+  @bus_site.admin_console_page.navigate_to_link(CONFIGS['bus']['menu']['search_list_partner'])
+  @bus_site.admin_console_page.search_list_partner_section.search_partner(account_name)
 
   rows_text = @bus_site.admin_console_page.search_list_partner_section.search_results_table_rows
   unless rows_text.count == 7 && rows_text[1].to_s == "[\"No results found.\"]"
-    @bus_site.admin_console_page.search_list_partner_section.view_partner_detail(account[:company_name])
-    @bus_site.admin_console_page.partner_details_section.delete_partner(Bus::DEFAULT_PWD)
+    @bus_site.admin_console_page.search_list_partner_section.view_partner_detail(account_name)
+    @bus_site.admin_console_page.partner_details_section.delete_partner(CONFIGS['global']['test_pwd'])
   end
 end
 
+# When you are on partner details section, you are able to execute this steps
 When /^I delete partner account$/ do
-  @bus_site.admin_console_page.partner_details_section.delete_partner(Bus::DEFAULT_PWD)
+  @bus_site.admin_console_page.partner_details_section.delete_partner(CONFIGS['global']['test_pwd'])
 end
 
 When /^I get the partner_id$/ do
@@ -46,9 +47,9 @@ Then /^Partner general information should be:$/ do |details_table|
   months = expected['Next Charge:'].match(/\+(\d+) month\(s\)/)
   unless months.nil?
     next_date = (Time.now.localtime("-06:00").to_datetime >> months[1].to_s.to_i).strftime("%m/%d/%y")
-    #actual['Next Charge:'].should == expected['Next Charge:'].gsub(months.to_s,next_date)
+    actual['Next Charge:'].should == expected['Next Charge:'].gsub(months.to_s,next_date)
   end
-  actual['Marketing Referrals:'].should == expected['Marketing Referrals:'].gsub(/@parent_admin_email/,@root_admin[:user_name])
+  actual['Marketing Referrals:'].should == expected['Marketing Referrals:'].gsub(/@parent_admin_email/,@admin_username)
   actual['Subdomain:'].should == expected['Subdomain:']
   actual['Enable Mobile Access:'].should == expected['Enable Mobile Access:']
   actual['Enable Co-branding:'].should == expected['Enable Co-branding:']

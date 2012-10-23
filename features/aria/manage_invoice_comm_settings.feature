@@ -29,11 +29,11 @@ Feature:
       | period | base plan |
       | 1      | 50 GB     |
     Then New partner should be created
-    When I log in aria admin console as aria admin
-    And I set the new partner account notification method to Printable (no Email)
-    Then the new partner account current notification method is set to Printable (no Email)
+    When I log in aria admin console as administrator
+    And I set newly created partner company name account notification method to Printable (no Email)
+    Then newly created partner company name account current notification method is set to Printable (no Email)
     When I set the new partner account notification method to HTML Email
-    Then the new partner account current notification method is set to HTML Email
+    Then newly created partner company name account current notification method is set to HTML Email
 
   @TC.15448 @firefox
   Scenario: 15448 Verify notification methods have HTML email and Printable no email
@@ -41,8 +41,8 @@ Feature:
       | period | base plan  |
       | 1      | 50 GB      |
     Then New partner should be created
-    When I log in aria admin console as aria admin
-    Then the new partner account notification methods should be:
+    When I log in aria admin console as administrator
+    Then newly created partner company name account notification methods should be:
       | methods              |
       | HTML Email           |
       | Printable (no Email) |
@@ -56,8 +56,8 @@ Feature:
     When I act as newly created partner account
     And I set account Receive Mozy Account Statements option to No
     Then Account statement preference should be changed
-    When I log in aria admin console as aria admin
-    Then the new partner account current notification method is set to Printable (no Email)
+    When I log in aria admin console as administrator
+    Then newly created partner company name account current notification method is set to Printable (no Email)
 
   @TC.15718 @firefox
   Scenario: 15718 Verify notification method set to HTML Email for new Monthly MozyPro partner
@@ -65,8 +65,8 @@ Feature:
       | period | base plan |
       | 1      | 50 GB     |
     Then New partner should be created
-    When I log in aria admin console as aria admin
-    Then the new partner account current notification method is set to HTML Email
+    When I log in aria admin console as administrator
+    Then newly created partner company name account current notification method is set to HTML Email
 
   @TC.17590 @firefox
   Scenario: 17590 Verify notification method set to HTML Email for new Monthly MozyEnterprise partner
@@ -74,8 +74,8 @@ Feature:
       | period | users |
       | 12     | 1     |
     Then New partner should be created
-    When I log in aria admin console as aria admin
-    Then the new partner account current notification method is set to HTML Email
+    When I log in aria admin console as administrator
+    Then newly created partner company name account current notification method is set to HTML Email
 
   @TC.17591 @firefox
   Scenario: 17591 Verify notification method set to HTML Email for new Monthly Reseller partner
@@ -83,8 +83,8 @@ Feature:
       | period | reseller type | reseller quota |
       | 1      | Silver        | 100            |
     Then New partner should be created
-    When I log in aria admin console as aria admin
-    Then the new partner account current notification method is set to HTML Email
+    When I log in aria admin console as administrator
+    Then newly created partner company name account current notification method is set to HTML Email
 
 
 

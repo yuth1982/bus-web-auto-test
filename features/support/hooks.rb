@@ -9,7 +9,7 @@ After do |scenario|
 end
 
 AfterStep do
-  puts Time.now if TIMESTAMP
+  # Todo
 end
 
 Before('@chrome') do

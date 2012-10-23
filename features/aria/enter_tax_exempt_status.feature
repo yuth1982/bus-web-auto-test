@@ -12,8 +12,8 @@
       | period | base plan | server plan | country | vat number   |
       | 1      | 50 GB     | yes         | Belgium | BE0883236072 |
     Then New partner should be created
-    When I log in aria admin console as aria admin
-    Then the new partner account taxpayer information should be:
+    When I log in aria admin console as administrator
+    Then newly created partner company name account taxpayer information should be:
       | id           | status                                                                   |
       | BE0883236072 | Account is exempt from both federal/national and state/province taxation.|
 
@@ -23,8 +23,8 @@
       | period | users | country | vat number   |
       | 24     | 1     | Belgium | BE0883236072 |
     Then New partner should be created
-    When I log in aria admin console as aria admin
-    Then the new partner account taxpayer information should be:
+    When I log in aria admin console as administrator
+    Then newly created partner company name account taxpayer information should be:
       | id           | status                                                                   |
       | BE0883236072 | Account is exempt from both federal/national and state/province taxation.|
 
@@ -34,8 +34,8 @@
       | period | reseller type | reseller quota | server plan | country | vat number    |
       | 1      | Gold          | 100            | yes         | Italy   | IT03018900245 |
     Then New partner should be created
-    When I log in aria admin console as aria admin
-    Then the new partner account taxpayer information should be:
+    When I log in aria admin console as administrator
+    Then newly created partner company name account taxpayer information should be:
       | id            | status                                                                   |
       | IT03018900245 | Account is exempt from both federal/national and state/province taxation.|
 
@@ -45,11 +45,11 @@
       | period | base plan | server plan | country | vat number   |
       | 24     | 50 GB     | yes         | Belgium | BE0883236072 |
     Then New partner should be created
-    When I log in aria admin console as aria admin
-    And I set the new partner account taxpayer information to:
+    When I log in aria admin console as administrator
+    And I set newly created partner company name account taxpayer information to:
       | exempt state | exempt federal |
       | no           | no             |
-    Then the new partner account taxpayer information should be:
+    Then newly created partner company name account taxpayer information should be:
       | id           | status                              |
       | BE0883236072 | Account is not exempt from taxation.|
 
@@ -59,11 +59,11 @@
       | period | users | country | vat number   |
       | 36     | 1     | Belgium | BE0883236072 |
     Then New partner should be created
-    When I log in aria admin console as aria admin
-    And I set the new partner account taxpayer information to:
+    When I log in aria admin console as administrator
+    And I set newly created partner company name account taxpayer information to:
       | exempt state | exempt federal |
       | no           | yes            |
-    Then the new partner account taxpayer information should be:
+    Then newly created partner company name account taxpayer information should be:
       | id           | status                                            |
       | BE0883236072 | Account is exempt from federal/national taxation. |
 
@@ -73,11 +73,11 @@
       | period | reseller type | reseller quota | country | vat number    |
       | 1      | Silver        | 100            | Italy   | IT03018900245 |
     Then New partner should be created
-    When I log in aria admin console as aria admin
-    And I set the new partner account taxpayer information to:
+    When I log in aria admin console as administrator
+    And I set newly created partner company name account taxpayer information to:
       | exempt state | exempt federal |
       | yes           | no            |
-    Then the new partner account taxpayer information should be:
+    Then newly created partner company name account taxpayer information should be:
       | id            | status                                          |
       | IT03018900245 | Account is exempt from state/province taxation. |
 

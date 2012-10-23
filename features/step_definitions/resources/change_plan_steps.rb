@@ -8,7 +8,7 @@
 # Optional: reseller quota, server plan, server add-on, coupon
 #
 When /^I change (MozyPro|MozyEnterprise|Reseller) account plan to:$/ do |type, plan_table|
-  @bus_site.admin_console_page.navigate_to_link(Bus::MENU[:change_plan])
+  @bus_site.admin_console_page.navigate_to_link(CONFIGS['bus']['menu']['change_plan'])
   attributes = plan_table.hashes.first
   coupon = attributes["coupon"] || ""
   case type

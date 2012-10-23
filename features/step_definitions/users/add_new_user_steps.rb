@@ -4,13 +4,14 @@
 # | user group | server licenses | server quota | desktop licenses | desktop quota |
 #
 When /^I add a new user:$/ do |user_table|
-  @bus_site.admin_console_page.navigate_to_link(Bus::MENU[:add_new_user])
+  @bus_site.admin_console_page.navigate_to_link(CONFIGS['bus']['menu']['add_new_user'])
 
   unless @user_group.nil?
     user_table.map_column!('user group') do |value|
       value.gsub(/@the_new_group/,@user_group.name)
     end
   end
+
   @user = Bus::DataObj::User.new
   attributes = user_table.hashes.first
   @user.name = attributes["name"] unless attributes["name"].nil?

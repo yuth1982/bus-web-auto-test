@@ -23,22 +23,25 @@
 #   click create
 
 When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partner_table|
-  @bus_site.admin_console_page.navigate_to_link(Bus::MENU[:add_new_partner])
+  @bus_site.admin_console_page.navigate_to_link(CONFIGS['bus']['menu']['add_new_partner'])
   attributes = partner_table.hashes.first
   case type
-    when "MozyPro"
+    when CONFIGS['bus']['company_type']['mozypro']
       @partner = Bus::DataObj::MozyPro.new
+      @partner.partner_info.type = type
       @partner.has_initial_purchase = false if attributes["base plan"].nil?
       @partner.base_plan = attributes["base plan"] || ""
       @partner.has_server_plan = (attributes["server plan"] || "no").eql?("yes")
-    when "MozyEnterprise"
+    when CONFIGS['bus']['company_type']['mozyenterprise']
       @partner = Bus::DataObj::MozyEnterprise.new
+      @partner.partner_info.type = type
       @partner.has_initial_purchase = false if attributes["users"].nil?
       @partner.num_enterprise_users = attributes["users"] || 0
       @partner.server_plan = attributes["server plan"] || "None"
       @partner.num_server_add_on = attributes["server add-on"] || 0
-    when "Reseller"
+    when CONFIGS['bus']['company_type']['reseller']
       @partner = Bus::DataObj::Reseller.new
+      @partner.partner_info.type = type
       @partner.has_initial_purchase = false if attributes["reseller type"].nil?
       @partner.reseller_type = attributes["reseller type"] || attributes["reseller type"].nil?
       @partner.reseller_quota = attributes["reseller quota"] || 0
@@ -61,11 +64,11 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partne
 
   # Partner info attributes
   @partner.partner_info.coupon_code = attributes["coupon"] unless attributes["coupon"].nil?
-  @partner.partner_info.parent = attributes["create under"] unless attributes["create under"].nil?
+  @partner.partner_info.parent = attributes["create under"] || CONFIGS['bus']['mozy_root_partner']['mozypro']
 
   # Admin info attributes
   @partner.admin_info.full_name = attributes["admin name"] unless attributes["admin name"].nil?
-  @partner.admin_info.email = attributes["admin email"] unless attributes["admin email"].nil?
+  @partner.admin_info.email = attributes["admin email"] unless attributes["admin name"].nil?
 
   # Billing info attributes
   # Not implemented, always use company info

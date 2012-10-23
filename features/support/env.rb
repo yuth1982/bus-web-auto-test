@@ -24,7 +24,7 @@ end
 
 Capybara.register_driver :webkit do |app|
   options = {
-    timeout: DEFAULT_WAIT_TIME,
+    timeout: CONFIGS['global']['default_wait_time'],
     ignore_ssl_errors: true
   }
   Capybara::Driver::Webkit.new(app, options)
@@ -43,4 +43,4 @@ case BROWSER
     raise "Unknown browser, please check env variable br"
 end
 
-Capybara.default_wait_time = DEFAULT_WAIT_TIME
+Capybara.default_wait_time = CONFIGS['global']['default_wait_time']

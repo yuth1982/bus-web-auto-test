@@ -2,7 +2,7 @@ module Aria
   # This class provides actions for aira login page
   class LoginPage < SiteHelper::Page
 
-    set_url("#{Aria::ARIA_HOST}")
+    set_url(ARIA_ENV['host'])
 
     # Private elements
     #
@@ -10,15 +10,18 @@ module Aria
     element(:password_tb, id: 'password')
     element(:login_btn, css: "input[value='Login']")
 
-    # Public: login aria admin console
+    # Public: Login aria admin console
+    #
+    # username - Aria admin console login user name
+    # password - Aria admin console login password
     #
     # Example
-    #   login(admin_object)
+    #   login('username', 'password')
     #
     # Returns nothing
-    def login(admin)
-      username_tb.type_text(admin[:user_name])
-      password_tb.type_text(admin[:password])
+    def login(username, password)
+      username_tb.type_text(username)
+      password_tb.type_text(password)
       login_btn.click
     end
   end

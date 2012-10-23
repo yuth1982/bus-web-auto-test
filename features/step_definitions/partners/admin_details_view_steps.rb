@@ -8,10 +8,11 @@
 #   click 'Save Changes'
 #
 When /^I activate new partner admin with default password$/ do
-  @bus_site.admin_console_page.click_link(Bus::MENU[:search_list_partner])
+  @bus_site.admin_console_page.navigate_to_link(CONFIGS['bus']['menu']['search_list_partner'])
   @bus_site.admin_console_page.search_list_partner_section.search_partner(@partner.admin_info.email)
   @bus_site.admin_console_page.search_list_partner_section.view_partner_detail(@partner.admin_info.email)
-  @bus_site.admin_console_page.admin_details_section.activate_admin(Bus::DEFAULT_PWD,Bus::DEFAULT_PWD)
+  password = CONFIGS['global']['test_pwd']
+  @bus_site.admin_console_page.admin_details_section.activate_admin(password, password)
 end
 
 # Steps included:
@@ -21,7 +22,7 @@ end
 #   click 'Act as' link
 #
 When /^I act as the partner by (.+) on admin details panel$/ do |admin_email|
-  @bus_site.admin_console_page.click_link(Bus::MENU[:search_list_partner])
+  @bus_site.admin_console_page.navigate_to_link(CONFIGS['bus']['menu']['search_list_partner'])
   @bus_site.admin_console_page.search_list_partner_section.search_partner(admin_email)
   @bus_site.admin_console_page.search_list_partner_section.view_partner_detail(admin_email)
   @bus_site.admin_console_page.admin_details_section.act_as_admin

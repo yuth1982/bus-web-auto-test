@@ -8,7 +8,7 @@ module Bus
       #
       def initialize
         super
-        partner_info.type = Bus::COMPANY_TYPE[:reseller]
+        #partner_info.type = Bus::COMPANY_TYPE[:reseller]
         @reseller_type = "Silver" # Silver, Gold, Platinum
         @reseller_quota = 0
         @reseller_add_on_quota = 0

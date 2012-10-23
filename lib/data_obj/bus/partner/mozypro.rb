@@ -8,7 +8,7 @@ module Bus
       #
       def initialize
         super
-        partner_info.type = Bus::COMPANY_TYPE[:mozypro]
+        #partner_info.type = Bus::COMPANY_TYPE[:mozypro]
         @base_plan = ""
         @has_server_plan = false
       end

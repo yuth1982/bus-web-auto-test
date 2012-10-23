@@ -6,8 +6,8 @@ module Bus
       # Public: Initialize a AdminInfo Object
             #
       def initialize
-        @type = Bus::COMPANY_TYPE[:business]
-        @parent = Bus::MOZY_ROOT_PARTNER[:mozypro]
+        @type = ""
+        @parent = ""
         @coupon_code = ""
       end
     end

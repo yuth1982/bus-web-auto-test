@@ -3,27 +3,36 @@ module Bus
   # This class provides actions for bus login page
   class LoginPage < SiteHelper::Page
 
-    set_url("#{Bus::BUS_HOST}/login/admin?old_school=1")
+    set_url("#{BUS_ENV['bus_host']}/login/admin?old_school=1")
 
     # Private elements
     #
     element(:username_tb, id: "username")
     element(:password_tb, id: "password")
     element(:login_btn, css: "span.login_button")
-    element(:logout_btn, link: "LOG OUT")
+    element(:logout_btn, xpath: "//a[text()='LOG OUT']")
 
-    # Public: login bus admin console
+    # Public: Login bus admin console
+    #
+    # username - Bus admin console login user name
+    # password - Bus admin console login password
     #
     # Example
-    #   @bus_login_page.login(admin_object)
+    #   login('username', 'password')
     #
     # Returns nothing
-    def login(admin)
-      username_tb.set(admin[:user_name])
-      password_tb.set(admin[:password])
+    def login(username, password)
+      username_tb.type_text(username)
+      password_tb.type_text(password)
       login_btn.click
     end
 
+    # Public: Logout bus admin console
+    #
+    # Example
+    #   logout
+    #
+    # Returns nothing
     def logout
       logout_btn.click
     end

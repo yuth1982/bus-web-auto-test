@@ -96,8 +96,8 @@ Feature: View Report
   @TC.16251 @slow @firefox
   Scenario: 16251 Verify MozyEtnerprise billing summary report csv all fields
     When I add a new MozyEnterprise partner:
-      | period | users | server plan                 | server add-on |
-      | 12     | 1     | 100 GB Server Plan, $582.78 | 2             |
+      | period | users | server plan        | server add-on |
+      | 12     | 1     | 100 GB Server Plan | 2             |
     Then New partner should be created
     When I act as newly created partner account
     And I build a new report:

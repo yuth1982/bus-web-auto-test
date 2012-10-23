@@ -2,7 +2,7 @@ module Bus
   # This class manage all sections for bus admin console page
   class AdminConsolePage < SiteHelper::Page
 
-    set_url("#{Bus::BUS_HOST}/dashboard")
+    set_url("#{BUS_ENV['bus_host']}/dashboard")
 
     # Partner section
     section(:search_list_partner_section, SearchListPartnerSection, id: "partner-list")

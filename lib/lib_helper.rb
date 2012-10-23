@@ -15,10 +15,11 @@ require 'time'
 require 'capybara/cucumber'
 require 'capybara-webkit'
 
-require 'configs/global_configs'
-require 'configs/bus_configs'
-require 'configs/aria_configs'
-require 'configs/zimbra_configs'
+require 'configs/configs_helper'
+#require 'configs/global_configs'
+#require 'configs/bus_configs'
+#require 'configs/aria_configs'
+#require 'configs/zimbra_configs'
 require 'file_helper'
 require 'zimbra_helper'
 
@@ -33,5 +34,7 @@ require 'aria_site/aria_site_helper'
 
 include Zimbra::Inbox
 include FileHelper
+
+
 
 

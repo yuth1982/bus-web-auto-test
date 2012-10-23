@@ -5,7 +5,7 @@ module FileHelper
   #
   # Returns default download path
   def default_download_path
-    path = File.expand_path("../#{DOWNLOAD_FOLDER}", File.dirname(__FILE__))
+    path = File.expand_path("../#{CONFIGS['global']['download_folder']}", File.dirname(__FILE__))
     Dir.mkdir(path) unless File.exists?(path)
     path
   end
@@ -14,7 +14,7 @@ module FileHelper
   #
   # Returns default upload path
   def default_upload_path
-    path = File.expand_path("../#{UPLOAD_FOLDER}", File.dirname(__FILE__))
+    path = File.expand_path("../#{CONFIGS['global']['upload_folder']}", File.dirname(__FILE__))
     Dir.mkdir(path) unless File.exists?(path)
     path
   end

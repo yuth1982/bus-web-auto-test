@@ -1,7 +1,7 @@
 module Aria
   # This class provides actions for accounts page
   class AccountsPage < SiteHelper::Page
-    set_url("#{Aria::ARIA_HOST}/AdminTools.php/Accounts/show")
+    set_url("#{ARIA_ENV['host']}/AdminTools.php/Accounts/show")
 
     section(:side_menu_section, SideMenuSection, id: 'sidebar')
     section(:account_overview_section, AccountOverviewSection, id: 'content-wrapper')

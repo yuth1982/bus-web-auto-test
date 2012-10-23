@@ -3,7 +3,7 @@
 # | key type  | power adapter   | os  | quota | assign to | discount | win drivers | mac drivers | ship driver |
 
 When /^I order data shuttle for (.+)$/ do |account, order_table|
-  @bus_site.admin_console_page.click_link(Bus::MENU[:order_data_shuttle])
+  @bus_site.admin_console_page.navigate_to_link(CONFIGS['bus']['menu']['order_data_shuttle'])
   @bus_site.admin_console_page.order_data_shuttle_section.search_partner(account[:company_name])
   @bus_site.admin_console_page.order_data_shuttle_section.view_order_detail(account[:company_name])
 
@@ -31,7 +31,7 @@ Then /^Verify shipping address table should be:$/ do |address_table|
 end
 
 When /^I navigate to process data shuttle order section for (.+)$/ do |account|
-  @bus_site.admin_console_page.click_link(Bus::MENU[:order_data_shuttle])
+  @bus_site.admin_console_page.navigate_to_link(CONFIGS['bus']['menu']['order_data_shuttle'])
   @bus_site.admin_console_page.order_data_shuttle_section.search_partner(account[:company_name])
   @bus_site.admin_console_page.order_data_shuttle_section.view_order_detail(account[:company_name])
 end
@@ -54,7 +54,7 @@ end
 
 
 When /^I cancel the latest data shuttle order for (.+)$/ do |account|
-  @bus_site.admin_console_page.click_link(Bus::MENU[:view_data_shuttle_orders])
+  @bus_site.admin_console_page.navigate_to_link(CONFIGS['bus']['menu']['view_data_shuttle_orders'])
   @bus_site.admin_console_page.view_data_shuttle_orders_section.search_order(account[:company_name])
   @bus_site.admin_console_page.view_data_shuttle_orders_section.view_latest_order
   @bus_site.admin_console_page.order_details_section.cancel_latest_order

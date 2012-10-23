@@ -1,7 +1,7 @@
 
 
 When /^I navigate to the new user group details section$/ do
-  @bus_site.admin_console_page.click_link(Bus::MENU[:list_user_groups])
+  @bus_site.admin_console_page.navigate_to_link(CONFIGS['bus']['menu']['list_user_groups'])
   @bus_site.admin_console_page.list_user_groups_section.view_user_group_detail(@user_group.name)
 end
 

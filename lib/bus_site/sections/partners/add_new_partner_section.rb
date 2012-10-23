@@ -166,7 +166,7 @@ module Bus
       company_type_select.select(partner_info.type)
       parent_partner_select.select(partner_info.parent)
       coupon_code_tb.type_text(partner_info.coupon_code) unless partner_info.coupon_code.nil?
-      sleep 10 unless partner_info.type.eql?(COMPANY_TYPE[:mozypro]) # wait for load all supp plans
+      sleep 10 unless partner_info.type.eql?(CONFIGS['bus']['company_type']['mozypro']) # wait for load all supp plans
     end
 
     def fill_admin_info(admin_info)
@@ -186,12 +186,12 @@ module Bus
 
     def fill_initial_purchase(partner)
       case partner.partner_info.type
-        when Bus::COMPANY_TYPE[:mozypro]
+        when CONFIGS['bus']['company_type']['mozypro']
           fill_mozypro_purchase(partner)
-        when Bus::COMPANY_TYPE[:mozyenterprise]
+        when CONFIGS['bus']['company_type']['mozyenterprise']
           raise("MozyEnterprise parent partner error") unless create_under_txt.text.eql?("(Creating under MozyEnterprise)")
           fill_mozyenterprise_purchase(partner)
-        when Bus::COMPANY_TYPE[:reseller]
+        when CONFIGS['bus']['company_type']['reseller']
           fill_reseller_purchase(partner)
       else
         raise "Unable to find partner type of #{partner.partner_info.type}"
@@ -225,15 +225,15 @@ module Bus
     def fill_reseller_purchase(partner)
       inputs = all(:xpath, "//div[@id='base_plan_section_#{partner.subscription_period}']/div/div/input")
       case partner.reseller_type
-        when Bus::RESELLER_TYPE[:silver]
+        when CONFIGS['bus']['reseller_type']['silver']
           inputs[0].click # Silver plan
           base_plan_id = inputs[0].value
           inputs[1].type_text(partner.reseller_quota) # Silver plan quota
-        when Bus::RESELLER_TYPE[:gold]
+        when CONFIGS['bus']['reseller_type']['gold']
           inputs[2].click # Gold plan
           base_plan_id = inputs[2].value
           inputs[3].type_text(partner.reseller_quota) # Gold plan quota
-        when Bus::RESELLER_TYPE[:platinum]
+        when CONFIGS['bus']['reseller_type']['platinum']
           inputs[4].click # Platinum plan
           base_plan_id = inputs[4].value
           inputs[5].type_text(partner.reseller_quota) # Platinum plan quota

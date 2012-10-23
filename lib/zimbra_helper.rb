@@ -7,7 +7,7 @@ module Zimbra
 
     def find_emails(query, format="xml")
       response = RestClient.get(
-          "#{Zimbra::ZM_HOST}/zimbra/home/#{Zimbra::ZM_USER}/inbox?fmt=#{format}&query=#{query.gsub(" ","%20")}&auth=qp&zauthtoken=#{auth_token}"
+          "#{ZIMBRA_ENV['host']}/zimbra/home/#{ZIMBRA_ENV['username']}/inbox?fmt=#{format}&query=#{query.gsub(" ","%20")}&auth=qp&zauthtoken=#{auth_token}"
       )
       parse_email_obj(response.body)
     end
@@ -18,8 +18,8 @@ module Zimbra
     #
     def auth_token
       RestClient.post(
-          Zimbra::ZM_HOST,
-          { :loginOp => 'login',:username => Zimbra::ZM_USER, :password => Zimbra::ZM_PWD, :client => 'preferred' },
+          ZIMBRA_ENV['host'],
+          { :loginOp => 'login',:username => ZIMBRA_ENV['username'], :password => ZIMBRA_ENV['password'], :client => 'preferred' },
           { :cookies => { :ZM_TEST => "true" } }
       ){ |response, request, result, &block|
         if [301, 302, 307].include? response.code

@@ -2,7 +2,7 @@ module Aria
   # This class provides actions for aria admin console page
   class AdminToolsPage < SiteHelper::Page
 
-    set_url("#{Aria::ARIA_HOST}/AdminTools.php")
+    set_url("#{ARIA_ENV['host']}/AdminTools.php")
 
     # Public: Click link on aira account page top navigation menu
     #
