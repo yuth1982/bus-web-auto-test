@@ -18,6 +18,7 @@ Feature: Add a new partner
       | Pre-tax Subtotal |          |            | $19.99      |
       | Total Charges    |          |            | $19.99      |
     And New partner should be created
+    And I delete partner account
 
   @TC.17956 @smoke
   Scenario: 17956 Add a new monthly MozyPro partner european
@@ -31,6 +32,7 @@ Feature: Add a new partner
       | Taxes             |          |            | $9.20       |
       | Total Charges     |          |            | $49.19      |
     And New partner should be created
+    And I delete partner account
 
   @TC.17957
   Scenario: 17957 Add a new yearly MozyPro partner european vat
@@ -44,6 +46,10 @@ Feature: Add a new partner
       | Pre-tax Subtotal |          |            | $2,309.78   |
       | Total Charges    |          |            | $2,309.78   |
     And New partner should be created
+    And Partner contact information should be:
+      | VAT Number:   |
+      | IT03018900245 |
+    And I delete partner account
 
   @TC.17959
   Scenario: 17959 Add a new yearly MozyPro partner european vat coupon
@@ -59,6 +65,7 @@ Feature: Add a new partner
       | Taxes             |          |            | $531.24     |
       | Total Charges     |          |            | $2,610.04   |
     And New partner should be created
+    And I delete partner account
 
   @TC.17960 @javascript
   Scenario: 17960 Add a new biennially MozyPro partner with no initial purchase
@@ -66,6 +73,7 @@ Feature: Add a new partner
       | period |
       | 24     |
     Then New partner should be created
+    And I delete partner account
 
   @TC.17961 @pro_net_terms
   Scenario: 17961 Add a new yearly MozyPro partner with net terms payment
@@ -73,6 +81,7 @@ Feature: Add a new partner
       | period | base plan | server plan | net terms |
       | 12     | 500 GB    | yes         | yes       |
     Then New partner should be created
+    And I delete partner account
 
   @TC.17962 @smoke
   Scenario: 17961 Add a new yearly basic MozyEnterprise partner
@@ -85,6 +94,7 @@ Feature: Add a new partner
       | Pre-tax Subtotal      |          |            | $95.00      |
       | Total Charges         |          |            | $95.00      |
     And New partner should be created
+    And I delete partner account
 
   @TC.17963
   Scenario: 17963 Add a new biennially MozyEnterprise partner european
@@ -100,6 +110,7 @@ Feature: Add a new partner
       | Taxes                 |          |            | $756.32     |
       | Total Charges         |          |            | $4,044.69   |
     And New partner should be created
+    And I delete partner account
 
   @TC.17964
   Scenario: 17964 Add a new biennially MozyEnterprise partner european vat
@@ -114,6 +125,7 @@ Feature: Add a new partner
       | Pre-tax Subtotal      |          |            | $3,288.37   |
       | Total Charges         |          |            | $3,288.37   |
     And New partner should be created
+    And I delete partner account
 
   @TC.17966
   Scenario: 17966 Add a new biennially MozyEnterprise partner european vat coupon
@@ -130,6 +142,7 @@ Feature: Add a new partner
       | Taxes                 |          |            | $756.32     |
       | Total Charges         |          |            | $3,715.85   |
     And New partner should be created
+    And I delete partner account
 
   @TC.17967
   Scenario: 17967 Add a new 3 years MozyEnterprise partner with no initial purchase
@@ -137,6 +150,7 @@ Feature: Add a new partner
       | period |
       | 36     |
     Then New partner should be created
+    And I delete partner account
 
   @TC.17968 @enterprise_net_terms
   Scenario: 17968 Add a new MozyEnterprise partner with net terms payment
@@ -144,6 +158,7 @@ Feature: Add a new partner
       | period | users | server plan | server add-on | net terms |
       | 12     | 5     | 500 GB      | 1             | yes       |
     Then New partner should be created
+    And I delete partner account
 
   @TC.17969 @smoke
   Scenario: 17969 Add a new monthly Silver Reseller partner
@@ -156,6 +171,7 @@ Feature: Add a new partner
       | Pre-tax Subtotal      |          |            | $42.00      |
       | Total Charges         |          |            | $42.00      |
     And New partner should be created
+    And I delete partner account
 
   @TC.17970
   Scenario: 17970 Add a new yearly Gold Reseller partner european
@@ -171,6 +187,7 @@ Feature: Add a new partner
       | Taxes                  |          |            | $594.55     |
       | Total Charges          |          |            | $3,179.55   |
     And New partner should be created
+    And I delete partner account
 
   @TC.17971
   Scenario: 17971 Add a new monthly Gold Reseller partner european vat
@@ -185,6 +202,7 @@ Feature: Add a new partner
       | Pre-tax Subtotal       |          |            | $152.50     |
       | Total Charges          |          |            | $152.50     |
     And New partner should be created
+    And I delete partner account
 
   @TC.17972
   Scenario: 17972 Add a new monthly Silver Reseller partner with coupon
@@ -198,6 +216,7 @@ Feature: Add a new partner
       | Pre-tax Subtotal      |          |            | $41.00      |
       | Total Charges         |          |            | $41.00      |
     And New partner should be created
+    And I delete partner account
 
   @TC.17973
   Scenario: 17973 Add a new Gold Reseller partner european vat coupon
@@ -214,6 +233,7 @@ Feature: Add a new partner
       | Taxes                 |          |            | $385.83     |
       | Total Charges         |          |            | $1,895.58   |
     And New partner should be created
+    And I delete partner account
 
   @TC.17974
   Scenario: 17974 Add a new Reseller partner with no initial purchase
@@ -221,6 +241,7 @@ Feature: Add a new partner
       | period |
       | 1      |
     Then New partner should be created
+    And I delete partner account
 
   @TC.17975 @reseller_net_terms @javascript
   Scenario: 17975 Add a new Reseller partner with net terms payment
@@ -228,6 +249,7 @@ Feature: Add a new partner
       | period | reseller type | reseller quota | server plan | server add-on | net terms |
       | 12     | Platinum      | 100            | yes         | 2             | yes       |
     Then New partner should be created
+    And I delete partner account
 
   @TC.18720
   Scenario: 18720 Verify MozyPro partner has 3 period options
@@ -258,6 +280,7 @@ Feature: Add a new partner
       | Pre-tax Subtotal  |          |            | $17.99      |
       | Total Charges     |          |            | $17.99      |
     And New partner should be created
+    And I delete partner account
 
   @TC.18734 @smoke
   Scenario: 18734 Add a new monthly MozyPro partner with 10 percent outline coupon
@@ -271,6 +294,7 @@ Feature: Add a new partner
       | Pre-tax Subtotal  |          |            | $17.99      |
       | Total Charges     |          |            | $17.99      |
     And New partner should be created
+    And I delete partner account
 
   @TC.18736 @smoke
   Scenario: 18736 Add a new yearly MozyEnterprise partner with 20 percent inline coupon
@@ -283,6 +307,7 @@ Feature: Add a new partner
       | Pre-tax Subtotal    |          |            | $76.00      |
       | Total Charges       |          |            | $76.00      |
     And New partner should be created
+    And I delete partner account
 
   @TC.18737 @smoke
   Scenario: 18737 Add a new yearly MozyEnterprise partner with 20 percent outline coupon
@@ -296,3 +321,4 @@ Feature: Add a new partner
       | Pre-tax Subtotal    |          |            | $76.00      |
       | Total Charges       |          |            | $76.00      |
     And New partner should be created
+    And I delete partner account

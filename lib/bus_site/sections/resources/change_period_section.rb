@@ -2,16 +2,12 @@ module Bus
   # This class provides actions for change billing period section
   class ChangePeriodSection < SiteHelper::Section
 
-    # Constants
-    #
-    CHANGE_CONFIRM_LOC = "billing_change_confirmation"
-
     # Private elements
     #
     element(:continue_btn, xpath: "//input[@value='Continue']")
-    element(:price_table, xpath: "//div[@id='#{CHANGE_CONFIRM_LOC}']/table")
+    element(:price_table, xpath: "//div[@id='billing_change_confirmation']/table")
     element(:message_div, xpath: "//div[@id='resource-change_billing_period-errors']/ul")
-    elements(:confirmation_p, xpath: "//div[@id='#{CHANGE_CONFIRM_LOC}']/p")
+    elements(:confirmation_p, xpath: "//div[@id='billing_change_confirmation']/p")
 
     # Public: Move upstream with subscription period
     #
@@ -21,8 +17,8 @@ module Bus
     # Returns nothing
     def change_subscription_up(link_text)
       find_link(link_text).click
+      sleep 5 # force to wait due to slow internet connection
       continue_btn.click
-      #sleep 10 # wait for change subscription period
     end
 
     # Public: Move downstream with subscription period
@@ -33,7 +29,6 @@ module Bus
     # Returns nothing
     def change_subscription_down(link_text)
       find_link(link_text).click
-      #sleep 10 #wait for change subscription period
     end
 
     # Public: Change subscription period confirmation text

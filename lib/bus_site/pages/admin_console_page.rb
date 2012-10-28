@@ -34,7 +34,9 @@ module Bus
     section(:billing_info_section, BillingInfoSection, id: "resource-billing")
     section(:change_period_section, ChangePeriodSection, id: "resource-change_billing_period")
     section(:manage_resources_section, ManageResourcesSection, id: "resource-available_key_list")
+    section(:manage_group_resources_section, ManageGroupResourcesSection , xpath: "//div[starts-with(@id, 'resource-group_available_keys-')]")
     section(:transfer_resources_section, TransferResourcesSection, id: "resource-transfer_resources")
+
 
     # Data shuttle section
     section(:order_data_shuttle_section, OrderDataShuttleSection, id: "resource-choose_pro_partner_for_new_seed")
@@ -48,8 +50,15 @@ module Bus
     section(:scheduled_reports_section, ScheduledReportsSection, id: "jobs-index")
     section(:quick_reports_section, QuickReportsSection, id: "jobs-quick_reports")
 
+    # Private element
+    element(:stop_masquerading_link, xpath: "//a[text()='stop masquerading']")
+
     def navigate_to_link(link)
       find_link(link).click
+    end
+
+    def close_stash_invitation_popup
+      find_link("Don't Show This Again").click
     end
   end
 end

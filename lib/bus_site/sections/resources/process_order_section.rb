@@ -23,7 +23,7 @@ module Bus
 
     # Create order section
     elements(:keys_tables, xpath: "//form[@id='resource-create_new_seed_form']/div/ul[2]/li[2]//table[@class='table-view']")
-    element(:add_new_key, link: "Add New Key")
+    element(:add_new_key, xpath: "//a[text()='Add New Key']")
 
     # Summary section
     elements(:summary_tables, xpath: "//form[@id='resource-create_new_seed_form']/div/ul[2]/li[3]//table[@class='table-view']")

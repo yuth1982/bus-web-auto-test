@@ -16,9 +16,9 @@ Feature: Bus Smoke Test
       | Pre-tax Subtotal      |          |            | $4,917.37   |
       | Total Charges         |          |            | $4,917.37   |
     Then New partner should be created
-    #And Partner general information should be:
-    #  | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:           | Root Role:          | Parent:        | Next Charge:          | Marketing Referrals:                   | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Autogrow: |
-    #  | @xxxxxx | (change)     | @xxxxxxx  | @today     | Active (change) | vmware admin (act as) | Enterprise (change) | MozyEnterprise | +24 month(s) (extend) | @parent_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No               |
+    And Partner general information should be:
+      | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:           | Root Role:          | Parent:        | Next Charge:          | Marketing Referrals:                   | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Autogrow: |
+      | @xxxxxx | (change)     | @xxxxxxx  | @today     | Active (change) | vmware admin (act as) | Enterprise (change) | MozyEnterprise | +24 month(s) (extend) | @parent_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No               |
     And Partner contact information should be:
       | Company Type:  | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:                   |
       | MozyEnterprise | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 |           |                 | qa1+test+create+partner@mozy.com |
@@ -52,14 +52,14 @@ Feature: Bus Smoke Test
       | user group  | server licenses | server quota | desktop licenses | desktop quota |
       | test group  | 1               | 10           | 1                | 10            |
     Then New user should be created
-    When I assign a key in user group the new user group with email qa1+test+user+group@mozy.com
-    Then Key should be assigned
+    When I assign a key in user group test group with email qa1+test+user+group@mozy.com
+    Then MozyEnterprise key should be assigned
     When I change account subscription up to 3-year billing period
     Then Subscription changed message should be Your account has been changed to 3-year billing.
     When I log in aria admin console as administrator
-    Then the new partner account account status should be ACTIVE
+    Then qa1+test+create+partner@mozy.com account status should be ACTIVE
     When I log in bus admin console as administrator
-    Then I search and delete newly created partner company name account
-    And I should see 3 email(s) when I search keywords:
-      | content                           |
-      | qa1+test+create+partner@mozy.com  |
+    Then I search and delete VMware account
+#    And I should see 3 email(s) when I search keywords:
+#      | content                           |
+#      | qa1+test+create+partner@mozy.com  |

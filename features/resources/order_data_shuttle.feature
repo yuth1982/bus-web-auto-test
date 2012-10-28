@@ -10,7 +10,7 @@ Feature:
       | period | base plan |
       | 1      | 50 GB     |
     Then New partner should be created
-    When I navigate to process data shuttle order section for the new partner account
+    When I navigate to process data shuttle order section for newly created partner company name
     Then Verify shipping address table should be:
       | description            | value         |
       | Name:                  | @name         |
@@ -29,7 +29,7 @@ Feature:
       | period | users |
       | 12     | 1     |
     Then New partner should be created
-    When I navigate to process data shuttle order section for the new partner account
+    When I navigate to process data shuttle order section for newly created partner company name
     And I go to next section without select power adapter in verify shipping address section
     Then Order data shuttle error message should be Please select the power adapter type.
 
@@ -39,7 +39,7 @@ Feature:
       | period | users |
       | 12     | 1     |
     Then New partner should be created
-    When I order data shuttle for the new partner account
+    When I order data shuttle for newly created partner company name
       | key from  | quota |
       | available | 5000  |
     Then Order data shuttle error message should be The resources added in this Data Shuttle order exceed those available for this partner. Please visit the Change Plan page to add more resources.
@@ -50,7 +50,7 @@ Feature:
       | period | users |
       | 12     | 1     |
     Then New partner should be created
-    When I order data shuttle for the new partner account
+    When I order data shuttle for newly created partner company name
       | key from  | discount |
       | available | 110      |
     Then Order data shuttle error message should be Discount >100% are not allowed.
@@ -61,7 +61,7 @@ Feature:
       | period | users |
       | 12     | 1     |
     Then New partner should be created
-    When I order data shuttle for the new partner account
+    When I order data shuttle for newly created partner company name
       | key from | discount |
       | new      | 110      |
     Then Order data shuttle error message should be The resources added includes new key. Please use only existing keys for this partner
@@ -72,7 +72,7 @@ Feature:
       | period | users |
       | 12     | 1     |
     Then New partner should be created
-    When I order data shuttle for the new partner account
+    When I order data shuttle for newly created partner company name
       | key from  | quota |
       | available | 20    |
     Then Data shuttle order summary should be:
@@ -87,7 +87,7 @@ Feature:
       | period | users |
       | 12     | 1     |
     Then New partner should be created
-    When I order data shuttle for the new partner account
+    When I order data shuttle for newly created partner company name
       | key from  | quota | assign to |
       | available | 20    | @email    |
     Then Data shuttle order should be created
@@ -98,7 +98,7 @@ Feature:
       | period | base plan |
       | 1      | 50 GB     |
     Then New partner should be created
-    When I order data shuttle for the new partner account
+    And I order data shuttle for newly created partner company name
       | key from | quota |
       | new      | 20    |
     Then Data shuttle order summary should be:
@@ -113,7 +113,7 @@ Feature:
       | period | base plan |
       | 1      | 50 GB     |
     Then New partner should be created
-    When I order data shuttle for the new partner account
+    When I order data shuttle for newly created partner company name
       | key from | quota | assign to |
       | new      | 20    | @email    |
     Then Data shuttle order should be created
@@ -124,7 +124,7 @@ Feature:
       | period | users |
       | 12     | 1     |
     Then New partner should be created
-    When I order data shuttle for the new partner account
+    When I order data shuttle for newly created partner company name
       | key from  | quota | assign to | discount |
       | available | 10    | @email    | 50       |
     Then Data shuttle order summary should be:
@@ -139,7 +139,7 @@ Feature:
       | period | users |
       | 12     | 1     |
     Then New partner should be created
-    When I order data shuttle for the new partner account
+    When I order data shuttle for newly created partner company name
       | key from  | quota | assign to | discount |
       | available | 10    | @email    | 100      |
     Then Data shuttle order summary should be:
@@ -154,11 +154,11 @@ Feature:
       | period | users |
       | 12     | 1     |
     Then New partner should be created
-    When I order data shuttle for the new partner account
+    When I order data shuttle for newly created partner company name
       | key from  | quota |
       | available | 20    |
     Then Data shuttle order should be created
-    When I cancel the latest data shuttle order for the new partner account
+    When I cancel the latest data shuttle order for newly created partner company name
     Then The order should be Cancelled
 
   @TC.16212 @slow
@@ -167,11 +167,11 @@ Feature:
       | period | base plan     |
       | 1      | 50 GB, $19.99 |
     Then New partner should be created
-    When I order data shuttle for the new partner account
+    When I order data shuttle for newly created partner company name
       | key from | quota |
       | new      | 20    |
     Then Data shuttle order should be created
-    When I cancel the latest data shuttle order for the new partner account
+    When I cancel the latest data shuttle order for newly created partner company name
     Then The order should be Cancelled
 
   @TC.17879 @slow
@@ -180,7 +180,7 @@ Feature:
       | period | reseller type | reseller quota |
       | 1      | Silver        | 2000           |
     Then New partner should be created
-    When I order data shuttle for the new partner account
+    When I order data shuttle for newly created partner company name
       | key from | quota |
       | new      | 2000  |
     Then Data shuttle order should be created
@@ -196,7 +196,7 @@ Feature:
       | period | base plan |
       | 1      | 4 TB      |
     Then New partner should be created
-    When I order data shuttle for the new partner account
+    When I order data shuttle for newly created partner company name
       | key from | quota |
       | new      | 3800  |
     Then Data shuttle order should be created
@@ -212,7 +212,7 @@ Feature:
       | period | reseller type | reseller quota |
       | 1      | Silver        | 2000           |
     Then New partner should be created
-    When I order data shuttle for the new partner account
+    When I order data shuttle for newly created partner company name
       | key from | quota | win drivers |
       | new      | 1000  | 2           |
     Then Data shuttle order should be created
@@ -224,7 +224,7 @@ Feature:
       | period | base plan |
       | 1      | 1 TB      |
     Then New partner should be created
-    When I order data shuttle for the new partner account
+    When I order data shuttle for newly created partner company name
       | key from  | quota | win drivers | mac drivers |
       | available | 500   | 0           | 2           |
     Then Data shuttle order should be created
@@ -236,7 +236,7 @@ Feature:
       | period | users |
       | 12     | 1     |
     Then New partner should be created
-    When I order data shuttle for the new partner account
+    When I order data shuttle for newly created partner company name
       | key from  | quota |
       | available | 20    |
     Then Data shuttle order should be created

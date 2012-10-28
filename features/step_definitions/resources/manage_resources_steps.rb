@@ -3,7 +3,11 @@ When /^I assign a key in user group (.+) with email (.+)$/ do |user_group, email
   @test_email = email
   @bus_site.admin_console_page.navigate_to_link(CONFIGS['bus']['menu']['assign_keys'])
   @bus_site.admin_console_page.manage_resources_section.select_group(user_group)
-  @bus_site.admin_console_page.manage_resources_section.assign_key(@test_email)
+  @bus_site.admin_console_page.manage_group_resources_section.assign_mozyenterprise_key(@test_email)
+end
+
+Then /^MozyEnterprise key should be assigned$/ do
+  @bus_site.admin_console_page.manage_group_resources_section.messages.should == "1 key has been assigned and emailed."
 end
 
 When /^Key should be assigned$/ do

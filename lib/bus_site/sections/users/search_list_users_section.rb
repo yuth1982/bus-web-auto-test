@@ -19,7 +19,7 @@ module Bus
       search_user_tb.type_text(keywords)
       user_filter_select.select(filter)
       search_user_btn.click
-      wait_until{ clear_search_link.visible? }
+      has_clear_search_link?
     end
 
     # Public: Search results table header row text

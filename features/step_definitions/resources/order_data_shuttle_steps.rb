@@ -2,10 +2,10 @@
 #
 # | key type  | power adapter   | os  | quota | assign to | discount | win drivers | mac drivers | ship driver |
 
-When /^I order data shuttle for (.+)$/ do |account, order_table|
+When /^I order data shuttle for (.+)$/ do |company_name, order_table|
   @bus_site.admin_console_page.navigate_to_link(CONFIGS['bus']['menu']['order_data_shuttle'])
-  @bus_site.admin_console_page.order_data_shuttle_section.search_partner(account[:company_name])
-  @bus_site.admin_console_page.order_data_shuttle_section.view_order_detail(account[:company_name])
+  @bus_site.admin_console_page.order_data_shuttle_section.search_partner(company_name)
+  @bus_site.admin_console_page.order_data_shuttle_section.view_order_detail(company_name)
 
   attributes = order_table.hashes.first
   @order = Bus::DataObj::DataShuttleOrder.new
@@ -30,10 +30,10 @@ Then /^Verify shipping address table should be:$/ do |address_table|
   @bus_site.admin_console_page.process_order_section.shipping_address.should == address_table.rows.map{ |row| row[1]}
 end
 
-When /^I navigate to process data shuttle order section for (.+)$/ do |account|
+When /^I navigate to process data shuttle order section for (.+)$/ do |company_name|
   @bus_site.admin_console_page.navigate_to_link(CONFIGS['bus']['menu']['order_data_shuttle'])
-  @bus_site.admin_console_page.order_data_shuttle_section.search_partner(account[:company_name])
-  @bus_site.admin_console_page.order_data_shuttle_section.view_order_detail(account[:company_name])
+  @bus_site.admin_console_page.order_data_shuttle_section.search_partner(company_name)
+  @bus_site.admin_console_page.order_data_shuttle_section.view_order_detail(company_name)
 end
 
 When /^I go to next section without select power adapter in verify shipping address section$/ do

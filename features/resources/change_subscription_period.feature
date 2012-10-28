@@ -14,6 +14,7 @@ Feature: Change subscription period
       | 1      | 50 GB     |
     Then New partner should be created
     When I act as newly created partner account
+    And I close Mozy Stash invitation popup window
     And I change account subscription up to annual billing period
     Then Subscription changed message should be Your account has been changed to yearly billing.
 

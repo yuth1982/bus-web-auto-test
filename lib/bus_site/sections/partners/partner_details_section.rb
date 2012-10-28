@@ -35,9 +35,10 @@ module Bus
     element(:contact_industry_select, id: "partner_industry")
     element(:contact_employees_select, id: "partner_num_employees")
     element(:contact_email_tb, id: "contact_email")
+    element(:contact_vat_tb, id: "vat_info_vat_number")
 
     def general_info_hash
-      wait_until{ delete_partner_link.visible? }
+      has_delete_partner_link?
       output = {}
       general_info_dls[0..-2].map{ |dl| output = output.merge(dl.dl_hashes) }
       output
@@ -46,7 +47,7 @@ module Bus
     # Public: Partner contact information hash
     #
     def contact_info_hash
-      wait_until{ delete_partner_link.visible? }
+      has_delete_partner_link?
       output = {}
       contact_info_dls.map{ |dl| output = output.merge(dl.dl_hashes) }
       output["Contact Address:"] = contact_address_tb.value
@@ -58,6 +59,7 @@ module Bus
       output["Industry:"] = contact_industry_select.first_selected_option.text
       output["# of employees:"] = contact_employees_select.first_selected_option.text
       output["Contact Email:"] = contact_email_tb.value
+      output["VAT Number:"] = contact_vat_tb.value unless output["VAT Number:"].nil?
       output.delete_if { |k, _| k.empty? }
     end
     # Public: Click act as partner link
@@ -82,7 +84,7 @@ module Bus
       sleep 2 # wait for load delete password div
       delete_password_tb.type_text(password)
       delete_submit_btn.click
-      sleep 5 # wait for delete partner
+      sleep 10 # wait for delete partner
     end
 
     # Public: Create the api_key
