@@ -58,7 +58,7 @@ module CapybaraHelper
       #
       # Returns headers text
       def headers_text
-        headers.map { |cell| cell.text }
+        headers.map { |cell| cell.text.strip }
       end
 
       # Public: Table body rows text
@@ -69,7 +69,7 @@ module CapybaraHelper
       #
       # Returns table rows text
       def rows_text
-        rows.map { |row| row.map { |cell| cell.text } }
+        rows.map { |row| row.map { |cell| cell.text.strip } }
       end
 
       # Public: Table footers text
@@ -81,7 +81,7 @@ module CapybaraHelper
       #
       # Returns table footers text
       def footers_text
-        footers.map { |cell| cell.text }
+        footers.map { |cell| cell.text.strip }
       end
     end
   end

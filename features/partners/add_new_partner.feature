@@ -84,7 +84,7 @@ Feature: Add a new partner
     And I delete partner account
 
   @TC.17962 @smoke
-  Scenario: 17961 Add a new yearly basic MozyEnterprise partner
+  Scenario: 17962 Add a new yearly basic MozyEnterprise partner
     When I add a new MozyEnterprise partner:
       | period | users |
       | 12     | 1     |
@@ -94,6 +94,17 @@ Feature: Add a new partner
       | Pre-tax Subtotal      |          |            | $95.00      |
       | Total Charges         |          |            | $95.00      |
     And New partner should be created
+    And Partner account attributes should be:
+    | Backup Licenses | Backup License Soft Cap | Enable Server | Cloud Storage (GB) | Stash Users: | Default Stash Quota: |
+    |                 | Disabled                | Disabled      |                    |              |                      |
+    And Partner license types should be:
+      |         | Licenses: | Licenses Used: | Quota:   | Quota Used: | Resource Policy: |
+      | Desktop | 1         | 0              | 25 GB    | 0 bytes     | Enabled          |
+      | Server  | 0         | 0              | 0 GB     | 0 bytes     | Enabled          |
+    And Partner internal billing should be:
+    | Account Type:   | Current Period: | Unpaid Balance: | Collect On: | Renewal Date: | Renewal Period:     |
+    | Credit Card     | Yearly          | $0.00           | N/A         | after 1 years | Use Current Period  |
+    And Partner sub admins should be empty
     And I delete partner account
 
   @TC.17963

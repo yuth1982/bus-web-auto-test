@@ -108,7 +108,7 @@ Feature:
     Then Data shuttle order should be created
 
   @TC.16205 @slow
-  Scenario: 16207 Ordering data shuttle for MozyPro using the Add New Key Link with assigned email
+  Scenario: 16205 Ordering data shuttle for MozyPro using the Add New Key Link with assigned email
     When I add a new MozyPro partner:
       | period | base plan |
       | 1      | 50 GB     |
@@ -191,7 +191,7 @@ Feature:
     Then The number of win drivers should be 2
 
   @TC.16320 @slow
-  Scenario: 17879 Ordering data shuttle over 3.6T for MozyPro using the Add New Key Link
+  Scenario: 16320 Ordering data shuttle over 3.6T for MozyPro using the Add New Key Link
     When I add a new MozyPro partner:
       | period | base plan |
       | 1      | 4 TB      |

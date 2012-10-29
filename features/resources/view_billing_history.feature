@@ -5,7 +5,7 @@ Feature: View billing history
   so that I can understand why I was charged what I was charged
 
   @TC.18898 @smoke
-  Scenario: Verify billing history after create MozyPro partner
+  Scenario: 18898 Verify billing history after create MozyPro partner
     Given I log in bus admin console as administrator
     When I add a new MozyPro partner:
       | period | base plan |

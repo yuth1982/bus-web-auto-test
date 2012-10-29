@@ -33,6 +33,7 @@ When /^I get the partner_id$/ do
 end
 
 Then /^Partner general information should be:$/ do |details_table|
+  @bus_site.admin_console_page.partner_details_section.has_delete_partner_link?
   actual = @bus_site.admin_console_page.partner_details_section.general_info_hash
   expected = details_table.hashes.first
 
@@ -53,17 +54,14 @@ Then /^Partner general information should be:$/ do |details_table|
           expected[header].should == actual[header]
         end
       when 'Approved:'
-        actual[header].should include(@partner.nil? ? expected[header] : Time.now.localtime("-06:00").strftime("%m/%d/%y"))
+        approved_date = Chronic.parse(expected[header])
+        actual[header].should include(approved_date.nil? ? expected[header] : approved_date.strftime("%m/%d/%y"))
+        #Time.now.localtime("-06:00")
       when 'Next Charge:'
-        months = expected[header].match(/\+(\d+) month\(s\)/)
-        if months.nil?
-          actual[header].should == expected[header]
-        else
-          next_date = (Time.now.localtime("-06:00").to_datetime >> months[1].to_s.to_i).strftime("%m/%d/%y")
-          actual[header].should include(next_date)
-        end
+        next_charge = Chronic.parse(expected[header])
+        actual[header].should include(next_charge.nil? ? expected[header] : next_charge.strftime("%m/%d/%y"))
       when 'Marketing Referrals:'
-        actual[header].should include(@admin_username)
+        actual[header].should == expected[header].gsub(/@login_admin_email/,@admin_username)
       else
         expected[header].should == actual[header]
     end
@@ -76,5 +74,39 @@ end
 Then /^Partner contact information should be:$/ do |contact_table|
   actual = @bus_site.admin_console_page.partner_details_section.contact_info_hash
   expected = contact_table.hashes.first
-  expected.keys.each{ |key| expected[key].should == actual[key]}
+  expected.keys.each{ |key| expected[key].should == actual[key] }
+end
+
+Then /^Partner account attributes should be:$/ do |attributes_table|
+  actual = @bus_site.admin_console_page.partner_details_section.account_attributes_hash
+  expected = attributes_table.hashes.first
+  expected.keys.each{ |key| expected[key].should == actual[key] }
+end
+
+Then /^Partner license types should be:$/ do |license_types_table|
+  @bus_site.admin_console_page.partner_details_section.license_types_table_headers.should == license_types_table.headers
+  @bus_site.admin_console_page.partner_details_section.license_types_table_rows.should == license_types_table.rows
+end
+
+Then /^Partner internal billing should be:$/ do |internal_billing_table|
+  actual = @bus_site.admin_console_page.partner_details_section.internal_billing_hash
+  expected = internal_billing_table.hashes.first
+  expected.keys.each do |header|
+    case header
+      when 'Renewal Date:'
+        renewal_date = Chronic.parse(expected[header])
+        actual[header].should == (renewal_date.nil? ? expected[header] : renewal_date.strftime("%m/%d/%y"))
+      else
+        expected[header].should == actual[header]
+    end
+  end
+end
+
+Then /^Partner sub admins should be empty$/ do
+  @bus_site.admin_console_page.partner_details_section.sub_admins_text.should include("No sub-admins.")
+end
+
+Then /^Partner sub admins should be:$/ do |sub_admins_table|
+  @bus_site.admin_console_page.partner_details_section.sub_admins_table_headers.should == sub_admins_table.headers
+  @bus_site.admin_console_page.partner_details_section.sub_admins_table_rows.should == sub_admins_table.rows
 end

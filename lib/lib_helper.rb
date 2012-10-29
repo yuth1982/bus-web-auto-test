@@ -11,6 +11,7 @@ require 'csv'
 require 'rest_client'
 require 'json'
 require 'time'
+require 'chronic'
 
 require 'capybara/cucumber'
 require 'capybara-webkit'

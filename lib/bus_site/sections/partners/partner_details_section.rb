@@ -37,8 +37,25 @@ module Bus
     element(:contact_email_tb, id: "contact_email")
     element(:contact_vat_tb, id: "vat_info_vat_number")
 
+    # Account attribute table
+    element(:account_attributes_table, xpath: "//form[@id='account_attributes_form']/table")
+
+    # License types table
+    element(:license_types_table, xpath: "//div[starts-with(@id,'partner_license_types_')]/table")
+
+    # Internal billing table
+    element(:internal_billing_table, xpath: "//div[contains(@id,'internal-billing-content')]/table")
+
+    # Subadmins
+    element(:sub_admins_div, xpath: "//div[@id='subadminbox']")
+    element(:sub_admins_table, xpath: "//div[@id='subadminbox']/table")
+
+    # Billing history
+
+    # Public: General information hash
+    #
+    #
     def general_info_hash
-      has_delete_partner_link?
       output = {}
       general_info_dls[0..-2].map{ |dl| output = output.merge(dl.dl_hashes) }
       output
@@ -47,7 +64,6 @@ module Bus
     # Public: Partner contact information hash
     #
     def contact_info_hash
-      has_delete_partner_link?
       output = {}
       contact_info_dls.map{ |dl| output = output.merge(dl.dl_hashes) }
       output["Contact Address:"] = contact_address_tb.value
@@ -62,6 +78,51 @@ module Bus
       output["VAT Number:"] = contact_vat_tb.value unless output["VAT Number:"].nil?
       output.delete_if { |k, _| k.empty? }
     end
+
+    # Public: Partner Account attributes hash
+    # Hidden column inside table will be removed
+    #
+    # Example:
+    #   => "{"Backup Licenses"=>"", "Backup License Soft Cap"=>"Disabled", "Enable Server"=>"Disabled", "Cloud Storage (GB)"=>"", "Stash Users:"=>"", "Default Stash Quota:"=>""}"
+    #
+    # Returns partner Account attributes hash
+    def account_attributes_hash
+      Hash[account_attributes_table.rows_text.collect{ |row| row[0..1] }]
+    end
+
+    # Public: License types table headers text
+    #
+    #
+    def license_types_table_headers
+      license_types_table.headers_text
+    end
+
+    # Public: License types table rows text
+    #
+    #
+    def license_types_table_rows
+      license_types_table.rows_text
+    end
+
+    # Public: Internal billing tasub_admins_h4ble
+    #
+    #
+    def internal_billing_hash
+      Hash[*internal_billing_table.rows_text.flatten]
+    end
+
+    def sub_admins_text
+      sub_admins_div.text
+    end
+
+    def sub_admins_table_headers
+      sub_admins_table.headers_text
+    end
+
+    def sub_admins_table_rows
+      sub_admins_table.rows_text
+    end
+
     # Public: Click act as partner link
     #
     # Example
