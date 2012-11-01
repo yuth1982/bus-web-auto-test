@@ -59,7 +59,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       | column 1      |  column 2                              |  column 3       | column 4  |
       | Machine Name  | Machine Hash                           | Current Owner   | New Owner |
 
-  @TC.16265 @positive @regression @smoke
+  @TC.16275 @positive @regression @smoke
   Scenario: Import a valid CSV file in non-passive way
     When I act as the partner by machine_migration_auto@auto.com on admin details panel
     And I navigate to the machine mapping page

@@ -13,3 +13,8 @@ Then /^User group details should be:$/ do |details_table|
   actual['ID:'].match(/\d{6}/).nil?.should be_false
   actual[1..-1].should == expected[1..-1]
 end
+
+When /^I delete a group named (.+)$/ do |user_group|
+  @bus_site.admin_console_page.list_user_groups_section.view_user_group_detail user_group
+  @bus_site.admin_console_page.user_group_details_section.delete_user_group
+end

@@ -8,6 +8,7 @@ module Bus
     element(:user_filter_select, id: "user_filter")
     element(:search_results_table, xpath: "//div[@id='user-list-content']/div/table")
     element(:clear_search_link, xpath: "//a[text()='Clear search']")
+    element(:refresh_link, xpath: "//a[@class='mod-button']")
 
     # Public: Search user
     #
@@ -55,6 +56,11 @@ module Bus
     # Return search results table body rows text array
     def view_user_details(user)
       find_link(user).click
+    end
+
+    def refresh
+      refresh_link.click
+      sleep 6
     end
   end
 end

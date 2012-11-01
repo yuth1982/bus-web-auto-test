@@ -18,3 +18,8 @@ Then /^New user group should be created$/ do
   @bus_site.admin_console_page.add_new_user_group_section.messages.should == "Created new user group #{@user_group.name}"
 end
 
+When /^I add a new user group named (.+)$/ do |group_name|
+  @bus_site.admin_console_page.add_new_user_group_section.set_group_name(group_name)
+  @bus_site.admin_console_page.add_new_user_group_section.save_changes
+  @bus_site.admin_console_page.add_new_user_group_section.messages.should == "Created new user group #{group_name}"
+end

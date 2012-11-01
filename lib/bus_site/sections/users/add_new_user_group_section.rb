@@ -24,6 +24,16 @@ module Bus
       save_changes_btn.click
     end
 
+    def set_group_name(group_name)
+      group_name_tb.type_text(group_name)
+    end
+
+    def save_changes
+      save_changes_btn.click
+    end
+
+
+
     # Public: Messages for add new user group sections
     #
     # Example

@@ -167,7 +167,7 @@ Feature: User sync
     Then The deprovision rule number is 0
     And Authentication Policy has been updated successfully
 
-  @TC.17538 @17551  @smoke @function
+  @TC.17538 @TC.17551  @smoke @function
   Scenario: One Rule/Match All/Multiple Users
     When I act as the partner by user_sync_automation@auto.com on admin details panel
     And I navigate to Authentication Policy section from bus admin console page
@@ -207,7 +207,7 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
 
-  @TC.17540 @17552 @function
+  @TC.17540 @TC.17552 @function
   Scenario: One Rule/Multiple Rules
     When I act as the partner by user_sync_automation@auto.com on admin details panel
     And I navigate to Authentication Policy section from bus admin console page
@@ -253,7 +253,7 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
 
-  @TC.17542 @17554 @function
+  @TC.17542 @TC.17554 @function
   Scenario: Multiple Ruls/Multiple Users
     When I act as the partner by user_sync_automation@auto.com on admin details panel
     And I navigate to Authentication Policy section from bus admin console page
@@ -303,7 +303,7 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
 
-  @TC.17543 @17557 @17558 @function
+  @TC.17543 @TC.17557 @TC.17558 @function
   Scenario: Multiple Ruls/Multiple Users/Rule order matters
     When I act as the partner by user_sync_automation@auto.com on admin details panel
     And I navigate to Authentication Policy section from bus admin console page
@@ -485,7 +485,7 @@ Feature: User sync
       | Save failed                          |
       | abcd is not a valid value for query. |
 
-  @TC.17592 @firefox_profile
+  @TC.17592 @firefox_profile @vpn
   Scenario: UserProvision - Deleted users in BUS can be resumed
     When I act as the partner by leongh+adi@mozy.com on admin details panel
     And I navigate to Authentication Policy section from bus admin console page
@@ -566,7 +566,7 @@ Feature: User sync
     When I login the subdomain qa5adtest05
     Then I will see the user account page
 
-  @TC.17593 @firefox_profile
+  @TC.17593 @firefox_profile @vpn
   Scenario: UserProvision - Suspended users in BUS can't be resumed
     When I act as the partner by leongh+adi@mozy.com on admin details panel
     And I navigate to Authentication Policy section from bus admin console page
@@ -658,7 +658,7 @@ Feature: User sync
     And I view user details by auto1@client7.mozyqa.local
     And I active the user
 
-  @TC.17594 @firefox_profile
+  @TC.17594 @firefox_profile @vpn
   Scenario: UserProvision - Delete user after several days of not synced
     When I act as the partner by leongh+adi@mozy.com on admin details panel
     And I navigate to Authentication Policy section from bus admin console page
@@ -710,7 +710,7 @@ Feature: User sync
     When I login the subdomain qa5adtest05
     Then I will see the Authentication Failed page
 
-  @TC.17595 @firefox_profile
+  @TC.17595 @firefox_profile @vpn
   Scenario: UserProvision - Suspend user after several days of not synced
     When I act as the partner by leongh+adi@mozy.com on admin details panel
     And I navigate to Authentication Policy section from bus admin console page
@@ -773,7 +773,7 @@ Feature: User sync
     And I view user details by auto1@client7.mozyqa.local
     And I active the user
 
-  @TC.17546 @TC.17548 @TC.17549
+  @TC.17546 @TC.17548 @TC.17549 @vpn
   Scenario: UserProvision/Sync - Add(Delete, Modify) a new user in AD
     When I act as the partner by user_sync_add_delete@auto.com on admin details panel
     And I navigate to Authentication Policy section from bus admin console page
@@ -886,7 +886,7 @@ Feature: User sync
   
     And I delete a user dev_user44 in the AD
 
-  @TC.18273
+  @TC.18273 @vpn
   Scenario: UserProvision-Fixed Attribute
     When I act as the partner by user_sync_add_delete@auto.com on admin details panel
     And I navigate to Authentication Policy section from bus admin console page
@@ -1000,3 +1000,56 @@ Feature: User sync
     Then The sync status result should like:
       | current status       | last sync           | next sync       |
       | Synchronized         |   @last_sync_time   | @next_sync_time |
+
+
+
+  @TC.18738 @function
+  Scenario: UserProvision-Delete a group, the users belong to this group will be moved to default group
+    When I act as the partner by user_sync_automation@auto.com on admin details panel
+    And I navigate to Add New User Group section from bus admin console page
+    And I add a new user group named test_delete
+    When I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
+    And I click Sync Rules tab
+    And I add 1 new provision rules:
+      | rule         | group       |
+      | cn=dev_test* | test_delete |
+    And I click the sync now button
+    And I wait for 80 seconds
+    And I delete 1 provision rules
+    And I save the changes
+    And I click Connection Settings tab
+    Then The sync status result should like:
+      | current status       | last sync           |
+      | Synchronized         |   @last_sync_time   |
+    When I navigate to Search / List Users section from bus admin console page
+    Then The users table should be:
+      | User               |      Name     | User Group  |
+      | dev_test3@test.com |   dev_test3   | test_delete |
+      | dev_test2@test.com |   dev_test2   | test_delete |
+      | dev_test1@test.com |   dev_test1   | test_delete |
+    When I navigate to List User Groups section from bus admin console page
+    And I view user group details by test_delete
+    And I delete a group named test_delete
+    And I refresh the search list user group page
+    Then The users table should be:
+      | User               |      Name     | User Group          |
+      | dev_test1@test.com |   dev_test1   | (default user group)|
+      | dev_test2@test.com |   dev_test2   | (default user group)|
+      | dev_test3@test.com |   dev_test3   | (default user group)|
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
+    And I click Sync Rules tab
+    And I add 1 new deprovision rules:
+      | rule         | action  |
+      | cn=dev_test* | Delete  |
+    And I click the sync now button
+    And I wait for 80 seconds
+    And I delete 1 deprovision rules
+    And I save the changes
+    And I click Connection Settings tab
+    Then The sync status result should like:
+      | current status       | last sync           |
+      | Synchronized         |   @last_sync_time   |
+    When I navigate to Search / List Users section from bus admin console page
+    Then The users table should be empty

@@ -4,14 +4,20 @@ module Bus
 
     # Private elements
     #
-    element(:delete_user_group, xpath: "//a[text()='Delete User Group']")
+    element(:delete_user_group_link, xpath: "//a[text()='Delete User Group']")
     elements(:group_details_dls, xpath: "//div/dl")
 
     def group_details_hash
-      has_delete_user_group?
+      has_delete_user_group_link?
       output = {}
       group_details_dls.map{ |dl| output = output.merge(dl.dl_hashes) }
       output.delete_if { |k, _| k.empty? }
+    end
+
+    def delete_user_group
+      delete_user_group_link.click
+      alert_accept
+      sleep 1
     end
   end
 end
