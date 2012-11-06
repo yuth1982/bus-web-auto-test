@@ -142,10 +142,10 @@ module Bus
     def delete_partner(password)
       delete_partner_link.click
       cancellation_submit_btn.click
-      sleep 2 # wait for load delete password div
+      wait_until{ delete_password_tb.visible? } # wait for load delete password div
       delete_password_tb.type_text(password)
       delete_submit_btn.click
-      sleep 10 # wait for delete partner
+      wait_until{ has_no_link?("Delete Partner") } # wait for delete partner
     end
 
     # Public: Create the api_key
