@@ -83,3 +83,24 @@ aria:
     search:                     Search
     account_overview:           Account Overview
 
+phoenix:
+  company_type:
+    mozypro:                    MozyPro
+    mozyhome:                   MozyHome
+
+  menu:
+    #MozyHome
+    #Account Pages
+    account_home:               Account Home
+    my_plan:                    My Plan
+    my_computer:                My Computer
+    my_profile:                 My Profile
+    download_mozy:              Download Mozy
+    stash_beta:                 Stash Beta
+    log_out:                    Log Out
+
+    #Need Help?
+    mozy_knowledge_base:        Mozy Knowledge Base
+    windows_client_manual:      Windows Client Manual
+    os_x_client_manual:         OS X Client Manual
+    mozyhome_support_portal:    MozyHome Support Portal
