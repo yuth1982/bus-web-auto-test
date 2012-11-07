@@ -336,3 +336,17 @@ end
 When /^I clear the fixed attribute$/ do
   @bus_site.admin_console_page.authentication_policy_section.set_fixed_attribute('')
 end
+
+Then /^I change root role to (.+)$/ do | role |
+  @bus_site.admin_console_page.partner_details_section.change_root_role(role)
+end
+Then /^I should see (Mozy|LDAP) auth selected$/ do |provider|
+  case provider
+  when "Mozy"
+    @bus_site.admin_console_page.authentication_policy_section.provider_mozy_checked?.should be_true
+    @bus_site.admin_console_page.authentication_policy_section.provider_ldap_checked?.should be_false
+  when "LDAP"
+    @bus_site.admin_console_page.authentication_policy_section.provider_ldap_checked?.should be_true
+    @bus_site.admin_console_page.authentication_policy_section.provider_mozy_checked?.should be_false
+  end
+end

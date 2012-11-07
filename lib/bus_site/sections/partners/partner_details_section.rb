@@ -13,6 +13,9 @@ module Bus
     element(:create_api_key_link, xpath: "//a[text()='(create)']")
     element(:api_key_text, xpath: '//fieldset//div[1]//span')
     element(:partner_id_text, xpath: "//div[starts-with(@id,'partner-show-')]/div/div[2]/dl[1]/dd[1]")
+    element(:partner_root_role_change_link, xpath: "//span[starts-with(@id, 'partner-display-root-role')]/a")
+    element(:partner_root_role_change_submit_btn, xpath: "//span[starts-with(@id, 'partner-change-root-role')]/input")
+    element(:partner_root_role_change_dropdown, xpath: "//span[starts-with(@id, 'partner-change-root-role')]/select")
 
     # Delete partner hidden forms
     #
@@ -176,6 +179,12 @@ module Bus
 
     def close_partner_detail_section_by_id(partner_id)
       find(:xpath, "//div[@id='partner-show-#{partner_id}']//a[@class='mod-button'][1]").click
+    end
+
+    def change_root_role(root_role)
+      partner_root_role_change_link.click
+      partner_root_role_change_dropdown.select(root_role)
+      partner_root_role_change_submit_btn.click
     end
   end
 end

@@ -58,6 +58,14 @@ module Bus
       end
     end
 
+    def provider_mozy_checked?
+      provider_mozy_rd.checked?
+    end
+
+    def provider_ldap_checked?
+      provider_ldap_rd.checked?
+    end
+
     # Public: Choose Horizon manager or not
     #
     # check - Switch to check/uncheck horizon manager
