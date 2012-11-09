@@ -6,7 +6,7 @@ When /^I should see (\d+) email\(s\) when I search keywords:$/ do |num_emails, k
   end
   query = keywords.hashes.first.map{|key, value| "#{key}:#{value}"}.join(" AND ")
   query = query + " AND after: -#{((Time.now - @start_time)/60).ceil}minute"
-  query = query.gsub(/@today/,Time.now.localtime("-06:00").strftime("%m/%d/%Y"))
+  query = query.gsub(/today/,Time.now.localtime("-06:00").strftime("%m/%d/%Y"))
   query = query.gsub(/@first_name/, @partner.credit_card.first_name)
   query = query.gsub(/@XXXX/, @partner.credit_card.number[12..-1])
   query = query.gsub(/@email/,@partner.admin_info.email)

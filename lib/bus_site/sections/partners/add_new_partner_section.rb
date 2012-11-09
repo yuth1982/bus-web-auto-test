@@ -140,7 +140,7 @@ module Bus
     # Returns period labels text
     def available_periods(type)
       company_type_select.select(type)
-      sleep 10 # force wait to load plans
+      wait_until{ include_initial_purchase_cb.visible?} # wait for load all supp plans
       period_labels.map{ |ele| ele.text}
     end
 
@@ -203,6 +203,12 @@ module Bus
       base_plan_select.select(partner.base_plan)
       base_plan_id = base_plan_select.value
       find_by_id("#{base_plan_id}_add_on_plan_check_box").check if partner.has_server_plan
+      # storage add on option for base plan >= 1 TB
+      if partner.storage_add_on != 0
+        add_on = find(:xpath, "//input[starts-with(@id,'#{base_plan_id}')][3]")
+        add_on.clear_value
+        add_on.type_text(partner.storage_add_on)
+      end
     end
 
     def fill_mozyenterprise_purchase(partner)

@@ -25,6 +25,8 @@ module Bus
 
     # General information
     elements(:general_info_dls, xpath: "//div/dl")
+    element(:stash_info_dl, xpath: "//div/dl/form")
+
     # Contact information
     elements(:contact_info_dls, xpath: "//div/form/dl")
     element(:contact_address_tb, id: "contact_address")
@@ -41,7 +43,10 @@ module Bus
     element(:contact_vat_tb, id: "vat_info_vat_number")
 
     # Account attribute table
-    element(:account_attributes_table, xpath: "//form[@id='account_attributes_form']/table")
+    element(:account_attributes_table, css: "form#account_attributes_form table")
+
+    # Resources table, for MozyPro
+    element(:generic_resources_table, css: "form#generic_resources_form table")
 
     # License types table
     element(:license_types_table, xpath: "//div[starts-with(@id,'partner_license_types_')]/table")
@@ -50,28 +55,38 @@ module Bus
     element(:internal_billing_table, xpath: "//div[contains(@id,'internal-billing-content')]/table")
 
     # Subadmins
-    element(:sub_admins_div, xpath: "//div[@id='subadminbox']")
-    element(:sub_admins_table, xpath: "//div[@id='subadminbox']/table")
+    element(:sub_admins_div, id: "subadminbox")
+    element(:sub_admins_table, css: "div#subadminbox table")
 
     # Billing history
+    element(:billing_history_table, css: "table.table-view")
 
     # Public: General information hash
     #
     #
     def general_info_hash
-      output = {}
-      general_info_dls[0..-2].map{ |dl| output = output.merge(dl.dl_hashes) }
-      output
+      output = general_info_dls[0].dt_dd_elements_text + general_info_dls[1].dt_dd_elements_text + stash_info_dl.dt_dd_elements_text.delete_if{ |pair| pair.first.empty?}
+      Hash[*output.flatten]
     end
 
     # Public: Partner contact information hash
     #
     def contact_info_hash
-      output = {}
-      contact_info_dls.map{ |dl| output = output.merge(dl.dl_hashes) }
+      output = Hash[*contact_info_dls.map{ |el| el.dt_dd_elements_text.delete_if{ |pair| pair.first.empty?}}.delete_if{ |el| el.empty?}.flatten]
       output["Contact Address:"] = contact_address_tb.value
       output["Contact City:"] = contact_city_tb.value
-      output["Contact State:"] = contact_state_us_select.first_selected_option.text
+
+      @state = ""
+      case
+        when contact_state_us_select.visible?
+          @state = contact_state_us_select.first_selected_option.text
+        when  contact_state_ca_select.visible?
+          @state = contact_state_us_select.first_selected_option.text
+        else
+          @state = contact_state_select.value
+      end
+      output["Contact State:"] = @state
+
       output["Contact ZIP/Postal Code:"] = contact_zip_tb.value
       output["Contact Country:"] = contact_country_select.first_selected_option.text
       output["Phone:"] = contact_phone_tb.value
@@ -79,18 +94,32 @@ module Bus
       output["# of employees:"] = contact_employees_select.first_selected_option.text
       output["Contact Email:"] = contact_email_tb.value
       output["VAT Number:"] = contact_vat_tb.value unless output["VAT Number:"].nil?
-      output.delete_if { |k, _| k.empty? }
+      output
     end
 
     # Public: Partner Account attributes hash
-    # Hidden column inside table will be removed
     #
     # Example:
-    #   => "{"Backup Licenses"=>"", "Backup License Soft Cap"=>"Disabled", "Enable Server"=>"Disabled", "Cloud Storage (GB)"=>"", "Stash Users:"=>"", "Default Stash Quota:"=>""}"
     #
     # Returns partner Account attributes hash
-    def account_attributes_hash
-      Hash[account_attributes_table.rows_text.collect{ |row| row[0..1] }]
+    def account_attributes_rows
+      # Remove hidden column inside table
+      account_attributes_table.rows_text.map{ |row| row[0..1] }
+    end
+
+    # Public: Generic resources table headers text
+    #
+    def generic_resources_table_headers
+      generic_resources_table.headers_text
+    end
+
+    # Public: Generic resources table rows text
+    #
+    def generic_resources_table_rows
+      # Remove hidden column inside table
+      output = generic_resources_table.rows_text.map{ |row| row[0..3] }
+      output[2] = output[2] + ['','']
+      output
     end
 
     # Public: License types table headers text
@@ -110,8 +139,8 @@ module Bus
     # Public: Internal billing tasub_admins_h4ble
     #
     #
-    def internal_billing_hash
-      Hash[*internal_billing_table.rows_text.flatten]
+    def internal_billing_table_rows
+      internal_billing_table.rows_text
     end
 
     def sub_admins_text
@@ -124,6 +153,20 @@ module Bus
 
     def sub_admins_table_rows
       sub_admins_table.rows_text
+    end
+
+    # Public: Billing history table headers text
+    #
+    #
+    def billing_history_table_headers
+      billing_history_table.headers_text
+    end
+
+    # Public: Billing history table rows text
+    #
+    #
+    def billing_history_table_rows
+      billing_history_table.rows_text
     end
 
     # Public: Click act as partner link

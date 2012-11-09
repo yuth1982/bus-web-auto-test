@@ -12,3 +12,6 @@ gem "capybara-webkit","=0.12.1"
 gem "pg", "=0.14.1"
 gem "net-ldap", "=0.3.1"
 gem "chronic", "=0.8.0"
+gem "activesupport", "=3.2.8"
+gem "tzinfo", "=0.3.35"
+

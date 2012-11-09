@@ -6,8 +6,8 @@ Feature: Bus Smoke Test
   @TC.18361 @slow
   Scenario: 18361 Mozy Enterprise Smoke Test
     When I add a new MozyEnterprise partner:
-      | period | users | server plan | server add-on | company name | address           | city      | state abbrev | zip   | country       | phone          | admin email                      | admin name   | cc last name | cc first name | cc number        | expire month | expire year | cvv |
-      | 24     | 10    | 100 GB      | 1             | VMware       | 3401 Hillview Ave | Palo Alto | CA           | 94304 | United States | 1-877-486-9273 | qa1+test+create+partner@mozy.com | vmware admin | vmware       | mozy          | 4111111111111111 | 12           | 15          | 123 |
+      | period | users | server plan | server add-on | company name | address           | city      | state abbrev | zip   | country       | phone          | admin name   | cc last name | cc first name | cc number        | expire month | expire year | cvv |
+      | 24     | 10    | 100 GB      | 1             | Smoke Test   | 3401 Hillview Ave | Palo Alto | CA           | 94304 | United States | 1-877-486-9273 | vmware admin | vmware       | mozy          | 4111111111111111 | 12           | 15          | 123 |
     Then Order summary table should be:
       | Description           | Quantity | Price Each | Total Price |
       | MozyEnterprise User   | 10       | $181.00    | $1,810.00   |
@@ -20,18 +20,23 @@ Feature: Bus Smoke Test
       | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:           | Root Role:          | Parent:        | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Autogrow: |
       | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | vmware admin (act as) | Enterprise (change) | MozyEnterprise | after 2 years  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No               |
     And Partner contact information should be:
-      | Company Type:  | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:                   |
-      | MozyEnterprise | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 |           |                 | qa1+test+create+partner@mozy.com |
+      | Company Type:  | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:   |
+      | MozyEnterprise | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 |           |                 | @new_admin_email |
     And Partner account attributes should be:
-      | Backup Licenses | Backup License Soft Cap | Enable Server | Cloud Storage (GB) | Stash Users: | Default Stash Quota: |
-      |                 | Disabled                | Disabled      |                    |              |                      |
+      | Backup Licenses         |           |
+      | Backup License Soft Cap | Disabled  |
+      | Enable Server           | Disabled  |
+      | Cloud Storage (GB)      |           |
+      | Stash Users:            |           |
+      | Default Stash Quota:    |           |
     And Partner license types should be:
       |         | Licenses: | Licenses Used: | Quota:   | Quota Used: | Resource Policy: |
       | Desktop | 10        | 0              | 250 GB   | 0 bytes     | Enabled          |
       | Server  | 200       | 0              | 350 GB   | 0 bytes     | Enabled          |
     And Partner internal billing should be:
-      | Account Type:   | Current Period: | Unpaid Balance: | Collect On: | Renewal Date: | Renewal Period:     |
-      | Credit Card     | Biennial        | $0.00           | N/A         | after 2 years | Use Current Period  |
+      | Account Type:   | Credit Card   | Current Period: | Biennial            |
+      | Unpaid Balance: | $0.00         | Collect On:     | N/A                 |
+      | Renewal Date:   | after 2 years | Renewal Period: | Use Current Period  |
     And Partner sub admins should be empty
     When I act as newly created partner account
     When I change MozyEnterprise account plan to:
@@ -68,9 +73,22 @@ Feature: Bus Smoke Test
     When I change account subscription up to 3-year billing period
     Then Subscription changed message should be Your account has been changed to 3-year billing.
     When I log in aria admin console as administrator
-    Then qa1+test+create+partner@mozy.com account status should be ACTIVE
+    Then newly created partner admin email account status should be ACTIVE
     When I log in bus admin console as administrator
-    Then I search and delete VMware account
-#    And I should see 3 email(s) when I search keywords:
-#      | content                           |
-#      | qa1+test+create+partner@mozy.com  |
+    Then I search and delete Smoke Test account
+    And I should see 3 email(s) when I search keywords:
+      | content |
+      | @email  |
+
+  @TC.112
+  Scenario: MozyPro France
+    When I add a new MozyPro partner:
+      | period | base plan | create under   | country | vat number    |
+      | 12     | 50 GB     | MozyPro France | France  | BE0883236072  |
+    Then Order summary table should be:
+      | Description       | Quantity | Price Each | Total Price |
+      | 50 GB             | 1        | €175.89    | €175.89     |
+      | Pre-tax Subtotal  |          |            | €175.89     |
+      | Total Charges     |          |            | €175.89     |
+    And New partner should be created
+    And I delete partner account

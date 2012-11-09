@@ -2,7 +2,7 @@
 #
 # MozyPro available columns:
 #   Required: period
-#   Optional: base plan, server plan, coupon, country, vat number, net terms
+#   Optional: base plan, server plan, storage add on, coupon, country, vat number, net terms
 #
 # MozyEnterprise available columns:
 #   Required: period
@@ -32,6 +32,7 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partne
       @partner.has_initial_purchase = false if attributes["base plan"].nil?
       @partner.base_plan = attributes["base plan"] || ""
       @partner.has_server_plan = (attributes["server plan"] || "no").eql?("yes")
+      @partner.storage_add_on =  attributes["storage add on"] || 0
     when CONFIGS['bus']['company_type']['mozyenterprise']
       @partner = Bus::DataObj::MozyEnterprise.new
       @partner.partner_info.type = type
@@ -68,7 +69,7 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partne
 
   # Admin info attributes
   @partner.admin_info.full_name = attributes["admin name"] unless attributes["admin name"].nil?
-  @partner.admin_info.email = attributes["admin email"] unless attributes["admin name"].nil?
+  @partner.admin_info.email = attributes["admin email"] unless attributes["admin email"].nil?
 
   # Billing info attributes
   # Not implemented, always use company info

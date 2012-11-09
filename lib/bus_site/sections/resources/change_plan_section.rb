@@ -10,7 +10,9 @@ module Bus
     # Mozypro
     #
     element(:pro_base_plan_select, id: "products_base_exclusive")
-    element(:pro_server_plan_cb, xpath: "//div[@id='#{ADD_ON_LIST_LOC}']/input[@type='checkbox']")
+    element(:pro_server_plan_status_span, id: "server-pass-status")
+    element(:pro_server_plan_change_link, xpath: "//a[text()='(change)']")
+    element(:pro_server_plan_select, xpath: "//span[@id='server-pass-status-change']/select")
     element(:pro_storage_add_on_tb, xpath: "//div[@id='#{ADD_ON_LIST_LOC}']/input[@type='text']")
 
     # MozyEnterprise
@@ -36,27 +38,29 @@ module Bus
     # Public: Change mozyporo account's plan
     #
     # Example
-    #   change_mozypro_plan("100 GB, $39.99","yes","coupon code")
+    #   change_mozypro_plan("100 GB, $39.99","es","coupon code")
     #
     # Returns nothing
     def change_mozypro_plan(base_plan, server_plan, coupon, storage_add_on=0)
       unless base_plan.empty?
         pro_base_plan_select.select(base_plan)
-        page.trigger_html_event(pro_base_plan_select.id, 'change')
+        #page.trigger_html_event(pro_base_plan_select.id, 'change')
       end
       unless storage_add_on == 0
         pro_storage_add_on_tb.type_text(storage_add_on)
-        page.trigger_html_event(pro_storage_add_on_tb.id, 'change')
+        #page.trigger_html_event(pro_storage_add_on_tb.id, 'change')
       end
       unless server_plan.empty?
-        pro_server_plan_cb.check if server_plan.eql?("yes")
-        page.trigger_html_event(pro_server_plan_cb.id, 'change')
+        sleep 2 # wait server plan to wait
+        pro_server_plan_change_link.click
+        pro_server_plan_select.select(server_plan)
+        #page.trigger_html_event(pro_server_plan_select.id, 'change')
       end
       fill_in_coupon(coupon)
       confirm_change
     end
 
-    # Public: Change mozyporo account's plan
+    # Public: Change mozypenterprise account's plan
     #
     # Example
     #   change_mozyenterprise_plan(2,"50 GB Server Plan, $296.78",2,"coupon code")
@@ -154,8 +158,8 @@ module Bus
       pro_base_plan_select.first_selected_option.text
     end
 
-    def mozypro_server_plan?
-      pro_server_plan_cb.checked?
+    def mozypro_server_plan_status
+      pro_server_plan_status_span.text
     end
 
     def mozypro_storage_add_on

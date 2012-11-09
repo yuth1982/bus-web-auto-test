@@ -198,6 +198,10 @@ Feature: Change plan
       | base plan |
       | 1 TB      |
 
+  | Resource        | Current Plan  | Distributed | Change  | Updated Plan |
+  | Total Storage   | 10 GB         | 10 GB       | 0 GB    | 10 GB        |
+
+
   @TC.17104 @Smoke
   Scenario: 17104 Add server plan option to MozyPro monthly US partner
     When I add a new MozyPro partner:

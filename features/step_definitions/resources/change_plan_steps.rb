@@ -32,7 +32,7 @@ When /^I change (MozyPro|MozyEnterprise|Reseller) account plan to:$/ do |type, p
 end
 
 Then /^Account plan should be changed$/ do
-  @bus_site.admin_console_page.change_plan_section.messages.should == "Successfully changed plan."
+  @bus_site.admin_console_page.change_plan_section.messages.should == "Successfully changed plan. Visit Manage Resources to distribute your new resources."
 end
 
 Then /^Change plan charge summary should be:$/ do |charge_table|
@@ -50,11 +50,11 @@ end
 Then /^MozyPro new plan should be:$/ do |new_plan_table|
   attributes = new_plan_table.hashes.first
   base_plan = attributes["base plan"] || ""
-  server_plan = (attributes["server plan"] || "no").eql?("yes")
+  server_plan = attributes["server plan"] || ""
   add_on = attributes["storage add-on"] || ""
 
   @bus_site.admin_console_page.change_plan_section.mozypro_base_plan.should include base_plan unless base_plan.empty?
-  @bus_site.admin_console_page.change_plan_section.mozypro_server_plan?.should == server_plan unless server_plan
+  @bus_site.admin_console_page.change_plan_section.mozypro_server_plan_status.should == server_plan unless server_plan.empty?
   @bus_site.admin_console_page.change_plan_section.mozypro_storage_add_on.should == add_on unless add_on.empty?
 
 end
