@@ -166,7 +166,7 @@ module Bus
       company_type_select.select(partner_info.type)
       parent_partner_select.select(partner_info.parent)
       coupon_code_tb.type_text(partner_info.coupon_code) unless partner_info.coupon_code.nil?
-      sleep 10 unless partner_info.type.eql?(CONFIGS['bus']['company_type']['mozypro']) # wait for load all supp plans
+      wait_until{ include_initial_purchase_cb.visible? } # wait for load all supp plans
     end
 
     def fill_admin_info(admin_info)
@@ -215,7 +215,14 @@ module Bus
       # Server Add ons drop down list
       find_by_id("#{base_plan_id}_add_on_plan_select").select(partner.server_plan)
       # Num of server add ons
-      server_add_on_id = find_by_id("#{base_plan_id}_add_on_plan").value
+      server_add_on_id = case partner.subscription_period
+	    when "12"
+		  "10353475"
+		when "24"
+		  "10353509"
+		when "36"
+		  "10353543"
+		end
 
       num_server = find_by_id("#{base_plan_id}_add_on_plan_#{server_add_on_id}")
       num_server.clear_value
