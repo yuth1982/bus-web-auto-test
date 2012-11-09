@@ -231,5 +231,4 @@ default user group who has no stash enabled
     And I act as newly created partner account
     And I add a new user group:
     And I delete newly created user group
-    Then the newly created user should be moved to default user group and stash should be disabled for the user and
-storage is returned
+    Then the newly created user should be moved to default user group and stash should be disabled for the user and storage is returned
