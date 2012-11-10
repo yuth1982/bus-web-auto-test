@@ -21,6 +21,7 @@ module Bus
     #
     element(:new_admin_display_name_tb, id: "new_admin_display_name")
     element(:new_admin_username_tb, id: "new_admin_username")
+    element(:root_role_td, id: "root-role-options")
 
     # Partner Info
     element(:parent_partner_select, id: "parent_partner_id")
@@ -71,8 +72,7 @@ module Bus
     # Returns nothing
     def add_new_account(partner)
       fill_company_info(partner.company_info)
-      fill_partner_info(partner.partner_info)
-      fill_admin_info(partner.admin_info)
+      fill_partner_admin_info(partner.partner_info, partner.admin_info)
       fill_billing_info(partner)
 
       # define master plan subscription period
@@ -140,7 +140,16 @@ module Bus
     # Returns period labels text
     def available_periods(type)
       company_type_select.select(type)
-      wait_until{ include_initial_purchase_cb.visible?} # wait for load all supp plans
+      role = ""
+      case type
+        when CONFIGS['bus']['company_type']['mozypro']
+          role = CONFIGS['bus']['root_role']['mozypro']
+        when CONFIGS['bus']['company_type']['mozyenterprise']
+          role = CONFIGS['bus']['root_role']['mozyenterprise']
+        when CONFIGS['bus']['company_type']['reseller']
+          role = CONFIGS['bus']['root_role']['reseller']
+      end
+      wait_until{ root_role_td.text.include?(role) && include_initial_purchase_cb.visible? }
       period_labels.map{ |ele| ele.text}
     end
 
@@ -162,16 +171,17 @@ module Bus
       contact_phone_tb.type_text(company_info.phone)
     end
 
-    def fill_partner_info(partner_info)
+    def fill_partner_admin_info(partner_info, admin_info)
       company_type_select.select(partner_info.type)
+      wait_until{ root_role_td.text.include?(admin_info.root_role) && include_initial_purchase_cb.visible? }
+
       parent_partner_select.select(partner_info.parent)
       coupon_code_tb.type_text(partner_info.coupon_code) unless partner_info.coupon_code.nil?
-      wait_until{ include_initial_purchase_cb.visible? } # wait for load all supp plans
-    end
 
-    def fill_admin_info(admin_info)
       new_admin_display_name_tb.type_text(admin_info.full_name)
       new_admin_username_tb.type_text(admin_info.email)
+
+      wait_until{ include_initial_purchase_cb.visible? } # wait for load all supp plans
     end
 
     def fill_billing_info(partner)
@@ -222,13 +232,13 @@ module Bus
       find_by_id("#{base_plan_id}_add_on_plan_select").select(partner.server_plan)
       # Num of server add ons
       server_add_on_id = case partner.subscription_period
-	    when "12"
-		  "10353475"
-		when "24"
-		  "10353509"
-		when "36"
-		  "10353543"
-		end
+                         when "12"
+                           "10353475"
+                         when "24"
+                           "10353509"
+                         when "36"
+                           "10353543"
+                         end
 
       num_server = find_by_id("#{base_plan_id}_add_on_plan_#{server_add_on_id}")
       num_server.clear_value
@@ -241,14 +251,17 @@ module Bus
         when CONFIGS['bus']['reseller_type']['silver']
           inputs[0].click # Silver plan
           base_plan_id = inputs[0].value
+          inputs[1].clear_value
           inputs[1].type_text(partner.reseller_quota) # Silver plan quota
         when CONFIGS['bus']['reseller_type']['gold']
           inputs[2].click # Gold plan
           base_plan_id = inputs[2].value
+          inputs[3].clear_value
           inputs[3].type_text(partner.reseller_quota) # Gold plan quota
         when CONFIGS['bus']['reseller_type']['platinum']
           inputs[4].click # Platinum plan
           base_plan_id = inputs[4].value
+          inputs[5].clear_value
           inputs[5].type_text(partner.reseller_quota) # Platinum plan quota
         else
           raise "Unable to find reseller type of #{partner.reseller_type}"
@@ -256,11 +269,13 @@ module Bus
 
       # Add ons server plan
       find_by_id("#{base_plan_id}_add_on_plan_check_box").check if partner.has_server_plan
-      # Num of server add ons
-      server_add_on_id = find_by_id("#{base_plan_id}_add_on_plan").value
 
-      server_add_on = find_by_id("#{base_plan_id}_add_on_plan_#{server_add_on_id}")
-      server_add_on.type_text(partner.reseller_add_on_quota) if partner.reseller_add_on_quota.to_i > 0
+      # Num of storage add ons
+      if partner.reseller_add_on_quota.to_i > 0
+        add_on = find(:xpath, "//div[@id='add_on_plan_text']/input[3]")
+        add_on.clear_value
+        add_on.type_text(partner.reseller_add_on_quota)
+      end
     end
 
     def fill_credit_card_info(credit_card)

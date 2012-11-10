@@ -31,6 +31,11 @@ bus:
     mozypro_ireland:            MozyPro Ireland
     mozypro_uk:                 MozyPro UK
 
+  root_role:
+    mozypro:                    SMB Bundle Limited
+    mozyenterprise:             Enterprise
+    reseller:                   Reseller Root
+
   menu:
     # Partners
     add_new_partner:            Add New Partner

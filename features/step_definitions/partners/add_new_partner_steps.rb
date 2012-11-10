@@ -10,10 +10,10 @@
 #
 # Reseller available columns:
 #   Required: period
-#   Optional: reseller type, reseller quota, server plan, server add-on, coupon,  country,  vat number, net terms
+#   Optional: reseller type, reseller quota, server plan, storage add on, coupon,  country,  vat number, net terms
 #
 # Shared available columns:
-# Optional: address, city, state, state abbrev, zip, country, phone, admin email, admin name
+# Optional: address, city, state, state abbrev, zip, country, phone, admin email, admin name, root role
 #
 # Steps included:
 #   click 'Add New Partner' link
@@ -33,21 +33,24 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partne
       @partner.base_plan = attributes["base plan"] || ""
       @partner.has_server_plan = (attributes["server plan"] || "no").eql?("yes")
       @partner.storage_add_on =  attributes["storage add on"] || 0
+      @partner.admin_info.root_role = attributes["root role"] || CONFIGS['bus']['root_role']['mozypro']
     when CONFIGS['bus']['company_type']['mozyenterprise']
       @partner = Bus::DataObj::MozyEnterprise.new
       @partner.partner_info.type = type
       @partner.has_initial_purchase = false if attributes["users"].nil?
       @partner.num_enterprise_users = attributes["users"] || 0
       @partner.server_plan = attributes["server plan"] || "None"
-      @partner.num_server_add_on = attributes["server add-on"] || 0
+      @partner.num_server_add_on = attributes["server add on"] || 0
+      @partner.admin_info.root_role = attributes["root role"] || CONFIGS['bus']['root_role']['mozyenterprise']
     when CONFIGS['bus']['company_type']['reseller']
       @partner = Bus::DataObj::Reseller.new
       @partner.partner_info.type = type
       @partner.has_initial_purchase = false if attributes["reseller type"].nil?
       @partner.reseller_type = attributes["reseller type"] || attributes["reseller type"].nil?
       @partner.reseller_quota = attributes["reseller quota"] || 0
-      @partner.reseller_add_on_quota = attributes["server add-on"] || 0
+      @partner.reseller_add_on_quota = attributes["storage add on"] || 0
       @partner.has_server_plan = (attributes["server plan"] || "no").eql?("yes")
+      @partner.admin_info.root_role = attributes["root role"] || CONFIGS['bus']['root_role']['reseller']
     else
       raise "Error: Company type #{type} does not exist."
   end
