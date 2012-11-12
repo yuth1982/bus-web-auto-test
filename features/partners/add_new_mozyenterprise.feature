@@ -247,6 +247,7 @@ Feature: Add a new partner
       | today | $0.00       | $0.00      | $0.00       |
     And I delete partner account
 
+  @TC.18736
   Scenario: 18736 Add New MozyEnterprise Partner US Without Initial Purchases
     When I add a new MozyEnterprise partner:
       | period | users | coupon              | country       | address           | city      | state abbrev | zip   | phone          |
