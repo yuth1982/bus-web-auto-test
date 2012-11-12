@@ -6,7 +6,7 @@
 #
 # MozyEnterprise available columns:
 #   Required: period
-#   Optional: users, server plan, server add-on, coupon, country, vat number, net terms
+#   Optional: users, server plan, server add on, coupon, country, vat number, net terms
 #
 # Reseller available columns:
 #   Required: period

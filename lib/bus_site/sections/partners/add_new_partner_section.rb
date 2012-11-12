@@ -175,7 +175,8 @@ module Bus
       company_type_select.select(partner_info.type)
       wait_until{ root_role_td.text.include?(admin_info.root_role) && include_initial_purchase_cb.visible? }
 
-      parent_partner_select.select(partner_info.parent)
+      # MozyEnterprise is for US only
+      parent_partner_select.select(partner_info.parent) unless partner_info.type.eql?(CONFIGS['bus']['company_type']['mozyenterprise'])
       coupon_code_tb.type_text(partner_info.coupon_code) unless partner_info.coupon_code.nil?
 
       new_admin_display_name_tb.type_text(admin_info.full_name)
@@ -222,27 +223,22 @@ module Bus
     end
 
     def fill_mozyenterprise_purchase(partner)
+      # Find base plan id from hidden input
       base_plan_id = find_by_id("#{partner.subscription_period}_base_plan").value
       # Base plan number of users
       num_user = find_by_id("#{partner.subscription_period}_base_plan_#{base_plan_id}")
       num_user.clear_value
       num_user.type_text(partner.num_enterprise_users)
 
-      # Server Add ons drop down list
+      # Server add ons select list
       find_by_id("#{base_plan_id}_add_on_plan_select").select(partner.server_plan)
-      # Num of server add ons
-      server_add_on_id = case partner.subscription_period
-                         when "12"
-                           "10353475"
-                         when "24"
-                           "10353509"
-                         when "36"
-                           "10353543"
-                         end
 
-      num_server = find_by_id("#{base_plan_id}_add_on_plan_#{server_add_on_id}")
-      num_server.clear_value
-      num_server.type_text(partner.num_server_add_on)
+      # Find server add on id from hidden input
+      server_add_on_id = find_by_id("#{base_plan_id}_add_on_plan_1").value
+
+      storage_add_on_input = find_by_id("#{base_plan_id}_add_on_plan_#{server_add_on_id}")
+      storage_add_on_input.clear_value
+      storage_add_on_input.type_text(partner.num_server_add_on)
     end
 
     def fill_reseller_purchase(partner)

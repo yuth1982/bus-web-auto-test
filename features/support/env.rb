@@ -53,5 +53,5 @@ end
 Capybara.default_wait_time = CONFIGS['global']['default_wait_time']
 
 # Set default time zone to Mountain time
-Time.zone = "Mountain Time (US & Canada)"
+Time.zone = "Eastern Time (US & Canada)"
 Chronic.time_class = Time.zone

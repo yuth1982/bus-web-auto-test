@@ -101,7 +101,7 @@ Feature: Add a new partner
     And New partner should be created
     And Partner general information should be:
       | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:          | Root Role:                  | Parent:                    | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro Germany (MozyPro)  | after 2 year   | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro Germany (MozyPro)  | after 2 years  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:   | VAT Number:  |
       | MozyPro       | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | Germany          | 1-877-486-9273 |           |                 | @new_admin_email | DE812321109  |
@@ -120,7 +120,7 @@ Feature: Add a new partner
     And Partner internal billing should be:
       | Account Type:   | Credit Card   | Current Period: | Biennial            |
       | Unpaid Balance: | €0.00         | Collect On:     | N/A                 |
-      | Renewal Date:   | after 2 year  | Renewal Period: | Use Current Period  |
+      | Renewal Date:   | after 2 years | Renewal Period: | Use Current Period  |
     And Partner billing history should be:
       | Date  | Amount  | Total Paid | Balance Due |
       | today | €585.71 | €585.71    | €0.00       |
@@ -212,7 +212,7 @@ Feature: Add a new partner
   Scenario: 18151 Add New MozyPro Partner US - Biennially - 1 TB - Server Plan - 10 Add on - Net Terms
     When I add a new MozyPro partner:
       | period | base plan | server plan  | storage add on | net terms  | country        | address           | city      | state abbrev | zip   | phone          |
-      | 24     | 1 TB      | yes          | 10              | yes        | United States  | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
+      | 24     | 1 TB      | yes          | 10             | yes        | United States  | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
     Then Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
       | 1 TB              | 1        | $7,979.79  | $7,979.79   |
@@ -223,7 +223,7 @@ Feature: Add a new partner
     And New partner should be created
     And Partner general information should be:
       | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:          | Root Role:                  | Parent: | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro | after 2 year   | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro | after 2 years  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:   |
       | MozyPro       | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 |           |                 | @new_admin_email |
@@ -242,7 +242,7 @@ Feature: Add a new partner
     And Partner internal billing should be:
       | Account Type:   | Net Terms 30  | Current Period: | Biennial            |
       | Unpaid Balance: | $28,557.48    | Collect On:     | N/A                 |
-      | Renewal Date:   | after 2 year  | Renewal Period: | Use Current Period  |
+      | Renewal Date:   | after 2 years | Renewal Period: | Use Current Period  |
     And Partner billing history should be:
       | Date  | Amount     | Total Paid | Balance Due |
       | today | $28,557.48 | $0.00      | $28,557.48  |
@@ -346,7 +346,7 @@ Feature: Add a new partner
     And New partner should be created
     And Partner general information should be:
       | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:          | Root Role:                  | Parent:                    | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro Ireland (MozyPro)  | after 2 year   | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro Ireland (MozyPro)  | after 2 years  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:   |
       | MozyPro       | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | Ireland          | 1-877-486-9273 |           |                 | @new_admin_email |
@@ -365,7 +365,7 @@ Feature: Add a new partner
     And Partner internal billing should be:
       | Account Type:   | Net Terms 30  | Current Period: | Biennial            |
       | Unpaid Balance: | €59,407.96    | Collect On:     | N/A                 |
-      | Renewal Date:   | after 2 year  | Renewal Period: | Use Current Period  |
+      | Renewal Date:   | after 2 years | Renewal Period: | Use Current Period  |
     And Partner billing history should be:
       | Date  | Amount      | Total Paid | Balance Due |
       | today | €59,407.96  | €0.00      | €59,407.96  |
@@ -470,7 +470,7 @@ Feature: Add a new partner
     And New partner should be created
     And Partner general information should be:
       | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:          | Root Role:                  | Parent:                   | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro France (MozyPro)  | after 2 year   | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro France (MozyPro)  | after 2 years  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:   |
       | MozyPro       | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | France           | 1-877-486-9273 |           |                 | @new_admin_email |
@@ -489,10 +489,10 @@ Feature: Add a new partner
     And Partner internal billing should be:
       | Account Type:   | Net Terms 30  | Current Period: | Biennial            |
       | Unpaid Balance: | €122,846.22   | Collect On:     | N/A                 |
-      | Renewal Date:   | after 2 year  | Renewal Period: | Use Current Period  |
+      | Renewal Date:   | after 2 years | Renewal Period: | Use Current Period  |
     And Partner billing history should be:
       | Date  | Amount      | Total Paid | Balance Due |
-      | today | €122,846.21 | €0.00      | €122,846.21 |
+      | today | €122,846.22 | €0.00      | €122,846.22 |
       | today | €0.00       | €0.00      | €0.00       |
     And I delete partner account
 
