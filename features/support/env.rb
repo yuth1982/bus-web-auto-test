@@ -52,6 +52,6 @@ end
 
 Capybara.default_wait_time = CONFIGS['global']['default_wait_time']
 
-# Accord to Aria, set default time zone to Eastern time
-Time.zone = "Eastern Time (US & Canada)"
+# Aria's timezone is UTC -04, Atlantic Standard Time
+Time.zone = "Atlantic Time (Canada)"
 Chronic.time_class = Time.zone
