@@ -529,8 +529,8 @@ Feature: Add a new partner
       | today | $0.00      | $0.00      | $0.00       |
     And I delete partner account
 
-  @TC.17820
-  Scenario: 17820 Verify MozyPro partner has 3 period options
+  @TC.18720
+  Scenario: 18720 Verify MozyPro partner has 3 period options
     When I navigate to Add New Partner section from bus admin console page
     Then MozyPro partner subscription period options should be:
       | Monthly | Yearly |  Biennially |
