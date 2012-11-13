@@ -12,7 +12,8 @@ Feature: Add a new partner
     When I add a new MozyPro partner:
       | period | base plan | coupon              | country       | address           | city      | state abbrev | zip   | phone          |
       | 1      | 10 GB     | 10PERCENTOFFOUTLINE | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be $9.99
+    And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
       | 10 GB             | 1        | $9.99      | $9.99       |
       | Discounts Applied |          |            | -$1.00      |
@@ -52,7 +53,8 @@ Feature: Add a new partner
     When I add a new MozyPro partner:
       | period | base plan | create under   | vat number    | coupon              | country | address           | city      | state | zip   | phone          |
       | 12     | 50 GB     | MozyPro France | FR08410091490 | 10PERCENTOFFOUTLINE | France  | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be €175.89
+    And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
       | 50 GB             | 1        | €175.89    | €175.89     |
       | Discounts Applied |          |            | -€17.59     |
@@ -92,7 +94,8 @@ Feature: Add a new partner
     When I add a new MozyPro partner:
       | period | base plan | create under    | vat number  | coupon              | country  | address           | city      | state | zip   | phone          |
       | 24     | 100 GB    | MozyPro Germany | DE812321109 | 10PERCENTOFFOUTLINE | Germany  | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be €650.79
+    And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
       | 100 GB             | 1       | €650.79    | €650.79     |
       | Discounts Applied |          |            | -€65.08     |
@@ -132,7 +135,8 @@ Feature: Add a new partner
     When I add a new MozyPro partner:
       | period | base plan | create under    | vat number  | coupon              | country  | address           | city      | state | zip   | phone          |
       | 1      | 250 GB    | MozyPro Ireland | IE9691104A  | 10PERCENTOFFOUTLINE | Ireland  | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be €74.99
+    And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
       | 250 GB             | 1       | €74.99     | €74.99      |
       | Discounts Applied |          |            | -€7.50      |
@@ -173,7 +177,8 @@ Feature: Add a new partner
     When I add a new MozyPro partner:
       | period | base plan | create under  | vat number  | coupon              | country        | address           | city      | state | zip   | phone          |
       | 12     | 500 GB    | MozyPro UK    | GB117223643 | 10PERCENTOFFOUTLINE | United Kingdom | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be £1,374.89
+    And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
       | 500 GB             | 1       | £1,374.89  | £1,374.89   |
       | Discounts Applied |          |            | -£137.49    |
@@ -213,7 +218,8 @@ Feature: Add a new partner
     When I add a new MozyPro partner:
       | period | base plan | server plan  | storage add on | net terms  | country        | address           | city      | state abbrev | zip   | phone          |
       | 24     | 1 TB      | yes          | 10             | yes        | United States  | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be $28,557.48
+    And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
       | 1 TB              | 1        | $7,979.79  | $7,979.79   |
       | Server Plan       | 1        | $629.79    | $629.79     |
@@ -254,7 +260,8 @@ Feature: Add a new partner
     When I add a new MozyPro partner:
       | period | base plan | create under   | server plan | net terms | country  | address           | city      | state | zip   | phone          |
       | 1      | 2 TB      | MozyPro France | yes         | yes       | France   | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be €609.98
+    And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
       | 2 TB              | 1        | €579.99    | €579.99     |
       | Server Plan       | 1        | €29.99     | €29.99      |
@@ -295,7 +302,8 @@ Feature: Add a new partner
     When I add a new MozyPro partner:
       | period | base plan | create under    | server plan  | net terms | country  | address           | city      | state | zip   | phone          |
       | 12     | 4 TB      | MozyPro Germany | yes          | yes       | Germany  | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be €12,649.78
+    And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
       | 4 TB              | 1        | €12,209.89 | €12,209.89  |
       | Server Plan       | 1        | €439.89    | €439.89     |
@@ -336,7 +344,8 @@ Feature: Add a new partner
     When I add a new MozyPro partner:
       | period | base plan | create under    | server plan | net terms | country  | address           | city      | state | zip   | phone          |
       | 24     | 8 TB      | MozyPro Ireland | yes         | yes       | Ireland  | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be €48,299.16
+    And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
       | 8 TB              | 1        | €46,619.58 | €46,619.58  |
       | Server Plan       | 1        | €1,679.58  | €1,679.58   |
@@ -377,7 +386,8 @@ Feature: Add a new partner
     When I add a new MozyPro partner:
       | period | base plan | create under   | server plan  | net terms  | country         | address           | city      | state | zip   | phone          |
       | 1      | 12 TB     | MozyPro UK     | yes          | yes        | United Kingdom  | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be £2,837.94
+    And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
       | 12 TB             | 1        | £2,732.97  | £2,732.97   |
       | Server Plan       | 1        | £104.97    | £104.97     |
@@ -418,7 +428,8 @@ Feature: Add a new partner
     When I add a new MozyPro partner:
       | period | base plan | server plan  | storage add on | country         | address           | city      | state abbrev | zip   | phone          |
       | 12     | 16 TB     | yes          | 10             | United States   | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be $76,008.02
+    And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
       | 16 TB             | 1        | $63,359.56 | $63,359.56  |
       | Server Plan       | 1        | $2,199.56  | $2,199.56   |
@@ -459,7 +470,8 @@ Feature: Add a new partner
     When I add a new MozyPro partner:
       | period | base plan | create under   | server plan  | storage add on | net terms  | vat number    | coupon              | country   | address           | city      | state | zip   | phone          |
       | 24     | 20 TB     | MozyPro France | yes          | 10             | yes        | FR08410091490 | 10PERCENTOFFOUTLINE | France    | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be €136,495.80
+    And Order summary table should be:
       | Description       | Quantity | Price Each   | Total Price  |
       | 20 TB             | 1        | €116,548.95  | €116,548.95  |
       | Server Plan       | 1        | €4,198.95    | €4,198.95    |
@@ -501,6 +513,7 @@ Feature: Add a new partner
     When I add a new MozyPro partner:
       | period | country       | address           | city      | state abbrev | zip   | phone          |
       | 1      | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
+    Then Sub-total before taxes or discounts should be 0
     And New partner should be created
     And Partner general information should be:
       | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:          | Root Role:                  | Parent:  | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |

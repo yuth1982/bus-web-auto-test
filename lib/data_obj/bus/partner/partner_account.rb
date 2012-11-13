@@ -3,7 +3,7 @@ module Bus
     # This class contains attributes for partner account information
     class PartnerAccount
       attr_accessor :company_info, :partner_info, :admin_info, :use_company_info,
-                    :subscription_period, :has_initial_purchase, :credit_card, :net_term_payment
+                    :subscription_period, :has_initial_purchase, :credit_card, :net_term_payment, :pre_sub_total
 
       # Public: Initialize a PartnerAccount Object
       #
@@ -16,6 +16,7 @@ module Bus
         @has_initial_purchase = true
         @credit_card = CreditCard.new
         @net_term_payment = false
+        @pre_sub_total = ""
       end
 
       # Public: output partner account attributes

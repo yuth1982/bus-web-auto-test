@@ -119,6 +119,10 @@ Then /^New partner should be created$/ do
   @bus_site.admin_console_page.add_new_partner_section.messages.should == "New partner created."
 end
 
+Then /^Sub-total before taxes or discounts should be (.+)$/ do |amount|
+  @partner.pre_sub_total.should == amount
+end
+
 Then /^Order summary table should be:$/ do |order_summary_table|
   @bus_site.admin_console_page.add_new_partner_section.order_summary_table_headers.should == order_summary_table.headers
   @bus_site.admin_console_page.add_new_partner_section.order_summary_table_rows.should == order_summary_table.rows

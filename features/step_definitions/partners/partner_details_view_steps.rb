@@ -2,7 +2,6 @@
 When /^I act as newly created partner account$/ do
   @bus_site.admin_console_page.partner_details_section.act_as_partner
   @bus_site.admin_console_page.has_stop_masquerading_link?
-  @bus_site.admin_console_page.close_stash_invitation_popup
 end
 
 Given /^I act as a partner (.*)$/ do |partner_name|
@@ -10,7 +9,6 @@ Given /^I act as a partner (.*)$/ do |partner_name|
   page.find_link(partner_name).click
   @bus_site.admin_console_page.partner_details_section.act_as_partner
   @bus_site.admin_console_page.has_stop_masquerading_link?
-  @bus_site.admin_console_page.close_stash_invitation_popup
 end
 
 When /^I search and delete (.+) account/ do |account_name|

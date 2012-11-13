@@ -12,7 +12,8 @@ Feature: Add a new partner
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | coupon              | country       | address           | city      | state abbrev | zip   | phone          |
       | 1      | Silver        | 500            | yes         | 10PERCENTOFFOUTLINE | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be $235.00
+    And Order summary table should be:
       | Description           | Quantity | Price Each | Total Price |
       | GB - Silver Reseller  | 500      | $0.42      | $210.00     |
       | Server Plan           | 1        | $25.00     | $25.00      |
@@ -53,7 +54,8 @@ Feature: Add a new partner
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | server plan | create under   | vat number    | coupon              | country | address           | city      | state | zip   | phone          |
       | 12      | Gold          | 500            | yes         | MozyPro France | FR08410091490 | 10PERCENTOFFOUTLINE | France  | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be €2,420.00
+    And Order summary table should be:
       | Description           | Quantity | Price Each | Total Price |
       | GB - Gold Reseller    | 500      | €3.08      | €1,540.00   |
       | Server Plan           | 1        | €880.00    | €880.00     |
@@ -94,7 +96,8 @@ Feature: Add a new partner
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | server plan | create under    | vat number    | coupon              | country | address           | city      | state | zip   | phone          |
       | 1       | Platinum      | 500            | yes         | MozyPro Germany | DE812321109   | 10PERCENTOFFOUTLINE | Germany | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be €260.00
+    And Order summary table should be:
       | Description             | Quantity | Price Each | Total Price |
       | GB - Platinum Reseller  | 500      | €0.24      | €120.00     |
       | Server Plan             | 1        | €140.00    | €140.00     |
@@ -135,7 +138,8 @@ Feature: Add a new partner
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | server plan | storage add on | create under    | vat number    | coupon              | country | address           | city      | state | zip   | phone          |
       | 12      | Silver        | 500            | yes         | 10             | MozyPro Ireland | IE9691104A    | 10PERCENTOFFOUTLINE | Ireland | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be €2,761.00
+    And Order summary table should be:
       | Description             | Quantity | Price Each | Total Price |
       | GB - Silver Reseller    | 500      | €3.63      | €1,815.00   |
       | Server Plan             | 1        | €220.00    | €220.00     |
@@ -178,7 +182,8 @@ Feature: Add a new partner
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | server plan | storage add on | create under    | vat number    | coupon              | country        | address           | city      | state | zip   | phone          |
       | 1       | Gold          | 500            | yes         | 10             | MozyPro UK      | GB117223643   | 10PERCENTOFFOUTLINE | United Kingdom | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be £226.00
+    And Order summary table should be:
       | Description             | Quantity | Price Each | Total Price |
       | GB - Gold Reseller      | 500      | £0.23      | £115.00     |
       | Server Plan             | 1        | £65.00     | £65.00      |
@@ -220,7 +225,8 @@ Feature: Add a new partner
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | storage add on | net terms  | country       | address           | city      | state abbrev | zip   | phone          |
       | 12     | Platinum      | 500            | 10             | yes        | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be $2,310.00
+    And Order summary table should be:
       | Description             | Quantity | Price Each | Total Price |
       | GB - Platinum Reseller  | 500      | $3.30      | $1,650.00   |
       | 20 GB add-on            | 10       | $66.00     | $660.00     |
@@ -260,7 +266,8 @@ Feature: Add a new partner
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | create under   | net terms | country | address           | city      | state | zip   | phone          |
       | 1       | Silver        | 500            | MozyPro France | yes       | France  | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be €165.00
+    And Order summary table should be:
       | Description           | Quantity | Price Each | Total Price |
       | GB - Silver Reseller  | 500      | €0.33      | €165.00     |
       | Pre-tax Subtotal      |          |            | €165.00     |
@@ -300,7 +307,8 @@ Feature: Add a new partner
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | net terms | create under    | country | address           | city      | state | zip   | phone          |
       | 12      | Gold          | 500            | yes       | MozyPro Germany | Germany | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be €1,540.00
+    And Order summary table should be:
       | Description             | Quantity | Price Each | Total Price |
       | GB - Gold Reseller      | 500      | €3.08      | €1,540.00   |
       | Pre-tax Subtotal        |          |            | €1,540.00   |
@@ -340,7 +348,8 @@ Feature: Add a new partner
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | net terms | create under    | country | address           | city      | state | zip   | phone          |
       | 1       | Platinum      | 500            | yes       | MozyPro Ireland | Ireland | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be €120.00
+    And Order summary table should be:
       | Description             | Quantity | Price Each | Total Price |
       | GB - Platinum Reseller  | 500      | €0.24      | €120.00     |
       | Pre-tax Subtotal        |          |            | €120.00     |
@@ -380,7 +389,8 @@ Feature: Add a new partner
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | storage add on | create under    | net terms | country        | address           | city      | state | zip   | phone          |
       | 12      | Silver        | 500            | 10             | MozyPro UK      | yes       | United Kingdom | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be £2,079.00
+    And Order summary table should be:
       | Description             | Quantity | Price Each | Total Price |
       | GB - Silver Reseller    | 500      | £2.97      | £1,485.00   |
       | 20 GB add-on            | 10       | £59.40     | £594.00     |
@@ -421,6 +431,7 @@ Feature: Add a new partner
     When I add a new Reseller partner:
       | period | country       | address           | city      | state abbrev | zip   | phone          |
       | 1      | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
+    Then Sub-total before taxes or discounts should be 0
     And New partner should be created
     And Partner general information should be:
       | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:          | Root Role:             | Parent: | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |

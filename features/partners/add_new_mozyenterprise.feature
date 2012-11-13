@@ -12,7 +12,8 @@ Feature: Add a new partner
     When I add a new MozyEnterprise partner:
       | period | users | coupon              | country       | address           | city      | state abbrev | zip   | phone          |
       | 12     | 100   | 20PERCENTOFFOUTLINE | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be $9,500.00
+    And Order summary table should be:
       | Description         | Quantity | Price Each | Total Price |
       | MozyEnterprise User | 100      | $95.00     | $9,500.00   |
       | Discounts Applied   |          |            | -$1,900.00  |
@@ -51,7 +52,8 @@ Feature: Add a new partner
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add on | country       | address           | city      | state abbrev | zip   | phone          |
       | 24     | 200   | 250 GB      | 10             | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be $58,478.48
+    And Order summary table should be:
       | Description          | Quantity | Price Each | Total Price |
       | MozyEnterprise User  | 200      | $181.00    | $36,200.00  |
       | 250 GB Server Plan   | 1        | $2,330.58  | $2,330.58   |
@@ -91,7 +93,8 @@ Feature: Add a new partner
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add on | coupon              | country       | address           | city      | state abbrev | zip   | phone          |
       | 36     | 300   | 500 GB      | 10            | 20PERCENTOFFOUTLINE | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be $112,496.40
+    And Order summary table should be:
       | Description           | Quantity | Price Each | Total Price |
       | MozyEnterprise User   | 300      | $259.00    | $77,700.00  |
       | 500 GB Server Plan    | 1        | $6,299.40  | $6,299.40   |
@@ -132,7 +135,8 @@ Feature: Add a new partner
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add on | country       | address           | city      | state abbrev | zip   | phone          |
       | 12     | 400   | 1 TB        | 10            | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be $52,958.68
+    And Order summary table should be:
       | Description           | Quantity | Price Each | Total Price |
       | MozyEnterprise User   | 400      | $95.00     | $38,000.00  |
       | 1 TB Server Plan      | 1        | $4,509.78  | $4,509.78   |
@@ -172,6 +176,7 @@ Feature: Add a new partner
     When I add a new MozyEnterprise partner:
       | period | users | server plan | coupon              | net terms | country       | address           | city      | state abbrev | zip   | phone          |
       | 24     | 500   | 2 TB        | 20PERCENTOFFOUTLINE | yes       | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
+    And Sub-total before taxes or discounts should be $107,089.58
     Then Order summary table should be:
       | Description         | Quantity | Price Each | Total Price |
       | MozyEnterprise User | 500      | $181.00    | $90,500.00  |
@@ -212,7 +217,8 @@ Feature: Add a new partner
     When I add a new MozyEnterprise partner:
       | period | users | server plan  | server add on | net terms | country       | address           | city      | state abbrev | zip   | phone          |
       | 36     | 600   | 4 TB         | 10            | yes       | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be $228,596.40
+    And Order summary table should be:
       | Description           | Quantity | Price Each | Total Price |
       | MozyEnterprise User   | 600      | $259.00    | $155,400.00 |
       | 4 TB Server Plan      | 1        | $44,699.40 | $44,699.40  |
@@ -250,14 +256,9 @@ Feature: Add a new partner
   @TC.18736
   Scenario: 18736 Add New MozyEnterprise Partner US Without Initial Purchases
     When I add a new MozyEnterprise partner:
-      | period | users | coupon              | country       | address           | city      | state abbrev | zip   | phone          |
-      | 12     | 100   | 20PERCENTOFFOUTLINE | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
-    Then Order summary table should be:
-      | Description         | Quantity | Price Each | Total Price |
-      | MozyEnterprise User | 100      | $95.00     | $9,500.00   |
-      | Discounts Applied   |          |            | -$1,900.00  |
-      | Pre-tax Subtotal    |          |            | $7,600.00   |
-      | Total Charges       |          |            | $7,600.00   |
+      | period | country       | address           | city      | state abbrev | zip   | phone          |
+      | 12     | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
+    Then Sub-total before taxes or discounts should be 0
     And New partner should be created
     And Partner general information should be:
       | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:          | Root Role:          | Parent:        | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
@@ -274,15 +275,14 @@ Feature: Add a new partner
       | Default Stash Storage:  |           |
     And Partner license types should be:
       |         | Licenses: | Licenses Used: | Quota:   | Quota Used: | Resource Policy: |
-      | Desktop | 100       | 0              | 2500 GB  | 0 bytes     | Enabled          |
+      | Desktop | 0         | 0              | 0 GB     | 0 bytes     | Enabled          |
       | Server  | 0         | 0              | 0 GB     | 0 bytes     | Enabled          |
     And Partner internal billing should be:
-      | Account Type:   | Credit Card   | Current Period: | Yearly              |
+      | Account Type:   | Other/None    | Current Period: | Yearly              |
       | Unpaid Balance: | $0.00         | Collect On:     | N/A                 |
       | Renewal Date:   | after 1 year  | Renewal Period: | Use Current Period  |
     And Partner billing history should be:
       | Date  | Amount    | Total Paid | Balance Due |
-      | today | $7,600.00 | $7,600.00  | $0.00       |
       | today | $0.00     | $0.00      | $0.00       |
     And I delete partner account
 

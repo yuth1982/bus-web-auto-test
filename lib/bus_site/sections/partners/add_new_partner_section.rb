@@ -45,6 +45,7 @@ module Bus
     elements(:period_labels, xpath: "//div[@id='initial_purchase_options']/dt/label")
     element(:initial_purchase_options, id: "initial_purchase_options")
     element(:include_initial_purchase_cb, id: "include_initial_purchase")
+    element(:pre_sub_total_label, id: "init_sub_total")
     element(:next_btn, id: "next-button")
 
     # Order summary
@@ -67,7 +68,7 @@ module Bus
     # Public: Add a new partner account
     #
     # Example
-    #   @bus_admin_console_page.add_new_partner_section.add_new_account(partner_object)
+    #   add_new_partner_section.add_new_account(partner_object)
     #
     # Returns nothing
     def add_new_account(partner)
@@ -80,6 +81,7 @@ module Bus
 
       if partner.has_initial_purchase
         fill_initial_purchase(partner)
+        set_pre_sub_total(partner)
         next_btn.click
         wait_until{ back_btn.visible? } # wait for fill credit card info
         if partner.net_term_payment
@@ -90,16 +92,16 @@ module Bus
         create_partner_btn.click
       else
         include_initial_purchase_cb.uncheck
+        set_pre_sub_total(partner)
         next_btn.click
       end
-      #sleep 20 # force wait for create the new partner
     end
 
     # Public: Messages for change account details actions
     #
     # Example
-    #  @bus_admin_console_page.add_new_partner_section.messages
-    #  # => "New partner created."
+    #   add_new_partner_section.messages
+    #   # => "New partner created."
     #
     # Returns success or error message text
     def messages
@@ -109,7 +111,7 @@ module Bus
     # Public: Add new partner order summary table rows text
     #
     # Example
-    #   @bus_admin_console_page.add_new_partner_section.order_summary_table_headers
+    #   add_new_partner_section.order_summary_table_headers
     #   # => ["Description","Quantity","Price Each","Total Price"]
     #
     # Returns order summary table rows text
@@ -120,7 +122,7 @@ module Bus
     # Public: Add new partner order summary table rows text
     #
     # Example
-    #   @bus_admin_console_page.add_new_partner_section.order_summary_table_rows
+    #   add_new_partner_section.order_summary_table_rows
     #   # => [["50 GB","1","$19.99","$19.99"],
     #         ["Discounts Applied","","","$-1.00"],
     #         ["Pre-tax Subtotal","","","$18.99"],
@@ -134,7 +136,7 @@ module Bus
     # Public: Add new partner subscription period labels text
     #
     # Example
-    #   @bus_admin_console_page.add_new_partner_section.available_periods("MozyPro")
+    #   add_new_partner_section.available_periods("MozyPro")
     #   # => ["Monthly", "Yearly", "Biennially"]
     #
     # Returns period labels text
@@ -213,7 +215,9 @@ module Bus
       base_plan_select = find_by_id("#{partner.subscription_period}_base_plan_select")
       base_plan_select.select(partner.base_plan)
       base_plan_id = base_plan_select.value
+
       find_by_id("#{base_plan_id}_add_on_plan_check_box").check if partner.has_server_plan
+
       # storage add on option for base plan >= 1 TB
       if partner.storage_add_on != 0
         add_on = find(:xpath, "//input[starts-with(@id,'#{base_plan_id}')][3]")
@@ -281,6 +285,16 @@ module Bus
       cc_exp_mm_select.select(credit_card.expire_month)
       cc_exp_yyyy_select.select(credit_card.expire_year)
     end
+
+    def set_pre_sub_total(partner)
+      find(:id, "initial_purchase_options").click
+      page.execute_script("$('initial_purchase_options').focus")
+      # Since I don't know how long the ajax call will return, I set 2 seconds wait here
+      # possible refactor here, remove sleep method
+      sleep 2
+      partner.pre_sub_total = pre_sub_total_label.text.strip
+    end
+
   end
 end
 
