@@ -9,5 +9,7 @@ module Aria
     section(:account_groups_section, AccountGroupsSection, xpath: '*')
     section(:taxpayer_section, TaxpayerSection, xpath: '*')
     section(:account_status_section, AccountStatusSection, xpath: '*')
+    section(:form_of_payment_section, FormOfPaymentSection, xpath: '*')
+
   end
 end

@@ -98,3 +98,25 @@ When /^I set notification method to (.+)$/ do |notification_method|
   @aria_site.accounts_page.notification_method_section.change_notify_method(notification_method)
 end
 
+# Billing contact steps
+Then /^Aria account billing contact should include:$/ do |contact_table|
+  @aria_site.admin_tools_page.switch_to_inner_work_frame
+  actual = @aria_site.accounts_page.account_overview_section.billing_contact
+
+  expected = contact_table.hashes.first
+  expected.keys.each do |header|
+    actual.should include(expected[header])
+  end
+end
+
+# Form of Payment steps
+Then /^Aria account credit card information should be:$/ do |cc_table|
+  @aria_site.admin_tools_page.switch_to_inner_work_frame
+  @aria_site.accounts_page.account_overview_section.navigate_to_link('Form of Payment')
+  actual = @aria_site.accounts_page.form_of_payment_section.credit_card_info_hash
+
+  expected = cc_table.hashes.first
+  expected.keys.each do |header|
+    actual[header].should  == expected[header]
+  end
+end

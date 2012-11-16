@@ -4,7 +4,17 @@ module Bus
 
     # Private elements
     #
-    element(:message_div, xpath: "//div[@id='resource-change_credit_card-errors']/ul")
+    element(:cc_address_tb, id: "cc_address")
+    element(:cc_city_tb, id: "cc_city")
+    element(:cc_state_tb, id: "cc_state")
+    element(:cc_state_us_select, id: "cc_state_us")
+    element(:cc_state_ca_select, id: "cc_state_ca")
+    element(:cc_country_select, id: "cc_country")
+    element(:cc_zip_tb, id: "cc_zip")
+    element(:cc_email_tb, id: "cc_email")
+    element(:cc_phone_tb, id: "cc_phone")
+
+    element(:message_div, css: "div#resource-change_credit_card-errors ul")
     element(:modify_credit_card_cb, id:"modify_cc")
     element(:cc_name_tb, id: "cc_name")
     element(:cc_no_tb, id: "cc_no")
@@ -12,33 +22,88 @@ module Bus
     element(:cc_exp_mm_select, id: "cc_exp_mm")
     element(:cc_exp_yyyy_select, id: "cc_exp_yyyy")
     element(:submit, id: "submit_button")
+    element(:payment_info_table, css: "form#change_cc_form table")
+
+    # Public: Update payment contact information
+    #
+    #
+    #
+    def update_payment_contact_info(contact_info, email)
+      cc_address_tb.type_text(contact_info.address) unless contact_info.address.nil?
+      # Since country and state are close related, you have to change them together
+      unless contact_info.country.nil?
+        cc_country_select.select(contact_info.country)
+        case contact_info.country
+          when 'United States'
+            cc_state_us_select.select(contact_info.state_abbrev)
+          when 'Canada'
+            cc_state_ca_select.select(contact_info.state_abbrev)
+          else
+            cc_state_tb.type_text(contact_info.state)
+        end
+      end
+      cc_city_tb.type_text(contact_info.city) unless contact_info.city.nil?
+      cc_zip_tb.type_text(contact_info.zip) unless contact_info.zip.nil?
+      cc_phone_tb.type_text(contact_info.phone) unless contact_info.phone.nil?
+      cc_email_tb.type_text(email) unless email.nil?
+    end
 
     # Public: Update account's credit card information, but not update billing address.
     #
     # Example
-    #   @bus_admin_console_page.change_payment_info_section.update_credit_card_info(credit_card_object)
+    #   change_payment_info_section.update_credit_card_info(credit_card_object)
     #
     # Returns nothing
     def update_credit_card_info(credit_card)
       modify_credit_card_cb.check
-      cc_name_tb.type_text("#{credit_card.first_name} #{credit_card.last_name}")
-      cc_no_tb.type_text(credit_card.number)
-      cvv_tb.type_text(credit_card.cvv)
-      cc_exp_mm_select.select(credit_card.expire_month)
-      cc_exp_yyyy_select.select(credit_card.expire_year)
-      submit.click
-      sleep 15
+      cc_name_tb.type_text(credit_card.full_name) unless credit_card.full_name.nil?
+      cc_no_tb.type_text(credit_card.number) unless credit_card.number.nil?
+      cvv_tb.type_text(credit_card.cvv) unless credit_card.cvv.nil?
+      cc_exp_mm_select.select(credit_card.expire_month) unless credit_card.expire_month.nil?
+      cc_exp_yyyy_select.select(credit_card.expire_year) unless credit_card.expire_year.nil?
     end
 
+    def submit_contact_cc_changes
+      submit.click
+    end
     # Public: Messages for change payment information actions
     #
     # Example
-    #  @bus_admin_console_page.change_payment_info_section.messages
-    #  # => "Your account is backup-suspended. You will not be able to access your account until your credit card is billed."
+    #   change_payment_info_section.messages
+    #   # => "Your account is backup-suspended. You will not be able to access your account until your credit card is billed."
     #
     # Returns success or error message text
     def messages
       message_div.text
     end
+
+    # Public: Billing information
+    #
+    # Example:
+    #   change_payment_info_section.billing_information_hash
+    #
+    # Returns billing information hashes
+    def billing_information_hash
+      output = Hash[*payment_info_table.rows_text[0..2].flatten]
+
+      @state = ""
+      case
+        when cc_state_us_select.visible?
+          @state = cc_state_us_select.first_selected_option.text
+        when  cc_state_ca_select.visible?
+          @state = cc_state_us_select.first_selected_option.text
+        else
+          @state = cc_state_select.value
+      end
+      output["Billing Street Address:"] = cc_address_tb.value
+      output["Billing City:"] = cc_city_tb.value
+      output["Billing State/Province:"] = @state
+      output["Billing Country:"] = cc_country_select.first_selected_option.text
+      output["Billing ZIP/Postal Code:"] = cc_zip_tb.value
+      output["Billing Email"] = cc_email_tb.value
+      output["Billing Phone:"] = cc_phone_tb.value
+      output
+    end
+
   end
 end

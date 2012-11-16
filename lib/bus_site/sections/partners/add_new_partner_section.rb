@@ -287,8 +287,12 @@ module Bus
     end
 
     def set_pre_sub_total(partner)
-      find(:id, "initial_purchase_options").click
-      page.execute_script("$('initial_purchase_options').focus")
+      # Click initial purchase twice, force re-calculate the price, make sure price gets update
+      if partner.has_initial_purchase
+        include_initial_purchase_cb.click
+        sleep 1
+        include_initial_purchase_cb.click
+      end
       # Since I don't know how long the ajax call will return, I set 2 seconds wait here
       # possible refactor here, remove sleep method
       sleep 2

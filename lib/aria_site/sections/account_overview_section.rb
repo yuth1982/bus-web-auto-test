@@ -18,12 +18,23 @@ module Aria
     # Public: Aria account status on account overview page
     #
     # Example
-    #   @aria_admin_console_page.accounts_page.account_overview_section.account_status
+    #   accounts_page.account_overview_section.account_status
     #   # => "ACTIVE"
     #
     # Returns account status text
     def account_status
       overview_table.rows_text[1][3]
+    end
+
+    # Public: Aria account billing contact information
+    #
+    # Example
+    #   accounts_page.account_overview_section.billing_contact
+    #   # => "change card Jaloo Foreign Utilities Company This is a new address Lemon Grove, MT  73662 United States Home: 12345678"
+    #
+    # Returns billing contact text
+    def billing_contact
+      overview_table.rows_text[8][3]
     end
   end
 end
