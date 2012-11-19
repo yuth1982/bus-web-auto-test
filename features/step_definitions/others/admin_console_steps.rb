@@ -6,3 +6,10 @@ When /^I close Mozy Stash invitation popup window$/ do
   @bus_site.admin_console_page.close_stash_invitation_popup
 end
 
+When /^I stop masquerading$/ do
+  @bus_site.admin_console_page.stop_masquerading
+end
+
+Then /^I should not see (.+) link$/ do |link|
+  @bus_site.admin_console_page.has_no_menu_link?(link).should be_true
+end

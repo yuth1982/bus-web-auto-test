@@ -4,13 +4,6 @@ When /^I act as newly created partner account$/ do
   @bus_site.admin_console_page.has_stop_masquerading_link?
 end
 
-Given /^I act as a partner (.*)$/ do |partner_name|
-  @bus_site.admin_console_page.search_list_partner_section.search_partner partner_name
-  page.find_link(partner_name).click
-  @bus_site.admin_console_page.partner_details_section.act_as_partner
-  @bus_site.admin_console_page.has_stop_masquerading_link?
-end
-
 When /^I search and delete by account (.+)/ do |account_name|
   @bus_site.admin_console_page.navigate_to_link(CONFIGS['bus']['menu']['search_list_partner'])
   @bus_site.admin_console_page.search_list_partner_section.search_partner(account_name)

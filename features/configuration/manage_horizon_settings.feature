@@ -6,7 +6,9 @@ Feature: Manage Horizon related settings
 
   Background:
     Given I log in bus admin console as administrator
-    And I act as the partner by mikeg+fedid@mozy.com on admin details panel
+    When I act as partner by:
+      | email                |
+      | mikeg+fedid@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
 
   @TC.17470

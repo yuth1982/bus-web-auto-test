@@ -15,12 +15,16 @@ module Bus
     element(:cc_phone_tb, id: "cc_phone")
 
     element(:message_div, css: "div#resource-change_credit_card-errors ul")
+    element(:cc_error_div, css: "div#ariaErrors ul")
     element(:modify_credit_card_cb, id:"modify_cc")
     element(:cc_name_tb, id: "cc_name")
     element(:cc_no_tb, id: "cc_no")
     element(:cvv_tb, id: "cvv")
     element(:cc_exp_mm_select, id: "cc_exp_mm")
     element(:cc_exp_yyyy_select, id: "cc_exp_yyyy")
+    element(:show_cvv_help_link, xpath: "//a[text()='(what is this?)']")
+    element(:cvv_help_div, css: "div#cvv2help")
+    element(:close_cvv_help_link, xpath: "//a[text()='(click to close)']")
     element(:submit, id: "submit_button")
     element(:payment_info_table, css: "form#change_cc_form table")
 
@@ -66,6 +70,7 @@ module Bus
     def submit_contact_cc_changes
       submit.click
     end
+
     # Public: Messages for change payment information actions
     #
     # Example
@@ -75,6 +80,10 @@ module Bus
     # Returns success or error message text
     def messages
       message_div.text
+    end
+
+    def modify_cc_error_message
+      cc_error_div.text
     end
 
     # Public: Billing information
@@ -103,6 +112,52 @@ module Bus
       output["Billing Email"] = cc_email_tb.value
       output["Billing Phone:"] = cc_phone_tb.value
       output
+    end
+
+    # Public: Click 'what is this?' to show cvv help popup dialog
+    #
+    # Example:
+    #   change_payment_info_section.show_cvv_help_popup
+    #
+    # Returns nothing
+    def show_cvv_help_popup
+      show_cvv_help_link.click
+    end
+
+    # Public: Click 'click to close' to close cvv help popup dialog
+    #
+    # Example:
+    #   change_payment_info_section.close_cvv_help_popup
+    #
+    # Returns nothing
+    def close_cvv_help_popup
+      close_cvv_help_link.click
+    end
+
+    # Public: Is cvv help popup dialog displayed?
+    #
+    # Example:
+    #   change_payment_info_section.cvv_help_displayed?
+    #
+    # Returns true or false
+    def cvv_help_displayed?
+      cvv_help_div.visible?
+    end
+
+    def enable_modify_credit_card
+      modify_credit_card_cb.check
+    end
+
+    def disable_modify_credit_card
+      modify_credit_card_cb.uncheck
+    end
+
+    def modify_cc_section_enabled?
+      cc_name_tb.enabled? && cc_no_tb.enabled? && cvv_tb.enabled? && cc_exp_mm_select.enabled? && cc_exp_yyyy_select.enabled?
+    end
+
+    def credit_card_number
+      cc_no_tb.value
     end
 
   end

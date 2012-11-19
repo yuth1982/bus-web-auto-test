@@ -65,7 +65,9 @@ Feature: Machine migration(Test for using bifrost helper files and create partne
 
   @TC.16272-
   Scenario: Export a CSV file in Synchronized way while the partner has 10000 machines before
-    Given I act as a partner Machine Migration Automation
+    When I act as partner by:
+      | name                         |
+      | Machine Migration Automation |
     And I navigate to the machine mapping page
     When I download the machine csv file
     Then The exported csv file should be like:(header as below, row number is 3, order by current owner, no duplicated rows)
@@ -108,7 +110,9 @@ Feature: Machine migration(Test for using bifrost helper files and create partne
 
   @TC.16276-
   Scenario: Import a CSV file in no passive way while the partner has 10000 machines before
-    Given I act as a partner Machine Migration Automation
+    When I act as partner by:
+      | name                         |
+      | Machine Migration Automation |
     And I navigate to the machine mapping page
     And I download the machine csv file
     And I change the csv file by adding new owners to the machines
@@ -358,7 +362,9 @@ Examples:
 
   @TC.17936-
   Scenario: Import a CSV file while two users have same machine
-    Given I act as a partner Machine Migration for TC17936
+    When I act as partner by:
+      | name                          |
+      | Machine Migration for TC17936 |
     And I navigate to the machine mapping page
     And I download the machine csv file
     And I change the csv file by moving the machines to new users

@@ -59,11 +59,14 @@ module Bus
 
     def stop_masquerading
       stop_masquerading_link.click
-      wait_until{ !stop_masquerading_link.visible? }
     end
 
     def close_stash_invitation_popup
       find_link("Don't Show This Again").click
+    end
+
+    def has_no_menu_link?(link)
+      has_no_link?(link)
     end
   end
 end

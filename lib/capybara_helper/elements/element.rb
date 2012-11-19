@@ -88,5 +88,9 @@ class Capybara::Node::Element
   def clear
     set('')
   end
+
+  def enabled?
+    self['disabled'].nil?
+  end
 end
 

@@ -9,7 +9,9 @@ Feature: User sync
 
   @TC.17518 @ui
   Scenario: Check the UI when the partner has never synced
-    When I act as the partner by user_sync_never_synced@auto.com on admin details panel
+    When I act as partner by:
+      | email                           |
+      | user_sync_never_synced@auto.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Connection Settings tab
@@ -19,7 +21,9 @@ Feature: User sync
 
   @TC.17519 @ui
   Scenario: Sync Now
-    When I act as the partner by user_sync_automation@auto.com on admin details panel
+    When I act as partner by:
+      | email                         |
+      | user_sync_automation@auto.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -32,7 +36,9 @@ Feature: User sync
 
   @TC.17529 @ui
   Scenario: Check the Attribute mapping UI
-    When I act as the partner by user_sync_automation@auto.com on admin details panel
+    When I act as partner by:
+      | email                         |
+      | user_sync_automation@auto.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Attribute Mapping tab
@@ -44,7 +50,9 @@ Feature: User sync
 
   @TC.17530 @ui
   Scenario: Local groups dropdown list check
-    When I act as the partner by user_sync_automation@auto.com on admin details panel
+    When I act as partner by:
+      | email                         |
+      | user_sync_automation@auto.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -56,7 +64,9 @@ Feature: User sync
 
   @TC.17531 @ui
   Scenario: User provision - Rules ordering interaction
-    When I act as the partner by user_sync_automation@auto.com on admin details panel
+    When I act as partner by:
+      | email                         |
+      | user_sync_automation@auto.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -86,7 +96,9 @@ Feature: User sync
 
   @TC.17532 @ui
   Scenario: User provision - Delete rules
-    When I act as the partner by user_sync_automation@auto.com on admin details panel
+    When I act as partner by:
+      | email                         |
+      | user_sync_automation@auto.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -106,7 +118,9 @@ Feature: User sync
 
   @TC.17534 @ui
   Scenario: UserDestruction - UI Components check
-    When I act as the partner by user_sync_automation@auto.com on admin details panel
+    When I act as partner by:
+      | email                         |
+      | user_sync_automation@auto.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -119,7 +133,9 @@ Feature: User sync
 
   @TC.17535 @ui
   Scenario: UserDestruction - Rules ordering interaction
-    When I act as the partner by user_sync_automation@auto.com on admin details panel
+    When I act as partner by:
+      | email                         |
+      | user_sync_automation@auto.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -149,7 +165,9 @@ Feature: User sync
 
   @TC.17536 @ui
   Scenario: UserDestruction - Rules deletion
-    When I act as the partner by user_sync_automation@auto.com on admin details panel
+    When I act as partner by:
+      | email                         |
+      | user_sync_automation@auto.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -169,7 +187,9 @@ Feature: User sync
 
   @TC.17538 @TC.17551  @smoke @function
   Scenario: One Rule/Match All/Multiple Users
-    When I act as the partner by user_sync_automation@auto.com on admin details panel
+    When I act as partner by:
+      | email                         |
+      | user_sync_automation@auto.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -209,7 +229,9 @@ Feature: User sync
 
   @TC.17540 @TC.17552 @function
   Scenario: One Rule/Multiple Rules
-    When I act as the partner by user_sync_automation@auto.com on admin details panel
+    When I act as partner by:
+      | email                         |
+      | user_sync_automation@auto.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -255,7 +277,9 @@ Feature: User sync
 
   @TC.17542 @TC.17554 @function
   Scenario: Multiple Ruls/Multiple Users
-    When I act as the partner by user_sync_automation@auto.com on admin details panel
+    When I act as partner by:
+      | email                         |
+      | user_sync_automation@auto.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -305,7 +329,9 @@ Feature: User sync
 
   @TC.17543 @TC.17557 @TC.17558 @function
   Scenario: Multiple Ruls/Multiple Users/Rule order matters
-    When I act as the partner by user_sync_automation@auto.com on admin details panel
+    When I act as partner by:
+      | email                         |
+      | user_sync_automation@auto.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -383,7 +409,9 @@ Feature: User sync
 
   @TC.17544 @function
   Scenario: UserProvision - Multiple Ruls/Multiple Users/Change Rules
-    When I act as the partner by user_sync_automation@auto.com on admin details panel
+    When I act as partner by:
+      | email                         |
+      | user_sync_automation@auto.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -461,7 +489,9 @@ Feature: User sync
 
   @TC.17559 @function
   Scenario: Empty rules will be filtered
-    When I act as the partner by user_sync_automation@auto.com on admin details panel
+    When I act as partner by:
+      | email                         |
+      | user_sync_automation@auto.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -473,7 +503,9 @@ Feature: User sync
 
   @TC.17560 @function
   Scenario: Unknown query string
-    When I act as the partner by user_sync_automation@auto.com on admin details panel
+    When I act as partner by:
+      | email                         |
+      | user_sync_automation@auto.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -487,7 +519,9 @@ Feature: User sync
 
   @TC.17592 @firefox_profile @vpn
   Scenario: UserProvision - Deleted users in BUS can be resumed
-    When I act as the partner by leongh+adi@mozy.com on admin details panel
+    When I act as partner by:
+      | email               |
+      | leongh+adi@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -515,7 +549,9 @@ Feature: User sync
     Then I will see the user account page
 
     When I log in bus admin console as administrator
-    When I act as the partner by leongh+adi@mozy.com on admin details panel
+    When I act as partner by:
+      | email               |
+      | leongh+adi@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -539,7 +575,9 @@ Feature: User sync
     Then I will see the Authentication Failed page
 
     When I log in bus admin console as administrator
-    When I act as the partner by leongh+adi@mozy.com on admin details panel
+    When I act as partner by:
+      | email               |
+      | leongh+adi@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -568,7 +606,9 @@ Feature: User sync
 
   @TC.17593 @firefox_profile @vpn
   Scenario: UserProvision - Suspended users in BUS can't be resumed
-    When I act as the partner by leongh+adi@mozy.com on admin details panel
+    When I act as partner by:
+      | email               |
+      | leongh+adi@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -596,7 +636,9 @@ Feature: User sync
     Then I will see the user account page
 
     When I log in bus admin console as administrator
-    And I act as a partner ADI 4 Autodesk
+    And I act as partner by:
+      | name          |
+      |ADI 4 Autodesk |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -624,7 +666,9 @@ Feature: User sync
     Then I will see the Authentication Failed page
 
     When I log in bus admin console as administrator
-    And I act as a partner ADI 4 Autodesk
+    And I act as partner by:
+      | name          |
+      |ADI 4 Autodesk |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -660,7 +704,9 @@ Feature: User sync
 
   @TC.17594 @firefox_profile @vpn
   Scenario: UserProvision - Delete user after several days of not synced
-    When I act as the partner by leongh+adi@mozy.com on admin details panel
+    When I act as partner by:
+      | email               |
+      | leongh+adi@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -688,7 +734,9 @@ Feature: User sync
     Then I will see the user account page
 
     When I log in bus admin console as administrator
-    And I act as a partner ADI 4 Autodesk
+    And I act as partner by:
+      | name          |
+      |ADI 4 Autodesk |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -712,7 +760,9 @@ Feature: User sync
 
   @TC.17595 @firefox_profile @vpn
   Scenario: UserProvision - Suspend user after several days of not synced
-    When I act as the partner by leongh+adi@mozy.com on admin details panel
+    When I act as partner by:
+      | email               |
+      | leongh+adi@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -740,7 +790,9 @@ Feature: User sync
     Then I will see the user account page
 
     When I log in bus admin console as administrator
-    And I act as a partner ADI 4 Autodesk
+    And I act as partner by:
+      | name          |
+      |ADI 4 Autodesk |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -775,7 +827,9 @@ Feature: User sync
 
   @TC.17546 @TC.17548 @TC.17549 @vpn
   Scenario: UserProvision/Sync - Add(Delete, Modify) a new user in AD
-    When I act as the partner by user_sync_add_delete@auto.com on admin details panel
+    When I act as partner by:
+      | email                         |
+      | user_sync_add_delete@auto.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -888,7 +942,9 @@ Feature: User sync
 
   @TC.18273 @vpn
   Scenario: UserProvision-Fixed Attribute
-    When I act as the partner by user_sync_add_delete@auto.com on admin details panel
+    When I act as partner by:
+      | email                         |
+      | user_sync_add_delete@auto.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Attribute Mapping tab
@@ -963,7 +1019,9 @@ Feature: User sync
 
   @TC.17521 @TC.17522 @TC.17523 @scheduled_sync
   Scenario: Scheduled Sync (UI, cancel)
-    When I act as the partner by usrsync@test.com on admin details panel
+    When I act as partner by:
+      | email            |
+      | usrsync@test.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -988,7 +1046,9 @@ Feature: User sync
 
   @TC.17520  @slow @scheduled_sync
   Scenario: Scheduled Sync
-    When I act as the partner by usrsync@test.com on admin details panel
+    When I act as partner by:
+      | email            |
+      | usrsync@test.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -1005,7 +1065,9 @@ Feature: User sync
 
   @TC.18738 @function
   Scenario: UserProvision-Delete a group, the users belong to this group will be moved to default group
-    When I act as the partner by user_sync_automation@auto.com on admin details panel
+    When I act as partner by:
+      | email                         |
+      | user_sync_automation@auto.com |
     And I navigate to Add New User Group section from bus admin console page
     And I add a new user group named test_delete
     When I navigate to Authentication Policy section from bus admin console page

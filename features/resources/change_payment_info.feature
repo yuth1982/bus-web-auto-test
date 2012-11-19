@@ -14,6 +14,8 @@ Feature: Modify credit card information and billing contact information
     Then Payment billing information should be:
     | Billing Street Address: | Billing City: | Billing State/Province: | Billing Country: | Billing ZIP/Postal Code: | Billing Email    | Billing Phone: |
     | 3401 Hillview Ave       | Palo Alto     | CA                      | United States    | 94304                    | @new_admin_email | 1-877-486-9273 |
+    When I stop masquerading
+    And I search and delete by account newly created partner company name
 
   @TC.15286
   Scenario: 15286 Change Payment Information With Credit Card
@@ -28,7 +30,7 @@ Feature: Modify credit card information and billing contact information
       | This is a new address | 12345678  |
     And I update credit card information to:
       | cc name     | cc number        | expire month | expire year | cvv |
-      | change card | 4532355312331942 | 12           | 18          | 123 |
+      | change card | 4111111111111111 | 12           | 18          | 123 |
     And I save payment information changes
     Then Payment information should be updated
     When I log in aria admin console as administrator
@@ -38,6 +40,105 @@ Feature: Modify credit card information and billing contact information
       | This is a new address | 12345678 | change card |
     And Aria account credit card information should be:
     | Payment Type:       | Card Number:      | Expiration Date: |
-    | Credit Card (Visa)  | ************1942  | 12 / 2018        |
+    | Credit Card (Visa)  | ************1111  | 12 / 2018        |
     When I log in bus admin console as administrator
     And I search and delete by account newly created partner company name
+
+  @TC.15272
+  Scenario: 15272 Verify Modify Credit Card Checkbox
+    When I add a new MozyPro partner:
+      | period | base plan |
+      | 1      | 250 GB    |
+    Then New partner should be created
+    When I act as newly created partner account
+    And I navigate to Change Payment Information section from bus admin console page
+    Then I should able to modify credit card information
+    And I should able to view cvv help popup dialog
+    And I should able to close cvv help popup dialog
+    When I stop masquerading
+    And I search and delete by account newly created partner company name
+
+  @TC.15273
+  Scenario: 15273 Change Payment Information Without Credit Card
+    When I add a new MozyEnterprise partner:
+      | period | users |
+      | 12     | 10    |
+    Then New partner should be created
+    When I act as newly created partner account
+    And I navigate to Change Payment Information section from bus admin console page
+    And I update payment contact information to:
+      | address         | city     | state    | country | zip    | phone    | email         |
+      | 333 Songhu Road | Shanghai | Shanghai | China   | 200433 | 12345678 | test@mozy.com |
+    And I save payment information changes
+    Then Payment information should be updated
+    When I log in aria admin console as administrator
+    And I search aria account by newly created partner admin email
+    Then Aria account billing contact should include:
+      | address         | city     | state    | country | zip    | phone    | email         |
+      | 333 Songhu Road | Shanghai | Shanghai | China   | 200433 | 12345678 | test@mozy.com |
+    When I log in bus admin console as administrator
+    And I search and delete by account newly created partner company name
+
+  @TC.15275
+  Scenario: 15275 Verify Credit Card Required Fields
+    When I add a new MozyEnterprise partner:
+      | period | users |
+      | 24     | 10    |
+    Then New partner should be created
+    When I act as newly created partner account
+    And I navigate to Change Payment Information section from bus admin console page
+    And I update credit card information to:
+      | cc name     | cc number        | expire month | expire year | cvv |
+      |             | 4111111111111111 | 12           | 19          | 123 |
+    And I save payment information changes
+    Then Modify credit card error messages should be Please enter the name on your credit card.
+    When I update credit card information to:
+      | cc name     | cc number        | expire month | expire year | cvv |
+      | new name    |                  | 12           | 19          | 123 |
+    And I save payment information changes
+    Then Modify credit card error messages should be You must enter a credit card number.
+    When I update credit card information to:
+      | cc name     | cc number        | expire month | expire year | cvv |
+      | new name    | 4111111111111111 | 12           | 19          |     |
+    And I save payment information changes
+    Then Modify credit card error messages should be Card security code missing.
+    When I stop masquerading
+    And I search and delete by account newly created partner company name
+
+  @TC.15459
+  Scenario: 15459 Verify Net Terms Customers Cannot Enter a Credit Card Number
+    When I add a new MozyPro partner:
+      | period | base plan | net terms |
+      | 1      | 10 GB     | yes       |
+    Then New partner should be created
+    When I act as newly created partner account
+    And I navigate to Change Payment Information section from bus admin console page
+    Then I should not see modify credit card section
+    When I stop masquerading
+    And I search and delete by account newly created partner company name
+
+  @TC.15458
+  Scenario: 15458 Verify Only the Last Four Digits of Credit Card Number Visible
+    When I add a new MozyPro partner:
+      | period | base plan | cc number        |
+      | 12     | 10 GB     | 4111111111111111 |
+    Then New partner should be created
+    When I act as newly created partner account
+    And I navigate to Change Payment Information section from bus admin console page
+    Then Credit card number should be XXXX XXXX XXXX 1111
+    When I stop masquerading
+    And I search and delete by account newly created partner company name
+
+  @TC.15376
+  Scenario: 15376 Verify OEM Do Not Keep Credit Card
+    When I act as partner by:
+      | name            | filter  |
+      | Muskadel Backup | OEMs    |
+    Then I should not see Change Payment Information link
+
+  @TC.19276
+  Scenario: 19276 Velocity Partner Do Not Keep Credit Card
+    When I act as partner by:
+      | name                |
+      | Velocity Consulting |
+    Then I should not see Change Payment Information link

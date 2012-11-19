@@ -50,3 +50,30 @@ Then /^Payment billing information should be:$/ do |billing_contact_table|
   end
 
 end
+
+Then /^I should able to modify credit card information$/ do
+  @bus_site.admin_console_page.change_payment_info_section.enable_modify_credit_card
+  @bus_site.admin_console_page.change_payment_info_section.modify_cc_section_enabled?.should be_true
+end
+
+Then /^I should able to view cvv help popup dialog$/ do
+  @bus_site.admin_console_page.change_payment_info_section.show_cvv_help_popup
+  @bus_site.admin_console_page.change_payment_info_section.cvv_help_displayed?.should be_true
+end
+
+Then /^I should able to close cvv help popup dialog$/ do
+  @bus_site.admin_console_page.change_payment_info_section.close_cvv_help_popup
+  @bus_site.admin_console_page.change_payment_info_section.cvv_help_displayed?.should be_false
+end
+
+Then /^Modify credit card error messages should be (.+)$/ do |err_msg|
+  @bus_site.admin_console_page.change_payment_info_section.modify_cc_error_message.should == err_msg
+end
+
+Then /^I should not see modify credit card section$/ do
+  @bus_site.admin_console_page.change_payment_info_section.has_modify_credit_card_cb?.should be_false
+end
+
+Then /^Credit card number should be (.+)$/ do |cc_num|
+  @bus_site.admin_console_page.change_payment_info_section.credit_card_number.should == cc_num
+end
