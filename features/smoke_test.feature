@@ -60,7 +60,7 @@ Feature: Bus Smoke Test
     | server licenses | server quota GB | desktop licenses | desktop quota GB |
     | 2               | 20              | 2                | 20               |
     Then Resources should be transferred
-    When I navigate to the new user group details section
+    When I view newly created user group name user group details
     Then User group details should be:
       | ID:     | External ID: | Billing code: | Status:         | Available Keys: | Available Quota: | Default quota for new installs:             | Default user group: |
       | @xxxxxx | (change)     | (change)      | Active (change) | 4               | 40 GB            | 10 GB (Desktop) and 20 GB (Server) (change) | No (make default)   |
@@ -75,7 +75,7 @@ Feature: Bus Smoke Test
     When I log in aria admin console as administrator
     Then newly created partner admin email account status should be ACTIVE
     When I log in bus admin console as administrator
-    Then I search and delete Smoke Test account
+    Then I search and delete partner account by Smoke Test
     And I should see 3 email(s) when I search keywords:
       | content |
       | @email  |

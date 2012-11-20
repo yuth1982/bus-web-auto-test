@@ -61,16 +61,42 @@ module Bus
     # Billing history
     element(:billing_history_table, css: "table.table-view")
 
+    # Stash section
+    element(:change_stash_link, xpath: "//a[contains(@onclick,'change_stash')]")
+    element(:cancel_stash_link, xpath: "//a[contains(@onclick,'cancel_change')]")
+    element(:stash_status_select, xpath: "//select[starts-with(@id,'partner-stash-status-')]")
+    element(:stash_default_quota_tb, id: "stash_default_quota")
+    element(:submit_stash_status_btn, xpath: "//input[contains(@onclick,'submit_stash_status')]")
+    element(:add_stash_to_all_users_link, xpath: "//a[contains(@onclick,'enable_stash_for_all_confirm')]")
+    element(:submit_delete_stash_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Submit']")
+    element(:cancel_delete_stash_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Cancel']")
+    element(:stash_status_span, xpath: "//span[starts-with(@id,'partner-display-stash-status-']")
+
     # Public: General information hash
     #
+    # Example:
+    #   partner_details_section.general_info_hash
+    #   # => Hash table
+    #   | ID:   | External ID: | Aria ID: | Approved:  | Status:         | Root Admin:            | Root Role:                  | Parent: | Next Charge:  | Marketing Referrals:             | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+    #   | 123456 | (change)    | 1234567  | 11/10/12   | Active (change) | test@mozy.com (act as) | SMB Bundle Limited (change) | MozyPro | 12/10/12      | test@mozy.com [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
     #
+    # Returns hash table
     def general_info_hash
-      output = general_info_dls[0].dt_dd_elements_text + general_info_dls[1].dt_dd_elements_text + stash_info_dl.dt_dd_elements_text.delete_if{ |pair| pair.first.empty?}
+      output = general_info_dls[0].dt_dd_elements_text + general_info_dls[1].dt_dd_elements_text
+      stash = stash_info_dl.dt_dd_elements_text.delete_if{ |pair| pair.first.empty? }.map{ |row| [row.first, row[1..-1].join(' ')] }
+      output = output + stash
       Hash[*output.flatten]
     end
 
     # Public: Partner contact information hash
     #
+    # Example:
+    #   partner_details_section.contact_info_hash
+    #   # => Hash table
+    #   | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email: |
+    #   | MozyPro       | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 |           |                 | test@mozy.com  |
+    #
+    # Returns hash table
     def contact_info_hash
       output = Hash[*contact_info_dls.map{ |el| el.dt_dd_elements_text.delete_if{ |pair| pair.first.empty?}}.delete_if{ |el| el.empty?}.flatten]
       output["Contact Address:"] = contact_address_tb.value
@@ -100,8 +126,10 @@ module Bus
     # Public: Partner Account attributes hash
     #
     # Example:
+    #   partner_details_section.account_attributes_rows
+    #   # => "[["Backup Licenses", "200"], ["Backup License Soft Cap", "Enabled"], ["Server Enabled", "Disabled"], ["Cloud Storage (GB)", "10"], ["Stash Users:", ""], ["Default Stash Storage:", ""]]"
     #
-    # Returns partner Account attributes hash
+    # Returns array
     def account_attributes_rows
       # Remove hidden column inside table
       account_attributes_table.rows_text.map{ |row| row[0..1] }
@@ -109,12 +137,20 @@ module Bus
 
     # Public: Generic resources table headers text
     #
+    # Example:
+    #   # => "["", "Used", "Allocated", "Limit"]"
+    #
+    # Return array
     def generic_resources_table_headers
       generic_resources_table.headers_text
     end
 
     # Public: Generic resources table rows text
     #
+    # Example:
+    #   # => "[["Backup Licenses", "0", "10", "200"], ["Cloud Storage (GB)", "0", "10", "10"], ["Server Enabled", "Disabled", "", ""]]"
+    #
+    # Returns array
     def generic_resources_table_rows
       # Remove hidden column inside table
       output = generic_resources_table.rows_text.map{ |row| row[0..3] }
@@ -124,21 +160,30 @@ module Bus
 
     # Public: License types table headers text
     #
+    # Example:
+    #   # => "["", "Licenses:", "Licenses Used:", "Quota:", "Quota Used:", "Resource Policy:"]"
     #
+    # Returns array
     def license_types_table_headers
       license_types_table.headers_text
     end
 
     # Public: License types table rows text
     #
+    # Example:
+    #   # => "[["Desktop", "100", "0", "2500 GB", "0 bytes", "Enabled"], ["Server", "0", "0", "0 GB", "0 bytes", "Enabled"]]"
     #
+    # Returns array
     def license_types_table_rows
       license_types_table.rows_text
     end
 
-    # Public: Internal billing tasub_admins_h4ble
+    # Public: Internal billing table row text
     #
+    # Example:
+    #   # => "[["Account Type:", "Credit Card", "Current Period:", "Yearly"], ["Unpaid Balance:", "$0.00", "Collect On:", "N/A"], ["Renewal Date:", "11/19/13", "Renewal Period:", "Use Current Period"]]"
     #
+    # Returns array
     def internal_billing_table_rows
       internal_billing_table.rows_text
     end
@@ -172,9 +217,9 @@ module Bus
     # Public: Click act as partner link
     #
     # Example
-    #   @bus_admin_console_page.partner_details_section.act_as_partner
+    #   partner_details_section.act_as_partner
     #
-    # Returns nothing                ""
+    # Returns nothing
     def act_as_partner
       act_as_link.click
     end
@@ -182,7 +227,7 @@ module Bus
     # Public: Delete the current partner
     #
     # Example
-    #   @bus_admin_console_page.partner_details_section.delete_partner("test1234")
+    #   partner_details_section.delete_partner("test1234")
     #
     # Returns nothing
     def delete_partner(password)
@@ -194,10 +239,38 @@ module Bus
       wait_until{ has_no_link?("Delete Partner") } # wait for delete partner
     end
 
+    # Public: Enable stash for a partner
+    #
+    # Example:
+    #   # => partner_details_section.enable_stash
+    #
+    # Returns nothing
+    def enable_stash(quota = 2)
+      change_stash_link.click
+      stash_status_select.select('Yes')
+      stash_default_quota_tb.type_text(quota)
+      submit_stash_status_btn.click
+      wait_until{ !submit_stash_status_btn.visible? }
+    end
+
+    # Public: Disable stash for a partner
+    #
+    # Example:
+    #   # => partner_details_section.disable_stash
+    #
+    # Returns nothing
+    def disable_stash
+      change_stash_link.click
+      stash_status_select.select('No')
+      submit_stash_status_btn.click
+      submit_delete_stash_btn.click
+      wait_until{ !submit_stash_status_btn.visible? }
+    end
+
     # Public: Create the api_key
     #
     # Example
-    #   @bus_admin_console_page.partner_details_section.create_api_key
+    #   partner_details_section.create_api_key
     #
     # Returns nothing
     def create_api_key

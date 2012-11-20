@@ -11,5 +11,5 @@ When /^I stop masquerading$/ do
 end
 
 Then /^I should not see (.+) link$/ do |link|
-  @bus_site.admin_console_page.has_no_menu_link?(link).should be_true
+  @bus_site.admin_console_page.has_no_link?(link).should be_true
 end

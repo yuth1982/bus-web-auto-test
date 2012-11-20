@@ -266,7 +266,7 @@ Feature: Change subscription period
       | Total amount to be charged                    | $420.00  |
     And Subscription changed message should be Your account has been changed to yearly billing.
     When I stop masquerading
-    And I search and delete by account newly created partner company name
+    And I search and delete partner account by newly created partner company name
 
   @TC.15384
   Scenario: 15384 Verify MozyPro confirmation message when change period to biennially
@@ -289,7 +289,7 @@ Feature: Change subscription period
       | Total amount to be charged                    | $399.80  |
     And Subscription changed message should be Your account has been changed to biennial billing.
     When I stop masquerading
-    And I search and delete by account newly created partner company name
+    And I search and delete partner account by newly created partner company name
 
   @TC.15385
   Scenario: 15385 Verify MozyEnterprise confirmation message when change period to 3 years
@@ -312,7 +312,7 @@ Feature: Change subscription period
       | Total amount to be charged                    | $164.00  |
     And Subscription changed message should be Your account has been changed to 3-year billing.
     When I stop masquerading
-    And I search and delete by account newly created partner company name
+    And I search and delete partner account by newly created partner company name
 
 
 

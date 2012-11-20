@@ -1069,7 +1069,9 @@ Feature: User sync
       | email                         |
       | user_sync_automation@auto.com |
     And I navigate to Add New User Group section from bus admin console page
-    And I add a new user group named test_delete
+    And I add a new user group:
+      | name        |
+      | test_delete |
     When I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -1090,9 +1092,7 @@ Feature: User sync
       | dev_test3@test.com |   dev_test3   | test_delete |
       | dev_test2@test.com |   dev_test2   | test_delete |
       | dev_test1@test.com |   dev_test1   | test_delete |
-    When I navigate to List User Groups section from bus admin console page
-    And I view user group details by test_delete
-    And I delete a group named test_delete
+    And I search and delete test_delete user group
     And I refresh the search list user group page
     Then The users table should be:
       | User               |      Name     | User Group          |

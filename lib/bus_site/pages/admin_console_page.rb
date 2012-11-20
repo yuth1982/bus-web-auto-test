@@ -65,8 +65,5 @@ module Bus
       find_link("Don't Show This Again").click
     end
 
-    def has_no_menu_link?(link)
-      has_no_link?(link)
-    end
   end
 end

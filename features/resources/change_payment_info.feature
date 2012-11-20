@@ -15,7 +15,7 @@ Feature: Modify credit card information and billing contact information
     | Billing Street Address: | Billing City: | Billing State/Province: | Billing Country: | Billing ZIP/Postal Code: | Billing Email    | Billing Phone: |
     | 3401 Hillview Ave       | Palo Alto     | CA                      | United States    | 94304                    | @new_admin_email | 1-877-486-9273 |
     When I stop masquerading
-    And I search and delete by account newly created partner company name
+    And I search and delete partner account by newly created partner company name
 
   @TC.15286
   Scenario: 15286 Change Payment Information With Credit Card
@@ -42,7 +42,7 @@ Feature: Modify credit card information and billing contact information
     | Payment Type:       | Card Number:      | Expiration Date: |
     | Credit Card (Visa)  | ************1111  | 12 / 2018        |
     When I log in bus admin console as administrator
-    And I search and delete by account newly created partner company name
+    And I search and delete partner account by newly created partner company name
 
   @TC.15272
   Scenario: 15272 Verify Modify Credit Card Checkbox
@@ -56,7 +56,7 @@ Feature: Modify credit card information and billing contact information
     And I should able to view cvv help popup dialog
     And I should able to close cvv help popup dialog
     When I stop masquerading
-    And I search and delete by account newly created partner company name
+    And I search and delete partner account by newly created partner company name
 
   @TC.15273
   Scenario: 15273 Change Payment Information Without Credit Card
@@ -77,7 +77,7 @@ Feature: Modify credit card information and billing contact information
       | address         | city     | state    | country | zip    | phone    | email         |
       | 333 Songhu Road | Shanghai | Shanghai | China   | 200433 | 12345678 | test@mozy.com |
     When I log in bus admin console as administrator
-    And I search and delete by account newly created partner company name
+    And I search and delete partner account by newly created partner company name
 
   @TC.15275
   Scenario: 15275 Verify Credit Card Required Fields
@@ -103,7 +103,7 @@ Feature: Modify credit card information and billing contact information
     And I save payment information changes
     Then Modify credit card error messages should be Card security code missing.
     When I stop masquerading
-    And I search and delete by account newly created partner company name
+    And I search and delete partner account by newly created partner company name
 
   @TC.15459
   Scenario: 15459 Verify Net Terms Customers Cannot Enter a Credit Card Number
@@ -115,7 +115,7 @@ Feature: Modify credit card information and billing contact information
     And I navigate to Change Payment Information section from bus admin console page
     Then I should not see modify credit card section
     When I stop masquerading
-    And I search and delete by account newly created partner company name
+    And I search and delete partner account by newly created partner company name
 
   @TC.15458
   Scenario: 15458 Verify Only the Last Four Digits of Credit Card Number Visible
@@ -127,7 +127,7 @@ Feature: Modify credit card information and billing contact information
     And I navigate to Change Payment Information section from bus admin console page
     Then Credit card number should be XXXX XXXX XXXX 1111
     When I stop masquerading
-    And I search and delete by account newly created partner company name
+    And I search and delete partner account by newly created partner company name
 
   @TC.15376
   Scenario: 15376 Verify OEM Do Not Keep Credit Card

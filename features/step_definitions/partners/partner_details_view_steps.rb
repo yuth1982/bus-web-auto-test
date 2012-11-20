@@ -4,7 +4,7 @@ When /^I act as newly created partner account$/ do
   @bus_site.admin_console_page.has_stop_masquerading_link?
 end
 
-When /^I search and delete by account (.+)/ do |account_name|
+When /^I search and delete partner account by (.+)/ do |account_name|
   @bus_site.admin_console_page.navigate_to_link(CONFIGS['bus']['menu']['search_list_partner'])
   @bus_site.admin_console_page.search_list_partner_section.search_partner(account_name)
 
@@ -126,4 +126,12 @@ Then /^Partner billing history should be:$/ do |billing_history_table|
   end
   @bus_site.admin_console_page.partner_details_section.billing_history_table_headers.should == billing_history_table.headers
   @bus_site.admin_console_page.partner_details_section.billing_history_table_rows.should == billing_history_table.rows
+end
+
+When /^I enable stash for the partner with (default|\d+ GB) stash storage$/ do |quota|
+    if quota == 'default'
+      @bus_site.admin_console_page.partner_details_section.enable_stash
+    else
+      @bus_site.admin_console_page.partner_details_section.enable_stash(quota)
+    end
 end

@@ -6,11 +6,16 @@ module Bus
     element(:change_status_link, xpath: "//span[starts-with(@id,'user-display-status-')]//a")
     element(:status_selection, xpath: "//select[@id='status']")
     element(:submit_status_btn, xpath: "//span[starts-with(@id,'user-change-status-')]//input")
-    element(:user_status, xpath: "//span[starts-with(@id,'user-display-status-')]")
+
     element(:the_user_id, xpath: "//div[@class='show-details']//dl[1]/dd[1]")
 
-    def status_is
-      user_status.text[0..-10]
+    element(:delete_user_link, xpath: "//a[text()='Delete User']")
+    elements(:user_details_dls, xpath: "//div[starts-with(@id,'user-show-')]//dl")
+
+    def user_details_hash
+      has_delete_user_link? # Wait until user details section loaded
+      output = user_details_dls.map{ |dl| dl.dt_dd_elements_text }.delete_if { |k| k.empty? }
+      Hash[*output]
     end
 
     def user_id

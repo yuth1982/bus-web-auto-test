@@ -1,234 +1,318 @@
 Feature: User group stash setting management
 
   As a Mozy customer admin
-  I want to turn-on Stash for a new user group so that I can add Stash to the users within that group
+  I want to turn-on Stash for a new user group
+  so that I can add Stash to the users within that group
 
-  # Add new user group functionality
-  @BSA.#2000 @TC.19001
-  Scenario: Given stash is enabled for partner, I can add a default amount of stash storage for a new user group
-    When I log in bus admin console as administrator
-    And I add a new (MozyPro|MozyEnterprise|Reseller) partner:
-    And I enable stash for the partner
-    And I act as newly created partner account
+  Background:
+    Given I log in bus admin console as administrator
+
+  @TC.19001 @BSA.2000
+  Scenario: Add default stash storage for a new user group when stash is enabled for partner
+    When I add a new MozyEnterprise partner:
+      | period | users |
+      | 12     | 10    |
+    Then New partner should be created
+    When I enable stash for the partner with default stash storage
+    Then Partner general information should be:
+      | Enable Stash: | Default Stash Storage: |
+      | Yes           | 2 GB (change)          |
+    When I act as newly created partner account
     And I add a new user group:
-      | stash |
-      |  10   |
-    Then newly created user group should have following information:
-      | stash |
-      |  10   |
+      | name           |
+      | TC.19001 group |
+    Then New user group should be created
+    When I navigate to List User Groups section from bus admin console page
+    When I view newly created user group name user group details
+    Then User group details should be:
+      | Enable Stash: | Default Stash Storage: |
+      | Yes           | 2 GB (change)          |
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name
 
-  @BSA.#2000 @TC.19002
-  Scenario: Given stash is enabled for partner, I can see help information in add new user group for Default Storage for Stash
-    When I log in bus admin console as administrator
-    And I add a new (MozyPro|MozyEnterprise|Reseller) partner:
-    And I enable stash for the partner
+  @TC.19002 @BSA.2000
+  Scenario: Help displays in add new user group for default stash storage when stash is enabled for partner
+    When I add a new MozyEnterprise partner:
+      | period | users |
+      | 12     | 10    |
+    Then New partner should be created
+    When I enable stash for the partner with default stash storage
+    Then Partner general information should be:
+      | Enable Stash: | Default Stash Storage: |
+      | Yes           | 2 GB (change)          |
     And I act as newly created partner account
-    And I navigate to the new user group details section
-    Then I can see help icon for stash
-    And I click the help icon
-    Then I can see popup with help message
+    And I navigate to Add New User Group section from bus admin console page
+    Then I can see help icon for default stash storage
+    And Defaut stash storage help message should be Each new user that has Stash enabled will start out with this amount of storage. You can change the user's Stash storage amount in the Users list.
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name
 
-  @BSA.#2000 @TC.19003
-  Scenario: Given stash is DISABLED for partner, I should NOT see 'Default Storage for Stash' in add new user group page
-    When I log in bus admin console as administrator
-    And I add a new (MozyPro|MozyEnterprise|Reseller) partner:
-    And I enable stash for the partner
+  @TC.19003 @BSA.2000
+  Scenario: No Default Storage for Stash text on add new user group section when stash is disabled for partner
+    When I add a new MozyEnterprise partner:
+      | period | users |
+      | 12     | 10    |
+    Then New partner should be created
     And I act as newly created partner account
-    And I navigate to the new user group details section
-    Then I should not see 'Default Storage for Stash'
+    And I navigate to Add New User Group section from bus admin console page
+    Then I should not see Default Storage for Stash text on add new user group section
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name
 
-  @BSA.#2000 @TC.19004
-  Scenario: Given stash is enabled for a user group, I can add a new user in that group with a certain amount of stash storage
-    When I log in bus admin console as administrator
-    And I add a new (MozyPro|MozyEnterprise|Reseller) partner:
-    And I enable stash for the partner
-    And I act as newly created partner account
+  @TC.19004 @BSA.2000
+  Scenario: Add custom stash storage for a new user group when stash is enabled for partner
+    When I add a new MozyEnterprise partner:
+      | period | users |
+      | 12     | 10    |
+    Then New partner should be created
+    When I enable stash for the partner with default stash storage
+    Then Partner general information should be:
+      | Enable Stash: | Default Stash Storage: |
+      | Yes           | 2 GB (change)          |
+    When I act as newly created partner account
     And I add a new user group:
-      | stash |
-      |  10   |
-    And I add a new user with default stash storage
-    Then I should see a new user is created with stash enabled and storage is 10GB
+      | name           | stash quota |
+      | TC.19004 group | 10          |
+    Then New user group should be created
+    When I navigate to List User Groups section from bus admin console page
+    When I view newly created user group name user group details
+    Then User group details should be:
+      | Enable Stash: | Default Stash Storage: |
+      | Yes           | 10 GB (change)         |
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name
 
-  # Edit existing user group
-  @BSA.#2010 @TC.19005
-  Scenario: Given stash is DISABLED for partner, I should NOT see 'Enable Stash' settings in user group edit page
-    When I log in bus admin console as administrator
-    And I add a new (MozyPro|MozyEnterprise|Reseller) partner:
+  @TC.19005 @BSA.2010
+  Scenario: No Enable Stash settings in user group edit page when stash is disabled for partner
+    When I add a new Reseller partner:
+      | period | reseller type | reseller quota |
+      | 1      | Silver        | 100            |
+    Then New partner should be created
     And I act as newly created partner account
-    And I navigate to the user group edit page
-    Then I should not see 'Enable Stash' settings
+    When I navigate to List User Groups section from bus admin console page
+    When I view (default user group) * user group details
+    Then I should not see Enable Stash text on user group details section
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name
 
-  @BSA.#2010 @TC.19006
-  Scenario: Given stash is DISABLED for partner, all existing user groups keep unchanged
-    When I log in bus admin console as administrator
-    And I add a new (MozyPro|MozyEnterprise|Reseller) partner:
-    And I act as newly created partner account
-    And I add a new user group:
-    And I enable stash for the partner
-      | stash |
-      | 5     |
-    And I act as the partner
-    And I navigate to user group list page
-    Then I can see user groups are not enabled with stash
+  @TC.19006 @BSA.2010
+  Scenario: Existing user groups are enabled with default stash storage when stash is enabled for partner
+    When I add a new Reseller partner:
+      | period | reseller type | reseller quota |
+      | 1      | Gold          | 100            |
+    Then New partner should be created
+    When I enable stash for the partner with 5 GB stash storage
+    Then Partner general information should be:
+      | Enable Stash: | Default Stash Storage: |
+      | Yes           | 5 GB (change)          |
+    When I act as newly created partner account
+    When I navigate to List User Groups section from bus admin console page
+    And I view (default user group) * user group details
+    Then User group details should be:
+      | Enable Stash: | Default Stash Storage: |
+      | Yes           | 5 GB (change)         |
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name
 
-  @BSA.#2010 @TC.19007
-  Scenario: Given stash is enabled for a user group, I can modify default stash storage quota for a user group in user group edit page
-    When I log in bus admin console as administrator
-    And I add a new (MozyPro|MozyEnterprise|Reseller) partner:
-    And I enable stash for the partner
-      | stash |
-      | 15    |
-    And I act as newly created partner account
-    And I navigate to user group list page
-    And I change default stash storage quota to 20
-    And I add a new user with default stash storage
-    Then I should see a new user is created with stash enabled and storage is 20GB
+  @TC.19007 @BSA.2010
+  Scenario: Modify default stash storage quota for a user group in user group edit page when stash is enabled for partner
+    When I add a new Reseller partner:
+      | period | reseller type | reseller quota |
+      | 1      | Platinum      | 100            |
+    Then New partner should be created
+    When I enable stash for the partner with 15 GB stash storage
+    Then Partner general information should be:
+      | Enable Stash: | Default Stash Storage: |
+      | Yes           | 15 GB (change)         |
+    When I act as newly created partner account
+    When I navigate to List User Groups section from bus admin console page
+    And I view (default user group) * user group details
+    And I enable stash for the user group with 20 GB stash storage
+    Then User group details should be:
+      | Enable Stash: | Default Stash Storage: |
+      | Yes           | 20 GB (change)         |
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name
 
-  # Delete stash from existing user group
-  @BSA.#2020 @TC.19008
-  Scenario: Given stash is enabled for a user group, I can disable default stash storage quota for a user group in user group edit page
-    When I log in bus admin console as administrator
-    And I add a new (MozyPro|MozyEnterprise|Reseller) partner:
-    And I enable stash for the partner
-      | stash |
-      | 15    |
-    And I act as newly created partner account
-    And I add a new user under the default group
-    And I navigate to user group list page
-    And I disable stash for the default group
-    Then I should see a confirmation message telling me if I really want to delete it
-    And I choose yes
-    Then I should not see stash column for the newly created user
-    And I should see unallocated storage increases 15GB
+  @TC.19008 @BSA.2020
+  Scenario: Disable stash for a user group in user group detail section
+    When I add a new MozyEnterprise partner:
+      | period | users |
+      | 12     | 10    |
+    Then New partner should be created
+    When I enable stash for the partner with 10 GB stash storage
+    Then Partner general information should be:
+      | Enable Stash: | Default Stash Storage: |
+      | Yes           | 10 GB (change)         |
+    When I act as newly created partner account
+    And I add a new user:
+    | name           | enable stash |
+    | TC.19008 user  | yes          |
+    Then New user should be created
+    When I navigate to List User Groups section from bus admin console page
+    Then User groups list table should be:
+    | External ID | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota              | Desktop Keys | Desktop Quota                |
+    |             | (default user group) * | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 assigned) / 0.0  | 0 / 10       | 0.0 (10.0 assigned) / 250.0  |
+    When I view (default user group) * user group details
+    And I disable stash for the user group
+    Then User group details should be:
+      | Enable Stash: |
+      | No            |
+    When I refresh List User Group section
+    And User groups list table should be:
+      | External ID | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota              | Desktop Keys | Desktop Quota               |
+      |             | (default user group) * | 1     | 1      | 0           | 0 / 0       | 0.0 (0.0 assigned) / 0.0  | 0 / 10       | 0.0 (0.0 assigned) / 250.0  |
 
-  @BSA.#2020 @TC.19009
-  Scenario: Given stash is enabled for a user group, I can CANCEL disable stash action on the confirmation popup
-    When I log in bus admin console as administrator
-    And I add a new (MozyPro|MozyEnterprise|Reseller) partner:
-    And I enable stash for the partner
-      | stash |
-      | 15    |
-    And I act as newly created partner account
-    And I add a new user under the default group
-    And I navigate to user group list page
-    And I disable stash for the default group
-    Then I should see a confirmation message telling me if I really want to delete it
-    And I choose no
-    Then I should see stash column exists for the newly created user
-    And I should see unallocated storage keeps the same
+  @TC.19009 @BSA.2020
+  Scenario: Cancel disable stash for a user group in user group detail section
+    When I add a new MozyEnterprise partner:
+      | period | users |
+      | 12     | 10    |
+    Then New partner should be created
+    When I enable stash for the partner with 15 GB stash storage
+    Then Partner general information should be:
+      | Enable Stash: | Default Stash Storage: |
+      | Yes           | 15 GB (change)         |
+    When I act as newly created partner account
+    And I add a new user:
+      | name           | enable stash |
+      | TC.19009 user  | yes          |
+    Then New user should be created
+    When I navigate to List User Groups section from bus admin console page
+    Then User groups list table should be:
+      | External ID | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota              | Desktop Keys | Desktop Quota                |
+      |             | (default user group) * | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 assigned) / 0.0  | 0 / 10       | 0.0 (15.0 assigned) / 250.0  |
+    When I view (default user group) * user group details
+    And I cancel disable stash for the user group
+    Then User group details should be:
+      | Enable Stash: | Default Stash Storage: |
+      | Yes           | 15 GB (change)         |
+    When I refresh List User Group section
+    And User groups list table should be:
+      | External ID | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota              | Desktop Keys | Desktop Quota               |
+      |             | (default user group) * | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 assigned) / 0.0  | 0 / 10       | 0.0 (15.0 assigned) / 250.0  |
 
-  @BSA.#2020 @TC.19010
-  Scenario: Given stash is enabled for a user group, I disable stash and newly created user has no stash enabled
-    When I log in bus admin console as administrator
-    And I add a new (MozyPro|MozyEnterprise|Reseller) partner:
-    And I enable stash for the partner
-      | stash |
-      | 15    |
-    And I act as newly created partner account
-    And I navigate to user group list page
-    And I disable stash for the default group
-    Then I should see a confirmation message telling me if I really want to delete it
-    And I choose yes
-    And I add a new user under default group
-    Then the newly created user has no stash enabled
+  @TC.19010 @BSA.2020
+  Scenario: User has not stash when disable stash for a user group in user group detail section
+    When I add a new MozyEnterprise partner:
+      | period | users |
+      | 12     | 10    |
+    Then New partner should be created
+    When I enable stash for the partner with 20 GB stash storage
+    Then Partner general information should be:
+      | Enable Stash: | Default Stash Storage: |
+      | Yes           | 20 GB (change)         |
+    When I act as newly created partner account
+    When I navigate to List User Groups section from bus admin console page
+    And I view (default user group) * user group details
+    And I disable stash for the user group
+    And I add a new user:
+      | name           | email                      |
+      | TC.19010 user  | qa1+tc+19019+user@mozy.com |
+    Then New user should be created
+    When I search user by:
+    | keywords      |
+    | TC.19010 user |
+    And I view user details by qa1+tc+19019+user@mozy.com
+    Then I should not see Enable Stash: setting on user details section
 
-  @BSA.#2020 @TC.19020
-  Scenario: Given 1 user is enabled stash, I delete the user group and users with storage resources are allocated to default user group
-    When I log in bus admin console as administrator
-    And I add a new (MozyPro|MozyEnterprise|Reseller) partner:
-    And I enale stash for the partner
-      | stash |
-      | 15    |
-    And I act as newly created partner account
-    And I add a new user group:
-    And I delete newly created user group
-    Then the newly created user should be moved to default user group and storage should be moved to default group
-
-  # Enable stash for all users
-  @BSA.#2030 @TC.19011
-  Scenario: Given stash is enabled for partner, I can enable stash for 0 user in the user group
-    When I log in bus admin console as administrator
-    And I add a new (MozyPro|MozyEnterprise|Reseller) partner:
-    And I enable stash for the partner
-      | stash |
-      | 15    |
-    And I act as newly created partner account
-    And I navigate to user group list page
-    And I enable stash for all users
-    Then I should see confirmation message:
-     | users | storage |
-     | 0     | 0       |
-
-  @BSA.#2030 @TC.19012
-  Scenario: Given stash is enabled for partner and 1 user is enabled with stash, I can enable stash for other 2 users in the user group at once
-    When I log in bus admin console as administrator
-    And I add a new (MozyPro|MozyEnterprise|Reseller) partner:
-    And I enable stash for the partner
-      | stash |
-      | 15    |
-    And I act as newly created partner account
-    And I add a new user under default group
-    And I add a new user under default group
-    And I add a new user under default group with stash enabled
-    And I navigate to user group list page
-    And I enable stash for all users
-    Then I should see confirmation message:
-      | users | storage |
-      | 2     | 30      |
-    And I click yes
-    Then I should see user list with 3 users enabled with stash
-
-  @BSA.#2030 @TC.19013
-  Scenario: Given stash is enabled for partner but not enough storage for all users to enable stash I can choose buy more storage
-    When I log in bus admin console as administrator
-    And I add a new (MozyPro|MozyEnterprise|Reseller) partner:
-    And I enable stash for the partner
-      | stash |
-      | 10000 |
-    And I act as newly created partner account
-    And I add a new user under default group
-    And I navigate to user group list page
-    And I enable stash for all users
-    Then I should see error message that I have no enough storage
-    And I click buy storage
-    Then I should be navigated to buy storage page
-
-  @BSA.#2030 @TC.19014
-  Scenario: Given stash is enabled for partner but not enough storage for all users to enable stash I can choose allocate more storage
-    When I log in bus admin console as administrator
-    And I add a new (MozyPro|MozyEnterprise|Reseller) partner:
-    And I enable stash for the partner
-      | stash |
-      | 10000 |
-    And I act as newly created partner account
-    And I add a new user under default group
-    And I navigate to user group list page
-    And I enable stash for all users
-    Then I should see error message that I have no enough storage
-    And I click allocate more storage
-    Then I should be navigated to allocate storage page
-
-    @BSA.#2030 @TC.19020
-    Scenario: Given 1 user is enabled stash, I delete the user group and users with storage resources are allocated to default user group
-    When I log in bus admin console as administrator
-    And I add a new (MozyPro|MozyEnterprise|Reseller) partner:
-    And I enale stash for the partner
-      | stash |
-      | 15    |
-    And I act as newly created partner account
-    And I add a new user group:
-    And I delete newly created user group
-    Then the newly created user should be moved to default user group and storage should be moved to default group
-
-    @BSA.#2030 @TC.19018
-    Scenario: Given 1 user is enabled stash, I delete the user group and users with storage resources are allocated to
-default user group who has no stash enabled
-    When I log in bus admin console as administrator
-    And I add a new (MozyPro|MozyEnterprise|Reseller) partner:
-    And I enale stash for the partner
-      | stash |
-      | 15    |
-    And I act as newly created partner account
-    And I add a new user group:
-    And I delete newly created user group
-    Then the newly created user should be moved to default user group and stash should be disabled for the user and storage is returned
+#  @TC.19020 @BSA.2020
+#  Scenario: Given 1 user is enabled stash, I delete the user group and users with storage resources are allocated to default user group
+#    When I log in bus admin console as administrator
+#    And I add a new (MozyPro|MozyEnterprise|Reseller) partner:
+#    And I enale stash for the partner
+#      | stash |
+#      | 15    |
+#    And I act as newly created partner account
+#    And I add a new user group:
+#    And I delete newly created user group
+#    Then the newly created user should be moved to default user group and storage should be moved to default group
+#
+#  # Enable stash for all users
+#  @BSA.#2030 @TC.19011
+#  Scenario: Given stash is enabled for partner, I can enable stash for 0 user in the user group
+#    When I log in bus admin console as administrator
+#    And I add a new (MozyPro|MozyEnterprise|Reseller) partner:
+#    And I enable stash for the partner
+#      | stash |
+#      | 15    |
+#    And I act as newly created partner account
+#    And I navigate to user group list page
+#    And I enable stash for all users
+#    Then I should see confirmation message:
+#     | users | storage |
+#     | 0     | 0       |
+#
+#  @BSA.#2030 @TC.19012
+#  Scenario: Given stash is enabled for partner and 1 user is enabled with stash, I can enable stash for other 2 users in the user group at once
+#    When I log in bus admin console as administrator
+#    And I add a new (MozyPro|MozyEnterprise|Reseller) partner:
+#    And I enable stash for the partner
+#      | stash |
+#      | 15    |
+#    And I act as newly created partner account
+#    And I add a new user under default group
+#    And I add a new user under default group
+#    And I add a new user under default group with stash enabled
+#    And I navigate to user group list page
+#    And I enable stash for all users
+#    Then I should see confirmation message:
+#      | users | storage |
+#      | 2     | 30      |
+#    And I click yes
+#    Then I should see user list with 3 users enabled with stash
+#
+#  @BSA.#2030 @TC.19013
+#  Scenario: Given stash is enabled for partner but not enough storage for all users to enable stash I can choose buy more storage
+#    When I log in bus admin console as administrator
+#    And I add a new (MozyPro|MozyEnterprise|Reseller) partner:
+#    And I enable stash for the partner
+#      | stash |
+#      | 10000 |
+#    And I act as newly created partner account
+#    And I add a new user under default group
+#    And I navigate to user group list page
+#    And I enable stash for all users
+#    Then I should see error message that I have no enough storage
+#    And I click buy storage
+#    Then I should be navigated to buy storage page
+#
+#  @BSA.#2030 @TC.19014
+#  Scenario: Given stash is enabled for partner but not enough storage for all users to enable stash I can choose allocate more storage
+#    When I log in bus admin console as administrator
+#    And I add a new (MozyPro|MozyEnterprise|Reseller) partner:
+#    And I enable stash for the partner
+#      | stash |
+#      | 10000 |
+#    And I act as newly created partner account
+#    And I add a new user under default group
+#    And I navigate to user group list page
+#    And I enable stash for all users
+#    Then I should see error message that I have no enough storage
+#    And I click allocate more storage
+#    Then I should be navigated to allocate storage page
+#
+#    @BSA.#2030 @TC.19020
+#    Scenario: Given 1 user is enabled stash, I delete the user group and users with storage resources are allocated to default user group
+#    When I log in bus admin console as administrator
+#    And I add a new (MozyPro|MozyEnterprise|Reseller) partner:
+#    And I enale stash for the partner
+#      | stash |
+#      | 15    |
+#    And I act as newly created partner account
+#    And I add a new user group:
+#    And I delete newly created user group
+#    Then the newly created user should be moved to default user group and storage should be moved to default group
+#
+#    @BSA.#2030 @TC.19018
+#    Scenario: Given 1 user is enabled stash, I delete the user group and users with storage resources are allocated to
+#default user group who has no stash enabled
+#    When I log in bus admin console as administrator
+#    And I add a new (MozyPro|MozyEnterprise|Reseller) partner:
+#    And I enale stash for the partner
+#      | stash |
+#      | 15    |
+#    And I act as newly created partner account
+#    And I add a new user group:
+#    And I delete newly created user group
+#    Then the newly created user should be moved to default user group and stash should be disabled for the user and storage is returned
