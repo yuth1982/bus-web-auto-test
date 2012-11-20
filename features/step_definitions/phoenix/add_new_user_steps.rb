@@ -67,6 +67,7 @@ When /^I add a phoenix Home user:$/ do |user_table|
   @partner.subscription_period = attributes["period"]
 
   puts @partner.to_s
+  @phoenix_site.select_dom.select_country(@partner)
 end
 
 Then /^the billing summary looks like:$/ do |billing_table|

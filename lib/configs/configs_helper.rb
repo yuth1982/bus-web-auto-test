@@ -14,6 +14,9 @@ ARIA_ENV = ALL_ENV[ENV['ARIA_ENV'] || 'aria_qa']
 # Active zimbra mail
 ZIMBRA_ENV = ALL_ENV['zimbra']
 
+# Active phoenix test environment, for example qa5, qa6
+PHX_ENV = ALL_ENV[ENV['PHX_ENV'] || 'phx-qa6']
+
 # ATF uses br env variable to decide which browser will launch
 # available browser: firefox, chrome, ie, webkit
 BROWSER = (ENV['br'] || 'firefox').downcase

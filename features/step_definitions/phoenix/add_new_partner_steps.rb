@@ -21,10 +21,6 @@
 #   fill in billing info
 #   click create
 
-Given /^I am at dom selection point:$/ do
-	# pending - add step here
-end
-
 When /^I add a phoenix Pro partner:$/ do |partner_table|
   # table is a Cucumber::Ast::Table
   attributes = partner_table.hashes.first
@@ -67,9 +63,17 @@ When /^I add a phoenix Pro partner:$/ do |partner_table|
   @partner.subscription_period = attributes["period"]
 
   puts @partner.to_s
+  @phoenix_site.select_dom.select_country(@partner)
+  @phoenix_site.admin_fill_out.admin_info_fill_out(@partner)
+  @phoenix_site.partner_fill_out.fill_out_partner_info(@partner)
+  @phoenix_site.licensing_fill_out.licensing_billing_fillout(@partner)
+  @phoenix_site.billing_fill_out.billing_info_fill_out(@partner)
+  @phoenix_site.reg_complete_pg.reg_complete(@partner)
 end
 
 Then /^the order summary looks like:$/ do |billing_table|
 	# table is a Cucumber::Ast::Table
 	attributes = billing_table.hashes.first
-end
+  @phoenix_site.billing_fill_out.billing_summary_table_headers.should == billing_table.headers
+  @phoenix_site.billing_fill_out.billing_summary_table_rows.should == billing_table.rows
+  end

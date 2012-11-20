@@ -7,7 +7,7 @@ Feature: Add a new user through phoenix
   Background:
     Given I wish to be a new user:
 
-  @TC.13462 @phx_smoke @sample @month
+  @TC.13462 @phx_smoke @month @sample
   Scenario: 13462 Add a new US monthly basic MozyHome user
     When I add a phoenix Home user:
       | period | base plan | country       |
