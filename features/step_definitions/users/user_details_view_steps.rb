@@ -22,5 +22,5 @@ end
 
 Then /^I should not see (.+) setting on user details section$/ do |text|
   @bus_site.admin_console_page.user_details_section.has_delete_user_link?
-  @bus_site.admin_console_page.user_details_section.user_details_hash.keys[text].should == nil
+  @bus_site.admin_console_page.user_details_section.user_details_hash[text].should == nil
 end

@@ -34,12 +34,5 @@ module Bus
     def user_group_list_table_rows
       user_groups_list_table.rows_text
     end
-
-    # Public: Refresh section
-    #
-    def refresh
-      find(:css, "img[alt='Refresh']").click
-      wait_until{ find(:xpath, "//a[text()='List User Groups']")[:class] != "title loading" }
-    end
   end
 end

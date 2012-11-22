@@ -18,7 +18,10 @@ module Bus
       #
       # Returns mozy enterprise partner formatted attributes text
       def to_s
-        "#{super}\nnum of enterprise users: #@num_enterprise_users\nserver plan: #@server_plan\nserver add-on: #@num_server_add_on"
+        %{#{super}
+        num of enterprise users: #@num_enterprise_users
+        server plan: #@server_plan
+        server add-on: #@num_server_add_on}
       end
     end
   end

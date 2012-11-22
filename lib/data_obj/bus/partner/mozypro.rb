@@ -8,7 +8,6 @@ module Bus
       #
       def initialize
         super
-        #partner_info.type = Bus::COMPANY_TYPE[:mozypro]
         @base_plan = ""
         @has_server_plan = false
         @storage_add_on = 0
@@ -18,7 +17,10 @@ module Bus
       #
       # Returns mozy pro partner formatted attributes text
       def to_s
-        "#{super}\nbase plan: #@base_plan\nhas server plan: #@has_server_plan\nstorage add on:#@storage_add_on"
+        %{#{super}
+        base plan: #@base_plan
+        has server plan: #@has_server_plan
+        storage add on:#@storage_add_on}
       end
     end
   end

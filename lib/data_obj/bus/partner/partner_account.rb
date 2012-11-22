@@ -19,11 +19,18 @@ module Bus
         @pre_sub_total = ""
       end
 
-      # Public: output partner account attributes
+      # Public: Output partner account attributes
       #
-      # Returns partner account formatted attributes text
+      # Returns text
       def to_s
-        "company: #{@company_info.name}\naddress: #{@company_info.address}\ncity: #{@company_info.city}\nstate: #{@company_info.state}\nstate abbrev: #{@company_info.state_abbrev}\ncountry: #{@company_info.country}\nzip: #{@company_info.zip}\nphone: #{@company_info.phone}\nvat_num: #{@company_info.vat_num}\ncompany type: #{partner_info.type}\ncreate under: #{@partner_info.parent}\ncoupon code: #{@partner_info.coupon_code}\nfull name: #{admin_info.full_name}\nemail: #{@admin_info.email}\nuse company info: #@use_company_info\nsubscription period: #@subscription_period\nhas initial purchase: #@has_initial_purchase\nnet term payment: #@net_term_payment\ncredit card name: #{@credit_card.first_name} #{@credit_card.last_name}\ncredit card number: #{@credit_card.number}\ncredit card cvv: #{@credit_card.cvv}\ncredit card expire month: #{@credit_card.expire_month}\ncredit card expire year: #{@credit_card.expire_year}"
+        %{
+        #{@company_info.to_s}
+        #{@partner_info.to_s}
+        #{@admin_info.to_s}
+        use company info: #@use_company_info
+        subscription period: #@subscription_period
+        has initial purchase: #@has_initial_purchase
+        net term payment: #@net_term_payment}
       end
     end
   end

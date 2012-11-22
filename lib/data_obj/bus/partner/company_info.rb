@@ -17,6 +17,21 @@ module Bus
         @phone = Forgery::Address.phone
         @vat_num = ""
       end
+
+      # Public: Output CompanyInfo object attributes
+      #
+      # Returns text
+      def to_s
+        %{company name: #@name
+        address: #@address
+        city: #@city
+        state abbrev (for US & CA only): #@state_abbrev
+        state: #@state
+        country: #@country
+        zip: #@zip
+        phone: #@phone
+        vat_num: #@vat_num}
+      end
     end
   end
 end

@@ -28,31 +28,42 @@ module SiteHelper
 
     # Public: switch
     #
-    #
-    #
+    # Returns nothing
     def switch_to_default_frame
       page.driver.browser.switch_to.default_content
     end
 
     # Public: alert_text
     #
-    #
+    # Returns nothing
     def alert_text
       page.driver.browser.switch_to.alert.text
     end
 
     # Public: alert_accept
     #
-    #
+    # Returns nothing
     def alert_accept
       page.driver.browser.switch_to.alert.accept
     end
 
     # Public: alert_dismiss
     #
-    #
+    # Returns nothing
     def alert_dismiss
       page.driver.browser.switch_to.alert.dismiss
+    end
+
+    # Public: Refresh bus admin console section
+    # This method is only for bus admin console pages
+    #
+    # Returns nothing
+    def refresh_bus_section
+      self.find(:css, "img[alt='Refresh']").click
+      wait_until{ self.find(:xpath, "//a[contains(@onclick,'toggle_module')]")[:class] != "title loading" }
+      # I found automation is still too faster, I need force to wait until table is loaded
+      # Possible refactor here
+      sleep 2
     end
   end
 end

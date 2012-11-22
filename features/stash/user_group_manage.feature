@@ -8,7 +8,7 @@ Feature: User group stash setting management
     Given I log in bus admin console as administrator
 
   @TC.19001 @BSA.2000
-  Scenario: Add default stash storage for a new user group when stash is enabled for partner
+  Scenario: 19001 Add default stash storage for a new user group when stash is enabled for partner
     When I add a new MozyEnterprise partner:
       | period | users |
       | 12     | 10    |
@@ -31,7 +31,7 @@ Feature: User group stash setting management
     And I search and delete partner account by newly created partner company name
 
   @TC.19002 @BSA.2000
-  Scenario: Help displays in add new user group for default stash storage when stash is enabled for partner
+  Scenario: 19002 Help displays in add new user group for default stash storage when stash is enabled for partner
     When I add a new MozyEnterprise partner:
       | period | users |
       | 12     | 10    |
@@ -48,7 +48,7 @@ Feature: User group stash setting management
     And I search and delete partner account by newly created partner company name
 
   @TC.19003 @BSA.2000
-  Scenario: No Default Storage for Stash text on add new user group section when stash is disabled for partner
+  Scenario: 19003 No Default Storage for Stash text on add new user group section when stash is disabled for partner
     When I add a new MozyEnterprise partner:
       | period | users |
       | 12     | 10    |
@@ -60,7 +60,7 @@ Feature: User group stash setting management
     And I search and delete partner account by newly created partner company name
 
   @TC.19004 @BSA.2000
-  Scenario: Add custom stash storage for a new user group when stash is enabled for partner
+  Scenario: 19004 Add custom stash storage for a new user group when stash is enabled for partner
     When I add a new MozyEnterprise partner:
       | period | users |
       | 12     | 10    |
@@ -83,7 +83,7 @@ Feature: User group stash setting management
     And I search and delete partner account by newly created partner company name
 
   @TC.19005 @BSA.2010
-  Scenario: No Enable Stash settings in user group edit page when stash is disabled for partner
+  Scenario: 19005 No Enable Stash settings in user group edit page when stash is disabled for partner
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
       | 1      | Silver        | 100            |
@@ -96,7 +96,7 @@ Feature: User group stash setting management
     And I search and delete partner account by newly created partner company name
 
   @TC.19006 @BSA.2010
-  Scenario: Existing user groups are enabled with default stash storage when stash is enabled for partner
+  Scenario: 19006 Existing user groups are enabled with default stash storage when stash is enabled for partner
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
       | 1      | Gold          | 100            |
@@ -115,7 +115,7 @@ Feature: User group stash setting management
     And I search and delete partner account by newly created partner company name
 
   @TC.19007 @BSA.2010
-  Scenario: Modify default stash storage quota for a user group in user group edit page when stash is enabled for partner
+  Scenario: 19007 Modify default stash storage quota for a user group in user group edit page when stash is enabled for partner
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
       | 1      | Platinum      | 100            |
@@ -135,7 +135,7 @@ Feature: User group stash setting management
     And I search and delete partner account by newly created partner company name
 
   @TC.19008 @BSA.2020
-  Scenario: Disable stash for a user group in user group detail section
+  Scenario: 19008 Disable stash for a user group in user group detail section
     When I add a new MozyEnterprise partner:
       | period | users |
       | 12     | 10    |
@@ -164,7 +164,7 @@ Feature: User group stash setting management
       |             | (default user group) * | 1     | 1      | 0           | 0 / 0       | 0.0 (0.0 assigned) / 0.0  | 0 / 10       | 0.0 (0.0 assigned) / 250.0  |
 
   @TC.19009 @BSA.2020
-  Scenario: Cancel disable stash for a user group in user group detail section
+  Scenario: 19009 Cancel disable stash for a user group in user group detail section
     When I add a new MozyEnterprise partner:
       | period | users |
       | 12     | 10    |
@@ -193,7 +193,7 @@ Feature: User group stash setting management
       |             | (default user group) * | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 assigned) / 0.0  | 0 / 10       | 0.0 (15.0 assigned) / 250.0  |
 
   @TC.19010 @BSA.2020
-  Scenario: User has not stash when disable stash for a user group in user group detail section
+  Scenario: 19010 User has not stash when disable stash for a user group in user group detail section
     When I add a new MozyEnterprise partner:
       | period | users |
       | 12     | 10    |

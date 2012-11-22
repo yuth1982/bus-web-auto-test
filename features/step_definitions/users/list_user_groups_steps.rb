@@ -20,5 +20,5 @@ Then /^User groups list table should be:$/ do |user_group_table|
 end
 
 When /^I refresh List User Group section$/ do
-  @bus_site.admin_console_page.list_user_groups_section.refresh
+  @bus_site.admin_console_page.list_user_groups_section.refresh_bus_section
 end
