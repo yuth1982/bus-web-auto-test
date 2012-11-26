@@ -6,7 +6,7 @@ module Phoenix
     # Private elements
     #
     # Credit Card Info
-    #
+    # pro flow
     element(:cc_type_select, id: "cc_type")
     element(:cc_no_tb, id: "cc_no")
     element(:cvv_tb, id: "cvv")
@@ -15,9 +15,15 @@ module Phoenix
     element(:cc_first_name_tb, id: "cc_first_name")
     element(:cc_last_name_tb, id: "cc_last_name")
     element(:cc_company_tb, id: "cc_company")
+    # home flow
+    element(:home_cc_type_select, id: "card_cardType")
+    element(:home_cc_acct_num_tb, id: "card_accountNumber")
+    element(:home_cc_cvv_tb, id: "card_cvNumber")
+    element(:home_cc_exp_mm_select, id: "card_expirationMonth")
+    element(:home_cc_exp_yy_select, id: "card_expirationYear")
     #
     # Billing Info
-    #
+    # pro flow
     element(:same_as_company_info_link, id: "insert_partner_contact")
     element(:cc_address_tb, id: "cc_address")
     element(:cc_country_select, id: "cc_country")
@@ -29,6 +35,18 @@ module Phoenix
     element(:cc_phone_tb, id: "cc_phone")
     element(:cc_zip_tb, id: "cc_zip")
     element(:billing_summary_table , css: "table.order-summary")
+    # home flow
+    element(:home_country_select, id: "billTo_country")
+    element(:home_bill_fname_tb, id: "billTo_firstName")
+    element(:home_bill_lname_tb, id: "billTo_lastName")
+    element(:home_bill_company_tb, id: "billTo_company")
+    element(:home_bill_addr1_tb, id: "billTo_street1")
+    element(:home_bill_city_tb, id: "billTo_city")
+    element(:home_bill_state_tb, id: "billTo_state")
+    element(:home_bill_state_select, id: "billTo_state_us")
+    element(:home_bill_post_tb, id: "billTo_postalCode")
+    element(:home_bill_phone_tb, id: "billTo_phoneNumber")
+    element(:home_bill_email_tb, id: "billTo_email")
     #
     # Various elements
     #
@@ -61,25 +79,50 @@ module Phoenix
     def billing_summary_table_rows
       billing_summary_table.rows_text
     end
-  def billing_info_fill_out(partner)
-    # card info
-    cc_no_tb.type_text(partner.credit_card.number)
-    cvv_tb.type_text(partner.credit_card.cvv)
-    cc_exp_mm_select.select(partner.credit_card.expire_month)
-    cc_exp_yyyy_select.select(partner.credit_card.expire_year)
-    # payee info
-    cc_first_name_tb.type_text(partner.credit_card.first_name)
-    cc_last_name_tb.type_text(partner.credit_card.last_name)
-    cc_company_tb.type_text(partner.company_info.name )
-    # billing company info
-    same_as_company_info_link.click
-    # get billing summary info as a hash , for verifications later
-    #     headers = 'css=th.' (desc, price, quantity, amount)
-    #     rows = 'css=td.desc.' (base_product, add_on_product, sub_price, discount, total)
-    billing_summary_table_headers
-    billing_summary_table_rows
-    # submission
-    submit_btn.click
-  end
+    def billing_info_fill_out(partner)
+      # get billing summary info as a hash , for verifications later
+      #     headers = 'css=th.' (desc, price, quantity, amount)
+      #     rows = 'css=td.desc.' (base_product, add_on_product, sub_price, discount, total)
+      billing_summary_table_headers
+      billing_summary_table_rows
+
+      if partner.partner_info.type.eql?("MozyPro")
+        # for pro, mainly the cc info - then click 'same as' link
+        # card info
+        cc_no_tb.type_text(partner.credit_card.number)
+        cvv_tb.type_text(partner.credit_card.cvv)
+        cc_exp_mm_select.select(partner.credit_card.expire_month)
+        cc_exp_yyyy_select.select(partner.credit_card.expire_year)
+        # payee info
+        cc_first_name_tb.type_text(partner.credit_card.first_name)
+        cc_last_name_tb.type_text(partner.credit_card.last_name)
+        cc_company_tb.type_text(partner.company_info.name )
+        # billing company info
+        same_as_company_info_link.click
+      else
+        # for mozy home, we have to fill the entire form out
+        home_cc_acct_num_tb.type_text(partner.credit_card.number)
+        home_cc_cvv_tb.type_text(partner.credit_card.cvv)
+        home_cc_exp_mm_select.select(partner.credit_card.expire_month)
+        home_cc_exp_yy_select.select(partner.credit_card.expire_year)
+        home_country_select..select(partner.company_info.country)
+        home_bill_fname_tb.type_text(partner.credit_card.first_name)
+        home_bill_lname_tb.type_text(partner.credit_card.last_name)
+        home_bill_company_tb.type_text(partner.company_info.name)
+        home_bill_addr1_tb.type_text(partner.company_info.address)
+        home_bill_city_tb.type_text(partner.company_info.city)
+        if partner.company_info.country.eql?("United States")
+            home_bill_state_select.select(partner.company_info.state_abbrev)
+          else
+            home_bill_state_tb.type_text(partner.company_info.state)
+          end
+        home_bill_post_tb.type_text(partner.company_info.zip)
+        home_bill_phone_tb.type_text(partner.company_info.phone)
+        home_bill_email_tb.eql?(partner.admin_info.email)
+        end
+
+      # submission
+      submit_btn.click
+    end
   end
 end

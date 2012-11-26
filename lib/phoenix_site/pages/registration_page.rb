@@ -43,8 +43,8 @@ module Phoenix
     def admin_info_fill_out(partner)
       new_admin_display_name_tb.type_text(partner.admin_info.full_name)
       new_admin_username_tb.type_text(partner.admin_info.email)
-      password_tb.type_text("test1234")
-      reenter_password_tb.type_text("test1234")
+      password_tb.type_text(CONFIGS['global']['test_pwd'])
+      reenter_password_tb.type_text(CONFIGS['global']['test_pwd'])
       new_admin_country_select.select(partner.company_info.country)
       new_admin_zip_tb.type_text(partner.company_info.zip)
       # need stub for pro/home selection

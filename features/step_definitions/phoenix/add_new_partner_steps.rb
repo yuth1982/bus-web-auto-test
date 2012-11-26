@@ -62,7 +62,6 @@ When /^I add a phoenix Pro partner:$/ do |partner_table|
   # Common attributes
   @partner.subscription_period = attributes["period"]
 
-  puts @partner.to_s
   @phoenix_site.select_dom.select_country(@partner)
   @phoenix_site.admin_fill_out.admin_info_fill_out(@partner)
   @phoenix_site.partner_fill_out.fill_out_partner_info(@partner)

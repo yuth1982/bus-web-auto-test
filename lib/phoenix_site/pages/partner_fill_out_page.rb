@@ -32,7 +32,7 @@ module Phoenix
     #	required: address : location, city, state, country , post, zip
     #	required: question 1: partner industry
     #	optional: question 2: number employees
-    #	optional: question 3: conatct response (how did you hear about us?)
+    #	optional: question 3: contact response (how did you hear about us?)
     #
     #	Example
     #

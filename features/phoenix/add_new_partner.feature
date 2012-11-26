@@ -7,7 +7,7 @@ Feature: Add a new partner through phoenix
   Background:
     Given I am at dom selection point:
 
-  @TC.13498 @smoke @biennial
+  @TC.13498 @smoke @biennial @sample
   Scenario: 13498 Add a new US biennial basic MozyPro partner
     When I add a phoenix Pro partner:
       | period | base plan | country       | server plan |
@@ -40,7 +40,7 @@ Feature: Add a new partner through phoenix
       | Server Plan - Monthly | $12.99 | 1        | $12.99      |
       | Total Charge          |        |          | $52.98      |
 
-  @TC.13503 @smoke @biennial @ie
+  @TC.13503 @smoke @biennial @IE
   Scenario: 13503 Add a new IE biennial basic MozyPro partner
     When I add a phoenix Pro partner:
       | period | base plan | country | vat number | server plan |
@@ -53,7 +53,7 @@ Feature: Add a new partner through phoenix
       | VAT                    | €197.93   |          | €197.93     |
       | Total Charge           | €1,058.51 |          | €1,058.51   |
 
-  @TC.13504 @smoke @year @ie @novat
+  @TC.13504 @smoke @year @IE @novat
   Scenario: 13504 Add a new IE yearly basic MozyPro partner
     When I add a phoenix Pro partner:
       | period | base plan | country | vat number | server plan |
@@ -66,7 +66,7 @@ Feature: Add a new partner through phoenix
       | VAT                    | €103.67 |          | €103.67     |
       | Total Charge           | €554.45 |          | €554.45     |
 
-  @TC.13497 @smoke @month @ie
+  @TC.13497 @smoke @month @IE
   Scenario: 13497 Add a new IE monthly basic MozyPro partner
     When I add a phoenix Pro partner:
       | period | base plan | country | vat number | server plan |
@@ -79,7 +79,7 @@ Feature: Add a new partner through phoenix
       | VAT                    | €9.43  |          | €9.43       |
       | Total Charge           | €50.41 |          | €50.41      |
 
-  @TC.13515 @phx_smoke @year @ie
+  @TC.13515 @smoke @year @IE
   Scenario: 13515 Add a new IE yearly basic MozyPro partner
     When I add a phoenix Pro partner:
       | period | base plan | country | vat number | server plan |
@@ -92,7 +92,7 @@ Feature: Add a new partner through phoenix
       | VAT                    | €103.67 |          | €103.67     |
       | Total Charge           | €554.45 |          | €554.45     |
 
-  @TC.13513 @smoke @biennial @uk
+  @TC.13513 @smoke @biennial @UK
   Scenario: 13503 Add a new UK biennial basic MozyPro partner
     When I add a phoenix Pro partner:
       | period | base plan | country        | vat number  | server plan |
@@ -105,7 +105,7 @@ Feature: Add a new partner through phoenix
       | VAT                    | Exempt  |          | Exempt      |
       | Total Charge           | £755.58 |          | £755.58     |
 
-  @TC.13521 @smoke @year @uk @novat
+  @TC.13521 @smoke @year @UK @novat
   Scenario: 13504 Add a new UK yearly basic MozyPro partner
     When I add a phoenix Pro partner:
       | period | base plan | country        | vat number | server plan |
@@ -118,7 +118,7 @@ Feature: Add a new partner through phoenix
       | VAT                    | £91.02  |          | £91.02      |
       | Total Charge           | £486.70 |          | £486.70     |
 
-  @TC.13507 @smoke @month @uk
+  @TC.13507 @smoke @month @UK
   Scenario: 13497 Add a new UK monthly basic MozyPro partner
     When I add a phoenix Pro partner:
       | period | base plan | country        | vat number  | server plan |
@@ -131,7 +131,7 @@ Feature: Add a new partner through phoenix
       | VAT                    | Exempt  |          | Exempt      |
       | Total Charge           | £35.98  |          | £35.98      |
 
-  @TC.13510 @phx_smoke @year @uk
+  @TC.13510 @smoke @year @UK
   Scenario: 13515 Add a new UK yearly basic MozyPro partner
     When I add a phoenix Pro partner:
       | period | base plan | country        | vat number  | server plan |

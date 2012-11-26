@@ -20,11 +20,6 @@
 #   fill in licensing info
 #   fill in billing info
 #   click create
-
-Given /^I wish to be a new user:$/ do
-	# pending - add step here
-end
-
 When /^I add a phoenix Home user:$/ do |user_table|
   # table is a Cucumber::Ast::Table
   attributes = user_table.hashes.first
@@ -65,13 +60,29 @@ When /^I add a phoenix Home user:$/ do |user_table|
 
   # Common attributes
   @partner.subscription_period = attributes["period"]
+  case
+    when attributes["period"].eql?("1")
+      @partner.subscription_period = "M"
+    when attributes["period"].eql?("12")
+      @partner.subscription_period = "Y"
+    when attributes["period"].eql?("24")
+      @partner.subscription_period = "2"
+  end
 
-  puts @partner.to_s
   @phoenix_site.select_dom.select_country(@partner)
+  @phoenix_site.admin_fill_out.admin_info_fill_out(@partner)
+  @phoenix_site.licensing_fill_out.licensing_billing_fillout(@partner)
+  @phoenix_site.billing_fill_out.billing_info_fill_out(@partner)
 end
 
 Then /^the billing summary looks like:$/ do |billing_table|
 	# table is a Cucumber::Ast::Table
 	# pending - add step here
 	attributes = billing_table.hashes.first
+  @phoenix_site.billing_fill_out.billing_summary_table_headers.should == billing_table.headers
+  @phoenix_site.billing_fill_out.billing_summary_table_rows.should == billing_table.rows
+end
+
+Then /^the user is successfully added.$/ do
+  @phoenix_site.reg_complete_pg.home_success(@partner)
 end
