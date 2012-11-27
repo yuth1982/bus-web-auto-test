@@ -1,3 +1,19 @@
+#If you want to run these testcases in other environment other than QA5, You need to prepare these data
+#To do: I will add a new feature to prepare these data automately
+#(1). Add some partner with the following partner name and admin if not exist
+# | partner name                      | admin                                    | usage                               |
+# | Machine Migration Automation      | machine_migration_auto@auto.com          | general                             |
+# | Machine Migration Add Delete Test | machine_migration_add_delete@auto.com    | add and delete user machine mapping |
+# | Fed ID Partner                    | leongh+system@mozy.com                   | 10000 user machine mappings         |
+# | Machine Migration for TC16273     | machine_migraion_tc16273@auto.com        | 0 user machine mappings             |
+# | Freecom                           | robert.bartelds-at-freecom.com@mozy.test | a partner which has subpartner      |
+# | Machine Migration for TC17936     | machine_migraion_tc17936@auto.com        | 2 users have the same machine       |
+#(2). Bifrostcli needed for the "Machine Migration Add Delete Test"
+#a. Download mozybfstcli from git repo and run 'python setup.py install' to install it
+#b. Change /etc/mozybfst.yml according to "Machine Migration Add Delete Test", in QA5, 1 example is like:
+#    secret: 5NDOVgE2OpdpZc5IPBEA8ZuQ6t2Ch7094MGoHg8nElxK6geBlpCFSSRxAt028Qa5
+#    group_id: 129736
+
 Feature: Machine migration (This is only for QA5 environment, This file will be replaced by machine_mapping.feature)
 
   As an admin

@@ -1,3 +1,21 @@
+# If you want to run these testcases in other environment other than QA5, You need to prepare these data
+# To do: I will add a new feature to prepare these data automately
+# AD server is needed in the environment
+# (1). Add some partners with the following partner name and admin if not exist
+# | partner name                      | admin                                    | usage                               |
+# | Never Synced Test                 | user_sync_never_synced@auto.com          | the partner never synced            |
+# | User Sync Automation              | user_sync_automation@auto.com            | general, mainly for the ui          |
+# | Fed ID Partner                    | leongh+adi@mozy.com                      | users in this partner can login     |
+# | Machine Migration for TC16273     | user_sync_add_delete@auto.com            | add/delete users in the AD          |
+# | Partner that has subpartner       | usrsync@test.com                         | scheduled sync                      |
+# (2). add 3 groups to each partner: dev, qa, pm
+# (3). add 9 users to AD server:
+# dev_test1/dev_test1@test.com, dev_test2, dev_test3,
+# qa_test1/qa_test1@test.com, qa_test2, qa_test3
+# pm_test1/pm_test1@test.com, pm_test2, pm_test3
+# (4). Update the following files: db_helper.rb, ldap_helper.rb
+# configure the db, ldap to match the specified environment
+
 Feature: User sync
 
   As an Mozy administrator
@@ -27,6 +45,9 @@ Feature: User sync
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I click Sync Rules tab
     And I click the sync now button
     And I wait for 70 seconds
     And I click Connection Settings tab
@@ -43,7 +64,7 @@ Feature: User sync
     And I use Directory Service as authentication provider
     And I click Attribute Mapping tab
     Then The layout of attribute should:
-      | Mozy              | username:      | name:      |Fixed Attribute |
+      | Mozy              | Username:      | Name:      |Fixed Attribute |
       | Directory Service | mail           |  cn        |                |
     When I save the changes
     Then Authentication Policy has been updated successfully
@@ -192,7 +213,9 @@ Feature: User sync
       | user_sync_automation@auto.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
-    And I click Sync Rules tab
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I click Sync Rules tab
     And I add 1 new provision rules:
       | rule         | group |
       | cn=dev_test* | dev   |
@@ -234,7 +257,9 @@ Feature: User sync
       | user_sync_automation@auto.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
-    And I click Sync Rules tab
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I click Sync Rules tab
     And I add 1 new provision rules:
       | rule                                                                  | group |
       | (&(objectClass=user)(\|(\|(cn=dev_test*)(cn=pm_test*))(cn=qa_test*))) | dev   |
@@ -282,7 +307,9 @@ Feature: User sync
       | user_sync_automation@auto.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
-    And I click Sync Rules tab
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I click Sync Rules tab
     And I add 3 new provision rules:
       | rule         | group |
       | cn=dev_test* | dev   |
@@ -334,7 +361,9 @@ Feature: User sync
       | user_sync_automation@auto.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
-    And I click Sync Rules tab
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I click Sync Rules tab
     And I add 4 new provision rules:
       | rule                                                | group |
       | cn=dev_test*                                        | dev   |
@@ -414,7 +443,9 @@ Feature: User sync
       | user_sync_automation@auto.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
-    And I click Sync Rules tab
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I click Sync Rules tab
     And I add 3 new provision rules:
       | rule         | group |
       | cn=dev_test* | dev   |
@@ -494,7 +525,9 @@ Feature: User sync
       | user_sync_automation@auto.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
-    And I click Sync Rules tab
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I click Sync Rules tab
     And I add 1 new deprovision rules:
       | rule         | action |
       |              |        |
@@ -517,6 +550,61 @@ Feature: User sync
       | Save failed                          |
       | abcd is not a valid value for query. |
 
+  @TC.18738 @function
+  Scenario: UserProvision-Delete a group, the users belong to this group will be moved to default group
+    When I act as partner by:
+      | email                         |
+      | user_sync_automation@auto.com |
+    And I navigate to Add New User Group section from bus admin console page
+    And I add a new user group:
+      | name        |
+      | test_delete |
+    When I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I click Sync Rules tab
+    And I add 1 new provision rules:
+      | rule         | group       |
+      | cn=dev_test* | test_delete |
+    And I click the sync now button
+    And I wait for 80 seconds
+    And I delete 1 provision rules
+    And I save the changes
+    And I click Connection Settings tab
+    Then The sync status result should like:
+      | current status       | last sync           |
+      | Synchronized         |   @last_sync_time   |
+    When I navigate to Search / List Users section from bus admin console page
+    Then The users table should be:
+      | User               |      Name     | User Group  |
+      | dev_test3@test.com |   dev_test3   | test_delete |
+      | dev_test2@test.com |   dev_test2   | test_delete |
+      | dev_test1@test.com |   dev_test1   | test_delete |
+    And I search and delete test_delete user group
+    And I refresh the search list user group page
+    Then The users table should be:
+      | User               |      Name     | User Group          |
+      | dev_test1@test.com |   dev_test1   | (default user group)|
+      | dev_test2@test.com |   dev_test2   | (default user group)|
+      | dev_test3@test.com |   dev_test3   | (default user group)|
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
+    And I click Sync Rules tab
+    And I add 1 new deprovision rules:
+      | rule         | action  |
+      | cn=dev_test* | Delete  |
+    And I click the sync now button
+    And I wait for 80 seconds
+    And I delete 1 deprovision rules
+    And I save the changes
+    And I click Connection Settings tab
+    Then The sync status result should like:
+      | current status       | last sync           |
+      | Synchronized         |   @last_sync_time   |
+    When I navigate to Search / List Users section from bus admin console page
+    Then The users table should be empty
+
   @TC.17592 @firefox_profile @vpn
   Scenario: UserProvision - Deleted users in BUS can be resumed
     When I act as partner by:
@@ -524,7 +612,9 @@ Feature: User sync
       | leongh+adi@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
-    And I click Sync Rules tab
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I click Sync Rules tab
     And I add 1 new provision rules:
       | rule             | group |
       | cn=auto1         | dev   |
@@ -611,7 +701,9 @@ Feature: User sync
       | leongh+adi@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
-    And I click Sync Rules tab
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I click Sync Rules tab
     And I add 1 new provision rules:
       | rule             | group |
       | cn=auto1         | dev   |
@@ -709,7 +801,9 @@ Feature: User sync
       | leongh+adi@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
-    And I click Sync Rules tab
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I click Sync Rules tab
     And I add 1 new provision rules:
       | rule             | group |
       | cn=auto1         | dev   |
@@ -740,8 +834,8 @@ Feature: User sync
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
-    And I Choose to delete users if missing from LDAP for 60 days
-    And I change the user last sync field in the db to be 60 days earlier
+    And I Choose to delete users if missing from LDAP for 90 days
+    And I change the user last sync field in the db to be 90 days earlier
     And I click the sync now button
     And I wait for 80 seconds
     And I clear the user sync information
@@ -765,7 +859,9 @@ Feature: User sync
       | leongh+adi@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
-    And I click Sync Rules tab
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I click Sync Rules tab
     And I add 1 new provision rules:
       | rule             | group |
       | cn=auto1         | dev   |
@@ -796,8 +892,8 @@ Feature: User sync
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
-    And I Choose to suspend users if missing from LDAP for 60 days
-    And I change the user last sync field in the db to be 60 days earlier
+    And I Choose to suspend users if missing from LDAP for 90 days
+    And I change the user last sync field in the db to be 90 days earlier
     And I click the sync now button
     And I wait for 90 seconds
     And I clear the user sync information
@@ -832,7 +928,9 @@ Feature: User sync
       | user_sync_add_delete@auto.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
-    And I click Sync Rules tab
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I click Sync Rules tab
     And I add 1 new provision rules:
       | rule         | group |
       | cn=dev_user* | dev   |
@@ -949,7 +1047,9 @@ Feature: User sync
     And I use Directory Service as authentication provider
     And I click Attribute Mapping tab
     And I set the fixed attribute to uid
-    And I click Sync Rules tab
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I click Sync Rules tab
     And I add a user dev_user4 to the AD
     And I add 1 new provision rules:
       | rule         | group |
@@ -1024,7 +1124,9 @@ Feature: User sync
       | usrsync@test.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
-    And I click Sync Rules tab
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I click Sync Rules tab
     And I choose to daily sync at 0 GMT
     And I click the sync now button
     And I wait for 80 seconds
@@ -1051,7 +1153,9 @@ Feature: User sync
       | usrsync@test.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
-    And I click Sync Rules tab
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I click Sync Rules tab
     And I choose to sync daily at the nearest sharp time
     And I save the changes
     And I wait until the sharp time
@@ -1060,58 +1164,3 @@ Feature: User sync
     Then The sync status result should like:
       | current status       | last sync           | next sync       |
       | Synchronized         |   @last_sync_time   | @next_sync_time |
-
-
-
-  @TC.18738 @function
-  Scenario: UserProvision-Delete a group, the users belong to this group will be moved to default group
-    When I act as partner by:
-      | email                         |
-      | user_sync_automation@auto.com |
-    And I navigate to Add New User Group section from bus admin console page
-    And I add a new user group:
-      | name        |
-      | test_delete |
-    When I navigate to Authentication Policy section from bus admin console page
-    And I use Directory Service as authentication provider
-    And I click Sync Rules tab
-    And I add 1 new provision rules:
-      | rule         | group       |
-      | cn=dev_test* | test_delete |
-    And I click the sync now button
-    And I wait for 80 seconds
-    And I delete 1 provision rules
-    And I save the changes
-    And I click Connection Settings tab
-    Then The sync status result should like:
-      | current status       | last sync           |
-      | Synchronized         |   @last_sync_time   |
-    When I navigate to Search / List Users section from bus admin console page
-    Then The users table should be:
-      | User               |      Name     | User Group  |
-      | dev_test3@test.com |   dev_test3   | test_delete |
-      | dev_test2@test.com |   dev_test2   | test_delete |
-      | dev_test1@test.com |   dev_test1   | test_delete |
-    And I search and delete test_delete user group
-    And I refresh the search list user group page
-    Then The users table should be:
-      | User               |      Name     | User Group          |
-      | dev_test1@test.com |   dev_test1   | (default user group)|
-      | dev_test2@test.com |   dev_test2   | (default user group)|
-      | dev_test3@test.com |   dev_test3   | (default user group)|
-    And I navigate to Authentication Policy section from bus admin console page
-    And I use Directory Service as authentication provider
-    And I click Sync Rules tab
-    And I add 1 new deprovision rules:
-      | rule         | action  |
-      | cn=dev_test* | Delete  |
-    And I click the sync now button
-    And I wait for 80 seconds
-    And I delete 1 deprovision rules
-    And I save the changes
-    And I click Connection Settings tab
-    Then The sync status result should like:
-      | current status       | last sync           |
-      | Synchronized         |   @last_sync_time   |
-    When I navigate to Search / List Users section from bus admin console page
-    Then The users table should be empty

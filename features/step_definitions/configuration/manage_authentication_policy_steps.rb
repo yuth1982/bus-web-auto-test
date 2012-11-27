@@ -185,7 +185,7 @@ When /^I save the changes$/ do
 end
 
 Then /^Authentication Policy has been updated successfully$/ do
-  @bus_site.admin_console_page.authentication_policy_section.result_message
+  @bus_site.admin_console_page.authentication_policy_section.result_message.should == 'Authentication Policy has been updated successfully.'
 end
 
 When /^I change the (.+) order by the following rule:$/ do |type, table|
@@ -349,4 +349,7 @@ Then /^I should see (Mozy|LDAP) auth selected$/ do |provider|
     @bus_site.admin_console_page.authentication_policy_section.provider_ldap_checked?.should be_true
     @bus_site.admin_console_page.authentication_policy_section.provider_mozy_checked?.should be_false
   end
+end
+When /^I see the response code is (\d+)$/ do |code|
+  @bus_site.admin_console_page.authentication_policy_section.response_code.should == code
 end

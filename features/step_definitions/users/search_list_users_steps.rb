@@ -34,5 +34,5 @@ end
 
 
 When /^I refresh the search list user group page$/ do
-  @bus_site.admin_console_page.search_list_users_section.refresh
+  @bus_site.admin_console_page.search_list_users_section.refresh_bus_section
 end

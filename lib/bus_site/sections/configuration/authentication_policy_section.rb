@@ -497,5 +497,9 @@ module Bus
     def data_ad_connection_cert_displayed?
       data_ad_connection_cert.visible?
     end
+
+    def response_code
+      status_code
+    end
   end
 end
