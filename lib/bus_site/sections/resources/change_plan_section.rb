@@ -6,7 +6,6 @@ module Bus
     #
     ADD_ON_LIST_LOC = "addon_products_list"
 
-    element(:current_plan_table, xpath: "//div[@id='current_resources_area']/table")
     # Mozypro
     #
     element(:pro_base_plan_select, id: "products_base_exclusive")
@@ -19,7 +18,7 @@ module Bus
     #
     element(:enterprise_users_tb, xpath: "//div[@id='base_plans']//input[starts-with(@id, 'products_base_')]")
     element(:enterprise_server_plan_select, id: "products_addon_exclusive")
-    element(:enterprise_server_add_on_tb, xpath: "//div[@id='#{ADD_ON_LIST_LOC}']/input[starts-with(@id, 'products_addon_')]")
+    element(:enterprise_server_add_on_tb, xpath: "//div[@id='#{ADD_ON_LIST_LOC}']/div[2]/input[starts-with(@id, 'products_addon_')]")
 
     # Reseller
     #
@@ -28,6 +27,7 @@ module Bus
     element(:reseller_server_plan_cb, xpath: "//div[@id='#{ADD_ON_LIST_LOC}']/input[@type='checkbox']")
 
     # Common
+    element(:current_plan_table, xpath: "//div[@id='current_resources_area']/table")
     element(:submit_btn, id: "submit_new_resources_btn" )
     element(:coupon_code_tb, id: "coupon_code")
     element(:charge_summary_table, xpath: "//div[@id='charge_summary']/table")
@@ -35,10 +35,10 @@ module Bus
     element(:cancel_btn, xpath: "//div[@id='change_plan_confirmation']//input[@value='Cancel']")
     element(:message_div, xpath: "//div[@id='resource-change_billing_plan-errors']/ul")
 
-    # Public: Change mozyporo account's plan
+    # Public: Change mozypro plan
     #
     # Example
-    #   change_mozypro_plan("100 GB, $39.99","es","coupon code")
+    #   change_mozypro_plan("100 GB, $39.99","yes","COUPONCODE")
     #
     # Returns nothing
     def change_mozypro_plan(base_plan, server_plan, coupon, storage_add_on=0)
@@ -60,10 +60,10 @@ module Bus
       confirm_change
     end
 
-    # Public: Change mozypenterprise account's plan
+    # Public: Change mozypenterprise plan
     #
     # Example
-    #   change_mozyenterprise_plan(2,"50 GB Server Plan, $296.78",2,"coupon code")
+    #   change_mozyenterprise_plan(2,"50 GB Server Plan, $296.78",2,"COUPONCODE")
     #
     # Returns nothing
     def change_mozyenterprise_plan(users, server_plan, server_add_on, coupon)
@@ -83,10 +83,10 @@ module Bus
       confirm_change
     end
 
-    # Public: Change mozyporo account's plan
+    # Public: Change reseller plan
     #
     # Example
-    #   change_reseller_plan("100 GB, $39.99","yes","coupon code")
+    #   change_reseller_plan(100,"yes",2,"COUPONCODE")
     #
     # Returns nothing
     def change_reseller_plan(quota, server_plan, server_add_on, coupon)
@@ -106,7 +106,7 @@ module Bus
       confirm_change
     end
 
-    # Public: Messages for change change plan actions
+    # Public: Return messages for change plan actions
     #
     # Example
     #  change_plan_section.messages
@@ -117,7 +117,7 @@ module Bus
       message_div.text
     end
 
-    # Public: Change plan charge summary table rows text
+    # Public: Return change plan charge summary table rows text
     #
     # Example
     #   change_plan_section.charge_summary_table_rows
@@ -130,7 +130,7 @@ module Bus
       charge_summary_table.rows_text
     end
 
-    # Public: Change plan charge summary table headers text
+    # Public: Return change plan charge summary table headers text
     #
     # Example
     #   change_plan_section.charge_summary_table_headers
@@ -141,45 +141,85 @@ module Bus
       charge_summary_table.headers_text
     end
 
-    # Public:
+    # Public:  Return change plan list of base plans
     #
     # Example
     #
     #  # => ["10 GB", "50 GB", "100 GB", "250 GB", "500 GB", "1 TB", "2 TB", "4 TB", "8 TB", "12 TB", "16 TB", "20 TB", "24 TB", "28 TB", "32 TB"]
     #
-    #
+    #  Return an array of mozypro base plans
     def mozypro_available_base_plans
       pro_base_plan_select.options.map{ |opt| opt.text.match(/(\d+) (GB|TB)/)[0]}
     end
 
     # Public: MozyPro current purchase
     #
+    # Example
+    #   change_plan_section.mozypro_base_plan.should include base_plan unless base_plan.empty?
+    #
+    # Returns string
     def mozypro_base_plan
       pro_base_plan_select.first_selected_option.text
     end
 
+    # Public: Public: MozyPro current server plan status
+    #
+    # Example
+    #   change_plan_section.mozypro_server_plan_status.should == server_plan unless server_plan.empty?
+    #
+    # Returns string
     def mozypro_server_plan_status
       pro_server_plan_status_span.text
     end
 
+    # Public: MozyPro storage add on value
+    #
+    # Example
+    #   change_plan_section.mozypro_storage_add_on.should == add_on unless add_on.empty?
+    #
+    # Returns integer
     def mozypro_storage_add_on
       pro_storage_add_on_tb.value
     end
 
+    # Public: MozyEnterprise current users
+    #
+    # Example
+    #   change_plan_section.mozyenterprise_users.should == users unless users.empty?
+    #
+    # Returns integer
     def mozyenterprise_users
       enterprise_users_tb.value
     end
 
+    # Public: MozyEnterprise current server plan
+    #
+    # Example
+    #   mozyenterprise_server_plan.should include server_plan unless server_plan
+    #
+    # Returns string
     def mozyenterprise_server_plan
       enterprise_server_plan_select.first_selected_option.text
     end
 
+    # Public: MozyEnterprise current server add on value
+    #
+    # Example
+    #   change_plan_section.mozyenterprise_server_add_on.should == add_on unless add_on.empty?
+    #
+    # Returns integer
     def mozyenterprise_server_add_on
       enterprise_server_add_on_tb.value
     end
 
     private
 
+    # Private: Enter coupon code
+    #
+    # Example
+    #   fill_in_coupon("COUPONCODE")
+    #
+    # Returns nothing
     def fill_in_coupon(coupon)
       unless coupon.empty?
         coupon_code_tb.type_text(coupon)
@@ -187,6 +227,12 @@ module Bus
       end
     end
 
+    # Private: Confirm change plan
+    #
+    # Example
+    #   confirm_change
+    #
+    # Returns nothing
     def confirm_change
       sleep 5
       page.execute_script("document.getElementById('submit_new_resources_btn').disabled=false")

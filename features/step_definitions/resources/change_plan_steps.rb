@@ -32,7 +32,7 @@ When /^I change (MozyPro|MozyEnterprise|Reseller) account plan to:$/ do |type, p
 end
 
 Then /^Account plan should be changed$/ do
-  @bus_site.admin_console_page.change_plan_section.messages.should == "Successfully changed plan. Visit Manage Resources to distribute your new resources."
+  @bus_site.admin_console_page.change_plan_section.messages.should == "Successfully changed plan."
 end
 
 Then /^Change plan charge summary should be:$/ do |charge_table|

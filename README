@@ -1,4 +1,12 @@
-Please visit https://labs.dechocorp.com/projects/decholabs/wiki/New_Project_Help for information on working with both Labs and Gerrit.
+== Description
+
+Welcome to bus-web-auto-test.
+
+This project is intended to house the test automation for the BUS, Phoenix and Freyja projects.
+
+== Documentation
+
+See https://redmine.dechocorp.com/projects/busqa/wiki for project documentation.
 
 Environment variables:
 bus_user
