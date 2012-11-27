@@ -18,6 +18,7 @@ module Phoenix
   element(:add_machine_select, id: "extra_machine_count")
   element(:promo_cde_tb, id: "promo-code")
   element(:plan_summary_table, css: "table.summary")
+  element(:plan_summary_tbl_body, css: "table.summary > tbody")
   #
   # Various elements
   #
@@ -85,7 +86,7 @@ module Phoenix
   end
 
   def plan_summary_table_rows
-    plan_summary_table.rows_text
+    plan_summary_tbl_body.rows_text
   end
 
   def get_plan_summary(partner)
@@ -94,6 +95,7 @@ module Phoenix
       else
         # get plan summary from licensing page
         plan_summary_table_rows
+        puts plan_summary_table_rows.to_s
         end
     end
 
@@ -117,7 +119,7 @@ module Phoenix
         fill_out_server_add_on
         else
         end
-      # get_plan_summary(partner)
+      get_plan_summary(partner)
       continue_btn.click
     end
   end

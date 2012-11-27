@@ -86,3 +86,7 @@ end
 Then /^the user is successfully added.$/ do
   @phoenix_site.reg_complete_pg.home_success(@partner)
 end
+
+And /^their account is activated.$/ do
+  # pending - add steps to bring up zimbra, login, search on & select email, then click on activation link
+end
