@@ -100,7 +100,7 @@ Feature: Change plan
       | Charge for new 50 GB            | $19.99   |
       |                                 |          |
       | Total amount to be charged      | $10.00   |
-    And Account plan should be changed
+    And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan |
       | 50 GB     |
@@ -117,7 +117,7 @@ Feature: Change plan
     When I change MozyPro account plan to:
       | base plan |
       | 250 GB    |
-    Then Account plan should be changed
+    Then the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan |
       | 250 GB    |
@@ -138,7 +138,7 @@ Feature: Change plan
       | Charge for new 1 TB             | $5,141.26  |
       |                                 |            |
       | Total amount to be charged      | $2,570.70  |
-    And Account plan should be changed
+    And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan |
       | 1 TB      |
@@ -155,7 +155,7 @@ Feature: Change plan
     When I change MozyPro account plan to:
       | base plan |
       | 250 GB    |
-    Then Account plan should be changed
+    Then the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan |
       | 250 GB    |
@@ -176,7 +176,7 @@ Feature: Change plan
       | Charge for new 2 TB             | $19,372.24 |
       |                                 |            |
       | Total amount to be charged      | $9,557.10  |
-    And Account plan should be changed
+    And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan |
       | 2 TB      |
@@ -193,7 +193,7 @@ Feature: Change plan
     When I change MozyPro account plan to:
       | base plan |
       | 1 TB      |
-    Then Account plan should be changed
+    Then the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan |
       | 1 TB      |
@@ -211,7 +211,7 @@ Feature: Change plan
     Then Change plan charge summary should be:
       | Description                  | Amount  |
       | Charge for new Server Plan   | $3.99   |
-    And Account plan should be changed
+    And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
       | 10        | yes         |
@@ -229,7 +229,7 @@ Feature: Change plan
     Then Change plan charge summary should be:
       | Description                  | Amount   |
       | Charge for new 250 GB Add-on | $949.90  |
-    And Account plan should be changed
+    And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | storage add on |
       | 1 TB      | 10             |
@@ -247,7 +247,7 @@ Feature: Change plan
     Then Change plan charge summary should be:
       | Description                  | Amount   |
       | Charge for new Server Plan   | $270.46  |
-    And Account plan should be changed
+    And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
       | 500 GB    | yes         |
@@ -265,7 +265,7 @@ Feature: Change plan
     Then Change plan charge summary should be:
       | Description                  | Amount     |
       | Charge for new 250 GB Add-on | $12,852.15 |
-    And Account plan should be changed
+    And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | storage add on |
       | 1 TB      | 10             |
@@ -283,7 +283,7 @@ Feature: Change plan
     Then Change plan charge summary should be:
       | Description                  | Amount   |
       | Charge for new Server Plan   | $516.34  |
-    And Account plan should be changed
+    And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
       | 500 GB    | yes         |
@@ -301,7 +301,7 @@ Feature: Change plan
     Then Change plan charge summary should be:
       | Description                  | Amount     |
       | Charge for new 250 GB Add-on | $24,535.92 |
-    And Account plan should be changed
+    And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | storage add on |
       | 1 TB      | 10             |
@@ -322,7 +322,7 @@ Feature: Change plan
       | Charge for new 1 TB             | $341.99  |
       |                                 |          |
       | Total amount to be charged      | $332.00  |
-    And Account plan should be changed
+    And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan | storage add on |
       | 1 TB      | yes         | 1              |

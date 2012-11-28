@@ -48,7 +48,7 @@ Feature: Bus Smoke Test
       | Charge for upgraded plans                  | $13,293.74  |
       |                                            |             |
       | Total amount to be charged                 | $12,181.16  |
-    And Account plan should be changed
+    And the MozyEnterprise account plan should be changed
     And MozyEnterprise new plan should be:
       | users | server plan | server add-on |
       | 15    | 500 GB      | 5             |

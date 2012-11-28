@@ -16,4 +16,4 @@ Feature:
     Then Change plan charge summary should be:
     | Description                | Amount |
     | Charge for upgraded plans  | $41.80 |
-    And Account plan should be changed
+    And the Reseller account plan should be changed

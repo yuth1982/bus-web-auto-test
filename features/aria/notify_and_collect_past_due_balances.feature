@@ -187,7 +187,7 @@ Feature: Notify about and collect past-due balances
     And I change MozyPro account plan to:
       | base plan |
       | 100 GB    |
-    Then Account plan should be changed
+    Then the MozyPro account plan should be changed
     When I log in aria admin console as administrator
     And I change newly created partner company name account status to Active Dunning 1
     Then Account status should be changed
@@ -214,7 +214,7 @@ Feature: Notify about and collect past-due balances
     And I change MozyPro account plan to:
       | base plan |
       | 100 GB    |
-    Then Account plan should be changed
+    Then the MozyPro account plan should be changed
     When I log in aria admin console as administrator
     And I change newly created partner company name account status to Active Dunning 2
     Then Account status should be changed
@@ -241,7 +241,7 @@ Feature: Notify about and collect past-due balances
     And I change MozyPro account plan to:
       | base plan |
       | 100 GB    |
-    Then Account plan should be changed
+    Then the MozyPro account plan should be changed
     When I log in aria admin console as administrator
     And I change newly created partner company name account status to Active Dunning 3
     Then Account status should be changed

@@ -31,8 +31,17 @@ When /^I change (MozyPro|MozyEnterprise|Reseller) account plan to:$/ do |type, p
   end
 end
 
-Then /^Account plan should be changed$/ do
-  @bus_site.admin_console_page.change_plan_section.messages.should == "Successfully changed plan."
+# Success message depends on Manage Resources vs. Assigned Keys
+# which is determined by the company type of the account
+Then /^the (MozyPro|MozyEnterprise|Reseller) account plan should be changed$/ do |type|
+  case type
+    when "MozyPro"
+      @bus_site.admin_console_page.change_plan_section.messages.should == "Successfully changed plan. Visit Manage Resources to distribute your new resources."
+    when "MozyEnterprise"
+      @bus_site.admin_console_page.change_plan_section.messages.should == "Successfully changed plan."
+    when "Reseller"
+      @bus_site.admin_console_page.change_plan_section.messages.should == "Successfully changed plan. Visit Manage Resources to distribute your new resources."
+  end
 end
 
 Then /^Change plan charge summary should be:$/ do |charge_table|
