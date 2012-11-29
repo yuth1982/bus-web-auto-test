@@ -6,29 +6,30 @@ Feature: Bus Smoke Test
   @TC.18361 @slow
   Scenario: 18361 Mozy Enterprise Smoke Test
     When I add a new MozyEnterprise partner:
-      | period | users | server plan | server add-on | company name | address           | city      | state abbrev | zip   | country       | phone          | admin name   | cc last name | cc first name | cc number        | expire month | expire year | cvv |
+      | period | users | server plan | server add on | company name | address           | city      | state abbrev | zip   | country       | phone          | admin name   | cc last name | cc first name | cc number        | expire month | expire year | cvv |
       | 24     | 10    | 100 GB      | 1             | Smoke Test   | 3401 Hillview Ave | Palo Alto | CA           | 94304 | United States | 1-877-486-9273 | vmware admin | vmware       | mozy          | 4111111111111111 | 12           | 15          | 123 |
-    Then Order summary table should be:
+    Then Sub-total before taxes or discounts should be $4,917.37
+    And Order summary table should be:
       | Description           | Quantity | Price Each | Total Price |
       | MozyEnterprise User   | 10       | $181.00    | $1,810.00   |
       | 100 GB Server Plan    | 1        | $1,112.58  | $1,112.58   |
       | 250 GB Server Add-on  | 1        | $1,994.79  | $1,994.79   |
       | Pre-tax Subtotal      |          |            | $4,917.37   |
       | Total Charges         |          |            | $4,917.37   |
-    Then New partner should be created
+    And New partner should be created
     And Partner general information should be:
       | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:           | Root Role:          | Parent:        | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Autogrow: |
-      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | vmware admin (act as) | Enterprise (change) | MozyEnterprise | after 2 years  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No               |
+      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | vmware admin (act as) | Enterprise (change) | MozyEnterprise | after 2 years  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)      |
     And Partner contact information should be:
       | Company Type:  | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:   |
       | MozyEnterprise | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 |           |                 | @new_admin_email |
     And Partner account attributes should be:
       | Backup Licenses         |           |
       | Backup License Soft Cap | Disabled  |
-      | Enable Server           | Disabled  |
+      | Server Enabled          | Disabled  |
       | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
-      | Default Stash Quota:    |           |
+      | Default Stash Storage:  |           |
     And Partner license types should be:
       |         | Licenses: | Licenses Used: | Quota:   | Quota Used: | Resource Policy: |
       | Desktop | 10        | 0              | 250 GB   | 0 bytes     | Enabled          |
@@ -39,7 +40,7 @@ Feature: Bus Smoke Test
       | Renewal Date:   | after 2 years | Renewal Period: | Use Current Period  |
     And Partner sub admins should be empty
     When I act as newly created partner account
-    When I change MozyEnterprise account plan to:
+    And I change MozyEnterprise account plan to:
       | users | server plan | server add-on |
       | 15    | 500 GB      | 5             |
     Then Change plan charge summary should be:
