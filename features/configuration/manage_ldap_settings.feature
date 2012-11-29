@@ -19,7 +19,9 @@ Feature: Manage Horizon related settings
     And I input server connection settings
       | Server Host          | Protocol | SSL Cert | Port | Base DN                   | Bind Username         | Bind Password |
       | 10.135.16.154        | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com| QAP@SSw0rd    |
-    And I Test Connection for AD
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I Test Connection for AD
     Then AD server test connection message should be Test passed. Successfully connected to 10.135.16.154 on port 389 using No SSL.
     And I save the Connection Settings information
     Then server connection settings information should include
@@ -34,7 +36,9 @@ Feature: Manage Horizon related settings
     And I input server connection settings
       | Server Host          | Protocol | SSL Cert | Port | Base DN                   | Bind Username         | Bind Password |
       | ad01.qa5.mozyops.com | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| 1hkc9ad@qa5.mozyops.com| daf145gvi    |
-    And I Test Connection for AD
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I Test Connection for AD
     Then AD server test connection message should be Test failed. Error: Could not connect to the AD server. Reason: BIND failed. Please verify you entered the correct BIND settings.
 
   @TC.17478
@@ -45,7 +49,9 @@ Feature: Manage Horizon related settings
     And I input server connection settings
       | Server Host          | Protocol | SSL Cert | Port | Base DN                   | Bind Username         | Bind Password |
       | ad01.qa5.mozyops.com | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com| QAP@SSw0rd    |
-    And I Test Connection for AD
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I Test Connection for AD
     Then AD server test connection message should be Test passed. Successfully connected to ad01.qa5.mozyops.com on port 389 using No SSL.
     And I save the Connection Settings information
     Then server connection settings information should include
@@ -61,8 +67,10 @@ Feature: Manage Horizon related settings
     And I input server connection settings
       | Server Host          | Protocol | SSL Cert | Port | Base DN                   | Bind Username         | Bind Password |
       | 10.34.9.             | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com| QAP@SSw0rd    |
-    And I Test Connection for AD
-    Then AD server test connection message should be Test failed. Error: Could not connect to the AD server. Reason: No such address or other socket error.
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I Test Connection for AD
+    Then AD server test connection message should be Test failed. Error: Could not connect to the AD server. Reason: Host unreachable
 
   @TC.17480
   Scenario: Port input should reject invalid parameters
@@ -72,8 +80,10 @@ Feature: Manage Horizon related settings
     And I input server connection settings
       | Server Host          | Protocol | SSL Cert | Port | Base DN                   | Bind Username         | Bind Password |
       | ad01.qa5.mozyops.com | No SSL   |          | 0    | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com| QAP@SSw0rd    |
-    And I Test Connection for AD
-    Then AD server test connection message should be Test failed. Error: Could not connect to the AD server. Reason: Server ad01.qa5.mozyops.com refused connection on port 0.
+    And I save the changes
+    Then The save error message should be:
+      | Save failed  |
+      | Invalid data.|
 
   @TC.17482
   Scenario: Base Tree should reject invalid empty inputs
@@ -83,7 +93,9 @@ Feature: Manage Horizon related settings
     And I input server connection settings
       | Server Host          | Protocol | SSL Cert | Port | Base DN                   | Bind Username         | Bind Password |
       | ad01.qa5.mozyops.com | No SSL   |          | 389  |                           | leongh@qa5.mozyops.com| QAP@SSw0rd    |
-    And I Test Connection for AD
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I Test Connection for AD
     Then AD server test connection message should be Test failed. Error: AD base DN is not provided.
 
   @TC.17484
