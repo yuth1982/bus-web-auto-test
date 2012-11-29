@@ -2,7 +2,7 @@ module Bus
   module DataObj
     # This class contains attributes for reseller partner
     class Reseller < PartnerAccount
-      attr_accessor :reseller_type, :reseller_quota, :reseller_add_on_quota, :has_server_plan
+      attr_accessor :reseller_type, :reseller_quota, :reseller_add_on_quota, :has_server_plan, :has_stash_grant_plan
 
       # Public: Initialize a Reseller Object
       #
@@ -12,6 +12,7 @@ module Bus
         @reseller_quota = 0
         @reseller_add_on_quota = 0
         @has_server_plan = false
+        @has_stash_grant_plan = false
       end
 
       # Public: output reseller partner attributes
@@ -22,7 +23,8 @@ module Bus
         reseller type: #@reseller_type
         reseller quota: #@reseller_quota
         reseller add-on quota: #@reseller_add_on_quota
-        has server plan: #@has_server_plan}
+        has server plan: #@has_server_plan
+        has stash grant plan: #@has_stash_grant_plan}
       end
     end
   end

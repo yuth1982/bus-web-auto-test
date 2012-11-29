@@ -216,7 +216,13 @@ module Bus
       base_plan_select.select(partner.base_plan)
       base_plan_id = base_plan_select.value
 
-      find_by_id("#{base_plan_id}_add_on_plan_check_box").check if partner.has_server_plan
+      #{base plan id}_add_on_plan_check_box_1 is stash beta grant id
+      stash_grant_id = find_by_id("#{base_plan_id}_add_on_plan_check_box_1").value
+      find_by_id("#{base_plan_id}_add_on_plan_check_box_#{stash_grant_id}").check if partner.has_stash_grant_plan
+
+      #{base plan id}_add_on_plan_check_box_2 is serer plan id
+      server_plan_id = find_by_id("#{base_plan_id}_add_on_plan_check_box_2").value
+      find_by_id("#{base_plan_id}_add_on_plan_check_box_#{server_plan_id}").check if partner.has_server_plan
 
       # storage add on option for base plan >= 1 TB
       if partner.storage_add_on != 0
@@ -267,8 +273,13 @@ module Bus
           raise "Unable to find reseller type of #{partner.reseller_type}"
       end
 
-      # Add ons server plan
-      find_by_id("#{base_plan_id}_add_on_plan_check_box").check if partner.has_server_plan
+      #{base plan id}_add_on_plan_check_box_1 is stash beta grant id
+      stash_grant_id = find_by_id("#{base_plan_id}_add_on_plan_check_box_1").value
+      find_by_id("#{base_plan_id}_add_on_plan_check_box_#{stash_grant_id}").check if partner.has_stash_grant_plan
+
+      #{base plan id}_add_on_plan_check_box_2 is serer plan id
+      server_plan_id = find_by_id("#{base_plan_id}_add_on_plan_check_box_2").value
+      find_by_id("#{base_plan_id}_add_on_plan_check_box_#{server_plan_id}").check if partner.has_server_plan
 
       # Num of storage add ons
       if partner.reseller_add_on_quota.to_i > 0
