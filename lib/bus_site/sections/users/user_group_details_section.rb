@@ -9,6 +9,8 @@ module Bus
     elements(:group_details_dls, xpath: "//div/dl")
     element(:stash_info_dl, xpath: "//form[starts-with(@id,'user_groups-stash-form')]")
 
+    elements(:user_group_tables, css: "table.table-view")
+
     # Stash section
     element(:change_stash_link, xpath: "//a[contains(@onclick,'change_stash')]")
     element(:cancel_stash_link, xpath: "//a[contains(@onclick,'cancel_change')]")
@@ -19,6 +21,16 @@ module Bus
 
     element(:submit_delete_stash_btn, xpath: "//div[@class='popup-window-footer']//input[@value='Submit']")
     element(:cancel_delete_stash_btn, xpath: "//div[@class='popup-window-footer']//input[@value='Cancel']")
+
+    element(:add_stash_to_all_link, xpath: "//a[text()='Add Stash to All Users']")
+
+    # Popup window
+    element(:popup_content_div, xpath: "//div[@class='popup-window-content']")
+    element(:close_popup_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Close']")
+    element(:continue_add_stash_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Continue']")
+    element(:buy_more_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Buy More']")
+    element(:allocate_resources_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Allocate']")
+
 
     # Public: User group details information
     #
@@ -33,9 +45,18 @@ module Bus
       Hash[*(output + stash).flatten]
     end
 
+    def users_list_table_headers
+      user_group_tables[0].headers_text
+    end
+
+    def users_list_table_rows
+      user_group_tables[0].rows_text
+    end
+
     def delete_user_group
       delete_user_group_link.click
       alert_accept
+      wait_until{ !has_delete_user_group_link? }
     end
 
     # Public: Enable stash for a partner
@@ -69,6 +90,30 @@ module Bus
         cancel_stash_link.click
       end
       wait_until{ !submit_stash_status_btn.visible? }
+    end
+
+    def add_stash_to_all_user
+      add_stash_to_all_link.click
+    end
+
+    def popup_window_content
+      popup_content_div.text
+    end
+
+    def close_popup_window
+      close_popup_btn.click
+    end
+
+    def confirm_add_stash
+      continue_add_stash_btn.click
+    end
+
+    def buy_more_resources
+      buy_more_btn.click
+    end
+
+    def allocate_resources
+      allocate_resources_btn.click
     end
   end
 end

@@ -4,7 +4,7 @@
 # Optional column: filter
 #
 When /^I search user by:$/ do |search_key_table|
-  @bus_site.admin_console_page.navigate_to_link(CONFIGS['bus']['menu']['search_list_users'])
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_users'])
   attributes = search_key_table.hashes.first
   keywords = attributes["keywords"] || ""
   filter = attributes["filter"] || "None"
@@ -12,6 +12,9 @@ When /^I search user by:$/ do |search_key_table|
 end
 
 Then /^User search results should be:$/ do |results_table|
+  results_table.map_column!('Created') do |value|
+    Chronic.parse(value).strftime("%m/%d/%y")
+  end
   @bus_site.admin_console_page.search_list_users_section.search_results_table_headers.should == results_table.headers
   @bus_site.admin_console_page.search_list_users_section.search_results_table_rows.should == results_table.rows
 end
@@ -32,7 +35,6 @@ When /^I view user details by (.+)$/ do |user|
   @bus_site.admin_console_page.search_list_users_section.view_user_details(user)
 end
 
-
-When /^I refresh the search list user group page$/ do
+When /^I refresh search list user group page$/ do
   @bus_site.admin_console_page.search_list_users_section.refresh_bus_section
 end

@@ -1,4 +1,4 @@
-Given /^I log in bus admin console as administrator/ do
+Given /^I log in bus admin console as administrator$/ do
   @bus_site = BusSite.new
   @bus_site.login_page.load
   @admin_username = BUS_ENV['bus_username']

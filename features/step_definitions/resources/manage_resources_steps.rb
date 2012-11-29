@@ -1,7 +1,7 @@
 
 When /^I assign a key in user group (.+) with email (.+)$/ do |user_group, email|
   @test_email = email
-  @bus_site.admin_console_page.navigate_to_link(CONFIGS['bus']['menu']['assign_keys'])
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['assign_keys'])
   @bus_site.admin_console_page.manage_resources_section.select_group(user_group)
   @bus_site.admin_console_page.manage_group_resources_section.assign_mozyenterprise_key(@test_email)
 end
@@ -15,7 +15,7 @@ When /^Key should be assigned$/ do
 end
 
 When /^I assign MozyPro allocated quota to (\d+) GB$/ do |new_quota|
-  @bus_site.admin_console_page.navigate_to_link(CONFIGS['bus']['menu']['manage_resources'])
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['manage_resources'])
   @bus_site.admin_console_page.manage_resources_section.assign_mozypro_storage(new_quota)
 end
 
@@ -37,4 +37,8 @@ Then /^MozyPro resource general information should be:$/ do |info_table|
   @bus_site.admin_console_page.manage_resources_section.mozypro_unallocated_storage.should == unallocated unless unallocated.empty?
   @bus_site.admin_console_page.manage_resources_section.mozypro_enable_server.should == add_on unless enable_server.empty?
 
+end
+
+Then /^Manage Resources section should be active$/ do
+  @bus_site.admin_console_page.manage_resources_section.has_manage_resource_content_div?.should be_true
 end

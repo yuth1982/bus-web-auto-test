@@ -8,7 +8,7 @@
 # Optional: reseller quota, server plan, server add-on, coupon
 #
 When /^I change (MozyPro|MozyEnterprise|Reseller) account plan to:$/ do |type, plan_table|
-  @bus_site.admin_console_page.navigate_to_link(CONFIGS['bus']['menu']['change_plan'])
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['change_plan'])
   attributes = plan_table.hashes.first
   coupon = attributes["coupon"] || ""
   case type
@@ -77,4 +77,8 @@ Then /^MozyEnterprise new plan should be:$/ do |new_plan_table|
   @bus_site.admin_console_page.change_plan_section.mozyenterprise_users.should == users unless users.empty?
   @bus_site.admin_console_page.change_plan_section.mozyenterprise_server_plan.should include server_plan unless server_plan
   @bus_site.admin_console_page.change_plan_section.mozyenterprise_server_add_on.should == add_on unless add_on.empty?
+end
+
+Then /^Change Plan section should be active$/ do
+  @bus_site.admin_console_page.change_plan_section.has_current_plan_table?.should be_true
 end

@@ -30,28 +30,44 @@ module SiteHelper
     #
     # Returns nothing
     def switch_to_default_frame
-      page.driver.browser.switch_to.default_content
+      if page.driver.is_a?(Capybara::Selenium::Driver)
+        page.driver.browser.switch_to.default_content
+      else
+        raise("switch_to_default_frame method only works for Selenium Driver")
+      end
     end
 
     # Public: alert_text
     #
     # Returns nothing
     def alert_text
-      page.driver.browser.switch_to.alert.text
+      if page.driver.is_a?(Capybara::Selenium::Driver)
+        page.driver.browser.switch_to.alert.text
+      else
+        raise("alert_text method only works for Selenium Driver")
+      end
     end
 
     # Public: alert_accept
     #
     # Returns nothing
     def alert_accept
-      page.driver.browser.switch_to.alert.accept
+      if page.driver.is_a?(Capybara::Selenium::Driver)
+        page.driver.browser.switch_to.alert.accept
+      else
+        raise("alert_accept method only works for Selenium Driver")
+      end
     end
 
     # Public: alert_dismiss
     #
     # Returns nothing
     def alert_dismiss
-      page.driver.browser.switch_to.alert.dismiss
+      if page.driver.is_a?(Capybara::Selenium::Driver)
+        page.driver.browser.switch_to.alert.dismiss
+      else
+        raise("alert_dismiss method only works for Selenium Driver")
+      end
     end
 
     # Public: Refresh bus admin console section
@@ -59,8 +75,11 @@ module SiteHelper
     #
     # Returns nothing
     def refresh_bus_section
-      self.find(:css, "img[alt='Refresh']").click
-      wait_until{ self.find(:xpath, "//a[contains(@onclick,'toggle_module')]")[:class] != "title loading" }
+      self.root_element.find(:xpath, "//div[@id='#{self.root_element[:id]}']//img[@alt='Refresh']").click
+      loading = self.root_element.find(:xpath, "//div[@id='#{self.root_element[:id]}']//a[contains(@onclick,'toggle_module')]")
+      wait_until{
+        loading[:class].match(/loading/).nil?
+      }
       # I found automation is still too faster, I need force to wait until table is loaded
       # Possible refactor here
       sleep 2

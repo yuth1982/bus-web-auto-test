@@ -5,7 +5,7 @@
 # | name | billing code | server quota | desktop quota | stash quota |
 #
 When /^I add a new user group:$/ do |user_table|
-  @bus_site.admin_console_page.navigate_to_link(CONFIGS['bus']['menu']['add_new_user_group'])
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_user_group'])
   @user_group = Bus::DataObj::UserGroup.new
   attributes = user_table.hashes.first
   @user_group.name = attributes['name']

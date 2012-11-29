@@ -5,7 +5,7 @@ When /^I act as newly created partner account$/ do
 end
 
 When /^I search and delete partner account by (.+)/ do |account_name|
-  @bus_site.admin_console_page.navigate_to_link(CONFIGS['bus']['menu']['search_list_partner'])
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_partner'])
   @bus_site.admin_console_page.search_list_partner_section.search_partner(account_name)
 
   rows_text = @bus_site.admin_console_page.search_list_partner_section.search_results_table_rows

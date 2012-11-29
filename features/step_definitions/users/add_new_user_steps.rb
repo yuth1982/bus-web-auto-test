@@ -4,7 +4,7 @@
 # | user group | server licenses | server quota | desktop licenses | desktop quota |
 #
 When /^I add a new user:$/ do |user_table|
-  @bus_site.admin_console_page.navigate_to_link(CONFIGS['bus']['menu']['add_new_user'])
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_user'])
 
   @user = Bus::DataObj::User.new
   attributes = user_table.hashes.first
@@ -27,4 +27,8 @@ end
 
 Then /^New user created message should be (.+)$/ do |message|
   @bus_site.admin_console_page.add_new_user_section.messages.should == message
+end
+
+When /^I refresh Add New User section$/ do
+  @bus_site.admin_console_page.add_new_user_section.refresh_bus_section
 end

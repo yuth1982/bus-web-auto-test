@@ -4,6 +4,7 @@ module Bus
 
     # Private elements
     #
+    element(:manage_resource_content_div, id: "resource-available_key_list-content")
     element(:select_group, link: "Select different group")
     #element(:group_select, id: "user_group_id")
     #element(:submit_group_btn, xpath: "//input[@name='select_group']")

@@ -27,7 +27,7 @@ module Bus
     element(:reseller_server_plan_cb, xpath: "//div[@id='#{ADD_ON_LIST_LOC}']/input[@type='checkbox']")
 
     # Common
-    element(:current_plan_table, xpath: "//div[@id='current_resources_area']/table")
+    element(:current_plan_table, css: "div#current_resources_area table")
     element(:submit_btn, id: "submit_new_resources_btn" )
     element(:coupon_code_tb, id: "coupon_code")
     element(:charge_summary_table, xpath: "//div[@id='charge_summary']/table")
@@ -141,7 +141,11 @@ module Bus
       charge_summary_table.headers_text
     end
 
-    # Public:  Return change plan list of base plans
+    def current_plan_table_headers
+      current_plan_table.headers_text
+    end
+
+    # Public:
     #
     # Example
     #

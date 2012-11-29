@@ -4,7 +4,7 @@
 # Optional column: filter, including sub-partners
 #
 When /^I search partner by:$/ do |search_key_table|
-  @bus_site.admin_console_page.navigate_to_link(CONFIGS['bus']['menu']['search_list_partner'])
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_partner'])
   attributes = search_key_table.hashes.first
   keywords = attributes["name"] || attributes["email"]
   filter = attributes["filter"] || "None"

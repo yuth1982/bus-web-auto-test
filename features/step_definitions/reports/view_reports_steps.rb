@@ -7,7 +7,7 @@ end
 # Available columns: type, name, frequency, start date, is active, recipients, subject, email message
 #
 When /^I build a new report:$/ do |report_table|
-  @bus_site.admin_console_page.navigate_to_link(CONFIGS['bus']['menu']['report_builder'])
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['report_builder'])
   attributes = report_table.hashes.first
   @bus_site.admin_console_page.report_builder_section.navigate_to_add_report_section(attributes["type"])
   case attributes["type"]

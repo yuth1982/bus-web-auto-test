@@ -53,8 +53,16 @@ module Bus
     # Private element
     element(:stop_masquerading_link, xpath: "//a[text()='stop masquerading']")
 
-    def navigate_to_link(link)
-      find_link(link).click
+    # Public: Navigate to menu item on admin console page
+    # Note: if bus module is opened, menu will not be clicked
+    #
+    # Returns nothing
+    def navigate_to_menu(link)
+      el = find_link(link)
+      el_class = el.element_parent[:class]
+      if el_class.match(/active/).nil?
+        el.click
+      end
     end
 
     def stop_masquerading

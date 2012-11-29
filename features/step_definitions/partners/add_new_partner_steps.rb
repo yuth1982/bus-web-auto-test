@@ -23,7 +23,7 @@
 #   click create
 
 When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partner_table|
-  @bus_site.admin_console_page.navigate_to_link(CONFIGS['bus']['menu']['add_new_partner'])
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_partner'])
   attributes = partner_table.hashes.first
   case type
     when CONFIGS['bus']['company_type']['mozypro']
@@ -32,6 +32,7 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partne
       @partner.has_initial_purchase = false if attributes["base plan"].nil?
       @partner.base_plan = attributes["base plan"] || ""
       @partner.has_server_plan = (attributes["server plan"] || "no").eql?("yes")
+      @partner.has_stash_grant_plan = (attributes["stash grant plan"] || "no").eql?("yes")
       @partner.storage_add_on =  attributes["storage add on"] || 0
       @partner.admin_info.root_role = attributes["root role"] || CONFIGS['bus']['root_role']['mozypro']
     when CONFIGS['bus']['company_type']['mozyenterprise']
@@ -50,6 +51,7 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partne
       @partner.reseller_quota = attributes["reseller quota"] || 0
       @partner.reseller_add_on_quota = attributes["storage add on"] || 0
       @partner.has_server_plan = (attributes["server plan"] || "no").eql?("yes")
+      @partner.has_stash_grant_plan = (attributes["stash grant plan"] || "no").eql?("yes")
       @partner.admin_info.root_role = attributes["root role"] || CONFIGS['bus']['root_role']['reseller']
     else
       raise "Error: Company type #{type} does not exist."

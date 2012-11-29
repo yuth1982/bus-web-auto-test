@@ -1,7 +1,7 @@
 #| server licences | server quota GB | desktop licences | desktop quota GB |
 #| 10              | 50              | 5                | 25               |
 When /^I transfer resources from (.+) to (.+) with:$/ do |source, target, resources_table|
-  @bus_site.admin_console_page.navigate_to_link(CONFIGS['bus']['menu']['transfer_resources'])
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['transfer_resources'])
   attributes = resources_table.hashes.first
   @source_group = source
   @target_group = target

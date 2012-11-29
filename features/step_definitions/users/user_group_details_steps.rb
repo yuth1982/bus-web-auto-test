@@ -21,6 +21,15 @@ Then /^User group details should be:$/ do |details_table|
   end
 end
 
+Then /^User group users list details should be:$/ do |users_list_table|
+  @bus_site.admin_console_page.user_group_details_section.has_change_name_link?
+  users_list_table.map_column!('Created') do |value|
+    Chronic.parse(value).strftime("%m/%d/%y")
+  end
+  @bus_site.admin_console_page.user_group_details_section.users_list_table_headers.should == users_list_table.headers
+  @bus_site.admin_console_page.user_group_details_section.users_list_table_rows.should == users_list_table.rows
+end
+
 Then /^I should not see (.+) text on user group details section$/ do |text|
   @bus_site.admin_console_page.user_group_details_section.has_change_name_link?
   @bus_site.admin_console_page.user_group_details_section.has_no_content?(text).should be_true
@@ -40,4 +49,32 @@ end
 
 When /^I cancel disable stash for the user group$/ do
   @bus_site.admin_console_page.user_group_details_section.disable_stash(false)
+end
+
+When /^I enable stash for all users$/ do
+  @bus_site.admin_console_page.user_group_details_section.add_stash_to_all_user
+end
+
+Then /^Add Stash to all users confirmation message should be (.+)$/ do |message|
+  @bus_site.admin_console_page.user_group_details_section.popup_window_content.should == message
+end
+
+Then /^I close add stash to all users popup window$/ do
+  @bus_site.admin_console_page.user_group_details_section.close_popup_window
+end
+
+Then /^I confirm add stash to all users$/ do
+  @bus_site.admin_console_page.user_group_details_section.confirm_add_stash
+end
+
+Then /^I click buy more on popup window$/ do
+  @bus_site.admin_console_page.user_group_details_section.buy_more_resources
+end
+
+Then /^I click allocate on popup window$/ do
+  @bus_site.admin_console_page.user_group_details_section.allocate_resources
+end
+
+When /^I refresh user group details section$/ do
+  @bus_site.admin_console_page.user_group_details_section.refresh_bus_section
 end
