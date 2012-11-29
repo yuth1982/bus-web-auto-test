@@ -21,5 +21,10 @@ class PhoenixSite
 
   def reg_complete_pg
     Phoenix::NewRegistrationComplete.new
-  end  
+  end
+
+  # stub for account verification
+  #def acct_verify
+    #Phoenix::AccountVerification.new
+  #end
 end

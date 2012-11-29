@@ -62,12 +62,13 @@ When /^I add a phoenix Pro partner:$/ do |partner_table|
   # Common attributes
   @partner.subscription_period = attributes["period"]
 
+  # for info review
+  # puts @partner.to_s
   @phoenix_site.select_dom.select_country(@partner)
   @phoenix_site.admin_fill_out.admin_info_fill_out(@partner)
   @phoenix_site.partner_fill_out.fill_out_partner_info(@partner)
   @phoenix_site.licensing_fill_out.licensing_billing_fillout(@partner)
   @phoenix_site.billing_fill_out.billing_info_fill_out(@partner)
-  @phoenix_site.reg_complete_pg.reg_complete(@partner)
 end
 
 Then /^the order summary looks like:$/ do |billing_table|
@@ -76,3 +77,7 @@ Then /^the order summary looks like:$/ do |billing_table|
   @phoenix_site.billing_fill_out.billing_summary_table_headers.should == billing_table.headers
   @phoenix_site.billing_fill_out.billing_summary_table_rows.should == billing_table.rows
   end
+
+And /^the partner is successfully added.$/ do
+  @phoenix_site.reg_complete_pg.reg_complete(@partner)
+end

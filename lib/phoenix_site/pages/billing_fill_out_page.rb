@@ -34,7 +34,7 @@ module Phoenix
     element(:cc_email_tb, id: "cc_email")
     element(:cc_phone_tb, id: "cc_phone")
     element(:cc_zip_tb, id: "cc_zip")
-    element(:billing_summary_table , css: "table.order-summary")
+    element(:billing_summary_table, css: "table.order-summary")
     # home flow
     element(:home_country_select, id: "billTo_country")
     element(:home_bill_fname_tb, id: "billTo_firstName")
@@ -54,73 +54,90 @@ module Phoenix
     element(:continue_btn, css: "input.img-button")
     element(:back_btn, id: "back_button")
     element(:submit_btn, id: "submit_button")
+
+    # Public elements & methods
     #
-    # Public: Phoenix new partner billing summary table headers
+
+    # Returns order summary table headers text
     #
-    # Example
-    #   billing_fill_out.billing_summary_table_headers
-    #   # => ["Description","Quantity","Price Each","Total Price"]
-    #
-    # Returns order summary table rows text
     def billing_summary_table_headers
       billing_summary_table.headers_text
     end
 
-    # Public: Phoenix new partner billing summary table rows
-    #
-    # Example
-    #   billing_fill_out.billing_summary_table_rows
-    #   # => [["50 GB","1","$19.99","$19.99"],
-    #         ["Discounts Applied","","","$-1.00"],
-    #         ["Pre-tax Subtotal","","","$18.99"],
-    #         ["Total Charges","","","$18.99"]]
-    #
     # Returns order summary table rows text
+    #
     def billing_summary_table_rows
       billing_summary_table.rows_text
     end
-    def billing_info_fill_out(partner)
-      # get billing summary info as a hash , for verifications later
-      #     headers = 'css=th.' (desc, price, quantity, amount)
-      #     rows = 'css=td.desc.' (base_product, add_on_product, sub_price, discount, total)
+
+    # calls method that checks for existence of billing summary table
+    #   and then get data from the table
+    #
+    #   get billing summary info as a hash , for verifications later
+    #     headers = 'css=th.' (desc, price, quantity, amount)
+    #     rows = 'css=td.desc.' (base_product, add_on_product, sub_price, discount, total)
+    def billing_summary_info_get
+      billing_summary_table.visible?
       billing_summary_table_headers
       billing_summary_table_rows
+    end
 
-      if partner.partner_info.type.eql?("MozyPro")
-        # for pro, mainly the cc info - then click 'same as' link
-        # card info
-        cc_no_tb.type_text(partner.credit_card.number)
-        cvv_tb.type_text(partner.credit_card.cvv)
-        cc_exp_mm_select.select(partner.credit_card.expire_month)
-        cc_exp_yyyy_select.select(partner.credit_card.expire_year)
-        # payee info
-        cc_first_name_tb.type_text(partner.credit_card.first_name)
-        cc_last_name_tb.type_text(partner.credit_card.last_name)
-        cc_company_tb.type_text(partner.company_info.name )
-        # billing company info
-        same_as_company_info_link.click
+    #   pro: filling in cc payment fields + click 'same as' link
+    #     clicking link populates company data for payee
+    #
+    def pro_fill_out(partner)
+      # for pro, mainly the cc info - then click 'same as' link
+      # card info
+      cc_no_tb.type_text(partner.credit_card.number)
+      cvv_tb.type_text(partner.credit_card.cvv)
+      cc_exp_mm_select.select(partner.credit_card.expire_month)
+      cc_exp_yyyy_select.select(partner.credit_card.expire_year)
+      # payee info
+      cc_first_name_tb.type_text(partner.credit_card.first_name)
+      cc_last_name_tb.type_text(partner.credit_card.last_name)
+      cc_company_tb.type_text(partner.company_info.name )
+      # billing company info
+      same_as_company_info_link.click
+    end
+
+    #   home : filling all available fields
+    #     if country not = US, fill in state / prov field, else select US state
+    #
+    def home_fill_out(partner)
+      # for mozy home, we have to fill the entire form out
+      home_cc_acct_num_tb.type_text(partner.credit_card.number)
+      home_cc_cvv_tb.type_text(partner.credit_card.cvv)
+      home_cc_exp_mm_select.select(partner.credit_card.expire_month)
+      home_cc_exp_yy_select.select(partner.credit_card.expire_year)
+      home_country_select..select(partner.company_info.country)
+      home_bill_fname_tb.type_text(partner.credit_card.first_name)
+      home_bill_lname_tb.type_text(partner.credit_card.last_name)
+      home_bill_company_tb.type_text(partner.company_info.name)
+      home_bill_addr1_tb.type_text(partner.company_info.address)
+      home_bill_city_tb.type_text(partner.company_info.city)
+      if partner.company_info.country.eql?("United States")
+        home_bill_state_select.select(partner.company_info.state_abbrev)
       else
-        # for mozy home, we have to fill the entire form out
-        home_cc_acct_num_tb.type_text(partner.credit_card.number)
-        home_cc_cvv_tb.type_text(partner.credit_card.cvv)
-        home_cc_exp_mm_select.select(partner.credit_card.expire_month)
-        home_cc_exp_yy_select.select(partner.credit_card.expire_year)
-        home_country_select..select(partner.company_info.country)
-        home_bill_fname_tb.type_text(partner.credit_card.first_name)
-        home_bill_lname_tb.type_text(partner.credit_card.last_name)
-        home_bill_company_tb.type_text(partner.company_info.name)
-        home_bill_addr1_tb.type_text(partner.company_info.address)
-        home_bill_city_tb.type_text(partner.company_info.city)
-        if partner.company_info.country.eql?("United States")
-            home_bill_state_select.select(partner.company_info.state_abbrev)
-          else
-            home_bill_state_tb.type_text(partner.company_info.state)
-          end
-        home_bill_post_tb.type_text(partner.company_info.zip)
-        home_bill_phone_tb.type_text(partner.company_info.phone)
-        home_bill_email_tb.eql?(partner.admin_info.email)
-        end
+        home_bill_state_tb.type_text(partner.company_info.state)
+      end
+      home_bill_post_tb.type_text(partner.company_info.zip)
+      home_bill_phone_tb.type_text(partner.company_info.phone)
+      home_bill_email_tb.eql?(partner.admin_info.email)
+    end
 
+
+    # code for the billing / payment page
+    #
+    def billing_info_fill_out(partner)
+      billing_summary_info_get
+      # code for filling in billing / cc payment info
+      #   based on home or pro type of acct
+      #
+      if partner.partner_info.type.eql?("MozyPro")
+        pro_fill_out(partner)
+      else
+        home_fill_out(partner)
+      end
       # submission
       submit_btn.click
     end

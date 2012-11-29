@@ -169,7 +169,7 @@ Feature: Add a new user through phoenix
     Then the user is successfully added.
     And their account is activated.
 
-  @TC.13485 @smoke @year @IE @snap
+  @TC.13485 @smoke @year @IE
   Scenario: 13485 Add a new IE yearly basic MozyHome user
     When I add a phoenix Home user:
       | period  | base plan  | country |

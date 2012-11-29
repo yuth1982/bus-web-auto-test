@@ -20,6 +20,7 @@ module Phoenix
   element(:reg_dl_win_btn, xpath: "//input[@value='Download for Win']")
   element(:reg_dl_mac_btn, xpath: "//input[@value='Download for Mac']")
   element(:reg_dl_mac2_btn, xpath: "(//input[@value='Download for Mac'])[2]")
+  element(:logout_btn, xpath: "//a[text()='LOG OUT']")
   #element(:go_to_acct_lnk, link: "Go to Account")
     #
     #	Public : reg complete banner visible
@@ -61,12 +62,17 @@ module Phoenix
       reg_dl_mac2_btn.present?
     end
 
+    def logout
+      logout_btn.click
+    end
+
     def reg_complete(partner)
       reg_comp_banner_present
       navigate_to_link("Go to Account")
       find_link("Don't Show This Again").click
       # couldn't get reference for admin_console_page.close_stash_invitation_popup correct, used above as temporary
       partner_created(partner)
+      logout
     end
 
     def home_success(partner)
@@ -79,6 +85,7 @@ module Phoenix
       reg_comp_banner_present
       find_link("Resend").click
       find_link("Back to Login Page").click
+      logout
     end
   end
 end

@@ -60,15 +60,17 @@ When /^I add a phoenix Home user:$/ do |user_table|
 
   # Common attributes
   @partner.subscription_period = attributes["period"]
-  case
+    case
     when attributes["period"].eql?("1")
       @partner.subscription_period = "M"
     when attributes["period"].eql?("12")
       @partner.subscription_period = "Y"
     when attributes["period"].eql?("24")
       @partner.subscription_period = "2"
-  end
+    end
 
+  # for info review
+  # puts @partner.to_s
   @phoenix_site.select_dom.select_country(@partner)
   @phoenix_site.admin_fill_out.admin_info_fill_out(@partner)
   @phoenix_site.licensing_fill_out.licensing_billing_fillout(@partner)
@@ -85,8 +87,4 @@ end
 
 Then /^the user is successfully added.$/ do
   @phoenix_site.reg_complete_pg.home_success(@partner)
-end
-
-And /^their account is activated.$/ do
-  # pending - add steps to bring up zimbra, login, search on & select email, then click on activation link
 end
