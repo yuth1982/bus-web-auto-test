@@ -25,14 +25,6 @@ module Bus
 
     element(:add_stash_to_all_link, xpath: "//a[text()='Add Stash to All Users']")
 
-    # Popup window
-    element(:popup_content_div, xpath: "//div[@class='popup-window-content']")
-    element(:close_popup_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Close']")
-    element(:continue_add_stash_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Continue']")
-    element(:buy_more_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Buy More']")
-    element(:allocate_resources_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Allocate']")
-
-
     # Public: User group details information
     #
     # Example:
@@ -98,26 +90,6 @@ module Bus
 
     def add_stash_to_all_user
       add_stash_to_all_link.click
-    end
-
-    def popup_window_content
-      popup_content_div.text
-    end
-
-    def close_popup_window
-      close_popup_btn.click
-    end
-
-    def confirm_add_stash
-      continue_add_stash_btn.click
-    end
-
-    def buy_more_resources
-      buy_more_btn.click
-    end
-
-    def allocate_resources
-      allocate_resources_btn.click
     end
   end
 end

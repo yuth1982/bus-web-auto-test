@@ -236,8 +236,8 @@ Feature: User group stash setting management
     And I navigate to List User Groups section from bus admin console page
     And I view (default user group) * user group details
     When I enable stash for all users
-    Then Add Stash to all users confirmation message should be Stash has already been enabled for all users in this user group. No changes have been made.
-    And I close add stash to all users popup window
+    Then Popup window message should be Stash has already been enabled for all users in this user group. No changes have been made.
+    And I click Close button on popup window
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -269,9 +269,9 @@ Feature: User group stash setting management
     When I navigate to List User Groups section from bus admin console page
     And I view (default user group) * user group details
     And I enable stash for all users
-    Then Add Stash to all users confirmation message should be Do you want to create a Stash for all 2 users with 20 GB total Desktop storage assigned for Stash usage?
-    When I confirm add stash to all users
-    And I refresh user group details section
+    Then Popup window message should be Do you want to create a Stash for all 2 users with 20 GB total Desktop storage assigned for Stash usage?
+    When I click Continue button on popup window
+    And I refresh User Group Details section
     Then User group users list details should be:
     | External ID | User                        | Name            | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
     |             | qa1+tc+19012+user3@mozy.com | TC.19012.3 user | Enabled | 0        | 10 GB   | none         | today   | never     |
@@ -297,8 +297,8 @@ Feature: User group stash setting management
     When I navigate to List User Groups section from bus admin console page
     And I view (default user group) * user group details
     And I enable stash for all users
-    Then Add Stash to all users confirmation message should be There is not enough storage available to add the default storage amount.
-    And I click buy more on popup window
+    Then Popup window message should be There is not enough storage available to add the default storage amount.
+    And I click Buy More button on popup window
     Then Change Plan section should be active
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
@@ -320,14 +320,14 @@ Feature: User group stash setting management
     When I navigate to List User Groups section from bus admin console page
     And I view (default user group) * user group details
     And I enable stash for all users
-    Then Add Stash to all users confirmation message should be You do not have enough storage available for the default storage entered. Use the Manage Resources panel to increase the amount of storage allocated or to purchase more storage.
-    And I click allocate on popup window
+    Then Popup window message should be You do not have enough storage available for the default storage entered. Use the Manage Resources panel to increase the amount of storage allocated or to purchase more storage.
+    And I click Allocate button on popup window
     Then Manage Resources section should be active
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19018 @BSA.2030
-  Scenario: 19018 User with a stash enabled group A should be moved to default non stash user group when I delete the user group A
+  @TC.19118 @BSA.2030
+  Scenario: 19118 User with a stash enabled group A should be moved to default non stash user group when I delete the user group A
     When I add a new MozyEnterprise partner:
       | period | users |
       | 12     | 10    |
@@ -342,24 +342,24 @@ Feature: User group stash setting management
     And I disable stash for the user group
     And I add a new user group:
       | name           |
-      | TC.19018 group |
+      | TC.19118 group |
     Then New user group should be created
-    When I transfer resources from (default user group) to TC.19018 group with:
+    When I transfer resources from (default user group) to TC.19118 group with:
       | desktop licenses | desktop quota GB |
       | 2                | 20               |
     And I add a new user:
       | name           | email                       | user group     | enable stash |
-      | TC.19018 user  | qa1+tc+19018+user1@mozy.com | TC.19018 group | yes          |
+      | TC.19118 user  | qa1+tc+19118+user1@mozy.com | TC.19118 group | yes          |
     Then New user should be created
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
       |External ID | User                        | Name          | User Group      | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      |            | qa1+tc+19018+user1@mozy.com | TC.19018 user | TC.19018 group  | Enabled | 0        | 2 GB    | none         | today   | never     |
-    When I search and delete TC.19018 group user group
-    And I refresh search list user group page
+      |            | qa1+tc+19118+user1@mozy.com | TC.19118 user | TC.19118 group  | Enabled | 0        | 2 GB    | none         | today   | never     |
+    When I search and delete TC.19118 group user group
+    And I refresh Search List User section
     Then User search results should be:
       |External ID | User                        | Name          | User Group           | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      |            | qa1+tc+19018+user1@mozy.com | TC.19018 user | (default user group) | Enabled | 0        | 2 GB    | none         | today   | never     |
+      |            | qa1+tc+19118+user1@mozy.com | TC.19118 user | (default user group) | Enabled | 0        | 2 GB    | none         | today   | never     |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 

@@ -34,7 +34,7 @@ module Bus
     section(:billing_info_section, BillingInfoSection, id: "resource-billing")
     section(:change_period_section, ChangePeriodSection, id: "resource-change_billing_period")
     section(:manage_resources_section, ManageResourcesSection, id: "resource-available_key_list")
-    section(:manage_group_resources_section, ManageGroupResourcesSection , xpath: "//div[starts-with(@id, 'resource-group_available_keys-')]")
+    section(:manage_user_group_resources_section, ManageUserGroupResourcesSection , xpath: "//div[starts-with(@id, 'resource-group_available_keys-')]")
     section(:transfer_resources_section, TransferResourcesSection, id: "resource-transfer_resources")
 
 
@@ -52,6 +52,13 @@ module Bus
 
     # Private element
     element(:stop_masquerading_link, xpath: "//a[text()='stop masquerading']")
+
+    # Popup window
+    element(:popup_content_div, xpath: "//div[@class='popup-window-content']")
+    element(:close_popup_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Close']")
+    element(:continue_add_stash_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Continue']")
+    element(:buy_more_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Buy More']")
+    element(:allocate_resources_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Allocate']")
 
     # Public: Navigate to menu item on admin console page
     # Note: if bus module is opened, menu will not be clicked
@@ -73,5 +80,24 @@ module Bus
       find_link("Don't Show This Again").click
     end
 
+    def popup_window_content
+      popup_content_div.text
+    end
+
+    def buy_more_resources
+      buy_more_btn.click
+    end
+
+    def allocate_resources
+      allocate_resources_btn.click
+    end
+
+    def close_popup_window
+      close_popup_btn.click
+    end
+
+    def continue_add_stash
+      continue_add_stash_btn.click
+    end
   end
 end

@@ -55,26 +55,6 @@ When /^I enable stash for all users$/ do
   @bus_site.admin_console_page.user_group_details_section.add_stash_to_all_user
 end
 
-Then /^Add Stash to all users confirmation message should be (.+)$/ do |message|
-  @bus_site.admin_console_page.user_group_details_section.popup_window_content.should == message
-end
-
-Then /^I close add stash to all users popup window$/ do
-  @bus_site.admin_console_page.user_group_details_section.close_popup_window
-end
-
-Then /^I confirm add stash to all users$/ do
-  @bus_site.admin_console_page.user_group_details_section.confirm_add_stash
-end
-
-Then /^I click buy more on popup window$/ do
-  @bus_site.admin_console_page.user_group_details_section.buy_more_resources
-end
-
-Then /^I click allocate on popup window$/ do
-  @bus_site.admin_console_page.user_group_details_section.allocate_resources
-end
-
-When /^I refresh user group details section$/ do
+When /^I refresh User Group Details section$/ do
   @bus_site.admin_console_page.user_group_details_section.refresh_bus_section
 end

@@ -4,20 +4,28 @@ module Bus
 
     # Private elements
     #
+    elements(:resources_general_info_spans, xpath: "//div[@class='show-details']/div/div/span[@class='label' or @class='value']")
+    elements(:resources_details_tables, css: "table.matrix_table")
+    element(:user_groups_table, css: "table.mini_table")
     element(:manage_resource_content_div, id: "resource-available_key_list-content")
-    element(:select_group, link: "Select different group")
-    #element(:group_select, id: "user_group_id")
-    #element(:submit_group_btn, xpath: "//input[@name='select_group']")
 
-    # MozyPro
-    element(:change_link, xpath: "//span[starts-with(@id, 'allocated_')]//a[text()='Change']")
-    element(:quota_tb, id: "quota")
-    element(:assign_storage_btn, css: "input[name='assign_storage']")
-    element(:message_div, xpath: "//div[@id='resource-available_key_list-errors']/ul") #Quota changed.
+    # Batch key assignment
+    element(:batch_key_assignment_link, xpath: "//a[text()='Perform batch key assignment']")
+    element(:batch_key_assignment_div, xpath: "//div[starts-with(@id, 'resource-available_key_list-batch_form-')]")
 
+    # Quota changed message
+    element(:message_div, xpath: "//div[@id='resource-available_key_list-errors']/ul")
 
-    elements(:general_info_span, xpath: "//div[@id='resource-available_key_list-content']/div[2]/div/div/span[@class='value']")
-
+    # Public: User group general information
+    #
+    # Example
+    #   @bus_site.admin_console_page.manage_resources_section.resources_general_info_hash
+    #
+    # Returns hash
+    def resources_general_info_hash
+      array = resources_general_info_spans.map{ |span| span.text }
+      Hash[*array]
+    end
 
     # Public: Find and click link by user group name
     #         Can be used to assign resources per user group in assign keys or manage resources
@@ -26,73 +34,120 @@ module Bus
     # @param [string] group_name
     #
     # Example
-    #  @bus_site.admin_console_page.manage_resources_section.select_group(user_group)
+    #  @bus_site.admin_console_page.manage_resources_section.select_group('Test user group')
     #
     # @return nothing
     def select_group(group_name)
-      #group_select.select(group_name)
-      #submit_group_btn.click
       find_link(group_name).click
     end
 
-    # Public: Assign a MozyEnterprise key to a user and send email
+    # Public: Allocate desktop resources for MozyPro partner
     #
-    # @param [string] email
+    # @param [string] desktop_quota
     #
     # Example
-    #  @bus_site.admin_console_page.manage_resources_section.assign_mozypro_key("qa1+automation+james.omally@mozy.com")
+    #   @bus_site.admin_console_page.manage_resources_section.allocate_mozypro_desktop_quota('10')
+    #
+    # Returns nothing
+    def allocate_mozypro_desktop_quota(desktop_quota)
+      desktop_span_1 = find(:id, "allocated_13")
+      desktop_span_2 = find(:id, "allocated_change_13")
+      desktop_span_1.find(:xpath, "//a[text()='Change']").click
+      desktop_span_2.find(:id, "quota").type_text(desktop_quota)
+      desktop_span_2.find(:css, "input[value='Submit']").click
+    end
+
+    # Public: Allocate server resources for MozyPro partner
+    #
+    # @param [string] server_quota
+    #
+    # Example
+    #   @bus_site.admin_console_page.manage_resources_section.allocate_mozypro_server_quota('10')
+    #
+    # Returns nothing
+    def allocate_mozypro_server_quota(server_quota)
+      server_span_1 = find(:id, "allocated_14")
+      server_span_2 = find(:id, "allocated_change_14")
+      server_span_1.find_link('Change').click
+      server_span_2.find(:id, "quota").type_text(server_quota)
+      server_span_2.find(:css, "input[value='Submit']").click
+    end
+
+    # Public: Resources storage details table headers text
+    #
+    # Example
+    #  @bus_site.admin_console_page.manage_resources_section.storage_details_table_headers
+    #
+    # Returns string array
+    def storage_details_table_headers
+      resources_details_tables[0].headers_text
+    end
+
+    # Public: Resources storage details table rows text
+    #
+    # Example
+    #  @bus_site.admin_console_page.manage_resources_section.storage_details_table_rows
+    #
+    # Returns string array
+    def storage_details_table_rows
+      resources_details_tables[0].rows_text
+    end
+
+    # Public: Resources license details table headers text
+    #
+    # Example
+    #  @bus_site.admin_console_page.manage_resources_section.license_details_table_headers
+    #
+    # Returns string array
+    def license_details_table_headers
+      resources_details_tables[1].headers_text
+    end
+
+    # Public: Resources license details table rows text
+    #
+    # Example
+    #  @bus_site.admin_console_page.manage_resources_section.license_details_table_rows
+    #
+    # Returns string array
+    def license_details_table_rows
+      resources_details_tables[1].rows_text
+    end
+
+    # Public: User groups table headers text
+    #
+    # Example
+    #  @bus_site.admin_console_page.manage_resources_section.user_groups_table_headers
+    #
+    # Returns string array
+    def user_groups_table_headers
+      user_groups_table.headers_text
+    end
+
+    # Public: User groups table rows text
+    #
+    # Example
+    #  @bus_site.admin_console_page.manage_resources_section.user_groups_table_rows
+    #
+    # Returns string array
+    def user_groups_table_rows
+      user_groups_table.rows_text
+    end
+
+    # Public: Batch Assign a MozyPro keys
+    #
+    # @params [string] email_quota, [string] type, [bool] send_email
+    #
+    # Example
+    #  @bus_site.admin_console_page.manage_resources_section.assign_mozypro_key('test_email@mozy.com,1','Desktop')
     #
     # @return nothing
-    def assign_mozypro_key(email, send_email = true)
-      find(:xpath, "//input[starts-with(@id,'key_email_')]").type_text(email)
-      send_email_cb.check if send_email
-      assign_keys_btn.click
-    end
-
-    # Public: Allocate a new quota to a MozyPro partner
-    #         upgrade or downgrade
-    #
-    # @param [integer] new_quota
-    #
-    # Example
-    #  @bus_site.admin_console_page.manage_resources_section.assign_mozypro_storage(250)
-    #
-    # @return nothing
-    def assign_mozypro_storage(new_quota)
-      change_link.click
-      quota_tb.type_text(new_quota)
-      assign_storage_btn.click
-      sleep 5
-    end
-
-    # Public: Returns the mozypro total storage
-    #
-    # Example
-    #  @bus_site.admin_console_page.manage_resources_section.mozypro_total_storage.should == total unless total.empty?
-    #
-    # @return [String]
-    def mozypro_total_storage
-      general_info_span[0].text
-    end
-
-    # Public: Returns the mozypro unallocated storage
-    #
-    # Example
-    #  @bus_site.admin_console_page.manage_resources_section.mozypro_unallocated_storage.should == unallocated unless unallocated.empty?
-    #
-    # @return [String]
-    def mozypro_unallocated_storage
-      general_info_span[1].text
-    end
-
-    # Public: Returns the mozypro server enabled status(yes, no)
-    #
-    # Example
-    #  @bus_site.admin_console_page.manage_resources_section.mozypro_enable_server.should == add_on unless enable_server.empty?
-    #
-    # @return [String]
-    def mozypro_enable_server
-      general_info_span[2].text
+    def batch_assign_mozypro_keys(email_quota, type, send_email = false)
+      batch_key_assignment_link.click
+      batch_key_assignment_div.find(:id, "emails").type_text(email_quota)
+      batch_key_assignment_div.find(:id, "license_type").select(type)
+      batch_key_assignment_div.find(:id, "send_emails").check if send_email
+      batch_key_assignment_div.find(:css, "input[name='batch_assignment']").click
+      wait_until{ batch_key_assignment_link.visible? }
     end
 
     # Public: Messages for manage resources actions

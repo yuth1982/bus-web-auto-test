@@ -69,8 +69,14 @@ Feature: Bus Smoke Test
       | user group  | server licenses | server quota | desktop licenses | desktop quota |
       | test group  | 1               | 10           | 1                | 10            |
     Then New user should be created
-    When I assign a key in user group test group with email qa1+test+user+group@mozy.com
-    Then MozyEnterprise key should be assigned
+    And I batch assign MozyEnterprise partner Server keys to (default user group) user group with send emails:
+      | email                         | quota |
+      | qa1+test+user+group@mozy.com  | 5     |
+    And I refresh Manage User Group Resources section
+    And User group license details table should be:
+      |         | Active | Assigned | Unassigned |
+      | Desktop | 0      | 0        | 13         |
+      | Server  | 0      | 1        | 197        |
     When I change account subscription up to 3-year billing period
     Then Subscription changed message should be Your account has been changed to 3-year billing.
     When I log in aria admin console as administrator

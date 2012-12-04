@@ -35,6 +35,6 @@ When /^I view user details by (.+)$/ do |user|
   @bus_site.admin_console_page.search_list_users_section.view_user_details(user)
 end
 
-When /^I refresh search list user group page$/ do
+When /^I refresh Search List User section$/ do
   @bus_site.admin_console_page.search_list_users_section.refresh_bus_section
 end

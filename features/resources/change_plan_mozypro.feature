@@ -112,7 +112,7 @@ Feature: Change plan
       | 1      | 1 TB      |
     Then New partner should be created
     When I act as newly created partner account
-    And I assign MozyPro allocated quota to 250 GB
+    And I allocate 250 GB Desktop quota to MozyPro partner
     Then MozyPro resource quota should be changed
     When I change MozyPro account plan to:
       | base plan |
@@ -150,7 +150,7 @@ Feature: Change plan
       | 12     | 500 GB    | United Kingdom |
     Then New partner should be created
     When I act as newly created partner account
-    And I assign MozyPro allocated quota to 250 GB
+    And I allocate 250 GB Desktop quota to MozyPro partner
     Then MozyPro resource quota should be changed
     When I change MozyPro account plan to:
       | base plan |
@@ -188,7 +188,7 @@ Feature: Change plan
       | 24     | 2 TB      | Ireland |
     Then New partner should be created
     When I act as newly created partner account
-    And I assign MozyPro allocated quota to 1024 GB
+    And I allocate 1024 GB Desktop quota to MozyPro partner
     Then MozyPro resource quota should be changed
     When I change MozyPro account plan to:
       | base plan |
