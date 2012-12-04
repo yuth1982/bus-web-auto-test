@@ -54,8 +54,8 @@ Feature: Bus Smoke Test
       | users | server plan | server add-on |
       | 15    | 500 GB      | 5             |
     When I add a new user group:
-      | name       | default server quota | default desktop quota |
-      | test group | 20                   | 10                    |
+      | name       | server quota | desktop quota |
+      | test group | 20           | 10            |
     Then New user group should be created
     When I transfer resources from (default user group) to test group with:
     | server licenses | server quota GB | desktop licenses | desktop quota GB |
@@ -63,8 +63,8 @@ Feature: Bus Smoke Test
     Then Resources should be transferred
     When I view newly created user group name user group details
     Then User group details should be:
-      | ID:     | External ID: | Billing code: | Status:         | Available Keys: | Available Quota: | Default quota for new installs:             | Default user group: |
-      | @xxxxxx | (change)     | (change)      | Active (change) | 4               | 40 GB            | 10 GB (Desktop) and 20 GB (Server) (change) | No (make default)   |
+      | ID:     | External ID: | Billing code: | Available Keys: | Available Quota: | Default quota for new installs:             | Default user group: |
+      | @xxxxxx | (change)     | (change)      | 4               | 40 GB            | 10 GB (Desktop) and 20 GB (Server) (change) | No (make default)   |
     When I add a new user:
       | user group  | server licenses | server quota | desktop licenses | desktop quota |
       | test group  | 1               | 10           | 1                | 10            |

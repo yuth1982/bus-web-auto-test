@@ -8,6 +8,7 @@ module Bus
     element(:delete_user_group_link, xpath: "//a[text()='Delete User Group']")
     elements(:group_details_dls, xpath: "//div/dl")
     element(:stash_info_dl, xpath: "//form[starts-with(@id,'user_groups-stash-form')]")
+    add_existence_checker(:stash_info_dl, xpath: "//form[starts-with(@id,'user_groups-stash-form')]")
 
     elements(:user_group_tables, css: "table.table-view")
 
@@ -41,8 +42,11 @@ module Bus
     def group_details_hash
       has_change_name_link?
       output = group_details_dls.map{ |dl| dl.dt_dd_elements_text }.delete_if { |k| k.empty? }
-      stash = stash_info_dl.dt_dd_elements_text.delete_if{ |pair| pair.first.empty? }.map{ |row| [row.first, row[1..-1].join(' ')] }
-      Hash[*(output + stash).flatten]
+      if has_stash_info_dl?
+        stash = stash_info_dl.dt_dd_elements_text.delete_if{ |pair| pair.first.empty? }.map{ |row| [row.first, row[1..-1].join(' ')] }
+        output = output + stash
+      end
+      Hash[*output.flatten]
     end
 
     def users_list_table_headers

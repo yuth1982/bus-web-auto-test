@@ -26,6 +26,7 @@ module Bus
     # General information
     elements(:general_info_dls, xpath: "//div/dl")
     element(:stash_info_dl, xpath: "//div/dl/form")
+    add_existence_checker(:stash_info_dl, xpath: "//div/dl/form")
 
     # Contact information
     elements(:contact_info_dls, xpath: "//div/form/dl")
@@ -83,8 +84,10 @@ module Bus
     # Returns hash table
     def general_info_hash
       output = general_info_dls[0].dt_dd_elements_text + general_info_dls[1].dt_dd_elements_text
-      stash = stash_info_dl.dt_dd_elements_text.delete_if{ |pair| pair.first.empty? }.map{ |row| [row.first, row[1..-1].join(' ')] }
-      output = output + stash
+      if has_stash_info_dl?
+        stash = stash_info_dl.dt_dd_elements_text.delete_if{ |pair| pair.first.empty? }.map{ |row| [row.first, row[1..-1].join(' ')] }
+        output = output + stash
+      end
       Hash[*output.flatten]
     end
 
