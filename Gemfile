@@ -14,4 +14,6 @@ gem "net-ldap", "=0.3.1"
 gem "chronic", "=0.8.0"
 gem "activesupport", "=3.2.8"
 gem "tzinfo", "=0.3.35"
+gem 'net-scp', '=1.0.4'
+gem 'diffy', '=2.1.0'
 

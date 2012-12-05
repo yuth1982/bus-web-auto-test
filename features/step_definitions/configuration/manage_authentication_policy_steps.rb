@@ -13,7 +13,7 @@ When /^I select Horizon Manager with organization name (.*)$/ do |org_name|
 end
 
 When /^I Test Connection for (Horizon Manager|AD)$/ do |provider|
-  case provider 
+  case provider
   when "Horizon Manager"
     @bus_site.admin_console_page.authentication_policy_section.test_connection_horizon
   when "AD"
@@ -102,10 +102,10 @@ When /^I input server connection settings$/ do |table|
   # table is a | ad01.qa5.mozyops.com | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com| QAP@SSw0rd    |
   server = table.hashes.first
   @connection_info = Bus::DataObj::ConnectionInfo.new
-  @connection_info.server_host = server['Server Host']
+  @connection_info.server_host = server['Server Host'] == '@host_address' ? Forgery::Internet.ip_v4 : server['Server Host']
   @connection_info.ssl_cert = server['SSL Cert']
   @connection_info.protocol = (server['Protocol'] == 'No SSL' ? 'false' : server['Protocol'].downcase)
-  @connection_info.port = server['Port']
+  @connection_info.port = server['Port'] == '@port' ? rand(1..65535) : server['Port']
   @connection_info.base_dn = server['Base DN']
   @connection_info.bind_user = server['Bind Username']
   @connection_info.bind_password = server['Bind Password']
@@ -149,7 +149,6 @@ When /^I input SAML authentication information$/ do |table|
   @saml_info.auth_url = auth['URL']
   @saml_info.saml_endpoint = auth['Endpoint']
   @saml_info.saml_cert = auth['Certificate']
-  @saml_info.encrypted = (auth['Encrypted'] == 'No') ? false : true
   @bus_site.admin_console_page.authentication_policy_section.fillin_saml_settings(@saml_info)
 end
 
@@ -220,7 +219,7 @@ When /^The selected (.+) option is (.+)$/ do |type, option|
 end
 
 When /^The save error message should be:$/ do |table|
-  @bus_site.admin_console_page.authentication_policy_section.result_message.should == "#{table.raw[0][0]}\n#{table.raw[1][0]}"
+  @bus_site.admin_console_page.authentication_policy_section.result_message.should include "#{table.raw[0][0]}\n#{table.raw[1][0]}"
 end
 
 When /^I click the sync now button$/ do
@@ -352,4 +351,10 @@ Then /^I should see (Mozy|LDAP) auth selected$/ do |provider|
 end
 When /^I see the response code is (\d+)$/ do |code|
   @bus_site.admin_console_page.authentication_policy_section.response_code.should == code
+end
+When /^I get the full whitelist into (.+)$/ do |file|
+  @bus_site.admin_console_page.authentication_policy_section.get_whitelist(file)
+end
+Then /^The new Server Host and Port are added to the whitelist according to (.+) and (.+)$/ do |old_file, new_file|
+  @bus_site.admin_console_page.authentication_policy_section.host_port_added(old_file, new_file)[0].should == [@connection_info.server_host, @connection_info.port.to_s]
 end

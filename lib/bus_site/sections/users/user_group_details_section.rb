@@ -9,8 +9,8 @@ module Bus
     elements(:group_details_dls, xpath: "//div/dl")
     element(:stash_info_dl, xpath: "//form[starts-with(@id,'user_groups-stash-form')]")
     add_existence_checker(:stash_info_dl, xpath: "//form[starts-with(@id,'user_groups-stash-form')]")
-
     elements(:user_group_tables, css: "table.table-view")
+    element(:loading_link, xpath: "//a[contains(@onclick,'toggle_module')]")
 
     # Stash section
     element(:change_stash_link, xpath: "//a[contains(@onclick,'change_stash')]")
@@ -53,6 +53,10 @@ module Bus
       delete_user_group_link.click
       alert_accept
       wait_until{ !has_delete_user_group_link? }
+    end
+
+    def stop_spining
+      wait_until{ loading_link[:class] != "title loading" }
     end
 
     # Public: Enable stash for a partner

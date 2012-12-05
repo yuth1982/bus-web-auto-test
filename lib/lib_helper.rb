@@ -13,6 +13,7 @@ require 'json'
 require 'time'
 require 'active_support/time'
 require 'chronic'
+require 'diffy'
 
 
 require 'capybara/cucumber'
@@ -23,6 +24,7 @@ require 'file_helper'
 require 'zimbra_helper'
 require 'db_helper'
 require 'ldap_helper'
+require 'ssh_helper'
 
 require 'data_obj/data_obj_helper'
 require 'site_helper/site_helper'
@@ -38,6 +40,7 @@ include Zimbra::Inbox
 include FileHelper
 include DBHelper
 include LDAPHelper
+include SSHHelper
 
 
 

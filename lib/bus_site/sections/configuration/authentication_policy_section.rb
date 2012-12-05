@@ -29,7 +29,6 @@ module Bus
     element(:data_saml_connection_client_endpoint, id: "data_saml_connection_client_endpoint")
     element(:data_saml_connection_signing_key, id: "data_saml_connection_signing_key")
     element(:saml_save_btn, xpath: "//div[@id='authentication_policies-edit-content']//input[@class='button']")
-    element(:data_saml_connection_encryption, id: "data_saml_connection_encryption")
     element(:connection_settings_tab, "//div[@id='authentication_policies-edit-tabs']/ul[1]/li[1]")
     element(:sync_rules_tab, xpath: "//div[@id='authentication_policies-edit-tabs']/ul[1]/li[2]")
     element(:attribute_mapping_tab, xpath: "//div[@id='authentication_policies-edit-tabs']/ul[1]/li[3]")
@@ -40,6 +39,7 @@ module Bus
     element(:options_suspend_missing_users, id: 'options_suspend_missing_users')
     element(:scheduled_sync_time, id: 'data_sync_options_schedule')
     element(:fixed_attribute, xpath: "//ul[@class='tab-panes']/li[3]//div[4]/div/input")
+    element(:loading_link, xpath: "//a[contains(@onclick,'toggle_module')]")
 
     # Public: Select authentication provider
     #
@@ -99,10 +99,12 @@ module Bus
     end
 
     def test_connection_ad
+      wait_until{ test_ad_connection[:class] != "disabled_for_spin" }
       test_ad_connection.click
     end
 
     def test_connection_result
+      wait_until{ loading_link[:class] != "title loading" }
       authentication_policies_edit_errors.text
     end
 
@@ -210,6 +212,7 @@ module Bus
     # Public: The message show after saving changes
     #
     def result_message
+      wait_until{ loading_link[:class] != "title loading" }
       authentication_policies_edit_errors.text
     end
 
@@ -415,14 +418,6 @@ module Bus
       data_saml_connection_client_endpoint.set(client_endpoint)
     end
 
-    def check_encrypt_saml(check)
-      if check
-        data_saml_connection_encryption.check
-      else
-        data_saml_connection_encryption.uncheck
-      end
-    end
-
     def fillin_certificate(cert)
       data_saml_connection_signing_key.set(cert)
     end
@@ -431,7 +426,6 @@ module Bus
       fillin_auth_url(saml_info.auth_url)
       fillin_client_endpoint(saml_info.saml_endpoint)
       fillin_certificate(saml_info.saml_cert)
-      check_encrypt_saml(saml_info.encrypted)
     end
 
     def saml_info
@@ -439,7 +433,6 @@ module Bus
       saml_info.auth_url = data_saml_connection_web_endpoint.value
       saml_info.saml_endpoint = data_saml_connection_client_endpoint.value
       saml_info.saml_cert = data_saml_connection_signing_key.value
-      saml_info.encrypted = data_saml_connection_encryption.value
       saml_info
     end
     # Public: Select protocol to connect to LDAP server
@@ -498,8 +491,30 @@ module Bus
       data_ad_connection_cert.visible?
     end
 
+    # selenium does not support this, use webkit
     def response_code
       status_code
+    end
+
+    def get_whitelist file
+      SSHHelper.download(SSHHelper::SOCKD_CONF, "#{FileHelper.default_test_data_path}/#{file}")
+    end
+
+    def host_port_added old_file, new_file
+      host_port = []
+      Diffy::Diff.new("#{FileHelper.default_test_data_path}/#{new_file}", "#{FileHelper.default_test_data_path}/#{old_file}", :source => 'files').each do |line|
+        case line
+          when /^\+/
+            #to do
+          when /^-/
+            if line =~ /to/
+              host = /[\d\.]+/.match(line)
+              port = /[\d]+$/.match(line)
+              host_port << [host[0], port[0]]
+            end
+        end
+      end
+      host_port
     end
   end
 end

@@ -68,9 +68,9 @@ Feature: Manage Horizon related settings
       | Server Host          | Protocol | SSL Cert | Port | Base DN                   | Bind Username         | Bind Password |
       | 10.34.9.             | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com| QAP@SSw0rd    |
     And I save the changes
-    Then Authentication Policy has been updated successfully
-    When I Test Connection for AD
-    Then AD server test connection message should be Test failed. Error: Could not connect to the AD server. Reason: Host unreachable
+    Then The save error message should be:
+      | Save failed  |
+      | Invalid data.|
 
   @TC.17480
   Scenario: Port input should reject invalid parameters
@@ -115,9 +115,9 @@ Feature: Manage Horizon related settings
     And I click SAML Authentication tab
     And I clear SAML Authentication information exists
     And I input SAML authentication information
-      | URL                        | Endpoint                    | Certificate      | Encrypted |
-      |sso.connect.pingidentity.com|sso.connect.pingidentity.com | abcdefghijkl     | No        |
+      | URL                        | Endpoint                    | Certificate      |
+      |sso.connect.pingidentity.com|sso.connect.pingidentity.com | abcdefghijkl     |
     And I save the SAML Authentication information
     Then SAML authentication information should include
-      | URL                        | Endpoint                    | Certificate      | Encrypted |
-      |sso.connect.pingidentity.com|sso.connect.pingidentity.com | abcdefghijkl     | No        |
+      | URL                        | Endpoint                    | Certificate      |
+      |sso.connect.pingidentity.com|sso.connect.pingidentity.com | abcdefghijkl     |
