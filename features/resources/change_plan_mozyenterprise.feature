@@ -26,8 +26,8 @@ Feature:
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19239 @change_plan
-  Scenario: 19239 MozyEnterprise 500 GB server add-on biennially to 1 TB add-on
+  @TC.19262 @change_plan
+  Scenario: 19262 MozyEnterprise 500 GB server add-on biennially to 1 TB add-on
     When I add a new MozyEnterprise partner:
       | period | users | server plan |
       | 24     | 10    | 500 GB      |
@@ -135,7 +135,7 @@ Scenario: 19263 MozyEnterprise 1 TB server add-on 3 years to 2 TB add-on
       | 15    | 10 GB       |
     Then Change plan charge summary should be:
       | Description                                | Amount      |
-      | Charge for upgraded plans                  | $470.90     |
+      | Charge for upgraded plans                  | $628.78     |
     And the MozyEnterprise account plan should be changed
     And MozyEnterprise new plan should be:
       | users | server plan |
