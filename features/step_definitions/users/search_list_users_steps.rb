@@ -19,11 +19,11 @@ Then /^User search results should be:$/ do |results_table|
   @bus_site.admin_console_page.search_list_users_section.search_results_table_rows.should == results_table.rows
 end
 
-When /^The users table should be:$/ do |table|
+When /^Synced users table should be:$/ do |users_table|
   header = @bus_site.admin_console_page.search_list_users_section.search_results_table_headers
   rows = @bus_site.admin_console_page.search_list_users_section.search_results_table_rows
-  header[1..3].should == table.headers
-  rows.collect { |row| row[1..3]}.should == table.rows
+  header[1..3].should == users_table.headers
+  rows.collect { |row| row[1..3]}.should == users_table.rows
 end
 
 When /^The users table should be empty$/ do

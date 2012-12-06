@@ -26,7 +26,7 @@ module Bus
       partner_filter_select.select(filter)
       include_sub_partners_cb.check if include_sub_partners
       search_partner_btn.click
-      has_clear_search_link?   # wait until clear search link appears
+      wait_until_bus_section_load
     end
 
     # Public: Search results table header row text

@@ -217,15 +217,19 @@ module Bus
       base_plan_id = base_plan_select.value
 
       #{base plan id}_add_on_plan_check_box_1 is stash beta grant id
-      stash_grant_id = find_by_id("#{base_plan_id}_add_on_plan_check_box_1").value
-      find_by_id("#{base_plan_id}_add_on_plan_check_box_#{stash_grant_id}").check if partner.has_stash_grant_plan
+      if partner.has_stash_grant_plan
+        stash_grant_id = find_by_id("#{base_plan_id}_add_on_plan_check_box_1").value
+        find_by_id("#{base_plan_id}_add_on_plan_check_box_#{stash_grant_id}").check
+      end
 
       #{base plan id}_add_on_plan_check_box_2 is serer plan id
-      server_plan_id = find_by_id("#{base_plan_id}_add_on_plan_check_box_2").value
-      find_by_id("#{base_plan_id}_add_on_plan_check_box_#{server_plan_id}").check if partner.has_server_plan
+      if partner.has_server_plan
+        server_plan_id = find_by_id("#{base_plan_id}_add_on_plan_check_box_2").value
+        find_by_id("#{base_plan_id}_add_on_plan_check_box_#{server_plan_id}").check
+      end
 
       # storage add on option for base plan >= 1 TB
-      if partner.storage_add_on != 0
+      if partner.storage_add_on.to_i != 0
         add_on = find(:xpath, "//input[starts-with(@id,'#{base_plan_id}')][3]")
         add_on.clear_value
         add_on.type_text(partner.storage_add_on)
@@ -274,12 +278,16 @@ module Bus
       end
 
       #{base plan id}_add_on_plan_check_box_1 is stash beta grant id
-      stash_grant_id = find_by_id("#{base_plan_id}_add_on_plan_check_box_1").value
-      find_by_id("#{base_plan_id}_add_on_plan_check_box_#{stash_grant_id}").check if partner.has_stash_grant_plan
+      if partner.has_stash_grant_plan
+        stash_grant_id = find_by_id("#{base_plan_id}_add_on_plan_check_box_1").value
+        find_by_id("#{base_plan_id}_add_on_plan_check_box_#{stash_grant_id}").check
+      end
 
       #{base plan id}_add_on_plan_check_box_2 is serer plan id
-      server_plan_id = find_by_id("#{base_plan_id}_add_on_plan_check_box_2").value
-      find_by_id("#{base_plan_id}_add_on_plan_check_box_#{server_plan_id}").check if partner.has_server_plan
+      if partner.has_server_plan
+        server_plan_id = find_by_id("#{base_plan_id}_add_on_plan_check_box_2").value
+        find_by_id("#{base_plan_id}_add_on_plan_check_box_#{server_plan_id}").check
+      end
 
       # Num of storage add ons
       if partner.reseller_add_on_quota.to_i > 0

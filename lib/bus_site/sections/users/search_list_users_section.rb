@@ -20,7 +20,7 @@ module Bus
       search_user_tb.type_text(keywords)
       user_filter_select.select(filter)
       search_user_btn.click
-      has_clear_search_link?
+      wait_until_bus_section_load
     end
 
     # Public: Search results table header row text
@@ -56,11 +56,6 @@ module Bus
     # Return search results table body rows text array
     def view_user_details(user)
       find_link(user).click
-    end
-
-    def refresh
-      refresh_link.click
-      sleep 6
     end
   end
 end

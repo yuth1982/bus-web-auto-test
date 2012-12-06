@@ -71,15 +71,15 @@ module SiteHelper
     end
 
     # Public: Refresh bus admin console section
-    # This method is only for bus admin console pages
+    #
+    # Example:
+    #   @bus_site.admin_console_page.refresh_bus_section
     #
     # Returns nothing
     def refresh_bus_section
-      self.root_element.find(:xpath, "//div[@id='#{self.root_element[:id]}']//img[@alt='Refresh']").click
-      loading = self.root_element.find(:xpath, "//div[@id='#{self.root_element[:id]}']//a[contains(@onclick,'toggle_module')]")
-      wait_until{
-        loading[:class].match(/loading/).nil?
-      }
+      root_element.find(:xpath, "h2/a[contains(@onclick,'refresh_module')]").click
+      loading = root_element.find(:xpath, "h2/a[contains(@onclick,'toggle_module')]")
+      wait_until{ loading[:class].match(/loading/).nil? }
       # I found automation is still too faster, I need force to wait until table is loaded
       # Possible refactor here
       sleep 2

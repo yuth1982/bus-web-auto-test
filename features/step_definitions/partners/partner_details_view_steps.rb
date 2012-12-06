@@ -26,7 +26,6 @@ When /^I get the partner_id$/ do
 end
 
 Then /^Partner general information should be:$/ do |details_table|
-  @bus_site.admin_console_page.partner_details_section.has_delete_partner_link?
   actual = @bus_site.admin_console_page.partner_details_section.general_info_hash
   expected = details_table.hashes.first
 
@@ -67,7 +66,6 @@ end
 # | Company Type: | Users: | Contact Address: | Contact City: | Contact State: | Contact ZIP/Postal Code: |
 # | Contact Country: | Phone: | Industry: | # of employees: | Contact Email: | Vat Number: |
 Then /^Partner contact information should be:$/ do |contact_table|
-  @bus_site.admin_console_page.partner_details_section.has_delete_partner_link?
   actual = @bus_site.admin_console_page.partner_details_section.contact_info_hash
   expected = contact_table.hashes.first
 
@@ -82,24 +80,24 @@ Then /^Partner contact information should be:$/ do |contact_table|
 end
 
 Then /^Partner account attributes should be:$/ do |attributes_table|
-  @bus_site.admin_console_page.partner_details_section.has_delete_partner_link?
   @bus_site.admin_console_page.partner_details_section.account_attributes_rows.should == attributes_table.raw
 end
 
 Then /^Partner resources should be:$/ do |resources_table|
-  @bus_site.admin_console_page.partner_details_section.has_delete_partner_link?
   @bus_site.admin_console_page.partner_details_section.generic_resources_table_headers.should == resources_table.headers
   @bus_site.admin_console_page.partner_details_section.generic_resources_table_rows.should == resources_table.rows
 end
 
 Then /^Partner license types should be:$/ do |license_types_table|
-  @bus_site.admin_console_page.partner_details_section.has_delete_partner_link?
   @bus_site.admin_console_page.partner_details_section.license_types_table_headers.should == license_types_table.headers
   @bus_site.admin_console_page.partner_details_section.license_types_table_rows.should == license_types_table.rows
 end
 
+Then /^Partner stash info should be:$/ do |stash_info_table|
+  @bus_site.admin_console_page.partner_details_section.stash_info_table_rows.should == stash_info_table.rows
+end
+
 Then /^Partner internal billing should be:$/ do |internal_billing_table|
-  @bus_site.admin_console_page.partner_details_section.has_delete_partner_link?
   actual = @bus_site.admin_console_page.partner_details_section.internal_billing_table_rows
   expected = internal_billing_table.raw
 
@@ -109,18 +107,15 @@ Then /^Partner internal billing should be:$/ do |internal_billing_table|
 end
 
 Then /^Partner sub admins should be empty$/ do
-  @bus_site.admin_console_page.partner_details_section.has_delete_partner_link?
   @bus_site.admin_console_page.partner_details_section.sub_admins_text.should include("No sub-admins.")
 end
 
 Then /^Partner sub admins should be:$/ do |sub_admins_table|
-  @bus_site.admin_console_page.partner_details_section.has_delete_partner_link?
   @bus_site.admin_console_page.partner_details_section.sub_admins_table_headers.should == sub_admins_table.headers
   @bus_site.admin_console_page.partner_details_section.sub_admins_table_rows.should == sub_admins_table.rows
 end
 
 Then /^Partner billing history should be:$/ do |billing_history_table|
-  @bus_site.admin_console_page.partner_details_section.has_delete_partner_link?
   billing_history_table.map_column!('Date') do |value|
     Chronic.parse(value).strftime("%m/%d/%y")
   end

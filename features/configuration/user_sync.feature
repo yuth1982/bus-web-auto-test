@@ -228,7 +228,7 @@ Feature: User sync
       | current status       | last sync           |
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
-    Then The users table should be:
+    Then Synced users table should be:
       | User               |      Name     | User Group  |
       | dev_test3@test.com |   dev_test3   | dev         |
       | dev_test2@test.com |   dev_test2   | dev         |
@@ -272,7 +272,7 @@ Feature: User sync
       | current status       | last sync           |
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
-    Then The users table should be:
+    Then Synced users table should be:
       | User               |      Name     | User Group  |
       | qa_test3@test.com  |   qa_test3    | dev         |
       | qa_test2@test.com  |   qa_test2    | dev         |
@@ -324,7 +324,7 @@ Feature: User sync
       | current status       | last sync           |
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
-    Then The users table should be:
+    Then Synced users table should be:
       | User               |      Name     | User Group  |
       | qa_test3@test.com  |   qa_test3    | qa          |
       | qa_test2@test.com  |   qa_test2    | qa          |
@@ -379,7 +379,7 @@ Feature: User sync
       | current status       | last sync           |
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
-    Then The users table should be:
+    Then Synced users table should be:
       | User               |      Name     | User Group  |
       | qa_test3@test.com  |   qa_test3    | qa          |
       | qa_test2@test.com  |   qa_test2    | qa          |
@@ -406,7 +406,7 @@ Feature: User sync
       | current status       | last sync           |
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
-    Then The users table should be:
+    Then Synced users table should be:
       | User               |      Name     | User Group  |
       | qa_test3@test.com  |   qa_test3    | qa          |
       | qa_test2@test.com  |   qa_test2    | qa          |
@@ -460,7 +460,7 @@ Feature: User sync
       | current status       | last sync           |
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
-    Then The users table should be:
+    Then Synced users table should be:
       | User               |      Name     | User Group |
       | qa_test3@test.com  |   qa_test3    | qa         |
       | qa_test2@test.com  |   qa_test2    | qa         |
@@ -488,7 +488,7 @@ Feature: User sync
       | current status       | last sync           |
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
-    Then The users table should be:
+    Then Synced users table should be:
       | User               |      Name     | User Group  |
       | qa_test3@test.com  |   qa_test3    | (default user group)        |
       | qa_test2@test.com  |   qa_test2    | (default user group)        |
@@ -576,14 +576,14 @@ Feature: User sync
       | current status       | last sync           |
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
-    Then The users table should be:
+    Then Synced users table should be:
       | User               |      Name     | User Group  |
       | dev_test3@test.com |   dev_test3   | test_delete |
       | dev_test2@test.com |   dev_test2   | test_delete |
       | dev_test1@test.com |   dev_test1   | test_delete |
     And I search and delete test_delete user group
     And I refresh the search list user group page
-    Then The users table should be:
+    Then Synced users table should be:
       | User               |      Name     | User Group          |
       | dev_test1@test.com |   dev_test1   | (default user group)|
       | dev_test2@test.com |   dev_test2   | (default user group)|
@@ -630,7 +630,7 @@ Feature: User sync
     And I search user by:
       | keywords                   | filter |
       | auto1@client7.mozyqa.local | None   |
-    Then The users table should be:
+    Then Synced users table should be:
       | User                       | Name       | User Group  |
       | auto1@client7.mozyqa.local | auto1      | dev         |
     When I view user details by auto1@client7.mozyqa.local
@@ -686,7 +686,7 @@ Feature: User sync
     And I search user by:
       | keywords                   | filter |
       | auto1@client7.mozyqa.local | None   |
-    Then The users table should be:
+    Then Synced users table should be:
       | User                       | Name       | User Group  |
       | auto1@client7.mozyqa.local | auto1      | dev         |
     When I view user details by auto1@client7.mozyqa.local
@@ -719,7 +719,7 @@ Feature: User sync
     And I search user by:
       | keywords                   | filter |
       | auto1@client7.mozyqa.local | None   |
-    Then The users table should be:
+    Then Synced users table should be:
       | User                       | Name       | User Group  |
       | auto1@client7.mozyqa.local | auto1      | dev         |
     When I view user details by auto1@client7.mozyqa.local
@@ -749,7 +749,7 @@ Feature: User sync
     And I search user by:
       | keywords                   | filter |
       | auto1@client7.mozyqa.local | None   |
-    Then The users table should be:
+    Then Synced users table should be:
       | User                       | Name       | User Group  |
       | auto1@client7.mozyqa.local | auto1      | dev         |
     When I view user details by auto1@client7.mozyqa.local
@@ -779,7 +779,7 @@ Feature: User sync
     And I search user by:
       | keywords                   | filter |
       | auto1@client7.mozyqa.local | None   |
-    Then The users table should be:
+    Then Synced users table should be:
       | User                       | Name       | User Group  |
       | auto1@client7.mozyqa.local | auto1      | dev         |
     When I view user details by auto1@client7.mozyqa.local
@@ -819,7 +819,7 @@ Feature: User sync
     And I search user by:
       | keywords                   | filter |
       | auto1@client7.mozyqa.local | None   |
-    Then The users table should be:
+    Then Synced users table should be:
       | User                       | Name       | User Group  |
       | auto1@client7.mozyqa.local | auto1      | dev         |
     When I view user details by auto1@client7.mozyqa.local
@@ -877,7 +877,7 @@ Feature: User sync
     And I search user by:
       | keywords                   | filter |
       | auto1@client7.mozyqa.local | None   |
-    Then The users table should be:
+    Then Synced users table should be:
       | User                       | Name       | User Group  |
       | auto1@client7.mozyqa.local | auto1      | dev         |
     When I view user details by auto1@client7.mozyqa.local
@@ -906,7 +906,7 @@ Feature: User sync
     And I search user by:
       | keywords                   | filter |
       | auto1@client7.mozyqa.local | None   |
-    Then The users table should be:
+    Then Synced users table should be:
       | User                       | Name       | User Group  |
       | auto1@client7.mozyqa.local | auto1      | dev         |
     When I view user details by auto1@client7.mozyqa.local
@@ -943,7 +943,7 @@ Feature: User sync
       | current status       | last sync           |
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
-    Then The users table should be:
+    Then Synced users table should be:
       | User               |      Name     | User Group  |
       | dev_user3@test.com |   dev_user3   | dev         |
       | dev_user2@test.com |   dev_user2   | dev         |
@@ -964,7 +964,7 @@ Feature: User sync
       | current status       | last sync           |
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
-    Then The users table should be:
+    Then Synced users table should be:
       | User               |      Name     | User Group  |
       | dev_user4@test.com |   dev_user4   | dev         |
       | dev_user3@test.com |   dev_user3   | dev         |
@@ -987,7 +987,7 @@ Feature: User sync
       | current status       | last sync           |
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
-    Then The users table should be:
+    Then Synced users table should be:
       | User               |      Name     | User Group  |
       | dev_user4@test.com |   dev_user44   | dev        |
       | dev_user3@test.com |   dev_user3   | dev         |
@@ -1010,7 +1010,7 @@ Feature: User sync
       | current status       | last sync           |
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
-    Then The users table should be:
+    Then Synced users table should be:
       | User                |      Name     | User Group  |
       | dev_user4@test.com  |   dev_user44  | dev         |
       | dev_user3@test.com  |   dev_user3   | dev         |
@@ -1063,7 +1063,7 @@ Feature: User sync
       | current status       | last sync           |
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
-    Then The users table should be:
+    Then Synced users table should be:
       | User               |      Name     | User Group  |
       | dev_user4@test.com |   dev_user4   | dev         |
       | dev_user3@test.com |   dev_user3   | dev         |
@@ -1088,7 +1088,7 @@ Feature: User sync
       | current status       | last sync           |
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
-    Then The users table should be:
+    Then Synced users table should be:
       | User                |      Name     | User Group  |
       | dev_user44@test.com |   dev_user4   | dev         |
       | dev_user3@test.com  |   dev_user3   | dev         |

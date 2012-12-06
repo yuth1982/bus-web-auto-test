@@ -23,6 +23,7 @@ module Bus
     #
     # Returns hash
     def resources_general_info_hash
+      wait_until_bus_section_load
       array = resources_general_info_spans.map{ |span| span.text }
       Hash[*array]
     end

@@ -56,7 +56,8 @@ module Bus
     # Popup window
     element(:popup_content_div, xpath: "//div[@class='popup-window-content']")
     element(:close_popup_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Close']")
-    element(:continue_add_stash_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Continue']")
+    element(:continue_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Continue']")
+    element(:cancel_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Cancel']")
     element(:buy_more_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Buy More']")
     element(:allocate_resources_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Allocate']")
 
@@ -96,8 +97,12 @@ module Bus
       close_popup_btn.click
     end
 
-    def continue_add_stash
-      continue_add_stash_btn.click
+    def click_continue
+      continue_btn.click
+    end
+
+    def click_cancel
+      cancel_btn.click
     end
   end
 end

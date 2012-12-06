@@ -46,3 +46,19 @@ Then /^User backup details table should be:$/ do |details_table|
   @bus_site.admin_console_page.user_details_section.user_backup_details_table_headers.should == details_table.headers
   @bus_site.admin_console_page.user_details_section.user_backup_details_table_rows.should == details_table.rows
 end
+
+When /^I cancel delete stash container for the user$/ do
+  @bus_site.admin_console_page.user_details_section.click_delete_stash
+end
+
+When /^I delete stash container for the user$/ do
+  @bus_site.admin_console_page.user_details_section.click_delete_stash
+end
+
+When /^I refresh User Details section$/ do
+  @bus_site.admin_console_page.user_details_section.refresh_bus_section
+end
+
+When /^I send stash invitation email$/ do
+  @bus_site.admin_console_page.user_details_section.send_stash_invitation_email
+end

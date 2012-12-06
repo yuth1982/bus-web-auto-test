@@ -15,7 +15,7 @@ Then /^I should not see (.+) link$/ do |link|
 end
 
 Then /^Popup window message should be (.+)$/ do |message|
-  @bus_site.admin_console_page.popup_window_content.should == message
+  @bus_site.admin_console_page.popup_window_content.gsub("\n"," ").should == message
 end
 
 Then /^I click Close button on popup window$/ do
@@ -23,7 +23,11 @@ Then /^I click Close button on popup window$/ do
 end
 
 Then /^I click Continue button on popup window$/ do
-  @bus_site.admin_console_page.continue_add_stash
+  @bus_site.admin_console_page.click_continue
+end
+
+Then /^I click Cancel button on popup window$/ do
+  @bus_site.admin_console_page.click_continue
 end
 
 Then /^I click Buy More button on popup window$/ do
@@ -32,4 +36,20 @@ end
 
 Then /^I click Allocate button on popup window$/ do
   @bus_site.admin_console_page.allocate_resources
+end
+
+When /^I save admin console page cookies (.+) value$/ do |name|
+  cookie = @bus_site.admin_console_page.cookies.select{ |cookie| cookie[:name] == name }.first
+  @admin_console_page_cookie_value = cookie[:value]
+  puts "admin console page #{name}: #@admin_console_page_cookie_value"
+end
+
+Then /^Two cookies value should be different$/ do
+  @admin_console_page_cookie_value.should_not == @login_cookie_value
+end
+
+Then /^Admin console page cookies (.+) value should not changed/ do |name|
+  cookie = @bus_site.admin_console_page.cookies.select{ |cookie| cookie[:name] == name }.first
+  puts "admin console page #{name}: #{cookie[:value]}"
+  @admin_console_page_cookie_value.should == cookie[:value]
 end

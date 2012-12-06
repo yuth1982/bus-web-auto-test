@@ -8,9 +8,7 @@ module Bus
     element(:delete_user_group_link, xpath: "//a[text()='Delete User Group']")
     elements(:group_details_dls, xpath: "//div/dl")
     element(:stash_info_dl, xpath: "//form[starts-with(@id,'user_groups-stash-form')]")
-    add_existence_checker(:stash_info_dl, xpath: "//form[starts-with(@id,'user_groups-stash-form')]")
     elements(:user_group_tables, css: "table.table-view")
-    element(:loading_link, xpath: "//a[contains(@onclick,'toggle_module')]")
 
     # Stash section
     element(:change_stash_link, xpath: "//a[contains(@onclick,'change_stash')]")
@@ -32,7 +30,7 @@ module Bus
     #
     # Returns hash array
     def group_details_hash
-      has_change_name_link?
+      wait_until_bus_section_load
       output = group_details_dls.map{ |dl| dl.dt_dd_elements_text }.delete_if { |k| k.empty? }
       if has_stash_info_dl?
         stash = stash_info_dl.dt_dd_elements_text.delete_if{ |pair| pair.first.empty? }.map{ |row| [row.first, row[1..-1].join(' ')] }
@@ -53,10 +51,6 @@ module Bus
       delete_user_group_link.click
       alert_accept
       wait_until{ !has_delete_user_group_link? }
-    end
-
-    def stop_spining
-      wait_until{ loading_link[:class] != "title loading" }
     end
 
     # Public: Enable stash for a partner

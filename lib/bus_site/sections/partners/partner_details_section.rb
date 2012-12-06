@@ -26,7 +26,6 @@ module Bus
     # General information
     elements(:general_info_dls, xpath: "//div/dl")
     element(:stash_info_dl, xpath: "//div/dl/form")
-    add_existence_checker(:stash_info_dl, xpath: "//div/dl/form")
 
     # Contact information
     elements(:contact_info_dls, xpath: "//div/form/dl")
@@ -52,6 +51,9 @@ module Bus
     # License types table
     element(:license_types_table, xpath: "//div[starts-with(@id,'partner_license_types_')]/table")
 
+    # Stash table
+    element(:stash_info_table, xpath: "//div[@class='show-details']/table[@class='form-box2']")
+
     # Internal billing table
     element(:internal_billing_table, xpath: "//div[contains(@id,'internal-billing-content')]/table")
 
@@ -71,7 +73,6 @@ module Bus
     element(:add_stash_to_all_users_link, xpath: "//a[contains(@onclick,'enable_stash_for_all_confirm')]")
     element(:submit_delete_stash_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Submit']")
     element(:cancel_delete_stash_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Cancel']")
-    element(:stash_status_span, xpath: "//span[starts-with(@id,'partner-display-stash-status-']")
 
     # Public: General information hash
     #
@@ -83,6 +84,7 @@ module Bus
     #
     # Returns hash table
     def general_info_hash
+      wait_until_bus_section_load
       output = general_info_dls[0].dt_dd_elements_text + general_info_dls[1].dt_dd_elements_text
       if has_stash_info_dl?
         stash = stash_info_dl.dt_dd_elements_text.delete_if{ |pair| pair.first.empty? }.map{ |row| [row.first, row[1..-1].join(' ')] }
@@ -101,6 +103,7 @@ module Bus
     #
     # Returns hash table
     def contact_info_hash
+      wait_until_bus_section_load
       output = Hash[*contact_info_dls.map{ |el| el.dt_dd_elements_text.delete_if{ |pair| pair.first.empty?}}.delete_if{ |el| el.empty?}.flatten]
       output["Contact Address:"] = contact_address_tb.value
       output["Contact City:"] = contact_city_tb.value
@@ -179,6 +182,13 @@ module Bus
     # Returns array
     def license_types_table_rows
       license_types_table.rows_text
+    end
+
+    # Public: Stash info table row text
+    #
+    # Returns array
+    def stash_info_table_rows
+      stash_info_table.rows_text
     end
 
     # Public: Internal billing table row text

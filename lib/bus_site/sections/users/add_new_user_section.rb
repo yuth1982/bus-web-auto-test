@@ -40,6 +40,7 @@ module Bus
       stash_quota_tb.type_text(user.stash_quota) unless user.stash_quota.nil?
       send_stash_invite_cb.check if user.send_stash_invite
       save_changes_btn.click
+      wait_until_bus_section_load
     end
 
     # Public: Messages for add new user sections

@@ -12,13 +12,16 @@ module Bus
     element(:status_selection, xpath: "//select[@id='status']")
     element(:submit_status_btn, xpath: "//span[starts-with(@id,'user-change-status-')]//input")
 
-    # Stash
+    # Add Stash
     element(:add_stash_link, xpath: "//form[contains(@id,'stash-form-')]//a[text()='(Add Stash)']")
     element(:stash_quota_tb, xpath: "//form[contains(@id,'stash-form-')]//input[@id='quota']")
     element(:send_email_cb, xpath: "//form[contains(@id,'stash-form-')]//input[@id='send_email']")
     element(:submit_stash_btn, xpath: "//form[contains(@id,'stash-form-')]//input[@value='Submit']")
     element(:cancel_stash_btn, xpath: "//form[contains(@id,'stash-form-')]//a[text()='(cancel)']")
     element(:send_invitation_link, xpath: "//a[text()='(Send Invitation Email)']")
+
+    # Delete Stash
+    element(:delete_stash_link, xpath: "//form[starts-with(@id,'disable-stash-form-')]//a[text()='delete']")
 
     # user backup information table
     element(:user_backup_details_table, css: "table.mini-table")
@@ -47,13 +50,15 @@ module Bus
 
     # Public: Enable stash for a partner
     #
+    # @params [string] quota, bool] send_email
+    #
     # Example:
-    #   # => user_details_details_section.add_stash
+    #   @bus_site.admin_console_page.user_details_details_section.add_stash
     #
     # Returns nothing
     def add_stash(quota, send_email)
       add_stash_link.click
-      stash_quota_tb.type_text(quota) if quota.to_i >= 0
+      stash_quota_tb.type_text(quota)
       send_email_cb.check if send_email
       submit_stash_btn.click
     end
@@ -66,6 +71,21 @@ module Bus
     def stash_enabled?
       wait_until{ send_invitation_link.visible? }
       user_details_hash['Enable Stash:'].include?('Yes')
+    end
+
+    def send_stash_invitation_email
+      send_invitation_link.click
+      wait_until_bus_section_load
+    end
+
+    # Public: Click delete link
+    #
+    # Example:
+    #   @bus_site.admin_console_page.user_details_details_section.delete_stash
+    #
+    # Returns nothing
+    def click_delete_stash
+      delete_stash_link.click
     end
 
     def user_backup_details_table_headers

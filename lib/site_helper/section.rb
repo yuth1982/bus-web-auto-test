@@ -22,5 +22,15 @@ module SiteHelper
       root_element.find_link(locator)
     end
 
+    # Public: Wait until bus admin console section loaded
+    #
+    # Example:
+    #   @bus_site.admin_console_page.search_list_partner_section.wait_until_bus_section_load
+    #
+    # Returns nothing
+    def wait_until_bus_section_load
+      loading = root_element.find(:xpath, "h2/a[contains(@onclick,'toggle_module')]")
+      wait_until{ loading[:class].match(/loading/).nil? }
+    end
   end
 end

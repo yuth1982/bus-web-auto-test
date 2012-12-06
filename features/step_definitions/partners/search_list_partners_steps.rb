@@ -46,3 +46,7 @@ Then /^Partner search results should be:$/ do |results_table|
   @bus_site.admin_console_page.search_list_partner_section.search_results_table_headers.should == results_table.headers
   @bus_site.admin_console_page.search_list_partner_section.search_results_table_rows.should == results_table.rows
 end
+
+When /^I refresh Search List Partners section$/ do
+  @bus_site.admin_console_page.search_list_partner_section.refresh_bus_section
+end
