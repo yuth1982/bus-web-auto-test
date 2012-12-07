@@ -94,7 +94,7 @@ Then /^Partner license types should be:$/ do |license_types_table|
 end
 
 Then /^Partner stash info should be:$/ do |stash_info_table|
-  @bus_site.admin_console_page.partner_details_section.stash_info_table_rows.should == stash_info_table.rows
+  @bus_site.admin_console_page.partner_details_section.stash_info_table_rows.should == stash_info_table.raw
 end
 
 Then /^Partner internal billing should be:$/ do |internal_billing_table|
@@ -124,9 +124,14 @@ Then /^Partner billing history should be:$/ do |billing_history_table|
 end
 
 When /^I enable stash for the partner with (default|\d+ GB) stash storage$/ do |quota|
-    if quota == 'default'
-      @bus_site.admin_console_page.partner_details_section.enable_stash
-    else
-      @bus_site.admin_console_page.partner_details_section.enable_stash(quota)
-    end
+  if quota == 'default'
+    @bus_site.admin_console_page.partner_details_section.enable_stash(2)
+  else
+    @bus_site.admin_console_page.partner_details_section.enable_stash(quota)
+  end
+end
+
+When /^I disable stash for the partner$/ do
+  @bus_site.admin_console_page.partner_details_section.disable_stash
+  @bus_site.admin_console_page.click_submit
 end

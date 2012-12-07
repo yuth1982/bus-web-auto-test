@@ -27,7 +27,7 @@ Then /^I click Continue button on popup window$/ do
 end
 
 Then /^I click Cancel button on popup window$/ do
-  @bus_site.admin_console_page.click_continue
+  @bus_site.admin_console_page.click_cancel
 end
 
 Then /^I click Buy More button on popup window$/ do

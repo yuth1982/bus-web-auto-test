@@ -17,16 +17,12 @@ module Bus
     element(:stash_default_quota_tb, id: "stash_default_quota")
     element(:submit_stash_status_btn, xpath: "//input[contains(@onclick,'submit_stash_status')]")
     element(:add_stash_to_all_users_link, xpath: "//a[contains(@onclick,'enable_stash_for_all_confirm')]")
-
-    element(:submit_delete_stash_btn, xpath: "//div[@class='popup-window-footer']//input[@value='Submit']")
-    element(:cancel_delete_stash_btn, xpath: "//div[@class='popup-window-footer']//input[@value='Cancel']")
-
     element(:add_stash_to_all_link, xpath: "//a[text()='Add Stash to All Users']")
 
     # Public: User group details information
     #
     # Example:
-    #   # => user_group_details_section.group_details_hash
+    #   @bus_site.admin_console_page.user_group_details_section.group_details_hash
     #
     # Returns hash array
     def group_details_hash
@@ -39,10 +35,22 @@ module Bus
       Hash[*output.flatten]
     end
 
+    # Public: User list details table headers text
+    #
+    # Example:
+    #   @bus_site.admin_console_page.user_group_details_section.users_list_table_headers
+    #
+    # Returns array
     def users_list_table_headers
       user_group_tables[0].headers_text
     end
 
+    # Public: User list details table rows text
+    #
+    # Example:
+    #   @bus_site.admin_console_page.user_group_details_section.users_list_table_rows
+    #
+    # Returns array
     def users_list_table_rows
       user_group_tables[0].rows_text
     end
@@ -56,10 +64,10 @@ module Bus
     # Public: Enable stash for a partner
     #
     # Example:
-    #   # => user_group_details_section.enable_stash
+    #   @bus_site.admin_console_page.user_group_details_section.enable_stash
     #
     # Returns nothing
-    def enable_stash(quota = 2)
+    def enable_stash(quota)
       change_stash_link.click
       stash_status_select.select('Yes')
       stash_default_quota_tb.type_text(quota)
@@ -67,23 +75,27 @@ module Bus
       wait_until{ !submit_stash_status_btn.visible? }
     end
 
+    # Public: Cancel Disable stash for a partner
+    #
+    # Example:
+    #   @bus_site.admin_console_page.user_group_details_section.disable_stash(true)
+    #
+    # Returns nothing
+    def cancel_disable_stash
+      change_stash_link.click
+      cancel_stash_link.click
+    end
+
     # Public: Disable stash for a partner
     #
     # Example:
-    #   # => user_group_details_section.disable_stash(true)
+    #   @bus_site.admin_console_page.user_group_details_section.disable_stash(true)
     #
     # Returns nothing
-    def disable_stash(confirm_delete = true)
+    def disable_stash
       change_stash_link.click
       stash_status_select.select('No')
       submit_stash_status_btn.click
-      if confirm_delete
-        submit_delete_stash_btn.click
-      else
-        cancel_delete_stash_btn.click
-        cancel_stash_link.click
-      end
-      wait_until{ !submit_stash_status_btn.visible? }
     end
 
     def add_stash_to_all_user

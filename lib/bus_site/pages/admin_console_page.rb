@@ -58,6 +58,7 @@ module Bus
     element(:close_popup_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Close']")
     element(:continue_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Continue']")
     element(:cancel_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Cancel']")
+    element(:submit_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Submit']")
     element(:buy_more_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Buy More']")
     element(:allocate_resources_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Allocate']")
 
@@ -103,6 +104,10 @@ module Bus
 
     def click_cancel
       cancel_btn.click
+    end
+
+    def click_submit
+      submit_btn.click
     end
   end
 end

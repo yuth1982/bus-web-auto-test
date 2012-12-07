@@ -71,8 +71,6 @@ module Bus
     element(:stash_default_quota_tb, id: "stash_default_quota")
     element(:submit_stash_status_btn, xpath: "//input[contains(@onclick,'submit_stash_status')]")
     element(:add_stash_to_all_users_link, xpath: "//a[contains(@onclick,'enable_stash_for_all_confirm')]")
-    element(:submit_delete_stash_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Submit']")
-    element(:cancel_delete_stash_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Cancel']")
 
     # Public: General information hash
     #
@@ -201,28 +199,37 @@ module Bus
       internal_billing_table.rows_text
     end
 
+    # Public: Sub admins text
+    #
+    # Return string
     def sub_admins_text
       sub_admins_div.text
     end
 
+    # Public: Sub admins table headers text
+    #
+    # Returns array
     def sub_admins_table_headers
       sub_admins_table.headers_text
     end
 
+    # Public: Sub admins table rows text
+    #
+    # Returns array
     def sub_admins_table_rows
       sub_admins_table.rows_text
     end
 
     # Public: Billing history table headers text
     #
-    #
+    # Returns array
     def billing_history_table_headers
       billing_history_table.headers_text
     end
 
     # Public: Billing history table rows text
     #
-    #
+    # Returns array
     def billing_history_table_rows
       billing_history_table.rows_text
     end
@@ -240,7 +247,7 @@ module Bus
     # Public: Delete the current partner
     #
     # Example
-    #   partner_details_section.delete_partner("test1234")
+    #   @bus_site.admin_console_page.partner_details_section.delete_partner("test1234")
     #
     # Returns nothing
     def delete_partner(password)
@@ -255,10 +262,10 @@ module Bus
     # Public: Enable stash for a partner
     #
     # Example:
-    #   # => partner_details_section.enable_stash
+    #   @bus_site.admin_console_page.partner_details_section.enable_stash
     #
     # Returns nothing
-    def enable_stash(quota = 2)
+    def enable_stash(quota)
       change_stash_link.click
       stash_status_select.select('Yes')
       stash_default_quota_tb.type_text(quota)
@@ -267,17 +274,16 @@ module Bus
     end
 
     # Public: Disable stash for a partner
+    # Note: Still Need to click submit button on popup window
     #
     # Example:
-    #   # => partner_details_section.disable_stash
+    #   @bus_site.admin_console_page.partner_details_section.disable_stash
     #
     # Returns nothing
     def disable_stash
       change_stash_link.click
       stash_status_select.select('No')
       submit_stash_status_btn.click
-      submit_delete_stash_btn.click
-      wait_until{ !submit_stash_status_btn.visible? }
     end
 
     # Public: Create the api_key

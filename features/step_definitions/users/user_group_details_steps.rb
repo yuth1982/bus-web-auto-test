@@ -37,7 +37,7 @@ end
 
 When /^I enable stash for the user group with (default|\d+ GB) stash storage$/ do |quota|
   if quota == 'default'
-    @bus_site.admin_console_page.user_group_details_section.enable_stash
+    @bus_site.admin_console_page.user_group_details_section.enable_stash(2)
   else
     @bus_site.admin_console_page.user_group_details_section.enable_stash(quota)
   end
@@ -45,10 +45,12 @@ end
 
 When /^I disable stash for the user group$/ do
   @bus_site.admin_console_page.user_group_details_section.disable_stash
+  @bus_site.admin_console_page.click_submit
+  @bus_site.admin_console_page.user_group_details_section.wait_until_bus_section_load
 end
 
 When /^I cancel disable stash for the user group$/ do
-  @bus_site.admin_console_page.user_group_details_section.disable_stash(false)
+  @bus_site.admin_console_page.user_group_details_section.cancel_disable_stash
 end
 
 When /^I enable stash for all users$/ do
