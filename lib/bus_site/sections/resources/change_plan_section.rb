@@ -12,7 +12,7 @@ module Bus
     element(:pro_server_plan_status_span, id: "server-pass-status")
     element(:pro_server_plan_change_link, xpath: "//a[text()='(change)']")
     element(:pro_server_plan_select, xpath: "//span[@id='server-pass-status-change']/select")
-    element(:pro_storage_add_on_tb, xpath: "//div[@id='#{ADD_ON_LIST_LOC}']/input[@type='text']")
+    element(:pro_storage_add_on_tb, xpath: "//div[@id='#{ADD_ON_LIST_LOC}']/div/input[@type='text']")
 
     # MozyEnterprise
     #
@@ -51,8 +51,9 @@ module Bus
         #page.trigger_html_event(pro_storage_add_on_tb.id, 'change')
       end
       unless server_plan.empty?
-        sleep 2 # wait server plan to wait
+        wait_until { pro_server_plan_change_link.visible? }
         pro_server_plan_change_link.click
+        wait_until{ pro_server_plan_select.visible? }
         pro_server_plan_select.select(server_plan)
         #page.trigger_html_event(pro_server_plan_select.id, 'change')
       end
