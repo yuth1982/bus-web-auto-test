@@ -212,7 +212,6 @@ module Bus
     # Public: The message show after saving changes
     #
     def result_message
-      wait_until{ loading_link[:class] != "title loading" }
       authentication_policies_edit_errors.text
     end
 
@@ -500,7 +499,7 @@ module Bus
       SSHHelper.download(SSHHelper::SOCKD_CONF, "#{FileHelper.default_test_data_path}/#{file}")
     end
 
-    def host_port_added old_file, new_file
+    def host_port_changed old_file, new_file
       host_port = []
       Diffy::Diff.new("#{FileHelper.default_test_data_path}/#{new_file}", "#{FileHelper.default_test_data_path}/#{old_file}", :source => 'files').each do |line|
         case line
@@ -516,5 +515,31 @@ module Bus
       end
       host_port
     end
+
+    def host_port_changed_num old_file, new_file
+      h = {:added => [], :deleted => []}
+      r = {:added => 0, :deleted => 0, :updated => 0}
+      Diffy::Diff.new("#{FileHelper.default_test_data_path}/#{new_file}", "#{FileHelper.default_test_data_path}/#{old_file}", :source => 'files').each do |line|
+        if line =~ /[\+-][\s]+to/
+          host = /[\d\.]+/.match(line)
+          port = /[\d]+$/.match(line)
+          if line =~ /^\+/
+            h[:added] << [host[0], port[0]]
+          else
+            h[:deleted] << [host[0], port[0]]
+          end
+        end
+      end
+      if h[:added].size == h[:deleted].size
+        r[:updated] = h[:added].size
+      elsif h[:added].size > h[:deleted].size
+        r[:added] = h[:added].size - h[:deleted].size
+      else
+        r[:deleted] = h[:deleted].size - h[:added].size
+      end
+      Log.debug r.inspect
+      r
+    end
+
   end
 end

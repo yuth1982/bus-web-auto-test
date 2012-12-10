@@ -181,6 +181,7 @@ end
 
 When /^I save the changes$/ do
   @bus_site.admin_console_page.authentication_policy_section.save_changes
+  @bus_site.admin_console_page.authentication_policy_section.wait_until_bus_section_load
 end
 
 Then /^Authentication Policy has been updated successfully$/ do
@@ -339,6 +340,7 @@ end
 Then /^I change root role to (.+)$/ do | role |
   @bus_site.admin_console_page.partner_details_section.change_root_role(role)
 end
+
 Then /^I should see (Mozy|LDAP) auth selected$/ do |provider|
   case provider
   when "Mozy"
@@ -349,12 +351,19 @@ Then /^I should see (Mozy|LDAP) auth selected$/ do |provider|
     @bus_site.admin_console_page.authentication_policy_section.provider_mozy_checked?.should be_false
   end
 end
+
 When /^I see the response code is (\d+)$/ do |code|
   @bus_site.admin_console_page.authentication_policy_section.response_code.should == code
 end
+
 When /^I get the full whitelist into (.+)$/ do |file|
   @bus_site.admin_console_page.authentication_policy_section.get_whitelist(file)
 end
-Then /^The new Server Host and Port are added to the whitelist according to (.+) and (.+)$/ do |old_file, new_file|
-  @bus_site.admin_console_page.authentication_policy_section.host_port_added(old_file, new_file)[0].should == [@connection_info.server_host, @connection_info.port.to_s]
+
+Then /^(\d+) Server Host and Port are (.+) to the whitelist according to (.+) and (.+)$/ do |num, key, old_file, new_file|
+  @bus_site.admin_console_page.authentication_policy_section.host_port_changed_num(new_file, old_file)[key.to_sym].should == num.to_i
+end
+
+When /^The new Server Host and Port should be the same as input according to (.+) and (.+)$/ do |old_file, new_file|
+  @bus_site.admin_console_page.authentication_policy_section.host_port_changed(old_file, new_file)[0].should == [@connection_info.server_host, @connection_info.port.to_s]
 end
