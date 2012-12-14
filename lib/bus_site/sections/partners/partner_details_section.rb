@@ -12,16 +12,12 @@ module Bus
     element(:export_to_excel_link, xpath: "//a[text()='Export to Excel (CSV)']")
     element(:create_api_key_link, xpath: "//a[text()='(create)']")
     element(:api_key_text, xpath: '//fieldset//div[1]//span')
-    element(:partner_id_text, xpath: "//div[starts-with(@id,'partner-show-')]/div/div[2]/dl[1]/dd[1]")
-    element(:partner_root_role_change_link, xpath: "//span[starts-with(@id, 'partner-display-root-role')]/a")
-    element(:partner_root_role_change_submit_btn, xpath: "//span[starts-with(@id, 'partner-change-root-role')]/input")
-    element(:partner_root_role_change_dropdown, xpath: "//span[starts-with(@id, 'partner-change-root-role')]/select")
 
-    # Delete partner hidden forms
-    #
-    element(:cancellation_submit_btn, xpath: "//div[starts-with(@id,'cancellation_reasons_')]//input[@value='Submit']")
-    element(:delete_password_tb, xpath: "//div[starts-with(@id,'partner-show-') and contains(@id, '-delete_form')]//input[@name='password']")
-    element(:delete_submit_btn, xpath: "//div[starts-with(@id,'partner-show-') and contains(@id, '-delete_form')]//input[@value='Submit']")
+    # Change partner root role
+    element(:partner_root_role_change_link, css: "span[id^=partner-display-root-role] a")
+    element(:partner_root_role_type_select, css: "span[id^=partner-change-root-role] select")
+    element(:partner_root_role_submit_btn, css: "span[id^=partner-change-root-role] input")
+    element(:partner_root_role_cancel_btn, css: "span[id^=partner-change-root-role] a")
 
     # General information
     elements(:general_info_dls, xpath: "//div/dl")
@@ -43,19 +39,19 @@ module Bus
     element(:contact_vat_tb, id: "vat_info_vat_number")
 
     # Account attribute table
-    element(:account_attributes_table, css: "form#account_attributes_form table")
+    element(:account_attributes_table, css: "form[id^=account_attributes_form] table")
 
     # Resources table, for MozyPro
-    element(:generic_resources_table, css: "form#generic_resources_form table")
+    element(:generic_resources_table, css: "form[id^=generic_resources_form] table")
 
     # License types table
-    element(:license_types_table, xpath: "//div[starts-with(@id,'partner_license_types_')]/table")
+    element(:license_types_table, css: "div[id^=partner_license_types] table")
 
     # Stash table
     element(:stash_info_table, xpath: "//div[@class='show-details']/table[@class='form-box2']")
 
     # Internal billing table
-    element(:internal_billing_table, xpath: "//div[contains(@id,'internal-billing-content')]/table")
+    element(:internal_billing_table, css: "div[id$=internal-billing-content] table")
 
     # Subadmins
     element(:sub_admins_div, id: "subadminbox")
@@ -65,12 +61,19 @@ module Bus
     element(:billing_history_table, css: "table.table-view")
 
     # Stash section
-    element(:change_stash_link, xpath: "//a[contains(@onclick,'change_stash')]")
-    element(:cancel_stash_link, xpath: "//a[contains(@onclick,'cancel_change')]")
-    element(:stash_status_select, xpath: "//select[starts-with(@id,'partner-stash-status-')]")
+    element(:change_stash_link, css: "a[onclick*='change_stash']")
+    element(:cancel_stash_link, css: "a[onclick*='cancel_change']")
+    element(:stash_status_select, css: "select[id^='partner-stash-status-']")
     element(:stash_default_quota_tb, id: "stash_default_quota")
-    element(:submit_stash_status_btn, xpath: "//input[contains(@onclick,'submit_stash_status')]")
-    element(:add_stash_to_all_users_link, xpath: "//a[contains(@onclick,'enable_stash_for_all_confirm')]")
+    element(:submit_stash_status_btn, css: "input[onclick*='submit_stash_status']")
+    element(:add_stash_to_all_users_link, css: "a[onclick*='enable_stash_for_all_confirm']")
+
+    # Public: Partner Id
+    #
+    # Return string
+    def partner_id
+      general_info_hash['ID:']
+    end
 
     # Public: General information hash
     #
@@ -237,7 +240,7 @@ module Bus
     # Public: Click act as partner link
     #
     # Example
-    #   partner_details_section.act_as_partner
+    #   @bus_site.admin_console_page.partner_details_section.act_as_partner
     #
     # Returns nothing
     def act_as_partner
@@ -251,11 +254,15 @@ module Bus
     #
     # Returns nothing
     def delete_partner(password)
+      submit_btn = find(:css, "div[id^='cancellation_reasons_'] input[value=Submit]")
+      password_tb = find(:css, "div#partner-show-#{partner_id}-delete_form input[name=password]")
+      submit_tb = find(:css, "div#partner-show-#{partner_id}-delete_form input[name=commit]")
+
       delete_partner_link.click
-      cancellation_submit_btn.click
-      wait_until{ delete_password_tb.visible? } # wait for load delete password div
-      delete_password_tb.type_text(password)
-      delete_submit_btn.click
+      submit_btn.click
+      wait_until{ password_tb.visible? } # wait for load delete password div
+      password_tb.type_text(password)
+      submit_tb.click
       wait_until{ has_no_link?("Delete Partner") } # wait for delete partner
     end
 
@@ -286,6 +293,28 @@ module Bus
       submit_stash_status_btn.click
     end
 
+    # Public: Add stash to all users
+    #
+    # Example:
+    #   @bus_site.admin_console_page.partner_details_section.add_stash_to_all_users
+    #
+    # Returns nothing
+    def add_stash_to_all_users
+      add_stash_to_all_users_link.click
+    end
+
+    # Public: Change partner root role
+    #
+    # Example:
+    #   @bus_site.admin_console_page.partner_details_section.change_root_role('Enterprise')
+    #
+    # Returns nothing
+    def change_root_role(root_role)
+      partner_root_role_change_link.click
+      partner_root_role_type_select.select(root_role)
+      partner_root_role_submit_btn.click
+    end
+
     # Public: Create the api_key
     #
     # Example
@@ -308,18 +337,8 @@ module Bus
       end
     end
 
-    def get_partner_id
-      partner_id_text.text
-    end
-
     def close_partner_detail_section_by_id(partner_id)
       find(:xpath, "//div[@id='partner-show-#{partner_id}']//a[@class='mod-button'][1]").click
-    end
-
-    def change_root_role(root_role)
-      partner_root_role_change_link.click
-      partner_root_role_change_dropdown.select(root_role)
-      partner_root_role_change_submit_btn.click
     end
   end
 end
