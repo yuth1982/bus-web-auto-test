@@ -500,7 +500,7 @@ Feature: Add a new partner
       | Server Enabled      | Enabled   |           |       |
     And Partner internal billing should be:
       | Account Type:   | Net Terms 30  | Current Period: | Biennial            |
-      | Unpaid Balance: | €122,846.22   | Collect On:     | N/A                 |
+      | Unpaid Balance: | €122,846.21   | Collect On:     | N/A                 |
       | Renewal Date:   | after 2 years | Renewal Period: | Use Current Period  |
     And Partner billing history should be:
       | Date  | Amount      | Total Paid | Balance Due |
