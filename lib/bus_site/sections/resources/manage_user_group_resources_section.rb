@@ -7,22 +7,22 @@ module Bus
     elements(:general_info_spans, xpath: "//div[@class='show-details']/div/span[@class='label' or @class='value']")
 
     # Resource changed message
-    element(:message_div, xpath: "//div[starts-with(@id,'resource-group_available_keys-')]/ul")
+    element(:message_div, css: "div[id^=resource-group_available_keys-] ul")
 
     # Create / Delete Keys
     element(:create_new_keys_link, xpath: "//a[text()='Create New Keys']")
-    element(:create_new_keys_div, xpath: "//div[starts-with(@id, 'unassigned_resources-create_keys_form_')]")
+    element(:create_new_keys_div, css: "div[id^=unassigned_resources-create_keys_form_]")
     element(:delete_keys_link, xpath: "//a[text()='Delete Keys']")
 
     # Batch key assignment
     element(:batch_key_assignment_link, xpath: "//a[text()='Perform batch key assignment']")
-    element(:batch_key_assignment_div, xpath: "//div[starts-with(@id, 'resource-group_available_keys-batch_form-')]")
+    element(:batch_key_assignment_div, css: "div[id^=resource-group_available_keys-batch_form-]")
 
     # Public: Get group id
     #
     # Return text
     def group_id
-      el = find(:xpath, "//div[starts-with(@id, 'unassigned-resources-')]")
+      el = find(:css, "div[id^=unassigned-resources-]")
       el.id.delete('unassigned-resources-')
     end
 
@@ -33,6 +33,7 @@ module Bus
     #
     # Returns hash
     def user_group_general_info_hash
+      wait_until_bus_section_load
       array = general_info_spans.map{ |span| span.text }
       Hash[*array]
     end
@@ -86,10 +87,10 @@ module Bus
     #
     # Returns nothing
     def allocate_reseller_desktop_quota(desktop_quota)
+      find(:css, "span#allocated_#{group_id}_13 a").click # Click Change link
       desktop_span = find(:id, "allocated_change_#{group_id}_13")
-      desktop_span.find(:xpath, "//a[text()='Change']").click
       desktop_span.find(:id, "quota").type_text(desktop_quota)
-      desktop_span.find(:css, "input[value='Submit']").click
+      desktop_span.find(:css, "input[value=Submit]").click
     end
 
     # Public: Allocate server resources for Reseller partner
@@ -101,10 +102,10 @@ module Bus
     #
     # Returns nothing
     def allocate_reseller_server_quota(server_quota)
+      find(:css, "span#allocated_#{group_id}_14 a").click # Click Change link
       server_span = find(:id, "allocated_change_#{group_id}_14")
-      server_span.find_link('Change').click
       server_span.find(:id, "quota").type_text(server_quota)
-      server_span.find(:css, "input[value='Submit']").click
+      server_span.find(:css, "input[value=Submit]").click
     end
 
     # Public: Batch Assign a MozyEnterprise or Reseller keys
@@ -120,8 +121,8 @@ module Bus
       batch_key_assignment_div.find(:id, "emails").type_text(email_quota)
       batch_key_assignment_div.find(:id, "license_type").select(license_type)
       batch_key_assignment_div.find(:id, "send_emails").check if send_email
-      batch_key_assignment_div.find(:css, "input[name='batch_assignment']").click
-      wait_until{ batch_key_assignment_link.visible? }
+      batch_key_assignment_div.find(:css, "input[name=batch_assignment]").click
+      wait_until_bus_section_load
     end
 
     # Public: Create new keys
@@ -134,10 +135,12 @@ module Bus
     # @return nothing
     def create_new_keys(license_type, num_keys)
       create_new_keys_link.click
-      create_new_keys_div.find(:id, "create_keys_license_type").select(license_type)
+      wait_until{ create_new_keys_div.visible? }
+      license_select = create_new_keys_div.find(:id, "create_keys_license_type")
+      license_select.select(license_type) if license_select.visible?
       create_new_keys_div.find(:id, "num_keys").type_text(num_keys)
-      create_new_keys_div.find(:css, "input[name='create_keys']").click
-      wait_until{ create_new_keys_link.visible? }
+      create_new_keys_div.find(:css, "input[name=create_keys]").click
+      wait_until_bus_section_load
     end
 
     # Public: Messages for manage resources actions

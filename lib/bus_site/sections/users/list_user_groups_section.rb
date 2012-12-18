@@ -35,9 +35,5 @@ module Bus
     def user_group_list_table_rows
       user_groups_list_table.rows_text
     end
-
-    def stop_spining
-      wait_until{ loading_link[:class] != "title loading" }
-    end
   end
 end

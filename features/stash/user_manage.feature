@@ -22,7 +22,6 @@ Feature: User stash setting management
     And I view user details by qa1+tc+18972+user1@mozy.com
     Then I should not see Enable Stash setting on user details section
 
-
   @TC.18973 @BSA.2040
   Scenario: 18973 Add Stash link is available in user view when stash is enabled for the user
     When I add a new MozyEnterprise partner:
@@ -64,9 +63,11 @@ Feature: User stash setting management
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by qa1+tc+18974+user1@mozy.com
     And I add stash for the user with:
-    | stash quota | send email |
-    | default     | no         |
-    Then Stash should be enabled for the user
+      | stash quota | send email |
+      | default     | no         |
+    Then User details should be:
+      | Name:                  | Enable Stash:               |
+      | TC.18974 user (change) | Yes (Send Invitation Email) |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -92,10 +93,9 @@ Feature: User stash setting management
       | 9999999     | no         |
     Then Popup window message should be You do not have enough storage available for the default storage entered. Use the Manage Resources panel to increase the amount of storage allocated or to purchase more storage.
     When I click Allocate button on popup window
-    Then Manage Resources section should be active
+    Then Manage Resources section should be visible
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
-
 
   @TC.18977 @BSA.2040
   Scenario: 18977 Enable stash by click Add Stash link but not enough storage then I can choose Buy More Storage
@@ -119,7 +119,7 @@ Feature: User stash setting management
       | 9999999     | no         |
     Then Popup window message should be There is not enough storage available to add the default storage amount.
     When I click Buy More button on popup window
-    Then Change Plan section should be active
+    Then Change Plan section should be visible
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -143,8 +143,10 @@ Feature: User stash setting management
     And I add stash for the user with:
       | stash quota | send email |
       | 10 GB       | no         |
-    Then Stash should be enabled for the user
-    Then User backup details table should be:
+    Then User details should be:
+      | Name:                  | Enable Stash:               |
+      | TC.19015 user (change) | Yes (Send Invitation Email) |
+    And User backup details table should be:
       | Computer | Encryption | Storage Used             | Last Update | License Key | Actions |
       | Stash    | Default    | 0 bytes / 10 GB (change) | N/A         |             | delete  |
     When I stop masquerading
@@ -167,7 +169,7 @@ Feature: User stash setting management
     Then New user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by qa1+tc+19017+user1@mozy.com
-    And I cancel add stash for the user
+    And I cancel add user stash
     Then User details should be:
       | Name:                  | Enable Stash:  |
       | TC.19017 user (change) | No (Add Stash) |
@@ -330,7 +332,7 @@ Feature: User stash setting management
     Then New user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by qa1+tc+18988+user1@mozy.com
-    And I cancel delete stash container for the user
+    And I delete stash container for the user
     Then Popup window message should be Do you want to delete the user's stash? Note: Deleting a user's Stash removes all of the user's Stash files from the Web.
     When I click Cancel button on popup window
     And User details should be:
@@ -365,7 +367,7 @@ Feature: User stash setting management
     Then New user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by qa1+tc+18989+user1@mozy.com
-    And I cancel delete stash container for the user
+    And I delete stash container for the user
     Then Popup window message should be Do you want to delete the user's stash? Note: Deleting a user's Stash removes all of the user's Stash files from the Web.
     When I click Cancel button on popup window
     And User details should be:
@@ -402,7 +404,7 @@ Feature: User stash setting management
     Then New user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by qa1+tc+19478+user1@mozy.com
-    And I cancel delete stash container for the user
+    And I delete stash container for the user
     Then Popup window message should be Do you want to delete the user's stash? Note: Deleting a user's Stash removes all of the user's Stash files from the Web.
     When I click Cancel button on popup window
     And User details should be:
@@ -439,8 +441,8 @@ Feature: User stash setting management
     And I view user details by qa1+tc+18990+user1@mozy.com
     And I send stash invitation email
     Then I should see 1 email(s) when I search keywords:
-      | to                          | date    |
-      | qa1+tc+18990+user1@mozy.com | today   |
+      | to                          | date    | subject               |
+      | qa1+tc+18990+user1@mozy.com | today   | Welcome to Mozy Stash |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -464,13 +466,15 @@ Feature: User stash setting management
     And I add stash for the user with:
       | stash quota | send email |
       | 10 GB       | yes        |
-    Then Stash should be enabled for the user
-    Then User backup details table should be:
+    Then User details should be:
+      | Name:                  | Enable Stash:               |
+      | TC.19121 user (change) | Yes (Send Invitation Email) |
+    And User backup details table should be:
       | Computer | Encryption | Storage Used             | Last Update | License Key | Actions |
       | Stash    | Default    | 0 bytes / 10 GB (change) | N/A         |             | delete  |
     Then I should see 1 email(s) when I search keywords:
-      | to                          | date    |
-      | qa1+tc+19121+user1@mozy.com | today   |
+      | to                          | date    | subject               |
+      | qa1+tc+19121+user1@mozy.com | today   | Welcome to Mozy Stash |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -495,7 +499,7 @@ Feature: User stash setting management
       | Computer | Encryption | Storage Used            | Last Update | License Key | Actions |
       | Stash    | Default    | 0 bytes / 5 GB (change) | N/A         |             | delete  |
     And I should see 1 email(s) when I search keywords:
-      | to                          | date    |
-      | qa1+tc+19122+user1@mozy.com | today   |
+      | to                          | date    | subject               |
+      | qa1+tc+19122+user1@mozy.com | today   | Welcome to Mozy Stash |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name

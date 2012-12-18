@@ -26,7 +26,7 @@ Then /^New user should be created$/ do
 end
 
 Then /^New user created message should be (.+)$/ do |message|
-  @bus_site.admin_console_page.add_new_user_section.messages.should == message
+  @bus_site.admin_console_page.add_new_user_section.messages.gsub("\n"," ").should == message
 end
 
 When /^I refresh Add New User section$/ do

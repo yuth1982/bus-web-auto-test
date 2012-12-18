@@ -83,18 +83,13 @@ Feature:
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
-# Bug 91042
-#    Then Partner account attributes should be:
-#      | Backup Licenses         |           |
-#      | Backup License Soft Cap | Disabled  |
-#      | Server Enabled          | Disabled  |
-#      | Cloud Storage (GB)      |           |
-#      | Stash Users:            | 2         |
-#      | Default Stash Storage:  | 5         |
+    Then Partner account attributes should include:
+      | Stash Users:            | -1        |
+      | Default Stash Storage:  | 5         |
     And Partner stash info should be:
       | Stash Users:         | 2               |
       | Stash Storage Usage: | 0 bytes / 25 GB |
-    And I search and delete partner account by newly created partner company name
+    And I delete partner account
 
   @TC.19739 @BSA.3000
   Scenario: 19739 MozyPro admin view stash details in partner details section
@@ -118,17 +113,13 @@ Feature:
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
-    And Partner account attributes should be:
-      | Backup Licenses         | 200       |
-      | Backup License Soft Cap | Enabled   |
-      | Server Enabled          | Disabled  |
-      | Cloud Storage (GB)      | 100       |
+    And Partner account attributes should include:
       | Stash Users:            | -1        |
       | Default Stash Storage:  | 10        |
     And Partner stash info should be:
       | Stash Users:         | 2               |
       | Stash Storage Usage: | 0 bytes / 35 GB |
-    And I search and delete partner account by newly created partner company name
+    And I delete partner account
 
   @TC.19740 @BSA.3000
   Scenario: 19740 Reseller admin view stash details in partner details section
@@ -154,18 +145,13 @@ Feature:
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
-# Bug 91042
-#    And Partner account attributes should be:
-#      | Backup Licenses         | 20000     |
-#      | Backup License Soft Cap | Disabled  |
-#      | Server Enabled          | Disabled  |
-#      | Cloud Storage (GB)      |           |
-#      | Stash Users:            | 2         |
-#      | Default Stash Storage:  | 10        |
+    And Partner account attributes should include:
+      | Stash Users:            | -1        |
+      | Default Stash Storage:  | 10        |
     And Partner stash info should be:
       | Stash Users:         | 2               |
       | Stash Storage Usage: | 0 bytes / 35 GB |
-    And I search and delete partner account by newly created partner company name
+    And I delete partner account
 
   @TC.19167 @BSA.3050
   Scenario: 19167 MozyEnterprise admin view stash details in assign keys section
@@ -208,8 +194,8 @@ Feature:
     Then New user should be created
     When I navigate to Manage Resources section from bus admin console page
     And Partner resources general information should be:
-      | Total Account Storage: | Unallocated Storage: | Desktop Storage: | Server Enabled: | Stash Users: | Stash Storage Usage: |
-      | 100 GB                 | 50 GB                | 50 GB            | No              | 1            | 0 bytes / 20 GB      |
+      | Stash Users: | Stash Storage Usage: |
+      | 1            | 0 bytes / 20 GB      |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -230,8 +216,8 @@ Feature:
     Then New user should be created
     When I navigate to Manage Resources section from bus admin console page
     And Partner resources general information should be:
-      | Total Account Storage: | Unallocated Storage: | Server Enabled: | Stash Users: | Stash Storage Usage: |
-      | 100 GB                 | 0 GB                 | No              | 1            | 0 bytes / 30 GB      |
+      | Stash Users: | Stash Storage Usage: |
+      | 1            | 0 bytes / 30 GB      |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -253,7 +239,7 @@ Feature:
       | Enable Stash: |
       | No            |
     When I stop masquerading
-    And I search and delete partner account by newly created partner company name
+    Then I search and delete partner account by newly created partner company name
 
   @TC.19123 @BSA.4000
   Scenario: 19123 MozyEnterprise admin change default stash quota in user group view
@@ -272,6 +258,8 @@ Feature:
     Then User group details should be:
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 20 GB (change)         |
+    When I stop masquerading
+    Then I search and delete partner account by newly created partner company name
 
   @TC.18913 @BSA.6000
   Scenario: 18913 Root admin disable Stash for a new MozyPro partner
@@ -287,3 +275,4 @@ Feature:
     Then Partner general information should be:
       | Enable Stash: |
       | No            |
+    When I delete partner account

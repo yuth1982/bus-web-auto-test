@@ -174,7 +174,7 @@ When /^I create (\d+) Machine user mappings for the subpartner$/ do |num|
 end
 
 When /^I close the partner detail page$/ do
-  partner_id = @bus_site.admin_console_page.partner_details_section.get_partner_id()
+  partner_id = @bus_site.admin_console_page.partner_details_section.partner_id()
   @bus_site.admin_console_page.partner_details_section.close_partner_detail_section_by_id(partner_id)
 end
 

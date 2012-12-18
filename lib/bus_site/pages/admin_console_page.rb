@@ -8,8 +8,8 @@ module Bus
     section(:search_list_partner_section, SearchListPartnerSection, id: "partner-list")
     section(:add_new_partner_section, AddNewPartnerSection, id: "partner-new")
 
-    section(:partner_details_section, PartnerDetailsSection, xpath: "//div[starts-with(@id, 'partner-show-')]")
-    section(:admin_details_section, AdminDetailsSection, xpath: "//div[starts-with(@id, 'admin-show-')]")
+    section(:partner_details_section, PartnerDetailsSection, css: "div[id^=partner-show-]")
+    section(:admin_details_section, AdminDetailsSection, css: "div[id^=admin-show-]")
 
     # Configuration section
     section(:account_details_section, AccountDetailsSection, id: "setting-edit_account_settings")
@@ -21,9 +21,9 @@ module Bus
     section(:add_new_user_group_section, AddNewUserGroupSection, id: "user_groups-new")
     section(:add_new_user_section, AddNewUserSection, id: "user-new")
     section(:machine_mapping_section, MachineMappingSection, id: "machine-machine_migration")
-    section(:user_group_details_section, UserGroupDetailsSection, xpath: "//div[starts-with(@id, 'user_groups-show-')]")
+    section(:user_group_details_section, UserGroupDetailsSection, css: "div[id^=user_groups-show-]")
     section(:list_user_groups_section, ListUserGroupsSection, id: "user_groups-list")
-    section(:user_details_section, UserDetailsSection, xpath: "//div[starts-with(@id, 'user-show-')]")
+    section(:user_details_section, UserDetailsSection, css: "div[id^=user-show-]")
 
     # Admin section
 
@@ -34,15 +34,15 @@ module Bus
     section(:billing_info_section, BillingInfoSection, id: "resource-billing")
     section(:change_period_section, ChangePeriodSection, id: "resource-change_billing_period")
     section(:manage_resources_section, ManageResourcesSection, id: "resource-available_key_list")
-    section(:manage_user_group_resources_section, ManageUserGroupResourcesSection , xpath: "//div[starts-with(@id, 'resource-group_available_keys-')]")
+    section(:manage_user_group_resources_section, ManageUserGroupResourcesSection , css: "div[id^=resource-group_available_keys-]")
     section(:transfer_resources_section, TransferResourcesSection, id: "resource-transfer_resources")
 
 
     # Data shuttle section
     section(:order_data_shuttle_section, OrderDataShuttleSection, id: "resource-choose_pro_partner_for_new_seed")
-    section(:process_order_section, ProcessOrderSection, xpath: "//div[starts-with(@id, 'resource-create_new_seed-')]")
+    section(:process_order_section, ProcessOrderSection, css: "div[id^=resource-create_new_seed-]")
     section(:view_data_shuttle_orders_section, ViewDataShuttleOrdersSection, id: "resource-view_seed_device_orders")
-    section(:order_details_section, OrderDetailsSection, xpath: "//div[starts-with(@id, 'resource-show_data_shuttle_order-')]")
+    section(:order_details_section, OrderDetailsSection, css: "div[id^=resource-show_data_shuttle_order-]")
 
     # reports section
     section(:report_builder_section, ReportBuilderSection, id: "jobs-report_builder")
@@ -54,13 +54,14 @@ module Bus
     element(:stop_masquerading_link, xpath: "//a[text()='stop masquerading']")
 
     # Popup window
-    element(:popup_content_div, xpath: "//div[@class='popup-window-content']")
-    element(:close_popup_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Close']")
-    element(:continue_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Continue']")
-    element(:cancel_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Cancel']")
-    element(:submit_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Submit']")
-    element(:buy_more_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Buy More']")
-    element(:allocate_resources_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Allocate']")
+    element(:popup_content_div, css: "div.popup-window-content")
+    element(:close_popup_link, css: "div.close_bar a")
+    element(:close_btn, css: "div.popup-window-footer input[value=Close]")
+    element(:continue_btn, css: "div.popup-window-footer input[value=Continue]")
+    element(:cancel_btn, css: "div.popup-window-footer input[value=Cancel]")
+    element(:submit_btn, css: "div.popup-window-footer input[value=Submit]")
+    element(:buy_more_btn, css: "div.popup-window-footer input[value='Buy More']")
+    element(:allocate_resources_btn, css: "div.popup-window-footer input[value=Allocate]")
 
     # Public: Navigate to menu item on admin console page
     # Note: if bus module is opened, menu will not be clicked
@@ -86,6 +87,10 @@ module Bus
       popup_content_div.text
     end
 
+    def close_popup_window
+      close_popup_link.click
+    end
+
     def buy_more_resources
       buy_more_btn.click
     end
@@ -94,8 +99,8 @@ module Bus
       allocate_resources_btn.click
     end
 
-    def close_popup_window
-      close_popup_btn.click
+    def click_close
+      close_btn.click
     end
 
     def click_continue

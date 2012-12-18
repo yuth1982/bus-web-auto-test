@@ -18,8 +18,12 @@ Then /^Popup window message should be (.+)$/ do |message|
   @bus_site.admin_console_page.popup_window_content.gsub("\n"," ").should == message
 end
 
-Then /^I click Close button on popup window$/ do
+Then /^I close popup window$/ do
   @bus_site.admin_console_page.close_popup_window
+end
+
+Then /^I click Close button on popup window$/ do
+  @bus_site.admin_console_page.click_close
 end
 
 Then /^I click Continue button on popup window$/ do
@@ -56,4 +60,12 @@ end
 
 Then /^the new partner admin should be logged in$/ do
   @bus_site.login_page.logged_in.should be_true
+end
+
+Then /^Alert message should be (.+)$/ do |message|
+  @bus_site.admin_console_page.alert_text.should == message
+end
+
+When /^I close alert window$/ do
+  @bus_site.admin_console_page.alert_dismiss
 end

@@ -79,6 +79,6 @@ Then /^MozyEnterprise new plan should be:$/ do |new_plan_table|
   @bus_site.admin_console_page.change_plan_section.mozyenterprise_server_add_on.should == add_on unless add_on.empty?
 end
 
-Then /^Change Plan section should be active$/ do
-  @bus_site.admin_console_page.change_plan_section.has_current_plan_table?.should be_true
+Then /^Change Plan section should be visible$/ do
+  @bus_site.admin_console_page.change_plan_section.section_visible?.should be_true
 end

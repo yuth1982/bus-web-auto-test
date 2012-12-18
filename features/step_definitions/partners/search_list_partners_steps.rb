@@ -34,6 +34,7 @@ end
 # Required: search list partner section must be visible
 When /^I view partner details by (.+)$/ do |search_key|
   @bus_site.admin_console_page.search_list_partner_section.view_partner_detail(search_key)
+  @bus_site.admin_console_page.partner_details_section.wait_until_bus_section_load
 end
 
 # Public: View admin details by click email in search partner results

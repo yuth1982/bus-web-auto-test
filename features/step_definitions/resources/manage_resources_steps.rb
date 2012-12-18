@@ -19,7 +19,6 @@ Then /^Partner total license details table should be:$/ do |license_details_tabl
 end
 
 Then /^Partner user groups table should be:$/ do |groups_table|
-  @bus_site.admin_console_page.manage_resources_section.user_groups_table_headers.should == groups_table.headers
   @bus_site.admin_console_page.manage_resources_section.user_groups_table_rows.should == groups_table.rows
 end
 
@@ -44,8 +43,8 @@ When /^I batch assign MozyPro partner (Server|Desktop) keys (with|without) send 
   @bus_site.admin_console_page.manage_resources_section.batch_assign_mozypro_keys(batch_text, type, send_email=='with')
 end
 
-Then /^Manage Resources section should be active$/ do
-  @bus_site.admin_console_page.manage_resources_section.has_manage_resource_content_div?.should be_true
+Then /^Manage Resources|Assign Keys section should be visible/ do
+  @bus_site.admin_console_page.manage_resources_section.section_visible?.should be_true
 end
 
 Then /^I refresh Manage Resources section$/ do
@@ -91,6 +90,10 @@ end
 
 When /^I create (\d+) new (Server|Desktop) keys for Reseller partner$/ do |num_keys, license_type|
   @bus_site.admin_console_page.manage_user_group_resources_section.create_new_keys(license_type, num_keys)
+end
+
+Then /^Reseller resource keys should be created$/ do
+  @bus_site.admin_console_page.manage_user_group_resources_section.messages.should == "New keys created"
 end
 
 When /^I batch assign (MozyEnterprise|Reseller) partner (Server|Desktop) keys to (.+) user group (with|without) send emails:$/ do |company_type, license_type, user_group, send_email, keys_table|

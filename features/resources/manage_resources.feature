@@ -13,9 +13,9 @@ Feature: Manage resources
     And I allocate 10 GB Desktop quota with (default user group) user group to Reseller partner
     Then Reseller resource quota should be changed
     # Bug 90676
-    #And User group general information should be:
-    #| Total Storage: | Desktop Storage: | Server Storage: | Server Enabled: | Total License Keys: | Desktop Licenses: | Server Licenses: |
-    #| 10 GB          | 10 GB            | 0 GB            | Yes             | 0                   | 0                 | 0                |
+#    And User group general information should be:
+#      | Total Storage: | Desktop Storage: | Server Storage: | Server Enabled: | Total License Keys: | Desktop Licenses: | Server Licenses: |
+#      | 10 GB          | 10 GB            | 0 GB            | Yes             | 0                   | 0                 | 0                |
     And User group resources details table should be:
       |         | Active    | Assigned | Unassigned       |
       | Desktop | 0 bytes   | 0 bytes  | 10 GB   Change   |
@@ -31,12 +31,12 @@ Feature: Manage resources
       | qa1+reseller+assign+key+test2@mozy.com | 10    |
     And I refresh Manage Resources section
     # Bug 90676
-    #Then Partner resources general information should be:
-    #  | Total Account Storage: | Unallocated Storage: | Desktop Storage: | Server Storage: | Server Enabled: | Total License Keys: | Desktop Licenses: | Server Licenses: |
-    #  | 140 GB                 | 130 GB               | 10 GB            | 0 GB            | Yes             | 0                   | 0                 | 0                |
+#    Then Partner resources general information should be:
+#      | Total Account Storage: | Unallocated Storage: | Desktop Storage: | Server Storage: | Server Enabled: | Total License Keys: | Desktop Licenses: | Server Licenses: |
+#      | 140 GB                 | 130 GB               | 10 GB            | 0 GB            | Yes             | 0                   | 0                 | 0                |
     And Partner total resources details table should be:
       |         | Active    | Assigned | Unassigned | Allocated |
-      | Desktop | 0 bytes   | 15 GB    | 10 GB      | 10 GB     |
+      | Desktop | 0 bytes   | 15 GB    | 0 byte     | 10 GB     |
       | Server  | 0 bytes   | 0 bytes  | 0 bytes    | 0 bytes   |
     And Partner total license details table should be:
       |         | Active | Assigned | Unassigned |
@@ -100,7 +100,7 @@ Feature: Manage resources
     And User group resources details table should be:
       |         | Active    | Assigned | Unassigned |
       | Desktop | 0 bytes   | 0 bytes  | 1.2 TB     |
-      | Server  | 0 bytes   | 0 bytes  | 1.5 TB     |
+      | Server  | 0 bytes   | 30 GB    | 1.5 TB     |
     And User group license details table should be:
       |         | Active | Assigned | Unassigned |
       | Desktop | 0      | 0        | 0          |

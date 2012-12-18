@@ -27,6 +27,7 @@ module Bus
         #{@company_info.to_s}
         #{@partner_info.to_s}
         #{@admin_info.to_s}
+        #{@credit_card.to_s}
         use company info: #@use_company_info
         subscription period: #@subscription_period
         has initial purchase: #@has_initial_purchase

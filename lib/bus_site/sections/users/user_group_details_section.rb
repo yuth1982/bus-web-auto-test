@@ -56,9 +56,13 @@ module Bus
     end
 
     def delete_user_group
-      delete_user_group_link.click
-      alert_accept
-      wait_until{ !has_delete_user_group_link? }
+      wait_until_bus_section_load
+      if users_list_table_rows[0].to_s != "[\"\"]"
+        delete_user_group_link.click
+        alert_accept
+      else
+        delete_user_group_link.click
+      end
     end
 
     # Public: Enable stash for a partner

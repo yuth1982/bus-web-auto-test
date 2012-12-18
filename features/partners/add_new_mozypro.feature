@@ -504,7 +504,7 @@ Feature: Add a new partner
       | Renewal Date:   | after 2 years | Renewal Period: | Use Current Period  |
     And Partner billing history should be:
       | Date  | Amount      | Total Paid | Balance Due |
-      | today | €122,846.22 | €0.00      | €122,846.22 |
+      | today | €122,846.21 | €0.00      | €122,846.21 |
       | today | €0.00       | €0.00      | €0.00       |
     And I delete partner account
 

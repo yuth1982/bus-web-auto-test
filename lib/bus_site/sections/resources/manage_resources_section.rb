@@ -6,8 +6,7 @@ module Bus
     #
     elements(:resources_general_info_spans, xpath: "//div[@class='show-details']/div/div/span[@class='label' or @class='value']")
     elements(:resources_details_tables, css: "table.matrix_table")
-    element(:user_groups_table, css: "table.mini_table")
-    element(:manage_resource_content_div, id: "resource-available_key_list-content")
+    element(:user_groups_table, css: "table.mini-table")
 
     # Batch key assignment
     element(:batch_key_assignment_link, xpath: "//a[text()='Perform batch key assignment']")

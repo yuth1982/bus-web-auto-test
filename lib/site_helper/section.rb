@@ -31,6 +31,19 @@ module SiteHelper
     def wait_until_bus_section_load
       loading = root_element.find(:xpath, "h2/a[contains(@onclick,'toggle_module')]")
       wait_until{ loading[:class].match(/loading/).nil? }
+      # I found automation is still too faster, I need force to wait until table is loaded
+      # Possible refactor here
+      sleep 2
+    end
+
+    # Public: Is section visible and active
+    #
+    # Example:
+    #   @bus_site.admin_console_page.search_list_partner_section.section_visible?
+    #
+    # Returns bool
+    def section_visible?
+      root_element.visible?
     end
   end
 end

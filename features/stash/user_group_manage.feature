@@ -110,7 +110,7 @@ Feature: User group stash setting management
     And I view (default user group) * user group details
     Then User group details should be:
       | Enable Stash: | Default Stash Storage: |
-      | Yes           | 5 GB (change)         |
+      | Yes           | 5 GB (change)          |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -299,7 +299,7 @@ Feature: User group stash setting management
     And I enable stash for all users
     Then Popup window message should be There is not enough storage available to add the default storage amount.
     And I click Buy More button on popup window
-    Then Change Plan section should be active
+    Then Change Plan section should be visible
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -322,7 +322,7 @@ Feature: User group stash setting management
     And I enable stash for all users
     Then Popup window message should be You do not have enough storage available for the default storage entered. Use the Manage Resources panel to increase the amount of storage allocated or to purchase more storage.
     And I click Allocate button on popup window
-    Then Manage Resources section should be active
+    Then Manage Resources section should be visible
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -347,7 +347,8 @@ Feature: User group stash setting management
     When I transfer resources from (default user group) to TC.19118 group with:
       | desktop licenses | desktop quota GB |
       | 2                | 20               |
-    And I add a new user:
+    Then Resources should be transferred
+    When I add a new user:
       | name           | email                       | user group     | enable stash |
       | TC.19118 user  | qa1+tc+19118+user1@mozy.com | TC.19118 group | yes          |
     Then New user should be created
@@ -381,7 +382,8 @@ Feature: User group stash setting management
     When I transfer resources from (default user group) to TC.19020 group with:
       | desktop licenses | desktop quota GB |
       | 2                | 20               |
-    And I add a new user:
+    Then Resources should be transferred
+    When I add a new user:
       | name           | email                       | user group     | enable stash |
       | TC.19020 user  | qa1+tc+19020+user1@mozy.com | TC.19020 group | yes          |
     Then New user should be created
@@ -391,7 +393,7 @@ Feature: User group stash setting management
       |             | (default user group) * | 0     | 1      | 0           | 0 / 0       | 0.0 (0.0 assigned) / 0.0  | 0 / 8        | 0.0 (0.0 assigned) / 230.0 |
       |             | TC.19020 group         | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 assigned) / 0.0  | 0 / 2        | 0.0 (10.0 assigned) / 20.0 |
     When I search and delete TC.19020 group user group
-    And I refresh List User Group section
+    And I refresh Search List User section
     Then User groups list table should be:
       | External ID | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota              | Desktop Keys | Desktop Quota                |
       |             | (default user group) * | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 assigned) / 0.0  | 0 / 10       | 0.0 (10.0 assigned) / 250.0  |

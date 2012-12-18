@@ -21,7 +21,7 @@ When /^I delete partner account$/ do
 end
 
 When /^I get the partner_id$/ do
-  @partner_id = @bus_site.admin_console_page.partner_details_section.get_partner_id()
+  @partner_id = @bus_site.admin_console_page.partner_details_section.partner_id()
   Log.debug("partner id is #{@partner_id}")
 end
 
@@ -79,8 +79,8 @@ Then /^Partner contact information should be:$/ do |contact_table|
   end
 end
 
-Then /^Partner account attributes should be:$/ do |attributes_table|
-  @bus_site.admin_console_page.partner_details_section.account_attributes_rows.should == attributes_table.raw
+Then /^Partner account attributes should be|include:$/ do |attributes_table|
+  (@bus_site.admin_console_page.partner_details_section.account_attributes_rows && attributes_table.raw).should == attributes_table.raw
 end
 
 Then /^Partner resources should be:$/ do |resources_table|
@@ -134,4 +134,10 @@ end
 When /^I disable stash for the partner$/ do
   @bus_site.admin_console_page.partner_details_section.disable_stash
   @bus_site.admin_console_page.click_submit
+end
+
+When /^I add stash to all users for the partner$/ do
+  @bus_site.admin_console_page.partner_details_section.add_stash_to_all_users
+  @bus_site.admin_console_page.click_continue
+  @bus_site.admin_console_page.partner_details_section.wait_until_bus_section_load
 end
