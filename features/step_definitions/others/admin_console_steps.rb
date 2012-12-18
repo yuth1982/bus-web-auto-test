@@ -53,3 +53,7 @@ Then /^Admin console page cookies (.+) value should not changed/ do |name|
   puts "admin console page #{name}: #{cookie[:value]}"
   @admin_console_page_cookie_value.should == cookie[:value]
 end
+
+Then /^the new partner admin should be logged in$/ do
+  @bus_site.login_page.logged_in.should be_true
+end

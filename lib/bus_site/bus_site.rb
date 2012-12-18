@@ -19,5 +19,10 @@ class BusSite
   def authentication_failed_page(subdomain = nil)
     Bus::AuthenticationFailedPage.new(subdomain)
   end
+
+  def verify_email_page
+    Bus::VerifyEmailPage.new
+  end
+
 end
 

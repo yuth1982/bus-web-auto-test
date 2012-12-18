@@ -48,6 +48,18 @@ module Bus
     def messages
       message_div.text
     end
+
+    # Public: Check if the log out link is present (implies user/partner is logged in)
+    #
+    # @param none
+    #
+    # Example
+    #   @bus_site.login_page.logged_in
+    #
+    # @return [Boolean]
+    def logged_in
+      logout_btn.visible?
+    end
   end
 end
 

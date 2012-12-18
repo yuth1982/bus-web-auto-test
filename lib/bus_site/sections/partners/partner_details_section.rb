@@ -13,6 +13,11 @@ module Bus
     element(:create_api_key_link, xpath: "//a[text()='(create)']")
     element(:api_key_text, xpath: '//fieldset//div[1]//span')
 
+    # Change partner status
+    element(:change_status_link, xpath: "//span[starts-with(@id,'partner-display-status-')]/a")
+    element(:change_status_select, xpath: "//span[starts-with(@id,'partner-change-status-')]/select")
+    element(:submit_change_status_btn, xpath: "//span[starts-with(@id,'partner-change-status-')]/input")
+
     # Change partner root role
     element(:partner_root_role_change_link, css: "span[id^=partner-display-root-role] a")
     element(:partner_root_role_type_select, css: "span[id^=partner-change-root-role] select")
@@ -327,6 +332,14 @@ module Bus
       end
     end
 
+    # Public: Returns api key
+    #
+    # @param none
+    #
+    # Example
+    #  @api_key = @bus_site.admin_console_page.partner_details_section.get_api_key
+    #
+    # @return [String]
     def get_api_key
       unless page.has_link?('(delete)')
         Log.debug('create')
@@ -337,8 +350,53 @@ module Bus
       end
     end
 
+
+    # Public: Close partner details frame
+    #
+    # @param [string] partner_id
+    #
+    # Example
+    #  @bus_site.admin_console_page.partner_details_section.close_partner_detail_section_by_id("317669")
+    #
+    # @return nothing
     def close_partner_detail_section_by_id(partner_id)
       find(:xpath, "//div[@id='partner-show-#{partner_id}']//a[@class='mod-button'][1]").click
+    end
+
+    # Public: Change Partner status from Active to Suspended
+    #
+    # @param none
+    #
+    # Example
+    #  @bus_site.admin_console_page.partner_details_section.suspend_partner
+    #
+    # @return nothing
+    def suspend_partner
+      wait_until { change_status_link.visible? }
+      change_status_link.click
+      # wait for edit view
+      wait_until { change_status_select.visible? }
+      change_status_select.select("Suspended")
+      submit_change_status_btn.click
+      wait_until{ change_status_link.visible? }
+    end
+
+    # Public: Change Partner status from Suspended to Active
+    #
+    # @param none
+    #
+    # Example
+    #  @bus_site.admin_console_page.partner_details_section.activate_partner
+    #
+    # @return nothing
+    def activate_partner
+      wait_until { change_status_link.visible? }
+      change_status_link.click
+      # wait for edit view
+      wait_until { change_status_select.visible? }
+      change_status_select.select("Active")
+      submit_change_status_btn.click
+      wait_until{ change_status_link.visible? }
     end
   end
 end

@@ -29,3 +29,12 @@ When /^I save login page cookies (.+) value$/ do |name|
   puts "login page #{name}: #@login_page_cookie_value"
 end
 
+And /^I log in bus admin console as new partner admin$/ do
+  @bus_site.login_page.load
+  @bus_site.login_page.login(@partner.admin_info.email, CONFIGS['global']['test_pwd'])
+end
+
+Then /^the new partner admin should be asked to verify their email address$/ do
+  @bus_site.verify_email_page.current_url.should == "#{BUS_ENV['bus_host']}/login/email_needs_verification"
+  @bus_site.verify_email_page.links_present.should be_true
+end
