@@ -38,7 +38,7 @@ Feature:
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19040 @TC.19041 @BSA.1000
+  @TC.19040 @BSA.1000
   Scenario: 19040 MozyPro Partner Provision Stash Container - Default User Group no email invite
     When I add a new MozyPro partner:
       | period | base plan |
@@ -209,7 +209,7 @@ Feature:
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19080 @TC.19081 @BSA.1000
+  @TC.19080 @BSA.1000
   Scenario: 19080 MozyPro Partner Add Stash Container Default User Group No Email
     When I add a new MozyPro partner:
       | period | base plan |
@@ -454,8 +454,8 @@ Feature:
       | Stash Storage Usage: | 0 bytes / 5 GB |
     And I delete partner account
 
-  @TC.19022 @TC.19023 @BSA.1000
-  Scenario: 19022 19023 Reseller Partner Provision Stash Container - Custom User Group with email invite - Part I and II
+  @TC.19022 @BSA.1000
+  Scenario: 19022 Reseller Partner Provision Stash Container - Custom User Group with email invite
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
       | 12     | Silver        | 100            |

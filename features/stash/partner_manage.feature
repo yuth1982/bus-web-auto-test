@@ -153,52 +153,6 @@ Feature:
       | Stash Storage Usage: | 0 bytes / 35 GB |
     And I delete partner account
 
-  @TC.19167 @BSA.3050
-  Scenario: 19167 MozyEnterprise admin view stash details in assign keys section
-    When I add a new MozyEnterprise partner:
-      | period | users |
-      | 12     | 10    |
-    Then New partner should be created
-    When I enable stash for the partner with 5 GB stash storage
-    Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 5 GB (change)          |
-    When I act as newly created partner account
-    And I add a new user:
-      | name           | email                       | enable stash | stash quota |
-      | TC.19167 user1 | qa1+tc+19167+user1@mozy.com | yes          | 15          |
-    Then New user should be created
-    When I navigate to Assign Keys section from bus admin console page
-    And Partner resources general information should be:
-      | Total Account Storage: | Desktop Storage: | Server Storage: | Server Enabled: | Stash Users: | Stash Storage Usage: |
-      | 250 GB                 | 250 GB           | 0 GB            | Yes             | 1            | 0 bytes / 15 GB      |
-    When I stop masquerading
-    And I search and delete partner account by newly created partner company name
-
-  @TC.19168 @BSA.3050
-  Scenario: 19168 Reseller admin view stash details in manage resources section
-    When I add a new Reseller partner:
-      | period | reseller type | reseller quota |
-      | 12     | Silver        | 100            |
-    Then New partner should be created
-    When I enable stash for the partner with 5 GB stash storage
-    Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 5 GB (change)          |
-    When I act as newly created partner account
-    And I allocate 50 GB Desktop quota with (default user group) user group to Reseller partner
-    Then Reseller resource quota should be changed
-    And I add a new user:
-      | name           | email                       | enable stash | stash quota |
-      | TC.19168 user1 | qa1+tc+19168+user1@mozy.com | yes          | 20          |
-    Then New user should be created
-    When I navigate to Manage Resources section from bus admin console page
-    And Partner resources general information should be:
-      | Stash Users: | Stash Storage Usage: |
-      | 1            | 0 bytes / 20 GB      |
-    When I stop masquerading
-    And I search and delete partner account by newly created partner company name
-
   @TC.19169 @BSA.3050
   Scenario: 19169 MozyPro admin view stash details in manage resources section
     When I add a new MozyPro partner:
