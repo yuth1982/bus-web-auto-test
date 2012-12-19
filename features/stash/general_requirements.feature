@@ -39,7 +39,7 @@ Feature:
     And I search and delete partner account by newly created partner company name
 
   @TC.19040 @TC.19041 @BSA.1000
-  Scenario: 19040 19041 MozyPro Partner Provision Stash Container - Default User Group no email invite - Part I and II
+  Scenario: 19040 MozyPro Partner Provision Stash Container - Default User Group no email invite
     When I add a new MozyPro partner:
       | period | base plan |
       | 12     | 100 GB    |
@@ -86,8 +86,8 @@ Feature:
       | Stash Storage Usage: | 0 bytes / 5 GB |
     And I delete partner account
 
-  @TC.19043 @TC.19044 @BSA.1000
-  Scenario: 19043 19044 MozyPro Partner Provision Stash Container - Default User Group with email invite - Part I and II
+  @TC.19044 @BSA.1000
+  Scenario: 19044 MozyPro Partner Provision Stash Container - Default User Group with email invite
     When I add a new MozyPro partner:
       | period | base plan |
       | 12     | 100 GB    |
@@ -99,26 +99,26 @@ Feature:
     When I act as newly created partner account
     And I add a new user:
       | name           | email                       | enable stash | stash quota | send stash invite |
-      | TC.19043 user  | qa1+tc+19043+user1@mozy.com | yes          | 5           | yes               |
+      | TC.19044 user  | qa1+tc+19044+user1@mozy.com | yes          | 5           | yes               |
     Then New user should be created
     And I should see 1 email(s) when I search keywords:
       | to                          | date    | subject               |
-      | qa1+tc+19043+user1@mozy.com | today   | Welcome to Mozy Stash |
+      | qa1+tc+19044+user1@mozy.com | today   | Welcome to Mozy Stash |
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
       | External ID | User                          | Name           | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      |             | qa1+tc+19043+user1@mozy.com   | TC.19043 user  | Enabled | 0        | 5 GB    | none         | today   | never     |
-    When I view user details by qa1+tc+19043+user1@mozy.com
+      |             | qa1+tc+19044+user1@mozy.com   | TC.19044 user  | Enabled | 0        | 5 GB    | none         | today   | never     |
+    When I view user details by qa1+tc+19044+user1@mozy.com
     Then User details should be:
       | Name:                  | Enable Stash:               |
-      | TC.19043 user (change) | Yes (Send Invitation Email) |
+      | TC.19044 user (change) | Yes (Send Invitation Email) |
     And User backup details table should be:
       | Computer | Encryption | Storage Used            | Last Update | License Key | Actions |
       | Stash    | Default    | 0 bytes / 5 GB (change) | N/A         |             | delete  |
     When I navigate to Search / List Machines section from bus admin console page
     Then Machine search results should be:
       | External ID | Machine | User                        | User Group           | Data Center | Storage Used            | Created | Last Update | Backed Up |
-      |             | Stash   | qa1+tc+19043+user1@mozy.com | (default user group) | qa6         | 0 bytes / 5 GB (change) | today   | —           | never     |
+      |             | Stash   | qa1+tc+19044+user1@mozy.com | (default user group) | qa6         | 0 bytes / 5 GB (change) | today   | —           | never     |
     When I navigate to Manage Resources section from bus admin console page
     Then Partner resources general information should be:
       | Stash Users: | Stash Storage Usage: |
@@ -210,7 +210,7 @@ Feature:
     And I search and delete partner account by newly created partner company name
 
   @TC.19080 @TC.19081 @BSA.1000
-  Scenario: 19080 MozyPro Partner Add Stash Container Default User Group No Email - Part I and II
+  Scenario: 19080 MozyPro Partner Add Stash Container Default User Group No Email
     When I add a new MozyPro partner:
       | period | base plan |
       | 12     | 100 GB    |
@@ -257,8 +257,8 @@ Feature:
       | Stash Storage Usage: | 0 bytes / 5 GB |
     And I delete partner account
 
-  @TC.19082 @TC.19083 @BSA.1000
-  Scenario: 19082 19083 MozyPro Partner Edit Stash Container - Default User Group No Email - Part I and II
+  @TC.19082 @BSA.1000
+  Scenario: 19082 MozyPro Partner Edit Stash Container - Default User Group No Email
     When I add a new MozyPro partner:
       | period | base plan |
       | 12     | 100 GB    |
@@ -394,8 +394,8 @@ Feature:
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.18994 @TC.19021 @BSA.1000
-  Scenario: 18994 19021 Reseller Partner Provision Stash Container - Default User Group no email invite - Part I and II
+  @TC.18994 @BSA.1000
+  Scenario: 18994 Reseller Partner Provision Stash Container - Default User Group no email invite
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
       | 12     | Silver        | 100            |
@@ -609,8 +609,8 @@ Feature:
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.18969 @TC.19058 @BSA.1000
-  Scenario: 18969 19058 Reseller Partner Add Stash Container Default User Group No Email - Part I and II
+  @TC.18969 @BSA.1000
+  Scenario: 18969 Reseller Partner Add Stash Container Default User Group No Email
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
       | 12     | Silver        | 100            |
@@ -672,8 +672,8 @@ Feature:
       | Stash Storage Usage: | 0 bytes / 5 GB |
     And I delete partner account
 
-  @TC.19060 @TC.19059 @BSA.1000
-  Scenario: 19060 19059 Reseller Partner Edit Stash Container - Default User Group No Email - Part I and II
+  @TC.19060 @BSA.1000
+  Scenario: 19060 Reseller Partner Edit Stash Container - Default User Group No Email
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
       | 12     | Silver        | 100            |
@@ -771,8 +771,8 @@ Feature:
       | Stash Storage Usage: | 0 bytes / 0 bytes |
     And I delete partner account
 
-  @TC.19061 @TC.19062 @BSA.1000
-  Scenario: 19061 19061 Reseller Partner Add Stash Container - Custom User Group with Email - Part I and II
+  @TC.19061 @BSA.1000
+  Scenario: 19061 Reseller Partner Add Stash Container - Custom User Group with Email
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
       | 12     | Silver        | 100            |
@@ -840,8 +840,8 @@ Feature:
       | Stash Storage Usage: | 0 bytes / 5 GB |
     And I delete partner account
 
-  @TC.19063 @TC.19064 @BSA.1000
-  Scenario: 19063 19064 Reseller Partner Edit Stash Container - Custom User Group No Email - Part I and II
+  @TC.19063 @BSA.1000
+  Scenario: 19063 Reseller Partner Edit Stash Container - Custom User Group No Email
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
       | 12     | Silver        | 100            |
@@ -1001,8 +1001,8 @@ Feature:
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19035 @TC.19036 @BSA.1000
-  Scenario: 19035 19036 MozyEnterprise Partner Provision Stash Container - Default User Group no email invite - Part I and II
+  @TC.19035 @BSA.1000
+  Scenario: 19035 MozyEnterprise Partner Provision Stash Container - Default User Group no email invite
     When I add a new MozyEnterprise partner:
       | period | users | server plan |
       | 12     | 10    | 100 GB      |
@@ -1057,8 +1057,8 @@ Feature:
       | Stash Storage Usage: | 0 bytes / 5 GB |
     And I delete partner account
 
-  @TC.19037 @TC.19038 @BSA.1000
-  Scenario: 19037 19038 MozyEnterprise Partner Provision Stash Container - Custom User Group with email invite - Part I and II
+  @TC.19037 @BSA.1000
+  Scenario: 19037 MozyEnterprise Partner Provision Stash Container - Custom User Group with email invite - Part I and II
     When I add a new MozyEnterprise partner:
       | period | users | server plan |
       | 12     | 10    | 100 GB      |
@@ -1200,8 +1200,8 @@ Feature:
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19104 @TC.19105 @BSA.1000
-  Scenario: 19104 19105 Reseller Partner Add Stash Container Default User Group No Email - Part I and II
+  @TC.19104 @BSA.1000
+  Scenario: 191045 Reseller Partner Add Stash Container Default User Group No Email - Part I and II
     When I add a new MozyEnterprise partner:
       | period | users |
       | 12     | 10    |
@@ -1259,8 +1259,8 @@ Feature:
       | Stash Storage Usage: | 0 bytes / 5 GB |
     And I delete partner account
 
-  @TC.19106 @TC.19107 @BSA.1000
-  Scenario: 19106 19107 MozyEnterprise Partner Edit Stash Container - Default User Group No Email - Part I and II
+  @TC.19106 @BSA.1000
+  Scenario: 19106 MozyEnterprise Partner Edit Stash Container - Default User Group No Email
     When I add a new MozyEnterprise partner:
       | period | users |
       | 12     | 10    |
@@ -1355,8 +1355,8 @@ Feature:
       | Stash Storage Usage: | 0 bytes / 0 bytes |
     And I delete partner account
 
-  @TC.19109 @TC.19110 @BSA.1000
-  Scenario: 19109 19110 MozyEnterprise Partner Add Stash Container - Custom User Group with Email - Part I and II
+  @TC.19109 @BSA.1000
+  Scenario: 19109 MozyEnterprise Partner Add Stash Container - Custom User Group with Email
     When I add a new MozyEnterprise partner:
       | period | users |
       | 12     | 10    |
@@ -1424,8 +1424,8 @@ Feature:
       | Stash Storage Usage: | 0 bytes / 5 GB |
     And I delete partner account
 
-  @TC.19111 @TC.19112 @BSA.1000
-  Scenario: 19111 19112 MozyEnterprise Partner Edit Stash Container - Custom User Group No Email - Part I and II
+  @TC.19111 @BSA.1000
+  Scenario: 19111 MozyEnterprise Partner Edit Stash Container - Custom User Group No Email
     When I add a new MozyEnterprise partner:
       | period | users |
       | 12     | 10    |
