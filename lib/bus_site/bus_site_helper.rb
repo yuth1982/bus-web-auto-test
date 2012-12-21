@@ -1,3 +1,4 @@
+
 # Partners section
 require 'bus_site/sections/partners/add_new_partner_section'
 require 'bus_site/sections/partners/search_list_partner_section'
@@ -38,6 +39,8 @@ require 'bus_site/sections/resources/process_order_section'
 require 'bus_site/sections/resources/view_data_shuttle_orders_section'
 require 'bus_site/sections/resources/order_details_section'
 require 'bus_site/sections/resources/transfer_resources_section'
+require 'bus_site/sections/resources/purchase_resources_section'
+require 'bus_site/sections/resources/return_resources_section'
 
 # Report section
 require 'bus_site/sections/reports/report_builder_section'

@@ -2,115 +2,92 @@ module Bus
   # This class provides actions for change plan section
   class ChangePlanSection < SiteHelper::Section
 
-    # Constants
-    #
-    ADD_ON_LIST_LOC = "addon_products_list"
-
-    # Mozypro
-    #
+    # Plans
     element(:pro_base_plan_select, id: "products_base_exclusive")
-    element(:pro_server_plan_status_span, id: "server-pass-status")
-    element(:pro_server_plan_change_link, xpath: "//a[text()='(change)']")
-    element(:pro_server_plan_select, xpath: "//span[@id='server-pass-status-change']/select")
-    element(:pro_storage_add_on_tb, xpath: "//div[@id='#{ADD_ON_LIST_LOC}']/div/input[@type='text']")
+    element(:enterprise_users_tb, css: "input[id^=products_base_]")
 
-    # MozyEnterprise
-    #
-    element(:enterprise_users_tb, xpath: "//div[@id='base_plans']//input[starts-with(@id, 'products_base_')]")
-    element(:enterprise_server_plan_select, id: "products_addon_exclusive")
-    element(:enterprise_server_add_on_tb, xpath: "//div[@id='#{ADD_ON_LIST_LOC}']/div[2]/input[starts-with(@id, 'products_addon_')]")
-
-    # Reseller
-    #
-    element(:reseller_quota, id: "products_exclusive_base_qty" )
-    element(:reseller_server_add_on_tb, xpath: "//div[@id='#{ADD_ON_LIST_LOC}']/input[@type='text']")
-    element(:reseller_server_plan_cb, xpath: "//div[@id='#{ADD_ON_LIST_LOC}']/input[@type='checkbox']")
+    element(:storage_add_on_tb, css: "input[id^=products_addon_]")
+    element(:server_plan_select, css: "select[id^=products_addon_]")
+    element(:server_plan_change_link, css: "span#clickable-change-link a")
+    element(:coupon_code_tb, id: "coupon_code")
+    element(:server_plan_status_span, id: "server-pass-status")
 
     # Common
     element(:current_plan_table, css: "div#current_resources_area table")
     element(:submit_btn, id: "submit_new_resources_btn" )
-    element(:coupon_code_tb, id: "coupon_code")
-    element(:charge_summary_table, xpath: "//div[@id='charge_summary']/table")
-    element(:continue_btn, xpath: "//div[@id='change_plan_confirmation']//input[@value='Continue']")
-    element(:cancel_btn, xpath: "//div[@id='change_plan_confirmation']//input[@value='Cancel']")
-    element(:message_div, xpath: "//div[@id='resource-change_billing_plan-errors']/ul")
+    element(:charge_summary_table, css: "div#charge_summary table")
+    element(:continue_btn, css: "div#change_plan_confirmation input[value=Continue]")
+    element(:cancel_btn, css: "div#change_plan_confirmation input[value=Cancel]")
+    element(:message_div, css: "div#resource-change_billing_plan-errors ul")
 
-    # Public: Change mozypro plan
+    # Public: Change MozyPro plan
     #
     # Example
-    #   change_mozypro_plan("100 GB, $39.99","yes","COUPONCODE")
+    #   @bus_site.admin_console_page.change_mozypro_plan('100 GB', 'yes', '2', 'COUPONCODE')
     #
     # Returns nothing
-    def change_mozypro_plan(base_plan, server_plan, coupon, storage_add_on=0)
-      unless base_plan.empty?
+    def change_mozypro_plan(base_plan, server_plan, storage_add_on, coupon)
+      server_plan_locator = "//label[contains(text(),'Server Plan')]"
+      # Find current server plan id e.g. 'products_addon_10353251, Server Plan, $12.99'
+      current_server_plan_id = find(:xpath, server_plan_locator)[:for]
+      unless base_plan.nil?
         pro_base_plan_select.select(base_plan)
-        #page.trigger_html_event(pro_base_plan_select.id, 'change')
+        wait_until{
+          # Wait for ajax call back
+          # Find target server plan id e.g. 'products_addon_10353259, Server Plan, $19.99'
+          target_server_plan_id = find(:xpath, server_plan_locator)[:for]
+          target_server_plan_id != current_server_plan_id
+        }
       end
-      unless storage_add_on == 0
-        pro_storage_add_on_tb.type_text(storage_add_on)
-        #page.trigger_html_event(pro_storage_add_on_tb.id, 'change')
+
+      unless server_plan.nil?
+        server_plan_change_link.click
+        wait_until{ server_plan_select.visible? }
+        server_plan_select.select(server_plan.capitalize)
       end
-      unless server_plan.empty?
-        wait_until { pro_server_plan_change_link.visible? }
-        pro_server_plan_change_link.click
-        wait_until{ pro_server_plan_select.visible? }
-        pro_server_plan_select.select(server_plan)
-        #page.trigger_html_event(pro_server_plan_select.id, 'change')
+
+      unless storage_add_on.nil?
+        storage_add_on_tb.type_text(storage_add_on)
       end
-      fill_in_coupon(coupon)
+
+      coupon_code_tb.type_text(coupon) unless coupon.nil?
       confirm_change
     end
 
-    # Public: Change mozypenterprise plan
+    # Public: Change MozypEnterprise plan
     #
     # Example
-    #   change_mozyenterprise_plan(2,"50 GB Server Plan, $296.78",2,"COUPONCODE")
+    #   @bus_site.admin_console_page.change_mozyenterprise_plan(2,"50 GB Server Plan, $296.78",2,"COUPONCODE")
     #
     # Returns nothing
     def change_mozyenterprise_plan(users, server_plan, server_add_on, coupon)
-      unless users == 0
-        enterprise_users_tb.type_text(users)
-        page.trigger_html_event(enterprise_users_tb.id, 'change')
-      end
-      unless server_plan.empty?
-        enterprise_server_plan_select.select(server_plan)
-        page.trigger_html_event(enterprise_server_plan_select.id, 'change')
-      end
-      unless server_add_on == 0
-        enterprise_server_add_on_tb.type_text(server_add_on)
-        page.trigger_html_event(enterprise_server_add_on_tb.id, 'change')
-      end
-      fill_in_coupon(coupon)
+      enterprise_users_tb.type_text(users) unless users.nil?
+      server_plan_select.select(server_plan) unless server_plan.nil?
+      storage_add_on_tb.type_text(server_add_on) unless server_add_on.nil?
+      coupon_code_tb.type_text(coupon) unless coupon.nil?
       confirm_change
     end
 
     # Public: Change reseller plan
     #
     # Example
-    #   change_reseller_plan(100,"yes",2,"COUPONCODE")
+    #   @bus_site.admin_console_page.change_reseller_plan(100,"yes",2,"COUPONCODE")
     #
     # Returns nothing
-    def change_reseller_plan(quota, server_plan, server_add_on, coupon)
-      unless quota == 0
-        reseller_quota.set(quota)
-        page.trigger_html_event(reseller_quota.id, 'change')
+    def change_reseller_plan(server_plan, server_add_on)
+      storage_add_on_tb.type_text(server_add_on) unless server_add_on.nil?
+      unless server_plan.nil?
+        server_plan_change_link.click
+        wait_until{ server_plan_select.visible? }
+        server_plan_select.select(server_plan.capitalize)
       end
-      unless server_add_on == 0
-        reseller_server_add_on_tb.type_text(server_add_on)
-        page.trigger_html_event(reseller_server_add_on_tb.id, 'change')
-      end
-      unless server_plan.empty
-        reseller_server_plan_cb.check if server_plan.eql?("yes")
-        page.trigger_html_event(reseller_server_plan_cb.id, 'change')
-      end
-      fill_in_coupon(coupon)
       confirm_change
     end
 
     # Public: Return messages for change plan actions
     #
     # Example
-    #  change_plan_section.messages
+    #  @bus_site.admin_console_page.change_plan_section.messages
     #  # => "Resources have been changed on your account."
     #
     # Returns success or error message text
@@ -121,7 +98,7 @@ module Bus
     # Public: Return change plan charge summary table rows text
     #
     # Example
-    #   change_plan_section.charge_summary_table_rows
+    #   @bus_site.admin_console_page.change_plan_section.charge_summary_table_rows
     #   # => [["Discounts Applied","-$19.99"],
     #         ["Charge for upgraded plansl","$52.98"],
     #         ["Total amount to be charged","$32.99"]]
@@ -134,7 +111,7 @@ module Bus
     # Public: Return change plan charge summary table headers text
     #
     # Example
-    #   change_plan_section.charge_summary_table_headers
+    #   @bus_site.admin_console_page.change_plan_section.charge_summary_table_headers
     #   # => ["Description", "Amount"]
     #
     # Returns order summary table rows text
@@ -149,7 +126,7 @@ module Bus
     # Public:
     #
     # Example
-    #
+    #  @bus_site.admin_console_page.mozypro_available_base_plans
     #  # => ["10 GB", "50 GB", "100 GB", "250 GB", "500 GB", "1 TB", "2 TB", "4 TB", "8 TB", "12 TB", "16 TB", "20 TB", "24 TB", "28 TB", "32 TB"]
     #
     #  Return an array of mozypro base plans
@@ -160,39 +137,39 @@ module Bus
     # Public: MozyPro current purchase
     #
     # Example
-    #   change_plan_section.mozypro_base_plan.should include base_plan unless base_plan.empty?
+    #   @bus_site.admin_console_page.change_plan_section
     #
     # Returns string
     def mozypro_base_plan
       pro_base_plan_select.first_selected_option.text
     end
 
-    # Public: Public: MozyPro current server plan status
+    # Public: Current server plan status
     #
     # Example
-    #   change_plan_section.mozypro_server_plan_status.should == server_plan unless server_plan.empty?
+    #   @bus_site.admin_console_page.change_plan_section.server_plan_status
     #
     # Returns string
-    def mozypro_server_plan_status
-      pro_server_plan_status_span.text
+    def server_plan_status
+      server_plan_status_span.text
     end
 
-    # Public: MozyPro storage add on value
+    # Public: Storage add on value
     #
     # Example
-    #   change_plan_section.mozypro_storage_add_on.should == add_on unless add_on.empty?
+    #   @bus_site.admin_console_page.change_plan_section.storage_add_on
     #
-    # Returns integer
-    def mozypro_storage_add_on
-      pro_storage_add_on_tb.value
+    # Returns string
+    def storage_add_on
+      storage_add_on_tb.value
     end
 
     # Public: MozyEnterprise current users
     #
     # Example
-    #   change_plan_section.mozyenterprise_users.should == users unless users.empty?
+    #   @bus_site.admin_console_page.change_plan_section.mozyenterprise_users
     #
-    # Returns integer
+    # Returns string
     def mozyenterprise_users
       enterprise_users_tb.value
     end
@@ -200,51 +177,26 @@ module Bus
     # Public: MozyEnterprise current server plan
     #
     # Example
-    #   mozyenterprise_server_plan.should include server_plan unless server_plan
+    #   @bus_site.admin_console_page.change_plan_section.mozyenterprise_server_plan
     #
     # Returns string
     def mozyenterprise_server_plan
-      enterprise_server_plan_select.first_selected_option.text
-    end
-
-    # Public: MozyEnterprise current server add on value
-    #
-    # Example
-    #   change_plan_section.mozyenterprise_server_add_on.should == add_on unless add_on.empty?
-    #
-    # Returns integer
-    def mozyenterprise_server_add_on
-      enterprise_server_add_on_tb.value
+      server_plan_select.first_selected_option.text
     end
 
     private
 
-    # Private: Enter coupon code
-    #
-    # Example
-    #   fill_in_coupon("COUPONCODE")
-    #
-    # Returns nothing
-    def fill_in_coupon(coupon)
-      unless coupon.empty?
-        coupon_code_tb.type_text(coupon)
-        page.trigger_html_event(coupon_code_tb.id, 'change')
-      end
-    end
-
     # Private: Confirm change plan
     #
     # Example
-    #   confirm_change
+    #   @bus_site.admin_console_page.change_plan_section.confirm_change
     #
     # Returns nothing
     def confirm_change
-      sleep 5
       page.execute_script("document.getElementById('submit_new_resources_btn').disabled=false")
-      sleep 2
+      sleep 2 # refactor later
       submit_btn.click
       continue_btn.click
-      sleep 20 # force wait for change plan
     end
   end
 end

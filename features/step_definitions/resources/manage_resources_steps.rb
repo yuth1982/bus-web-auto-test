@@ -47,7 +47,7 @@ Then /^Manage Resources|Assign Keys section should be visible/ do
   @bus_site.admin_console_page.manage_resources_section.section_visible?.should be_true
 end
 
-Then /^I refresh Manage Resources section$/ do
+When /^I refresh Manage Resources|Assign Keys section$/ do
   @bus_site.admin_console_page.manage_resources_section.refresh_bus_section
 end
 
@@ -113,3 +113,4 @@ end
 Then /^I refresh Manage User Group Resources section$/ do
   @bus_site.admin_console_page.manage_user_group_resources_section.refresh_bus_section
 end
+

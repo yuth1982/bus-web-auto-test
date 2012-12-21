@@ -259,15 +259,17 @@ module Bus
     #
     # Returns nothing
     def delete_partner(password)
-      submit_btn = find(:css, "div[id^='cancellation_reasons_'] input[value=Submit]")
-      password_tb = find(:css, "div#partner-show-#{partner_id}-delete_form input[name=password]")
-      submit_tb = find(:css, "div#partner-show-#{partner_id}-delete_form input[name=commit]")
-
+      wait_until_bus_section_load
       delete_partner_link.click
+
+      submit_btn = find(:css, "div[id^='cancellation_reasons_'] input[value=Submit]")
+      password_tb = find(:css, "div[id$=-delete_form] input[name=password]")
+      submit_delete_btn = find(:css, "div[id$=-delete_form] input[name=commit]")
+
       submit_btn.click
       wait_until{ password_tb.visible? } # wait for load delete password div
       password_tb.type_text(password)
-      submit_tb.click
+      submit_delete_btn.click
       wait_until{ has_no_link?("Delete Partner") } # wait for delete partner
     end
 

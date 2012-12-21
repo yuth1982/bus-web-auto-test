@@ -73,6 +73,7 @@ bus:
     assign_keys:                Assign Keys
     transfer_resources:         Transfer Resources
     return_unused_resources:    Return Unused Resources
+    purchase_resources:         Purchase Resources
 
     # Reports
     report_builder:             Report Builder

@@ -36,7 +36,8 @@ module Bus
     section(:manage_resources_section, ManageResourcesSection, id: "resource-available_key_list")
     section(:manage_user_group_resources_section, ManageUserGroupResourcesSection , css: "div[id^=resource-group_available_keys-]")
     section(:transfer_resources_section, TransferResourcesSection, id: "resource-transfer_resources")
-
+    section(:purchase_resources_section, PurchaseResourcesSection, id: "resource-purchase_resources")
+    section(:return_resources_section, ReturnResourcesSection, id: "resource-unpurchase_resources")
 
     # Data shuttle section
     section(:order_data_shuttle_section, OrderDataShuttleSection, id: "resource-choose_pro_partner_for_new_seed")

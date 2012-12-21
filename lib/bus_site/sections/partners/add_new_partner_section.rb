@@ -65,6 +65,9 @@ module Bus
     element(:create_partner_btn, xpath: "//div[@id='cc-details']//input[@id='submit_button']")
     element(:back_btn, id: "back_button")
 
+    # sub partner
+    element(:create_sub_partner_btn, css: "input[value='Create Partner']")
+
     # Public: Add a new partner account
     #
     # Example
@@ -95,6 +98,13 @@ module Bus
         set_pre_sub_total(partner)
         next_btn.click
       end
+    end
+
+    def add_new_sub_partner(partner_name, admin_name, admin_email)
+      new_partner_name_tb.type_text(partner_name)
+      new_admin_display_name_tb.type_text(admin_name)
+      new_admin_username_tb.type_text(admin_email)
+      create_sub_partner_btn.click
     end
 
     # Public: Messages for change account details actions
