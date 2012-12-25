@@ -6,9 +6,9 @@ module Bus
     #
     # Search section elements
     element(:search_partner_tb, id: "pro_partner_search")
-    element(:search_partner_btn, xpath: "//div[@id='resource-choose_pro_partner_for_new_seed-content']//input[@value='Submit']")
-    element(:search_results_table, xpath: "//div[@id='resource-choose_pro_partner_for_new_seed-content']//table[@class='table-view']")
-    element(:clear_search_link, link: "Clear search")
+    element(:search_partner_btn, css: "div#resource-choose_pro_partner_for_new_seed-content input[value=Submit]")
+    element(:search_results_table, css: "div#resource-choose_pro_partner_for_new_seed-content table.table-view")
+    element(:clear_search_link, xpath: "//a[text()='Clear search']")
 
     # Public: Search partner by search text
     #

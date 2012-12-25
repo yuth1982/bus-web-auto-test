@@ -5,8 +5,8 @@ module Bus
     # Private elements
     #
     element(:search_order_tb, id: "seed_device_order_search")
-    element(:search_order_btn, xpath: "//div[@id='resource-view_seed_device_orders-content']//input[@value='Submit']")
-    element(:order_results_table, xpath: "//div[@id='resource-view_seed_device_orders-content']//table[@class='table-view']")
+    element(:search_order_btn, css: "div#resource-view_seed_device_orders-content input[value=Submit]")
+    element(:order_results_table, css: "div#resource-view_seed_device_orders-content table.table-view")
 
     # Public: Search data shuttle order
     #
@@ -28,7 +28,7 @@ module Bus
     #
     # Returns Nothing
     def view_latest_order
-      sleep 5 # wait until search complete
+      wait_until_bus_section_load
       order_results_table.rows.first[0].find("a").click
     end
   end

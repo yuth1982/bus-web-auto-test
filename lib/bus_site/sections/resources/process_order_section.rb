@@ -5,10 +5,9 @@ module Bus
     # Private elements
     #
     # Verify shipping address section
-    element(:verify_shipping_address_table, xpath: "//form[@id='resource-create_new_seed_form']/div/ul[2]/li/table")
+    element(:verify_shipping_address_table, css: "table.form-box2")
 
-    element(:all_msg_div, xpath: "//ul[@class='flash successes' or @class='flash errors']")
-    element(:message_div, xpath: "//ul[@class='flash successes' or @class='flash errors']/li")
+    element(:message_div, xpath: "//ul[@class='flash successes' or @class='flash errors']")
 
     element(:name_tb, id: "seed_device_order_name")
     element(:address1_tb, id: "seed_device_order_address1")
@@ -19,14 +18,16 @@ module Bus
     element(:zip_tb, id: "seed_device_order_zip")
     element(:phone_tb, id: "seed_device_order_phone_number")
     element(:power_adapter_select, id: "seed_device_order_sku")
-    elements(:next_btns, xpath: "//div[@id='wizard-buttons-right']//input[@value='Next']")
+    elements(:next_btns, css: "div#wizard-buttons-right input[value=Next]")
+
+    # [0] Order Keys table [1] Licence Key table [2] Order Summary table
+    elements(:keys_tables, css: "ul.tab-panes > li > div > table")
 
     # Create order section
-    elements(:keys_tables, xpath: "//form[@id='resource-create_new_seed_form']/div/ul[2]/li[2]//table[@class='table-view']")
+    element(:available_keys_table, css: "div.box table.table-view")
     element(:add_new_key, xpath: "//a[text()='Add New Key']")
 
     # Summary section
-    elements(:summary_tables, xpath: "//form[@id='resource-create_new_seed_form']/div/ul[2]/li[3]//table[@class='table-view']")
     element(:num_win_drivers_tb, id: "seed_device_order_win_drive_num")
     element(:num_mac_drivers_tb, id: "seed_device_order_mac_drive_num")
     element(:is_ship_driver_cb, id: "seed_device_order_skip_order_fulfillment")
@@ -34,26 +35,6 @@ module Bus
 
     def address_desc_columns
       verify_shipping_address_table.rows_text.map{ |row| row[0] }
-    end
-
-    # Public: Click create order tab
-    #
-    # Example
-    #    @bus_admin_console_page.process_order_section.go_to_create_order_section
-    #
-    # Return nothing
-    def go_to_create_order_section
-        next_btns[0].click
-    end
-
-    # Public: Click summary tab
-    #
-    # Example
-    #    @bus_admin_console_page.process_order_section.go_to_summary_section
-    #
-    # Return nothing
-    def go_to_summary_section
-      next_btns[1].click
     end
 
     # Public: Shipping address text
@@ -69,38 +50,47 @@ module Bus
     #
     # Return nothing
     def create_order(order)
+      wait_until_bus_section_load
       # fill shipping address section
-      power_adapter_select.select(order.adapter_type)
-      go_to_create_order_section
-      sleep 10 # wait for load create order section
-      # fill create order section
-      case order.key_from
-        when "available"
-          # Add key from available keys
-          add_available_key.click
-        when "new"
-          add_new_key.click
-        else
-          raise "Please order key from either available keys or add a new key"
-      end
-      sleep 15 # wait for load order keys
-      os_tb.select(order.os)
-      order_quota_tb.type_text(order.quota)
-      order_assign_to_tb.type_text(order.assign_to)
-      go_to_summary_section
-      sleep 10 # wait for load summary section
+      power_adapter_select.select(order.adapter_type) unless order.adapter_type.nil?
+      next_btns[0].click # click next and goto
+      #go_to_create_order_section
+      wait_until_bus_section_load
 
-      # fill summary section
-      if all_msg_div.text.empty?
-        discount_tb.type_text(order.discount)
-        # focus out of discount text box, make sure discount amount changes
-        page.trigger_html_event(discount_tb.id, "change")
-        num_win_drivers_tb.type_text(order.num_win_drivers) if order.num_win_drivers > 0
-        num_mac_drivers_tb.type_text(order.num_mac_drivers) if order.num_mac_drivers > 0
-        is_ship_driver_cb.check unless order.ship_driver
-        submit_order_btn.click
+      unless order.adapter_type.nil?
+        # fill create order section
+        case order.key_from
+          when "available"
+            # Add key from available keys
+            add_available_key.click
+          when "new"
+            add_new_key.click
+          else
+            raise "Please order key from either available keys or add a new key"
+        end
+        wait_until_bus_section_load
+
+        os_tb.select(order.os) unless order.os.nil?
+        order_quota_tb.type_text(order.quota) unless order.quota.nil?
+        order_assign_to_tb.type_text(order.assign_to) unless order.assign_to.nil?
+
+        wait_until_bus_section_load
+        next_btns[1].click
+
+        wait_until_bus_section_load
+
+        # fill summary section
+        if messages.empty?
+          discount_tb.type_text(order.discount) unless order.discount.nil?
+          # focus out of discount text box, make sure discount amount changes
+          page.trigger_html_event(discount_tb.id, "change")
+          num_win_drivers_tb.type_text(order.num_win_drivers) unless order.num_win_drivers.nil?
+          num_mac_drivers_tb.type_text(order.num_mac_drivers) unless order.num_mac_drivers.nil?
+          is_ship_driver_cb.check unless order.ship_driver.nil?
+          submit_order_btn.click
+        end
+        wait_until_bus_section_load
       end
-      sleep 10 # wait for complete ordering data shuttle
     end
 
     # Public: Messages for process order actions
@@ -123,7 +113,7 @@ module Bus
     #
     # Returns order summary table rows text
     def order_summary_table_rows
-      summary_tables[1].rows_text
+      order_summary_table.rows_text
     end
 
     def num_win_driver_ordered
@@ -136,12 +126,16 @@ module Bus
 
     private
 
-    def available_keys_table
+    def order_keys_table
       keys_tables[0]
     end
 
-    def order_keys_table
+    def licence_key_table
       keys_tables[1]
+    end
+
+    def order_summary_table
+      keys_tables[2]
     end
 
     def add_available_key
@@ -158,10 +152,6 @@ module Bus
 
     def order_assign_to_tb
       order_keys_table.rows.first[5].find("input")
-    end
-
-    def licence_key_table
-      summary_tables[0]
     end
 
     def discount_tb

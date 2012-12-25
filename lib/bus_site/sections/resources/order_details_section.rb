@@ -4,8 +4,9 @@ module Bus
 
     # Private elements
     #
-    elements(:cancel_order_links, link: "cancel")
-    elements(:order_detail_tables, xpath: "//div[starts-with(@id,'resource-show_data_shuttle_order-') and contains(@id, '-content')]//table")
+    elements(:cancel_order_links, xpath: "//a[text()='cancel']")
+    element(:order_detail_table, css: "div[id^=resource-show_data_shuttle_order-] table.table-view")
+    element(:shipping_tracking_table, css: "div[id^=resource-show_data_shuttle_order-] table.mini-table")
 
     # Public: Click cancel button of first order in list
     #
@@ -14,6 +15,7 @@ module Bus
     #
     # Returns nothing
     def cancel_latest_order
+      wait_until_bus_section_load
       cancel_order_links.first.click
     end
 
@@ -25,7 +27,7 @@ module Bus
     #
     # Returns Shipping tracking table rows text
     def shipping_tracking_table_rows
-      order_detail_tables[1].rows_text
+      shipping_tracking_table.rows_text
     end
 
     # Public: Last created order status
@@ -36,13 +38,7 @@ module Bus
     #
     # Returns status text
     def latest_order_status
-      orders_table.rows.first[1].text
-    end
-
-    private
-
-    def orders_table
-      order_detail_tables[0]
+      order_detail_table.rows.first[1].text
     end
   end
 end

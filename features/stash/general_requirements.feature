@@ -1058,7 +1058,7 @@ Feature:
     And I delete partner account
 
   @TC.19037 @BSA.1000
-  Scenario: 19037 MozyEnterprise Partner Provision Stash Container - Custom User Group with email invite - Part I and II
+  Scenario: 19037 MozyEnterprise Partner Provision Stash Container - Custom User Group with email invite
     When I add a new MozyEnterprise partner:
       | period | users | server plan |
       | 12     | 10    | 100 GB      |
@@ -1129,8 +1129,8 @@ Feature:
   @TC.19102 @BSA.1000
   Scenario: 19102 MozyEnterprise Partner Add Stash to existing partner
     When I add a new MozyEnterprise partner:
-      | period | users |
-      | 12     | 10    |
+      | period | users | server plan |
+      | 12     | 10    | 100 GB      |
     Then New partner should be created
     When I act as newly created partner account
     When I navigate to Add New User section from bus admin console page

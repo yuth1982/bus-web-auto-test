@@ -31,6 +31,8 @@ module Bus
       desktop_quota_tb.type_text(desktop_quota) unless desktop_quota.nil?
       continue_btn.click
       submit_purchase_btn.click
+      # Not necessary need to wait, work around for TC.19871, TC.19872
+      wait_until_bus_section_load
     end
 
     # Public: Messages for purchase resources actions

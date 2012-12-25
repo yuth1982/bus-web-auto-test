@@ -7,8 +7,8 @@ module Bus
       # Public: Initialize a DataShuttleOrder Object
       #
       def initialize
-        @adapter_type = "Data Shuttle US"
-        @os = "Win"
+        @adapter_type = ""
+        @os = ""
         @quota = 0
         @assign_to = ""
         @key_from = "new"

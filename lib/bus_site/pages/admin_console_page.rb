@@ -41,7 +41,7 @@ module Bus
 
     # Data shuttle section
     section(:order_data_shuttle_section, OrderDataShuttleSection, id: "resource-choose_pro_partner_for_new_seed")
-    section(:process_order_section, ProcessOrderSection, css: "div[id^=resource-create_new_seed-]")
+    section(:process_order_section, ProcessOrderSection, css: "div[id^=resource-create_new_seed-].start-closed")
     section(:view_data_shuttle_orders_section, ViewDataShuttleOrdersSection, id: "resource-view_seed_device_orders")
     section(:order_details_section, OrderDetailsSection, css: "div[id^=resource-show_data_shuttle_order-]")
 
