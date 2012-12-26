@@ -11,22 +11,15 @@ When /^I search user by:$/ do |search_key_table|
   @bus_site.admin_console_page.search_list_users_section.search_user(keywords, filter)
 end
 
-Then /^User search results should be|include:$/ do |results_table|
-  results_table.map_column!('Created') do |value|
-    Chronic.parse(value).strftime("%m/%d/%y")
+Then /^User search results should be:$/ do |results_table|
+  if results_table.headers.include?('Created')
+    results_table.map_column!('Created') do |value|
+      Chronic.parse(value).strftime("%m/%d/%y")
+    end
   end
-
-  actual_hash = @bus_site.admin_console_page.search_list_users_section.search_results_table_hash
-  expected_hash = results_table.hashes
-  expected_hash.each_index{ |index| expected_hash[index].keys.each{ |key| actual_hash[index][key].should == expected_hash[index][key]} }
-
-end
-
-When /^Synced users table should be:$/ do |users_table|
-  header = @bus_site.admin_console_page.search_list_users_section.search_results_table_headers
-  rows = @bus_site.admin_console_page.search_list_users_section.search_results_table_rows
-  header[1..3].should == users_table.headers
-  rows.collect { |row| row[1..3]}.should == users_table.rows
+  actual = @bus_site.admin_console_page.search_list_users_section.search_results_hashes
+  expected = results_table.hashes
+  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
 
 When /^The users table should be empty$/ do

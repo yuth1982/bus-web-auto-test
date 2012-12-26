@@ -44,11 +44,14 @@ When /^I view admin details by (.+)$/ do |partner_email|
 end
 
 Then /^Partner search results should be:$/ do |results_table|
-  results_table.map_column!('Created') do |value|
-    Chronic.parse(value).strftime("%m/%d/%y")
+  if results_table.headers.include?('Created')
+    results_table.map_column!('Created') do |value|
+      Chronic.parse(value).strftime("%m/%d/%y")
+    end
   end
-  @bus_site.admin_console_page.search_list_partner_section.search_results_table_headers.should == results_table.headers
-  @bus_site.admin_console_page.search_list_partner_section.search_results_table_rows.should == results_table.rows
+  actual = @bus_site.admin_console_page.search_list_partner_section.search_results_hashes
+  expected = results_table.hashes
+  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
 
 When /^I refresh Search List Partners section$/ do

@@ -23,15 +23,14 @@ module Bus
       wait_until_bus_section_load
     end
 
-    # Public: Search results table hash rows
+    # Public: Search results hashes
+    #         Converts results table into an Array of Hash where the keys of each Hash are the headers in the table.                                                                                               # Example
     #
-    # Example
-    #
-    #  @bus_admin_console_page.search_list_users_section.search_results_table_headers
+    #  @bus_admin_console_page.search_list_users_section.search_results_hashes
     #  # => ["User"=>"user@mozy.com", "Name"=>"Test User", "Machines"=>0, "Storage"=>"15 GB", “Storage Used"=>0, "Created"=>"08/15/12"", "Backed Up"=>"never"]
     #
     # Returns hash array
-    def search_results_table_hash
+    def search_results_hashes
       search_results_table.rows_text.map{ |row| Hash[*search_results_table.headers_text.zip(row).flatten] }
     end
 

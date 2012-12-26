@@ -1,11 +1,11 @@
 Feature: Search and list user
 
-  @smoke
+  @search_user_example
   Scenario: Search user
-    Given I log in bus admin console as mozypro test account
+    Given I log in bus admin console as administrator
     When I search user by:
-      | keywords                   | filter |
-      | qa1+new+user+test@mozy.com | None   |
+      | keywords             |
+      | backup19057@test.com |
     Then User search results should be:
-      | User                       | Name       | Machines | Storage | Storage Used | Created  | Backed Up |
-      | qa1+new+user+test@mozy.com | new user 1 | 0        | 0 bytes | none         | 08/15/12 | never     |
+      | User                 | Name         |
+      | backup19057@test.com | backup19057  |

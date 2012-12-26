@@ -28,9 +28,9 @@ Feature:
     Then New user should be created
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | External ID | User                          | Name           | User Group           | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      |             | qa1+tc+19045+user2@mozy.com   | TC.19045 user2 | (default user group) | Enabled | 0        | 15 GB   | none         | today   | never     |
-      |             | qa1+tc+19045+user1@mozy.com   | TC.19045 user1 | (default user group) | Enabled | 0        | 10 GB   | none         | today   | never     |
+      | User                          | Name           | User Group           | Stash   | Storage | Created |
+      | qa1+tc+19045+user2@mozy.com   | TC.19045 user2 | (default user group) | Enabled | 15 GB   | today   |
+      | qa1+tc+19045+user1@mozy.com   | TC.19045 user1 | (default user group) | Enabled | 10 GB   | today   |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -83,7 +83,7 @@ Feature:
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
-    Then Partner account attributes should include:
+    Then Partner account attributes should be:
       | Stash Users:            | -1        |
       | Default Stash Storage:  | 5         |
     And Partner stash info should be:
@@ -113,7 +113,7 @@ Feature:
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
-    And Partner account attributes should include:
+    And Partner account attributes should be:
       | Stash Users:            | -1        |
       | Default Stash Storage:  | 10        |
     And Partner stash info should be:
@@ -145,7 +145,7 @@ Feature:
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
-    And Partner account attributes should include:
+    And Partner account attributes should be:
       | Stash Users:            | -1        |
       | Default Stash Storage:  | 10        |
     And Partner stash info should be:

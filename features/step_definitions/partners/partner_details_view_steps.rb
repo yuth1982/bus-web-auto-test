@@ -79,7 +79,7 @@ Then /^Partner contact information should be:$/ do |contact_table|
   end
 end
 
-Then /^Partner account attributes should be|include:$/ do |attributes_table|
+Then /^Partner account attributes should be:$/ do |attributes_table|
   (@bus_site.admin_console_page.partner_details_section.account_attributes_rows && attributes_table.raw).should == attributes_table.raw
 end
 
