@@ -17,8 +17,9 @@ end
 #
 Then /^User groups list table should be:$/ do |user_group_table|
   @bus_site.admin_console_page.list_user_groups_section.wait_until_bus_section_load
-  @bus_site.admin_console_page.list_user_groups_section.user_group_list_table_headers.should == user_group_table.headers
-  @bus_site.admin_console_page.list_user_groups_section.user_group_list_table_rows.should == user_group_table.rows
+  actual = @bus_site.admin_console_page.list_user_groups_section.user_group_list_table_hashes
+  expected = user_group_table.hashes
+  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
 
 When /^I refresh List User Group section$/ do

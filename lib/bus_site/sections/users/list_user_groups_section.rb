@@ -35,5 +35,9 @@ module Bus
     def user_group_list_table_rows
       user_groups_list_table.rows_text
     end
+
+    def user_group_list_table_hashes
+      user_groups_list_table.rows_text.map{ |row| Hash[*user_groups_list_table.headers_text.zip(row).flatten] }
+    end
   end
 end

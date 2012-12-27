@@ -105,5 +105,9 @@ module Bus
     def add_stash_to_all_user
       add_stash_to_all_link.click
     end
+
+    def users_list_table_hashes
+      users_list_table_rows.map{ |row| Hash[*users_list_table_headers.zip(row).flatten] }
+    end
   end
 end

@@ -23,11 +23,14 @@ end
 
 Then /^User group users list details should be:$/ do |users_list_table|
   @bus_site.admin_console_page.user_group_details_section.has_change_name_link?
-  users_list_table.map_column!('Created') do |value|
-    Chronic.parse(value).strftime("%m/%d/%y")
+  if users_list_table.headers.include?('Created')
+    users_list_table.map_column!('Created') do |value|
+      Chronic.parse(value).strftime("%m/%d/%y")
+    end
   end
-  @bus_site.admin_console_page.user_group_details_section.users_list_table_headers.should == users_list_table.headers
-  @bus_site.admin_console_page.user_group_details_section.users_list_table_rows.should == users_list_table.rows
+  actual = @bus_site.admin_console_page.user_group_details_section.users_list_table_hashes
+  expected = users_list_table.hashes
+  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
 
 Then /^I should not see (.+) text on user group details section$/ do |text|
@@ -59,4 +62,8 @@ end
 
 When /^I refresh User Group Details section$/ do
   @bus_site.admin_console_page.user_group_details_section.refresh_bus_section
+end
+
+When /^I close the user group detail page$/ do
+  @bus_site.admin_console_page.user_group_details_section.close_bus_section
 end

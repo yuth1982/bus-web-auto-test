@@ -84,5 +84,15 @@ module SiteHelper
       # Possible refactor here
       sleep 2
     end
+
+    # Public: close bus admin console section
+    #
+    # Example:
+    #   @bus_site.admin_console_page.close_bus_section
+    #
+    # Returns nothing
+    def close_bus_section
+      root_element.find(:css, "a[onclick^='delete_module']").click
+    end
   end
 end
