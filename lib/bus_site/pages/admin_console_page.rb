@@ -19,7 +19,7 @@ module Bus
     section(:search_list_users_section, SearchListUsersSection, id: "user-list")
     section(:search_list_machines_section, SearchListMachinesSection, id: "machine-list")
     section(:add_new_user_group_section, AddNewUserGroupSection, id: "user_groups-new")
-    section(:add_new_user_section, AddNewUserSection, id: "user-new")
+    section(:add_new_user_section, AddNewUserSection, id: "user-new_users_in_batch")
     section(:machine_mapping_section, MachineMappingSection, id: "machine-machine_migration")
     section(:user_group_details_section, UserGroupDetailsSection, css: "div[id^=user_groups-show-]")
     section(:list_user_groups_section, ListUserGroupsSection, id: "user_groups-list")

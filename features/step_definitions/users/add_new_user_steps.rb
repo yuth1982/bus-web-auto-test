@@ -3,7 +3,7 @@
 # User available column names:
 # | user group | server licenses | server quota | desktop licenses | desktop quota |
 #
-When /^I add a new user:$/ do |user_table|
+When /^I add a new user to (MozyPro||Reseller||MozyEnterprise||Itemized) partner:$/ do |type, user_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_user'])
 
   @user = Bus::DataObj::User.new
@@ -11,18 +11,30 @@ When /^I add a new user:$/ do |user_table|
   @user.user_group = attributes["user group"]
   @user.name = attributes["name"] unless attributes["name"].nil?
   @user.email = attributes["email"] unless attributes["email"].nil?
-  @user.server_licenses = attributes["server licenses"]
-  @user.server_quota = attributes["server quota"]
-  @user.desktop_licenses = attributes["desktop licenses"]
-  @user.desktop_quota = attributes["desktop quota"]
+  @user.server_licenses = attributes["server licenses"] unless attributes["server licenses"].nil?
+  @user.server_quota = attributes["server quota"] unless attributes["server quota"].nil?
+  @user.desktop_licenses = attributes["desktop licenses"] unless attributes["desktop licenses"].nil?
+  @user.desktop_quota = attributes["desktop quota"] unless attributes["desktop quota"].nil?
+  @user.desired_user_storage = attributes["desired_user_storage"] unless attributes["desired_user_storage"].nil?
+  @user.device_count = attributes["device_count"] unless attributes["device_count"].nil?
   @user.enable_stash = (attributes["enable stash"] || "no").eql?("yes")
-  @user.stash_quota = attributes["stash quota"]
+  @user.stash_quota = attributes["stash quota"] unless attributes["stash quota"].nil?
   @user.send_stash_invite = (attributes["send stash invite"] || "no").eql?("yes")
-  @bus_site.admin_console_page.add_new_user_section.add_new_user(@user)
+
+  case type
+    when "Itemized"
+      @bus_site.admin_console_page.add_new_user_section.add_new_user_to_itemized_partner(@user)
+    when "MozyPro" || "Reseller"
+      @bus_site.admin_console_page.add_new_user_section.add_new_user_to_partner(@user)
+    when "MozyEnterprise"
+      @bus_site.admin_console_page.add_new_user_section.add_new_user_to_enterprise_partner(@user)
+  end
+
+
 end
 
 Then /^New user should be created$/ do
-  @bus_site.admin_console_page.add_new_user_section.messages.should == "Created new user #{@user.email}"
+  @bus_site.admin_console_page.add_new_user_section.messages.should == "Created 1 user(s)"
 end
 
 Then /^New user created message should be (.+)$/ do |message|
