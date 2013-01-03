@@ -41,7 +41,7 @@ Feature: Bus Smoke Test
     And Partner sub admins should be empty
     When I act as newly created partner account
     And I change MozyEnterprise account plan to:
-      | users | server plan | server add-on |
+      | users | server plan | storage add-on |
       | 15    | 500 GB      | 5             |
     Then Change plan charge summary should be:
       | Description                                | Amount      |

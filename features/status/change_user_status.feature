@@ -34,7 +34,7 @@ Feature: Change User Status
     And I activate the partner
     And I log out bus admin console
     And I log in bus admin console as new partner admin
-    Then the new partner admin should be asked to verify their email address
+    Then the new partner admin should be logged in
     Then I log in bus admin console as administrator
     And I view partner details by newly created partner company name
     And I delete partner account
