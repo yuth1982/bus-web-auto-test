@@ -7,29 +7,78 @@
 # Reseller available columns:
 # Optional: server plan, storage add-on
 #
-When /^I change (MozyPro|MozyEnterprise|Reseller) account plan to:$/ do |type, plan_table|
+When /^I change (MozyPro|MozyEnterprise|Reseller|Itemized) account plan to:$/ do |type, plan_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['change_plan'])
-  attributes = plan_table.hashes.first
-  base_plan = attributes["base plan"] # MozyPro
-  users = attributes["users"] # MozyEnterprise
-  server_plan = attributes["server plan"]
-  storage_add_on = attributes["storage add-on"]
-  coupon = attributes["coupon"]
+  cells = plan_table.hashes.first
+  base_plan = cells['base plan'] # MozyPro
+  users = cells['users'] # MozyEnterprise
+  server_plan = cells['server plan']
+  storage_add_on = cells['storage add-on']
+  coupon = cells['coupon']
+  # Itemized
+  server_license = cells['server license']
+  server_quota = cells['server quota']
+  desktop_license = cells['desktop license']
+  desktop_quota = cells['desktop quota']
+
   case type
-    when "MozyPro"
+    when 'MozyPro'
       @bus_site.admin_console_page.change_plan_section.change_mozypro_plan(base_plan, server_plan, storage_add_on, coupon)
-    when "MozyEnterprise"
+    when 'MozyEnterprise'
       @bus_site.admin_console_page.change_plan_section.change_mozyenterprise_plan(users, server_plan, storage_add_on, coupon)
-    when "Reseller"
+    when 'Reseller'
       @bus_site.admin_console_page.change_plan_section.change_reseller_plan(server_plan, storage_add_on)
+    when 'Itemized'
+      @bus_site.admin_console_page.change_plan_section.change_itemized_partner_plan(server_license, server_quota, desktop_license, desktop_quota)
     else
       raise "#{type} Company type not exist"
   end
 end
 
+When /^I increase Itemized account plan by:$/ do |resources_table|
+  cells = resources_table.hashes.first
+  @current_itemized_resources = @bus_site.admin_console_page.change_plan_section.current_itemized_resources
+
+  s_license = (cells["server license"] || 0).to_i
+  s_quota = (cells["server quota"] || 0).to_i
+  d_license = (cells["desktop license"] || 0).to_i
+  d_quota = (cells["desktop quota"] || 0).to_i
+
+  new_server_license = @current_itemized_resources[:server_license] + s_license
+  new_server_quota = @current_itemized_resources[:server_quota] + s_quota
+  new_desktop_license = @current_itemized_resources[:desktop_license] + d_license
+  new_desktop_quota = @current_itemized_resources[:desktop_quota] + d_quota
+  @bus_site.admin_console_page.change_plan_section.change_itemized_partner_plan(new_server_license, new_server_quota, new_desktop_license, new_desktop_quota)
+end
+
+Then /^Current itemized resources should (be|increase):$/ do |how, resources_table|
+  @new_itemized_resources = @bus_site.admin_console_page.change_plan_section.current_itemized_resources
+  cells = resources_table.hashes.first
+
+  s_license = (cells["server license"] || 0).to_i
+  s_quota = (cells["server quota"] || 0).to_i
+  d_license = (cells["desktop license"] || 0).to_i
+  d_quota = (cells["desktop quota"] || 0).to_i
+
+  case how
+    when 'increase'
+      (@new_itemized_resources[:server_license] - @current_itemized_resources[:server_license]).should == s_license
+      (@new_itemized_resources[:server_quota] - @current_itemized_resources[:server_quota]).should == s_quota
+      (@new_itemized_resources[:desktop_license] - @current_itemized_resources[:desktop_license]).should == d_license
+      (@new_itemized_resources[:desktop_quota] - @current_itemized_resources[:desktop_quota]).should == d_quota
+    when 'be'
+      @new_itemized_resources[:server_license].should == s_license
+      @new_itemized_resources[:server_quota].should == s_quota
+      @new_itemized_resources[:desktop_license].should == d_license
+      @new_itemized_resources[:desktop_quota].should == d_quota
+    else
+      raise 'unknown error'
+  end
+end
+
 # Success message depends on Manage Resources vs. Assigned Keys
 # which is determined by the company type of the account
-Then /^the (MozyPro|MozyEnterprise|Reseller) account plan should be changed$/ do |type|
+Then /^the (MozyPro|MozyEnterprise|Reseller|Itemized) account plan should be changed$/ do |type|
   case type
     when "MozyPro"
       @bus_site.admin_console_page.change_plan_section.messages.should == "Successfully changed plan. Visit Manage Resources to distribute your new resources."
@@ -37,17 +86,19 @@ Then /^the (MozyPro|MozyEnterprise|Reseller) account plan should be changed$/ do
       @bus_site.admin_console_page.change_plan_section.messages.should == "Successfully changed plan."
     when "Reseller"
       @bus_site.admin_console_page.change_plan_section.messages.should == "Successfully changed plan. Visit Manage Resources to distribute your new resources."
+    when "Itemized"
+      @bus_site.admin_console_page.change_plan_section.messages.should == "Successfully changed plan."
     else
       raise "#{type} Company type not exist"
   end
 end
 
-Then /^(MozyPro|MozyEnterprise|Reseller) new plan should be:$/ do |type, new_plan_table|
-  attributes = new_plan_table.hashes.first
-  base_plan = attributes["base plan"]
-  users = attributes["users"]
-  server_plan = attributes["server plan"]
-  add_on = attributes["storage add-on"]
+Then /^(MozyPro|MozyEnterprise|Reseller|Itemized) new plan should be:$/ do |type, new_plan_table|
+  expected = new_plan_table.hashes.first
+  base_plan = expected["base plan"]
+  users = expected["users"]
+  server_plan = expected["server plan"]
+  add_on = expected["storage add-on"]
 
   case type
     when 'MozyPro'
@@ -59,9 +110,16 @@ Then /^(MozyPro|MozyEnterprise|Reseller) new plan should be:$/ do |type, new_pla
       @bus_site.admin_console_page.change_plan_section.mozyenterprise_users.should == users unless users.nil?
       @bus_site.admin_console_page.change_plan_section.mozyenterprise_server_plan.should include server_plan unless server_plan.nil?
       @bus_site.admin_console_page.change_plan_section.storage_add_on.should == add_on unless add_on.nil?
+
     when 'Reseller'
       @bus_site.admin_console_page.change_plan_section.server_plan_status.should == server_plan.capitalize unless server_plan.nil?
       @bus_site.admin_console_page.change_plan_section.storage_add_on.should == add_on unless add_on.nil?
+
+    when 'Itemized'
+      actual = @bus_site.admin_console_page.change_plan_section.itemized_current_plan_hash
+      expected.keys.each do |key|
+        actual[key].should == expected[key]
+      end
     else
       raise "#{type} Company type not exist"
   end

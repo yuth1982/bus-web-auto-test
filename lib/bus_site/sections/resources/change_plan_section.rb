@@ -12,6 +12,9 @@ module Bus
     element(:coupon_code_tb, id: "coupon_code")
     element(:server_plan_status_span, id: "server-pass-status")
 
+    # Itemized
+    elements(:itemized_plans_tbs, css: "div#base_plans_group input")
+
     # Common
     element(:current_plan_table, css: "div#current_resources_area table")
     element(:submit_btn, id: "submit_new_resources_btn" )
@@ -82,6 +85,38 @@ module Bus
         server_plan_select.select(server_plan.capitalize)
       end
       confirm_change
+    end
+
+    # Public: Change itemized partner plan
+    #
+    # Example
+    #   @bus_site.admin_console_page.change_itemized_partner_plan('1','2','1','2')
+    #
+    # Returns nothing
+    def change_itemized_partner_plan(server_license, server_quota, desktop_license, desktop_quota)
+      wait_until_bus_section_load
+      itemized_plans_tbs[0].type_text(server_quota) unless server_quota.nil?
+      itemized_plans_tbs[1].type_text(desktop_quota) unless desktop_quota.nil?
+      itemized_plans_tbs[2].type_text(desktop_license) unless desktop_license.nil?
+      itemized_plans_tbs[3].type_text(server_license) unless server_license.nil?
+      confirm_change
+    end
+
+    # Public: Current itemized account resources
+    #
+    # Example
+    #  @bus_admin_console_page.purchase_resources_section.current_purchased_resources
+    #  # => "server_plan => 1, server_quota => 2, desktop_license => 1, desktop_quota => 3"
+    #
+    # Returns resource object contains number of server license, server quota, desktop license and desktop quota
+    def current_itemized_resources
+      wait_until_bus_section_load
+      resources = Struct.new(:server_license, :server_quota, :desktop_license, :desktop_quota)
+      server_license = itemized_plans_tbs[3].value.to_i
+      server_quota = itemized_plans_tbs[0].value.to_i
+      desktop_license = itemized_plans_tbs[2].value.to_i
+      desktop_quota = itemized_plans_tbs[1].value.to_i
+      resources.new(server_license, server_quota, desktop_license, desktop_quota)
     end
 
     # Public: Return messages for change plan actions
@@ -182,6 +217,11 @@ module Bus
     # Returns string
     def mozyenterprise_server_plan
       server_plan_select.first_selected_option.text
+    end
+
+    def itemized_current_plan_hash
+      wait_until_bus_section_load
+      Hash['server quota' => itemized_plans_tbs[0].value, 'desktop quota' => itemized_plans_tbs[1].value, 'desktop license' => itemized_plans_tbs[2].value, 'server license' => itemized_plans_tbs[3].value]
     end
 
     private
