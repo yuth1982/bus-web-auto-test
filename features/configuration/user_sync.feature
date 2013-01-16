@@ -553,8 +553,8 @@ Feature: User sync
   @TC.18738 @function
   Scenario: UserProvision-Delete a group, the users belong to this group will be moved to default group
     When I act as partner by:
-      | email                         |
-      | user_sync_automation@auto.com |
+      | email                                |
+      | user_sync_delete_user_group@auto.com |
     And I navigate to Add New User Group section from bus admin console page
     And I add a new user group:
       | name        |
@@ -582,7 +582,7 @@ Feature: User sync
       | dev_test2@test.com |   dev_test2   | test_delete |
       | dev_test1@test.com |   dev_test1   | test_delete |
     And I search and delete test_delete user group
-    And I refresh the search list user group page
+    And I refresh Search List User section
     Then User search results should be:
       | User               |      Name     | User Group          |
       | dev_test1@test.com |   dev_test1   | (default user group)|
@@ -1021,7 +1021,7 @@ Feature: User sync
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
     And I add a user dev_user4 to the AD
-    And I modify a user dev_user4 to dev_user44 in the AD:
+    And I modify a user dev_user4 to dev_user44 in the AD
     And I add 1 new deprovision rules:
       | rule         | action  |
       | cn=dev_user* | Delete  |
@@ -1035,8 +1035,9 @@ Feature: User sync
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
-  
-    And I delete a user dev_user44 in the AD
+
+    And I modify a user dev_user44 to dev_user4 in the AD
+    And I delete a user dev_user4 in the AD
 
   @TC.18273 @vpn
   Scenario: UserProvision-Fixed Attribute

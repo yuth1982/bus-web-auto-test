@@ -309,7 +309,7 @@ Then /^I get the user (.+) details in the console$/ do |username|
   LDAPHelper.show_user(username)
 end
 
-When /^I modify a user (.+) to (.+) in the AD:$/ do |username, new_name|
+When /^I modify a user (.+) to (.+) in the AD$/ do |username, new_name|
   LDAPHelper.modify_rdn(username, new_name)
 end
 
