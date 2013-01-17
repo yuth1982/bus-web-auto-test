@@ -18,7 +18,7 @@ module Bus
     element(:device_count_tb, id: "device_count")
     element(:dt_device_count_tb, id: "requested_licenses_Desktop")
 
-    element(:save_changes_btn, css: "div.field.filed_input > button[type=\"button\"]")
+    element(:save_changes_btn, css: "div.div_col.field_input > button[type=\"button\"]")
     element(:message_div, xpath: "//div[@id='user-new_users_in_batch-errors']/ul/li")
 
     # Public: Add a new user
@@ -35,10 +35,14 @@ module Bus
         sleep 2
         find(:xpath, "//li[text()='#{user.user_group}']").click
       end
+      wait_until_bus_section_load
       name_tb.type_text(user.name)
       email_tb.type_text(user.email)
-      desired_user_storage_tb.type_text(user.desired_user_storage) unless user.desired_user_storage.nil?
-      device_count_tb.type_text(user.device_count) unless user.device_count.nil?
+      desired_user_storage_tb.type_text(user.desired_user_storage) unless user.desired_user_storage == 0
+      device_count_tb.type_text(user.device_count) unless user.device_count == 0
+      enable_stash_cb.check if user.enable_stash
+      stash_quota_tb.type_text(user.stash_quota) unless user.stash_quota == 0
+      send_stash_invite_cb.check if user.send_stash_invite
       save_changes_btn.click
       wait_until_bus_section_load
     end
@@ -59,8 +63,11 @@ module Bus
       end
       name_tb.type_text(user.name)
       email_tb.type_text(user.email)
-      desired_user_storage_tb.type_text(user.desired_user_storage) unless user.desired_user_storage.nil?
-      dt_device_count_tb.type_text(user.device_count) unless user.device_count.nil?
+      desired_user_storage_tb.type_text(user.desired_user_storage) unless user.desired_user_storage == 0
+      dt_device_count_tb.type_text(user.device_count) unless user.device_count == 0
+      enable_stash_cb.check if user.enable_stash
+      stash_quota_tb.type_text(user.stash_quota) unless user.stash_quota == 0
+      send_stash_invite_cb.check if user.send_stash_invite
       save_changes_btn.click
       wait_until_bus_section_load
     end
@@ -79,12 +86,14 @@ module Bus
       end
       name_tb.type_text(user.name)
       email_tb.type_text(user.email)
-      server_licenses_tb.type_text(user.server_licenses) unless user.server_licenses.nil?
-      server_quota_tb.type_text(user.server_quota) unless user.server_quota.nil?
-      desktop_licenses_tb.type_text(user.desktop_licenses) unless user.desktop_licenses.nil?
-      desktop_quota_tb.type_text(user.desktop_quota) unless user.desktop_quota.nil?
+      server_licenses_tb.type_text(user.server_licenses) unless user.server_licenses == 0
+      server_quota_tb.type_text(user.server_quota) unless user.server_quota == 0
+      desktop_licenses_tb.type_text(user.desktop_licenses) unless user.desktop_licenses == 0
+      desktop_quota_tb.type_text(user.desktop_quota) unless user.desktop_quota == 0
+      desired_user_storage_tb.type_text(user.desired_user_storage) unless user.desired_user_storage == 0
+      device_count_tb.type_text(user.device_count) unless user.device_count == 0
       enable_stash_cb.check if user.enable_stash
-      stash_quota_tb.type_text(user.stash_quota) unless user.stash_quota.nil?
+      stash_quota_tb.type_text(user.stash_quota) unless user.stash_quota == 0
       send_stash_invite_cb.check if user.send_stash_invite
       save_changes_btn.click
       wait_until_bus_section_load

@@ -7,7 +7,7 @@ module Bus
     element(:delete_user_link, xpath: "//a[text()='Delete User']")
     element(:change_user_password_link, xpath: "//a[text()='Change User Password']")
 
-    elements(:user_details_dls, xpath: "//div[starts-with(@id,'user-show-')]//dl")
+    elements(:user_details_dls, xpath: "//div[starts-with(@id,'user-show_user_centric-')]//dl")
     element(:change_status_link, xpath: "//span[starts-with(@id,'user-display-status-')]//a")
     element(:status_selection, xpath: "//select[@id='status']")
     element(:submit_status_btn, xpath: "//span[starts-with(@id,'user-change-status-')]//input")
@@ -29,8 +29,9 @@ module Bus
     element(:delete_stash_link, css: "a[onclick^=show_delete_stash_popup]")
 
     # user backup information table
-    element(:user_backup_details_table, css: "table.mini-table")
-
+    element(:user_backup_details_table, xpath: "div//[starts-with(@id, 'user-show_user_centric')]//div[2]/div[3]/div/table)]")
+    element(:user_resource_details_table, css: "div.show-details > table")
+  
     # Public: User details hash
     #
     # Example:
@@ -39,6 +40,7 @@ module Bus
     # Returns array hash
     def user_details_hash
       wait_until_bus_section_load
+      #wait_until { user_details_dls.visible? }
       output = user_details_dls.map{ |dl| dl.dt_dd_elements_text }.delete_if { |k| k.empty? }
       Hash[*output.flatten]
     end
@@ -154,7 +156,7 @@ module Bus
     # Public: Click delete link
     #
     # Example:
-    #   @bus_site.admin_console_page.user_details_details_section.delete_stash
+    #   @bus_site.admin_console_page.user_details_section.delete_stash
     #
     # Returns nothing
     def click_delete_stash
@@ -167,6 +169,30 @@ module Bus
 
     def user_backup_details_table_rows
       user_backup_details_table.rows_text
+    end
+    
+    # Public: Return string of table headers
+    #
+    # @param [] none
+    #
+    # Example
+    #  @bus_site.admin_console_page.user_details_section.user_resource_details_table_headers
+    #
+    # @return String    
+    def user_resource_details_table_headers
+      user_resource_details_table.headers_text
+    end
+
+    # Public: Return string of table rows
+    #
+    # @param [] none
+    #
+    # Example
+    #  @bus_site.admin_console_page.user_details_section.user_resource_details_table_rows
+    #
+    # @return String 
+    def user_resource_details_table_rows
+      user_resource_details_table.rows_text
     end
 
     def active_user

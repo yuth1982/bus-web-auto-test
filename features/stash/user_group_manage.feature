@@ -145,7 +145,7 @@ Feature: User group stash setting management
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 10 GB (change)         |
     When I act as newly created partner account
-    And I add a new user:
+    And I add a new user to a MozyEnterprise partner:
     | name           | enable stash |
     | TC.19008 user  | yes          |
     Then New user should be created
@@ -176,7 +176,7 @@ Feature: User group stash setting management
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 15 GB (change)         |
     When I act as newly created partner account
-    And I add a new user:
+    And I add a new user to a MozyEnterprise partner:
       | name           | enable stash |
       | TC.19009 user  | yes          |
     Then New user should be created
@@ -210,7 +210,7 @@ Feature: User group stash setting management
     When I navigate to List User Groups section from bus admin console page
     And I view (default user group) * user group details
     And I disable stash for the user group
-    And I add a new user:
+    And I add a new user to a MozyEnterprise partner:
       | name           | email                      |
       | TC.19010 user  | qa1+tc+19019+user@mozy.com |
     Then New user should be created
@@ -252,17 +252,17 @@ Feature: User group stash setting management
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 10 GB (change)         |
     When I act as newly created partner account
-    And I add a new user:
+    And I add a new user to a MozyEnterprise partner:
       | name             | email                       | enable stash |
       | TC.19012.1 user  | qa1+tc+19012+user1@mozy.com | yes          |
     Then New user should be created
     When I refresh Add New User section
-    And I add a new user:
+    And I add a new user to a MozyEnterprise partner:
       | name             | email                       |
       | TC.19012.2 user  | qa1+tc+19012+user2@mozy.com |
     Then New user should be created
     When I refresh Add New User section
-    And I add a new user:
+    And I add a new user to a MozyEnterprise partner:
       | name             | email                       |
       | TC.19012.3 user  | qa1+tc+19012+user3@mozy.com |
     Then New user should be created
@@ -291,7 +291,7 @@ Feature: User group stash setting management
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 10000 GB (change)      |
     When I act as newly created partner account
-    And I add a new user:
+    And I add a new user to a MozyEnterprise partner:
       | name           |
       | TC.19013 user  |
     When I navigate to List User Groups section from bus admin console page
@@ -314,7 +314,7 @@ Feature: User group stash setting management
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 10000 GB (change)      |
     When I act as newly created partner account
-    And I add a new user:
+    And I add a new user to a Reseller partner:
       | name           |
       | TC.19014 user  |
     When I navigate to List User Groups section from bus admin console page
@@ -348,17 +348,17 @@ Feature: User group stash setting management
       | desktop licenses | desktop quota GB |
       | 2                | 20               |
     Then Resources should be transferred
-    When I add a new user:
+    When I add a new user to a MozyEnterprise partner:
       | name           | email                       | user group     | enable stash |
       | TC.19118 user  | qa1+tc+19118+user1@mozy.com | TC.19118 group | yes          |
     Then New user should be created
     When I navigate to Search / List Users section from bus admin console page
-    Then User search results should be:
+    Then user search results should be:
       |External ID | User                        | Name          | User Group      | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
       |            | qa1+tc+19118+user1@mozy.com | TC.19118 user | TC.19118 group  | Enabled | 0        | 2 GB    | none         | today   | never     |
     When I search and delete TC.19118 group user group
     And I refresh Search List User section
-    Then User search results should be:
+    Then user search results should be:
       |External ID | User                        | Name          | User Group           | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
       |            | qa1+tc+19118+user1@mozy.com | TC.19118 user | (default user group) | Enabled | 0        | 2 GB    | none         | today   | never     |
     When I stop masquerading
@@ -383,7 +383,7 @@ Feature: User group stash setting management
       | desktop licenses | desktop quota GB |
       | 2                | 20               |
     Then Resources should be transferred
-    When I add a new user:
+    When I add a new user to a MozyEnterprise partner:
       | name           | email                       | user group     | enable stash |
       | TC.19020 user  | qa1+tc+19020+user1@mozy.com | TC.19020 group | yes          |
     Then New user should be created

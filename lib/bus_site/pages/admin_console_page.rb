@@ -23,7 +23,7 @@ module Bus
     section(:machine_mapping_section, MachineMappingSection, id: "machine-machine_migration")
     section(:user_group_details_section, UserGroupDetailsSection, css: "div[id^=user_groups-show-]")
     section(:list_user_groups_section, ListUserGroupsSection, id: "user_groups-list")
-    section(:user_details_section, UserDetailsSection, css: "div[id^=user-show-]")
+    section(:user_details_section, UserDetailsSection, css: "div[id^=user-show_user_centric]")
 
     # Admin section
 

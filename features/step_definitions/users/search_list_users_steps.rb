@@ -6,15 +6,38 @@
 When /^I search user by:$/ do |search_key_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_users'])
   attributes = search_key_table.hashes.first
-  keywords = attributes["keywords"] || ""
+  if @user.nil?
+    keywords = attributes["keywords"] || ""
+  else
+    keywords = attributes["keywords"].gsub(/@user_name/,@user.name) || ""
+  end
   filter = attributes["filter"] || "None"
-  @bus_site.admin_console_page.search_list_users_section.search_user(keywords, filter)
+  partner_filter = attributes["user type"] || ""
+  @bus_site.admin_console_page.search_list_users_section.search_user(keywords, filter, partner_filter)
 end
 
-Then /^User search results should be:$/ do |results_table|
+Then /^user search results should be:$/ do |results_table|
+
   results_table.map_column!('Created') do |value|
     Chronic.parse(value).strftime("%m/%d/%y")
   end
+
+  results_table.map_column!('User') do |value|
+    if @user.nil?
+      value.slice(0,27)+"..."
+    else
+      (value.gsub(/@user_email/,@user.email)).slice(0,27)+"..."
+    end
+  end
+
+  results_table.map_column!('Name') do |value|
+    if @user.nil?
+      value.slice(0,27)+"..."
+    else
+      value.gsub(/@user_name/,@user.name)
+    end
+  end
+
   @bus_site.admin_console_page.search_list_users_section.search_results_table_headers.should == results_table.headers
   @bus_site.admin_console_page.search_list_users_section.search_results_table_rows.should == results_table.rows
 end
@@ -32,7 +55,11 @@ When /^The users table should be empty$/ do
 end
 
 When /^I view user details by (.+)$/ do |user|
-  @bus_site.admin_console_page.search_list_users_section.view_user_details(user)
+  if @user.nil?
+    @bus_site.admin_console_page.search_list_users_section.view_user_details((user).slice(0,27))
+  else
+    @bus_site.admin_console_page.search_list_users_section.view_user_details((user.gsub(/@user_email/,@user.email)).slice(0,27))
+  end
 end
 
 When /^I refresh Search List User section$/ do

@@ -14,7 +14,7 @@ Feature: User stash setting management
       | 12     | 50 GB     |
     Then New partner should be created
     When I act as newly created partner account
-    And I add a new user:
+    And I add a new user to a MozyPro partner:
       | name           | email                        |
       | TC.18972 user  | qa1+tc+18972+user1@mozy.com  |
     Then New user should be created
@@ -33,13 +33,13 @@ Feature: User stash setting management
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 2 GB (change)          |
     When I act as newly created partner account
-    And I add a new user:
+    And I add a new user to a MozyEnterprise partner:
       | name           | email                        |
       | TC.18973 user  | qa1+tc+18973+user1@mozy.com  |
     Then New user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by qa1+tc+18973+user1@mozy.com
-    Then User details should be:
+    Then user details should be:
       | Name:                  | Enable Stash:  |
       | TC.18973 user (change) | No (Add Stash) |
     When I stop masquerading
@@ -56,7 +56,7 @@ Feature: User stash setting management
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 2 GB (change)          |
     When I act as newly created partner account
-    And I add a new user:
+    And I add a new user to a MozyPro partner:
       | name           | email                        |
       | TC.18974 user  | qa1+tc+18974+user1@mozy.com  |
     Then New user should be created
@@ -65,7 +65,7 @@ Feature: User stash setting management
     And I add stash for the user with:
       | stash quota | send email |
       | default     | no         |
-    Then User details should be:
+    Then user details should be:
       | Name:                  | Enable Stash:               |
       | TC.18974 user (change) | Yes (Send Invitation Email) |
     When I stop masquerading
@@ -82,7 +82,7 @@ Feature: User stash setting management
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 2 GB (change)          |
     When I act as newly created partner account
-    And I add a new user:
+    And I add a new user to a MozyPro partner:
       | name           | email                        |
       | TC.18976 user  | qa1+tc+18976+user1@mozy.com  |
     Then New user should be created
@@ -108,7 +108,7 @@ Feature: User stash setting management
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 2 GB (change)          |
     When I act as newly created partner account
-    And I add a new user:
+    And I add a new user to a MozyEnterprise partner:
       | name           | email                        |
       | TC.18977 user  | qa1+tc+18977+user1@mozy.com  |
     Then New user should be created
@@ -134,7 +134,7 @@ Feature: User stash setting management
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 5 GB (change)          |
     When I act as newly created partner account
-    And I add a new user:
+    And I add a new user to a MozyPro partner:
       | name           | email                        |
       | TC.19015 user  | qa1+tc+19015+user1@mozy.com  |
     Then New user should be created
@@ -143,7 +143,7 @@ Feature: User stash setting management
     And I add stash for the user with:
       | stash quota | send email |
       | 10 GB       | no         |
-    Then User details should be:
+    Then user details should be:
       | Name:                  | Enable Stash:               |
       | TC.19015 user (change) | Yes (Send Invitation Email) |
     And User backup details table should be:
@@ -163,14 +163,14 @@ Feature: User stash setting management
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 5 GB (change)          |
     When I act as newly created partner account
-    And I add a new user:
+    And I add a new user to a MozyPro partner:
       | name           | email                        |
       | TC.19017 user  | qa1+tc+19017+user1@mozy.com  |
     Then New user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by qa1+tc+19017+user1@mozy.com
     And I cancel add user stash
-    Then User details should be:
+    Then user details should be:
       | Name:                  | Enable Stash:  |
       | TC.19017 user (change) | No (Add Stash) |
     When I stop masquerading
@@ -215,13 +215,13 @@ Feature: User stash setting management
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 2 GB (change)          |
     When I act as newly created partner account
-    And I add a new user:
+    And I add a new user to a MozyEnterprise partner:
       | name           | email                       | enable stash |
       | TC.18981 user  | qa1+tc+18981+user1@mozy.com | yes          |
     Then New user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by qa1+tc+18981+user1@mozy.com
-    Then User details should be:
+    Then user details should be:
       | Name:                  | Enable Stash:               |
       | TC.18981 user (change) | Yes (Send Invitation Email) |
     When I stop masquerading
@@ -238,7 +238,7 @@ Feature: User stash setting management
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 2 GB (change)          |
     When I act as newly created partner account
-    And I add a new user:
+    And I add a new user to a MozyPro partner:
       | name           | email                       | enable stash | stash quota |
       | TC.18982 user  | qa1+tc+18982+user1@mozy.com | yes          | 99999999    |
     Then New user created message should be Only 50 Desktop GB free
@@ -256,12 +256,12 @@ Feature: User stash setting management
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 2 GB (change)          |
     When I act as newly created partner account
-    And I add a new user:
+    And I add a new user to a Reseller partner:
       | name           | email                       | enable stash | stash quota |
       | TC.18985 user  | qa1+tc+18985+user1@mozy.com | yes          | 0           |
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by qa1+tc+18985+user1@mozy.com
-    Then User details should be:
+    Then user details should be:
       | Name:                  | Enable Stash:  |
       | TC.18985 user (change) | No (Add Stash) |
     When I stop masquerading
@@ -280,7 +280,7 @@ Feature: User stash setting management
     When I act as newly created partner account
     And I allocate 10 GB Desktop quota with (default user group) user group to Reseller partner
     Then Reseller resource quota should be changed
-    When I add a new user:
+    When I add a new user to a Reseller partner:
       | name           | email                       | enable stash | stash quota |
       | TC.19018 user  | qa1+tc+19018+user1@mozy.com | yes          | 5           |
     Then New user should be created
@@ -303,13 +303,13 @@ Feature: User stash setting management
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 2 GB (change)          |
     When I act as newly created partner account
-    And I add a new user:
+    And I add a new user to a MozyPro partner:
       | name           | email                       |
       | TC.19019 user  | qa1+tc+19019+user1@mozy.com |
     Then New user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by qa1+tc+19019+user1@mozy.com
-    Then User details should be:
+    Then user details should be:
       | Name:                  | Enable Stash:  |
       | TC.19019 user (change) | No (Add Stash) |
     When I stop masquerading
@@ -326,7 +326,7 @@ Feature: User stash setting management
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 2 GB (change)          |
     When I act as newly created partner account
-    And I add a new user:
+    And I add a new user to a MozyPro partner:
       | name           | email                       | enable stash | stash quota | send stash invite |
       | TC.18988 user  | qa1+tc+18988+user1@mozy.com | yes          | 5           | yes               |
     Then New user should be created
@@ -335,7 +335,7 @@ Feature: User stash setting management
     And I delete stash container for the user
     Then Popup window message should be Do you want to delete the user's stash? Note: Deleting a user's Stash removes all of the user's Stash files from the Web.
     When I click Cancel button on popup window
-    And User details should be:
+    And user details should be:
     | Enable Stash:               |
     | Yes (Send Invitation Email) |
     And User backup details table should be:
@@ -344,7 +344,7 @@ Feature: User stash setting management
     When I delete stash container for the user
     And I click Continue button on popup window
     And I refresh User Details section
-    Then User details should be:
+    Then user details should be:
       | Enable Stash:  |
       | No (Add Stash) |
     When I stop masquerading
@@ -361,7 +361,7 @@ Feature: User stash setting management
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 2 GB (change)          |
     When I act as newly created partner account
-    And I add a new user:
+    And I add a new user to a MozyEnterprise partner:
       | name           | email                       | enable stash | stash quota | send stash invite |
       | TC.18989 user  | qa1+tc+18989+user1@mozy.com | yes          | 5           | yes               |
     Then New user should be created
@@ -370,7 +370,7 @@ Feature: User stash setting management
     And I delete stash container for the user
     Then Popup window message should be Do you want to delete the user's stash? Note: Deleting a user's Stash removes all of the user's Stash files from the Web.
     When I click Cancel button on popup window
-    And User details should be:
+    And user details should be:
       | Enable Stash:               |
       | Yes (Send Invitation Email) |
     And User backup details table should be:
@@ -379,7 +379,7 @@ Feature: User stash setting management
     When I delete stash container for the user
     And I click Continue button on popup window
     And I refresh User Details section
-    Then User details should be:
+    Then user details should be:
       | Enable Stash:  |
       | No (Add Stash) |
     When I stop masquerading
@@ -398,7 +398,7 @@ Feature: User stash setting management
     When I act as newly created partner account
     And I allocate 10 GB Desktop quota with (default user group) user group to Reseller partner
     Then Reseller resource quota should be changed
-    And I add a new user:
+    And I add a new user to a Reseller partner:
       | name           | email                       | enable stash | stash quota | send stash invite |
       | TC.19478 user  | qa1+tc+19478+user1@mozy.com | yes          | 5           | yes               |
     Then New user should be created
@@ -407,7 +407,7 @@ Feature: User stash setting management
     And I delete stash container for the user
     Then Popup window message should be Do you want to delete the user's stash? Note: Deleting a user's Stash removes all of the user's Stash files from the Web.
     When I click Cancel button on popup window
-    And User details should be:
+    And user details should be:
       | Enable Stash:               |
       | Yes (Send Invitation Email) |
     And User backup details table should be:
@@ -416,7 +416,7 @@ Feature: User stash setting management
     When I delete stash container for the user
     And I click Continue button on popup window
     And I refresh User Details section
-    Then User details should be:
+    Then user details should be:
       | Enable Stash:  |
       | No (Add Stash) |
     When I stop masquerading
@@ -433,7 +433,7 @@ Feature: User stash setting management
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 2 GB (change)          |
     When I act as newly created partner account
-    And I add a new user:
+    And I add a new user to a MozyPro partner:
       | name           | email                        | enable stash |
       | TC.18990 user  | qa1+tc+18990+user1@mozy.com  | yes          |
     Then New user should be created
@@ -457,7 +457,7 @@ Feature: User stash setting management
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 2 GB (change)          |
     When I act as newly created partner account
-    And I add a new user:
+    And I add a new user to a MozyEnterprise partner:
       | name           | email                        |
       | TC.19121 user  | qa1+tc+19121+user1@mozy.com  |
     Then New user should be created
@@ -466,7 +466,7 @@ Feature: User stash setting management
     And I add stash for the user with:
       | stash quota | send email |
       | 10 GB       | yes        |
-    Then User details should be:
+    Then user details should be:
       | Name:                  | Enable Stash:               |
       | TC.19121 user (change) | Yes (Send Invitation Email) |
     And User backup details table should be:
@@ -489,7 +489,7 @@ Feature: User stash setting management
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 2 GB (change)          |
     When I act as newly created partner account
-    And I add a new user:
+    And I add a new user to a MozyEnterprise partner:
       | name           | email                       | enable stash | stash quota | send stash invite |
       | TC.19122 user  | qa1+tc+19122+user1@mozy.com | yes          | 5           | yes               |
     Then New user should be created

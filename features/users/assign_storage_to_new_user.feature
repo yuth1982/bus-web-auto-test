@@ -1,0 +1,202 @@
+Feature: Assign storage to a new user
+
+  As an admin, I can assign storage for a new user 
+  so that he is guaranteed a specific amount of storage.
+
+  Background:
+
+  @TC.19654
+  Scenario: 19654 - Create new user under Itemized Reseller as BUS Admin
+    Given I log in bus admin console as administrator
+    When I act as partner by:
+      | name                               |
+      | qa1+testResellerItem90211@mozy.com |
+    And I add a new user to a Itemized partner:
+      | desired_user_storage | desktop licenses |
+      | 2                   | 1                |
+    Then New user should be created
+
+  @TC.19642
+  Scenario: 19642 - Create new user under Itemized Reseller as Partner Admin
+    Given I navigate to bus admin console login page
+    And I log in bus admin console with user name qa1+testResellerItem90211@mozy.com and password test1234
+    And I add a new user to a Itemized partner:
+      | desired_user_storage | desktop licenses |
+      | 2                   | 1                |
+    Then New user should be created
+
+  @TC.19805
+  Scenario: 19805 - Create new user under Itemized MozyPro as BUS Admin
+    Given I log in bus admin console as administrator
+    When I act as partner by:
+      | name                          |
+      | qa1+testBundled90211@mozy.com |
+    And I add a new user to a Itemized partner:
+      | desired_user_storage | device_count |
+      | 2                   | 1            |
+    Then New user should be created
+
+  @TC.19806
+  Scenario: 19806 - Create new user under Itemized MozyPro as Partner Admin
+    Given I navigate to bus admin console login page
+    And I log in bus admin console with user name qa1+testBundled90211@mozy.com and password test1234
+    And I add a new user to a Itemized partner:
+      | desired_user_storage | device_count |
+      | 2                   | 1            |
+    Then New user should be created
+
+  @TC.19656
+  Scenario: 19656 - Create new user under MozyPro as BUS Admin
+    Given I log in bus admin console as administrator
+    When I add a new MozyPro partner:
+      | period | base plan |
+      | 1      | 50 GB     |
+    Then New partner should be created
+    When I act as newly created partner account
+    When I add a new user to a MozyPro partner:
+      | desired_user_storage | device_count |
+      | 10                   | 1            |
+    Then New user should be created
+    When I stop masquerading
+    Then I search and delete partner account by newly created partner company name
+
+  @TC.19651
+  Scenario: 19651 - Create new user as Partner Admin
+    Given I log in bus admin console as administrator
+    When I add a new MozyPro partner:
+      | period | base plan |
+      | 1      | 50 GB     |
+    Then New partner should be created
+    And I activate new partner admin with default password
+    And I log out bus admin console
+    And I log in bus admin console as new partner admin
+    When I add a new user to a MozyPro partner:
+      | desired_user_storage | device_count |
+      | 10                   | 1            |
+    Then New user should be created
+    And I log out bus admin console
+    Then I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner name
+
+  @TC.19814
+  Scenario: 19814 - Create new user under Metallic Reseller as BUS Admin
+    Given I log in bus admin console as administrator
+    When I add a new Reseller partner:
+      | period | reseller type | reseller quota |
+      | 1      | Silver        | 100            |
+    Then New partner should be created
+    When I act as newly created partner account
+    When I add a new user to a Reseller partner:
+      | desired_user_storage | device_count |
+      | 10                   | 1            |
+    Then New user should be created
+    When I stop masquerading
+    Then I search and delete partner account by newly created partner company name
+
+  @TC.19815
+  Scenario: 19815 - Create new user as Partner Admin
+    Given I log in bus admin console as administrator
+    When I add a new Reseller partner:
+      | period | reseller type | reseller quota |
+      | 1      | Silver        | 100            |
+    Then New partner should be created
+    And I activate new partner admin with default password
+    And I log out bus admin console
+    And I log in bus admin console as new partner admin
+    When I add a new user to a Reseller partner:
+      | desired_user_storage | device_count |
+      | 10                   | 1            |
+    Then New user should be created
+    And I log out bus admin console
+    Then I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner name
+
+  @TC.19658
+  Scenario: 19658 - Create new user under Enterprise partner as BUS Admin
+    Given I log in bus admin console as administrator
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan |
+      | 12     | 10    | 250 GB      |
+    Then New partner should be created
+    When I act as newly created partner account
+    When I add a new user to a MozyEnterprise partner:
+      | desired_user_storage | device_count |
+      | 10                   | 1            |
+    Then New user should be created
+    When I stop masquerading
+    Then I search and delete partner account by newly created partner company name
+
+  @TC.19653
+  Scenario: 19653 - Create new user as Partner Admin
+    Given I log in bus admin console as administrator
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan |
+      | 12     | 10    | 250 GB      |
+    Then New partner should be created
+    And I activate new partner admin with default password
+    And I log out bus admin console
+    And I log in bus admin console as new partner admin
+    When I add a new user to a MozyEnterprise partner:
+      | desired_user_storage | device_count |
+      | 10                   | 1            |
+    Then New user should be created
+    And I log out bus admin console
+    Then I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner name
+
+
+  @TC.19808
+  Scenario: 19808 - Create new user under German Itemized Partner as BUS Admin
+    Given I log in bus admin console as administrator
+    When I act as partner by:
+      | name                                     |
+      | qa1+testDEMozyProItemized90211@mozy.com |
+    And I add a new user to a Itemized partner:
+      | desktop licenses | desired_user_storage |
+      | 1                | 2                    |
+    Then New user should be created
+
+  @TC.19809
+  Scenario: 19809 - Create new user under French Itemized Partner as Partner Admin
+    Given I navigate to bus admin console login page
+    And I log in bus admin console with user name qa1+testFRMetallic90211@mozy.com and password test1234
+    And I add a new user to a Itemized partner:
+      | desired_user_storage | device_count |
+      | 2                    | 1            |
+    Then New user should be created
+
+  @TC.19810
+  Scenario: 19810 - Create new user under Irish MozyPro Bundled Partner
+    Given I log in bus admin console as administrator
+    When I add a new MozyPro partner:
+      | period | base plan | create under    | country |
+      | 1      | 50 GB     | MozyPro Ireland | Ireland |
+    Then New partner should be created
+    When I act as newly created partner account
+    When I add a new user to a MozyPro partner:
+      | desired_user_storage | device_count |
+      | 2                    | 1            |
+    Then New user should be created
+    When I stop masquerading
+    Then I search and delete partner account by newly created partner company name
+
+  @TC.19811
+  Scenario: 19811 - Create new user under UK Enterprise Partner as Partner
+    Given I navigate to bus admin console login page
+    And I log in bus admin console with user name qa1+testUKEnterprise90211@mozy.com and password test1234
+    When I add a new user to a MozyEnterprise partner:
+      | desired_user_storage |
+      | 2                    |
+    Then New user should be created
+
+
+#  Scenario: Add a new user to MozyPro partner exceed quota limit
+#    Given I log in bus admin console as mozypro test account
+#    When I add a new user:
+#      | # desktop licenses | desktop quota |
+#      | 1                  | 1000          |
+#    Then New user created message should be Only 30 GB free(20 GB have been reserved for other users)
+
+
+
+

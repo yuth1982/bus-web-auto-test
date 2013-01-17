@@ -11,11 +11,34 @@ When /^I active the user$/ do
   @bus_site.admin_console_page.user_details_section.active_user
 end
 
-Then /^User details should be:$/ do |user_table|
+Then /^user details should be:$/ do |user_table|
   actual = @bus_site.admin_console_page.user_details_section.user_details_hash
   expected = user_table.hashes.first
+
   expected.keys.each do |header|
-    actual[header].should == expected[header]
+    case header
+      when 'ID:'
+        if expected[header].start_with?('@')
+          actual[header].length.should == expected[header].length - 1
+          actual[header].match(/\d{8}/).nil?.should be_false
+        else
+          actual[header].should == expected[header]
+        end
+      when 'Name:'
+        if @user.nil?
+          actual[header].should == expected[header]
+        else
+          actual[header].should == expected[header].gsub(/@user/,@user.name)
+        end
+      when ''
+        if expected[header] == "today"
+          actual[header].should == Chronic.parse(expected[header]).strftime("%m/%d/%y %H:%M")
+        else
+          actual[header].should == expected[header]
+        end
+      else
+        actual[header].should == expected[header]
+    end
   end
 end
 
@@ -83,4 +106,12 @@ end
 
 Then /^User details changed message should be (.+)$/ do |message|
   @bus_site.admin_console_page.user_details_section.messages.should == message
+end
+
+And /^user resources details headers should be:$/ do |resource_table|
+  @bus_site.admin_console_page.user_details_section.user_resource_details_table_headers.should == resource_table.headers
+end
+
+And /^user resources details rows should be:$/ do |resource_table|
+  @bus_site.admin_console_page.user_details_section.user_resource_details_table_rows.should == resource_table.rows
 end

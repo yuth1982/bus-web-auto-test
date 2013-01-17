@@ -6,6 +6,7 @@ module Bus
     element(:search_user_tb, id: "user_search")
     element(:search_user_btn, xpath: "//div[@id='user-list-content']/div/form//input[@value='Submit']")
     element(:user_filter_select, id: "user_filter")
+    element(:partner_filter_select, id:"partner_filter")
     element(:search_results_table, xpath: "//div[@id='user-list-content']/div/table")
     element(:clear_search_link, xpath: "//a[text()='Clear search']")
     element(:refresh_link, xpath: "//a[@class='mod-button']")
@@ -16,9 +17,12 @@ module Bus
     #  @bus_admin_console_page.search_list_users_section.search_user("qa1+test@mozy.com", "None")
     #
     # Returns nothing
-    def search_user(keywords, filter = "None")
+    def search_user(keywords, filter = "None", partner_filter = "")
       search_user_tb.type_text(keywords)
       user_filter_select.select(filter)
+      if partner_filter != ""
+        partner_filter_select.select(partner_filter)
+      end
       search_user_btn.click
       wait_until_bus_section_load
     end

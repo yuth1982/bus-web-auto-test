@@ -41,7 +41,7 @@ Feature: Bus Smoke Test
     And Partner sub admins should be empty
     When I act as newly created partner account
     And I change MozyEnterprise account plan to:
-      | users | server plan | server add-on |
+      | users | server plan | storage add-on |
       | 15    | 500 GB      | 5             |
     Then Change plan charge summary should be:
       | Description                                | Amount      |
@@ -65,9 +65,9 @@ Feature: Bus Smoke Test
     Then User group details should be:
       | ID:     | External ID: | Billing code: | Available Keys: | Available Quota: | Default quota for new installs:             | Default user group: |
       | @xxxxxx | (change)     | (change)      | 4               | 40 GB            | 10 GB (Desktop) and 20 GB (Server) (change) | No (make default)   |
-    When I add a new user:
-      | user group  | server licenses | server quota | desktop licenses | desktop quota |
-      | test group  | 1               | 10           | 1                | 10            |
+    When I add a new user to a MozyEnterprise partner:
+      | user group  | desired_user_storage | desktop licenses |
+      | test group  | 10                   | 1            |
     Then New user should be created
     And I batch assign MozyEnterprise partner Server keys to (default user group) user group with send emails:
       | email                         | quota |

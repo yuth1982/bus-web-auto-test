@@ -18,16 +18,16 @@ Feature:
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 5 GB (change)          |
     When I act as newly created partner account
-    And I add a new user:
+    And I add a new user to a MozyEnterprise partner:
       | name           | email                       | enable stash | stash quota |
       | TC.19045 user1 | qa1+tc+19045+user1@mozy.com | yes          | 10          |
     Then New user should be created
-    And I add a new user:
+    And I add a new user to a MozyEnterprise partner:
       | name           | email                       | enable stash | stash quota |
       | TC.19045 user2 | qa1+tc+19045+user2@mozy.com | yes          | 15          |
     Then New user should be created
     When I navigate to Search / List Users section from bus admin console page
-    Then User search results should be:
+    Then user search results should be:
       | External ID | User                          | Name           | User Group           | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
       |             | qa1+tc+19045+user2@mozy.com   | TC.19045 user2 | (default user group) | Enabled | 0        | 15 GB   | none         | today   | never     |
       |             | qa1+tc+19045+user1@mozy.com   | TC.19045 user1 | (default user group) | Enabled | 0        | 10 GB   | none         | today   | never     |
@@ -45,16 +45,16 @@ Feature:
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 5 GB (change)          |
     When I act as newly created partner account
-    And I add a new user:
+    And I add a new user to a MozyPro partner:
       | name           | email                       | enable stash | stash quota |
       | TC.19057 user1 | qa1+tc+19057+user1@mozy.com | yes          | 10          |
     Then New user should be created
-    And I add a new user:
+    And I add a new user to a MozyPro partner:
       | name           | email                       | enable stash | stash quota |
       | TC.19057 user2 | qa1+tc+19057+user2@mozy.com | yes          | 15          |
     Then New user should be created
     When I navigate to Search / List Users section from bus admin console page
-    Then User search results should be:
+    Then user search results should be:
       | External ID | User                          | Name           | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
       |             | qa1+tc+19057+user2@mozy.com   | TC.19057 user2 | Enabled | 0        | 15 GB   | none         | today   | never     |
       |             | qa1+tc+19057+user1@mozy.com   | TC.19057 user1 | Enabled | 0        | 10 GB   | none         | today   | never     |
@@ -72,11 +72,11 @@ Feature:
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 5 GB (change)          |
     When I act as newly created partner account
-    And I add a new user:
+    And I add a new user to a MozyEnterprise partner:
       | name           | email                       | enable stash | stash quota |
       | TC.19738 user1 | qa1+tc+19738+user1@mozy.com | yes          | 10          |
     Then New user should be created
-    And I add a new user:
+    And I add a new user to a MozyEnterprise partner:
       | name           | email                       | enable stash | stash quota |
       | TC.19738 user2 | qa1+tc+19738+user2@mozy.com | yes          | 15          |
     Then New user should be created
@@ -102,11 +102,11 @@ Feature:
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 10 GB (change)         |
     When I act as newly created partner account
-    And I add a new user:
+    And I add a new user to a MozyPro partner:
       | name           | email                       | enable stash | stash quota |
       | TC.19739 user1 | qa1+tc+19739+user1@mozy.com | yes          | 15          |
     Then New user should be created
-    And I add a new user:
+    And I add a new user to a MozyPro partner:
       | name           | email                       | enable stash | stash quota |
       | TC.19739 user2 | qa1+tc+19739+user2@mozy.com | yes          | 20          |
     Then New user should be created
@@ -134,11 +134,11 @@ Feature:
     When I act as newly created partner account
     And I allocate 50 GB Desktop quota with (default user group) user group to Reseller partner
     Then Reseller resource quota should be changed
-    When I add a new user:
+    When I add a new user to a Reseller partner:
       | name           | email                       | enable stash | stash quota |
       | TC.19740 user1 | qa1+tc+19740+user1@mozy.com | yes          | 15          |
     Then New user should be created
-    When I add a new user:
+    When I add a new user to a Reseller partner:
       | name           | email                       | enable stash | stash quota |
       | TC.19740 user2 | qa1+tc+19740+user2@mozy.com | yes          | 20          |
     Then New user should be created
@@ -164,7 +164,7 @@ Feature:
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 5 GB (change)          |
     When I act as newly created partner account
-    And I add a new user:
+    And I add a new user to a MozyPro partner:
       | name           | email                       | enable stash | stash quota |
       | TC.19169 user1 | qa1+tc+19169+user1@mozy.com | yes          | 30          |
     Then New user should be created

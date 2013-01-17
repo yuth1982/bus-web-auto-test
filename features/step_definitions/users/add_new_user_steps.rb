@@ -3,7 +3,7 @@
 # User available column names:
 # | user group | server licenses | server quota | desktop licenses | desktop quota |
 #
-When /^I add a new user to (MozyPro||Reseller||MozyEnterprise||Itemized) partner:$/ do |type, user_table|
+When /^I add a new user to a (MozyPro||Reseller||MozyEnterprise||Itemized) partner:$/ do |type, user_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_user'])
 
   @user = Bus::DataObj::User.new
@@ -24,7 +24,7 @@ When /^I add a new user to (MozyPro||Reseller||MozyEnterprise||Itemized) partner
   case type
     when "Itemized"
       @bus_site.admin_console_page.add_new_user_section.add_new_user_to_itemized_partner(@user)
-    when "MozyPro" || "Reseller"
+    when "MozyPro", "Reseller"
       @bus_site.admin_console_page.add_new_user_section.add_new_user_to_partner(@user)
     when "MozyEnterprise"
       @bus_site.admin_console_page.add_new_user_section.add_new_user_to_enterprise_partner(@user)
