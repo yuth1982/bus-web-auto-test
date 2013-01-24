@@ -465,3 +465,22 @@ Feature: Add a new partner
     When I navigate to Add New Partner section from bus admin console page
     Then Reseller partner subscription period options should be:
       | Monthly | Yearly |
+
+  @TC.20379
+  Scenario: 20379 Add New Reseller Partner - US - Monthly - Silver 500 GB - Server Plan - 100PercentDiscountCoupon - CC
+    When I add a new Reseller partner:
+      | period | reseller type | reseller quota | server plan | coupon               |
+      | 1      | Silver        | 500            | yes         | 100PERCENTOFFOUTLINE |
+    Then Sub-total before taxes or discounts should be $235.00
+    And Order summary table should be:
+      | Description           | Quantity | Price Each | Total Price |
+      | GB - Silver Reseller  | 500      | $0.42      | $210.00     |
+      | Server Plan           | 1        | $25.00     | $25.00      |
+      | Discounts Applied     |          |            | -$235.00    |
+      | Total Charges         |          |            | $0.00       |
+    And New partner should be created
+    And Partner billing history should be:
+      | Date  | Amount  | Total Paid | Balance Due |
+      | today | $0.00   | $0.00      | $0.00       |
+      | today | $0.00   | $0.00      | $0.00       |
+    And I delete partner account

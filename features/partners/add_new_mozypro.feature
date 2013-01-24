@@ -547,3 +547,22 @@ Feature: Add a new partner
     When I navigate to Add New Partner section from bus admin console page
     Then MozyPro partner subscription period options should be:
       | Monthly | Yearly |  Biennially |
+
+  @TC.20377
+  Scenario: 20377 Add New MozyPro Partner - US - Monthly - 50 GB - Server Plan - 100PercentDiscountCoupon - CC
+    When I add a new MozyPro partner:
+      | period | base plan | server plan | coupon               |
+      | 1      | 50 GB     | yes         | 100PERCENTOFFOUTLINE |
+    Then Sub-total before taxes or discounts should be $26.98
+    And Order summary table should be:
+      | Description       | Quantity | Price Each | Total Price |
+      | 50 GB             | 1        | $19.99     | $19.99      |
+      | Server Plan       | 1        | $6.99      | $6.99       |
+      | Discounts Applied |          |            | -$26.98     |
+      | Total Charges     |          |            | $0.00       |
+    And New partner should be created
+    And Partner billing history should be:
+      | Date  | Amount     | Total Paid | Balance Due |
+      | today | $0.00      | $0.00      | $0.00       |
+      | today | $0.00      | $0.00      | $0.00       |
+    And I delete partner account

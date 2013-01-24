@@ -23,6 +23,16 @@ module Bus
     element(:cancel_btn, css: "div#change_plan_confirmation input[value=Cancel]")
     element(:message_div, css: "div#resource-change_billing_plan-errors ul")
 
+    # Public: Reseller Supplemental Plans Hashes
+    #
+    #
+    def reseller_supp_plans_hash
+      storage_add_on_label = find(:css, "label[for=#{storage_add_on_tb.id}]").text
+      {'storage add on type' => storage_add_on_label.split(',')[0],
+       '# storage add on' => storage_add_on_tb.value,
+       'has server plan' => server_plan_status_span.text}
+    end
+
     # Public: Change MozyPro plan
     #
     # Example

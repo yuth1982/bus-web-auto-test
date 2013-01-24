@@ -57,6 +57,7 @@ module Bus
 
     def delete_user_group
       wait_until_bus_section_load
+      # if user group contains users
       if users_list_table_rows[0].to_s != "[\"\"]"
         delete_user_group_link.click
         alert_accept

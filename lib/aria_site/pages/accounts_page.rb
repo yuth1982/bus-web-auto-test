@@ -1,6 +1,7 @@
 module Aria
   # This class provides actions for accounts page
   class AccountsPage < SiteHelper::Page
+
     set_url("#{ARIA_ENV['host']}/AdminTools.php/Accounts/show")
 
     section(:side_menu_section, SideMenuSection, id: 'sidebar')
@@ -10,6 +11,9 @@ module Aria
     section(:taxpayer_section, TaxpayerSection, xpath: '*')
     section(:account_status_section, AccountStatusSection, xpath: '*')
     section(:form_of_payment_section, FormOfPaymentSection, xpath: '*')
+    section(:supplemental_plans_section, SupplementalPlansSection, xpath: '*')
+    section(:change_plan_units_section, ChangePlanUnitsSection, xpath: '*')
+    section(:save_plan_units_section, SavePlanUnitsSection, xpath: '*')
 
   end
 end

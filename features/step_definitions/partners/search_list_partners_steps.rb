@@ -12,6 +12,12 @@ When /^I search partner by:$/ do |search_key_table|
   @bus_site.admin_console_page.search_list_partner_section.search_partner(keywords, filter, including_sub_partners)
 end
 
+When /^I search partner by (.+)$/ do |keywords|
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_partner'])
+  @bus_site.admin_console_page.search_list_partner_section.search_partner(keywords)
+end
+
+
 When /^I act as partner by:$/ do |search_key_table|
   attributes = search_key_table.hashes.first
   step %{I search partner by:}, table(%{

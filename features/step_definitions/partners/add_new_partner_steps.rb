@@ -126,8 +126,9 @@ Then /^Sub-total before taxes or discounts should be (.+)$/ do |amount|
 end
 
 Then /^Order summary table should be:$/ do |order_summary_table|
-  @bus_site.admin_console_page.add_new_partner_section.order_summary_table_headers.should == order_summary_table.headers
-  @bus_site.admin_console_page.add_new_partner_section.order_summary_table_rows.should == order_summary_table.rows
+  actual = @bus_site.admin_console_page.add_new_partner_section.order_summary_hashes
+  expected = order_summary_table.hashes
+  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
 
 Then /^(MozyPro|MozyEnterprise|Reseller) partner subscription period options should be:$/ do |type, periods_table|

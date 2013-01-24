@@ -7,7 +7,7 @@ module Bus
       # Public: Initialize a CompanyInfo Object
       #
       def initialize
-        @name = "#{Forgery::Name.company_name} #{Random.rand(10000..99999).to_s} Company"
+        @name = "#{Forgery::Name.company_name} Company #{Time.now.strftime("%m%d-%H%M-%S")}"
         @address= Forgery::Address.street_address
         @city = Forgery::Address.city
         @state_abbrev = Forgery::Address.state_abbrev

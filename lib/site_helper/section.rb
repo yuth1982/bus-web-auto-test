@@ -29,8 +29,10 @@ module SiteHelper
     #
     # Returns nothing
     def wait_until_bus_section_load
-      loading = root_element.find(:xpath, "h2/a[contains(@onclick,'toggle_module')]")
-      wait_until{ loading[:class].match(/loading/).nil? }
+      loading = root_element.find(:css, "h2 a[onclick^=toggle_module]")
+      unless loading[:class].nil?
+        wait_until{ loading[:class].match(/loading/).nil? }
+      end
       # I found automation is still too faster, I need force to wait until table is loaded
       # Possible refactor here
       sleep 2

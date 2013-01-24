@@ -72,7 +72,7 @@ module Bus
     #
     # Returns nothing
     def view_partner_detail(search_key)
-      find_link(search_key).click
+      find(:xpath, "//a[text()='#{search_key}']").click
     end
 
     # Public: View partner's root admin detail by click root admin email/username
@@ -83,7 +83,7 @@ module Bus
     #
     # Returns nothing
     def view_root_admin_detail(search_key)
-      find_link(search_key).click
+      find(:xpath, "//a[text()='#{search_key}']").click
     end
 
     def clear_search

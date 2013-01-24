@@ -141,3 +141,11 @@ end
 When /^I refresh Change Plan section$/ do
   @bus_site.admin_console_page.change_plan_section.refresh_bus_section
 end
+
+Then /^Reseller supplemental plans should be:$/ do |plans_table|
+  actual = @bus_site.admin_console_page.change_plan_section.reseller_supp_plans_hash
+  expected = plans_table.hashes.first
+  expected.keys.each do |header|
+    actual[header].should == expected[header]
+  end
+end

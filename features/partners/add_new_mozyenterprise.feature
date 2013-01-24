@@ -291,3 +291,24 @@ Feature: Add a new partner
     When I navigate to Add New Partner section from bus admin console page
     Then MozyEnterprise partner subscription period options should be:
       | Yearly |  Biennially | 3 years |
+
+  @TC.20378
+  Scenario: 20378 Add New MozyEnterprise Partner - US - Yearly - 10 Users - 500 B Server Plan - 2 Add on - Coupon - CC
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan  | server add on | coupon               |
+      | 12     | 10    | 500 GB       | 2             | 100PERCENTOFFOUTLINE |
+    Then Sub-total before taxes or discounts should be $5,349.56
+    And Order summary table should be:
+      | Description          | Quantity | Price Each | Total Price |
+      | MozyEnterprise User  | 10       | $95.00     | $950.00     |
+      | 500 GB Server Plan   | 1        | $2,309.78  | $2,309.78   |
+      | 250 GB Server Add-on | 2        | $1,044.89  | $2,089.78   |
+      | Discounts Applied    |          |            | -$5,349.56  |
+      | Total Charges        |          |            | $0.00       |
+    And New partner should be created
+    And Partner billing history should be:
+      | Date  | Amount    | Total Paid | Balance Due |
+      | today | $0.00     | $0.00      | $0.00       |
+      | today | $0.00     | $0.00      | $0.00       |
+    And I delete partner account
+

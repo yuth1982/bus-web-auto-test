@@ -67,3 +67,15 @@ end
 When /^I close the user group detail page$/ do
   @bus_site.admin_console_page.user_group_details_section.close_bus_section
 end
+
+When /^I delete the user group$/ do
+  @bus_site.admin_console_page.user_group_details_section.delete_user_group
+  @bus_site.admin_console_page.list_user_groups_section.wait_until_bus_section_load
+end
+
+When /^I search and delete (.+) user group$/ do |group_name|
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['list_user_groups'])
+  @bus_site.admin_console_page.list_user_groups_section.view_user_group_detail(group_name)
+  @bus_site.admin_console_page.user_group_details_section.delete_user_group
+  @bus_site.admin_console_page.list_user_groups_section.wait_until_bus_section_load
+end

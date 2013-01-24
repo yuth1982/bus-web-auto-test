@@ -11,6 +11,10 @@ Transform /^newly created user group name$/ do |step_arg|
   @user_group.name
 end
 
+Transform /^newly created user email$/ do |step_arg|
+  @user.email
+end
+
 When /^I wait for (\d+) seconds$/ do |seconds|
   sleep seconds.to_i
 end

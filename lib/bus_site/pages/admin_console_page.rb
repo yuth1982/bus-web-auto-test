@@ -52,7 +52,9 @@ module Bus
     section(:quick_reports_section, QuickReportsSection, id: "jobs-quick_reports")
 
     # Private element
+    element(:current_admin_div, id: "identify-me")
     element(:stop_masquerading_link, xpath: "//a[text()='stop masquerading']")
+
 
     # Popup window
     element(:popup_content_div, css: "div.popup-window-content")
@@ -69,15 +71,20 @@ module Bus
     #
     # Returns nothing
     def navigate_to_menu(link)
-      el = find_link(link)
+      el = find(:xpath, "//a[text()='#{link}']")
       el_class = el.element_parent[:class]
       if el_class.match(/active/).nil?
         el.click
       end
     end
 
+    # Public: Stop Masquerading
+    #
+    # Returns nothing
     def stop_masquerading
+      current_admin = current_admin_div.text
       stop_masquerading_link.click
+      wait_until{ current_admin != current_admin_div.text}
     end
 
     def close_stash_invitation_popup
