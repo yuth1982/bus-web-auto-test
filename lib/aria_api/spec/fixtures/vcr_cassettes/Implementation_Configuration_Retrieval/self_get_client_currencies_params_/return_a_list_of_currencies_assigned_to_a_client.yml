@@ -1,0 +1,36 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://secure.future.stage.ariasystems.net/api/ws/api_ws_class_dispatcher.php
+    body:
+      encoding: US-ASCII
+      string: output_format=json&auth_key=8Vn848nuRPa58jht9jBBpWvSUVsn3fnB&client_no=4950701&rest_call=get_client_currencies
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 24 Apr 2012 14:46:16 GMT
+      Server:
+      - Apache
+      Content-Length:
+      - '738'
+      Content-Type:
+      - application/json
+      Set-Cookie:
+      - citrix_ns_id=AXwV2b2oZn1B5u6pv/0yu7sod7wA0; Domain=.future.stage.ariasystems.net;
+        Path=/; HttpOnly
+    body:
+      encoding: US-ASCII
+      string: ! '{"client_currency":[{"currency_cd":"usd","currency_name":"US Dollars","currency_short_name":"dollar","iso_4217n":840,"currency_symbol":"$","currency_html":"$","default_ind":1},{"currency_cd":"cad","currency_name":"Canadian
+        Dollars","currency_short_name":"Canadian dollar","iso_4217n":124,"currency_symbol":"$","currency_html":"$","default_ind":0},{"currency_cd":"eur","currency_name":"European
+        Euro-Dollar","currency_short_name":"EuroDollar","iso_4217n":978,"currency_symbol":"\u20ac","currency_html":"&euro;","default_ind":0},{"currency_cd":"gbp","currency_name":"British
+        Pound","currency_short_name":"British Pound","iso_4217n":826,"currency_symbol":"\u00a3","currency_html":"&pound;","default_ind":0}],"error_code":0,"error_msg":"OK"}
+
+'
+    http_version: 
+  recorded_at: Tue, 24 Apr 2012 14:46:18 GMT
+recorded_with: VCR 2.0.0

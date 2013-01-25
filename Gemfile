@@ -17,4 +17,8 @@ gem "tzinfo", "=0.3.35"
 gem 'net-ssh', '=2.6.2'
 gem 'net-scp', '=1.0.4'
 gem 'diffy', '=2.1.0'
-
+gem 'httparty', '=0.10.0'
+gem 'json', '=1.7.5'
+gem 'savon', '=1.1.0'
+gem 'vcr', '=2.4.0'
+gem 'webmock', '=1.9.0'

@@ -1,0 +1,35 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://secure.future.stage.ariasystems.net/api/ws/api_ws_class_dispatcher.php
+    body:
+      encoding: US-ASCII
+      string: output_format=json&auth_key=8Vn848nuRPa58jht9jBBpWvSUVsn3fnB&client_no=4950701&rest_call=get_client_plans_all
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 24 Apr 2012 14:46:19 GMT
+      Server:
+      - Apache
+      Content-Length:
+      - '1061'
+      Content-Type:
+      - application/json
+      Set-Cookie:
+      - citrix_ns_id=4gz2ZX4Q8WMUjXOqMxEA35uq60UA0; Domain=.future.stage.ariasystems.net;
+        Path=/; HttpOnly
+    body:
+      encoding: US-ASCII
+      string: ! '{"error_code":0,"error_msg":"OK","all_client_plans":[{"plan_no":10291129,"plan_name":"Test
+        Plan 01","plan_desc":"This is a test plan","supp_plan_ind":0,"billing_interval":1,"billing_ind":1,"display_ind":1,"rollover_months":null,"rollover_plan_no":null,"early_cancel_fee":null,"early_cancel_min_months":null,"suspension_period":null,"new_acct_status":1,"rollover_acct_status":1,"rollover_acct_status_days":0,"init_free_months":0,"plan_2_assign_on_susp":null,"default_notify_method":null,"prepaid_ind":0,"currency_cd":"usd","plan_services":[{"service_no":10163081,"service_desc":"Recurring
+        Fee","is_recurring_ind":1,"is_usage_based_ind":0,"usage_type":null,"taxable_ind":0,"is_tax_ind":0,"is_arrears_ind":0,"is_setup_ind":0,"is_misc_ind":0,"is_donation_ind":0,"is_order_based_ind":0,"is_cancellation_ind":0,"coa_id":"48100","ledger_code":"48100","display_ind":1,"tiered_pricing_rule":2,"is_min_fee_ind":0,"plan_service_rates":[{"rate_seq_no":1,"from_unit":1,"to_unit":10,"rate_per_unit":10},{"rate_seq_no":2,"from_unit":11,"to_unit":null,"rate_per_unit":9}]}]}]}
+
+'
+    http_version: 
+  recorded_at: Tue, 24 Apr 2012 14:46:22 GMT
+recorded_with: VCR 2.0.0
