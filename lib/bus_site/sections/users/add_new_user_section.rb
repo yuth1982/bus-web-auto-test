@@ -5,7 +5,7 @@ module Bus
     #
     element(:name_tb, id: "user1_name")
     element(:email_tb, id: "user1_username")
-    element(:user_group_search_img, css: "img[alt='Search-button-icon']")
+    element(:user_group_search_select, id: "user_user_group_id")
 
     element(:server_licenses_tb, id: "requested_licenses_Server")
     element(:server_quota_tb, id: "requested_quota_Server")
@@ -17,6 +17,8 @@ module Bus
     element(:desired_user_storage_tb, id: "desired_user_storage")
     element(:device_count_tb, id: "device_count")
     element(:dt_device_count_tb, id: "requested_licenses_Desktop")
+    element(:desktop_device_lbl, id: "Desktop_device")
+    element(:server_device_lbl, id: "Server_device")
 
     element(:save_changes_btn, css: "div.div_col.field_input > button[type=\"button\"]")
     element(:message_div, xpath: "//div[@id='user-new_users_in_batch-errors']/ul/li")
@@ -30,10 +32,8 @@ module Bus
     #
     # @return nothing
     def add_new_user_to_partner(user)
-      unless user.user_group.nil?
-        user_group_search_img.click
-        sleep 2
-        find(:xpath, "//li[text()='#{user.user_group}']").click
+      unless user.user_group.nil? || user.user_group == ""
+        select_user_group(user.user_group)
       end
       wait_until_bus_section_load
       name_tb.type_text(user.name)
@@ -56,10 +56,8 @@ module Bus
     #
     # @return nothing
     def add_new_user_to_enterprise_partner(user)
-      unless user.user_group.nil?
-        user_group_search_img.click
-        sleep 2
-        find(:xpath, "//li[text()='#{user.user_group}']").click
+      unless user.user_group.nil? || user.user_group == ""
+        select_user_group(user.user_group)
       end
       name_tb.type_text(user.name)
       email_tb.type_text(user.email)
@@ -79,13 +77,14 @@ module Bus
     #
     # Returns nothing
     def add_new_user_to_itemized_partner(user)
-      unless user.user_group.nil?
-        user_group_search_img.click
-        sleep 2
-        find(:xpath, "//li[text()='#{user.user_group}']").click
+      unless user.user_group.nil? || user.user_group == ""
+        select_user_group(user.user_group)
       end
       name_tb.type_text(user.name)
       email_tb.type_text(user.email)
+      if user.server_licenses.to_i > 0 && user_enable_server_support_cb.visible?
+        user_enable_server_support_cb.click
+      end
       server_licenses_tb.type_text(user.server_licenses) unless user.server_licenses == 0
       server_quota_tb.type_text(user.server_quota) unless user.server_quota == 0
       desktop_licenses_tb.type_text(user.desktop_licenses) unless user.desktop_licenses == 0
@@ -108,6 +107,44 @@ module Bus
     # Returns success or error message text
     def messages
       message_div.text
+    end
+    
+    # Public: Select a user group
+    #
+    # @param [String] user_group
+    #
+    # Example
+    #   @bus_admin_console_page.add_new_user_section.select_user_group("User Group 1")
+    #
+    # @return nothing
+    def select_user_group(user_group)
+      if has_user_group_search_select?
+        user_group_search_select.select(user_group)
+      end
+    end
+    
+    # Public: Return desktop device value
+    #
+    # @param [] none
+    #
+    # Example
+    #   @bus_admin_console_page.add_new_user_section.desktop_device_lbl.to_i
+    #
+    # @return [String]
+    def desktop_device
+      desktop_device_lbl.text
+    end
+    
+    # Public: Return server device value
+    #
+    # @param [] none
+    #
+    # Example
+    #   @bus_admin_console_page.add_new_user_section.server_device_lbl.to_i
+    #
+    # @return [String]
+    def server_device
+      server_device_lbl.text
     end
   end
 end
