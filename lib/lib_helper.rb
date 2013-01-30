@@ -20,6 +20,7 @@ require 'capybara/cucumber'
 require 'capybara-webkit'
 
 require 'configs/configs_helper'
+require 'aria_api/lib/aria_api'
 require 'file_helper'
 require 'zimbra_helper'
 require 'db_helper'
@@ -41,6 +42,7 @@ include FileHelper
 include DBHelper
 include LDAPHelper
 include SSHHelper
+include AriaApi
 
 
 

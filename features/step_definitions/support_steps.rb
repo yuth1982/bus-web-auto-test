@@ -15,6 +15,10 @@ Transform /^newly created user email$/ do |step_arg|
   @user.email
 end
 
+Transform /^newly created partner aria id$/ do |step_arg|
+  @aria_id
+end
+
 When /^I wait for (\d+) seconds$/ do |seconds|
   sleep seconds.to_i
 end

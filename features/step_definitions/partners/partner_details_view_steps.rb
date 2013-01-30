@@ -25,6 +25,10 @@ When /^I get the partner_id$/ do
   Log.debug("partner id is #{@partner_id}")
 end
 
+When /^I get partner aria id$/ do
+  @aria_id = @bus_site.admin_console_page.partner_details_section.general_info_hash['Aria ID:']
+end
+
 Then /^Partner general information should be:$/ do |details_table|
   actual = @bus_site.admin_console_page.partner_details_section.general_info_hash
   expected = details_table.hashes.first
