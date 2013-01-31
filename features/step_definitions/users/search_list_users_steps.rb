@@ -17,26 +17,22 @@ When /^I search user by (.+)$/ do |keywords|
 end
 
 Then /^User search results should be:$/ do |results_table|
-  if results_table.headers.include?('Created')
-    results_table.map_column!('Created') do |value|
-      Chronic.parse(value).strftime("%m/%d/%y")
-    end
-  end
-
-  if results_table.headers.include?('User')
-    results_table.map_column!('User') do |value|
-      value.gsub(/@user_email/, @user.email)
-    end
-  end
-
-  if results_table.headers.include?('Name')
-    results_table.map_column!('Name') do |value|
-      value.gsub(/@user_name/, @user.name)
-    end
-  end
-
   actual = @bus_site.admin_console_page.search_list_users_section.search_results_hashes
   expected = results_table.hashes
+  expected.each do |col|
+    col.map do |k,v|
+      case k
+        when "Created"
+          v.replace!(Chronic.parse(v).strftime("%m/%d/%y"))
+        when "Name"
+          v.gsub!(/@user_name/, @user.name) unless @user.nil?
+        when "User"
+          v.gsub!(/@user_email/, @user.email) unless @user.nil?
+        else
+          # do nothing
+      end
+    end
+  end
   expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
 
