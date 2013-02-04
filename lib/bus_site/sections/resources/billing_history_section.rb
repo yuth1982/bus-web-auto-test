@@ -8,28 +8,14 @@ module Bus
     element(:bill_history_h3, xpath: "//h3[text()='Billing History']")
     element(:billing_history_table, xpath: "//div[@id='resource-all_charges-content']//table[@class='table-view']")
 
-    # Public: billing history table header rows text
+    # Public: Billing history hashes
+    #         Converts results table into an Array of Hash where the keys of each Hash are the headers in the table.                                                                                               # Example
     #
-    # Example
+    #  @bus_admin_console_page.billing_history_section.billing_history_hashes
     #
-    #   @bus_admin_console_page.billing_history_section.billing_history_table_header
-    #   # => ["Date", "Amount", "Total Paid", "Balance Due"]
-    #
-    # Returns the billing history table header row text array
-    def billing_history_table_headers
-      billing_history_table.headers_text
-    end
-
-    # Public: billing history table body rows text
-    #
-    # Example
-    #
-    #   @bus_admin_console_page.billing_history_section.billing_history_table_header
-    #   # => [["07/30/12", "$439.89", "$439.89", "$0.00"], ["07/31/12", "95.00", "95.00", "$0.00"]]
-    #
-    # Returns the billing history table body rows text array
-    def billing_history_table_rows
-      billing_history_table.rows_text
+    # Returns hash array
+    def billing_history_hashes
+      billing_history_table.rows_text.map{ |row| Hash[*billing_history_table.headers_text.zip(row).flatten] }
     end
   end
 end

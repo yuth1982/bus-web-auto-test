@@ -20,10 +20,10 @@ Then /^User search results should be:$/ do |results_table|
   actual = @bus_site.admin_console_page.search_list_users_section.search_results_hashes
   expected = results_table.hashes
   expected.each do |col|
-    col.map do |k,v|
+    col.each do |k,v|
       case k
         when "Created"
-          v.replace!(Chronic.parse(v).strftime("%m/%d/%y"))
+          v.replace(Chronic.parse(v).strftime("%m/%d/%y"))
         when "Name"
           v.gsub!(/@user_name/, @user.name) unless @user.nil?
         when "User"

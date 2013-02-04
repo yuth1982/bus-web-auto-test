@@ -120,11 +120,19 @@ Then /^Partner sub admins should be:$/ do |sub_admins_table|
 end
 
 Then /^Partner billing history should be:$/ do |billing_history_table|
-  billing_history_table.map_column!('Date') do |value|
-    Chronic.parse(value).strftime("%m/%d/%y")
+  actual = @bus_site.admin_console_page.partner_details_section.billing_history_hashes
+  expected = billing_history_table.hashes
+  expected.each do |col|
+    col.each do |k,v|
+      case k
+        when "Date"
+          v.replace(Chronic.parse(v).strftime("%m/%d/%y"))
+        else
+          # do nothing
+      end
+    end
   end
-  @bus_site.admin_console_page.partner_details_section.billing_history_table_headers.should == billing_history_table.headers
-  @bus_site.admin_console_page.partner_details_section.billing_history_table_rows.should == billing_history_table.rows
+  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
 
 When /^I enable stash for the partner with (default|\d+ GB) stash storage$/ do |quota|

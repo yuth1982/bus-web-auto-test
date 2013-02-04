@@ -228,18 +228,14 @@ module Bus
       sub_admins_table.rows_text
     end
 
-    # Public: Billing history table headers text
+    # Public: Billing history hashes
+    #         Converts results table into an Array of Hash where the keys of each Hash are the headers in the table.                                                                                               # Example
     #
-    # Returns array
-    def billing_history_table_headers
-      billing_history_table.headers_text
-    end
-
-    # Public: Billing history table rows text
+    #  @bus_admin_console_page.partner_details_section.billing_history_hashes
     #
-    # Returns array
-    def billing_history_table_rows
-      billing_history_table.rows_text
+    # Returns hash array
+    def billing_history_hashes
+      billing_history_table.rows_text.map{ |row| Hash[*billing_history_table.headers_text.zip(row).flatten] }
     end
 
     # Public: Click act as partner link
