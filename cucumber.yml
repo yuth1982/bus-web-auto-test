@@ -1,1 +1,3 @@
-default: -color --format pretty --format rerun --out rerun.txt -r features
+common: -color --format pretty --format rerun --out rerun.txt -r features
+default: -p common
+exclude_qa5: -e "configuration|users/machine" -p common

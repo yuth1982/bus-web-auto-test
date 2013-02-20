@@ -974,7 +974,7 @@ Feature: User sync
     When I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
-    And I modify a user dev_user4 to dev_user44 in the AD:
+    And I modify a user dev_user4 to dev_user44 in the AD
     And I add 1 new provision rules:
       | rule         | group |
       | cn=dev_user* | dev   |
