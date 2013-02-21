@@ -1,20 +1,36 @@
 
-Then /^Autogrow status text's should be (.+)$/ do |value|
-  @bus_site.admin_console_page.billing_info_section.autogrow_status.should == value
+Then /^Autogrow details should be:$/ do |autogrow_table|
+  actual = @bus_site.admin_console_page.billing_info_section.autogrow_hashes
+  expected = autogrow_table.hashes
+  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
 
 Then /^Next renewal supplemental plan details should be:$/ do |plan_table|
-  @bus_site.admin_console_page.billing_info_section.supp_plan_table_rows.should == plan_table.hashes.map { |el| el.values }
+  actual = @bus_site.admin_console_page.billing_info_section.supp_plan_hashes
+  expected = plan_table.hashes
+  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
 
-Then /^VAT table should be:$/ do |vat_num_table|
-  @bus_site.admin_console_page.billing_info_section.vat_table_rows.should == vat_num_table.rows.map{|row| row.delete_if{|cell| cell.empty? }}
+Then /^VAT info should be:$/ do |vat_table|
+  actual = @bus_site.admin_console_page.billing_info_section.vat_hashes
+  expected = vat_table.hashes
+  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
 
 Then /^Next renewal info table should be:$/ do |next_renewal_table|
-  #next_renewal_table.map_column!('value') do |value|
-  #    Chronic.parse(value).strftime("%b %d, %Y")
-  #end
-  next_renewal_table.raw
-  @bus_site.admin_console_page.billing_info_section.next_renewal_table_rows.should == next_renewal_table.rows
+  actual = @bus_site.admin_console_page.billing_info_section.next_renewal_hashes
+  expected = next_renewal_table.hashes
+  expected.each do |col|
+    col.each do |k,v|
+      case k
+        when 'Date'
+          v.replace(Chronic.parse(v).strftime('%b %d, %Y'))
+        when 'Payment Type'
+          v.gsub!(/@XXXX/,@partner.credit_card.last_four_digits) unless @partner.nil?
+        else
+          # do nothing
+      end
+    end
+  end
+  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
