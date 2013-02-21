@@ -4,9 +4,7 @@ module Bus
 
     # Private elements
     #
-    element(:export_to_excel_link, link: "Export to Excel (CSV)")
-    element(:bill_history_h3, xpath: "//h3[text()='Billing History']")
-    element(:billing_history_table, xpath: "//div[@id='resource-all_charges-content']//table[@class='table-view']")
+    element(:billing_history_table, css: 'div#resource-all_charges-content table.table-view')
 
     # Public: Billing history hashes
     #         Converts results table into an Array of Hash where the keys of each Hash are the headers in the table.                                                                                               # Example

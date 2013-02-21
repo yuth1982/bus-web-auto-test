@@ -5,7 +5,7 @@ Then /^Billing history table should be:$/ do |billing_table|
   expected.each do |col|
     col.each do |k,v|
       case k
-        when "Created"
+        when "Date"
           v.replace(Chronic.parse(v).strftime("%m/%d/%y"))
         else
           # do nothing
