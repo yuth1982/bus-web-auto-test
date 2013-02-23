@@ -7,7 +7,7 @@ module Bus
     element(:delete_user_link, xpath: "//a[text()='Delete User']")
     element(:change_user_password_link, xpath: "//a[text()='Change User Password']")
 
-    elements(:user_details_dls, xpath: "//div[starts-with(@id,'user-show_user_centric-')]//dl")
+    elements(:user_details_dls, xpath: "//div[starts-with(@id,'user-show')]//div[2]/dl")
     element(:change_status_link, xpath: "//span[starts-with(@id,'user-display-status-')]//a")
     element(:status_selection, xpath: "//select[@id='status']")
     element(:submit_status_btn, xpath: "//span[starts-with(@id,'user-change-status-')]//input")
@@ -29,40 +29,44 @@ module Bus
     element(:delete_stash_link, css: "a[onclick^=show_delete_stash_popup]")
 
     # user backup information table
-    element(:user_backup_details_table, xpath: "div//[starts-with(@id, 'user-show_user_centric')]//div[2]/div[3]/div/table)]")
+    element(:user_backup_details_table, xpath: "div//[starts-with(@id, 'user-show')]//div[2]/table)]")
     element(:user_resource_details_table, css: "div.show-details > table")
   
     # Public: User details hash
     #
+    # @param [] none
+    #
     # Example:
     #   # => user_details_details_section.user_details_hash
     #
-    # Returns array hash
+    # @return [Hash]
     def user_details_hash
       wait_until_bus_section_load
-      #wait_until { user_details_dls.visible? }
       output = user_details_dls.map{ |dl| dl.dt_dd_elements_text }.delete_if { |k| k.empty? }
       Hash[*output.flatten]
     end
 
     # Public: User id
     #
+    # @param [] none
+    #
     # Example:
     #   # => user_details_details_section.user_id
     #
-    # Returns user id
+    # @return [String]
     def user_id
       user_details_hash['ID:']
     end
 
     # Public: Enable stash for a user
     #
-    # @params [string] quota, [bool] send_email
+    # @params [string] quota
+    # @params [bool] send_email
     #
     # Example:
     #   @bus_site.admin_console_page.user_details_details_section.add_stash
     #
-    # Returns nothing
+    # @return [] nothing
     def add_stash(quota, send_email)
       add_stash_link.click
       stash_quota_tb.type_text(quota) if quota.to_i >= 0 #if quota = -1, then use default
@@ -73,10 +77,12 @@ module Bus
 
     # Public: Click add stash link then click cancel link
     #
+    # @params [] none
+    #
     # Example:
     #   @bus_site.admin_console_page.user_details_details_section.cancel_add_stash
     #
-    # Returns nothing
+    # @return [] nothing
     def cancel_add_stash
       add_stash_link.click
       cancel_stash_btn.click
@@ -89,7 +95,7 @@ module Bus
     # Example:
     #   @bus_site.admin_console_page.user_details_details_section.change_stash_quota('10')
     #
-    # Returns nothing
+    # @return [] nothing
     def change_stash_quota(quota)
       change_stash_quota_link.click
       change_stash_quota_tb.type_text(quota)
@@ -98,10 +104,12 @@ module Bus
 
     # Public: Click change stash link then click cancel link
     #
+    # @params [] none
+    #
     # Example:
     #   @bus_site.admin_console_page.user_details_details_section.cancel_change_stash_quota
     #
-    # Returns nothing
+    # @return [] nothing
     def cancel_change_stash_quota
       change_stash_quota_link.click
       cancel_change_stash_quota_link.click
@@ -109,10 +117,12 @@ module Bus
 
     # Public: Click change stash quota text box to trigger popup box
     #
+    # @params [] none
+    #
     # Example:
     #   @bus_site.admin_console_page.user_details_details_section.click_change_quota_tb
     #
-    # Returns nothing
+    # @return [] nothing
     def click_change_quota_tb
       change_stash_quota_link.click
       change_stash_quota_tb.click
@@ -120,10 +130,12 @@ module Bus
 
     # Public: Find change stash quota popup box by tips text
     #
+    # @params [] none
+    #
     # Example:
     #   @bus_site.admin_console_page.user_details_details_section.find_change_quota_tooltips('Max: 100 GB')
     #
-    # Returns nothing
+    # @return [] nothing
     def find_change_quota_tooltips(text)
       tooltips = find(:xpath, "//span[text()='#{text}']")
       # I cannot check tooltips.visible?, since change_stash_quota_tb element will out of focus immediately
@@ -134,20 +146,24 @@ module Bus
 
     # Public: Click delete link
     #
+    # @params [] none
+    #
     # Example:
     #   @bus_site.admin_console_page.user_details_details_section.click_delete_stash_link
     #
-    # Returns nothing
+    # @return [] nothing
     def click_delete_stash_link
       delete_stash_link.click
     end
 
     # Public: Click send stash invitation email link
     #
+    # @params [] none
+    #
     # Example:
     #   @bus_site.admin_console_page.user_details_details_section.send_stash_invitation_email
     #
-    # Returns nothing
+    # @return [] nothing
     def send_stash_invitation_email
       send_invitation_link.click
       wait_until_bus_section_load
@@ -155,18 +171,36 @@ module Bus
 
     # Public: Click delete link
     #
-    # Example:
-    #   @bus_site.admin_console_page.user_details_section.delete_stash
+    # @params [] none
     #
-    # Returns nothing
+    # Example:
+    #   @bus_site.admin_console_page.user_details_section.click_delete_stash
+    #
+    # @return [] nothing
     def click_delete_stash
       delete_stash_link.click
     end
-
+   
+    # Public: Return user back up details table headers
+    #
+    # @params [] none
+    #
+    # Example:
+    #   @bus_site.admin_console_page.user_details_section.user_backup_details_table_headers
+    #
+    # @return [String] 
     def user_backup_details_table_headers
       user_backup_details_table.headers_text
     end
 
+    # Public: Return user back up details table rows
+    #
+    # @params [] none
+    #
+    # Example:
+    #   @bus_site.admin_console_page.user_details_section.user_backup_details_table_rows
+    #
+    # @return [String]
     def user_backup_details_table_rows
       user_backup_details_table.rows_text
     end
@@ -178,7 +212,7 @@ module Bus
     # Example
     #  @bus_site.admin_console_page.user_details_section.user_resource_details_table_headers
     #
-    # @return String    
+    # @return [String]    
     def user_resource_details_table_headers
       user_resource_details_table.headers_text
     end
@@ -195,12 +229,29 @@ module Bus
       user_resource_details_table.rows_text
     end
 
+    
+    # Public: Activate user 
+    #
+    # @params [] none
+    #
+    # Example:
+    #   @bus_site.admin_console_page.user_details_section.active_user
+    #
+    # @return [] nothing
     def active_user
       change_status_link.click
       status_selection.select('Active')
       submit_status_btn.click
     end
 
+    # Public: Return error messages
+    #
+    # @params [] none
+    #
+    # Example:
+    #   @bus_site.admin_console_page.user_details_section.messages
+    #
+    # @return [String]
     def messages
       message_div = find(:css, "div#user-show-#{user_id}-errors ul")
       message_div.text

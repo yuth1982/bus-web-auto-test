@@ -5,7 +5,9 @@ module Bus
     # Plans
     element(:pro_base_plan_select, id: "products_base_exclusive")
     element(:enterprise_users_tb, css: "input[id^=products_base_]")
-
+    element(:desktop_licenses_tb, xpath: "//div[@id='base_plans']/div[3]/input")
+    element(:server_licenses_tb, xpath: "//div[@id='base_plans']/div[4]/input")
+    
     element(:storage_add_on_tb, css: "input[id^=products_addon_]")
     element(:server_plan_select, css: "select[id^=products_addon_]")
     element(:server_plan_change_link, css: "span#clickable-change-link a")
@@ -21,11 +23,18 @@ module Bus
     element(:message_div, css: "div#resource-change_billing_plan-errors ul")
 
     # Public: Change MozyPro plan
+    # 
+    # @param [Integer] users
+    # @param [String] server_plan
+    # @param [Integer] server_add_on
+    # @param [String] coupon
+    # @param [Object] user_group
     #
     # Example
-    #   @bus_site.admin_console_page.change_mozypro_plan('100 GB', 'yes', '2', 'COUPONCODE')
+    #   @bus_site.admin_console_page.change_mozypro_plan('100 GB', 'yes', '2', 'COUPONCODE', @user_group)
     #
-    # Returns nothing
+    # @return [nothing]
+
     def change_mozypro_plan(base_plan, server_plan, storage_add_on, coupon)
       server_plan_locator = "//label[contains(text(),'Server Plan')]"
       # Find current server plan id e.g. 'products_addon_10353251, Server Plan, $12.99'
@@ -55,16 +64,32 @@ module Bus
     end
 
     # Public: Change MozypEnterprise plan
+    # 
+    # @param [Integer] users
+    # @param [String] server_plan
+    # @param [Integer] server_add_on
+    # @param [String] coupon
+    # @param [Object] user_group
     #
     # Example
-    #   @bus_site.admin_console_page.change_mozyenterprise_plan(2,"50 GB Server Plan, $296.78",2,"COUPONCODE")
+    #   @bus_site.admin_console_page.change_mozyenterprise_plan(2,"50 GB Server Plan, $296.78",2,"COUPONCODE", @user_group)
     #
-    # Returns nothing
-    def change_mozyenterprise_plan(users, server_plan, server_add_on, coupon)
-      enterprise_users_tb.type_text(users) unless users.nil?
+    # @return [nothing]
+    def change_mozyenterprise_plan(users, server_plan, server_add_on, coupon, user_group)
+
+      unless users.nil?
+        if !user_group.nil? && user_group.name == "(default user group)"
+          #update @user_group obj will refactor later
+          user_group.desktop_device = users.to_i
+        end
+        wait_until { enterprise_users_tb.visible? }
+        enterprise_users_tb.type_text(users)
+      end
+      
       server_plan_select.select(server_plan) unless server_plan.nil?
       storage_add_on_tb.type_text(server_add_on) unless server_add_on.nil?
       coupon_code_tb.type_text(coupon) unless coupon.nil?
+      
       confirm_change
     end
 
@@ -82,6 +107,42 @@ module Bus
         server_plan_select.select(server_plan.capitalize)
       end
       confirm_change
+    end
+    
+    # Public: Change itemized plan
+    #
+    # @param [String] server_licenses
+    # @param [String] desktop_licenses
+    # @param [Object] user_group
+    #
+    # Example
+    #  @bus_site.admin_console_page.change_plan_section.change_itemized_plan("2", "2", @user_group)
+    #
+    # @return [nothing]     
+    def change_itemized_plan(server_licenses, desktop_licenses, user_group)
+      
+      unless server_licenses.nil?
+        if !user_group.nil? && user_group.name == "(default user group)"
+          #update @user_group obj will refactor later
+          user_group.server_device = user_group.server_device + server_licenses.to_i
+        end
+        wait_until { server_licenses_tb.visible? }
+        server_licenses = server_licenses.to_i + server_licenses_tb.value.to_i
+        server_licenses_tb.type_text(server_licenses)
+      end
+      
+      unless desktop_licenses.nil?
+        if !user_group.nil? && user_group.name == "(default user group)"
+          #update @user_group obj will refactor later
+          user_group.desktop_device = user_group.desktop_device + desktop_licenses.to_i
+        end
+        wait_until { desktop_licenses_tb.visible? }
+        desktop_licenses = desktop_licenses.to_i + desktop_licenses_tb.value.to_i
+        desktop_licenses_tb.type_text(desktop_licenses)
+      end
+
+      confirm_change
+      
     end
 
     # Public: Return messages for change plan actions
@@ -188,14 +249,16 @@ module Bus
 
     # Private: Confirm change plan
     #
+    # @param [none]
+    #
     # Example
     #   @bus_site.admin_console_page.change_plan_section.confirm_change
     #
-    # Returns nothing
+    # @return [nothing] 
     def confirm_change
-      page.execute_script("document.getElementById('submit_new_resources_btn').disabled=false")
-      sleep 2 # refactor later
+      wait_until { submit_btn.visible? }
       submit_btn.click
+      wait_until { continue_btn.visible? }
       continue_btn.click
     end
   end

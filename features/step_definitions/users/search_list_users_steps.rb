@@ -23,16 +23,16 @@ Then /^user search results should be:$/ do |results_table|
   end
 
   results_table.map_column!('User') do |value|
-    if @user.nil?
-      value.slice(0,27)+"..."
+    if @user.nil? 
+      value.slice(0,27)+"..." unless value.length <= 28
     else
-      (value.gsub(/@user_email/,@user.email)).slice(0,27)+"..."
+      (value.gsub(/@user_email/,@user.email)).length > 27 ? value.gsub(/@user_email/,@user.email).slice(0,27)+"...":value.gsub(/@user_email/,@user.email)
     end
   end
 
   results_table.map_column!('Name') do |value|
     if @user.nil?
-      value.slice(0,27)+"..."
+      value.slice(0,27)+"..." unless value.length <= 28
     else
       value.gsub(/@user_name/,@user.name)
     end

@@ -8,9 +8,10 @@ When /^I add a new user to a (MozyPro||Reseller||MozyEnterprise||Itemized) partn
 
   @user = Bus::DataObj::User.new
   attributes = user_table.hashes.first
-  @user.user_group = attributes["user group"]
+  @user.user_group = attributes["user group"] unless attributes["user group"].nil?
   @user.name = attributes["name"] unless attributes["name"].nil?
   @user.email = attributes["email"] unless attributes["email"].nil?
+  @user.user_type = attributes["user type"] unless attributes["user type"].nil?
   @user.server_licenses = attributes["server licenses"] unless attributes["server licenses"].nil?
   @user.server_quota = attributes["server quota"] unless attributes["server quota"].nil?
   @user.desktop_licenses = attributes["desktop licenses"] unless attributes["desktop licenses"].nil?
@@ -34,11 +35,11 @@ When /^I add a new user to a (MozyPro||Reseller||MozyEnterprise||Itemized) partn
 end
 
 Then /^New user should be created$/ do
-  @bus_site.admin_console_page.add_new_user_section.messages.should == "Created 1 user(s)"
+  @bus_site.admin_console_page.add_new_user_section.success_messages.should == "Successfully created 1 user(s)"
 end
 
 Then /^New user created message should be (.+)$/ do |message|
-  @bus_site.admin_console_page.add_new_user_section.messages.gsub("\n"," ").should == message
+  @bus_site.admin_console_page.add_new_user_section.sucess_messages.gsub("\n"," ").should == message
 end
 
 When /^I refresh Add New User section$/ do
@@ -57,4 +58,41 @@ Then /^I should see stash options$/ do
   @bus_site.admin_console_page.add_new_user_section.has_content?('Enable Stash:').should be_true
   @bus_site.admin_console_page.add_new_user_section.has_content?('Send Stash Invite:').should be_true
   @bus_site.admin_console_page.add_new_user_section.has_content?('Desired Storage for Stash:').should be_true
+end
+
+Then /^desktop and server devices should not be displayed in Add New User module$/ do
+  @bus_site.admin_console_page.add_new_user_section.has_desktop_device_lbl?.should be_false
+  @bus_site.admin_console_page.add_new_user_section.has_server_device_lbl?.should be_false
+  @bus_site.admin_console_page.add_new_user_section.has_content?('Desktop Devices').should be_false
+  @bus_site.admin_console_page.add_new_user_section.has_content?('Server Devices').should be_false
+end
+
+Then /^desktop and server devices should be displayed in Add New User module$/ do
+  @bus_site.admin_console_page.add_new_user_section.has_desktop_device_lbl?.should be_true
+  @bus_site.admin_console_page.add_new_user_section.has_server_device_lbl?.should be_true
+  @bus_site.admin_console_page.add_new_user_section.has_content?('Desktop Devices').should be_true
+  @bus_site.admin_console_page.add_new_user_section.has_content?('Server Devices').should be_true
+end
+
+When /^I note the desktop and server amounts in Add New User module for user group (.+)$/ do |user_group|
+  @bus_site.admin_console_page.add_new_user_section.select_user_group(user_group)
+  @bus_site.admin_console_page.add_new_user_section.wait_until_bus_section_load
+   if @user_group.nil?
+     @user_group = Bus::DataObj::UserGroup.new
+     @user_group.name = user_group
+     @user_group.desktop_device = @bus_site.admin_console_page.add_new_user_section.desktop_device.to_i
+     @user_group.server_device = @bus_site.admin_console_page.add_new_user_section.server_device.to_i
+   else
+     # "Available:" device and storage calculations happen after frame load
+     @user_group.desktop_device.should == @bus_site.admin_console_page.add_new_user_section.desktop_device.to_i 
+     @user_group.server_device.should == @bus_site.admin_console_page.add_new_user_section.server_device.to_i 
+   end
+end
+
+Then /^the user groups should not be visible in the Add New User module$/ do
+  @bus_site.admin_console_page.add_new_user_section.has_user_group_search_select?.should be_false
+end
+
+When /^I choose (.+) from Choose a Group$/ do |user_group|
+  @bus_site.admin_console_page.add_new_user_section.select_user_group(user_group)
 end

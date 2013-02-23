@@ -58,16 +58,16 @@ Feature: Bus Smoke Test
       | test group | 20           | 10            |
     Then New user group should be created
     When I transfer resources from (default user group) to test group with:
-    | server licenses | server quota GB | desktop licenses | desktop quota GB |
-    | 2               | 20              | 2                | 20               |
+      | server licenses | server quota GB | desktop licenses | desktop quota GB |
+      | 2               | 20              | 2                | 20               |
     Then Resources should be transferred
     When I view newly created user group name user group details
     Then User group details should be:
       | ID:     | External ID: | Billing code: | Available Keys: | Available Quota: | Default quota for new installs:             | Default user group: |
       | @xxxxxx | (change)     | (change)      | 4               | 40 GB            | 10 GB (Desktop) and 20 GB (Server) (change) | No (make default)   |
     When I add a new user to a MozyEnterprise partner:
-      | user group  | desired_user_storage | desktop licenses |
-      | test group  | 10                   | 1            |
+      | desired_user_storage | desktop licenses | user group | user type           |
+      | 10                   | 1                | test group | Desktop Backup Only |
     Then New user should be created
     And I batch assign MozyEnterprise partner Server keys to (default user group) user group with send emails:
       | email                         | quota |
