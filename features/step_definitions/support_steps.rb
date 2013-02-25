@@ -19,6 +19,10 @@ Transform /^newly created partner aria id$/ do |step_arg|
   @aria_id
 end
 
+Transform /^newly created partner external id$/ do |step_arg|
+  @new_p_external_id
+end
+
 When /^I wait for (\d+) seconds$/ do |seconds|
   sleep seconds.to_i
 end

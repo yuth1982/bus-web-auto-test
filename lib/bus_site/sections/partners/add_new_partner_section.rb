@@ -6,67 +6,69 @@ module Bus
     #
     # Company Info
     #
-    element(:new_partner_name_tb, id: "new_partner_name")
-    element(:contact_country_select, id: "partner_new_contact_country")
-    element(:contact_state_tb, id: "partner_new_contact_state")
-    element(:contact_state_us_select, id: "partner_new_contact_state_us")
-    element(:contact_state_ca_select, id: "partner_new_contact_state_ca")
-    element(:contact_city_tb, id: "contact_city")
-    element(:contact_address_tb, id: "contact_address")
-    element(:contact_zip_tb, id: "contact_zip")
-    element(:contact_phone_tb, id: "contact_phone")
-    element(:vat_number_tb, id: "vat_info_vat_number")
+    element(:new_partner_name_tb, id: 'new_partner_name')
+    element(:contact_country_select, id: 'partner_new_contact_country')
+    element(:contact_state_tb, id: 'partner_new_contact_state')
+    element(:contact_state_us_select, id: 'partner_new_contact_state_us')
+    element(:contact_state_ca_select, id: 'partner_new_contact_state_ca')
+    element(:contact_city_tb, id: 'contact_city')
+    element(:contact_address_tb, id: 'contact_address')
+    element(:contact_zip_tb, id: 'contact_zip')
+    element(:contact_phone_tb, id: 'contact_phone')
+    element(:vat_number_tb, id: 'vat_info_vat_number')
 
     # Admin info
     #
-    element(:new_admin_display_name_tb, id: "new_admin_display_name")
-    element(:new_admin_username_tb, id: "new_admin_username")
-    element(:root_role_td, id: "root-role-options")
+    element(:new_admin_display_name_tb, id: 'new_admin_display_name')
+    element(:new_admin_username_tb, id: 'new_admin_username')
+    element(:root_role_td, id: 'root-role-options')
 
     # Partner Info
-    element(:parent_partner_select, id: "parent_partner_id")
-    element(:company_type_select, id: "extended_company_type")
-    element(:create_under_txt, id: "parent_partner_options")
-    element(:coupon_code_tb, id: "coupon_code")
-    element(:plan_loading_div, id: "plan_loading")
+    element(:parent_partner_select, id: 'parent_partner_id')
+    element(:company_type_select, id: 'extended_company_type')
+    element(:create_under_txt, id: 'parent_partner_options')
+    element(:coupon_code_tb, id: 'coupon_code')
+    element(:plan_loading_div, id: 'plan_loading')
 
     # Billing Info
-    element(:use_company_info_cb, id: "use_company_info")
-    element(:cc_address_tb, id: "cc_address")
-    element(:cc_country_select, id: "cc_country")
-    element(:cc_state_tb, id: "cc_state")
-    element(:cc_state_us_select, id: "cc_state_us")
-    element(:cc_state_ca_select, id: "cc_state_ca")
-    element(:cc_city_tb, id: "cc_city")
-    element(:cc_email_tb, id: "cc_email")
-    element(:cc_phone_tb, id: "cc_phone")
-    element(:cc_zip_tb, id: "cc_zip")
+    element(:use_company_info_cb, id: 'use_company_info')
+    element(:cc_address_tb, id: 'cc_address')
+    element(:cc_country_select, id: 'cc_country')
+    element(:cc_state_tb, id: 'cc_state')
+    element(:cc_state_us_select, id: 'cc_state_us')
+    element(:cc_state_ca_select, id: 'cc_state_ca')
+    element(:cc_city_tb, id: 'cc_city')
+    element(:cc_email_tb, id: 'cc_email')
+    element(:cc_phone_tb, id: 'cc_phone')
+    element(:cc_zip_tb, id: 'cc_zip')
 
-    elements(:period_radios, css: "div#initial_purchase_options dt input")
-    elements(:period_labels, css: "div#initial_purchase_options dt label")
-    element(:initial_purchase_options, id: "initial_purchase_options")
-    element(:include_initial_purchase_cb, id: "include_initial_purchase")
-    element(:pre_sub_total_label, id: "init_sub_total")
-    element(:next_btn, id: "next-button")
+    elements(:period_radios, css: 'div#initial_purchase_options dt input')
+    elements(:period_labels, css: 'div#initial_purchase_options dt label')
+    element(:initial_purchase_options, id: 'initial_purchase_options')
+    element(:include_initial_purchase_cb, id: 'include_initial_purchase')
+    element(:pre_sub_total_label, id: 'init_sub_total')
+    element(:next_btn, id: 'next-button')
 
     # Order summary
-    element(:order_summary_table, css: "div#order-summary table")
+    element(:order_summary_table, css: 'div#order-summary table')
 
     # Credit Card Info
     #
-    element(:cc_name_tb, id: "cc_name")
-    element(:cc_no_tb, id: "cc_no")
-    element(:cvv_tb, id: "cvv")
-    element(:cc_exp_mm_select, id: "cc_exp_mm")
-    element(:cc_exp_yyyy_select, id: "cc_exp_yyyy")
-    element(:net_term_payment, id: "formOfPaymentNT")
+    element(:cc_name_tb, id: 'cc_name')
+    element(:cc_no_tb, id: 'cc_no')
+    element(:cvv_tb, id: 'cvv')
+    element(:cc_exp_mm_select, id: 'cc_exp_mm')
+    element(:cc_exp_yyyy_select, id: 'cc_exp_yyyy')
 
-    element(:message_div, css: "div#partner-new-errors ul")
-    element(:create_partner_btn, css: "div#cc-details input#submit_button")
-    element(:back_btn, id: "back_button")
+    element(:cc_payment_input, id: 'formOfPaymentCC')
+    element(:net_term_payment_input, id: 'formOfPaymentNT')
+
+    element(:message_div, css: 'div#partner-new-errors ul')
+    element(:create_partner_btn, css: 'div#cc-details input#submit_button')
+    element(:back_btn, id: 'back_button')
 
     # sub partner
-    element(:create_sub_partner_btn, css: "input[value='Create Partner']")
+    element(:create_sub_partner_btn, css: 'input#submit_button')
 
     # Public: Add a new partner account
     #
@@ -88,8 +90,9 @@ module Bus
         next_btn.click
         wait_until{ back_btn.visible? } # wait for fill credit card info
         if partner.net_term_payment
-          net_term_payment.click
+          net_term_payment_input.click
         else
+          cc_payment_input.click
           fill_credit_card_info(partner.credit_card)
         end
         create_partner_btn.click
@@ -147,7 +150,7 @@ module Bus
     def fill_company_info(company_info)
       new_partner_name_tb.type_text(company_info.name)
 
-      if company_info.country.eql?("United States")
+      if company_info.country.eql?('United States')
         contact_state_us_select.select(company_info.state_abbrev)
       else
         contact_country_select.select(company_info.country)
@@ -180,7 +183,7 @@ module Bus
     end
 
     def fill_subscription_period(period)
-      find(:id, "billing_period_#{period}").click
+      find_with_highlight(:id, "billing_period_#{period}").click
     end
 
     def fill_initial_purchase(partner)
@@ -188,7 +191,7 @@ module Bus
         when CONFIGS['bus']['company_type']['mozypro']
           fill_mozypro_purchase(partner)
         when CONFIGS['bus']['company_type']['mozyenterprise']
-          raise("MozyEnterprise parent partner error") unless create_under_txt.text.eql?("(Creating under MozyEnterprise)")
+          raise('MozyEnterprise parent partner error') unless create_under_txt.text.eql?('(Creating under MozyEnterprise)')
           fill_mozyenterprise_purchase(partner)
         when CONFIGS['bus']['company_type']['reseller']
           fill_reseller_purchase(partner)
@@ -198,25 +201,25 @@ module Bus
     end
 
     def fill_mozypro_purchase(partner)
-      base_plan_select = find(:id, "#{partner.subscription_period}_base_plan_select")
+      base_plan_select = find_with_highlight(:id, "#{partner.subscription_period}_base_plan_select")
       base_plan_select.select(partner.base_plan)
       base_plan_id = base_plan_select.value
 
       #{base plan id}_add_on_plan_check_box_1 is stash beta grant id
       if partner.has_stash_grant_plan
-        stash_grant_id = find(:id, "#{base_plan_id}_add_on_plan_check_box_1").value
-        find(:id, "#{base_plan_id}_add_on_plan_check_box_#{stash_grant_id}").check
+        stash_grant_id = find_with_highlight(:id, "#{base_plan_id}_add_on_plan_check_box_1").value
+        find_with_highlight(:id, "#{base_plan_id}_add_on_plan_check_box_#{stash_grant_id}").check
       end
 
       #{base plan id}_add_on_plan_check_box_2 is serer plan id
       if partner.has_server_plan
         server_plan_id = find(:id, "#{base_plan_id}_add_on_plan_check_box_2").value
-        find(:id, "#{base_plan_id}_add_on_plan_check_box_#{server_plan_id}").check
+        find_with_highlight(:id, "#{base_plan_id}_add_on_plan_check_box_#{server_plan_id}").check
       end
 
       # storage add on option for base plan >= 1 TB
       if partner.storage_add_on.to_i != 0
-        add_on = find(:xpath, "//input[starts-with(@id,'#{base_plan_id}')][3]")
+        add_on = find_with_highlight(:xpath, "//input[starts-with(@id,'#{base_plan_id}')][3]")
         add_on.clear_value
         add_on.type_text(partner.storage_add_on)
       end
@@ -226,17 +229,17 @@ module Bus
       # Find base plan id from hidden input
       base_plan_id = find(:id, "#{partner.subscription_period}_base_plan").value
       # Base plan number of users
-      num_user = find(:id, "#{partner.subscription_period}_base_plan_#{base_plan_id}")
+      num_user = find_with_highlight(:id, "#{partner.subscription_period}_base_plan_#{base_plan_id}")
       num_user.clear_value
       num_user.type_text(partner.num_enterprise_users)
 
       # Server add ons select list
-      find(:id, "#{base_plan_id}_add_on_plan_select").select(partner.server_plan)
+      find_with_highlight(:id, "#{base_plan_id}_add_on_plan_select").select(partner.server_plan)
 
       # Find server add on id from hidden input
       server_add_on_id = find(:id, "#{base_plan_id}_add_on_plan_1").value
 
-      storage_add_on_input = find(:id, "#{base_plan_id}_add_on_plan_#{server_add_on_id}")
+      storage_add_on_input = find_with_highlight(:id, "#{base_plan_id}_add_on_plan_#{server_add_on_id}")
       storage_add_on_input.clear_value
       storage_add_on_input.type_text(partner.num_server_add_on)
     end
@@ -266,18 +269,18 @@ module Bus
       #{base plan id}_add_on_plan_check_box_1 is stash beta grant id
       if partner.has_stash_grant_plan
         stash_grant_id = find(:id, "#{base_plan_id}_add_on_plan_check_box_1").value
-        find(:id, "#{base_plan_id}_add_on_plan_check_box_#{stash_grant_id}").check
+        find_with_highlight(:id, "#{base_plan_id}_add_on_plan_check_box_#{stash_grant_id}").check
       end
 
       #{base plan id}_add_on_plan_check_box_2 is serer plan id
       if partner.has_server_plan
         server_plan_id = find(:id, "#{base_plan_id}_add_on_plan_check_box_2").value
-        find(:id, "#{base_plan_id}_add_on_plan_check_box_#{server_plan_id}").check
+        find_with_highlight(:id, "#{base_plan_id}_add_on_plan_check_box_#{server_plan_id}").check
       end
 
       # Num of storage add ons
       if partner.reseller_add_on_quota.to_i > 0
-        add_on = find(:xpath, "//div[@id='add_on_plan_text']/input[3]")
+        add_on = find_with_highlight(:xpath, "//div[@id='add_on_plan_text']/input[3]")
         add_on.clear_value
         add_on.type_text(partner.reseller_add_on_quota)
       end
@@ -313,7 +316,7 @@ module Bus
         when CONFIGS['bus']['company_type']['reseller']
           role = CONFIGS['bus']['root_role']['reseller']
         else
-          raise "Unknown company type"
+          raise 'Unknown company type'
       end
       wait_until{ !root_role_td.text.match(role).nil? }
       wait_until{ !plan_loading_div.visible? }

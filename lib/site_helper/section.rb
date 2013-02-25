@@ -10,8 +10,14 @@ module SiteHelper
       @root_element = root_element
     end
 
+    # Public: Find element by args
+    # and highlight element
+    #
+    # Return Element
     def find(type, locator)
-      root_element.find(type, locator)
+      el = root_element.find(type, locator)
+      el.highlight
+      el
     end
 
     def all(type, locator)

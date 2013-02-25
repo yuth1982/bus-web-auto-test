@@ -6,9 +6,10 @@
 When /^I search partner by:$/ do |search_key_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_partner'])
   attributes = search_key_table.hashes.first
-  keywords = attributes["name"] || attributes["email"]
-  filter = attributes["filter"] || "None"
-  including_sub_partners = (attributes["including sub-partners"] || "yes").eql?("yes")
+  keywords = (attributes['name'] || attributes['email'])
+  keywords = keywords.gsub(/@company_name/,@partner.company_info.name).gsub(/@amdin_email/,@partner.admin_info.email) unless @partner.nil?
+  filter = attributes['filter'] || 'None'
+  including_sub_partners = (attributes['including sub-partners'] || 'yes').eql?('yes')
   @bus_site.admin_console_page.search_list_partner_section.search_partner(keywords, filter, including_sub_partners)
 end
 
@@ -24,14 +25,14 @@ When /^I act as partner by:$/ do |search_key_table|
       |#{search_key_table.headers.join('|')}|
       |#{search_key_table.rows.first.join('|')}|
     })
-  if attributes["name"].nil? == false
-    page.find_link(attributes["name"]).click
+  if attributes['name'].nil? == false
+    page.find_link(attributes['name']).click
     @bus_site.admin_console_page.partner_details_section.act_as_partner
-  elsif attributes["email"].nil? == false
-    page.find_link(attributes["email"]).click
+  elsif attributes['email'].nil? == false
+    page.find_link(attributes['email']).click
     @bus_site.admin_console_page.admin_details_section.act_as_admin
   else
-    raise "Please act as partner by name or email"
+    raise 'Please act as partner by name or email'
   end
   @bus_site.admin_console_page.has_stop_masquerading_link?
 end
@@ -49,22 +50,44 @@ When /^I view admin details by (.+)$/ do |partner_email|
   @bus_site.admin_console_page.search_list_partner_section.view_partner_detail(partner_email)
 end
 
-Then /^Partner search results should be:$/ do |results_table|
+Then /^Partner search results (should|should not) be:$/ do |match, results_table|
   actual = @bus_site.admin_console_page.search_list_partner_section.search_results_hashes
   expected = results_table.hashes
   expected.each do |col|
     col.each do |k,v|
       case k
-        when "Created"
-          v.replace(Chronic.parse(v).strftime("%m/%d/%y"))
+        when 'External ID'
+          v.gsub!(/@external_id/, @new_p_external_id) unless @new_p_external_id.nil?
+        when 'Partner'
+          v.gsub!(/@company_name/, @partner.company_info.name) unless @partner.nil?
+        when 'Created'
+          v.replace(Chronic.parse(v).strftime('%m/%d/%y'))
+        when "Root Admin"
+          v.gsub!(/@admin_email/, @partner.admin_info.email) unless @partner.nil?
         else
           # do nothing
       end
     end
   end
-  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
+  if match.eql?('should')
+    expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
+  else
+    expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should_not == expected[index][key]} }
+  end
+end
+
+Then /^Partner search results should be empty$/ do
+  rows = @bus_site.admin_console_page.search_list_partner_section.search_results_table_rows
+  rows.count.should == 7 && rows[1].to_s.should == "[\"No results found.\"]"
 end
 
 When /^I refresh Search List Partners section$/ do
   @bus_site.admin_console_page.search_list_partner_section.refresh_bus_section
 end
+
+When /^I clear partner search results$/ do
+  @bus_site.admin_console_page.search_list_partner_section.clear_search
+  @bus_site.admin_console_page.search_list_partner_section.wait_until_bus_section_load
+end
+
+

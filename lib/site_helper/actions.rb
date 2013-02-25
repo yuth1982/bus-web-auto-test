@@ -96,5 +96,15 @@ module SiteHelper
     def close_bus_section
       root_element.find(:css, "a[onclick^='delete_module']").click
     end
+
+    # Public: Find element by args
+    # Highlight element if found
+    #
+    # Return Element
+    def find_with_highlight(*args)
+      el = find(*args)
+      el.highlight
+      el
+    end
   end
 end

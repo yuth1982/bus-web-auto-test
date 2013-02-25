@@ -91,7 +91,7 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partne
   @partner.subscription_period = attributes["period"]
   @partner.net_term_payment = (attributes["net terms"] || "no").eql?("yes")
 
-  puts @partner.to_s
+  Log.debug(@partner.to_s)
   @bus_site.admin_console_page.add_new_partner_section.add_new_account(@partner)
 end
 

@@ -33,37 +33,21 @@ Then /^Partner general information should be:$/ do |details_table|
   actual = @bus_site.admin_console_page.partner_details_section.general_info_hash
   expected = details_table.hashes.first
 
-  expected.keys.each do |header|
-    case header
-      when 'ID:'
-        if expected[header].start_with?('@')
-          actual[header].length.should == expected[header].length - 1
-          actual[header].match(/\d{6}/).nil?.should be_false
-        else
-          actual[header].should == expected[header]
-        end
-      when 'Aria ID:'
-        if expected[header].start_with?('@')
-          actual[header].length.should == expected[header].length - 1
-          actual[header].match(/\d{7}/).nil?.should be_false
-        else
-          actual[header].should == expected[header]
-        end
-      when 'Approved:'
-        # In bus UI, approved date has been convert to local time.
-        approved_date = Time.now
-        actual[header].should include(approved_date.nil? ? expected[header] : approved_date.strftime("%m/%d/%y"))
-      when 'Next Charge:'
-        next_charge = Chronic.parse(expected[header])
-        actual[header].should include(next_charge.nil? ? expected[header] : next_charge.strftime("%m/%d/%y"))
+  expected.each do |k,v|
+    case k
+      when 'External ID:'
+        v.gsub!(/@external_id/, @new_p_external_id) unless @new_p_external_id.nil?
       when 'Root Admin:'
-        actual[header].should == expected[header].gsub(/@root_admin/,@partner.admin_info.full_name)
+        v.gsub!(/@root_admin/, @partner.admin_info.full_name) unless @partner.nil?
+      when 'Next Charge:'
+        v.replace(Chronic.parse(v).strftime('%m/%d/%y') + ' (extend)')
       when 'Marketing Referrals:'
-        actual[header].should == expected[header].gsub(/@login_admin_email/,@admin_username)
+        v.gsub!(/@login_admin_email/,@admin_username)
       else
-        actual[header].should == expected[header]
+        # do nothing
     end
   end
+  expected.keys.each{ |key| actual[key].should == expected[key] }
 end
 
 # Any of following columns can be verified:
@@ -81,6 +65,23 @@ Then /^Partner contact information should be:$/ do |contact_table|
         actual[header].should == expected[header]
     end
   end
+end
+
+When /^I Create an API key for current partner$/ do
+  @bus_site.admin_console_page.partner_details_section.create_api_key
+end
+
+Then /^Partner API key should be (.+)$/ do |api_key|
+  api_key = '' if api_key.eql?('empty')
+  @bus_site.admin_console_page.partner_details_section.api_key.should == api_key
+end
+
+When /^I add a new ip whitelist (.+)$/ do |ip|
+  @bus_site.admin_console_page.partner_details_section.add_ip_whitelist(ip)
+end
+
+Then /^Partner ip whitelist should be (.+)$/ do |ip|
+  @bus_site.admin_console_page.partner_details_section.ip_whitelist.should == ip
 end
 
 Then /^Partner account attributes should be:$/ do |attributes_table|
@@ -152,4 +153,27 @@ When /^I add stash to all users for the partner$/ do
   @bus_site.admin_console_page.partner_details_section.add_stash_to_all_users
   @bus_site.admin_console_page.click_continue
   @bus_site.admin_console_page.partner_details_section.wait_until_bus_section_load
+end
+
+# From partner details view, click Status: Active (change) link
+# Select Suspended
+# Click Submit
+When /^I suspend the partner$/ do
+  @bus_site.admin_console_page.partner_details_section.suspend_partner
+end
+
+# From partner details view, click Status: Active (change) link
+# Select Suspended
+# Click Submit
+When /^I activate the partner$/ do
+  @bus_site.admin_console_page.partner_details_section.activate_partner
+end
+
+When /^I change partner external id to (.+)$/ do |external_id|
+  @bus_site.admin_console_page.partner_details_section.change_external_id(external_id)
+end
+
+When /^I add a new partner external id$/ do
+  @new_p_external_id = "#{Time.now.strftime('%m%d-%H%M-%S')}"
+  @bus_site.admin_console_page.partner_details_section.change_external_id(@new_p_external_id)
 end

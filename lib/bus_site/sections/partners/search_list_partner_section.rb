@@ -4,12 +4,12 @@ module Bus
 
     # Private elements
     #
-    element(:search_partner_tb, id: "pro_partner_search")
-    element(:search_partner_btn, xpath: "//div[@id='partner-list-content']//input[@value='Submit']")
-    element(:partner_filter_select, id: "pro_partner_filter")
-    element(:include_sub_partners_cb, id: "include_subpartners")
+    element(:search_partner_tb, id: 'pro_partner_search')
+    element(:search_partner_btn, css: 'div#partner-list-content input[value=Submit]')
+    element(:partner_filter_select, id: 'pro_partner_filter')
+    element(:include_sub_partners_cb, id: 'include_subpartners')
     element(:clear_search_link, xpath: "//a[text()='Clear search']")
-    element(:search_results_table, xpath: "//div[@id='partner-list-content']/div/table")
+    element(:search_results_table, css: 'div#partner-list-content table.table-view')
 
     # Public: Search partner
     #
@@ -22,9 +22,12 @@ module Bus
     #
     # Returns nothing
     def search_partner(search_key, filter = "None", include_sub_partners = true)
+      # By default, include sub partners is checked
+      include_sub_partners_cb.check if include_sub_partners
+      include_sub_partners_cb.uncheck unless include_sub_partners
+      wait_until_bus_section_load # Wait to load sub partners
       search_partner_tb.type_text(search_key)
       partner_filter_select.select(filter)
-      include_sub_partners_cb.check if include_sub_partners
       search_partner_btn.click
       wait_until_bus_section_load
     end

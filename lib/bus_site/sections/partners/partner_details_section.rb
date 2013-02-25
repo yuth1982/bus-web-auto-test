@@ -10,68 +10,78 @@ module Bus
     element(:delete_partner_link, xpath: "//a[text()='Delete Partner']")
     element(:view_in_aria_link, xpath: "//a[text()='View in Aria']")
     element(:export_to_excel_link, xpath: "//a[text()='Export to Excel (CSV)']")
-    element(:create_api_key_link, xpath: "//a[text()='(create)']")
-    element(:api_key_text, xpath: '//fieldset//div[1]//span')
+
+    # Change partner external id
+    element(:external_id_tb, id: 'external_id')
+    element(:change_external_id_link, css: 'dd.view>form>span.view a')
+    element(:cancel_external_id_link, css: 'dd.edit>form>span.edit a')
+    element(:submit_external_id_btn, css: 'dd.edit>form>span.edit input[value=Submit]')
 
     # Change partner status
-    element(:change_status_link, xpath: "//span[starts-with(@id,'partner-display-status-')]/a")
-    element(:change_status_select, xpath: "//span[starts-with(@id,'partner-change-status-')]/select")
-    element(:submit_change_status_btn, xpath: "//span[starts-with(@id,'partner-change-status-')]/input")
+    element(:change_status_link, css: 'span[id^=partner-display-status-] a')
+    element(:change_status_select, css: 'span[id^=partner-change-status-] select')
+    element(:submit_change_status_btn, css: 'span[id^=partner-change-status-] input')
+    element(:cancel_change_status_link, css: 'span[id^=partner-change-status-] a')
 
     # Change partner root role
-    element(:partner_root_role_change_link, css: "span[id^=partner-display-root-role] a")
-    element(:partner_root_role_type_select, css: "span[id^=partner-change-root-role] select")
-    element(:partner_root_role_submit_btn, css: "span[id^=partner-change-root-role] input")
-    element(:partner_root_role_cancel_btn, css: "span[id^=partner-change-root-role] a")
+    element(:partner_root_role_change_link, css: 'span[id^=partner-display-root-role] a')
+    element(:partner_root_role_type_select, css: 'span[id^=partner-change-root-role] select')
+    element(:partner_root_role_submit_btn, css: 'span[id^=partner-change-root-role] input')
+    element(:partner_root_role_cancel_btn, css: 'span[id^=partner-change-root-role] a')
 
     # General information
-    elements(:general_info_dls, xpath: "//div/dl")
-    element(:stash_info_dl, xpath: "//div/dl/form")
+    elements(:general_info_dls, css: 'div>dl')
+    element(:stash_info_dl, css: 'div>dl>form')
 
     # Contact information
-    elements(:contact_info_dls, xpath: "//div/form/dl")
-    element(:contact_address_tb, id: "contact_address")
-    element(:contact_city_tb, id: "contact_city")
-    element(:contact_state_select, id: "contact_state")
-    element(:contact_state_us_select, id: "contact_state_us")
-    element(:contact_state_ca_select, id: "contact_state_ca")
-    element(:contact_zip_tb, id: "contact_zip")
-    element(:contact_country_select, id: "contact_country")
-    element(:contact_phone_tb, id: "partner_contact_phone")
-    element(:contact_industry_select, id: "partner_industry")
-    element(:contact_employees_select, id: "partner_num_employees")
-    element(:contact_email_tb, id: "contact_email")
-    element(:contact_vat_tb, id: "vat_info_vat_number")
+    elements(:contact_info_dls, css: 'div>form>dl')
+    element(:contact_address_tb, id: 'contact_address')
+    element(:contact_city_tb, id: 'contact_city')
+    element(:contact_state_select, id: 'contact_state')
+    element(:contact_state_us_select, id: 'contact_state_us')
+    element(:contact_state_ca_select, id: 'contact_state_ca')
+    element(:contact_zip_tb, id: 'contact_zip')
+    element(:contact_country_select, id: 'contact_country')
+    element(:contact_phone_tb, id: 'partner_contact_phone')
+    element(:contact_industry_select, id: 'partner_industry')
+    element(:contact_employees_select, id: 'partner_num_employees')
+    element(:contact_email_tb, id: 'contact_email')
+    element(:contact_vat_tb, id: 'vat_info_vat_number')
+
+    # API Key
+    element(:api_key_div, css: 'div[id^=api-key-box-] fieldset div:nth-child(1)')
+    element(:create_or_delete_api_key_link, css: 'div[id^=api-key-box-] fieldset div:nth-child(1) a')
+    element(:ip_whitelist_div, css: 'div[id^=api-key-box-] fieldset div:nth-child(2)')
 
     # Account attribute table
-    element(:account_attributes_table, css: "form[id^=account_attributes_form] table")
+    element(:account_attributes_table, css: 'form[id^=account_attributes_form] table')
 
     # Resources table, for MozyPro
-    element(:generic_resources_table, css: "form[id^=generic_resources_form] table")
+    element(:generic_resources_table, css: 'form[id^=generic_resources_form] table')
 
     # License types table
-    element(:license_types_table, css: "div[id^=partner_license_types] table")
+    element(:license_types_table, css: 'div[id^=partner_license_types] table')
 
     # Stash table
-    element(:stash_info_table, xpath: "//div[@class='show-details']/table[@class='form-box2']")
+    element(:stash_info_table, css: 'div.show-details>table.form-box2')
 
     # Internal billing table
-    element(:internal_billing_table, css: "div[id$=internal-billing-content] table")
+    element(:internal_billing_table, css: 'div[id$=internal-billing-content] table')
 
     # Subadmins
-    element(:sub_admins_div, id: "subadminbox")
-    element(:sub_admins_table, css: "div#subadminbox table")
+    element(:sub_admins_div, id: 'subadminbox')
+    element(:sub_admins_table, css: 'div#subadminbox table')
 
     # Billing history
-    element(:billing_history_table, css: "table.table-view")
+    element(:billing_history_table, css: 'table.table-view')
 
     # Stash section
-    element(:change_stash_link, css: "a[onclick*='change_stash']")
-    element(:cancel_stash_link, css: "a[onclick*='cancel_change']")
-    element(:stash_status_select, css: "select[id^='partner-stash-status-']")
-    element(:stash_default_quota_tb, id: "stash_default_quota")
-    element(:submit_stash_status_btn, css: "input[onclick*='submit_stash_status']")
-    element(:add_stash_to_all_users_link, css: "a[onclick*='enable_stash_for_all_confirm']")
+    element(:change_stash_link, css: 'a[onclick*=change_stash]')
+    element(:cancel_stash_link, css: 'a[onclick*=cancel_change]')
+    element(:stash_status_select, css: 'select[id^=partner-stash-status-]')
+    element(:stash_default_quota_tb, id: 'stash_default_quota')
+    element(:submit_stash_status_btn, css: 'input[onclick*=submit_stash_status]')
+    element(:add_stash_to_all_users_link, css: 'a[onclick*=enable_stash_for_all_confirm]')
 
     # Public: Partner Id
     #
@@ -111,8 +121,8 @@ module Bus
     def contact_info_hash
       wait_until_bus_section_load
       output = Hash[*contact_info_dls.map{ |el| el.dt_dd_elements_text.delete_if{ |pair| pair.first.empty?}}.delete_if{ |el| el.empty?}.flatten]
-      output["Contact Address:"] = contact_address_tb.value
-      output["Contact City:"] = contact_city_tb.value
+      output['Contact Address:'] = contact_address_tb.value
+      output['Contact City:'] = contact_city_tb.value
 
       @state = ""
       case
@@ -123,15 +133,15 @@ module Bus
         else
           @state = contact_state_select.value
       end
-      output["Contact State:"] = @state
+      output['Contact State:'] = @state
 
-      output["Contact ZIP/Postal Code:"] = contact_zip_tb.value
-      output["Contact Country:"] = contact_country_select.first_selected_option.text
-      output["Phone:"] = contact_phone_tb.value
-      output["Industry:"] = contact_industry_select.first_selected_option.text
-      output["# of employees:"] = contact_employees_select.first_selected_option.text
-      output["Contact Email:"] = contact_email_tb.value
-      output["VAT Number:"] = contact_vat_tb.value unless output["VAT Number:"].nil?
+      output['Contact ZIP/Postal Code:'] = contact_zip_tb.value
+      output['Contact Country:'] = contact_country_select.first_selected_option.text
+      output['Phone:'] = contact_phone_tb.value
+      output['Industry:'] = contact_industry_select.first_selected_option.text
+      output['# of employees:'] = contact_employees_select.first_selected_option.text
+      output['Contact Email:'] = contact_email_tb.value
+      output['VAT Number:'] = contact_vat_tb.value unless output['VAT Number:'].nil?
       output
     end
 
@@ -258,15 +268,15 @@ module Bus
       wait_until_bus_section_load
       delete_partner_link.click
 
-      submit_btn = find(:css, "div[id^='cancellation_reasons_'] input[value=Submit]")
-      password_tb = find(:css, "div[id$=-delete_form] input[name=password]")
-      submit_delete_btn = find(:css, "div[id$=-delete_form] input[name=commit]")
+      submit_btn = find(:css, 'div[id^=cancellation_reasons_] input[value=Submit]')
+      password_tb = find(:css, 'div[id$=-delete_form] input[name=password]')
+      submit_delete_btn = find(:css, 'div[id$=-delete_form] input[name=commit]')
 
       submit_btn.click
       wait_until{ password_tb.visible? } # wait for load delete password div
       password_tb.type_text(password)
       submit_delete_btn.click
-      wait_until{ has_no_link?("Delete Partner") } # wait for delete partner
+      wait_until{ has_no_link?('Delete Partner') } # wait for delete partner
     end
 
     # Public: Enable stash for a partner
@@ -318,36 +328,47 @@ module Bus
       partner_root_role_submit_btn.click
     end
 
-    # Public: Create the api_key
+    # Public: Create API Key
+    # Skipped, ff API key existed
     #
     # Example
-    #   partner_details_section.create_api_key
+    #   @bus_site.admin_console_page.partner_details_section.create_api_key
     #
     # Returns nothing
     def create_api_key
-      if page.has_link?('(create)')
-        create_api_key_link.click
+      wait_until_bus_section_load
+      locator =  "//a[text()='(create)']"
+      find_any = api_key_div.all(:xpath, locator)
+      if find_any.size > 0
+        api_key_div.find(:xpath, locator).click
+        wait_until_bus_section_load
       end
     end
 
-    # Public: Returns api key
-    #
-    # @param none
+    # Public: Get API key
     #
     # Example
-    #  @api_key = @bus_site.admin_console_page.partner_details_section.get_api_key
+    #  @bus_site.admin_console_page.partner_details_section.api_key
     #
-    # @return [String]
-    def get_api_key
-      unless page.has_link?('(delete)')
-        Log.debug('create')
-        create_api_key_link.click
-      end
-      if page.has_link?('(delete)')
-        api_key = api_key_text.text[0..-10].strip
-      end
+    # Returns API key string
+    def api_key
+      api_key_div.text.gsub(/API Key:/,'').gsub(/\(create\)/,'').gsub(/\(delete\)/,'').strip
     end
 
+    # Public: IP whitelist
+    #
+    def ip_whitelist
+      ip_whitelist_div.text.gsub(/API IP Whitelist:/,'').gsub(/\(change\)/,'').gsub(/\(cancel\)/,'').strip
+    end
+
+    def add_ip_whitelist(ip)
+      ip_whitelist_div.find(:css, 'a:first-child').click
+      ip_whitelist_div.find(:css, 'input#api_allowed_ips').type_text(ip.to_s)
+      ip_whitelist_div.find(:css, 'input[value=Submit]').click
+      wait_until_bus_section_load
+      # This method call is a walk around of bug #95827, it should be removed when bug is fixed
+      refresh_bus_section
+    end
 
     # Public: Close partner details frame
     #
@@ -374,7 +395,7 @@ module Bus
       change_status_link.click
       # wait for edit view
       wait_until { change_status_select.visible? }
-      change_status_select.select("Suspended")
+      change_status_select.select('Suspended')
       submit_change_status_btn.click
       wait_until{ change_status_link.visible? }
     end
@@ -392,9 +413,22 @@ module Bus
       change_status_link.click
       # wait for edit view
       wait_until { change_status_select.visible? }
-      change_status_select.select("Active")
+      change_status_select.select('Active')
       submit_change_status_btn.click
       wait_until{ change_status_link.visible? }
+    end
+
+    # Public: Change Partner External ID
+    #    #
+    # Example
+    #  @bus_site.admin_console_page.partner_details_section.change_external_id('Test_EID_12345')
+    #
+    # Return nothing
+    def change_external_id(id)
+      change_external_id_link.click
+      external_id_tb.type_text(id)
+      submit_external_id_btn.click
+      wait_until_bus_section_load
     end
   end
 end
