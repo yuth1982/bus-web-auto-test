@@ -9,6 +9,8 @@ module Bus
     element(:user_group_search_select, id: "user_user_group_id")
     element(:desktop_device_lbl, id: "Desktop_device")
     element(:server_device_lbl, id: "Server_device")
+    element(:buy_more_link, xpath: "//a[contains(text(),'Buy More')]")
+    element(:add_more_link, xpath: "//a[contains(text(),'Add More')]")
 
     # Section 2
     element(:success_message_div, css: "ul.flash.successes > li")
@@ -195,6 +197,30 @@ module Bus
     # @return [String]
     def server_device
       server_device_lbl.text
+    end
+    
+    # Public: Click buy more link
+    #
+    # @param [] none
+    #
+    # Example
+    #   @bus_admin_console_page.add_new_user_section.click_buy_more_link
+    #
+    # @return [] nothing
+    def click_buy_more_link
+      buy_more_link.click
+    end
+    
+    # Public: Click add more link
+    #
+    # @param [] none
+    #
+    # Example
+    #   @bus_admin_console_page.add_new_user_section.click_add_more_link
+    #
+    # @return [] nothing
+    def click_add_more_link
+      add_more_link.click
     end
   end
 end

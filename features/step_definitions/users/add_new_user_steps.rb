@@ -96,3 +96,21 @@ end
 When /^I choose (.+) from Choose a Group$/ do |user_group|
   @bus_site.admin_console_page.add_new_user_section.select_user_group(user_group)
 end
+
+Then /^the Buy More link should be visible$/ do
+  @bus_site.admin_console_page.add_new_user_section.has_buy_more_link?.should be_true
+end
+
+Then /^the Buy More link should open the Change Plan module$/ do
+  @bus_site.admin_console_page.add_new_user_section.click_buy_more_link
+  @bus_site.admin_console_page.change_plan_section.section_visible?
+end
+
+Then /^the Add More link should be visible$/ do
+  @bus_site.admin_console_page.add_new_user_section.has_add_more_link?.should be_true
+end
+
+Then /^the Add More link should open the Manage Resources module$/ do
+  @bus_site.admin_console_page.add_new_user_section.click_add_more_link
+  @bus_site.admin_console_page.manage_resources_section.section_visible?
+end
