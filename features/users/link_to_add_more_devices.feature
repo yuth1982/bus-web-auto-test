@@ -36,7 +36,7 @@ Feature: Link to More Devices
     	And I navigate to Add New User section from bus admin console page
     	And I choose (default user group) from Choose a Group
     	Then the Add More link should be visible
-    	And the Add More link should open the Manage Resources module
+    	And the Add More link should open the Change Plan module
     	Then I stop masquerading
     	And I search and delete partner account by newly created partner company name
 	
@@ -51,24 +51,24 @@ Feature: Link to More Devices
         And I navigate to Add New User section from bus admin console page
         And I choose (default user group) from Choose a Group
     	Then the Add More link should be visible
-    	And the Add More link should open the Manage Resources module
+    	And the Add More link should open the Change Plan module
     	Then I stop masquerading
     	And I search and delete partner account by newly created partner company name
 	
 	@TC.19949
-	Scenario: Mozy-19949:MozyPro Itemized (1UG), Verify Add More Link in Add New User
+	Scenario: Mozy-19949:MozyPro Itemized (2UG), Verify Add More Link in Add New User
 	    Given I log in bus admin console as administrator
       	When I act as partner by:
       		| name                                         |
       		| qa1+TestMozyProItemizedMonthly92066@mozy.com |
         And I navigate to Add New User section from bus admin console page
-        And I choose (default user group) from Choose a Group
+        And I choose User Group 1 from Choose a Group
         Then the Add More link should be visible
     	And the Add More link should open the Manage Resources module
 	
 	
 	@TC.19948
-	Scenario: Mozy-19948:Enterprise (1UG), Verify Add More Link in Add New User
+	Scenario: Mozy-19948:Enterprise (2UG), Verify Add More Link in Add New User
     	Given I log in bus admin console as administrator
     	When I add a new MozyEnterprise partner:
       		| period | users | server plan |
@@ -113,7 +113,7 @@ Feature: Link to More Devices
     	And I navigate to Add New User section from bus admin console page
     	And I choose (default user group) from Choose a Group
     	Then the Add More link should be visible
-    	And the Add More link should open the Manage Resources module
+    	And the Add More link should open the Change Plan module
     	Then I stop masquerading
     	And I search and delete partner account by newly created partner company name
 	
@@ -128,7 +128,7 @@ Feature: Link to More Devices
         And I navigate to Add New User section from bus admin console page
         And I choose (default user group) from Choose a Group
     	Then the Add More link should be visible
-    	And the Add More link should open the Manage Resources module
+    	And the Add More link should open the Change Plan module
     	Then I stop masquerading
     	And I search and delete partner account by newly created partner company name       	
 	
@@ -141,5 +141,5 @@ Feature: Link to More Devices
         And I navigate to Add New User section from bus admin console page
         And I choose (default user group) from Choose a Group
     	Then the Add More link should be visible
-    	And the Add More link should open the Manage Resources module
+    	And the Add More link should open the Change Plan module
 	

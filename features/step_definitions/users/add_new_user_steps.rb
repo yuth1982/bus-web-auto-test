@@ -90,7 +90,9 @@ When /^I note the desktop and server amounts in Add New User module for user gro
 end
 
 Then /^the user groups should not be visible in the Add New User module$/ do
-  @bus_site.admin_console_page.add_new_user_section.has_user_group_search_select?.should be_false
+  @bus_site.admin_console_page.add_new_user_section.user_group_search_select_visible?.should be_false
+  @bus_site.admin_console_page.add_new_user_section.has_add_group_link?.should be_false
+  @bus_site.admin_console_page.add_new_user_section.has_content?('Choose a Group:').should be_false
 end
 
 When /^I choose (.+) from Choose a Group$/ do |user_group|
@@ -113,4 +115,9 @@ end
 Then /^the Add More link should open the Manage Resources module$/ do
   @bus_site.admin_console_page.add_new_user_section.click_add_more_link
   @bus_site.admin_console_page.manage_resources_section.section_visible?
+end
+
+Then /^the Add More link should open the Change Plan module$/ do
+  @bus_site.admin_console_page.add_new_user_section.click_add_more_link
+  @bus_site.admin_console_page.change_plan_section.section_visible?
 end

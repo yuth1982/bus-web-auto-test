@@ -11,6 +11,7 @@ module Bus
     element(:server_device_lbl, id: "Server_device")
     element(:buy_more_link, xpath: "//a[contains(text(),'Buy More')]")
     element(:add_more_link, xpath: "//a[contains(text(),'Add More')]")
+    element(:add_group_link, xpath: "//a[contains(text(),'Add Group')]")
 
     # Section 2
     element(:success_message_div, css: "ul.flash.successes > li")
@@ -221,6 +222,18 @@ module Bus
     # @return [] nothing
     def click_add_more_link
       add_more_link.click
+    end
+    
+    # Public: Return whether user groups drop down is visible
+    #
+    # @param [] none
+    #
+    # Example
+    #   @bus_admin_console_page.add_new_user_section.user_group_search_select_visible?
+    #
+    # @return [Boolean]
+    def user_group_search_select_visible?
+      user_group_search_select.visible?
     end
   end
 end
