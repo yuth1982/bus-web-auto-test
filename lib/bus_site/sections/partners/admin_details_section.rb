@@ -9,6 +9,11 @@ module Bus
     element(:new_pwd_txt, id: "new_password")
     element(:pwd_confirm_txt, id: "new_password_confirmation")
     element(:submit, xpath: "//div[starts-with(@id, 'admin-pass-change-')]/form//input[@value='Save Changes']")
+    element(:delete_admin_btn, xpath: "//a[text() = 'Delete Admin']")
+    element(:pw_tb, id: "password")
+    element(:submit_btn, xpath: "//div[contains(@id, 'delete_form')]//input[@Value='Submit']")
+
+
 
     # Public: activate an admin account
     #
@@ -33,6 +38,13 @@ module Bus
     # Returns nothing
     def act_as_admin
       act_as_link.click
+    end
+
+    def delete_admin(admin_password)
+      delete_admin_btn.click
+      alert_accept
+      pw_tb.set(admin_password)
+      submit_btn.click
     end
   end
 end

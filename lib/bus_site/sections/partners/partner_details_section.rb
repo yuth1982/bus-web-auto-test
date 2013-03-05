@@ -268,7 +268,7 @@ module Bus
     #   @bus_site.admin_console_page.partner_details_section.delete_partner("test1234")
     #
     # Returns nothing
-    def delete_partner(password)
+    def delete_partner(password, expect_pass = True)
       wait_until_bus_section_load
       delete_partner_link.click
 
@@ -280,7 +280,15 @@ module Bus
       wait_until{ password_tb.visible? } # wait for load delete password div
       password_tb.type_text(password)
       submit_delete_btn.click
-      wait_until{ has_no_link?('Delete Partner') } # wait for delete partner
+      if expect_pass
+        wait_until{ has_no_link?("Delete Partner") } # wait for delete partner
+      else
+        return_text = alert_text
+        alert_accept
+        cancel_btn = find(:xpath, "//a[text() = 'Cancel']")
+        cancel_btn.click
+        return_text
+      end
     end
 
     # Public: Enable stash for a partner

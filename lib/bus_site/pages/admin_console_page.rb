@@ -26,6 +26,11 @@ module Bus
     section(:user_details_section, UserDetailsSection, css: "div[id^=user-show-]")
 
     # Admin section
+    section(:add_new_role_section, AddNewRoleSection, id: "roles-new-content")
+    section(:add_new_admin_section, AddNewAdminSection, id: "admin-new")
+    section(:search_admins_section, SearchAdminsSection, id: "admin-search")
+    section(:role_details_section, RoleDetailsSection, css: "div[id^=roles-show-]")
+    section(:list_roles_section, ListRolesSection, id: "roles-list")
 
     # Resources section
     section(:change_plan_section, ChangePlanSection, id: "resource-change_billing_plan")
@@ -85,6 +90,10 @@ module Bus
       current_admin = current_admin_div.text
       stop_masquerading_link.click
       wait_until{ current_admin != current_admin_div.text}
+    end
+
+    def has_navigation?(link)
+      all(:xpath, "//a[text() = '#{link}']")
     end
 
     def close_stash_invitation_popup

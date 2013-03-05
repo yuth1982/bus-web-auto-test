@@ -22,6 +22,7 @@ require 'bus_site/sections/admins/add_new_role_section'
 require 'bus_site/sections/admins/list_admins_section'
 require 'bus_site/sections/admins/list_roles_section'
 require 'bus_site/sections/admins/search_admins_section'
+require 'bus_site/sections/admins/role_details_section'
 
 #Configuration section
 require 'bus_site/sections/configuration/authentication_policy_section'
