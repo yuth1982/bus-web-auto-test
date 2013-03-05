@@ -92,5 +92,9 @@ module Bus
     def clear_search
       clear_search_link.click
     end
+
+    def search_input_text
+      search_partner_tb.value
+    end
   end
 end

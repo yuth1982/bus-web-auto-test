@@ -23,6 +23,10 @@ class PhoenixSite
     Phoenix::NewRegistrationComplete.new
   end
 
+  def account_page
+    Phoenix::Account.new
+  end
+
   # stub for account verification
   #def acct_verify
     #Phoenix::AccountVerification.new

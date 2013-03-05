@@ -31,6 +31,10 @@ module Bus
     # user backup information table
     element(:user_backup_details_table, css: "table.mini-table")
 
+    element(:verify_user_link, css: 'a[onclick*=consumer_verify]')
+    element(:user_verified_msg, css: "ul[class='flash successes'] li")
+    element(:login_as_user_link, css: 'a[href*=login_as_user]')
+
     # Public: User details hash
     #
     # Example:
@@ -178,6 +182,18 @@ module Bus
     def messages
       message_div = find(:css, "div#user-show-#{user_id}-errors ul")
       message_div.text
+    end
+
+    def verify_user
+      verify_user_link.click
+    end
+
+    def user_verified
+      user_verified_msg.text
+    end
+
+    def login_as_user
+      login_as_user_link.click
     end
   end
 end

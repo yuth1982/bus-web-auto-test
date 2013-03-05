@@ -11,7 +11,7 @@ module Phoenix
   element(:billing_period_radio, id: "interval_")
   # changed to xpath ref - pending resolution of https://redmine.mozycorp.com/issues/90134
   # then will change back to proper css: "label.add_on_name" reference afterwards
-	element(:server_add_on_lbl, xpath: "//td[@id='add_on_list']/div[2]/label")
+	element(:server_add_on_lbl, xpath: "//td[@id='add_on_list']/div[1]/label")
   element(:server_add_on_cb, id: :"add_id_")
   element(:vat_number_tb, id: "vat_num")
   element(:coupon_code_tb, id: "coupon_code")

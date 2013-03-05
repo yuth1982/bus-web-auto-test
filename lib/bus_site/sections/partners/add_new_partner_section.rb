@@ -321,6 +321,11 @@ module Bus
       wait_until{ !root_role_td.text.match(role).nil? }
       wait_until{ !plan_loading_div.visible? }
     end
+
+    public
+    def billing_country
+      cc_country_select.value
+    end
   end
 end
 

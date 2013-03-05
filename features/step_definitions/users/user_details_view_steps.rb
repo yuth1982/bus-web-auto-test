@@ -84,3 +84,25 @@ end
 Then /^User details changed message should be (.+)$/ do |message|
   @bus_site.admin_console_page.user_details_section.messages.should == message
 end
+Then /^MozyHome user details should be:$/ do |user_table|
+  # table is a | @country |
+  actual = @bus_site.admin_console_page.user_details_section.user_details_hash
+  expected = user_table.hashes.first
+  expected.keys.each do |header|
+    case header
+      when 'Country:'
+        actual[header].should == expected[header].gsub(/@country/, @partner.company_info.country)
+      else
+        actual[header].should == expected[header]
+    end
+  end
+end
+When /^I verify the user$/ do
+  @bus_site.admin_console_page.user_details_section.verify_user
+end
+Then /^The user is verified$/ do
+  @bus_site.admin_console_page.user_details_section.user_verified.should == 'User verified.'
+end
+When /^I Log in as the user$/ do
+  @bus_site.admin_console_page.user_details_section.login_as_user
+end

@@ -9,6 +9,7 @@ module Bus
     element(:search_results_table, xpath: "//div[@id='machine-list-content']/div/table")
     element(:clear_search_link, xpath: "//table[@id=('search_box')]//tr/td[1]/a")
     element(:machine_mapping_link, xpath: "//p[2]/a")
+    element(:export_csv_link, css: "p.table-export-links a")
 
     def navigate_to_machine_mapping
       machine_mapping_link.click
@@ -34,6 +35,34 @@ module Bus
     # Return search results table body rows text array
     def search_results_table_rows
       search_results_table.rows_text
+    end
+
+    # Public: Click to export the machine csv
+    #
+    # Example
+    #   @bus_admin_console_page.search_list_machines_section.export_csv
+    #
+    # Returns null
+    def export_csv
+      export_csv_link.click
+    end
+
+    # Public: Get the downloaded machines.csv and users.csv if exist
+    #
+    # Example
+    #   @bus_admin_console_page.search_list_machines_section.machine_user_csv_file
+    #
+    # Returns ['machines.csv', 'users.csv']
+    def machine_user_csv_files machine, user
+      flag = 0
+      CONFIGS['global']['default_wait_time'].times do
+        if file_exists?("#{machine}") && file_exists?("#{user}")
+          flag = 1
+          break
+        end
+        sleep(2)
+      end
+      return [machine, user] if flag == 1
     end
   end
 end

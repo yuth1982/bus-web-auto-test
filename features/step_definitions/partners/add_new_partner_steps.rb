@@ -143,3 +143,6 @@ When /^I add a new sub partner:$/ do |sub_partner_table|
   admin_email = attributes["admin email"]
   @bus_site.admin_console_page.add_new_partner_section.add_new_sub_partner(partner_name, admin_name, admin_email)
 end
+Then /^the default billing country is (.+) in add new partner section$/ do |country|
+  @bus_site.admin_console_page.add_new_partner_section.billing_country.should == country
+end

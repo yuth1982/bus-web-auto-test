@@ -141,5 +141,13 @@ module Phoenix
       # submission
       submit_btn.click
     end
+
+    def pro_billing_country
+      cc_country_select.value
+    end
+
+    def home_billing_country
+      home_country_select.value
+    end
   end
 end

@@ -70,3 +70,6 @@ end
 When /^I close alert window$/ do
   @bus_site.admin_console_page.alert_dismiss
 end
+When /^I view the partner info$/ do
+  @bus_site.admin_console_page.view_partner_info
+end

@@ -100,7 +100,7 @@ module Bus
         when cc_state_us_select.visible?
           @state = cc_state_us_select.first_selected_option.text
         when  cc_state_ca_select.visible?
-          @state = cc_state_us_select.first_selected_option.text
+          @state = cc_state_ca_select.first_selected_option.text
         else
           @state = cc_state_select.value
       end

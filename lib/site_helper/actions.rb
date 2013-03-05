@@ -106,5 +106,9 @@ module SiteHelper
       el.highlight
       el
     end
+
+    def view_partner_info
+      find(:xpath, "//div[@id='identify-me']/a[1]").click
+    end
   end
 end

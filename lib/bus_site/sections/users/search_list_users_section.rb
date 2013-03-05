@@ -9,6 +9,7 @@ module Bus
     element(:search_results_table, xpath: "//div[@id='user-list-content']/div/table")
     element(:clear_search_link, xpath: "//a[text()='Clear search']")
     element(:refresh_link, xpath: "//a[@class='mod-button']")
+    element(:export_csv_link, css: "p.table-export-links a")
 
     # Public: Search user
     #
@@ -67,6 +68,17 @@ module Bus
     # Return search results table body rows text array
     def view_user_details(user)
       find_link(user).click
+    end
+
+    # Public: Click the export csv link to download the users table
+    #
+    # Example
+    #
+    #  @bus_admin_console_page.search_list_users_section.export_users_csv
+    #
+    # Return null
+    def export_csv
+      export_csv_link.click
     end
   end
 end

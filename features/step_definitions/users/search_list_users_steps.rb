@@ -45,6 +45,13 @@ When /^I view user details by (.+)$/ do |user|
   @bus_site.admin_console_page.search_list_users_section.view_user_details(user)
 end
 
+When /^I view MozyHome user details by (.+)$/ do |user|
+  @bus_site.admin_console_page.search_list_users_section.view_user_details(user.gsub(/@user_name/,@partner.admin_info.email[0..10]))
+end
+
 When /^I refresh Search List User section$/ do
   @bus_site.admin_console_page.search_list_users_section.refresh_bus_section
+end
+When /^I export the users csv$/ do
+  @bus_site.admin_console_page.search_list_users_section.export_csv
 end

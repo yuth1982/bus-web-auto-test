@@ -61,6 +61,16 @@ Then /^Partner contact information should be:$/ do |contact_table|
     case header
       when 'Contact Email:'
         actual[header].should == expected[header].gsub(/@new_admin_email/,@partner.admin_info.email)
+      when 'Contact Address:'
+        actual[header].should == expected[header].gsub(/@address/, @partner.company_info.address)
+      when 'Contact City:'
+        actual[header].should == expected[header].gsub(/@city/, @partner.company_info.city)
+      when 'Contact State:'
+        actual[header].should == expected[header].gsub(/@state/, @partner.company_info.state_abbrev)
+      when 'Contact ZIP/Postal Code:'
+        actual[header].should == expected[header].gsub(/@zip_code/, @partner.company_info.zip)
+      when 'Contact Country:'
+        actual[header].should == expected[header].gsub(/@country/, @partner.company_info.country)
       else
         actual[header].should == expected[header]
     end
@@ -176,4 +186,48 @@ end
 When /^I add a new partner external id$/ do
   @new_p_external_id = "#{Time.now.strftime('%m%d-%H%M-%S')}"
   @bus_site.admin_console_page.partner_details_section.change_external_id(@new_p_external_id)
+end
+
+When /^I change the subdomain to @subdomain$/ do
+  @subdomain = (0...8).map{(97+rand(26)).chr}.join
+  @bus_site.admin_console_page.partner_details_section.change_subdomain
+  @bus_site.partner_subdomain_page.change_subdomain @subdomain
+end
+
+Then /^The subdomain is created with name https:\/\/@subdomain.mozypro.com\/$/ do
+  @bus_site.partner_subdomain_page.subdomain.should == "https:\/\/#{@subdomain}.mozypro.com\/"
+  @bus_site.partner_subdomain_page.close_page
+end
+
+When /^The subdomain in BUS will be @subdomain$/ do
+  @bus_site.admin_console_page.partner_details_section.refresh_bus_section
+  #something here
+  @bus_site.admin_console_page.partner_details_section.subdomain.should == @subdomain
+end
+When /^I change the partner contact information to:$/ do |info_table|
+  # table is a | address          | city          | state          | zip_code                 | country          |
+  new_info = info_table.hashes.first
+  new_info.keys.each do |header|
+    case header
+      when 'Contact Email:'
+        @bus_site.admin_console_page.partner_details_section.set_contact_email(new_info[header])
+      when 'Contact Address:'
+        @bus_site.admin_console_page.partner_details_section.set_contact_address(new_info[header])
+      when 'Contact City:'
+        @bus_site.admin_console_page.partner_details_section.set_contact_city(new_info[header])
+      when 'Contact Country:'
+        @bus_site.admin_console_page.partner_details_section.set_contact_country(new_info[header])
+      when 'Contact State:'
+        @bus_site.admin_console_page.partner_details_section.set_contact_state(new_info[header])
+      when 'Contact ZIP/Postal Code:'
+        @bus_site.admin_console_page.partner_details_section.set_contact_zip(new_info[header])
+      else
+        raise "Unexpected #{new_info[header]}"
+    end
+  end
+  @bus_site.admin_console_page.partner_details_section.save_changes
+end
+
+Then /^Partner contact information is changed$/ do
+  @bus_site.admin_console_page.partner_details_section.wait_until_bus_section_load
 end

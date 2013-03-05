@@ -47,6 +47,7 @@ module Bus
     element(:contact_employees_select, id: 'partner_num_employees')
     element(:contact_email_tb, id: 'contact_email')
     element(:contact_vat_tb, id: 'vat_info_vat_number')
+    element(:save_changes_btn, css: 'input.button')
 
     # API Key
     element(:api_key_div, css: 'div[id^=api-key-box-] fieldset div:nth-child(1)')
@@ -82,6 +83,9 @@ module Bus
     element(:stash_default_quota_tb, id: 'stash_default_quota')
     element(:submit_stash_status_btn, css: 'input[onclick*=submit_stash_status]')
     element(:add_stash_to_all_users_link, css: 'a[onclick*=enable_stash_for_all_confirm]')
+
+    # Subdomain
+    element(:change_subdomain_link, css: "a[onclick*='/partner/subdomain']")
 
     # Public: Partner Id
     #
@@ -129,7 +133,7 @@ module Bus
         when contact_state_us_select.visible?
           @state = contact_state_us_select.first_selected_option.text
         when  contact_state_ca_select.visible?
-          @state = contact_state_us_select.first_selected_option.text
+          @state = contact_state_ca_select.first_selected_option.text
         else
           @state = contact_state_select.value
       end
@@ -430,5 +434,69 @@ module Bus
       submit_external_id_btn.click
       wait_until_bus_section_load
     end
+
+    # Public: Click the link to change the subdomain name
+    #
+    # @param none
+    #
+    # Example
+    #  @bus_site.admin_console_page.partner_details_section.change_subdomain
+    #
+    # @return nothing
+    def change_subdomain
+      change_subdomain_link.click
+    end
+
+    def subdomain
+      change_subdomain_link.text
+    end
+
+    # Public: Change the contact email
+    #
+    # @param email
+    #
+    # Example
+    #  @bus_site.admin_console_page.partner_details_section.set_contact_email email
+    #
+    # @return nothing
+    def set_contact_email email
+      contact_email_tb.type_text email
+    end
+
+    def set_contact_address address
+      contact_address_tb.type_text address
+    end
+
+    def set_contact_city city
+      contact_city_tb.type_text city
+    end
+
+    def set_contact_state state
+      case
+        when contact_state_us_select.visible?
+          contact_state_us_select state
+        when  contact_state_ca_select.visible?
+          contact_state_ca_select.select state
+        else
+          contact_state_select.type_text state
+      end
+    end
+
+    def set_contact_zip zip
+      contact_zip_tb.type_text zip
+    end
+
+    def set_contact_country country
+      contact_country_select.select country
+    end
+
+    def save_changes
+      save_changes_btn.click
+    end
+
+    def save_changes?
+
+    end
+
   end
 end

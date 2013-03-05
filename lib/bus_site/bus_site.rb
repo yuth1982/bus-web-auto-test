@@ -24,5 +24,9 @@ class BusSite
     Bus::VerifyEmailPage.new
   end
 
+  def partner_subdomain_page
+    Bus::PartnerSubdomainPage.new
+  end
+
 end
 
