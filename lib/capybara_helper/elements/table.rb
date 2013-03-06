@@ -4,84 +4,119 @@ module CapybaraHelper
     # Tests: TC.17955, TC.15385, TC.17881, TC.16184
     #
     module Table
-      # Public: Elements of table header
+      # Raw Capybara::Node::Element of the table
       #
-      # Examples
-      #   headers
-      #   # => Array<Selenium::WebDriver::Element>
+      # Examples:
+      #   A html table:
+      #   | id | name  |
+      #   | 1  | alex  |
+      #   | 2  | smith |
       #
-      # Returns WebDriver elements of table header
+      #   gets converted into the following:
+      #   #=> [[Element, Element],[Element, Element], [Element, Element]]
+      #
+      # @return [Array[Array<Capybara::Node::Element>]]
+      def raw
+        self.all(:css, 'tr').map{ |row| row.all(:css, 'th,td')}
+      end
+
+      # Raw text of this table
+      # Examples:
+      #   A html table:
+      #   | id | name  |
+      #   | 1  | alex  |
+      #   | 2  | smith |
+      #
+      #   gets converted into the following:
+      #   #=> [['id', 'name'],['1', 'alex'], ['2', 'smith']]
+      #
+      # @return [Array[Array<String>]]
+      def raw_text
+        raw.map{ |row| row.map{ |cell| cell.text.strip } }
+      end
+
+      # Elements of table header
+      #
+      # @return [Array<Capybara::Node::Element>]
       def headers
-        cell_matrix = self.all("tr").map{ |row| row.child}
-        size = cell_matrix.first.select{ |cell| cell.tag_name == "th"}.length
-        if size > 1
-          cell_matrix.first
-        else
-          nil
+        th_size = raw.first.select{ |cell| cell.tag_name == 'th'}.size
+        case
+          when th_size == 1 # vertical header
+            raw.map { |cell| cell[0] }
+          when th_size > 1 # horizontal header
+            raw.first
+          else
+            nil # no th elements detected
         end
       end
 
-      # Public: WebDriver elements list of table body rows
+      # Elements of table rows
       #
-      # Examples
-      #   table.rows
-      #   # => Array[Array<Selenium::WebDriver::Element>]
-      #
-      # Returns list of WebDriver elements
+      # @return [Array[Array<Capybara::Node::Element>]]
       def rows
-        cell_matrix = self.all("tbody/tr").map{ |row| row.child}
-        size = cell_matrix.first.select{ |cell| cell.tag_name == "th"}.length
-        if size > 1
-          cell_matrix[1..-1]
-        else
-          cell_matrix
+        th_size = raw.first.select{ |cell| cell.tag_name == 'th'}.size
+        case
+          when th_size == 1 # vertical header
+            raw.map{ |row| row[1..-1] }.transpose
+          when th_size > 1 # horizontal header
+            raw[1..-1]
+          else  # no header, raw is rows
+            raw
         end
-        #find_elements(:xpath, ".//tbody/tr/td").each_slice(headers.length).to_a
       end
 
-      # Public: Elements of table foot row
+      # Table headers text
+      # Examples:
+      #   A html table header with horizontal headers
+      #   | id | name |
       #
-      # Examples
-      #   footers
-      #   # => Array<Selenium::WebDriver::Element>]
+      #   and
       #
-      # Returns elements of table foot row
-      def footers
-        all("tfoot/tr").child
-      end
-
-      # Public: Table headers text
+      #   A html table header with vertical headers
+      #   | id   |
+      #   | name |
       #
-      # Examples
-      #   table.headers_text
-      #   # => [["Plan","Price"]]
+      #   get converted into the following:
+      #   #=> ['id', 'name']
       #
-      # Returns headers text
+      # @return [Array<String>]
       def headers_text
         headers.map { |cell| cell.text.strip }
       end
 
-      # Public: Table body rows text
+      # Table body rows text
+      # Examples:
+      #   A html table body with horizontal headers
+      #   | 1  | alex  |
+      #   | 2  | smith |
       #
-      # Examples
-      #   table.rows_text
-      #   # => [["total","$200.00"],["tax","$15.00"]]
+      #   and
       #
-      # Returns table rows text
+      #   A html table body with vertical headers
+      #   | 1    | 2     |
+      #   | alex | smith |
+      #
+      #   get converted into the following:
+      #   #=> [['1', 'alex'], ['2', 'smith']]
+      #
+      # @return [Array[Array<String>]]
       def rows_text
         rows.map { |row| row.map { |cell| cell.text.strip } }
       end
 
-      # Public: Table footers text
+      # Converts this table into an Array of Hash where the keys of each Hash are the headers in the table.
+      # Examples:
+      #   A html table:
+      #   | id | name  | age |
+      #   | 1  | alex  | 10  |
+      #   | 2  | smith | 16  |
       #
-      # Examples
+      #   Gets converted into the following:
+      #   # => [{'id' => '1', 'name' => 'alex', 'age' => '10'}, {'id' => '2', 'name' => 'smith', 'age' => '16'}]
       #
-      #   table.footers_text
-      #   # => ["footer 1","footer 2"]
-      #
-      # Returns table footers text
-      def footers_text
-        footers.map { |cell| cell.text.strip }
+      # @return [Array<Hash>]
+      def hashes
+        rows_text.map{ |row| Hash[*headers_text.zip(row).flatten] }
       end
     end
   end
