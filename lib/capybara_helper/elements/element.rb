@@ -26,7 +26,7 @@ class Capybara::Node::Element
   #
   # Returns nothing
   def highlight
-    driver.execute_script("document.activeElement.style.outline='2px dashed red'")
+    driver.execute_script("document.activeElement.style.border='2px solid red'")
   end
   # Public: clear value of an element
   # This might not work with webkit

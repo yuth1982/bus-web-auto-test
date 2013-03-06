@@ -97,6 +97,18 @@ module SiteHelper
       root_element.find(:css, "a[onclick^='delete_module']").click
     end
 
+    def collapse_bus_section
+      if root_element[:class] == 'adminbox-active'
+        root_element.find(:css, 'a.title').click
+      end
+    end
+
+    def expand_bus_section
+      if root_element[:class] == 'adminbox-inactive'
+        root_element.find(:css, 'a.title').click
+      end
+    end
+
     # Public: Find element by args
     # Highlight element if found
     #

@@ -45,10 +45,15 @@ module Bus
     section(:return_resources_section, ReturnResourcesSection, id: "resource-unpurchase_resources")
 
     # Data shuttle section
-    section(:order_data_shuttle_section, OrderDataShuttleSection, id: "resource-choose_pro_partner_for_new_seed")
-    section(:process_order_section, ProcessOrderSection, css: "div[id^=resource-create_new_seed-].start-closed")
-    section(:view_data_shuttle_orders_section, ViewDataShuttleOrdersSection, id: "resource-view_seed_device_orders")
-    section(:order_details_section, OrderDetailsSection, css: "div[id^=resource-show_data_shuttle_order-]")
+    section(:data_shuttle_status_section, DataShuttleStatusSection, id: 'resource-data_shuttle_status')
+    section(:order_data_shuttle_section, OrderDataShuttleSection, id: 'resource-choose_pro_partner_for_new_seed')
+    section(:process_order_section, ProcessOrderSection, css: 'div[id^=resource-create_new_seed-].start-closed')
+    section(:view_data_shuttle_orders_section, ViewDataShuttleOrdersSection, id: 'resource-view_seed_device_orders')
+    section(:order_details_section, OrderDetailsSection, css: 'div[id^=resource-show_data_shuttle_order-]')
+
+    section(:device_status_section, DeviceStatusSection, css: 'div[id^=resource-show_data_shuttle_device_status-]')
+    section(:device_stuck_section, DeviceStuckSection, css: 'div[id^=resource-show_data_shuttle_device_status-]')
+    section(:inventory_status_section, InventoryStatusSection, css: 'div[id^=resource-show_drive_inventory_status-]')
 
     # reports section
     section(:report_builder_section, ReportBuilderSection, id: "jobs-report_builder")

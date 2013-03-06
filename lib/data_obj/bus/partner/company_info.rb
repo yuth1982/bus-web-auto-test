@@ -13,7 +13,7 @@ module Bus
         @state_abbrev = Forgery::Address.state_abbrev
         @state = Forgery::Address.state
         @country = "United States"
-        @zip = Random.rand(10000..99999).to_s
+        @zip = Random.new.rand(10000..99999).to_s
         @phone = Forgery::Address.phone
         @vat_num = ""
       end

@@ -268,7 +268,7 @@ module Bus
     #   @bus_site.admin_console_page.partner_details_section.delete_partner("test1234")
     #
     # Returns nothing
-    def delete_partner(password, expect_pass = True)
+    def delete_partner(password, expect_pass = true)
       wait_until_bus_section_load
       delete_partner_link.click
 

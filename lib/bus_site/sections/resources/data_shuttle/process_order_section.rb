@@ -52,7 +52,49 @@ module Bus
     def create_order(order)
       wait_until_bus_section_load
       # fill shipping address section
+
+      if order.name.nil?
+        name_tb.type_text('')
+      elsif order.name != 'keep the same'
+          name_tb.type_text(order.name)
+      end
+
+      if order.address_1.nil?
+        address1_tb.type_text('')
+      elsif order.address_1 != 'keep the same'
+        address1_tb.type_text(order.address_1)
+      end
+
+      address2_tb.type_text(order.address_2)
+
+      if order.city.nil?
+        city_tb.type_text('')
+      elsif order.city != 'keep the same'
+        city_tb.type_text(order.city)
+      end
+
+      if order.state.nil?
+        state_tb.type_text('')
+      elsif order.state != 'keep the same'
+        state_tb.type_text(order.state)
+      end
+
+      country_select.select(order.country) unless order.country.nil?
+
+      if order.zip.nil?
+        zip_tb.type_text('')
+      elsif order.zip != 'keep the same'
+        zip_tb.type_text(order.zip)
+      end
+
+      if order.phone.nil?
+        phone_tb.type_text('')
+      elsif order.phone != 'keep the same'
+        phone_tb.type_text(order.phone)
+      end
+
       power_adapter_select.select(order.adapter_type) unless order.adapter_type.nil?
+
       next_btns[0].click # click next and goto
       #go_to_create_order_section
       wait_until_bus_section_load
