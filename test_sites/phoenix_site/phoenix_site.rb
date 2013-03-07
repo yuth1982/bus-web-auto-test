@@ -1,3 +1,5 @@
+Dir.glob("#{File.dirname(__FILE__)}/pages/**/*.rb").each{ |file| require file }
+
 class PhoenixSite
   def select_dom
     Phoenix::DomSelection.new

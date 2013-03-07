@@ -1,5 +1,5 @@
 module Phoenix
-  class NewAdminFillout
+  class NewAdminFillout < SiteHelper::Page
 
     set_url("#{PHX_ENV['phx_host']}")
 

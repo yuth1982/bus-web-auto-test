@@ -1,5 +1,4 @@
-$:.unshift(File.dirname(__FILE__) + '/../../lib')
-require 'lib_helper'
+require "#{File.dirname(__FILE__)}/../../test_sites/test_sites"
 
 Capybara.register_driver :firefox do |app|
   profile = Selenium::WebDriver::Firefox::Profile.new
