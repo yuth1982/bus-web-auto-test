@@ -8,7 +8,7 @@ Arch:x86_64-gcc3:$
 QuickTime Plugin.plugin:$
 /Library/Internet Plug-Ins/QuickTime Plugin.plugin:$
 7.7.1:$
-1349759345000:0:1:$
+1349759345000:0:5:$
 The QuickTime Plugin allows you to view a wide variety of multimedia content in web pages. For more information, visit the <A HREF=http://www.apple.com/quicktime>QuickTime</A> Web site.:$
 QuickTime Plug-in 7.7.1:$
 40
@@ -55,7 +55,7 @@ QuickTime Plug-in 7.7.1:$
 JavaAppletPlugin.plugin:$
 /System/Library/Java/Support/CoreDeploy.bundle/Contents/JavaAppletPlugin.plugin:$
 14.4.0:$
-1349751371000:0:1:$
+1349751371000:0:5:$
 Displays Java applet content, or a placeholder if Java is not installed.:$
 Java Applet Plug-in:$
 17
@@ -76,10 +76,18 @@ Java Applet Plug-in:$
 14:application/x-java-applet;version=1.2:Java applet::$
 15:application/x-java-applet;jpi-version=1.6.0_35:Java applet::$
 16:application/x-java-vm-npruntime:::$
+Picasa.plugin:$
+/Users/csliu/Library/Internet Plug-Ins/Picasa.plugin:$
+1.0:$
+1348540258000:0:1:$
+Picasa plugin.:$
+Picasa:$
+1
+0:application/x-picasa-detect:3.1:picasa:$
 Flash Player.plugin:$
 /Library/Internet Plug-Ins/Flash Player.plugin:$
 11.4.402.265:$
-1346569861000:0:1:$
+1346569861000:0:5:$
 Shockwave Flash 11.4 r402:$
 Shockwave Flash:$
 2
@@ -88,15 +96,23 @@ Shockwave Flash:$
 aliedit.plugin:$
 /Users/csliu/Library/Internet Plug-Ins/aliedit.plugin:$
 1.0:$
-1340701294000:0:1:$
+1340701294000:0:5:$
 aliedit for cocoa:$
 Aliedit Plug-In:$
 1
 0:application/aliedit:Alipay.com security control::$
+WebEx64.plugin:$
+/Users/csliu/Library/Internet Plug-Ins/WebEx64.plugin:$
+1.0:$
+1332293594000:0:1:$
+WebEx64 General Plugin Container Version 202:$
+WebEx64 General Plugin Container:$
+1
+0:application/webx-gpc-plugin64:gpc::$
 SharePointBrowserPlugin.plugin:$
 /Library/Internet Plug-Ins/SharePointBrowserPlugin.plugin:$
 14.0.0:$
-1282723867000:0:1:$
+1282723867000:0:5:$
 Microsoft Office for Mac SharePoint Browser Plug-in:$
 SharePoint Browser Plug-in:$
 1
@@ -104,20 +120,20 @@ SharePoint Browser Plug-in:$
 iPhotoPhotocast.plugin:$
 /Library/Internet Plug-Ins/iPhotoPhotocast.plugin:$
 7.0:$
-1258498989000:0:1:$
+1258498989000:0:5:$
 iPhoto6:$
 iPhotoPhotocast:$
 1
 0:application/photo:iPhoto 700::$
 
 [INVALID]
-/Library/Internet Plug-Ins/SharePointWebKitPlugin.webplugin:$
-1282723860000:$
-/Library/Internet Plug-Ins/Quartz Composer.webplugin:$
-1349749851000:$
-/Library/Internet Plug-Ins/nsIQTScriptablePlugin.xpt:$
-1349749846000:$
-/Library/Internet Plug-Ins/flashplayer.xpt:$
-1345055405000:$
 /Users/csliu/Library/Internet Plug-Ins/.DS_Store:$
 1342776785000:$
+/Library/Internet Plug-Ins/flashplayer.xpt:$
+1345055405000:$
+/Library/Internet Plug-Ins/nsIQTScriptablePlugin.xpt:$
+1349749846000:$
+/Library/Internet Plug-Ins/Quartz Composer.webplugin:$
+1349749851000:$
+/Library/Internet Plug-Ins/SharePointWebKitPlugin.webplugin:$
+1282723860000:$

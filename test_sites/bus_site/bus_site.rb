@@ -31,5 +31,9 @@ class BusSite
     Bus::PartnerSubdomainPage.new
   end
 
+  def adfs_login_page
+    Bus::AdfsLoginPage.new
+  end
+
 end
 

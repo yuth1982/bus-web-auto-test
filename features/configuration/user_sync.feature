@@ -5,7 +5,7 @@
 # | partner name                      | admin                                    | usage                               |
 # | Never Synced Test                 | user_sync_never_synced@auto.com          | the partner never synced            |
 # | User Sync Automation              | user_sync_automation@auto.com            | general, mainly for the ui          |
-# | Fed ID Partner                    | leongh+adi@mozy.com                      | users in this partner can login     |
+# | Fed ID Partner                    | mikeg+newfedid@mozy.com                      | users in this partner can login     |
 # | Machine Migration for TC16273     | user_sync_add_delete@auto.com            | add/delete users in the AD          |
 # | Partner that has subpartner       | usrsync@test.com                         | scheduled sync                      |
 # (2). add 3 groups to each partner: dev, qa, pm
@@ -608,8 +608,8 @@ Feature: User sync
   @TC.17592 @firefox_profile @vpn
   Scenario: UserProvision - Deleted users in BUS can be resumed
     When I act as partner by:
-      | email               |
-      | leongh+adi@mozy.com |
+      | email                   |
+      | mikeg+newfedid@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I save the changes
@@ -624,24 +624,24 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | current status       | last sync           |
-      | Synchronized         |   @last_sync_time   |
+      | current status       | last sync          |
+      | Synchronized         | @last_sync_time    |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
       | keywords                   | filter |
-      | auto1@client7.mozyqa.local | None   |
+      | auto1@okta.mozyqa.local    | None   |
     Then User search results should be:
-      | User                       | Name       | User Group  |
-      | auto1@client7.mozyqa.local | auto1      | dev         |
-    When I view user details by auto1@client7.mozyqa.local
+      | User                      | Name       | User Group  |
+      | auto1@okta.mozyqa.local   | auto1      | dev         |
+    When I view user details by auto1@okta.mozyqa.local
     Then The user status should be Active
-    When I login the subdomain qa5adtest05
+    When I login the subdomain okta
     Then I will see the user account page
 
     When I log in bus admin console as administrator
     When I act as partner by:
-      | email               |
-      | leongh+adi@mozy.com |
+      | email                   |
+      | mikeg+newfedid@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -659,15 +659,15 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
       | keywords                   | filter |
-      | auto1@client7.mozyqa.local | None   |
+      | auto1@okta.mozyqa.local    | None   |
     Then The users table should be empty
-    When I login the subdomain qa5adtest05
+    When I login the subdomain okta
     Then I will see the Authentication Failed page
 
     When I log in bus admin console as administrator
     When I act as partner by:
-      | email               |
-      | leongh+adi@mozy.com |
+      | email                   |
+      | mikeg+newfedid@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -675,7 +675,7 @@ Feature: User sync
       | rule             | group |
       | cn=auto1         | dev   |
     And I click the sync now button
-    And I wait for 90 seconds
+    And I wait for 60 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
@@ -684,21 +684,21 @@ Feature: User sync
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                   | filter |
-      | auto1@client7.mozyqa.local | None   |
+      | keywords                | filter |
+      | auto1@okta.mozyqa.local | None   |
     Then User search results should be:
-      | User                       | Name       | User Group  |
-      | auto1@client7.mozyqa.local | auto1      | dev         |
-    When I view user details by auto1@client7.mozyqa.local
+      | User                    | Name       | User Group  |
+      | auto1@okta.mozyqa.local | auto1      | dev         |
+    When I view user details by auto1@okta.mozyqa.local
     Then The user status should be Active
-    When I login the subdomain qa5adtest05
+    When I login the subdomain okta
     Then I will see the user account page
 
   @TC.17593 @firefox_profile @vpn
   Scenario: UserProvision - Suspended users in BUS can't be resumed
     When I act as partner by:
-      | email               |
-      | leongh+adi@mozy.com |
+      | email                   |
+      | mikeg+newfedid@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I save the changes
@@ -717,20 +717,20 @@ Feature: User sync
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                   | filter |
-      | auto1@client7.mozyqa.local | None   |
+      | keywords                | filter |
+      | auto1@okta.mozyqa.local | None   |
     Then User search results should be:
-      | User                       | Name       | User Group  |
-      | auto1@client7.mozyqa.local | auto1      | dev         |
-    When I view user details by auto1@client7.mozyqa.local
+      | User                    | Name       | User Group  |
+      | auto1@okta.mozyqa.local | auto1      | dev         |
+    When I view user details by auto1@okta.mozyqa.local
     Then The user status should be Active
-    When I login the subdomain qa5adtest05
+    When I login the subdomain okta
     Then I will see the user account page
 
     When I log in bus admin console as administrator
     And I act as partner by:
-      | name          |
-      |ADI 4 Autodesk |
+      | email                   |
+      | mikeg+newfedid@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -738,7 +738,7 @@ Feature: User sync
       | rule             | action  |
       | cn=auto1         | Suspend |
     And I click the sync now button
-    And I wait for 90 seconds
+    And I wait for 60 seconds
     And I delete 1 deprovision rules
     And I save the changes
     And I click Connection Settings tab
@@ -747,20 +747,20 @@ Feature: User sync
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                   | filter |
-      | auto1@client7.mozyqa.local | None   |
+      | keywords                | filter |
+      | auto1@okta.mozyqa.local | None   |
     Then User search results should be:
-      | User                       | Name       | User Group  |
-      | auto1@client7.mozyqa.local | auto1      | dev         |
-    When I view user details by auto1@client7.mozyqa.local
+      | User                    | Name       | User Group  |
+      | auto1@okta.mozyqa.local | auto1      | dev         |
+    When I view user details by auto1@okta.mozyqa.local
     And The user status should be Suspended
-    And I login the subdomain qa5adtest05
+    When I login the subdomain okta
     Then I will see the Authentication Failed page
 
     When I log in bus admin console as administrator
     And I act as partner by:
-      | name          |
-      |ADI 4 Autodesk |
+      | email                   |
+      | mikeg+newfedid@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -768,7 +768,7 @@ Feature: User sync
       | rule             | group |
       | cn=auto1         | dev   |
     And I click the sync now button
-    And I wait for 90 seconds
+    And I wait for 60 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
@@ -778,27 +778,27 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
       | keywords                   | filter |
-      | auto1@client7.mozyqa.local | None   |
+      | auto1@okta.mozyqa.local | None   |
     Then User search results should be:
-      | User                       | Name       | User Group  |
-      | auto1@client7.mozyqa.local | auto1      | dev         |
-    When I view user details by auto1@client7.mozyqa.local
+      | User                    | Name       | User Group  |
+      | auto1@okta.mozyqa.local | auto1      | dev         |
+    When I view user details by auto1@okta.mozyqa.local
     Then The user status should be Suspended
-    When I login the subdomain qa5adtest05
+    When I login the subdomain okta
     Then I will see the Authentication Failed page
 
     And I log in bus admin console as administrator
     And I search user by:
-      | keywords                   | filter |
-      | auto1@client7.mozyqa.local | None   |
-    And I view user details by auto1@client7.mozyqa.local
+      | keywords                | filter |
+      | auto1@okta.mozyqa.local | None   |
+    And I view user details by auto1@okta.mozyqa.local
     And I active the user
 
   @TC.17594 @firefox_profile @vpn
   Scenario: UserProvision - Delete user after several days of not synced
     When I act as partner by:
-      | email               |
-      | leongh+adi@mozy.com |
+      | email                   |
+      | mikeg+newfedid@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I save the changes
@@ -808,7 +808,7 @@ Feature: User sync
       | rule             | group |
       | cn=auto1         | dev   |
     And I click the sync now button
-    And I wait for 90 seconds
+    And I wait for 60 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
@@ -817,25 +817,25 @@ Feature: User sync
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                   | filter |
-      | auto1@client7.mozyqa.local | None   |
+      | keywords                | filter |
+      | auto1@okta.mozyqa.local | None   |
     Then User search results should be:
-      | User                       | Name       | User Group  |
-      | auto1@client7.mozyqa.local | auto1      | dev         |
-    When I view user details by auto1@client7.mozyqa.local
+      | User                    | Name       | User Group  |
+      | auto1@okta.mozyqa.local | auto1      | dev         |
+    When I view user details by auto1@okta.mozyqa.local
     And I get the user id
-    And I login the subdomain qa5adtest05
+    And I login the subdomain okta
     Then I will see the user account page
 
     When I log in bus admin console as administrator
     And I act as partner by:
-      | name          |
-      |ADI 4 Autodesk |
+      | email                   |
+      | mikeg+newfedid@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
-    And I Choose to delete users if missing from LDAP for 90 days
-    And I change the user last sync field in the db to be 90 days earlier
+    And I Choose to delete users if missing from LDAP for 60 days
+    And I change the user last sync field in the db to be 60 days earlier
     And I click the sync now button
     And I wait for 80 seconds
     And I clear the user sync information
@@ -846,17 +846,17 @@ Feature: User sync
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                   | filter |
-      | auto1@client7.mozyqa.local | None   |
+      | keywords                | filter |
+      | auto1@okta.mozyqa.local | None   |
     Then The users table should be empty
-    When I login the subdomain qa5adtest05
+    When I login the subdomain okta
     Then I will see the Authentication Failed page
 
   @TC.17595 @firefox_profile @vpn
   Scenario: UserProvision - Suspend user after several days of not synced
     When I act as partner by:
-      | email               |
-      | leongh+adi@mozy.com |
+      | email                   |
+      | mikeg+newfedid@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I save the changes
@@ -866,7 +866,7 @@ Feature: User sync
       | rule             | group |
       | cn=auto1         | dev   |
     And I click the sync now button
-    And I wait for 90 seconds
+    And I wait for 60 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
@@ -876,26 +876,26 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
       | keywords                   | filter |
-      | auto1@client7.mozyqa.local | None   |
+      | auto1@okta.mozyqa.local | None   |
     Then User search results should be:
-      | User                       | Name       | User Group  |
-      | auto1@client7.mozyqa.local | auto1      | dev         |
-    When I view user details by auto1@client7.mozyqa.local
+      | User                    | Name       | User Group  |
+      | auto1@okta.mozyqa.local | auto1      | dev         |
+    When I view user details by auto1@okta.mozyqa.local
     And I get the user id
-    And I login the subdomain qa5adtest05
+    And I login the subdomain okta
     Then I will see the user account page
 
     When I log in bus admin console as administrator
     And I act as partner by:
-      | name          |
-      |ADI 4 Autodesk |
+      | email                   |
+      | mikeg+newfedid@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
-    And I Choose to suspend users if missing from LDAP for 90 days
-    And I change the user last sync field in the db to be 90 days earlier
+    And I Choose to suspend users if missing from LDAP for 60 days
+    And I change the user last sync field in the db to be 60 days earlier
     And I click the sync now button
-    And I wait for 90 seconds
+    And I wait for 60 seconds
     And I clear the user sync information
     And I save the changes
     And I click Connection Settings tab
@@ -904,21 +904,21 @@ Feature: User sync
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                   | filter |
-      | auto1@client7.mozyqa.local | None   |
+      | keywords                | filter |
+      | auto1@okta.mozyqa.local | None   |
     Then User search results should be:
-      | User                       | Name       | User Group  |
-      | auto1@client7.mozyqa.local | auto1      | dev         |
-    When I view user details by auto1@client7.mozyqa.local
+      | User                    | Name       | User Group  |
+      | auto1@okta.mozyqa.local | auto1      | dev         |
+    When I view user details by auto1@okta.mozyqa.local
     Then The user status should be Suspended
-    When I login the subdomain qa5adtest05
+    When I login the subdomain okta
     Then I will see the Authentication Failed page
 
     And I log in bus admin console as administrator
     And I search user by:
-      | keywords                   | filter |
-      | auto1@client7.mozyqa.local | None   |
-    And I view user details by auto1@client7.mozyqa.local
+      | keywords                | filter |
+      | auto1@okta.mozyqa.local | None   |
+    And I view user details by auto1@okta.mozyqa.local
     And I active the user
 
   @TC.17546 @TC.17548 @TC.17549 @vpn

@@ -5,6 +5,7 @@ module Bus
     # Private elements
     #
     element(:computer_msg, xpath: "//div[@id='account-index-content']/h3[1]")
+    element(:logout_link, css: "a[href='/login/logout']")
 
     attr_accessor :subdomain, :type
 
@@ -25,6 +26,10 @@ module Bus
     #
     def computer_message
       computer_msg.text
+    end
+
+    def logout
+      logout_link.click
     end
   end
 end
