@@ -93,7 +93,7 @@ module Bus
     #
     # Returns billing information hashes
     def billing_information_hash
-      output = Hash[*payment_info_table.rows_text[0..2].flatten]
+      output = {}
 
       @state = ""
       case
