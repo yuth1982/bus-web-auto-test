@@ -22,14 +22,18 @@ Then /^User group details should be:$/ do |details_table|
 end
 
 Then /^User group users list details should be:$/ do |users_list_table|
-  @bus_site.admin_console_page.user_group_details_section.has_change_name_link?
-  if users_list_table.headers.include?('Created')
-    users_list_table.map_column!('Created') do |value|
-      Chronic.parse(value).strftime("%m/%d/%y")
-    end
-  end
   actual = @bus_site.admin_console_page.user_group_details_section.users_list_table_hashes
   expected = users_list_table.hashes
+  expected.each do |col|
+    col.each do |k,v|
+      case k
+        when 'Created'
+          v.replace(Chronic.parse(v).strftime('%m/%d/%y'))
+        else
+          # do nothing
+      end
+    end
+  end
   expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
 

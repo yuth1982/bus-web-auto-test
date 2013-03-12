@@ -25,7 +25,11 @@ class Capybara::Node::Element
   #
   # Returns nothing
   def highlight
-    driver.execute_script("document.activeElement.style.border='2px solid red'")
+    begin
+      driver.execute_script("#{self[:style]}; document.activeElement.style.border='2px solid red'")
+    rescue
+      # Skipped
+    end
   end
   # Public: clear value of an element
   # This might not work with webkit

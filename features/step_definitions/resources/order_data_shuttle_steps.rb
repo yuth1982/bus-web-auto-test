@@ -30,7 +30,7 @@ end
 
 Then /^Partner search results in order data shuttle section should be empty$/ do
   rows = @bus_site.admin_console_page.order_data_shuttle_section.search_results_table_rows
-  rows.count.should == 7 && rows[1].to_s.should == "[\"No results found.\"]"
+  rows.to_s.include?('No results found.').should be_true
 end
 
 When /^I refresh order data shuttle section$/ do

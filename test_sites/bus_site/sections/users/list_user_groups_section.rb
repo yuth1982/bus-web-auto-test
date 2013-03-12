@@ -16,6 +16,7 @@ module Bus
     # Returns nothing
     def view_user_group_detail(search_key)
       find_link(search_key).click
+      wait_until_bus_section_load
     end
 
     # Public: User group list table header text

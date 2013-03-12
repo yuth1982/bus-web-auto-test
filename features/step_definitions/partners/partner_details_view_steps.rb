@@ -8,8 +8,8 @@ When /^I search and delete partner account by (.+)/ do |account_name|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_partner'])
   @bus_site.admin_console_page.search_list_partner_section.search_partner(account_name)
 
-  rows_text = @bus_site.admin_console_page.search_list_partner_section.search_results_table_rows
-  unless rows_text.count == 7 && rows_text[1].to_s == "[\"No results found.\"]"
+  rows = @bus_site.admin_console_page.search_list_partner_section.search_results_table_rows
+  unless rows.to_s.include?('No results found.')
     @bus_site.admin_console_page.search_list_partner_section.view_partner_detail(account_name)
     @bus_site.admin_console_page.partner_details_section.delete_partner(BUS_ENV['bus_password'])
   end

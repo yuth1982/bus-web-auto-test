@@ -15,6 +15,10 @@ module Bus
       machine_mapping_link.click
     end
 
+    def search_results_hashes
+      search_results_table.hashes
+    end
+
     # Public: Search results table header row text
     #
     # Example

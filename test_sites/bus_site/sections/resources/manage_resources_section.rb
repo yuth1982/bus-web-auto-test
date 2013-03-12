@@ -120,7 +120,7 @@ module Bus
     #
     # Returns string array
     def user_groups_table_headers
-      user_groups_table.headers_text
+      user_groups_table.rows_text[1]
     end
 
     # Public: User groups table rows text
@@ -130,7 +130,7 @@ module Bus
     #
     # Returns string array
     def user_groups_table_rows
-      user_groups_table.rows_text
+      user_groups_table.rows_text[2..-1]
     end
 
     # Public: Batch Assign a MozyPro keys

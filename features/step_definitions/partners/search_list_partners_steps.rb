@@ -79,7 +79,7 @@ end
 
 Then /^Partner search results should be empty$/ do
   rows = @bus_site.admin_console_page.search_list_partner_section.search_results_table_rows
-  rows.count.should == 7 && rows[1].to_s.should == "[\"No results found.\"]"
+  rows.to_s.include?('No results found.').should be_true
 end
 
 When /^I refresh Search List Partners section$/ do

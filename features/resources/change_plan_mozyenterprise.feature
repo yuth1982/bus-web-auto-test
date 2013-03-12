@@ -126,8 +126,8 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
   @TC.19268 @change_plan
   Scenario: 19268 MozyEnterprise VAT no storage add-on yearly to 10 GB add-on
     When I add a new MozyEnterprise partner:
-      | period | users |  vat number    | country |
-      | 12     | 10    | FR08410091490  | France  |
+      | period | users |  vat number    | country | net terms |
+      | 12     | 10    | FR08410091490  | France  | yes       |
     Then New partner should be created
     When I act as newly created partner account
     When I change MozyEnterprise account plan to:

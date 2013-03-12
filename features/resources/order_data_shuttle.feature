@@ -171,13 +171,13 @@ Feature:
       | Order # | Partner | Created | Key | Machine | Data Shuttle Device ID | Phase | Status | % Complete | GB Transferred | Seed Size | Start | Elapsed |
 
   @TC.12922
-  Scenario: 12204 Verify Data Shuttle Stuck > 14 days
+  Scenario: 12922 Verify Data Shuttle Stuck > 14 days
     When I navigate to Data Shuttle Status section from bus admin console page
     Then Data shuttle device stuck over 14 days table header should be:
       | Order # | Partner | Created | Key | Machine | Data Shuttle Device ID | Phase | Status | % Complete | GB Transferred | Seed Size | Start | Elapsed |
 
   @TC.12923
-  Scenario: 12204 Verify Data Shuttle Stuck > 30 days
+  Scenario: 12923 Verify Data Shuttle Stuck > 30 days
     When I navigate to Data Shuttle Status section from bus admin console page
     Then Data shuttle device stuck over 30 days table header should be:
       | Order # | Partner | Created | Key | Machine | Data Shuttle Device ID | Phase | Status | % Complete | GB Transferred | Seed Size | Start | Elapsed |

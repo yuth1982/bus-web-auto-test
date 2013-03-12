@@ -62,8 +62,8 @@ Feature: User group stash setting management
   @TC.19004 @BSA.2000
   Scenario: 19004 Add custom stash storage for a new user group when stash is enabled for partner
     When I add a new MozyEnterprise partner:
-      | period | users |
-      | 12     | 10    |
+      | period | users | net terms |
+      | 12     | 10    | yes       |
     Then New partner should be created
     When I enable stash for the partner with default stash storage
     Then Partner general information should be:
@@ -146,13 +146,13 @@ Feature: User group stash setting management
       | Yes           | 10 GB (change)         |
     When I act as newly created partner account
     And I add a new user:
-    | name           | enable stash |
-    | TC.19008 user  | yes          |
+      | name           | enable stash |
+      | TC.19008 user  | yes          |
     Then New user should be created
     When I navigate to List User Groups section from bus admin console page
     Then User groups list table should be:
-    | External ID | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota              | Desktop Keys | Desktop Quota                |
-    |             | (default user group) * | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 assigned) / 0.0  | 0 / 10       | 0.0 (10.0 assigned) / 250.0  |
+      | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota            | Desktop Keys | Desktop Quota              |
+      | (default user group) * | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 active) / 0.0  | 0 / 10       | 0.0 (10.0 active) / 250.0  |
     When I view (default user group) * user group details
     And I disable stash for the user group
     Then User group details should be:
@@ -160,8 +160,8 @@ Feature: User group stash setting management
       | No            |
     When I refresh List User Group section
     And User groups list table should be:
-      | External ID | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota              | Desktop Keys | Desktop Quota               |
-      |             | (default user group) * | 1     | 1      | 0           | 0 / 0       | 0.0 (0.0 assigned) / 0.0  | 0 / 10       | 0.0 (0.0 assigned) / 250.0  |
+      | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota            | Desktop Keys | Desktop Quota             |
+      | (default user group) * | 1     | 1      | 0           | 0 / 0       | 0.0 (0.0 active) / 0.0  | 0 / 10       | 0.0 (0.0 active) / 250.0  |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -182,8 +182,8 @@ Feature: User group stash setting management
     Then New user should be created
     When I navigate to List User Groups section from bus admin console page
     Then User groups list table should be:
-      | External ID | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota              | Desktop Keys | Desktop Quota                |
-      |             | (default user group) * | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 assigned) / 0.0  | 0 / 10       | 0.0 (15.0 assigned) / 250.0  |
+      | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota            | Desktop Keys | Desktop Quota              |
+      | (default user group) * | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 active) / 0.0  | 0 / 10       | 0.0 (15.0 active) / 250.0  |
     When I view (default user group) * user group details
     And I cancel disable stash for the user group
     Then User group details should be:
@@ -191,8 +191,8 @@ Feature: User group stash setting management
       | Yes           | 15 GB (change)         |
     When I refresh List User Group section
     And User groups list table should be:
-      | External ID | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota              | Desktop Keys | Desktop Quota               |
-      |             | (default user group) * | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 assigned) / 0.0  | 0 / 10       | 0.0 (15.0 assigned) / 250.0  |
+      | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota            | Desktop Keys | Desktop Quota              |
+      | (default user group) * | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 active) / 0.0  | 0 / 10       | 0.0 (15.0 active) / 250.0  |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -211,13 +211,13 @@ Feature: User group stash setting management
     And I view (default user group) * user group details
     And I disable stash for the user group
     And I add a new user:
-      | name           | email                      |
-      | TC.19010 user  | qa1+tc+19019+user@mozy.com |
+      | name           |
+      | TC.19010 user  |
     Then New user should be created
     When I search user by:
     | keywords      |
     | TC.19010 user |
-    And I view user details by qa1+tc+19019+user@mozy.com
+    And I view user details by newly created user email
     Then I should not see Enable Stash: setting on user details section
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
@@ -253,18 +253,18 @@ Feature: User group stash setting management
       | Yes           | 10 GB (change)         |
     When I act as newly created partner account
     And I add a new user:
-      | name             | email                       | enable stash |
-      | TC.19012.1 user  | qa1+tc+19012+user1@mozy.com | yes          |
+      | name             | enable stash |
+      | TC.19012.1 user  | yes          |
     Then New user should be created
     When I refresh Add New User section
     And I add a new user:
-      | name             | email                       |
-      | TC.19012.2 user  | qa1+tc+19012+user2@mozy.com |
+      | name             |
+      | TC.19012.2 user  |
     Then New user should be created
     When I refresh Add New User section
     And I add a new user:
-      | name             | email                       |
-      | TC.19012.3 user  | qa1+tc+19012+user3@mozy.com |
+      | name             |
+      | TC.19012.3 user  |
     Then New user should be created
     When I navigate to List User Groups section from bus admin console page
     And I view (default user group) * user group details
@@ -273,10 +273,10 @@ Feature: User group stash setting management
     When I click Continue button on popup window
     And I refresh User Group Details section
     Then User group users list details should be:
-    | External ID | User                        | Name            | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-    |             | qa1+tc+19012+user3@mozy.com | TC.19012.3 user | Enabled | 0        | 10 GB   | none         | today   | never     |
-    |             | qa1+tc+19012+user2@mozy.com | TC.19012.2 user | Enabled | 0        | 10 GB   | none         | today   | never     |
-    |             | qa1+tc+19012+user1@mozy.com | TC.19012.1 user | Enabled | 0        | 10 GB   | none         | today   | never     |
+    | Name            | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
+    | TC.19012.3 user | Enabled | 0        | 10 GB   | none         | today   | never     |
+    | TC.19012.2 user | Enabled | 0        | 10 GB   | none         | today   | never     |
+    | TC.19012.1 user | Enabled | 0        | 10 GB   | none         | today   | never     |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -349,18 +349,18 @@ Feature: User group stash setting management
       | 2                | 20               |
     Then Resources should be transferred
     When I add a new user:
-      | name           | email                       | user group     | enable stash |
-      | TC.19118 user  | qa1+tc+19118+user1@mozy.com | TC.19118 group | yes          |
+      | name           | user group     | enable stash |
+      | TC.19118 user  | TC.19118 group | yes          |
     Then New user should be created
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      |External ID | User                        | Name          | User Group      | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      |            | qa1+tc+19118+user1@mozy.com | TC.19118 user | TC.19118 group  | Enabled | 0        | 2 GB    | none         | today   | never     |
+      | Name          | User Group      | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
+      | TC.19118 user | TC.19118 group  | Enabled | 0        | 2 GB    | none         | today   | never     |
     When I search and delete TC.19118 group user group
     And I refresh Search List User section
     Then User search results should be:
-      |External ID | User                        | Name          | User Group           | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      |            | qa1+tc+19118+user1@mozy.com | TC.19118 user | (default user group) | Enabled | 0        | 2 GB    | none         | today   | never     |
+      | Name          | User Group           | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
+      | TC.19118 user | (default user group) | Enabled | 0        | 2 GB    | none         | today   | never     |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -384,19 +384,19 @@ Feature: User group stash setting management
       | 2                | 20               |
     Then Resources should be transferred
     When I add a new user:
-      | name           | email                       | user group     | enable stash |
-      | TC.19020 user  | qa1+tc+19020+user1@mozy.com | TC.19020 group | yes          |
+      | name           | user group     | enable stash |
+      | TC.19020 user  | TC.19020 group | yes          |
     Then New user should be created
     When I navigate to List User Groups section from bus admin console page
     Then User groups list table should be:
-      | External ID | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota              | Desktop Keys | Desktop Quota              |
-      |             | (default user group) * | 0     | 1      | 0           | 0 / 0       | 0.0 (0.0 assigned) / 0.0  | 0 / 8        | 0.0 (0.0 assigned) / 230.0 |
-      |             | TC.19020 group         | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 assigned) / 0.0  | 0 / 2        | 0.0 (10.0 assigned) / 20.0 |
+      | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota            | Desktop Keys | Desktop Quota            |
+      | (default user group) * | 0     | 1      | 0           | 0 / 0       | 0.0 (0.0 active) / 0.0  | 0 / 8        | 0.0 (0.0 active) / 230.0 |
+      | TC.19020 group         | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 active) / 0.0  | 0 / 2        | 0.0 (10.0 active) / 20.0 |
     When I search and delete TC.19020 group user group
     And I refresh Search List User section
     Then User groups list table should be:
-      | External ID | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota              | Desktop Keys | Desktop Quota                |
-      |             | (default user group) * | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 assigned) / 0.0  | 0 / 10       | 0.0 (10.0 assigned) / 250.0  |
+      | External ID | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota            | Desktop Keys | Desktop Quota              |
+      |             | (default user group) * | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 active) / 0.0  | 0 / 10       | 0.0 (10.0 active) / 250.0  |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 

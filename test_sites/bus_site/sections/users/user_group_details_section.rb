@@ -108,6 +108,7 @@ module Bus
     end
 
     def users_list_table_hashes
+      wait_until_bus_section_load
       users_list_table_rows.map{ |row| Hash[*users_list_table_headers.zip(row).flatten] }
     end
   end

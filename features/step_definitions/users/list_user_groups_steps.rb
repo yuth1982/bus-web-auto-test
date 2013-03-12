@@ -4,8 +4,7 @@ When /^I view (.+) user group details$/ do |user_group|
 end
 
 Then /^User groups list table should be:$/ do |user_group_table|
-  @bus_site.admin_console_page.list_user_groups_section.wait_until_bus_section_load
-  actual = @bus_site.admin_console_page.list_user_groups_section.user_group_list_table_hashes
+  actual = @bus_site.admin_console_page.list_user_groups_section.user_group_list_hashes
   expected = user_group_table.hashes
   expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end

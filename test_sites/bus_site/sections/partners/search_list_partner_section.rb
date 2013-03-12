@@ -21,10 +21,13 @@ module Bus
     #  @bus_admin_console_page.search_list_partner_section.search_partner("qa1+test@mozy.com")
     #
     # Returns nothing
-    def search_partner(search_key, filter = "None", include_sub_partners = true)
+    def search_partner(search_key, filter = 'None', include_sub_partners = true)
       # By default, include sub partners is checked
-      include_sub_partners_cb.check if include_sub_partners
-      include_sub_partners_cb.uncheck unless include_sub_partners
+      if include_sub_partners
+        include_sub_partners_cb.check
+      else
+        include_sub_partners_cb.uncheck
+      end
       wait_until_bus_section_load # Wait to load sub partners
       search_partner_tb.type_text(search_key)
       partner_filter_select.select(filter)
@@ -75,6 +78,9 @@ module Bus
     #
     # Returns nothing
     def view_partner_detail(search_key)
+      # Make sure include sub partners checked
+      include_sub_partners_cb.check
+      wait_until_bus_section_load # Wait to load sub partners
       find(:xpath, "//a[text()='#{search_key}']").click
     end
 
