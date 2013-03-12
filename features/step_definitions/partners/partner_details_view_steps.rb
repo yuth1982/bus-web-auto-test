@@ -189,7 +189,7 @@ When /^I add a new partner external id$/ do
 end
 
 When /^I change the subdomain to @subdomain$/ do
-  @subdomain = (0...8).map{(97+rand(26)).chr}.join
+  @subdomain = (0...8).map{(97+Random.new.rand(26)).chr}.join
   @bus_site.admin_console_page.partner_details_section.change_subdomain
   @bus_site.partner_subdomain_page.change_subdomain @subdomain
 end
