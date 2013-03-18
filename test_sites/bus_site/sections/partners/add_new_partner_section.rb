@@ -300,6 +300,9 @@ module Bus
         include_initial_purchase_cb.click
         sleep 1
         include_initial_purchase_cb.click
+        # When the next button is clicked before the panel is finished loading
+        # it causes the cc auth to hang, when update is slow many test failures happen.
+        wait_until{pre_sub_total_label.text!="0"}
       end
       # Since I don't know how long the ajax call will return, I set 2 seconds wait here
       # possible refactor here, remove sleep method
