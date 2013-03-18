@@ -49,13 +49,13 @@ Feature: Search and list partner
   @TC.789
   Scenario: 789 Search partner by company name
     When I add a new MozyPro partner:
-      | period | base plan |
-      | 1      | 10 GB     |
+      | period | base plan | net terms |
+      | 1      | 10 GB     | yes       |
     And New partner should be created
     When I search partner by newly created partner company name
     Then Partner search results should be:
-      | Partner       | Created |
-      | @company_name | today   |
+      | Partner       |
+      | @company_name |
     And I search and delete partner account by newly created partner company name
 
   # This test cases requires an OEM partner
@@ -64,8 +64,8 @@ Feature: Search and list partner
   @TC.790 @need_test_account
   Scenario: 790 Do a search for all partners
     When I add a new MozyPro partner:
-      | period | base plan |
-      | 1      | 10 GB     |
+      | period | base plan | net terms |
+      | 1      | 10 GB     | yes       |
     And New partner should be created
     When I search partner by:
       | name                              |
@@ -84,8 +84,8 @@ Feature: Search and list partner
   @TC.791
   Scenario: 791 Do a regular expression search for a partner
     When I add a new MozyPro partner:
-      | period | base plan |
-      | 1      | 10 GB     |
+      | period | base plan | net terms |
+      | 1      | 10 GB     | yes       |
     And New partner should be created
     And I add a new partner external id
     And Partner general information should be:
@@ -104,29 +104,30 @@ Feature: Search and list partner
   @TC.792
   Scenario: 792 Do a search on all deleted partners
     When I add a new MozyPro partner:
-      | period | base plan |
-      | 1      | 10 GB     |
+      | period | base plan | net terms |
+      | 1      | 10 GB     | yes       |
     Then New partner should be created
     And I delete partner account
     When I search partner by:
       | name          | filter  |
       | @company_name | Deleted |
     Then Partner search results should be:
-      | Partner       | Created |
-      | @company_name | today   |
+      | Partner       |
+      | @company_name |
+    And I search and delete partner account by newly created partner company name
 
   @TC.795
   Scenario: 795 Search for partners with the business type
     When I add a new MozyPro partner:
-      | period | base plan |
-      | 1      | 10 GB     |
+      | period | base plan | net terms |
+      | 1      | 10 GB     | yes       |
     Then New partner should be created
     When I search partner by:
       | name          | filter     |
       | @company_name | Businesses |
     Then Partner search results should be:
-      | Partner       | Created | Type    |
-      | @company_name | today   | MozyPro |
+      | Partner       | Type    |
+      | @company_name | MozyPro |
     And I search and delete partner account by newly created partner company name
 
   # This test cases requires an incompleted partner
@@ -144,15 +145,15 @@ Feature: Search and list partner
   @TC.796
   Scenario: 796 Search for partners with the reseller type
     When I add a new Reseller partner:
-      | period  | reseller type | reseller quota |
-      | 1       | Platinum      | 500            |
+      | period  | reseller type | reseller quota | net terms |
+      | 1       | Platinum      | 500            | yes       |
     And New partner should be created
     When I search partner by:
       | name          | filter   |
       | @company_name | Reseller |
     Then Partner search results should be:
-      | Partner       | Created | Type     |
-      | @company_name | today   | Reseller |
+      | Partner       | Type     |
+      | @company_name | Reseller |
     And I search and delete partner account by newly created partner company name
 
   # This test cases requires an OEM partner

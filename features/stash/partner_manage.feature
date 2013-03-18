@@ -94,8 +94,8 @@ Feature:
   @TC.19739 @BSA.3000
   Scenario: 19739 MozyPro admin view stash details in partner details section
     When I add a new MozyPro partner:
-      | period | base plan |
-      | 12     | 100 GB    |
+      | period | base plan | net terms |
+      | 12     | 100 GB    | yes       |
     Then New partner should be created
     When I enable stash for the partner with 10 GB stash storage
     Then Partner general information should be:

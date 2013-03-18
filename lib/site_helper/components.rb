@@ -26,7 +26,7 @@ module SiteHelper
     #
     # Returns elements
     def elements(element_name,element_hash)
-      send(:define_method, element_name) do
+      define_method(element_name) do
         all(element_hash.keys.first, element_hash.values.first)
       end
       private element_name
@@ -36,24 +36,9 @@ module SiteHelper
     #
     # Returns page object
     def section(section_name, section_class, element_hash)
-      send(:define_method, section_name) do
+      define_method(section_name) do
         section_class.new(find(element_hash.keys[0], element_hash.values[0]))
       end
-    end
-
-    # Public: Add element name into list
-    #
-    # Returns nothing
-    def add_element_name(element_name)
-      @element_names ||= []
-      @element_names << element_name
-    end
-
-    # Public: Element names in the page object
-    #
-    # return element names array
-    def element_names
-      @element_names
     end
 
     private

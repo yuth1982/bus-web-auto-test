@@ -83,9 +83,10 @@ Feature: Bus Smoke Test
     Then newly created partner admin email account status should be ACTIVE
     When I log in bus admin console as administrator
     Then I search and delete partner account by Smoke Test
-    And I should see 3 email(s) when I search keywords:
-      | content |
-      | @email  |
+    When I search emails by keywords:
+      | content          |
+      | @new_admin_email |
+    Then I should see 3 email(s)
 
   @TC.112
   Scenario: MozyPro France

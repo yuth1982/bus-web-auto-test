@@ -354,13 +354,13 @@ Feature: User group stash setting management
     Then New user should be created
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | Name          | User Group      | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      | TC.19118 user | TC.19118 group  | Enabled | 0        | 2 GB    | none         | today   | never     |
+      | Name          | User Group      | Stash   | Machines | Storage | Storage Used |
+      | TC.19118 user | TC.19118 group  | Enabled | 0        | 2 GB    | none         |
     When I search and delete TC.19118 group user group
     And I refresh Search List User section
     Then User search results should be:
-      | Name          | User Group           | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      | TC.19118 user | (default user group) | Enabled | 0        | 2 GB    | none         | today   | never     |
+      | Name          | User Group           | Stash   | Machines | Storage | Storage Used |
+      | TC.19118 user | (default user group) | Enabled | 0        | 2 GB    | none         |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 

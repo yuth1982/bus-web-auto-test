@@ -7,20 +7,22 @@ Feature: Corporate Invoices
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.15686 @slow @javascript
+  @TC.15686
   Scenario: 15686 Verify Aria sends email when create a new MozyPro partner
     When I add a new MozyPro partner:
       | period | base plan |
       | 1      | 50 GB     |
     Then New partner should be created
-    And I should see 1 email(s) when I search keywords:
-    | to     | date    | subject                  |
-    | @email | @today  | MozyPro Account Created! |
-    And I should see 1 email(s) when I search keywords:
-    | from        | to     | date    | subject                  |
-    | ar@mozy.com | @email | @today  | MozyQA Account Statement |
+    When I search emails by keywords:
+      | to               | subject                  |
+      | @new_admin_email | MozyPro Account Created! |
+    Then I should see 1 email(s)
+    When I search emails by keywords:
+      | from        | to               | subject                  |
+      | ar@mozy.com | @new_admin_email | MozyQA Account Statement |
+    Then I should see 2 email(s)
 
-  @TC.15687 @slow @javascript
+  @TC.15687
   Scenario: 15687 Verify Aria sends invoice email when change subscription period of a MozyPro partner
     When I add a new MozyPro partner:
       | period | base plan |
@@ -29,22 +31,25 @@ Feature: Corporate Invoices
     When I act as newly created partner account
     And I change account subscription up to annual billing period
     Then Subscription changed message should be Your account has been changed to yearly billing.
-    And I should see 2 email(s) when I search keywords:
-    | to            | date    | subject                  | content  |
-    | qa1@mozy.com  | @today  | MozyQA Account Statement | @address |
+    When I search emails by keywords:
+      | to          | date  | subject                  | content          |
+      | ar@mozy.com | today | MozyQA Account Statement | @company_address |
+    Then I should see 2 email(s)
 
-  @TC.17841 @slow @javascript
+  @TC.17841
   Scenario: 15686 Verify Aria sends email when create a new MozyEnterprise partner
     When I add a new MozyEnterprise partner:
       | period | users |
       | 12     | 1     |
     Then New partner should be created
-    And I should see 1 email(s) when I search keywords:
-      | to     | date    | subject                         |
-      | @email | @today  | MozyEnterprise Account Created! |
-    And I should see 1 email(s) when I search keywords:
-      | from        | to     | date    | subject                  |
-      | ar@mozy.com | @email | @today  | MozyQA Account Statement |
+    When I search emails by keywords:
+      | to               | subject                         |
+      | @new_admin_email | MozyEnterprise Account Created! |
+    Then I should see 1 email(s)
+    When I search emails by keywords:
+      | from        | to               | subject                  |
+      | ar@mozy.com | @new_admin_email | MozyQA Account Statement |
+    Then I should see 2 email(s)
 
   @TC.17842 @slow @javascript
   Scenario: 17842 Verify Aria sends invoice email when change subscription period of a MozyEnterprise partner
@@ -55,6 +60,7 @@ Feature: Corporate Invoices
     When I act as newly created partner account
     And I change account subscription up to biennial billing period
     Then Subscription changed message should be Your account has been changed to biennial billing.
-    And I should see 2 email(s) when I search keywords:
-      | to            | date    | subject                  | content  |
-      | qa1@mozy.com  | @today  | MozyQA Account Statement | @address |
+    When I search emails by keywords:
+      | to           | date  | subject                  | content          |
+      | qa1@mozy.com | today | MozyQA Account Statement | @company_address |
+    Then I should see 2 email(s)

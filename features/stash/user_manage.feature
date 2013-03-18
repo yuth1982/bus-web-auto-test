@@ -440,9 +440,10 @@ Feature: User stash setting management
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by newly created user email
     And I send stash invitation email
-    Then I should see 1 email(s) when I search keywords:
-      | to              | date    | subject               |
-      | @new_user_email | today   | Welcome to Mozy Stash |
+    When I search emails by keywords:
+      | to              | subject      |
+      | @new_user_email | enable stash |
+    Then I should see 1 email(s)
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -472,9 +473,10 @@ Feature: User stash setting management
     And User backup details table should be:
       | Computer | Encryption | Storage Used             | Last Update | License Key | Actions |
       | Stash    | Default    | 0 bytes / 10 GB (change) | N/A         |             | delete  |
-    Then I should see 1 email(s) when I search keywords:
-      | to              | date    | subject               |
-      | @new_user_email | today   | Welcome to Mozy Stash |
+    When I search emails by keywords:
+      | to              | subject      |
+      | @new_user_email | enable stash |
+    Then I should see 1 email(s)
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -498,9 +500,10 @@ Feature: User stash setting management
     Then User backup details table should be:
       | Computer | Encryption | Storage Used            | Last Update | License Key | Actions |
       | Stash    | Default    | 0 bytes / 5 GB (change) | N/A         |             | delete  |
-    And I should see 1 email(s) when I search keywords:
-      | to              | date    | subject               |
-      | @new_user_email | today   | Welcome to Mozy Stash |
+    When I search emails by keywords:
+      | to              | subject      |
+      | @new_user_email | enable stash |
+    Then I should see 1 email(s)
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 

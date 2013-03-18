@@ -53,13 +53,14 @@ Feature:
       | name           | enable stash | stash quota |
       | TC.19040 user  | yes          | 5           |
     Then New user should be created
-    And I should see 0 email(s) when I search keywords:
-      | to              | date    | subject               |
-      | @new_user_email | today   | Welcome to Mozy Stash |
+    When I search emails by keywords:
+      | to              | subject      |
+      | @new_user_email | enable stash |
+    Then I should see 0 email(s)
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | Name           | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      | TC.19040 user  | Enabled | 0        | 5 GB    | none         | today   | never     |
+      | Name           | Stash   | Machines | Storage | Storage Used |
+      | TC.19040 user  | Enabled | 0        | 5 GB    | none         |
     When I view user details by newly created user email
     Then User details should be:
       | Name:                  | Enable Stash:               |
@@ -69,8 +70,8 @@ Feature:
       | Stash    | Default    | 0 bytes / 5 GB (change) | N/A         |             | delete  |
     When I navigate to Search / List Machines section from bus admin console page
     Then Machine search results should be:
-      | Machine | User            | User Group           | Data Center | Storage Used            | Created |
-      | Stash   | @new_user_email | (default user group) | qa6         | 0 bytes / 5 GB (change) | today   |
+      | Machine | User            | User Group           | Data Center | Storage Used            |
+      | Stash   | @new_user_email | (default user group) | qa6         | 0 bytes / 5 GB (change) |
     When I navigate to Manage Resources section from bus admin console page
     Then Partner resources general information should be:
       | Stash Users: | Stash Storage Usage: |
@@ -101,13 +102,14 @@ Feature:
       | name           | enable stash | stash quota | send stash invite |
       | TC.19044 user  | yes          | 5           | yes               |
     Then New user should be created
-    And I should see 1 email(s) when I search keywords:
-      | to              | date    | subject               |
-      | @new_user_email | today   | Welcome to Mozy Stash |
+    When I search emails by keywords:
+      | to              | subject      |
+      | @new_user_email | enable stash |
+    Then I should see 1 email(s)
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | Name           | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      | TC.19044 user  | Enabled | 0        | 5 GB    | none         | today   | never     |
+      | Name           | Stash   | Machines | Storage | Storage Used |
+      | TC.19044 user  | Enabled | 0        | 5 GB    | none         |
     When I view user details by newly created user email
     Then User details should be:
       | Name:                  | Enable Stash:               |
@@ -117,8 +119,8 @@ Feature:
       | Stash    | Default    | 0 bytes / 5 GB (change) | N/A         |             | delete  |
     When I navigate to Search / List Machines section from bus admin console page
     Then Machine search results should be:
-      | User Group           | Data Center | Storage Used            | Created |
-      | (default user group) | qa6         | 0 bytes / 5 GB (change) | today   |
+      | User Group           | Data Center | Storage Used            |
+      | (default user group) | qa6         | 0 bytes / 5 GB (change) |
     When I navigate to Manage Resources section from bus admin console page
     Then Partner resources general information should be:
       | Stash Users: | Stash Storage Usage: |
@@ -232,16 +234,17 @@ Feature:
     Then User details should be:
       | Name:                  | Enable Stash:               |
       | TC.19080 user (change) | Yes (Send Invitation Email) |
-    And I should see 0 email(s) when I search keywords:
-      | to                          | date    | subject               |
-      | qa1+tc+19080+user1@mozy.com | today   | Welcome to Mozy Stash |
+    When I search emails by keywords:
+      | to              | subject      |
+      | @new_user_email | enable stash |
+    Then I should see 0 email(s)
     And User backup details table should be:
       | Computer | Encryption | Storage Used            | Last Update | License Key | Actions |
       | Stash    | Default    | 0 bytes / 5 GB (change) | N/A         |             | delete  |
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | Name           | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      | TC.19080 user  | Enabled | 0        | 5 GB    | none         | today   | never     |
+      | Name           | Stash   | Machines | Storage | Storage Used |
+      | TC.19080 user  | Enabled | 0        | 5 GB    | none         |
     When I navigate to Manage Resources section from bus admin console page
     Then Partner resources general information should be:
       | Stash Users: | Stash Storage Usage: |
@@ -339,8 +342,8 @@ Feature:
     And User backup details table should not have stash record
     When I refresh Search List User section
     Then User search results should be:
-      | Name           | Stash    | Machines | Storage | Storage Used | Created | Backed Up |
-      | TC.19084 user  | Disabled | 0        | 0 bytes | none         | today   | never     |
+      | Name           | Stash    | Machines | Storage | Storage Used |
+      | TC.19084 user  | Disabled | 0        | 0 bytes | none         |
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
@@ -413,13 +416,14 @@ Feature:
       | name           | enable stash | stash quota |
       | TC.18994 user  | yes          | 5           |
     Then New user should be created
-    And I should see 0 email(s) when I search keywords:
-      | to              | date    | subject               |
-      | @new_user_email | today   | Welcome to Mozy Stash |
+    When I search emails by keywords:
+      | to              | subject      |
+      | @new_user_email | enable stash |
+    Then I should see 0 email(s)
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | Name           | User Group           | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      | TC.18994 user  | (default user group) | Enabled | 0        | 5 GB    | none         | today   | never     |
+      | Name           | User Group           | Stash   | Machines | Storage | Storage Used |
+      | TC.18994 user  | (default user group) | Enabled | 0        | 5 GB    | none         |
     When I view user details by newly created user email
     Then User details should be:
       | Name:                  | Enable Stash:               |
@@ -437,8 +441,8 @@ Feature:
       | (default user group) * | 1     | 1      | 1           | 0 / 10 | 0.0 (5.0 assigned) / 50.0  |
     When I view (default user group) * user group details
     Then User group users list details should be:
-      | Name          | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      | TC.18994 user | Enabled | 0        | 5 GB    | none         | today   | never     |
+      | Name          | Stash   | Machines | Storage | Storage Used |
+      | TC.18994 user | Enabled | 0        | 5 GB    | none         |
     When I navigate to Manage Resources section from bus admin console page
     Then Partner resources general information should be:
       | Stash Users: | Stash Storage Usage: |
@@ -454,7 +458,7 @@ Feature:
       | Stash Storage Usage: | 0 bytes / 5 GB |
     And I delete partner account
 
-  @TC.19022 @BSA.1000 @firefox_profile
+  @TC.19022 @BSA.1000
   Scenario: 19022 Reseller Partner Provision Stash Container - Custom User Group with email invite
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -636,20 +640,21 @@ Feature:
     Then User details should be:
       | Name:                  | Enable Stash:               |
       | TC.18969 user (change) | Yes (Send Invitation Email) |
-    And I should see 0 email(s) when I search keywords:
-      | to              | date    | subject               |
-      | @new_user_email | today   | Welcome to Mozy Stash |
+    When I search emails by keywords:
+      | to              | subject      |
+      | @new_user_email | enable stash |
+    Then I should see 0 email(s)
     And User backup details table should be:
       | Computer | Encryption | Storage Used            | Last Update | License Key | Actions |
       | Stash    | Default    | 0 bytes / 5 GB (change) | N/A         |             | delete  |
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | Name           | User Group           | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      | TC.18969 user  | (default user group) | Enabled | 0        | 5 GB    | none         | today   | never     |
+      | Name           | User Group           | Stash   | Machines | Storage | Storage Used |
+      | TC.18969 user  | (default user group) | Enabled | 0        | 5 GB    | none         |
     When I navigate to List User Groups section from bus admin console page
     Then User groups list table should be:
-      | Name                   | Users | Admins | Stash Users | Keys  | Quota                     |
-      | (default user group) * | 1     | 1      | 1           | 0 / 5 | 0.0 (5.0 assigned) / 50.0 |
+      | Name                   | Users | Admins | Stash Users | Keys  | Quota                   |
+      | (default user group) * | 1     | 1      | 1           | 0 / 5 | 0.0 (5.0 active) / 50.0 |
     And I view (default user group) * user group details
     Then User group details should be:
       | Enable Stash: | Default Stash Storage: |
@@ -794,13 +799,14 @@ Feature:
       | name           | user group     | enable stash | send stash invite |
       | TC.19061 user  | TC.19061 group | yes          | yes               |
     Then New user should be created
-    And I should see 1 email(s) when I search keywords:
-      | to              | date    | subject               |
-      | @new_user_email | today   | Welcome to Mozy Stash |
+    When I search emails by keywords:
+      | to              | subject      |
+      | @new_user_email | enable stash |
+    Then I should see 1 email(s)
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | Name           | User Group     | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      | TC.19061 user  | TC.19061 group | Enabled | 0        | 5 GB    | none         | today   | never     |
+      | Name           | User Group     | Stash   | Machines | Storage | Storage Used |
+      | TC.19061 user  | TC.19061 group | Enabled | 0        | 5 GB    | none         |
     When I view user details by newly created user email
     Then User details should be:
       | Name:                  | Enable Stash:               |
@@ -810,8 +816,8 @@ Feature:
       | Stash    | Default    | 0 bytes / 5 GB (change) | N/A         |             | delete  |
     When I navigate to Search / List Machines section from bus admin console page
     Then Machine search results should be:
-      | Machine | User            | User Group     | Data Center | Storage Used            | Created |
-      | Stash   | @new_user_email | TC.19061 group | qa6         | 0 bytes / 5 GB (change) | today   |
+      | Machine | User            | User Group     | Data Center | Storage Used            |
+      | Stash   | @new_user_email | TC.19061 group | qa6         | 0 bytes / 5 GB (change) |
     When I navigate to List User Groups section from bus admin console page
     Then User groups list table should be:
       | Name                   | Users | Admins | Stash Users | Keys   | Quota                    |
@@ -819,8 +825,8 @@ Feature:
       | TC.19061 group         | 1     | 1      | 1           | 0 / 5  | 0.0 (5.0 active) / 50.0  |
     When I view TC.19061 group user group details
     Then User group users list details should be:
-      | Name          | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      | TC.19061 user | Enabled | 0        | 5 GB    | none         | today   | never     |
+      | Name          | Stash   | Machines | Storage | Storage Used |
+      | TC.19061 user | Enabled | 0        | 5 GB    | none         |
     When I navigate to Manage Resources section from bus admin console page
     Then Partner resources general information should be:
       | Stash Users: | Stash Storage Usage: |
@@ -1016,13 +1022,14 @@ Feature:
       | name           | enable stash | stash quota |
       | TC.19035 user  | yes          | 5           |
     Then New user should be created
-    And I should see 0 email(s) when I search keywords:
-      | to              | date    | subject               |
-      | @new_user_email | today   | Welcome to Mozy Stash |
+    When I search emails by keywords:
+      | to              | subject      |
+      | @new_user_email | enable stash |
+    Then I should see 0 email(s)
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | Name           | User Group           | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      | TC.19035 user  | (default user group) | Enabled | 0        | 5 GB    | none         | today   | never     |
+      | Name           | User Group           | Stash   | Machines | Storage | Storage Used |
+      | TC.19035 user  | (default user group) | Enabled | 0        | 5 GB    | none         |
     When I view user details by newly created user email
     Then User details should be:
       | Name:                  | Enable Stash:               |
@@ -1032,16 +1039,16 @@ Feature:
       | Stash    | Default    | 0 bytes / 5 GB (change) | N/A         |             | delete  |
     When I navigate to Search / List Machines section from bus admin console page
     Then Machine search results should be:
-      | Machine | User            | User Group           | Data Center | Storage Used            | Created |
-      | Stash   | @new_user_email | (default user group) | qa6         | 0 bytes / 5 GB (change) | today   |
+      | Machine | User            | User Group           | Data Center | Storage Used            |
+      | Stash   | @new_user_email | (default user group) | qa6         | 0 bytes / 5 GB (change) |
     When I navigate to List User Groups section from bus admin console page
     Then User groups list table should be:
       | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota             | Desktop Keys | Desktop Quota            |
       | (default user group) * | 1     | 1      | 1           | 0 / 200     | 0.0 (0.0 active) / 100.0 | 0 / 10       | 0.0 (5.0 active) / 250.0 |
     When I view (default user group) * user group details
     Then User group users list details should be:
-      | Name          | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      | TC.19035 user | Enabled | 0        | 5 GB    | none         | today   | never     |
+      | Name          | Stash   | Machines | Storage | Storage Used |
+      | TC.19035 user | Enabled | 0        | 5 GB    | none         |
     When I navigate to Assign Keys section from bus admin console page
     Then Partner resources general information should be:
       | Stash Users: | Stash Storage Usage: |
@@ -1080,13 +1087,14 @@ Feature:
         | name           | user group     | enable stash | send stash invite |
         | TC.19037 user  | TC.19037 group | yes          | yes               |
     Then New user should be created
-    And I should see 1 email(s) when I search keywords:
-      | to              | date    | subject               |
-      | @new_user_email | today   | Welcome to Mozy Stash |
+    When I search emails by keywords:
+      | to              | subject      |
+      | @new_user_email | enable stash |
+    Then I should see 1 email(s)
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | Name           | User Group     | Stash   | Machines | Storage | Storage Used | Created |
-      | TC.19037 user  | TC.19037 group | Enabled | 0        | 5 GB    | none         | today   |
+      | Name           | User Group     | Stash   | Machines | Storage | Storage Used |
+      | TC.19037 user  | TC.19037 group | Enabled | 0        | 5 GB    | none         |
     When I view user details by newly created user email
     Then User details should be:
       | Name:                  | Enable Stash:               |
@@ -1096,8 +1104,8 @@ Feature:
       | Stash    | Default    | 0 bytes / 5 GB (change) | N/A         |             | delete  |
     When I navigate to Search / List Machines section from bus admin console page
     Then Machine search results should be:
-      | Machine | User            | User Group     | Data Center | Storage Used            | Created |
-      | Stash   | @new_user_email | TC.19037 group | qa6         | 0 bytes / 5 GB (change) | today   |
+      | Machine | User            | User Group     | Data Center | Storage Used            |
+      | Stash   | @new_user_email | TC.19037 group | qa6         | 0 bytes / 5 GB (change) |
     When I navigate to List User Groups section from bus admin console page
     Then User groups list table should be:
       | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota            | Desktop Keys | Desktop Quota            |
@@ -1105,8 +1113,8 @@ Feature:
       | TC.19037 group         | 1     | 1      | 1           | 0 / 1       | 0.0 (0.0 active) / 10.0 | 0 / 2        | 0.0 (5.0 active) / 30.0  |
     When I view TC.19037 group user group details
     Then User group users list details should be:
-      | Name          | Stash   | Machines | Storage | Storage Used | Created |
-      | TC.19037 user | Enabled | 0        | 5 GB    | none         | today   |
+      | Name          | Stash   | Machines | Storage | Storage Used |
+      | TC.19037 user | Enabled | 0        | 5 GB    | none         |
     When I navigate to Assign Keys section from bus admin console page
     Then Partner resources general information should be:
       | Stash Users: | Stash Storage Usage: |
@@ -1158,10 +1166,10 @@ Feature:
     When I act as newly created partner account
     And I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | Name           | User Group           | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      | TC.19102 user3 | (default user group) | Enabled | 0        | 5 GB    | none         | today   | never     |
-      | TC.19102 user2 | (default user group) | Enabled | 0        | 5 GB    | none         | today   | never     |
-      | TC.19102 user1 | (default user group) | Enabled | 0        | 5 GB    | none         | today   | never     |
+      | Name           | User Group           | Stash   | Machines | Storage | Storage Used |
+      | TC.19102 user3 | (default user group) | Enabled | 0        | 5 GB    | none         |
+      | TC.19102 user2 | (default user group) | Enabled | 0        | 5 GB    | none         |
+      | TC.19102 user1 | (default user group) | Enabled | 0        | 5 GB    | none         |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -1195,8 +1203,8 @@ Feature:
     Then I close popup window
     When I refresh Search List User section
     Then User search results should be:
-      | Name           | User Group           | Stash    | Machines | Storage | Storage Used | Created | Backed Up |
-      | TC.19103 user  | (default user group) | Disabled | 0        | 0 bytes | none         | today   | never     |
+      | Name           | User Group           | Stash    | Machines | Storage | Storage Used |
+      | TC.19103 user  | (default user group) | Disabled | 0        | 0 bytes | none         |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -1223,16 +1231,17 @@ Feature:
     Then User details should be:
       | Name:                  | Enable Stash:               |
       | TC.19104 user (change) | Yes (Send Invitation Email) |
-    And I should see 0 email(s) when I search keywords:
-      | to              | date    | subject               |
-      | @new_user_email | today   | Welcome to Mozy Stash |
+    When I search emails by keywords:
+      | to              | subject      |
+      | @new_user_email | enable stash |
+    Then I should see 0 email(s)
     And User backup details table should be:
       | Computer | Encryption | Storage Used            | Last Update | License Key | Actions |
       | Stash    | Default    | 0 bytes / 5 GB (change) | N/A         |             | delete  |
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | Name           | User Group           | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      | TC.19104 user  | (default user group) | Enabled | 0        | 5 GB    | none         | today   | never     |
+      | Name           | User Group           | Stash   | Machines | Storage | Storage Used |
+      | TC.19104 user  | (default user group) | Enabled | 0        | 5 GB    | none         |
     When I navigate to List User Groups section from bus admin console page
     Then User groups list table should be:
       | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota           | Desktop Keys | Desktop Quota            |
@@ -1242,8 +1251,8 @@ Feature:
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 2 GB (change)          |
     Then User group users list details should be:
-      | Name          | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      | TC.19104 user | Enabled | 0        | 5 GB    | none         | today   | never     |
+      | Name          | Stash   | Machines | Storage | Storage Used |
+      | TC.19104 user | Enabled | 0        | 5 GB    | none         |
     When I navigate to Assign Keys section from bus admin console page
     Then Partner resources general information should be:
       | Stash Users: | Stash Storage Usage: |
@@ -1342,8 +1351,8 @@ Feature:
     And User backup details table should not have stash record
     When I refresh Search List User section
     Then User search results should be:
-      | Name           | User Group           | Stash    | Machines | Storage | Storage Used | Created | Backed Up |
-      | TC.19108 user  | (default user group) | Disabled | 0        | 0 bytes | none         | today   | never     |
+      | Name           | User Group           | Stash    | Machines | Storage | Storage Used |
+      | TC.19108 user  | (default user group) | Disabled | 0        | 0 bytes | none         |
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
@@ -1378,13 +1387,14 @@ Feature:
       | name           | user group     | enable stash | send stash invite |
       | TC.19109 user  | TC.19109 group | yes          | yes               |
     Then New user should be created
-    And I should see 1 email(s) when I search keywords:
-      | to              | date    | subject               |
-      | @new_user_email | today   | Welcome to Mozy Stash |
+    When I search emails by keywords:
+      | to              | subject      |
+      | @new_user_email | enable stash |
+    Then I should see 1 email(s)
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | Name           | User Group     | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      | TC.19109 user  | TC.19109 group | Enabled | 0        | 5 GB    | none         | today   | never     |
+      | Name           | User Group     | Stash   | Machines | Storage | Storage Used |
+      | TC.19109 user  | TC.19109 group | Enabled | 0        | 5 GB    | none         |
     When I view user details by newly created user email
     Then User details should be:
       | Name:                  | Enable Stash:               |
@@ -1394,8 +1404,8 @@ Feature:
       | Stash    | Default    | 0 bytes / 5 GB (change) | N/A         |             | delete  |
     When I navigate to Search / List Machines section from bus admin console page
     Then Machine search results should be:
-      | Machine | User            | User Group     | Data Center | Storage Used            | Created |
-      | Stash   | @new_user_email | TC.19109 group | qa6         | 0 bytes / 5 GB (change) | today   |
+      | Machine | User            | User Group     | Data Center | Storage Used            |
+      | Stash   | @new_user_email | TC.19109 group | qa6         | 0 bytes / 5 GB (change) |
     When I navigate to List User Groups section from bus admin console page
     Then User groups list table should be:
       | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota           | Desktop Keys | Desktop Quota            |
@@ -1403,8 +1413,8 @@ Feature:
       | TC.19109 group         | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 active) / 0.0 | 0 / 2        | 0.0 (5.0 active) / 20.0  |
     When I view TC.19109 group user group details
     Then User group users list details should be:
-      | Name          | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      | TC.19109 user | Enabled | 0        | 5 GB    | none         | today   | never     |
+      | Name          | Stash   | Machines | Storage | Storage Used |
+      | TC.19109 user | Enabled | 0        | 5 GB    | none         |
     When I navigate to Assign Keys section from bus admin console page
     Then Partner resources general information should be:
       | Stash Users: | Stash Storage Usage: |
@@ -1475,8 +1485,8 @@ Feature:
       | TC.19111 group         | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 active) / 0.0 | 0 / 2        | 0.0 (10.0 active) / 20.0 |
     When I view TC.19111 group user group details
     Then User group users list details should be:
-      | Name          | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      | TC.19111 user | Enabled | 0        | 10 GB   | none         | today   | never     |
+      | Name          | Stash   | Machines | Storage | Storage Used |
+      | TC.19111 user | Enabled | 0        | 10 GB   | none         |
     When I navigate to Assign Keys section from bus admin console page
     Then Partner resources general information should be:
       | Stash Users: | Stash Storage Usage: |
@@ -1532,8 +1542,8 @@ Feature:
     And User backup details table should not have stash record
     When I refresh Search List User section
     Then User search results should be:
-      | Name           | User Group     | Stash    | Machines | Storage | Storage Used | Created | Backed Up |
-      | TC.19113 user  | TC.19113 group | Disabled | 0        | 0 bytes | none         | today   | never     |
+      | Name           | User Group     | Stash    | Machines | Storage | Storage Used |
+      | TC.19113 user  | TC.19113 group | Disabled | 0        | 0 bytes | none         |
     When I navigate to List User Groups section from bus admin console page
     Then User groups list table should be:
       | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota           | Desktop Keys | Desktop Quota            |
@@ -1541,8 +1551,8 @@ Feature:
       | TC.19113 group         | 1     | 1      | 0           | 0 / 0       | 0.0 (0.0 active) / 0.0 | 0 / 2        | 0.0 (0.0 active) / 20.0  |
     When I view TC.19113 group user group details
     Then User group users list details should be:
-      | Name          | Stash    | Machines | Storage | Storage Used | Created | Backed Up |
-      | TC.19113 user | Disabled | 0        | 0 bytes | none         | today   | never     |
+      | Name          | Stash    | Machines | Storage | Storage Used |
+      | TC.19113 user | Disabled | 0        | 0 bytes | none         |
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
