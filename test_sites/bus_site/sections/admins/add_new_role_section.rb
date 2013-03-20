@@ -4,6 +4,7 @@ module Bus
     element(:role_select, id: "role_subpartner_role")
     element(:name_tb, id: "role_name")
     element(:role_parent_select, id: "role_parent_role_id")
+    element(:message_div, css: 'div#roles-new-errors ul')
 
     element(:submit_btn, xpath: "//input[contains(@value, 'Save Changes')]")
 
@@ -45,6 +46,10 @@ module Bus
 
     def delete_role(role_name)
 
+    end
+
+    def messages
+      message_div.text
     end
   end
 end

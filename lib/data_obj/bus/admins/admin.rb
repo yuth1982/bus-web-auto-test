@@ -10,8 +10,8 @@ module Bus
         @name = name || "#{first_name} #{last_name}"
         @email = email || "#{CONFIGS['global']['email_prefix']}+#{first_name}+#{last_name}+#{Time.now.strftime("%H%M")}@mozy.com".downcase
         @parent = parent || 0
-        @user_groups = user_groups || 0
-        @roles = roles || 0
+        @user_groups = user_groups || []
+        @roles = roles || []
         @num_desktop_licenses = 0
         @desktop_quota = 0
       end

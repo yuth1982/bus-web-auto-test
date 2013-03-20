@@ -1,14 +1,13 @@
 When /^I add a new admin:$/ do |table|
   # table is a | ATC695 | leongh+atc695@mozy.com | ATC695 |pending
   admin_hash = table.hashes.first
-  roles = admin_hash['Roles'].split(',')
-  if admin_hash['User Group'].nil?
-    user_groups = []
-  else
-    user_groups = admin_hash['User Group'].split(',')
+  roles = (admin_hash['Roles'] || '').split(',').compact
+  user_groups = (admin_hash['User Group'] || '').split(',').compact
+  roles.each do | v |
+    v.gsub!(/@new_role/,  @role.name)
   end
-  admin = Bus::DataObj::Admin.new(admin_hash['Name'], admin_hash['Email'], admin_hash['Parent'], user_groups, roles)
-  @bus_site.admin_console_page.add_new_admin_section.add_new_admin(admin)
+  @admin = Bus::DataObj::Admin.new(admin_hash['Name'], admin_hash['Email'], admin_hash['Parent'], user_groups, roles)
+  @bus_site.admin_console_page.add_new_admin_section.add_new_admin(@admin)
 end
 
 Then /^I should see capabilities in Admin Console panel$/ do |table|
@@ -22,35 +21,30 @@ end
 When /^I search admin by:$/ do |search_key_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_admin'])
   attributes = search_key_table.hashes.first
-  keywords = attributes["name"] || attributes["email"]
+  keywords = attributes["name"] || attributes["email"].gsub(/@new_admin/, @admin.email)
   @bus_site.admin_console_page.search_admins_section.search_admin(keywords)
 end
 
 When /^I act as admin by:$/ do |table|
   # table is a | leongh+atc695@mozy.com |pending
-  2.times {
-    step %{I search admin by:}, table(%{
-      |#{table.headers.join('|')}|
-      |#{table.rows.first.join('|')}|
-    })
-  }
+  step %{I search admin by:}, table(%{
+    |#{table.headers.join('|')}|
+    |#{table.rows.first.join('|')}|
+  })
 
   attributes = table.hashes.first
-  page.find_link(attributes["email"] || attributes["name"]).click
+  page.find_link(attributes["email"].gsub(/@new_admin/, @admin.email)[0..24] || attributes["name"]).click
   @bus_site.admin_console_page.admin_details_section.act_as_admin
   @bus_site.admin_console_page.has_stop_masquerading_link?
 end
 
 When /^I delete admin by:$/ do |table|
-  sleep 5 # Without sleep, the (stop masquerade) link comes back again
-  2.times {
-    step %{I search admin by:}, table(%{
-      |#{table.headers.join('|')}|
-      |#{table.rows.first.join('|')}|
+  step %{I search admin by:}, table(%{
+    |#{table.headers.join('|')}|
+    |#{table.rows.first.join('|')}|
     })
-  }
   attributes = table.hashes.first
-  page.find_link(attributes["email"] || attributes["name"]).click
+  page.find_link(attributes["email"].gsub(/@new_admin/, @admin.email)[0..24] || attributes["name"]).click
   @bus_site.admin_console_page.admin_details_section.delete_admin(BUS_ENV['bus_password'])
   step "I navigate to Search Admins section from bus admin console page"
   @bus_site.admin_console_page.search_admins_section.refresh_bus_section
@@ -70,7 +64,6 @@ When /^I (can|cannot) change partner name$/ do | c |
     when "cannot"
       @bus_site.admin_console_page.has_navigation?("Change Name").should be_empty
     else
-
   end
 end
 
@@ -109,4 +102,8 @@ end
 When /^I delete partner account with password (.+)$/ do | pw |
   warning_msg = @bus_site.admin_console_page.partner_details_section.delete_partner(pw, false)
   warning_msg.should include("Incorrect password.")
+end
+
+Then /^new admin should be created$/ do
+  @bus_site.admin_console_page.add_new_admin_section.messages.should == "New Admin created. Please have the Admin check his or her email to complete the process."
 end

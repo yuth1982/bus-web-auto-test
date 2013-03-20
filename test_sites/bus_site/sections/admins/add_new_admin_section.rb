@@ -5,6 +5,7 @@ module Bus
     element(:email_tb,id: "new_admin_username")
     elements(:user_groups_cb,xpath: "//div[@id='user_groups']/ul/li/label")
     elements(:roles_cb,xpath: "//div[@id='roles']/ul/li/label")
+    element(:message_div, css: "div#admin-new-errors ul")
     element(:save_changes_btn,xpath: "//div[@id='admin-new-content']//form/table//input[@value='Save Changes']")
 
     def add_new_admin(admin_obj)
@@ -26,5 +27,8 @@ module Bus
       save_changes_btn.click
     end
 
+    def messages
+      message_div.text
+    end
   end
 end
