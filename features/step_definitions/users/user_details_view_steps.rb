@@ -106,3 +106,23 @@ end
 When /^I Log in as the user$/ do
   @bus_site.admin_console_page.user_details_section.login_as_user
 end
+
+Then /^I delete user$/ do
+  @bus_site.admin_console_page.user_details_section.delete_user
+end
+
+Then /^I reassign the user to user group (.+)$/ do |new_user_group|
+  @bus_site.admin_console_page.user_details_section.update_user_group(@user, new_user_group)
+end
+
+Then /^I reassign the user to partner (.+)$/ do |new_partner|
+  @bus_site.admin_console_page.user_details_section.update_partner(new_partner)
+end
+
+Then /^the user's partner should be (.+)$/ do |partner|
+  @bus_site.admin_console_page.user_details_section.user_partner(partner).should be_true
+end
+
+Then /^the user's user group should be (.+)$/ do |user_group|
+  @bus_site.admin_console_page.user_details_section.users_user_group(user_group).should be_true
+end

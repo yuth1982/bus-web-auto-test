@@ -7,7 +7,7 @@ When /^I search partner by:$/ do |search_key_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_partner'])
   attributes = search_key_table.hashes.first
   keywords = (attributes['name'] || attributes['email'])
-  keywords = keywords.gsub(/@company_name/,@partner.company_info.name).gsub(/@amdin_email/,@partner.admin_info.email) unless @partner.nil?
+  keywords = keywords.gsub(/@company_name/,@partner.company_info.name).gsub(/@admin_email/,@partner.admin_info.email) unless @partner.nil?
   filter = attributes['filter'] || 'None'
   including_sub_partners = (attributes['including sub-partners'] || 'yes').eql?('yes')
   @bus_site.admin_console_page.search_list_partner_section.search_partner(keywords, filter, including_sub_partners)

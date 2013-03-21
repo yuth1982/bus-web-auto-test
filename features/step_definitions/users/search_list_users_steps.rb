@@ -7,8 +7,10 @@ When /^I search user by:$/ do |search_key_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_users'])
   attributes = search_key_table.hashes.first
   keywords = attributes["keywords"] || ""
+  keywords = keywords.gsub(/@user_email/,@user.email)
   filter = attributes["filter"] || "None"
-  @bus_site.admin_console_page.search_list_users_section.search_user(keywords, filter)
+  user_type = attributes["user type"] || ""
+  @bus_site.admin_console_page.search_list_users_section.search_user(keywords, filter, user_type)
 end
 
 When /^I search user by (.+)$/ do |keywords|
@@ -42,7 +44,7 @@ When /^The users table should be empty$/ do
 end
 
 When /^I view user details by (.+)$/ do |user|
-  @bus_site.admin_console_page.search_list_users_section.view_user_details(user)
+  @bus_site.admin_console_page.search_list_users_section.view_user_details(!@user.nil? ? user.gsub(/@user_email/,@user.email[0..10]) : user[0..10])
 end
 
 When /^I view MozyHome user details by (.+)$/ do |user|

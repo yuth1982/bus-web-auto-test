@@ -11,6 +11,12 @@ module Bus
     element(:change_status_link, xpath: "//span[starts-with(@id,'user-display-status-')]//a")
     element(:status_selection, xpath: "//select[@id='status']")
     element(:submit_status_btn, xpath: "//span[starts-with(@id,'user-change-status-')]//input")
+    element(:change_user_group_link, xpath: "//span[starts-with(@id,'user-display-usergroup-')]//a[text()='(change)']")
+    element(:change_user_group_submit_button, xpath: "//span[starts-with(@id,'user-change-usergroup-')]//input[@name='commit']")
+    element(:user_group_search_img, css: "img[alt='Search-button-icon']")
+    element(:change_partner_link, xpath: "//span[starts-with(@id,'user-display-partner-')]//a[text()='(change)']")
+    element(:change_partner_submit_button, xpath: "//span[starts-with(@id,'user-change-partner-')]//input[@name='commit']")
+
 
     # Add Stash
     element(:add_stash_link, xpath: "//a[text()='(Add Stash)']")
@@ -194,6 +200,87 @@ module Bus
 
     def login_as_user
       login_as_user_link.click
+    end
+
+    # Public: Click change link
+    #    Select new user group
+    #    Click submit button
+    #    Refresh module
+    #    Verify user group changed
+    #
+    # @param [Object] user
+    # @param [String] new_user_group
+    #
+    # Example
+    #    @bus_admin_console_page.user_details_section.update_user_group(@user, "Test Group 1")
+    #
+    # @return [nothing]
+    def update_user_group(user, new_user_group)
+      change_user_group_link.click
+      unless user.user_group.nil?
+        user_group_search_img.click
+        sleep 2
+        find(:xpath, "//li[text()='#{new_user_group}']").click
+        change_user_group_submit_button.click
+        wait_until{ !change_user_group_submit_button.visible? }
+        user.user_group = new_user_group
+      end
+    end
+
+    # Public: Returns user's user group
+    #
+    # Example
+    #    @bus_admin_console_page.user_details_section.users_user_group("User Group 1")
+    #
+    # @return [Boolean]
+    def users_user_group(user_group)
+      find(:xpath, "//a[text()='#{user_group}']")
+    end
+
+    # Public: Click change link
+    #    Select new user group
+    #    Click submit button
+    #    Refresh module
+    #    Verify user group changed
+    #
+    # @param [Object] user
+    # @param [String] new_user_group
+    #
+    # Example
+    #    @bus_admin_console_page.user_details_section.update_user_group(@user, "Test Group 1")
+    #
+    # @return [nothing]
+    def update_partner(new_partner)
+      change_partner_link.click
+      user_group_search_img.click
+      sleep 2
+      find(:xpath, "//li[text()='#{new_partner}']").click
+      change_partner_submit_button.click
+      wait_until{ !change_partner_submit_button.visible? }
+    end
+
+    # Public: Returns user's partner
+    #
+    # Example
+    #    @bus_admin_console_page.user_details_section.user_partner("Enterprise Root")
+    #
+    # @return [Boolean]
+    def user_partner(user_partner)
+      find(:xpath, "//a[text()='#{user_partner}']")
+    end
+
+    # Public: Click Delete User
+    #    Click confirmation
+    #
+    # @param [none]
+    #
+    # Example
+    #    @bus_admin_console_page.user_details_section.delete_user
+    #
+    # @return [nothing]
+    def delete_user
+      delete_user_link.click
+      alert_accept
     end
   end
 end
