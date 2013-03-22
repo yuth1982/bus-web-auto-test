@@ -83,7 +83,7 @@ When /^I add a phoenix Pro partner to the billing page:$/ do |partner_table|
   @phoenix_site.admin_fill_out.admin_info_fill_out(@partner)
   @phoenix_site.partner_fill_out.fill_out_partner_info(@partner)
   @phoenix_site.licensing_fill_out.licensing_billing_fillout(@partner)
-#  @phoenix_site.billing_fill_out.billing_info_fill_out(@partner)
+  @phoenix_site.billing_fill_out.billing_info_fill_out(@partner)
 end
 
 When /^I build phoenix Pro partner info:$/ do |partner_table|
@@ -138,6 +138,15 @@ end
 And /^the partner is successfully added.$/ do
   @phoenix_site.reg_complete_pg.reg_complete(@partner)
 end
+
 Then /^the default country is (.+) in the pro billing page$/ do |country|
   @phoenix_site.billing_fill_out.pro_billing_country.should == country
+end
+
+And /^they have logged in and verified their account.$/ do
+  @bus_site = BusSite.new
+  @bus_site.login_page.load
+  @bus_site.login_page.partner_login(@partner)
+  @phoenix_site.reg_complete_pg.new_partner_verify(@partner)
+  @phoenix_site.reg_complete_pg.logout(@partner)
 end

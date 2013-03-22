@@ -5,6 +5,9 @@ ALL_ENV = YAML.load_file("#{File.dirname(__FILE__)}/env.yaml")
 
 CONFIGS = YAML.load_file("#{File.dirname(__FILE__)}/configs.yaml")
 
+# used for localized links, etc
+LANG = YAML.load_file("#{File.dirname(__FILE__)}/lang.yaml")
+
 # Active bus test environment, for example qa5, qa6
 BUS_ENV = ALL_ENV[ENV['BUS_ENV'] || 'qa6']
 

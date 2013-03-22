@@ -28,6 +28,20 @@ module Bus
       login_btn.click
     end
 
+    # Public: Partner login bus admin console
+    #
+    # username - Partner admin console login user name
+    # password - Partner admin console login password
+    #
+    # Example
+    #   @bus_site.login_page.login('username', 'password')
+    #
+    # Returns nothing
+    def partner_login(partner)
+      username_tb.type_text(partner.admin_info.email)
+      password_tb.type_text(CONFIGS['global']['test_pwd'])
+      login_btn.click
+    end
     # Public: Logout bus admin console
     #
     # Example
