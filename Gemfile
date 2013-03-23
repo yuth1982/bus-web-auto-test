@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source :rubygems
 
 gem 'rspec','=2.11.0'
 gem 'cucumber','=1.2.1'
