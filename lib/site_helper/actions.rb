@@ -21,6 +21,9 @@ module SiteHelper
             sleep 5 # Force wati
             page.driver.browser.switch_to.frame(id)
           end
+        when Numeric
+          #by frame index
+          page.driver.browser.switch_to.frame(frame_ids)
         else
           raise "Unknown input value type"
       end

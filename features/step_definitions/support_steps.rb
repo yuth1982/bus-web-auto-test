@@ -26,3 +26,7 @@ end
 When /^I wait for (\d+) seconds$/ do |seconds|
   sleep seconds.to_i
 end
+
+Transform /^newly created config name$/ do |step_arg|
+  @client_config.name
+end
