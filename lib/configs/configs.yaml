@@ -60,6 +60,7 @@ bus:
     accont_details:             Account Details
     password_policy:            Password Policy
     authentication_policy:      Authentication Policy
+    client_configuration:       Client Configuration
 
     # Resources
     change_plan:                Change Plan

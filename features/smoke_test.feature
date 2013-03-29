@@ -79,6 +79,13 @@ Feature: Bus Smoke Test
       | Server  | 0      | 1        | 197        |
     When I change account subscription up to 3-year billing period
     Then Subscription changed message should be Your account has been changed to 3-year billing.
+    When I create a new client config:
+      | name                | user group |
+      | smoke_client_config | test group |
+    Then client configuration section message should be Your configuration was saved.
+    And existing client config should be:
+      | Name 	              | License Type 	| User Groups |
+      | smoke_client_config   |	Server 	        | test group  |
     When I log in aria admin console as administrator
     Then newly created partner admin email account status should be ACTIVE
     When I log in bus admin console as administrator
@@ -86,7 +93,7 @@ Feature: Bus Smoke Test
     When I search emails by keywords:
       | content          |
       | @new_admin_email |
-    Then I should see 3 email(s)
+    Then I should see 2 email(s)
 
   @TC.112
   Scenario: MozyPro France
