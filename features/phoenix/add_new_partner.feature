@@ -7,7 +7,8 @@ Feature: Add a new partner through phoenix
   Background:
     Given I am at dom selection point:
 
-  @TC.13502 @smoke @month @sample
+   # this case is basis for phoenix base smoke tes
+  @TC.13502 @month
     Scenario: 13502 Add a new US monthly basic MozyPro partner
       When I add a phoenix Pro partner:
         | period | base plan | country       | server plan |
@@ -47,7 +48,7 @@ Feature: Add a new partner through phoenix
         | Unpaid Balance: | $0.00         | Collect On:     | N/A                 |
         | Renewal Date:   | after 1 month | Renewal Period: | Use Current Period  |
 
-  @TC.13499 @smoke @year
+  @TC.13499 @year
     Scenario: 13499 Add a new US yearly basic MozyPro partner
       When I add a phoenix Pro partner:
         | period | base plan | country       | server plan |
@@ -60,7 +61,7 @@ Feature: Add a new partner through phoenix
       And the partner is successfully added.
       And they have logged in and verified their account.
 
-  @TC.13498 @smoke @biennial
+  @TC.13498 @biennial
     Scenario: 13498 Add a new US biennial basic MozyPro partner
       When I add a phoenix Pro partner:
         | period | base plan | country       | server plan |
@@ -73,7 +74,7 @@ Feature: Add a new partner through phoenix
       And the partner is successfully added.
       And they have logged in and verified their account.
 
-  @TC.13497 @smoke @month @IE
+  @TC.13497 @month @IE
     Scenario: 13497 Add a new IE monthly basic MozyPro partner
       When I add a phoenix Pro partner:
         | period | base plan | country | vat number | server plan |
@@ -88,7 +89,7 @@ Feature: Add a new partner through phoenix
       And the partner is successfully added.
       And they have logged in and verified their account.
 
-  @TC.13515 @smoke @year @IE
+  @TC.13515 @year @IE
     Scenario: 13515 Add a new IE yearly basic MozyPro partner
       When I add a phoenix Pro partner:
         | period | base plan | country | vat number | server plan |
@@ -103,7 +104,7 @@ Feature: Add a new partner through phoenix
       And the partner is successfully added.
       And they have logged in and verified their account.
 
-  @TC.13503 @smoke @biennial @IE
+  @TC.13503 @biennial @IE
     Scenario: 13503 Add a new IE biennial basic MozyPro partner
       When I add a phoenix Pro partner:
         | period | base plan | country | vat number | server plan |
@@ -118,7 +119,7 @@ Feature: Add a new partner through phoenix
       And the partner is successfully added.
       And they have logged in and verified their account.
 
-  @TC.13504 @smoke @year @IE @novat
+  @TC.13504 @year @IE @novat
     Scenario: 13504 Add a new IE yearly basic MozyPro partner without a VAT number
       When I add a phoenix Pro partner:
         | period | base plan | country | vat number | server plan |
@@ -133,7 +134,7 @@ Feature: Add a new partner through phoenix
       And the partner is successfully added.
       And they have logged in and verified their account.
 
-  @TC.13507 @smoke @month @UK
+  @TC.13507 @month @UK
     Scenario: 13507 Add a new UK monthly basic MozyPro partner
       When I add a phoenix Pro partner:
         | period | base plan | country        | vat number  | server plan |
@@ -149,7 +150,7 @@ Feature: Add a new partner through phoenix
       And they have logged in and verified their account.
       And I log in bus admin console as administrator
 
-  @TC.13510 @smoke @year @UK
+  @TC.13510 @year @UK
     Scenario: 13510 Add a new UK yearly basic MozyPro partner
       When I add a phoenix Pro partner:
         | period | base plan | country        | vat number  | server plan |
@@ -164,7 +165,7 @@ Feature: Add a new partner through phoenix
       And the partner is successfully added.
       And they have logged in and verified their account.
 
-  @TC.13513 @smoke @biennial @UK
+  @TC.13513 @biennial @UK
     Scenario: 13513 Add a new UK biennial basic MozyPro partner
       When I add a phoenix Pro partner:
         | period | base plan | country        | vat number  | server plan |
@@ -179,7 +180,7 @@ Feature: Add a new partner through phoenix
       And the partner is successfully added.
       And they have logged in and verified their account.
 
-  @TC.13521 @smoke @year @UK @novat
+  @TC.13521 @year @UK @novat
     Scenario: 13521 Add a new UK yearly basic MozyPro partner without a VAT number
       When I add a phoenix Pro partner:
         | period | base plan | country        | vat number | server plan |
@@ -194,7 +195,7 @@ Feature: Add a new partner through phoenix
       And the partner is successfully added.
       And they have logged in and verified their account.
 
-  @TC.13505 @smoke @month @DE
+  @TC.13505 @month @DE
     Scenario: 13505 Add a new DE monthly basic MozyPro partner
       When I add a phoenix Pro partner:
         | period | base plan | country | vat number  | server plan |
@@ -209,7 +210,7 @@ Feature: Add a new partner through phoenix
       And the partner is successfully added.
       And they have logged in and verified their account.
 
-  @TC.13508 @smoke @year @DE
+  @TC.13508 @year @DE
     Scenario: 13508 Add a new DE yearly basic MozyPro partner
       When I add a phoenix Pro partner:
         | period | base plan | country | vat number  | server plan |
@@ -224,7 +225,7 @@ Feature: Add a new partner through phoenix
       And the partner is successfully added.
       And they have logged in and verified their account.
 
-  @TC.13511 @smoke @biennial @DE
+  @TC.13511 @biennial @DE
     Scenario: 13511 Add a new DE biennial basic MozyPro partner
       When I add a phoenix Pro partner:
         | period | base plan | country | vat number  | server plan |
@@ -239,7 +240,7 @@ Feature: Add a new partner through phoenix
       And the partner is successfully added.
       And they have logged in and verified their account.
 
-  @TC.13519 @smoke @year @DE @novat
+  @TC.13519 @year @DE @novat
     Scenario: 13519 Add a new DE yearly basic MozyPro partner without a VAT number
       When I add a phoenix Pro partner:
         | period | base plan | country | vat number  | server plan |
@@ -254,7 +255,7 @@ Feature: Add a new partner through phoenix
       And the partner is successfully added.
       And they have logged in and verified their account.
 
-  @TC.13506 @smoke @month @FR
+  @TC.13506 @month @FR
     Scenario: 13506 Add a new FR monthly basic MozyPro partner
       When I add a phoenix Pro partner:
         | period | base plan | country | vat number    | server plan |
@@ -269,7 +270,7 @@ Feature: Add a new partner through phoenix
       And the partner is successfully added.
       And they have logged in and verified their account.
 
-  @TC.13509 @smoke @year @FR
+  @TC.13509 @year @FR
     Scenario: 13509 Add a new FR yearly basic MozyPro partner
       When I add a phoenix Pro partner:
         | period | base plan | country | vat number    | server plan |
@@ -284,7 +285,7 @@ Feature: Add a new partner through phoenix
       And the partner is successfully added.
       And they have logged in and verified their account.
 
-  @TC.13512 @smoke @biennial @FR
+  @TC.13512 @biennial @FR
     Scenario: 13512 Add a new FR biennial basic MozyPro partner
       When I add a phoenix Pro partner:
         | period | base plan | country | vat number    | server plan |
@@ -299,7 +300,7 @@ Feature: Add a new partner through phoenix
       And the partner is successfully added.
       And they have logged in and verified their account.
 
-  @TC.13520 @smoke @year @FR @novat
+  @TC.13520 @year @FR @novat
     Scenario: 13520 Add a new FR yearly basic MozyPro partner without a VAT number
       When I add a phoenix Pro partner:
         | period | base plan | country | vat number    | server plan |
