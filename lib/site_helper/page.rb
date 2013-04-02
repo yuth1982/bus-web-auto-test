@@ -4,6 +4,14 @@ module SiteHelper
     include Actions
     extend Components
 
+    def initialize
+      if page.driver.is_a?(Capybara::Selenium::Driver)
+        page.driver.browser.switch_to.default_content
+      else
+        raise('Error: Selenium WebDriver Required.')
+      end
+    end
+
     def self.url
       @url
     end

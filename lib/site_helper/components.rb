@@ -41,6 +41,23 @@ module SiteHelper
       end
     end
 
+    # Define iframe of the page
+    #
+    # Examples:
+    #   class DemoPage < SiteHelper::Page
+    #     iframe(:outer_iframe, OuterIframe, :id, 'outer_iframe')
+    #   end
+    #
+    # @param [Symbol] name        The name of new iframe
+    # @param [Array]  find_args
+    #
+    # @return [SiteHelper::Iframe]
+    def iframe(name, iframe_class, *find_args)
+      define_method(name) do
+        iframe_class.new(find(*find_args))
+      end
+    end
+
     private
     # Define an existence check method
     # This method tries to find all elements by given locator with no wait time

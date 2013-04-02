@@ -10,7 +10,7 @@ Then /^I create a new client config:$/ do |table|
   @client_config.throttle_amount = attributes['throttle amount']
 
   @bus_site.admin_console_page.client_config_section.wait_until_bus_section_load
-  @bus_site.admin_console_page.client_config_section.create_client_config(@client_config)
+  @bus_site.admin_console_page.client_config_section.cc_iframe.create_client_config(@client_config)
 end
 
 Then /^client configuration section message should be (.+)/ do |message|

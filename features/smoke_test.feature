@@ -100,3 +100,13 @@ Feature: Bus Smoke Test
       | Total Charges     |          |            | €175.89     |
     And New partner should be created
     And I delete partner account
+
+   @Test_iframe
+   Scenario: Test Client Configuration
+     When I create a new client config:
+      | name                |
+      | smoke_client_config |
+     When I add a new MozyPro partner:
+       | period | base plan |
+       | 1      | 10 GB     |
+     And New partner should be created
