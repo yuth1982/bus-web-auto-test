@@ -14,5 +14,7 @@ Feature: View billing history
     When I act as newly created partner account
     And I navigate to Billing History section from bus admin console page
     And Billing history table should be:
-      | Date    | Amount  | Total Paid | Balance Due |
-      | @today  | $94.99  | $94.99     | $0.00       |
+      | Date  | Amount  | Total Paid | Balance Due |
+      | today | $94.99  | $94.99     | $0.00       |
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name

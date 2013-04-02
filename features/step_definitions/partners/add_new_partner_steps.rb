@@ -91,7 +91,7 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partne
   @partner.subscription_period = attributes["period"]
   @partner.net_term_payment = (attributes["net terms"] || "no").eql?("yes")
 
-  puts @partner.to_s
+  Log.debug(@partner.to_s)
   @bus_site.admin_console_page.add_new_partner_section.add_new_account(@partner)
 end
 
@@ -126,8 +126,9 @@ Then /^Sub-total before taxes or discounts should be (.+)$/ do |amount|
 end
 
 Then /^Order summary table should be:$/ do |order_summary_table|
-  @bus_site.admin_console_page.add_new_partner_section.order_summary_table_headers.should == order_summary_table.headers
-  @bus_site.admin_console_page.add_new_partner_section.order_summary_table_rows.should == order_summary_table.rows
+  actual = @bus_site.admin_console_page.add_new_partner_section.order_summary_hashes
+  expected = order_summary_table.hashes
+  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
 
 Then /^(MozyPro|MozyEnterprise|Reseller) partner subscription period options should be:$/ do |type, periods_table|
@@ -141,4 +142,7 @@ When /^I add a new sub partner:$/ do |sub_partner_table|
   admin_name = attributes["admin name"]
   admin_email = attributes["admin email"]
   @bus_site.admin_console_page.add_new_partner_section.add_new_sub_partner(partner_name, admin_name, admin_email)
+end
+Then /^the default billing country is (.+) in add new partner section$/ do |country|
+  @bus_site.admin_console_page.add_new_partner_section.billing_country.should == country
 end

@@ -1,93 +1,93 @@
 Feature: Add new user, user group device details
 
-	As an admin, 
-	when I provision a user, 
-	I can see how many devices are available to assign to a user after I select the User Group 
-	so that I can make a decision if I need to purchase more or not.
+  As an admin,
+  when I provision a user,
+  I can see how many devices are available to assign to a user after I select the User Group
+  so that I can make a decision if I need to purchase more or not.
 
-	Success Criteria:
-		I can see how many desktop devices are available
-		I can see how many server devices are available
-		If MP direct and no UGs available (only 1 UG), the available devices are automatically shown
+  Success Criteria:
+  I can see how many desktop devices are available
+  I can see how many server devices are available
+  If MP direct and no UGs available (only 1 UG), the available devices are automatically shown
 
-	Background:
+  Background:
 
-	@TC.19932
-	Scenario: Mozy-19932:Devices Add New User (Single UG) Bundled
-	    Given I log in bus admin console as administrator
-    	When I add a new MozyPro partner:
-    		| period | base plan | server plan |
-    		| 1      | 50 GB     | yes         |
-    	Then New partner should be created
-    	When I act as newly created partner account
-    	And I navigate to Add New User section from bus admin console page
-    	Then desktop and server devices should not be displayed in Add New User module
-    	And I stop masquerading
-    	And I search and delete partner account by newly created partner company name
-    	
+  @TC.19932
+  Scenario: Mozy-19932:Devices Add New User (Single UG) Bundled
+    Given I log in bus admin console as administrator
+    When I add a new MozyPro partner:
+      | period | base plan | server plan |
+      | 1      | 50 GB     | yes         |
+    Then New partner should be created
+    When I act as newly created partner account
+    And I navigate to Add New User section from bus admin console page
+    Then desktop and server devices should not be displayed in Add New User module
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
     @TC.19978
     Scenario: Mozy-19978:Devices Add New User (Mult UG) Bundled
-    Given I log in bus admin console as administrator
-    	When I add a new MozyPro partner:
-    		| period | base plan | server plan |
-    		| 1      | 50 GB     | yes         |
-    	Then New partner should be created
-    	When I change root role to Bundle Pro Partner Root
-    	When I act as newly created partner account
-    	And I navigate to Add New User section from bus admin console page
-    	And I choose (default user group) from Choose a Group
-    	Then desktop and server devices should not be displayed in Add New User module
-    	And I stop masquerading
-    	And I search and delete partner account by newly created partner company name
-    	
+      Given I log in bus admin console as administrator
+      When I add a new MozyPro partner:
+        | period | base plan | server plan |
+        | 1      | 50 GB     | yes         |
+      Then New partner should be created
+      When I change root role to Bundle Pro Partner Root
+      When I act as newly created partner account
+      And I navigate to Add New User section from bus admin console page
+      And I choose (default user group) from Choose a Group
+      Then desktop and server devices should not be displayed in Add New User module
+      And I stop masquerading
+      And I search and delete partner account by newly created partner company name
+
     @TC.19934
     Scenario: Mozy-19934:Devices Add New User (Single UG) Metallic Reseller
-    Given I log in bus admin console as administrator
-    	When I add a new Reseller partner:
-      		| period | reseller type | reseller quota |
-      		| 1      | Silver        | 10             |
-     	Then New partner should be created
-       	When I act as newly created partner account
-        And I navigate to Add New User section from bus admin console page
-        And I choose (default user group) from Choose a Group
-    	Then desktop and server devices should not be displayed in Add New User module
-    	And I stop masquerading
-    	And I search and delete partner account by newly created partner company name
-    	
+      Given I log in bus admin console as administrator
+      When I add a new Reseller partner:
+        | period | reseller type | reseller quota |
+        | 1      | Silver        | 10             |
+      Then New partner should be created
+      When I act as newly created partner account
+      And I navigate to Add New User section from bus admin console page
+      And I choose (default user group) from Choose a Group
+      Then desktop and server devices should not be displayed in Add New User module
+      And I stop masquerading
+      And I search and delete partner account by newly created partner company name
+
     @TC.19944
     Scenario: Mozy-19944:Devices Add New User (Mult UG) Metallic Reseller
-    Given I log in bus admin console as administrator
-    	When I add a new Reseller partner:
-      		| period | reseller type | reseller quota | server plan |
-      		| 1      | Silver        | 10             | yes         |
-    	Then New partner should be created
-      	When I act as newly created partner account
-      	And I add a new user group:
-      		| name         | 
-      		| User Group 1 |
-      	Then New user group should be created
-      	And I navigate to Add New User section from bus admin console page
-      	And I choose User Group 1 from Choose a Group
-    	Then desktop and server devices should not be displayed in Add New User module
-    	And I stop masquerading
-    	And I search and delete partner account by newly created partner company name
-    	    	
+      Given I log in bus admin console as administrator
+      When I add a new Reseller partner:
+        | period | reseller type | reseller quota | server plan |
+        | 1      | Silver        | 10             | yes         |
+      Then New partner should be created
+      When I act as newly created partner account
+      And I add a new user group:
+        | name         |
+        | User Group 1 |
+      Then New user group should be created
+      And I navigate to Add New User section from bus admin console page
+      And I choose User Group 1 from Choose a Group
+      Then desktop and server devices should not be displayed in Add New User module
+      And I stop masquerading
+      And I search and delete partner account by newly created partner company name
+
     @TC.19935
     Scenario: Mozy-19935:Devices Add New User (Single UG) Reseller Itemized
-    Given I log in bus admin console as administrator
-      	When I act as partner by:
-      		| name                               |
-      		| qa1+test82143Itemizedcreseller@mozy.com |
-        And I navigate to Add New User section from bus admin console page
-    	Then desktop and server devices should be displayed in Add New User module
-    	And the user groups should not be visible in the Add New User module
-    	When I note the desktop and server amounts in Add New User module for user group (default user group)
-    	And I change Itemized account plan to:
-    		| desktop licenses | server licenses | 
-    		| 2                | 2               | 
-        Then the Itemized account plan should be changed
-        And I navigate to Add New User section from bus admin console page
-    	Then I note the desktop and server amounts in Add New User module for user group (default user group)
+      Given I log in bus admin console as administrator
+      When I act as partner by:
+        | name                               |
+        | qa1+test82143Itemizedcreseller@mozy.com |
+      And I navigate to Add New User section from bus admin console page
+      Then desktop and server devices should be displayed in Add New User module
+      And the user groups should not be visible in the Add New User module
+      When I note the desktop and server amounts in Add New User module for user group (default user group)
+      And I change Itemized account plan to:
+        | desktop licenses | server licenses |
+        | 2                | 2               |
+      Then the Itemized account plan should be changed
+      And I navigate to Add New User section from bus admin console page
+      Then I note the desktop and server amounts in Add New User module for user group (default user group)
 
     @TC.19958
     Scenario: Mozy-19958:Devices Add New User (Mult UG) Reseller Itemized

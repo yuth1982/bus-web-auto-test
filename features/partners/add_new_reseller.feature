@@ -22,11 +22,11 @@ Feature: Add a new partner
       | Total Charges         |          |            | $211.50     |
     And New partner should be created
     And Partner general information should be:
-      | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:          | Root Role:             | Parent: | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro | after 1 month  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Status:         | Root Admin:          | Root Role:             | Parent: | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro | after 1 month  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
     And Partner contact information should be:
-      | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:   |
-      | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 |           |                 | @new_admin_email |
+      | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
+      | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
       | Backup Licenses         | 100200    |
       | Backup License Soft Cap | Enabled   |
@@ -64,8 +64,8 @@ Feature: Add a new partner
       | Total Charges         |          |            | €2,178.00   |
     And New partner should be created
     And Partner general information should be:
-      | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:          | Root Role:             | Parent:                   | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro France (MozyPro)  | after 1 year   | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Status:         | Root Admin:          | Root Role:             | Parent:                   | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro France (MozyPro)  | after 1 year   | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:   | VAT Number:   |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | France           | 1-877-486-9273 |           |                 | @new_admin_email | FR08410091490 |
@@ -106,11 +106,11 @@ Feature: Add a new partner
       | Total Charges           |          |            | €234.00     |
     And New partner should be created
     And Partner general information should be:
-      | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:          | Root Role:             | Parent:                    | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro Germany (MozyPro)  | after 1 month  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Status:         | Root Admin:          | Root Role:             | Parent:                    | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro Germany (MozyPro)  | after 1 month  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
     And Partner contact information should be:
-      | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:    | VAT Number: |
-      | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | Germany           | 1-877-486-9273 |           |                 | @new_admin_email | DE812321109 |
+      | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:   | VAT Number: |
+      | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | Germany          | 1-877-486-9273 |           |                 | @new_admin_email | DE812321109 |
     And Partner account attributes should be:
       | Backup Licenses         | 100200    |
       | Backup License Soft Cap | Enabled   |
@@ -150,11 +150,11 @@ Feature: Add a new partner
       | Total Charges           |          |            | €3,119.93   |
     And New partner should be created
     And Partner general information should be:
-      | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:          | Root Role:             | Parent:                    | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro Ireland (MozyPro)  | after 1 year   | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Status:         | Root Admin:          | Root Role:             | Parent:                    | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro Ireland (MozyPro)  | after 1 year   | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
     And Partner contact information should be:
-      | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:    | VAT Number: |
-      | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | Ireland          | 1-877-486-9273 |           |                 | @new_admin_email | IE9691104A  |
+      | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   | VAT Number: |
+      | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | Ireland          | 1-877-486-9273 | @new_admin_email | IE9691104A  |
     And Partner account attributes should be:
       | Backup Licenses         | 100200    |
       | Backup License Soft Cap | Enabled   |
@@ -193,11 +193,11 @@ Feature: Add a new partner
       | Total Charges           |          |            | £203.40     |
     And New partner should be created
     And Partner general information should be:
-      | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:          | Root Role:             | Parent:               | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro UK (MozyPro)  | after 1 month  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Status:         | Root Admin:          | Root Role:             | Parent:               | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro UK (MozyPro)  | after 1 month  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
     And Partner contact information should be:
-      | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:   | VAT Number: |
-      | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United Kingdom   | 1-877-486-9273 |           |                 | @new_admin_email | GB117223643 |
+      | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   | VAT Number: |
+      | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United Kingdom   | 1-877-486-9273 | @new_admin_email | GB117223643 |
     And Partner account attributes should be:
       | Backup Licenses         | 100200    |
       | Backup License Soft Cap | Enabled   |
@@ -234,11 +234,11 @@ Feature: Add a new partner
       | Total Charges           |          |            | $2,310.00   |
     And New partner should be created
     And Partner general information should be:
-      | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:          | Root Role:             | Parent: | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro | after 1 year   | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Status:         | Root Admin:          | Root Role:             | Parent: | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro | after 1 year   | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
     And Partner contact information should be:
-      | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:   |
-      | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 |           |                 | @new_admin_email |
+      | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
+      | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
       | Backup Licenses         | 100000    |
       | Backup License Soft Cap | Enabled   |
@@ -275,11 +275,11 @@ Feature: Add a new partner
       | Total Charges         |          |            | €202.95     |
     And New partner should be created
     And Partner general information should be:
-      | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:          | Root Role:             | Parent:                   | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro France (MozyPro)  | after 1 month  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Status:         | Root Admin:          | Root Role:             | Parent:                   | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro France (MozyPro)  | after 1 month  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
     And Partner contact information should be:
-      | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:   |
-      | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | France           | 1-877-486-9273 |           |                 | @new_admin_email |
+      | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
+      | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | France           | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
       | Backup Licenses         | 100000    |
       | Backup License Soft Cap | Enabled   |
@@ -316,11 +316,11 @@ Feature: Add a new partner
       | Total Charges           |          |            | €1,894.20   |
     And New partner should be created
     And Partner general information should be:
-      | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:          | Root Role:             | Parent:                    | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro Germany (MozyPro)  | after 1 year   | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Status:         | Root Admin:          | Root Role:             | Parent:                    | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro Germany (MozyPro)  | after 1 year   | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
     And Partner contact information should be:
-      | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:    |
-      | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | Germany          | 1-877-486-9273 |           |                 | @new_admin_email  |
+      | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:    |
+      | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | Germany          | 1-877-486-9273 | @new_admin_email  |
     And Partner account attributes should be:
       | Backup Licenses         | 100000    |
       | Backup License Soft Cap | Enabled   |
@@ -357,11 +357,11 @@ Feature: Add a new partner
       | Total Charges           |          |            | €147.60     |
     And New partner should be created
     And Partner general information should be:
-      | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:          | Root Role:             | Parent:                    | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro Ireland (MozyPro)  | after 1 month  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Status:         | Root Admin:          | Root Role:             | Parent:                    | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro Ireland (MozyPro)  | after 1 month  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
     And Partner contact information should be:
-      | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:   |
-      | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | Ireland          | 1-877-486-9273 |           |                 | @new_admin_email |
+      | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
+      | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | Ireland          | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
       | Backup Licenses         | 100000    |
       | Backup License Soft Cap | Enabled   |
@@ -399,11 +399,11 @@ Feature: Add a new partner
       | Total Charges           |          |            | £2,557.17   |
     And New partner should be created
     And Partner general information should be:
-      | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:          | Root Role:             | Parent:               | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro UK (MozyPro)  | after 1 year   | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Status:         | Root Admin:          | Root Role:             | Parent:               | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro UK (MozyPro)  | after 1 year   | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
     And Partner contact information should be:
-      | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:   |
-      | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United Kingdom   | 1-877-486-9273 |           |                 | @new_admin_email |
+      | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
+      | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United Kingdom   | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
       | Backup Licenses         | 100000    |
       | Backup License Soft Cap | Enabled   |
@@ -434,11 +434,11 @@ Feature: Add a new partner
     Then Sub-total before taxes or discounts should be 0
     And New partner should be created
     And Partner general information should be:
-      | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:          | Root Role:             | Parent: | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro | after 1 month  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Status:         | Root Admin:          | Root Role:             | Parent: | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro | after 1 month  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
     And Partner contact information should be:
-      | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:   |
-      | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 |           |                 | @new_admin_email |
+      | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
+      | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
       | Backup Licenses         | 0         |
       | Backup License Soft Cap | Enabled   |
@@ -465,3 +465,22 @@ Feature: Add a new partner
     When I navigate to Add New Partner section from bus admin console page
     Then Reseller partner subscription period options should be:
       | Monthly | Yearly |
+
+  @TC.20379
+  Scenario: 20379 Add New Reseller Partner - US - Monthly - Silver 500 GB - Server Plan - 100PercentDiscountCoupon - CC
+    When I add a new Reseller partner:
+      | period | reseller type | reseller quota | server plan | coupon               |
+      | 1      | Silver        | 500            | yes         | 100PERCENTOFFOUTLINE |
+    Then Sub-total before taxes or discounts should be $235.00
+    And Order summary table should be:
+      | Description           | Quantity | Price Each | Total Price |
+      | GB - Silver Reseller  | 500      | $0.42      | $210.00     |
+      | Server Plan           | 1        | $25.00     | $25.00      |
+      | Discounts Applied     |          |            | -$235.00    |
+      | Total Charges         |          |            | $0.00       |
+    And New partner should be created
+    And Partner billing history should be:
+      | Date  | Amount  | Total Paid | Balance Due |
+      | today | $0.00   | $0.00      | $0.00       |
+      | today | $0.00   | $0.00      | $0.00       |
+    And I delete partner account

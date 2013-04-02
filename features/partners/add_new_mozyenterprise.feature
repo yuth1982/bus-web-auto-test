@@ -21,11 +21,11 @@ Feature: Add a new partner
       | Total Charges       |          |            | $7,600.00   |
     And New partner should be created
     And Partner general information should be:
-      | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:          | Root Role:          | Parent:        | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | after 1 year   | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Status:         | Root Admin:          | Root Role:          | Parent:        | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | after 1 year   | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
     And Partner contact information should be:
-      | Company Type:   | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:   |
-      | MozyEnterprise  | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 |           |                 | @new_admin_email |
+      | Company Type:   | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
+      | MozyEnterprise  | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
       | Backup Licenses         |           |
       | Backup License Soft Cap | Disabled  |
@@ -62,11 +62,11 @@ Feature: Add a new partner
       | Total Charges        |          |            | $58,478.48  |
     And New partner should be created
     And Partner general information should be:
-      | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:          | Root Role:          | Parent:        | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | after 2 years  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Status:         | Root Admin:          | Root Role:          | Parent:        | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | after 2 years  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
     And Partner contact information should be:
-      | Company Type:   | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:   |
-      | MozyEnterprise  | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 |           |                 | @new_admin_email |
+      | Company Type:   | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
+      | MozyEnterprise  | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
       | Backup Licenses         |           |
       | Backup License Soft Cap | Disabled  |
@@ -104,8 +104,8 @@ Feature: Add a new partner
       | Total Charges         |          |            | $89,997.12  |
     And New partner should be created
     And Partner general information should be:
-      | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:          | Root Role:          | Parent:        | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | after 3 years  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Status:         | Root Admin:          | Root Role:          | Parent:        | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | after 3 years  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
     And Partner contact information should be:
       | Company Type:   | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:   |
       | MozyEnterprise  | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 |           |                 | @new_admin_email |
@@ -145,11 +145,11 @@ Feature: Add a new partner
       | Total Charges         |          |            | $52,958.68  |
     And New partner should be created
     And Partner general information should be:
-      | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:          | Root Role:          | Parent:        | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | after 1 year   | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Status:         | Root Admin:          | Root Role:          | Parent:        | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | after 1 year   | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
     And Partner contact information should be:
-      | Company Type:   | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:   |
-      | MozyEnterprise  | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 |           |                 | @new_admin_email |
+      | Company Type:   | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
+      | MozyEnterprise  | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
       | Backup Licenses         |           |
       | Backup License Soft Cap | Disabled  |
@@ -186,11 +186,11 @@ Feature: Add a new partner
       | Total Charges       |          |            | $85,671.66  |
     And New partner should be created
     And Partner general information should be:
-      | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:          | Root Role:          | Parent:        | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | after 2 years  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Status:         | Root Admin:          | Root Role:          | Parent:        | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | after 2 years  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
     And Partner contact information should be:
-      | Company Type:   | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:   |
-      | MozyEnterprise  | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 |           |                 | @new_admin_email |
+      | Company Type:   | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
+      | MozyEnterprise  | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
       | Backup Licenses         |           |
       | Backup License Soft Cap | Disabled  |
@@ -227,11 +227,11 @@ Feature: Add a new partner
       | Total Charges         |          |            | $228,596.40 |
     And New partner should be created
     And Partner general information should be:
-      | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:          | Root Role:          | Parent:        | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | after 3 years  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Status:         | Root Admin:          | Root Role:          | Parent:        | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | after 3 years  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
     And Partner contact information should be:
-      | Company Type:   | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:   |
-      | MozyEnterprise  | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 |           |                 | @new_admin_email |
+      | Company Type:   | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
+      | MozyEnterprise  | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
       | Backup Licenses         |           |
       | Backup License Soft Cap | Disabled  |
@@ -261,11 +261,11 @@ Feature: Add a new partner
     Then Sub-total before taxes or discounts should be 0
     And New partner should be created
     And Partner general information should be:
-      | ID:     | External ID: | Aria ID:  | Approved:  | Status:         | Root Admin:          | Root Role:          | Parent:        | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | @xxxxxx | (change)     | @xxxxxxx  | today      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | after 1 year   | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Status:         | Root Admin:          | Root Role:          | Parent:        | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | after 1 year   | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
     And Partner contact information should be:
-      | Company Type:   | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:   |
-      | MozyEnterprise  | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 |           |                 | @new_admin_email |
+      | Company Type:   | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
+      | MozyEnterprise  | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
       | Backup Licenses         |           |
       | Backup License Soft Cap | Disabled  |
@@ -291,3 +291,23 @@ Feature: Add a new partner
     When I navigate to Add New Partner section from bus admin console page
     Then MozyEnterprise partner subscription period options should be:
       | Yearly |  Biennially | 3 years |
+
+  @TC.20378
+  Scenario: 20378 Add New MozyEnterprise Partner - US - Yearly - 10 Users - 500 B Server Plan - 2 Add on - Coupon - CC
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan  | server add on | coupon               |
+      | 12     | 10    | 500 GB       | 2             | 100PERCENTOFFOUTLINE |
+    Then Sub-total before taxes or discounts should be $5,349.56
+    And Order summary table should be:
+      | Description          | Quantity | Price Each | Total Price |
+      | MozyEnterprise User  | 10       | $95.00     | $950.00     |
+      | 500 GB Server Plan   | 1        | $2,309.78  | $2,309.78   |
+      | 250 GB Server Add-on | 2        | $1,044.89  | $2,089.78   |
+      | Discounts Applied    |          |            | -$5,349.56  |
+      | Total Charges        |          |            | $0.00       |
+    And New partner should be created
+    And Partner billing history should be:
+      | Date  | Amount    | Total Paid | Balance Due |
+      | today | $0.00     | $0.00      | $0.00       |
+      | today | $0.00     | $0.00      | $0.00       |
+    And I delete partner account

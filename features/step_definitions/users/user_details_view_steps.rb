@@ -108,10 +108,54 @@ Then /^User details changed message should be (.+)$/ do |message|
   @bus_site.admin_console_page.user_details_section.messages.should == message
 end
 
-And /^user resources details headers should be:$/ do |resource_table|
+Then /^user resources details headers should be:$/ do |resource_table|
   @bus_site.admin_console_page.user_details_section.user_resource_details_table_headers.should == resource_table.headers
 end
 
-And /^user resources details rows should be:$/ do |resource_table|
+Then /^user resources details rows should be:$/ do |resource_table|
   @bus_site.admin_console_page.user_details_section.user_resource_details_table_rows.should == resource_table.rows
+end
+
+Then /^MozyHome user details should be:$/ do |user_table|
+  # table is a | @country |
+  actual = @bus_site.admin_console_page.user_details_section.user_details_hash
+  expected = user_table.hashes.first
+  expected.keys.each do |header|
+    case header
+      when 'Country:'
+        actual[header].should == expected[header].gsub(/@country/, @partner.company_info.country)
+      else
+        actual[header].should == expected[header]
+    end
+  end
+end
+
+When /^I verify the user$/ do
+  @bus_site.admin_console_page.user_details_section.verify_user
+end
+Then /^The user is verified$/ do
+  @bus_site.admin_console_page.user_details_section.user_verified.should == 'User verified.'
+end
+When /^I Log in as the user$/ do
+  @bus_site.admin_console_page.user_details_section.login_as_user
+end
+
+Then /^I delete user$/ do
+  @bus_site.admin_console_page.user_details_section.delete_user
+end
+
+Then /^I reassign the user to user group (.+)$/ do |new_user_group|
+  @bus_site.admin_console_page.user_details_section.update_user_group(@user, new_user_group)
+end
+
+Then /^I reassign the user to partner (.+)$/ do |new_partner|
+  @bus_site.admin_console_page.user_details_section.update_partner(new_partner)
+end
+
+Then /^the user's partner should be (.+)$/ do |partner|
+  @bus_site.admin_console_page.user_details_section.user_partner(partner).should be_true
+end
+
+Then /^the user's user group should be (.+)$/ do |user_group|
+  @bus_site.admin_console_page.user_details_section.users_user_group(user_group).should be_true
 end

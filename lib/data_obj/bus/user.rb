@@ -7,7 +7,7 @@ module Bus
 
       def initialize
         @name = Forgery::Name.first_name
-        @email = "#{CONFIGS['global']['email_prefix']}+#{name}+#{Time.now.strftime("%H%M")}@mozy.com".downcase
+        @email = "#{CONFIGS['global']['email_prefix']}+#{name}+#{Time.now.strftime("%H%M")}@decho.com".downcase
         @user_group = ""
         @user_type = ""
         @server_licenses = 0

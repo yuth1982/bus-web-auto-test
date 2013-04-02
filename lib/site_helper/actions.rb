@@ -21,6 +21,9 @@ module SiteHelper
             sleep 5 # Force wati
             page.driver.browser.switch_to.frame(id)
           end
+        when Numeric
+          #by frame index
+          page.driver.browser.switch_to.frame(frame_ids)
         else
           raise "Unknown input value type"
       end
@@ -77,12 +80,50 @@ module SiteHelper
     #
     # Returns nothing
     def refresh_bus_section
-      root_element.find(:xpath, "h2/a[contains(@onclick,'refresh_module')]").click
-      loading = root_element.find(:xpath, "h2/a[contains(@onclick,'toggle_module')]")
-      wait_until{ loading[:class].match(/loading/).nil? }
+      root_element.find(:css, "h2 a[onclick^=refresh_module]").click
+      loading = root_element.find(:css, "h2 a[onclick^=toggle_module]")
+      unless loading[:class].nil?
+        wait_until{ loading[:class].match(/loading/).nil? }
+      end
       # I found automation is still too faster, I need force to wait until table is loaded
       # Possible refactor here
       sleep 2
+    end
+
+    # Public: close bus admin console section
+    #
+    # Example:
+    #   @bus_site.admin_console_page.close_bus_section
+    #
+    # Returns nothing
+    def close_bus_section
+      root_element.find(:css, "a[onclick^='delete_module']").click
+    end
+
+    def collapse_bus_section
+      if root_element[:class] == 'adminbox-active'
+        root_element.find(:css, 'a.title').click
+      end
+    end
+
+    def expand_bus_section
+      if root_element[:class] == 'adminbox-inactive'
+        root_element.find(:css, 'a.title').click
+      end
+    end
+
+    # Public: Find element by args
+    # Highlight element if found
+    #
+    # Return Element
+    def find_with_highlight(*args)
+      el = find(*args)
+      el.highlight
+      el
+    end
+
+    def view_partner_info
+      find(:xpath, "//div[@id='identify-me']/a[1]").click
     end
   end
 end

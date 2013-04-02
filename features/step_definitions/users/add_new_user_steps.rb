@@ -7,35 +7,35 @@ When /^I add a new user to a (MozyPro||Reseller||MozyEnterprise||Itemized) partn
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_user'])
 
   @user = Bus::DataObj::User.new
-  attributes = user_table.hashes.first
-  @user.user_group = attributes["user group"] unless attributes["user group"].nil?
-  @user.name = attributes["name"] unless attributes["name"].nil?
-  @user.email = attributes["email"] unless attributes["email"].nil?
-  @user.user_type = attributes["user type"] unless attributes["user type"].nil?
-  @user.server_licenses = attributes["server licenses"] unless attributes["server licenses"].nil?
-  @user.server_quota = attributes["server quota"] unless attributes["server quota"].nil?
-  @user.desktop_licenses = attributes["desktop licenses"] unless attributes["desktop licenses"].nil?
-  @user.desktop_quota = attributes["desktop quota"] unless attributes["desktop quota"].nil?
-  @user.desired_user_storage = attributes["desired_user_storage"] unless attributes["desired_user_storage"].nil?
-  @user.device_count = attributes["device_count"] unless attributes["device_count"].nil?
-  @user.enable_stash = (attributes["enable stash"] || "no").eql?("yes")
-  @user.stash_quota = attributes["stash quota"] unless attributes["stash quota"].nil?
-  @user.send_stash_invite = (attributes["send stash invite"] || "no").eql?("yes")
+  cells = user_table.hashes.first
+  @user.user_group = cells['user group'] unless cells['user group'].nil?
+  @user.name = cells['name'] unless cells['name'].nil?
+  @user.email = cells['email'] unless cells['email'].nil?
+  @user.user_type = cells['user type'] unless cells['user type'].nil?
+  @user.server_licenses = cells['server licenses'] unless cells['server licenses'].nil?
+  @user.server_quota = cells['server quota'] unless cells['server quota'].nil?
+  @user.desktop_licenses = cells['desktop licenses'] unless cells['desktop licenses'].nil?
+  @user.desktop_quota = cells['desktop quota'] unless cells['desktop quota'].nil?
+  @user.desired_user_storage = cells['desired_user_storage'] unless cells['desired_user_storage'].nil?
+  @user.device_count = cells['device_count'] unless cells['device_count'].nil?
+  @user.enable_stash = (cells['enable stash'] || 'no').eql?('yes')
+  @user.stash_quota = cells['stash quota'] unless cells['stash quota'].nil?
+  @user.send_stash_invite = (cells['send stash invite'] || 'no').eql?('yes')
 
   case type
-    when "Itemized"
+    when 'Itemized'
       @bus_site.admin_console_page.add_new_user_section.add_new_user_to_itemized_partner(@user)
-    when "MozyPro", "Reseller"
+    when 'MozyPro', 'Reseller'
       @bus_site.admin_console_page.add_new_user_section.add_new_user_to_partner(@user)
-    when "MozyEnterprise"
+    when 'MozyEnterprise'
       @bus_site.admin_console_page.add_new_user_section.add_new_user_to_enterprise_partner(@user)
+    else
+      raise 'Unknown partner type'
   end
-
-
 end
 
 Then /^New user should be created$/ do
-  @bus_site.admin_console_page.add_new_user_section.success_messages.should == "Successfully created 1 user(s)"
+  @bus_site.admin_console_page.add_new_user_section.success_messages.should == 'Successfully created 1 user(s)'
 end
 
 Then /^New user created message should be (.+)$/ do |message|

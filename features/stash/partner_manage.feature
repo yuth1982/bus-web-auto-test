@@ -19,26 +19,26 @@ Feature:
       | Yes           | 5 GB (change)          |
     When I act as newly created partner account
     And I add a new user to a MozyEnterprise partner:
-      | name           | email                       | enable stash | stash quota |
-      | TC.19045 user1 | qa1+tc+19045+user1@mozy.com | yes          | 10          |
+      | name           | enable stash | stash quota |
+      | TC.19045 user1 | yes          | 10          |
     Then New user should be created
     And I add a new user to a MozyEnterprise partner:
-      | name           | email                       | enable stash | stash quota |
-      | TC.19045 user2 | qa1+tc+19045+user2@mozy.com | yes          | 15          |
+      | name           | enable stash | stash quota |
+      | TC.19045 user2 | yes          | 15          |
     Then New user should be created
     When I navigate to Search / List Users section from bus admin console page
-    Then user search results should be:
-      | External ID | User                          | Name           | User Group           | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      |             | qa1+tc+19045+user2@mozy.com   | TC.19045 user2 | (default user group) | Enabled | 0        | 15 GB   | none         | today   | never     |
-      |             | qa1+tc+19045+user1@mozy.com   | TC.19045 user1 | (default user group) | Enabled | 0        | 10 GB   | none         | today   | never     |
+    Then User search results should be:
+      | User            | Name           | User Group           | Stash   | Storage |
+      | @new_user_email | TC.19045 user2 | (default user group) | Enabled | 15 GB   |
+      | @new_user_email | TC.19045 user1 | (default user group) | Enabled | 10 GB   |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
   @TC.19057 @BSA.3000
   Scenario: 19057 MozyPro admin view stash details in list users section
     When I add a new MozyPro partner:
-      | period | base plan |
-      | 12     | 100 GB    |
+      | period | base plan | net terms |
+      | 12     | 100 GB    | yes       |
     Then New partner should be created
     When I enable stash for the partner with 5 GB stash storage
     Then Partner general information should be:
@@ -46,18 +46,18 @@ Feature:
       | Yes           | 5 GB (change)          |
     When I act as newly created partner account
     And I add a new user to a MozyPro partner:
-      | name           | email                       | enable stash | stash quota |
-      | TC.19057 user1 | qa1+tc+19057+user1@mozy.com | yes          | 10          |
+      | name           | enable stash | stash quota |
+      | TC.19057 user1 | yes          | 10          |
     Then New user should be created
     And I add a new user to a MozyPro partner:
-      | name           | email                       | enable stash | stash quota |
-      | TC.19057 user2 | qa1+tc+19057+user2@mozy.com | yes          | 15          |
+      | name           | enable stash | stash quota |
+      | TC.19057 user2 | yes          | 15          |
     Then New user should be created
     When I navigate to Search / List Users section from bus admin console page
-    Then user search results should be:
-      | External ID | User                          | Name           | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      |             | qa1+tc+19057+user2@mozy.com   | TC.19057 user2 | Enabled | 0        | 15 GB   | none         | today   | never     |
-      |             | qa1+tc+19057+user1@mozy.com   | TC.19057 user1 | Enabled | 0        | 10 GB   | none         | today   | never     |
+    Then User search results should be:
+      | User            | Name           | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
+      | @new_user_email | TC.19057 user2 | Enabled | 0        | 15 GB   | none         | today   | never     |
+      | @new_user_email | TC.19057 user1 | Enabled | 0        | 10 GB   | none         | today   | never     |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -73,17 +73,17 @@ Feature:
       | Yes           | 5 GB (change)          |
     When I act as newly created partner account
     And I add a new user to a MozyEnterprise partner:
-      | name           | email                       | enable stash | stash quota |
-      | TC.19738 user1 | qa1+tc+19738+user1@mozy.com | yes          | 10          |
+      | name           | enable stash | stash quota |
+      | TC.19738 user1 | yes          | 10          |
     Then New user should be created
     And I add a new user to a MozyEnterprise partner:
-      | name           | email                       | enable stash | stash quota |
-      | TC.19738 user2 | qa1+tc+19738+user2@mozy.com | yes          | 15          |
+      | name           | enable stash | stash quota |
+      | TC.19738 user2 | yes          | 15          |
     Then New user should be created
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
-    Then Partner account attributes should include:
+    Then Partner account attributes should be:
       | Stash Users:            | -1        |
       | Default Stash Storage:  | 5         |
     And Partner stash info should be:
@@ -94,8 +94,8 @@ Feature:
   @TC.19739 @BSA.3000
   Scenario: 19739 MozyPro admin view stash details in partner details section
     When I add a new MozyPro partner:
-      | period | base plan |
-      | 12     | 100 GB    |
+      | period | base plan | net terms |
+      | 12     | 100 GB    | yes       |
     Then New partner should be created
     When I enable stash for the partner with 10 GB stash storage
     Then Partner general information should be:
@@ -103,17 +103,17 @@ Feature:
       | Yes           | 10 GB (change)         |
     When I act as newly created partner account
     And I add a new user to a MozyPro partner:
-      | name           | email                       | enable stash | stash quota |
-      | TC.19739 user1 | qa1+tc+19739+user1@mozy.com | yes          | 15          |
+      | name           | enable stash | stash quota |
+      | TC.19739 user1 | yes          | 15          |
     Then New user should be created
     And I add a new user to a MozyPro partner:
-      | name           | email                       | enable stash | stash quota |
-      | TC.19739 user2 | qa1+tc+19739+user2@mozy.com | yes          | 20          |
+      | name           | enable stash | stash quota |
+      | TC.19739 user2 | yes          | 20          |
     Then New user should be created
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
-    And Partner account attributes should include:
+    And Partner account attributes should be:
       | Stash Users:            | -1        |
       | Default Stash Storage:  | 10        |
     And Partner stash info should be:
@@ -135,17 +135,17 @@ Feature:
     And I allocate 50 GB Desktop quota with (default user group) user group to Reseller partner
     Then Reseller resource quota should be changed
     When I add a new user to a Reseller partner:
-      | name           | email                       | enable stash | stash quota |
-      | TC.19740 user1 | qa1+tc+19740+user1@mozy.com | yes          | 15          |
+      | name           | enable stash | stash quota |
+      | TC.19740 user1 | yes          | 15          |
     Then New user should be created
     When I add a new user to a Reseller partner:
-      | name           | email                       | enable stash | stash quota |
-      | TC.19740 user2 | qa1+tc+19740+user2@mozy.com | yes          | 20          |
+      | name           | enable stash | stash quota |
+      | TC.19740 user2 | yes          | 20          |
     Then New user should be created
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
-    And Partner account attributes should include:
+    And Partner account attributes should be:
       | Stash Users:            | -1        |
       | Default Stash Storage:  | 10        |
     And Partner stash info should be:
@@ -156,8 +156,8 @@ Feature:
   @TC.19169 @BSA.3050
   Scenario: 19169 MozyPro admin view stash details in manage resources section
     When I add a new MozyPro partner:
-      | period | base plan |
-      | 12     | 100 GB    |
+      | period | base plan | net terms |
+      | 12     | 100 GB    | yes       |
     Then New partner should be created
     When I enable stash for the partner with 5 GB stash storage
     Then Partner general information should be:
@@ -165,8 +165,8 @@ Feature:
       | Yes           | 5 GB (change)          |
     When I act as newly created partner account
     And I add a new user to a MozyPro partner:
-      | name           | email                       | enable stash | stash quota |
-      | TC.19169 user1 | qa1+tc+19169+user1@mozy.com | yes          | 30          |
+      | name           | enable stash | stash quota |
+      | TC.19169 user1 | yes          | 30          |
     Then New user should be created
     When I navigate to Manage Resources section from bus admin console page
     And Partner resources general information should be:

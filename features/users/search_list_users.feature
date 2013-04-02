@@ -1,11 +1,16 @@
 Feature: Search and list user
 
-  @smoke
+  Background:
+    Given I log in bus admin console as administrator
+
+  @TC.683 @need_test_account
   Scenario: Search user
-    Given I log in bus admin console as mozypro test account
+    When I act as partner by:
+      | email                                    |
+      | qa1+users+features+test+account@mozy.com |
     When I search user by:
-      | keywords                   | filter |
-      | qa1+new+user+test@mozy.com | None   |
-    Then user search results should be:
-      | User                       | Name       | Machines | Storage | Storage Used | Created  | Backed Up |
-      | qa1+new+user+test@mozy.com | new user 1 | 0        | 0 bytes | none         | 08/15/12 | never     |
+      | keywords                  |
+      | qa1+tc+683+user@decho.com |
+    Then User search results should be:
+      | User                      | Name        |
+      | qa1+tc+683+user@decho.com | TC.683 User |

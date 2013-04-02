@@ -23,25 +23,25 @@ Feature: Modify credit card information and billing contact information
       | period | users |
       | 36     | 100   |
     Then New partner should be created
+    And I get partner aria id
     When I act as newly created partner account
     And I navigate to Change Payment Information section from bus admin console page
     And I update payment contact information to:
       | address               | phone     |
       | This is a new address | 12345678  |
     And I update credit card information to:
-      | cc name     | cc number        | expire month | expire year | cvv |
-      | change card | 4111111111111111 | 12           | 18          | 123 |
+      | cc name       | cc number        | expire month | expire year | cvv |
+      | new card name | 4111111111111111 | 12           | 18          | 123 |
     And I save payment information changes
     Then Payment information should be updated
-    When I log in aria admin console as administrator
-    And I search aria account by newly created partner admin email
-    Then Aria account billing contact should include:
-      | address               | phone    | cc name     |
-      | This is a new address | 12345678 | change card |
-    And Aria account credit card information should be:
-    | Payment Type:       | Card Number:      | Expiration Date: |
-    | Credit Card (Visa)  | ************1111  | 12 / 2018        |
-    When I log in bus admin console as administrator
+    When API* I get Aria account details by newly created partner aria id
+    Then API* Aria account billing info should be:
+      | address               | phone    | contact name  |
+      | This is a new address | 12345678 | new card name |
+    And API* Aria account credit card info should be:
+      | payment type | last four digits   | expire month | expire year |
+      | Credit Card  | 1111               | 12           | 2018        |
+    When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
   @TC.15272

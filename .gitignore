@@ -6,3 +6,4 @@ download/*.csv
 rerun.txt
 lor
 .rvmrc
+chromedriver.log

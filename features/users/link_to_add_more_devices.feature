@@ -1,16 +1,16 @@
 Feature: Link to More Devices
 
-	As an admin (without UG enabled), 
-	I want a path to purchase more devices (previously known as keys) if I'm running out, 
-	So that I have a easy way to manage my resource needs.
+  As an admin (without UG enabled),
+  I want a path to purchase more devices (previously known as keys) if I'm running out,
+  So that I have a easy way to manage my resource needs.
 
-	Success Criteria:
-		-Next to the available desktop and server devices the admin will have a link for "add More"
-		-"add more" will redirect the admin to change plan page where they can add more devices to the account
-		
-	Background:
-	
-	@TC.19977
+  Success Criteria:
+  - Next to the available desktop and server devices the admin will have a link for "add More"
+  - "add more" will redirect the admin to change plan page where they can add more devices to the account
+
+  Background:
+
+  @TC.19977
 	Scenario: Mozy-19977:Bundled (1UG), Verify Add More Link in Add New User
 	    Given I log in bus admin console as administrator
     	When I add a new MozyPro partner:

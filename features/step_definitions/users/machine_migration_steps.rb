@@ -132,7 +132,8 @@ end
 
 
 When /^I get the api_key$/ do
-  @api_key = @bus_site.admin_console_page.partner_details_section.get_api_key
+  @bus_site.admin_console_page.partner_details_section.create_api_key
+  @api_key = @bus_site.admin_console_page.partner_details_section.api_key
   Log.debug("api_key is #{@api_key}")
 end
 When /^I get the current user machine mapping number$/ do
@@ -166,7 +167,8 @@ When /^I add a subpartner if not exist:$/ do |table|
 end
 
 When /^I get the subpartner api_key$/ do
-  @subpartner_api_key = @bus_site.admin_console_page.partner_details_section.get_api_key
+  @bus_site.admin_console_page.partner_details_section.create_api_key
+  @subpartner_api_key = @bus_site.admin_console_page.partner_details_section.api_key
 end
 
 When /^I create (\d+) Machine user mappings for the subpartner$/ do |num|

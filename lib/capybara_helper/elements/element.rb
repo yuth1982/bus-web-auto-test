@@ -4,7 +4,6 @@ class Capybara::Node::Element
   include CapybaraHelper::Elements::Table
   include CapybaraHelper::Elements::Select
   include CapybaraHelper::Elements::TextField
-  include CapybaraHelper::Elements::Link
   include CapybaraHelper::Elements::DefinitionList
 
   # Public: element's id attribute value
@@ -22,6 +21,16 @@ class Capybara::Node::Element
     self[:name]
   end
 
+  # Public: Highlight active element
+  #
+  # Returns nothing
+  def highlight
+    begin
+      driver.execute_script("#{self[:style]}; document.activeElement.style.border='2px solid red'")
+    rescue
+      # Skipped
+    end
+  end
   # Public: clear value of an element
   # This might not work with webkit
   #

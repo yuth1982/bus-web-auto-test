@@ -10,8 +10,14 @@ module SiteHelper
       @root_element = root_element
     end
 
+    # Public: Find element by args
+    # and highlight element
+    #
+    # Return Element
     def find(type, locator)
-      root_element.find(type, locator)
+      el = root_element.find(type, locator)
+      el.highlight
+      el
     end
 
     def all(type, locator)
@@ -29,8 +35,10 @@ module SiteHelper
     #
     # Returns nothing
     def wait_until_bus_section_load
-      loading = root_element.find(:xpath, "h2/a[contains(@onclick,'toggle_module')]")
-      wait_until{ loading[:class].match(/loading/).nil? }
+      loading = root_element.find(:css, "h2 a[onclick^=toggle_module]")
+      unless loading[:class].nil?
+        wait_until{ loading[:class].match(/loading/).nil? }
+      end
       # I found automation is still too faster, I need force to wait until table is loaded
       # Possible refactor here
       sleep 2

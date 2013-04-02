@@ -105,7 +105,7 @@ When /^I input server connection settings$/ do |table|
   @connection_info.server_host = server['Server Host'] == '@host_address' ? Forgery::Internet.ip_v4 : server['Server Host']
   @connection_info.ssl_cert = server['SSL Cert']
   @connection_info.protocol = (server['Protocol'] == 'No SSL' ? 'false' : server['Protocol'].downcase)
-  @connection_info.port = server['Port'] == '@port' ? rand(1..65535) : server['Port']
+  @connection_info.port = server['Port'] == '@port' ? Random.new.rand(1..65535) : server['Port']
   @connection_info.base_dn = server['Base DN']
   @connection_info.bind_user = server['Bind Username']
   @connection_info.bind_password = server['Bind Password']
@@ -309,7 +309,7 @@ Then /^I get the user (.+) details in the console$/ do |username|
   LDAPHelper.show_user(username)
 end
 
-When /^I modify a user (.+) to (.+) in the AD:$/ do |username, new_name|
+When /^I modify a user (.+) to (.+) in the AD$/ do |username, new_name|
   LDAPHelper.modify_rdn(username, new_name)
 end
 

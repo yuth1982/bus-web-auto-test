@@ -1,4 +1,4 @@
-Feature: Change plan
+Feature: Change Plan for MozyPro Partners
 
   Background:
     Given I log in bus admin console as administrator

@@ -8,8 +8,8 @@ When /^I search and delete partner account by (.+)/ do |account_name|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_partner'])
   @bus_site.admin_console_page.search_list_partner_section.search_partner(account_name)
 
-  rows_text = @bus_site.admin_console_page.search_list_partner_section.search_results_table_rows
-  unless rows_text.count == 7 && rows_text[1].to_s == "[\"No results found.\"]"
+  rows = @bus_site.admin_console_page.search_list_partner_section.search_results_table_rows
+  unless rows.to_s.include?('No results found.')
     @bus_site.admin_console_page.search_list_partner_section.view_partner_detail(account_name)
     @bus_site.admin_console_page.partner_details_section.delete_partner(BUS_ENV['bus_password'])
   end
@@ -25,41 +25,29 @@ When /^I get the partner_id$/ do
   Log.debug("partner id is #{@partner_id}")
 end
 
+When /^I get partner aria id$/ do
+  @aria_id = @bus_site.admin_console_page.partner_details_section.general_info_hash['Aria ID:']
+end
+
 Then /^Partner general information should be:$/ do |details_table|
   actual = @bus_site.admin_console_page.partner_details_section.general_info_hash
   expected = details_table.hashes.first
 
-  expected.keys.each do |header|
-    case header
-      when 'ID:'
-        if expected[header].start_with?('@')
-          actual[header].length.should == expected[header].length - 1
-          actual[header].match(/\d{6}/).nil?.should be_false
-        else
-          actual[header].should == expected[header]
-        end
-      when 'Aria ID:'
-        if expected[header].start_with?('@')
-          actual[header].length.should == expected[header].length - 1
-          actual[header].match(/\d{7}/).nil?.should be_false
-        else
-          actual[header].should == expected[header]
-        end
-      when 'Approved:'
-        # In bus UI, approved date has been convert to local time.
-        approved_date = Time.now
-        actual[header].should include(approved_date.nil? ? expected[header] : approved_date.strftime("%m/%d/%y"))
-      when 'Next Charge:'
-        next_charge = Chronic.parse(expected[header])
-        actual[header].should include(next_charge.nil? ? expected[header] : next_charge.strftime("%m/%d/%y"))
+  expected.each do |k,v|
+    case k
+      when 'External ID:'
+        v.gsub!(/@external_id/, @new_p_external_id) unless @new_p_external_id.nil?
       when 'Root Admin:'
-        actual[header].should == expected[header].gsub(/@root_admin/,@partner.admin_info.full_name)
+        v.gsub!(/@root_admin/, @partner.admin_info.full_name) unless @partner.nil?
+      when 'Next Charge:'
+        v.replace(Chronic.parse(v).strftime('%m/%d/%y') + ' (extend)')
       when 'Marketing Referrals:'
-        actual[header].should == expected[header].gsub(/@login_admin_email/,@admin_username)
+        v.gsub!(/@login_admin_email/,@admin_username)
       else
-        actual[header].should == expected[header]
+        # do nothing
     end
   end
+  expected.keys.each{ |key| actual[key].should == expected[key] }
 end
 
 # Any of following columns can be verified:
@@ -73,14 +61,41 @@ Then /^Partner contact information should be:$/ do |contact_table|
     case header
       when 'Contact Email:'
         actual[header].should == expected[header].gsub(/@new_admin_email/,@partner.admin_info.email)
+      when 'Contact Address:'
+        actual[header].should == expected[header].gsub(/@address/, @partner.company_info.address)
+      when 'Contact City:'
+        actual[header].should == expected[header].gsub(/@city/, @partner.company_info.city)
+      when 'Contact State:'
+        actual[header].should == expected[header].gsub(/@state/, @partner.company_info.state_abbrev)
+      when 'Contact ZIP/Postal Code:'
+        actual[header].should == expected[header].gsub(/@zip_code/, @partner.company_info.zip)
+      when 'Contact Country:'
+        actual[header].should == expected[header].gsub(/@country/, @partner.company_info.country)
       else
         actual[header].should == expected[header]
     end
   end
 end
 
-Then /^Partner account attributes should be|include:$/ do |attributes_table|
-  (@bus_site.admin_console_page.partner_details_section.account_attributes_rows && attributes_table.raw).should == attributes_table.raw
+When /^I Create an API key for current partner$/ do
+  @bus_site.admin_console_page.partner_details_section.create_api_key
+end
+
+Then /^Partner API key should be (.+)$/ do |api_key|
+  api_key = '' if api_key.eql?('empty')
+  @bus_site.admin_console_page.partner_details_section.api_key.should == api_key
+end
+
+When /^I add a new ip whitelist (.+)$/ do |ip|
+  @bus_site.admin_console_page.partner_details_section.add_ip_whitelist(ip)
+end
+
+Then /^Partner ip whitelist should be (.+)$/ do |ip|
+  @bus_site.admin_console_page.partner_details_section.ip_whitelist.should == ip
+end
+
+Then /^Partner account attributes should be:$/ do |attributes_table|
+  @bus_site.admin_console_page.partner_details_section.account_attributes_rows.should == attributes_table.raw
 end
 
 Then /^Partner resources should be:$/ do |resources_table|
@@ -116,11 +131,19 @@ Then /^Partner sub admins should be:$/ do |sub_admins_table|
 end
 
 Then /^Partner billing history should be:$/ do |billing_history_table|
-  billing_history_table.map_column!('Date') do |value|
-    Chronic.parse(value).strftime("%m/%d/%y")
+  actual = @bus_site.admin_console_page.partner_details_section.billing_history_hashes
+  expected = billing_history_table.hashes
+  expected.each do |col|
+    col.each do |k,v|
+      case k
+        when "Date"
+          v.replace(Chronic.parse(v).strftime("%m/%d/%y"))
+        else
+          # do nothing
+      end
+    end
   end
-  @bus_site.admin_console_page.partner_details_section.billing_history_table_headers.should == billing_history_table.headers
-  @bus_site.admin_console_page.partner_details_section.billing_history_table_rows.should == billing_history_table.rows
+  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
 
 When /^I enable stash for the partner with (default|\d+ GB) stash storage$/ do |quota|
@@ -139,5 +162,72 @@ end
 When /^I add stash to all users for the partner$/ do
   @bus_site.admin_console_page.partner_details_section.add_stash_to_all_users
   @bus_site.admin_console_page.click_continue
+  @bus_site.admin_console_page.partner_details_section.wait_until_bus_section_load
+end
+
+# From partner details view, click Status: Active (change) link
+# Select Suspended
+# Click Submit
+When /^I suspend the partner$/ do
+  @bus_site.admin_console_page.partner_details_section.suspend_partner
+end
+
+# From partner details view, click Status: Active (change) link
+# Select Suspended
+# Click Submit
+When /^I activate the partner$/ do
+  @bus_site.admin_console_page.partner_details_section.activate_partner
+end
+
+When /^I change partner external id to (.+)$/ do |external_id|
+  @bus_site.admin_console_page.partner_details_section.change_external_id(external_id)
+end
+
+When /^I add a new partner external id$/ do
+  @new_p_external_id = "#{Time.now.strftime('%m%d-%H%M-%S')}"
+  @bus_site.admin_console_page.partner_details_section.change_external_id(@new_p_external_id)
+end
+
+When /^I change the subdomain to @subdomain$/ do
+  @subdomain = (0...8).map{(97+Random.new.rand(26)).chr}.join
+  @bus_site.admin_console_page.partner_details_section.change_subdomain
+  @bus_site.partner_subdomain_page.change_subdomain @subdomain
+end
+
+Then /^The subdomain is created with name https:\/\/@subdomain.mozypro.com\/$/ do
+  @bus_site.partner_subdomain_page.subdomain.should == "https:\/\/#{@subdomain}.mozypro.com\/"
+  @bus_site.partner_subdomain_page.close_page
+end
+
+When /^The subdomain in BUS will be @subdomain$/ do
+  @bus_site.admin_console_page.partner_details_section.refresh_bus_section
+  #something here
+  @bus_site.admin_console_page.partner_details_section.subdomain.should == @subdomain
+end
+When /^I change the partner contact information to:$/ do |info_table|
+  # table is a | address          | city          | state          | zip_code                 | country          |
+  new_info = info_table.hashes.first
+  new_info.keys.each do |header|
+    case header
+      when 'Contact Email:'
+        @bus_site.admin_console_page.partner_details_section.set_contact_email(new_info[header])
+      when 'Contact Address:'
+        @bus_site.admin_console_page.partner_details_section.set_contact_address(new_info[header])
+      when 'Contact City:'
+        @bus_site.admin_console_page.partner_details_section.set_contact_city(new_info[header])
+      when 'Contact Country:'
+        @bus_site.admin_console_page.partner_details_section.set_contact_country(new_info[header])
+      when 'Contact State:'
+        @bus_site.admin_console_page.partner_details_section.set_contact_state(new_info[header])
+      when 'Contact ZIP/Postal Code:'
+        @bus_site.admin_console_page.partner_details_section.set_contact_zip(new_info[header])
+      else
+        raise "Unexpected #{new_info[header]}"
+    end
+  end
+  @bus_site.admin_console_page.partner_details_section.save_changes
+end
+
+Then /^Partner contact information is changed$/ do
   @bus_site.admin_console_page.partner_details_section.wait_until_bus_section_load
 end

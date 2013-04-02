@@ -1,15 +1,22 @@
 module Zimbra
   module Inbox
 
-    def find_email(id, format="xml")
-      raise "Not implemented"
+    # Find email content by mail item id
+    #
+    # @return [string]
+    def find_email_content(id, format='jason')
+      url = "#{ZIMBRA_ENV['host']}/zimbra/home/#{ZIMBRA_ENV['username']}/inbox?id=#{id}&fmt=#{format}&auth=qp&zauthtoken=#{auth_token}"
+      RestClient.get(url)
     end
 
-    def find_emails(query, format="xml")
-      response = RestClient.get(
-          "#{ZIMBRA_ENV['host']}/zimbra/home/#{ZIMBRA_ENV['username']}/inbox?fmt=#{format}&query=#{query.gsub(" ","%20")}&auth=qp&zauthtoken=#{auth_token}"
-      )
+    def find_emails(query, format='xml')
+      url = "#{ZIMBRA_ENV['host']}/zimbra/home/#{ZIMBRA_ENV['username']}/inbox?fmt=#{format}&query=#{query.gsub(' ','%20')}&auth=qp&zauthtoken=#{auth_token}"
+      response = RestClient.get(url)
       parse_email_obj(response.body)
+    end
+
+    def send_request(url)
+      RestClient.get(url)
     end
 
     private
@@ -20,7 +27,7 @@ module Zimbra
       RestClient.post(
           ZIMBRA_ENV['host'],
           { :loginOp => 'login',:username => ZIMBRA_ENV['username'], :password => ZIMBRA_ENV['password'], :client => 'preferred' },
-          { :cookies => { :ZM_TEST => "true" } }
+          { :cookies => { :ZM_TEST => 'true' } }
       ){ |response, request, result, &block|
         if [301, 302, 307].include? response.code
           response.follow_redirection(request, result, &block)
@@ -49,7 +56,7 @@ module Zimbra
       mails = []
       nodes.each do |node|
         mail = Struct.new(:id, :from, :subject, :fragment)
-        mails << mail.new(node.attribute("id").text,node.xpath("./e").attribute("a").text,node.xpath("./su").text,node.xpath("./fr").text)
+        mails << mail.new(node.attribute('id').text,node.xpath('./e').attribute('a').text,node.xpath('./su').text,node.xpath('./fr').text)
       end
       mails
     end

@@ -1,6 +1,7 @@
 module SiteHelper
   module Components
     # Public: Define a new method with the name of the symbol after locator returns element
+    # and highlight element
     #
     # Example
     #   element(:username_tb, id: "username")
@@ -9,7 +10,9 @@ module SiteHelper
     # Returns element
     def element(element_name, element_hash)
       define_method(element_name.to_sym) do
-        find(element_hash.keys.first, element_hash.values.first)
+        el = find(element_hash.keys.first, element_hash.values.first)
+        el.highlight
+        el
       end
       add_existence_checker(element_name,element_hash)
       private element_name
@@ -23,7 +26,7 @@ module SiteHelper
     #
     # Returns elements
     def elements(element_name,element_hash)
-      send(:define_method, element_name) do
+      define_method(element_name) do
         all(element_hash.keys.first, element_hash.values.first)
       end
       private element_name
@@ -33,29 +36,15 @@ module SiteHelper
     #
     # Returns page object
     def section(section_name, section_class, element_hash)
-      send(:define_method, section_name) do
+      define_method(section_name) do
         section_class.new(find(element_hash.keys[0], element_hash.values[0]))
       end
     end
 
-    # Public: Add element name into list
-    #
-    # Returns nothing
-    def add_element_name(element_name)
-      @element_names ||= []
-      @element_names << element_name
-    end
-
-    # Public: Element names in the page object
-    #
-    # return element names array
-    def element_names
-      @element_names
-    end
-
     private
     # Define an existence check method
-    # This method tries to find element until Capybara.default_wait_time timeout
+    # This method tries to find all elements by given locator with no wait time
+    # please make sure your page/section is fully loaded before use this method
     #
     # Example
     #   login_page.has_username_tb?
@@ -65,7 +54,7 @@ module SiteHelper
     def add_existence_checker(element_name, element_hash)
       method_name = "has_#{element_name}?"
       define_method(method_name.to_sym) do
-        has_selector?(element_hash.keys.first, element_hash.values.first)
+        all(element_hash.keys.first, element_hash.values.first).size > 0
       end
     end
 

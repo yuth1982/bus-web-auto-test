@@ -26,7 +26,7 @@ Then /^user search results should be:$/ do |results_table|
     if @user.nil? 
       value.slice(0,27)+"..." unless value.length <= 28
     else
-      (value.gsub(/@user_email/,@user.email)).length > 27 ? value.gsub(/@user_email/,@user.email).slice(0,27)+"...":value.gsub(/@user_email/,@user.email)
+      (value.gsub(/@new_user_email/,@user.email)).length > 27 ? value.gsub(/@user_email/,@user.email).slice(0,27)+"...":value.gsub(/@user_email/,@user.email)
     end
   end
 
@@ -42,16 +42,29 @@ Then /^user search results should be:$/ do |results_table|
   @bus_site.admin_console_page.search_list_users_section.search_results_table_rows.should == results_table.rows
 end
 
-When /^Synced users table should be:$/ do |users_table|
-  header = @bus_site.admin_console_page.search_list_users_section.search_results_table_headers
-  rows = @bus_site.admin_console_page.search_list_users_section.search_results_table_rows
-  header[1..3].should == users_table.headers
-  rows.collect { |row| row[1..3]}.should == users_table.rows
+Then /^User search results should be:$/ do |results_table|
+  actual = @bus_site.admin_console_page.search_list_users_section.search_results_hashes
+  expected = results_table.hashes
+  expected.each do |col|
+    col.each do |k,v|
+      case k
+        when "Created"
+          v.replace(Chronic.parse(v).strftime("%m/%d/%y"))
+        when "Name"
+          v.gsub!(/@user_name/, @user.name) unless @user.nil?
+        when "User"
+          v.gsub!(/@user_email/, @user.email) unless @user.nil?
+        else
+          # do nothing
+      end
+    end
+  end
+  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
 
 When /^The users table should be empty$/ do
   rows = @bus_site.admin_console_page.search_list_users_section.search_results_table_rows
-  rows.count.should == 7 && rows[1].to_s.should == "[\"No results found.\"]"
+  rows.to_s.include?('No results found.').should be_true
 end
 
 When /^I view user details by (.+)$/ do |user|
@@ -62,6 +75,13 @@ When /^I view user details by (.+)$/ do |user|
   end
 end
 
+When /^I view MozyHome user details by (.+)$/ do |user|
+  @bus_site.admin_console_page.search_list_users_section.view_user_details(user.gsub(/@user_name/,@partner.admin_info.email[0..10]))
+end
+
 When /^I refresh Search List User section$/ do
   @bus_site.admin_console_page.search_list_users_section.refresh_bus_section
+end
+When /^I export the users csv$/ do
+  @bus_site.admin_console_page.search_list_users_section.export_csv
 end

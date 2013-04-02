@@ -22,12 +22,19 @@ Then /^User group details should be:$/ do |details_table|
 end
 
 Then /^User group users list details should be:$/ do |users_list_table|
-  @bus_site.admin_console_page.user_group_details_section.has_change_name_link?
-  users_list_table.map_column!('Created') do |value|
-    Chronic.parse(value).strftime("%m/%d/%y")
+  actual = @bus_site.admin_console_page.user_group_details_section.users_list_table_hashes
+  expected = users_list_table.hashes
+  expected.each do |col|
+    col.each do |k,v|
+      case k
+        when 'Created'
+          v.replace(Chronic.parse(v).strftime('%m/%d/%y'))
+        else
+          # do nothing
+      end
+    end
   end
-  @bus_site.admin_console_page.user_group_details_section.users_list_table_headers.should == users_list_table.headers
-  @bus_site.admin_console_page.user_group_details_section.users_list_table_rows.should == users_list_table.rows
+  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
 
 Then /^I should not see (.+) text on user group details section$/ do |text|
@@ -59,4 +66,20 @@ end
 
 When /^I refresh User Group Details section$/ do
   @bus_site.admin_console_page.user_group_details_section.refresh_bus_section
+end
+
+When /^I close the user group detail page$/ do
+  @bus_site.admin_console_page.user_group_details_section.close_bus_section
+end
+
+When /^I delete the user group$/ do
+  @bus_site.admin_console_page.user_group_details_section.delete_user_group
+  @bus_site.admin_console_page.list_user_groups_section.wait_until_bus_section_load
+end
+
+When /^I search and delete (.+) user group$/ do |group_name|
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['list_user_groups'])
+  @bus_site.admin_console_page.list_user_groups_section.view_user_group_detail(group_name)
+  @bus_site.admin_console_page.user_group_details_section.delete_user_group
+  @bus_site.admin_console_page.list_user_groups_section.wait_until_bus_section_load
 end

@@ -47,7 +47,7 @@ Feature: Notify about and collect past-due balances
     And I navigate to Change Payment Information section from bus admin console page
     Then Change payment information message should be Your account is backup-suspended. You will not be able to access your account until your credit card is billed.
 
-  @TC.16147 @slow @firefox
+  @TC.16147
   Scenario: 16147 Verify aria sends email when change MozyEnterprise account status to Active Dunning 1
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -56,9 +56,10 @@ Feature: Notify about and collect past-due balances
     When I log in aria admin console as administrator
     And I change newly created partner company name account status to Active Dunning 1
     Then Account status should be changed
-    Then I should see 1 email(s) when I search keywords:
-      | from                    | date    | subject                                          | content                  |
-      | AccountManager@mozy.com | @today  | [Mozy] Your credit card payment was unsuccessful | (Visa) ************@XXXX |
+    When I search emails by keywords:
+      | from                    | subject                                          | content                  |
+      | AccountManager@mozy.com | [Mozy] Your credit card payment was unsuccessful | (Visa) ************@XXXX |
+    Then I should see 1 email(s)
 
   @TC.16148 @slow @firefox
   Scenario: 16148 Verify aria sends email when change Reseller account status to Active Dunning 2
@@ -69,9 +70,10 @@ Feature: Notify about and collect past-due balances
     When I log in aria admin console as administrator
     And I change newly created partner company name account status to Active Dunning 2
     Then Account status should be changed
-    And I should see 1 email(s) when I search keywords:
-      | from                    | date    | subject               | content                  |
-      | AccountManager@mozy.com | @today  | [Mozy] SECOND NOTICE  | (Visa) ************@XXXX |
+    When I search emails by keywords:
+      | from                    | subject               | content                  |
+      | AccountManager@mozy.com | [Mozy] SECOND NOTICE  | (Visa) ************@XXXX |
+    Then I should see 1 email(s)
 
   @TC.16149 @slow @firefox
   Scenario: 16149 Verify aria sends email when change MozyPro account status to Active Dunning 3
@@ -82,9 +84,10 @@ Feature: Notify about and collect past-due balances
     When I log in aria admin console as administrator
     And I change newly created partner company name account status to Active Dunning 3
     Then Account status should be changed
-    And I should see 1 email(s) when I search keywords:
-      | from                    | date    | subject                                          | content         |
-      | AccountManager@mozy.com | @today  | [Mozy] Your account will be suspended in 7 days  | Hi, @first_name |
+    When I search emails by keywords:
+      | from                    | subject                                         | content         |
+      | AccountManager@mozy.com | [Mozy] Your account will be suspended in 7 days | Hi, @first_name |
+    Then I should see 1 email(s)
 
   @TC.16243 @slow @firefox
   Scenario: 16243 Verify aria sends email when MozyPro account status sets to suspended
@@ -95,9 +98,10 @@ Feature: Notify about and collect past-due balances
     When I log in aria admin console as administrator
     And I change newly created partner company name account status to Suspended
     Then Account status should be changed
-    And I should see 1 email(s) when I search keywords:
-      | from        | date    | subject                                    | content           |
-      | ar@mozy.com | @today  | There was a problem with your Mozy payment | Dear @first_name, |
+    When I search emails by keywords:
+      | from        | subject                                    | content           |
+      | ar@mozy.com | There was a problem with your Mozy payment | Dear, @first_name |
+    Then I should see 1 email(s)
 
   @TC.16165 @slow @firefox
   Scenario: 16165 Verify aria sends email when change MozyPro account status to Active Dunning 1 net terms
@@ -108,9 +112,10 @@ Feature: Notify about and collect past-due balances
     When I log in aria admin console as administrator
     And I change newly created partner company name account status to Active Dunning 1
     Then Account status should be changed
-    And I should see 1 email(s) when I search keywords:
-      | from                    | date    | subject                                | content               |
-      | AccountManager@mozy.com | @today  | [Mozy] Mozy invoice, due upon receipt  | Hi, @admin_first_name |
+    When I search emails by keywords:
+      | from                    | subject                               | content         |
+      | AccountManager@mozy.com | [Mozy] Mozy invoice, due upon receipt | Hi, @admin_first_name |
+    Then I should see 1 email(s)
 
   @TC.16166 @slow @firefox
   Scenario: 16166 Verify aria sends email when change MozyEnterprise account status to Active Dunning 2 net terms
@@ -121,9 +126,10 @@ Feature: Notify about and collect past-due balances
     When I log in aria admin console as administrator
     And I change newly created partner company name account status to Active Dunning 2
     Then Account status should be changed
-    And I should see 1 email(s) when I search keywords:
-      | from                    | date    | subject                                  | content               |
-      | AccountManager@mozy.com | @today  | [Mozy] Mozy subscription invoice overdue | Hi, @admin_first_name |
+    When I search emails by keywords:
+      | from                    | subject                                  | content               |
+      | AccountManager@mozy.com | [Mozy] Mozy subscription invoice overdue | Hi, @admin_first_name |
+    Then I should see 1 email(s)
 
   # need update subject information
   @TC.16244 @slow @firefox
@@ -135,9 +141,10 @@ Feature: Notify about and collect past-due balances
     When I log in aria admin console as administrator
     And I change newly created partner company name account status to Active Dunning 3
     Then Account status should be changed
-    And I should see 1 email(s) when I search keywords:
-      | from                    | date    | subject                                                       | content               |
-      | AccountManager@mozy.com | @today  | [Mozy] Your account is suspended all users unable to back up  | Hi, @admin_first_name |
+    When I search emails by keywords:
+      | from                    | subject                                                      | content               |
+      | AccountManager@mozy.com | [Mozy] Your account is suspended all users unable to back up | Hi, @admin_first_name |
+    Then I should see 1 email(s)
 
   @TC.17978 @slow @firefox
   Scenario: 17978 Verify aria sends email when MozyPro account status sets to suspended net terms
@@ -148,10 +155,10 @@ Feature: Notify about and collect past-due balances
     When I log in aria admin console as administrator
     And I change newly created partner company name account status to Suspended
     Then Account status should be changed
-    And I should see 1 email(s) when I search keywords:
-      | from        | date    | subject                    | content                |
-      | ar@mozy.com | @today  | Account Suspension Notice  | Dear @admin_first_name |
-
+    When I search emails by keywords:
+      | from        | subject                   | content                |
+      | ar@mozy.com | Account Suspension Notice | Dear @admin_first_name |
+    Then I should see 1 email(s)
 
   #@TC.16114
   #Scenario: Verify update credit card in bus and a charge will be attempted for the entire balance

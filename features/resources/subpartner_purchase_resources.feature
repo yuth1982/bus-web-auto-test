@@ -1,69 +1,58 @@
 Feature: Sub partners can purchase resources
 
   # Limitations:
-  #  Test accounts have been created on QA6 only for existing partners cases
+  #  Test accounts have been created on QA6 for existing partners cases
   #
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.19864
+  @TC.19864 @need_test_account
   Scenario: 19864 Existing OEM partner with sub partners whose sub partners can purchase resources
     When I act as partner by:
       | email                                | filter |
       | qa1+oem+subpartner+reserved@mozy.com | OEMs   |
-    And I navigate to Assign Keys section from bus admin console page
-    Then Partner resources general information should be:
-      | Total Account Storage: | Desktop Storage: | Server Storage: | Server Enabled: | Total License Keys: | Desktop Licenses: | Server Licenses: |
-      | 381 GB                 | 198 GB           | 183 GB          | Yes             | 36                  | 19                | 17               |
-    When I add a new sub partner:
-      | name                 | admin name      | admin email                  |
-      | TC.19864 sub partner | TC.19864 admin  | qa1+tc+19864+admin1@mozy.com |
-    Then New partner should be created
-    When I act as newly created sub partner account
+    And I act as partner by:
+      | email                          |
+      | qa1+tc+19864+admin1@mozy.com   |
+    And I navigate to Purchase Resources section from bus admin console page
+    And I save current purchased resources
     And I purchase resources:
       | desktop license | desktop quota | server license | server quota |
-      | 1               | 10            | 1              | 5            |
+      | 2               | 20            | 2              | 10           |
     Then Resources should be purchased
-    When I stop masquerading
-    When I search partner by:
-      | email                        |
-      | qa1+tc+19864+admin1@mozy.com |
-    Then Partner search results should be:
-      | External ID | Partner              | Created | Root Admin                   | Type     | Users    | Licenses | Quota |
-      |             | TC.19864 sub partner | today   | qa1+tc+19864+admin1@mozy.com | business | 0        | 2        | 15 GB |
-    When I navigate to Assign Keys section from bus admin console page
-    Then Partner resources general information should be:
-      | Total Account Storage: | Desktop Storage: | Server Storage: | Server Enabled: | Total License Keys: | Desktop Licenses: | Server Licenses: |
-      | 396 GB                 | 208 GB           | 188 GB          | Yes             | 38                  | 20                | 18               |
-    And I search and delete partner account by TC.19864 sub partner
+    And Current purchased resources should increase:
+      | desktop license | desktop quota | server license | server quota |
+      | 2               | 20            | 2              | 10           |
 
-  @TC.19865
+  @TC.19865 @need_test_account
   Scenario: 19865 Existing OEM partner with sub partners whose OEM partner can purchase resources
     When I act as partner by:
       | email                                | filter |
       | qa1+oem+subpartner+reserved@mozy.com | OEMs   |
-    And I navigate to Assign Keys section from bus admin console page
-    Then Partner resources general information should be:
-      | Total Account Storage: | Desktop Storage: | Server Storage: | Server Enabled: | Total License Keys: | Desktop Licenses: | Server Licenses: |
-      | 381 GB                 | 198 GB           | 183 GB          | Yes             | 36                  | 19                | 17               |
-    When I navigate to Purchase Resources section from bus admin console page
+    And I navigate to Purchase Resources section from bus admin console page
+    And I save current purchased resources
     And I purchase resources:
       | user group         | desktop license | desktop quota | server license | server quota |
       | default user group | 1               | 10            | 1              | 5            |
     Then Resources should be purchased
-    When I navigate to Assign Keys section from bus admin console page
-    Then Partner resources general information should be:
-      | Total Account Storage: | Desktop Storage: | Server Storage: | Server Enabled: | Total License Keys: | Desktop Licenses: | Server Licenses: |
-      | 396 GB                 | 208 GB           | 188 GB          | Yes             | 38                  | 20                | 18               |
-    When I navigate to Return Unused Resources section from bus admin console page
-    And I return resources:
+    And Current purchased resources should increase:
+      | desktop license | desktop quota | server license | server quota |
+      | 1               | 10            | 1              | 5            |
+
+  @TC.19867 @need_test_account
+  Scenario: 19867 Existing OEM partner without subpartners can purchase resources
+    When I act as partner by:
+      | email                          | filter |
+      | qa1+tc+19867+reserved@mozy.com | OEMs   |
+    And I navigate to Purchase Resources section from bus admin console page
+    And I save current purchased resources
+    And I purchase resources:
       | user group         | desktop license | desktop quota | server license | server quota |
       | default user group | 1               | 10            | 1              | 5            |
-    Then Resources should be returned
-    When I refresh Assign Keys section
-    Then Partner resources general information should be:
-      | Total Account Storage: | Desktop Storage: | Server Storage: | Server Enabled: | Total License Keys: | Desktop Licenses: | Server Licenses: |
-      | 381 GB                 | 198 GB           | 183 GB          | Yes             | 36                  | 19                | 17               |
+    Then Resources should be purchased
+    And Current purchased resources should increase:
+      | desktop license | desktop quota | server license | server quota |
+      | 1               | 10            | 1              | 5            |
 
   @TC.19869
   Scenario: 19869 New MozyPro bundle partner without sub partner can purchase resource
@@ -116,7 +105,7 @@ Feature: Sub partners can purchase resources
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19953
+  @TC.19953 @need_test_account
   Scenario: 19953 Existing MozyPro bundle partner without sub partner can purchase resource
     When I act as partner by:
       | email                          |
@@ -137,4 +126,88 @@ Feature: Sub partners can purchase resources
       | base plan | server plan |
       | 50 GB     | no          |
 
+  @TC.19954 @need_test_account
+  Scenario: 19954 Existing Reseller Metallic partner without sub partner can purchase resource
+    When I act as partner by:
+      | email                          |
+      | qa1+tc+19954+reserved@mozy.com |
+    And I change Reseller account plan to:
+      | storage add-on |
+      | 10             |
+    Then the Reseller account plan should be changed
+    And Reseller new plan should be:
+      | storage add-on | server plan |
+      | 10             | yes         |
+    When I refresh Change Plan section
+    And I change Reseller account plan to:
+      | storage add-on |
+      | 5              |
+    Then the Reseller account plan should be changed
+    And Reseller new plan should be:
+      | storage add-on | server plan |
+      | 5              | yes         |
 
+   @TC.19871 @need_test_account @not_implemented
+   Scenario: 19871 Reseller Metallic partner with subparnter whose subparnter buy resources will raise error message
+#    When I act as partner by:
+#      | email                          |
+#      | qa1+tc+19871+reserved@mozy.com |
+#    When I act as partner by:
+#      | email                          |
+#      | qa1+sub+admin+19871@mozy.com   |
+#    And I navigate to Purchase Resources section from bus admin console page
+#    And I purchase resources:
+#      | desktop license | desktop quota |
+#      | 1               | 10            |
+#    # Suppose to check resource NOT purchased message, but not implemented yet, refactor later
+#    And I navigate to Manage Resources section from bus admin console page
+#    # Bug 92091
+#    Then Partner resources general information should be:
+#      | Total Account Storage: | Unallocated Storage: | Server Enabled: |
+#      | 0 GB                   | 0 GB                 | No              |
+
+  @TC.19868 @need_test_account
+  Scenario: 19868 Existing Reseller itemized partner without subpartners can purchase resources
+    When I act as partner by:
+      | email                          |
+      | qa1+tc+19868+reserved@mozy.com |
+    When I navigate to Change Plan section from bus admin console page
+    And I increase Itemized account plan by:
+      | desktop license | desktop quota | server license | server quota |
+      | 1               | 10            | 1              | 5            |
+    Then the Itemized account plan should be changed
+    And Current itemized resources should increase:
+      | desktop license | desktop quota | server license | server quota |
+      | 1               | 10            | 1              | 5            |
+
+  @TC.19872 @need_test_account
+  Scenario: 19872 Existing MozyPro itemized partner without subpartners can purchase resources
+    When I act as partner by:
+      | email                          |
+      | qa1+tc+19872+reserved@mozy.com |
+    When I navigate to Change Plan section from bus admin console page
+    And I increase Itemized account plan by:
+      | desktop license | desktop quota | server license | server quota |
+      | 1               | 10            | 1              | 5            |
+    Then the Itemized account plan should be changed
+    And Current itemized resources should increase:
+      | desktop license | desktop quota | server license | server quota |
+      | 1               | 10            | 1              | 5            |
+
+  @TC.19370 @need_test_account
+  Scenario: 19370 Existing Reseller itemized partner with subpartners whose subpartner can purchase resources
+    When I act as partner by:
+      | email                          |
+      | qa1+tc+19370+reserved@mozy.com |
+    And I act as partner by:
+      | email                          |
+      | qa1+sub+admin+19370@mozy.com   |
+    And I navigate to Purchase Resources section from bus admin console page
+    And I save current purchased resources
+    And I purchase resources:
+      | desktop license | desktop quota | server license | server quota |
+      | 1               | 10            | 1              | 5            |
+    Then Resources should be purchased
+    And Current purchased resources should increase:
+      | desktop license | desktop quota | server license | server quota |
+      | 1               | 10            | 1              | 5            |

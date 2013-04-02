@@ -8,6 +8,7 @@ end
 
 When /^I stop masquerading$/ do
   @bus_site.admin_console_page.stop_masquerading
+  @bus_site.admin_console_page.has_no_link?('stop masquerading').should be_true
 end
 
 Then /^I should not see (.+) link$/ do |link|
@@ -68,4 +69,7 @@ end
 
 When /^I close alert window$/ do
   @bus_site.admin_console_page.alert_dismiss
+end
+When /^I view the partner info$/ do
+  @bus_site.admin_console_page.view_partner_info
 end

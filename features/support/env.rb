@@ -1,5 +1,4 @@
-$:.unshift(File.dirname(__FILE__) + '/../../lib')
-require 'lib_helper'
+require "#{File.dirname(__FILE__)}/../../test_sites/test_sites"
 
 Capybara.register_driver :firefox do |app|
   profile = Selenium::WebDriver::Firefox::Profile.new
@@ -18,6 +17,7 @@ Capybara.register_driver :firefox_profile do |app|
   profile_address = "#{FileHelper.default_test_data_path}/#{CONFIGS['global']['profile_name']}"
   profile = Selenium::WebDriver::Firefox::Profile.new profile_address
   profile.add_extension("#{FileHelper.default_test_data_path}/autoauth-2.1-fx+fn.xpi")
+  profile.add_extension("#{FileHelper.default_test_data_path}/firebug-1.11.2-fx.xpi")
   Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => profile)
 end
 
@@ -55,3 +55,8 @@ Capybara.default_wait_time = CONFIGS['global']['default_wait_time']
 # Aria's timezone is UTC -04, Atlantic Standard Time
 Time.zone = "Atlantic Time (Canada)"
 Chronic.time_class = Time.zone
+
+# Setup Aria API
+AriaApi::Configuration.auth_key = ARIA_API_ENV['auth_key']
+AriaApi::Configuration.client_no = ARIA_API_ENV['client_no']
+AriaApi::Configuration.url = ARIA_API_ENV['url']
