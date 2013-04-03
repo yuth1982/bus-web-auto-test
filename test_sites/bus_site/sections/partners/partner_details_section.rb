@@ -96,13 +96,13 @@ module Bus
 
     # Public: General information hash
     #
+    # @param [none]
+    #
     # Example:
     #   partner_details_section.general_info_hash
-    #   # => Hash table
-    #   | ID:   | External ID: | Aria ID: | Approved:  | Status:         | Root Admin:            | Root Role:                  | Parent: | Next Charge:  | Marketing Referrals:             | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    #   | 123456 | (change)    | 1234567  | 11/10/12   | Active (change) | test@mozy.com (act as) | SMB Bundle Limited (change) | MozyPro | 12/10/12      | test@mozy.com [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+    #   # => {"ID:"=>"325379", "External ID:"=>"(change)", "Aria ID:"=>"4475660", "Approved:"=>"04/02/13 12:04", "Status:"=>"Active (change)", "Root Admin:"=>"Ann Dunn (act as)", "Root Role:"=>"Enterprise (change)", "Parent:"=>"MozyEnterprise", "Next Charge:"=>"04/02/14 (extend)", "Marketing Referrals:"=>"qa1+automation+admin@mozy.com [X] (add referral)", "Subdomain:"=>"(learn more and set up)", "Enable Mobile Access:"=>"Yes (change)", "Enable Co-branding:"=>"No (change)", "Require Ingredient:"=>"No (change)", "Enable Autogrow:"=>"No (change)", "Enable Stash:"=>"No", "Account Type"=>"Trial (change)", "Sales Origin"=>"Sales", "Sales Channel"=>"Inside Sales (change)"}
     #
-    # Returns hash table
+    # @return [Hash]
     def general_info_hash
       wait_until_bus_section_load
       output = general_info_dls[0].dt_dd_elements_text + general_info_dls[1].dt_dd_elements_text
@@ -110,8 +110,29 @@ module Bus
         stash = stash_info_dl.dt_dd_elements_text.delete_if{ |pair| pair.first.empty? }.map{ |row| [row.first, row[1..-1].join(' ')] }
         output = output + stash
       end
+      unless general_info_dls[3].nil?
+        # v.2.4.3 account type details
+        output += general_info_dls[3].dt_dd_elements_text
+      end
       Hash[*output.flatten]
     end
+
+    # Public: Account Details hash
+    #
+    # @param [none]
+    #
+    # Example:
+    #   partner_details_section.account_details_hash
+    #   # => {"Account Type"=>"Trial (change)", "Sales Origin"=>"Sales", "Sales Channel"=>"Inside Sales (change)"}
+    #
+    # @return [Hash]
+    def account_details_hash
+      wait_until_bus_section_load
+      # v.2.4.3 account type details
+      general_info_dls[3].nil? ? output = [] : output = general_info_dls[3].dt_dd_elements_text
+      Hash[*output.flatten]
+    end
+
 
     # Public: Partner contact information hash
     #

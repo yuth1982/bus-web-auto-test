@@ -50,6 +50,12 @@ Then /^Partner general information should be:$/ do |details_table|
   expected.keys.each{ |key| actual[key].should == expected[key] }
 end
 
+Then /^partner account details should be:$/ do |account_details_table|
+  actual = @bus_site.admin_console_page.partner_details_section.account_details_hash
+  expected = account_details_table.hashes.first
+  expected.keys.each{ |key| actual[key].should == expected[key] }
+end
+
 # Any of following columns can be verified:
 # | Company Type: | Users: | Contact Address: | Contact City: | Contact State: | Contact ZIP/Postal Code: |
 # | Contact Country: | Phone: | Industry: | # of employees: | Contact Email: | Vat Number: |

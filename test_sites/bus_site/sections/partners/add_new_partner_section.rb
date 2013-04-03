@@ -30,6 +30,11 @@ module Bus
     element(:coupon_code_tb, id: 'coupon_code')
     element(:plan_loading_div, id: 'plan_loading')
 
+    # Account Detail
+    element(:acct_type_select, id: 'acct_type')
+    element(:sales_origin_select, id: 'sales_origin')
+    element(:sales_channel_select, id: 'sales_channel')
+
     # Billing Info
     element(:use_company_info_cb, id: 'use_company_info')
     element(:cc_address_tb, id: 'cc_address')
@@ -68,7 +73,7 @@ module Bus
     element(:back_btn, id: 'back_button')
 
     # sub partner
-    element(:create_sub_partner_btn, css: 'input#submit_button')
+    element(:create_sub_partner_btn, css: 'input[name="commit"]')
 
     # Public: Add a new partner account
     #
@@ -79,6 +84,7 @@ module Bus
     def add_new_account(partner)
       fill_company_info(partner.company_info)
       fill_partner_admin_info(partner.partner_info, partner.admin_info)
+      fill_account_detail_info(partner.account_detail)
       fill_billing_info(partner)
 
       # define master plan subscription period
@@ -174,6 +180,12 @@ module Bus
       coupon_code_tb.type_text(partner_info.coupon_code) unless partner_info.coupon_code.nil?
       new_admin_display_name_tb.type_text(admin_info.full_name)
       new_admin_username_tb.type_text(admin_info.email)
+    end
+
+    def fill_account_detail_info(partner_acct_detail)
+        acct_type_select.select(partner_acct_detail.account_type) unless partner_acct_detail.account_type.nil?
+        sales_origin_select.select(partner_acct_detail.sales_origin) unless partner_acct_detail.sales_origin.nil?
+        sales_channel_select.select(partner_acct_detail.sales_channel) unless partner_acct_detail.sales_channel.nil?
     end
 
     def fill_billing_info(partner)

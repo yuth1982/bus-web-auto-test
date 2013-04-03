@@ -76,6 +76,11 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partne
   @partner.admin_info.full_name = attributes["admin name"] unless attributes["admin name"].nil?
   @partner.admin_info.email = attributes["admin email"] unless attributes["admin email"].nil?
 
+  # Account Detail info attributes
+  @partner.account_detail.account_type = attributes["account type"]
+  @partner.account_detail.sales_origin = attributes["sales origin"]
+  @partner.account_detail.sales_channel = attributes["sales channel"]
+
   # Billing info attributes
   # Not implemented, always use company info
 
@@ -137,11 +142,12 @@ end
 
 When /^I add a new sub partner:$/ do |sub_partner_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_partner'])
+  @user = Bus::DataObj::User.new
   attributes = sub_partner_table.hashes.first
   partner_name = attributes["name"]
-  admin_name = attributes["admin name"]
-  admin_email = attributes["admin email"]
-  @bus_site.admin_console_page.add_new_partner_section.add_new_sub_partner(partner_name, admin_name, admin_email)
+  @user.name = attributes["admin name"] unless attributes["admin name"].nil?
+  @user.email = attributes["admin email"] unless attributes["admin email"].nil?
+  @bus_site.admin_console_page.add_new_partner_section.add_new_sub_partner(partner_name, @user.name, @user.email)
 end
 Then /^the default billing country is (.+) in add new partner section$/ do |country|
   @bus_site.admin_console_page.add_new_partner_section.billing_country.should == country
