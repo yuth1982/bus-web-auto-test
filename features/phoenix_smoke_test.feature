@@ -9,7 +9,7 @@ Feature: Add a new partner through phoenix
   #-- phoenix smoke test --
   #   adding bus smoke test line items to a phoenix test
   #   and verifying that they will work without any problem, once tweaked.
-  @TC.13502 @smoke
+  @TC.20959
   Scenario: 13502 Add a new US monthly MozyPro partner
     When I add a phoenix Pro partner:
       | period | base plan | country       | server plan |

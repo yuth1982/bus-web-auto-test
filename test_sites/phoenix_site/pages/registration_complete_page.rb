@@ -20,9 +20,15 @@ module Phoenix
     # home specific - may be related
   element(:reg_get_started_txt, xpath: "//div[@id='main']/div/div/div/div/div[2]/div/div/p[2]")
   element(:reg_referral_txt, css: "div.referrer-info > p")
+    # download specific - redmine 90306
+  element(:win_dl_lbl, css: "div.download")
   element(:reg_dl_win_btn, xpath: "//input[@value='Download for Win']")
+  element(:mac_1_dl_lbl, xpath: "//div[@id='main']/div/div/div/div/div[2]/div/div/div[2]")
   element(:reg_dl_mac_btn, xpath: "//input[@value='Download for Mac']")
+  element(:mac_2_dl_lbl, xpath: "//div[@id='main']/div/div/div/div/div[2]/div/div/div[3]")
   element(:reg_dl_mac2_btn, xpath: "(//input[@value='Download for Mac'])[2]")
+  element(:mac_3_dl_lbl, xpath: "//div[@id='main']/div/div/div/div/div[2]/div/div/div[4]")
+  element(:reg_dl_mac3_btn, xpath: "(//input[@value='Download for Mac'])[3]")
   element(:logout_btn, xpath: "//a[text()='LOG OUT']")
   #element(:go_to_acct_lnk, link: "Go to Account")
   # adding a few items for quick and dirty acct verification, if items present and value good - acct=good.
@@ -34,7 +40,7 @@ module Phoenix
   element(:man_resource_plan_size, css: "span.value") # manage resources section - 'total account storage'
   element(:man_resource_server_value , xpath: "//div[@id='resource-available_key_list-content']/div[2]/div[3]/div/span[6]") # manage resources section "server enabled" value
     #
-    #	Public : reg complete banner visible
+    #	Public : reg complete banner present
     #
     #	required: nothing
     #
@@ -124,10 +130,16 @@ module Phoenix
     end
 
     # here we check for windows and both mac client download buttons
-    def reg_home_dl_buttons
+    # specifc for redmine 90306, till changed
+    def reg_home_dl_items
+      win_dl_lbl.eql?("Version 2.12.1.160, 0 bytes, Windows 7 / Vista / XP")
       reg_dl_win_btn.present?
+      mac_1_dl_lbl.eql?("Version 2.10.0.1110, 0 bytes, Mac OS X 10.6+ (Intel)")
       reg_dl_mac_btn.present?
+      mac_2_dl_lbl.eql?("Version 2.9.1.609, 0 bytes, Mac OS X 10.5 (Intel)")
       reg_dl_mac2_btn.present?
+      mac_3_dl_lbl.eql?("Version 1.7.3.0, 0 bytes, Mac OS X 10.4 (PPC, Intel), Mac OS X 10.5 (PPC)")
+      reg_dl_mac3_btn.present?
     end
 
     # home registration complete
@@ -136,12 +148,12 @@ module Phoenix
       reg_comp_text
       reg_get_started
       reg_referral_banner
-      reg_home_dl_buttons
+      reg_home_dl_items
       localized_click(partner, 'acct_page_link')
       reg_comp_banner_present
       localized_click(partner, 'resend_verify_email_link')
       localized_click(partner, 'back_2_login_link')
-      logout(partner)
+      # logout(partner)
     end
 
     # user/partner verification section
