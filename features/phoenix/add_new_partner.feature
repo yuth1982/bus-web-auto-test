@@ -750,6 +750,25 @@ Feature: Add a new partner through phoenix
   # extended coverage section:
   #   coverage based on changes made to UI, requirements changes, bugs, etc
   #---------------------------------------------------------------------------------
-  #   Redmine #:
-  #   Name:
+
   #---------------------------------------------------------------------------------
+  #   Requirement #:  96067
+  #   Name: Phoenix needs to support the new account type, and sales origin partner details
+  #   Bug #: 97647
+  #   Name: Phoenix generated pro acct missing internal values
+  #---------------------------------------------------------------------------------
+  @TC.20985 @BUG.97647
+  Scenario: 20985 Verification of new internal acct attributes for phoenix generated MozyPro partner
+    When I add a phoenix Pro partner:
+      | period | base plan | country       |
+      | 12      | 100 GB   | United States |
+    And the partner is successfully added.
+    And I log in bus admin console as administrator
+    And I search partner by:
+      | name          | filter |
+      | @company_name | None   |
+    And I view partner details by newly created partner company name
+    Then partner account details should be:
+      | Account Type  | Sales Origin  | Sales Channel         |
+      | Live (change) | Web           | Inside Sales (change) |
+    And I delete partner account

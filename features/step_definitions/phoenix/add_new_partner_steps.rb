@@ -62,6 +62,11 @@ When /^I add a phoenix Pro partner:$/ do |partner_table|
   # Common attributes
   @partner.subscription_period = attributes["period"]
 
+  # Account Attributes
+  @partner.account_detail.account_type = attributes["account type"] unless attributes["account type"].nil?
+  @partner.account_detail.sales_origin = attributes["sales origin"] unless attributes["sales origin"].nil?
+  @partner.account_detail.sales_channel = attributes["sales channel"] unless attributes["sales channel"].nil?
+
   # for info review
   # puts @partner.to_s
   @phoenix_site.select_dom.select_country(@partner)
