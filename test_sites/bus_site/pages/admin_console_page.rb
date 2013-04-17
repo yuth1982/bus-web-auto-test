@@ -17,14 +17,16 @@ module Bus
     section(:client_config_section, ClientConfigSection, id: 'setting-edit_client_config')
 
     # Users section
-    section(:search_list_users_section, SearchListUsersSection, id: "user-list")
-    section(:search_list_machines_section, SearchListMachinesSection, id: "machine-list")
-    section(:add_new_user_group_section, AddNewUserGroupSection, id: "user_groups-new")
-    section(:add_new_user_section, AddNewUserSection, id: "user-new_users_in_batch")
-    section(:machine_mapping_section, MachineMappingSection, id: "machine-machine_migration")
-    section(:user_group_details_section, UserGroupDetailsSection, css: "div[id^=user_groups-show-]")
-    section(:list_user_groups_section, ListUserGroupsSection, id: "user_groups-list")
-    section(:user_details_section, UserDetailsSection, css: "div[id^=user-show]")
+    section(:search_list_users_section, SearchListUsersSection, id: 'user-list')
+    section(:search_list_machines_section, SearchListMachinesSection, id: 'machine-list')
+    section(:user_group_list_section, UserGroupListSection, id: 'storage-user_group_list')
+    section(:add_new_user_group_section, AddEditUserGroupSection, id: 'user_groups-new')
+    section(:edit_user_group_section, AddEditUserGroupSection, css: 'div[id^=user_groups-edit_storage_pool_policy-]')
+    section(:add_new_user_section, AddNewUserSection, id: 'user-new_users_in_batch')
+    section(:machine_mapping_section, MachineMappingSection, id: 'machine-machine_migration')
+    section(:user_group_details_section, UserGroupDetailsSection, css: 'div[id^=user_groups-show-]')
+    section(:list_user_groups_section, ListUserGroupsSection, id: 'user_groups-list')
+    section(:user_details_section, UserDetailsSection, css: 'div[id^=user-show]')
 
     # Admin section
     section(:add_new_role_section, AddNewRoleSection, id: "roles-new-content")
@@ -76,6 +78,8 @@ module Bus
     element(:submit_btn, css: "div.popup-window-footer input[value=Submit]")
     element(:buy_more_btn, css: "div.popup-window-footer input[value='Buy More']")
     element(:allocate_resources_btn, css: "div.popup-window-footer input[value=Allocate]")
+    element(:ok_btn, css: "div.popup-window-footer input[value=Ok]")
+
 
     # Public: Navigate to menu item on admin console page
     # Note: if bus module is opened, menu will not be clicked
@@ -136,6 +140,10 @@ module Bus
 
     def click_submit
       submit_btn.click
+    end
+
+    def click_ok
+      ok_btn.click
     end
   end
 end

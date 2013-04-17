@@ -80,8 +80,8 @@ module SiteHelper
     #
     # Returns nothing
     def refresh_bus_section
-      root_element.find(:css, "h2 a[onclick^=refresh_module]").click
-      loading = root_element.find(:css, "h2 a[onclick^=toggle_module]")
+      root_element.find(:css, 'h2>a[onclick^=refresh_module]').click
+      loading = root_element.find(:css, 'h2>a[onclick^=toggle_module]')
       unless loading[:class].nil?
         wait_until{ loading[:class].match(/loading/).nil? }
       end
