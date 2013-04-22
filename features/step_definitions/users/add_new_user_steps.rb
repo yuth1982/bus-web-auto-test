@@ -1,27 +1,25 @@
-# Public: Create a new partner
+# If you are create one user: You can specify user name and email
+# If you are create more than on users: User names and emails are random
 #
-# User available column names:
-# | user group |
-#
+# available columns:
+# name, email, user_group, storage_type, storage_max, devices, enable_stash, send_email
 When /^I add (\d+) new user:$/ do |num_users, user_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_user'])
   cells = user_table.hashes.first
   @new_user = Bus::DataObj::User.new
-  # Use page default value if you don't specific a column
-  @new_user.user_group = cells['user group']
-  @new_user.name = cells['name'] unless cells['name'].nil?
-  @new_user.email = cells['email'] unless cells['email'].nil?
-  @new_user.storage_type = cells['storage type']
-  @new_user.storage_max = cells['storage max']
-  @new_user.devices = cells['devices']
-  @new_user.enable_stash = cells['enable stash']
-  @new_user.send_email = cells['send email']
+  hash_to_object(cells, @new_user)
   @bus_site.admin_console_page.add_new_user_section.add_new_users(@new_user, num_users)
 end
 
 Then /^(\d+) new user should be created$/ do |num|
   @bus_site.admin_console_page.add_new_user_section.success_messages.should == "Successfully created #{num} user(s)"
 end
+
+Then /^User group storage details table should be:$/ do |ug_table|
+  @bus_site.admin_console_page.add_new_user_section.wait_until_bus_section_load
+  @bus_site.admin_console_page.add_new_user_section.ug_resource_details_table_rows.should == ug_table.raw
+end
+
 
 Then /^New user created message should be (.+)$/ do |message|
   @bus_site.admin_console_page.add_new_user_section.sucess_messages.gsub("\n"," ").should == message

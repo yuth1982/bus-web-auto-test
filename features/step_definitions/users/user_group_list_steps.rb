@@ -1,3 +1,8 @@
+When /^I navigate to Add User Group section$/ do
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['user_group_list'])
+  @bus_site.admin_console_page.user_group_list_section.view_add_group_section
+end
+
 When /^I view user group details by name: (.+)$/ do |group_name|
   @bus_site.admin_console_page.user_group_list_section.view_user_group(group_name)
 end

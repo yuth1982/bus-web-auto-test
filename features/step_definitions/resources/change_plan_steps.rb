@@ -10,29 +10,24 @@
 When /^I change (MozyPro|MozyEnterprise|Reseller|Itemized) account plan to:$/ do |type, plan_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['change_plan'])
 
-  attributes = plan_table.hashes.first
-  base_plan = attributes["base plan"] # MozyPro
-  users = attributes["users"] # MozyEnterprise
-  server_plan = attributes["server plan"]
-  storage_add_on = attributes["storage add-on"]
-  coupon = attributes["coupon"]
-  desktop_licenses = attributes["desktop licenses"] #Itemized
-  server_licenses = attributes["server licenses"] #Itemized
-  
-  #When a user is created it requires a user group, 
-  # since this step should be independant of user creation
-  # this ensures that one is created here.
-  if @user_group.nil?
-    @user_group = Bus::DataObj::UserGroup.new  
-  end
+  cells = plan_table.hashes.first
+  base_plan = cells['base plan'] # MozyPro
+  users = cells['users'] # MozyEnterprise
+  server_plan = cells['server plan']
+  storage_add_on = cells['storage add-on']
+  coupon = cells['coupon']
+  desktop_licenses = cells['desktop licenses'] #Itemized
+  server_licenses = cells['server licenses'] #Itemized
 
   case type
-    when "MozyEnterprise"
-      @bus_site.admin_console_page.change_plan_section.change_mozyenterprise_plan(users, server_plan, storage_add_on, coupon, @user_group)
-    when "Reseller"
+    when 'MozyEnterprise'
+      @bus_site.admin_console_page.change_plan_section.change_mozyenterprise_plan(users, server_plan, storage_add_on, coupon)
+    when 'Reseller'
       @bus_site.admin_console_page.change_plan_section.change_reseller_plan(server_plan, storage_add_on)
+    when 'MozyPro'
+      @bus_site.admin_console_page.change_plan_section.change_mozypro_plan(base_plan, server_plan, storage_add_on, coupon)
     when "Itemized"
-      @bus_site.admin_console_page.change_plan_section.change_itemized_plan(server_licenses, desktop_licenses, @user_group)
+      @bus_site.admin_console_page.change_plan_section.change_itemized_plan(server_licenses, desktop_licenses)
     else
       raise "#{type} Company type not exist"
   end

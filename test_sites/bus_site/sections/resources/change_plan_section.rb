@@ -37,19 +37,17 @@ module Bus
 
     # Public: Change MozyPro plan
     # 
-    # @param [Integer] users
-    # @param [String] server_plan
-    # @param [Integer] server_add_on
-    # @param [String] coupon
-    # @param [Object] user_group
+    # @base_plan [String]
+    # @server_plan [String]
+    # @storage_add_on [Integer]
+    # @coupon [String] coupon
     #
     # Example
-    #   @bus_site.admin_console_page.change_mozypro_plan('100 GB', 'yes', '2', 'COUPONCODE', @user_group)
+    #   @bus_site.admin_console_page.change_mozypro_plan('100 GB', 'yes', '2', 'COUPON CODE')
     #
     # @return [nothing]
 
     def change_mozypro_plan(base_plan, server_plan, storage_add_on, coupon)
-      server_plan_locator = "//label[contains(text(),'Server Plan')]"
       # Find current server plan id e.g. 'products_addon_10353251, Server Plan, $12.99'
       current_server_plan_id = find(:xpath, server_plan_locator)[:for]
       unless base_plan.nil?
@@ -78,42 +76,31 @@ module Bus
 
     # Public: Change MozypEnterprise plan
     # 
-    # @param [Integer] users
-    # @param [String] server_plan
-    # @param [Integer] server_add_on
-    # @param [String] coupon
-    # @param [Object] user_group
+    # @users [Integer]
+    # @server_plan [String]
+    # @server_add_on [Integer]
+    # @coupon [String]
     #
     # Example
-    #   @bus_site.admin_console_page.change_mozyenterprise_plan(2,"50 GB Server Plan, $296.78",2,"COUPONCODE", @user_group)
+    #   @bus_site.admin_console_page.change_mozyenterprise_plan(2,"50 GB Server Plan, $296.78",2,"COUPONCODE")
     #
     # @return [nothing]
-    def change_mozyenterprise_plan(users, server_plan, server_add_on, coupon, user_group)
-
-      unless users.nil?
-        if !user_group.nil? && user_group.name == "(default user group)"
-          #update @user_group obj will refactor later
-          user_group.desktop_device = users.to_i
-        end
-        wait_until { enterprise_users_tb.visible? }
-        enterprise_users_tb.type_text(users)
-      end
-      
+    def change_mozyenterprise_plan(users, server_plan, server_add_on, coupon)
+      enterprise_users_tb.type_text(users) unless users.nil?
       server_plan_select.select(server_plan) unless server_plan.nil?
       storage_add_on_tb.type_text(server_add_on) unless server_add_on.nil?
       coupon_code_tb.type_text(coupon) unless coupon.nil?
-      
       confirm_change
     end
 
     # Public: Change reseller plan
     #
     # Example
-    #   @bus_site.admin_console_page.change_reseller_plan(100,"yes",2,"COUPONCODE")
+    #   @bus_site.admin_console_page.change_reseller_plan("yes",2)
     #
-    # Returns nothing
-    def change_reseller_plan(server_plan, server_add_on)
-      storage_add_on_tb.type_text(server_add_on) unless server_add_on.nil?
+    # @returns [] nothing
+    def change_reseller_plan(server_plan, storage_add_on)
+      storage_add_on_tb.type_text(storage_add_on) unless storage_add_on.nil?
       unless server_plan.nil?
         server_plan_change_link.click
         wait_until{ server_plan_select.visible? }
@@ -299,17 +286,16 @@ module Bus
 
     # Private: Confirm change plan
     #
-    # @param [none]
-    #
     # Example
     #   @bus_site.admin_console_page.change_plan_section.confirm_change
     #
-    # @return [nothing] 
+    # @return [] nothing
     def confirm_change
-      wait_until { submit_btn.visible? }
+      wait_until{ submit_btn.visible?}
       submit_btn.click
-      wait_until { continue_btn.visible? }
+      wait_until_bus_section_load
       continue_btn.click
+      wait_until_bus_section_load
     end
   end
 end

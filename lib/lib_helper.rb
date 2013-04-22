@@ -25,6 +25,7 @@ require 'zimbra_helper'
 require 'db_helper'
 require 'ldap_helper'
 require 'ssh_helper'
+require 'utility'
 
 require 'site_helper/site_helper'
 require 'capybara_helper/capybara_helper'
@@ -36,6 +37,7 @@ include DBHelper
 include LDAPHelper
 include SSHHelper
 include AriaApi
+include Utility
 
 
 

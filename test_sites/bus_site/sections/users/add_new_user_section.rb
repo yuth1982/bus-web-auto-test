@@ -7,6 +7,7 @@ module Bus
     element(:err_msg_div, css: 'ul.flash.errors')
 
     element(:user_group_select, id: 'user_user_group_id')
+    element(:ug_resources_details_table, id: 'resource-details')
     element(:buy_more_link, id: 'add_more_link')
     element(:add_group_link, css: 'a[href*=add_group]')
 
@@ -21,7 +22,7 @@ module Bus
     element(:delete_user_btn, css: 'button[onclick*=del_new_user]')
 
     element(:send_emails_cb, id: 'send_email_to_users')
-    element(:submit_btn, css: 'button[onclick*=new_users_in_batch]')
+    element(:submit_btn, id: 'new_users_in_batch_submit_btn')
 
     # Public: Add new users
     #
@@ -90,6 +91,15 @@ module Bus
     # @return [String]
     def error_messages
       err_msg_div.text
+    end
+
+    def ug_resource_details_table_rows
+      ug_resources_details_table.rows_text[1..-2]
+    end
+
+    def select_user_group(group_name)
+      user_group_select.select(group_name)
+      sleep 2 # wait for ajax call back
     end
   end
 end
