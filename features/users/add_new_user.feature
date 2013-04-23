@@ -39,5 +39,5 @@ Feature: Add a new user
     When I add 2 new user:
       | user_group           | storage_type | storage_max | devices |
       | (default user group) | Desktop      | 10          | 1       |
-    Then 1 new user should be created
+    Then 2 new user should be created
 

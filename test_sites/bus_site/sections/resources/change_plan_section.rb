@@ -295,7 +295,6 @@ module Bus
       submit_btn.click
       wait_until_bus_section_load
       continue_btn.click
-      wait_until_bus_section_load
     end
   end
 end
