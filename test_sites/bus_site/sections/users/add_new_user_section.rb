@@ -26,15 +26,15 @@ module Bus
 
     # Public: Add new users
     #
-    # @user       [Object] user
-    # @num_users  [int] number of users to create
+    # @users     [Object] users
     #
     # Example
     #   @bus_admin_console_page.add_new_user_section.add_new_users(user_object)
     #
     # @return [] nothing
-    def add_new_users(user, num_users = 1)
-      user_group_select.select(user.user_group)
+    def add_new_users(users)
+      user = users.first
+      user_group_select.select(user.user_group) unless user.user_group.nil?
       sleep 2 # wait for ajax call back
       storage_type_select.select(user.storage_type) unless user.storage_type.nil?
       storage_max_tb.type_text(user.storage_max) unless user.storage_max.nil?
@@ -48,15 +48,10 @@ module Bus
         end
       end
 
-      if num_users.to_i == 1
-        name_tb.type_text(user.name)
-        email_tb.type_text(user.email)
-      else
-        num_users.to_i.times do |i|
-          find(:id, "user#{i+1}_name").type_text(user.rand_name)
-          find(:id, "user#{i+1}_username").type_text(user.rand_email)
-          add_user_btn.click
-        end
+      users.each_index do |index|
+        find(:id, "user#{index+1}_name").type_text(users[index].name)
+        find(:id, "user#{index+1}_username").type_text(users[index].email)
+        add_user_btn.click if index != users.length-1
       end
 
       unless user.send_email.nil?
@@ -84,7 +79,7 @@ module Bus
 
     # Public: Error messages for add new user sections
     #
-    # Example
+    # Examples:
     #  @bus_admin_console_page.add_new_user_section.error_messages
     #  # => "Failed to create (1) users"
     #
@@ -93,6 +88,13 @@ module Bus
       err_msg_div.text
     end
 
+    # Public: User group resource details
+    #
+    # Examples:
+    #  @bus_admin_console_page.add_new_user_section.ug_resource_details_table_rows
+    #  # => ["Desktop Storage (GB)","200"],["Server Storage (GB)","50"],["Desktop Devices","2"], ["Server Devices", "192"]
+    #
+    # @return
     def ug_resource_details_table_rows
       ug_resources_details_table.rows_text[1..-2]
     end

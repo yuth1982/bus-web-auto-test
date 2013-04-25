@@ -16,30 +16,8 @@ When /^I search user by:$/ do |search_key_table|
   @bus_site.admin_console_page.search_list_users_section.search_user(keywords, filter, partner_filter)
 end
 
-Then /^user search results should be:$/ do |results_table|
-
-  results_table.map_column!('Created') do |value|
-    Chronic.parse(value).strftime("%m/%d/%y")
-  end
-
-  results_table.map_column!('User') do |value|
-    if @user.nil? 
-      value.slice(0,27)+"..." unless value.length <= 28
-    else
-      (value.gsub(/@new_user_email/,@user.email)).length > 27 ? value.gsub(/@user_email/,@user.email).slice(0,27)+"...":value.gsub(/@user_email/,@user.email)
-    end
-  end
-
-  results_table.map_column!('Name') do |value|
-    if @user.nil?
-      value.slice(0,27)+"..." unless value.length <= 28
-    else
-      value.gsub(/@user_name/,@user.name)
-    end
-  end
-
-  @bus_site.admin_console_page.search_list_users_section.search_results_table_headers.should == results_table.headers
-  @bus_site.admin_console_page.search_list_users_section.search_results_table_rows.should == results_table.rows
+When /^I sort user search results by (User|Name|User Group|Stash|Machines|Storage|Storage Used|Created|Backed Up)$/ do |column_name|
+  @bus_site.admin_console_page.search_list_users_section.sort_users_by(column_name)
 end
 
 Then /^User search results should be:$/ do |results_table|
@@ -48,12 +26,12 @@ Then /^User search results should be:$/ do |results_table|
   expected.each do |col|
     col.each do |k,v|
       case k
-        when "Created"
-          v.replace(Chronic.parse(v).strftime("%m/%d/%y"))
-        when "Name"
-          v.gsub!(/@user_name/, @user.name) unless @user.nil?
-        when "User"
-          v.gsub!(/@user_email/, @user.email) unless @user.nil?
+        when 'Created'
+          v.replace(Chronic.parse(v).strftime('%m/%d/%y'))
+        when 'Name'
+          v.gsub!(/@user_name/, @new_users.first.name.slice(0,27)) unless @new_users.nil?
+        when 'User'
+          v.gsub!(/@user_email/, @new_users.first.email.slice(0,27)) unless @new_users.nil?
         else
           # do nothing
       end

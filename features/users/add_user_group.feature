@@ -3,31 +3,31 @@ Feature: Add a new user group
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.849 @bus2.4
-  Scenario: 849 Add a new user group
-    When I add a new MozyEnterprise partner:
-      | period | users |
-      | 12     | 100   |
-    Then New partner should be created
-    When I act as newly created partner
-    And I add a new itemized user group:
-      | desktop_storage_type | desktop device | server_storage_type | server device |
-      | Shared               | 1               | Shared             | 1             |
-    Then Bundled user group should be created
-    And I search and delete newly created user group name user group
-
-  @TC.848 @bus2.4
-  Scenario: 848 Delete a user group
-    When I act as partner by:
-      | email                                    |
-      | qa1+users+features+test+account@mozy.com |
-    When I add a new user group:
-      | desktop licenses | desktop quota |
-      | 1                | 10            |
-    Then New user group should be created
-    When I view newly created user group name user group details
-    And I delete the user group
-    And I navigate to List User Group section from bus admin console page
+#  @TC.849 @bus2.4
+#  Scenario: 849 Add a new user group
+#    When I add a new MozyEnterprise partner:
+#      | period | users |
+#      | 12     | 100   |
+#    Then New partner should be created
+#    When I act as newly created partner
+#    And I add a new itemized user group:
+#      | desktop_storage_type | desktop device | server_storage_type | server device |
+#      | Shared               | 1               | Shared             | 1             |
+#    Then Bundled user group should be created
+#    And I search and delete newly created user group name user group
+#
+#  @TC.848 @bus2.4
+#  Scenario: 848 Delete a user group
+#    When I act as partner by:
+#      | email                                    |
+#      | qa1+users+features+test+account@mozy.com |
+#    When I add a new user group:
+#      | desktop licenses | desktop quota |
+#      | 1                | 10            |
+#    Then New user group should be created
+#    When I view newly created user group name user group details
+#    And I delete the user group
+#    And I navigate to List User Group section from bus admin console page
 
   @TC.20716
   Scenario: 20716 [Bundled] Add New Group
@@ -137,7 +137,7 @@ Feature: Add a new user group
     And I search and delete partner account by newly created partner company name
 
   # Error messages are not final version, they will be change in the future
-  @TC.20898
+  @TC.20898 @BUG.100010
   Scenario: 20898 [Bundled][Negative] Add New Group
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | net terms | company name                      |
@@ -157,6 +157,13 @@ Feature: Add a new user group
     Then Add user group error messages should be:
       """
       Whole positive integer required for Generic assigned storage
+      """
+    When I add a new Bundled user group:
+      | storage_type | assigned_quota |
+      | Assigned     |                |
+    Then Add user group error messages should be:
+      """
+      I don't know what is the error message
       """
     When I add a new Bundled user group:
       | storage_type | assigned_quota |
@@ -192,6 +199,13 @@ Feature: Add a new user group
     Then Add user group error messages should be:
       """
       Whole positive integer required for Generic shared with max storage
+      """
+    When I add a new Bundled user group:
+      | storage_type    | max_quota |
+      | Shared with Max |           |
+    Then Add user group error messages should be:
+      """
+      I don't know what is the error message
       """
     When I add a new Bundled user group:
       | storage_type    | max_quota |
@@ -250,6 +264,14 @@ Feature: Add a new user group
       """
     When I add a new Itemized user group:
       | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
+      | Shared               |                 | Shared              |                |
+    Then Add user group error messages should be:
+      """
+      Desktop device count required
+      Server device count required
+      """
+    When I add a new Itemized user group:
+      | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
       | Shared               | -1              | Shared              | -1             |
     Then Add user group error messages should be:
       """
@@ -284,7 +306,7 @@ Feature: Add a new user group
       """
     When I add a new Itemized user group:
       | desktop_storage_type | desktop_max_quota | desktop_devices | server_storage_type | server_max_quota | server_devices |
-      | Shared with Max      | 0                 | 0               | Shared with Max     | 0          | 0              |
+      | Shared with Max      | 0                 | 0               | Shared with Max     | 0                | 0              |
     Then Add user group error messages should be:
       """
       Whole positive integer required for Server shared with max storage
@@ -294,7 +316,17 @@ Feature: Add a new user group
       """
     When I add a new Itemized user group:
       | desktop_storage_type | desktop_max_quota | desktop_devices | server_storage_type | server_max_quota | server_devices |
-      | Shared with Max      | -1          | -1              | Shared with Max     | -1         | -1             |
+      | Shared with Max      |                   |                 | Shared with Max     |                  |                |
+    Then Add user group error messages should be:
+      """
+      Server shared with max storage required
+      Desktop shared with max storage required
+      Desktop device count required
+      Server device count required
+      """
+    When I add a new Itemized user group:
+      | desktop_storage_type | desktop_max_quota | desktop_devices | server_storage_type | server_max_quota | server_devices |
+      | Shared with Max      | -1                | -1              | Shared with Max     | -1               | -1             |
     Then Add user group error messages should be:
       """
       Whole positive integer required for Server shared with max storage
@@ -324,7 +356,7 @@ Feature: Add a new user group
       """
     When I add a new Itemized user group:
       | desktop_storage_type | desktop_assigned_quota | desktop_devices | server_storage_type | server_assigned_quota | server_devices |
-      | Assigned             | 251                    | 11              | Assigned            | 101             | 201            |
+      | Assigned             | 251                    | 11              | Assigned            | 101                   | 201            |
     Then Add user group error messages should be:
       """
       Server assigned storage cannot exceed its ProPartner's effective storage quota
@@ -334,7 +366,7 @@ Feature: Add a new user group
       """
     When I add a new Itemized user group:
       | desktop_storage_type | desktop_assigned_quota | desktop_devices | server_storage_type | server_assigned_quota | server_devices |
-      | Assigned             | 0                | 0               | Assigned            | 0               | 0              |
+      | Assigned             | 0                      | 0               | Assigned            | 0                     | 0              |
     Then Add user group error messages should be:
       """
       Whole positive integer required for Server assigned storage
@@ -344,7 +376,17 @@ Feature: Add a new user group
       """
     When I add a new Itemized user group:
       | desktop_storage_type | desktop_assigned_quota | desktop_devices | server_storage_type | server_assigned_quota | server_devices |
-      | Assigned             | -1               | -1              | Assigned            | -1              | -1             |
+      | Assigned             |                        |                 | Assigned            |                       |                |
+    Then Add user group error messages should be:
+      """
+      Server assigned storage required
+      Desktop assigned storage required
+      Desktop device count required
+      Server device count required
+      """
+    When I add a new Itemized user group:
+      | desktop_storage_type | desktop_assigned_quota | desktop_devices | server_storage_type | server_assigned_quota | server_devices |
+      | Assigned             | -1                     | -1              | Assigned            | -1                    | -1             |
     Then Add user group error messages should be:
       """
       Whole positive integer required for Server assigned storage
@@ -354,7 +396,7 @@ Feature: Add a new user group
       """
     When I add a new Itemized user group:
       | desktop_storage_type | desktop_assigned_quota | desktop_devices | server_storage_type | server_assigned_quota | server_devices |
-      | Assigned             | hello            | hello           | Assigned            | hello           | hello          |
+      | Assigned             | hello                  | hello           | Assigned            | hello                 | hello          |
     Then Add user group error messages should be:
       """
       Whole positive integer required for Server assigned storage
@@ -364,7 +406,7 @@ Feature: Add a new user group
       """
     When I add a new Itemized user group:
       | desktop_storage_type | desktop_assigned_quota | desktop_devices | server_storage_type | server_assigned_quota | server_devices |
-      | Assigned             | 1.5              | 1.5             | Assigned            | 1.5             | 1.5            |
+      | Assigned             | 1.5                    | 1.5             | Assigned            | 1.5                   | 1.5            |
     Then Add user group error messages should be:
       """
       Whole positive integer required for Server assigned storage

@@ -2,9 +2,9 @@
 # Create a new bundled user group
 #
 # Bundled step available column names:
-# | name      | storage type | assigned | max      | server support | enable stash |
+# | name      | storage_type | assigned | max      | server_support | enable_stash |
 # Itemized step available column names:
-# | name      | desktop storage type | desktop assigned | desktop max | desktop device | enable stash | server storage type | server assigned | server max | server device |
+# | name      | desktop_storage_type | desktop_assigned | desktop_max | desktop_device | enable_stash | server_storage_type | server assigned | server max | server device |
 #
 When /^I (add|edit) (.+) (Bundled|Itemized) user group:$/ do |action, group_name, type, ug_table|
   cells = ug_table.hashes.first

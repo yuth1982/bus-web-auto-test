@@ -3,25 +3,28 @@ module Bus
   class SearchListUsersSection < SiteHelper::Section
     # Private elements
     #
-    element(:search_user_tb, id: "user_search")
-    element(:search_user_btn, xpath: "//div[@id='user-list-content']/div/form//input[@value='Submit']")
-    element(:user_filter_select, id: "user_filter")
-    element(:partner_filter_select, id:"partner_filter")
-    element(:search_results_table, xpath: "//div[@id='user-list-content']/div/table")
+    element(:search_user_tb, id: 'user_search')
+    element(:search_user_btn, css: 'table#search_box input[value=Submit]')
+    element(:user_filter_select, id: 'user_filter')
+    element(:partner_filter_select, id: 'partner_filter')
+    element(:search_results_table, css: 'div#user-list-content>div>table')
     element(:clear_search_link, xpath: "//a[text()='Clear search']")
-    element(:refresh_link, xpath: "//a[@class='mod-button']")
-    element(:export_csv_link, css: "p.table-export-links a")
+    element(:export_csv_link, css: 'p.table-export-links a')
 
     # Public: Search user
     #
-    # Examples
-    #  @bus_admin_console_page.search_list_users_section.search_user("qa1+test@mozy.com", "None")
+    # @keywords         [String]
+    # @filter           [String]
+    # @partner_filter   [String]
     #
-    # Returns nothing
-    def search_user(keywords, filter = "None", partner_filter = "")
+    # Examples:
+    #  @bus_admin_console_page.search_list_users_section.search_user("qa1+test@mozy.com")
+    #
+    # @return [] nothing
+    def search_user(keywords, filter = 'None', partner_filter = '')
       search_user_tb.type_text(keywords)
       user_filter_select.select(filter)
-      if partner_filter != ""
+      unless partner_filter.empty?
         partner_filter_select.select(partner_filter)
       end
       search_user_btn.click
@@ -31,12 +34,13 @@ module Bus
     # Public: Search results hashes
     #         Converts results table into an Array of Hash where the keys of each Hash are the headers in the table.                                                                                               # Example
     #
+    # Examples:
     #  @bus_admin_console_page.search_list_users_section.search_results_hashes
     #  # => ["User"=>"user@mozy.com", "Name"=>"Test User", "Machines"=>0, "Storage"=>"15 GB", “Storage Used"=>0, "Created"=>"08/15/12"", "Backed Up"=>"never"]
     #
-    # Returns hash array
+    # @return [Hash<String>]
     def search_results_hashes
-      search_results_table.rows_text.map{ |row| Hash[*search_results_table.headers_text.zip(row).flatten] }
+      search_results_table.hashes
     end
 
     # Public: Search results table header row text
@@ -53,8 +57,7 @@ module Bus
 
     # Public: Search results table body rows text
     #
-    # Example
-    #
+    # Examples:
     #  @bus_admin_console_page.search_list_users_section.search_results_table_rows
     #  # => ["", "qa1+new+user+test@mozy.com", "new user 1", "0", "0 bytes", "0", "none", "08/15/12", "never"]
     #
@@ -65,24 +68,28 @@ module Bus
 
     # Public: Click the user link to view user details
     #
-    # Example
-    #
+    # Examples:
     #  @bus_admin_console_page.search_list_users_section.view_user_details('qa1+new+user+test@mozy.com')
     #
-    # Return search results table body rows text array
+    #@return [] nothing
     def view_user_details(user)
       find_link(user).click
     end
 
     # Public: Click the export csv link to download the users table
     #
-    # Example
-    #
+    # Examples:
     #  @bus_admin_console_page.search_list_users_section.export_users_csv
     #
-    # Return null
+    # @return [] nothing
     def export_csv
       export_csv_link.click
+    end
+
+    def sort_users_by(column_name)
+      target = search_results_table.headers.select{ |col| col.text == column_name}
+      target.first.find(:css, 'a').click
+      wait_until_bus_section_load
     end
   end
 end

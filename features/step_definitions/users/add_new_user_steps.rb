@@ -3,26 +3,29 @@
 #
 # available columns:
 # name, email, user_group, storage_type, storage_max, devices, enable_stash, send_email
-When /^I add (\d+) new user:$/ do |num_users, user_table|
+When /^I add new user\(s\):$/ do |user_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_user'])
-  cells = user_table.hashes.first
-  @new_user = Bus::DataObj::User.new
-  hash_to_object(cells, @new_user)
-  @bus_site.admin_console_page.add_new_user_section.add_new_users(@new_user, num_users)
+  @new_users =[]
+  user_table.hashes.each do |hash|
+    user = Bus::DataObj::User.new
+    hash_to_object(hash, user)
+    @new_users << user
+  end
+  @bus_site.admin_console_page.add_new_user_section.add_new_users(@new_users)
 end
 
 Then /^(\d+) new user should be created$/ do |num|
   @bus_site.admin_console_page.add_new_user_section.success_messages.should == "Successfully created #{num} user(s)"
 end
 
+Then /^Add new user error message should be:$/ do |messages|
+  @bus_site.admin_console_page.add_new_user_section.wait_until_bus_section_load
+  @bus_site.admin_console_page.add_new_user_section.error_messages.should == messages.to_s
+end
+
 Then /^User group storage details table should be:$/ do |ug_table|
   @bus_site.admin_console_page.add_new_user_section.wait_until_bus_section_load
   @bus_site.admin_console_page.add_new_user_section.ug_resource_details_table_rows.should == ug_table.raw
-end
-
-
-Then /^New user created message should be (.+)$/ do |message|
-  @bus_site.admin_console_page.add_new_user_section.sucess_messages.gsub("\n"," ").should == message
 end
 
 When /^I refresh Add New User section$/ do

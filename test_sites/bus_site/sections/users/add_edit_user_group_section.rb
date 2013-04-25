@@ -7,6 +7,7 @@ module Bus
     element(:err_msg_div, css: 'ul.flash.errors')
     # Common
     element(:group_name_tb, id: 'name')
+    element(:storage_device_err_p, id: 'show_storage_device_warning_row')
     # For bundled
     element(:generic_storage_type_select, css: 'select[id^=Generic_storage_pool_type_]')
     element(:generic_assigned_tb, id: 'Generic_storage_assigned')

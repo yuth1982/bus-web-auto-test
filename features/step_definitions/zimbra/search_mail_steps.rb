@@ -4,7 +4,7 @@ When /^I search emails by keywords:$/ do |keywords_table|
     col.each do |k,v|
       case k
         when 'to'
-          v.gsub!(/@new_user_email/, @user.email) unless @user.nil?
+          v.gsub!(/@new_user_email/, @new_users.first.email) unless @new_users.nil?
           v.gsub!(/@new_admin_email/, @partner.admin_info.email) unless @partner.nil?
         when 'date'
           v.replace(Chronic.parse(v).strftime('%m/%d/%y'))

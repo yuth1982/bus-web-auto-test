@@ -19,7 +19,7 @@ Transform /^newly created (Bundled|Itemized) user group name$/ do |type|
 end
 
 Transform /^newly created user email$/ do |step_arg|
-  @user.email
+  @new_users.first.email
 end
 
 Transform /^newly created partner aria id$/ do |step_arg|

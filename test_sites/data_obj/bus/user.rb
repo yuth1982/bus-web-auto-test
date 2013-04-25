@@ -5,17 +5,10 @@ module Bus
       attr_accessor :name, :email, :user_group, :storage_type, :storage_max, :devices, :enable_stash, :send_email
 
       def initialize
-        @name = rand_name
-        @email = rand_email
+        @name = Forgery::Name.first_name
+        @email = "#{CONFIGS['global']['email_prefix']}+#{Forgery(:basic).password(:at_least => 12, :at_most => 15)}@decho.com".downcase
       end
 
-      def rand_name
-        Forgery::Name.first_name
-      end
-
-      def rand_email
-        "#{CONFIGS['global']['email_prefix']}+User+#{Time.now.strftime('%H%M%S')}@decho.com".downcase
-      end
     end
   end
 end
