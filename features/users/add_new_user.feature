@@ -43,12 +43,12 @@ Feature: Add a new user
     Then 1 new user should be created
     When I add new user(s):
       | name       | user_group           | storage_type | storage_max | devices |
-      | TC.20875-5 | (default user group) | Desktop      |             | 1       |
+      | TC.20875-5 | (default user group) | Desktop      |             | 2       |
       | TC.20875-6 | (default user group) | Desktop      |             | 2       |
     Then 2 new user should be created
     When I add new user(s):
       | name       | user_group           | storage_type | storage_max | devices |
-      | TC.20875-7 | (default user group) | Server       |             | 1       |
+      | TC.20875-7 | (default user group) | Server       |             | 2       |
       | TC.20875-8 | (default user group) | Server       |             | 2       |
     Then 2 new user should be created
     When I navigate to Search / List Users section from bus admin console page
@@ -104,12 +104,12 @@ Feature: Add a new user
     Then 1 new user should be created
     When I add new user(s):
       | name       | user_group    | storage_type | storage_max | devices |
-      | TC.20910-5 | TC.20910 UG 3 | Desktop      |             | 1       |
+      | TC.20910-5 | TC.20910 UG 3 | Desktop      |             | 2       |
       | TC.20910-6 | TC.20910 UG 3 | Desktop      |             | 2       |
     Then 2 new user should be created
     When I add new user(s):
       | name       | user_group    | storage_type | storage_max | devices |
-      | TC.20910-7 | TC.20910 UG 3 | Server       |             | 1       |
+      | TC.20910-7 | TC.20910 UG 3 | Server       |             | 2       |
       | TC.20910-8 | TC.20910 UG 3 | Server       |             | 2       |
     Then 2 new user should be created
     When I navigate to Search / List Users section from bus admin console page
@@ -153,12 +153,12 @@ Feature: Add a new user
     Then 1 new user should be created
     When I add new user(s):
       | name       | user_group           | storage_type | storage_max | devices |
-      | TC.20871-5 | (default user group) | Desktop      |             | 1       |
+      | TC.20871-5 | (default user group) | Desktop      |             | 2       |
       | TC.20871-6 | (default user group) | Desktop      |             | 2       |
     Then 2 new user should be created
     When I add new user(s):
       | name       | user_group           | storage_type | storage_max | devices |
-      | TC.20871-7 | (default user group) | Server       |             | 1       |
+      | TC.20871-7 | (default user group) | Server       |             | 2       |
       | TC.20871-8 | (default user group) | Server       |             | 2       |
     Then 2 new user should be created
     When I navigate to Search / List Users section from bus admin console page
@@ -214,12 +214,12 @@ Feature: Add a new user
     Then 1 new user should be created
     When I add new user(s):
       | name       | user_group    | storage_type | storage_max | devices |
-      | TC.20906-5 | TC.20906 UG 3 | Desktop      |             | 1       |
+      | TC.20906-5 | TC.20906 UG 3 | Desktop      |             | 2       |
       | TC.20906-6 | TC.20906 UG 3 | Desktop      |             | 2       |
     Then 2 new user should be created
     When I add new user(s):
       | name       | user_group    | storage_type | storage_max | devices |
-      | TC.20906-7 | TC.20906 UG 3 | Server       |             | 1       |
+      | TC.20906-7 | TC.20906 UG 3 | Server       |             | 2       |
       | TC.20906-8 | TC.20906 UG 3 | Server       |             | 2       |
     Then 2 new user should be created
     When I navigate to Search / List Users section from bus admin console page
@@ -263,12 +263,12 @@ Feature: Add a new user
     Then 1 new user should be created
     When I add new user(s):
       | name       | storage_type | storage_max | devices |
-      | TC.20921-5 | Desktop      |             | 1       |
+      | TC.20921-5 | Desktop      |             | 2       |
       | TC.20921-6 | Desktop      |             | 2       |
     Then 2 new user should be created
     When I add new user(s):
       | name       | storage_type | storage_max | devices |
-      | TC.20921-7 | Server       |             | 1       |
+      | TC.20921-7 | Server       |             | 2       |
       | TC.20921-8 | Server       |             | 2       |
     Then 2 new user should be created
     When I navigate to Search / List Users section from bus admin console page
