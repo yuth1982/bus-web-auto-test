@@ -4,7 +4,8 @@
 # Bundled step available column names:
 # | name      | storage_type | assigned | max      | server_support | enable_stash |
 # Itemized step available column names:
-# | name      | desktop_storage_type | desktop_assigned | desktop_max | desktop_device | enable_stash | server_storage_type | server assigned | server max | server device |
+# | name      | desktop_storage_type | desktop_assigned | desktop_max | desktop_devices | enable_stash |
+# | server_storage_type | server_assigned | server_max | server_devices |
 #
 When /^I (add|edit) (.+) (Bundled|Itemized) user group:$/ do |action, group_name, type, ug_table|
   cells = ug_table.hashes.first
@@ -107,5 +108,9 @@ Then /^I should see correct UI for (Bundled|Itemized) user group with:$/ do |typ
     else
       # Skipped
   end
+end
+
+Then /^I close edit user group section$/ do
+  @bus_site.admin_console_page.edit_user_group_section.close_bus_section
 end
 

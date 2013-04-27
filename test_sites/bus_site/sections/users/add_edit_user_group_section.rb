@@ -35,8 +35,8 @@ module Bus
     #
     # @return [] nothing
     def add_edit_bundled_user_group(ug)
-      group_name_tb.type_text(ug.name)
-      generic_storage_type_select.select(ug.storage_type) # mandatory
+      group_name_tb.type_text(ug.name) if group_name_tb[:disabled].nil?
+      generic_storage_type_select.select(ug.storage_type) unless ug.storage_type.nil?
       generic_max_tb.type_text(ug.max_quota) unless ug.max_quota.nil?
       generic_assigned_tb.type_text(ug.assigned_quota) unless ug.assigned_quota.nil?
       unless ug.server_support.nil?
@@ -65,7 +65,7 @@ module Bus
     #
     # @return [] nothing
     def add_edit_itemized_user_group(ug)
-      group_name_tb.type_text(ug.name)
+      group_name_tb.type_text(ug.name) if group_name_tb[:disabled].nil?
 
       desktop_storage_type_select.select(ug.desktop_storage_type) unless ug.desktop_storage_type.nil?
       desktop_assigned_tb.type_text(ug.desktop_assigned_quota) unless ug.desktop_assigned_quota.nil?
@@ -78,7 +78,7 @@ module Bus
       server_devices_tb.type_text(ug.server_devices) unless ug.server_devices.nil?
 
       unless ug.enable_stash.nil?
-        if ug.enable_stash
+        if ug.enable_stash.downcase.eql?('yes')
           enable_stash_cb.check
         else
           enable_stash_cb.uncheck
