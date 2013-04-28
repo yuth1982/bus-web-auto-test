@@ -163,7 +163,7 @@ Feature: Add a new user group
       | Assigned     |                |
     Then Add user group error messages should be:
       """
-      I don't know what is the error message
+      Generic assigned storage required
       """
     When I add a new Bundled user group:
       | storage_type | assigned_quota |
@@ -205,7 +205,7 @@ Feature: Add a new user group
       | Shared with Max |           |
     Then Add user group error messages should be:
       """
-      I don't know what is the error message
+      Generic shared with max storage required
       """
     When I add a new Bundled user group:
       | storage_type    | max_quota |
@@ -413,6 +413,13 @@ Feature: Add a new user group
       Whole positive integer required for Desktop assigned storage
       Whole positive integer required for Desktop device count
       Whole positive integer required for Server device count
+      """
+    When I add a new Itemized user group:
+      | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
+      |      | Shared               | 1               | Shared              | 1              |
+    Then Add user group error messages should be:
+      """
+      Please enter a name
       """
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
