@@ -1,3 +1,4 @@
+require_relative 'client_config_iframe'
 module Bus
   # This class provides actions for add new partner page section
   class ClientConfigSection < SiteHelper::Section
