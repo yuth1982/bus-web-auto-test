@@ -46,6 +46,7 @@ module Bus
     section(:transfer_resources_section, TransferResourcesSection, id: "resource-transfer_resources")
     section(:purchase_resources_section, PurchaseResourcesSection, id: "resource-purchase_resources")
     section(:return_resources_section, ReturnResourcesSection, id: "resource-unpurchase_resources")
+    section(:resource_summary_section, ResourceSummarySection, id: 'storage-summary')
 
     # Data shuttle section
     section(:data_shuttle_status_section, DataShuttleStatusSection, id: 'resource-data_shuttle_status')
