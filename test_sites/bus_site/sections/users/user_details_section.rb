@@ -41,6 +41,8 @@ module Bus
     element(:verify_user_link, css: 'a[onclick*=consumer_verify]')
     element(:user_verified_msg, css: "ul[class='flash successes'] li")
     element(:login_as_user_link, css: 'a[href*=login_as_user]')
+
+    element(:device_table, css: 'table.mini-table')
     # Public: User details hash
     #
     # @param [] none
@@ -357,6 +359,14 @@ module Bus
     def delete_user
       delete_user_link.click
       alert_accept
+    end
+
+    def device_table_headers
+      device_table.headers_text
+    end
+
+    def device_table_rows
+      device_table.rows_text
     end
   end
 end

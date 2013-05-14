@@ -159,3 +159,12 @@ end
 Then /^the user's user group should be (.+)$/ do |user_group|
   @bus_site.admin_console_page.user_details_section.users_user_group(user_group).should be_true
 end
+Then(/^device table in user details should be:$/) do |table|
+  # table is a | machine1        | 0 / 40 GB      | Set                  | N/A         |        |
+  @bus_site.admin_console_page.user_details_section.device_table_headers.should == table.raw.first
+  actual_rows = @bus_site.admin_console_page.user_details_section.device_table_rows.delete_if do |row|
+    row.first == ''
+  end
+  Log.debug actual_rows
+  actual_rows.should == table.rows
+end

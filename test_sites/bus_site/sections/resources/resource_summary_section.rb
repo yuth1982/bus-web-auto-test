@@ -57,8 +57,8 @@ module Bus
       ['used', 'available'].each do |u_or_a|
         result["#{resource_type}_#{u_or_a}"] = find(:id, "resource_summary_#{resource_type}_#{u_or_a}").text
       end
-      elements = all(:id, 'resource_storage_subpartner_all')
-      result['subpartner_storage_all'] = elements.first.text unless elements.empty?
+      elements = all(:id, "resource_#{resource_type}_subpartner_all")
+      result["#{resource_type}_all_subpartner"] = elements.first.text unless elements.empty?
       result
     end
   end
