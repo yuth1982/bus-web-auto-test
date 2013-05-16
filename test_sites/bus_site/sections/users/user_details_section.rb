@@ -16,6 +16,8 @@ module Bus
     element(:user_group_search_img, css: "img[alt='Search-button-icon']")
     element(:change_partner_link, xpath: "//span[starts-with(@id,'user-display-partner-')]//a[text()='(change)']")
     element(:change_partner_submit_button, xpath: "//span[starts-with(@id,'user-change-partner-')]//input[@name='commit']")
+    element(:view_product_keys_link, xpath: "//a[text()='(View Product Keys)']")
+    element(:product_key_lbl, xpath: "//div[starts-with(@id, 'all-license-keys-')]//div/div/div[2]/table[2]/tbody/tr/td")
 
 
     # Add Stash
@@ -43,6 +45,12 @@ module Bus
     element(:login_as_user_link, css: 'a[href*=login_as_user]')
 
     element(:device_table, css: 'table.mini-table')
+
+    # Change User Password
+    element(:new_password_tb, id: 'new_password')
+    element(:new_password_confirm_tb, id: 'new_password_confirmation')
+    element(:new_password_change_btn, css: "div[id^=user-pass-change] input[value='Save Changes']")
+
     # Public: User details hash
     #
     # @param [] none
@@ -367,6 +375,23 @@ module Bus
 
     def device_table_rows
       device_table.rows_text
+    end
+
+    def click_view_product_keys_link
+      view_product_keys_link.click
+    end
+
+    def product_key
+      product_key_lbl.text
+    end
+
+    def edit_password(password)
+      change_user_password_link.click
+      wait_until_bus_section_load
+      new_password_tb.type_text(password)
+      new_password_confirm_tb.type_text(password)
+      new_password_change_btn.click
+      wait_until{ !new_password_change_btn.visible? }
     end
   end
 end

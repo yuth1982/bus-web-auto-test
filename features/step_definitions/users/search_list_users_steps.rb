@@ -6,10 +6,10 @@
 When /^I search user by:$/ do |search_key_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_users'])
   attributes = search_key_table.hashes.first
-  if @user.nil?
+  if @new_users.nil?
     keywords = attributes["keywords"] || ""
   else
-    keywords = attributes["keywords"].gsub(/@user_name/,@user.name) || ""
+    keywords = attributes["keywords"].gsub(/@user_name/,@new_users[0].name) || ""
   end
   filter = attributes["filter"] || "None"
   partner_filter = attributes["user type"] || ""
@@ -47,9 +47,9 @@ end
 
 When /^I view user details by (.+)$/ do |user|
   if @user.nil?
-    @bus_site.admin_console_page.search_list_users_section.view_user_details((user).slice(0,27))
+    @bus_site.admin_console_page.search_list_users_section.view_user_details(user)
   else
-    @bus_site.admin_console_page.search_list_users_section.view_user_details((user.gsub(/@user_email/,@user.email)).slice(0,27))
+    @bus_site.admin_console_page.search_list_users_section.view_user_details(user.gsub(/@user_email/,@new_users.first.email))
   end
 end
 

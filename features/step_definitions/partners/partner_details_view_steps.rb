@@ -1,4 +1,3 @@
-
 When /^I act as newly created partner|sub partner account$/ do
   @bus_site.admin_console_page.partner_details_section.act_as_partner
   @bus_site.admin_console_page.has_stop_masquerading_link?
@@ -79,6 +78,7 @@ end
 
 When /^I Create an API key for current partner$/ do
   @bus_site.admin_console_page.partner_details_section.create_api_key
+  @api_key = @bus_site.admin_console_page.partner_details_section.api_key
 end
 
 Then /^Partner API key should be (.+)$/ do |api_key|
@@ -230,4 +230,8 @@ end
 
 Then /^Partner contact information is changed$/ do
   @bus_site.admin_console_page.partner_details_section.wait_until_bus_section_load
+end
+
+Then /^partner details message should be$/ do |message|
+  @bus_site.admin_console_page.partner_details_section.success_messages == message
 end

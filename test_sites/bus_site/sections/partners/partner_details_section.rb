@@ -4,6 +4,7 @@ module Bus
 
     # Private elements
     #
+    element(:msg_div, css: 'ul.flash.successes')
     element(:billing_info_link, xpath: "//a[text()='Billing Info']")
     element(:act_as_link, xpath: "//a[text()='act as']")
     element(:change_name_link, xpath: "//a[text()='Change Name']")
@@ -374,12 +375,10 @@ module Bus
     end
 
     def add_ip_whitelist(ip)
+      refresh_bus_section
       ip_whitelist_div.find(:css, 'a:first-child').click
       ip_whitelist_div.find(:css, 'input#api_allowed_ips').type_text(ip.to_s)
       ip_whitelist_div.find(:css, 'input[value=Submit]').click
-      wait_until_bus_section_load
-      # This method call is a walk around of bug #95827, it should be removed when bug is fixed
-      refresh_bus_section
     end
 
     # Public: Close partner details frame
@@ -502,8 +501,15 @@ module Bus
       save_changes_btn.click
     end
 
-    def save_changes?
-
+    # Public: Success messages for partner details section
+    #
+    # Example
+    #  @bus_admin_console_page.partner_details_section.success_messages
+    #  # => "API IP whitelist has been updated"
+    #
+    # @return [String]
+    def success_messages
+      msg_div.text
     end
 
   end

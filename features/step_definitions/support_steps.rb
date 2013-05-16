@@ -37,3 +37,7 @@ end
 Transform /^newly created config name$/ do |step_arg|
   @client_config.name
 end
+
+Transform /^default password$/ do |step_arg|
+  CONFIGS['global']['test_pwd']
+end

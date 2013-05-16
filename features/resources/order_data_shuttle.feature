@@ -14,6 +14,7 @@ Feature:
     Then Partners search results in order data shuttle section should be:
       | Partner        | Root Admin    | Type    |
       | @partner_name  | @admin_email  | MozyPro |
+    Then I search and delete partner account by newly created partner company name
 
   @TC.12659
   Scenario: 12659 Delete a partner and verify the module updates correctly
@@ -48,6 +49,7 @@ Feature:
     Then Partners search results in order data shuttle section should be:
       | Partner        | Root Admin    | Type    |
       | @partner_name  | @admin_email  | MozyPro |
+    Then I search and delete partner account by newly created partner company name
 
   @TC.12661
   Scenario: 12661 Verify EMEA Pro Partners Appear - Search
@@ -60,6 +62,7 @@ Feature:
     Then Partners search results in order data shuttle section should be:
       | Partner        | Root Admin    | Type    |
       | @partner_name  | @admin_email  | MozyPro |
+    Then I search and delete partner account by newly created partner company name
 
   @TC.12942
   Scenario: 12942 Suspended partner order data shuttle
@@ -71,6 +74,7 @@ Feature:
     When I navigate to Order Data Shuttle section from bus admin console page
     And I search partner in order data shuttle section by newly created partner company name
     Then Partner search results in order data shuttle section should be empty
+    Then I search and delete partner account by newly created partner company name
 
   @TC.12368
   Scenario: 12368 Verify Shipping Address Section - Populated Fields Correctly
@@ -210,12 +214,27 @@ Feature:
   Scenario: 16183 Verify ordering data shuttle exceed partner available resources
     When I add a new MozyEnterprise partner:
       | period | users |
-      | 12     | 1     |
+      | 12     | 2     |
     Then New partner should be created
-    When I order data shuttle for newly created partner company name
+    When I get the partner_id
+    And I act as newly created partner account
+    And I add new user(s):
+      | user_group           | storage_type | storage_max | devices |
+      | (default user group) | Desktop      | 10          | 1       |
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    Then I stop masquerading
+    And I order data shuttle for newly created partner company name
       | power adapter   | key from  | quota |
       | Data Shuttle US | available | 5000  |
-    Then Order data shuttle message should be The resources added in this Data Shuttle order exceed those available for this partner. Please visit the Change Plan page to add more resources.
+    Then order data shuttle message should be:
+    """
+    The resources added in this Data Shuttle order exceed those available for machine 'AUTOTEST'. Please visit the Edit Machine page to add more resources.
+    """
     And I search and delete partner account by newly created partner company name
 
   @TC.16325
@@ -224,77 +243,48 @@ Feature:
       | period | users |
       | 12     | 1     |
     Then New partner should be created
+    When I get the partner_id
+    And I act as newly created partner account
+    And I add new user(s):
+      | user_group           | storage_type | storage_max | devices |
+      | (default user group) | Desktop      | 10          | 1       |
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    Then I stop masquerading
     When I order data shuttle for newly created partner company name
       | power adapter   | key from  | discount |
       | Data Shuttle US | available | 110      |
-    Then Order data shuttle message should be Discount >100% are not allowed. Please correct the value in the red box
-    And I search and delete partner account by newly created partner company name
-
-  @TC.16184
-  Scenario: 16184 Verify ordering data shuttle exceed partner available licence
-    When I add a new MozyEnterprise partner:
-      | period | users |
-      | 12     | 1     |
-    Then New partner should be created
-    When I order data shuttle for newly created partner company name
-      | power adapter   | key from |
-      | Data Shuttle US | new      |
-    Then Order data shuttle message should be The resources added includes new key. Please use only existing keys for this partner
-    And I search and delete partner account by newly created partner company name
-
-  @TC.16209
-  Scenario: 16209 Ordering data shuttle for MozyEnterprise using the Add Link with Unassigned email
-    When I add a new MozyEnterprise partner:
-      | period | users |
-      | 12     | 1     |
-    Then New partner should be created
-    When I order data shuttle for newly created partner company name
-      | power adapter   | key from  | quota |
-      | Data Shuttle US | available | 20    |
-    Then Data shuttle order summary should be:
-      | Description         | Quantity | Total    |
-      | Data Shuttle 1.8 TB | 1        | $275.00  |
-      | Total Price         |          | $275.00  |
-    Then Data shuttle order should be created
-    And I search and delete partner account by newly created partner company name
-
-  @TC.16208
-  Scenario: 16208 Ordering data shuttle for MozyEnterprise using the Add Link with assigned email
-    When I add a new MozyEnterprise partner:
-      | period | users |
-      | 12     | 1     |
-    Then New partner should be created
-    When I order data shuttle for newly created partner company name
-      | power adapter   | key from  | quota | assign to                                |
-      | Data Shuttle US | available | 20    | qa1+TC+16208+data+shuttle+order@mozy.com |
-    Then Data shuttle order should be created
-    And I search and delete partner account by newly created partner company name
-
-  @TC.16207
-  Scenario: 16207 Ordering data shuttle for MozyPro using the Add New Key Link with unassigned email
-    When I add a new MozyPro partner:
-      | period | base plan |
-      | 1      | 50 GB     |
-    Then New partner should be created
-    And I order data shuttle for newly created partner company name
-      | power adapter   | key from | quota |
-      | Data Shuttle US | new      | 20    |
-    Then Data shuttle order summary should be:
-      | Description         | Quantity | Total    |
-      | Data Shuttle 1.8 TB | 1        | $275.00  |
-      | Total Price         |          | $275.00  |
-    Then Data shuttle order should be created
+    Then order data shuttle message should be:
+    """
+    Discount >100% are not allowed. Please correct the value in the red box
+    """
     And I search and delete partner account by newly created partner company name
 
   @TC.16205 @slow
-  Scenario: 16205 Ordering data shuttle for MozyPro using the Add New Key Link with assigned email
+  Scenario: 16205 Ordering data shuttle for MozyPro
     When I add a new MozyPro partner:
       | period | base plan |
       | 1      | 50 GB     |
     Then New partner should be created
+    When I get the partner_id
+    And I act as newly created partner account
+    And I add new user(s):
+      | storage_type | storage_max | devices |
+      | Desktop      | 30          | 1       |
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    Then I stop masquerading
     When I order data shuttle for newly created partner company name
-      | power adapter   | key from | quota | assign to                                |
-      | Data Shuttle US | new      | 20    | qa1+TC+16205+data+shuttle+order@mozy.com |
+      | power adapter   | key from  | quota |
+      | Data Shuttle US | available | 20    |
     Then Data shuttle order should be created
     And I search and delete partner account by newly created partner company name
 
@@ -302,11 +292,23 @@ Feature:
   Scenario: 16324 Ordering data shuttle with 50% discount
     When I add a new MozyEnterprise partner:
       | period | users |
-      | 12     | 1     |
+      | 12     | 2     |
     Then New partner should be created
+    When I get the partner_id
+    And I act as newly created partner account
+    And I add new user(s):
+      | user_group           | storage_type | storage_max | devices |
+      | (default user group) | Desktop      | 10          | 1       |
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    Then I stop masquerading
     When I order data shuttle for newly created partner company name
-      | power adapter   | key from  | quota | assign to | discount |
-      | Data Shuttle US | available | 10    | @email    | 50       |
+      | power adapter   | key from  | quota | discount |
+      | Data Shuttle US | available | 10    | 50       |
     Then Data shuttle order summary should be:
       | Description         | Quantity | Total    |
       | Data Shuttle 1.8 TB | 1        | $137.50  |
@@ -318,11 +320,23 @@ Feature:
   Scenario: 16323 Ordering data shuttle with 100% discount
     When I add a new MozyEnterprise partner:
       | period | users |
-      | 12     | 1     |
+      | 12     | 2     |
     Then New partner should be created
+    When I get the partner_id
+    And I act as newly created partner account
+    And I add new user(s):
+      | user_group           | storage_type | storage_max | devices |
+      | (default user group) | Desktop      | 10          | 1       |
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    Then I stop masquerading
     When I order data shuttle for newly created partner company name
-      | power adapter   | key from  | quota | assign to | discount |
-      | Data Shuttle US | available | 10    | @email    | 100      |
+      | power adapter   | key from  | quota | discount |
+      | Data Shuttle US | available | 10    | 100      |
     Then Data shuttle order summary should be:
       | Description         | Quantity | Total  |
       | Data Shuttle 1.8 TB | 1        | $0.00  |
@@ -334,8 +348,20 @@ Feature:
   Scenario: 16211 Canceling orders that were created using the Add Link
     When I add a new MozyEnterprise partner:
       | period | users |
-      | 12     | 1     |
+      | 12     | 2     |
     Then New partner should be created
+    When I get the partner_id
+    And I act as newly created partner account
+    And I add new user(s):
+      | user_group           | storage_type | storage_max | devices |
+      | (default user group) | Desktop      | 20          | 1       |
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    Then I stop masquerading
     When I order data shuttle for newly created partner company name
       | power adapter   | key from  | quota |
       | Data Shuttle US | available | 20    |
@@ -344,29 +370,27 @@ Feature:
     Then The order should be Cancelled
     And I search and delete partner account by newly created partner company name
 
-  @TC.16212
-  Scenario: 16212 Canceling orders that were created using the Add New Key Link
-    When I add a new MozyPro partner:
-      | period | base plan     |
-      | 1      | 50 GB         |
-    Then New partner should be created
-    When I order data shuttle for newly created partner company name
-      | power adapter   | key from | quota |
-      | Data Shuttle US | new      | 20    |
-    Then Data shuttle order should be created
-    When I cancel the latest data shuttle order for newly created partner company name
-    Then The order should be Cancelled
-    And I search and delete partner account by newly created partner company name
-
   @TC.17879
-  Scenario: 17879 Ordering data shuttle over 1.8T for Reseller using the Add New Key Link
+  Scenario: 17879 Ordering data shuttle over 1.8T for Reseller
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
       | 1      | Silver        | 2000           |
     Then New partner should be created
+    When I get the partner_id
+    And I act as newly created partner account
+    And I add new user(s):
+      | user_group           | storage_type | storage_max | devices |
+      | (default user group) | Desktop      | 2000        | 1       |
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    Then I stop masquerading
     When I order data shuttle for newly created partner company name
-      | power adapter   | key from | quota |
-      | Data Shuttle US | new      | 2000  |
+      | power adapter   | key from  | quota |
+      | Data Shuttle US | available | 2000  |
     Then Data shuttle order should be created
     And Data shuttle order summary should be:
       | Description         | Quantity | Total   |
@@ -376,14 +400,26 @@ Feature:
     And I search and delete partner account by newly created partner company name
 
   @TC.16320
-  Scenario: 16320 Ordering data shuttle over 3.6T for MozyPro using the Add New Key Link
+  Scenario: 16320 Ordering data shuttle over 3.6T for MozyPro
     When I add a new MozyPro partner:
       | period | base plan |
       | 1      | 4 TB      |
     Then New partner should be created
+    When I get the partner_id
+    And I act as newly created partner account
+    And I add new user(s):
+      | storage_type | storage_max | devices |
+      | Desktop      | 3800        | 1       |
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    Then I stop masquerading
     When I order data shuttle for newly created partner company name
-      | power adapter   | key from | quota |
-      | Data Shuttle US | new      | 3800  |
+      | power adapter   | key from  | quota |
+      | Data Shuttle US | available | 3800  |
     Then Data shuttle order should be created
     And Data shuttle order summary should be:
       | Description         | Quantity | Total   |
@@ -398,9 +434,21 @@ Feature:
       | period | reseller type | reseller quota |
       | 1      | Silver        | 2000           |
     Then New partner should be created
+    When I get the partner_id
+    And I act as newly created partner account
+    And I add new user(s):
+      | user_group           | storage_type | storage_max | devices |
+      | (default user group) | Desktop      | 1000        | 1       |
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    Then I stop masquerading
     When I order data shuttle for newly created partner company name
-      | power adapter   | key from | quota | win drivers |
-      | Data Shuttle US | new      | 1000  | 2           |
+      | power adapter   | key from  | quota | win drivers |
+      | Data Shuttle US | available | 1000  | 2           |
     Then Data shuttle order should be created
     And The number of win drivers should be 2
     And I search and delete partner account by newly created partner company name
@@ -411,6 +459,18 @@ Feature:
       | period | base plan |
       | 1      | 1 TB      |
     Then New partner should be created
+    When I get the partner_id
+    And I act as newly created partner account
+    And I add new user(s):
+      | storage_type | storage_max | devices |
+      | Desktop      | 500         | 1       |
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    Then I stop masquerading
     When I order data shuttle for newly created partner company name
       | power adapter   | key from  | quota | win drivers | mac drivers |
       | Data Shuttle US | available | 500   | 0           | 2           |
@@ -422,8 +482,20 @@ Feature:
   Scenario: 17881 Verify billing statements when order a data shuttle
     When I add a new MozyEnterprise partner:
       | period | users |
-      | 12     | 1     |
+      | 12     | 2     |
     Then New partner should be created
+    When I get the partner_id
+    And I act as newly created partner account
+    And I add new user(s):
+      | user_group           | storage_type | storage_max | devices |
+      | (default user group) | Desktop      | 20          | 1       |
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    Then I stop masquerading
     When I order data shuttle for newly created partner company name
       | power adapter   | key from  | quota |
       | Data Shuttle US | available | 20    |

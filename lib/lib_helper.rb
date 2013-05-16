@@ -14,7 +14,9 @@ require 'time'
 require 'active_support/time'
 require 'chronic'
 require 'diffy'
-
+require 'net/http'
+require 'digest/sha1'
+require 'openssl'
 
 require 'capybara/cucumber'
 require 'capybara-webkit'
@@ -26,6 +28,7 @@ require 'db_helper'
 require 'ldap_helper'
 require 'ssh_helper'
 require 'utility'
+require 'device_helper'
 
 require 'site_helper/site_helper'
 require 'capybara_helper/capybara_helper'
@@ -38,6 +41,7 @@ include LDAPHelper
 include SSHHelper
 include AriaApi
 include Utility
+include KeylessDeviceActivation::Authentication
 
 
 

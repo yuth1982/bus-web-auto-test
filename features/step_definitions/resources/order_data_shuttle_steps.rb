@@ -87,7 +87,7 @@ When /^I navigate to process data shuttle order section for (.+)$/ do |company_n
   @bus_site.admin_console_page.order_data_shuttle_section.view_order_detail(company_name)
 end
 
-Then /^Order data shuttle message should be (.+)$/ do |messages|
+Then /^order data shuttle message should be:$/ do |messages|
   @bus_site.admin_console_page.process_order_section.messages.gsub(/\n/," ").should == messages
 end
 
