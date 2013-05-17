@@ -73,3 +73,37 @@ end
 When /^I view the partner info$/ do
   @bus_site.admin_console_page.view_partner_info
 end
+
+Then /^navigation items should be removed$/ do
+  # this should apply regardless of the partner type
+  @bus_site.admin_console_page.has_navigation?("Assign Keys").should be_empty
+  @bus_site.admin_console_page.has_navigation?("Transfer Resources").should be_empty
+  @bus_site.admin_console_page.has_navigation?("Return Unused Resources").should be_empty
+  @bus_site.admin_console_page.has_navigation?("Add New User Group").should be_empty
+  @bus_site.admin_console_page.has_navigation?("List User Groups").should be_empty
+end
+
+Then /^new section & navigation items are present for (MozyPro|MozyEnterprise|Reseller) partner$/ do |type|
+  @bus_site.admin_console_page.has_navigation?('quick_link_item').should be_empty
+  case type
+    when CONFIGS['bus']['company_type']['mozypro']
+      @bus_site.admin_console_page.has_navigation?("Resource Summary").should_not be_empty
+      @bus_site.admin_console_page.has_navigation?("Change Plan").should_not be_empty
+      @bus_site.admin_console_page.has_navigation?("Add New User").should_not be_empty
+      @bus_site.admin_console_page.has_navigation?("Download MozyPro Client").should_not be_empty
+    when CONFIGS['bus']['company_type']['mozyenterprise']
+      @bus_site.admin_console_page.has_navigation?("Resource Summary").should_not be_empty
+      @bus_site.admin_console_page.has_navigation?("User Group List").should_not be_empty
+      @bus_site.admin_console_page.has_navigation?("Add New User").should_not be_empty
+      @bus_site.admin_console_page.has_navigation?("Change Plan").should_not be_empty
+      @bus_site.admin_console_page.has_navigation?("Download MozyEnterprise Client").should_not be_empty
+    when CONFIGS['bus']['company_type']['reseller']
+      @bus_site.admin_console_page.has_navigation?("Resource Summary").should_not be_empty
+      @bus_site.admin_console_page.has_navigation?("User Group List").should_not be_empty
+      @bus_site.admin_console_page.has_navigation?("Add New User").should_not be_empty
+      @bus_site.admin_console_page.has_navigation?("Change Plan").should_not be_empty
+      @bus_site.admin_console_page.has_navigation?("Download MozyPro Client").should_not be_empty
+    else
+      raise "Error: Company type #{type} does not exist."
+  end
+end

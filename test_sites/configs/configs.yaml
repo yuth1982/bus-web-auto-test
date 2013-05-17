@@ -37,6 +37,14 @@ bus:
     reseller:                   Reseller Root
 
   menu:
+    # Quick Links
+    resource_summary:           Resource Summary
+    user_group_list:            User Group List
+    add_new_user:               Add New User
+    change_plan:                Change Plan
+    download_enterprise:        Download MozyEnterprise Client
+    download_client:            Download MozyPro Client
+
     # Partners
     add_new_partner:            Add New Partner
     search_list_partner:        Search / List Partners
@@ -45,9 +53,7 @@ bus:
     search_list_users:          Search / List Users
     search_list_machines:       Search / List Machines
     list_user_groups:           List User Groups
-    user_group_list:            User Group List
     add_new_user_group:         Add New User Group
-    add_new_user:               Add New User
 
     # Admins
     search_admin:               Search Admins

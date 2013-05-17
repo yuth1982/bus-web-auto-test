@@ -13,6 +13,8 @@ United States:
   language: en
   MozyPro:
     go_to_acct: Go to Account
+    start_using_mozy: Start using Mozy
+    #pending removal
     skip_stash: Don't Show This Again
     logout: LOG OUT
     survey_industry: Financial Services
@@ -44,6 +46,8 @@ Ireland:
   language: en-gb
   MozyPro:
     go_to_acct: Go to Account
+    start_using_mozy: Start using Mozy
+    #pending removal
     skip_stash: Don't Show This Again
     logout: LOG OUT
     survey_industry: Government
@@ -61,6 +65,8 @@ United Kingdom:
   language: en-gb
   MozyPro:
     go_to_acct: Go to Account
+    start_using_mozy: Start using Mozy
+    #pending removal
     skip_stash: Don't Show This Again
     logout: LOG OUT
     survey_industry: Insurance
@@ -77,7 +83,11 @@ Germany:
   language: de
   MozyPro:
     go_to_acct: Zur Kontoseite gehen
+    #pending translation
+    start_using_mozy: Start using Mozy
+    #pending removal
     skip_stash: Dies nicht mehr anzeigen
+    start_using_mozy: Start using Mozy
     logout: ABMELDEN
     survey_industry: Finanzleistungen
     survey_num_employees: 1001-2000
@@ -93,6 +103,9 @@ France:
   language: fr
   MozyPro:
     go_to_acct: Accéder au compte
+    #pending translation
+    start_using_mozy: Start using Mozy
+    #pending removal
     skip_stash: Ne plus afficher ce message
     logout: DÉCONNEXION
     survey_industry: Services financiers

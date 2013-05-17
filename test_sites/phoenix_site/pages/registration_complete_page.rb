@@ -24,7 +24,7 @@ module Phoenix
     element(:reg_dl_mac_btn, xpath: "//input[@value='Download for Mac']")
     element(:reg_dl_mac2_btn, xpath: "(//input[@value='Download for Mac'])[2]")
     element(:logout_btn, xpath: "//a[text()='LOG OUT']")
-    #element(:go_to_acct_lnk, link: "Go to Account")
+    element(:start_using_mozy, id: "btn_start_using")
     # adding a few items for quick and dirty acct verification, if items present and value good - acct=good.
     # additional verification being done @ admin level in admin console
     element(:h3_section, css: "h3") # partner detail info section
@@ -106,7 +106,8 @@ module Phoenix
     def reg_complete(partner)
       reg_comp_banner_present
       localized_click(partner, 'go_to_acct')
-      localized_click(partner, 'skip_stash')
+      start_using_mozy.click
+      #localized_click(partner, 'start_using_mozy')
       partner_created(partner)
       localized_click(partner, 'logout')
     end

@@ -68,7 +68,7 @@ module Bus
     # Private element
     element(:current_admin_div, id: "identify-me")
     element(:stop_masquerading_link, xpath: "//a[text()='stop masquerading']")
-
+    element(:quick_link_item, id: "nav-cat-quick")
 
     # Popup window
     element(:popup_content_div, css: "div.popup-window-content")

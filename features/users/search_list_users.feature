@@ -33,13 +33,13 @@ Feature: Search and list user
     When I enable stash for the partner with default stash storage
     And I act as newly created partner
     And I add new user(s):
-      | name       | storage_type | storage_max | devices | enable_stash |
-      | TC.21012-1 | Desktop      | 10          | 1       | yes          |
+      | name       | storage_type | storage_limit | devices | enable_stash |
+      | TC.21012-1 | Desktop      | 10            | 1       | yes          |
     Then 1 new user should be created
-    And I navigate to Contact section from bus admin console page
+    And I refresh Add New User section
     And I add new user(s):
-      | name       | storage_type | storage_max | devices |
-      | TC.21012-2 | Server       |             | 2       |
+      | name       | storage_type | storage_limit | devices |
+      | TC.21012-2 | Server       |               | 2       |
     Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
@@ -64,33 +64,33 @@ Feature: Search and list user
     When I enable stash for the partner with default stash storage
     And I act as newly created partner
     And I add new user(s):
-      | name       | storage_type | storage_max | devices |
-      | TC.21014-1 | Desktop      | 15          | 2       |
+      | name       | storage_type | storage_limit | devices |
+      | TC.21014-1 | Desktop      | 15            | 2       |
     Then 1 new user should be created
-    And I navigate to Contact section from bus admin console page
+    And I refresh Add New User section
     When I add new user(s):
-      | name       | storage_type | storage_max | devices | enable_stash |
-      | TC.21014-2 | Desktop      |             | 2       | yes          |
+      | name       | storage_type | storage_limit | devices | enable_stash |
+      | TC.21014-2 | Desktop      |               | 2       | yes          |
     Then 1 new user should be created
-    And I navigate to Contact section from bus admin console page
+    And I refresh Add New User section
     When I add new user(s):
-      | name       | storage_type | storage_max | devices | enable_stash |
-      | TC.21014-3 | Desktop      | 20          | 2       | yes          |
+      | name       | storage_type | storage_limit | devices | enable_stash |
+      | TC.21014-3 | Desktop      | 20            | 2       | yes          |
     Then 1 new user should be created
-    And I navigate to Contact section from bus admin console page
+    And I refresh Add New User section
     When I add new user(s):
-      | name       | storage_type | storage_max | devices |
-      | TC.21014-4 | Desktop      |             | 2       |
+      | name       | storage_type | storage_limit | devices |
+      | TC.21014-4 | Desktop      |               | 2       |
     Then 1 new user should be created
-    And I navigate to Contact section from bus admin console page
+    And I refresh Add New User section
     And I add new user(s):
-      | name       | storage_type | storage_max | devices |
-      | TC.21014-5 | Server       | 25          | 2       |
+      | name       | storage_type | storage_limit | devices |
+      | TC.21014-5 | Server       | 25            | 2       |
     Then 1 new user should be created
-    And I navigate to Contact section from bus admin console page
+    And I refresh Add New User section
     When I add new user(s):
-      | name       | storage_type | storage_max | devices |
-      | TC.21014-6 | Server       |             | 2       |
+      | name       | storage_type | storage_limit | devices |
+      | TC.21014-6 | Server       |               | 2       |
     Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
@@ -114,33 +114,33 @@ Feature: Search and list user
     When I enable stash for the partner with default stash storage
     And I act as newly created partner
     And I add new user(s):
-      | name       | user_group           | storage_type | storage_max | devices | enable_stash |
-      | TC.21016-1 | (default user group) | Desktop      | 15          | 2       | yes          |
+      | name       | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | TC.21016-1 | (default user group) | Desktop      | 15            | 2       | yes          |
     Then 1 new user should be created
-    And I navigate to Contact section from bus admin console page
+    And I refresh Add New User section
     When I add new user(s):
-      | name       | user_group           | storage_type | storage_max | devices | enable_stash |
-      | TC.21016-2 | (default user group) | Desktop      |             | 2       | yes          |
+      | name       | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | TC.21016-2 | (default user group) | Desktop      |               | 2       | yes          |
     Then 1 new user should be created
-    And I navigate to Contact section from bus admin console page
+    And I refresh Add New User section
     When I add new user(s):
-      | name       | user_group           | storage_type | storage_max | devices |
-      | TC.21016-3 | (default user group) | Desktop      | 35          | 2       |
+      | name       | user_group           | storage_type | storage_limit | devices |
+      | TC.21016-3 | (default user group) | Desktop      | 35            | 2       |
     Then 1 new user should be created
-    And I navigate to Contact section from bus admin console page
+    And I refresh Add New User section
     When I add new user(s):
-      | name       | user_group           | storage_type | storage_max | devices |
-      | TC.21016-4 | (default user group) | Desktop      |             | 2       |
+      | name       | user_group           | storage_type | storage_limit | devices |
+      | TC.21016-4 | (default user group) | Desktop      |               | 2       |
     Then 1 new user should be created
-    And I navigate to Contact section from bus admin console page
+    And I refresh Add New User section
     And I add new user(s):
-      | name       | user_group           | storage_type | storage_max | devices |
-      | TC.21016-5 | (default user group) | Server       | 25          | 2       |
+      | name       | user_group           | storage_type | storage_limit | devices |
+      | TC.21016-5 | (default user group) | Server       | 25            | 2       |
     Then 1 new user should be created
-    And I navigate to Contact section from bus admin console page
+    And I refresh Add New User section
     When I add new user(s):
-      | name       | user_group           | storage_type | storage_max | devices |
-      | TC.21016-6 | (default user group) | Server       |             | 2       |
+      | name       | user_group           | storage_type | storage_limit | devices |
+      | TC.21016-6 | (default user group) | Server       |               | 2       |
     Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
@@ -164,33 +164,33 @@ Feature: Search and list user
     When I enable stash for the partner with default stash storage
     And I act as newly created partner
     And I add new user(s):
-      | name       | user_group           | storage_type | storage_max | devices | enable_stash |
-      | TC.21015-1 | (default user group) | Desktop      | 10          | 2       | yes          |
+      | name       | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | TC.21015-1 | (default user group) | Desktop      | 10            | 2       | yes          |
     Then 1 new user should be created
-    And I navigate to Contact section from bus admin console page
+    And I refresh Add New User section
     And I add new user(s):
-      | name       | user_group           | storage_type | storage_max | devices |
-      | TC.21015-2 | (default user group) | Desktop      |             | 2       |
+      | name       | user_group           | storage_type | storage_limit | devices |
+      | TC.21015-2 | (default user group) | Desktop      |               | 2       |
     Then 1 new user should be created
-    And I navigate to Contact section from bus admin console page
+    And I refresh Add New User section
     And I add new user(s):
-      | name       | user_group           | storage_type | storage_max | devices | enable_stash |
-      | TC.21015-3 | (default user group) | Desktop      |             | 2       | yes          |
+      | name       | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | TC.21015-3 | (default user group) | Desktop      |               | 2       | yes          |
     Then 1 new user should be created
-    And I navigate to Contact section from bus admin console page
+    And I refresh Add New User section
     And I add new user(s):
-      | name       | user_group           | storage_type | storage_max | devices |
-      | TC.21015-4 | (default user group) | Desktop      | 18          | 2       |
+      | name       | user_group           | storage_type | storage_limit | devices |
+      | TC.21015-4 | (default user group) | Desktop      | 18            | 2       |
     Then 1 new user should be created
-    And I navigate to Contact section from bus admin console page
+    And I refresh Add New User section
     And I add new user(s):
-      | name       | user_group           | storage_type | storage_max | devices |
-      | TC.21015-5 | (default user group) | Server       |             | 1       |
+      | name       | user_group           | storage_type | storage_limit | devices |
+      | TC.21015-5 | (default user group) | Server       |               | 1       |
     Then 1 new user should be created
-    And I navigate to Contact section from bus admin console page
+    And I refresh Add New User section
     And I add new user(s):
-      | name       | user_group           | storage_type | storage_max | devices |
-      | TC.21015-6 | (default user group) | Server       | 22          | 1       |
+      | name       | user_group           | storage_type | storage_limit | devices |
+      | TC.21015-6 | (default user group) | Server       | 22            | 1       |
     Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
