@@ -85,11 +85,19 @@ module Bus
     # Public: Navigate to menu item on admin console page
     # Note: if bus module is opened, menu will not be clicked
     #
-    # Returns nothing
-    def navigate_to_menu(link)
-      el = find(:xpath, "//a[text()='#{link}']")
-      el_class = el.element_parent[:class]
-      if el_class.match(/active/).nil?
+    # @link_name          [String] link name
+    # @use_quick_link     [Boolean] click link in Quick Links if link exists
+    #
+    # @return [nothing]
+    def navigate_to_menu(link_name, use_quick_link = false)
+      # Looking for link in navigation menu
+      find(:xpath, "//ul//a[text()='#{link_name}']")
+      # calling all method does not require to wait
+      links = all(:xpath, "//ul//a[text()='#{link_name}']")
+
+      el = use_quick_link ? links.first : links.last
+
+      if links.first.element_parent[:class].match(/active/).nil? && links.last.element_parent[:class].match(/active/).nil?
         el.click
       end
     end

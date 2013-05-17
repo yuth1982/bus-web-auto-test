@@ -37,7 +37,7 @@ module Bus
       user_group_select.select(user.user_group) unless user.user_group.nil?
       sleep 2 # wait for ajax call back
       storage_type_select.select(user.storage_type) unless user.storage_type.nil?
-      storage_max_tb.type_text(user.storage_max) unless user.storage_max.nil?
+      storage_max_tb.type_text(user.storage_limit) unless user.storage_limit.nil?
       device_tb.type_text(user.devices) unless user.devices.nil?
 
       unless user.enable_stash.nil?
