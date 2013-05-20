@@ -182,3 +182,9 @@ end
 Then /^I update the user password to (.+)$/ do |password|
   @bus_site.admin_console_page.user_details_section.edit_password(password)
 end
+When(/^I get the machine_id by license_key$/) do
+  @machine_id = DBHelper.get_machine_id_by_license_key(@license_key)
+end
+When(/^I update the newly created machine used quota to (\d+) GB$/) do |quota|
+  DBHelper.update_machine_info(@machine_id, quota)
+end

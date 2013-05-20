@@ -44,4 +44,32 @@ Feature: User Details
       | Stash Container |                    |                      |                  |        |
       | Stash           | 0 / 40 GB          | Set                  | N/A              |        |
 
+  @TC.20986__
+  Scenario: 20986 (create machine dynamically) "Last Update" shows the time for the 3 device whose last backup time is 5 days ago
+    Given I log in bus admin console as administrator
+    When I add a new MozyEnterprise partner:
+      | period | users |
+      | 12     | 2     |
+    Then New partner should be created
+    When I get the partner_id
+    And I act as newly created partner account
+    And I add new user(s):
+      | name          | user_group           | storage_type | storage_limit | devices |
+      | TC.20986.User | (default user group) | Desktop      |               | 1       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    And I get the machine_id by license_key
+    And I update the newly created machine used quota to 10 GB
+    And I refresh User Details section
+    Then device table in user details should be:
+      | Device          | Storage Type |Used/Available     | Device Storage Limit | Last Update      | Action |
+      | AUTOTEST        | Desktop      |10 GB / 40 GB      | Set                  | < a minute ago   |        |
+    Then I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
 
