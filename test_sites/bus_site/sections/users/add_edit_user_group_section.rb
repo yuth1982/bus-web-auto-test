@@ -37,7 +37,7 @@ module Bus
     def add_edit_bundled_user_group(ug)
       group_name_tb.type_text(ug.name) if group_name_tb[:disabled].nil?
       generic_storage_type_select.select(ug.storage_type) unless ug.storage_type.nil?
-      generic_max_tb.type_text(ug.max_quota) unless ug.max_quota.nil?
+      generic_max_tb.type_text(ug.limited_quota) unless ug.limited_quota.nil?
       generic_assigned_tb.type_text(ug.assigned_quota) unless ug.assigned_quota.nil?
       unless ug.server_support.nil?
         if ug.server_support.downcase.eql?('yes')
@@ -69,12 +69,12 @@ module Bus
 
       desktop_storage_type_select.select(ug.desktop_storage_type) unless ug.desktop_storage_type.nil?
       desktop_assigned_tb.type_text(ug.desktop_assigned_quota) unless ug.desktop_assigned_quota.nil?
-      desktop_max_tb.type_text(ug.desktop_max_quota) unless ug.desktop_max_quota.nil?
+      desktop_max_tb.type_text(ug.desktop_limited_quota) unless ug.desktop_limited_quota.nil?
       desktop_devices_tb.type_text(ug.desktop_devices) unless ug.desktop_devices.nil?
 
       server_storage_type_select.select(ug.server_storage_type) unless ug.server_storage_type.nil?
       server_assigned_tb.type_text(ug.server_assigned_quota) unless ug.server_assigned_quota.nil?
-      server_max_tb.type_text(ug.server_max_quota) unless ug.server_max_quota.nil?
+      server_max_tb.type_text(ug.server_limited_quota) unless ug.server_limited_quota.nil?
       server_devices_tb.type_text(ug.server_devices) unless ug.server_devices.nil?
 
       unless ug.enable_stash.nil?
@@ -118,7 +118,7 @@ module Bus
             @result =
                 !generic_max_tb.visible? &&
                 !generic_assigned_tb.visible?
-          when 'Shared with Max'
+          when 'Limited'
             @result =
                 generic_max_tb.visible? &&
                 !generic_assigned_tb.visible?
@@ -152,7 +152,7 @@ module Bus
                 !desktop_max_tb.visible? &&
                 !desktop_assigned_tb.visible? &&
                 desktop_devices_tb.visible?
-          when 'Shared with Max'
+          when 'Limited'
             @result =
                 desktop_max_tb.visible? &&
                 !desktop_assigned_tb.visible? &&

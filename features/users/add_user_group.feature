@@ -42,9 +42,9 @@ Feature: Add a new user group
       | TC.20716-Shared | Shared       |
     Then TC.20716-Shared user group should be created
     When I add a new Bundled user group:
-      | name                     | storage_type     | max_quota |
-      | TC.20716-Shared-with-Max | Shared with Max  | 50        |
-    Then TC.20716-Shared-with-Max user group should be created
+      | name             | storage_type | limited_quota |
+      | TC.20716-Limited | Limited      | 50            |
+    Then TC.20716-Limited user group should be created
     When I add a new Bundled user group:
       | name              | storage_type | assigned_quota |
       | TC.20716-Assigned | Assigned     | 50             |
@@ -58,9 +58,9 @@ Feature: Add a new user group
       | TC.20716-Shared-1 | Shared       | yes          | yes            |
     Then TC.20716-Shared-1 user group should be created
     When I add a new Bundled user group:
-      | name                       | storage_type    | max_quota | enable_stash | server_support |
-      | TC.20716-Shared-with-Max-1 | Shared with Max | 50        | yes          | yes            |
-    Then TC.20716-Shared-with-Max-1 user group should be created
+      | name               | storage_type | limited_quota | enable_stash | server_support |
+      | TC.20716-Limited-1 | Limited      | 50            | yes          | yes            |
+    Then TC.20716-Limited-1 user group should be created
     When I add a new Bundled user group:
       | name                | storage_type | assigned_quota | enable_stash | server_support |
       | TC.20716-Assigned-1 | Assigned     | 50             | yes          | yes            |
@@ -72,16 +72,16 @@ Feature: Add a new user group
     When I navigate to User Group List section from bus admin console page
     # User group table has an irregular headers, therefore headers verification will be ignored.
     And Bundled user groups table should be:
-    | Group Name                  | Stash | Server | Storage Type    | Type Value | Storage Used | Devices Used |
-    | (default user group)        | true  | true   | Shared          |            | 0 bytes      | 0            |
-    | TC.20716%^^&&&%$$#          | false | false  | None            |            | 0 bytes      | 0            |
-    | TC.20716-Assigned           | false | false  | Assigned        | 50 GB      | 0 bytes      | 0            |
-    | TC.20716-Assigned-1         | true  | true   | Assigned        | 50 GB      | 0 bytes      | 0            |
-    | TC.20716-None               | false | false  | None            |            | 0 bytes      | 0            |
-    | TC.20716-Shared             | false | false  | Shared          |            | 0 bytes      | 0            |
-    | TC.20716-Shared-1           | true  | true   | Shared          |            | 0 bytes      | 0            |
-    | TC.20716-Shared-with-Max    | false | false  | Shared with max | 50 GB      | 0 bytes      | 0            |
-    | TC.20716-Shared-with-Max-1  | true  | true   | Shared with max | 50 GB      | 0 bytes      | 0            |
+    | Group Name           | Stash | Server | Storage Type | Type Value | Storage Used | Devices Used |
+    | (default user group) | true  | true   | Shared       |            | 0            | 0            |
+    | TC.20716%^^&&&%$$#   | false | false  | None         |            | 0            | 0            |
+    | TC.20716-Assigned    | false | false  | Assigned     | 50 GB      | 0            | 0            |
+    | TC.20716-Assigned-1  | true  | true   | Assigned     | 50 GB      | 0            | 0            |
+    | TC.20716-Limited     | false | false  | Limited      | 50 GB      | 0            | 0            |
+    | TC.20716-Limited-1   | true  | true   | Limited      | 50 GB      | 0            | 0            |
+    | TC.20716-None        | false | false  | None         |            | 0            | 0            |
+    | TC.20716-Shared      | false | false  | Shared       |            | 0            | 0            |
+    | TC.20716-Shared-1    | true  | true   | Shared       |            | 0            | 0            |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -98,9 +98,9 @@ Feature: Add a new user group
       | TC.20899-Shared | Shared               | 1               | yes          | None                |
     Then TC.20899-Shared user group should be created
     When I add a new Itemized user group:
-      | name                     | desktop_storage_type | desktop_max_quota | desktop_devices | enable_stash | server_storage_type |
-      | TC.20899-Shared-with-Max | Shared with Max      | 5                 | 1               | yes          | None                |
-    Then TC.20899-Shared-with-Max user group should be created
+      | name             | desktop_storage_type | desktop_limited_quota | desktop_devices | enable_stash | server_storage_type |
+      | TC.20899-Limited | Limited              | 5                     | 1               | yes          | None                |
+    Then TC.20899-Limited user group should be created
     When I add a new Itemized user group:
       | name              | desktop_storage_type | desktop_assigned_quota | desktop_devices | enable_stash | server_storage_type |
       | TC.20899-Assigned | Assigned             | 5                      | 1               | yes          | None                |
@@ -114,9 +114,9 @@ Feature: Add a new user group
       | TC.20899-Shared-1 | Shared               | 1               | Shared              | 2              |
     Then TC.20899-Shared-1 user group should be created
     When I add a new Itemized user group:
-      | name                       | desktop_storage_type | desktop_max_quota | desktop_devices | server_storage_type | server_max_quota | server_devices |
-      | TC.20899-Shared-with-Max-1 | Shared with Max      | 5                 | 1               | Shared with Max     | 10         | 2              |
-    Then TC.20899-Shared-with-Max-1 user group should be created
+      | name               | desktop_storage_type | desktop_limited_quota | desktop_devices | server_storage_type | server_limited_quota | server_devices |
+      | TC.20899-Limited-1 | Limited              | 5                     | 1               | Limited             | 10                   | 2              |
+    Then TC.20899-Limited-1 user group should be created
     When I add a new Itemized user group:
       | name                | desktop_storage_type | desktop_assigned_quota | desktop_devices | server_storage_type | server_assigned_quota | server_devices |
       | TC.20899-Assigned-1 | Assigned             | 5                      | 1               | Assigned            | 10                    | 2              |
@@ -124,15 +124,15 @@ Feature: Add a new user group
     When I navigate to User Group List section from bus admin console page
     # User group table has an irregular headers, therefore headers verification will be ignored.
     And Itemized user groups table should be:
-      | Group Name                  | Stash | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
-      | (default user group)        | true  | Shared               |                    | 0 bytes              | 0                    | 4                     | Shared              |                   | 0 bytes             | 0                   | 194                  |
-      | TC.20899-Assigned           | true  | Assigned             | 5 GB               | 0 bytes              | 0                    | 1                     | None                |                   | 0 bytes             | 0                   | 0                    |
-      | TC.20899-Assigned-1         | false | Assigned             | 5 GB               | 0 bytes              | 0                    | 1                     | Assigned            | 10 GB             | 0 bytes             | 0                   | 2                    |
-      | TC.20899-None               | false | None                 |                    | 0 bytes              | 0                    | 0                     | None                |                   | 0 bytes             | 0                   | 0                    |
-      | TC.20899-Shared             | true  | Shared               |                    | 0 bytes              | 0                    | 1                     | None                |                   | 0 bytes             | 0                   | 0                    |
-      | TC.20899-Shared-1           | false | Shared               |                    | 0 bytes              | 0                    | 1                     | Shared              |                   | 0 bytes             | 0                   | 2                    |
-      | TC.20899-Shared-with-Max    | true  | Shared with max      | 5 GB               | 0 bytes              | 0                    | 1                     | None                |                   | 0 bytes             | 0                   | 0                    |
-      | TC.20899-Shared-with-Max-1  | false | Shared with max      | 5 GB               | 0 bytes              | 0                    | 1                     | Shared with max     | 10 GB             | 0 bytes             | 0                   | 2                    |
+      | Group Name           | Stash | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
+      | (default user group) | true  | Shared               |                    | 0                    | 0                    | 4                     | Shared              |                   | 0                   | 0                   | 194                  |
+      | TC.20899-Assigned    | true  | Assigned             | 5 GB               | 0                    | 0                    | 1                     | None                |                   | 0                   | 0                   | 0                    |
+      | TC.20899-Assigned-1  | false | Assigned             | 5 GB               | 0                    | 0                    | 1                     | Assigned            | 10 GB             | 0                   | 0                   | 2                    |
+      | TC.20899-Limited     | true  | Limited              | 5 GB               | 0                    | 0                    | 1                     | None                |                   | 0                   | 0                   | 0                    |
+      | TC.20899-Limited-1   | false | Limited              | 5 GB               | 0                    | 0                    | 1                     | Limited             | 10 GB             | 0                   | 0                   | 2                    |
+      | TC.20899-None        | false | None                 |                    | 0                    | 0                    | 0                     | None                |                   | 0                   | 0                   | 0                    |
+      | TC.20899-Shared      | true  | Shared               |                    | 0                    | 0                    | 1                     | None                |                   | 0                   | 0                   | 0                    |
+      | TC.20899-Shared-1    | false | Shared               |                    | 0                    | 0                    | 1                     | Shared              |                   | 0                   | 0                   | 2                    |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -149,88 +149,74 @@ Feature: Add a new user group
       | Assigned     | 101            |
     Then Add user group error messages should be:
       """
-      Generic assigned storage cannot exceed its ProPartner's effective storage quota
-      """
-    When I add a new Bundled user group:
-      | storage_type | assigned_quota |
-      | Assigned     | 0              |
-    Then Add user group error messages should be:
-      """
-      Whole positive integer required for Generic assigned storage
+      Generic storage can only be assigned between 0 to 100 GB.
       """
     When I add a new Bundled user group:
       | storage_type | assigned_quota |
       | Assigned     |                |
     Then Add user group error messages should be:
       """
-      Generic assigned storage required
+      Generic Assigned Storage Required
       """
     When I add a new Bundled user group:
       | storage_type | assigned_quota |
       | Assigned     | -1             |
     Then Add user group error messages should be:
       """
-      Whole positive integer required for Generic assigned storage
+      Whole positive integer required for Generic Assigned Storage
       """
     When I add a new Bundled user group:
       | storage_type | assigned_quota |
       | Assigned     | 1.5            |
     Then Add user group error messages should be:
       """
-      Whole positive integer required for Generic assigned storage
+      Whole positive integer required for Generic Assigned Storage
       """
     When I add a new Bundled user group:
       | storage_type | assigned_quota |
       | Assigned     | hello          |
     Then Add user group error messages should be:
       """
-      Whole positive integer required for Generic assigned storage
+      Whole positive integer required for Generic Assigned Storage
       """
     When I add a new Bundled user group:
-      | storage_type    | max_quota |
-      | Shared with Max | 101       |
+      | storage_type | limited_quota |
+      | Limited      | 101           |
     Then Add user group error messages should be:
       """
-      Use between 1 to 100 GB for Generic shared with max storage
+      Use between 0 to 100 GB for Generic limited storage.
       """
     When I add a new Bundled user group:
-      | storage_type    | max_quota |
-      | Shared with Max | 0         |
+      | storage_type | limited_quota |
+      | Limited      |               |
     Then Add user group error messages should be:
       """
-      Whole positive integer required for Generic shared with max storage
+      Generic Limited Storage required
       """
     When I add a new Bundled user group:
-      | storage_type    | max_quota |
-      | Shared with Max |           |
+      | storage_type | limited_quota |
+      | Limited      | -1            |
     Then Add user group error messages should be:
       """
-      Generic shared with max storage required
+      Whole positive integer required for Generic Limited Storage
       """
     When I add a new Bundled user group:
-      | storage_type    | max_quota |
-      | Shared with Max | -1        |
+      | storage_type | limited_quota |
+      | Limited      | 1.5           |
     Then Add user group error messages should be:
       """
-      Whole positive integer required for Generic shared with max storage
+      Whole positive integer required for Generic Limited Storage
       """
     When I add a new Bundled user group:
-      | storage_type    | max_quota |
-      | Shared with Max | 1.5       |
+      | storage_type | limited_quota |
+      | Limited      | hello         |
     Then Add user group error messages should be:
       """
-      Whole positive integer required for Generic shared with max storage
+      Whole positive integer required for Generic Limited Storage
       """
     When I add a new Bundled user group:
-      | storage_type    | max_quota |
-      | Shared with Max | hello     |
-    Then Add user group error messages should be:
-      """
-      Whole positive integer required for Generic shared with max storage
-      """
-    When I add a new Bundled user group:
-      | name | storage_type    |
-      |      | Shared with Max |
+      | name | storage_type |
+      |      | Limited      |
     Then Add user group error messages should be:
       """
       Please enter a name
@@ -253,14 +239,6 @@ Feature: Add a new user group
       """
       Not enough Desktop devices available
       Not enough Server devices available
-      """
-    When I add a new Itemized user group:
-      | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
-      | Shared               | 0               | Shared              | 0              |
-    Then Add user group error messages should be:
-      """
-      Whole positive integer required for Desktop device count
-      Whole positive integer required for Server device count
       """
     When I add a new Itemized user group:
       | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
@@ -295,62 +273,52 @@ Feature: Add a new user group
       Whole positive integer required for Server device count
       """
     When I add a new Itemized user group:
-      | desktop_storage_type | desktop_max_quota | desktop_devices | server_storage_type | server_max_quota | server_devices |
-      | Shared with Max      | 251               | 11              | Shared with Max     | 101              | 201            |
+      | desktop_storage_type | desktop_limited_quota | desktop_devices | server_storage_type | server_limited_quota | server_devices |
+      | Limited              | 251                   | 11              | Limited             | 101                  | 201            |
     Then Add user group error messages should be:
       """
-      Use between 1 to 100 GB for Server shared with max storage
-      Use between 1 to 250 GB for Desktop shared with max storage
+      Use between 0 to 100 GB for Server limited storage.
+      Use between 0 to 250 GB for Desktop limited storage.
       Not enough Desktop devices available
       Not enough Server devices available
       """
     When I add a new Itemized user group:
-      | desktop_storage_type | desktop_max_quota | desktop_devices | server_storage_type | server_max_quota | server_devices |
-      | Shared with Max      | 0                 | 0               | Shared with Max     | 0                | 0              |
+      | desktop_storage_type | desktop_limited_quota | desktop_devices | server_storage_type | server_limited_quota | server_devices |
+      | Limited              |                       |                 | Limited             |                      |                |
     Then Add user group error messages should be:
       """
-      Whole positive integer required for Server shared with max storage
-      Whole positive integer required for Desktop shared with max storage
-      Whole positive integer required for Desktop device count
-      Whole positive integer required for Server device count
-      """
-    When I add a new Itemized user group:
-      | desktop_storage_type | desktop_max_quota | desktop_devices | server_storage_type | server_max_quota | server_devices |
-      | Shared with Max      |                   |                 | Shared with Max     |                  |                |
-    Then Add user group error messages should be:
-      """
-      Server shared with max storage required
-      Desktop shared with max storage required
+      Server Limited Storage required
+      Desktop Limited Storage required
       Desktop device count required
       Server device count required
       """
     When I add a new Itemized user group:
-      | desktop_storage_type | desktop_max_quota | desktop_devices | server_storage_type | server_max_quota | server_devices |
-      | Shared with Max      | -1                | -1              | Shared with Max     | -1               | -1             |
+      | desktop_storage_type | desktop_limited_quota | desktop_devices | server_storage_type | server_limited_quota | server_devices |
+      | Limited              | -1                    | -1              | Limited             | -1                   | -1             |
     Then Add user group error messages should be:
       """
-      Whole positive integer required for Server shared with max storage
-      Whole positive integer required for Desktop shared with max storage
+      Whole positive integer required for Server Limited Storage
+      Whole positive integer required for Desktop Limited Storage
       Whole positive integer required for Desktop device count
       Whole positive integer required for Server device count
       """
     When I add a new Itemized user group:
-      | desktop_storage_type | desktop_max_quota | desktop_devices | server_storage_type | server_max_quota | server_devices |
-      | Shared with Max      | hello             | hello           | Shared with Max     | hello            | hello          |
+      | desktop_storage_type | desktop_limited_quota | desktop_devices | server_storage_type | server_limited_quota | server_devices |
+      | Limited              | hello                 | hello           | Limited             | hello                | hello          |
     Then Add user group error messages should be:
       """
-      Whole positive integer required for Server shared with max storage
-      Whole positive integer required for Desktop shared with max storage
+      Whole positive integer required for Server Limited Storage
+      Whole positive integer required for Desktop Limited Storage
       Whole positive integer required for Desktop device count
       Whole positive integer required for Server device count
       """
     When I add a new Itemized user group:
-      | desktop_storage_type | desktop_max_quota | desktop_devices | server_storage_type | server_max_quota | server_devices |
-      | Shared with Max      | 1.5               | 1.5             | Shared with Max     | 1.5              | 1.5            |
+      | desktop_storage_type | desktop_limited_quota | desktop_devices | server_storage_type | server_limited_quota | server_devices |
+      | Limited              | 1.5                   | 1.5             | Limited             | 1.5                  | 1.5            |
     Then Add user group error messages should be:
       """
-      Whole positive integer required for Server shared with max storage
-      Whole positive integer required for Desktop shared with max storage
+      Whole positive integer required for Server Limited Storage
+      Whole positive integer required for Desktop Limited Storage
       Whole positive integer required for Desktop device count
       Whole positive integer required for Server device count
       """
@@ -359,28 +327,18 @@ Feature: Add a new user group
       | Assigned             | 251                    | 11              | Assigned            | 101                   | 201            |
     Then Add user group error messages should be:
       """
-      Server assigned storage cannot exceed its ProPartner's effective storage quota
-      Desktop assigned storage cannot exceed its ProPartner's effective storage quota
+      Server storage can only be assigned between 0 to 100 GB.
+      Desktop storage can only be assigned between 0 to 250 GB.
       Not enough Desktop devices available
       Not enough Server devices available
-      """
-    When I add a new Itemized user group:
-      | desktop_storage_type | desktop_assigned_quota | desktop_devices | server_storage_type | server_assigned_quota | server_devices |
-      | Assigned             | 0                      | 0               | Assigned            | 0                     | 0              |
-    Then Add user group error messages should be:
-      """
-      Whole positive integer required for Server assigned storage
-      Whole positive integer required for Desktop assigned storage
-      Whole positive integer required for Desktop device count
-      Whole positive integer required for Server device count
       """
     When I add a new Itemized user group:
       | desktop_storage_type | desktop_assigned_quota | desktop_devices | server_storage_type | server_assigned_quota | server_devices |
       | Assigned             |                        |                 | Assigned            |                       |                |
     Then Add user group error messages should be:
       """
-      Server assigned storage required
-      Desktop assigned storage required
+      Server Assigned Storage Required
+      Desktop Assigned Storage Required
       Desktop device count required
       Server device count required
       """
@@ -389,8 +347,8 @@ Feature: Add a new user group
       | Assigned             | -1                     | -1              | Assigned            | -1                    | -1             |
     Then Add user group error messages should be:
       """
-      Whole positive integer required for Server assigned storage
-      Whole positive integer required for Desktop assigned storage
+      Whole positive integer required for Server Assigned Storage
+      Whole positive integer required for Desktop Assigned Storage
       Whole positive integer required for Desktop device count
       Whole positive integer required for Server device count
       """
@@ -399,8 +357,8 @@ Feature: Add a new user group
       | Assigned             | hello                  | hello           | Assigned            | hello                 | hello          |
     Then Add user group error messages should be:
       """
-      Whole positive integer required for Server assigned storage
-      Whole positive integer required for Desktop assigned storage
+      Whole positive integer required for Server Assigned Storage
+      Whole positive integer required for Desktop Assigned Storage
       Whole positive integer required for Desktop device count
       Whole positive integer required for Server device count
       """
@@ -409,8 +367,8 @@ Feature: Add a new user group
       | Assigned             | 1.5                    | 1.5             | Assigned            | 1.5                   | 1.5            |
     Then Add user group error messages should be:
       """
-      Whole positive integer required for Server assigned storage
-      Whole positive integer required for Desktop assigned storage
+      Whole positive integer required for Server Assigned Storage
+      Whole positive integer required for Desktop Assigned Storage
       Whole positive integer required for Desktop device count
       Whole positive integer required for Server device count
       """
@@ -436,8 +394,8 @@ Feature: Add a new user group
       | storage_type | enable_stash | server_support |
       | Shared       | no           | no             |
     Then I should see correct UI for Bundled user group with:
-      | storage_type    | enable_stash | server_support |
-      | Shared with Max | no           | no             |
+      | storage_type | enable_stash | server_support |
+      | Limited      | no           | no             |
     Then I should see correct UI for Bundled user group with:
       | storage_type | enable_stash | server_support |
       | Assigned     | no           | no             |
@@ -454,7 +412,7 @@ Feature: Add a new user group
       | Shared       | no           | yes            |
     Then I should see correct UI for Bundled user group with:
       | storage_type | enable_stash | server_support |
-      | Shared with Max | no           | yes            |
+      | Limited      | no           | yes            |
     Then I should see correct UI for Bundled user group with:
       | storage_type | enable_stash | server_support |
       | Assigned     | no           | yes            |
@@ -467,8 +425,8 @@ Feature: Add a new user group
       | storage_type | enable_stash | server_support |
       | Shared       | yes          | yes            |
     Then I should see correct UI for Bundled user group with:
-      | storage_type    | enable_stash | server_support |
-      | Shared with Max | yes          | yes            |
+      | storage_type | enable_stash | server_support |
+      | Limited      | yes          | yes            |
     Then I should see correct UI for Bundled user group with:
       | storage_type | enable_stash | server_support |
       | Assigned     | yes          | yes            |
@@ -487,8 +445,8 @@ Feature: Add a new user group
       | storage_type | enable_stash | server_support |
       | Shared       | no           | no             |
     Then I should see correct UI for Itemized user group with:
-      | storage_type    | enable_stash | server_support |
-      | Shared with Max | no           | no             |
+      | storage_type | enable_stash | server_support |
+      | Limited      | no           | no             |
     Then I should see correct UI for Itemized user group with:
       | storage_type | enable_stash | server_support |
       | Assigned     | no           | no             |
@@ -504,8 +462,8 @@ Feature: Add a new user group
       | storage_type | enable_stash | server_support |
       | Shared       | no           | yes            |
     Then I should see correct UI for Itemized user group with:
-      | storage_type    | enable_stash | server_support |
-      | Shared with Max | no           | yes            |
+      | storage_type | enable_stash | server_support |
+      | Limited      | no           | yes            |
     Then I should see correct UI for Itemized user group with:
       | storage_type | enable_stash | server_support |
       | Assigned     | no           | yes            |
@@ -518,8 +476,8 @@ Feature: Add a new user group
       | storage_type | enable_stash | server_support |
       | Shared       | yes          | yes            |
     Then I should see correct UI for Itemized user group with:
-      | storage_type    | enable_stash | server_support |
-      | Shared with Max | yes          | yes            |
+      | storage_type | enable_stash | server_support |
+      | Limited      | yes          | yes            |
     Then I should see correct UI for Itemized user group with:
       | storage_type | enable_stash | server_support |
       | Assigned     | yes          | yes            |

@@ -19,7 +19,7 @@ module Bus
     # Users section
     section(:search_list_users_section, SearchListUsersSection, id: 'user-list')
     section(:search_list_machines_section, SearchListMachinesSection, id: 'machine-list')
-    section(:user_group_list_section, UserGroupListSection, id: 'storage-user_group_list')
+    section(:user_group_list_section, UserGroupListSection, id: 'user_groups-list')
     section(:add_new_user_group_section, AddEditUserGroupSection, id: 'user_groups-new')
     section(:edit_user_group_section, AddEditUserGroupSection, css: 'div[id^=user_groups-edit_storage_pool_policy-]')
     section(:add_new_user_section, AddNewUserSection, id: 'user-new_users_in_batch')
