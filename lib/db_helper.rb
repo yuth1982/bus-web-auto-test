@@ -49,4 +49,30 @@ module DBHelper
       conn.close unless conn.nil?
     end
   end
+
+  def get_user_email
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select username from public.users limit 1;"
+      c = conn.exec(sql)
+      c.values[0][0]
+    rescue PGError => e
+      puts 'postgres error'
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_admin_email
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select username from public.admins limit 1;"
+      c = conn.exec(sql)
+      c.values[0][0]
+    rescue PGError => e
+      puts 'postgres error'
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
 end

@@ -76,6 +76,15 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partne
   @partner.admin_info.full_name = attributes["admin name"] unless attributes["admin name"].nil?
   @partner.admin_info.email = attributes["admin email"] unless attributes["admin email"].nil?
 
+  # Admin existing email check
+  if @existing_admin_email
+    @partner.admin_info.email = @existing_admin_email
+  end
+
+  if @existing_user_email
+    @partner.admin_info.email = @existing_user_email
+  end
+
   # Billing info attributes
   # Not implemented, always use company info
 
@@ -143,6 +152,11 @@ When /^I add a new sub partner:$/ do |sub_partner_table|
   admin_email = attributes["admin email"]
   @bus_site.admin_console_page.add_new_partner_section.add_new_sub_partner(partner_name, admin_name, admin_email)
 end
+
 Then /^the default billing country is (.+) in add new partner section$/ do |country|
   @bus_site.admin_console_page.add_new_partner_section.billing_country.should == country
+end
+
+Then /^Add New Partner error message should be:$/ do |messages|
+  @bus_site.admin_console_page.add_new_partner_section.messages.should == messages.to_s
 end

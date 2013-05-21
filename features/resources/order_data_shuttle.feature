@@ -219,7 +219,7 @@ Feature:
     When I get the partner_id
     And I act as newly created partner account
     And I add new user(s):
-      | user_group           | storage_type | storage_max | devices |
+      | user_group           | storage_type | storage_limit | devices |
       | (default user group) | Desktop      | 10          | 1       |
     And I search user by:
       | keywords   |
@@ -246,7 +246,7 @@ Feature:
     When I get the partner_id
     And I act as newly created partner account
     And I add new user(s):
-      | user_group           | storage_type | storage_max | devices |
+      | user_group           | storage_type | storage_limit | devices |
       | (default user group) | Desktop      | 10          | 1       |
     And I search user by:
       | keywords   |
@@ -273,7 +273,7 @@ Feature:
     When I get the partner_id
     And I act as newly created partner account
     And I add new user(s):
-      | storage_type | storage_max | devices |
+      | storage_type | storage_limit | devices |
       | Desktop      | 30          | 1       |
     And I search user by:
       | keywords   |
@@ -297,7 +297,7 @@ Feature:
     When I get the partner_id
     And I act as newly created partner account
     And I add new user(s):
-      | user_group           | storage_type | storage_max | devices |
+      | user_group           | storage_type | storage_limit | devices |
       | (default user group) | Desktop      | 10          | 1       |
     And I search user by:
       | keywords   |
@@ -325,7 +325,7 @@ Feature:
     When I get the partner_id
     And I act as newly created partner account
     And I add new user(s):
-      | user_group           | storage_type | storage_max | devices |
+      | user_group           | storage_type | storage_limit | devices |
       | (default user group) | Desktop      | 10          | 1       |
     And I search user by:
       | keywords   |
@@ -353,7 +353,7 @@ Feature:
     When I get the partner_id
     And I act as newly created partner account
     And I add new user(s):
-      | user_group           | storage_type | storage_max | devices |
+      | user_group           | storage_type | storage_limit | devices |
       | (default user group) | Desktop      | 20          | 1       |
     And I search user by:
       | keywords   |
@@ -379,7 +379,7 @@ Feature:
     When I get the partner_id
     And I act as newly created partner account
     And I add new user(s):
-      | user_group           | storage_type | storage_max | devices |
+      | user_group           | storage_type | storage_limit | devices |
       | (default user group) | Desktop      | 2000        | 1       |
     And I search user by:
       | keywords   |
@@ -408,7 +408,7 @@ Feature:
     When I get the partner_id
     And I act as newly created partner account
     And I add new user(s):
-      | storage_type | storage_max | devices |
+      | storage_type | storage_limit | devices |
       | Desktop      | 3800        | 1       |
     And I search user by:
       | keywords   |
@@ -437,7 +437,7 @@ Feature:
     When I get the partner_id
     And I act as newly created partner account
     And I add new user(s):
-      | user_group           | storage_type | storage_max | devices |
+      | user_group           | storage_type | storage_limit | devices |
       | (default user group) | Desktop      | 1000        | 1       |
     And I search user by:
       | keywords   |
@@ -462,7 +462,7 @@ Feature:
     When I get the partner_id
     And I act as newly created partner account
     And I add new user(s):
-      | storage_type | storage_max | devices |
+      | storage_type | storage_limit | devices |
       | Desktop      | 500         | 1       |
     And I search user by:
       | keywords   |
@@ -487,7 +487,7 @@ Feature:
     When I get the partner_id
     And I act as newly created partner account
     And I add new user(s):
-      | user_group           | storage_type | storage_max | devices |
+      | user_group           | storage_type | storage_limit | devices |
       | (default user group) | Desktop      | 20          | 1       |
     And I search user by:
       | keywords   |
