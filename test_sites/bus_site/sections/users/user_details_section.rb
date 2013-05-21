@@ -9,8 +9,8 @@ module Bus
 
     elements(:user_details_dls, xpath: "//div[starts-with(@id,'user-show')]//div[2]/dl")
     element(:change_status_link, xpath: "//span[starts-with(@id,'user-display-status-')]//a")
-    element(:status_selection, xpath: "//select[@id='status']")
-    element(:submit_status_btn, xpath: "//span[starts-with(@id,'user-change-status-')]//input")
+    element(:status_selection, css: 'select#status')
+    element(:submit_status_btn, css: 'span[id^=user-change-status-]>input')
     element(:change_user_group_link, xpath: "//span[starts-with(@id,'user-display-usergroup-')]//a[text()='(change)']")
     element(:change_user_group_submit_button, xpath: "//span[starts-with(@id,'user-change-usergroup-')]//input[@name='commit']")
     element(:user_group_search_img, css: "img[alt='Search-button-icon']")
@@ -19,6 +19,7 @@ module Bus
     element(:view_product_keys_link, xpath: "//a[text()='(View Product Keys)']")
     element(:product_key_lbl, xpath: "//div[starts-with(@id, 'all-license-keys-')]//div/div/div[2]/table[2]/tbody/tr/td")
 
+    elements(:product_keys_tables, css: 'div[id^=all-license-keys-] table.mini-table')
 
     # Add Stash
     element(:add_stash_link, xpath: "//a[text()='(Add Stash)']")
@@ -51,6 +52,14 @@ module Bus
     element(:new_password_confirm_tb, id: 'new_password_confirmation')
     element(:new_password_change_btn, css: "div[id^=user-pass-change] input[value='Save Changes']")
 
+
+    def activated_keys_table_rows
+      product_keys_tables.first.rows_text
+    end
+
+    def unactivated_keys_table_rows
+      product_keys_tables.last.rows_text
+    end
     # Public: User details hash
     #
     # @param [] none
@@ -374,11 +383,44 @@ module Bus
     end
 
     def device_table_rows
-      device_table.rows_text
+      if device_stash_divide_row_index.nil?
+        device_table.rows_text
+      else
+        device_table.rows_text[0..device_stash_divide_row_index-1]
+      end
+    end
+
+    def device_table_hashes
+      device_table_rows.map{ |row| Hash[*device_table_headers.zip(row).flatten] }
+    end
+
+    def stash_table_headers
+      device_table.headers_text
+    end
+
+    def stash_table_rows
+      unless device_stash_divide_row_index.nil?
+        device_table.rows_text.last
+      end
+    end
+
+    def stash_table_hashes
+      Hash[*device_table_headers.zip(stash_table_rows).flatten]
+    end
+
+    def delete_device(device_name)
+      device_table.rows.each do |row|
+        if row[0].text == device_name
+          row[-1].find(:css, 'a.action').click
+          alert_accept
+          break;
+        end
+      end
     end
 
     def click_view_product_keys_link
       view_product_keys_link.click
+      sleep 1 # wait for ajax callback
     end
 
     def product_key
@@ -392,6 +434,11 @@ module Bus
       new_password_confirm_tb.type_text(password)
       new_password_change_btn.click
       wait_until{ !new_password_change_btn.visible? }
+    end
+
+    private
+    def device_stash_divide_row_index
+      device_table.rows_text.index{ |row| row.first == ''}
     end
   end
 end
