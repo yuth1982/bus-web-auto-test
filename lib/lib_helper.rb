@@ -17,6 +17,7 @@ require 'diffy'
 require 'net/http'
 require 'digest/sha1'
 require 'openssl'
+require 'erb'
 
 require 'capybara/cucumber'
 require 'capybara-webkit'

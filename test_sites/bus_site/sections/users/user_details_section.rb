@@ -52,6 +52,8 @@ module Bus
     element(:new_password_confirm_tb, id: 'new_password_confirmation')
     element(:new_password_change_btn, css: "div[id^=user-pass-change] input[value='Save Changes']")
 
+    # License Keys
+    element(:send_keys_btn, xpath: '//div[starts-with(@id, "all-license-keys")]/descendant::input[starts-with(@id, "send_key")]')
 
     def activated_keys_table_rows
       product_keys_tables.first.rows_text
@@ -60,6 +62,7 @@ module Bus
     def unactivated_keys_table_rows
       product_keys_tables.last.rows_text
     end
+
     # Public: User details hash
     #
     # @param [] none
@@ -257,7 +260,6 @@ module Bus
       user_resource_details_table.rows_text
     end
 
-    
     # Public: Activate user 
     #
     # @params [] none
@@ -434,6 +436,18 @@ module Bus
       new_password_confirm_tb.type_text(password)
       new_password_change_btn.click
       wait_until{ !new_password_change_btn.visible? }
+    end
+
+    # Public: Click send user keys
+    #
+    # @param [none]
+    #
+    # Example
+    #    @bus_admin_console_page.user_details_section.click_send_user_keys
+    #
+    # @return [nothing]
+    def click_send_user_keys
+      send_keys_btn.click
     end
 
     private

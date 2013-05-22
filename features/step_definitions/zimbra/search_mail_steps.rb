@@ -21,9 +21,17 @@ When /^I search emails by keywords:$/ do |keywords_table|
         else
           # do nothing
       end
+      v.replace ERB.new(v).result(binding)
     end
   end
-  @email_search_query = keywords_table.hashes.first.map{|key, value| "#{key}:#{value}"}.join(' AND ')
+  @email_search_query = keywords_table.hashes.first.map {|key, value|
+    if value.match(/^\[.+\]$/) # Convert to Array if it is
+      eval(value).map {|v| "#{key}:#{v}" }
+    else
+      "#{key}:#{value}"
+    end
+  }.flatten.join(' AND ')
+  sleep 5
   Log.info(@email_search_query)
   @found_emails = find_emails(@email_search_query)
 end
@@ -39,6 +47,11 @@ When /^I retrieve email content by keywords:$/ do |keywords_table|
     })
   raise "#{@found_emails.size} emails found, please update your search query" if @found_emails.size != 1
   @mail_content = find_email_content(@found_emails.first.id)
+end
+
+Then /^I can find (\d+) elements by (xpath|css) "(.*?)" from email content$/ do |size, method, query|
+  doc = Nokogiri.XML(get_html_from_email(@found_emails.first.id))
+  doc.send(method, query).size.should == size.to_i
 end
 
 Then /^I verify email address from email content$/ do

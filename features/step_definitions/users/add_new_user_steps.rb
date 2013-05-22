@@ -107,3 +107,8 @@ Then /^the Add More link should open the Change Plan module$/ do
   @bus_site.admin_console_page.add_new_user_section.click_add_more_link
   @bus_site.admin_console_page.change_plan_section.section_visible?
 end
+
+When /^I view latest created user details$/ do
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_users'])
+  @bus_site.admin_console_page.search_list_users_section.view_user_details((@new_users.last.email).slice(0,27))
+end
