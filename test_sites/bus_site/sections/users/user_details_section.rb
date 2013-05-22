@@ -397,7 +397,11 @@ module Bus
     end
 
     def stash_table_headers
-      device_table.headers_text
+      result = device_table.headers_text
+      unless device_stash_divide_row_index.nil?
+        result[0] = device_table.rows_text[device_stash_divide_row_index + 1].first
+      end
+      result
     end
 
     def stash_table_rows
@@ -407,7 +411,7 @@ module Bus
     end
 
     def stash_table_hashes
-      Hash[*device_table_headers.zip(stash_table_rows).flatten]
+      Hash[*stash_table_headers.zip(stash_table_rows).flatten]
     end
 
     def delete_device(device_name)

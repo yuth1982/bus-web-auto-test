@@ -24,11 +24,6 @@ module DBHelper
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
       sql = "select machine_id from mozy_pro_keys where keystring ='#{license_key}';"
-      Log.debug sql
-      Log.debug @host
-      Log.debug @port
-      Log.debug @db_user
-      Log.debug @db_name
       c = conn.exec(sql)
       c.values[0][0]
     rescue PGError => e

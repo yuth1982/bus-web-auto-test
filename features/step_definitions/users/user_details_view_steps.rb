@@ -174,6 +174,7 @@ end
 
 When /^I delete device by name: (.+)$/ do |device_name|
   @bus_site.admin_console_page.user_details_section.delete_device(device_name)
+  @bus_site.admin_console_page.user_details_section.wait_until_bus_section_load
 end
 
 Then /^I view the user's product keys$/ do
@@ -186,6 +187,8 @@ Then /^I store the user's product key$/ do
 end
 
 Then /^I update the user password to (.+)$/ do |password|
+  password = rand.to_s if password == '@user_password'
+  @user_password = password
   @bus_site.admin_console_page.user_details_section.edit_password(password)
 end
 When(/^I get the machine_id by license_key$/) do
@@ -193,4 +196,7 @@ When(/^I get the machine_id by license_key$/) do
 end
 When(/^I update the newly created machine used quota to (\d+) GB$/) do |quota|
   DBHelper.update_machine_info(@machine_id, quota)
+end
+When(/^I close user details section$/) do
+  @bus_site.admin_console_page.user_details_section.close_bus_section
 end
