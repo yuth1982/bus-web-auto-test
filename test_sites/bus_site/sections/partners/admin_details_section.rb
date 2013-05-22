@@ -12,6 +12,11 @@ module Bus
     element(:delete_admin_btn, xpath: "//a[text() = 'Delete Admin']")
     element(:pw_tb, id: "password")
     element(:submit_btn, xpath: "//div[contains(@id, 'delete_form')]//input[@Value='Submit']")
+    element(:admin_name_tb, id: "target_admin_display_name")
+    element(:admin_email_tb, id: "target_admin_username")
+    element(:admin_parent_select, xpath: "//select[@name='target_admin[parent_admin_id]']")
+    element(:admin_info_submit_btn, xpath: "//div[contains(@id, 'admininfobox')]//input[@value='Save Changes']")
+    element(:admin_info_message_txt, xpath: "//div[contains(@id, 'admininfobox')]//ul/li")
 
 
 
@@ -45,6 +50,26 @@ module Bus
       alert_accept
       pw_tb.set(admin_password)
       submit_btn.click
+    end
+
+    def set_admin_email(email)
+      admin_email_tb.type_text email
+    end
+
+    def set_admin_name(name)
+      admin_name_tb.type_text name
+    end
+
+    def set_admin_parent(parent)
+      admin_parent_select.select parent
+    end
+
+    def save_admin_info_changes
+      admin_info_submit_btn.click
+    end
+
+    def admin_info_box_message
+      admin_info_message_txt.text
     end
   end
 end

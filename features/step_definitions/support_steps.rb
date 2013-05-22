@@ -41,3 +41,15 @@ end
 Transform /^default password$/ do |step_arg|
   CONFIGS['global']['test_pwd']
 end
+
+Transform /^existing admin email$/ do |step_arg|
+  @existing_admin_email
+end
+
+Transform /^existing user email$/ do |step_arg|
+  @existing_user_email
+end
+
+Transform /^automation admin email$/ do |step_arg|
+  BUS_ENV['bus_username']
+end

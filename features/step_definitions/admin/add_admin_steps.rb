@@ -2,13 +2,17 @@ When /^I add a new admin:$/ do |table|
   # table is a | ATC695 | leongh+atc695@mozy.com | ATC695 |pending
   admin_hash = table.hashes.first
   roles = admin_hash['Roles'].split(',')
+
+  admin_hash['Email'] = @existing_user_email if admin_hash['Email'] == '@existing_user_email'
+  admin_hash['Email'] = @existing_admin_email if admin_hash['Email'] == '@existing_admin_email'
+
   if admin_hash['User Group'].nil?
     user_groups = []
   else
     user_groups = admin_hash['User Group'].split(',')
   end
-  admin = Bus::DataObj::Admin.new(admin_hash['Name'], admin_hash['Email'], admin_hash['Parent'], user_groups, roles)
-  @bus_site.admin_console_page.add_new_admin_section.add_new_admin(admin)
+  @admin = Bus::DataObj::Admin.new(admin_hash['Name'], admin_hash['Email'], admin_hash['Parent'], user_groups, roles)
+  @bus_site.admin_console_page.add_new_admin_section.add_new_admin(@admin)
 end
 
 Then /^I should see capabilities in Admin Console panel$/ do |table|
@@ -22,6 +26,9 @@ end
 When /^I search admin by:$/ do |search_key_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_admin'])
   attributes = search_key_table.hashes.first
+  attributes['email'] = @existing_user_email if attributes['email'] == '@existing_user_email'
+  attributes['email'] = @existing_admin_email if attributes['email'] == '@existing_admin_email'
+  attributes['email'] = @admin.email if attributes['email'] == '@admin_email'
   keywords = attributes["name"] || attributes["email"]
   @bus_site.admin_console_page.search_admins_section.search_admin(keywords)
 end
@@ -50,6 +57,11 @@ When /^I delete admin by:$/ do |table|
     })
   }
   attributes = table.hashes.first
+
+  attributes['email'] = @existing_user_email[0..26] if attributes['email'] == '@existing_user_email'
+  attributes['email'] = @existing_admin_email[0..26] if attributes['email'] == '@existing_admin_email'
+  attributes['email'] = @admin.email[0..26] if attributes['email'] == '@admin_email'
+
   page.find_link(attributes["email"] || attributes["name"]).click
   @bus_site.admin_console_page.admin_details_section.delete_admin(BUS_ENV['bus_password'])
   step "I navigate to Search Admins section from bus admin console page"
@@ -109,4 +121,23 @@ end
 When /^I delete partner account with password (.+)$/ do | pw |
   warning_msg = @bus_site.admin_console_page.partner_details_section.delete_partner(pw, false)
   warning_msg.should include("Incorrect password.")
+end
+
+When /^Add New Admin success message should be displayed$/ do
+  @bus_site.admin_console_page.add_new_admin_section.messages.should == "New Admin created. Please have the Admin check his or her email to complete the process."
+end
+
+When /^Add New Admin error message should be:$/ do |messages|
+  @bus_site.admin_console_page.add_new_admin_section.messages.should == messages.to_s
+end
+
+When /^I view admin details by:$/ do |table|
+    step %{I search admin by:}, table(%{
+      |#{table.headers.join('|')}|
+      |#{table.rows.first.join('|')}|
+    })
+
+  attributes = table.hashes.first
+  attributes['email'] = @admin.email[0..26] if attributes['email'] == '@admin_email'
+  page.find_link(attributes["email"] || attributes["name"]).click
 end

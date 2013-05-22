@@ -33,9 +33,8 @@ Feature: User Has Unique Username
       | 1      | @existing_admin_email |
     Then Add New Partner error message should be:
     """
-      An account with that email address already exists
-      """
-
+    An account with that email address already exists
+    """
 
   Scenario: Mozy-21343:Add New Partner with Existing User Email as Admin Email
     When I get a user email from the database
@@ -45,3 +44,66 @@ Feature: User Has Unique Username
       | 1      | 10 GB     | @existing_user_email |
     Then New partner should be created
     And I delete partner account
+
+  Scenario: Mozy-21340:Edit Admin Email With Admin Email That Is Already in Use
+    When I get an admin email from the database
+    And I log in bus admin console as administrator
+    And I view the partner info
+    And I change the username to existing admin email
+    Then Account Details error message should be:
+    """
+    An account with that email address already exists
+    Email address unchanged. The email address you entered is invalid or already in use: An account with that email address already exists
+    """
+
+  Scenario:  Mozy-21346:Edit Admin Email With User Email That Is Already in Use
+    When I get a user email from the database
+    And I log in bus admin console as administrator
+    And I view the partner info
+    And I change the username to existing user email
+    Then username changed success message should be displayed
+    When I change the username to automation admin email
+    Then username changed success message should be displayed
+
+  Scenario: Mozy-21341:Add New Admin Role with Existing User Email
+    When I get a user email from the database
+    And I log in bus admin console as administrator
+    And I navigate to Add New Admin section from bus admin console page
+    And I add a new admin:
+      | Name       | Email                | Roles |
+      | First Last | @existing_user_email | Sales |
+    Then Add New Admin success message should be displayed
+    When I delete admin by:
+      | email                |
+      | @existing_user_email |
+
+  Scenario: Mozy-21342:Add New Admin Role with Existing Admin Email
+    When I get an admin email from the database
+    And I log in bus admin console as administrator
+    And I navigate to Add New Admin section from bus admin console page
+    And I add a new admin:
+      | Name       | Email                 | Roles |
+      | First Last | @existing_admin_email | Sales |
+    Then Add New Admin error message should be:
+    """
+    An account with that email address already exists
+    """
+
+  Scenario: Mozy-21347:Edit Sub Admin with Existing User Email
+    When I get a user email from the database
+    And I log in bus admin console as administrator
+    And I navigate to Add New Admin section from bus admin console page
+    And I add a new admin:
+      | Roles |
+      | Sales |
+    Then Add New Admin success message should be displayed
+    When I view admin details by:
+      | email        |
+      | @admin_email |
+    And edit admin details:
+      | Email:               |
+      | @existing_user_email |
+    Then edit details success message should display
+    When I delete admin by:
+      | email                |
+      | @existing_user_email |

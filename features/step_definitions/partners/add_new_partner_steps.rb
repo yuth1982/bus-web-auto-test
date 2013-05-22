@@ -77,13 +77,8 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partne
   @partner.admin_info.email = attributes["admin email"] unless attributes["admin email"].nil?
 
   # Admin existing email check
-  if @existing_admin_email
-    @partner.admin_info.email = @existing_admin_email
-  end
-
-  if @existing_user_email
-    @partner.admin_info.email = @existing_user_email
-  end
+  attributes['admin email'] = @existing_user_email if attributes['admin email'] == '@existing_user_email'
+  attributes['admin email'] = @existing_admin_email if attributes['admin email'] == '@existing_admin_email'
 
   # Billing info attributes
   # Not implemented, always use company info

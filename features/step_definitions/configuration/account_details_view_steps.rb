@@ -15,3 +15,15 @@ end
 Then /^Account statement preference should be changed$/ do
   @bus_site.admin_console_page.account_details_section.messages.should == "Successfully saved Account Statement preference."
 end
+
+Then /^I change the username to (.+)$/ do  |username|
+  @bus_site.admin_console_page.account_details_section.edit_username(username)
+end
+
+Then /^Account Details error message should be:$/ do |messages|
+  @bus_site.admin_console_page.account_details_section.messages.should == messages.to_s
+end
+
+Then /^username changed success message should be displayed$/ do
+  @bus_site.admin_console_page.account_details_section.messages.should == "Email address updated successfully"
+end

@@ -70,10 +70,10 @@ end
 When /^I close alert window$/ do
   @bus_site.admin_console_page.alert_dismiss
 end
+
 When /^I view the partner info$/ do
   @bus_site.admin_console_page.view_partner_info
 end
-
 Then /^navigation items should be removed$/ do
   # this should apply regardless of the partner type
   @bus_site.admin_console_page.has_navigation?("Assign Keys").should be_empty
