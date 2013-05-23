@@ -4,6 +4,32 @@ module Bus
     #
     element(:add_group_input, css: "input[value='Add Group']")
 
+    # Messages
+    element(:succ_msg_div, css: 'ul.flash.successes')
+    element(:err_msg_div, css: 'ul.flash.errors')
+
+    # Public: Successful messages for delete user group sections
+    #
+    # Example:
+    #  @bus_site.admin_console_page.user_group_list_section.success_messages
+    #  # => "User Group #{group_name} has been successfully created."
+    #
+    # @return [String]
+    def success_messages
+      succ_msg_div.text
+    end
+
+    # Public: Error messages for delete user group sections
+    #
+    # Example:
+    #  @bus_site.admin_console_page.user_group_list_section.error_messages
+    #  # => "Can't delete last user group of a non-deleted partner"
+    #
+    # @return [String]
+    def error_messages
+      err_msg_div.text
+    end
+
     # Public: Click Add Group button
     #
     # Example
@@ -71,7 +97,7 @@ module Bus
     def delete_user_group(group_name)
       ug_table.rows[1..-1].each do |row|
         if row[0].text == group_name
-          row[-1].find(:css, 'form>a').click
+          row[-1].find(:css, '.ug_delete').click
           break;
         end
       end

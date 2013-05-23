@@ -48,7 +48,7 @@ When /^I (add|edit) (.+) (Bundled|Itemized) user group:$/ do |action, group_name
   end
 end
 
-Then /^(.+) user group should be (created|updated)$/ do |ug, action|
+Then /^(.+) user group should be (created|updated|deleted)$/ do |ug, action|
   case ug
     when 'Bundled'
       group_name = @new_bundled_ug.name
@@ -69,13 +69,18 @@ Then /^(.+) user group should be (created|updated)$/ do |ug, action|
       # Clear previous message
       @bus_site.admin_console_page.edit_user_group_section.refresh_bus_section
       @bus_site.admin_console_page.edit_user_group_section.wait_until_bus_section_load
+    when 'deleted'
+      @bus_site.admin_console_page.user_group_list_section.success_messages.should == "Successfully removed #{group_name}."
+      # Clear previous message
+      @bus_site.admin_console_page.user_group_list_section.refresh_bus_section
+      @bus_site.admin_console_page.user_group_list_section.wait_until_bus_section_load
     else
       # Skipped
   end
 
 end
 
-Then /^(Add|Edit) user group error messages should be:$/ do |action, messages|
+Then /^(Add|Edit|Delete) user group error messages should be:$/ do |action, messages|
   case action
     when 'Add'
       @bus_site.admin_console_page.add_new_user_group_section.error_messages.should == messages.to_s
@@ -87,6 +92,11 @@ Then /^(Add|Edit) user group error messages should be:$/ do |action, messages|
       # Clear previous message
       @bus_site.admin_console_page.edit_user_group_section.refresh_bus_section
       @bus_site.admin_console_page.edit_user_group_section.wait_until_bus_section_load
+    when 'Delete'
+      @bus_site.admin_console_page.user_group_list_section.error_messages.should == messages.to_s
+      # Clear previous message
+      @bus_site.admin_console_page.user_group_list_section.refresh_bus_section
+      @bus_site.admin_console_page.user_group_list_section.wait_until_bus_section_load
     else
       # Skipped
   end

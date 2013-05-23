@@ -15,3 +15,7 @@ When(/^The following equation about (storage|device) for (Itemized|Bundled) part
   end
   eval(array.join).should == true
 end
+
+Then /^I refresh Resource Summary section$/ do
+  @bus_site.admin_console_page.resource_summary_section.refresh_bus_section
+end

@@ -20,7 +20,8 @@ Then /^(Bundled|Itemized) user groups table should be:$/ do |type, ug_table|
 end
 
 When /^I delete user group details by name: (.+)$/ do |group_name|
-  @bus_site.admin_console_page.user_group_list_section.delete_user_group(group_name)
-  @bus_site.admin_console_page.click_ok
-  @bus_site.admin_console_page.user_group_list_section.wait_until_bus_section_load
+  admin_console_page = @bus_site.admin_console_page
+  admin_console_page.user_group_list_section.delete_user_group(group_name)
+  admin_console_page.alert_accept
+  admin_console_page.user_group_list_section.wait_until_bus_section_load
 end
