@@ -69,6 +69,7 @@ When /^I add a phoenix Home user:$/ do |user_table|
       @partner.subscription_period = "2"
     end
 
+  Log.debug(@partner.to_s)
   # for info review
   # puts @partner.to_s
   @phoenix_site.select_dom.select_country(@partner)

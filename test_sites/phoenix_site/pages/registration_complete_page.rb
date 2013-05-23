@@ -142,7 +142,7 @@ module Phoenix
       reg_comp_banner_present
       localized_click(partner, 'resend_verify_email_link')
       localized_click(partner, 'back_2_login_link')
-      logout(partner)
+      #logout(partner)
     end
 
     # user/partner verification section

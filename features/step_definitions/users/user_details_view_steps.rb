@@ -191,16 +191,41 @@ Then /^I update the user password to (.+)$/ do |password|
   @user_password = password
   @bus_site.admin_console_page.user_details_section.edit_password(password)
 end
+
 When(/^I get the machine_id by license_key$/) do
   @machine_id = DBHelper.get_machine_id_by_license_key(@license_key)
 end
+
 When(/^I update the newly created machine used quota to (\d+) GB$/) do |quota|
   DBHelper.update_machine_info(@machine_id, quota)
 end
+
 When(/^I close user details section$/) do
   @bus_site.admin_console_page.user_details_section.close_bus_section
 end
 
+When /^edit user details:$/ do |info_table|
+  # table is a | email          | name          | status     |
+  new_info = info_table.hashes.first
+  new_info.keys.each do |header|
+    case header
+      when 'email'
+        new_info[header] = @existing_user_email if new_info[header] == '@existing_user_email'
+        new_info[header] = @existing_admin_email if new_info[header] == '@existing_admin_email'
+        @bus_site.admin_console_page.user_details_section.set_user_email(new_info[header])
+      when 'name'
+        @bus_site.admin_console_page.user_details_section.set_user_name(new_info[header])
+      when 'status'
+        @bus_site.admin_console_page.user_details_section.set_user_status(new_info[header]) #cancelled or active
+      else
+        raise "Unexpected header for #{new_info[header]}"
+    end
+  end
+end
+
+When /^edit user email success message to (.+) should be displayed$/ do |email|
+  @bus_site.admin_console_page.user_details_section.messages.should == "Your email change request requires verification. We sent an email to #{email}. Please open the email and click the verification link to confirm this change."
+end
 When /^I set device quota field to (\d+) and cancel$/ do |count|
   @bus_site.admin_console_page.user_details_section.device_edit_and_cancel(count)
 end

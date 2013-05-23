@@ -35,6 +35,10 @@ When /^edit admin details:$/ do |info_table|
   @bus_site.admin_console_page.admin_details_section.save_admin_info_changes
 end
 
-When /^edit details success message should display$/ do
+When /^edit sub admin personal information success message should display$/ do
   @bus_site.admin_console_page.admin_details_section.admin_info_box_message.should == "Changes saved successfully."
+end
+
+When /^edit sub admin personal information error message\(s\) should be:$/ do |message|
+  @bus_site.admin_console_page.admin_details_section.admin_info_box_message.should == message.to_s
 end

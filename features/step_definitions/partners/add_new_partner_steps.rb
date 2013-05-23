@@ -72,13 +72,13 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partne
   @partner.partner_info.coupon_code = attributes["coupon"] unless attributes["coupon"].nil?
   @partner.partner_info.parent = attributes["create under"] || CONFIGS['bus']['mozy_root_partner']['mozypro']
 
-  # Admin info attributes
-  @partner.admin_info.full_name = attributes["admin name"] unless attributes["admin name"].nil?
-  @partner.admin_info.email = attributes["admin email"] unless attributes["admin email"].nil?
-
   # Admin existing email check
   attributes['admin email'] = @existing_user_email if attributes['admin email'] == '@existing_user_email'
   attributes['admin email'] = @existing_admin_email if attributes['admin email'] == '@existing_admin_email'
+
+  # Admin info attributes
+  @partner.admin_info.full_name = attributes["admin name"] unless attributes["admin name"].nil?
+  @partner.admin_info.email = attributes["admin email"] unless attributes["admin email"].nil?
 
   # Billing info attributes
   # Not implemented, always use company info

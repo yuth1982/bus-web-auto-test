@@ -6,13 +6,14 @@
 When /^I search user by:$/ do |search_key_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_users'])
   attributes = search_key_table.hashes.first
-  if @new_users.nil?
-    keywords = attributes["keywords"] || ""
-  else
-    keywords = attributes["keywords"].gsub(/@user_name/,@new_users[0].name) || ""
-  end
+
+  attributes['keywords'] = @partner.admin_info.email if attributes['keywords'] == '@mh_user_email'
+  attributes['keywords'] = @new_users[0].name if attributes['keywords'] == '@user_name'
+
+  keywords = attributes["keywords"] || ""
   filter = attributes["filter"] || "None"
   partner_filter = attributes["user type"] || ""
+
   @bus_site.admin_console_page.search_list_users_section.search_user(keywords, filter, partner_filter)
 end
 

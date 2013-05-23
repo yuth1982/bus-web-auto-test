@@ -3,6 +3,10 @@ Transform /^newly created partner admin email$/ do |step_arg|
   @partner.admin_info.email
 end
 
+Transform /^newly created MozyHome username$/ do |step_arg|
+  @partner.admin_info.email
+end
+
 Transform /^newly created partner company name$/ do |step_arg|
   @partner.company_info.name
 end

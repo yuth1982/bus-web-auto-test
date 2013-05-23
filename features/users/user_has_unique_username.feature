@@ -103,7 +103,52 @@ Feature: User Has Unique Username
     And edit admin details:
       | Email:               |
       | @existing_user_email |
-    Then edit details success message should display
+    Then edit sub admin personal information success message should display
     When I delete admin by:
       | email                |
       | @existing_user_email |
+
+  Scenario: Mozy-21348:Edit Sub Admin with Existing Admin Email
+    When I get an admin email from the database
+    And I log in bus admin console as administrator
+    And I navigate to Add New Admin section from bus admin console page
+    And I add a new admin:
+      | Roles |
+      | Sales |
+    Then Add New Admin success message should be displayed
+    When I view admin details by:
+      | email        |
+      | @admin_email |
+    And edit admin details:
+      | Email:                |
+      | @existing_admin_email |
+    Then edit sub admin personal information error message(s) should be:
+    """
+    An account with that email address already exists
+    """
+    When I delete admin by:
+      | email        |
+      | @admin_email |
+
+  Scenario:  Mozy-21366:Update User(MH) With Existing Admin Username
+    When I get an admin email from the database
+    And I am at dom selection point:
+    And I add a phoenix Home user:
+      | period | base plan | country       |
+      | 1      | 50 GB     | United States |
+    And the billing summary looks like:
+      | Description                           | Price | Quantity | Amount |
+      | MozyHome 50 GB (1 computer) - Monthly | $5.99 | 1        | $5.99  |
+      | Total Charge                          | $5.99 |          | $5.99  |
+    And the user is successfully added.
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name redacted-4165@notarealdomain.mozy.com and password default password
+    And I search user by:
+      | keywords       | user type |
+      | @mh_user_email | MozyHome  |
+    And I view MozyHome user details by @user_name
+    And edit user details:
+      | email                 |
+      | @existing_admin_email |
+    Then edit user email success message to existing admin email should be displayed
+    And I delete user

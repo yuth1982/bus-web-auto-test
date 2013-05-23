@@ -478,6 +478,32 @@ module Bus
       send_keys_btn.click
     end
 
+    def set_user_email(email)
+      find_link("Change User Email").click
+      find(:id, "username").type_text email
+      e = find(:xpath, "//div[contains(@id, 'user-username-change-')]//input[@value='Save Changes']")
+      e.click
+      wait_until{ !e.visible? }
+    end
+
+    def set_user_name(name)
+      find(:xpath, "//div[contains(@id, 'user-show-')]//a[contains(text(),'(change)')]").click
+      find(:id, "name").type_text name
+      e = find(:xpath, "//div[contains(@id, 'user-show-')]//input[@name='commit']")
+      e.click
+      wait_until{ !e.visible? }
+    end
+
+    def set_user_status(status)
+      case status
+        when "cancelled"
+          find(:xpath, "//div[contains(@id, 'user-show-')]//a[contains(text(),'(cancel)')]").click
+          alert_accept
+        when "active"
+          find(:xpath, "//div[contains(@id, 'user-show-')]//a[contains(text(),'(uncancel)')]").click
+      end
+    end
+
     private
     def device_stash_divide_row_index
       device_table.rows_text.index{ |row| row.first == ''}
