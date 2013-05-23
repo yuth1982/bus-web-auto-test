@@ -6,14 +6,23 @@ Feature: Send activated / unactivated license keys
   @TC.20947
   Scenario: 20947 [Itemized][Server License]Admin can send activated/unactived license keys
     When I add a new MozyEnterprise partner:
-      | period | users | server plan | net terms | company name            |
-      | 12     | 10    | 100 GB      | yes       | [Itemized] Add New User |
+      | period | users | server plan | net terms |
+      | 12     | 10    | 100 GB      | yes       |
     Then New partner should be created
     When I get the partner_id
     And I act as newly created partner
     And I add new user(s):
-      | name       | user_group           | storage_type | storage_limit | devices | enable_stash |
-      | TC.20947-1 | (default user group) | Server       | 10            | 3       | no           |
+      | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | (default user group) | Server       | 10            | 0       | no           |
+    Then 1 new user should be created
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    And I view the user's product keys
+    Then I can see Send Keys button is disable
+    Then I close user details section
+    And I add new user(s):
+      | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | (default user group) | Server       | 10            | 3       | no           |
     Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by newly created user email
@@ -25,7 +34,7 @@ Feature: Send activated / unactivated license keys
       | content                |
       | <%=@unactivated_keys%> |
     Then I should see 1 email(s)
-    And I can find 0 Activated Server license key(s) from the mail
+    And I cannot find any Activated license key(s) from the mail
     And I can find 3 Unactivated Server license key(s) from the mail
     When I update the user password to default password
     And activate the user's Server device without a key and with the default password
@@ -42,6 +51,7 @@ Feature: Send activated / unactivated license keys
     Then I should see 2 email(s)
     And I can find 1 Activated Server license key(s) from the mail
     And I can find 2 Unactivated Server license key(s) from the mail
+    And Unactivated keys should show above activated in the mail
     When activate the user's Server device without a key and with the default password
     And I get the machine_id by license_key
     And I update the newly created machine used quota to 5 GB
@@ -58,7 +68,7 @@ Feature: Send activated / unactivated license keys
       | <%=@activated_keys%> |
     Then I should see 3 email(s)
     And I can find 3 Activated Server license key(s) from the mail
-    And I can find 0 Unactivated Server license key(s) from the mail
+    And I cannot find any Unactivated license key(s) from the mail
 
   @TC.21006
   Scenario: 21006 [BundleReseller][Desktop License]Admin can send activated/unactivated license keys
@@ -69,8 +79,17 @@ Feature: Send activated / unactivated license keys
     When I get the partner_id
     And I act as newly created partner
     And I add new user(s):
-      | name       | user_group           | storage_type | storage_limit | devices |
-      | TC.21006-1 | (default user group) | Desktop      | 25            | 3       |
+      | user_group           | storage_type | storage_limit | devices |
+      | (default user group) | Desktop      | 25            | 0       |
+    Then 1 new user should be created
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    And I view the user's product keys
+    Then I can see Send Keys button is disable
+    Then I close user details section
+    And I add new user(s):
+      | user_group           | storage_type | storage_limit | devices |
+      | (default user group) | Desktop      | 25            | 3       |
     Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by newly created user email
@@ -82,7 +101,7 @@ Feature: Send activated / unactivated license keys
       | content                |
       | <%=@unactivated_keys%> |
     Then I should see 1 email(s)
-    And I can find 0 Activated Desktop license key(s) from the mail
+    And I cannot find any Activated license key(s) from the mail
     And I can find 3 Unactivated Desktop license key(s) from the mail
     When I update the user password to default password
     And activate the user's Desktop device without a key and with the default password
@@ -99,6 +118,7 @@ Feature: Send activated / unactivated license keys
     Then I should see 2 email(s)
     And I can find 1 Activated Desktop license key(s) from the mail
     And I can find 2 Unactivated Desktop license key(s) from the mail
+    And Unactivated keys should show above activated in the mail
     When activate the user's Desktop device without a key and with the default password
     And I get the machine_id by license_key
     And I update the newly created machine used quota to 5 GB
@@ -115,4 +135,4 @@ Feature: Send activated / unactivated license keys
       | <%=@activated_keys%> |
     Then I should see 3 email(s)
     And I can find 3 Activated Desktop license key(s) from the mail
-    And I can find 0 Unactivated Desktop license key(s) from the mail
+    And I cannot find any Unactivated license key(s) from the mail
