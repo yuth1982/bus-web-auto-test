@@ -17,7 +17,7 @@ Feature: User Details
       | @user_name |
     Then User search results should be:
       | External ID | User        | Name       | Machines | Storage | Storage Used | Created  | Backed Up |
-      |             | @user_email | @user_name | 0        | 2 GB    | none         | today    | never     |    
+      |             | @user_email | @user_name | 0        | 2 GB    | none         | today    | never     |
     When I view user details by @user_email
     Then user details should be:
       | Name:               | Enable Stash:               |
@@ -137,5 +137,39 @@ Feature: User Details
       | Machine1  | 10 GB / 30 GB      | Set                  | < a minute ago   |        |
     Then I delete device by name: Machine1
 
-
-
+  @TC.21020
+  Scenario: 21020 [Itemized]List all the active devices including stash
+    Given I log in bus admin console as administrator
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | net terms | company name             |
+      | 12     | 8     | 100 GB      | yes       | [Itemized] User Detail   |
+    Then New partner should be created
+    And I enable stash for the partner with 5 GB stash storage
+    When I get the partner_id
+    And I act as newly created partner account
+    And I add new user(s):
+      | name          | user_group           | storage_type | storage_limit | devices |
+      | TC.21020.User | (default user group) | Desktop      |               | 4       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I add stash for the user with:
+      | stash quota | send email |
+      | default     | no         |
+    And I update the user password to default password
+    And I add 3 machines for the user and update its used quota
+      | user_email  | machine_name | machine_type | partner_name  | used_quota |
+      | @user_email | Machine1     | Desktop      | @partner_name | 10 GB      |
+      | @user_email | Machine2     | Desktop      | @partner_name | 20 GB      |
+      | @user_email | Machine3     | Desktop      | @partner_name | 30 GB      |
+    And I refresh User Details section
+    Then device table in user details should be:
+      | Device          | Storage Type |Used/Available     | Device Storage Limit | Last Update      | Action |
+      | Machine1        | Desktop      |10 GB / 140 GB     | Set                  | < a minute ago   |        |
+      | Machine2        | Desktop      |20 GB / 140 GB     | Set                  | < a minute ago   |        |
+      | Machine3        | Desktop      |30 GB / 140 GB     | Set                  | < a minute ago   |        |
+    Then stash device table in user details should be:
+      | Stash Container | Used/Available     | Device Storage Limit | Last Update      | Action |
+      | Stash           | 0 / 140 GB         | Set                  | N/A              |        |

@@ -13,3 +13,14 @@ When /^I use keyless activation to activate devices$/  do |table|
   @license_key = client.license_key
   @license_key.should_not be_nil
 end
+
+When /^I add (\d+) machines for the user and update its used quota$/ do |count, table|
+  count.to_i.times do |row|
+    step %{I use keyless activation to activate devices}, table(%{
+      |#{table.headers.join('|')}|
+      |#{table.rows[row].join('|')}|
+    })
+    step %{I get the machine_id by license_key}
+    step %{I update the newly created machine used quota to #{table.hashes[row]['used_quota']}}
+  end
+end
