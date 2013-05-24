@@ -60,7 +60,7 @@ Then /^(.+) user group should be (created|updated)$/ do |ug, action|
 
   case action
     when 'created'
-      @bus_site.admin_console_page.add_new_user_group_section.success_messages.should == "User Group #{group_name}has been successfully created."
+      @bus_site.admin_console_page.add_new_user_group_section.success_messages.should == "User Group #{group_name} has been successfully created."
       # Clear previous message
       @bus_site.admin_console_page.add_new_user_group_section.refresh_bus_section
       @bus_site.admin_console_page.add_new_user_group_section.wait_until_bus_section_load
