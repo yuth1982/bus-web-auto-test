@@ -2,6 +2,7 @@ module Bus
   # This class provides actions for change plan section
   class ChangePlanSection < SiteHelper::Section
 
+    element(:addon_plans_group, id: 'addon_plans_group')
     # Plans
     element(:pro_base_plan_select, id: "products_base_exclusive")
     element(:enterprise_users_tb, css: "input[id^=products_base_]")
@@ -86,6 +87,7 @@ module Bus
     #
     # @return [nothing]
     def change_mozyenterprise_plan(users, server_plan, server_add_on, coupon)
+      wait_for_all_elements_loaded
       enterprise_users_tb.type_text(users) unless users.nil?
       server_plan_select.select(server_plan) unless server_plan.nil?
       storage_add_on_tb.type_text(server_add_on) unless server_add_on.nil?
@@ -291,10 +293,14 @@ module Bus
     #
     # @return [] nothing
     def confirm_change
-      wait_until{ submit_btn.visible?}
+      wait_until{ submit_btn['disabled'] != 'true' }
       submit_btn.click
       wait_until_bus_section_load
       continue_btn.click
+    end
+
+    def wait_for_all_elements_loaded
+      wait_until { addon_plans_group.visible? }
     end
   end
 end

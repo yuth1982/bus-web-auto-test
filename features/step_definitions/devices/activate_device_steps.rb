@@ -24,3 +24,8 @@ When /^I add (\d+) machines for the user and update its used quota$/ do |count, 
     step %{I update the newly created machine used quota to #{table.hashes[row]['used_quota']}}
   end
 end
+
+When /^I activate the new user's (\d+) (Server|Desktop) device\(s\) and update used quota to (\d+) GB$/ do |times, device_type, quota|
+  user_id = DBHelper.get_user_id_by_email @new_users[0].email
+  DBHelper.create_machines(user_id, device_type, times, quota.to_i)
+end

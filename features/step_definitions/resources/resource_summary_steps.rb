@@ -3,6 +3,7 @@ Then(/^(Itemized|Bundled) (storage|device) summary should be:$/) do |partner_typ
   table_hash = table.hashes.first.inject({}) { |hash, (key, value)| hash[[resource_type, key].join('_').gsub(/\s/, '_').downcase] = value; hash }
   @bus_site.admin_console_page.resource_summary_section.resource_info(partner_type, resource_type).should == table_hash
 end
+
 When(/^The following equation about (storage|device) for (Itemized|Bundled) partner is right$/) do |resource_type, partner_type, table|
   # table is a | |
   resource_hash = @bus_site.admin_console_page.resource_summary_section.resource_info(partner_type, resource_type)
@@ -15,9 +16,11 @@ When(/^The following equation about (storage|device) for (Itemized|Bundled) part
   end
   eval(array.join).should == true
 end
+
 When(/^I click the (more|hide) link for (storage|device)$/) do |action, type|
   @bus_site.admin_console_page.resource_summary_section.click_more_hide_link(action, type)
 end
+
 Then /^I refresh Resource Summary section$/ do
   @bus_site.admin_console_page.resource_summary_section.refresh_bus_section
 end
