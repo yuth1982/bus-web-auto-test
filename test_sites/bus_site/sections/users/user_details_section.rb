@@ -37,6 +37,13 @@ module Bus
     element(:change_quota_tooltips, css: "span[id^=tooltip_for_user_show_]")
     element(:delete_stash_link, css: "a[onclick^=show_delete_stash_popup]")
 
+    # Change Device Quota
+    element(:device_edit, css: "form[action^='/user/change_device_count/'] span[class=view] a")
+    element(:device_count, css: "input#device_count")
+    element(:device_edit_submit, css: "input#device_count + input.button")
+    element(:device_edit_cancel, css: "input#device_count + input.button + a")
+    element(:device_status, css: "div.show-details>div>div:first-child>div:nth-child(2) span.view:first-child")
+
     # user backup information table
     element(:user_backup_details_table, xpath: "div//[starts-with(@id, 'user-show')]//div[2]/table)]")
     element(:user_resource_details_table, css: "div.show-details > table")
@@ -54,6 +61,10 @@ module Bus
 
     # License Keys
     element(:send_keys_btn, xpath: '//div[starts-with(@id, "all-license-keys")]/descendant::input[starts-with(@id, "send_key")]')
+
+    def device_status_text
+      device_status.text
+    end
 
     def activated_keys_table_rows
       product_keys_tables.first.rows_text
@@ -440,6 +451,19 @@ module Bus
       new_password_confirm_tb.type_text(password)
       new_password_change_btn.click
       wait_until{ !new_password_change_btn.visible? }
+    end
+
+    def change_device_quota(count)
+      device_edit.click
+      device_count.type_text(count)
+      device_edit_submit.click
+      wait_until{ !device_edit_submit.visible? }
+    end
+
+    def device_edit_and_cancel(count)
+      device_edit.click
+      device_count.type_text(count)
+      device_edit_cancel.click
     end
 
     # Public: Click send user keys

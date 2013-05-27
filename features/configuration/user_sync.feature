@@ -792,7 +792,7 @@ Feature: User sync
       | keywords                | filter |
       | auto1@okta.mozyqa.local | None   |
     And I view user details by auto1@okta.mozyqa.local
-    And I active the user
+    And I activate the user
 
   @TC.17594 @firefox_profile @vpn
   Scenario: UserProvision - Delete user after several days of not synced
@@ -919,7 +919,7 @@ Feature: User sync
       | keywords                | filter |
       | auto1@okta.mozyqa.local | None   |
     And I view user details by auto1@okta.mozyqa.local
-    And I active the user
+    And I activate the user
 
   @TC.17546 @TC.17548 @TC.17549 @vpn
   Scenario: UserProvision/Sync - Add(Delete, Modify) a new user in AD

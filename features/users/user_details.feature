@@ -173,3 +173,74 @@ Feature: User Details
     Then stash device table in user details should be:
       | Stash Container | Used/Available     | Device Storage Limit | Last Update      | Action |
       | Stash           | 0 / 140 GB         | Set                  | N/A              |        |
+
+  @TC.21096
+  Scenario: 21096 [Itemized]Edit the number of Desktop Device
+    Given I log in bus admin console as administrator
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | net terms | company name             |
+      | 12     | 8     | 100 GB      | yes       | [Itemized]Edit Device    |
+    Then New partner should be created
+    And I enable stash for the partner with 10 GB stash storage
+    When I get the partner_id
+    And I act as newly created partner account
+    And I add a new Itemized user group:
+      | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices | enable_stash |
+      | Test | Shared               | 5               | Shared              | 10             | yes          |
+    And I add new user(s):
+      | name          | user_group | storage_type | storage_limit | devices | enable_stash |
+      | TC.21096.User | Test       | Desktop      | 50            | 3       | yes          |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And I add 2 machines for the user and update its used quota
+      | user_email  | machine_name | machine_type | partner_name  | used_quota |
+      | @user_email | Machine1     | Desktop      | @partner_name | 0 GB       |
+      | @user_email | Machine2     | Desktop      | @partner_name | 0 GB       |
+    And I refresh User Details section
+    When I set device quota field to 4 and cancel
+    Then users' device status should be:
+      | Used | Available | storage_type |
+      |  2   | 1         | Desktop      |
+    When I edit user device quota to 4
+    Then users' device status should be:
+      | Used | Available | storage_type |
+      | 2    | 2         | Desktop      |
+    When I view the user's product keys
+    Then Number of Desktop activated keys should be 2
+    And Number of Desktop unactivated keys should be 2
+    When I edit user device quota to 2
+    When I view the user's product keys
+    Then Number of Desktop activated keys should be 2
+    And Number of Desktop unactivated keys should be 0
+
+  @TC.21097
+  Scenario: 21097 [Itemized]Error shows when I add more Server devices than available in UG
+    Given I log in bus admin console as administrator
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | net terms | company name             |
+      | 12     | 8     | 100 GB      | yes       | [Itemized]No More Device |
+    Then New partner should be created
+    And I enable stash for the partner with 10 GB stash storage
+    When I get the partner_id
+    And I act as newly created partner account
+    And I add a new Itemized user group:
+      | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices | enable_stash |
+      | Test | Shared               | 5               | Shared              | 10             | yes          |
+    And I add new user(s):
+      | name  | user_group | storage_type | storage_limit | devices | enable_stash |
+      | User1 | Test       | Server       | 50            | 3       | no           |
+    Then 1 new user should be created
+    And I add new user(s):
+      | name  | user_group | storage_type | storage_limit | devices | enable_stash |
+      | User2 | Test       | Server       | 50            | 5       | no           |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    When I edit user device quota to 8
+    Then No more device error show

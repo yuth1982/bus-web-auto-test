@@ -7,7 +7,7 @@ When /^I get the user id$/ do
   Log.debug("user id is #{@user_id}")
 end
 
-When /^I active the user$/ do
+When /^I activate the user$/ do
   @bus_site.admin_console_page.user_details_section.active_user
 end
 
@@ -199,4 +199,26 @@ When(/^I update the newly created machine used quota to (\d+) GB$/) do |quota|
 end
 When(/^I close user details section$/) do
   @bus_site.admin_console_page.user_details_section.close_bus_section
+end
+
+When /^I set device quota field to (\d+) and cancel$/ do |count|
+  @bus_site.admin_console_page.user_details_section.device_edit_and_cancel(count)
+end
+
+When /^I edit user device quota to (\d+)$/ do |count|
+  @bus_site.admin_console_page.user_details_section.change_device_quota(count)
+end
+
+Then /^No more device error show$/ do
+  @bus_site.admin_console_page.user_details_section.messages.should == "Invalid number of Server devices"
+end
+
+When /^users' device status should be:$/ do |device_status_table|
+  device_status = @bus_site.admin_console_page.user_details_section.device_status_text
+  actual = {}
+  actual['storage_type'] = device_status[/\b(\w*):/, 1]
+  actual['used'] = device_status[/(\d+) Used/, 1]
+  actual['available'] = device_status[/(\d+) Available/, 1]
+  expected = device_status_table.hashes.first
+  expected.keys.each{ |header| actual[header.downcase].should == expected[header] }
 end
