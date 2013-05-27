@@ -53,7 +53,7 @@ module Bus
     element(:new_password_change_btn, css: "div[id^=user-pass-change] input[value='Save Changes']")
 
     # License Keys
-    element(:send_keys_btn, css: 'div[id^=all-license-keys] input[id^=send_key]')
+    element(:send_keys_btn, xpath: '//div[starts-with(@id, "all-license-keys")]/descendant::input[starts-with(@id, "send_key")]')
 
     def activated_keys_table_rows
       product_keys_tables.first.rows_text
@@ -211,7 +211,7 @@ module Bus
     def click_delete_stash
       delete_stash_link.click
     end
-   
+
     # Public: Return user back up details table headers
     #
     # @params [] none
@@ -235,7 +235,7 @@ module Bus
     def user_backup_details_table_rows
       user_backup_details_table.rows_text
     end
-    
+
     # Public: Return string of table headers
     #
     # @param [] none
@@ -452,18 +452,6 @@ module Bus
     # @return [nothing]
     def click_send_user_keys
       send_keys_btn.click
-    end
-
-    # Public: Is "Send Keys" button disabled?
-    #
-    # @param [none]
-    #
-    # Example
-    #    @bus_admin_console_page.user_details_section.send_keys_button_disabled?
-    #
-    # @return [nothing]
-    def send_keys_button_disabled?
-      send_keys_btn['disabled'] == 'true'
     end
 
     private
