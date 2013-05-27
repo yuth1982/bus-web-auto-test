@@ -15,7 +15,9 @@ When(/^The following equation about (storage|device) for (Itemized|Bundled) part
   end
   eval(array.join).should == true
 end
-
+When(/^I click the (more|hide) link for (storage|device)$/) do |action, type|
+  @bus_site.admin_console_page.resource_summary_section.click_more_hide_link(action, type)
+end
 Then /^I refresh Resource Summary section$/ do
   @bus_site.admin_console_page.resource_summary_section.refresh_bus_section
 end

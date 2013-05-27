@@ -10,6 +10,8 @@ module Bus
     element(:desktop_storage_total_span, id: 'resource_storage_total_Desktop')
     element(:server_storage_used_span, id: 'resource_storage_used_Server')
     element(:server_storage_total_span, id: 'resource_storage_total_Server')
+    element(:storage_more_link, id: 'display_storage_details_of_other_license_types')
+    element(:storage_hide_link, id: 'hide_storage_details_of_other_license_types')
     # Itemized and Bundled
     element(:storage_available_span, id: 'resource_summary_storage_available')
     element(:storage_used_span, id: 'resource_summary_storage_used')
@@ -30,6 +32,9 @@ module Bus
 
     element(:device_buy_more_link, css: 'div.div_col:last-child span.buy_more>a')
 
+    element(:device_more_link, id: 'display_device_details_of_other_license_types')
+    element(:device_hide_link, id: 'hide_device_details_of_other_license_types')
+
     # Bundled
 
 
@@ -46,11 +51,11 @@ module Bus
       wait_until_bus_section_load
       result = {}
       if partner_type == 'Itemized'
-        ['Desktop', 'Server'].each do |type|
+        ['Desktop', 'Server', 'Test1', 'Test2'].each do |type|
           ['used', 'total', 'subpartner'].each do |u_t_s|
             locator = "#{["resource", "#{resource_type}", "#{u_t_s}", "#{type}"].join('_')}"
             elements = all(:id, locator)
-            result["#{["#{resource_type}", "#{type.downcase}", "#{u_t_s}"].join('_')}"] = elements.first.text unless elements.empty?
+            result["#{["#{resource_type}", "#{type.downcase}", "#{u_t_s}"].join('_')}"] = elements.first.text if !elements.empty? && elements.first.visible?
           end
         end
       end
@@ -60,6 +65,11 @@ module Bus
       elements = all(:id, "resource_#{resource_type}_subpartner_all")
       result["#{resource_type}_all_subpartner"] = elements.first.text unless elements.empty?
       result
+    end
+
+    def click_more_hide_link(action, type)
+      action = 'display' if action == 'more'
+      find(:id, "#{action}_#{type}_details_of_other_license_types").click
     end
   end
 end
