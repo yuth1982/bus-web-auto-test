@@ -243,4 +243,89 @@ Feature: User Details
       | @user_name |
     And I view user details by newly created user email
     When I edit user device quota to 8
-    Then No more device error show
+    Then Show error: Invalid number of Server devices
+
+  @TC.21102
+  Scenario: 21102 [Bundled]Removed Device is returned to UG
+    Given I log in bus admin console as administrator
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | net terms | company name             |
+      | 12     | 8     | 100 GB      | yes       | [Itemized]Removed Device |
+    Then New partner should be created
+    And I enable stash for the partner with 10 GB stash storage
+    And I act as newly created partner account
+    And I add a new Itemized user group:
+      | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices | enable_stash |
+      | Test | Shared               | 5               | Shared              | 50             | yes          |
+    And I add new user(s):
+      | name  | user_group | storage_type | storage_limit | devices | enable_stash |
+      | User1 | Test       | Server       | 50            | 3       | no           |
+    Then 1 new user should be created
+    And I add new user(s):
+      | name  | user_group | storage_type | storage_limit | devices | enable_stash |
+      | User2 | Test       | Server       | 50            | 40      | no           |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | User1      |
+    And I view user details by User1
+    When  I edit user device quota to 2
+    Then The range of device by tooltips should be:
+      | Min | Max |
+      | 0   | 10  |
+    And users' device status should be:
+      | Used | Available | storage_type |
+      |  0   | 2         | Server       |
+    And I close user details section
+    And I search user by:
+      | keywords |
+      | User2    |
+    And I view user details by User2
+    Then The range of device by tooltips should be:
+      | Min | Max |
+      | 0   | 48  |
+    When  I edit user device quota to 38
+    And users' device status should be:
+      | Used | Available | storage_type |
+      |  0   | 38        | Server       |
+    And I close user details section
+    When I search user by:
+      | keywords |
+      | User1    |
+    And I view user details by User1
+    And The range of device by tooltips should be:
+      | Min | Max |
+      | 0   | 12  |
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.21103
+  Scenario: 21103 [Bundled]Error shows when I remove more Desktop devices than not activated
+    Given I log in bus admin console as administrator
+    When I add a new Reseller partner:
+      | period | reseller type | reseller quota | server plan |
+      | 12     | Silver        | 200            | yes         |
+    Then New partner should be created
+    And I get the partner_id
+    And I enable stash for the partner with 10 GB stash storage
+    And I act as newly created partner account
+    When I add a new Bundled user group:
+      | name | storage_type | server_support | enable_stash |
+      | Test | Shared       | yes            | yes          |
+    And I add new user(s):
+      | name  | user_group | storage_type | storage_limit | devices | enable_stash |
+      | User1 | Test       | Desktop      | 50            | 3       | no           |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | User1      |
+    And I view user details by User1
+    And I update the user password to default password
+    And I add 2 machines for the user and update its used quota
+      | user_email  | machine_name | machine_type | partner_name  | used_quota |
+      | @user_email | Machine1     | Desktop      | @partner_name | 0 GB       |
+      | @user_email | Machine2     | Desktop      | @partner_name | 0 GB       |
+    When  I edit user device quota to 1
+    Then Show error: The number here should be great or equal than 2, which is the current used device count
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name

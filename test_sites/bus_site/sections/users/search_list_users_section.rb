@@ -73,7 +73,12 @@ module Bus
     #
     #@return [] nothing
     def view_user_details(user)
-      find_link(user).click
+      # user is a email
+      if user =~ /^[^\s\:<]+\@[^\s\:<]+\.[^\s\:<]+$/
+        find_link(user).click
+      else
+        find(:xpath, "//div[@id='user-list-content']//table[@class='table-view']//tr[td='#{user}']//a").click
+      end
     end
 
     # Public: Click the export csv link to download the users table

@@ -43,6 +43,7 @@ module Bus
     element(:device_edit_submit, css: "input#device_count + input.button")
     element(:device_edit_cancel, css: "input#device_count + input.button + a")
     element(:device_status, css: "div.show-details>div>div:first-child>div:nth-child(2) span.view:first-child")
+    element(:device_tooltip, css: "span.storage_pool_quota_tooltip")
 
     # user backup information table
     element(:user_backup_details_table, xpath: "div//[starts-with(@id, 'user-show')]//div[2]/table)]")
@@ -464,6 +465,21 @@ module Bus
       device_edit.click
       device_count.type_text(count)
       device_edit_cancel.click
+    end
+
+    def check_device_range(range)
+      tooltip = {}
+      device_edit.click
+      device_count.click
+      page.execute_script("document.getElementById('#{device_count[:id]}').onfocus()")
+      sleep 2 # wait for device_tooltip to show
+      tip_text = device_tooltip.text
+      tooltip['min'] = tip_text[/Min: (\d+)/, 1]
+      tooltip['max'] = tip_text[/Max: (\d+)/, 1]
+      device_edit_cancel.click
+      range.each do |k, v|
+        tooltip[k.downcase].should == v
+      end
     end
 
     # Public: Click send user keys

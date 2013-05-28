@@ -242,8 +242,12 @@ When /^I edit user device quota to (\d+)$/ do |count|
   @bus_site.admin_console_page.user_details_section.change_device_quota(count)
 end
 
-Then /^No more device error show$/ do
-  @bus_site.admin_console_page.user_details_section.messages.should == "Invalid number of Server devices"
+Then /^The range of device by tooltips should be:$/ do | range |
+  @bus_site.admin_console_page.user_details_section.check_device_range(range.hashes.first)
+end
+
+Then /^Show error: (.+)$/ do |message|
+  @bus_site.admin_console_page.user_details_section.messages.should == message
 end
 
 When /^users' device status should be:$/ do |device_status_table|
