@@ -311,7 +311,7 @@ Feature:
       | Data Shuttle US | available | 10    | 50       |
     Then Data shuttle order summary should be:
       | Description         | Quantity | Total    |
-      | Data Shuttle 1.8 TB | 1        | $137.50  |
+      | Data Shuttle 1.8 TB | 1        | $275.00  |
       | Total Price         |          | $137.50  |
     Then Data shuttle order should be created
     And I search and delete partner account by newly created partner company name
@@ -338,9 +338,9 @@ Feature:
       | power adapter   | key from  | quota | discount |
       | Data Shuttle US | available | 10    | 100      |
     Then Data shuttle order summary should be:
-      | Description         | Quantity | Total  |
-      | Data Shuttle 1.8 TB | 1        | $0.00  |
-      | Total Price         |          | $0.00  |
+      | Description         | Quantity | Total   |
+      | Data Shuttle 1.8 TB | 1        | $275.00 |
+      | Total Price         |          | $0.00   |
     Then Data shuttle order should be created
     And I search and delete partner account by newly created partner company name
 
@@ -391,12 +391,12 @@ Feature:
     When I order data shuttle for newly created partner company name
       | power adapter   | key from  | quota |
       | Data Shuttle US | available | 2000  |
-    Then Data shuttle order should be created
     And Data shuttle order summary should be:
       | Description         | Quantity | Total   |
       | Data Shuttle 3.6 TB | 1        | $375.00 |
       | Total Price         |          | $375.00 |
     Then The number of win drivers should be 2
+    Then Data shuttle order should be created
     And I search and delete partner account by newly created partner company name
 
   @TC.16320
@@ -420,12 +420,12 @@ Feature:
     When I order data shuttle for newly created partner company name
       | power adapter   | key from  | quota |
       | Data Shuttle US | available | 3800  |
-    Then Data shuttle order should be created
     And Data shuttle order summary should be:
       | Description         | Quantity | Total   |
       | Data Shuttle 5.4 TB | 1        | $475.00 |
       | Total Price         |          | $475.00 |
     Then The number of win drivers should be 3
+    Then Data shuttle order should be created
     And I search and delete partner account by newly created partner company name
 
   @TC.16340
@@ -449,8 +449,8 @@ Feature:
     When I order data shuttle for newly created partner company name
       | power adapter   | key from  | quota | win drivers |
       | Data Shuttle US | available | 1000  | 2           |
-    Then Data shuttle order should be created
     And The number of win drivers should be 2
+    Then Data shuttle order should be created
     And I search and delete partner account by newly created partner company name
 
   @TC.16342
@@ -474,8 +474,8 @@ Feature:
     When I order data shuttle for newly created partner company name
       | power adapter   | key from  | quota | win drivers | mac drivers |
       | Data Shuttle US | available | 500   | 0           | 2           |
-    Then Data shuttle order should be created
     And The number of mac drivers should be 2
+    Then Data shuttle order should be created
     And I search and delete partner account by newly created partner company name
 
   @TC.17881
@@ -488,7 +488,7 @@ Feature:
     And I act as newly created partner account
     And I add new user(s):
       | user_group           | storage_type | storage_limit | devices |
-      | (default user group) | Desktop      | 20          | 1       |
+      | (default user group) | Desktop      | 20            | 1       |
     And I search user by:
       | keywords   |
       | @user_name |
