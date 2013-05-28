@@ -29,8 +29,7 @@ class PhoenixSite
     Phoenix::Account.new
   end
 
-  # stub for account verification
-  #def acct_verify
-    #Phoenix::AccountVerification.new
-  #end
+  def verify_email_address
+    Phoenix::AccountVerification.new
+  end
 end

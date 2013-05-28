@@ -224,6 +224,14 @@ When /^edit user details:$/ do |info_table|
 end
 
 When /^edit user email success message to (.+) should be displayed$/ do |email|
+  @bus_site.admin_console_page.user_details_section.messages.should == "Email address unchanged. The email address you entered is invalid or already in use: Please enter a valid email address"
+end
+
+When /^edit user email error message to (.+) should be displayed$/ do |email|
+  @bus_site.admin_console_page.user_details_section.messages.should == "Email address unchanged. The email address you entered is invalid or already in use: An account with email address \"#{email}\" already exists"
+end
+
+When /^edit user email change confirmation message to (.+) should be displayed$/ do |email|
   @bus_site.admin_console_page.user_details_section.messages.should == "Your email change request requires verification. We sent an email to #{email}. Please open the email and click the verification link to confirm this change."
 end
 When /^I set device quota field to (\d+) and cancel$/ do |count|

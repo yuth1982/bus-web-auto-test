@@ -1,4 +1,5 @@
 When /^I search emails by keywords:$/ do |keywords_table|
+  #zimbra search keywords avail https://mail.dechocorp.com/zimbra/help/en_US/advanced/Zimbra_User_Help.htm
   expected = keywords_table.hashes
   expected.each do |col|
     col.each do |k,v|
@@ -6,6 +7,7 @@ When /^I search emails by keywords:$/ do |keywords_table|
         when 'to'
           v.gsub!(/@new_user_email/, @new_users.first.email) unless @new_users.nil?
           v.gsub!(/@new_admin_email/, @partner.admin_info.email) unless @partner.nil?
+          v.gsub!(/@existing_admin_email/, @existing_admin_email) unless @existing_admin_email.nil?
         when 'date'
           v.replace(Chronic.parse(v).strftime('%m/%d/%y'))
         when 'subject'
@@ -45,8 +47,9 @@ When /^I retrieve email content by keywords:$/ do |keywords_table|
       |#{keywords_table.headers.join('|')}|
       |#{keywords_table.rows.first.join('|')}|
     })
-  raise "#{@found_emails.size} emails found, please update your search query" if @found_emails.size != 1
+  Log.debug("#{@found_emails.size} emails found, please update your search query") if @found_emails.size != 1
   @mail_content = find_email_content(@found_emails.first.id)
+  Log.debug(@mail_content)
 end
 
 Then /^I can find (\d+) elements by (xpath|css) "(.*?)" from email content$/ do |size, method, query|
@@ -54,9 +57,9 @@ Then /^I can find (\d+) elements by (xpath|css) "(.*?)" from email content$/ do 
   doc.send(method, query).size.should == size.to_i
 end
 
-Then /^I verify email address from email content$/ do
+Then /^I get verify email address from email content$/ do
   match = @mail_content.match(/https?:\/\/secure.mozy.[\S]+\/registration\/verify_email_address\/[\S]+/)
-  url = match[0] unless match.nil?
-  response = send_request(url)
-  response.code.should == '200'
+  @verify_email_query = match[0] unless match.nil?
+  #response = send_request(url)
+  #response.code.should == '200'
 end

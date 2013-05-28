@@ -187,3 +187,9 @@ When /^I change credit card info to:$/ do |contact_table|
   @phoenix_site.licensing_fill_out.licensing_billing_fillout(@partner)
   @phoenix_site.billing_fill_out.billing_info_fill_out(@partner)
 end
+
+When /^verify email address link should show success message$/ do
+  @phoenix_site.verify_email_address.visit(@verify_email_query)
+  @phoenix_site.verify_email_address.form_title_txt.should == "Email Address Verified"
+  @phoenix_site.verify_email_address.form_message_txt.should == " Email Address has been verified"
+end
