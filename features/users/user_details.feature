@@ -64,8 +64,8 @@ Feature: User Details
     And I view user details by newly created user email
     And I update the user password to default password
     And I use keyless activation to activate devices
-      | user_email  | machine_name | machine_type | partner_name  |
-      | @user_email | Machine1     | Desktop      | @partner_name |
+      | machine_name | machine_type |
+      | Machine1     | Desktop      |
     And I get the machine_id by license_key
     And I update the newly created machine used quota to 10 GB
     And I refresh User Details section
@@ -93,8 +93,8 @@ Feature: User Details
     When I view user details by last_update@test.com
     And I update the user password to @user_password
     And I use keyless activation to activate devices
-      | user_email           | machine_name | machine_type | partner_name     |
-      | last_update@test.com | machine4     | Desktop      | Test Last Update1 |
+      | machine_name | machine_type |
+      | machine4     | Desktop      |
     And I get the machine_id by license_key
     And I update the newly created machine used quota to 10 GB
     And I refresh User Details section
@@ -127,8 +127,8 @@ Feature: User Details
     And I view user details by newly created user email
     And I update the user password to default password
     And I use keyless activation to activate devices
-      | user_email  | machine_name | machine_type | partner_name     |
-      | @user_email | Machine1     | Desktop      | Test Last Update |
+      | machine_name | machine_type |
+      | Machine1     | Desktop      |
     And I get the machine_id by license_key
     And I update the newly created machine used quota to 10 GB
     And I refresh User Details section
@@ -159,11 +159,11 @@ Feature: User Details
       | stash quota | send email |
       | default     | no         |
     And I update the user password to default password
-    And I add 3 machines for the user and update its used quota
-      | user_email  | machine_name | machine_type | partner_name  | used_quota |
-      | @user_email | Machine1     | Desktop      | @partner_name | 10 GB      |
-      | @user_email | Machine2     | Desktop      | @partner_name | 20 GB      |
-      | @user_email | Machine3     | Desktop      | @partner_name | 30 GB      |
+    And I add machines for the user and update its used quota
+      | machine_name | machine_type | used_quota |
+      | Machine1     | Desktop      | 10 GB      |
+      | Machine2     | Desktop      | 20 GB      |
+      | Machine3     | Desktop      | 30 GB      |
     And I refresh User Details section
     Then device table in user details should be:
       | Device          | Storage Type |Used/Available     | Device Storage Limit | Last Update      | Action |
@@ -196,10 +196,10 @@ Feature: User Details
       | @user_name |
     And I view user details by newly created user email
     And I update the user password to default password
-    And I add 2 machines for the user and update its used quota
-      | user_email  | machine_name | machine_type | partner_name  | used_quota |
-      | @user_email | Machine1     | Desktop      | @partner_name | 0 GB       |
-      | @user_email | Machine2     | Desktop      | @partner_name | 0 GB       |
+    And I add machines for the user and update its used quota
+      | machine_name | machine_type | used_quota |
+      | Machine1     | Desktop      | 0 GB       |
+      | Machine2     | Desktop      | 0 GB       |
     And I refresh User Details section
     When I set device quota field to 4 and cancel
     Then users' device status should be:
@@ -306,7 +306,6 @@ Feature: User Details
       | period | reseller type | reseller quota | server plan |
       | 12     | Silver        | 200            | yes         |
     Then New partner should be created
-    And I get the partner_id
     And I enable stash for the partner with 10 GB stash storage
     And I act as newly created partner account
     When I add a new Bundled user group:
@@ -321,10 +320,10 @@ Feature: User Details
       | User1      |
     And I view user details by User1
     And I update the user password to default password
-    And I add 2 machines for the user and update its used quota
-      | user_email  | machine_name | machine_type | partner_name  | used_quota |
-      | @user_email | Machine1     | Desktop      | @partner_name | 0 GB       |
-      | @user_email | Machine2     | Desktop      | @partner_name | 0 GB       |
+    And I add machines for the user and update its used quota
+      | machine_name | machine_type | used_quota |
+      | Machine1     | Desktop      | 0 GB       |
+      | Machine2     | Desktop      | 0 GB       |
     When  I edit user device quota to 1
     Then Show error: The number here should be great or equal than 2, which is the current used device count
     And I stop masquerading

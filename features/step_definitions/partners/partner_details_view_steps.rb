@@ -1,4 +1,5 @@
 When /^I act as newly created partner|sub partner account$/ do
+  @current_partner = @bus_site.admin_console_page.partner_details_section.partner
   @bus_site.admin_console_page.partner_details_section.act_as_partner
   @bus_site.admin_console_page.has_stop_masquerading_link?
   @partner_id = @bus_site.admin_console_page.current_partner_id

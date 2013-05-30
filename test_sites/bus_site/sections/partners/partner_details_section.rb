@@ -95,6 +95,11 @@ module Bus
       general_info_hash['ID:']
     end
 
+    def partner
+      { :id => general_info_hash['ID:'],
+        :name => find(:css, "div.header-bar > h3").text }
+    end
+
     # Public: General information hash
     #
     # Example:

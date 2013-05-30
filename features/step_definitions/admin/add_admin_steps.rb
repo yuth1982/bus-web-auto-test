@@ -44,6 +44,7 @@ When /^I act as admin by:$/ do |table|
 
   attributes = table.hashes.first
   page.find_link(attributes["email"] || attributes["name"]).click
+  @current_partner = @bus_site.admin_console_page.admin_details_section.partner
   @bus_site.admin_console_page.admin_details_section.act_as_admin
   @bus_site.admin_console_page.has_stop_masquerading_link?
 end

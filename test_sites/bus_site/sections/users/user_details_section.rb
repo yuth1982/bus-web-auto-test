@@ -3,6 +3,8 @@ module Bus
   class UserDetailsSection < SiteHelper::Section
     # Private elements
     #
+
+    elements(:general_info_dls, css: 'div>dl')
     # top menus
     element(:delete_user_link, xpath: "//a[text()='Delete User']")
     element(:change_user_password_link, xpath: "//a[text()='Change User Password']")
@@ -73,6 +75,12 @@ module Bus
 
     def unactivated_keys_table_rows
       product_keys_tables.last.rows_text
+    end
+
+    def general_info_hash
+      wait_until_bus_section_load
+      output = general_info_dls[0].dt_dd_elements_text + general_info_dls[1].dt_dd_elements_text
+      Hash[*output.flatten]
     end
 
     # Public: User details hash
@@ -445,6 +453,12 @@ module Bus
       product_key_lbl.text
     end
 
+    def user
+      { :id => general_info_hash['ID:'],
+        :email => find(:css, "div.header-bar > h3").text,
+        :name => general_info_hash['Name:'][/^(.*)(change)$/, 1]}
+    end
+
     def edit_password(password)
       change_user_password_link.click
       wait_until_bus_section_load
@@ -471,7 +485,6 @@ module Bus
       tooltip = {}
       device_edit.click
       device_count.click
-      page.execute_script("document.getElementById('#{device_count[:id]}').onfocus()")
       sleep 2 # wait for device_tooltip to show
       tip_text = device_tooltip.text
       tooltip['min'] = tip_text[/Min: (\d+)/, 1]

@@ -81,6 +81,9 @@ module Bus
     element(:allocate_resources_btn, css: "div.popup-window-footer input[value=Allocate]")
     element(:ok_btn, css: "div.popup-window-footer input[value=Ok]")
 
+    def partner_id
+      find(:xpath, "//div[@id='identify-me']/a[1]")[:href][/partner-show-(\d+)/, 1]
+    end
 
     # Public: Navigate to menu item on admin console page
     # Note: if bus module is opened, menu will not be clicked

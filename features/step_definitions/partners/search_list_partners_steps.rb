@@ -27,15 +27,18 @@ When /^I act as partner by:$/ do |search_key_table|
     })
   if attributes['name'].nil? == false
     page.find_link(attributes['name']).click
+    @current_partner = @bus_site.admin_console_page.partner_details_section.partner
     @bus_site.admin_console_page.partner_details_section.act_as_partner
   elsif attributes['email'].nil? == false
     page.find_link(attributes['email']).click
+    @current_partner = @bus_site.admin_console_page.admin_details_section.partner
     @bus_site.admin_console_page.admin_details_section.act_as_admin
   else
     raise 'Please act as partner by name or email'
   end
   @bus_site.admin_console_page.has_stop_masquerading_link?
   @partner_id = @bus_site.admin_console_page.current_partner_id
+  @current_partner[:id] ||= @bus_site.admin_console_page.partner_id
 end
 
 # Public: View partner details by click name in search partner results

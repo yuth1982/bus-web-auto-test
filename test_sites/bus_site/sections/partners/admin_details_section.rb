@@ -45,6 +45,10 @@ module Bus
       act_as_link.click
     end
 
+    def partner
+      { :name => find(:xpath, "//div[@class='show-details']/dl[dt='Partner:']/dd").text }
+    end
+
     def delete_admin(admin_password)
       delete_admin_btn.click
       alert_accept
