@@ -46,6 +46,7 @@ module Bus
     element(:device_edit_cancel, css: "input#device_count + input.button + a")
     element(:device_status, css: "div.show-details>div>div:first-child>div:nth-child(2) span.view:first-child")
     element(:device_tooltip, css: "span.storage_pool_quota_tooltip")
+    element(:machine_max_tooltips, css: "span[id^=tooltip_for_machine]")
 
     # user backup information table
     element(:user_backup_details_table, xpath: "div//[starts-with(@id, 'user-show')]//div[2]/table)]")
@@ -530,6 +531,48 @@ module Bus
           alert_accept
         when "active"
           find(:xpath, "//div[contains(@id, 'user-show-')]//a[contains(text(),'(uncancel)')]").click
+      end
+    end
+
+    def handle_max(action, type, name, confirm=true)
+      case type
+        when 'machine'
+          limit_col = find(:xpath, "//a[text()='#{name}']/../../*[last()-2]")
+          action = 'cancel-edit' if action == 'cancel'
+          limit_col.find(:css, "*[id^=#{action}-machine-storage-max]").click
+          if action == 'remove'
+            confirm ? alert_accept : alert_dismiss
+          end
+        when 'user'
+          #TODO
+      end
+    end
+
+    def set_max_value(type, name, quota)
+      case type
+        when 'machine'
+          limit_col = find(:xpath, "//a[text()='#{name}']/../../*[last()-2]")
+          max_input = limit_col.find(:css, '*[id^=input-machine-storage-max]')
+          max_input.click
+          Log.debug machine_max_tooltips.text
+          max_input.type_text(quota)
+        when 'user'
+          #TODO
+      end
+    end
+
+    def check_machine_max_range(name, range)
+      tooltip = {}
+      limit_col = find(:xpath, "//a[text()='#{name}']/../../*[last()-2]")
+      max_input = limit_col.find(:css, '*[id^=input-machine-storage-max]')
+      max_input.click
+      sleep 1
+      tip_text = machine_max_tooltips.text
+      Log.debug tip_text
+      tooltip['min'] = tip_text[/Min: (\d+)/, 1]
+      tooltip['max'] = tip_text[/Max: (\d+)/, 1]
+      range.each do |k, v|
+        tooltip[k.downcase].should == v
       end
     end
 

@@ -69,7 +69,7 @@ Feature: Resource Summary
       | Available | Used  | All Subpartner |
       | 70 GB     |  0    | 30 GB          |
 
-  @TC.20707
+  @TC.20707 @firefox_debug
   Scenario: 20797 [Itemized]Click 'More' link will show all the Storage type when Storage type is more than 3
     When I act as partner by:
       | email                               |

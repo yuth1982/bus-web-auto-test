@@ -259,3 +259,17 @@ When /^users' device status should be:$/ do |device_status_table|
   expected = device_status_table.hashes.first
   expected.keys.each{ |header| actual[header.downcase].should == expected[header] }
 end
+
+When(/^I (set|edit|remove|save|cancel) (user|machine) max for (.+)$/) do |action, type, name|
+  @bus_site.admin_console_page.user_details_section.handle_max(action, type, name)
+end
+When(/^I input the (user|machine) max value for (.+) to (\d+) GB$/) do |type, name, quota|
+  @bus_site.admin_console_page.user_details_section.set_max_value(type, name, quota)
+end
+Then(/^set max message should be:$/) do | msg|
+  @bus_site.admin_console_page.user_details_section.messages.should == msg
+end
+Then(/^The range of machine max for (.+) by tooltips should be:$/) do |machine, range|
+  # table is a | 0   | 12  |
+  @bus_site.admin_console_page.user_details_section.check_machine_max_range(machine, range.hashes.first)
+end
