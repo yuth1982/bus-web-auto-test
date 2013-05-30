@@ -8,6 +8,23 @@ module Bus
     element(:succ_msg_div, css: 'ul.flash.successes')
     element(:err_msg_div, css: 'ul.flash.errors')
 
+    def ug_table_header(name)
+      case name
+        when 'Device Used'
+          ug_table.find(:css, "th[aria-label^='Used']:not([class*='raw_storage'])")
+        when 'Storage Used', 'Desktop Storage Used'
+          ug_table.find(:css, "th[aria-label^='Used'].raw_storage")
+        when 'Server Storage Used'
+          ug_table.find(:xpath, "//th[contains(text(), 'Used')][contains(@class, 'raw_storage')][2]")
+        when 'Desktop Device Total'
+          ug_table.find(:xpath, "//th[contains(text(), 'Total')][1]")
+        when 'Server Device Total'
+          ug_table.find(:xpath, "//th[contains(text(), 'Total')][2]")
+        else
+          ug_table.find(:css, "th[aria-label^='#{name}']")
+      end
+    end
+
     # Public: Successful messages for delete user group sections
     #
     # Example:
@@ -98,12 +115,11 @@ module Bus
       ug_table.rows[1..-1].each do |row|
         if row[0].text == group_name
           row[-1].find(:css, '.ug_delete').click
-          break;
+          alert_accept
+          break
         end
       end
     end
-
-    private
 
     # Private: User Group Table
     #

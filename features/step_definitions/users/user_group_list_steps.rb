@@ -22,6 +22,18 @@ end
 When /^I delete user group details by name: (.+)$/ do |group_name|
   admin_console_page = @bus_site.admin_console_page
   admin_console_page.user_group_list_section.delete_user_group(group_name)
-  admin_console_page.alert_accept
   admin_console_page.user_group_list_section.wait_until_bus_section_load
+end
+
+When /^I click (Group Name|Stash|Server Enabled|Device Used|Storage Used|Desktop Storage Used|Desktop Device Total|Server Storage Used|Server Device Total) table header$/ do |name|
+  @bus_site.admin_console_page.user_group_list_section.ug_table_header(name).click
+end
+
+Then /^Column (Group Name|Stash|Server Enabled|Device Used|Storage Used|Desktop Storage Used|Desktop Device Total|Server Storage Used|Server Device Total) sorts in (ascending|descending) order$/ do |name, order|
+  class_expected = "sorting_#{order[0..-7]}"
+  @bus_site.admin_console_page.user_group_list_section.ug_table_header(name)[:class].should =~ /#{class_expected}/
+end
+
+When /^I refresh User Group list section$/ do
+  @bus_site.admin_console_page.user_group_list_section.refresh_bus_section
 end
