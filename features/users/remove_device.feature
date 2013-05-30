@@ -192,3 +192,5 @@ Feature: Remove a device
     And I view the user's product keys
     Then Number of activated keys should be 0
     And Number of unactivated keys should be 2
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name

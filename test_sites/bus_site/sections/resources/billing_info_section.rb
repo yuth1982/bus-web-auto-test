@@ -112,7 +112,8 @@ module Bus
     #
     # Returns hash array
     def autogrow_hashes
-      autogrow_table_rows[1..-1].map{ |row| Hash[*autogrow_table_rows[0].zip(row).flatten] }
+      wait_until_bus_section_load
+      tables.last.hashes
     end
   end
 end
