@@ -39,6 +39,7 @@ module Phoenix
     element(:continue_btn, css: "input.img-button")
     element(:back_btn, id: "back_button")
     element(:submit_btn, id: "submit_button")
+    element(:error_message, css: "p.error")
     # Public : fill out admin info
     #
     # required: admin name - name of primary admin on acct
@@ -113,6 +114,10 @@ module Phoenix
       # pro/home selection
       plan_choice(partner)
       continue_btn.click
+    end
+
+    def messages
+      error_message.text
     end
   end
 end

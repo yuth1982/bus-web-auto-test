@@ -25,6 +25,7 @@ Feature: User Has Unique Username
   - Don't cause failures when updating other fields (for example, display name) for existing users with non-unique usernames
   - Don't cause failures when updating users in other products (for example, MozyOEM)
 
+  @TC.21339
   Scenario: Mozy-21339 : Add New Partner With Non Unique Admin Email
     When I get an admin email from the database
     And I log in bus admin console as administrator
@@ -36,6 +37,7 @@ Feature: User Has Unique Username
     An account with that email address already exists
     """
 
+  @TC.21343
   Scenario: Mozy-21343:Add New Partner with Existing User Email as Admin Email
     When I get a user email from the database
     And I log in bus admin console as administrator
@@ -45,17 +47,25 @@ Feature: User Has Unique Username
     Then New partner should be created
     And I delete partner account
 
+  @TC.21340
   Scenario: Mozy-21340:Edit Admin Email With Admin Email That Is Already in Use
-    When I get an admin email from the database
-    And I log in bus admin console as administrator
+    When I log in bus admin console as administrator
+    And I navigate to Add New Admin section from bus admin console page
+    And I add a new admin:
+      | Roles |
+      | Sales |
+    And I save the admin email as existing admin email
     And I view the partner info
     And I change the username to existing admin email
     Then Account Details error message should be:
     """
-    An account with that email address already exists
-    Email address unchanged. The email address you entered is invalid or already in use: An account with that email address already exists
+    Failed to update email address. The email address you entered may be invalid or already in use:
     """
+    And I delete admin by:
+      | email                 |
+      | @existing_admin_email |
 
+  @TC.21346
   Scenario:  Mozy-21346:Edit Admin Email With User Email That Is Already in Use
     When I get a user email from the database
     And I log in bus admin console as administrator
@@ -65,6 +75,7 @@ Feature: User Has Unique Username
     When I change the username to automation admin email
     Then username changed success message should be displayed
 
+  @TC.21341
   Scenario: Mozy-21341:Add New Admin Role with Existing User Email
     When I get a user email from the database
     And I log in bus admin console as administrator
@@ -77,6 +88,7 @@ Feature: User Has Unique Username
       | email                |
       | @existing_user_email |
 
+  @TC.21342
   Scenario: Mozy-21342:Add New Admin Role with Existing Admin Email
     When I get an admin email from the database
     And I log in bus admin console as administrator
@@ -89,6 +101,7 @@ Feature: User Has Unique Username
     An account with that email address already exists
     """
 
+  @TC.21347
   Scenario: Mozy-21347:Edit Sub Admin with Existing User Email
     When I get a user email from the database
     And I log in bus admin console as administrator
@@ -108,6 +121,7 @@ Feature: User Has Unique Username
       | email                |
       | @existing_user_email |
 
+  @TC.21348
   Scenario: Mozy-21348:Edit Sub Admin with Existing Admin Email
     When I get an admin email from the database
     And I log in bus admin console as administrator
@@ -130,6 +144,7 @@ Feature: User Has Unique Username
       | email        |
       | @admin_email |
 
+  @TC.21366
   Scenario:  Mozy-21366:Update User(MH) With Existing Admin Username
     When I get an admin email from the database
     And I am at dom selection point:
@@ -161,8 +176,10 @@ Feature: User Has Unique Username
     And I search user by:
       | keywords              | user type |
       | @existing_admin_email | MozyHome  |
+    And I view MozyHome user details by existing admin email
     And I delete user
 
+  @TC.21365
   Scenario: Mozy-21365:Update User(MH) With Existing User Username
     When I get a user email from the database
     And I am at dom selection point:
@@ -185,3 +202,104 @@ Feature: User Has Unique Username
       | @existing_user_email |
     Then edit user email error message to existing user email should be displayed
     And I delete user
+
+  @TC.21351
+  Scenario: Mozy-21351:Edit Admin Email With Existing User Email(MH)
+    When I get a Mozy Home user email from the database
+    And I log in bus admin console as administrator
+    And I view the partner info
+    And I change the username to existing user email
+    Then username changed success message should be displayed
+    When I change the username to automation admin email
+    Then username changed success message should be displayed
+
+  @TC.21383
+  Scenario: Mozy-21383:Update User(MH) With Suspended User Username
+    When I get a suspended user email from the database
+    And I am at dom selection point:
+    And I add a phoenix Home user:
+      | period | base plan | country       |
+      | 1      | 50 GB     | United States |
+    And the billing summary looks like:
+      | Description                           | Price | Quantity | Amount |
+      | MozyHome 50 GB (1 computer) - Monthly | $5.99 | 1        | $5.99  |
+      | Total Charge                          | $5.99 |          | $5.99  |
+    And the user is successfully added.
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name redacted-4165@notarealdomain.mozy.com and password default password
+    And I search user by:
+      | keywords       | user type |
+      | @mh_user_email | MozyHome  |
+    And I view MozyHome user details by @user_name
+    And edit user details:
+      | email                |
+      | @existing_user_email |
+    Then edit user email error message to existing user email should be displayed
+    And I delete user
+
+  @TC.21384
+  Scenario: Mozy-21384:Update User(MH) With Deleted User Username
+    When I get a deleted user email from the database
+    And I am at dom selection point:
+    And I add a phoenix Home user:
+      | period | base plan | country       |
+      | 1      | 50 GB     | United States |
+    And the billing summary looks like:
+      | Description                           | Price | Quantity | Amount |
+      | MozyHome 50 GB (1 computer) - Monthly | $5.99 | 1        | $5.99  |
+      | Total Charge                          | $5.99 |          | $5.99  |
+    And the user is successfully added.
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name redacted-4165@notarealdomain.mozy.com and password default password
+    And I search user by:
+      | keywords       | user type |
+      | @mh_user_email | MozyHome  |
+    And I view MozyHome user details by newly created MozyHome username
+    And edit user details:
+      | email                |
+      | @existing_user_email |
+    And edit user email change confirmation message to existing user email should be displayed
+    And I retrieve email content by keywords:
+      | to                    | subject                    | date  |
+      | @existing_user_email | Email Address Verification | today |
+    And I get verify email address from email content
+    Then verify email address link should show success message
+    When I navigate to bus admin console login page
+    And I log in bus admin console with user name redacted-4165@notarealdomain.mozy.com and password default password
+    And I search user by:
+      | keywords             | user type |
+      | @existing_user_email | MozyHome  |
+    And I view MozyHome user details by existing user email
+    And I delete user
+
+  @TC.21800
+  Scenario: Mozy-21800:Web Sign Up - Add New User With Existing Admin Username
+    When I get an admin email from the database
+    And I am at dom selection point:
+    And I add a phoenix Home user:
+      | period | base plan | country       | admin email           |
+      | 1      | 50 GB     | United States | @existing_admin_email |
+    And the billing summary looks like:
+      | Description                           | Price | Quantity | Amount |
+      | MozyHome 50 GB (1 computer) - Monthly | $5.99 | 1        | $5.99  |
+      | Total Charge                          | $5.99 |          | $5.99  |
+    And the user is successfully added.
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name redacted-4165@notarealdomain.mozy.com and password default password
+    And I search user by:
+      | keywords       | user type |
+      | @mh_user_email | MozyHome  |
+    And I view MozyHome user details by newly created MozyHome username
+    And I delete user
+
+  @TC.21357 @BUG.99434 @BUG.102097
+  Scenario: Mozy-21357:Web Sign Up - Add New User With Existing(Created) User Username(MH)
+    When I get a user email from the database
+    And I am at dom selection point:
+    And I sign up a phoenix Home user:
+      | period | base plan | country       | admin email          |
+      | 1      | 50 GB     | United States | @existing_user_email |
+    Then sign up page error message should be:
+    """
+    An account with email address "existing user email" already exists
+    """

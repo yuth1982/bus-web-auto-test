@@ -142,3 +142,7 @@ When /^I view admin details by:$/ do |table|
   attributes['email'] = @admin.email[0..26] if attributes['email'] == '@admin_email'
   page.find_link(attributes["email"] || attributes["name"]).click
 end
+
+When /^I save the admin email as existing admin email$/ do
+  @existing_admin_email = @admin.email
+end

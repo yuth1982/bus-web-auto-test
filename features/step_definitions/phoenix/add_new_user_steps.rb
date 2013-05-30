@@ -43,10 +43,13 @@ When /^I add a phoenix Home user:$/ do |user_table|
   @partner.partner_info.coupon_code = attributes["coupon"] unless attributes["coupon"].nil?
   @partner.partner_info.parent = attributes["create under"] || CONFIGS['bus']['mozy_root_partner']['mozypro']
 
+  # Admin existing email check
+  attributes['admin email'] = @existing_user_email if attributes['admin email'] == '@existing_user_email'
+  attributes['admin email'] = @existing_admin_email if attributes['admin email'] == '@existing_admin_email'
+
   # Admin info attributes
   @partner.admin_info.full_name = attributes["admin name"] unless attributes["admin name"].nil?
-  @partner.admin_info.email = attributes["admin email"] unless attributes["admin name"].nil?
-
+  @partner.admin_info.email = attributes["admin email"] unless attributes["admin email"].nil?
   # Billing info attributes
   # Not implemented, always use company info
 
@@ -114,9 +117,13 @@ When /^I build a phoenix Home user:$/ do |user_table|
   @partner.partner_info.coupon_code = attributes["coupon"] unless attributes["coupon"].nil?
   @partner.partner_info.parent = attributes["create under"] || CONFIGS['bus']['mozy_root_partner']['mozypro']
 
+  # Admin existing email check
+  attributes['admin email'] = @existing_user_email if attributes['admin email'] == '@existing_user_email'
+  attributes['admin email'] = @existing_admin_email if attributes['admin email'] == '@existing_admin_email'
+
   # Admin info attributes
   @partner.admin_info.full_name = attributes["admin name"] unless attributes["admin name"].nil?
-  @partner.admin_info.email = attributes["admin email"] unless attributes["admin name"].nil?
+  @partner.admin_info.email = attributes["admin email"] unless attributes["admin email"].nil?
 
   # Billing info attributes
   # Not implemented, always use company info
@@ -192,4 +199,22 @@ When /^verify email address link should show success message$/ do
   @phoenix_site.verify_email_address.visit(@verify_email_query)
   @phoenix_site.verify_email_address.form_title_txt.should == "Email Address Verified"
   @phoenix_site.verify_email_address.form_message_txt.should == " Email Address has been verified"
+end
+
+When /^I sign up a phoenix Home user:$/ do |user_table|
+
+  # table is a Cucumber::Ast::Table
+  step %{I build a phoenix Home user:}, table(%{
+      |#{user_table.headers.join('|')}|
+      |#{user_table.rows.first.join('|')}|
+    })
+  # for info review
+  # puts @partner.to_s
+  @phoenix_site.select_dom.select_country(@partner)
+  @phoenix_site.admin_fill_out.admin_info_fill_out(@partner)
+
+end
+
+Then /^sign up page error message should be:$/ do |message|
+  @phoenix_site.admin_fill_out.messages == message.to_s
 end

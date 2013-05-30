@@ -50,15 +50,15 @@ end
 
 When /^I view user details by (.+)$/ do |user|
   if @user.nil?
-    @bus_site.admin_console_page.search_list_users_section.view_user_details(user)
+    @bus_site.admin_console_page.search_list_users_section.view_user_details(user[0..26])
   else
-    @bus_site.admin_console_page.search_list_users_section.view_user_details(user.gsub(/@user_email/,@new_users.first.email))
+    @bus_site.admin_console_page.search_list_users_section.view_user_details(user.gsub(/@user_email/,@new_users.first.email).slice!(0..26))
   end
   @current_user = @bus_site.admin_console_page.user_details_section.user
 end
 
 When /^I view MozyHome user details by (.+)$/ do |user|
-  @bus_site.admin_console_page.search_list_users_section.view_user_details(user.gsub(/@user_name/,@partner.admin_info.email[0..10]))
+  @bus_site.admin_console_page.search_list_users_section.view_user_details(user.gsub(/@user_name/,@partner.admin_info.email[0..26]).slice!(0..26))
 end
 
 When /^I refresh Search List User section$/ do
