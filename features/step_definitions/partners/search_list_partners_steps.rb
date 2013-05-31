@@ -35,6 +35,7 @@ When /^I act as partner by:$/ do |search_key_table|
     raise 'Please act as partner by name or email'
   end
   @bus_site.admin_console_page.has_stop_masquerading_link?
+  @partner_id = @bus_site.admin_console_page.current_partner_id
 end
 
 # Public: View partner details by click name in search partner results

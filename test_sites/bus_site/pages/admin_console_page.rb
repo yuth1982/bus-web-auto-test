@@ -66,7 +66,7 @@ module Bus
     section(:quick_reports_section, QuickReportsSection, id: "jobs-quick_reports")
 
     # Private element
-    element(:current_admin_div, id: "identify-me")
+    element(:current_admin_div, id: 'identify-me')
     element(:stop_masquerading_link, xpath: "//a[text()='stop masquerading']")
     element(:quick_link_item, id: "nav-cat-quick")
 
@@ -109,6 +109,13 @@ module Bus
       current_admin = current_admin_div.text
       stop_masquerading_link.click
       wait_until{ current_admin != current_admin_div.text}
+    end
+
+    # Public: Get partner id from top admin identification div
+    #
+    #
+    def current_partner_id
+      current_admin_div.find(:css, 'a:first-child')[:href].match(/partner-show-(\d+)&/)[1]
     end
 
     def has_navigation?(link)
