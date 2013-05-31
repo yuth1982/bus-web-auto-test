@@ -50,6 +50,7 @@ module Bus
 
     def change_mozypro_plan(base_plan, server_plan, storage_add_on, coupon)
       # Find current server plan id e.g. 'products_addon_10353251, Server Plan, $12.99'
+      server_plan_locator = '//label[starts-with(.,"Server Plan")]'
       current_server_plan_id = find(:xpath, server_plan_locator)[:for]
       unless base_plan.nil?
         pro_base_plan_select.select(base_plan)
