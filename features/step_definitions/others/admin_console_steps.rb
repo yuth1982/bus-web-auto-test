@@ -107,3 +107,27 @@ Then /^new section & navigation items are present for (MozyPro|MozyEnterprise|Re
       raise "Error: Company type #{type} does not exist."
   end
 end
+
+Then /^I verify the new links for (MozyPro|MozyEnterprise|Reseller) partner$/ do |type|
+  case type
+    when CONFIGS['bus']['company_type']['mozypro']
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['resource_summary']), true)
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['add_new_user']), true)
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['download_client']), true)
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['change_plan']), true)
+    when CONFIGS['bus']['company_type']['mozyenterprise']
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['resource_summary']), true)
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['user_group_list']), true)
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['add_new_user']), true)
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['download_client']), true)
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['change_plan']), true)
+    when CONFIGS['bus']['company_type']['reseller']
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['resource_summary']), true)
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['user_group_list']), true)
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['add_new_user']), true)
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['download_client']), true)
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['change_plan']), true)
+    else
+      raise "Error: Company type #{type} does not exist."
+  end
+end

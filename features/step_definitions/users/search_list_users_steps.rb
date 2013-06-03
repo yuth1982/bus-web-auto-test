@@ -43,6 +43,26 @@ Then /^User search results should be:$/ do |results_table|
   expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
 
+Then /^Itemized user search results should be:$/ do |results_table|
+  actual = @bus_site.admin_console_page.search_list_itemized_users_section.search_results_hashes
+  expected = results_table.hashes
+  expected.each do |col|
+    col.each do |k,v|
+      case k
+        when 'Created'
+          v.replace(Chronic.parse(v).strftime('%m/%d/%y'))
+        when 'Name'
+          v.gsub!(/@user_name/, @new_users.first.name.slice(0,27)) unless @new_users.nil?
+        when 'User'
+          v.gsub!(/@user_email/, @new_users.first.email.slice(0,27)) unless @new_users.nil?
+        else
+          # do nothing
+      end
+    end
+  end
+  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
+end
+
 When /^The users table should be empty$/ do
   rows = @bus_site.admin_console_page.search_list_users_section.search_results_table_rows
   rows.to_s.include?('No results found.').should be_true

@@ -7,6 +7,7 @@ module Bus
     # Partner section
     section(:search_list_partner_section, SearchListPartnerSection, id: "partner-list")
     section(:add_new_partner_section, AddNewPartnerSection, id: "partner-new")
+    section(:add_itemized_partner_section, AddItemizedPartnerSection, id: "partner-new-content")
 
     section(:partner_details_section, PartnerDetailsSection, css: "div[id^=partner-show-]")
     section(:admin_details_section, AdminDetailsSection, css: "div[id^=admin-show-]")
@@ -18,11 +19,14 @@ module Bus
 
     # Users section
     section(:search_list_users_section, SearchListUsersSection, id: 'user-list')
+    section(:search_list_itemized_users_section, SearchListItemizedUsersSection, id: 'user-list-content')
     section(:search_list_machines_section, SearchListMachinesSection, id: 'machine-list')
     section(:user_group_list_section, UserGroupListSection, id: 'user_groups-list')
     section(:add_new_user_group_section, AddEditUserGroupSection, id: 'user_groups-new')
+    section(:add_new_itemized_user_group_section, AddEditItemizedUserGroupSection, id: 'user_groups-new-content')
     section(:edit_user_group_section, AddEditUserGroupSection, css: 'div[id^=user_groups-edit_storage_pool_policy-]')
     section(:add_new_user_section, AddNewUserSection, id: 'user-new_users_in_batch')
+    section(:add_new_itemized_user_section, AddNewItemizedUserSection, id: 'user-new-content')
     section(:machine_mapping_section, MachineMappingSection, id: 'machine-machine_migration')
     section(:user_group_details_section, UserGroupDetailsSection, css: 'div[id^=user_groups-show-]')
     section(:list_user_groups_section, ListUserGroupsSection, id: 'user_groups-list')

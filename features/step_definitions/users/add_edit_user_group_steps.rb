@@ -48,6 +48,29 @@ When /^I (add|edit) (.+) (Bundled|Itemized) user group:$/ do |action, group_name
   end
 end
 
+# Create a user group for an itemized partner
+#
+# Itemized step available column names:
+# | name      | desktop_storage_assigned | server_storage_assigned | server_devices |
+#
+When /^I (add|edit) a new user group for an itemized partner:$/ do |action, ug_table|
+  cells = ug_table.hashes.first
+
+  case action
+    when 'add'
+      @new_itemized_ug = Bus::DataObj::ItemizedUserGroup.new
+      hash_to_object(cells, @new_itemized_ug)
+      @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_user_group'])
+      @bus_site.admin_console_page.add_new_itemized_user_group_section.add_itemized_partner_ug(@new_itemized_ug)
+
+    when 'edit'
+      @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['list_user_groups'])
+      @bus_site.admin_console_page.add_new_itemized_user_group_section.edit_itemized_partner_ug(@new_itemized_ug)
+    else
+      # Skipped
+  end
+end
+
 Then /^(.+) user group should be (created|updated|deleted)$/ do |ug, action|
   case ug
     when 'Bundled'
@@ -66,6 +89,38 @@ Then /^(.+) user group should be (created|updated|deleted)$/ do |ug, action|
       @bus_site.admin_console_page.add_new_user_group_section.wait_until_bus_section_load
     when 'updated'
       @bus_site.admin_console_page.edit_user_group_section.success_messages.should == "User Group #{group_name} has been successfully updated."
+      # Clear previous message
+      @bus_site.admin_console_page.edit_user_group_section.refresh_bus_section
+      @bus_site.admin_console_page.edit_user_group_section.wait_until_bus_section_load
+    when 'deleted'
+      @bus_site.admin_console_page.user_group_list_section.success_messages.should == "Successfully removed #{group_name}."
+      # Clear previous message
+      @bus_site.admin_console_page.user_group_list_section.refresh_bus_section
+      @bus_site.admin_console_page.user_group_list_section.wait_until_bus_section_load
+    else
+      # Skipped
+  end
+
+end
+
+Then /^Itemized partner user group (.+) should be (created|updated|deleted)$/ do |ug, action|
+  case ug
+    when 'Bundled'
+      group_name = @new_bundled_ug.name
+    when 'Itemized'
+      group_name = @new_itemized_ug.name
+    else
+      group_name = ug
+  end
+
+  case action
+    when 'created'
+      @bus_site.admin_console_page.add_new_user_group_section.success_messages.should == "Created new user group #{group_name}"
+      # Clear previous message
+      @bus_site.admin_console_page.add_new_user_group_section.refresh_bus_section
+      @bus_site.admin_console_page.add_new_user_group_section.wait_until_bus_section_load
+    when 'updated'
+      @bus_site.admin_console_page.edit_user_group_section.success_messages.should == "Updated user group #{group_name}"
       # Clear previous message
       @bus_site.admin_console_page.edit_user_group_section.refresh_bus_section
       @bus_site.admin_console_page.edit_user_group_section.wait_until_bus_section_load

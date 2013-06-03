@@ -14,8 +14,28 @@ When /^I add new user\(s\):$/ do |user_table|
   @bus_site.admin_console_page.add_new_user_section.add_new_users(@new_users)
 end
 
+# If you are create one user: You can specify user name and email
+# If you are create more than on users: User names and emails are random
+#
+# available columns:
+# name, email, user_group, storage_type, storage_max, devices, enable_stash, send_email
+When /^I add new itemized user\(s\):$/ do |itemized_table|
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_user'])
+  @new_users =[]
+  itemized_table.hashes.each do |hash|
+    user = Bus::DataObj::ItemizedUser.new
+    hash_to_object(hash, user)
+    @new_users << user
+  end
+  @bus_site.admin_console_page.add_new_itemized_user_section.add_new_itemized_users(@new_users)
+end
+
 Then /^(\d+) new user should be created$/ do |num|
   @bus_site.admin_console_page.add_new_user_section.success_messages.should == "Successfully created #{num} user(s)"
+end
+
+Then /^new itemized user should be created$/ do
+  @bus_site.admin_console_page.add_new_itemized_user_section.new_user_creation_success(@new_users)
 end
 
 Then /^Add new user error message should be:$/ do |messages|

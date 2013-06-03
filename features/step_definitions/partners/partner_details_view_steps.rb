@@ -72,6 +72,8 @@ Then /^Partner contact information should be:$/ do |contact_table|
         actual[header].should == expected[header].gsub(/@zip_code/, @partner.company_info.zip)
       when 'Contact Country:'
         actual[header].should == expected[header].gsub(/@country/, @partner.company_info.country)
+      when 'Phone:'
+        actual[header].should == expected[header].gsub(/@phone/, @partner.company_info.phone)
       else
         actual[header].should == expected[header]
     end
@@ -103,6 +105,11 @@ end
 Then /^Partner resources should be:$/ do |resources_table|
   @bus_site.admin_console_page.partner_details_section.generic_resources_table_headers.should == resources_table.headers
   @bus_site.admin_console_page.partner_details_section.generic_resources_table_rows.should == resources_table.rows
+end
+
+Then /^Itemized partner resources should be:$/ do |resources_table|
+  @bus_site.admin_console_page.partner_details_section.license_types_table_headers.should == resources_table.headers
+  @bus_site.admin_console_page.partner_details_section.license_types_table_rows.should == resources_table.rows
 end
 
 Then /^Partner license types should be:$/ do |license_types_table|

@@ -18,6 +18,8 @@ bus:
     mozypro:                    MozyPro
     mozyenterprise:             MozyEnterprise
     reseller:                   Reseller
+    itemized_pro:               MozyPro Itemized
+    itemized_reseller:          Reseller Itemized
 
   reseller_type:
     silver:                     Silver
@@ -35,6 +37,7 @@ bus:
     mozypro:                    SMB Bundle Limited
     mozyenterprise:             Enterprise
     reseller:                   Reseller Root
+    biz_root:                   Business Root
 
   menu:
     # Quick Links

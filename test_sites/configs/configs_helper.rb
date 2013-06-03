@@ -23,6 +23,9 @@ ZIMBRA_ENV = ALL_ENV['zimbra']
 # Active phoenix test environment, for example qa5, qa6
 PHX_ENV = ALL_ENV[ENV['PHX_ENV'] || 'phx-qa6']
 
+# Active phoenix test environment, for example qa5, qa6
+TOOLS_ENV = ALL_ENV[ENV['TOOLS_ENV'] || 'tools']
+
 # ATF uses br env variable to decide which browser will launch
 # available browser: firefox, chrome, ie, webkit
 BROWSER = (ENV['br'] || 'firefox').downcase

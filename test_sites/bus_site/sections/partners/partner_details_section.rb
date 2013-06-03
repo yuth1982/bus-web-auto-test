@@ -85,6 +85,11 @@ module Bus
     element(:submit_stash_status_btn, css: 'input[onclick*=submit_stash_status]')
     element(:add_stash_to_all_users_link, css: 'a[onclick*=enable_stash_for_all_confirm]')
 
+    #autogrow section
+    element(:change_autogrow_status_link, css: 'a[onclick*=partner-display-overdraft-status]')
+    element(:autogrow_status_select, css: 'select[id^=overdraft_status]')
+    element(:submit_autogrow_status_btn, css: 'span[id^=partner-change-overdraft-status-] input[value=Submit]')
+
     # Subdomain
     element(:change_subdomain_link, css: "a[onclick*='/partner/subdomain']")
 
@@ -322,6 +327,32 @@ module Bus
       change_stash_link.click
       stash_status_select.select('No')
       submit_stash_status_btn.click
+    end
+
+    # Public: Enable autogrow for a partner
+    #
+    # Example:
+    #   @bus_site.admin_console_page.partner_details_section.enable_autogrow
+    #
+    # Returns nothing
+    def enable_autogrow
+      change_autogrow_status_link.click
+      autogrow_status_select.select('Yes')
+      submit_autogrow_status_btn.click
+      wait_until{ success_messages == "Overdraft protection enabled." }
+    end
+
+    # Public: Disable autogrow for a partner
+    #
+    # Example:
+    #   @bus_site.admin_console_page.partner_details_section.disable_autogrow
+    #
+    # Returns nothing
+    def disable_autogrow
+      change_autogrow_status_link.click
+      autogrow_status_select.select('No')
+      submit_autogrow_status_btn.click
+      wait_until{ success_messages == "Overdraft protection disabled." }
     end
 
     # Public: Add stash to all users

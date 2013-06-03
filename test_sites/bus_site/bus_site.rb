@@ -35,5 +35,8 @@ class BusSite
     Bus::AdfsLoginPage.new
   end
 
+  def itemized_login
+    Bus::ItemizedLoginPage.new
+  end
 end
 
