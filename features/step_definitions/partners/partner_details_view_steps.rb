@@ -35,6 +35,7 @@ Then /^Partner general information should be:$/ do |details_table|
   expected = details_table.hashes.first
 
   expected.each do |k,v|
+    # Using erb instead of place holder such as @external_id
     case k
       when 'External ID:'
         v.gsub!(/@external_id/, @new_p_external_id) unless @new_p_external_id.nil?
@@ -47,6 +48,7 @@ Then /^Partner general information should be:$/ do |details_table|
       else
         # do nothing
     end
+    v.replace ERB.new(v).result(binding)
   end
   expected.keys.each{ |key| actual[key].should == expected[key] }
 end
@@ -58,6 +60,7 @@ Then /^Partner contact information should be:$/ do |contact_table|
   actual = @bus_site.admin_console_page.partner_details_section.contact_info_hash
   expected = contact_table.hashes.first
 
+  # line 64 - 82 should be replaced with erb
   expected.keys.each do |header|
     case header
       when 'Contact Email:'
@@ -77,7 +80,13 @@ Then /^Partner contact information should be:$/ do |contact_table|
       else
         actual[header].should == expected[header]
     end
+
+    expected.each do |_,v|
+      v.replace ERB.new(v).result(binding)
+    end
   end
+
+  expected.keys.each{ |key| actual[key].should == expected[key] }
 end
 
 When /^I Create an API key for current partner$/ do
@@ -243,4 +252,8 @@ end
 
 Then /^partner details message should be$/ do |message|
   @bus_site.admin_console_page.partner_details_section.success_messages == message
+end
+
+Then /^Partner pooled storage information should be:$/ do |ps_table|
+  @bus_site.admin_console_page.partner_details_section.pooled_resource_table_rows.should == ps_table.raw
 end

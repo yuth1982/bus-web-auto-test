@@ -4,8 +4,8 @@ module Aria
 
     # Private elements
     #
-    element(:num_plans_tb, css: "input[name=inNumUnits]")
-    element(:assignment_scope_select, css: "select#inAssignOptionsIgnore")
+    element(:num_plans_tb, css: 'input[name=inNumUnits]')
+    element(:assignment_scope_select, css: 'select#inAssignOptionsIgnore')
     element(:save_plan_btn, css: "input[value='Save Changes']")
 
     # Public: Change supplemental plan units

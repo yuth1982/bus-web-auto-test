@@ -13,11 +13,9 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | GB - Gold Reseller      | 200      |
       | 20 GB add-on            | 2        |
     And New partner should be created
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 240    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     When I act as newly created partner
     And I navigate to Change Plan section from bus admin console page
     Then Reseller supplemental plans should be:
@@ -36,11 +34,9 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | GB - Platinum Reseller  | 200      |
       | 20 GB add-on            | 2        |
     And New partner should be created
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 240    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     When I act as newly created partner
     And I navigate to Change Plan section from bus admin console page
     Then Reseller supplemental plans should be:
@@ -59,11 +55,9 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | GB - Gold Reseller  | 200      |
       | 20 GB add-on        | 2        |
     And New partner should be created
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 240    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     When I act as newly created partner
     And I navigate to Change Plan section from bus admin console page
     Then Reseller supplemental plans should be:
@@ -82,11 +76,9 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | GB - Platinum Reseller | 200      |
       | 20 GB add-on           | 2        |
     And New partner should be created
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 240    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     When I act as newly created partner
     And I navigate to Change Plan section from bus admin console page
     Then Reseller supplemental plans should be:
@@ -105,11 +97,9 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | GB - Gold Reseller  | 200      |
       | 20 GB add-on        | 2        |
     And New partner should be created
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 240    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     When I act as newly created partner
     And I navigate to Change Plan section from bus admin console page
     Then Reseller supplemental plans should be:
@@ -128,11 +118,9 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | GB - Platinum Reseller | 200      |
       | 20 GB add-on           | 2        |
     And New partner should be created
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 240    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     When I act as newly created partner
     And I navigate to Change Plan section from bus admin console page
     Then Reseller supplemental plans should be:
@@ -158,11 +146,10 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
     When I log in bus admin console as administrator
     And I search partner by newly created partner admin email
     And I view partner details by newly created partner company name
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 260    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
+    And I delete partner account
 
   @TC.20187
   Scenario: 20187 Assign new Platinum Reseller 20 GB add on plan in Aria
@@ -181,11 +168,10 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
     When I log in bus admin console as administrator
     And I search partner by newly created partner admin email
     And I view partner details by newly created partner company name
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 260    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
+    And I delete partner account
 
   @TC.20188
   Scenario: 20188 Order plan in Change Plan - Gold Reseller - US - Monthly - 20 GB add on
@@ -197,11 +183,9 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | GB - Gold Reseller      | 200      |
       | 20 GB add-on            | 2        |
     And New partner should be created
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 240    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     When I act as newly created partner
     When I change Reseller account plan to:
       | storage add-on |
@@ -222,11 +206,9 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | GB - Platinum Reseller  | 200      |
       | 20 GB add-on            | 2        |
     And New partner should be created
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 240    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     When I act as newly created partner
     When I change Reseller account plan to:
       | storage add-on |
@@ -247,11 +229,9 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | GB - Gold Reseller      | 200      |
       | 20 GB add-on            | 4        |
     And New partner should be created
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 280    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 280       | 280      | 0    | Unlimited | Unlimited |
     When I act as newly created partner
     When I change Reseller account plan to:
       | storage add-on |
@@ -272,11 +252,9 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | GB - Platinum Reseller  | 200      |
       | 20 GB add-on            | 4        |
     And New partner should be created
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 280    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 280       | 280      | 0    | Unlimited | Unlimited |
     When I act as newly created partner
     When I change Reseller account plan to:
       | storage add-on |
@@ -303,11 +281,9 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
     When I stop masquerading
     And I search partner by newly created partner admin email
     And I view partner details by newly created partner company name
-    Then Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 240    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     And I delete partner account
 
   @TC.20195
@@ -326,11 +302,9 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
     When I stop masquerading
     And I search partner by newly created partner admin email
     And I view partner details by newly created partner company name
-    Then Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 240    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     And I delete partner account
 
   @TC.20196
@@ -349,11 +323,9 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
     When I stop masquerading
     And I search partner by newly created partner admin email
     And I view partner details by newly created partner company name
-    Then Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 240    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     And I delete partner account
 
   @TC.20197
@@ -372,11 +344,9 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
     When I stop masquerading
     And I search partner by newly created partner admin email
     And I view partner details by newly created partner company name
-    Then Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 240    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     And I delete partner account
 
   @TC.20198
@@ -395,11 +365,9 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
     When I stop masquerading
     And I search partner by newly created partner admin email
     And I view partner details by newly created partner company name
-    Then Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 240    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     And I delete partner account
 
   @TC.20199
@@ -418,11 +386,9 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
     When I stop masquerading
     And I search partner by newly created partner admin email
     And I view partner details by newly created partner company name
-    Then Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 240    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     And I delete partner account
 
   @TC.20200
@@ -435,11 +401,9 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | GB - Gold Reseller      | 200      |
       | 20 GB add-on            | 2        |
     And New partner should be created
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 240    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     When I act as newly created partner
     When I change Reseller account plan to:
       | storage add-on |
@@ -450,11 +414,9 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
     When I stop masquerading
     And I search partner by newly created partner admin email
     And I view partner details by newly created partner company name
-    Then Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 280    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 280       | 280      | 0    | Unlimited | Unlimited |
     And I delete partner account
 
   @TC.20201
@@ -467,11 +429,9 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | GB - Platinum Reseller  | 200      |
       | 20 GB add-on            | 2        |
     And New partner should be created
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 240    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     When I act as newly created partner
     When I change Reseller account plan to:
       | storage add-on |
@@ -482,11 +442,9 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
     When I stop masquerading
     And I search partner by newly created partner admin email
     And I view partner details by newly created partner company name
-    Then Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 280    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 280       | 280      | 0    | Unlimited | Unlimited |
     And I delete partner account
 
   @TC.20202
@@ -499,11 +457,9 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | GB - Gold Reseller      | 200      |
       | 20 GB add-on            | 2        |
     And New partner should be created
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 240    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     When I act as newly created partner
     When I change Reseller account plan to:
       | storage add-on |
@@ -514,11 +470,9 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
     When I stop masquerading
     And I search partner by newly created partner admin email
     And I view partner details by newly created partner company name
-    Then Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 280    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 280       | 280      | 0    | Unlimited | Unlimited |
     And I delete partner account
 
   @TC.20203
@@ -531,11 +485,9 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | GB - Platinum Reseller  | 200      |
       | 20 GB add-on            | 2        |
     And New partner should be created
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 240    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     When I act as newly created partner
     When I change Reseller account plan to:
       | storage add-on |
@@ -546,11 +498,9 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
     When I stop masquerading
     And I search partner by newly created partner admin email
     And I view partner details by newly created partner company name
-    Then Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 280    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 280       | 280      | 0    | Unlimited | Unlimited |
     And I delete partner account
 
   @TC.20204
@@ -563,11 +513,9 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | GB - Gold Reseller      | 200      |
       | 20 GB add-on            | 2        |
     And New partner should be created
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 240    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     When I act as newly created partner
     When I change Reseller account plan to:
       | storage add-on |
@@ -578,11 +526,9 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
     When I stop masquerading
     And I search partner by newly created partner admin email
     And I view partner details by newly created partner company name
-    Then Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 280    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 280       | 280      | 0    | Unlimited | Unlimited |
     And I delete partner account
 
   @TC.20205
@@ -595,11 +541,9 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | GB - Platinum Reseller  | 200      |
       | 20 GB add-on            | 2        |
     And New partner should be created
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 240    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     When I act as newly created partner
     When I change Reseller account plan to:
       | storage add-on |
@@ -610,9 +554,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
     When I stop masquerading
     And I search partner by newly created partner admin email
     And I view partner details by newly created partner company name
-    Then Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 40000  |
-      | Cloud Storage (GB)  | 0         | 0         | 280    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 280       | 280      | 0    | Unlimited | Unlimited |
     And I delete partner account

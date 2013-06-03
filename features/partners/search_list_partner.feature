@@ -215,17 +215,15 @@ Feature: Search and list partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
       | MozyPro       | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
-      | Backup Licenses         | 200       |
-      | Backup License Soft Cap | Enabled   |
+      | Backup Licenses         |           |
+      | Backup License Soft Cap | Disabled  |
       | Server Enabled          | Disabled  |
-      | Cloud Storage (GB)      | 10        |
+      | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit |
-      | Backup Licenses     | 0         | 10        | 200   |
-      | Cloud Storage (GB)  | 0         | 10        | 10    |
-      | Server Enabled      | Disabled  |           |       |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 10        | 10       | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Credit Card   | Current Period: | Monthly             |
       | Unpaid Balance: | $0.00         | Collect On:     | N/A                 |

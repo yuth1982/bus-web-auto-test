@@ -58,6 +58,9 @@ module Bus
     # Account attribute table
     element(:account_attributes_table, css: 'form[id^=account_attributes_form] table')
 
+    # Pooled Storage
+    element(:pooled_resources_table, css: 'form[id^=pooled_resources_form] table')
+
     # Resources table, for MozyPro
     element(:generic_resources_table, css: 'form[id^=generic_resources_form] table')
 
@@ -172,7 +175,10 @@ module Bus
       account_attributes_table.rows_text.map{ |row| row[0..1] }
     end
 
-    # Public: Generic resources table headers text
+    def pooled_resource_table_rows
+      pooled_resources_table.rows_text
+    end
+      # Public: Generic resources table headers text
     #
     # Example:
     #   # => "["", "Used", "Allocated", "Limit"]"
