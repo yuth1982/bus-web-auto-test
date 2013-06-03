@@ -79,7 +79,7 @@ end
 Then /^the (MozyPro|MozyEnterprise|Reseller|Itemized) account plan should be changed$/ do |type|
   case type
     when 'MozyEnterprise', 'Itemized', 'MozyPro', 'Reseller'
-      @bus_site.admin_console_page.change_plan_section.messages.should == 'Successfully changed plan.'
+      @bus_site.admin_console_page.change_plan_section.messages.should =~ /Successfully changed plan\./
     else
       raise "#{type} Company type not exist"
   end
