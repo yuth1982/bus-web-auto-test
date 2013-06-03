@@ -58,6 +58,56 @@ module DBHelper
     end
   end
 
+  def get_user_username(parent)
+    user_group_id = case parent
+                              #ME = 300177, MC = 4933, MP = 3364, MPUK = 273491, MPFrance = , MPG = , MPI = 273492, Fortress = 17771
+                              #MH = 3365, MHUK = 264258, MHG = 264261, MHF = 264260, MHI = 264259, MHEMEA = 264257
+                              when 'ME'
+                                730104
+                              when 'MC'
+                                6201
+                              when 'MP'
+                                4150
+                              when 'MPUK'
+                                324536
+                              when 'MPF'
+                                629085
+                              when 'MPG'
+                                506873
+                              #when 'MPI'
+                              #  273492
+                              #when 'F'
+                              #  17771
+                              when 'MH'
+                                4151
+                              #when 'MHUK'
+                              #  264258
+                              #when 'MHG'
+                              #  264261
+                              #when 'MHF'
+                              #  264260
+                              #when 'MHI'
+                              #  264259
+                              #when 'MHEMEA'
+                              #  264257
+                              else
+                               puts "Parent partner code entered (#{parent}) is not supported"
+                            end
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select username from public.users where user_group_id = #{user_group_id} and deleted = false and creation_time IS NOT NULL order by id DESC limit 1;"
+      c = conn.exec(sql)
+      Log.debug(c.values)
+      Log.debug(c.values[0][0])
+      c.values[0][0]
+    rescue PGError => e
+      puts 'postgres error'
+    ensure
+      conn.close unless conn.nil?
+    end
+
+  end
+
   def get_admin_email
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)

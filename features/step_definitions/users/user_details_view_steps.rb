@@ -212,6 +212,7 @@ When /^edit user details:$/ do |info_table|
       when 'email'
         new_info[header] = @existing_user_email if new_info[header] == '@existing_user_email'
         new_info[header] = @existing_admin_email if new_info[header] == '@existing_admin_email'
+        new_info[header] = @partner.admin_info.email if new_info[header] == '@mh_user_email'
         @bus_site.admin_console_page.user_details_section.set_user_email(new_info[header])
       when 'name'
         @bus_site.admin_console_page.user_details_section.set_user_name(new_info[header])
@@ -229,6 +230,10 @@ end
 
 When /^edit user email error message to (.+) should be displayed$/ do |email|
   @bus_site.admin_console_page.user_details_section.messages.should == "Email address unchanged. The email address you entered is invalid or already in use: An account with email address \"#{email}\" already exists"
+end
+
+When /^edit user email error message should be:$/ do |message|
+  @bus_site.admin_console_page.user_details_section.messages.should == message
 end
 
 When /^edit user email change confirmation message to (.+) should be displayed$/ do |email|

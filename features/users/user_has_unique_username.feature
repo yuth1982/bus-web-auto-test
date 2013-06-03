@@ -181,8 +181,7 @@ Feature: User Has Unique Username
 
   @TC.21365
   Scenario: Mozy-21365:Update User(MH) With Existing User Username
-    When I get a user email from the database
-    And I am at dom selection point:
+    When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country       |
       | 1      | 50 GB     | United States |
@@ -197,6 +196,29 @@ Feature: User Has Unique Username
       | keywords       | user type |
       | @mh_user_email | MozyHome  |
     And I view MozyHome user details by @user_name
+    And edit user details:
+      | email          |
+      | @mh_user_email |
+    Then edit user email error message should be:
+    """
+    The email address you entered matches your existing email. Please enter a different email address.
+    """
+    When I get a MP user username from the database
+    And edit user details:
+      | email                |
+      | @existing_user_email |
+    Then edit user email error message to existing user email should be displayed
+    When I get a ME user username from the database
+    And edit user details:
+      | email                |
+      | @existing_user_email |
+    Then edit user email error message to existing user email should be displayed
+#    When I get a MEO user username from the database
+#    And edit user details:
+#      | email                |
+#      | @existing_user_email |
+    Then edit user email error message to existing user email should be displayed
+    When I get a MC user username from the database
     And edit user details:
       | email                |
       | @existing_user_email |
@@ -294,12 +316,84 @@ Feature: User Has Unique Username
 
   @TC.21357 @BUG.99434 @BUG.102097
   Scenario: Mozy-21357:Web Sign Up - Add New User With Existing(Created) User Username(MH)
-    When I get a user email from the database
+    When I am at dom selection point:
+    And I get a MH user username from the database
+    And I sign up a phoenix Home user:
+      | period | base plan | country       | admin email          |
+      | 1      | 50 GB     | United States | @existing_user_email |
+    Then sign up page error message to existing user email should be displayed
+    When I am at dom selection point:
+    And I get a MP user username from the database
+    And I sign up a phoenix Home user:
+      | period | base plan | country       | admin email          |
+      | 1      | 50 GB     | United States | @existing_user_email |
+    Then sign up page error message to existing user email should be displayed
+    When I get a ME user username from the database
     And I am at dom selection point:
     And I sign up a phoenix Home user:
       | period | base plan | country       | admin email          |
       | 1      | 50 GB     | United States | @existing_user_email |
+    Then sign up page error message to existing user email should be displayed
+#    When I am at dom selection point:
+#    And I get a MEO user username from the database
+#    And I sign up a phoenix Home user:
+#      | period | base plan | country       | admin email          |
+#      | 1      | 50 GB     | United States | @existing_user_email |
+#    Then sign up page error message should be:
+#    """
+#     An account with this email address already exists
+#    """
+    When I get a MC user username from the database
+    And I am at dom selection point:
+    And I sign up a phoenix Home user:
+      | period | base plan | country       | admin email          |
+      | 1      | 50 GB     | United States | @existing_user_email |
+    Then sign up page error message to existing user email should be displayed
+
+  @TC.21809
+  Scenario: Mozy-21809:Web Sign Up - Add New User With Existing(Created) User Username(MH-UK)
+    When I get a user email from the database
+    And I am at dom selection point:
+    And I sign up a phoenix Home user:
+      | period | base plan | country        | admin email          |
+      | 1      | 50 GB     | United Kingdom | @existing_user_email |
     Then sign up page error message should be:
     """
-    An account with email address "existing user email" already exists
+     An account with this email address already exists
+    """
+
+  @TC.21810
+  Scenario: Mozy-21810:Web Sign Up - Add New User With Existing(Created) User Username(MH-IE)
+    When I get a user email from the database
+    And I am at dom selection point:
+    And I sign up a phoenix Home user:
+      | period | base plan | country | admin email          |
+      | 1      | 50 GB     | Ireland | @existing_user_email |
+    Then sign up page error message should be:
+    """
+     An account with this email address already exists
+    """
+
+  @TC.21811
+  Scenario: Mozy-21811:Web Sign Up - Add New User With Existing(Created) User Username(MH-FR)
+    When I get a user email from the database
+    And I am at dom selection point:
+    And I sign up a phoenix Home user:
+      | period | base plan | country | admin email          |
+      | 1      | 50 GB     | France  | @existing_user_email |
+    Then sign up page error message should be:
+    """
+     Un compte avec cette adresse électronique existe déjà.
+    """
+
+  @TC.21812
+  Scenario: Mozy-21812:Web Sign Up - Add New User With Existing(Created) User Username(MH-DE)
+    When I get a user email from the database
+    And I am at dom selection point:
+    And I sign up a phoenix Home user:
+      | period | base plan | country | admin email          |
+      | 1      | 50 GB     | Germany | @existing_user_email |
+    Then sign up page error message should be:
+    """
+     Ein Konto mit dieser E-Mail-Adresse ist bereits vorhanden.
     """

@@ -3,6 +3,10 @@ When /^I get a user email from the database$/ do
   Log.debug("user email from database = #{@existing_user_email}")
 end
 
+When /^I get a (MH|MP|ME|MEO|MC) user username from the database$/ do |parent|
+  @existing_user_email = DBHelper.get_user_username(parent)
+end
+
 When /^I get an admin email from the database$/ do
   @existing_admin_email = DBHelper.get_admin_email
   Log.debug("admin email from database = #{@existing_admin_email}")

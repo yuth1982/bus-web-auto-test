@@ -216,5 +216,9 @@ When /^I sign up a phoenix Home user:$/ do |user_table|
 end
 
 Then /^sign up page error message should be:$/ do |message|
-  @phoenix_site.admin_fill_out.messages == message.to_s
+  @phoenix_site.admin_fill_out.rp_error_messages.should eq(message)
+end
+
+Then /^sign up page error message to (.+) should be displayed$/ do |username|
+  @phoenix_site.admin_fill_out.rp_error_messages.should eq(" An account with email address \"#{username}\" already exists")
 end

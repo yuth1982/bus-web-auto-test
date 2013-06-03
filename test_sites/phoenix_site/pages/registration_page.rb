@@ -101,7 +101,7 @@ module Phoenix
       new_admin_username_tb.type_text(partner.admin_info.email)
       password_tb.type_text(CONFIGS['global']['test_pwd'])
       reenter_password_tb.type_text(CONFIGS['global']['test_pwd'])
-      new_admin_country_select.select(partner.company_info.country)
+      new_admin_country_select.select(localize_country(partner.company_info.country))
       new_admin_zip_tb.type_text(partner.company_info.zip)
     end
 
@@ -116,8 +116,18 @@ module Phoenix
       continue_btn.click
     end
 
-    def messages
+    def rp_error_messages
       error_message.text
     end
+
+    def localize_country country
+      case
+        when country == 'Germany'
+           'Deutschland'
+        else
+          country
+      end
+    end
+
   end
 end
