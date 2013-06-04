@@ -7,6 +7,8 @@ When /^I add new user\(s\):$/ do |user_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_user'])
   @new_users =[]
   user_table.hashes.each do |hash|
+    hash['email'] = @existing_user_email if hash['email'] == '@existing_user_email'
+    hash['email'] = @existing_admin_email if hash['email'] == '@existing_admin_email'
     user = Bus::DataObj::User.new
     hash_to_object(hash, user)
     @new_users << user

@@ -213,10 +213,10 @@ Feature: User Has Unique Username
       | email                |
       | @existing_user_email |
     Then edit user email error message to existing user email should be displayed
-#    When I get a MEO user username from the database
-#    And edit user details:
-#      | email                |
-#      | @existing_user_email |
+  #    When I get a MEO user username from the database
+  #    And edit user details:
+  #      | email                |
+  #      | @existing_user_email |
     Then edit user email error message to existing user email should be displayed
     When I get a MC user username from the database
     And edit user details:
@@ -314,7 +314,7 @@ Feature: User Has Unique Username
     And I view MozyHome user details by newly created MozyHome username
     And I delete user
 
-  @TC.21357 @BUG.99434 @BUG.102097
+  @TC.21357 @BUG.99434 @BUG2.102097
   Scenario: Mozy-21357:Web Sign Up - Add New User With Existing(Created) User Username(MH)
     When I am at dom selection point:
     And I get a MH user username from the database
@@ -343,12 +343,12 @@ Feature: User Has Unique Username
 #    """
 #     An account with this email address already exists
 #    """
-    When I get a MC user username from the database
-    And I am at dom selection point:
-    And I sign up a phoenix Home user:
-      | period | base plan | country       | admin email          |
-      | 1      | 50 GB     | United States | @existing_user_email |
-    Then sign up page error message to existing user email should be displayed
+  When I get a MC user username from the database
+  And I am at dom selection point:
+  And I sign up a phoenix Home user:
+    | period | base plan | country       | admin email          |
+    | 1      | 50 GB     | United States | @existing_user_email |
+  Then sign up page error message to existing user email should be displayed
 
   @TC.21809
   Scenario: Mozy-21809:Web Sign Up - Add New User With Existing(Created) User Username(MH-UK)
@@ -397,3 +397,321 @@ Feature: User Has Unique Username
     """
      Ein Konto mit dieser E-Mail-Adresse ist bereits vorhanden.
     """
+
+  @TC.21878
+  Scenario: Mozy-21878:Add New User(MP) With Existing User Username
+    When I log in bus admin console as administrator
+    And I add a new Reseller partner:
+      | period | reseller type | reseller quota |
+      | 12     | Silver        | 20             |
+    Then New partner should be created
+    And I act as newly created partner
+    And I get a MH user username from the database
+    And I add new user(s):
+      | email                | user_group          | storage_type | storage_limit | devices |
+      | @existing_user_email |(default user group) | Desktop      | 10            | 1       |
+    Then Add new user error message should be:
+    """
+    Failed to create 1 user(s)
+    """
+    And I get a MP user username from the database
+    And I add new user(s):
+      | email                | user_group          | storage_type | storage_limit | devices |
+      | @existing_user_email |(default user group) | Desktop      | 10            | 1       |
+    Then Add new user error message should be:
+    """
+    Failed to create 1 user(s)
+    """
+    And I get a ME user username from the database
+    And I add new user(s):
+      | email                | user_group          | storage_type | storage_limit | devices |
+      | @existing_user_email |(default user group) | Desktop      | 10            | 1       |
+    Then Add new user error message should be:
+    """
+    Failed to create 1 user(s)
+    """
+  #    And I get a MEO user username from the database
+  #    And I add new user(s):
+  #      | email                | user_group          | storage_type | storage_limit | devices |
+  #      | @existing_user_email |(default user group) | Desktop      | 10            | 1       |
+  #    Then Add new user error message should be:
+  #    """
+  #    Failed to create 1 user(s)
+  #    """
+    And I get a MC user username from the database
+    And I add new user(s):
+      | email                | user_group          | storage_type | storage_limit | devices |
+      | @existing_user_email |(default user group) | Desktop      | 10            | 1       |
+    Then Add new user error message should be:
+    """
+    Failed to create 1 user(s)
+    """
+    And I get a suspended user email from the database
+    And I add new user(s):
+      | email                | user_group          | storage_type | storage_limit | devices |
+      | @existing_user_email |(default user group) | Desktop      | 10            | 1       |
+    Then Add new user error message should be:
+    """
+    Failed to create 1 user(s)
+    """
+    And I get a deleted user email from the database
+    And I add new user(s):
+      | email                | user_group          | storage_type | storage_limit | devices |
+      | @existing_user_email |(default user group) | Desktop      | 10            | 1       |
+    Then 1 new user should be created
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.21877
+  Scenario: Mozy-21877:Add New User(MP) With Existing Admin Username
+    When I log in bus admin console as administrator
+    And I add a new Reseller partner:
+      | period | reseller type | reseller quota |
+      | 12     | Silver        | 20 v           |
+    And New partner should be created
+    And I act as newly created partner
+    And I get an admin email from the database
+    And I add new user(s):
+      | email                 | user_group           | storage_type | storage_limit | devices |
+      | @existing_admin_email | (default user group) | Desktop      | 10            | 1       |
+    And 1 new user should be created
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.21872
+  Scenario: Mozy-21872:Update User(MP) With Existing User Username
+    When I log in bus admin console as administrator
+    And I add a new MozyPro partner:
+      | period | base plan |
+      | 1      | 100 GB    |
+    And New partner should be created
+    And I act as newly created partner
+    And I add new user(s):
+      | storage_type | storage_limit | devices |
+      | Desktop      | 10            | 1       |
+    And 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I get a MH user username from the database
+    And edit user details:
+      | email                |
+      | @existing_user_email |
+    Then edit user email error message to existing user email should be displayed
+    And I get a MP user username from the database
+    And edit user details:
+      | email                |
+      | @existing_user_email |
+    Then edit user email error message to existing user email should be displayed
+    And I get a ME user username from the database
+    And edit user details:
+      | email                |
+      | @existing_user_email |
+    Then edit user email error message to existing user email should be displayed
+  #    And I get a MEO user username from the database
+  #      And edit user details:
+  #        | email                 |
+  #        | @existing_admin_email |
+  #      Then edit user email error message to existing user email should be displayed
+    And I get a MC user username from the database
+    And edit user details:
+      | email                 |
+      | @existing_user_email |
+    Then edit user email error message to existing user email should be displayed
+    And I get a suspended user email from the database
+    And edit user details:
+      | email                 |
+      | @existing_user_email |
+    Then edit user email error message to existing user email should be displayed
+    And I get a deleted user email from the database
+    And edit user details:
+      | email                 |
+      | @existing_user_email |
+    And edit user email success message to existing user email should be displayed
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.21869
+  Scenario: Mozy-21869:Update User(MP) With Existing Admin Username
+    When I log in bus admin console as administrator
+    And I add a new MozyPro partner:
+      | period | base plan |
+      | 1      | 100 GB    |
+    And New partner should be created
+    And I act as newly created partner
+    And I add new user(s):
+      | storage_type | storage_limit | devices |
+      | Desktop      | 10            | 1       |
+    And 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I get an admin email from the database
+    And edit user details:
+      | email                 |
+      | @existing_admin_email |
+    Then edit user email success message to existing admin email should be displayed
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.21880
+  Scenario: Mozy-21880:Add New User(ME) With Existing User Username
+    When I log in bus admin console as administrator
+    When I add a new MozyEnterprise partner:
+      | period | users |
+      | 12     | 10    |
+    Then New partner should be created
+    And I act as newly created partner
+    And I get a MH user username from the database
+    And I add new user(s):
+      | email                | user_group          | storage_type | storage_limit | devices |
+      | @existing_user_email |(default user group) | Desktop      | 10            | 1       |
+    Then Add new user error message should be:
+    """
+    Failed to create 1 user(s)
+    """
+    And I get a MP user username from the database
+    And I add new user(s):
+      | email                | user_group          | storage_type | storage_limit | devices |
+      | @existing_user_email |(default user group) | Desktop      | 10            | 1       |
+    Then Add new user error message should be:
+    """
+    Failed to create 1 user(s)
+    """
+    And I get a ME user username from the database
+    And I add new user(s):
+      | email                | user_group          | storage_type | storage_limit | devices |
+      | @existing_user_email |(default user group) | Desktop      | 10            | 1       |
+    Then Add new user error message should be:
+    """
+    Failed to create 1 user(s)
+    """
+  #    And I get a MEO user username from the database
+  #    And I add new user(s):
+  #      | email                | user_group          | storage_type | storage_limit | devices |
+  #      | @existing_user_email |(default user group) | Desktop      | 10            | 1       |
+  #    Then Add new user error message should be:
+  #    """
+  #    Failed to create 1 user(s)
+  #    """
+    And I get a MC user username from the database
+    And I add new user(s):
+      | email                | user_group          | storage_type | storage_limit | devices |
+      | @existing_user_email |(default user group) | Desktop      | 10            | 1       |
+    Then Add new user error message should be:
+    """
+    Failed to create 1 user(s)
+    """
+    And I get a suspended user email from the database
+    And I add new user(s):
+      | email                | user_group          | storage_type | storage_limit | devices |
+      | @existing_user_email |(default user group) | Desktop      | 10            | 1       |
+    Then Add new user error message should be:
+    """
+    Failed to create 1 user(s)
+    """
+    And I get a deleted user email from the database
+    And I add new user(s):
+      | email                | user_group          | storage_type | storage_limit | devices |
+      | @existing_user_email |(default user group) | Desktop      | 10            | 1       |
+    Then 1 new user should be created
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.21876
+  Scenario: Mozy-21876:Add New User(ME) With Existing Admin Username
+    When I log in bus admin console as administrator
+    And I add a new MozyEnterprise partner:
+      | period | users |
+      | 12     | 10    |
+    And New partner should be created
+    And I act as newly created partner
+    And I get an admin email from the database
+    And I add new user(s):
+      | email                 | user_group           | storage_type | storage_limit | devices |
+      | @existing_admin_email | (default user group) | Desktop      | 10            | 1       |
+    And 1 new user should be created
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.21873
+  Scenario: Mozy-21873:Update User(ME) With Existing User Username
+    When I log in bus admin console as administrator
+    And I add a new MozyEnterprise partner:
+      | period | users |
+      | 12     | 10    |
+    And New partner should be created
+    And I act as newly created partner
+    And I add new user(s):
+      | user_group           | storage_type | storage_limit | devices |
+      | (default user group) | Desktop      | 10            | 1       |
+    And 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I get a MH user username from the database
+    And edit user details:
+      | email                |
+      | @existing_user_email |
+    Then edit user email error message to existing user email should be displayed
+    And I get a MP user username from the database
+    And edit user details:
+      | email                |
+      | @existing_user_email |
+    Then edit user email error message to existing user email should be displayed
+    And I get a ME user username from the database
+    And edit user details:
+      | email                |
+      | @existing_user_email |
+    Then edit user email error message to existing user email should be displayed
+  #    And I get a MEO user username from the database
+  #      And edit user details:
+  #        | email                 |
+  #        | @existing_admin_email |
+  #      Then edit user email error message to existing user email should be displayed
+    And I get a MC user username from the database
+    And edit user details:
+      | email                 |
+      | @existing_user_email |
+    Then edit user email error message to existing user email should be displayed
+    And I get a suspended user email from the database
+    And edit user details:
+      | email                 |
+      | @existing_user_email |
+    Then edit user email error message to existing user email should be displayed
+    And I get a deleted user email from the database
+    And edit user details:
+      | email                 |
+      | @existing_user_email |
+    And edit user email success message to existing user email should be displayed
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.21870
+  Scenario: Mozy-21870:Update User(ME) With Existing Admin Username
+    When I log in bus admin console as administrator
+    And I add a new MozyEnterprise partner:
+      | period | users |
+      | 12     | 10    |
+    And New partner should be created
+    And I act as newly created partner
+    And I add new user(s):
+      | user_group           | storage_type | storage_limit | devices |
+      | (default user group) | Desktop      | 10            | 1       |
+    And 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I get an admin email from the database
+    And edit user details:
+      | email                 |
+      | @existing_admin_email |
+    Then edit user email success message to existing admin email should be displayed
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+

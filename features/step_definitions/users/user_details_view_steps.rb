@@ -235,7 +235,7 @@ When /^edit user details:$/ do |info_table|
 end
 
 When /^edit user email success message to (.+) should be displayed$/ do |email|
-  @bus_site.admin_console_page.user_details_section.messages.should == "Email address unchanged. The email address you entered is invalid or already in use: Please enter a valid email address"
+  @bus_site.admin_console_page.user_details_section.messages.should == "Email has been changed to #{email}."
 end
 
 When /^edit user email error message to (.+) should be displayed$/ do |email|

@@ -4,8 +4,7 @@ module Bus
     # Private elements
     #
     element(:succ_msg_div, css: 'ul.flash.successes')
-    element(:err_msg_div, css: 'ul.flash.errors')
-
+    element(:err_msg_div, xpath: "//div[starts-with(@id, 'user-new_users_in_batch-content')]/div[3]/div/div/ul")
     element(:user_group_select, id: 'user_user_group_id')
     element(:ug_resources_details_table, id: 'resource-details')
     element(:buy_more_link, id: 'add_more_link')

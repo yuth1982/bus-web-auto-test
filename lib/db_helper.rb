@@ -110,8 +110,7 @@ module DBHelper
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
       sql = "select username from public.users where user_group_id = #{user_group_id} and deleted = false and creation_time IS NOT NULL order by id DESC limit 1;"
       c = conn.exec(sql)
-      Log.debug(c.values)
-      Log.debug(c.values[0][0])
+      Log.debug("Email from tree #{parent} = #{c.values[0][0]}")
       c.values[0][0]
     rescue PGError => e
       puts 'postgres error'
