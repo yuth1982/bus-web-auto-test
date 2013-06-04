@@ -65,8 +65,8 @@ Feature: Change Plan for MozyPro Partners
   @TC.18732 @Bug.83813 @regression  @bus @2.5 @change_plan @mozypro
   Scenario: 18732 Verify MozyPro biennially base plans info
     When I add a new MozyPro partner:
-      | period | base plan |
-      | 24     | 10 GB     |
+      | period | base plan | net terms |
+      | 24     | 10 GB     | yes       |
     Then New partner should be created
     When I act as newly created partner account
     And I navigate to Change Plan section from bus admin console page
@@ -133,8 +133,8 @@ Feature: Change Plan for MozyPro Partners
   @TC.18336 @Smoke @bus @2.5 @change_plan @mozypro
   Scenario: 18336 MozyPro yearly UK partner 500 GB moves to 1 TB plan
     When I add a new MozyPro partner:
-      | period | base plan | country        |
-      | 12     | 500 GB    | United Kingdom |
+      | period | base plan | country        | net terms |
+      | 12     | 500 GB    | United Kingdom | yes       |
     Then New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
@@ -156,8 +156,8 @@ Feature: Change Plan for MozyPro Partners
   @TC.18443 @Smoke @bus @2.5 @change_plan @mozypro
   Scenario: 18443 MozyPro yearly UK partner 500 GB moves to 250 GB plan
     When I add a new MozyPro partner:
-      | period | base plan | country        |
-      | 12     | 500 GB    | United Kingdom |
+      | period | base plan | country        | net terms |
+      | 12     | 500 GB    | United Kingdom | yes       |
     Then New partner should be created
     When I act as newly created partner account
     When I change MozyPro account plan to:
@@ -233,8 +233,8 @@ Feature: Change Plan for MozyPro Partners
   @TC.17105 @Smoke @bus @2.5 @change_plan @mozypro
   Scenario: 17105 Add server storage add on to MozyPro monthly US partner
     When I add a new MozyPro partner:
-      | period | base plan |
-      | 1      | 1 TB      |
+      | period | base plan | net terms |
+      | 1      | 1 TB      | yes       |
     Then New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
@@ -253,8 +253,8 @@ Feature: Change Plan for MozyPro Partners
   @TC.17274 @Smoke @bus @2.5 @change_plan @mozypro
   Scenario: 17274 Add server plan option to MozyPro yearly UK partner
     When I add a new MozyPro partner:
-      | period | base plan | country        |
-      | 12     | 500 GB    | United Kingdom |
+      | period | base plan | country        | net terms |
+      | 12     | 500 GB    | United Kingdom | yes       |
     Then New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
@@ -273,8 +273,8 @@ Feature: Change Plan for MozyPro Partners
   @TC.17275 @Smoke @bus @2.5 @change_plan @mozypro
   Scenario: 17275 Add server storage add on to MozyPro yearly UK partner
     When I add a new MozyPro partner:
-      | period | base plan | country        |
-      | 12     | 1 TB      | United Kingdom |
+      | period | base plan | country        | net terms |
+      | 12     | 1 TB      | United Kingdom | yes       |
     Then New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
