@@ -27,17 +27,15 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
       | MozyPro       | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
-      | Backup Licenses         | 200       |
-      | Backup License Soft Cap | Enabled   |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Disabled  |
-      | Cloud Storage (GB)      | 10        |
+      | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit |
-      | Backup Licenses     | 0         | 10        | 200   |
-      | Cloud Storage (GB)  | 0         | 10        | 10    |
-      | Server Enabled      | Disabled  |           |       |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 10        | 10       | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Credit Card   | Current Period: | Monthly             |
       | Unpaid Balance: | $0.00         | Collect On:     | N/A                 |
@@ -68,17 +66,15 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   | VAT Number:    |
       | MozyPro       | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | France           | 1-877-486-9273 | @new_admin_email | FR08410091490  |
     And Partner account attributes should be:
-      | Backup Licenses         | 200       |
-      | Backup License Soft Cap | Enabled   |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Disabled  |
-      | Cloud Storage (GB)      | 50        |
+      | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit |
-      | Backup Licenses     | 0         | 10        | 200   |
-      | Cloud Storage (GB)  | 0         | 50        | 50    |
-      | Server Enabled      | Disabled  |           |       |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 50        | 50       | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Credit Card   | Current Period: | Yearly              |
       | Unpaid Balance: | €0.00         | Collect On:     | N/A                 |
@@ -97,7 +93,7 @@ Feature: Add a new partner
     Then Sub-total before taxes or discounts should be €650.79
     And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
-      | 100 GB             | 1       | €650.79    | €650.79     |
+      | 100 GB            | 1        | €650.79    | €650.79     |
       | Discounts Applied |          |            | -€65.08     |
       | Pre-tax Subtotal  |          |            | €585.71     |
       | Total Charges     |          |            | €585.71     |
@@ -109,17 +105,15 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   | VAT Number:  |
       | MozyPro       | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | Germany          | 1-877-486-9273 | @new_admin_email | DE812321109  |
     And Partner account attributes should be:
-      | Backup Licenses         | 200       |
-      | Backup License Soft Cap | Enabled   |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Disabled  |
-      | Cloud Storage (GB)      | 100       |
+      | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit |
-      | Backup Licenses     | 0         | 10        | 200   |
-      | Cloud Storage (GB)  | 0         | 100       | 100   |
-      | Server Enabled      | Disabled  |           |       |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 100       | 100      | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Credit Card   | Current Period: | Biennial            |
       | Unpaid Balance: | €0.00         | Collect On:     | N/A                 |
@@ -138,7 +132,7 @@ Feature: Add a new partner
     Then Sub-total before taxes or discounts should be €74.99
     And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
-      | 250 GB             | 1       | €74.99     | €74.99      |
+      | 250 GB            | 1        | €74.99     | €74.99      |
       | Discounts Applied |          |            | -€7.50      |
       | Pre-tax Subtotal  |          |            | €67.49      |
       | Taxes             |          |            | €17.25      |
@@ -151,17 +145,15 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   | VAT Number:  |
       | MozyPro       | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | Ireland          | 1-877-486-9273 | @new_admin_email | IE9691104A   |
     And Partner account attributes should be:
-      | Backup Licenses         | 200       |
-      | Backup License Soft Cap | Enabled   |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Disabled  |
-      | Cloud Storage (GB)      | 250       |
+      | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit |
-      | Backup Licenses     | 0         | 10        | 200   |
-      | Cloud Storage (GB)  | 0         | 250       | 250   |
-      | Server Enabled      | Disabled  |           |       |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 250       | 250      | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Credit Card   | Current Period: | Monthly             |
       | Unpaid Balance: | €0.00         | Collect On:     | N/A                 |
@@ -180,7 +172,7 @@ Feature: Add a new partner
     Then Sub-total before taxes or discounts should be £1,374.89
     And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
-      | 500 GB             | 1       | £1,374.89  | £1,374.89   |
+      | 500 GB            | 1        | £1,374.89  | £1,374.89   |
       | Discounts Applied |          |            | -£137.49    |
       | Pre-tax Subtotal  |          |            | £1,237.40   |
       | Total Charges     |          |            | £1,237.40   |
@@ -192,17 +184,15 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   | VAT Number:  |
       | MozyPro       | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United Kingdom   | 1-877-486-9273 | @new_admin_email | GB117223643  |
     And Partner account attributes should be:
-      | Backup Licenses         | 200       |
-      | Backup License Soft Cap | Enabled   |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Disabled  |
-      | Cloud Storage (GB)      | 500       |
+      | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit |
-      | Backup Licenses     | 0         | 10        | 200   |
-      | Cloud Storage (GB)  | 0         | 500       | 500   |
-      | Server Enabled      | Disabled  |           |       |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 500       | 500      | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Credit Card   | Current Period: | Yearly              |
       | Unpaid Balance: | £0.00         | Collect On:     | N/A                 |
@@ -234,17 +224,15 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
       | MozyPro       | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
-      | Backup Licenses         | 400       |
-      | Backup License Soft Cap | Enabled   |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Enabled   |
-      | Cloud Storage (GB)      | 3524      |
+      | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit |
-      | Backup Licenses     | 0         | 20        | 400   |
-      | Cloud Storage (GB)  | 0         | 3524      | 3524  |
-      | Server Enabled      | Enabled   |           |       |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 3524      | 3524     | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Net Terms 30  | Current Period: | Biennial            |
       | Unpaid Balance: | $28,557.48    | Collect On:     | N/A                 |
@@ -276,17 +264,15 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
       | MozyPro       | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | France           | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
-      | Backup Licenses         | 400       |
-      | Backup License Soft Cap | Enabled   |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Enabled   |
-      | Cloud Storage (GB)      | 2048      |
+      | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit |
-      | Backup Licenses     | 0         | 20        | 400   |
-      | Cloud Storage (GB)  | 0         | 2048      | 2048  |
-      | Server Enabled      | Enabled   |           |       |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 2048      | 2048     | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Net Terms 30  | Current Period: | Monthly             |
       | Unpaid Balance: | €750.28       | Collect On:     | N/A                 |
@@ -318,17 +304,15 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
       | MozyPro       | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | Germany          | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
-      | Backup Licenses         | 400       |
-      | Backup License Soft Cap | Enabled   |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Enabled   |
-      | Cloud Storage (GB)      | 4096      |
+      | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit |
-      | Backup Licenses     | 0         | 20        | 400   |
-      | Cloud Storage (GB)  | 0         | 4096      | 4096  |
-      | Server Enabled      | Enabled   |           |       |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 4096      | 4096     | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Net Terms 30  | Current Period: | Yearly              |
       | Unpaid Balance: | €15,559.22    | Collect On:     | N/A                 |
@@ -360,17 +344,15 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
       | MozyPro       | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | Ireland          | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
-      | Backup Licenses         | 400       |
-      | Backup License Soft Cap | Enabled   |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Enabled   |
-      | Cloud Storage (GB)      | 8192      |
+      | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit |
-      | Backup Licenses     | 0         | 20        | 400   |
-      | Cloud Storage (GB)  | 0         | 8192      | 8192  |
-      | Server Enabled      | Enabled   |           |       |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 8192      | 8192     | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Net Terms 30  | Current Period: | Biennial            |
       | Unpaid Balance: | €59,407.96    | Collect On:     | N/A                 |
@@ -402,17 +384,15 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
       | MozyPro       | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United Kingdom   | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
-      | Backup Licenses         | 400       |
-      | Backup License Soft Cap | Enabled   |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Enabled   |
-      | Cloud Storage (GB)      | 12288     |
+      | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit |
-      | Backup Licenses     | 0         | 20        | 400   |
-      | Cloud Storage (GB)  | 0         | 12288     | 12288 |
-      | Server Enabled      | Enabled   |           |       |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 12288     | 12288    | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Net Terms 30  | Current Period: | Monthly             |
       | Unpaid Balance: | £3,490.66     | Collect On:     | N/A                 |
@@ -444,17 +424,15 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
       | MozyPro       | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
-      | Backup Licenses         | 400       |
-      | Backup License Soft Cap | Enabled   |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Enabled   |
-      | Cloud Storage (GB)      | 18884     |
+      | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit |
-      | Backup Licenses     | 0         | 20        | 400   |
-      | Cloud Storage (GB)  | 0         | 18884     | 18884 |
-      | Server Enabled      | Enabled   |           |       |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 18884     | 18884    | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Credit Card   | Current Period: | Yearly              |
       | Unpaid Balance: | $0.00         | Collect On:     | N/A                 |
@@ -487,17 +465,15 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
       | MozyPro       | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | France           | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
-      | Backup Licenses         | 400       |
-      | Backup License Soft Cap | Enabled   |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Enabled   |
-      | Cloud Storage (GB)      | 22980     |
+      | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit |
-      | Backup Licenses     | 0         | 20        | 400   |
-      | Cloud Storage (GB)  | 0         | 22980     | 22980 |
-      | Server Enabled      | Enabled   |           |       |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 22980     | 22980    | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Net Terms 30  | Current Period: | Biennial            |
       | Unpaid Balance: | €122,846.21   | Collect On:     | N/A                 |
@@ -522,17 +498,15 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
       | MozyPro       | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
-      | Backup Licenses         | 0         |
-      | Backup License Soft Cap | Enabled   |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Disabled  |
-      | Cloud Storage (GB)      | 0         |
+      | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit |
-      | Backup Licenses     | 0         | 0         | 0     |
-      | Cloud Storage (GB)  | 0         | 0         | 0     |
-      | Server Enabled      | Disabled  |           |       |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 0         | 0        | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Other/None    | Current Period: | Monthly             |
       | Unpaid Balance: | $0.00         | Collect On:     | N/A                 |

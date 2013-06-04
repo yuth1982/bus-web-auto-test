@@ -121,6 +121,10 @@ Then /^Itemized partner resources should be:$/ do |resources_table|
   @bus_site.admin_console_page.partner_details_section.license_types_table_rows.should == resources_table.rows
 end
 
+Then /^Partner pooled storage information should be:$/ do |resources_table|
+  @bus_site.admin_console_page.partner_details_section.pooled_resource_table_rows.should == resources_table.raw
+end
+
 Then /^Partner license types should be:$/ do |license_types_table|
   @bus_site.admin_console_page.partner_details_section.license_types_table_headers.should == license_types_table.headers
   @bus_site.admin_console_page.partner_details_section.license_types_table_rows.should == license_types_table.rows

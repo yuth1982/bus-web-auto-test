@@ -27,16 +27,15 @@ Feature: Add a new partner
       | Company Type:   | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
       | MozyEnterprise  | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
-      | Backup Licenses         |           |
-      | Backup License Soft Cap | Disabled  |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Disabled  |
       | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner license types should be:
-      |         | Licenses: | Licenses Used: | Quota:   | Quota Used: | Resource Policy: |
-      | Desktop | 100       | 0              | 2500 GB  | 0 bytes     | Enabled          |
-      | Server  | 0         | 0              | 0 GB     | 0 bytes     | Enabled          |
+    And Partner pooled storage information should be:
+      |         | Used | Available | Assigned | Used | Available | Assigned  |
+      | Desktop | 0    | 2500      | 2500     | 0    | 100       | 100       |
     And Partner internal billing should be:
       | Account Type:   | Credit Card   | Current Period: | Yearly              |
       | Unpaid Balance: | $0.00         | Collect On:     | N/A                 |
@@ -68,16 +67,16 @@ Feature: Add a new partner
       | Company Type:   | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
       | MozyEnterprise  | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
-      | Backup Licenses         |           |
-      | Backup License Soft Cap | Disabled  |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Disabled  |
       | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner license types should be:
-      |         | Licenses: | Licenses Used: | Quota:   | Quota Used: | Resource Policy: |
-      | Desktop | 200       | 0              | 5000 GB  | 0 bytes     | Enabled          |
-      | Server  | 200       | 0              | 2750 GB  | 0 bytes     | Enabled          |
+    And Partner pooled storage information should be:
+      |         | Used | Available | Assigned | Used | Available | Assigned  |
+      | Desktop | 0    | 5000      | 5000     | 0    | 200       | 200       |
+      | Server  | 0    | 2750      | 2750     | 0    | 200       | 200       |
     And Partner internal billing should be:
       | Account Type:   | Credit Card   | Current Period: | Biennial            |
       | Unpaid Balance: | $0.00         | Collect On:     | N/A                 |
@@ -110,16 +109,16 @@ Feature: Add a new partner
       | Company Type:   | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:   |
       | MozyEnterprise  | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 |           |                 | @new_admin_email |
     And Partner account attributes should be:
-      | Backup Licenses         |           |
-      | Backup License Soft Cap | Disabled  |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Disabled  |
       | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner license types should be:
-      |         | Licenses: | Licenses Used: | Quota:   | Quota Used: | Resource Policy: |
-      | Desktop | 300       | 0              | 7500 GB  | 0 bytes     | Enabled          |
-      | Server  | 200        | 0             | 3000 GB  | 0 bytes     | Enabled          |
+    And Partner pooled storage information should be:
+      |         | Used | Available | Assigned | Used | Available | Assigned  |
+      | Desktop | 0    | 7500      | 7500     | 0    | 300       | 300       |
+      | Server  | 0    | 3000      | 3000     | 0    | 200       | 200       |
     And Partner internal billing should be:
       | Account Type:   | Credit Card   | Current Period: | 3-year              |
       | Unpaid Balance: | $0.00         | Collect On:     | N/A                 |
@@ -151,16 +150,16 @@ Feature: Add a new partner
       | Company Type:   | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
       | MozyEnterprise  | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
-      | Backup Licenses         |           |
-      | Backup License Soft Cap | Disabled  |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Disabled  |
       | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner license types should be:
-      |         | Licenses: | Licenses Used: | Quota:   | Quota Used: | Resource Policy: |
-      | Desktop | 400       | 0              | 10000 GB | 0 bytes     | Enabled          |
-      | Server  | 200       | 0              | 3524 GB  | 0 bytes     | Enabled          |
+    And Partner pooled storage information should be:
+      |         | Used | Available | Assigned | Used | Available | Assigned  |
+      | Desktop | 0    | 10000     | 10000    | 0    | 400       | 400       |
+      | Server  | 0    | 3524      | 3524     | 0    | 200       | 200       |
     And Partner internal billing should be:
       | Account Type:   | Credit Card   | Current Period: | Yearly              |
       | Unpaid Balance: | $0.00         | Collect On:     | N/A                 |
@@ -192,16 +191,16 @@ Feature: Add a new partner
       | Company Type:   | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
       | MozyEnterprise  | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
-      | Backup Licenses         |           |
-      | Backup License Soft Cap | Disabled  |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Disabled  |
       | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner license types should be:
-      |         | Licenses: | Licenses Used: | Quota:   | Quota Used: | Resource Policy: |
-      | Desktop | 500       | 0              | 12500 GB | 0 bytes     | Enabled          |
-      | Server  | 200       | 0              | 2048 GB  | 0 bytes     | Enabled          |
+    And Partner pooled storage information should be:
+      |         | Used | Available | Assigned | Used | Available | Assigned  |
+      | Desktop | 0    | 12500     | 12500    | 0    | 500       | 500       |
+      | Server  | 0    | 2048      | 2048     | 0    | 200       | 200       |
     And Partner internal billing should be:
       | Account Type:   | Net Terms 30  | Current Period: | Biennial            |
       | Unpaid Balance: | $85,671.66    | Collect On:     | N/A                 |
@@ -233,16 +232,16 @@ Feature: Add a new partner
       | Company Type:   | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
       | MozyEnterprise  | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
-      | Backup Licenses         |           |
-      | Backup License Soft Cap | Disabled  |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Disabled  |
       | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner license types should be:
-      |         | Licenses: | Licenses Used: | Quota:   | Quota Used: | Resource Policy: |
-      | Desktop | 600       | 0              | 15000 GB | 0 bytes     | Enabled          |
-      | Server  | 200       | 0              | 6596 GB  | 0 bytes     | Enabled          |
+    And Partner pooled storage information should be:
+      |         | Used | Available | Assigned | Used | Available | Assigned  |
+      | Desktop | 0    | 15000     | 15000    | 0    | 600       | 600       |
+      | Server  | 0    | 6596      | 6596     | 0    | 200       | 200       |
     And Partner internal billing should be:
       | Account Type:   | Net Terms 30  | Current Period: | 3-year              |
       | Unpaid Balance: | $228,596.40   | Collect On:     | N/A                 |
@@ -267,16 +266,12 @@ Feature: Add a new partner
       | Company Type:   | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
       | MozyEnterprise  | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
-      | Backup Licenses         |           |
-      | Backup License Soft Cap | Disabled  |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Disabled  |
       | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner license types should be:
-      |         | Licenses: | Licenses Used: | Quota:   | Quota Used: | Resource Policy: |
-      | Desktop | 0         | 0              | 0 GB     | 0 bytes     | Enabled          |
-      | Server  | 0         | 0              | 0 GB     | 0 bytes     | Enabled          |
     And Partner internal billing should be:
       | Account Type:   | Other/None    | Current Period: | Yearly              |
       | Unpaid Balance: | $0.00         | Collect On:     | N/A                 |

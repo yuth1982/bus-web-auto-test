@@ -28,17 +28,15 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
-      | Backup Licenses         | 100200    |
-      | Backup License Soft Cap | Enabled   |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Enabled   |
-      | Cloud Storage (GB)      | 500       |
+      | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 100200 |
-      | Cloud Storage (GB)  | 0         | 0         | 500    |
-      | Server Enabled      | Enabled   |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 500       | 500      | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Credit Card   | Current Period: | Monthly             |
       | Unpaid Balance: | $0.00         | Collect On:     | N/A                 |
@@ -70,17 +68,15 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:   | VAT Number:   |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | France           | 1-877-486-9273 |           |                 | @new_admin_email | FR08410091490 |
     And Partner account attributes should be:
-      | Backup Licenses         | 100200    |
-      | Backup License Soft Cap | Enabled   |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Enabled   |
-      | Cloud Storage (GB)      | 500       |
+      | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 100200 |
-      | Cloud Storage (GB)  | 0         | 0         | 500    |
-      | Server Enabled      | Enabled   |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 500       | 500      | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Credit Card   | Current Period: | Yearly              |
       | Unpaid Balance: | €0.00         | Collect On:     | N/A                 |
@@ -112,17 +108,15 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:   | VAT Number: |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | Germany          | 1-877-486-9273 |           |                 | @new_admin_email | DE812321109 |
     And Partner account attributes should be:
-      | Backup Licenses         | 100200    |
-      | Backup License Soft Cap | Enabled   |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Enabled   |
-      | Cloud Storage (GB)      | 500       |
+      | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 100200 |
-      | Cloud Storage (GB)  | 0         | 0         | 500    |
-      | Server Enabled      | Enabled   |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 500       | 500      | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Credit Card   | Current Period: | Monthly             |
       | Unpaid Balance: | €0.00         | Collect On:     | N/A                 |
@@ -156,17 +150,15 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   | VAT Number: |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | Ireland          | 1-877-486-9273 | @new_admin_email | IE9691104A  |
     And Partner account attributes should be:
-      | Backup Licenses         | 100200    |
-      | Backup License Soft Cap | Enabled   |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Enabled   |
-      | Cloud Storage (GB)      | 700       |
+      | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 100200 |
-      | Cloud Storage (GB)  | 0         | 0         | 700    |
-      | Server Enabled      | Enabled   |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 700       | 700      | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Credit Card   | Current Period: | Yearly              |
       | Unpaid Balance: | €0.00         | Collect On:     | N/A                 |
@@ -199,17 +191,15 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   | VAT Number: |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United Kingdom   | 1-877-486-9273 | @new_admin_email | GB117223643 |
     And Partner account attributes should be:
-      | Backup Licenses         | 100200    |
-      | Backup License Soft Cap | Enabled   |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Enabled   |
-      | Cloud Storage (GB)      | 700       |
+      | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 100200 |
-      | Cloud Storage (GB)  | 0         | 0         | 700    |
-      | Server Enabled      | Enabled   |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 700       | 700      | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Credit Card   | Current Period: | Monthly             |
       | Unpaid Balance: | £0.00         | Collect On:     | N/A                 |
@@ -240,17 +230,15 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
-      | Backup Licenses         | 100000    |
-      | Backup License Soft Cap | Enabled   |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Disabled  |
-      | Cloud Storage (GB)      | 700       |
+      | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 100000 |
-      | Cloud Storage (GB)  | 0         | 0         | 700    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 700       | 700      | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Net Terms 30  | Current Period: | Yearly              |
       | Unpaid Balance: | $2,310.00     | Collect On:     | N/A                 |
@@ -281,17 +269,15 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | France           | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
-      | Backup Licenses         | 100000    |
-      | Backup License Soft Cap | Enabled   |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Disabled  |
-      | Cloud Storage (GB)      | 500       |
+      | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 100000 |
-      | Cloud Storage (GB)  | 0         | 0         | 500    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 500       | 500      | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Net Terms 30  | Current Period: | Monthly             |
       | Unpaid Balance: | €202.95       | Collect On:     | N/A                 |
@@ -322,17 +308,15 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:    |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | Germany          | 1-877-486-9273 | @new_admin_email  |
     And Partner account attributes should be:
-      | Backup Licenses         | 100000    |
-      | Backup License Soft Cap | Enabled   |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Disabled  |
-      | Cloud Storage (GB)      | 500       |
+      | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 100000 |
-      | Cloud Storage (GB)  | 0         | 0         | 500    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 500       | 500      | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Net Terms 30  | Current Period: | Yearly              |
       | Unpaid Balance: | €1,894.20     | Collect On:     | N/A                 |
@@ -363,17 +347,15 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | Ireland          | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
-      | Backup Licenses         | 100000    |
-      | Backup License Soft Cap | Enabled   |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Disabled  |
-      | Cloud Storage (GB)      | 500       |
+      | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 100000 |
-      | Cloud Storage (GB)  | 0         | 0         | 500    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 500       | 500      | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Net Terms 30  | Current Period: | Monthly             |
       | Unpaid Balance: | €147.60       | Collect On:     | N/A                 |
@@ -405,17 +387,15 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United Kingdom   | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
-      | Backup Licenses         | 100000    |
-      | Backup License Soft Cap | Enabled   |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Disabled  |
-      | Cloud Storage (GB)      | 700       |
+      | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 100000 |
-      | Cloud Storage (GB)  | 0         | 0         | 700    |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 700       | 700      | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Net Terms 30  | Current Period: | Yearly              |
       | Unpaid Balance: | £2,557.17     | Collect On:     | N/A                 |
@@ -440,17 +420,15 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | @new_admin_email |
     And Partner account attributes should be:
-      | Backup Licenses         | 0         |
-      | Backup License Soft Cap | Enabled   |
+      | Backup Devices          |           |
+      | Backup Device Soft Cap  | Disabled  |
       | Server Enabled          | Disabled  |
-      | Cloud Storage (GB)      | 0         |
+      | Cloud Storage (GB)      |           |
       | Stash Users:            |           |
       | Default Stash Storage:  |           |
-    And Partner resources should be:
-      |                     | Used      | Allocated | Limit  |
-      | Backup Licenses     | 0         | 0         | 0      |
-      | Cloud Storage (GB)  | 0         | 0         | 0      |
-      | Server Enabled      | Disabled  |           |        |
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 0         | 0        | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Other/None    | Current Period: | Monthly             |
       | Unpaid Balance: | $0.00         | Collect On:     | N/A                 |

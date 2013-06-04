@@ -64,6 +64,9 @@ module Bus
     # Resources table, for MozyPro
     element(:generic_resources_table, css: 'form[id^=generic_resources_form] table')
 
+    # Pooled Resources table, for Pooled partner
+    element(:pooled_resources_table, css: 'form[id^=pooled_resources_form] table')
+
     # License types table
     element(:license_types_table, css: 'div[id^=partner_license_types] table')
 
@@ -178,7 +181,8 @@ module Bus
     def pooled_resource_table_rows
       pooled_resources_table.rows_text
     end
-      # Public: Generic resources table headers text
+
+    # Public: Generic resources table headers text
     #
     # Example:
     #   # => "["", "Used", "Allocated", "Limit"]"
