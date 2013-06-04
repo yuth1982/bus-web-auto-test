@@ -61,8 +61,12 @@ When /^I cancel add user stash$/ do
   @bus_site.admin_console_page.user_details_section.cancel_add_stash
 end
 
-When /^I change user stash quota to (\d+) GB$/ do |quota|
-  @bus_site.admin_console_page.user_details_section.change_stash_quota(quota)
+When /^I (change|set) user stash quota to (\d+) GB$/ do |action, quota|
+  if action == 'change'
+    @bus_site.admin_console_page.user_details_section.change_stash_quota(quota)
+  elsif action == 'set'
+    @bus_site.admin_console_page.user_details_section.add_stash_quota(quota)
+  end
 end
 
 When /^I cancel change user stash quota$/ do
@@ -196,8 +200,14 @@ When(/^I get the machine_id by license_key$/) do
   @machine_id = DBHelper.get_machine_id_by_license_key(@license_key)
 end
 
-When(/^I update the newly created machine used quota to (\d+) GB$/) do |quota|
-  DBHelper.update_machine_info(@machine_id, quota)
+When(/^I update (.+) used quota to (\d+) GB$/) do |machine, quota|
+  machine_id = machine.is_a?(Fixnum) ? machine : @bus_site.admin_console_page.user_details_section.get_machine_id(machine)
+  DBHelper.update_machine_info(machine_id, quota)
+end
+
+When /Available quota of (.+) should be (\d+) GB/ do |machine, quota|
+  machine_id = machine.is_a?(Fixnum) ? machine : @bus_site.admin_console_page.user_details_section.get_machine_id(machine)
+  DBHelper.machine_available_quota(machine_id).should == quota.to_i
 end
 
 When(/^I close user details section$/) do
@@ -268,9 +278,11 @@ end
 When(/^I (set|edit|remove|save|cancel) (user|machine) max for (.+)$/) do |action, type, name|
   @bus_site.admin_console_page.user_details_section.handle_max(action, type, name)
 end
+
 When(/^I input the (user|machine) max value for (.+) to (\d+) GB$/) do |type, name, quota|
   @bus_site.admin_console_page.user_details_section.set_max_value(type, name, quota)
 end
+
 Then(/^set max message should be:$/) do | msg|
   @bus_site.admin_console_page.user_details_section.messages.should == msg
 end

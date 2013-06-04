@@ -25,7 +25,7 @@ module DBHelper
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
       sql = "select machine_id from mozy_pro_keys where keystring ='#{license_key}';"
       c = conn.exec(sql)
-      c.values[0][0]
+      c.values[0][0].to_i
     rescue PGError => e
       puts 'postgres error'
     ensure
@@ -38,6 +38,19 @@ module DBHelper
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
       sql = "UPDATE machines SET space_used = #{quota}::bigint*1024*1024*1024 , pending_space_used = 0, patches = 0, files = 1, last_client_version = null,last_backup_at = #{time}, last_successful_backup_at = #{time} WHERE id = #{machine_id};;"
       c = conn.exec(sql)
+    rescue PGError => e
+      puts 'postgres error'
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def machine_available_quota(machine_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select machine_available_quota(#{machine_id});"
+      c = conn.exec(sql)
+      c.values[0][0].to_i/(1024 ** 3)
     rescue PGError => e
       puts 'postgres error'
     ensure

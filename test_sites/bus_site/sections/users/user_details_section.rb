@@ -124,7 +124,6 @@ module Bus
       stash_quota_tb.type_text(quota) if quota.to_i >= 0 #if quota = -1, then use default
       send_email_cb.check if send_email
       submit_stash_btn.click
-      wait_until_bus_section_load
     end
 
     # Public: Click add stash link then click cancel link
@@ -149,9 +148,15 @@ module Bus
     #
     # @return [] nothing
     def change_stash_quota(quota)
-      change_stash_quota_link.click
-      change_stash_quota_tb.type_text(quota)
-      change_stash_quota_btn.click
+      handle_max('edit', 'machine', 'Stash')
+      set_max_value('machine', 'Stash', quota)
+      handle_max('save', 'machine', 'Stash')
+    end
+
+    def add_stash_quota(quota)
+      handle_max('set', 'machine', 'Stash')
+      set_max_value('machine', 'Stash', quota)
+      handle_max('save', 'machine', 'Stash')
     end
 
     # Public: Click change stash link then click cancel link
@@ -466,14 +471,12 @@ module Bus
       new_password_tb.type_text(password)
       new_password_confirm_tb.type_text(password)
       new_password_change_btn.click
-      wait_until{ !new_password_change_btn.visible? }
     end
 
     def change_device_quota(count)
       device_edit.click
       device_count.type_text(count)
       device_edit_submit.click
-      wait_until{ !device_edit_submit.visible? }
     end
 
     def device_edit_and_cancel(count)
@@ -494,6 +497,11 @@ module Bus
       range.each do |k, v|
         tooltip[k.downcase].should == v
       end
+    end
+
+    def get_machine_id(device)
+      a = find(:xpath, "//table[@class='mini-table']//td[1]/a[text()='#{device}']")[:href]
+      a[/\/admin\/view_restores\/(\d+)$/, 1].to_i
     end
 
     # Public: Click send user keys
@@ -537,9 +545,9 @@ module Bus
     def handle_max(action, type, name, confirm=true)
       case type
         when 'machine'
-          limit_col = find(:xpath, "//a[text()='#{name}']/../../*[last()-2]")
           action = 'cancel-edit' if action == 'cancel'
-          limit_col.find(:css, "*[id^=#{action}-machine-storage-max]").click
+          ctl = find(:xpath, "//table[@class='mini-table']//a[text()='#{name}']/../../*[last()-2]//*[starts-with(@id, '#{action}-machine-storage-max')]")
+          ctl.click
           if action == 'remove'
             confirm ? alert_accept : alert_dismiss
           end
@@ -551,8 +559,7 @@ module Bus
     def set_max_value(type, name, quota)
       case type
         when 'machine'
-          limit_col = find(:xpath, "//a[text()='#{name}']/../../*[last()-2]")
-          max_input = limit_col.find(:css, '*[id^=input-machine-storage-max]')
+          max_input = find(:xpath, "//table[@class='mini-table']//a[text()='#{name}']/../../*[last()-2]//*[starts-with(@id, 'input-machine-storage-max')]")
           max_input.click
           Log.debug machine_max_tooltips.text
           max_input.type_text(quota)
@@ -563,10 +570,11 @@ module Bus
 
     def check_machine_max_range(name, range)
       tooltip = {}
-      limit_col = find(:xpath, "//a[text()='#{name}']/../../*[last()-2]")
-      max_input = limit_col.find(:css, '*[id^=input-machine-storage-max]')
+      ctl = find(:xpath, "//table[@class='mini-table']//a[text()='#{name}']/../../*[last()-2]//*[contains(@id, 'set-machine-storage-max') or contains(@id, 'edit-machine-storage-max')]")
+      ctl.click
+      max_input = find(:xpath, "//table[@class='mini-table']//a[text()='#{name}']/../../*[last()-2]//*[starts-with(@id, 'input-machine-storage-max')]")
       max_input.click
-      sleep 1
+      sleep 2
       tip_text = machine_max_tooltips.text
       Log.debug tip_text
       tooltip['min'] = tip_text[/Min: (\d+)/, 1]

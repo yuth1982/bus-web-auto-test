@@ -8,8 +8,13 @@ After do |scenario|
 
 end
 
-AfterStep do
-  # Todo
+AfterStep do |scenario|
+  loading = all(:css, 'h2 a[onclick^=toggle_module].title')
+  loading.each do |one|
+    unless one[:class].nil?
+      wait_until{ one[:class].match(/loading/).nil? }
+    end
+  end
 end
 
 Before('@chrome') do
