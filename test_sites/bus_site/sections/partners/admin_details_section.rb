@@ -46,7 +46,8 @@ module Bus
     end
 
     def partner
-      { :name => find(:xpath, "//div[@class='show-details']/dl[dt='Partner:']/dd").text }
+      partners = all(:xpath, "//div[@class='show-details']/dl[dt='Partner:']/dd")
+      { :name => partners.first.text } if partners.size > 0
     end
 
     def delete_admin(admin_password)

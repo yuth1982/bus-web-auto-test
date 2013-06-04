@@ -18,3 +18,12 @@ When /^I delete role (.+)$/ do | role_name |
   @bus_site.admin_console_page.role_details_section.delete_role(role_name)
   sleep 1
 end
+
+When /^I clean all roles with name which started with "([^"]+)"$/ do |prefix|
+  @bus_site.admin_console_page.list_roles_section.wait_until_bus_section_load
+  names = @bus_site.admin_console_page.list_roles_section.all_role_name_started_with(prefix).map(&:text)
+  Log.debug "to clear #{names.inspect}"
+  names.each do |name|
+    step %{I delete role #{name}}
+  end
+end

@@ -13,6 +13,7 @@ When /^I add a new admin:$/ do |table|
   end
   @admin = Bus::DataObj::Admin.new(admin_hash['Name'], admin_hash['Email'], admin_hash['Parent'], user_groups, roles)
   @bus_site.admin_console_page.add_new_admin_section.add_new_admin(@admin)
+  @bus_site.admin_console_page.add_new_admin_section.wait_until_bus_section_load
 end
 
 Then /^I should see capabilities in Admin Console panel$/ do |table|
@@ -43,10 +44,17 @@ When /^I act as admin by:$/ do |table|
   }
 
   attributes = table.hashes.first
-  page.find_link(attributes["email"] || attributes["name"]).click
+  page.find_link(attributes["email"].slice(0, 27) || attributes["name"]).click
   @current_partner = @bus_site.admin_console_page.admin_details_section.partner
   @bus_site.admin_console_page.admin_details_section.act_as_admin
   @bus_site.admin_console_page.has_stop_masquerading_link?
+end
+
+When /^I act as latest created admin$/ do
+  step %{I act as admin by:}, table(%{
+    | email           |
+    | #{@admin.email} |
+  })
 end
 
 When /^I delete admin by:$/ do |table|
@@ -63,10 +71,17 @@ When /^I delete admin by:$/ do |table|
   attributes['email'] = @existing_admin_email[0..26] if attributes['email'] == '@existing_admin_email'
   attributes['email'] = @admin.email[0..26] if attributes['email'] == '@admin_email'
 
-  page.find_link(attributes["email"] || attributes["name"]).click
+  page.find_link(attributes["email"].slice(0, 27) || attributes["name"]).click
   @bus_site.admin_console_page.admin_details_section.delete_admin(BUS_ENV['bus_password'])
   step "I navigate to Search Admins section from bus admin console page"
   @bus_site.admin_console_page.search_admins_section.refresh_bus_section
+end
+
+When /^I delete lastest created admin$/ do
+  step %{I delete admin by:}, table(%{
+    | email           |
+    | #{@admin.email} |
+  })
 end
 
 When /^I list partner details for a partner in partner list$/ do

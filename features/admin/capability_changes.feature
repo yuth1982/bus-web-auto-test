@@ -1,28 +1,28 @@
-Feature: Manage admin capability change 
+Feature: Manage admin capability change
 
   As an Mozy administrator
-  I can manage admin's capabilities 
+  I can manage admin's capabilities
 
   Background:
     Given I log in bus admin console as administrator
 
   @TC.700
   Scenario: Check partners list/view check to make sure you can't change the name
+    When I navigate to List Roles section from bus admin console page
+    And I clean all roles with name which started with "$AUTOTEST$"
     When I navigate to Add New Role section from bus admin console page
     And I add a new role:
-      | Name   |
-      | ATC700 |
+      | Name              |
+      | $AUTOTEST$ATC700  |
     And I check capabilities for the new role:
       | Capabilities        |
       | Partners: list/view |
     And I navigate to Add New Admin section from bus admin console page
     And I add a new admin:
     # Multiple roles can be specified as role1, role2, role3 (separated by comma)
-      | Name   | Email                  | Roles  |
-      | ATC700 | leongh+atc700@mozy.com | ATC700 |
-    And I act as admin by:
-      | email                  |
-      | leongh+atc700@mozy.com |
+      | Roles             |
+      | $AUTOTEST$ATC700  |
+    And I act as latest created admin
     Then I should see capabilities in Admin Console panel
       | Capabilities |
       | Search / List Partners |
@@ -30,18 +30,17 @@ Feature: Manage admin capability change
     And I list partner details for a partner in partner list
     And I cannot change partner name
     And I log in bus admin console as administrator
-    And I delete admin by:
-      | email                 |
-      |leongh+atc700@mozy.com |
-    And I delete role ATC700
-
+    And I delete lastest created admin
+    And I delete role $AUTOTEST$ATC700
 
   @TC.699
   Scenario: Check Delete a partner with invalid password
+    When I navigate to List Roles section from bus admin console page
+    And I clean all roles with name which started with "$AUTOTEST$"
     When I navigate to Add New Role section from bus admin console page
     And I add a new role:
-      | Name   |
-      | ATC699 |
+      | Name          |
+      | $AUTOTEST$699 |
     And I check capabilities for the new role:
       | Capabilities        |
       | Partners: delete    |
@@ -49,11 +48,10 @@ Feature: Manage admin capability change
     And I navigate to Add New Admin section from bus admin console page
     And I add a new admin:
     # Multiple roles can be specified as role1, role2, role3 (separated by comma)
-      | Name   | Email                  | Roles  |
-      | ATC699 | leongh+atc699@mozy.com | ATC699 |
-    And I act as admin by:
-      | email                  |
-      | leongh+atc699@mozy.com |
+      | Roles         |
+      | $AUTOTEST$699 |
+    And Add New Admin success message should be displayed
+    And I act as latest created admin
     Then I should see capabilities in Admin Console panel
       | Capabilities |
       | Search / List Partners |
@@ -62,10 +60,8 @@ Feature: Manage admin capability change
     And I can delete partner
     And I delete partner account with password xxx
     And I log in bus admin console as administrator
-    And I delete admin by:
-      | email                 |
-      |leongh+atc699@mozy.com |
-    And I delete role ATC699
+    And I delete lastest created admin
+    And I delete role $AUTOTEST$699
 
   @TC.698
   Scenario: Check Delete a partner works
