@@ -28,6 +28,7 @@ require 'zimbra_helper'
 require 'db_helper'
 require 'ldap_helper'
 require 'ssh_helper'
+require 'ssh_migration'
 require 'utility'
 require 'device_helper'
 
@@ -40,6 +41,7 @@ include FileHelper
 include DBHelper
 include LDAPHelper
 include SSHHelper
+include SSHMigration
 include AriaApi
 include Utility
 include KeylessDeviceActivation::Authentication

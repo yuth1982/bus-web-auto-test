@@ -7,3 +7,7 @@ Given /^I migrate (the|multiple) partner to aria$/ do |partners_to_migrate|
     else
   end
 end
+
+Given /^I migrate the partner to pooled storage$/ do
+  SSHMigration.migrate_to_pooled_storage(@partner_id)
+end

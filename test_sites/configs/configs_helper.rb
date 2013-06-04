@@ -26,6 +26,9 @@ PHX_ENV = ALL_ENV[ENV['PHX_ENV'] || 'phx-qa6']
 # Active phoenix test environment, for example qa5, qa6
 TOOLS_ENV = ALL_ENV[ENV['TOOLS_ENV'] || 'tools']
 
+# Adding refs for ssh connectivity to boxes for script execution and log fetching
+SSH_ENV = ALL_ENV[ENV['SSH_ENV'] || 'ssh']
+
 # ATF uses br env variable to decide which browser will launch
 # available browser: firefox, chrome, ie, webkit
 BROWSER = (ENV['br'] || 'firefox').downcase
