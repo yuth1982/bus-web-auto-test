@@ -52,7 +52,7 @@ Feature: Add a new partner
       | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period  |
     And I delete partner account
 
-  # base creation itemized (pro) partner w/ user
+  # base creation itemized (pro) partner to pooled storage w/ user
   #   & adding machine, quota to accts will be in future commits
   #   all as setup steps for verification of migration of itemized partners to pooled storage
   @TC.21013 @itemized
@@ -86,7 +86,66 @@ Feature: Add a new partner
       | Name     | Machines | Storage | Storage Used |
       | TC210131 | 0        | 0       | None         |
     And I stop masquerading
+    And I migrate the partner to pooled storage
+    And I log in bus admin console as administrator
+    And I search partner by:
+      | name          | filter |
+      | @company_name | None   |
+    And I view partner details by newly created partner company name
+    And I act as newly created partner
+    And I navigate to Search / List Users section from bus admin console page
+    And I sort user search results by Name
+    And Itemized user search results should be:
+      | Name     | Machines | Storage                         | Storage Used                |
+      | TC210131 | 0        | Desktop: Shared\nServer: Shared | Desktop: None\nServer: None |
+    And I stop masquerading
     And I search and delete partner account by newly created partner company name
+
+    @TC.21182 @itemized
+    Scenario: 21182 Pooled Storage - MozyPro Itemized - BUS Admin UI - Removal of nav menu items
+      When I successfully add an itemized MozyPro partner:
+        | period | server licenses | server quota | desktop licenses | desktop quota |
+        | 12     | 5               | 50           | 5                | 50            |
+      And I log in bus admin console as administrator
+      And I search partner by:
+        | name          | filter |
+        | @company_name | None   |
+      And I view partner details by newly created partner company name
+      And I get the partner_id
+      And I migrate the partner to aria
+      And I migrate the partner to pooled storage
+      And I log in bus admin console as administrator
+      And I search partner by:
+        | name          | filter |
+        | @company_name | None   |
+      And I view partner details by newly created partner company name
+      And I act as newly created partner
+      And navigation items should be removed
+      And I stop masquerading
+      And I search and delete partner account by newly created partner company name
+
+    @TC.21300 @itemized
+    Scenario: 21300 Pooled Storage - MozyPro Itemized - BUS Admin UI - New Quick Links Section
+      When I successfully add an itemized MozyPro partner:
+        | period | server licenses | server quota | desktop licenses | desktop quota |
+        | 12     | 5               | 50           | 5                | 50            |
+      And I log in bus admin console as administrator
+      And I search partner by:
+        | name          | filter |
+        | @company_name | None   |
+      And I view partner details by newly created partner company name
+      And I get the partner_id
+      And I migrate the partner to aria
+      And I migrate the partner to pooled storage
+      And I log in bus admin console as administrator
+      And I search partner by:
+        | name          | filter |
+        | @company_name | None   |
+      And I view partner details by newly created partner company name
+      And I act as newly created partner
+      And new section & navigation items are present for Itemized partner
+      And I stop masquerading
+      And I search and delete partner account by newly created partner company name
 
   # base creation itemized (pro) partner w/ user group
   #   & adding machine, quota to accts will be in future commits
@@ -169,8 +228,7 @@ Feature: Add a new partner
       | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period  |
     And I delete partner account
 
-  #
-  # base creation add itemized (reseller) partner & user + verification
+  # base creation add itemized (reseller) partner to pooled storage w/ user
   #   & adding machine, quota to accts will be in future commits
   #   all as setup steps for verification of migration of itemized partners to pooled storage
   @TC.21017 @itemized
@@ -195,14 +253,72 @@ Feature: Add a new partner
     And I view partner details by newly created partner company name
     And I act as newly created partner
     And I add new itemized user(s):
-      | name       | devices_server | quota_server | devices_desktop | quota_desktop |
-      | TC.20843.1 | 1              | 10           | 1               | 10            |
+      | name     | devices_server | quota_server | devices_desktop | quota_desktop |
+      | TC210171 | 1              | 10           | 1               | 10            |
     And new itemized user should be created
     And I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     And Itemized user search results should be:
-      | Name       | Machines | Storage | Storage Used |
-      | TC.20843.1 | 0        | 0       | None         |
+      | Name     | Machines | Storage | Storage Used |
+      | TC210171 | 0        | 0       | None         |
+    And I stop masquerading
+    And I migrate the partner to pooled storage
+    And I log in bus admin console as administrator
+    And I search partner by:
+      | name          | filter |
+      | @company_name | None   |
+    And I view partner details by newly created partner company name
+    And I act as newly created partner
+    And I navigate to Search / List Users section from bus admin console page
+    And I sort user search results by Name
+    And Itemized user search results should be:
+      | Name     | Machines | Storage                         | Storage Used                |
+      | TC210171 | 0        | Desktop: Shared\nServer: Shared | Desktop: None\nServer: None |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
+  @TC.21183 @itemized
+  Scenario: 21183 Pooled Storage - Reseller Itemized - BUS Admin UI - Removal of nav menu items
+    When I successfully add an itemized Reseller partner:
+      | period | server licenses | server quota | desktop licenses | desktop quota |
+      | 12     | 5               | 50           | 5                | 50            |
+    And I log in bus admin console as administrator
+    And I search partner by:
+      | name          | filter |
+      | @company_name | None   |
+    And I view partner details by newly created partner company name
+    And I get the partner_id
+    And I migrate the partner to aria
+    And I migrate the partner to pooled storage
+    And I log in bus admin console as administrator
+    And I search partner by:
+      | name          | filter |
+      | @company_name | None   |
+    And I view partner details by newly created partner company name
+    And I act as newly created partner
+    And navigation items should be removed
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.21301 @itemized
+  Scenario: 21301 Pooled Storage - Reseller - BUS Admin UI - New Quick Links Section
+    When I successfully add an itemized Reseller partner:
+      | period | server licenses | server quota | desktop licenses | desktop quota |
+      | 12     | 5               | 50           | 5                | 50            |
+    And I log in bus admin console as administrator
+    And I search partner by:
+      | name          | filter |
+      | @company_name | None   |
+    And I view partner details by newly created partner company name
+    And I get the partner_id
+    And I migrate the partner to aria
+    And I migrate the partner to pooled storage
+    And I log in bus admin console as administrator
+    And I search partner by:
+      | name          | filter |
+      | @company_name | None   |
+    And I view partner details by newly created partner company name
+    And I act as newly created partner
+    And new section & navigation items are present for Itemized partner
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name

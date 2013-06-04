@@ -83,7 +83,7 @@ Then /^navigation items should be removed$/ do
   @bus_site.admin_console_page.has_navigation?("List User Groups").should be_empty
 end
 
-Then /^new section & navigation items are present for (MozyPro|MozyEnterprise|Reseller) partner$/ do |type|
+Then /^new section & navigation items are present for (MozyPro|MozyEnterprise|Reseller|Itemized) partner$/ do |type|
   @bus_site.admin_console_page.has_navigation?('quick_link_item').should be_empty
   case type
     when CONFIGS['bus']['company_type']['mozypro']
@@ -98,6 +98,12 @@ Then /^new section & navigation items are present for (MozyPro|MozyEnterprise|Re
       @bus_site.admin_console_page.has_navigation?("Change Plan").should_not be_empty
       @bus_site.admin_console_page.has_navigation?("Download MozyEnterprise Client").should_not be_empty
     when CONFIGS['bus']['company_type']['reseller']
+      @bus_site.admin_console_page.has_navigation?("Resource Summary").should_not be_empty
+      @bus_site.admin_console_page.has_navigation?("User Group List").should_not be_empty
+      @bus_site.admin_console_page.has_navigation?("Add New User").should_not be_empty
+      @bus_site.admin_console_page.has_navigation?("Change Plan").should_not be_empty
+      @bus_site.admin_console_page.has_navigation?("Download MozyPro Client").should_not be_empty
+    when "Itemized"
       @bus_site.admin_console_page.has_navigation?("Resource Summary").should_not be_empty
       @bus_site.admin_console_page.has_navigation?("User Group List").should_not be_empty
       @bus_site.admin_console_page.has_navigation?("Add New User").should_not be_empty
