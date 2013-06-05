@@ -38,7 +38,7 @@ When /^I act as partner by:$/ do |search_key_table|
   end
   @bus_site.admin_console_page.has_stop_masquerading_link?
   @partner_id = @bus_site.admin_console_page.current_partner_id
-  @current_partner[:id] ||= @bus_site.admin_console_page.partner_id
+  @current_partner[:id] ||= @bus_site.admin_console_page.partner_id if @current_partner
 end
 
 # Public: View partner details by click name in search partner results
