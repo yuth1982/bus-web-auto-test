@@ -507,6 +507,6 @@ Feature:
     Then Billing history table should be:
       | Date    | Amount  | Total Paid | Balance Due |
       | today  | $275.00  | $275.00    | $0.00       |
-      | today  | $95.00   | $95.00     | $0.00       |
+      | today  | $190.00  | $190.00     | $0.00       |
       | today  | $0.00    | $0.00      | $0.00       |
     And I search and delete partner account by newly created partner company name
