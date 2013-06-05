@@ -59,7 +59,8 @@ Feature: User Has Unique Username
     And I change the username to existing admin email
     Then Account Details error message should be:
     """
-    Failed to update email address. The email address you entered may be invalid or already in use:
+    An account with that email address already exists
+    Email address unchanged. The email address you entered is invalid or already in use: An account with that email address already exists
     """
     And I delete admin by:
       | email                 |
@@ -174,8 +175,8 @@ Feature: User Has Unique Username
     When I navigate to bus admin console login page
     And I log in bus admin console with user name redacted-4165@notarealdomain.mozy.com and password default password
     And I search user by:
-      | keywords              | user type |
-      | @existing_admin_email | MozyHome  |
+      | keywords              | user type      |
+      | @existing_admin_email | MozyHome Users |
     And I view MozyHome user details by existing admin email
     And I delete user
 
@@ -467,7 +468,7 @@ Feature: User Has Unique Username
     When I log in bus admin console as administrator
     And I add a new Reseller partner:
       | period | reseller type | reseller quota |
-      | 12     | Silver        | 20 v           |
+      | 12     | Silver        | 20             |
     And New partner should be created
     And I act as newly created partner
     And I get an admin email from the database
