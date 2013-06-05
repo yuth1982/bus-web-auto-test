@@ -257,7 +257,3 @@ end
 Then /^partner details message should be$/ do |message|
   @bus_site.admin_console_page.partner_details_section.success_messages == message
 end
-
-Then /^Partner pooled storage information should be:$/ do |ps_table|
-  @bus_site.admin_console_page.partner_details_section.pooled_resource_table_rows.should == ps_table.raw
-end
