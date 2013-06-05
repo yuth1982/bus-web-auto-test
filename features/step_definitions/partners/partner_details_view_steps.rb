@@ -60,30 +60,8 @@ Then /^Partner contact information should be:$/ do |contact_table|
   actual = @bus_site.admin_console_page.partner_details_section.contact_info_hash
   expected = contact_table.hashes.first
 
-  # line 64 - 82 should be replaced with erb
-  expected.keys.each do |header|
-    case header
-      when 'Contact Email:'
-        actual[header].should == expected[header].gsub(/@new_admin_email/,@partner.admin_info.email)
-      when 'Contact Address:'
-        actual[header].should == expected[header].gsub(/@address/, @partner.company_info.address)
-      when 'Contact City:'
-        actual[header].should == expected[header].gsub(/@city/, @partner.company_info.city)
-      when 'Contact State:'
-        actual[header].should == expected[header].gsub(/@state/, @partner.company_info.state_abbrev)
-      when 'Contact ZIP/Postal Code:'
-        actual[header].should == expected[header].gsub(/@zip_code/, @partner.company_info.zip)
-      when 'Contact Country:'
-        actual[header].should == expected[header].gsub(/@country/, @partner.company_info.country)
-      when 'Phone:'
-        actual[header].should == expected[header].gsub(/@phone/, @partner.company_info.phone)
-      else
-        actual[header].should == expected[header]
-    end
-
-    expected.each do |_,v|
-      v.replace ERB.new(v).result(binding)
-    end
+  expected.each do |_,v|
+    v.replace ERB.new(v).result(binding)
   end
 
   expected.keys.each{ |key| actual[key].should == expected[key] }
