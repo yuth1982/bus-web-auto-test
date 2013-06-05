@@ -570,12 +570,8 @@ module Bus
 
     def check_machine_max_range(name, range)
       tooltip = {}
-      ctl = find(:xpath, "//table[@class='mini-table']//a[text()='#{name}']/../../*[last()-2]//*[contains(@id, 'set-machine-storage-max') or contains(@id, 'edit-machine-storage-max')]")
-      ctl.click
       max_input = find(:xpath, "//table[@class='mini-table']//a[text()='#{name}']/../../*[last()-2]//*[starts-with(@id, 'input-machine-storage-max')]")
-      max_input.click
-      sleep 2
-      tip_text = machine_max_tooltips.text
+      tip_text = max_input[:onfocus][/'(Min: \d+ GB, Max: \d+ GB)'/, 1]
       Log.debug tip_text
       tooltip['min'] = tip_text[/Min: (\d+)/, 1]
       tooltip['max'] = tip_text[/Max: (\d+)/, 1]

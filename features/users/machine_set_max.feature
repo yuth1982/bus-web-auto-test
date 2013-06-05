@@ -133,7 +133,7 @@ Feature: Set/Remove Max at Machine
     And I update Stash used quota to 5 GB
     And The range of machine max for Stash by tooltips should be:
       | Min | Max |
-      | 15  | 50  |
+      | 0   | 50  |
     Then Available quota of Machine1 should be 0 GB
     And Available quota of Stash should be 0 GB
     When I refresh User Details section
@@ -226,11 +226,11 @@ Feature: Set/Remove Max at Machine
     When I update Machine1 used quota to 10 GB
     Then The range of machine max for Machine1 by tooltips should be:
       | Min | Max |
-      | 10  | 50  |
+      | 0   | 50  |
     And I update Stash used quota to 5 GB
     Then The range of machine max for Stash by tooltips should be:
       | Min | Max |
-      | 15  | 50  |
+      | 0   | 50  |
     Then Available quota of Machine1 should be 0 GB
     And Available quota of Stash should be 0 GB
     And I stop masquerading
