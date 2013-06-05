@@ -101,13 +101,13 @@ module SiteHelper
     end
 
     def collapse_bus_section
-      if root_element[:class] == 'adminbox-active'
+      if root_element[:class] =~ /adminbox-active/
         root_element.find(:css, 'a.title').click
       end
     end
 
     def expand_bus_section
-      if root_element[:class] == 'adminbox-inactive'
+      if root_element[:class] =~ /adminbox-inactive/
         root_element.find(:css, 'a.title').click
       end
     end

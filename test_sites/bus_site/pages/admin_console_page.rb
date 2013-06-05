@@ -75,6 +75,7 @@ module Bus
     element(:quick_link_item, id: "nav-cat-quick")
 
     # Popup window
+    element(:start_using_mozy_btn, id: "btn_start_using")
     element(:popup_content_div, css: "div.popup-window-content")
     element(:close_popup_link, css: "div.close_bar a")
     element(:close_btn, css: "div.popup-window-footer input[value=Close]")
@@ -97,13 +98,12 @@ module Bus
     #
     # @return [nothing]
     def navigate_to_menu(link_name, use_quick_link = false)
+      start_using_mozy_btn.click if has_start_using_mozy_btn?
       # Looking for link in navigation menu
       find(:xpath, "//ul//a[text()='#{link_name}']")
       # calling all method does not require to wait
       links = all(:xpath, "//ul//a[text()='#{link_name}']")
-
       el = use_quick_link ? links.first : links.last
-
       if links.first.element_parent[:class].match(/active/).nil? && links.last.element_parent[:class].match(/active/).nil?
         el.click
       end
