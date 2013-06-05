@@ -71,6 +71,7 @@ Feature: User stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
+  # Enable stash behavior changed, this test case need to be updated
   @TC.18976 @BSA.2040
   Scenario: 18976 Enable stash by click Add Stash link but not enough storage then I can choose Allocate More Storage
     When I add a new MozyPro partner:
@@ -97,6 +98,7 @@ Feature: User stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
+  # Enable stash behavior changed, this test case need to be updated
   @TC.18977 @BSA.2040
   Scenario: 18977 Enable stash by click Add Stash link but not enough storage then I can choose Buy More Storage
     When I add a new MozyEnterprise partner:
@@ -108,10 +110,10 @@ Feature: User stash setting management
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 2 GB (change)          |
     When I act as newly created partner account
-    And I add a new user to a MozyEnterprise partner:
-      | name           |
-      | TC.18977 user  |
-    Then New user should be created
+    And I add new user(s):
+      | name          | user_group           | storage_type | storage_limit | devices |
+      | TC.18977 user | (default user group) | Desktop      | 10            | 1       |
+    Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by newly created user email
     And I add stash for the user with:
@@ -134,10 +136,10 @@ Feature: User stash setting management
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 5 GB (change)          |
     When I act as newly created partner account
-    And I add a new user to a MozyPro partner:
-      | name           |
-      | TC.19015 user  |
-    Then New user should be created
+    And I add new user(s):
+      | name          | storage_type | storage_limit | devices |
+      | TC.19015 user | Desktop      | 10            | 1       |
+    Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by newly created user email
     And I add stash for the user with:
@@ -163,10 +165,10 @@ Feature: User stash setting management
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 5 GB (change)          |
     When I act as newly created partner account
-    And I add a new user to a MozyPro partner:
-      | name           |
-      | TC.19017 user  |
-    Then New user should be created
+    And I add new user(s):
+      | name          | storage_type | storage_limit | devices |
+      | TC.19017 user | Desktop      | 10            | 1       |
+    Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by newly created user email
     And I cancel add user stash
@@ -215,13 +217,13 @@ Feature: User stash setting management
       | Enable Stash: | Default Stash Storage: |
       | Yes           | 2 GB (change)          |
     When I act as newly created partner account
-    And I add a new user to a MozyEnterprise partner:
-      | name           | enable stash |
-      | TC.18981 user  | yes          |
-    Then New user should be created
+    And I add new user(s):
+      | name          | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | TC.18981 user | (default user group) | Desktop      | 10            | 1       | yes          |
+    Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by newly created user email
-    Then User details should be:
+    Then user details should be:
       | Name:                  | Enable Stash:               |
       | TC.18981 user (change) | Yes (Send Invitation Email) |
     When I stop masquerading

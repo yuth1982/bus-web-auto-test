@@ -17,8 +17,8 @@ Feature: Phoenix regression Test
     When I log in bus admin console as administrator
     And I view partner details by @partner_name
     Then Partner contact information should be:
-      | Contact Address: | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: |
-      | @address         | @city         | @state         | @zip_code                | @country         |
+      | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   |
+      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> |
     Then I delete partner account
 
   @TC.2356
@@ -29,8 +29,8 @@ Feature: Phoenix regression Test
       | 1      | 50 GB     |
     Then New partner should be created
     And Partner contact information should be:
-      | Contact Address: | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: |
-      | @address         | @city         | @state         | @zip_code                | @country         |
+      | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   |
+      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> |
     Then I delete partner account
 
   @TC.2357 @fail
@@ -83,8 +83,8 @@ Feature: Phoenix regression Test
     When I log in bus admin console as administrator
     And I view partner details by @partner_name
     Then Partner contact information should be:
-      | Contact Address: | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: |
-      | @address         | @city         | @state         | @zip_code                | @country         |
+      | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   |
+      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> |
     When I change the partner contact information to:
       | Contact Address: | Contact Country: | Contact City: | Contact ZIP/Postal Code: | Contact State: |
       | address          | Canada           | city          | 123456                   | AB             |

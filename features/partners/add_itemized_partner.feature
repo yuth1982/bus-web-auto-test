@@ -31,19 +31,19 @@ Feature: Add a new partner
       | Status:         | Root Admin:          | Root Role:             | Parent: | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Autogrow: | Enable Stash: |
       | Active (change) | @root_admin (act as) | Business Root (change) | MozyPro | after 1 year   | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)      | No            |
     And Partner contact information should be:
-      | Company Type:    | Users: | Contact Address: | Contact City: | Contact ZIP/Postal Code: | Contact Country: | Phone: | Contact Email:   |
-      | MozyPro Itemized | 0      | @address         | @city         | @zip_code                | @country         | @phone | @new_admin_email |
+      | Company Type:    | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+      | MozyPro Itemized | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
-      | Backup Licenses         |          |
-      | Backup License Soft Cap | Disabled |
+      | Backup Devices          |          |
+      | Backup Device Soft Cap  | Disabled |
       | Server Enabled          | Disabled |
       | Cloud Storage (GB)      |          |
       | Stash Users:            |          |
       | Default Stash Storage:  |          |
     And Itemized partner resources should be:
-      |         | Licenses: | Licenses Used: | Quota: | Quota Used: | Resource Policy: |
-      | Desktop | 5         | 0              | 50 GB  | 0           | Enabled          |
-      | Server  | 5         | 0              | 50 GB  | 0           | Enabled          |
+      |         | Devices: | Devices Used: | Quota: | Quota Used: | Resource Policy: |
+      | Desktop | 5        | 0             | 50 GB  | 0           | Enabled          |
+      | Server  | 5        | 0             | 50 GB  | 0           | Enabled          |
     And Partner internal billing should be:
       | Account Type:   | Tokenized Credit Card | Current Period: | Yearly              |
       | Unpaid Balance: | $0.00                 | Collect On:     | N/A                 |
@@ -114,19 +114,19 @@ Feature: Add a new partner
       | Status:         | Root Admin:          | Root Role:             | Parent: | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Autogrow: | Enable Stash: |
       | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro | after 1 year   | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)      | No            |
     And Partner contact information should be:
-      | Company Type:     | Users: | Contact Address: | Contact City: | Contact ZIP/Postal Code: | Contact Country: | Phone: | Contact Email:   |
-      | Reseller Itemized | 0      | @address         | @city         | @zip_code                | @country         | @phone | @new_admin_email |
+      | Company Type:     | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+      | Reseller Itemized | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
-      | Backup Licenses         |          |
-      | Backup License Soft Cap | Disabled |
+      | Backup Devices          |          |
+      | Backup Device Soft Cap  | Disabled |
       | Server Enabled          | Disabled |
       | Cloud Storage (GB)      |          |
       | Stash Users:            |          |
       | Default Stash Storage:  |          |
     And Itemized partner resources should be:
-      |         | Licenses: | Licenses Used: | Quota: | Quota Used: | Resource Policy: |
-      | Desktop | 10        | 0              | 250 GB | 0           | Enabled          |
-      | Server  | 10        | 0              | 250 GB | 0           | Enabled          |
+      |         | Devices: | Devices Used: | Quota: | Quota Used: | Resource Policy: |
+      | Desktop | 10       | 0             | 250 GB | 0           | Enabled          |
+      | Server  | 10       | 0             | 250 GB | 0           | Enabled          |
     And Partner internal billing should be:
       | Account Type:   | Tokenized Credit Card | Current Period: | Yearly              |
       | Unpaid Balance: | $0.00                 | Collect On:     | N/A                 |

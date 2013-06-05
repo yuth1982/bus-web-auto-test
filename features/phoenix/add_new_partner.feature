@@ -28,11 +28,11 @@ Feature: Add a new partner through phoenix
         | Status:         | Root Admin:          | Root Role:                  | Parent: | Next Charge:   | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
         | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro | after 1 month  | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
       And Partner contact information should be:
-        | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Contact Email:   |
-        | MozyPro       | 0      | @address          | @city         | @state         | @zip_code                | @country         | @new_admin_email |
+        | Company Type:  | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+        | MozyPro        | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
       And Partner account attributes should be:
-        | Backup Licenses         | 400     |
-        | Backup License Soft Cap | Enabled |
+        | Backup Devices          | 400     |
+        | Backup Device Soft Cap  | Enabled |
         | Server Enabled          | Enabled |
         | Cloud Storage (GB)      | 100     |
         | Stash Users:            |         |
