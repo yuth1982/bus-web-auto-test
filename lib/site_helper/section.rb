@@ -20,12 +20,23 @@ module SiteHelper
       el
     end
 
+    # if no this element will return nil. Don't wait.
+    def locate(type, locator)
+      el = root_element.first(type, locator)
+      el.highlight if el
+      el
+    end
+
     def all(type, locator)
       root_element.all(type, locator)
     end
 
     def find_link(locator)
       root_element.find_link(locator)
+    end
+
+    def locate_link(locator)
+      root_element.first(:xpath, XPath::HTML.link(locator))
     end
 
   end
