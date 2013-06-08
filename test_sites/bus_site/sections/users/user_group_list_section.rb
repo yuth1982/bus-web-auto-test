@@ -86,6 +86,17 @@ module Bus
       end
     end
 
+    # Public: MozyPro Itemized user group list rows
+    #
+    # Example
+    #   @bus_admin_console_page.user_group_list_section.mozypro_itemized_ug_list_rows
+    #   # => ["(default user group)", "false", "Shared", "", "0", "0", "10", "Shared", "", "0", "0", "200"]
+    #
+    # @return [Array<String>]
+    def mozypro_itemized_ug_list_rows
+      old_ug_table.rows_text
+    end
+
     # Public: View edit user group section
     #
     # @group_name [String] user group name
@@ -130,6 +141,17 @@ module Bus
     def ug_table
       wait_until_bus_section_load
       find(:css, 'table.user_group_list.dataTable')
+    end
+
+    # Private: Old User Group Table
+    #
+    # Example
+    #   @bus_admin_console_page.user_group_list_section.old_ug_table
+    #
+    # @return [element]
+    def old_ug_table
+      wait_until_bus_section_load
+      find(:css, '#user_groups-list-content table.table-view tbody')
     end
   end
 end

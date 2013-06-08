@@ -19,6 +19,11 @@ Then /^(Bundled|Itemized) user groups table should be:$/ do |type, ug_table|
   actual.should == ug_table.rows
 end
 
+Then /^MozyPro Itemized user groups table should be:$/ do |ug_table|
+  actual = @bus_site.admin_console_page.user_group_list_section.mozypro_itemized_ug_list_rows
+  actual.should == ug_table.rows
+end
+
 When /^I delete user group details by name: (.+)$/ do |group_name|
   admin_console_page = @bus_site.admin_console_page
   admin_console_page.user_group_list_section.delete_user_group(group_name)
