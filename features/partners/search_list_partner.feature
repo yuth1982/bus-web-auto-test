@@ -99,7 +99,7 @@ Feature: Search and list partner
       | @external_id | @company_name | MozyPro |
     When I search partner by newly created partner admin email
     Then Partner search results should be:
-      | External ID  | Partner       | Root Admin  |
+      | External ID  | Partner       | Root Admin   |
       | @external_id | @company_name | @admin_email |
     And I search and delete partner account by newly created partner company name
 
@@ -138,17 +138,17 @@ Feature: Search and list partner
   @TC.794 @need_test_account
   Scenario: 794 Search incomplete all partners
     When I search partner by:
-      | name                       | filter |
-      | Quigley-Effertz - Reserved | Incomplete (all)   |
+      | name                       | filter           |
+      | Quigley-Effertz - Reserved | Incomplete (all) |
     Then Partner search results should be:
-      | Partner                    | Type |
-      | Quigley-Effertz - Reserved | MozyPro Itemized  |
+      | Partner                    | Type             |
+      | Quigley-Effertz - Reserved | MozyPro Itemized |
 
   @TC.796
   Scenario: 796 Search for partners with the reseller type
     When I add a new Reseller partner:
-      | period  | reseller type | reseller quota | net terms |
-      | 1       | Platinum      | 500            | yes       |
+      | period | reseller type | reseller quota | net terms |
+      | 1      | Platinum      | 500            | yes       |
     And New partner should be created
     When I search partner by:
       | name          | filter   |
@@ -203,33 +203,33 @@ Feature: Search and list partner
       | 1      | 10 GB     | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
     Then Sub-total before taxes or discounts should be $9.99
     And Order summary table should be:
-      | Description       | Quantity | Price Each | Total Price |
-      | 10 GB             | 1        | $9.99      | $9.99       |
-      | Pre-tax Subtotal  |          |            | $9.99       |
-      | Total Charges     |          |            | $9.99       |
+      | Description      | Quantity | Price Each | Total Price |
+      | 10 GB            | 1        | $9.99      | $9.99       |
+      | Pre-tax Subtotal |          |            | $9.99       |
+      | Total Charges    |          |            | $9.99       |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:                  | Parent: | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro | after 1 month  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Status:         | Root Admin:          | Root Role:                  | Parent: | Next Charge:  | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro | after 1 month | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
       | MozyPro       | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
-      | Backup Devices          |           |
-      | Backup Device Soft Cap  | Disabled  |
-      | Server Enabled          | Disabled  |
-      | Cloud Storage (GB)      |           |
-      | Stash Users:            |           |
-      | Default Stash Storage:  |           |
+      | Backup Keys            |          |
+      | Backup Key Soft Cap    | Disabled |
+      | Server Enabled         | Disabled |
+      | Cloud Storage (GB)     |          |
+      | Stash Users:           |          |
+      | Default Stash Storage: |          |
     And Partner pooled storage information should be:
       | Used | Available | Assigned | Used | Available | Assigned  |
       | 0    | 10        | 10       | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
-      | Account Type:   | Credit Card   | Current Period: | Monthly             |
-      | Unpaid Balance: | $0.00         | Collect On:     | N/A                 |
-      | Renewal Date:   | after 1 month | Renewal Period: | Use Current Period  |
+      | Account Type:   | Credit Card   | Current Period: | Monthly            |
+      | Unpaid Balance: | $0.00         | Collect On:     | N/A                |
+      | Renewal Date:   | after 1 month | Renewal Period: | Use Current Period |
     And Partner billing history should be:
-      | Date  | Amount  | Total Paid | Balance Due |
-      | today | $9.99   | $9.99      | $0.00       |
-      | today | $0.00   | $0.00      | $0.00       |
+      | Date  | Amount | Total Paid | Balance Due |
+      | today | $9.99  | $9.99      | $0.00       |
+      | today | $0.00  | $0.00      | $0.00       |
     And I delete partner account

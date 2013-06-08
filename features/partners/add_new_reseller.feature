@@ -28,8 +28,8 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
-      | Backup Devices         |          |
-      | Backup Device Soft Cap | Disabled |
+      | Backup Keys            |          |
+      | Backup Key Soft Cap    | Disabled |
       | Server Enabled         | Enabled  |
       | Cloud Storage (GB)     |          |
       | Stash Users:           |          |
@@ -68,8 +68,8 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:                 | VAT Number:   |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | France           | 1-877-486-9273 |           |                 | <%=@partner.admin_info.email%> | FR08410091490 |
     And Partner account attributes should be:
-      | Backup Devices         |          |
-      | Backup Device Soft Cap | Disabled |
+      | Backup Keys            |          |
+      | Backup Key Soft Cap    | Disabled |
       | Server Enabled         | Enabled  |
       | Cloud Storage (GB)     |          |
       | Stash Users:           |          |
@@ -108,8 +108,8 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:                 | VAT Number: |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | Germany          | 1-877-486-9273 |           |                 | <%=@partner.admin_info.email%> | DE812321109 |
     And Partner account attributes should be:
-      | Backup Devices         |          |
-      | Backup Device Soft Cap | Disabled |
+      | Backup Keys            |          |
+      | Backup Key Soft Cap    | Disabled |
       | Server Enabled         | Enabled  |
       | Cloud Storage (GB)     |          |
       | Stash Users:           |          |
@@ -150,8 +150,8 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 | VAT Number: |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | Ireland          | 1-877-486-9273 | <%=@partner.admin_info.email%> | IE9691104A  |
     And Partner account attributes should be:
-      | Backup Devices         |          |
-      | Backup Device Soft Cap | Disabled |
+      | Backup Keys            |          |
+      | Backup Key Soft Cap    | Disabled |
       | Server Enabled         | Enabled  |
       | Cloud Storage (GB)     |          |
       | Stash Users:           |          |
@@ -191,8 +191,8 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 | VAT Number: |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United Kingdom   | 1-877-486-9273 | <%=@partner.admin_info.email%> | GB117223643 |
     And Partner account attributes should be:
-      | Backup Devices         |          |
-      | Backup Device Soft Cap | Disabled |
+      | Backup Keys            |          |
+      | Backup Key Soft Cap    | Disabled |
       | Server Enabled         | Enabled  |
       | Cloud Storage (GB)     |          |
       | Stash Users:           |          |
@@ -230,8 +230,8 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
-      | Backup Devices         |          |
-      | Backup Device Soft Cap | Disabled |
+      | Backup Keys            |          |
+      | Backup Key Soft Cap    | Disabled |
       | Server Enabled         | Disabled |
       | Cloud Storage (GB)     |          |
       | Stash Users:           |          |
@@ -269,8 +269,8 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | France           | 1-877-486-9273 | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
-      | Backup Devices         |          |
-      | Backup Device Soft Cap | Disabled |
+      | Backup Keys            |          |
+      | Backup Key Soft Cap    | Disabled |
       | Server Enabled         | Disabled |
       | Cloud Storage (GB)     |          |
       | Stash Users:           |          |
@@ -308,8 +308,8 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | Germany          | 1-877-486-9273 | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
-      | Backup Devices         |          |
-      | Backup Device Soft Cap | Disabled |
+      | Backup Keys            |          |
+      | Backup Key Soft Cap    | Disabled |
       | Server Enabled         | Disabled |
       | Cloud Storage (GB)     |          |
       | Stash Users:           |          |
@@ -347,8 +347,8 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | Ireland          | 1-877-486-9273 | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
-      | Backup Devices         |          |
-      | Backup Device Soft Cap | Disabled |
+      | Backup Keys            |          |
+      | Backup Key Soft Cap    | Disabled |
       | Server Enabled         | Disabled |
       | Cloud Storage (GB)     |          |
       | Stash Users:           |          |
@@ -387,8 +387,8 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United Kingdom   | 1-877-486-9273 | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
-      | Backup Devices         |          |
-      | Backup Device Soft Cap | Disabled |
+      | Backup Keys            |          |
+      | Backup Key Soft Cap    | Disabled |
       | Server Enabled         | Disabled |
       | Cloud Storage (GB)     |          |
       | Stash Users:           |          |
@@ -420,8 +420,8 @@ Feature: Add a new partner
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
-      | Backup Devices         |          |
-      | Backup Device Soft Cap | Disabled |
+      | Backup Keys            |          |
+      | Backup Key Soft Cap    | Disabled |
       | Server Enabled         | Disabled |
       | Cloud Storage (GB)     |          |
       | Stash Users:           |          |
