@@ -15,7 +15,7 @@ Feature: Phoenix regression Test
       | Total Charge          | $1,112.58 |          | $1,112.58 |
     And the partner is successfully added.
     When I log in bus admin console as administrator
-    And I view partner details by @partner_name
+    And I view partner details by @company_name
     Then Partner contact information should be:
       | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   |
       | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> |
@@ -81,7 +81,7 @@ Feature: Phoenix regression Test
       | Total Charge          | $1,112.58 |          | $1,112.58 |
     And the partner is successfully added.
     When I log in bus admin console as administrator
-    And I view partner details by @partner_name
+    And I view partner details by @company_name
     Then Partner contact information should be:
       | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   |
       | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> |

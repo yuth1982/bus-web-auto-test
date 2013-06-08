@@ -26,11 +26,11 @@ When /^I act as partner by:$/ do |search_key_table|
       |#{search_key_table.rows.first.join('|')}|
     })
   if attributes['name'].nil? == false
-    page.find_link(attributes['name']).click
+    page.find(:xpath, "//div[@id='partner-list-content']//table[@class='table-view']//tr[1]//td[2]/a").click
     @current_partner = @bus_site.admin_console_page.partner_details_section.partner
     @bus_site.admin_console_page.partner_details_section.act_as_partner
   elsif attributes['email'].nil? == false
-    page.find_link(attributes['email']).click
+    page.find(:xpath, "//div[@id='partner-list-content']//table[@class='table-view']//tr[1]//td[4]/a").click
     @current_partner = @bus_site.admin_console_page.admin_details_section.partner
     @bus_site.admin_console_page.admin_details_section.act_as_admin
   else
@@ -44,7 +44,7 @@ end
 # Public: View partner details by click name in search partner results
 # Required: search list partner section must be visible
 When /^I view partner details by (.+)$/ do |search_key|
-  search_key = @partner.company_info.name if search_key == '@partner_name'
+  search_key = @partner.company_info.name if search_key == '@company_name'
   @bus_site.admin_console_page.search_list_partner_section.view_partner_detail(search_key)
   @bus_site.admin_console_page.partner_details_section.wait_until_bus_section_load
 end

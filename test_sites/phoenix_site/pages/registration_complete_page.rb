@@ -106,7 +106,7 @@ module Phoenix
     def reg_complete(partner)
       reg_comp_banner_present
       localized_click(partner, 'go_to_acct')
-      start_using_mozy.click
+#      start_using_mozy.click
       #localized_click(partner, 'start_using_mozy')
       partner_created(partner)
       localized_click(partner, 'logout')

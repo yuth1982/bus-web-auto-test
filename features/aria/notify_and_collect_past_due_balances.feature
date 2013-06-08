@@ -13,7 +13,7 @@ Feature: Notify about and collect past-due balances
       | period | base plan |
       | 1      | 50 GB     |
     Then New partner should be created
-    When I search and delete newly created partner company name account
+    When I delete partner account
     And I log in aria admin console as administrator
     Then newly created partner admin email account status should be CANCELLED
 
@@ -24,26 +24,30 @@ Feature: Notify about and collect past-due balances
       | 1      | 50 GB     |
     Then New partner should be created
     When I log in aria admin console as administrator
-    And I change newly created partner company name account status to Suspended
+    And I change newly created partner admin email account status to Suspended
     Then Account status should be changed
     When I wait for 60 seconds
     And I log in bus admin console as administrator
-    And I act as the partner by newly created partner admin email on admin details panel
+    And I act as partner by:
+      | email        |
+      | @admin_email |
     And I navigate to Change Payment Information section from bus admin console page
     Then Change payment information message should be Your account is backup-suspended. You will not be able to access your account until your credit card is billed.
 
   @TC.17877 @slow @firefox
   Scenario: 17877 MozyPro account with server plan suspended in aria should be backup-suspended in bus
     When I add a new MozyPro partner:
-      | period | base plan |
-      | 1      | 50 GB     |
+      | period | base plan | server plan |
+      | 1      | 50 GB     | yes         |
     Then New partner should be created
     When I log in aria admin console as administrator
-    And I change newly created partner company name account status to Suspended
+    And I change newly created partner admin email account status to Suspended
     Then Account status should be changed
     When I wait for 60 seconds
     And I log in bus admin console as administrator
-    And I act as the partner by the new partner email on admin details panel
+    And I act as partner by:
+      | email        |
+      | @admin_email |
     And I navigate to Change Payment Information section from bus admin console page
     Then Change payment information message should be Your account is backup-suspended. You will not be able to access your account until your credit card is billed.
 
@@ -54,7 +58,7 @@ Feature: Notify about and collect past-due balances
       | 12     | 1     |
     Then New partner should be created
     When I log in aria admin console as administrator
-    And I change newly created partner company name account status to Active Dunning 1
+    And I change newly created partner admin email account status to Active Dunning 1
     Then Account status should be changed
     When I search emails by keywords:
       | from                    | subject                                          | content                  |
@@ -68,7 +72,7 @@ Feature: Notify about and collect past-due balances
       | 1      | Silver        | 100            |
     Then New partner should be created
     When I log in aria admin console as administrator
-    And I change newly created partner company name account status to Active Dunning 2
+    And I change newly created partner admin email account status to Active Dunning 2
     Then Account status should be changed
     When I search emails by keywords:
       | from                    | subject               | content                  |
@@ -82,7 +86,7 @@ Feature: Notify about and collect past-due balances
       | 1      | 50 GB     |
     Then New partner should be created
     When I log in aria admin console as administrator
-    And I change newly created partner company name account status to Active Dunning 3
+    And I change newly created partner admin email account status to Active Dunning 3
     Then Account status should be changed
     When I search emails by keywords:
       | from                    | subject                                         | content         |
@@ -96,7 +100,7 @@ Feature: Notify about and collect past-due balances
       | 12     | 1     |
     Then New partner should be created
     When I log in aria admin console as administrator
-    And I change newly created partner company name account status to Suspended
+    And I change newly created partner admin email account status to Suspended
     Then Account status should be changed
     When I search emails by keywords:
       | from        | subject                                    | content           |
@@ -110,7 +114,7 @@ Feature: Notify about and collect past-due balances
     | 1      | 50 GB     | yes       |
     Then New partner should be created
     When I log in aria admin console as administrator
-    And I change newly created partner company name account status to Active Dunning 1
+    And I change newly created partner admin email account status to Active Dunning 1
     Then Account status should be changed
     When I search emails by keywords:
       | from                    | subject                               | content         |
@@ -124,7 +128,7 @@ Feature: Notify about and collect past-due balances
       | 12     | 1        | yes       |
     Then New partner should be created
     When I log in aria admin console as administrator
-    And I change newly created partner company name account status to Active Dunning 2
+    And I change newly created partner admin email account status to Active Dunning 2
     Then Account status should be changed
     When I search emails by keywords:
       | from                    | subject                                  | content               |
@@ -139,7 +143,7 @@ Feature: Notify about and collect past-due balances
       | 1      | Silver        | 100            | yes       |
     Then New partner should be created
     When I log in aria admin console as administrator
-    And I change newly created partner company name account status to Active Dunning 3
+    And I change newly created partner admin email account status to Active Dunning 3
     Then Account status should be changed
     When I search emails by keywords:
       | from                    | subject                                                      | content               |
@@ -153,7 +157,7 @@ Feature: Notify about and collect past-due balances
       | 1      | 50 GB     | yes       |
     Then New partner should be created
     When I log in aria admin console as administrator
-    And I change newly created partner company name account status to Suspended
+    And I change newly created partner admin email account status to Suspended
     Then Account status should be changed
     When I search emails by keywords:
       | from        | subject                   | content                |
@@ -187,25 +191,27 @@ Feature: Notify about and collect past-due balances
       | 1      | 50 GB     |
     Then New partner should be created
     When I log in aria admin console as administrator
-    And I change newly created partner company name account CAG to Fail Test CAG
+    And I change newly created partner admin email account CAG to Fail Test CAG
     Then Collections account groups should be changed
     When I log in bus admin console as administrator
-    And I act as the partner by newly created partner admin email on admin details panel
+    And I act as partner by:
+      | email        |
+      | @admin_email |
     And I change MozyPro account plan to:
       | base plan |
       | 100 GB    |
     Then the MozyPro account plan should be changed
     When I log in aria admin console as administrator
-    And I change newly created partner company name account status to Active Dunning 1
+    And I change newly created partner admin email account status to Active Dunning 1
     Then Account status should be changed
-    And I change newly created partner company name account CAG to CyberSource Credit Card
+    And I change newly created partner admin email account CAG to CyberSource Credit Card
     Then Collections account groups should be changed
     When I log in bus admin console as administrator
     And I act as the partner by newly created partner admin email on admin details panel
-    And I update newly created partner company name account credit card information
+    And I update newly created partner admin email account credit card information
     Then Credit card information should be updated
     When I log in aria admin console as administrator
-    Then newly created partner company name account status should be ACTIVE
+    Then newly created partner admin email account status should be ACTIVE
 
   @TC.16152 @firefox
   Scenario: 16152 Verify account reinstate from active dunning 2 state if charge goes through
@@ -214,25 +220,27 @@ Feature: Notify about and collect past-due balances
       | 1      | 50 GB     |
     Then New partner should be created
     When I log in aria admin console as administrator
-    And I change newly created partner company name account CAG to Fail Test CAG
+    And I change newly created partner admin email account CAG to Fail Test CAG
     Then Collections account groups should be changed
     When I log in bus admin console as administrator
-    And I act as the partner by newly created partner admin email on admin details panel
+    And I act as partner by:
+      | email        |
+      | @admin_email |
     And I change MozyPro account plan to:
       | base plan |
       | 100 GB    |
     Then the MozyPro account plan should be changed
     When I log in aria admin console as administrator
-    And I change newly created partner company name account status to Active Dunning 2
+    And I change newly created partner admin email account status to Active Dunning 2
     Then Account status should be changed
-    And I change newly created partner company name account CAG to CyberSource Credit Card
+    And I change newly created partner admin email account CAG to CyberSource Credit Card
     Then Collections account groups should be changed
     When I log in bus admin console as administrator
     And I act as the partner by newly created partner admin email on admin details panel
-    And I update newly created partner company name account credit card information
+    And I update newly created partner admin email account credit card information
     Then Credit card information should be updated
     When I log in aria admin console as administrator
-    Then newly created partner company name account status should be ACTIVE
+    Then newly created partner admin email account status should be ACTIVE
 
   @TC.16153 @firefox
   Scenario: 16153 Verify account reinstate from active dunning 3 state if charge goes through
@@ -241,24 +249,24 @@ Feature: Notify about and collect past-due balances
       | 1      | 50 GB     |
     Then New partner should be created
     When I log in aria admin console as administrator
-    And I change newly created partner company name account CAG to Fail Test CAG
+    And I change newly created partner admin email account CAG to Fail Test CAG
     Then Collections account groups should be changed
     When I log in bus admin console as administrator
-    And I act as the partner by newly created partner admin email on admin details panel
+    And I act as partner by:
+      | email        |
+      | @admin_email |
     And I change MozyPro account plan to:
       | base plan |
       | 100 GB    |
     Then the MozyPro account plan should be changed
     When I log in aria admin console as administrator
-    And I change newly created partner company name account status to Active Dunning 3
+    And I change newly created partner admin email account status to Active Dunning 3
     Then Account status should be changed
-    And I change newly created partner company name account CAG to CyberSource Credit Card
+    And I change newly created partner admin email account CAG to CyberSource Credit Card
     Then Collections account groups should be changed
     When I log in bus admin console as administrator
     And I act as the partner by the new partner email on admin details panel
-    And I update newly created partner company name account credit card information
+    And I update newly created partner admin email account credit card information
     Then Credit card information should be updated
     When I log in aria admin console as administrator
-    Then newly created partner company name account status should be ACTIVE
-
-
+    Then newly created partner admin email account status should be ACTIVE

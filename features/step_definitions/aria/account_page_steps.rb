@@ -1,6 +1,6 @@
 When /^I navigate to (.+) view from side menu$/ do |link_name|
   #@aria_site.admin_tools_page.switch_to_work_frame
-  @aria_site.account_page.outer_if.main_if.work_if.side_menu_section.navigate_to_link(link_name)
+  @aria_site.accounts_page.outer_if.main_if.work_if.side_menu_section.navigate_to_link(link_name)
 end
 
 # Taxpayer information steps
