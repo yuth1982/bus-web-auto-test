@@ -39,7 +39,7 @@ Feature: Sort user group list
         | @user_name |
       And I view user details by newly created user email
       And I update the user password to default password
-      And I add 3 machines for the user and update its used quota
+      And I add machines for the user and update its used quota
         | user_email  | machine_name | machine_type | partner_name  | used_quota |
         | @user_email | Machine1     | Desktop      | @partner_name | 1 GB       |
         | @user_email | Machine2     | Desktop      | @partner_name | 1 GB       |
@@ -56,7 +56,7 @@ Feature: Sort user group list
         | @user_name |
       And I view user details by newly created user email
       And I update the user password to default password
-      And I add 2 machines for the user and update its used quota
+      And I add machines for the user and update its used quota
         | user_email  | machine_name | machine_type | partner_name  | used_quota |
         | @user_email | Machine1     | Desktop      | @partner_name | 1 GB       |
         | @user_email | Machine1     | Desktop      | @partner_name | 1 GB       |
@@ -71,7 +71,7 @@ Feature: Sort user group list
         | @user_name |
       And I view user details by newly created user email
       And I update the user password to default password
-      And I add 1 machines for the user and update its used quota
+      And I add machines for the user and update its used quota
         | user_email  | machine_name | machine_type | partner_name  | used_quota |
         | @user_email | Machine1     | Desktop      | @partner_name | 5 GB       |
       Then I close user details section
@@ -211,7 +211,7 @@ Feature: Sort user group list
       | @user_name |
     And I view user details by newly created user email
     And I update the user password to default password
-    And I add 1 machines for the user and update its used quota
+    And I add machines for the user and update its used quota
       | user_email  | machine_name | machine_type | partner_name  | used_quota |
       | @user_email | Machine1     | Desktop      | @partner_name | 1 GB       |
     Then I close user details section
@@ -225,7 +225,7 @@ Feature: Sort user group list
       | @user_name |
     And I view user details by newly created user email
     And I update the user password to default password
-    And I add 1 machines for the user and update its used quota
+    And I add machines for the user and update its used quota
       | user_email  | machine_name | machine_type | partner_name  | used_quota |
       | @user_email | Machine1     | Server       | @partner_name | 1 GB       |
     Then I close user details section
@@ -240,7 +240,7 @@ Feature: Sort user group list
       | @user_name |
     And I view user details by newly created user email
     And I update the user password to default password
-    And I add 1 machines for the user and update its used quota
+    And I add machines for the user and update its used quota
       | user_email  | machine_name | machine_type | partner_name  | used_quota |
       | @user_email | Machine1     | Desktop      | @partner_name | 2 GB       |
     Then I close user details section
@@ -254,7 +254,7 @@ Feature: Sort user group list
       | @user_name |
     And I view user details by newly created user email
     And I update the user password to default password
-    And I add 1 machines for the user and update its used quota
+    And I add machines for the user and update its used quota
       | user_email  | machine_name | machine_type | partner_name  | used_quota |
       | @user_email | Machine1     | Server       | @partner_name | 2 GB       |
     Then I close user details section
@@ -269,7 +269,7 @@ Feature: Sort user group list
       | @user_name |
     And I view user details by newly created user email
     And I update the user password to default password
-    And I add 1 machines for the user and update its used quota
+    And I add machines for the user and update its used quota
       | user_email  | machine_name | machine_type | partner_name  | used_quota |
       | @user_email | Machine1     | Desktop      | @partner_name | 3 GB       |
     Then I close user details section
@@ -283,7 +283,7 @@ Feature: Sort user group list
       | @user_name |
     And I view user details by newly created user email
     And I update the user password to default password
-    And I add 1 machines for the user and update its used quota
+    And I add machines for the user and update its used quota
       | user_email  | machine_name | machine_type | partner_name  | used_quota |
       | @user_email | Machine1     | Server       | @partner_name | 3 GB       |
     Then I close user details section
@@ -299,7 +299,7 @@ Feature: Sort user group list
       | @user_name |
     And I view user details by newly created user email
     And I update the user password to default password
-    And I add 1 machines for the user and update its used quota
+    And I add machines for the user and update its used quota
       | user_email  | machine_name | machine_type | partner_name  | used_quota |
       | @user_email | Machine1     | Desktop      | @partner_name | 4 GB       |
     Then I close user details section
@@ -313,7 +313,7 @@ Feature: Sort user group list
       | @user_name |
     And I view user details by newly created user email
     And I update the user password to default password
-    And I add 1 machines for the user and update its used quota
+    And I add machines for the user and update its used quota
       | user_email  | machine_name | machine_type | partner_name  | used_quota |
       | @user_email | Machine1     | Server       | @partner_name | 4 GB       |
     Then I close user details section
