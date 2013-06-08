@@ -580,6 +580,18 @@ module Bus
       end
     end
 
+    # Public: Is "Send Keys" button disabled?
+    #
+    # @param [none]
+    #
+    # Example
+    #    @bus_admin_console_page.user_details_section.send_keys_button_disabled?
+    #
+    # @return [nothing]
+    def send_keys_button_disabled?
+      send_keys_btn['disabled'] == 'true'
+    end
+
     private
     def device_stash_divide_row_index
       device_table.rows_text.index{ |row| row.first == ''}
