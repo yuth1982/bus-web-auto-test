@@ -72,7 +72,7 @@ When /^I download (.+) scheduled report$/ do |report_name|
 end
 
 When /^I download (.+) quick report$/ do |report_name|
-  @bus_site.admin_console_page.click_link(Bus::MENU[:quick_reports])
+  @bus_site.admin_console_page.click_link(CONFIGS['bus']['menu']['quick_reports'])
   @bus_site.admin_console_page.quick_reports_section.download_report(report_name)
 end
 
@@ -100,8 +100,12 @@ When /^I search report by name (.+)$/ do |report_name|
 end
 
 Then /^Scheduled report list should be:$/ do |results_table|
-  results_table.map_column!('Recipients') do |value|
-      value.gsub(/@email/,@partner.admin_info.email)
+  actual = @bus_site.admin_console_page.scheduled_reports_section.reports_table_hashes.first
+  expected = results_table.hashes.first
+
+  expected.each do |_, v|
+    v.replace ERB.new(v).result(binding)
   end
-  @bus_site.admin_console_page.scheduled_reports_section.reports_table_rows.should == results_table.rows
+
+  expected.keys.each{ |key| actual[key].should == expected[key]}
 end

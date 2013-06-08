@@ -18,7 +18,7 @@ module Bus
 
     element(:backup_overdue_after_tb, id: "job_backup_overdue_after")
     element(:save_btn, xpath: "//div[@id='jobs-new-content']//input[@value='Save']")
-    element(:delete_btn, link: "Delete")
+    element(:delete_btn, xpath: "//a[text()='Delete']")
 
     #Report Scope Section
 
