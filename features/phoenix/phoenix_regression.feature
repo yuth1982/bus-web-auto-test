@@ -38,7 +38,7 @@ Feature: Phoenix regression Test
     When I add a phoenix Pro partner to the billing page:
       | period | base plan | country       | server plan |
       | 24     | 100 GB    | United States | yes         |
-    Then the default country is United States in the pro billing page
+    Then the default country is us in the pro billing page
 
   @TC.2359 @fail
   Scenario: 2359 Verify that the United States is the default country (MozyHome)
