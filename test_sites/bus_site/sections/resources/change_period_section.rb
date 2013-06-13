@@ -19,6 +19,7 @@ module Bus
       find_link(link_text).click
       sleep 5 # force to wait due to slow internet connection
       continue_btn.click
+      wait_until_bus_section_load
     end
 
     # Public: Move downstream with subscription period
@@ -29,6 +30,7 @@ module Bus
     # Returns nothing
     def change_subscription_down(link_text)
       find_link(link_text).click
+      wait_until_bus_section_load
     end
 
     # Public: Change subscription period confirmation text
