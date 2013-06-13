@@ -16,6 +16,7 @@ Feature: Search and list partner
     And Partner ip whitelist should be 250.250.250.250
 
   # Todo: this case need to check create ip white list successful message
+  # Todo: This test cases could be failed because no ui for api creating if partner uses pooled storage
   @TC.644
   Scenario: 644 Verify White List visibility for a Corp partner with an API Key
     When I add a new MozyPro partner:
@@ -39,6 +40,7 @@ Feature: Search and list partner
     And Partner API key should be empty
     And Partner ip whitelist should be There is no current API key.
 
+  # Todo: This test cases could be failed because no ui for api creating if partner uses pooled storage
   @TC.646
   Scenario: 646 Verify White List visibility for a Corp partner without an API Key
     When I add a new MozyPro partner:
