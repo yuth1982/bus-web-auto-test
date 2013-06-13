@@ -120,70 +120,70 @@ Feature: Edit existing user group
       | TC.20881 UG | Assigned     | 101            |
     Then Edit user group error messages should be:
       """
-      Generic storage can only be assigned between 0 to 100 GB.
+      storage can only be assigned between 0 and 100 GB.
       """
     When I edit TC.20881 UG Bundled user group:
       | name        | storage_type | assigned_quota |
       | TC.20881 UG | Assigned     |                |
     Then Edit user group error messages should be:
       """
-      Generic Assigned Storage Required
+      Assigned Storage Required
       """
     When I edit TC.20881 UG Bundled user group:
       | name        | storage_type | assigned_quota |
       | TC.20881 UG | Assigned     | -1             |
     Then Edit user group error messages should be:
       """
-      Whole positive integer required for Generic Assigned Storage
+      Whole positive integer required for Assigned Storage
       """
     When I edit TC.20881 UG Bundled user group:
       | name        | storage_type | assigned_quota |
       | TC.20881 UG | Assigned     | 1.5            |
     Then Edit user group error messages should be:
       """
-      Whole positive integer required for Generic Assigned Storage
+      Whole positive integer required for Assigned Storage
       """
     When I edit TC.20881 UG Bundled user group:
       | name        | storage_type | assigned_quota |
       | TC.20881 UG | Assigned     | hello          |
     Then Edit user group error messages should be:
       """
-      Whole positive integer required for Generic Assigned Storage
+      Whole positive integer required for Assigned Storage
       """
     When I edit TC.20881 UG Bundled user group:
       | name        | storage_type | limited_quota |
       | TC.20881 UG | Limited      | 101           |
     Then Edit user group error messages should be:
       """
-      Use between 0 to 100 GB for Generic limited storage.
+      Use between 0 and 100 GB for limited storage.
       """
     When I edit TC.20881 UG Bundled user group:
       | name        | storage_type | limited_quota |
       | TC.20881 UG | Limited      |               |
     Then Edit user group error messages should be:
       """
-      Generic Limited Storage required
+      Limited Storage required
       """
     When I edit TC.20881 UG Bundled user group:
       | name        | storage_type | limited_quota |
       | TC.20881 UG | Limited      | -1            |
     Then Edit user group error messages should be:
       """
-      Whole positive integer required for Generic Limited Storage
+      Whole positive integer required for Limited Storage
       """
     When I edit TC.20881 UG Bundled user group:
       | name        | storage_type | limited_quota |
       | TC.20881 UG | Limited      | 1.5           |
     Then Edit user group error messages should be:
       """
-      Whole positive integer required for Generic Limited Storage
+      Whole positive integer required for Limited Storage
       """
     When I edit TC.20881 UG Bundled user group:
       | name        | storage_type    | limited_quota |
       | TC.20881 UG | Limited         | hello         |
     Then Edit user group error messages should be:
       """
-      Whole positive integer required for Generic Limited Storage
+      Whole positive integer required for Limited Storage
       """
     When I edit TC.20881 UG Bundled user group:
       | name | storage_type | limited_quota |
@@ -252,8 +252,8 @@ Feature: Edit existing user group
       | TC.20829 UG | Limited              | 251                   | 11              | Limited             | 101                  | 201            |
     Then Edit user group error messages should be:
       """
-      Use between 0 to 100 GB for Server limited storage.
-      Use between 0 to 250 GB for Desktop limited storage.
+      Use between 0 and 100 GB for Server limited storage.
+      Use between 0 and 250 GB for Desktop limited storage.
       Not enough Desktop devices available
       Not enough Server devices available
       """
@@ -302,8 +302,8 @@ Feature: Edit existing user group
       | TC.20818 UG | Assigned             | 251                    | 11              | Assigned            | 101                   | 201            |
     Then Edit user group error messages should be:
       """
-      Server storage can only be assigned between 0 to 100 GB.
-      Desktop storage can only be assigned between 0 to 250 GB.
+      Server storage can only be assigned between 0 and 100 GB.
+      Desktop storage can only be assigned between 0 and 250 GB.
       Not enough Desktop devices available
       Not enough Server devices available
       """

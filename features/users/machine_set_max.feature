@@ -170,18 +170,18 @@ Feature: Set/Remove Max at Machine
     And I input the machine max value for Machine1 to 20 GB
     And I save machine max for Machine1
     Then device table in user details should be:
-      | Device          | Storage Type | Used/Available | Device Storage Limit | Last Update    | Action |
-      | Machine1        | Desktop      | 0 / 20 GB      | 20 GB Edit Remove    | < a minute ago |        |
+      | Device   | Used/Available | Device Storage Limit | Last Update    |
+      | Machine1 | 0 / 20 GB      | 20 GB Edit Remove    | < a minute ago |
     Then I set machine max for Machine1
     And I input the machine max value for Machine1 to 30 GB
     And I save machine max for Machine1
     Then device table in user details should be:
-      | Device          | Storage Type | Used/Available | Device Storage Limit | Last Update    | Action |
-      | Machine1        | Desktop      | 0 / 30 GB      | 30 GB Edit Remove    | < a minute ago |        |
+      | Device   | Used/Available | Device Storage Limit | Last Update    |
+      | Machine1 | 0 / 30 GB      | 30 GB Edit Remove    | < a minute ago |
     When I remove machine max for Machine1
     Then device table in user details should be:
-      | Device          | Storage Type | Used/Available | Device Storage Limit | Last Update    | Action |
-      | Machine1        | Desktop      | 0 / 50 GB      | Set                  | < a minute ago |        |
+      | Device   | Used/Available | Device Storage Limit | Last Update    |
+      | Machine1 | 0 / 50 GB      | Set                  | < a minute ago |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 

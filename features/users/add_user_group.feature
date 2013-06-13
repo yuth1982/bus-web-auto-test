@@ -124,15 +124,15 @@ Feature: Add a new user group
     When I navigate to User Group List section from bus admin console page
     # User group table has an irregular headers, therefore headers verification will be ignored.
     And Itemized user groups table should be:
-      | Group Name           | Stash | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
-      | (default user group) | true  | Shared               |                    | 0                    | 0                    | 4                     | Shared              |                   | 0                   | 0                   | 194                  |
-      | TC.20899-Assigned    | true  | Assigned             | 5 GB               | 0                    | 0                    | 1                     | None                |                   | 0                   | 0                   | 0                    |
-      | TC.20899-Assigned-1  | false | Assigned             | 5 GB               | 0                    | 0                    | 1                     | Assigned            | 10 GB             | 0                   | 0                   | 2                    |
-      | TC.20899-Limited     | true  | Limited              | 5 GB               | 0                    | 0                    | 1                     | None                |                   | 0                   | 0                   | 0                    |
-      | TC.20899-Limited-1   | false | Limited              | 5 GB               | 0                    | 0                    | 1                     | Limited             | 10 GB             | 0                   | 0                   | 2                    |
-      | TC.20899-None        | false | None                 |                    | 0                    | 0                    | 0                     | None                |                   | 0                   | 0                   | 0                    |
-      | TC.20899-Shared      | true  | Shared               |                    | 0                    | 0                    | 1                     | None                |                   | 0                   | 0                   | 0                    |
-      | TC.20899-Shared-1    | false | Shared               |                    | 0                    | 0                    | 1                     | Shared              |                   | 0                   | 0                   | 2                    |
+      | Group Name           | Stash | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total |
+      | (default user group) | true  | Shared              |                   | 0                   | 0                   | 194                  | Shared               |                    | 0                    | 0                    | 4                     |
+      | TC.20899-Assigned    | true  | None                |                   | 0                   | 0                   | 0                    | Assigned             | 5 GB               | 0                    | 0                    | 1                     |
+      | TC.20899-Assigned-1  | false | Assigned            | 10 GB             | 0                   | 0                   | 2                    | Assigned             | 5 GB               | 0                    | 0                    | 1                     |
+      | TC.20899-Limited     | true  | None                |                   | 0                   | 0                   | 0                    | Limited              | 5 GB               | 0                    | 0                    | 1                     |
+      | TC.20899-Limited-1   | false | Limited             | 10 GB             | 0                   | 0                   | 2                    | Limited              | 5 GB               | 0                    | 0                    | 1                     |
+      | TC.20899-None        | false | None                |                   | 0                   | 0                   | 0                    | None                 |                    | 0                    | 0                    | 0                     |
+      | TC.20899-Shared      | true  | None                |                   | 0                   | 0                   | 0                    | Shared               |                    | 0                    | 0                    | 1                     |
+      | TC.20899-Shared-1    | false | Shared              |                   | 0                   | 0                   | 2                    | Shared               |                    | 0                    | 0                    | 1                     |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -149,70 +149,70 @@ Feature: Add a new user group
       | Assigned     | 101            |
     Then Add user group error messages should be:
       """
-      Generic storage can only be assigned between 0 to 100 GB.
+      storage can only be assigned between 0 and 100 GB.
       """
     When I add a new Bundled user group:
       | storage_type | assigned_quota |
       | Assigned     |                |
     Then Add user group error messages should be:
       """
-      Generic Assigned Storage Required
+      Assigned Storage Required
       """
     When I add a new Bundled user group:
       | storage_type | assigned_quota |
       | Assigned     | -1             |
     Then Add user group error messages should be:
       """
-      Whole positive integer required for Generic Assigned Storage
+      Whole positive integer required for Assigned Storage
       """
     When I add a new Bundled user group:
       | storage_type | assigned_quota |
       | Assigned     | 1.5            |
     Then Add user group error messages should be:
       """
-      Whole positive integer required for Generic Assigned Storage
+      Whole positive integer required for Assigned Storage
       """
     When I add a new Bundled user group:
       | storage_type | assigned_quota |
       | Assigned     | hello          |
     Then Add user group error messages should be:
       """
-      Whole positive integer required for Generic Assigned Storage
+      Whole positive integer required for Assigned Storage
       """
     When I add a new Bundled user group:
       | storage_type | limited_quota |
       | Limited      | 101           |
     Then Add user group error messages should be:
       """
-      Use between 0 to 100 GB for Generic limited storage.
+      Use between 0 and 100 GB for limited storage.
       """
     When I add a new Bundled user group:
       | storage_type | limited_quota |
       | Limited      |               |
     Then Add user group error messages should be:
       """
-      Generic Limited Storage required
+      Limited Storage required
       """
     When I add a new Bundled user group:
       | storage_type | limited_quota |
       | Limited      | -1            |
     Then Add user group error messages should be:
       """
-      Whole positive integer required for Generic Limited Storage
+      Whole positive integer required for Limited Storage
       """
     When I add a new Bundled user group:
       | storage_type | limited_quota |
       | Limited      | 1.5           |
     Then Add user group error messages should be:
       """
-      Whole positive integer required for Generic Limited Storage
+      Whole positive integer required for Limited Storage
       """
     When I add a new Bundled user group:
       | storage_type | limited_quota |
       | Limited      | hello         |
     Then Add user group error messages should be:
       """
-      Whole positive integer required for Generic Limited Storage
+      Whole positive integer required for Limited Storage
       """
     When I add a new Bundled user group:
       | name | storage_type |
@@ -277,8 +277,8 @@ Feature: Add a new user group
       | Limited              | 251                   | 11              | Limited             | 101                  | 201            |
     Then Add user group error messages should be:
       """
-      Use between 0 to 100 GB for Server limited storage.
-      Use between 0 to 250 GB for Desktop limited storage.
+      Use between 0 and 100 GB for Server limited storage.
+      Use between 0 and 250 GB for Desktop limited storage.
       Not enough Desktop devices available
       Not enough Server devices available
       """
@@ -327,8 +327,8 @@ Feature: Add a new user group
       | Assigned             | 251                    | 11              | Assigned            | 101                   | 201            |
     Then Add user group error messages should be:
       """
-      Server storage can only be assigned between 0 to 100 GB.
-      Desktop storage can only be assigned between 0 to 250 GB.
+      Server storage can only be assigned between 0 and 100 GB.
+      Desktop storage can only be assigned between 0 and 250 GB.
       Not enough Desktop devices available
       Not enough Server devices available
       """

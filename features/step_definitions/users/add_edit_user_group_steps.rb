@@ -83,12 +83,12 @@ Then /^(.+) user group should be (created|updated|deleted)$/ do |ug, action|
 
   case action
     when 'created'
-      @bus_site.admin_console_page.add_new_user_group_section.success_messages.should == "User Group #{group_name} has been successfully created."
+      @bus_site.admin_console_page.add_new_user_group_section.success_messages.should == "User Group #{group_name.strip} has been successfully created."
       # Clear previous message
       @bus_site.admin_console_page.add_new_user_group_section.refresh_bus_section
       @bus_site.admin_console_page.add_new_user_group_section.wait_until_bus_section_load
     when 'updated'
-      @bus_site.admin_console_page.edit_user_group_section.success_messages.should == "User Group #{group_name} has been successfully updated."
+      @bus_site.admin_console_page.edit_user_group_section.success_messages.should == "User Group #{group_name.strip} has been successfully updated."
       # Clear previous message
       @bus_site.admin_console_page.edit_user_group_section.refresh_bus_section
       @bus_site.admin_console_page.edit_user_group_section.wait_until_bus_section_load

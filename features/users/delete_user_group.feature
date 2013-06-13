@@ -139,7 +139,7 @@ Feature: Edit existing user group
 
 
   @TC.21008
-  Scenario: [Itemized] Delete User Group with No users
+  Scenario: 21008 [Itemized] Delete User Group with No users
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | company name                       |
       | 12     | 10    | 100 GB      | yes       | [Itemized] Delete User Group |
@@ -209,59 +209,48 @@ Feature: Edit existing user group
     And I search and delete partner account by newly created partner company name
 
   @TC.21009
-  Scenario: [Itemized] Delete User Group with users in it
+  Scenario: 21009 [Itemized] Delete User Group with users in it
       When I add a new MozyEnterprise partner:
         | period | users | server plan | net terms | company name                       |
         | 12     | 10    | 100 GB      | yes       | [Itemized] Delete User Group |
       Then New partner should be created
       And I enable stash for the partner with default stash storage
       And I act as newly created partner
-
     When I navigate to User Group List section from bus admin console page
-
     And Itemized user groups table should be:
       | Group Name           | Stash | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
       | (default user group) | true  | Shared               |                    | 0                    | 0                    | 10                    | Shared              |                   | 0                   | 0                   | 200                  |
-
     And I add new user(s):
       | user_group           | name       | storage_type | storage_limit | devices |
       | (default user group) | TC.21009-1 | Desktop      | 10            | 1       |
     Then 1 new user should be created
-
     And I add a new Itemized user group:
       | name                | desktop_storage_type | desktop_devices | desktop_assigned_quota | server_storage_type | server_devices | server_assigned_quota |
       | TC.21009-Assigned-2 | Assigned             | 2               | 10                     | Assigned            | 2              | 10                    |
     Then TC.21009-Assigned-2 user group should be created
-
     And I add new user(s):
       | user_group           | name       | storage_type | storage_limit | devices |
       | TC.21009-Assigned-2  | TC.21009-2 | Desktop      | 10            | 1       |
     Then 1 new user should be created
-
     And I add a new Itemized user group:
       | name                | desktop_storage_type | desktop_devices | desktop_limited_quota | server_storage_type | server_devices | server_limited_quota |
       | TC.21009-Limited-3  | Limited              | 2               | 10                    | Limited             | 2              | 10                    |
     Then TC.21009-Limited-3 user group should be created
-
     And I add new user(s):
       | user_group           | name       | storage_type | storage_limit | devices |
       | TC.21009-Limited-3   | TC.21009-3 | Desktop      | 10            | 1       |
     Then 1 new user should be created
-
-
     When I navigate to User Group List section from bus admin console page
-    When I delete user group details by name: TC.21009-Assigned-2
+    And I delete user group details by name: TC.21009-Assigned-2
     Then Delete user group error messages should be:
       """
       Before delete TC.21009-Assigned-2, you need to delete all the user of user group.
       """
-
     When I delete user group details by name: TC.21009-Limited-3
     Then Delete user group error messages should be:
       """
       Before delete TC.21009-Limited-3, you need to delete all the user of user group.
       """
-
     When I delete user group details by name: (default user group)
     Then Delete user group error messages should be:
       """

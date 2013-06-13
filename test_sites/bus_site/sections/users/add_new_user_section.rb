@@ -7,7 +7,7 @@ module Bus
     element(:err_msg_div, xpath: "//div[starts-with(@id, 'user-new_users_in_batch-content')]/div[3]/div/div/ul")
     element(:user_group_select, id: 'user_user_group_id')
     element(:ug_resources_details_table, id: 'resource-details')
-    element(:buy_more_link, id: 'add_more_link')
+    element(:buy_more_link, css: 'span.buy_more>a[href*=change_billing_plan]')
     element(:add_group_link, css: 'a[href*=add_group]')
 
     element(:storage_type_select, id: 'user_storage_pool_policy')
@@ -95,12 +95,16 @@ module Bus
     #
     # @return
     def ug_resource_details_table_rows
-      ug_resources_details_table.rows_text[1..-2]
+      ug_resources_details_table.rows_text[1..-2].delete_if{ |row| row.first.empty?}
     end
 
     def select_user_group(group_name)
       user_group_select.select(group_name)
       sleep 2 # wait for ajax call back
+    end
+
+    def click_buy_more_link
+      buy_more_link.click
     end
   end
 end

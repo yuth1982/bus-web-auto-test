@@ -79,8 +79,8 @@ Feature: Add a new user
       | TC.20910 UG 1 | Shared       | yes            | yes          |
     Then TC.20910 UG 1 user group should be created
     When I add a new Bundled user group:
-      | name          | storage_type    | max_quota | server_support | enable_stash |
-      | TC.20910 UG 2 | Shared with Max | 50        | yes            | yes          |
+      | name          | storage_type | limited_quota | server_support | enable_stash |
+      | TC.20910 UG 2 | Limited      | 50            | yes            | yes          |
     Then TC.20910 UG 2 user group should be created
     When I add a new Bundled user group:
       | name          | storage_type | assigned_quota | server_support | enable_stash |
@@ -164,15 +164,15 @@ Feature: Add a new user
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     Then User search results should be:
-      | Name        | User Group            | Stash    | Storage        |
-      | TC.20871-1  | (default user group)  | Enabled  | 10 GB(Limited) |
-      | TC.20871-2  | (default user group)  | Disabled | Shared         |
-      | TC.20871-3  | (default user group)  | Disabled | 10 GB(Limited) |
-      | TC.20871-4  | (default user group)  | Disabled | Shared         |
-      | TC.20871-5  | (default user group)  | Disabled | Shared         |
-      | TC.20871-6  | (default user group)  | Disabled | Shared         |
-      | TC.20871-7  | (default user group)  | Disabled | Shared         |
-      | TC.20871-8  | (default user group)  | Disabled | Shared         |
+      | Name        | User Group            | Stash    | Storage                 |
+      | TC.20871-1  | (default user group)  | Enabled  | Desktop: 10 GB(Limited) |
+      | TC.20871-2  | (default user group)  | Disabled | Desktop: Shared         |
+      | TC.20871-3  | (default user group)  | Disabled | Server: 10 GB(Limited)  |
+      | TC.20871-4  | (default user group)  | Disabled | Server: Shared          |
+      | TC.20871-5  | (default user group)  | Disabled | Desktop: Shared         |
+      | TC.20871-6  | (default user group)  | Disabled | Desktop: Shared         |
+      | TC.20871-7  | (default user group)  | Disabled | Server: Shared          |
+      | TC.20871-8  | (default user group)  | Disabled | Server: Shared          |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -189,8 +189,8 @@ Feature: Add a new user
       | TC.20906 UG 1 | Shared               | 2               | yes          | Shared              | 2              |
     Then TC.20906 UG 1 user group should be created
     When I add a new Itemized user group:
-      | name          | desktop_storage_type | desktop_max_quota | desktop_devices | enable_stash | server_storage_type | server_max_quota | server_devices |
-      | TC.20906 UG 2 | Shared with Max      | 50                | 2               | yes          | Shared with Max     | 50               | 2              |
+      | name          | desktop_storage_type | desktop_limited_quota | desktop_devices | enable_stash | server_storage_type | server_limited_quota | server_devices |
+      | TC.20906 UG 2 | Limited              | 50                    | 2               | yes          | Limited             | 50                   | 2              |
     Then TC.20906 UG 2 user group should be created
     When I add a new Itemized user group:
       | name          | desktop_storage_type | desktop_assigned_quota | desktop_devices | enable_stash | server_storage_type | server_assigned_quota | server_devices |
@@ -225,15 +225,15 @@ Feature: Add a new user
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     Then User search results should be:
-      | Name        | User Group     | Stash    | Storage        |
-      | TC.20906-1  | TC.20906 UG 1  | Enabled  | 10 GB(Limited) |
-      | TC.20906-2  | TC.20906 UG 1  | Disabled | Shared         |
-      | TC.20906-3  | TC.20906 UG 2  | Disabled | 10 GB(Limited) |
-      | TC.20906-4  | TC.20906 UG 2  | Disabled | Shared         |
-      | TC.20906-5  | TC.20906 UG 3  | Disabled | Shared         |
-      | TC.20906-6  | TC.20906 UG 3  | Disabled | Shared         |
-      | TC.20906-7  | TC.20906 UG 3  | Disabled | Shared         |
-      | TC.20906-8  | TC.20906 UG 3  | Disabled | Shared         |
+      | Name        | User Group     | Stash    | Storage                 |
+      | TC.20906-1  | TC.20906 UG 1  | Enabled  | Desktop: 10 GB(Limited) |
+      | TC.20906-2  | TC.20906 UG 1  | Disabled | Desktop: Shared         |
+      | TC.20906-3  | TC.20906 UG 2  | Disabled | Server: 10 GB(Limited)  |
+      | TC.20906-4  | TC.20906 UG 2  | Disabled | Server: Shared          |
+      | TC.20906-5  | TC.20906 UG 3  | Disabled | Desktop: Shared         |
+      | TC.20906-6  | TC.20906 UG 3  | Disabled | Desktop: Shared         |
+      | TC.20906-7  | TC.20906 UG 3  | Disabled | Server: Shared          |
+      | TC.20906-8  | TC.20906 UG 3  | Disabled | Server: Shared          |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
