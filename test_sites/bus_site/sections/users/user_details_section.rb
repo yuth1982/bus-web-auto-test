@@ -124,6 +124,7 @@ module Bus
       stash_quota_tb.type_text(quota) if quota.to_i >= 0 #if quota = -1, then use default
       send_email_cb.check if send_email
       submit_stash_btn.click
+      wait_until_bus_section_load
     end
 
     # Public: Click add stash link then click cancel link
@@ -487,13 +488,9 @@ module Bus
 
     def check_device_range(range)
       tooltip = {}
-      device_edit.click
-      device_count.click
-      sleep 2 # wait for device_tooltip to show
-      tip_text = device_tooltip.text
+      tip_text = device_count[:onfocus][/'(Min: \d+ GB, Max: \d+ GB)'/, 1]
       tooltip['min'] = tip_text[/Min: (\d+)/, 1]
       tooltip['max'] = tip_text[/Max: (\d+)/, 1]
-      device_edit_cancel.click
       range.each do |k, v|
         tooltip[k.downcase].should == v
       end
@@ -553,6 +550,10 @@ module Bus
           end
         when 'user'
           #TODO
+      end
+
+      if action == 'save' or action == 'remove'
+        wait_until_bus_section_load
       end
     end
 

@@ -74,7 +74,7 @@ module Bus
     #@return [] nothing
     def view_user_details(user)
       wait_until_bus_section_load
-      (locate_link(user) || locate(:xpath, "//div[@id='user-list-content']//table[@class='table-view']//a[contains(text(), '#{user}')]")).click
+      (locate_link(user) || locate(:xpath, "//div[@id='user-list-content']//table[@class='table-view']//tr[td='#{user}']//a")).click
     end
 
     # Public: Click the export csv link to download the users table
