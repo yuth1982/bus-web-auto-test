@@ -207,9 +207,15 @@ Feature: Notify about and collect past-due balances
     And I change newly created partner admin email account CAG to CyberSource Credit Card
     Then Collections account groups should be changed
     When I log in bus admin console as administrator
-    And I act as the partner by newly created partner admin email on admin details panel
-    And I update newly created partner admin email account credit card information
-    Then Credit card information should be updated
+    And I act as partner by:
+      | email        |
+      | @admin_email |
+    And I navigate to Change Payment Information section from bus admin console page
+    And I update credit card information to:
+      | cc name       | cc number        | expire month | expire year | cvv |
+      | new card name | 4111111111111111 | 12           | 18          | 123 |
+    And I save payment information changes
+    Then Payment information should be updated
     When I log in aria admin console as administrator
     Then newly created partner admin email account status should be ACTIVE
 
@@ -236,9 +242,15 @@ Feature: Notify about and collect past-due balances
     And I change newly created partner admin email account CAG to CyberSource Credit Card
     Then Collections account groups should be changed
     When I log in bus admin console as administrator
-    And I act as the partner by newly created partner admin email on admin details panel
-    And I update newly created partner admin email account credit card information
-    Then Credit card information should be updated
+    And I act as partner by:
+      | email        |
+      | @admin_email |
+    And I navigate to Change Payment Information section from bus admin console page
+    And I update credit card information to:
+      | cc name       | cc number        | expire month | expire year | cvv |
+      | new card name | 4111111111111111 | 12           | 18          | 123 |
+    And I save payment information changes
+    Then Payment information should be updated
     When I log in aria admin console as administrator
     Then newly created partner admin email account status should be ACTIVE
 
@@ -265,8 +277,14 @@ Feature: Notify about and collect past-due balances
     And I change newly created partner admin email account CAG to CyberSource Credit Card
     Then Collections account groups should be changed
     When I log in bus admin console as administrator
-    And I act as the partner by the new partner email on admin details panel
-    And I update newly created partner admin email account credit card information
-    Then Credit card information should be updated
+    And I act as partner by:
+      | email        |
+      | @admin_email |
+    And I navigate to Change Payment Information section from bus admin console page
+    And I update credit card information to:
+      | cc name       | cc number        | expire month | expire year | cvv |
+      | new card name | 4111111111111111 | 12           | 18          | 123 |
+    And I save payment information changes
+    Then Payment information should be updated
     When I log in aria admin console as administrator
     Then newly created partner admin email account status should be ACTIVE

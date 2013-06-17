@@ -15,7 +15,7 @@ Feature: Phoenix regression Test
       | Total Charge          | $1,112.58 |          | $1,112.58 |
     And the partner is successfully added.
     When I log in bus admin console as administrator
-    And I view partner details by @company_name
+    And I view partner details by newly created partner company name
     Then Partner contact information should be:
       | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   |
       | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> |
@@ -40,18 +40,18 @@ Feature: Phoenix regression Test
       | 24     | 100 GB    | United States | yes         |
     Then the default country is us in the pro billing page
 
-  @TC.2359 @fail
-  Scenario: 2359 Verify that the United States is the default country (MozyHome)
-    When I add a phoenix Home user to the billing page:
-      | period | base plan | country       |
-      | 1      | 50 GB     | United States |
-    Then the default country is United States in the home billing page
-
-  @TC.2360 @fail
-  Scenario: 2360 Verify that the United States is the default country (BUS)
-    When I log in bus admin console as administrator
-    And I navigate to Add New Partner section from bus admin console page
-    Then the default billing country is United States in add new partner section
+#  @TC.2359 @fail
+#  Scenario: 2359 Verify that the United States is the default country (MozyHome)
+#    When I add a phoenix Home user to the billing page:
+#      | period | base plan | country       |
+#      | 1      | 50 GB     | United States |
+#    Then the default country is United States in the home billing page
+#
+#  @TC.2360 @fail
+#  Scenario: 2360 Verify that the United States is the default country (BUS)
+#    When I log in bus admin console as administrator
+#    And I navigate to Add New Partner section from bus admin console page
+#    Then the default billing country is United States in add new partner section
 
   @TC.2349 @partly_correct
   Scenario: 2349 Create a new MozyHome user
@@ -81,7 +81,7 @@ Feature: Phoenix regression Test
       | Total Charge          | $1,112.58 |          | $1,112.58 |
     And the partner is successfully added.
     When I log in bus admin console as administrator
-    And I view partner details by @company_name
+    And I view partner details by newly created partner company name
     Then Partner contact information should be:
       | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   |
       | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> |

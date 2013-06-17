@@ -44,7 +44,6 @@ end
 # Public: View partner details by click name in search partner results
 # Required: search list partner section must be visible
 When /^I view partner details by (.+)$/ do |search_key|
-  search_key = @partner.company_info.name if search_key == '@company_name'
   @bus_site.admin_console_page.search_list_partner_section.view_partner_detail(search_key)
   @bus_site.admin_console_page.partner_details_section.wait_until_bus_section_load
 end
