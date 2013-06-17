@@ -13,6 +13,9 @@ module Bus
     element(:create_new_keys_link, xpath: "//a[text()='Create New Keys']")
     element(:create_new_keys_div, css: "div[id^=unassigned_resources-create_keys_form_]")
     element(:delete_keys_link, xpath: "//a[text()='Delete Keys']")
+    element(:delete_inactive_keys_radio, id: "cleanup_type_unactivated")
+    element(:delete_unassigned_keys_radio, id: "cleanup_type_unassigned")
+    element(:confirm_for_delete_keys_button, css: "input[name=cleanup_keys][type=submit]")
 
     # Batch key assignment
     element(:batch_key_assignment_link, xpath: "//a[text()='Perform batch key assignment']")
@@ -152,6 +155,33 @@ module Bus
     # Returns text
     def messages
       message_div.text
+    end
+
+    # Public: delete keys
+    #
+    # @params [symbol] type
+    #
+    # Example
+    #  @bus_site.admin_console_page.manage_user_group_resources_section.delete_keys :active
+    #
+    # @return nothing
+    def delete_keys type
+      delete_keys_link.click
+      case type
+      when :inactive
+        choose delete_inactive_keys_radio.id
+      when :unassigned
+        choose delete_unassigned_keys_radio.id
+      else
+        raise ArgumentError.new 'unknown type'
+      end
+      confirm_for_delete_keys_button.click
+      wait_until_bus_section_load
+    end
+
+    def delete_key_by_email email
+      find(:xpath, "//td/span[contains(., '#{email}')]/a").click
+      wait_until_bus_section_load
     end
   end
 

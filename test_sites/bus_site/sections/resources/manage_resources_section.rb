@@ -12,6 +12,14 @@ module Bus
     element(:batch_key_assignment_link, xpath: "//a[text()='Perform batch key assignment']")
     element(:batch_key_assignment_div, xpath: "//div[starts-with(@id, 'resource-available_key_list-batch_form-')]")
 
+    # Create / Delete Keys
+    element(:create_new_keys_link, xpath: "//a[text()='Create New Keys']")
+    element(:license_select, id: "create_keys_license_type")
+    element(:delete_keys_link, xpath: "//a[text()='Delete Keys']")
+    element(:delete_inactive_keys_radio, id: "cleanup_type_unactivated")
+    element(:delete_unassigned_keys_radio, id: "cleanup_type_unassigned")
+    element(:confirm_for_delete_keys_button, css: "input[name=cleanup_keys][type=submit]")
+
     # Quota changed message
     element(:message_div, xpath: "//div[@id='resource-available_key_list-errors']/ul")
 
@@ -159,6 +167,44 @@ module Bus
     # Returns success or error message text
     def messages
       message_div.text
+    end
+
+    # Public: Create new keys
+    #
+    # @params [string] license_type, [string] num_keys
+    #
+    # Example
+    #  @bus_site.admin_console_page.manage_resources_section.create_new_keys('Desktop', '5')
+    #
+    # @return nothing
+    def create_new_keys(license_type, num_keys)
+      create_new_keys_link.click
+      license_select.select(license_type) if license_select.visible?
+      find(:id, "num_keys").type_text(num_keys)
+      find(:css, "input[name=create_keys]").click
+      wait_until_bus_section_load
+    end
+
+    # Public: delete keys
+    #
+    # @params [symbol] type
+    #
+    # Example
+    #  @bus_site.admin_console_page.manage_resources_section.delete_keys :active
+    #
+    # @return nothing
+    def delete_keys type
+      delete_keys_link.click
+      case type
+      when :inactive
+        choose delete_inactive_keys_radio.id
+      when :unassigned
+        choose delete_unassigned_keys_radio.id
+      else
+        raise ArgumentError.new 'unknown type'
+      end
+      confirm_for_delete_keys_button.click
+      wait_until_bus_section_load
     end
   end
 end

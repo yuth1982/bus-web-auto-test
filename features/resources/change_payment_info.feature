@@ -30,14 +30,14 @@ Feature: Modify credit card information and billing contact information
       | address               | phone     |
       | This is a new address | 12345678  |
     And I update credit card information to:
-      | cc name       | cc number        | expire month | expire year | cvv |
-      | new card name | 4111111111111111 | 12           | 18          | 123 |
+      | cc name      | cc number        | expire month | expire year | cvv |
+      | newcard name | 4111111111111111 | 12           | 18          | 123 |
     And I save payment information changes
     Then Payment information should be updated
     When API* I get Aria account details by newly created partner aria id
     Then API* Aria account billing info should be:
-      | address               | phone    | contact name  |
-      | This is a new address | 12345678 | new card name |
+      | address               | phone    | contact name |
+      | This is a new address | 12345678 | newcard name |
     And API* Aria account credit card info should be:
       | payment type | last four digits   | expire month | expire year |
       | Credit Card  | 1111               | 12           | 2018        |

@@ -84,8 +84,32 @@ When /^I allocate (\d+) GB (Server|Desktop) quota with (.+) user group to Resell
   end
 end
 
+When /^I delete all (inactive|unassigned) keys for (.+) user group$/ do |type, user_group|
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['manage_resources'])
+  @bus_site.admin_console_page.manage_resources_section.select_group(user_group)
+  @bus_site.admin_console_page.manage_user_group_resources_section.delete_keys type.to_sym
+end
+
+When /^I delete all (inactive|unassigned) keys for current MozyPro partner$/ do |type|
+  @bus_site.admin_console_page.manage_resources_section.delete_keys type.to_sym
+end
+
 Then /^Reseller resource quota should be changed$/ do
+  @bus_site.admin_console_page.manage_user_group_resources_section.wait_until_bus_section_load
   @bus_site.admin_console_page.manage_user_group_resources_section.messages.should == "Quota changed."
+end
+
+Then /^All (inactive|unassigned) keys should be deleted$/ do |type|
+  @bus_site.admin_console_page.manage_user_group_resources_section.wait_until_bus_section_load
+  @bus_site.admin_console_page.manage_user_group_resources_section.messages.should == "All #{type} keys have been deleted."
+end
+
+Then /^All MozyPro (inactive|unassigned) keys should be deleted$/ do |type|
+  @bus_site.admin_console_page.manage_resources_section.messages.should == "All #{type} keys have been deleted."
+end
+
+When /^I create (\d+) new (Server|Desktop) keys for MozyPro partner$/ do |num_keys, license_type|
+  @bus_site.admin_console_page.manage_resources_section.create_new_keys(license_type, num_keys)
 end
 
 When /^I create (\d+) new (Server|Desktop) keys for Reseller partner$/ do |num_keys, license_type|
@@ -108,6 +132,22 @@ When /^I batch assign (MozyEnterprise|Reseller) partner (Server|Desktop) keys to
   @bus_site.admin_console_page.manage_resources_section.select_group(user_group)
   batch_text = keys_table.rows.map{|row| row.join(",")}.join("\n")
   @bus_site.admin_console_page.manage_user_group_resources_section.batch_assign_keys(batch_text, license_type, send_email=='with')
+end
+
+When /^I delete these keys for (.+) user group in (Reseller|MozyEnterprise) partner:$/ do |user_group, company_type, keys_table|
+  case company_type
+    when 'MozyEnterprise'
+      @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['assign_keys'])
+    when 'Reseller'
+      @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['manage_resources'])
+    else
+      raise 'Error resource type'
+  end
+  @bus_site.admin_console_page.manage_resources_section.select_group(user_group)
+  email_index = keys_table.headers.index 'email'
+  keys_table.rows.each do |row|
+    @bus_site.admin_console_page.manage_user_group_resources_section.delete_key_by_email row[email_index]
+  end
 end
 
 Then /^I refresh Manage User Group Resources section$/ do
