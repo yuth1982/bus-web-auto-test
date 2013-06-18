@@ -24,16 +24,16 @@ Feature: Bus Smoke Test
       | Company Type:  | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         |
       | MozyEnterprise | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 |
     And Partner account attributes should be:
-      | Backup Licenses         |           |
-      | Backup License Soft Cap | Disabled  |
-      | Server Enabled          | Disabled  |
-      | Cloud Storage (GB)      |           |
-      | Stash Users:            |           |
-      | Default Stash Storage:  |           |
-    And Partner license types should be:
-      |         | Licenses: | Licenses Used: | Quota:   | Quota Used: | Resource Policy: |
-      | Desktop | 10        | 0              | 250 GB   | 0 bytes     | Enabled          |
-      | Server  | 200       | 0              | 350 GB   | 0 bytes     | Enabled          |
+      | Backup Keys            |           |
+      | Backup Key Soft Cap    | Disabled  |
+      | Server Enabled         | Disabled  |
+      | Cloud Storage (GB)     |           |
+      | Stash Users:           |           |
+      | Default Stash Storage: |           |
+    And Partner pooled storage information should be:
+      |         | Used | Available | Assigned | Used | Available | Assigned |
+      | Desktop | 0    | 250       | 250      | 0    | 10        | 10       |
+      | Server  | 0    | 350       | 350      | 0    | 200       | 200      |
     And Partner internal billing should be:
       | Account Type:   | Credit Card   | Current Period: | Biennial            |
       | Unpaid Balance: | $0.00         | Collect On:     | N/A                 |
@@ -57,10 +57,6 @@ Feature: Bus Smoke Test
       | name        | desktop_storage_type | desktop_assigned_quota | desktop_devices | server_storage_type | server_assigned_quota | server_devices |
       | test group  | Assigned             | 10                     | 1               | Assigned            | 20                    | 2              |
     Then test group user group should be created
-    When I transfer resources from (default user group) to test group with:
-      | server_licenses | server_storage | desktop_licenses | desktop_storage |
-      | 2               | 20             | 2                | 20              |
-    Then Resources should be transferred
 # It looks like there's some problems when transferring storage to target user group.
 # Since those groups are using storage pooled resources. Why do we need to transfer resource at all? e.g. share/shared with max user group
 # This verification needs confirm with dev / PO

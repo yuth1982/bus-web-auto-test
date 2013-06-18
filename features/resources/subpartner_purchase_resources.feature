@@ -9,11 +9,11 @@ Feature: Sub partners can purchase resources
   @TC.19864 @need_test_account
   Scenario: 19864 Existing OEM partner with sub partners whose sub partners can purchase resources
     When I act as partner by:
-      | email                                | filter |
-      | qa1+oem+subpartner+reserved@mozy.com | OEMs   |
+      | email                          | filter |
+      | qa1+tc+19867+reserved@mozy.com | OEMs   |
     And I act as partner by:
       | email                          |
-      | qa1+tc+19864+admin1@mozy.com   |
+      | qa1+tc+19811+admin1@mozy.com   |
     And I navigate to Purchase Resources section from bus admin console page
     And I save current purchased resources
     And I purchase resources:
@@ -27,8 +27,8 @@ Feature: Sub partners can purchase resources
   @TC.19865 @need_test_account
   Scenario: 19865 Existing OEM partner with sub partners whose OEM partner can purchase resources
     When I act as partner by:
-      | email                                | filter |
-      | qa1+oem+subpartner+reserved@mozy.com | OEMs   |
+      | email                          | filter |
+      | qa1+tc+19867+reserved@mozy.com | OEMs   |
     And I navigate to Purchase Resources section from bus admin console page
     And I save current purchased resources
     And I purchase resources:
@@ -42,8 +42,8 @@ Feature: Sub partners can purchase resources
   @TC.19867 @need_test_account
   Scenario: 19867 Existing OEM partner without subpartners can purchase resources
     When I act as partner by:
-      | email                          | filter |
-      | qa1+tc+19867+reserved@mozy.com | OEMs   |
+      | email                                   | filter |
+      | redacted-374495@notarealdomain.mozy.com | OEMs   |
     And I navigate to Purchase Resources section from bus admin console page
     And I save current purchased resources
     And I purchase resources:
