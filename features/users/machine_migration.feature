@@ -24,7 +24,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
     Given I log in bus admin console as administrator
 
   @TC.16266 @regression @smoke
-  Scenario: Export the machine-user mapping csv file
+  Scenario: 16266 Export the machine-user mapping csv file
     When I act as partner by:
       | email                           |
       | machine_migration_auto@auto.com |
@@ -37,7 +37,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       |WIN-F13I7JF06G5|87f9fa5583e952cf76fe53e1eab0123923dc92e4|new_user@test.com|           |
 
   @TC.16270
-  Scenario: Export a CSV file in Synchronized way after deleting one user-machine mapping
+  Scenario: 16270 Export a CSV file in Synchronized way after deleting one user-machine mapping
     When I act as partner by:
       | email                                 |
       | machine_migration_add_delete@auto.com |
@@ -50,7 +50,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
     Then The exported csv file should be 1 rows less than the former one
 
   @TC.16271
-  Scenario: Export a CSV file in Synchronized way after adding one user-machine mapping
+  Scenario: 16271 Export a CSV file in Synchronized way after adding one user-machine mapping
     When I act as partner by:
       | email                                 |
       | machine_migration_add_delete@auto.com |
@@ -63,7 +63,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
     Then The exported csv file should be 1 rows more than the former one
 
   @TC.16272
-  Scenario: Export a CSV file in Synchronized way while the partner has 10000 machines before
+  Scenario: 16272 Export a CSV file in Synchronized way while the partner has 10000 machines before
     When I act as partner by:
       | email                  |
       | leongh+system@mozy.com |
@@ -75,7 +75,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       |WIN-F13I7JF06G5|87f9fa5583e952cf76fe53e1eab0123923dc92e4|new_user@test.com|           |
 
   @TC.16273
-  Scenario: Export a CSV file in Synchronized way while the partner has no Mozy users before
+  Scenario: 16273 Export a CSV file in Synchronized way while the partner has no Mozy users before
     When I act as partner by:
       | name                          |
       | Machine Migration for TC16273 |
@@ -86,7 +86,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       | Machine Name  | Machine Hash                           | Current Owner   | New Owner |
 
   @TC.16275 @positive @regression @smoke
-  Scenario: Import a valid CSV file in non-passive way
+  Scenario: 16275 Import a valid CSV file in non-passive way
     When I act as partner by:
       | email                           |
       | machine_migration_auto@auto.com |
@@ -100,7 +100,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       |Import Results:| 3 rows imported |3 machines moved to new users | 0 machines skipped (no new user specified) |
 
   @TC.16279
-  Scenario: Import a CSV file whose type is not CSV in non-passive way
+  Scenario: 16279 Import a CSV file whose type is not CSV in non-passive way
     When I act as partner by:
       | email                           |
       | machine_migration_auto@auto.com |
@@ -130,7 +130,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
     | Current Owner |
 
   @TC.16283
-  Scenario: Import a CSV file with a column absent (new owner)
+  Scenario: 16283 Import a CSV file with a column absent (new owner)
     When I act as partner by:
       | email                           |
       | machine_migration_auto@auto.com |
@@ -161,7 +161,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
     | Machine Hash  |
 
   @TC.16286
-  Scenario: Import a CSV file whose one column has unknown value (current Owner)
+  Scenario: 16286 Import a CSV file whose one column has unknown value (current Owner)
     When I act as partner by:
       | email                           |
       | machine_migration_auto@auto.com |
@@ -174,7 +174,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       |Import Results:| 3 rows imported |0 machines moved to new users | 0 machines skipped (no new user specified) | 3 Errors: | does not own machine |
 
   @TC.16287
-  Scenario: Import a CSV file whose one column has unknown value (New Owner)
+  Scenario: 16287 Import a CSV file whose one column has unknown value (New Owner)
     When I act as partner by:
       | email                           |
       | machine_migration_auto@auto.com |
@@ -187,7 +187,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       |Import Results:| 3 rows imported |0 machines moved to new users | 0 machines skipped (no new user specified) | 3 Errors: | Unknown new owner |
 
   @TC.16288
-  Scenario: Import a CSV file with current owners invalid format
+  Scenario: 16288 Import a CSV file with current owners invalid format
     When I act as partner by:
       | email                           |
       | machine_migration_auto@auto.com |
@@ -200,7 +200,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       |Import Results:| 3 rows imported |0 machines moved to new users | 0 machines skipped (no new user specified) | 3 Errors: | does not own machine |
 
   @TC.16289
-  Scenario: Import a CSV file with new owners invalid format
+  Scenario: 16289 Import a CSV file with new owners invalid format
     When I act as partner by:
       | email                           |
       | machine_migration_auto@auto.com |
@@ -213,7 +213,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       |Import Results:| 3 rows imported |0 machines moved to new users | 0 machines skipped (no new user specified) | 3 Errors: | Unknown new owner |
 
   @TC.16290
-  Scenario: Import a CSV file with mismatched machine name and machine hash
+  Scenario: 16290 Import a CSV file with mismatched machine name and machine hash
     When I act as partner by:
       | email                           |
       | machine_migration_auto@auto.com |
@@ -226,7 +226,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       |Import Results:| 3 rows imported |0 machines moved to new users | 0 machines skipped (no new user specified) | 3 Errors: | Unknown machine |
 
   @TC.16291
-  Scenario: Import a CSV file with new owner an empty string in non-passive way
+  Scenario: 16291 Import a CSV file with new owner an empty string in non-passive way
     When I act as partner by:
       | email                           |
       | machine_migration_auto@auto.com |
@@ -239,19 +239,19 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       |Import Results:| 3 rows imported |0 machines moved to new users | 3 machines skipped (no new user specified) |
 
   @TC.16343
-  Scenario: Export a CSV file when the partner has subpartners
+  Scenario: 16343 Export a CSV file when the partner has subpartners
     When I act as partner by:
       | name    |
       | Freecom |
     And I navigate to the machine mapping page
     When I download the machine csv file
     And The exported csv file should be:
-      | column 1      |  column 2                              |  column 3                              | column 4  |
-      | Machine Name  | Machine Hash                           | Current Owner                          | New Owner |
-      |SUPPORT-PC     |c58d8af103f37ffa82351ef500115b4b2e32    |hussin.diraki-at-freecom.com@mozy.test  |           |
-      |R620           |7a712089bc55ff31aa22efe9fb417083aa795138|ingmar.heinecke-at-freecom.com@mozy.test|           |
-      |FREECOM-TEST   |323e04be11da0abb2b3be5070010c617bb3e    |rbartelds-at-gmail.com@mozy.test        |           |
-      |BLN039         |351eeb340475694284f7a08218c9474f474afb70|robert.bartelds-at-freecom.com@mozy.test|           |
+      | column 1      | column 2                                 | column 3                                 | column 4  |
+      | Machine Name  | Machine Hash                             | Current Owner                            | New Owner |
+      | SUPPORT-PC    | c58d8af103f37ffa82351ef500115b4b2e32     | hussin.diraki-at-freecom.com@mozy.test   |           |
+      | R620          | 7a712089bc55ff31aa22efe9fb417083aa795138 | ingmar.heinecke-at-freecom.com@mozy.test |           |
+      | FREECOM-TEST  | 323e04be11da0abb2b3be5070010c617bb3e     | rbartelds-at-gmail.com@mozy.test         |           |
+      | BLN039        | 351eeb340475694284f7a08218c9474f474afb70 | robert.bartelds-at-freecom.com@mozy.test |           |
 
   @TC.17936
   Scenario: Import a CSV file while two users have same machine
