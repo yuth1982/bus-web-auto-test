@@ -55,10 +55,7 @@ When /^I refresh Add New User section$/ do
 end
 
 Then /^I should not see stash options$/ do
-  @bus_site.admin_console_page.add_new_user_section.has_save_changes_btn?
-  @bus_site.admin_console_page.add_new_user_section.has_no_content?('Enable Stash:').should be_true
-  @bus_site.admin_console_page.add_new_user_section.has_no_content?('Send Stash Invite:').should be_true
-  @bus_site.admin_console_page.add_new_user_section.has_no_content?('Desired Storage for Stash:').should be_true
+  @bus_site.admin_console_page.add_new_user_section.has_stash_option?.should be_false
 end
 
 Then /^I should see stash options$/ do

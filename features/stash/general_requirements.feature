@@ -47,13 +47,13 @@ Feature:
       | TC.19040 User | Desktop      | 10            | 1       | yes          | no         |
     Then 1 new user should be created
     When I search emails by keywords:
-      | to              | subject      |
-      | @new_user_email | enable stash |
+      | to                          | subject      |
+      | <%=@new_users.first.email%> | enable stash |
     Then I should see 0 email(s)
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User          | Name          | Stash   | Machines | Storage        | Storage Used |
-      | @user_email   | TC.19040 User | Enabled | 0        | 10 GB(Limited) | None         |
+      | User                        | Name          | Stash   | Machines | Storage        | Storage Used |
+      | <%=@new_users.first.email%> | TC.19040 User | Enabled | 0        | 10 GB(Limited) | None         |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                  | Enable Stash:               |
@@ -83,46 +83,33 @@ Feature:
     And I act as newly created partner account
     And I add new user(s):
       | name          | storage_type | storage_limit | devices | enable_stash | send_email |
-      | TC.19040 User | Desktop      | 10            | 1       | yes          | no         |
+      | TC.19044 User | Desktop      | 10            | 1       | yes          | yes        |
     Then 1 new user should be created
-
-
-    And I add a new user to a MozyPro partner:
-      | name           | enable stash | stash quota | send stash invite |
-      | TC.19044 user  | yes          | 5           | yes               |
-    Then New user should be created
     When I search emails by keywords:
-      | to              | subject      |
-      | @new_user_email | enable stash |
+      | to                          | subject      |
+      | <%=@new_users.first.email%> | enable stash |
     Then I should see 1 email(s)
     When I navigate to Search / List Users section from bus admin console page
-    Then user search results should be:
-      | User            | Name           | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      | @new_user_email | TC.19044 user  | Enabled | 0        | 5 GB    | none         | today   | never     |
+    Then User search results should be:
+      | User                        | Name          | Stash   | Machines | Storage        | Storage Used |
+      | <%=@new_users.first.email%> | TC.19044 User | Enabled | 0        | 10 GB(Limited) | None         |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                  | Enable Stash:               |
       | TC.19044 user (change) | Yes (Send Invitation Email) |
-    And User backup details table should be:
-      | Computer | Encryption | Storage Used            | Last Update | License Key | Actions |
-      | Stash    | Default    | 0 bytes / 5 GB (change) | N/A         |             | delete  |
+    And stash device table in user details should be:
+      | Stash Container | Used/Available     | Device Storage Limit | Last Update      |
+      | Stash           | 0 / 10 GB          | Set                  | N/A              |
     When I navigate to Search / List Machines section from bus admin console page
     Then Machine search results should be:
-      | User Group           | Data Center | Storage Used            |
-      | (default user group) | qa6         | 0 bytes / 5 GB (change) |
-    When I navigate to Manage Resources section from bus admin console page
-    Then Partner resources general information should be:
-      | Stash Users: | Stash Storage Usage: |
-      | 1            | 0 bytes / 5 GB       |
+      | Machine | User                        | User Group           | Data Center | Storage Used |
+      | Stash   | <%=@new_users.first.email%> | (default user group) | qa6         | 0            |
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
-    Then Partner account attributes should be:
-      | Stash Users:            | -1        |
-      | Default Stash Storage:  | 2         |
     And Partner stash info should be:
-      | Stash Users:         | 1              |
-      | Stash Storage Usage: | 0 bytes / 5 GB |
+      | Stash Users:         | 1 |
+      | Stash Storage Usage: | 0 |
     And I delete partner account
 
   @TC.19078 @BSA.1000
@@ -134,26 +121,26 @@ Feature:
     When I act as newly created partner account
     And I navigate to Add New User section from bus admin console page
     Then I should not see stash options
-    When I add a new user to a MozyPro partner:
-      | name          | desktop licenses | desktop quota |
-      | TC.19078 user | 1                | 10            |
-    Then New user should be created
+    When I add new user(s):
+      | name          | storage_type | storage_limit | devices |
+      | TC.19078 User | Desktop      | 10            | 1       |
+    Then 1 new user should be created
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
-    When I enable stash for the partner with 5 GB stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 5 GB (change)          |
+      | Enable Stash: |
+      | Yes (change)  |
     When I act as newly created partner account
     And I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | user            | Name           | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      | @new_user_email | TC.19078 user  | Disabled | 0       | 0 bytes | none         | today   | never     |
+      | User                        | Name          | Stash    | Machines | Storage        | Storage Used |
+      | <%=@new_users.first.email%> | TC.19078 User | Disabled | 0        | 10 GB(Limited) | None         |
     And I view user details by newly created user email
-    Then User details should be:
+    Then user details should be:
       | Name:                  | Enable Stash:  |
-      | TC.19078 user (change) | No (Add Stash) |
+      | TC.19078 User (change) | No (Add Stash) |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 

@@ -38,6 +38,7 @@ Then /^User search results should be:$/ do |results_table|
         else
           # do nothing
       end
+      v.replace ERB.new(v).result(binding)
     end
   end
   expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }

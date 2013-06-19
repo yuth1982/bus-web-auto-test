@@ -106,5 +106,13 @@ module Bus
     def click_buy_more_link
       buy_more_link.click
     end
+
+    def has_stash_option?
+      # For newly created test partner, if there
+      user_group_select.select('(default user group)') if user_group_select.visible?
+      sleep 2 # wait for ajax call back
+      storage_type_select.select('Desktop')
+      enable_stash_cb.visible?
+    end
   end
 end
