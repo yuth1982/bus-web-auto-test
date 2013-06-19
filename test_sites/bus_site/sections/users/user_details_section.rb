@@ -112,16 +112,14 @@ module Bus
 
     # Public: Enable stash for a user
     #
-    # @params [string] quota
     # @params [bool] send_email
     #
     # Example:
     #   @bus_site.admin_console_page.user_details_details_section.add_stash
     #
     # @return [] nothing
-    def add_stash(quota, send_email)
+    def add_stash(send_email)
       add_stash_link.click
-      stash_quota_tb.type_text(quota) if quota.to_i >= 0 #if quota = -1, then use default
       send_email_cb.check if send_email
       submit_stash_btn.click
       wait_until_bus_section_load

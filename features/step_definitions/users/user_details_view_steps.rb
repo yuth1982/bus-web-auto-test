@@ -46,16 +46,22 @@ Then /^I should not see (.+) setting on user details section$/ do |text|
   @bus_site.admin_console_page.user_details_section.user_details_hash[text].should == nil
 end
 
-When /^I add stash for the user with:$/ do |paras|
-  attributes = paras.hashes.first
-  stash_quota = attributes['stash quota'] || 'default'
-  send_email = (attributes['send email'] || "no").eql?("yes")
-  if stash_quota == 'default'
-    @bus_site.admin_console_page.user_details_section.add_stash(-1, send_email)
-  else
-    @bus_site.admin_console_page.user_details_section.add_stash(stash_quota, send_email)
-  end
+
+When /^I enable stash (with|without) send email in user details section$/ do |condition|
+  send_email =  condition == 'with' ? true : false
+  @bus_site.admin_console_page.user_details_section.add_stash(send_email)
 end
+
+#When /^I add stash for the user with:$/ do |paras|
+#  attributes = paras.hashes.first
+#  stash_quota = attributes['stash quota'] || 'default'
+#  send_email = (attributes['send email'] || "no").eql?("yes")
+#  if stash_quota == 'default'
+#    @bus_site.admin_console_page.user_details_section.add_stash(-1, send_email)
+#  else
+#    @bus_site.admin_console_page.user_details_section.add_stash(stash_quota, send_email)
+#  end
+#end
 
 When /^I cancel add user stash$/ do
   @bus_site.admin_console_page.user_details_section.cancel_add_stash
