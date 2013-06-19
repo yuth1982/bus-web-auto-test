@@ -18,7 +18,7 @@ module Bus
       sign_mozy_radio.click
     end
 
-    def site_select(value='mozy')
+    def site_select(value='Mozy Fedid01')
       site_selecter.select value
     end
 
@@ -34,9 +34,11 @@ module Bus
       if stslabel.visible?
         Log.debug 'come into login page'
         if page.has_button? 'ctl00_ContentPlaceHolder1_GoButton'
+          site_select
           go
         elsif page.has_button? 'ctl00_ContentPlaceHolder1_SignInButton'
           choose_mozy_radio
+          site_select
           continue_login
         else
           raise 'Cannot log in'

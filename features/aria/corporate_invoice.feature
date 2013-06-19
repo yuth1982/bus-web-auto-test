@@ -18,9 +18,9 @@ Feature: Corporate Invoices
       | @new_admin_email | MozyPro Account Created! |
     Then I should see 1 email(s)
     When I search emails by keywords:
-      | from        | to               | subject                  |
-      | ar@mozy.com | @new_admin_email | MozyQA Account Statement |
-    Then I should see 2 email(s)
+      | from        | to            | subject                    | content          |
+      | ar@mozy.com | qa1@decho.com | Mozy Inc Account Statement | @company_address |
+    Then I should see 1 email(s)
 
   @TC.15687
   Scenario: 15687 Verify Aria sends invoice email when change subscription period of a MozyPro partner
@@ -32,8 +32,8 @@ Feature: Corporate Invoices
     And I change account subscription up to annual billing period
     Then Subscription changed message should be Your account has been changed to yearly billing.
     When I search emails by keywords:
-      | to          | date  | subject                  | content          |
-      | ar@mozy.com | today | MozyQA Account Statement | @company_address |
+      | from        | to            | subject                    | content          |
+      | ar@mozy.com | qa1@decho.com | Mozy Inc Account Statement | @company_address |
     Then I should see 2 email(s)
 
   @TC.17841
@@ -47,9 +47,9 @@ Feature: Corporate Invoices
       | @new_admin_email | MozyEnterprise Account Created! |
     Then I should see 1 email(s)
     When I search emails by keywords:
-      | from        | to               | subject                  |
-      | ar@mozy.com | @new_admin_email | MozyQA Account Statement |
-    Then I should see 2 email(s)
+      | from        | to            | subject                    | content          |
+      | ar@mozy.com | qa1@decho.com | Mozy Inc Account Statement | @company_address |
+    Then I should see 1 email(s)
 
   @TC.17842 @slow @javascript
   Scenario: 17842 Verify Aria sends invoice email when change subscription period of a MozyEnterprise partner
@@ -61,6 +61,6 @@ Feature: Corporate Invoices
     And I change account subscription up to biennial billing period
     Then Subscription changed message should be Your account has been changed to biennial billing.
     When I search emails by keywords:
-      | to           | date  | subject                  | content          |
-      | qa1@mozy.com | today | MozyQA Account Statement | @company_address |
+      | from        | to            | subject                    | content          |
+      | ar@mozy.com | qa1@decho.com | Mozy Inc Account Statement | @company_address |
     Then I should see 2 email(s)

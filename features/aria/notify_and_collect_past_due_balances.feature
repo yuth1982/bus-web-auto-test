@@ -61,8 +61,8 @@ Feature: Notify about and collect past-due balances
     And I change newly created partner admin email account status to Active Dunning 1
     Then Account status should be changed
     When I search emails by keywords:
-      | from                    | subject                                          | content                  |
-      | AccountManager@mozy.com | [Mozy] Your credit card payment was unsuccessful | (Visa) ************@XXXX |
+      | from                    | subject                               | date  | content                             |
+      | AccountManager@mozy.com | [Mozy] Mozy invoice, due upon receipt | today |<%=@partner.credit_card.first_name%> |
     Then I should see 1 email(s)
 
   @TC.16148 @slow @firefox

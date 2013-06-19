@@ -32,7 +32,7 @@ Feature:
     When I log in aria admin console as administrator
     And I set newly created partner admin email account notification method to Printable (no Email)
     Then newly created partner admin email account current notification method is set to Printable (no Email)
-    When I set the new partner account notification method to HTML Email
+    When I set newly created partner admin email account notification method to HTML Email
     Then newly created partner admin email account current notification method is set to HTML Email
 
   @TC.15448 @firefox

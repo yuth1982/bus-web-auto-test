@@ -64,7 +64,8 @@ end
 Then /^(.+) account notification methods should be:$/ do |user_name, notify_table|
   step "I search aria account by #{user_name}"
   step "I navigate to Notification Method view from side menu"
-  @aria_site.accounts_page.outer_if.main_if.work_if.inner_work_if.notification_method_section.notify_methods.should == notify_table.rows.map{ |row| row.first }
+  methods = @aria_site.accounts_page.outer_if.main_if.work_if.inner_work_if.notification_method_section.notify_methods
+  notify_table.rows.map(&:first).each { |method| methods.should include method }
 end
 
 Then /^(.+) account current notification method is set to (.+)$/ do |user_name, method|

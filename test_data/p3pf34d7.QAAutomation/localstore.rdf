@@ -5,18 +5,18 @@
                    sidebarcommand=""
                    width=""
                    src="" />
-  <RDF:Description RDF:about="chrome://browser/content/browser.xul#addon-bar"
-                   collapsed="true" />
   <RDF:Description RDF:about="chrome://browser/content/browser.xul#main-window"
                    width="994"
                    height="802"
-                   screenX="4"
-                   screenY="22"
-                   sizemode="normal" />
+                   sizemode="normal"
+                   screenX="1527"
+                   screenY="904" />
   <RDF:Description RDF:about="chrome://browser/content/browser.xul">
     <NC:persist RDF:resource="chrome://browser/content/browser.xul#main-window"/>
     <NC:persist RDF:resource="chrome://browser/content/browser.xul#sidebar-box"/>
     <NC:persist RDF:resource="chrome://browser/content/browser.xul#sidebar-title"/>
     <NC:persist RDF:resource="chrome://browser/content/browser.xul#addon-bar"/>
   </RDF:Description>
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul#addon-bar"
+                   collapsed="true" />
 </RDF:RDF>
