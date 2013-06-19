@@ -87,7 +87,6 @@ module Bus
     element(:change_stash_link, css: 'a[onclick*=change_stash]')
     element(:cancel_stash_link, css: 'a[onclick*=cancel_change]')
     element(:stash_status_select, css: 'select[id^=partner-stash-status-]')
-    element(:stash_default_quota_tb, id: 'stash_default_quota')
     element(:submit_stash_status_btn, css: 'input[onclick*=submit_stash_status]')
     element(:add_stash_to_all_users_link, css: 'a[onclick*=enable_stash_for_all_confirm]')
 
@@ -318,12 +317,11 @@ module Bus
     #   @bus_site.admin_console_page.partner_details_section.enable_stash
     #
     # Returns nothing
-    def enable_stash(quota)
+    def enable_stash
       change_stash_link.click
       stash_status_select.select('Yes')
-      stash_default_quota_tb.type_text(quota)
       submit_stash_status_btn.click
-      wait_until{ !submit_stash_status_btn.visible? }
+      wait_until_bus_section_load
     end
 
     # Public: Disable stash for a partner
@@ -337,6 +335,7 @@ module Bus
       change_stash_link.click
       stash_status_select.select('No')
       submit_stash_status_btn.click
+      wait_until_bus_section_load
     end
 
     # Public: Enable autogrow for a partner

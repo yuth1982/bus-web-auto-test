@@ -146,6 +146,10 @@ Then /^Partner billing history should be:$/ do |billing_history_table|
   expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
 
+When /^I enable stash for the partner$/ do
+  @bus_site.admin_console_page.partner_details_section.enable_stash
+end
+
 When /^I enable stash for the partner with (default|\d+ GB) stash storage$/ do |quota|
   if quota == 'default'
     @bus_site.admin_console_page.partner_details_section.enable_stash(2)

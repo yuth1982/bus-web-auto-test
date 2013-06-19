@@ -7,12 +7,13 @@ Then /^Machine search results should be:$/ do |results_table|
     col.each do |k,v|
       case k
         when 'User'
-          v.gsub!(/@new_user_email/, @user.email) unless @user.nil?
+          v.gsub!(/@new_user_email/, @new_users.first.email) unless @new_users.nil?
         when 'Created'
           v.replace(Chronic.parse(v).strftime('%m/%d/%y'))
         else
           # do nothing
       end
+      v.replace ERB.new(v).result(binding)
     end
   end
   expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }

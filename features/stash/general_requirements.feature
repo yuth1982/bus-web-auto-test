@@ -5,33 +5,34 @@ Feature:
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.19039 @BSA.1000
-  Scenario: 19039 MozyPro Partner Verify Stash UI in Add New User
-    When I add a new MozyPro partner:
-      | period | base plan | server plan |
-      | 12     | 100 GB    | yes         |
-    Then New partner should be created
-    When I enable stash for the partner with default stash storage
-    Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 2 GB (change)          |
-    When I act as newly created partner account
-    And I add a new user to a MozyPro partner:
-      | name | email  | enable stash |
-      |      |        | no           |
-    Then New user created message should be Please input all required fields and at least one User Name and Email
-    And I refresh Add New User section
-    When I add a new user to a MozyPro partner:
-      | name          | desired_user_storage | device_count |
-      | TC.19039 user | 9999999999           | 9999999999   |
-    Then New user created message should be User Group (default user group) does not have enough storage available.
-    And I refresh Add New User section
-    When I add a new user to a MozyPro partner:
-      | name          | email | desired_user_storage | device_count | enable stash |
-      | TC.19039 user |       | 20                   | 1            | yes          | 
-    Then New user created message should be Please input all required fields and at least one User Name and Email
-    When I stop masquerading
-    And I search and delete partner account by newly created partner company name
+# Dup
+#  @TC.19039 @BSA.1000
+#  Scenario: 19039 MozyPro Partner Verify Stash UI in Add New User
+#    When I add a new MozyPro partner:
+#      | period | base plan | server plan |
+#      | 12     | 100 GB    | yes         |
+#    Then New partner should be created
+#    When I enable stash for the partner with default stash storage
+#    Then Partner general information should be:
+#      | Enable Stash: | Default Stash Storage: |
+#      | Yes           | 2 GB (change)          |
+#    When I act as newly created partner account
+#    And I add a new user to a MozyPro partner:
+#      | name | email  | enable stash |
+#      |      |        | no           |
+#    Then New user created message should be Please input all required fields and at least one User Name and Email
+#    And I refresh Add New User section
+#    When I add a new user to a MozyPro partner:
+#      | name          | desired_user_storage | device_count |
+#      | TC.19039 user | 9999999999           | 9999999999   |
+#    Then New user created message should be User Group (default user group) does not have enough storage available.
+#    And I refresh Add New User section
+#    When I add a new user to a MozyPro partner:
+#      | name          | email | desired_user_storage | device_count | enable stash |
+#      | TC.19039 user |       | 20                   | 1            | yes          |
+#    Then New user created message should be Please input all required fields and at least one User Name and Email
+#    When I stop masquerading
+#    And I search and delete partner account by newly created partner company name
 
   @TC.19040 @BSA.1000
   Scenario: 19040 MozyPro Partner Provision Stash Container - Default User Group no email invite
@@ -39,47 +40,37 @@ Feature:
       | period | base plan | net terms |
       | 12     | 100 GB    | yes       |
     Then New partner should be created
-    When I enable stash for the partner with default stash storage
-    Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 2 GB (change)          |
-    When I act as newly created partner account
-    And I add a new user to a MozyPro partner:
-      | enable stash |
-      | yes          |
-    Then New user should be created
+    When I enable stash for the partner
+    And I act as newly created partner account
+    And I add new user(s):
+      | name          | storage_type | storage_limit | devices | enable_stash | send_email |
+      | TC.19040 User | Desktop      | 10            | 1       | yes          | no         |
+    Then 1 new user should be created
     When I search emails by keywords:
       | to              | subject      |
       | @new_user_email | enable stash |
     Then I should see 0 email(s)
     When I navigate to Search / List Users section from bus admin console page
-    Then user search results should be:
-      | External ID | User          | Name        | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      |             | @user_email   | @user_name  | Enabled | 0        | 2 GB    | none         | today   | never     |
-    When I view user details by @user_email
+    Then User search results should be:
+      | User          | Name          | Stash   | Machines | Storage        | Storage Used |
+      | @user_email   | TC.19040 User | Enabled | 0        | 10 GB(Limited) | None         |
+    When I view user details by newly created user email
     Then user details should be:
-      | Name:          | Enable Stash:               |
-      | @user (change) | Yes (Send Invitation Email) |
-    And User backup details table should be:
-      | Computer | Encryption | Storage Used            | Last Update | License Key | Actions |
-      | Stash    | Default    | 0 bytes / 2 GB (change) | N/A         |             | delete  |
+      | Name:                  | Enable Stash:               |
+      | TC.19040 User (change) | Yes (Send Invitation Email) |
+    And stash device table in user details should be:
+      | Stash Container | Used/Available     | Device Storage Limit | Last Update      |
+      | Stash           | 0 / 10 GB          | Set                  | N/A              |
     When I navigate to Search / List Machines section from bus admin console page
     Then Machine search results should be:
-      | External ID | Machine | User            | User Group           | Data Center | Storage Used            | Created | Last Update | Backed Up |
-      |             | Stash   | @new_user_email | (default user group) | qa6         | 0 bytes / 2 GB (change) | today   | —           | never     |
-    When I navigate to Manage Resources section from bus admin console page
-    Then Partner resources general information should be:
-      | Stash Users: | Stash Storage Usage: |
-      | 1            | 0 bytes / 2 GB       |
+      | Machine | User                        | User Group           | Data Center | Storage Used |
+      | Stash   | <%=@new_users.first.email%> | (default user group) | qa6         | 0            |
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
-    Then Partner account attributes should be:
-      | Stash Users:            | -1        |
-      | Default Stash Storage:  | 2         |
     And Partner stash info should be:
-      | Stash Users:         | 1              |
-      | Stash Storage Usage: | 0 bytes / 2 GB |
+      | Stash Users:         | 1 |
+      | Stash Storage Usage: | 0 |
     And I delete partner account
 
   @TC.19044 @BSA.1000
@@ -88,11 +79,14 @@ Feature:
       | period | base plan | net terms |
       | 12     | 100 GB    | yes       |
     Then New partner should be created
-    When I enable stash for the partner with default stash storage
-    Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 2 GB (change)          |
-    When I act as newly created partner account
+    When I enable stash for the partner
+    And I act as newly created partner account
+    And I add new user(s):
+      | name          | storage_type | storage_limit | devices | enable_stash | send_email |
+      | TC.19040 User | Desktop      | 10            | 1       | yes          | no         |
+    Then 1 new user should be created
+
+
     And I add a new user to a MozyPro partner:
       | name           | enable stash | stash quota | send stash invite |
       | TC.19044 user  | yes          | 5           | yes               |
@@ -164,6 +158,7 @@ Feature:
     And I search and delete partner account by newly created partner company name
 
   @TC.19079 @BSA.1000
+
   Scenario: 19079 MozyPro Partner Add Stash container that exceeds available Stash quota
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -256,6 +251,7 @@ Feature:
     And I delete partner account
 
   @TC.19082 @BSA.1000
+
   Scenario: 19082 MozyPro Partner Edit Stash Container - Default User Group No Email
     When I add a new MozyPro partner:
       | period | base plan | net terms |
