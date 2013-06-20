@@ -72,43 +72,29 @@ module DBHelper
   end
 
   def get_user_username(parent)
-    user_group_id = case parent
-                              #ME = 300177, MC = 4933, MP = 3364, MPUK = 273491, MPFrance = , MPG = , MPI = 273492, Fortress = 17771
-                              #MH = 3365, MHUK = 264258, MHG = 264261, MHF = 264260, MHI = 264259, MHEMEA = 264257
+    partner_id = case parent
                               when 'ME'
-                                730104
+                                "mozy_enterprise_partner_id"
                               when 'MC'
-                                6201
+                                "mozy_corp_partner_id"
                               when 'MP'
-                                4150
-                              when 'MPUK'
-                                324536
-                              when 'MPF'
-                                629085
-                              when 'MPG'
-                                506873
-                              #when 'MPI'
-                              #  273492
-                              #when 'F'
-                              #  17771
+                                "mozy_pro_partner_id"
                               when 'MH'
-                                4151
-                              #when 'MHUK'
-                              #  264258
-                              #when 'MHG'
-                              #  264261
-                              #when 'MHF'
-                              #  264260
-                              #when 'MHI'
-                              #  264259
-                              #when 'MHEMEA'
-                              #  264257
+                                "mozy_consumer_partner_id"
+                              when 'MEO'
+                                "mozy_enterprise_old_partner_id"
                               else
                                puts "Parent partner code entered (#{parent}) is not supported"
                             end
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "select username from public.users where user_group_id = #{user_group_id} and deleted = false and creation_time IS NOT NULL order by id DESC limit 1;"
+      sql = "select username from users u where u.user_group_id in (
+              select ug.id as ug_id from user_groups ug where ug.pro_partner_id in (
+                select id from pro_partners sub_pt, (
+                  select tree_sortkey from pro_partners p where p.id in (
+                    select cast(value as integer) from global_settings where key = '#{partner_id}')) as key
+              where sub_pt.tree_sortkey between key.tree_sortkey and tree_right(key.tree_sortkey)))
+            and u.enforce_unique_username = true and u.userhash is not null and u.username is not null and u.creation_time is not null and deleted = false limit 1;"
       c = conn.exec(sql)
       Log.debug("Email from tree #{parent} = #{c.values[0][0]}")
       c.values[0][0]

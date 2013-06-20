@@ -336,24 +336,21 @@ Feature: User Has Unique Username
       | 1      | 50 GB     | United States | @existing_user_email |
     Then sign up page error message to existing user email should be displayed
 #    When I am at dom selection point:
-#    And I get a MEO user username from the database
-#    And I sign up a phoenix Home user:
-#      | period | base plan | country       | admin email          |
-#      | 1      | 50 GB     | United States | @existing_user_email |
-#    Then sign up page error message should be:
-#    """
-#     An account with this email address already exists
-#    """
-  When I get a MC user username from the database
-  And I am at dom selection point:
-  And I sign up a phoenix Home user:
-    | period | base plan | country       | admin email          |
-    | 1      | 50 GB     | United States | @existing_user_email |
-  Then sign up page error message to existing user email should be displayed
+    And I get a MEO user username from the database
+    And I sign up a phoenix Home user:
+      | period | base plan | country       | admin email          |
+      | 1      | 50 GB     | United States | @existing_user_email |
+    Then sign up page error message to existing user email should be displayed
+    When I get a MC user username from the database
+    And I am at dom selection point:
+    And I sign up a phoenix Home user:
+      | period | base plan | country       | admin email          |
+      | 1      | 50 GB     | United States | @existing_user_email |
+    Then sign up page error message to existing user email should be displayed
 
   @TC.21809
-  Scenario: Mozy-21809:Web Sign Up - Add New User With Existing(Created) User Username(MH-UK)
-    When I get a user email from the database
+  Scenario: Mozy-21809:Web Sign Up - Add New User With Existing(Created) User Username(MH-UK) under MH tree
+    When I get a MH user username from the database
     And I am at dom selection point:
     And I sign up a phoenix Home user:
       | period | base plan | country        | admin email          |
@@ -364,8 +361,8 @@ Feature: User Has Unique Username
     """
 
   @TC.21810
-  Scenario: Mozy-21810:Web Sign Up - Add New User With Existing(Created) User Username(MH-IE)
-    When I get a user email from the database
+  Scenario: Mozy-21810:Web Sign Up - Add New User With Existing(Created) User Username(MH-IE) under MP tree
+    When I get a MP user username from the database
     And I am at dom selection point:
     And I sign up a phoenix Home user:
       | period | base plan | country | admin email          |
@@ -376,8 +373,8 @@ Feature: User Has Unique Username
     """
 
   @TC.21811
-  Scenario: Mozy-21811:Web Sign Up - Add New User With Existing(Created) User Username(MH-FR)
-    When I get a user email from the database
+  Scenario: Mozy-21811:Web Sign Up - Add New User With Existing(Created) User Username(MH-FR) under ME tree
+    When I get a ME user username from the database
     And I am at dom selection point:
     And I sign up a phoenix Home user:
       | period | base plan | country | admin email          |
@@ -388,8 +385,8 @@ Feature: User Has Unique Username
     """
 
   @TC.21812
-  Scenario: Mozy-21812:Web Sign Up - Add New User With Existing(Created) User Username(MH-DE)
-    When I get a user email from the database
+  Scenario: Mozy-21812:Web Sign Up - Add New User With Existing(Created) User Username(MH-DE) under MEO tree
+    When I get a MEO user username from the database
     And I am at dom selection point:
     And I sign up a phoenix Home user:
       | period | base plan | country | admin email          |
