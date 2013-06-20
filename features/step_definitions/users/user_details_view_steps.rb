@@ -46,7 +46,6 @@ Then /^I should not see (.+) setting on user details section$/ do |text|
   @bus_site.admin_console_page.user_details_section.user_details_hash[text].should == nil
 end
 
-
 When /^I enable stash (with|without) send email in user details section$/ do |condition|
   send_email =  condition == 'with' ? true : false
   @bus_site.admin_console_page.user_details_section.add_stash(send_email)
@@ -62,6 +61,7 @@ end
 #    @bus_site.admin_console_page.user_details_section.add_stash(stash_quota, send_email)
 #  end
 #end
+
 
 When /^I cancel add user stash$/ do
   @bus_site.admin_console_page.user_details_section.cancel_add_stash

@@ -28,10 +28,10 @@ Feature: User stash setting management
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner with default stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 2 GB (change)          |
+      | Enable Stash: |
+      | Yes (change)  |
     When I act as newly created partner account
     And I add new user(s):
       | name          | user_group           | storage_type | storage_limit | devices |
@@ -51,10 +51,10 @@ Feature: User stash setting management
       | period | base plan |
       | 12     | 50 GB     |
     Then New partner should be created
-    When I enable stash for the partner with default stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 2 GB (change)          |
+      | Enable Stash: |
+      | Yes (change)  |
     When I act as newly created partner account
     And I add new user(s):
       | name          | storage_type | storage_limit | devices |
@@ -62,9 +62,7 @@ Feature: User stash setting management
     Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by newly created user email
-    And I add stash for the user with:
-      | stash quota | send email |
-      | default     | no         |
+    And I enable stash without send email in user details section
     Then user details should be:
       | Name:                  | Enable Stash:               |
       | TC.18974 user (change) | Yes (Send Invitation Email) |
@@ -160,10 +158,10 @@ Feature: User stash setting management
       | period | base plan |
       | 12     | 50 GB     |
     Then New partner should be created
-    When I enable stash for the partner with 5 GB stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 5 GB (change)          |
+      | Enable Stash: |
+      | Yes (change)  |
     When I act as newly created partner account
     And I add new user(s):
       | name          | storage_type | storage_limit | devices |
@@ -196,10 +194,10 @@ Feature: User stash setting management
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner with 5 GB stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 5 GB (change)          |
+      | Enable Stash: |
+      | Yes (change)  |
     When I act as newly created partner account
     And I navigate to Add New User section from bus admin console page
     Then I should see stash options
@@ -212,10 +210,10 @@ Feature: User stash setting management
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner with default stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 2 GB (change)          |
+      | Enable Stash: |
+      | Yes (change)  |
     When I act as newly created partner account
     And I add new user(s):
       | name          | user_group           | storage_type | storage_limit | devices | enable_stash |
@@ -300,18 +298,18 @@ Feature: User stash setting management
       | period | base plan |
       | 1      | 50 GB     |
     Then New partner should be created
-    When I enable stash for the partner with default stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 2 GB (change)          |
+      | Enable Stash: |
+      | Yes (change)  |
     When I act as newly created partner account
-    And I add a new user to a MozyPro partner:
-      | name           |
-      | TC.19019 user  |
-    Then New user should be created
+    And I add new user(s):
+      | name          | storage_type | storage_limit | enable_stash |
+      | TC.19019 user | Desktop      | 10            | no           |
+    Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by newly created user email
-    Then User details should be:
+    Then user details should be:
       | Name:                  | Enable Stash:  |
       | TC.19019 user (change) | No (Add Stash) |
     When I stop masquerading
@@ -544,11 +542,11 @@ Feature: User stash setting management
     Then User search results should be:
       | User                   | Name           | User Group           | Stash    | Machines | Storage | Storage Used |
       | backup@test.com        | backup         | backup               | Disabled | 1        | 1 GB    | 10 MB        |
-      | stash19045@test.com    | stash19045     | (default user group) | Enabled  | 0        | 2 GB    | 20 MB        |
-      | backup19045@test.com   | backup19045    | (default user group) | Disabled | 1        | 1 GB    | 10 MB        |
       | stash@test.com         | stash          | stash                | Enabled  | 0        | 2 GB    | 20 MB        |
+      | backup19045@test.com   | backup19045    | (default user group) | Disabled | 1        | 1 GB    | 10 MB        |
+      | stash19045@test.com    | stash19045     | (default user group) | Enabled  | 0        | 2 GB    | 20 MB        |
     When I view user details by stash19045@test.com
-    Then User details should be:
+    Then user details should be:
       | Name:               | Enable Stash:               |
       | stash19045 (change) | Yes (Send Invitation Email) |
 
@@ -561,12 +559,12 @@ Feature: User stash setting management
     Then User search results should be:
       | User                   | Name           | User Group           | Stash    | Machines | Storage | Storage Used |
       | backup@test.com        | backup         | backup               | Disabled | 1        | 1 GB    | 10 MB        |
-      | stash19045@test.com    | stash19045     | (default user group) | Enabled  | 0        | 2 GB    | 20 MB        |
-      | backup19045@test.com   | backup19045    | (default user group) | Disabled | 1        | 1 GB    | 10 MB        |
       | stash@test.com         | stash          | stash                | Enabled  | 0        | 2 GB    | 20 MB        |
+      | backup19045@test.com   | backup19045    | (default user group) | Disabled | 1        | 1 GB    | 10 MB        |
+      | stash19045@test.com    | stash19045     | (default user group) | Enabled  | 0        | 2 GB    | 20 MB        |
     When I view user details by stash19045@test.com
     Then User backup details table should be:
-      | Computer | Encryption | Storage Used            | Last Update | License Key | Actions               |
+      | Computer | Encryption | Storage Used            | Last Update | Product Key | Actions               |
       | Stash    | Default    | 20 MB / 2 GB (change)   | N/A         |             | Access Files delete   |
 
   @TC.19116 @BSA.3040
@@ -580,7 +578,7 @@ Feature: User stash setting management
       |             | backup19057@test.com   | backup19057    | Disabled | 1        | 1 GB    | 10 MB        |
       |             | stash19057@test.com    | stash19057     | Enabled  | 0        | 2 GB    | 5 MB         |
     When I view user details by stash19057@test.com
-    Then User details should be:
+    Then user details should be:
       | Name:                  | Enable Stash:               |
       | stash19057 (change)    | Yes (Send Invitation Email) |
 
@@ -596,7 +594,7 @@ Feature: User stash setting management
       | stash19057@test.com    | stash19057     | Enabled  | 0        | 2 GB    | 5 MB         |
     When I view user details by stash19057@test.com
     Then User backup details table should be:
-      | Computer | Encryption | Storage Used            | Last Update | License Key | Actions               |
+      | Computer | Encryption | Storage Used            | Last Update | Product Key | Actions               |
       | Stash    | Default    | 5 MB / 2 GB (change)    | N/A         |             | Access Files delete   |
 
 

@@ -49,7 +49,7 @@ module Bus
     element(:machine_max_tooltips, css: "span[id^=tooltip_for_machine]")
 
     # user backup information table
-    element(:user_backup_details_table, xpath: "div//[starts-with(@id, 'user-show')]//div[2]/table)]")
+    element(:user_backup_details_table, xpath: "//div[starts-with(@id, 'user-show')]//div[2]/table")
     element(:user_resource_details_table, css: "div.show-details > table")
 
     element(:verify_user_link, css: 'a[onclick*=consumer_verify]')

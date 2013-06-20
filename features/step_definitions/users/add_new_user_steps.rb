@@ -59,10 +59,7 @@ Then /^I should not see stash options$/ do
 end
 
 Then /^I should see stash options$/ do
-  @bus_site.admin_console_page.add_new_user_section.has_save_changes_btn?
-  @bus_site.admin_console_page.add_new_user_section.has_content?('Enable Stash:').should be_true
-  @bus_site.admin_console_page.add_new_user_section.has_content?('Send Stash Invite:').should be_true
-  @bus_site.admin_console_page.add_new_user_section.has_content?('Desired Storage for Stash:').should be_true
+  @bus_site.admin_console_page.add_new_user_section.has_stash_option?.should be_true
 end
 
 Then /^desktop and server devices should not be displayed in Add New User module$/ do
