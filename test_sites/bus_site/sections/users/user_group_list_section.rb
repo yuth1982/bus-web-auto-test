@@ -108,7 +108,7 @@ module Bus
     def view_user_group(group_name)
       ug_table.rows[1..-1].each do |row|
         if row[0].text == group_name
-          row[-1].find(:css, 'a[onclick*=edit_storage_pool_policy]').click
+          row[-1].find(:css, 'a.action.edit_user_group').click
           break;
         end
       end

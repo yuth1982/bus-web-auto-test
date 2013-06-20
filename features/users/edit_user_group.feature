@@ -9,7 +9,7 @@ Feature: Edit existing user group
       | period | reseller type | reseller quota | server plan | net terms | company name              |
       | 12     | Silver        | 100            | yes         | yes       | [Bundled] Edit User Group |
     Then New partner should be created
-    And I enable stash for the partner with default stash storage
+    And I enable stash for the partner
     And I act as newly created partner
     When I edit (default user group) Bundled user group:
       | storage_type  |
@@ -59,7 +59,7 @@ Feature: Edit existing user group
       | period | users | server plan | net terms | company name               |
       | 12     | 10    | 100 GB      | yes       | [Itemized] Edit User Group |
     Then New partner should be created
-    And I enable stash for the partner with default stash storage
+    And I enable stash for the partner
     And I act as newly created partner
     When I edit (default user group) Itemized user group:
       | desktop_storage_type | server_storage_type |
