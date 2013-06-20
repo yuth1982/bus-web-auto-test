@@ -75,8 +75,8 @@ Feature: Notify about and collect past-due balances
     And I change newly created partner admin email account status to Active Dunning 2
     Then Account status should be changed
     When I search emails by keywords:
-      | from                    | subject               | content                  |
-      | AccountManager@mozy.com | [Mozy] SECOND NOTICE  | (Visa) ************@XXXX |
+      | from                    | subject                                  | date  | content                             |
+      | AccountManager@mozy.com | [Mozy] Mozy subscription invoice overdue | today |<%=@partner.credit_card.first_name%> |
     Then I should see 1 email(s)
 
   @TC.16149 @slow @firefox
@@ -89,8 +89,8 @@ Feature: Notify about and collect past-due balances
     And I change newly created partner admin email account status to Active Dunning 3
     Then Account status should be changed
     When I search emails by keywords:
-      | from                    | subject                                         | content         |
-      | AccountManager@mozy.com | [Mozy] Your account will be suspended in 7 days | Hi, @first_name |
+      | from                    | date  | content                              |
+      | AccountManager@mozy.com | today | <%=@partner.credit_card.first_name%> |
     Then I should see 1 email(s)
 
   @TC.16243 @slow @firefox
@@ -103,8 +103,8 @@ Feature: Notify about and collect past-due balances
     And I change newly created partner admin email account status to Suspended
     Then Account status should be changed
     When I search emails by keywords:
-      | from        | subject                                    | content           |
-      | ar@mozy.com | There was a problem with your Mozy payment | Dear, @first_name |
+      | from        | subject                   | date  | content                             |
+      | ar@mozy.com | Account Suspension Notice | today |<%=@partner.credit_card.first_name%> |
     Then I should see 1 email(s)
 
   @TC.16165 @slow @firefox
@@ -117,8 +117,8 @@ Feature: Notify about and collect past-due balances
     And I change newly created partner admin email account status to Active Dunning 1
     Then Account status should be changed
     When I search emails by keywords:
-      | from                    | subject                               | content         |
-      | AccountManager@mozy.com | [Mozy] Mozy invoice, due upon receipt | Hi, @admin_first_name |
+      | from                    | subject                               | date  | content                             |
+      | AccountManager@mozy.com | [Mozy] Mozy invoice, due upon receipt | today | <%=@partner.admin_info.first_name%> |
     Then I should see 1 email(s)
 
   @TC.16166 @slow @firefox
@@ -131,8 +131,8 @@ Feature: Notify about and collect past-due balances
     And I change newly created partner admin email account status to Active Dunning 2
     Then Account status should be changed
     When I search emails by keywords:
-      | from                    | subject                                  | content               |
-      | AccountManager@mozy.com | [Mozy] Mozy subscription invoice overdue | Hi, @admin_first_name |
+      | from                    | subject                                  | date  | content                             |
+      | AccountManager@mozy.com | [Mozy] Mozy subscription invoice overdue | today | <%=@partner.admin_info.first_name%> |
     Then I should see 1 email(s)
 
   # need update subject information
@@ -146,8 +146,8 @@ Feature: Notify about and collect past-due balances
     And I change newly created partner admin email account status to Active Dunning 3
     Then Account status should be changed
     When I search emails by keywords:
-      | from                    | subject                                                      | content               |
-      | AccountManager@mozy.com | [Mozy] Your account is suspended all users unable to back up | Hi, @admin_first_name |
+      | from                    | date  | content                             |
+      | AccountManager@mozy.com | today | <%=@partner.admin_info.first_name%> |
     Then I should see 1 email(s)
 
   @TC.17978 @slow @firefox
@@ -160,8 +160,8 @@ Feature: Notify about and collect past-due balances
     And I change newly created partner admin email account status to Suspended
     Then Account status should be changed
     When I search emails by keywords:
-      | from        | subject                   | content                |
-      | ar@mozy.com | Account Suspension Notice | Dear @admin_first_name |
+      | from        | subject                   | date  | content                              |
+      | ar@mozy.com | Account Suspension Notice | today | <%=@partner.admin_info.full_name%> |
     Then I should see 1 email(s)
 
   #@TC.16114
