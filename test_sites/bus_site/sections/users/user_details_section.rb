@@ -16,6 +16,7 @@ module Bus
     element(:change_user_group_link, xpath: "//span[starts-with(@id,'user-display-usergroup-')]//a[text()='(change)']")
     element(:change_user_group_submit_button, xpath: "//span[starts-with(@id,'user-change-usergroup-')]//input[@name='commit']")
     element(:user_group_search_img, css: "img[alt='Search-button-icon']")
+    element(:user_group_details_link, xpath: "//span[starts-with(@id,'user-display-usergroup-')]//a[starts-with(@href, '/user_groups/show/')]")
     element(:change_partner_link, xpath: "//span[starts-with(@id,'user-display-partner-')]//a[text()='(change)']")
     element(:change_partner_submit_button, xpath: "//span[starts-with(@id,'user-change-partner-')]//input[@name='commit']")
     element(:view_product_keys_link, xpath: "//a[text()='(View Product Keys)']")
@@ -590,6 +591,10 @@ module Bus
     # @return [nothing]
     def send_keys_button_disabled?
       send_keys_btn['disabled'] == 'true'
+    end
+
+    def click_user_group_details_link
+      user_group_details_link.click
     end
 
     private

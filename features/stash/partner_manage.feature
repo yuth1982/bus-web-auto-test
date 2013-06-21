@@ -13,24 +13,21 @@ Feature:
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner with 5 GB stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 5 GB (change)          |
+      | Enable Stash: |
+      | Yes (change)  |
     When I act as newly created partner account
-    And I add a new user to a MozyEnterprise partner:
-      | name           | enable stash | stash quota |
-      | TC.19045 user1 | yes          | 10          |
-    Then New user should be created
-    And I add a new user to a MozyEnterprise partner:
-      | name           | enable stash | stash quota |
-      | TC.19045 user2 | yes          | 15          |
-    Then New user should be created
+    And I add new user(s):
+      | name           | user_group           | storage_type | devices | enable_stash |
+      | TC.19045 user1 | (default user group) | Desktop      | 1       | yes          |
+      | TC.19045 user2 | (default user group) | Desktop      | 1       | yes          |
+    Then 2 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User            | Name           | User Group           | Stash   | Storage |
-      | @new_user_email | TC.19045 user2 | (default user group) | Enabled | 15 GB   |
-      | @new_user_email | TC.19045 user1 | (default user group) | Enabled | 10 GB   |
+      | User                     | Name           | Stash   | Machines | Storage         | Storage Used  | Created | Backed Up |
+      | <%=@new_users[1].email%> | TC.19045 user2 | Enabled | 0        | Desktop: Shared | Desktop: None | today   | never     |
+      | <%=@new_users[0].email%> | TC.19045 user1 | Enabled | 0        | Desktop: Shared | Desktop: None | today   | never     |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -40,24 +37,21 @@ Feature:
       | period | base plan | net terms |
       | 12     | 100 GB    | yes       |
     Then New partner should be created
-    When I enable stash for the partner with 5 GB stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 5 GB (change)          |
+      | Enable Stash: |
+      | Yes (change)  |
     When I act as newly created partner account
-    And I add a new user to a MozyPro partner:
-      | name           | enable stash | stash quota |
-      | TC.19057 user1 | yes          | 10          |
-    Then New user should be created
-    And I add a new user to a MozyPro partner:
-      | name           | enable stash | stash quota |
-      | TC.19057 user2 | yes          | 15          |
-    Then New user should be created
+    And I add new user(s):
+      | name            | storage_type | devices | enable_stash |
+      | TC.19057.1-user | Desktop      | 1       | yes          |
+      | TC.19057.2-user | Desktop      | 1       | yes          |
+    Then 2 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User            | Name           | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      | @new_user_email | TC.19057 user2 | Enabled | 0        | 15 GB   | none         | today   | never     |
-      | @new_user_email | TC.19057 user1 | Enabled | 0        | 10 GB   | none         | today   | never     |
+      | User                     | Name            | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
+      | <%=@new_users[1].email%> | TC.19057.2-user | Enabled | 0        | Shared  | None         | today   | never     |
+      | <%=@new_users[0].email%> | TC.19057.1-user | Enabled | 0        | Shared  | None         | today   | never     |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -221,12 +215,12 @@ Feature:
       | period | base plan |
       | 12     | 100 GB    |
     Then New partner should be created
-    When I enable stash for the partner with default stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 2 GB (change)          |
+      | Enable Stash: |
+      | Yes (change)  |
     When I disable stash for the partner
     Then Partner general information should be:
       | Enable Stash: |
-      | No            |
+      | No (change)   |
     When I delete partner account

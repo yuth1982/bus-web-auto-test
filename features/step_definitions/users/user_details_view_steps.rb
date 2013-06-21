@@ -296,3 +296,13 @@ Then(/^The range of machine max for (.+) by tooltips should be:$/) do |machine, 
   # table is a | 0   | 12  |
   @bus_site.admin_console_page.user_details_section.check_machine_max_range(machine, range.hashes.first)
 end
+
+When /^I view details of (.+)'s user group$/ do |user|
+  step %{I search user by:}, table(%{
+      | keywords |
+      | #{user}  |
+  })
+  step %{I view user details by #{user}}
+  @bus_site.admin_console_page.user_details_section.click_user_group_details_link
+  @bus_site.admin_console_page.user_details_section.wait_until_bus_section_load
+end

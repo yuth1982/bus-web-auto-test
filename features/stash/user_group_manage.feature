@@ -13,20 +13,23 @@ Feature: User group stash setting management
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner with default stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 2 GB (change)          |
+      | Enable Stash: |
+      | Yes (change)  |
     When I act as newly created partner account
-    And I add a new user group:
-      | name           |
-      | TC.19001 group |
-    Then New user group should be created
-    When I navigate to List User Groups section from bus admin console page
-    When I view TC.19001 group user group details
+    And I add a new Itemized user group:
+      | name           | desktop_storage_type | desktop_devices | enable_stash |
+      | TC.19001 group | Shared               | 5               | yes          |
+    Then TC.19001 group user group should be created
+    And I add new user(s):
+      | name            | user_group     | storage_type | devices |
+      | TC.19001.1-user | TC.19001 group | Desktop      | 1       |
+    Then 1 new user should be created
+    When I view details of TC.19001.1-user's user group
     Then User group details should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 2 GB (change)          |
+      | Enable Stash: |
+      | Yes (change)  |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -65,20 +68,27 @@ Feature: User group stash setting management
       | period | users | net terms |
       | 12     | 10    | yes       |
     Then New partner should be created
-    When I enable stash for the partner with default stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 2 GB (change)          |
+      | Enable Stash: |
+      | Yes (change)  |
     When I act as newly created partner account
-    And I add a new user group:
-      | name           | stash quota |
-      | TC.19004 group | 10          |
-    Then New user group should be created
-    When I navigate to List User Groups section from bus admin console page
-    When I view newly created user group name user group details
+    And I add a new Itemized user group:
+      | name           | desktop_storage_type | desktop_devices | enable_stash |
+      | TC.19004 group | Shared               | 5               | yes          |
+    Then TC.19004 group user group should be created
+    And I add new user(s):
+      | name            | user_group     | storage_type | devices |
+      | TC.19004.1-user | TC.19004 group | Desktop      | 1       |
+    Then 1 new user should be created
+    And I add a new Itemized user group:
+      | name | desktop_storage_type | desktop_devices |
+      | Test | Shared               | 5               |
+    Then Test user group should be created
+    When I view details of TC.19004.1-user's user group
     Then User group details should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 10 GB (change)         |
+      | Enable Stash: |
+      | Yes (change)  |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -89,8 +99,15 @@ Feature: User group stash setting management
       | 1      | Silver        | 100            |
     Then New partner should be created
     And I act as newly created partner account
-    When I navigate to List User Groups section from bus admin console page
-    When I view (default user group) * user group details
+    And I add new user(s):
+      | name            | user_group           | storage_type | devices |
+      | TC.19005.1-user | (default user group) | Desktop      | 1       |
+    Then 1 new user should be created
+    And I add a new Bundled user group:
+      | name | storage_type |
+      | Test | Shared       |
+    Then Test user group should be created
+    When I view details of TC.19005.1-user's user group
     Then I should not see Enable Stash text on user group details section
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
@@ -120,17 +137,24 @@ Feature: User group stash setting management
       | period | reseller type | reseller quota |
       | 1      | Platinum      | 100            |
     Then New partner should be created
-    When I enable stash for the partner with 15 GB stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 15 GB (change)         |
+      | Enable Stash: |
+      | Yes (change)  |
     When I act as newly created partner account
-    When I navigate to List User Groups section from bus admin console page
-    And I view (default user group) * user group details
+    And I add new user(s):
+      | name            | user_group           | storage_type | devices | enable_stash |
+      | TC.19007.1-user | (default user group) | Desktop      | 1       | yes          |
+    Then 1 new user should be created
+    And I add a new Bundled user group:
+      | name | storage_type |
+      | Test | Shared       |
+    Then Test user group should be created
+    When I view details of TC.19007.1-user's user group
     And I enable stash for the user group with 20 GB stash storage
     Then User group details should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 20 GB (change)         |
+      | Enable Stash: |
+      | Yes (change)  |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -171,28 +195,33 @@ Feature: User group stash setting management
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner with 15 GB stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 15 GB (change)         |
+      | Enable Stash: |
+      | Yes (change)  |
     When I act as newly created partner account
-    And I add a new user to a MozyEnterprise partner:
-      | name           | enable stash |
-      | TC.19009 user  | yes          |
-    Then New user should be created
-    When I navigate to List User Groups section from bus admin console page
-    Then User groups list table should be:
-      | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota            | Desktop Keys | Desktop Quota              |
-      | (default user group) * | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 active) / 0.0  | 0 / 10       | 0.0 (15.0 active) / 250.0  |
-    When I view (default user group) * user group details
+    And I add new user(s):
+      | name            | user_group           | storage_type | devices | enable_stash |
+      | TC.19009.1-user | (default user group) | Desktop      | 1       | yes          |
+    Then 1 new user should be created
+    When I navigate to User Group List section from bus admin console page
+    And Itemized user groups table should be:
+      | Group Name           | Stash | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total |
+      | (default user group) | true  | Shared               |                    | 0                    | 0                    | 10                    |
+    And I add a new Itemized user group:
+      | name | desktop_storage_type | desktop_devices |
+      | Test | Shared               | 5               |
+    Then Test user group should be created
+    When I view details of TC.19009.1-user's user group
     And I cancel disable stash for the user group
     Then User group details should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 15 GB (change)         |
-    When I refresh List User Group section
-    And User groups list table should be:
-      | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota            | Desktop Keys | Desktop Quota              |
-      | (default user group) * | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 active) / 0.0  | 0 / 10       | 0.0 (15.0 active) / 250.0  |
+      | Enable Stash: |
+      | Yes (change)  |
+    When I navigate to User Group List section from bus admin console page
+    And Itemized user groups table should be:
+      | Group Name           | Stash | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total |
+      | (default user group) | true  | Shared               |                    | 0                    | 0                    | 5                     |
+      | Test                 | false | Shared               |                    | 0                    | 0                    | 5                     |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -202,22 +231,22 @@ Feature: User group stash setting management
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner with 20 GB stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 20 GB (change)         |
+      | Enable Stash: |
+      | Yes (change)  |
     When I act as newly created partner account
-    When I navigate to List User Groups section from bus admin console page
-    And I view (default user group) * user group details
+    And I add new user(s):
+      | name            | user_group           | storage_type | devices | enable_stash |
+      | TC.19010.1-user | (default user group) | Desktop      | 1       | yes          |
+    Then 1 new user should be created
+    And I add a new Itemized user group:
+      | name | desktop_storage_type | desktop_devices |
+      | Test | Shared               | 5               |
+    Then Test user group should be created
+    When I view details of TC.19010.1-user's user group
     And I disable stash for the user group
-    And I add a new user to a MozyEnterprise partner:
-      | name           |
-      | TC.19010 user  |
-    Then New user should be created
-    When I search user by:
-    | keywords      |
-    | TC.19010 user |
-    And I view user details by newly created user email
+    And I refresh User Details section
     Then I should not see Enable Stash: setting on user details section
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
@@ -247,36 +276,34 @@ Feature: User group stash setting management
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner with 10 GB stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 10 GB (change)         |
+      | Enable Stash: |
+      | Yes (change)  |
     When I act as newly created partner account
-    And I add a new user to a MozyEnterprise partner:
-      | name             | enable stash |
-      | TC.19012.1 user  | yes          |
-    Then New user should be created
-    When I refresh Add New User section
-    And I add a new user to a MozyEnterprise partner:
-      | name             |
-      | TC.19012.2 user  |
-    Then New user should be created
-    When I refresh Add New User section
-    And I add a new user to a MozyEnterprise partner:
-      | name             |
-      | TC.19012.3 user  |
-    Then New user should be created
-    When I navigate to List User Groups section from bus admin console page
-    And I view (default user group) * user group details
+    And I add new user(s):
+      | name            | user_group           | storage_type | devices | enable_stash |
+      | TC.19012.1-user | (default user group) | Desktop      | 1       | yes          |
+    Then 1 new user should be created
+    And I add new user(s):
+      | name            | user_group           | storage_type | devices | enable_stash |
+      | TC.19012.2-user | (default user group) | Desktop      | 1       | no           |
+      | TC.19012.3-user | (default user group) | Desktop      | 1       | no           |
+    Then 2 new user should be created
+    And I add a new Itemized user group:
+      | name | desktop_storage_type | desktop_devices |
+      | Test | Shared               | 5               |
+    Then Test user group should be created
+    When I view details of TC.19012.1-user's user group
     And I enable stash for all users
-    Then Popup window message should be Do you want to create a Stash for all 2 users with 20 GB total Desktop storage assigned for Stash usage?
+    Then Popup window message should be Do you want to create a Stash for all 2 users?
     When I click Continue button on popup window
     And I refresh User Group Details section
     Then User group users list details should be:
-    | Name            | Stash   | Machines | Storage | Storage Used |
-    | TC.19012.3 user | Enabled | 0        | 10 GB   | none         |
-    | TC.19012.2 user | Enabled | 0        | 10 GB   | none         |
-    | TC.19012.1 user | Enabled | 0        | 10 GB   | none         |
+    | Name            | Stash   | Machines | Storage         | Storage Used  |
+    | TC.19012.3-user | Enabled | 0        | Desktop: Shared | Desktop: None |
+    | TC.19012.2-user | Enabled | 0        | Desktop: Shared | Desktop: None |
+    | TC.19012.1-user | Enabled | 0        | Desktop: Shared | Desktop: None |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
