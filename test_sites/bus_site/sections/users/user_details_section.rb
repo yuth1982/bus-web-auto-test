@@ -223,6 +223,7 @@ module Bus
     def send_stash_invitation_email
       send_invitation_link.click
       wait_until_bus_section_load
+      sleep 5 # wait for email to send
     end
 
     # Public: Click delete link
