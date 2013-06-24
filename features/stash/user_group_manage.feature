@@ -257,17 +257,13 @@ Feature: User group stash setting management
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner with 15 GB stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 15 GB (change)         |
-    When I act as newly created partner account
-    And I navigate to List User Groups section from bus admin console page
-    And I view (default user group) * user group details
-    When I enable stash for all users
-    Then Popup window message should be Stash has already been enabled for all users in this user group. No changes have been made.
+      | Enable Stash: |
+      | Yes (change)  |
+    When I try to add stash to all users for the partner
+    Then Popup window message should be Nothing got changed. All users in this partner already have Stash.
     And I click Close button on popup window
-    When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
   @TC.19012 @BSA.2030

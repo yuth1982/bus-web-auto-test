@@ -164,9 +164,13 @@ When /^I disable stash for the partner$/ do
 end
 
 When /^I add stash to all users for the partner$/ do
-  @bus_site.admin_console_page.partner_details_section.add_stash_to_all_users
-  @bus_site.admin_console_page.click_continue
+  step 'I try to add stash to all users for the partner'
+  @bus_site.admin_console_page.click_close
   @bus_site.admin_console_page.partner_details_section.wait_until_bus_section_load
+end
+
+When /^I try to add stash to all users for the partner$/ do
+  @bus_site.admin_console_page.partner_details_section.add_stash_to_all_users
 end
 
 # From partner details view, click Status: Active (change) link
