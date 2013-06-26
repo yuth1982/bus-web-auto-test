@@ -15,6 +15,9 @@ When /^I search user by:$/ do |search_key_table|
   keywords = attributes["keywords"] || ""
   filter = attributes["filter"] || "None"
   partner_filter = attributes["user type"] || ""
+  attributes.each do |_, v|
+    v.replace ERB.new(v).result(binding)
+  end
 
   @bus_site.admin_console_page.search_list_users_section.search_user(keywords, filter, partner_filter)
 end
@@ -70,6 +73,7 @@ When /^The users table should be empty$/ do
 end
 
 When /^I view user details by (.+)$/ do |user|
+  user.replace ERB.new(user).result(binding)
   if @user.nil?
     @bus_site.admin_console_page.search_list_users_section.view_user_details(user[0..26])
   else

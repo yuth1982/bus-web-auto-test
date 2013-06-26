@@ -121,3 +121,8 @@ phoenix:
     windows_client_manual:      Windows Client Manual
     os_x_client_manual:         OS X Client Manual
     mozyhome_support_portal:    MozyHome Support Portal
+
+fedid:
+  user_email:                   auto@mtdev.mozypro.local
+  user_name:                    auto
+  subdomain:                    fedid01

@@ -97,7 +97,7 @@ module LDAPHelper
   # Public: modify a rdn
   #
   # can not use the rename functions, sucks, So I have to use another way, delete it and then add it
-  def modify_rdn(user_name, new_name)
+  def modify_rdn(user_name, new_name, user)
     dn = "cn=#{user_name}, #{TREEBASE}"
     ldap = Net::LDAP.new :host => HOST,
                          :port => PORT,
@@ -109,8 +109,8 @@ module LDAPHelper
     ldap.open do |ldap|
  #     p ldap.rename(:olddn => dn, :newrdn => "cn=#{new_name}")
       delete_user(user_name)
-      add_user(new_name, "#{user_name}#{EMAIL_POSTFIX}")
+      add_user(new_name, "#{user}")
     end
-    Log.debug("rename user #{user_name} to AD: #{new_name}")
+    Log.debug("rename user #{user} from #{user_name} to #{new_name} in AD")
   end
 end

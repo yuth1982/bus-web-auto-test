@@ -53,13 +53,12 @@ end
 When /^I load attributes$/ do
   @bus_site.admin_console_page.authentication_policy_section.load_attributes
   # Verify all input fields are disabled
-  @bus_site.admin_console_page.authentication_policy_section.auth_URL_disabled?.should be_true
-  while @bus_site.admin_console_page.authentication_policy_section.auth_URL_disabled? do
-  end
+  #@bus_site.admin_console_page.authentication_policy_section.auth_URL_disabled?.should be_true
 end
 
 Then /^SAML authentication information should include$/ do |table|
   # table is a | mozyqa2.horizonmanager.com/SAAS/API/1.0/GET/federation/request?s=1876 | horizonmanager.com| glbv7YsYBdLHAtbX2Geg==|pending
+  @bus_site.admin_console_page.authentication_policy_section.wait_until_bus_section_load
   data = table.hashes
   data.each do |d|
     @bus_site.admin_console_page.authentication_policy_section.auth_URL.should include(d[:URL])
@@ -309,8 +308,8 @@ Then /^I get the user (.+) details in the console$/ do |username|
   LDAPHelper.show_user(username)
 end
 
-When /^I modify a user (.+) to (.+) in the AD$/ do |username, new_name|
-  LDAPHelper.modify_rdn(username, new_name)
+When /^I modify the username from (.+) to (.+) for user (.+) in the AD$/ do |username, new_name, user|
+  LDAPHelper.modify_rdn(username, new_name, user)
 end
 
 When /^I choose to daily sync at (\d+) GMT$/ do |hour|
