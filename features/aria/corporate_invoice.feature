@@ -7,7 +7,7 @@ Feature: Corporate Invoices
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.15686
+  @TC.15686 @bus @2.0 @corporate_invoices
   Scenario: 15686 Verify Aria sends email when create a new MozyPro partner
     When I add a new MozyPro partner:
       | period | base plan |
@@ -22,7 +22,7 @@ Feature: Corporate Invoices
       | ar@mozy.com | qa1@decho.com | Mozy Inc Account Statement | @company_address |
     Then I should see 1 email(s)
 
-  @TC.15687
+  @TC.15687 @bus @2.0 @corporate_invoices
   Scenario: 15687 Verify Aria sends invoice email when change subscription period of a MozyPro partner
     When I add a new MozyPro partner:
       | period | base plan |
@@ -36,7 +36,7 @@ Feature: Corporate Invoices
       | ar@mozy.com | qa1@decho.com | Mozy Inc Account Statement | @company_address |
     Then I should see 2 email(s)
 
-  @TC.17841
+  @TC.17841 @bus @2.0 @corporate_invoices
   Scenario: 15686 Verify Aria sends email when create a new MozyEnterprise partner
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -51,7 +51,7 @@ Feature: Corporate Invoices
       | ar@mozy.com | qa1@decho.com | Mozy Inc Account Statement | @company_address |
     Then I should see 1 email(s)
 
-  @TC.17842 @slow @javascript
+  @TC.17842 @slow @javascript @bus @2.0 @corporate_invoices
   Scenario: 17842 Verify Aria sends invoice email when change subscription period of a MozyEnterprise partner
     When I add a new MozyEnterprise partner:
       | period | users |

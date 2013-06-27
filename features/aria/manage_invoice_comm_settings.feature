@@ -6,7 +6,7 @@ Feature:
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.15229
+  @TC.15229 @bus @2.0 @manage_invoice_communication_settings
   Scenario: 15229 Verify Receive Mozy Account Statements set to Yes for new partner in Bus
     When I add a new MozyPro partner:
       | period | base plan |
@@ -23,7 +23,7 @@ Feature:
       | Receive Mozy Email Notifications? | No (change)       |
       | Receive Mozy Account Statements?  | Yes (change)      |
 
-  @TC.15230 @firefox
+  @TC.15230 @firefox @bus @2.0 @manage_invoice_communication_settings
   Scenario: 15230 Alter notification method between HTML email and Printable no email in Aria
     When I add a new MozyPro partner:
       | period | base plan |
@@ -35,7 +35,7 @@ Feature:
     When I set newly created partner admin email account notification method to HTML Email
     Then newly created partner admin email account current notification method is set to HTML Email
 
-  @TC.15448 @firefox
+  @TC.15448 @firefox @bus @2.0 @manage_invoice_communication_settings
   Scenario: 15448 Verify notification methods have HTML email and Printable no email
     When I add a new MozyPro partner:
       | period | base plan  |
@@ -47,7 +47,7 @@ Feature:
       | HTML Email           |
       | Printable (no Email) |
 
-  @TC.15495 @firefox
+  @TC.15495 @firefox @bus @2.0 @manage_invoice_communication_settings
   Scenario: 15495 Verify aria notification method when set Receive Mozy Account Statements to No
     When I add a new MozyPro partner:
       | period | base plan |
@@ -59,7 +59,7 @@ Feature:
     When I log in aria admin console as administrator
     Then newly created partner admin email account current notification method is set to Printable (no Email)
 
-  @TC.15718 @firefox
+  @TC.15718 @firefox @bus @2.0 @manage_invoice_communication_settings
   Scenario: 15718 Verify notification method set to HTML Email for new Monthly MozyPro partner
     When I add a new MozyPro partner:
       | period | base plan |
@@ -68,7 +68,7 @@ Feature:
     When I log in aria admin console as administrator
     Then newly created partner admin email account current notification method is set to HTML Email
 
-  @TC.17590 @firefox
+  @TC.17590 @firefox @bus @2.0 @manage_invoice_communication_settings
   Scenario: 17590 Verify notification method set to HTML Email for new Monthly MozyEnterprise partner
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -77,7 +77,7 @@ Feature:
     When I log in aria admin console as administrator
     Then newly created partner admin email account current notification method is set to HTML Email
 
-  @TC.17591 @firefox
+  @TC.17591 @firefox  @bus @2.0 @manage_invoice_communication_settings
   Scenario: 17591 Verify notification method set to HTML Email for new Monthly Reseller partner
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
