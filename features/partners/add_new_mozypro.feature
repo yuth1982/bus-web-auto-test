@@ -22,14 +22,14 @@ Feature: Add a new partner
     And New partner should be created
     And Partner general information should be:
       | Status:         | Root Admin:          | Root Role:                  | Parent: | Next Charge:  | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro | after 1 month | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro | after 1 month | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
       | MozyPro       | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
-      | Backup Keys            |          |
-      | Backup Key Soft Cap    | Disabled |
-      | Server Enabled         | Disabled |
+      | Backup Devices         |          |
+      | Backup Device Soft Cap | Disabled |
+      | Server                 | Disabled |
       | Cloud Storage (GB)     |          |
       | Stash Users:           |          |
       | Default Stash Storage: |          |
