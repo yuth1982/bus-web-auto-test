@@ -6,7 +6,7 @@ Feature: Manage admin capability change
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.700
+  @TC.700 @bus @admin @partner_capability_changes
   Scenario: Check partners list/view check to make sure you can't change the name
     When I navigate to List Roles section from bus admin console page
     And I clean all roles with name which started with "$AUTOTEST$"
@@ -33,7 +33,7 @@ Feature: Manage admin capability change
     And I delete lastest created admin
     And I delete role $AUTOTEST$ATC700
 
-  @TC.699
+  @TC.699 @bus @admin @partner_capability_changes
   Scenario: Check Delete a partner with invalid password
     When I navigate to List Roles section from bus admin console page
     And I clean all roles with name which started with "$AUTOTEST$"
@@ -63,7 +63,7 @@ Feature: Manage admin capability change
     And I delete lastest created admin
     And I delete role $AUTOTEST$699
 
-  @TC.698
+  @TC.698 @bus @admin @partner_capability_changes
   Scenario: Check Delete a partner works
     When I navigate to Add New Role section from bus admin console page
     And I add a new role:
@@ -95,7 +95,7 @@ Feature: Manage admin capability change
     And I delete role ATC698
 
 
-  @TC.697
+  @TC.697 @bus @admin @partner_capability_changes
   Scenario: Check partners Delete, List/View capability
     When I navigate to Add New Role section from bus admin console page
     And I add a new role:
@@ -125,7 +125,7 @@ Feature: Manage admin capability change
       |leongh+atc697@mozy.com |
     And I delete role ATC697
 
-  @TC.696
+  @TC.696 @bus @admin @partner_capability_changes
   Scenario: Check partners Edit, List/View capability
     When I navigate to Add New Role section from bus admin console page
     And I add a new role:
@@ -164,7 +164,7 @@ Feature: Manage admin capability change
       |leongh+atc696@mozy.com |
     And I delete role ATC696
 
-  @TC.695
+  @TC.695 @bus @admin @partner_capability_changes
   Scenario: Check partners Add, List/View capability
     When I navigate to Add New Role section from bus admin console page
     And I add a new role:
