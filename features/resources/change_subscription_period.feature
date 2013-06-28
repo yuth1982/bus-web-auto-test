@@ -7,7 +7,7 @@ Feature: Change subscription period
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.15231
+  @TC.15231 @bus @change_period
   Scenario: 15231 MozyPro US - Change Period from Monthly to Yearly - CC
     When I add a new MozyPro partner:
       | period | base plan |
@@ -24,7 +24,7 @@ Feature: Change subscription period
       | Renewal Date:   | after 1 year  | Renewal Period: | Use Current Period  |
     And I delete partner account
 
-  @TC.15232
+  @TC.15232 @bus @change_period
   Scenario: 15232 MozyPro FR - Change Period from Yearly to Biennially - CC
     When I add a new MozyPro partner:
       | period | base plan | create under   | country |
@@ -41,7 +41,7 @@ Feature: Change subscription period
       | Renewal Date:   | after 2 years | Renewal Period: | Use Current Period  |
     And I delete partner account
 
-  @TC.15233
+  @TC.15233 @bus @change_period
   Scenario: 15233 MozyPro DE - Change Period from Monthly to Biennially - CC
     When I add a new MozyPro partner:
       | period | base plan | create under    | country |
@@ -58,7 +58,7 @@ Feature: Change subscription period
       | Renewal Date:   | after 2 years | Renewal Period: | Use Current Period  |
     And I delete partner account
 
-  @TC.15234
+  @TC.15234 @bus @change_period
   Scenario: 15234 MozyPro IE - Change Period from Biennially to Yearly - Net Terms
     When I add a new MozyPro partner:
       | period | base plan | create under    | country | net terms |
@@ -75,7 +75,7 @@ Feature: Change subscription period
       | Renewal Date:   | after 2 years | Renewal Period: | Yearly    |
     And I delete partner account
 
-  @TC.15235
+  @TC.15235 @bus @change_period
   Scenario: 15235 MozyPro UK - Change Period from Yearly to Monthly - Net Terms
     When I add a new MozyPro partner:
       | period | base plan | create under | country        | net terms |
@@ -92,7 +92,7 @@ Feature: Change subscription period
         | Renewal Date:   | after 1 year  | Renewal Period: | Monthly  |
     And I delete partner account
 
-  @TC.15236
+  @TC.15236 @bus @change_period
   Scenario: 15236 MozyPro US - Change Period from Biennially to Monthly - Net Terms
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -109,7 +109,7 @@ Feature: Change subscription period
       | Renewal Date:   | after 2 years | Renewal Period: | Monthly     |
     And I delete partner account
 
-  @TC.15238
+  @TC.15238 @bus @change_period
   Scenario: 15238 MozyEnterprise - Change Period from Yearly to Biennially - CC
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -126,7 +126,7 @@ Feature: Change subscription period
       | Renewal Date:   | after 2 years | Renewal Period: | Use Current Period  |
     And I delete partner account
 
-  @TC.15239
+  @TC.15239 @bus @change_period
   Scenario: 15239 MozyEnterprise - Change Period from Biennially to 3 Years - CC
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -143,7 +143,7 @@ Feature: Change subscription period
       | Renewal Date:   | after 3 years | Renewal Period: | Use Current Period  |
     And I delete partner account
 
-  @TC.15240
+  @TC.15240 @bus @change_period
   Scenario: 15240 MozyEnterprise - Change Period from Yearly to 3 Years - CC
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -160,7 +160,7 @@ Feature: Change subscription period
       | Renewal Date:   | after 3 years | Renewal Period: | Use Current Period  |
     And I delete partner account
 
-  @TC.15241
+  @TC.15241 @bus @change_period
   Scenario: 15241 MozyEnterprise - Change Period from Biennially to Yearly - Net Terms
     When I add a new MozyEnterprise partner:
       | period | users | net terms |
@@ -177,7 +177,7 @@ Feature: Change subscription period
       | Renewal Date:   | after 2 years | Renewal Period: | Yearly    |
     And I delete partner account
 
-  @TC.15243
+  @TC.15243 @bus @change_period
   Scenario: 15243 MozyEnterprise - Change Period from 3 Years to Biennially - Net Terms
     When I add a new MozyEnterprise partner:
       | period | users | net terms |
@@ -194,7 +194,7 @@ Feature: Change subscription period
       | Renewal Date:   | after 3 years | Renewal Period: | Biennially  |
     And I delete partner account
 
-  @TC.15244
+  @TC.15244 @bus @change_period
   Scenario: 15244 MozyEnterprise - Change Period from 3 Years to Yearly - Net Terms
     When I add a new MozyEnterprise partner:
       | period | users | net terms |
@@ -211,7 +211,7 @@ Feature: Change subscription period
       | Renewal Date:   | after 3 year  | Renewal Period: | Yearly    |
     And I delete partner account
 
-  @TC.15245
+  @TC.15245 @bus @change_period
   Scenario: 15245 Reseller US - Change Period from Monthly to Yearly - CC
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -228,7 +228,7 @@ Feature: Change subscription period
       | Renewal Date:   | after 1 year  | Renewal Period: | Use Current Period  |
     And I delete partner account
 
-  @TC.15246
+  @TC.15246 @bus @change_period
   Scenario: 15246 Reseller US - Change Period from Yearly to Monthly - Net Terms
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -245,7 +245,7 @@ Feature: Change subscription period
       | Renewal Date:   | after 1 year  | Renewal Period: | Monthly  |
     And I delete partner account
 
-  @TC.15383
+  @TC.15383 @bus @change_period
   Scenario: 15383 Verify Reseller confirmation message when change period to yearly
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -268,7 +268,7 @@ Feature: Change subscription period
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15384
+  @TC.15384 @bus @change_period
   Scenario: 15384 Verify MozyPro confirmation message when change period to biennially
     When I add a new MozyPro partner:
       | period | base plan |
@@ -291,7 +291,7 @@ Feature: Change subscription period
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15385
+  @TC.15385 @bus @change_period
   Scenario: 15385 Verify MozyEnterprise confirmation message when change period to 3 years
     When I add a new MozyEnterprise partner:
       | period | users |

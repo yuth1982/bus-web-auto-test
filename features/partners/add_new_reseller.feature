@@ -7,7 +7,7 @@ Feature: Add a new partner
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.18143
+  @TC.18143 @bus @2.5 @add_new_partner @reseller
   Scenario: 18143 Add New Reseller Partner - US - Monthly - Silver 500 GB - Server Plan - Coupon - CC
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | coupon              | country       | address           | city      | state abbrev | zip   | phone          |
@@ -47,7 +47,7 @@ Feature: Add a new partner
       | today | $0.00   | $0.00      | $0.00       |
     And I delete partner account
 
-  @TC.18146
+  @TC.18146 @bus @2.5 @add_new_partner @reseller
   Scenario: 18146 Add New Reseller Partner - FR - Yearly - Gold 500 GB - Server Plan - VAT - Coupon - CC
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | create under   | vat number    | coupon              | country | address           | city      | state | zip   | phone          |
@@ -87,7 +87,7 @@ Feature: Add a new partner
       | today | €0.00     | €0.00      | €0.00       |
     And I delete partner account
 
-  @TC.18149
+  @TC.18149 @bus @2.5 @add_new_partner @reseller
   Scenario: 18149 Add New Reseller Partner - DE - Monthly - Platinum 500 GB - Server Plan - VAT - Coupon - CC
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | create under    | vat number  | coupon              | country | address           | city      | state | zip   | phone          |
@@ -127,7 +127,7 @@ Feature: Add a new partner
       | today | €0.00   | €0.00      | €0.00       |
     And I delete partner account
 
-  @TC.18152
+  @TC.18152 @bus @2.5 @add_new_partner @reseller
   Scenario: 18152 Add New Reseller Partner - IE - Yearly - Silver 500 GB - Server Plan - 10 Add on - VAT - Coupon - CC
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | storage add on | create under    | vat number | coupon              | country | address           | city      | state | zip   | phone          |
@@ -169,7 +169,7 @@ Feature: Add a new partner
       | today | €0.00     | €0.00      | €0.00       |
     And I delete partner account
 
-  @TC.18153
+  @TC.18153 @bus @2.5 @add_new_partner @reseller
   Scenario: 18153 Add New Reseller Partner - UK - Monthly - Gold 500 GB - Server Plan -  10 Add on - VAT - Coupon - CC
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | storage add on | create under | vat number  | coupon              | country        | address           | city      | state | zip   | phone          |
@@ -210,7 +210,7 @@ Feature: Add a new partner
       | today | £0.00   | £0.00      | £0.00       |
     And I delete partner account
 
-  @TC.18155
+  @TC.18155 @bus @2.5 @add_new_partner @reseller
   Scenario: 18155 Add New Reseller Partner - US - Yearly - Platinum 500 GB - 10 Add on - Net Terms
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | storage add on | net terms | country       | address           | city      | state abbrev | zip   | phone          |
@@ -249,7 +249,7 @@ Feature: Add a new partner
       | today | $0.00     | $0.00      | $0.00       |
     And I delete partner account
 
-  @TC.17970
+  @TC.17970  @bus @2.5 @add_new_partner @reseller
   Scenario: 17970 Add New Reseller Partner - FR - Monthly - Silver 500 GB - Net Terms
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | create under   | net terms | country | address           | city      | state | zip   | phone          |
@@ -288,7 +288,7 @@ Feature: Add a new partner
       | today | €0.00   | €0.00      | €0.00       |
     And I delete partner account
 
-  @TC.17971
+  @TC.17971 @bus @2.5 @add_new_partner @reseller
   Scenario: 17971 Add New Reseller Partner - DE - Yearly - Gold 500 GB - Net Terms
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms | create under    | country | address           | city      | state | zip   | phone          |
@@ -327,7 +327,7 @@ Feature: Add a new partner
       | today | €0.00     | €0.00      | €0.00       |
     And I delete partner account
 
-  @TC.17972
+  @TC.17972 @bus @2.5 @add_new_partner @reseller
   Scenario: 17972 Add New Reseller Partner - IE - Monthly - Platinum 500 GB - Net Terms
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms | create under    | country | address           | city      | state | zip   | phone          |
@@ -366,7 +366,7 @@ Feature: Add a new partner
       | today | €0.00   | €0.00      | €0.00       |
     And I delete partner account
 
-  @TC.17973
+  @TC.17973 @bus @2.5 @add_new_partner @reseller
   Scenario: 17973 Add New Reseller Partner - UK - Yearly - Silver 500 GB - 10 Add on - Net Terms
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | storage add on | create under | net terms | country        | address           | city      | state | zip   | phone          |
@@ -406,7 +406,7 @@ Feature: Add a new partner
       | today | £0.00     | £0.00      | £0.00       |
     And I delete partner account
 
-  @TC.17974
+  @TC.17974 @bus @2.5 @add_new_partner @reseller
   Scenario: 17974 Add New Reseller Partner US Without Initial Purchases
     When I add a new Reseller partner:
       | period | country       | address           | city      | state abbrev | zip   | phone          |
@@ -438,13 +438,13 @@ Feature: Add a new partner
       | today | $0.00  | $0.00      | $0.00       |
     And I delete partner account
 
-  @TC.18722
+  @TC.18722 @bus @2.5 @add_new_partner @reseller
   Scenario: 18722 Verify Reseller partner has 2 period options
     When I navigate to Add New Partner section from bus admin console page
     Then Reseller partner subscription period options should be:
       | Monthly | Yearly |
 
-  @TC.20379
+  @TC.20379 @bus @2.5 @add_new_partner @reseller
   Scenario: 20379 Add New Reseller Partner - US - Monthly - Silver 500 GB - Server Plan - 100PercentDiscountCoupon - CC
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | coupon               |

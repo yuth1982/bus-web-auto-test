@@ -6,7 +6,7 @@ Feature: Add a new partner
 
   #
   # base creation cases for itemized pro
-  @TC.20843 @itemized
+  @TC.20843 @itemized @bus @2.5 @create_partner
   Scenario: 20843 Add New MozyPro Itemized Partner - US - Monthly - 10 GB
     When I log in to legacy bus01 as administrator
     And I successfully add an itemized MozyPro partner:
@@ -53,7 +53,7 @@ Feature: Add a new partner
   # base creation itemized (pro) partner w/ user group
   #   & adding machine, quota to accts will be in future commits
   #   all as setup steps for verification of migration of itemized partners to pooled storage
-  @TC.210XX @itemized
+  @TC.210XX @itemized @bus @2.5 @user_view @pooled_storage
   Scenario: 210XX Pooled Storage - Pro Itemized - User List View - removal of assigned/used quota
     When I log in to legacy bus01 as administrator
     And I successfully add an itemized MozyPro partner:
@@ -89,7 +89,7 @@ Feature: Add a new partner
 
   # RESELLERS HERE
   # base creation case for itemized reseller
-  @TC.20846 @itemized
+  @TC.20846 @itemized @bus @2.5
   Scenario: 20846 Add New Reseller Itemized Partner - US - Monthly - 10 GB
     When I log in to legacy bus01 as administrator
     And I successfully add an itemized Reseller partner:

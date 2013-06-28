@@ -10,7 +10,7 @@ Feature: Add a new user through phoenix
   #
   # 50 GB Cases
   #
-  @TC.13462 @smoke @month
+  @TC.13462 @smoke @month @bus @regression_test @phoenix @mozyhome
   Scenario: 13462 Add a new US monthly basic MozyHome user
     When I add a phoenix Home user:
       | period | base plan | country       |
@@ -21,7 +21,7 @@ Feature: Add a new user through phoenix
       | Total Charge                          | $5.99 |          | $5.99  |
     Then the user is successfully added.
 
-  @TC.13463 @smoke @year
+  @TC.13463 @smoke @year @bus @regression_test @phoenix @mozyhome
   Scenario: 13463 Add a new US yearly basic MozyHome user
     When I add a phoenix Home user:
       | period | base plan | country       |
@@ -32,7 +32,7 @@ Feature: Add a new user through phoenix
       | Total Charge                          | $65.89 |          | $65.89 |
     Then the user is successfully added.
 
-  @TC.13464 @smoke @biennial
+  @TC.13464 @smoke @biennial @bus @regression_test @phoenix @mozyhome
   Scenario: 13464 Add a new US biennial basic MozyHome user
     When I add a phoenix Home user:
       | period | base plan | country       |
@@ -43,7 +43,7 @@ Feature: Add a new user through phoenix
       | Total Charge                           | $125.79 |          | $125.79 |
     Then the user is successfully added.
 
-  @TC.13468 @smoke @month @IE
+  @TC.13468 @smoke @month @IE @bus @regression_test @phoenix @mozyhome
   Scenario: 13468 Add a new IE monthly basic MozyHome user
     When I add a phoenix Home user:
       | period | base plan | country |
@@ -54,7 +54,7 @@ Feature: Add a new user through phoenix
       | Total Charge                          | €4.99 |          | €4.99  |
     Then the user is successfully added.
 
-  @TC.13469 @smoke @year @IE
+  @TC.13469 @smoke @year @IE @bus @regression_test @phoenix @mozyhome
   Scenario: 13469 Add a new IE yearly basic MozyHome user
     When I add a phoenix Home user:
       | period  | base plan | country |
@@ -65,7 +65,7 @@ Feature: Add a new user through phoenix
       | Total Charge                         | €54.89 |          | €54.89 |
     Then the user is successfully added.
 
-  @TC.13470 @smoke @biennial @IE
+  @TC.13470 @smoke @biennial @IE @bus @regression_test @phoenix @mozyhome
   Scenario: 13470 Add a new IE biennial basic MozyHome user
     When I add a phoenix Home user:
       | period  | base plan | country |
@@ -76,7 +76,7 @@ Feature: Add a new user through phoenix
       | Total Charge                           | €104.79 |          | €104.79 |
     Then the user is successfully added.
 
-  @TC.13467 @smoke @month @UK
+  @TC.13467 @smoke @month @UK @bus @regression_test @phoenix @mozyhome
   Scenario: 13467 Add a new UK monthly basic MozyHome user
     When I add a phoenix Home user:
       | period | base plan | country        |
@@ -87,7 +87,7 @@ Feature: Add a new user through phoenix
       | Total Charge                          | £4.99 |          | £4.99  |
     Then the user is successfully added.
 
-  @TC.13471 @smoke @year @UK
+  @TC.13471 @smoke @year @UK @bus @regression_test @phoenix @mozyhome
   Scenario: 13471 Add a new UK yearly basic MozyHome user
     When I add a phoenix Home user:
       | period | base plan | country        |
@@ -98,7 +98,7 @@ Feature: Add a new user through phoenix
       | Total Charge                         | £54.89 |          | £54.89 |
     Then the user is successfully added.
 
-  @TC.13472 @smoke @biennial @UK
+  @TC.13472 @smoke @biennial @UK @bus @regression_test @phoenix @mozyhome
   Scenario: 13472 Add a new UK biennial basic MozyHome user
     When I add a phoenix Home user:
       | period | base plan | country        |
@@ -112,7 +112,7 @@ Feature: Add a new user through phoenix
   #
   # 125 GB Cases
   #
-  @TC.13477 @smoke @month
+  @TC.13477 @smoke @month @bus @regression_test @phoenix @mozyhome
   Scenario: 13477 Add a new US monthly basic MozyHome user
     When I add a phoenix Home user:
       | period | base plan | country       |
@@ -123,7 +123,7 @@ Feature: Add a new user through phoenix
       | Total Charge                                  | $9.99 |          | $9.99  |
     Then the user is successfully added.
 
-  @TC.13483 @smoke @year
+  @TC.13483 @smoke @year @bus @regression_test @phoenix @mozyhome
   Scenario: 13483 Add a new US yearly basic MozyHome user
     When I add a phoenix Home user:
       | period | base plan | country       |
@@ -134,7 +134,7 @@ Feature: Add a new user through phoenix
       | Total Charge                                 | $109.89 |          | $109.89 |
     Then the user is successfully added.
 
-  @TC.13482 @smoke @biennial
+  @TC.13482 @smoke @biennial @bus @regression_test @phoenix @mozyhome
   Scenario: 13482 Add a new US biennial basic MozyHome user
     When I add a phoenix Home user:
       | period | base plan | country       |
@@ -145,7 +145,7 @@ Feature: Add a new user through phoenix
       | Total Charge                                   | $209.79 |          | $209.79 |
     Then the user is successfully added.
 
-  @TC.13478 @smoke @month @IE
+  @TC.13478 @smoke @month @IE @bus @regression_test @phoenix @mozyhome
   Scenario: 13478 Add a new IE monthly basic MozyHome user
     When I add a phoenix Home user:
       | period | base plan  | country |
@@ -156,7 +156,7 @@ Feature: Add a new user through phoenix
       | Total Charge                                  | €8.99 |          | €8.99  |
     Then the user is successfully added.
 
-  @TC.13485 @smoke @year @IE
+  @TC.13485 @smoke @year @IE @bus @regression_test @phoenix @mozyhome
   Scenario: 13485 Add a new IE yearly basic MozyHome user
     When I add a phoenix Home user:
       | period  | base plan  | country |
@@ -167,7 +167,7 @@ Feature: Add a new user through phoenix
       | Total Charge                                 | €98.89 |          | €98.89 |
     Then the user is successfully added.
 
-  @TC.13484 @smoke @biennial @IE
+  @TC.13484 @smoke @biennial @IE @bus @regression_test @phoenix @mozyhome
   Scenario: 13484 Add a new IE biennial basic MozyHome user
     When I add a phoenix Home user:
       | period  | base plan  | country |
@@ -178,7 +178,7 @@ Feature: Add a new user through phoenix
       | Total Charge                                   | €188.79 |          | €188.79 |
     Then the user is successfully added.
 
-  @TC.13479 @smoke @month @UK
+  @TC.13479 @smoke @month @UK @bus @regression_test @phoenix @mozyhome
   Scenario: 13479 Add a new UK monthly basic MozyHome user
     When I add a phoenix Home user:
       | period | base plan | country        |
@@ -189,7 +189,7 @@ Feature: Add a new user through phoenix
       | Total Charge                                  | £7.99 |          | £7.99  |
     Then the user is successfully added.
 
-  @TC.13487 @smoke @year @UK
+  @TC.13487 @smoke @year @UK @bus @regression_test @phoenix @mozyhome
   Scenario: 13487 Add a new UK yearly basic MozyHome user
     When I add a phoenix Home user:
       | period | base plan | country        |
@@ -200,7 +200,7 @@ Feature: Add a new user through phoenix
       | Total Charge                                 | £87.89 |          | £87.89 |
     Then the user is successfully added.
 
-  @TC.13486 @smoke @biennial @UK
+  @TC.13486 @smoke @biennial @UK @bus @regression_test @phoenix @mozyhome
   Scenario: 13486 Add a new UK biennial basic MozyHome user
     When I add a phoenix Home user:
       | period | base plan | country        |

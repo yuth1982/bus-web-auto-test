@@ -4,7 +4,7 @@ Feature: Quick Links section & Link removal from left navigation
     # Base case for nav link removal
     #   Redmine: 99538
     #
-    @TC.21175
+    @TC.21175 @bus @2.5 @nav_link_removal
     Scenario: 21175 Removal of nav menu items
       When I log in bus admin console as administrator
       And I add a new MozyEnterprise partner:
@@ -19,7 +19,7 @@ Feature: Quick Links section & Link removal from left navigation
     #
     #   Cases for bundled Pro/Metallic Reseller/Enterprise
     #
-    @TC.21176
+    @TC.21176 @bus @2.5 @nav_link_removal @mozypro
     Scenario: 21176 MozyPro - BUS Admin UI - Nav link removal
       When I log in bus admin console as administrator
       And I add a new MozyPro partner:
@@ -31,7 +31,7 @@ Feature: Quick Links section & Link removal from left navigation
       And I stop masquerading
       And I search and delete partner account by newly created partner company name
 
-    @TC.21178
+    @TC.21178 @bus @2.5 @nav_link_removal @metallic
     Scenario: 21178 Metallic Reseller - BUS Admin UI - Nav link removal
       When I log in bus admin console as administrator
       And I add a new Reseller partner:
@@ -43,7 +43,7 @@ Feature: Quick Links section & Link removal from left navigation
       And I stop masquerading
       And I search and delete partner account by newly created partner company name
 
-    @TC.21179
+    @TC.21179 @bus @2.5 @nav_link_removal @mozyenterprise
     Scenario: 21179 MozyEnterprise BUS Admin UI - Nav link removal
       When I log in bus admin console as administrator
       And I add a new MozyEnterprise partner:
@@ -58,7 +58,7 @@ Feature: Quick Links section & Link removal from left navigation
     #
     #   Cases for itemized Pro/Reseller
     #
-    @TC.21182 @itemized
+    @TC.21182 @itemized @bus @2.5 @nav_link_removal @mozypro
     Scenario: 21182 Pooled Storage - MozyPro Itemized - BUS Admin UI -  Nav link removal
       When I log in to legacy bus01 as administrator
       And I successfully add an itemized MozyPro partner:
@@ -82,7 +82,7 @@ Feature: Quick Links section & Link removal from left navigation
       And I stop masquerading
       And I search and delete partner account by newly created partner company name
 
-    @TC.21183 @itemized
+    @TC.21183 @itemized @bus @2.5 @nav_link_removal @reseller
     Scenario: 21183 Pooled Storage - Reseller Itemized - BUS Admin UI -  Nav link removal
       When I log in to legacy bus01 as administrator
       And I successfully add an itemized Reseller partner:
@@ -110,7 +110,7 @@ Feature: Quick Links section & Link removal from left navigation
     # nav removal - for acct through phoenix
     #   Redmine: 99538
     #
-    @TC.21177
+    @TC.21177 @bus @2.5 @nav_link_removal @mozypro
     Scenario: 21177 MozyPro - Phoenix UI - Left nav link removal
       When I am at dom selection point:
       And I add a phoenix Pro partner:
@@ -132,7 +132,7 @@ Feature: Quick Links section & Link removal from left navigation
     #   Section heading is only a title, as each link goes to different modules
     #   Redmine: 99171
     #
-    @TC.21295
+    @TC.21295 @bus @2.5 @quick_link
     Scenario: 21295 New Quick Link Section
       When I log in bus admin console as administrator
       And I add a new MozyPro partner:
@@ -147,7 +147,7 @@ Feature: Quick Links section & Link removal from left navigation
     #
     #   Cases for bundled Pro/Metallic Reseller/Enterprise
     #
-    @TC.21296
+    @TC.21296 @bus @2.5 @quick_link @mozypro
     Scenario: 21296 MozyPro - BUS Admin UI - New Quick Link Section
       When I log in bus admin console as administrator
       And I add a new MozyPro partner:
@@ -159,7 +159,7 @@ Feature: Quick Links section & Link removal from left navigation
       And I stop masquerading
       And I search and delete partner account by newly created partner company name
 
-    @TC.21298
+    @TC.21298 @bus @2.5 @quick_link @metallic
     Scenario: 21298 Metallic Reseller - BUS Admin UI - New Quick Link Section
       When I log in bus admin console as administrator
       And I add a new Reseller partner:
@@ -171,7 +171,7 @@ Feature: Quick Links section & Link removal from left navigation
       And I stop masquerading
       And I search and delete partner account by newly created partner company name
 
-    @TC.21299
+    @TC.21299 @bus @2.5 @quick_link @mozyenterprise
     Scenario: 21299 MozyEnterprise BUS Admin UI - New Quick Link Section
       When I log in bus admin console as administrator
       And I add a new MozyEnterprise partner:
@@ -186,7 +186,7 @@ Feature: Quick Links section & Link removal from left navigation
     #
     #   Cases for itemized Pro/Reseller
     #
-    @TC.21300 @itemized
+    @TC.21300 @itemized  @bus @2.5 @quick_link @mozypro
     Scenario: 21300 Pooled Storage - MozyPro Itemized - BUS Admin UI - New Quick Links Section
       When I log in to legacy bus01 as administrator
       And I successfully add an itemized MozyPro partner:
@@ -210,7 +210,7 @@ Feature: Quick Links section & Link removal from left navigation
       And I stop masquerading
       And I search and delete partner account by newly created partner company name
 
-    @TC.21301 @itemized
+    @TC.21301 @itemized  @bus @2.5 @quick_link @reseller
     Scenario: 21301 Pooled Storage - Reseller - BUS Admin UI - New Quick Links Section
       When I log in to legacy bus01 as administrator
       And I successfully add an itemized Reseller partner:
@@ -238,7 +238,7 @@ Feature: Quick Links section & Link removal from left navigation
       # quick link section - through phoenix
       #   Redmine: 99171
       #
-      @TC.21297
+      @TC.21297  @bus @2.5 @quick_link @mozypro @phoenix
       Scenario: 21297 MozyPro - Phoenix UI - New Quick Link Section
         When I am at dom selection point:
         And I add a phoenix Pro partner:

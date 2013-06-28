@@ -6,7 +6,7 @@ Feature: Default created partners are using Mozy authentication
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.17460 @bus
+  @TC.17460 @bus @2.1 @direct_ldap_integration @authentication_migration
   Scenario: Default created partners are using Mozy authentication
     When I add a new MozyPro partner:
       | period |

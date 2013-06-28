@@ -3,7 +3,7 @@ Feature: Phoenix regression Test
   Background:
     Given I am at dom selection point:
 
-  @TC.2347
+  @TC.2347 @bus @capture @city @state @zip
   Scenario: 2347 Create a new Mozypro partner part1(mozy.com)
     When I add a phoenix Pro partner:
       | period | base plan | country       | server plan |
@@ -21,7 +21,7 @@ Feature: Phoenix regression Test
       | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> |
     Then I delete partner account
 
-  @TC.2356
+  @TC.2356 @bus @capture @city @state @zip
   Scenario: 2356 Create a new MozyPro partner part3 (BUS)
     When I log in bus admin console as administrator
     When I add a new MozyPro partner:
@@ -33,7 +33,7 @@ Feature: Phoenix regression Test
       | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> |
     Then I delete partner account
 
-  @TC.2357 @fail
+  @TC.2357 @fail    @bus @capture @city @state @zip
   Scenario: 2357 Verify that the United States is the default country (MozyPro)
     When I add a phoenix Pro partner to the billing page:
       | period | base plan | country       | server plan |
@@ -53,7 +53,7 @@ Feature: Phoenix regression Test
 #    And I navigate to Add New Partner section from bus admin console page
 #    Then the default billing country is United States in add new partner section
 
-  @TC.2349 @partly_correct
+  @TC.2349 @partly_correct    @bus @capture @city @state @zip
   Scenario: 2349 Create a new MozyHome user
     When I add a phoenix Home user:
       | period | base plan | country       |
@@ -69,7 +69,7 @@ Feature: Phoenix regression Test
       | Country: |
       | @country |
 
-  @TC.2350
+  @TC.2350 @bus @capture @city @state @zip
   Scenario: 2350 Edit an existing Mozypro partner as an admin
     When I add a phoenix Pro partner:
       | period | base plan | country       | server plan |
@@ -93,7 +93,7 @@ Feature: Phoenix regression Test
       | Contact Address: | Contact Country: | Contact City: | Contact ZIP/Postal Code: | Contact State: |
       | address          | Canada           | city          | 123456                   | AB             |
 
-  @TC.2351
+  @TC.2351 @bus @capture @city @state @zip
   Scenario: 2351 Edit an existing MozyHome user as an admin
     When I add a phoenix Home user:
       | period | base plan | country       |
@@ -109,7 +109,7 @@ Feature: Phoenix regression Test
       | Country: |
       | @country |
 
-  @TC.2354 @partly_correct
+  @TC.2354 @partly_correct  @bus @capture @city @state @zip
   Scenario: 2354 Edit an existing MozyHome user as a user
     When I add a phoenix Home user:
       | period | base plan | country       |
@@ -139,7 +139,7 @@ Feature: Phoenix regression Test
       | Country: |
       | Thailand |
 
-  @TC.2361
+  @TC.2361 @bus @capture @city @state @zip
   Scenario: 2361 Change credit card information for a MozyPro partner
     When I log in bus admin console as administrator
     And I add a new MozyPro partner:
@@ -157,7 +157,7 @@ Feature: Phoenix regression Test
       | Billing Street Address: | Billing Phone: | Billing City: | Billing Country: | Billing State/Province: | Billing ZIP/Postal Code: | Billing Email   |
       | address                 | 12345678       | city          | Canada           | AB                      | 123456                   | email@email.com |
 
-  @TC.2362 @firefox
+  @TC.2362 @firefox @bus @capture @city @state @zip
   Scenario: 2362 Edit an existing MozyHome user as a user
     When I add a phoenix Home user:
       | period | base plan | country       |

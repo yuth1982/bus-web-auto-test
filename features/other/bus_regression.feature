@@ -3,7 +3,7 @@ Feature: BUS Regression Test
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.1649 @selenium
+  @TC.1649 @selenium @bus @others
   Scenario: 1649 Set a partners subdomain
     When I add a new MozyPro partner:
       | period | base plan |
@@ -14,7 +14,7 @@ Feature: BUS Regression Test
     And The subdomain in BUS will be @subdomain
     And I delete partner account
 
-  @TC.2168
+  @TC.2168 @bus @others
   Scenario: 2168 Export to CSV
     When I act as partner by:
       | name                     |
@@ -25,7 +25,7 @@ Feature: BUS Regression Test
     And I export the machines csv
     Then users.csv and machines.csv are downloaded
 
-  @TC.2188
+  @TC.2188 @bus @others
   Scenario: 2188 XXS issues and input validation
     When I search partner by <script>alert('foo')</script>
     Then I will see alert('foo') in the search partner input box
