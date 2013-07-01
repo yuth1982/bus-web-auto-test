@@ -1,6 +1,6 @@
 Feature: User Details
 
-  @TC.19057
+  @TC.19057 @bus @2.5 @stash @partner_manage
   Scenario: Mozy-19057:Access Partner as Partner Admin
     Given I log in bus admin console as administrator
     When I add a new MozyPro partner:
@@ -23,7 +23,7 @@ Feature: User Details
       | Name:               | Enable Stash:               |
       | First Last (change) | Yes (Send Invitation Email) |
 
-  @TC.20986
+  @TC.20986 @bus @2.5 @user_view @last_update
   Scenario: 20986 "Last Update" shows the time for the 3 device whose last backup time is 5 days ago
     Given I log in bus admin console as administrator
     When I act as partner by:
@@ -45,7 +45,7 @@ Feature: User Details
       | Stash Container | Used/Available     | Device Storage Limit | Last Update      | Action |
       | Stash           | 0 / 40 GB          | Set                  | N/A              |        |
 
-  @TC.20986__
+  @TC.20986__   @bus @2.5 @user_view @last_update @dynamic_create
   Scenario: 20986 (create machine dynamically) "Last Update" shows the time for the 3 device whose last backup time is 5 days ago
     Given I log in bus admin console as administrator
     When I add a new MozyEnterprise partner:
@@ -75,7 +75,7 @@ Feature: User Details
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.20986_
+  @TC.20986_  @bus @2.5 @user_view @last_update
   Scenario: (Create machine for an existed partner)20986 "Last Update" shows the time for the 3 device whose last backup time is 5 days ago
     Given I log in bus admin console as administrator
     And I search partner by last_update@auto.com
@@ -137,7 +137,7 @@ Feature: User Details
       | Machine1  | 10 GB / 30 GB      | Set                  | < a minute ago   |        |
     Then I delete device by name: Machine1
 
-  @TC.21020
+  @TC.21020 @bus @2.5 @user_view @itemized @list_active_devices
   Scenario: 21020 [Itemized]List all the active devices including stash
     Given I log in bus admin console as administrator
     When I add a new MozyEnterprise partner:
@@ -174,7 +174,7 @@ Feature: User Details
       | Stash Container | Used/Available     | Device Storage Limit | Last Update      | Action |
       | Stash           | 0 / 140 GB         | Set                  | N/A              |        |
 
-  @TC.21096
+  @TC.21096 @bus @2.5 @user_view @itemized
   Scenario: 21096 [Itemized]Edit the number of Desktop Device
     Given I log in bus admin console as administrator
     When I add a new MozyEnterprise partner:
@@ -217,7 +217,7 @@ Feature: User Details
     Then Number of Desktop activated keys should be 2
     And Number of Desktop unactivated keys should be 0
 
-  @TC.21097
+  @TC.21097 @bus @2.5 @itemized @user_view @list_active_devices
   Scenario: 21097 [Itemized]Error shows when I add more Server devices than available in UG
     Given I log in bus admin console as administrator
     When I add a new MozyEnterprise partner:
@@ -245,7 +245,7 @@ Feature: User Details
     When I edit user device quota to 8
     Then Show error: Invalid number of Server devices
 
-  @TC.21102
+  @TC.21102 @bus @2.5 @user_view @list_active_devices @itemized
   Scenario: 21102 [Bundled]Removed Device is returned to UG
     Given I log in bus admin console as administrator
     When I add a new MozyEnterprise partner:
@@ -299,7 +299,7 @@ Feature: User Details
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21103
+  @TC.21103 @bus @2.5 @user_view @list_active_devices @itemized
   Scenario: 21103 [Bundled]Error shows when I remove more Desktop devices than not activated
     Given I log in bus admin console as administrator
     When I add a new Reseller partner:

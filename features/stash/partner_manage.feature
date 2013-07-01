@@ -7,7 +7,7 @@ Feature:
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.19045 @BSA.3000
+  @TC.19045 @BSA.3000 @bus @stash @partner_manage
   Scenario: 19045 MozyEnterprise admin view stash details in list users section
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -31,7 +31,7 @@ Feature:
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19057 @BSA.3000
+  @TC.19057 @BSA.3000 @bus @stash @partner_manage
   Scenario: 19057 MozyPro admin view stash details in list users section
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -55,7 +55,7 @@ Feature:
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19738 @BSA.3000
+  @TC.19738 @BSA.3000 @bus @stash @partner_manage
   Scenario: 19738 MozyEnterprise admin view stash details in partner details section
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -85,7 +85,7 @@ Feature:
       | Stash Storage Usage: | 0 bytes / 25 GB |
     And I delete partner account
 
-  @TC.19739 @BSA.3000
+  @TC.19739 @BSA.3000 @bus @stash @partner_manage
   Scenario: 19739 MozyPro admin view stash details in partner details section
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -115,7 +115,7 @@ Feature:
       | Stash Storage Usage: | 0 bytes / 35 GB |
     And I delete partner account
 
-  @TC.19740 @BSA.3000
+  @TC.19740 @BSA.3000 @bus @stash @partner_manage
   Scenario: 19740 Reseller admin view stash details in partner details section
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -147,7 +147,7 @@ Feature:
       | Stash Storage Usage: | 0 bytes / 35 GB |
     And I delete partner account
 
-  @TC.19169 @BSA.3050
+  @TC.19169 @BSA.3050 @bus @stash @partner_manage
   Scenario: 19169 MozyPro admin view stash details in manage resources section
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -169,7 +169,7 @@ Feature:
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19056 @BSA.4000
+  @TC.19056 @BSA.4000 @bus @stash @partner_manage
   Scenario: 19056 MozyEnterprise admin disable stash in user group view
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -189,7 +189,7 @@ Feature:
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19123 @BSA.4000
+  @TC.19123 @BSA.4000 @bus @stash @partner_manage
   Scenario: 19123 MozyEnterprise admin change default stash quota in user group view
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -209,7 +209,7 @@ Feature:
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.18913 @BSA.6000
+  @TC.18913 @BSA.6000 @bus @stash @partner_manage
   Scenario: 18913 Root admin disable Stash for a new MozyPro partner
     When I add a new MozyPro partner:
       | period | base plan |

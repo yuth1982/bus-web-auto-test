@@ -11,7 +11,7 @@ Feature: Link to More Devices
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.19977
+  @TC.19977 @bus @2.5 @user_centric_storage @bundled @1UG
   Scenario: 19977 Bundled (1UG) Verify Buy More Link in Add New User
     When I add a new MozyPro partner:
       | period | base plan | server plan |
@@ -40,7 +40,7 @@ Feature: Link to More Devices
 #    Then I stop masquerading
 #    And I search and delete partner account by newly created partner company name
 	
-  @TC.19951
+  @TC.19951 @bus @2.5 @user_centric_storage @1UG @metallic_reseller
   Scenario: 19951 Metallic Reseller (1UG) Verify Buy More Link in Add New User
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -65,8 +65,8 @@ Feature: Link to More Devices
 #    Then the Add More link should be visible
 #    And the Add More link should open the Manage Resources module
 	
-  @TC.19948
-  Scenario: 19948 Enterprise (2UG) Verify Buy More Link in Add New User
+  @TC.19948 @bus @2.5 @user_centric_storage @1UG @enterprise
+Scenario: 19948 Enterprise (2UG) Verify Buy More Link in Add New User
     When I add a new MozyEnterprise partner:
       | period | users | server plan |
       | 12     | 10    | 250 GB      |
@@ -83,8 +83,8 @@ Feature: Link to More Devices
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 	
-  @TC.19947
-  Scenario: 19947 EMEA (1UG) Ireland Bundled Verify Buy More Link in Add New User
+  @TC.19947 @bus @2.5 @user_centric_storage @1UG @emea @IE @bundled
+Scenario: 19947 EMEA (1UG) Ireland Bundled Verify Buy More Link in Add New User
     When I add a new MozyPro partner:
       | period | base plan | server plan | country | create under    |
       | 1      | 50 GB     | yes         | Ireland | MozyPro Ireland |
@@ -96,8 +96,8 @@ Feature: Link to More Devices
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19946
-  Scenario: 19946 EMEA (1UG) UK Enterprise Verify Buy More Link in Add New User
+  @TC.19946 @bus @2.5 @user_centric_storage @1UG @emea @UK @enterprise
+Scenario: 19946 EMEA (1UG) UK Enterprise Verify Buy More Link in Add New User
     When I add a new MozyEnterprise partner:
       | period | users | server plan | country        |
       | 12     | 10    | 250 GB      | United Kingdom |
@@ -110,8 +110,8 @@ Feature: Link to More Devices
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 	
-  @TC.19945
-  Scenario: 19945 EMEA (1UG) France Metallic Reseller Verify Buy More Link in Add New User
+  @TC.19945 @bus @2.5 @user_centric_storage @1UG @emea @FR @metallic_reseller
+Scenario: 19945 EMEA (1UG) France Metallic Reseller Verify Buy More Link in Add New User
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | country | create under   |
       | 1      | Gold          | 10             | France  | MozyPro France |
@@ -124,7 +124,7 @@ Feature: Link to More Devices
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 	
-  @TC.19952
+  @TC.19952 @bus @2.5 @user_centric_storage @1UG @emea @DE @mozypro @itemzied
   Scenario: Mozy-19952:EMEA(1UG), Germany, MozyPro Itemized, Verify Add More Link in Add New User
     When I act as partner by:
       | name                                    |

@@ -3,7 +3,7 @@ Feature: Send activated / unactivated license keys
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.20947
+  @TC.20947 @bus @2.5 @user_view @server_license
   Scenario: 20947 [Itemized][Server License]Admin can send activated/unactived license keys
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |

@@ -17,7 +17,7 @@ Feature: Add a new user
 #      | User        | Name       | User Group           |
 #      | @user_email | @user_name | (default user group) |
 
-  @TC.20875
+  @TC.20875 @bus @2.5 @manage_storage @add_new_user
   Scenario: 20875 [Bundled] Add New User with default user group
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan |
@@ -66,7 +66,7 @@ Feature: Add a new user
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.20910
+  @TC.20910 @bus @2.5 @manage_storage @add_new_user
   Scenario: 20910 [Bundled] Add New User with new user group
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | net terms |
@@ -127,7 +127,7 @@ Feature: Add a new user
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.20871
+  @TC.20871 @bus @2.5 @manage_storage @add_new_user
   Scenario: 20871 [Itemized] Add New User with default user group
     When I add a new MozyEnterprise partner:
       | period | users | server plan | company name            |
@@ -176,7 +176,7 @@ Feature: Add a new user
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.20906
+  @TC.20906 @bus @2.5 @manage_storage @add_new_user
   Scenario: 20906 [Itemized] Add New User with new user group
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -237,7 +237,7 @@ Feature: Add a new user
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.20921
+  @TC.20921 @bus @2.5 @manage_storage @add_new_user
   Scenario: 20921 [MozyPro] Add New User
     When I add a new MozyPro partner:
       | period | base plan | server plan | net terms |

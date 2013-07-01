@@ -25,7 +25,7 @@ Feature: User Has Unique Username
   - Don't cause failures when updating other fields (for example, display name) for existing users with non-unique usernames
   - Don't cause failures when updating users in other products (for example, MozyOEM)
 
-  @TC.21339
+  @TC.21339 @bus @2.5 @add_new_partner @existing_email
   Scenario: Mozy-21339 : Add New Partner With Non Unique Admin Email
     When I get an admin email from the database
     And I log in bus admin console as administrator
@@ -37,7 +37,7 @@ Feature: User Has Unique Username
     An account with that email address already exists
     """
 
-  @TC.21343
+  @TC.21343 @bus @2.5 @add_new_partner @existing_email
   Scenario: Mozy-21343:Add New Partner with Existing User Email as Admin Email
     When I get a user email from the database
     And I log in bus admin console as administrator
@@ -47,7 +47,7 @@ Feature: User Has Unique Username
     Then New partner should be created
     And I delete partner account
 
-  @TC.21340
+  @TC.21340 @bus @2.5 @existing_email
   Scenario: Mozy-21340:Edit Admin Email With Admin Email That Is Already in Use
     When I log in bus admin console as administrator
     And I navigate to Add New Admin section from bus admin console page
@@ -66,7 +66,7 @@ Feature: User Has Unique Username
       | email                 |
       | @existing_admin_email |
 
-  @TC.21346
+  @TC.21346 @bus @2.5 @existing_email
   Scenario:  Mozy-21346:Edit Admin Email With User Email That Is Already in Use
     When I get a user email from the database
     And I log in bus admin console as administrator
@@ -76,7 +76,7 @@ Feature: User Has Unique Username
     When I change the username to automation admin email
     Then username changed success message should be displayed
 
-  @TC.21341
+  @TC.21341 @bus @2.5 @existing_email
   Scenario: Mozy-21341:Add New Admin Role with Existing User Email
     When I get a user email from the database
     And I log in bus admin console as administrator
@@ -89,7 +89,7 @@ Feature: User Has Unique Username
       | email                |
       | @existing_user_email |
 
-  @TC.21342
+  @TC.21342 @bus @2.5 @existing_email
   Scenario: Mozy-21342:Add New Admin Role with Existing Admin Email
     When I get an admin email from the database
     And I log in bus admin console as administrator
@@ -102,7 +102,7 @@ Feature: User Has Unique Username
     An account with that email address already exists
     """
 
-  @TC.21347
+  @TC.21347 @bus @2.5 @existing_email
   Scenario: Mozy-21347:Edit Sub Admin with Existing User Email
     When I get a user email from the database
     And I log in bus admin console as administrator
@@ -122,7 +122,7 @@ Feature: User Has Unique Username
       | email                |
       | @existing_user_email |
 
-  @TC.21348
+  @TC.21348 @bus @2.5 @existing_email
   Scenario: Mozy-21348:Edit Sub Admin with Existing Admin Email
     When I get an admin email from the database
     And I log in bus admin console as administrator
@@ -145,7 +145,7 @@ Feature: User Has Unique Username
       | email        |
       | @admin_email |
 
-  @TC.21366
+  @TC.21366 @bus @2.5 @existing_username @mozyhome
   Scenario:  Mozy-21366:Update User(MH) With Existing Admin Username
     When I get an admin email from the database
     And I am at dom selection point:
@@ -180,7 +180,7 @@ Feature: User Has Unique Username
     And I view MozyHome user details by existing admin email
     And I delete user
 
-  @TC.21365
+  @TC.21365 @bus @2.5 @existing_username @mozyhome
   Scenario: Mozy-21365:Update User(MH) With Existing User Username
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -226,7 +226,7 @@ Feature: User Has Unique Username
     Then edit user email error message to existing user email should be displayed
     And I delete user
 
-  @TC.21351
+  @TC.21351 @bus @2.5 @existing_email @mozyhome
   Scenario: Mozy-21351:Edit Admin Email With Existing User Email(MH)
     When I get a Mozy Home user email from the database
     And I log in bus admin console as administrator
@@ -236,7 +236,7 @@ Feature: User Has Unique Username
     When I change the username to automation admin email
     Then username changed success message should be displayed
 
-  @TC.21383
+  @TC.21383 @bus @2.5 @mozyhome @suspened_username
   Scenario: Mozy-21383:Update User(MH) With Suspended User Username
     When I get a suspended user email from the database
     And I am at dom selection point:
@@ -260,7 +260,7 @@ Feature: User Has Unique Username
     Then edit user email error message to existing user email should be displayed
     And I delete user
 
-  @TC.21384
+  @TC.21384 @bus @2.5 @mozyhome
   Scenario: Mozy-21384:Update User(MH) With Deleted User Username
     When I get a deleted user email from the database
     And I am at dom selection point:
@@ -295,7 +295,7 @@ Feature: User Has Unique Username
     And I view MozyHome user details by existing user email
     And I delete user
 
-  @TC.21800
+  @TC.21800 @bus @2.5 @existing_username @mozyhome
   Scenario: Mozy-21800:Web Sign Up - Add New User With Existing Admin Username
     When I get an admin email from the database
     And I am at dom selection point:
@@ -315,7 +315,7 @@ Feature: User Has Unique Username
     And I view MozyHome user details by newly created MozyHome username
     And I delete user
 
-  @TC.21357 @BUG.99434 @BUG2.102097
+  @TC.21357 @BUG.99434 @BUG2.102097 @bus @2.5 @mozyhome @existing_username
   Scenario: Mozy-21357:Web Sign Up - Add New User With Existing(Created) User Username(MH)
     When I am at dom selection point:
     And I get a MH user username from the database
@@ -348,7 +348,7 @@ Feature: User Has Unique Username
       | 1      | 50 GB     | United States | @existing_user_email |
     Then sign up page error message to existing user email should be displayed
 
-  @TC.21809
+  @TC.21809 @bus @2.5 @existing_username @UK @mozyhome
   Scenario: Mozy-21809:Web Sign Up - Add New User With Existing(Created) User Username(MH-UK) under MH tree
     When I get a MH user username from the database
     And I am at dom selection point:
@@ -360,7 +360,7 @@ Feature: User Has Unique Username
      An account with this email address already exists
     """
 
-  @TC.21810
+  @TC.21810 @bus @2.5 @existing_username @IE @mozyhome
   Scenario: Mozy-21810:Web Sign Up - Add New User With Existing(Created) User Username(MH-IE) under MP tree
     When I get a MP user username from the database
     And I am at dom selection point:
@@ -372,7 +372,7 @@ Feature: User Has Unique Username
      An account with this email address already exists
     """
 
-  @TC.21811
+  @TC.21811 @bus @2.5 @existing_username @FR @mozyhome
   Scenario: Mozy-21811:Web Sign Up - Add New User With Existing(Created) User Username(MH-FR) under ME tree
     When I get a ME user username from the database
     And I am at dom selection point:
@@ -384,7 +384,7 @@ Feature: User Has Unique Username
      Un compte avec cette adresse électronique existe déjà.
     """
 
-  @TC.21812
+  @TC.21812 @bus @2.5 @existing_username @DE @mozyhome
   Scenario: Mozy-21812:Web Sign Up - Add New User With Existing(Created) User Username(MH-DE) under MEO tree
     When I get a MEO user username from the database
     And I am at dom selection point:
@@ -396,7 +396,7 @@ Feature: User Has Unique Username
      Ein Konto mit dieser E-Mail-Adresse ist bereits vorhanden.
     """
 
-  @TC.21878
+  @TC.21878 @bus @2.5 @existing_username @mozypro
   Scenario: Mozy-21878:Add New User(MP) With Existing User Username
     When I log in bus admin console as administrator
     And I add a new Reseller partner:
@@ -460,7 +460,7 @@ Feature: User Has Unique Username
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21877
+  @TC.21877 @bus @2.5 @existing_username @mozypro
   Scenario: Mozy-21877:Add New User(MP) With Existing Admin Username
     When I log in bus admin console as administrator
     And I add a new Reseller partner:
@@ -476,7 +476,7 @@ Feature: User Has Unique Username
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21872
+  @TC.21872 @bus @2.5 @existing_username @mozypro
   Scenario: Mozy-21872:Update User(MP) With Existing User Username
     When I log in bus admin console as administrator
     And I add a new MozyPro partner:
@@ -530,7 +530,7 @@ Feature: User Has Unique Username
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21869
+  @TC.21869 @bus @2.5 @existing_username @mozypro
   Scenario: Mozy-21869:Update User(MP) With Existing Admin Username
     When I log in bus admin console as administrator
     And I add a new MozyPro partner:
@@ -554,7 +554,7 @@ Feature: User Has Unique Username
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21880
+  @TC.21880 @bus @2.5 @existing_username @enterprise
   Scenario: Mozy-21880:Add New User(ME) With Existing User Username
     When I log in bus admin console as administrator
     When I add a new MozyEnterprise partner:
@@ -618,7 +618,7 @@ Feature: User Has Unique Username
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21876
+  @TC.21876 @bus @2.5 @existing_username @enterprise
   Scenario: Mozy-21876:Add New User(ME) With Existing Admin Username
     When I log in bus admin console as administrator
     And I add a new MozyEnterprise partner:
@@ -634,7 +634,7 @@ Feature: User Has Unique Username
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21873
+  @TC.21873 @bus @2.5 @existing_username @enterprise
   Scenario: Mozy-21873:Update User(ME) With Existing User Username
     When I log in bus admin console as administrator
     And I add a new MozyEnterprise partner:
@@ -688,7 +688,7 @@ Feature: User Has Unique Username
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21870
+  @TC.21870 @bus @2.5 @existing_username @enterprise
   Scenario: Mozy-21870:Update User(ME) With Existing Admin Username
     When I log in bus admin console as administrator
     And I add a new MozyEnterprise partner:

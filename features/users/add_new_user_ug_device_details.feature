@@ -13,7 +13,7 @@ Feature: Add new user, user group device details
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.19932
+  @TC.19932 @bus @2.5 @user_centric_storage @add_new_user @devices
   Scenario: 19932 Devices Add New User (Single UG) Bundled
     When I add a new MozyPro partner:
       | period | base plan | server plan | net terms |
@@ -26,7 +26,7 @@ Feature: Add new user, user group device details
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19978
+  @TC.19978 @bus @2.5 @user_centric_storage @add_new_user @devices
   Scenario: 19978 Devices Add New User (Mult UG) Bundled
     When I add a new MozyPro partner:
       | period | base plan | server plan | net terms |
@@ -41,7 +41,7 @@ Feature: Add new user, user group device details
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19934
+  @TC.19934 @bus @2.5 @user_centric_storage @add_new_user @devices @metallic
   Scenario: 19934 Devices Add New User (Single UG) Metallic Reseller
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -137,7 +137,7 @@ Feature: Add new user, user group device details
 #        And I navigate to Add New User section from bus admin console page
 #    	Then I note the desktop and server amounts in Add New User module for user group User Group 1
 
-  @TC.19937
+  @TC.19937 @bus @2.5 @user_centric_storage @add_new_user @devices @enterprise
   Scenario: 19937 Devices Add New User (Single UG) Enterprise
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -198,7 +198,7 @@ Feature: Add new user, user group device details
 #    And I stop masquerading
 #    And I search and delete partner account by newly created partner company name
 
-  @TC.19938
+  @TC.19938 @bus @2.5 @user_centric_storage @add_new_user @devices @IE @bundled @emea
   Scenario: 19938 Devices Add New User (Single UG) Bundled Ireland
     When I add a new MozyPro partner:
       | period | base plan | server plan | country | create under    | net terms |
@@ -211,7 +211,7 @@ Feature: Add new user, user group device details
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19939
+  @TC.19939 @bus @2.5 @user_centric_storage @add_new_user @devices @UK @emea @enterprise
   Scenario: 19939 Change Plan after Add New User (Single UG) Enterprise UK
     When I add a new MozyEnterprise partner:
       | period | users | server plan | country        | net terms |
@@ -287,7 +287,7 @@ Feature: Add new user, user group device details
 #    	And I stop masquerading
 #    	And I search and delete partner account by newly created partner company name
 
-  @TC.19962
+  @TC.19962 @bus @2.5 @user_centric_storage @add_new_user @devices @emea @FR @metallic
   Scenario: 19962 Change Plan after Add New User (Multiple UG) French Reseller
     Given I log in bus admin console as administrator
     When I add a new Reseller partner:

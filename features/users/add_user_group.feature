@@ -29,7 +29,7 @@ Feature: Add a new user group
 #    And I delete the user group
 #    And I navigate to List User Group section from bus admin console page
 
-  @TC.20716
+  @TC.20716 @bus @2.5 @manage_storage @add_user_group @bundled
   Scenario: 20716 [Bundled] Add New Group
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | net terms | company name            |
@@ -85,7 +85,7 @@ Feature: Add a new user group
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.20899
+  @TC.20899  @bus @2.5 @manage_storage @add_user_group @itemized
   Scenario: 20899 [Itemized] Add New Group
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | company name             |
@@ -137,7 +137,7 @@ Feature: Add a new user group
     And I search and delete partner account by newly created partner company name
 
   # Error messages are not final version, they will be change in the future
-  @TC.20898 @BUG.100010
+  @TC.20898 @BUG.100010  @bus @2.5 @manage_storage @add_user_group
   Scenario: 20898 [Bundled][Negative] Add New Group
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | net terms | company name                      |
@@ -225,7 +225,7 @@ Feature: Add a new user group
     And I search and delete partner account by newly created partner company name
 
   # Error messages are not final version, they will be change in the future
-  @TC.20900
+  @TC.20900 @bus @2.5 @manage_storage @add_user_group
   Scenario: 20900 [Itemized][Negative] Add New Group
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | company name                       |
@@ -382,7 +382,7 @@ Feature: Add a new user group
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.20713
+  @TC.20713 @bus @2.5 @manage_storage @add_user_group
   Scenario: 20713 [Bundled] Verify Add New Group UI
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms | company name                      |
@@ -433,7 +433,7 @@ Feature: Add a new user group
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.20896
+  @TC.20896 @bus @2.5 @manage_storage @add_user_group
   Scenario: 20896 [Itemized] Verify Add New Group UI
     When I add a new MozyEnterprise partner:
       | period | users | net terms | company name                       |

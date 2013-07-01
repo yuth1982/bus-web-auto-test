@@ -3,7 +3,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.20180
+  @TC.20180 @bus @resizing_reseller_add-ons_plan
   Scenario: 20180 Create New Gold Reseller - Monthly - US - 20 GB Add on - Net Terms
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | storage add on | net terms |
@@ -24,7 +24,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.20181
+  @TC.20181 @bus @resizing_reseller_add-ons_plan
   Scenario: 20181 Create New Platinum Reseller - Monthly - US - 20 GB Add on - Net Terms
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | storage add on | net terms |
@@ -45,7 +45,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.20182
+  @TC.20182 @bus @resizing_reseller_add-ons_plan
   Scenario: 20182 Create New Gold Reseller - Yearly - UK - 20 GB Add on - Net Terms
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | storage add on | country        | create under | net terms |
@@ -66,7 +66,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.20183
+  @TC.20183 @bus @resizing_reseller_add-ons_plan
   Scenario: 20183 Create New Platinum Reseller - Yearly - UK - 20 GB Add on - Net Terms
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | storage add on | country        | create under | net terms |
@@ -87,7 +87,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.20184
+  @TC.20184 @bus @resizing_reseller_add-ons_plan
   Scenario: 20184 Create New Gold Reseller - Yearly - FR - 20 GB Add on - Net Terms
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | storage add on | country | create under   | net terms |
@@ -108,7 +108,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.20185
+  @TC.20185 @bus @resizing_reseller_add-ons_plan
   Scenario: 20185 Create New Platinum Reseller - Yearly - FR - 20 GB Add on - Net Terms
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | storage add on | country | create under   | net terms |
@@ -129,7 +129,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.20186
+  @TC.20186 @bus @resizing_reseller_add-ons_plan
   Scenario: 20186 Assign new Gold Reseller 20 GB add on plan in Aria
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | storage add on |
@@ -151,7 +151,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     And I delete partner account
 
-  @TC.20187
+  @TC.20187 @bus @resizing_reseller_add-ons_plan
   Scenario: 20187 Assign new Platinum Reseller 20 GB add on plan in Aria
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | storage add on |
@@ -173,7 +173,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     And I delete partner account
 
-  @TC.20188
+  @TC.20188 @bus @resizing_reseller_add-ons_plan
   Scenario: 20188 Order plan in Change Plan - Gold Reseller - US - Monthly - 20 GB add on
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | storage add on |
@@ -196,7 +196,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.20189
+  @TC.20189 @bus @resizing_reseller_add-ons_plan
   Scenario: 20189 Order plan in Change Plan - Platinum Reseller - US - Monthly - 20 GB add on
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | storage add on |
@@ -219,7 +219,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.20190
+  @TC.20190 @bus @resizing_reseller_add-ons_plan
   Scenario: 20190 Return plan in Change Plan - Gold Reseller - US - Monthly - 20 GB add on
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | storage add on |
@@ -242,7 +242,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.20191
+  @TC.20191 @bus @resizing_reseller_add-ons_plan
   Scenario: 20191 Return plan in Change Plan - Platinum Reseller - US - Monthly - 20 GB add on
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | storage add on |
@@ -265,7 +265,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.20194
+  @TC.20194 @bus @resizing_reseller_add-ons_plan
   Scenario: 20194 Change Subscription Period of Gold Reseller - US - 20 GB Add on - Monthly to Yearly
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | storage add on |
@@ -286,7 +286,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     And I delete partner account
 
-  @TC.20195
+  @TC.20195 @bus @resizing_reseller_add-ons_plan
   Scenario: 20195 Change Subscription Period of Platinum Reseller - US - 20 GB Add on - Monthly to Yearly
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | storage add on |
@@ -307,7 +307,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     And I delete partner account
 
-  @TC.20196
+  @TC.20196 @bus @resizing_reseller_add-ons_plan
   Scenario: 20196 Change Subscription Period of Gold Reseller - UK - 20 GB Add on - Yearly to Monthly
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | storage add on | country        | create under |
@@ -328,7 +328,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     And I delete partner account
 
-  @TC.20197
+  @TC.20197 @bus @resizing_reseller_add-ons_plan
   Scenario: 20197 Change Subscription Period of Platinum Reseller - US - 20 GB Add on - Monthly to Yearly
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | storage add on | country        | create under |
@@ -349,7 +349,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     And I delete partner account
 
-  @TC.20198
+  @TC.20198 @bus @resizing_reseller_add-ons_plan
   Scenario: 20198 Change Subscription Period of Gold Reseller - FR - 20 GB Add on - Yearly to Monthly
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | storage add on | country | create under   |
@@ -370,7 +370,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     And I delete partner account
 
-  @TC.20199
+  @TC.20199 @bus @resizing_reseller_add-ons_plan
   Scenario: 20199 Change Subscription Period of Platinum Reseller - FR - 20 GB Add on - Monthly to Yearly
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | storage add on | country | create under   |
@@ -391,7 +391,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
     And I delete partner account
 
-  @TC.20200
+  @TC.20200 @bus @resizing_reseller_add-ons_plan
   Scenario: 20200 Order plan in Change Plan - Gold Reseller - US - Yearly - 20 GB add on
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | storage add on |
@@ -419,7 +419,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | 0    | 280       | 280      | 0    | Unlimited | Unlimited |
     And I delete partner account
 
-  @TC.20201
+  @TC.20201 @bus @resizing_reseller_add-ons_plan
   Scenario: 20201 Order plan in Change Plan - Platinum Reseller - US - Yearly - 20 GB add on
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | storage add on |
@@ -447,7 +447,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | 0    | 280       | 280      | 0    | Unlimited | Unlimited |
     And I delete partner account
 
-  @TC.20202
+  @TC.20202 @bus @resizing_reseller_add-ons_plan
   Scenario: 20202 Order plan in Change Plan - Gold Reseller - UK - Yearly - 20 GB add on
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | storage add on | country        | create under |
@@ -475,7 +475,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | 0    | 280       | 280      | 0    | Unlimited | Unlimited |
     And I delete partner account
 
-  @TC.20203
+  @TC.20203 @bus @resizing_reseller_add-ons_plan
   Scenario: 20203 Order plan in Change Plan - Platinum Reseller - UK - Yearly - 20 GB add on
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | storage add on | country        | create under |
@@ -503,7 +503,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | 0    | 280       | 280      | 0    | Unlimited | Unlimited |
     And I delete partner account
 
-  @TC.20204
+  @TC.20204 @bus @resizing_reseller_add-ons_plan
   Scenario: 20204 Order plan in Change Plan - Gold Reseller - FR - Yearly - 20 GB add on
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | storage add on | country | create under   |
@@ -531,7 +531,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | 0    | 280       | 280      | 0    | Unlimited | Unlimited |
     And I delete partner account
 
-  @TC.20205
+  @TC.20205 @bus @resizing_reseller_add-ons_plan
   Scenario: 20205 Order plan in Change Plan - Platinum Reseller - FR - Yearly - 20 GB add on
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | storage add on | country | create under   |

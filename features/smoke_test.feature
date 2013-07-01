@@ -3,7 +3,7 @@ Feature: Bus Smoke Test
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.18361 @slow
+  @TC.18361 @slow @bus @2.5 @smoke @enterprise
   Scenario: 18361 Mozy Enterprise Smoke Test
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add on | company name | address           | city      | state abbrev | zip   | country       | phone          | admin name   | cc last name | cc first name | cc number        | expire month | expire year | cvv |

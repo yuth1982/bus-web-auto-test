@@ -7,7 +7,7 @@ Feature: User group stash setting management
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.19001 @BSA.2000
+  @TC.19001 @BSA.2000 @bus @stash
   Scenario: 19001 Add default stash storage for a new user group when stash is enabled for partner
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -33,7 +33,7 @@ Feature: User group stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19002 @BSA.2000
+  @TC.19002 @BSA.2000 @bus @stash
   Scenario: 19002 Help displays in add new user group for default stash storage when stash is enabled for partner
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -50,7 +50,7 @@ Feature: User group stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19003 @BSA.2000
+  @TC.19003 @BSA.2000 @bus @stash
   Scenario: 19003 No Default Storage for Stash text on add new user group section when stash is disabled for partner
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -62,7 +62,7 @@ Feature: User group stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19004 @BSA.2000
+  @TC.19004 @BSA.2000 @bus @stash
   Scenario: 19004 Add custom stash storage for a new user group when stash is enabled for partner
     When I add a new MozyEnterprise partner:
       | period | users | net terms |
@@ -92,7 +92,7 @@ Feature: User group stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19005 @BSA.2010
+  @TC.19005 @BSA.2010 @bus @stash
   Scenario: 19005 No Enable Stash settings in user group edit page when stash is disabled for partner
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -112,7 +112,7 @@ Feature: User group stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19006 @BSA.2010
+  @TC.19006 @BSA.2010 @bus @stash
   Scenario: 19006 Existing user groups are enabled with default stash storage when stash is enabled for partner
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -131,7 +131,7 @@ Feature: User group stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19007 @BSA.2010
+  @TC.19007 @BSA.2010 @bus @stash
   Scenario: 19007 Modify default stash storage quota for a user group in user group edit page when stash is enabled for partner
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -158,7 +158,7 @@ Feature: User group stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19008 @BSA.2020
+  @TC.19008 @BSA.2020 @bus @stash
   Scenario: 19008 Disable stash for a user group in user group detail section
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -189,7 +189,7 @@ Feature: User group stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19009 @BSA.2020
+  @TC.19009 @BSA.2020 @bus @stash
   Scenario: 19009 Cancel disable stash for a user group in user group detail section
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -225,7 +225,7 @@ Feature: User group stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19010 @BSA.2020
+  @TC.19010 @BSA.2020 @bus @stash
   Scenario: 19010 User has not stash when disable stash for a user group in user group detail section
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -251,7 +251,7 @@ Feature: User group stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19011 @BSA.2030
+  @TC.19011 @BSA.2030 @bus @stash
   Scenario: 19011 Add stash to all users for 0 user in the user group when stash is enabled for partner
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -266,7 +266,7 @@ Feature: User group stash setting management
     And I click Close button on popup window
     And I search and delete partner account by newly created partner company name
 
-  @TC.19012 @BSA.2030
+  @TC.19012 @BSA.2030 @bus @stash
   Scenario: 19012 A user is enabled with stash I can enable stash for other 2 users in the user group at once
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -303,7 +303,7 @@ Feature: User group stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19013 @BSA.2030
+  @TC.19013 @BSA.2030 @bus @stash
   Scenario: 19013 Enable stash to all users but not enough storage then I can choose buy more storage
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -326,7 +326,7 @@ Feature: User group stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19014 @BSA.2030
+  @TC.19014 @BSA.2030 @bus @stash
   Scenario: 19014 Enable stash to all users but not enough storage then I can choose allocate more storage
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -349,7 +349,7 @@ Feature: User group stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19118 @BSA.2030
+  @TC.19118 @BSA.2030 @bus @stash
   Scenario: 19118 User with a stash enabled group A should be moved to default non stash user group when I delete the user group A
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -387,7 +387,7 @@ Feature: User group stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19020 @BSA.2020
+  @TC.19020 @BSA.2020 @bus @stash
   Scenario: 19020 Delete a user group and users with storage resources are returned to default user group
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -423,7 +423,7 @@ Feature: User group stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.18997 @BSA.3030
+  @TC.18997 @BSA.3030 @bus @2.5 @user_stories
   Scenario: 18997 [List User Groups View][P]"Stash Users" column shows and has valid values
     When I act as partner by:
       | email                        |
@@ -435,7 +435,7 @@ Feature: User group stash setting management
       | backup                 | 1     | 1      | 0           |
       | stash                  | 1     | 1      | 1           |
 
-  @TC.18998 @BSA.3030
+  @TC.18998 @BSA.3030 @bus @2.5 @user_stories
   Scenario: 18998 [List User Groups View][P]"Desktop Quota" column includes backup and stash
     When I act as partner by:
       | email                        |
@@ -447,7 +447,7 @@ Feature: User group stash setting management
       | backup                 | 1     | 1      | 0           | 0 / 0       | 0.0 (0.0 assigned) / 0.0 | 1 / 10         | 0.01 (1.0 assigned) / 10.0  |
       | stash                  | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 assigned) / 0.0 | 0 / 0          | 0.02 (2.0 assigned) / 10.0  |
 
-  @TC.18999 @BSA.3030
+  @TC.18999 @BSA.3030 @bus @2.5 @user_stories
   Scenario: 18999 [Group Detail View][P]"Stash" column shows and has valid value
     When I act as partner by:
       | email                        |
@@ -474,7 +474,7 @@ Feature: User group stash setting management
       | User            | Name   | Stash    |
       | backup@test.com | backup | Disabled |
 
-  @TC.19000 @BSA.3030
+  @TC.19000 @BSA.3030 @bus @2.5 @user_stories
   Scenario: 19000 [Group Detail View][P]"Storage" and "Storage Used" column includes backup and stash
     When I act as partner by:
       | email                        |

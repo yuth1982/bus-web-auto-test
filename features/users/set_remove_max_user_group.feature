@@ -3,7 +3,7 @@ Feature: Set Remove Max at User Group
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.21002
+  @TC.21002 @bus @2.5 @manage_storage @bundled @reseller
   Scenario: 21002 [Bundled][Reseller] Change Group Share with Max value less than used quota
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | net terms |

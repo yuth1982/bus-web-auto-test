@@ -4,7 +4,7 @@ Feature: User Resources
   I can drill down to the user and see what storage he is using as well as his storage allocation 
   so that I can quickly understand if I need to make a storage adjustment.
 
-  @TC.19640
+  @TC.19640 @bus @user_storage_details @bundled
   Scenario: Mozy-19640:Access Partner as Partner Admin
     Given I log in bus admin console as administrator
     When I add a new MozyPro partner:
@@ -37,8 +37,8 @@ Feature: User Resources
     Then I log in bus admin console as administrator
     And I search and delete partner account by newly created partner name
 
-  @TC.19646
-  Scenario: Mozy-19646:Access Partner as Bus Admin
+  @TC.19646 @bus @user_storage_details @metallic_resellers
+Scenario: Mozy-19646:Access Partner as Bus Admin
     Given I log in bus admin console as administrator
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -67,8 +67,8 @@ Feature: User Resources
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19839
-  Scenario: Mozy-19839:Access Reseller Itemized Partner as Partner Admin
+  @TC.19839 @bus @user_storage_details @itemized @reseller
+Scenario: Mozy-19839:Access Reseller Itemized Partner as Partner Admin
 	Given I navigate to bus admin console login page
     And I log in bus admin console with user name qa1+testResellerItem90211@mozy.com and password test1234
     When I add a new user to a Itemized partner:
@@ -91,8 +91,8 @@ Feature: User Resources
 	  | Storage Used / Assigned | Devices Activated | View License Keys  |
       | 0 / 2 GB (change)       | 0 / 1 (change)    | Reassign Device(s) |
 
-  @TC.19841
-  Scenario: Mozy-19841: Access an MozyPro Itemized Partner's User's details as Bus Admin
+  @TC.19841 @bus @user_storage_details @mozypro @itemized
+Scenario: Mozy-19841: Access an MozyPro Itemized Partner's User's details as Bus Admin
 	Given I log in bus admin console as administrator
   	When I act as partner by:
       | name                              |
@@ -117,8 +117,8 @@ Feature: User Resources
       | Storage Used / Assigned | Devices Activated | View License Keys  |
       | 0 / 2 GB (change)       | 0 / 1 (change)    | Reassign Device(s) |      
        
-  @TC.19844
-  Scenario: Mozy-19844: Access an Enterprise Partner's User's details as Partner Admin
+  @TC.19844 @bus @user_storage_details @enterprise
+Scenario: Mozy-19844: Access an Enterprise Partner's User's details as Partner Admin
     Given I log in bus admin console as administrator
     When I add a new MozyEnterprise partner:
       | period | users | 
@@ -150,8 +150,8 @@ Feature: User Resources
     Then I log in bus admin console as administrator
     And I search and delete partner account by newly created partner name
       
-  @TC.19850
-  Scenario: Mozy-19850: Access an Irish Partner's User's details as Partner Admin
+  @TC.19850 @bus @user_storage_details @emea @IE @bundled
+Scenario: Mozy-19850: Access an Irish Partner's User's details as Partner Admin
     Given I log in bus admin console as administrator
     When I add a new MozyPro partner:
       | period | base plan | country | create under    |
@@ -183,8 +183,8 @@ Feature: User Resources
     Then I log in bus admin console as administrator
     And I search and delete partner account by newly created partner name  
     
-  @TC.19853
-  Scenario: Mozy-19853: Access an United Kingdom Partner's User's details as Partner Admin
+  @TC.19853 @bus @user_storage_details @emea @UK @enterprise
+Scenario: Mozy-19853: Access an United Kingdom Partner's User's details as Partner Admin
     Given I log in bus admin console as administrator
     When I add a new MozyEnterprise partner:
       | period | users | country        | 
@@ -216,8 +216,8 @@ Feature: User Resources
     Then I log in bus admin console as administrator
     And I search and delete partner account by newly created partner name    
 
-  @TC.19856
-  Scenario: Mozy-19856:Access French Reseller's User's details as Bus Admin
+  @TC.19856 @bus @user_storage_details @emea @FR @metallic_reseller
+Scenario: Mozy-19856:Access French Reseller's User's details as Bus Admin
     Given I log in bus admin console as administrator
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | country | create under   |
@@ -246,8 +246,8 @@ Feature: User Resources
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
     
-  @TC.19859
-  Scenario: Mozy-19859:Access German Partner's User's details as Bus Admin
+  @TC.19859 @bus @user_storage_details @emea @DE @mozypro @itemized
+Scenario: Mozy-19859:Access German Partner's User's details as Bus Admin
   	Given I log in bus admin console as administrator
   	When I act as partner by:
       | name                                    |
