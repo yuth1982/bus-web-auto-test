@@ -74,6 +74,9 @@ end
 When /^I view the partner info$/ do
   @bus_site.admin_console_page.view_partner_info
 end
+
+# has_navigation returns a value if items are present, otherwise it will return empty
+# in the case, am verifying that items are not present by checking for empty value
 Then /^navigation items should be removed$/ do
   # this should apply regardless of the partner type
   @bus_site.admin_console_page.has_navigation?("Assign Keys").should be_empty
@@ -83,8 +86,10 @@ Then /^navigation items should be removed$/ do
   @bus_site.admin_console_page.has_navigation?("List User Groups").should be_empty
 end
 
+# has_navigation returns a value if items are present, otherwise it will return empty
+# in the case, am verifying that items are present by ensuring a value is present
 Then /^new section & navigation items are present for (MozyPro|MozyEnterprise|Reseller|Itemized) partner$/ do |type|
-  @bus_site.admin_console_page.has_navigation?('quick_link_item').should be_empty
+  @bus_site.admin_console_page.has_navigation?('quick_link_item').should_not be_empty
   case type
     when CONFIGS['bus']['company_type']['mozypro']
       @bus_site.admin_console_page.has_navigation?("Resource Summary").should_not be_empty

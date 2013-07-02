@@ -17,7 +17,7 @@ module Phoenix
     element(:reg_comp_banner_txt, css: "div.inner-center-form-box > p")
     element(:reg_comp_txt_par_1, xpath: "//div[@id='main']/div/div/div/div/div[2]/div/div/p[2]")
     element(:reg_comp_txt_par_2, xpath: "//div[@id='main']/div/div/div/div/div[2]/div/div/p[3]")
-      # home specific - may be related
+    # home specific - may be related
     element(:reg_get_started_txt, xpath: "//div[@id='main']/div/div/div/div/div[2]/div/div/p[2]")
     element(:reg_referral_txt, css: "div.referrer-info > p")
     element(:reg_dl_win_btn, xpath: "//input[@value='Download for Win']")
@@ -25,21 +25,19 @@ module Phoenix
     element(:reg_dl_mac2_btn, xpath: "(//input[@value='Download for Mac'])[2]")
     element(:logout_btn, xpath: "//a[text()='LOG OUT']")
     element(:start_using_mozy, id: "btn_start_using")
-    # adding a few items for quick and dirty acct verification, if items present and value good - acct=good.
+    # adding a few minimal items for acct verification, if items present / value good - acct=good.
     # additional verification being done @ admin level in admin console
     element(:h3_section, css: "h3") # partner detail info section
-    element(:partner_server_setting, css: "span.partner_generic_resource_shown.info")
+    element(:pooled_resources, css: "table.form-box2")
     element(:h4_section, css: "h4") # renewal heading in billing info
+    element(:refresh, css: "img[alt='Refresh']")
+    element(:pooled_resource_tbl, css: "table.form-box2")
     element(:bill_info_plan_amnt, css: "strong") # billing info - plan size in bold
-    element(:man_resource_plan_size, css: "span.value") # manage resources section - 'total account storage'
-    element(:man_resource_server_value , xpath: "//div[@id='resource-available_key_list-content']/div[2]/div[3]/div/span[6]") # manage resources section "server enabled" value
     #
     # Public : reg complete banner visible
-    #
     # required: nothing
     #
     # Example
-    #
     #   xx('yy')
     #
     # Returns nothing
@@ -58,10 +56,18 @@ module Phoenix
     def logout(partner)
       localized_click(partner, 'logout')
     end
+
+    # clears pertinent cookies for phoenix
+    def clear_phoenix_cookies
+      page.driver.browser.manage.delete_cookie("_session_id");
+      page.driver.browser.manage.delete_cookie("_phoenix_session_id");
+      page.driver.browser.manage.delete_cookie("user_lang_pref");
+    end
+
+
     # pro section
     # code here relates
     # to mozypro related items
-
     def partner_created(partner)
       find_link(partner.company_info.name).present?
     end
@@ -83,7 +89,14 @@ module Phoenix
     def partner_info_section(partner)
       go_to_partner_info(partner)
       h3_section.eql?(partner.company_info.name).present?
-      partner_server_setting.eql?(partner.has_server_plan).present?
+      until pooled_resource_tbl.visible?
+        refresh
+      end
+      pooled_resources.visible?
+    end
+
+    def refresh
+      refresh.click
     end
 
     # billing info verification - if specific values are present, section should be good
@@ -94,20 +107,10 @@ module Phoenix
       bill_info_plan_amnt.eql?(partner.base_plan).present?
     end
 
-    # manage resources info verification - if specific values are present, section should be good
-    # additional verification being done @ admin level in admin console
-    def manage_resources_section(partner)
-      localized_click(partner, 'man_res')
-      man_resource_plan_size.eql?(partner.base_plan).present?
-      man_resource_server_value.eql?(partner.has_server_plan).present?
-    end
-
     # pro registration complete
     def reg_complete(partner)
       reg_comp_banner_present
       localized_click(partner, 'go_to_acct')
-#      start_using_mozy.click
-      #localized_click(partner, 'start_using_mozy')
       partner_created(partner)
       localized_click(partner, 'logout')
     end
@@ -115,7 +118,6 @@ module Phoenix
     # home section
     # code here relates
     # to mozyhome related items
-
     def reg_get_started
       reg_get_started_txt.present?
     end
@@ -143,6 +145,7 @@ module Phoenix
       localized_click(partner, 'resend_verify_email_link')
       localized_click(partner, 'back_2_login_link')
       #logout(partner)
+      clear_phoenix_cookies
     end
 
     # user/partner verification section
@@ -152,7 +155,13 @@ module Phoenix
       partner_created(partner)
       partner_info_section(partner)
       billing_info_section(partner)
-      manage_resources_section(partner)
+      # manage resources is no longer available w/ pooled storage
+      # TODO: GET THIS CALL FOR RESOURCE SUMMARY VERIFICATION WORKING PROPERLY
+      # step %{Bundled storage summary should be:}, table(%{
+      #    | Available | Used |
+      #    | #{partner.base_plan} | 0 |
+      #  })
+      clear_phoenix_cookies
     end
   end
 end

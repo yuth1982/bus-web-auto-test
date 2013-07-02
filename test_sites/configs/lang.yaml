@@ -59,7 +59,21 @@ Ireland:
     man_res: Manage Resources
 
   MozyHome:
-
+    acct_page_link: account page
+    resend_verify_email_link: Resend
+    back_2_login_link: Back to Login Page
+    logout: Log Out
+    acct_link: Account Home
+    plan_link: My Plan
+    devices_link: My Computer
+    profile_link: My Profile
+    dl_link: Download Mozy
+    stash_link: Stash Beta
+    logout_link: Log Out
+    know_base_link: Mozy Knowledge Base
+    winclient_man_link: Windows Client Manual
+    macclient_man_link: OS X Client Manual
+    support_page_link: MozyHome Support Portal
 
 United Kingdom:
   language: en-gb
@@ -78,6 +92,21 @@ United Kingdom:
     man_res: Manage Resources
 
   MozyHome:
+    acct_page_link: account page
+    resend_verify_email_link: Resend
+    back_2_login_link: Back to Login Page
+    logout: Log Out
+    acct_link: Account Home
+    plan_link: My Plan
+    devices_link: My Computer
+    profile_link: My Profile
+    dl_link: Download Mozy
+    stash_link: Stash Beta
+    logout_link: Log Out
+    know_base_link: Mozy Knowledge Base
+    winclient_man_link: Windows Client Manual
+    macclient_man_link: OS X Client Manual
+    support_page_link: MozyHome Support Portal
 
 Germany:
   language: de

@@ -121,7 +121,7 @@ module Bus
     # Returns hash table
     def general_info_hash
       wait_until_bus_section_load
-      output = general_info_dls[0,2].inject([]){ |sum, dls| sum + dls.dt_dd_elements_text}
+      output = general_info_dls[0,4].inject([]){ |sum, dls| sum + dls.dt_dd_elements_text}
       if has_stash_info_dl?
         stash = stash_info_dl.dt_dd_elements_text.delete_if{ |pair| pair.first.empty? }.map{ |row| [row.first, row[1..-1].join(' ')] }
         output = output + stash

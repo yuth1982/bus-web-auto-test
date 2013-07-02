@@ -93,7 +93,7 @@ module Phoenix
       end
     end
 
-    # acct admin info fill out(partner)
+    #		acct admin info fill out(partner)
     #     fill out required admin info from partner.admin_info
     #
     def acct_admin_info_fill_out(partner)
@@ -101,7 +101,11 @@ module Phoenix
       new_admin_username_tb.type_text(partner.admin_info.email)
       password_tb.type_text(CONFIGS['global']['test_pwd'])
       reenter_password_tb.type_text(CONFIGS['global']['test_pwd'])
-      new_admin_country_select.select(localize_country(partner.company_info.country))
+      if partner.company_info.country.eql?("Germany")
+        new_admin_country_select.select("Deutschland")
+      else
+        new_admin_country_select.select(partner.company_info.country)
+      end
       new_admin_zip_tb.type_text(partner.company_info.zip)
     end
 
@@ -123,7 +127,7 @@ module Phoenix
     def localize_country country
       case
         when country == 'Germany'
-           'Deutschland'
+          'Deutschland'
         else
           country
       end
