@@ -1,4 +1,4 @@
-eature: Add a new partner through phoenix
+Feature: Add a new partner through phoenix
 
 As a business owner
 I want to create a partner through phoenix
