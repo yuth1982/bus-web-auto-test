@@ -89,6 +89,11 @@ end
 When /^I refresh Search List User section$/ do
   @bus_site.admin_console_page.search_list_users_section.refresh_bus_section
 end
+
 When /^I export the users csv$/ do
   @bus_site.admin_console_page.search_list_users_section.export_csv
+end
+
+When /^I clear user search results$/ do
+  @bus_site.admin_console_page.search_list_users_section.clear_search
 end

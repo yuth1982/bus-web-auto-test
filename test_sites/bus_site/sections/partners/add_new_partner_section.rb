@@ -68,7 +68,7 @@ module Bus
     element(:back_btn, id: 'back_button')
 
     # sub partner
-    element(:create_sub_partner_btn, css: 'input#submit_button')
+    element(:create_sub_partner_btn, css: 'input[type="submit"]')
 
     # Public: Add a new partner account
     #

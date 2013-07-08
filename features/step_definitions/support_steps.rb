@@ -61,3 +61,7 @@ end
 Transform /^the newly created machine$/ do |step_arg|
   @machine_id
 end
+
+Transform /^the newly created device name$/ do |step_arg|
+  @clients.last.machine_alias
+end

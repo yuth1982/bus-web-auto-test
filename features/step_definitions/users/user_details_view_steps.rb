@@ -206,6 +206,11 @@ When(/^I get the machine_id by license_key$/) do
   @machine_id = DBHelper.get_machine_id_by_license_key(@license_key)
 end
 
+When /^I get the machine id for client (\d+) by license key (.+)$/ do |client_index, license_key|
+  license_key.replace ERB.new(license_key).result(binding)
+  @clients[client_index.to_i].machine_id = DBHelper.get_machine_id_by_license_key(license_key)
+end
+
 When(/^I update (.+) used quota to (\d+) GB$/) do |machine, quota|
   machine_id = machine.is_a?(Fixnum) ? machine : @bus_site.admin_console_page.user_details_section.get_machine_id(machine)
   DBHelper.update_machine_info(machine_id, quota)
@@ -307,4 +312,8 @@ When /^I view details of (.+)'s user group$/ do |user|
   step %{I view user details by #{user}}
   @bus_site.admin_console_page.user_details_section.click_user_group_details_link
   @bus_site.admin_console_page.user_details_section.wait_until_bus_section_load
+end
+
+When /^I close the user detail page$/ do
+  @bus_site.admin_console_page.user_details_section.close_bus_section
 end

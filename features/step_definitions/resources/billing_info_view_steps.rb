@@ -1,4 +1,3 @@
-
 Then /^Autogrow details should be:$/ do |autogrow_table|
   actual = @bus_site.admin_console_page.billing_info_section.autogrow_hashes
   expected = autogrow_table.hashes
@@ -34,3 +33,14 @@ Then /^Next renewal info table should be:$/ do |next_renewal_table|
   end
   expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
+
+When /^I (Enable|Disable) billing info autogrow$/ do |status|
+  case status
+    when "Enable"
+      @bus_site.admin_console_page.billing_info_section.enable_autogrow
+    when "Disable"
+      @bus_site.admin_console_page.billing_info_section.disable_autogrow
+    else
+  end
+end
+

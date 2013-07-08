@@ -31,6 +31,7 @@ require 'ssh_helper'
 require 'ssh_migration'
 require 'utility'
 require 'device_helper'
+require 'ssh_tds_grow_quota'
 require 'testlink_helper'
 
 require 'site_helper/site_helper'
@@ -43,9 +44,13 @@ include DBHelper
 include LDAPHelper
 include SSHHelper
 include SSHMigration
+include SSHTDSGrowQuota
+include SSHRecordOverdraft
 include AriaApi
 include Utility
-include KeylessDeviceActivation::Authentication
+include KeylessDeviceActivation
+include Activation
+include DataShuttleSeeding
 
 
 

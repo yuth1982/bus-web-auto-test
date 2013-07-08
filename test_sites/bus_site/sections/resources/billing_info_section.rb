@@ -7,6 +7,9 @@ module Bus
     element(:change_subscription_link, css: "a[href='/resource/change_billing_period']")
 
     element(:vat_info_table, css: 'div[id^=partner-billing-info-vat-] table')
+    element(:enable_autogrow_link, xpath: "//a[text()='(more info)']")
+    element(:commit_autogrow_btn, xpath: "//div[@id='overdraft']/form/input[@name='commit']")
+    element(:disable_autogrow_link, xpath: "//a[text()='(disable)']")
 
     # All tables in Billing Information section, including Next Renewal, Supplemental Plan, Autogrow
     elements(:tables, css: 'div#resource-billing-content table')
@@ -103,6 +106,19 @@ module Bus
     def autogrow_hashes
       wait_until_bus_section_load
       tables.last.hashes
+    end
+
+    def enable_autogrow
+      wait_until_bus_section_load
+      enable_autogrow_link.click
+      commit_autogrow_btn.click
+      wait_until{ !commit_autogrow_btn.visible? }
+    end
+
+    def disable_autogrow
+      disable_autogrow_link.click
+      commit_autogrow_btn.click
+      wait_until{ !commit_autogrow_btn.visible? }
     end
   end
 end

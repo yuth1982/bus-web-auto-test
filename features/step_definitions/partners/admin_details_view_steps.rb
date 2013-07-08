@@ -15,6 +15,12 @@ When /^I activate new partner admin with default password$/ do
   @bus_site.admin_console_page.admin_details_section.activate_admin(password, password)
 end
 
+When /^I get the admin id from partner details$/ do
+  @bus_site.admin_console_page.partner_details_section.find_link(@partner.admin_info.full_name).click
+  @admin_id = @bus_site.admin_console_page.admin_details_section.admin_id
+  Log.debug("admin id is #{@admin_id}")
+end
+
 When /^edit admin details:$/ do |info_table|
   # table is a | email          | name          | parent admin     |
   new_info = info_table.hashes.first

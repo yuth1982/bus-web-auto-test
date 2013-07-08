@@ -227,8 +227,8 @@ Feature:
     And I view user details by newly created user email
     And I update the user password to default password
     And I use keyless activation to activate devices
-      | machine_type | machine_codename |
-      | Desktop      | MozyEnterprise   |
+      | machine_type |
+      | Desktop      |
     Then I stop masquerading
     And I order data shuttle for newly created partner company name
       | power adapter   | key from  | quota |
@@ -363,8 +363,8 @@ Feature:
     And I view user details by newly created user email
     And I update the user password to default password
     And I use keyless activation to activate devices
-      | machine_type | machine_codename |
-      | Desktop      | MozyEnterprise   |
+      | machine_type |
+      | Desktop      |
     Then I stop masquerading
     When I order data shuttle for newly created partner company name
       | power adapter   | key from  | quota |

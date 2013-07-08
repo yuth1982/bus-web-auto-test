@@ -27,6 +27,7 @@ module Bus
       unless partner_filter.empty?
         partner_filter_select.select(partner_filter)
       end
+      wait_until_bus_section_load
       search_user_btn.click
       wait_until_bus_section_load
     end
@@ -90,6 +91,11 @@ module Bus
     def sort_users_by(column_name)
       target = search_results_table.headers.select{ |col| col.text == column_name}
       target.first.find(:css, 'a').click
+      wait_until_bus_section_load
+    end
+
+    def clear_search
+      clear_search_link.click
       wait_until_bus_section_load
     end
   end

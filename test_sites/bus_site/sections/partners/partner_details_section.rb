@@ -106,8 +106,9 @@ module Bus
     end
 
     def partner
+      wait_until_bus_section_load
       { :id => general_info_hash['ID:'],
-        :name => find(:css, "div.header-bar > h3").text }
+        :name => find(:xpath, "//div[starts-with(@id,'partner-show-')]/div[2]/div/h3").text }
     end
 
     # Public: General information hash
@@ -348,7 +349,7 @@ module Bus
       change_autogrow_status_link.click
       autogrow_status_select.select('Yes')
       submit_autogrow_status_btn.click
-      wait_until{ success_messages == "Overdraft protection enabled." }
+      wait_until{ !submit_autogrow_status_btn.visible? }
     end
 
     # Public: Disable autogrow for a partner

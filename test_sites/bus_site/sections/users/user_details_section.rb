@@ -453,7 +453,7 @@ module Bus
 
     def click_view_product_keys_link
       view_product_keys_link.click
-      sleep 1 # wait for ajax callback
+      wait_until{ product_key_lbl.visible? }
     end
 
     def product_key

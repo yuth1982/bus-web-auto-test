@@ -68,5 +68,17 @@ module Bus
       end
       return [machine, user] if flag == 1
     end
+
+    # Public: Open the machine details section
+    #
+    # @param [String] machine_name
+    #
+    # Example
+    #   @bus_site.admin_console_page.search_list_machine_section.view_machine_details("AUTOTEST")
+    #
+    # @return [] nothing
+    def view_machine_details(machine_name)
+      find_link(machine_name).click
+    end
   end
 end

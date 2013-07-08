@@ -76,5 +76,9 @@ module Bus
     def admin_info_box_message
       admin_info_message_txt.text
     end
+
+    def admin_id
+      find(:xpath, "//div[contains(@id, 'admin-show-')]/div[2]/dl[2]/dd").text
+    end
   end
 end

@@ -244,3 +244,13 @@ end
 Then /^partner details message should be$/ do |message|
   @bus_site.admin_console_page.partner_details_section.success_messages == message
 end
+
+When /^I (Enable|Disable) partner details autogrow$/ do |status|
+  case status
+    when "Enable"
+      @bus_site.admin_console_page.partner_details_section.enable_autogrow
+    when "Disable"
+      @bus_site.admin_console_page.partner_details_section.disable_autogrow
+    else
+  end
+end

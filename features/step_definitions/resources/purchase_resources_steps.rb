@@ -1,4 +1,3 @@
-
 When /^I purchase resources:$/ do |resources_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['purchase_resources'])
   cells = resources_table.hashes.first
@@ -7,7 +6,8 @@ When /^I purchase resources:$/ do |resources_table|
   d_quota = cells["desktop quota"]
   s_license = cells["server license"]
   s_quota = cells["server quota"]
-  @bus_site.admin_console_page.purchase_resources_section.purchase(user_group, d_license, d_quota, s_license, s_quota)
+  g_quota = cells["generic quota"]
+  @bus_site.admin_console_page.purchase_resources_section.purchase(user_group, d_license, d_quota, s_license, s_quota, g_quota)
 end
 
 Then /^Resources should be purchased$/ do

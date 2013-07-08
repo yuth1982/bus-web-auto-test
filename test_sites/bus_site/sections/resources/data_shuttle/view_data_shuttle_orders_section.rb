@@ -31,5 +31,10 @@ module Bus
       wait_until_bus_section_load
       order_results_table.rows.first[0].find("a").click
     end
+
+    def top_seed_id
+      wait_until_bus_section_load
+      order_results_table.rows.first[0].find("a").text
+    end
   end
 end

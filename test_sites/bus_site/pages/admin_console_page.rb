@@ -16,6 +16,7 @@ module Bus
     section(:account_details_section, AccountDetailsSection, id: "setting-edit_account_settings")
     section(:authentication_policy_section, AuthenticationPolicySection, id: 'authentication_policies-edit')
     section(:client_config_section, ClientConfigSection, id: 'setting-edit_client_config')
+    section(:add_new_pro_plan_section, AddNewProPlanSection, id: 'plan-pro_new')
 
     # Users section
     section(:search_list_users_section, SearchListUsersSection, id: 'user-list')
@@ -31,6 +32,7 @@ module Bus
     section(:user_group_details_section, UserGroupDetailsSection, css: 'div[id^=user_groups-show-]')
     section(:list_user_groups_section, ListUserGroupsSection, id: 'user_groups-list')
     section(:user_details_section, UserDetailsSection, css: 'div[id^=user-show]')
+    section(:machine_details_section, MachineDetailsSection, css: 'div[id^=machine-show-]')
 
     # Admin section
     section(:add_new_role_section, AddNewRoleSection, id: "roles-new-content")
