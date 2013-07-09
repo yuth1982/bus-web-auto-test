@@ -82,6 +82,7 @@ When /^I add a new ip whitelist (.+)$/ do |ip|
 end
 
 Then /^Partner ip whitelist should be (.+)$/ do |ip|
+  @bus_site.admin_console_page.partner_details_section.wait_until_bus_section_load
   @bus_site.admin_console_page.partner_details_section.ip_whitelist.should == ip
 end
 

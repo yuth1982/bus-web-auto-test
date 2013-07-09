@@ -69,32 +69,31 @@ Feature: Resource Summary
       | Available | Used  | All Subpartner |
       | 70 GB     |  0    | 30 GB          |
 
-  @TC.20707 @firefox_debug @bus @2.5 @add_new_partner @account_type
-  Scenario: 20797 [Itemized]Click 'More' link will show all the Storage type when Storage type is more than 3
-    When I act as partner by:
-      | email                               |
-      | resource_summary_test_more@auto.com |
-    And I navigate to Resource Summary section from bus admin console page
-    Then Itemized storage summary should be:
-      | Test2 Used | Test2 Total | Test1 Used | Test1 Total | Server Used | Server Total | Available | Used  |
-      | 0          | 200 GB      | 0          | 200 GB      | 0           | 200 GB       | 850 GB    | 0     |
-    And Itemized device summary should be:
-      | Test2 Used | Test2 Total | Test1 Used | Test1 Total | Server Used | Server Total | Available | Used  |
-      | 0          | 0           | 0          | 0           | 0           | 0            | 10        | 0     |
-    When I click the more link for storage
-    And I click the more link for device
-    Then Itemized storage summary should be:
-      | Test2 Used | Test2 Total | Test1 Used | Test1 Total | Server Used | Server Total | Desktop Used | Desktop Total | Available | Used  |
-      | 0          | 200 GB      | 0          | 200 GB      | 0           | 200 GB       | 0            | 250 GB        | 850 GB    | 0     |
-    And Itemized device summary should be:
-      | Test2 Used | Test2 Total | Test1 Used | Test1 Total | Server Used | Server Total | Desktop Used | Desktop Total | Available | Used  |
-      | 0          | 0           | 0          | 0           | 0           | 0            | 0            | 10            | 10        | 0     |
-    When I click the hide link for storage
-    And I click the hide link for device
-    Then Itemized storage summary should be:
-      | Test2 Used | Test2 Total | Test1 Used | Test1 Total | Server Used | Server Total | Available | Used  |
-      | 0          | 200 GB      | 0          | 200 GB      | 0           | 200 GB       | 850 GB    | 0     |
-    And Itemized device summary should be:
-      | Test2 Used | Test2 Total | Test1 Used | Test1 Total | Server Used | Server Total | Available | Used  |
-      | 0          | 0           | 0          | 0           | 0           | 0            | 10        | 0     |
-
+#  @TC.20797 @firefox_debug
+#  Scenario: 20797 [Itemized]Click 'More' link will show all the Storage type when Storage type is more than 3
+#    When I act as partner by:
+#      | email                               |
+#      | resource_summary_test_more@auto.com |
+#    And I navigate to Resource Summary section from bus admin console page
+#    Then Itemized storage summary should be:
+#      | Test2 Used | Test2 Total | Test1 Used | Test1 Total | Server Used | Server Total | Available | Used  |
+#      | 0          | 200 GB      | 0          | 200 GB      | 0           | 200 GB       | 850 GB    | 0     |
+#    And Itemized device summary should be:
+#      | Test2 Used | Test2 Total | Test1 Used | Test1 Total | Server Used | Server Total | Available | Used  |
+#      | 0          | 0           | 0          | 0           | 0           | 0            | 10        | 0     |
+#    When I click the more link for storage
+#    And I click the more link for device
+#    Then Itemized storage summary should be:
+#      | Test2 Used | Test2 Total | Test1 Used | Test1 Total | Server Used | Server Total | Desktop Used | Desktop Total | Available | Used  |
+#      | 0          | 200 GB      | 0          | 200 GB      | 0           | 200 GB       | 0            | 250 GB        | 850 GB    | 0     |
+#    And Itemized device summary should be:
+#      | Test2 Used | Test2 Total | Test1 Used | Test1 Total | Server Used | Server Total | Desktop Used | Desktop Total | Available | Used  |
+#      | 0          | 0           | 0          | 0           | 0           | 0            | 0            | 10            | 10        | 0     |
+#    When I click the hide link for storage
+#    And I click the hide link for device
+#    Then Itemized storage summary should be:
+#      | Test2 Used | Test2 Total | Test1 Used | Test1 Total | Server Used | Server Total | Available | Used  |
+#      | 0          | 200 GB      | 0          | 200 GB      | 0           | 200 GB       | 850 GB    | 0     |
+#    And Itemized device summary should be:
+#      | Test2 Used | Test2 Total | Test1 Used | Test1 Total | Server Used | Server Total | Available | Used  |
+#      | 0          | 0           | 0          | 0           | 0           | 0            | 10        | 0     |
