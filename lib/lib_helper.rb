@@ -31,6 +31,7 @@ require 'ssh_helper'
 require 'ssh_migration'
 require 'utility'
 require 'device_helper'
+require 'testlink_helper'
 
 require 'site_helper/site_helper'
 require 'capybara_helper/capybara_helper'

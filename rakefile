@@ -1,11 +1,82 @@
 require 'cucumber'
 require 'cucumber/rake/task'
+require './lib/testlink_helper'
 
-desc 'Run Cucumber features and generate an HTML summary and a plain text log'
+namespace :testlink do
+
+  TEST_PLAN = 268267  # "BUS2.5 Automated Cases Test Pass"
+  PROJECT_PREFIX = "Mozy"
+  PROJECT_ID = 2      # 2 - 'Mozy'
+  CLIENT = TestlinkHelper::TestlinkAPIClient.new
+
+  desc "Testlink management operations - about"
+  task :about do
+    puts CLIENT.run_api("about", {})
+  end
+
+  desc "Get cases exists in the repo but missed from testplan (default plan is 'BUS2.5 Automated Cases Test Pass')"
+  task :cases_missed_from_testplan, :testplan_id do |t, args|
+    # Testplan 'BUS2.5 Automated Cases Test Pass' ID is 268267, set as default test plan right now
+    args.with_defaults(:testplan_id => TEST_PLAN)
+    cases = cases_missed_from_testplan(args[:testplan_id])
+    puts "#{cases.size} cases missed from testplan"
+    puts cases
+  end
+
+  desc "Get cases exists in the testplan but no code in the repo (default plan is 'BUS2.5 Automated Cases Test Pass')"
+  task :cases_missed_from_repo, :testplan_id do |t, args|
+    # Testplan 'BUS2.5 Automated Cases Test Pass' ID is 268267, set as default test plan right now
+    args.with_defaults(:testplan_id => TEST_PLAN)
+    cases = cases_missed_from_repo(args[:testplan_id])
+    puts "#{cases.size} cases missed from the repository"
+    puts cases
+  end
+
+  desc "Add missing cases into testplan (default plan is 'BUS2.5 Automated Cases Test Pass'), run 'rake testlink:cases_missed_from_testplan' to get list of missing cases"
+  task :add_missing_cases, :testplan_id do |t, args|
+    # Testplan 'BUS2.5 Automated Cases Test Pass' ID is 268267, set as default test plan right now
+    args.with_defaults(:testplan_id => TEST_PLAN)
+    cases = cases_missed_from_testplan(args[:testplan_id])
+    cases.each do |tc|
+      puts "Adding #{tc} into testplan..."
+      test_case = CLIENT.run_api("getTestCase", {:testcaseexternalid => "#{PROJECT_PREFIX}-#{tc}"}).first
+      arg = {:testplanid => args[:testplan_id], :testcaseid => test_case["testcase_id"].to_i, :testprojectid => PROJECT_ID, :version => test_case["version"].to_i}
+      CLIENT.run_api("addTestCaseToTestPlan", arg)
+      puts "#{tc} added"
+    end
+  end
+
+  def get_cases_from_testplan(testplan_id)
+    # Get cases from testlink
+    cases = CLIENT.run_api("getTestCasesForTestPlan", {:testplanid => testplan_id})
+    cases.values.map{|c| c["external_id"]}
+  end
+
+  def get_cases_from_config
+    # Get cases from local git repo by config.properties file
+    file = "config.properties"
+    text = File.open(file, 'r').read.split(',')
+    text.map{|t| t[t.index('"')+1..t.index("::")-1] if t.include?("::")}.compact
+  end
+
+  def cases_missed_from_testplan(testplan_id)
+    cases_in_testplan = get_cases_from_testplan(testplan_id)
+    cases_in_repo = get_cases_from_config
+    cases_in_repo.select{|c| !cases_in_testplan.include?(c)}
+  end
+
+  def cases_missed_from_repo(testplan_id)
+    cases_in_testplan = get_cases_from_testplan(testplan_id)
+    cases_in_repo = get_cases_from_config
+    cases_in_testplan.select{|c| !cases_in_repo.include?(c)}
+  end
+end
 
 Cucumber::Rake::Task.new(:update_config) do |t|
   t.cucumber_opts = "-d -f Cucumber::Formatter::UpdateConfig"
 end
+
+desc 'Run Cucumber features and generate an HTML summary and a plain text log'
 
 Cucumber::Rake::Task.new(:all) do |t|
   t.cucumber_opts = "--color --format html --out all_features_#{Time.now.strftime("%Y%m%dT%H%M")}.html features"
