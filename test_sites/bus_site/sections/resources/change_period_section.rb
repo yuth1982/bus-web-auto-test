@@ -18,6 +18,9 @@ module Bus
     def change_subscription_up(link_text)
       find_link(link_text).click
       sleep 5 # force to wait due to slow internet connection
+    end
+
+    def continue_change_subscription
       continue_btn.click
       wait_until_bus_section_load
     end

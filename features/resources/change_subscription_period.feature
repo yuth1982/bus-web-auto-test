@@ -264,7 +264,8 @@ Feature: Change subscription period
       | Credit for remainder of monthly subscription  | $42.00   |
       | Charge for new yearly subscription            | $462.00  |
       | Total amount to be charged                    | $420.00  |
-    And Subscription changed message should be Your account has been changed to yearly billing.
+    When I continue to change account subscription
+    Then Subscription changed message should be Your account has been changed to yearly billing.
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -287,7 +288,8 @@ Feature: Change subscription period
       | Credit for remainder of monthly subscription  | $19.99   |
       | Charge for new biennial subscription          | $419.79  |
       | Total amount to be charged                    | $399.80  |
-    And Subscription changed message should be Your account has been changed to biennial billing.
+    When I continue to change account subscription
+    Then Subscription changed message should be Your account has been changed to biennial billing.
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -310,7 +312,8 @@ Feature: Change subscription period
       | Credit for remainder of yearly subscription   | $95.00   |
       | Charge for new 3-year subscription            | $259.00  |
       | Total amount to be charged                    | $164.00  |
-    And Subscription changed message should be Your account has been changed to 3-year billing.
+    When I continue to change account subscription
+    Then Subscription changed message should be Your account has been changed to 3-year billing.
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 

@@ -23,3 +23,12 @@ end
 Then /^Subscription changed message should be (.+)$/ do |message|
   @bus_site.admin_console_page.change_period_section.messages.should == message
 end
+
+Then /^I continue to change account subscription$/ do
+  @bus_site.admin_console_page.change_period_section.continue_change_subscription
+end
+
+When /^I change account subscription up to (.+) period!$/ do |link_text|
+  step "I change account subscription up to #{link_text} period"
+  step "I continue to change account subscription"
+end

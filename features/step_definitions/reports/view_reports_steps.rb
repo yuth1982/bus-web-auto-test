@@ -91,8 +91,9 @@ Then /^Quick report (.+) csv file details should be:$/ do |report_type, report_t
   report_table.map_column!('Column C') do |value|
     value.gsub(/@XXXX/, @partner.credit_card.number[12..-1])
   end
-
-  @bus_site.admin_console_page.quick_reports_section.read_quick_report(report_type).should == report_table.rows
+  actual = @bus_site.admin_console_page.quick_reports_section.read_quick_report(report_type)
+  actual.size.should == report_table.rows.size
+  actual.each { |row| report_table.rows.should include row }
 end
 
 When /^I search report by name (.+)$/ do |report_name|

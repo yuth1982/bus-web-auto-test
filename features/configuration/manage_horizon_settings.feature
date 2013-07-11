@@ -12,21 +12,21 @@ Feature: Manage Horizon related settings
     And I navigate to Authentication Policy section from bus admin console page
 
   @TC.17470 @bus @2.1 @direct_ldap_integration @authentication_migration
-  Scenario: Successfully verify 'Test Connection' button should work with valid organization name
+  Scenario: 17470 Successfully verify 'Test Connection' button should work with valid organization name
     When I use Directory Service as authentication provider
     And I select Horizon Manager with organization name mozyqa2
     And I Test Connection for Horizon Manager
     Then Horizon Manager test connection message should be Test passed.
 
   @TC.17471 @bus @2.1 @direct_ldap_integration @authentication_migration
-  Scenario: Verify 'Test Connection' button should work with invalid organization name given
+  Scenario: 17471 Verify 'Test Connection' button should work with invalid organization name given
     When I use Directory Service as authentication provider
     And I select Horizon Manager with organization name 1ziygbnk
     And I Test Connection for Horizon Manager
     Then Horizon Manager test connection message should be Test failed.
 
   @TC.17472 @bus @2.1 @direct_ldap_integration @authentication_migration
-  Scenario: Can successfully load Horizon Manager's attributes with valid organization name
+  Scenario: 17472 Can successfully load Horizon Manager's attributes with valid organization name
     When I use Directory Service as authentication provider
     And I select Horizon Manager with organization name mozyqa2
     And I click SAML Authentication tab
@@ -41,7 +41,7 @@ Feature: Manage Horizon related settings
       | mozyqa2.horizonmanager.com/SAAS/API/1.0/GET/federation/request?s=1876 | horizonmanager.com| glbv7YsYBdLHAtbX2Geg==|
 
   @TC.17473 @bus @2.1 @direct_ldap_integration @authentication_migration
-  Scenario: Failure will occur in a reasonable time loading attributes with invalid organization name
+  Scenario: 17473 Failure will occur in a reasonable time loading attributes with invalid organization name
     When I use Directory Service as authentication provider
     And I select Horizon Manager with organization name 4ihlgoiyzhbje
     And I click SAML Authentication tab
@@ -49,13 +49,13 @@ Feature: Manage Horizon related settings
     Then Horizon Manager load attribute information should be Failed to load attributes from Horizon
 
   @TC.17474 @bus @2.1 @direct_ldap_integration @authentication_migration
-  Scenario: Pop-up window will be prompted loading attributes with empty organization name
+  Scenario: 17474 Pop-up window will be prompted loading attributes with empty organization name
     When I use Directory Service as authentication provider
     And I select Horizon Manager with organization name nothing
     And I click SAML Authentication tab
     Then I load attributes and I should see an JS alert with message Oranization name (Org Name) is not specified.
 
   @TC.17475 @bus @2.1 @direct_ldap_integration @authentication_migration
-  Scenario: User mapping tab is disabled when managing horizon manager
+  Scenario: 17475 User mapping tab is disabled when managing horizon manager
     When I use Directory Service as authentication provider
     Then user mapping tab should be disabled

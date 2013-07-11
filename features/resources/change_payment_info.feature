@@ -97,11 +97,11 @@ Feature: Modify credit card information and billing contact information
       | new name    |                  | 12           | 19          | 123 |
     And I save payment information changes
     Then Modify credit card error messages should be You must enter a credit card number.
-    When I update credit card information to:
-      | cc name     | cc number        | expire month | expire year | cvv |
-      | new name    | 4111111111111111 | 12           | 19          |     |
-    And I save payment information changes
-    Then Modify credit card error messages should be Card security code missing.
+    # When I update credit card information to:
+    #   | cc name     | cc number        | expire month | expire year | cvv |
+    #   | new name    | 4111111111111111 | 12           | 19          |     |
+    # And I save payment information changes
+    # Then Modify credit card error messages should be Card security code missing.
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 

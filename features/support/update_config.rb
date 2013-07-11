@@ -17,11 +17,12 @@ module Cucumber
       def after_features(features)
         features.each do |feature|
           feature.feature_elements.each do |el|
-            tag_name = el.source_tag_names.first
-            unless tag_name.nil?
-              matches = tag_name.match(/(TC.)(\d+)/)
-              unless matches.nil?
-                @cucumber_mappings << "#{matches[2]}::#{el.name}" if matches.length == 3
+            el.source_tag_names.each do |tag_name|
+              unless tag_name.nil?
+                matches = tag_name.match(/(TC.)(\d+)/)
+                unless matches.nil?
+                  @cucumber_mappings << "#{matches[2]}::#{el.name}" if matches.length == 3
+                end
               end
             end
           end

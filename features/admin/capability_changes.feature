@@ -7,7 +7,7 @@ Feature: Manage admin capability change
     Given I log in bus admin console as administrator
 
   @TC.700 @bus @admin @partner_capability_changes
-  Scenario: Check partners list/view check to make sure you can't change the name
+  Scenario: 700 Check partners list/view check to make sure you can't change the name
     When I navigate to List Roles section from bus admin console page
     And I clean all roles with name which started with "$AUTOTEST$"
     When I navigate to Add New Role section from bus admin console page
@@ -34,7 +34,7 @@ Feature: Manage admin capability change
     And I delete role $AUTOTEST$ATC700
 
   @TC.699 @bus @admin @partner_capability_changes
-  Scenario: Check Delete a partner with invalid password
+  Scenario: 699 Check Delete a partner with invalid password
     When I navigate to List Roles section from bus admin console page
     And I clean all roles with name which started with "$AUTOTEST$"
     When I navigate to Add New Role section from bus admin console page
@@ -64,7 +64,7 @@ Feature: Manage admin capability change
     And I delete role $AUTOTEST$699
 
   @TC.698 @bus @admin @partner_capability_changes
-  Scenario: Check Delete a partner works
+  Scenario: 698 Check Delete a partner works
     When I navigate to Add New Role section from bus admin console page
     And I add a new role:
       | Name   |
@@ -96,7 +96,7 @@ Feature: Manage admin capability change
 
 
   @TC.697 @bus @admin @partner_capability_changes
-  Scenario: Check partners Delete, List/View capability
+  Scenario: 697 Check partners Delete, List/View capability
     When I navigate to Add New Role section from bus admin console page
     And I add a new role:
       | Name   |
@@ -126,7 +126,7 @@ Feature: Manage admin capability change
     And I delete role ATC697
 
   @TC.696 @bus @admin @partner_capability_changes
-  Scenario: Check partners Edit, List/View capability
+  Scenario: 696 Check partners Edit, List/View capability
     When I navigate to Add New Role section from bus admin console page
     And I add a new role:
       | Name   |
@@ -165,7 +165,7 @@ Feature: Manage admin capability change
     And I delete role ATC696
 
   @TC.695 @bus @admin @partner_capability_changes
-  Scenario: Check partners Add, List/View capability
+  Scenario: 695 Check partners Add, List/View capability
     When I navigate to Add New Role section from bus admin console page
     And I add a new role:
       | Name   |

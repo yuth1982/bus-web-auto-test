@@ -59,7 +59,7 @@ Feature: Resource Summary
       | Available | Used  |
       | 70 GB     | 30 GB |
 
-  @TC.2080 @bus @2.5 @manage_storage @display_account_storage @device_summary5
+  @TC.20805 @bus @2.5 @manage_storage @display_account_storage @device_summary
   Scenario: 20805 [Bundled with subpartner]The subpartner Storage shows in the partner's summary view
     When I act as partner by:
       | email                                        |
