@@ -24,9 +24,9 @@ Feature: Bus Smoke Test
       | Company Type:  | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         |
       | MozyEnterprise | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 |
     And Partner account attributes should be:
-      | Backup Keys            |           |
-      | Backup Key Soft Cap    | Disabled  |
-      | Server Enabled         | Disabled  |
+      | Backup Devices         |           |
+      | Backup Device Soft Cap | Disabled  |
+      | Server                 | Disabled  |
       | Cloud Storage (GB)     |           |
       | Stash Users:           |           |
       | Default Stash Storage: |           |

@@ -166,7 +166,7 @@ end
 
 When /^I add stash to all users for the partner$/ do
   step 'I try to add stash to all users for the partner'
-  @bus_site.admin_console_page.click_close
+  @bus_site.admin_console_page.click_continue
   @bus_site.admin_console_page.partner_details_section.wait_until_bus_section_load
 end
 

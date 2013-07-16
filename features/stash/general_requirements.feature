@@ -24,7 +24,7 @@ Feature:
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
       | User                        | Name          | Stash   | Machines | Storage        | Storage Used |
-      | <%=@new_users.first.email%> | TC.19040 User | Enabled | 0        | 10 GB(Limited) | None         |
+      | <%=@new_users.first.email%> | TC.19040 User | Enabled | 0        | 10 GB (Limited)| None         |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                  | Enable Stash:               |
@@ -65,7 +65,7 @@ Feature:
     And I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
       | User                        | Name          | Stash    | Machines | Storage        | Storage Used |
-      | <%=@new_users.first.email%> | TC.19078 User | Disabled | 0        | 10 GB(Limited) | None         |
+      | <%=@new_users.first.email%> | TC.19078 User | Disabled | 0        | 10 GB (Limited)| None         |
     And I view user details by newly created user email
     Then user details should be:
       | Name:                  | Enable Stash:  |
@@ -101,7 +101,7 @@ Feature:
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
       | User                        | Name          | Stash   | Machines | Storage        | Storage Used |
-      | <%=@new_users.first.email%> | TC.19080 User | Enabled | 0        | 10 GB(Limited) | None         |
+      | <%=@new_users.first.email%> | TC.19080 User | Enabled | 0        | 10 GB (Limited)| None         |
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
@@ -129,7 +129,7 @@ Feature:
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
       | User                        | Name          | User Group  | Stash   | Machines | Storage        | Storage Used |
-      | <%=@new_users.first.email%> | TC.19022 User | TC.19022 UG | Enabled | 0        | 10 GB(Limited) | None         |
+      | <%=@new_users.first.email%> | TC.19022 User | TC.19022 UG | Enabled | 0        | 10 GB (Limited)| None         |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                  | Enable Stash: |
@@ -159,10 +159,10 @@ Feature:
     And I navigate to Add New User section from bus admin console page
     Then I should not see stash options
     When I add new user(s):
-      | name            | user_group           | storage_type | storage_limit | devices |
-      | TC.18967 user1  | (default user group) | Desktop      | 5             | 1       |
-      | TC.18967 user2  | (default user group) | Desktop      | 10            | 2       |
-      | TC.18967 user3  | (default user group) | Desktop      | 15            | 3       |
+      | name           | user_group           | storage_type | storage_limit | devices |
+      | TC.18967 user1 | (default user group) | Desktop      | 5             | 1       |
+      | TC.18967 user2 |                      |              |               |         |
+      | TC.18967 user3 |                      |              |               |         |
     Then 3 new user should be created
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
@@ -174,9 +174,9 @@ Feature:
     And I sort user search results by Name
     Then User search results should be:
       | User                     | Name           | User Group           | Stash   | Machines | Storage        |
-      | <%=@new_users[0].email%> | TC.18967 user1 | (default user group) | Enabled | 0        | 5 GB(Limited)  |
-      | <%=@new_users[1].email%> | TC.18967 user2 | (default user group) | Enabled | 0        | 10 GB(Limited) |
-      | <%=@new_users[2].email%> | TC.18967 user3 | (default user group) | Enabled | 0        | 15 GB(Limited) |
+      | <%=@new_users[0].email%> | TC.18967 user1 | (default user group) | Enabled | 0        | 5 GB (Limited) |
+      | <%=@new_users[1].email%> | TC.18967 user2 | (default user group) | Enabled | 0        | 5 GB (Limited) |
+      | <%=@new_users[2].email%> | TC.18967 user3 | (default user group) | Enabled | 0        | 5 GB (Limited) |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -239,7 +239,7 @@ Feature:
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
       | User                        | Name          | Stash   | Machines | Storage                 | Storage Used  |
-      | <%=@new_users.first.email%> | TC.19035 User | Enabled | 0        | Desktop: 10 GB(Limited) | Desktop: None |
+      | <%=@new_users.first.email%> | TC.19035 User | Enabled | 0        | Desktop: 10 GB (Limited)| Desktop: None |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                  | Enable Stash:               |
@@ -284,9 +284,9 @@ Feature:
     And I sort user search results by Name
     Then User search results should be:
       | User                     | Name           | User Group           | Stash   | Machines | Storage                 |
-      | <%=@new_users[0].email%> | TC.19102 user1 | (default user group) | Enabled | 0        | Desktop: 5 GB(Limited)  |
-      | <%=@new_users[1].email%> | TC.19102 user2 | (default user group) | Enabled | 0        | Desktop: 10 GB(Limited) |
-      | <%=@new_users[2].email%> | TC.19102 user3 | (default user group) | Enabled | 0        | Desktop: 15 GB(Limited) |
+      | <%=@new_users[0].email%> | TC.19102 user1 | (default user group) | Enabled | 0        | Desktop: 5 GB (Limited) |
+      | <%=@new_users[1].email%> | TC.19102 user2 | (default user group) | Enabled | 0        | Desktop: 10 GB (Limited)|
+      | <%=@new_users[2].email%> | TC.19102 user3 | (default user group) | Enabled | 0        | Desktop: 15 GB (Limited)|
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -345,7 +345,7 @@ Feature:
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
       | User                        | Name          | Stash   | Machines | Storage                 | Storage Used  |
-      | <%=@new_users.first.email%> | TC.19109 User | Enabled | 0        | Desktop: 10 GB(Limited) | Desktop: None |
+      | <%=@new_users.first.email%> | TC.19109 User | Enabled | 0        | Desktop: 10 GB (Limited)| Desktop: None |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                  | Enable Stash:               |
@@ -389,7 +389,7 @@ Feature:
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
       | User                        | Name          | Stash   | Machines | Storage                 | Storage Used  |
-      | <%=@new_users.first.email%> | TC.19109 User | Enabled | 0        | Desktop: 10 GB(Limited) | Desktop: None |
+      | <%=@new_users.first.email%> | TC.19109 User | Enabled | 0        | Desktop: 10 GB (Limited)| Desktop: None |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                  | Enable Stash:               |

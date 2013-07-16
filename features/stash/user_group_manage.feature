@@ -442,10 +442,10 @@ Feature: User group stash setting management
       | test3010_3030_3040@auto.com  |
     When I navigate to List User Groups section from bus admin console page
     Then User groups list table should be:
-      | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota             | Desktop Keys   | Desktop Quota               |
-      | (default user group) * | 2     | 1      | 1           | 0 / 0       | 0.0 (0.0 assigned) / 0.0 | 1 / 9          | 0.03 (3.0 assigned) / 230.0 |
-      | backup                 | 1     | 1      | 0           | 0 / 0       | 0.0 (0.0 assigned) / 0.0 | 1 / 10         | 0.01 (1.0 assigned) / 10.0  |
-      | stash                  | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 assigned) / 0.0 | 0 / 0          | 0.02 (2.0 assigned) / 10.0  |
+      | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota           | Desktop Keys | Desktop Quota             |
+      | (default user group) * | 2     | 1      | 1           | 0 / 0       | 0.0 (0.0 active) / 0.0 | 1 / 9        | 0.03 (3.0 active) / 230.0 |
+      | backup                 | 1     | 1      | 0           | 0 / 0       | 0.0 (0.0 active) / 0.0 | 1 / 10       | 0.01 (1.0 active) / 10.0  |
+      | stash                  | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 active) / 0.0 | 0 / 0        | 0.02 (2.0 active) / 10.0  |
 
   @TC.18999 @BSA.3030 @bus @2.5 @user_stories
   Scenario: 18999 [Group Detail View][P]"Stash" column shows and has valid value
@@ -454,10 +454,10 @@ Feature: User group stash setting management
       | test3010_3030_3040@auto.com  |
     When I navigate to List User Groups section from bus admin console page
     Then User groups list table should be:
-      | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota             | Desktop Keys   | Desktop Quota               |
-      | (default user group) * | 2     | 1      | 1           | 0 / 0       | 0.0 (0.0 assigned) / 0.0 | 1 / 9          | 0.03 (3.0 assigned) / 230.0 |
-      | backup                 | 1     | 1      | 0           | 0 / 0       | 0.0 (0.0 assigned) / 0.0 | 1 / 10         | 0.01 (1.0 assigned) / 10.0  |
-      | stash                  | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 assigned) / 0.0 | 0 / 0          | 0.02 (2.0 assigned) / 10.0  |
+      | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota           | Desktop Keys | Desktop Quota             |
+      | (default user group) * | 2     | 1      | 1           | 0 / 0       | 0.0 (0.0 active) / 0.0 | 1 / 9        | 0.03 (3.0 active) / 230.0 |
+      | backup                 | 1     | 1      | 0           | 0 / 0       | 0.0 (0.0 active) / 0.0 | 1 / 10       | 0.01 (1.0 active) / 10.0  |
+      | stash                  | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 active) / 0.0 | 0 / 0        | 0.02 (2.0 active) / 10.0  |
     When I view (default user group) * user group details
     Then User group users list details should be:
       | User                 | Name        | Stash    |
@@ -481,10 +481,10 @@ Feature: User group stash setting management
       | test3010_3030_3040@auto.com  |
     When I navigate to List User Groups section from bus admin console page
     Then User groups list table should be:
-      | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota             | Desktop Keys   | Desktop Quota               |
-      | (default user group) * | 2     | 1      | 1           | 0 / 0       | 0.0 (0.0 assigned) / 0.0 | 1 / 9          | 0.03 (3.0 assigned) / 230.0 |
-      | backup                 | 1     | 1      | 0           | 0 / 0       | 0.0 (0.0 assigned) / 0.0 | 1 / 10         | 0.01 (1.0 assigned) / 10.0  |
-      | stash                  | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 assigned) / 0.0 | 0 / 0          | 0.02 (2.0 assigned) / 10.0  |
+      | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota           | Desktop Keys | Desktop Quota             |
+      | (default user group) * | 2     | 1      | 1           | 0 / 0       | 0.0 (0.0 active) / 0.0 | 1 / 9        | 0.03 (3.0 active) / 230.0 |
+      | backup                 | 1     | 1      | 0           | 0 / 0       | 0.0 (0.0 active) / 0.0 | 1 / 10       | 0.01 (1.0 active) / 10.0  |
+      | stash                  | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 active) / 0.0 | 0 / 0        | 0.02 (2.0 active) / 10.0  |
     When I view (default user group) * user group details
     Then User group users list details should be:
       | User                 | Name        | Stash    | Machines | Storage | Storage Used |
