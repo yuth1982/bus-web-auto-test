@@ -306,7 +306,7 @@ Feature: User Details
       | period | reseller type | reseller quota | server plan |
       | 12     | Silver        | 200            | yes         |
     Then New partner should be created
-    And I enable stash for the partner with 10 GB stash storage
+    And I enable stash for the partner
     And I act as newly created partner account
     When I add a new Bundled user group:
       | name | storage_type | server_support | enable_stash |

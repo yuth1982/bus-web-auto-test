@@ -324,7 +324,7 @@ Feature: Search and list user
         | name          | filter |
         | @company_name | None   |
       And I view partner details by newly created partner company name
-      And I enable stash for the partner with default stash storage
+      And I enable stash for the partner
       And I act as newly created partner
       And I add new user(s):
         | name       | storage_type | storage_limit | devices | enable_stash |
@@ -339,7 +339,7 @@ Feature: Search and list user
       And I sort user search results by Name
       Then User search results should be:
         | Name        | Stash    | Storage        |
-        | TC.21012-1  | Enabled  | 10 GB(Limited) |
+        | TC.21012-1  | Enabled  | 10 GB (Limited)|
         | TC.21012-2  | Disabled | Shared         |
       And I stop masquerading
       And I search and delete partner account by newly created partner company name
