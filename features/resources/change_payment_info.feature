@@ -79,7 +79,7 @@ Feature: Modify credit card information and billing contact information
     When I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.15275 @bus @2.5 @modify @cc @billing_contact_info
+  @TC.15275 @bus @2.5 @modify @cc @billing_contact_info @BUG.96359
   Scenario: 15275 Verify Credit Card Required Fields
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -97,6 +97,7 @@ Feature: Modify credit card information and billing contact information
       | new name    |                  | 12           | 19          | 123 |
     And I save payment information changes
     Then Modify credit card error messages should be You must enter a credit card number.
+    # Verification below is for Production only
     # When I update credit card information to:
     #   | cc name     | cc number        | expire month | expire year | cvv |
     #   | new name    | 4111111111111111 | 12           | 19          |     |
