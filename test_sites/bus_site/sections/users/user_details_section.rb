@@ -488,7 +488,7 @@ module Bus
 
     def check_device_range(range)
       tooltip = {}
-      tip_text = device_count[:onfocus][/'(Min: \d+ GB, Max: \d+ GB)'/, 1]
+      tip_text = device_count[:onfocus][/'(Min: \d+, Max: \d+)'/, 1]
       tooltip['min'] = tip_text[/Min: (\d+)/, 1]
       tooltip['max'] = tip_text[/Max: (\d+)/, 1]
       range.each do |k, v|

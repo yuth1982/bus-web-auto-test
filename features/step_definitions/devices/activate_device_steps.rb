@@ -10,7 +10,7 @@ When /^I use keyless activation to activate devices$/  do |table|
   user_email = @current_user[:email]
   partner_name = (@partner && @partner.company_info.name) || @current_partner[:name]
   @current_partner[:id] ||= @bus_site.admin_console_page.partner_id
-  client = Client.new(user_email, @user_password, @current_partner[:id], partner_name, attr['machine_type'], attr['machine_name'])
+  client = Client.new(user_email, @user_password, @current_partner[:id], partner_name, attr['machine_type'], attr['machine_name'], attr['machine_codename'])
   @license_key = client.license_key
   @license_key.should_not be_nil
 end

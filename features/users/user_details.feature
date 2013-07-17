@@ -181,7 +181,7 @@ Feature: User Details
       | period | users | server plan | net terms | company name             |
       | 12     | 8     | 100 GB      | yes       | [Itemized]Edit Device    |
     Then New partner should be created
-    And I enable stash for the partner with 10 GB stash storage
+    And I enable stash for the partner
     When I get the partner_id
     And I act as newly created partner account
     And I add a new Itemized user group:
@@ -197,9 +197,9 @@ Feature: User Details
     And I view user details by newly created user email
     And I update the user password to default password
     And I add machines for the user and update its used quota
-      | machine_name | machine_type | used_quota |
-      | Machine1     | Desktop      | 0 GB       |
-      | Machine2     | Desktop      | 0 GB       |
+      | machine_name | machine_type | used_quota | machine_codename |
+      | Machine1     | Desktop      | 0 GB       | MozyEnterprise   |
+      | Machine2     | Desktop      | 0 GB       | MozyEnterprise   |
     And I refresh User Details section
     When I set device quota field to 4 and cancel
     Then users' device status should be:
@@ -224,7 +224,7 @@ Feature: User Details
       | period | users | server plan | net terms | company name             |
       | 12     | 8     | 100 GB      | yes       | [Itemized]No More Device |
     Then New partner should be created
-    And I enable stash for the partner with 10 GB stash storage
+    And I enable stash for the partner
     When I get the partner_id
     And I act as newly created partner account
     And I add a new Itemized user group:
@@ -252,7 +252,7 @@ Feature: User Details
       | period | users | server plan | net terms | company name             |
       | 12     | 8     | 100 GB      | yes       | [Itemized]Removed Device |
     Then New partner should be created
-    And I enable stash for the partner with 10 GB stash storage
+    And I enable stash for the partner
     And I act as newly created partner account
     And I add a new Itemized user group:
       | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices | enable_stash |

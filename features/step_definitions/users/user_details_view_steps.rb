@@ -261,6 +261,7 @@ end
 
 When /^I edit user device quota to (\d+)$/ do |count|
   @bus_site.admin_console_page.user_details_section.change_device_quota(count)
+  @bus_site.admin_console_page.user_details_section.wait_until_bus_section_load
 end
 
 Then /^The range of device by tooltips should be:$/ do | range |
@@ -280,6 +281,7 @@ When /^users' device status should be:$/ do |device_status_table|
   expected = device_status_table.hashes.first
   expected.keys.each{ |header| actual[header.downcase].should == expected[header] }
 end
+
 
 When(/^I (set|edit|remove|save|cancel) (user|machine) max for (.+)$/) do |action, type, name|
   @bus_site.admin_console_page.user_details_section.handle_max(action, type, name)

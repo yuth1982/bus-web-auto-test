@@ -12,7 +12,7 @@ module KeylessDeviceActivation
     #to Mozy Auth service to exchange an access token. This requires two API calls.
     class Client
       attr_accessor :username, :password, :license_key
-      def initialize(username, password, partner_id, partner_name, device_type, machine_name = nil, codename = "mozypro")
+      def initialize(username, password, partner_id, partner_name, device_type, machine_name = nil, codename = nil)
         @username = username
         @password = password
         @partner_id = partner_id
@@ -29,6 +29,7 @@ module KeylessDeviceActivation
         @sid = "sid_hash"+@random_value
         @mac = "mac_hash"+@random_value
         @machine_alias = machine_name || "AUTOTEST"
+        @codename = codename || "mozypro"
         @auth_code = {}
         @access_token = {}
         @license_key = ""
