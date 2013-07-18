@@ -97,23 +97,23 @@ Feature: Set/Remove Max at Machine
       | period | users | server plan | net terms |
       | 12     | 8     | 100 GB      | yes       |
     Then New partner should be created
-    And I enable stash for the partner with 10 GB stash storage
+    And I enable stash for the partner
     And I act as newly created partner account
     And I add a new Itemized user group:
       | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices | enable_stash |
       | Test | Shared               | 5               | Shared              | 10             | yes          |
     And I add new user(s):
       | name  | user_group | storage_type | storage_limit | devices | enable_stash |
-      | User1 | Test       | Desktop      | 50            | 3       | no           |
+      | User1 | Test       | Desktop      | 50            | 3       | yes           |
     Then 1 new user should be created
     When I search user by:
       | keywords   |
       | User1      |
     Then I view user details by User1
     And I update the user password to default password
-    And I add stash for the user with:
-      | stash quota | send email |
-      | 5           | no         |
+#    And I add stash for the user with:
+#      | stash quota | send email |
+#      | 5           | no         |
     And I set user stash quota to 5 GB
     And I use keyless activation to activate devices
       | machine_name | machine_type |
@@ -148,7 +148,7 @@ Feature: Set/Remove Max at Machine
       | period | reseller type | reseller quota | server plan |
       | 12     | Silver        | 200            | yes         |
     Then New partner should be created
-    And I enable stash for the partner with 10 GB stash storage
+    And I enable stash for the partner
     And I act as newly created partner account
     When I add a new Bundled user group:
       | name | storage_type | server_support | enable_stash |
@@ -172,7 +172,7 @@ Feature: Set/Remove Max at Machine
     Then device table in user details should be:
       | Device   | Used/Available | Device Storage Limit | Last Update    |
       | Machine1 | 0 / 20 GB      | 20 GB Edit Remove    | < a minute ago |
-    Then I set machine max for Machine1
+    Then I edit machine max for Machine1
     And I input the machine max value for Machine1 to 30 GB
     And I save machine max for Machine1
     Then device table in user details should be:
@@ -191,7 +191,7 @@ Feature: Set/Remove Max at Machine
       | period | reseller type | reseller quota | server plan |
       | 12     | Silver        | 200            | yes         |
     Then New partner should be created
-    And I enable stash for the partner with 10 GB stash storage
+    And I enable stash for the partner
     And I act as newly created partner account
     When I add a new Bundled user group:
       | name | storage_type | server_support | enable_stash |
