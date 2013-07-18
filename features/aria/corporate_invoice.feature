@@ -29,7 +29,7 @@ Feature: Corporate Invoices
       | 1      | 50 GB     |
     Then New partner should be created
     When I act as newly created partner account
-    And I change account subscription up to annual billing period
+    And I change account subscription up to annual billing period!
     Then Subscription changed message should be Your account has been changed to yearly billing.
     When I search emails by keywords:
       | from        | to            | subject                    | content          |

@@ -32,6 +32,9 @@ module Aria
     #
     # Returns success or error message text
     def messages
+      wait_until(240) do
+        message_div.visible?
+      end
       message_div.text
     end
   end

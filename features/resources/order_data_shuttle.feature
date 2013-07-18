@@ -220,13 +220,15 @@ Feature:
     And I act as newly created partner account
     And I add new user(s):
       | user_group           | storage_type | storage_limit | devices |
-      | (default user group) | Desktop      | 10          | 1       |
+      | (default user group) | Desktop      | 10            | 1       |
     And I search user by:
       | keywords   |
       | @user_name |
     And I view user details by newly created user email
     And I update the user password to default password
-    And activate the user's Desktop device without a key and with the default password
+    And I use keyless activation to activate devices
+      | machine_type | machine_codename |
+      | Desktop      | MozyEnterprise   |
     Then I stop masquerading
     And I order data shuttle for newly created partner company name
       | power adapter   | key from  | quota |
@@ -360,7 +362,9 @@ Feature:
       | @user_name |
     And I view user details by newly created user email
     And I update the user password to default password
-    And activate the user's Desktop device without a key and with the default password
+    And I use keyless activation to activate devices
+      | machine_type | machine_codename |
+      | Desktop      | MozyEnterprise   |
     Then I stop masquerading
     When I order data shuttle for newly created partner company name
       | power adapter   | key from  | quota |
