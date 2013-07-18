@@ -90,7 +90,7 @@ Feature: Bus Smoke Test
 #    Then I should see 3 email(s)
 
   @TC.112
-  Scenario: MozyPro France
+  Scenario: 112 MozyPro France
     When I add a new MozyPro partner:
       | period | base plan | create under   | country | vat number    |
       | 12     | 50 GB     | MozyPro France | France  | BE0883236072  |

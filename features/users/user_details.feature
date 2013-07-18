@@ -76,7 +76,7 @@ Feature: User Details
     And I search and delete partner account by newly created partner company name
 
   @TC.20986_  @bus @2.5 @user_view @last_update
-  Scenario: (Create machine for an existed partner)20986 "Last Update" shows the time for the 3 device whose last backup time is 5 days ago
+  Scenario: 20986 (Create machine for an existed partner)20986 "Last Update" shows the time for the 3 device whose last backup time is 5 days ago
     Given I log in bus admin console as administrator
     And I search partner by last_update@auto.com
     When I view partner details by Test Last Update

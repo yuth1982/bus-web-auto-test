@@ -37,7 +37,7 @@ Feature: Corporate Invoices
     Then I should see 2 email(s)
 
   @TC.17841 @bus @2.0 @corporate_invoices
-  Scenario: 15686 Verify Aria sends email when create a new MozyEnterprise partner
+  Scenario: 17841 Verify Aria sends email when create a new MozyEnterprise partner
     When I add a new MozyEnterprise partner:
       | period | users |
       | 12     | 1     |

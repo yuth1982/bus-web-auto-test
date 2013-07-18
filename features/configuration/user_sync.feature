@@ -26,7 +26,7 @@ Feature: User sync
     Given I log in bus admin console as administrator
 
   @TC.17518 @ui @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: Check the UI when the partner has never synced
+  Scenario: 17518 Check the UI when the partner has never synced
     When I act as partner by:
       | email                           |
       | user_sync_never_synced@auto.com |
@@ -38,7 +38,7 @@ Feature: User sync
       | Never synchronized   |           |           |
 
   @TC.17519 @ui @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: Sync Now
+  Scenario: 17519 Sync Now
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -56,7 +56,7 @@ Feature: User sync
       | Synchronized         |   @last_sync_time   |
 
   @TC.17529 @ui @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: Check the Attribute mapping UI
+  Scenario: 17529 Check the Attribute mapping UI
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -70,7 +70,7 @@ Feature: User sync
     Then Authentication Policy has been updated successfully
 
   @TC.17530 @ui @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: Local groups dropdown list check
+  Scenario: 17530 Local groups dropdown list check
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -84,7 +84,7 @@ Feature: User sync
       | (default user group) | dev | pm | qa |
 
   @TC.17531 @ui @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: User provision - Rules ordering interaction
+  Scenario: 17531 User provision - Rules ordering interaction
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -116,7 +116,7 @@ Feature: User sync
     And I save the changes
 
   @TC.17532 @ui @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: User provision - Delete rules
+  Scenario: 17532 User provision - Delete rules
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -138,7 +138,7 @@ Feature: User sync
     And Authentication Policy has been updated successfully
 
   @TC.17534 @ui @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: UserDestruction - UI Components check
+  Scenario: 17534 UserDestruction - UI Components check
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -153,7 +153,7 @@ Feature: User sync
     And The selected deprovision option is Take no action
 
   @TC.17535 @ui @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: UserDestruction - Rules ordering interaction
+  Scenario: 17535 UserDestruction - Rules ordering interaction
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -185,7 +185,7 @@ Feature: User sync
     And I save the changes
 
   @TC.17536 @ui @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: UserDestruction - Rules deletion
+  Scenario: 17536 UserDestruction - Rules deletion
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -207,7 +207,7 @@ Feature: User sync
     And Authentication Policy has been updated successfully
 
   @TC.17538 @TC.17551  @smoke @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction
-  Scenario: One Rule/Match All/Multiple Users
+  Scenario: 17538 17551 One Rule/Match All/Multiple Users
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -251,7 +251,7 @@ Feature: User sync
     Then The users table should be empty
 
   @TC.17540 @TC.17552 @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction
-  Scenario: One Rule/Multiple Rules
+  Scenario: 17540 17552 One Rule/Multiple Rules
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -301,7 +301,7 @@ Feature: User sync
     Then The users table should be empty
 
   @TC.17542 @TC.17554 @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction
-  Scenario: Multiple Ruls/Multiple Users
+  Scenario: 17542 17554 Multiple Ruls/Multiple Users
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -355,7 +355,7 @@ Feature: User sync
     Then The users table should be empty
 
   @TC.17543 @TC.17557 @TC.17558 @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction
-  Scenario: Multiple Ruls/Multiple Users/Rule order matters
+  Scenario: 17543 17557 17558 Multiple Ruls/Multiple Users/Rule order matters
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -437,7 +437,7 @@ Feature: User sync
     Then The users table should be empty
 
   @TC.17544 @function @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: UserProvision - Multiple Ruls/Multiple Users/Change Rules
+  Scenario: 17544 UserProvision - Multiple Ruls/Multiple Users/Change Rules
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -519,7 +519,7 @@ Feature: User sync
     Then The users table should be empty
 
   @TC.17559 @function @bus @2.1 @direct_ldap_integration @user_deconstruction
-  Scenario: Empty rules will be filtered
+  Scenario: 17559 Empty rules will be filtered
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -535,7 +535,7 @@ Feature: User sync
     Then Authentication Policy has been updated successfully
 
   @TC.17560 @function @bus @2.1 @direct_ldap_integration @user_deconstruction
-  Scenario: Unknown query string
+  Scenario: 17560 Unknown query string
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -552,7 +552,7 @@ Feature: User sync
 
 #  Invalid. Now the you must delete users first before deleting the user group
 #  @TC.18738 @function   @bus @2.1 @direct_ldap_integration @use_provision
-#  Scenario: UserProvision-Delete a group, the users belong to this group will be moved to default group
+#  Scenario: 18738 UserProvision-Delete a group, the users belong to this group will be moved to default group
 #    When I act as partner by:
 #      | email                                |
 #      | user_sync_delete_user_group@auto.com |
@@ -607,7 +607,7 @@ Feature: User sync
 #    Then The users table should be empty
 
   @TC.17592 @firefox_profile @vpn  @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: UserProvision - Deleted users in BUS can be resumed
+  Scenario: 17592 UserProvision - Deleted users in BUS can be resumed
     When I act as partner by:
       | email        |
       | dvg@dvg.dvg  |
@@ -696,7 +696,7 @@ Feature: User sync
     Then I will see the user account page
 
   @TC.17593 @firefox_profile @vpn  @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: UserProvision - Suspended users in BUS can't be resumed
+  Scenario: 17593 UserProvision - Suspended users in BUS can't be resumed
     When I act as partner by:
       | email                   |
       | dvg@dvg.dvg |
@@ -796,7 +796,7 @@ Feature: User sync
     And I activate the user
 
   @TC.17594 @firefox_profile @vpn @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: UserProvision - Delete user after several days of not synced
+  Scenario: 17594 UserProvision - Delete user after several days of not synced
     When I act as partner by:
       | email       |
       | dvg@dvg.dvg |
@@ -854,7 +854,7 @@ Feature: User sync
     Then I will see the Authentication Failed page
 
   @TC.17595 @firefox_profile @vpn @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: UserProvision - Suspend user after several days of not synced
+  Scenario: 17595 UserProvision - Suspend user after several days of not synced
     When I act as partner by:
       | email       |
       | dvg@dvg.dvg |
@@ -923,7 +923,7 @@ Feature: User sync
     And I activate the user
 
   @TC.17546 @TC.17548 @TC.17549 @vpn @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: UserProvision/Sync - Add(Delete, Modify) a new user in AD
+  Scenario: 17546 17548 17549 UserProvision/Sync - Add(Delete, Modify) a new user in AD
     When I act as partner by:
       | email                         |
       | user_sync_add_delete@auto.com |
@@ -1030,7 +1030,7 @@ Feature: User sync
     And I delete a user fediduser2 in the AD
 
   @TC.18723 @vpn @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: UserProvision-Fixed Attribute
+  Scenario: 18723 UserProvision-Fixed Attribute
     When I act as partner by:
       | email                         |
       | user_sync_add_delete@auto.com |
@@ -1105,7 +1105,7 @@ Feature: User sync
 
 
   @TC.17521 @TC.17522 @TC.17523 @scheduled_sync  @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: Scheduled Sync (UI, cancel)
+  Scenario: 17521 17522 17523 Scheduled Sync (UI, cancel)
     When I act as partner by:
       | email            |
       | usrsync@test.com |
@@ -1134,7 +1134,7 @@ Feature: User sync
       | Synchronized         |   @last_sync_time   |                 |
 
   @TC.17520  @slow @scheduled_sync @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: Scheduled Sync
+  Scenario: 17520 Scheduled Sync
     When I act as partner by:
       | email            |
       | usrsync@test.com |

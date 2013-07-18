@@ -111,7 +111,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       |Import Results:| -1 rows imported |0 machines moved to new users | 0 machines skipped (no new user specified) | 1 Errors: |   Invalid file. The uploaded file was an invalid CSV file. |
 
   @TC.16280 @TC.16281 @TC.16282 @bus @2.5 @machine_migration
-  Scenario Outline: Import a CSV file with a column absent
+  Scenario Outline: 16280 16281 16282 Import a CSV file with a column absent
     When I act as partner by:
       | email                           |
       | machine_migration_auto@auto.com |
@@ -143,7 +143,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       |Import Results:| 3 rows imported |0 machines moved to new users | 3 machines skipped (no new user specified) |
 
   @TC.16284 @TC.16285 @bus @2.5 @machine_migration
-  Scenario Outline: Import a CSV file whose one column has unknown value
+  Scenario Outline: 16284 16285 Import a CSV file whose one column has unknown value
     When I act as partner by:
       | email                           |
       | machine_migration_auto@auto.com |
@@ -254,7 +254,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       | BLN039        | 351eeb340475694284f7a08218c9474f474afb70 | robert.bartelds-at-freecom.com@mozy.test |           |
 
   @TC.17936 @bug @2.2 @machine_migration
-  Scenario: Import a CSV file while two users have same machine
+  Scenario: 17936 Import a CSV file while two users have same machine
     When I act as partner by:
       | email                            |
       | machine_migraion_tc17936@auto.com |
@@ -267,7 +267,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       |Import Results:| 2 rows imported |2 machines moved to new users | 0 machines skipped (no new user specified) |
 
   @TC.16276 @slow @bug @2.5 @machine_migration
-  Scenario: Import a CSV file in no passive way while the partner has 10000 machines before
+  Scenario: 16276 Import a CSV file in no passive way while the partner has 10000 machines before
     When I act as partner by:
       | email                  |
       | leongh+system@mozy.com |

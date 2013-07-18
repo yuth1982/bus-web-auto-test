@@ -31,7 +31,7 @@ Feature: Change subscription period
       | 12     | 50 GB     | MozyPro France | France  |
     Then New partner should be created
     When I act as newly created partner account
-    And I change account subscription up to biennial billing period
+    And I change account subscription up to biennial billing period!
     Then Subscription changed message should be Your account has been changed to biennial billing.
     When I stop masquerading
     And I view partner details by newly created partner company name

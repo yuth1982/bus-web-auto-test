@@ -4,7 +4,7 @@ Feature: Add a new user
     Given I log in bus admin console as administrator
 
 #  @TC.806 @need_test_account
-#  Scenario: Add a new user to MozyEnterprise partner
+#  Scenario: 806 Add a new user to MozyEnterprise partner
 #    When I act as partner by:
 #      | email                                    |
 #      | qa1+users+features+test+account@mozy.com |

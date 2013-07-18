@@ -328,7 +328,7 @@ Feature: Add new user, user group device details
 #
 # Non storage pooled partner, move to 2.4
 #    @TC.19963
-#    Scenario: Mozy-19941: Devices Add New User (Mult UG) German MozyPro Itemized
+#    Scenario: 19963 Mozy-19941: Devices Add New User (Mult UG) German MozyPro Itemized
 #    Given I navigate to bus admin console login page
 #    	And I log in bus admin console with user name qa1+TestMozyProItemizedMonthly92066@mozy.com and password test1234
 #    	And I navigate to Add New User section from bus admin console page

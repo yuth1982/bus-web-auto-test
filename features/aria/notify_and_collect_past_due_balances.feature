@@ -165,7 +165,7 @@ Feature: Notify about and collect past-due balances
     Then I should see 1 email(s)
 
   #@TC.16114 @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers
-  #Scenario: Verify update credit card in bus and a charge will be attempted for the entire balance
+  #Scenario: 16114 Verify update credit card in bus and a charge will be attempted for the entire balance
 #    When I add a new MozyPro partner:
 #    | period | base plan     |
 #    | 1      | 50 GB, $19.99 |

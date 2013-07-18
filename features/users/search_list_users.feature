@@ -1,7 +1,7 @@
 Feature: Search and list user
 
   @TC.683 @need_test_account @bus @regression_test @users @search
-  Scenario: Search user
+  Scenario: 683 Search user
     When I log in bus admin console as administrator
     And I act as partner by:
       | email                                    |
