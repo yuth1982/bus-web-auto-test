@@ -71,38 +71,38 @@ module KeylessDeviceActivation
   # As a user,
   # I want to install a Mozy client in my device, and activate it with my credentials (username and password) and without a license key,
   # then I can enjoy the awesome Mozy services.
-    #The client should send the user credentials, username and password,
-    #to Mozy Auth service to exchange an access token. This requires two API calls.
-    class KeylessClient
-      attr_accessor :username, :password, :license_key, :machine_alias, :machine_id, :machine_hash
-      def initialize(username, password, partner_id, partner_name, device_type, company_type, machine_name = nil)
-        @username = username
-        @password = password
-        @partner_id = partner_id
-        @partner_name = partner_name
-        @device_type = device_type
-        @codename = "mozypro"
-        @client_name = "BAC#{Time.now.strftime("%m%d%H%M%S")}"
-        @client_id = "bac#{Time.now.strftime("%m%d%H%M%S")}"
-        @client_secret = "bac#{Time.now.strftime("%m%d%H%M%S")}"
-        @random_value = ""; 16.times{@random_value  << (65 + rand(25)).chr}
-        @random_value = ""; 16.times{@random_value  << (65 + rand(25)).chr}
-        @random_value = ""; 16.times{@random_value  << (65 + rand(25)).chr}
-        @machine_hash = "machinehash"+@random_value
-        @sid = "sid_hash"+@random_value
-        @mac = "mac_hash"+@random_value
-        @machine_alias = machine_name || "AUTOTEST"
-        @machine_id = ""
-        @auth_code = {}
-        @access_token = {}
-        @license_key = ""
-        get_codename(company_type)
-        enable_partner_to_sso(@partner_id, @partner_name)
-        create_oauth_client
-        sso_auth(@partner_id)
-        sso_to_auth
-        client_devices_activate
-      end
+  #The client should send the user credentials, username and password,
+  #to Mozy Auth service to exchange an access token. This requires two API calls.
+  class KeylessClient
+    attr_accessor :username, :password, :license_key, :machine_alias, :machine_id, :machine_hash
+    def initialize(username, password, partner_id, partner_name, device_type, company_type, machine_name = nil)
+      @username = username
+      @password = password
+      @partner_id = partner_id
+      @partner_name = partner_name
+      @device_type = device_type
+      @codename = "mozypro"
+      @client_name = "BAC#{Time.now.strftime("%m%d%H%M%S")}"
+      @client_id = "bac#{Time.now.strftime("%m%d%H%M%S")}"
+      @client_secret = "bac#{Time.now.strftime("%m%d%H%M%S")}"
+      @random_value = ""; 16.times{@random_value  << (65 + rand(25)).chr}
+      @random_value = ""; 16.times{@random_value  << (65 + rand(25)).chr}
+      @random_value = ""; 16.times{@random_value  << (65 + rand(25)).chr}
+      @machine_hash = "machinehash"+@random_value
+      @sid = "sid_hash"+@random_value
+      @mac = "mac_hash"+@random_value
+      @machine_alias = machine_name || "AUTOTEST"
+      @machine_id = ""
+      @auth_code = {}
+      @access_token = {}
+      @license_key = ""
+      get_codename(company_type)
+      enable_partner_to_sso(@partner_id, @partner_name)
+      create_oauth_client
+      sso_auth(@partner_id)
+      sso_to_auth
+      client_devices_activate
+    end
 
     def enable_partner_to_sso(partner_id, partner_name)
       uri = URI.parse("http://#{BUS_ENV['sso_host']}")
@@ -245,42 +245,18 @@ module DataShuttleSeeding
 
   #https://trac.dechocorp.com/wiki/BUS/api/client/DataSeeding
   def set_seed_status_client (seed_id, status,seed_complete,total_files,total_bytes,total_files_seeded,total_bytes_seeded, root_admin_id, username, password, machine_hash)
-    #userhash = Digest::SHA1.hexdigest(username)
-    #passwordhash = Digest::SHA1.hexdigest(password)
-    #
-    #string = "/client/set_seed_status"\
-    #      +"?user="+userhash\
-    #      +"&password="+passwordhash\
-    #      +"&machineid="+machine_hash\
-    #      +"&seed_id="+seed_id\
-    #      +"&status="+status\
-    #      +"&total_files="+total_files\
-    #      +"&total_bytes="+total_bytes\
-    #      +"&seed_complete="+seed_complete\
-    #      +"&total_files_seeded="+total_files_seeded\
-    #      +"&total_bytes_seeded="+total_bytes_seeded\
-    #      +"&physical_drive_id=12345"
-    #
-    #uri = URI.parse("http://#{BUS_ENV['client_host']}")
-    #Net::HTTP.start(uri.host, uri.port,
-    #                :use_ssl => uri.scheme == 'https') do |http|
-    #  http.set_debug_output $stderr
-    #  req = Net::HTTP::Get.new(string)
-    #  Log.debug(string)
-    #  response = http.request(req)
-    #  pp response
     userhash = Digest::SHA1.hexdigest(root_admin_id.to_s+" "+username.to_s)
 
-    string = "/client/set_seed_status"\
-            +"?machineid="+machine_hash\
-            +"&seed_id="+seed_id\
-            +"&status="+status\
-            +"&total_files="+total_files\
-            +"&total_bytes="+total_bytes\
-            +"&seed_complete="+seed_complete\
-            +"&total_files_seeded="+total_files_seeded\
-            +"&total_bytes_seeded="+total_bytes_seeded\
-            +"&physical_drive_id=12345"
+    string = "/client/set_seed_status\
+?machineid=#{machine_hash}\
+&seed_id=#{seed_id}\
+&status=#{status}\
+&total_files=#{total_files.to_s}\
+&total_bytes=#{total_bytes.to_s}\
+&seed_complete=#{seed_complete}\
+&total_files_seeded=#{total_files_seeded.to_s}\
+&total_bytes_seeded=#{total_bytes_seeded.to_s}\
+&physical_drive_id=12345"
 
     uri = URI.parse("http://#{BUS_ENV['client_host']}")
     Net::HTTP.start(uri.host, uri.port,

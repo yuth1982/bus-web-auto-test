@@ -16,3 +16,7 @@ Then /^the data shuttle machine details should be:$/ do |ds_table|
   end
   expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
+
+When(/^I close machine details section$/) do
+  @bus_site.admin_console_page.machine_details_section.close_bus_section
+end

@@ -226,9 +226,7 @@ Feature:
       | @user_name |
     And I view user details by newly created user email
     And I update the user password to default password
-    And I use keyless activation to activate devices
-      | machine_type |
-      | Desktop      |
+    And activate the user's Desktop device without a key and with the default password
     Then I stop masquerading
     And I order data shuttle for newly created partner company name
       | power adapter   | key from  | quota |
@@ -362,9 +360,7 @@ Feature:
       | @user_name |
     And I view user details by newly created user email
     And I update the user password to default password
-    And I use keyless activation to activate devices
-      | machine_type |
-      | Desktop      |
+    And activate the user's Desktop device without a key and with the default password
     Then I stop masquerading
     When I order data shuttle for newly created partner company name
       | power adapter   | key from  | quota |
@@ -513,4 +509,85 @@ Feature:
       | today  | $275.00  | $275.00    | $0.00       |
       | today  | $190.00  | $190.00     | $0.00       |
       | today  | $0.00    | $0.00      | $0.00       |
+    And I search and delete partner account by newly created partner company name
+
+  @TC.21978 @bus @data_shuttle @status @BUG.91049
+  Scenario:  Data shuttle backed up til load complete, then second data shuttle seeded for same user/key/machine
+    When I add a new MozyEnterprise partner:
+      | period | users |
+      | 12 | 2 |
+    Then New partner should be created
+    When I get the partner_id
+    And I get the admin id from partner details
+    And I act as newly created partner account
+    And I add new user(s):
+      | user_group | storage_type | storage_limit | devices |
+      | (default user group) |  Desktop |  20 |  1 |
+    And I search user by:
+      | keywords |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    Then I stop masquerading
+    When I order data shuttle for newly created partner company name
+      | power adapter | key from | quota |
+      | Data Shuttle US | available | 20 |
+    Then Data shuttle order should be created
+    Then I get the data shuttle seed id
+    When I navigate to Search / List Partners section from bus admin console page
+    And I view partner details by newly created partner company name
+    And I act as newly created partner account
+    And I set the data shuttle seed status:
+      | status |
+      | seeding |
+    Then I navigate to Search / List Machines section from bus admin console page
+    Then I view machine details for the newly created device name
+    Then the data shuttle machine details should be:
+      | Order ID | Data Shuttle Device ID | Phase |
+      | <%=@seed_id%> | <%=@seed_id%> | Seeding |
+    Then I close machine details section
+    And I set the data shuttle seed status:
+      | status | total files | total bytes |
+      | seed_complete | 1000 | 2097152 |
+    Then I navigate to Search / List Machines section from bus admin console page
+    Then I view machine details for the newly created device name
+    Then the data shuttle machine details should be:
+      | Order ID | Data Shuttle Device ID | Phase |
+      | <%=@seed_id%> | <%=@seed_id%> | Seed Complete |
+    Then I close machine details section
+    And I set the data shuttle seed status:
+      | status | total files seeded | total bytes seeded |
+      | loading | 100 | 2000000 |
+    Then I navigate to Search / List Machines section from bus admin console page
+    Then I view machine details for the newly created device name
+    Then the data shuttle machine details should be:
+      | Order ID | Data Shuttle Device ID | Phase |
+      | <%=@seed_id%> | <%=@seed_id%> | Loading |
+    Then I close machine details section
+    And I set the data shuttle seed status:
+      | status | total files | total bytes | total files seeded | total bytes seeded |
+      | load_complete | 1000 | 2097152 | 1000 | 2097152 |
+    Then I navigate to Search / List Machines section from bus admin console page
+    Then I view machine details for the newly created device name
+    Then the data shuttle machine details should be:
+      | Order ID | Data Shuttle Device ID | Phase |
+      | <%=@seed_id%> | <%=@seed_id%> | Load Complete |
+    Then I stop masquerading
+    When I order data shuttle for newly created partner company name
+      | power adapter | key from | quota |
+      | Data Shuttle US | available | 20 |
+    Then Data shuttle order should be created
+    Then I get the data shuttle seed id
+    When I navigate to Search / List Partners section from bus admin console page
+    And I view partner details by newly created partner company name
+    And I act as newly created partner account
+    And I set the data shuttle seed status:
+      | status |
+      | seeding |
+    Then I navigate to Search / List Machines section from bus admin console page
+    Then I view machine details for the newly created device name
+    Then the data shuttle machine details should be:
+      | Order ID | Data Shuttle Device ID | Phase |
+      | <%=@seed_id%> | <%=@seed_id%> | Seeding |
     And I search and delete partner account by newly created partner company name
