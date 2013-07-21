@@ -101,10 +101,10 @@ Feature: User stash setting management
   #      | period | users |
   #      | 12     | 10    |
   #    Then New partner should be created
-  #    When I enable stash for the partner with default stash storage
+  #    When I enable stash for the partner
   #    Then Partner general information should be:
-  #      | Enable Stash: | Default Stash Storage: |
-  #      | Yes           | 2 GB (change)          |
+  #      | Enable Stash: |
+  #      | Yes           |
   #    When I act as newly created partner account
   #    And I add new user(s):
   #      | name          | user_group           | storage_type | storage_limit | devices |
@@ -127,10 +127,10 @@ Feature: User stash setting management
   #      | period | base plan |
   #      | 12     | 50 GB     |
   #    Then New partner should be created
-  #    When I enable stash for the partner with 5 GB stash storage
+  #    When I enable stash for the partner
   #    Then Partner general information should be:
-  #      | Enable Stash: | Default Stash Storage: |
-  #      | Yes           | 5 GB (change)          |
+  #      | Enable Stash: |
+  #      | Yes           |
   #    When I act as newly created partner account
   #    And I add new user(s):
   #      | name          | storage_type | storage_limit | devices |
@@ -231,10 +231,10 @@ Feature: User stash setting management
     #      | period | base plan |
     #      | 12     | 50 GB     |
     #    Then New partner should be created
-    #    When I enable stash for the partner with default stash storage
+    #    When I enable stash for the partner
     #    Then Partner general information should be:
-    #      | Enable Stash: | Default Stash Storage: |
-    #      | Yes           | 2 GB (change)          |
+    #      | Enable Stash: |
+    #      | Yes           |
     #    When I act as newly created partner account
     #    And I add a new user to a MozyPro partner:
     #      | name           | enable stash | stash quota |
@@ -249,10 +249,10 @@ Feature: User stash setting management
     #      | period | reseller type | reseller quota |
     #      | 12     | Silver        | 100            |
     #    Then New partner should be created
-    #    When I enable stash for the partner with default stash storage
+    #    When I enable stash for the partner
     #    Then Partner general information should be:
-    #      | Enable Stash: | Default Stash Storage: |
-    #      | Yes           | 2 GB (change)          |
+    #      | Enable Stash: |
+    #      | Yes           |
     #    When I act as newly created partner account
     #    And I add a new user to a Reseller partner:
     #      | name           | enable stash | stash quota |
@@ -271,10 +271,10 @@ Feature: User stash setting management
       | period | reseller type | reseller quota |
       | 1      | Gold          | 100            |
     Then New partner should be created
-    When I enable stash for the partner with default stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 2 GB (change)          |
+      | Enable Stash: |
+      | Yes           |
     When I act as newly created partner account
     And I allocate 10 GB Desktop quota with (default user group) user group to Reseller partner
     Then Reseller resource quota should be changed
@@ -319,10 +319,10 @@ Feature: User stash setting management
     #      | period | base plan |
     #      | 1      | 50 GB     |
     #    Then New partner should be created
-    #    When I enable stash for the partner with default stash storage
+    #    When I enable stash for the partner
     #    Then Partner general information should be:
-    #      | Enable Stash: | Default Stash Storage: |
-    #      | Yes           | 2 GB (change)          |
+    #      | Enable Stash: |
+    #      | Yes           |
     #    When I act as newly created partner account
     #    And I add a new user to a MozyPro partner:
     #      | name           | enable stash | stash quota | send stash invite |
@@ -354,10 +354,10 @@ Feature: User stash setting management
     #      | period | users |
     #      | 12     | 10    |
     #    Then New partner should be created
-    #    When I enable stash for the partner with default stash storage
+    #    When I enable stash for the partner
     #    Then Partner general information should be:
-    #      | Enable Stash: | Default Stash Storage: |
-    #      | Yes           | 2 GB (change)          |
+    #      | Enable Stash: |
+    #      | Yes           |
     #    When I act as newly created partner account
     #    And I add a new user to a MozyEnterprise partner:
     #      | name           | enable stash | stash quota | send stash invite |
@@ -389,10 +389,10 @@ Feature: User stash setting management
     #      | period | reseller type | reseller quota | net terms |
     #      | 1      | Gold          | 100            | yes       |
     #    Then New partner should be created
-    #    When I enable stash for the partner with default stash storage
+    #    When I enable stash for the partner
     #    Then Partner general information should be:
-    #      | Enable Stash: | Default Stash Storage: |
-    #      | Yes           | 2 GB (change)          |
+    #      | Enable Stash: |
+    #      | Yes           |
     #    When I act as newly created partner account
     #    And I allocate 10 GB Desktop quota with (default user group) user group to Reseller partner
     #    Then Reseller resource quota should be changed
@@ -451,10 +451,10 @@ Feature: User stash setting management
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner with default stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 2 GB (change)          |
+      | Enable Stash: |
+      | Yes           |
     When I act as newly created partner account
     And I add a new user to a MozyEnterprise partner:
       | name           |
@@ -484,10 +484,10 @@ Feature: User stash setting management
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner with default stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 2 GB (change)          |
+      | Enable Stash: |
+      | Yes           |
     When I act as newly created partner account
     And I add a new user to a MozyEnterprise partner:
       | name           | enable stash | stash quota | send stash invite |

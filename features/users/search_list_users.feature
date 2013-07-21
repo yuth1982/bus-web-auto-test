@@ -29,7 +29,7 @@ Feature: Search and list user
       | period | base plan | server plan | net terms |
       | 1      | 100 GB    | yes         | yes       |
     And New partner should be created
-    When I enable stash for the partner with default stash storage
+    When I enable stash for the partner
     And I act as newly created partner
     And I add new user(s):
       | name       | storage_type | storage_limit | devices | enable_stash |
@@ -61,7 +61,7 @@ Feature: Search and list user
       | period | base plan | server plan | net terms |
       | 1      | 100 GB    | yes         | yes       |
     And New partner should be created
-    When I enable stash for the partner with default stash storage
+    When I enable stash for the partner
     And I act as newly created partner
     And I add new user(s):
       | name       | storage_type | storage_limit | devices |
@@ -112,7 +112,7 @@ Feature: Search and list user
       | period | reseller type | reseller quota | server plan | net terms |
       | 12     | Silver        | 500            | yes         | yes       |
     Then New partner should be created
-    When I enable stash for the partner with default stash storage
+    When I enable stash for the partner
     And I act as newly created partner
     And I add new user(s):
       | name       | user_group           | storage_type | storage_limit | devices | enable_stash |
@@ -163,7 +163,7 @@ Feature: Search and list user
       | period | users | server plan | net terms |
       | 12     | 10    | 100 GB      | yes       |
     Then New partner should be created
-    When I enable stash for the partner with default stash storage
+    When I enable stash for the partner
     And I act as newly created partner
     And I add new user(s):
       | name       | user_group           | storage_type | storage_limit | devices | enable_stash |

@@ -174,7 +174,7 @@ Feature: Notify about and collect past-due balances
 #    And I change the new partner account CAG to Fail Test CAG
 #    Then CAG message should be Account group changes saved.
 #    When I act as newly created partner account
-#    And I change account subscription up to MozyPro annual billing period
+#    And I change account subscription to MozyPro annual billing period!
 #    Then Subscription changed message should be Your account has been changed to yearly billing.
 #    When I visit aria admin console page
 #    When I change the new partner account CAG to CyberSource Credit Card

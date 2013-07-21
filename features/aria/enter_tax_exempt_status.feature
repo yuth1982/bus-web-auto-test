@@ -14,8 +14,8 @@
     Then New partner should be created
     When I log in aria admin console as administrator
     Then newly created partner admin email account taxpayer information should be:
-      | id           | status                                        |
-      | BE0883236072 | State/Provice and Federal/National Tax Exempt |
+      | id           | status                                         |
+      | BE0883236072 | State/Province and Federal/National Tax Exempt |
 
   @TC.17527 @firefox @bus @2.0 @enter_tax-exempt_status
   Scenario: 17527 Verify default tax-exemtp status of a new Biennially MozyEnterprise partner
@@ -25,8 +25,8 @@
     Then New partner should be created
     When I log in aria admin console as administrator
     Then newly created partner admin email account taxpayer information should be:
-      | id           | status                                        |
-      | BE0883236072 | State/Provice and Federal/National Tax Exempt |
+      | id           | status                                         |
+      | BE0883236072 | State/Province and Federal/National Tax Exempt |
 
   @TC.17528 @firefox @bus @2.0 @enter_tax-exempt_status
   Scenario: 17528 Verify default tax-exemtp status of a new Monthly Reseller partner
@@ -36,8 +36,8 @@
     Then New partner should be created
     When I log in aria admin console as administrator
     Then newly created partner admin email account taxpayer information should be:
-      | id            | status                                        |
-      | IT03018900245 | State/Provice and Federal/National Tax Exempt |
+      | id            | status                                         |
+      | IT03018900245 | State/Province and Federal/National Tax Exempt |
 
   @TC.17533 @firefox  @bus @2.0 @enter_tax-exempt_status
   Scenario: 17533 Set both Exempt from State and Federal taxes to false for a new Biennially Mozypro partner

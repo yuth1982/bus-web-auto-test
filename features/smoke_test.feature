@@ -77,7 +77,7 @@ Feature: Bus Smoke Test
 #      |         | Active | Assigned | Unassigned |
 #      | Desktop | 0      | 0        | 13         |
 #      | Server  | 0      | 1        | 197        |
-    When I change account subscription up to 3-year billing period
+    When I change account subscription to 3-year billing period!
     Then Subscription changed message should be Your account has been changed to 3-year billing.
 # Use Aria API to verify
 #    When I log in aria admin console as administrator

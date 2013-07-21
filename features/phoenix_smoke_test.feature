@@ -64,7 +64,7 @@ Feature: Add a new partner through phoenix
       | name       | storage_type | storage_limit | devices |
       | TC.20959-1 | Desktop      | 10            | 1       |
     Then 1 new user should be created
-    When I change account subscription up to biennial period!
+    When I change account subscription to biennial period!
     Then Subscription changed message should be Your account has been changed to biennial billing.
     When I log in aria admin console as administrator
     Then newly created partner admin email account status should be ACTIVE

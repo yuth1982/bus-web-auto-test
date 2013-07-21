@@ -61,10 +61,10 @@ Feature:
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner with 5 GB stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 5 GB (change)          |
+      | Enable Stash: |
+      | Yes           |
     When I act as newly created partner account
     And I add a new user to a MozyEnterprise partner:
       | name           | enable stash | stash quota |
@@ -91,10 +91,10 @@ Feature:
       | period | base plan | net terms |
       | 12     | 100 GB    | yes       |
     Then New partner should be created
-    When I enable stash for the partner with 10 GB stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 10 GB (change)         |
+      | Enable Stash: |
+      | Yes           |
     When I act as newly created partner account
     And I add a new user to a MozyPro partner:
       | name           | enable stash | stash quota |
@@ -121,10 +121,10 @@ Feature:
       | period | reseller type | reseller quota |
       | 12     | Silver        | 100            |
     Then New partner should be created
-    When I enable stash for the partner with 10 GB stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 10 GB (change)         |
+      | Enable Stash: |
+      | Yes           |
     When I act as newly created partner account
     And I allocate 50 GB Desktop quota with (default user group) user group to Reseller partner
     Then Reseller resource quota should be changed
@@ -153,10 +153,10 @@ Feature:
       | period | base plan | net terms |
       | 12     | 100 GB    | yes       |
     Then New partner should be created
-    When I enable stash for the partner with 5 GB stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 5 GB (change)          |
+      | Enable Stash: |
+      | Yes           |
     When I act as newly created partner account
     And I add a new user to a MozyPro partner:
       | name           | enable stash | stash quota |
@@ -175,10 +175,10 @@ Feature:
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner with 15 GB stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 15 GB (change)         |
+      | Enable Stash: |
+      | Yes           |
     When I act as newly created partner account
     When I navigate to List User Groups section from bus admin console page
     And I view (default user group) * user group details
@@ -195,17 +195,17 @@ Feature:
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner with default stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 2 GB (change)          |
+      | Enable Stash: |
+      | Yes           |
     When I act as newly created partner account
     When I navigate to List User Groups section from bus admin console page
     And I view (default user group) * user group details
-    And I enable stash for the user group with 20 GB stash storage
+    And I enable stash for the user group
     Then User group details should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 20 GB (change)         |
+      | Enable Stash: |
+      | Yes           |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 

@@ -14,7 +14,7 @@ Feature: Change subscription period
       | 1      | 50 GB     |
     Then New partner should be created
     When I act as newly created partner account
-    And I change account subscription up to annual billing period
+    And I change account subscription to annual billing period!
     Then Subscription changed message should be Your account has been changed to yearly billing.
     When I stop masquerading
     And I view partner details by newly created partner company name
@@ -31,7 +31,7 @@ Feature: Change subscription period
       | 12     | 50 GB     | MozyPro France | France  |
     Then New partner should be created
     When I act as newly created partner account
-    And I change account subscription up to biennial billing period!
+    And I change account subscription to biennial billing period!
     Then Subscription changed message should be Your account has been changed to biennial billing.
     When I stop masquerading
     And I view partner details by newly created partner company name
@@ -48,7 +48,7 @@ Feature: Change subscription period
       | 12     | 50 GB     | MozyPro Germany | Germany |
     Then New partner should be created
     When I act as newly created partner account
-    And I change account subscription up to biennial billing period
+    And I change account subscription to biennial billing period!
     Then Subscription changed message should be Your account has been changed to biennial billing.
     When I stop masquerading
     And I view partner details by newly created partner company name
@@ -65,7 +65,7 @@ Feature: Change subscription period
       | 24     | 50 GB     | MozyPro Ireland | Ireland | yes       |
     Then New partner should be created
     When I act as newly created partner account
-    And I change account subscription down to annual billing period
+    And I change account subscription to annual billing period!
     Then Subscription changed message should be Your account will be switched to yearly billing schedule at your next renewal.
     When I stop masquerading
     And I view partner details by newly created partner company name
@@ -82,7 +82,7 @@ Feature: Change subscription period
       | 12     | 50 GB     | MozyPro UK   | United Kingdom | yes       |
     Then New partner should be created
     When I act as newly created partner account
-    And I change account subscription down to monthly billing period
+    And I change account subscription to monthly billing period!
     Then Subscription changed message should be Your account will be switched to monthly billing schedule at your next renewal.
     When I stop masquerading
     And I view partner details by newly created partner company name
@@ -99,7 +99,7 @@ Feature: Change subscription period
       | 24     | 50 GB     | yes       |
     Then New partner should be created
     When I act as newly created partner account
-    And I change account subscription down to monthly billing period
+    And I change account subscription to monthly billing period!
     Then Subscription changed message should be Your account will be switched to monthly billing schedule at your next renewal.
     When I stop masquerading
     And I view partner details by newly created partner company name
@@ -116,7 +116,7 @@ Feature: Change subscription period
       | 12     | 10    |
     Then New partner should be created
     When I act as newly created partner account
-    And I change account subscription up to biennial billing period
+    And I change account subscription to biennial billing period!
     Then Subscription changed message should be Your account has been changed to biennial billing.
     When I stop masquerading
     And I view partner details by newly created partner company name
@@ -133,7 +133,7 @@ Feature: Change subscription period
       | 24     | 10    |
     Then New partner should be created
     When I act as newly created partner account
-    And I change account subscription up to 3-year billing period
+    And I change account subscription to 3-year billing period!
     Then Subscription changed message should be Your account has been changed to 3-year billing.
     When I stop masquerading
     And I view partner details by newly created partner company name
@@ -150,7 +150,7 @@ Feature: Change subscription period
       | 12     | 10    |
     Then New partner should be created
     When I act as newly created partner account
-    And I change account subscription up to 3-year billing period
+    And I change account subscription to 3-year billing period!
     Then Subscription changed message should be Your account has been changed to 3-year billing.
     When I stop masquerading
     And I view partner details by newly created partner company name
@@ -167,7 +167,7 @@ Feature: Change subscription period
       | 24     | 10    | yes       |
     Then New partner should be created
     When I act as newly created partner account
-    And I change account subscription down to annual billing period
+    And I change account subscription to annual billing period!
     Then Subscription changed message should be Your account will be switched to yearly billing schedule at your next renewal.
     When I stop masquerading
     And I view partner details by newly created partner company name
@@ -184,7 +184,7 @@ Feature: Change subscription period
       | 36     | 10    | yes       |
     Then New partner should be created
     When I act as newly created partner account
-    And I change account subscription down to biennial billing period
+    And I change account subscription to biennial billing period!
     Then Subscription changed message should be Your account will be switched to biennial billing schedule at your next renewal.
     When I stop masquerading
     And I view partner details by newly created partner company name
@@ -201,7 +201,7 @@ Feature: Change subscription period
       | 36     | 10    | yes       |
     Then New partner should be created
     When I act as newly created partner account
-    And I change account subscription down to annual billing period
+    And I change account subscription to annual billing period!
     Then Subscription changed message should be Your account will be switched to yearly billing schedule at your next renewal.
     When I stop masquerading
     And I view partner details by newly created partner company name
@@ -218,7 +218,7 @@ Feature: Change subscription period
       | 1      | Silver        | 100            |
     Then New partner should be created
     When I act as newly created partner account
-    And I change account subscription up to annual billing period
+    And I change account subscription to annual billing period!
     Then Subscription changed message should be Your account has been changed to yearly billing.
     When I stop masquerading
     And I view partner details by newly created partner company name
@@ -235,7 +235,7 @@ Feature: Change subscription period
       | 12     | Gold          | 100            | yes       |
     Then New partner should be created
     When I act as newly created partner account
-    And I change account subscription down to monthly billing period
+    And I change account subscription to monthly billing period!
     Then Subscription changed message should be Your account will be switched to monthly billing schedule at your next renewal.
     When I stop masquerading
     And I view partner details by newly created partner company name
@@ -252,7 +252,7 @@ Feature: Change subscription period
       | 1      | Silver        | 100            |
     Then New partner should be created
     When I act as newly created partner account
-    And I change account subscription up to annual billing period
+    And I change account subscription to annual billing period
     Then Change subscription confirmation message should be:
       """
       Are you sure that you want to change your subscription period from monthly to yearly billing?
@@ -276,7 +276,7 @@ Feature: Change subscription period
       | 1      | 50 GB     |
     Then New partner should be created
     When I act as newly created partner account
-    And I change account subscription up to biennial billing period
+    And I change account subscription to biennial billing period
     Then Change subscription confirmation message should be:
       """
       Are you sure that you want to change your subscription period from monthly to biennial billing?
@@ -300,7 +300,7 @@ Feature: Change subscription period
       | 12     | 1     |
     Then New partner should be created
     When I act as newly created partner account
-    And I change account subscription up to 3-year billing period
+    And I change account subscription to 3-year billing period
     Then Change subscription confirmation message should be:
       """
       Are you sure that you want to change your subscription period from yearly to 3-year billing?

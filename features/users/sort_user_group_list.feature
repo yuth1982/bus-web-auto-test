@@ -11,7 +11,7 @@ Feature: Sort user group list
         | 12     | Silver        | 100            | yes         | yes       | [Bundled] Sort User Group List |
       Then New partner should be created
       And I get the partner_id
-      And I enable stash for the partner with default stash storage
+      And I enable stash for the partner
       And I act as newly created partner
 
       And I add a new Bundled user group:
@@ -182,7 +182,7 @@ Scenario: 20933 [Itemized] Sort Columns
       | 12     | 10    | 100 GB      | yes       | [Itemized] Sort User Group List |
     Then New partner should be created
     And I get the partner_id
-    And I enable stash for the partner with default stash storage
+    And I enable stash for the partner
     And I act as newly created partner
 
 

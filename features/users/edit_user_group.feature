@@ -12,8 +12,8 @@ Feature: Edit existing user group
     And I enable stash for the partner
     And I act as newly created partner
     When I edit (default user group) Bundled user group:
-      | storage_type  |
-      | None          |
+      | storage_type |
+      | Shared       |
     Then (default user group) user group should be updated
     When I edit (default user group) Bundled user group:
       | storage_type | limited_quota | enable_stash | server_support |
@@ -30,7 +30,7 @@ Feature: Edit existing user group
     Then TC.20894 UG user group should be created
     When I edit TC.20894 UG Bundled user group:
       | name        | storage_type |
-      | TC.20894 UG | None         |
+      | TC.20894 UG | Shared       |
     Then TC.20894 UG user group should be updated
     When I edit TC.20894 UG Bundled user group:
       | name        | storage_type | assigned_quota | enable_stash | server_support |
@@ -63,7 +63,7 @@ Feature: Edit existing user group
     And I act as newly created partner
     When I edit (default user group) Itemized user group:
       | desktop_storage_type | server_storage_type |
-      | None                 | None                |
+      | Shared               | Shared              |
     Then (default user group) user group should be updated
     When I edit (default user group) Itemized user group:
       | desktop_storage_type | desktop_limited_quota | enable_stash | server_storage_type | server_limited_quota |
@@ -80,7 +80,7 @@ Feature: Edit existing user group
     Then TC.20818 UG user group should be created
     When I edit TC.20818 UG Itemized user group:
       | name        | desktop_storage_type | server_storage_type |
-      | TC.20818 UG | None                 | None                |
+      | TC.20818 UG | Shared               | Shared              |
     Then TC.20818 UG user group should be updated
     When I edit TC.20818 UG Itemized user group:
       | name        | desktop_storage_type | desktop_limited_quota | desktop_devices | server_storage_type | server_limited_quota | server_devices |

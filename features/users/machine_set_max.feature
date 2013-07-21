@@ -20,7 +20,7 @@ Feature: Set/Remove Max at Machine
       | period | users | server plan | net terms | company name             |
       | 12     | 8     | 100 GB      | yes       | Set Max for Machine      |
     Then New partner should be created
-    And I enable stash for the partner with 10 GB stash storage
+    And I enable stash for the partner
     When I get the partner_id
     And I act as newly created partner account
     And I add a new Itemized user group:

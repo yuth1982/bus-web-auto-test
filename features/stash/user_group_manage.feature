@@ -39,10 +39,10 @@ Feature: User group stash setting management
     #      | period | users |
     #      | 12     | 10    |
     #    Then New partner should be created
-    #    When I enable stash for the partner with default stash storage
+    #    When I enable stash for the partner
     #    Then Partner general information should be:
-    #      | Enable Stash: | Default Stash Storage: |
-    #      | Yes           | 2 GB (change)          |
+    #      | Enable Stash: |
+    #      | Yes           |
     #    And I act as newly created partner account
     #    And I navigate to Add New User Group section from bus admin console page
     #    Then I can see help icon for default stash storage
@@ -113,7 +113,7 @@ Feature: User group stash setting management
     And I search and delete partner account by newly created partner company name
 
   @TC.19006 @BSA.2010 @bus @stash
-  Scenario: 19006 Existing user groups are enabled with default stash storage when stash is enabled for partner
+  Scenario: 19006 Existing user groups are enabled when stash is enabled for partner
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
       | 1      | Gold          | 100            |
@@ -150,7 +150,7 @@ Feature: User group stash setting management
 #      | Test | Shared       |
 #    Then Test user group should be created
 #    When I view details of TC.19007.1-user's user group
-#    And I enable stash for the user group with 20 GB stash storage
+#    And I enable stash for the user group
 #    Then User group details should be:
 #      | Enable Stash: |
 #      | Yes (change)  |
@@ -313,10 +313,10 @@ Feature: User group stash setting management
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner with 10000 GB stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 10000 GB (change)      |
+      | Enable Stash: |
+      | Yes           |
     When I act as newly created partner account
     And I add a new user to a MozyEnterprise partner:
       | name           |
@@ -336,10 +336,10 @@ Feature: User group stash setting management
       | period | reseller type | reseller quota |
       | 1      | Gold          | 100            |
     Then New partner should be created
-    When I enable stash for the partner with 10000 GB stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 10000 GB (change)      |
+      | Enable Stash: |
+      | Yes           |
     When I act as newly created partner account
     And I add a new user to a Reseller partner:
       | name           |
@@ -359,10 +359,10 @@ Feature: User group stash setting management
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner with default stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 2 GB (change)          |
+      | Enable Stash: |
+      | Yes           |
     When I act as newly created partner account
     When I navigate to List User Groups section from bus admin console page
     And I view (default user group) * user group details
@@ -397,10 +397,10 @@ Feature: User group stash setting management
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner with 10 GB stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 10 GB (change)         |
+      | Enable Stash: |
+      | Yes           |
     When I act as newly created partner account
     And I add a new user group:
       | name           |

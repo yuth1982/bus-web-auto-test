@@ -39,11 +39,6 @@ Feature: Edit existing user group
     Then TC.21003-Limited-3 user group should be created
 
     When I add a new Bundled user group:
-      | name            | storage_type |
-      | TC.21003-None-4 | None         |
-    Then TC.21003-None-4 user group should be created
-
-    When I add a new Bundled user group:
       | name                | storage_type | assigned_quota |
       | TC.21003-Assigned-5 | Assigned     | 15             |
     Then TC.21003-Assigned-5 user group should be created
@@ -62,9 +57,6 @@ Feature: Edit existing user group
 
     When I delete user group details by name: TC.21003-Limited-3
     Then TC.21003-Limited-3 user group should be deleted
-
-    When I delete user group details by name: TC.21003-None-4
-    Then TC.21003-None-4 user group should be deleted
 
     And I refresh Resource Summary section
     Then Bundled storage summary should be:
@@ -144,7 +136,7 @@ Feature: Edit existing user group
       | period | users | server plan | net terms | company name                       |
       | 12     | 10    | 100 GB      | yes       | [Itemized] Delete User Group |
     Then New partner should be created
-    And I enable stash for the partner with default stash storage
+    And I enable stash for the partner
     And I act as newly created partner
 
     And I navigate to User Group List section from bus admin console page
@@ -171,11 +163,6 @@ Feature: Edit existing user group
     Then TC.21008-Limited-3 user group should be created
 
     And I add a new Itemized user group:
-      | name            | desktop_storage_type | server_storage_type |
-      | TC.21008-None-4 | None                 | None                |
-    Then TC.21008-None-4 user group should be created
-
-    And I add a new Itemized user group:
       | name                | desktop_storage_type | desktop_devices | desktop_assigned_quota | server_storage_type | server_devices | server_assigned_quota |
       | TC.21008-Assigned-5 | Assigned             | 1               | 15                     | Assigned            | 1              | 15                    |
     Then TC.21008-Assigned-5 user group should be created
@@ -196,9 +183,6 @@ Feature: Edit existing user group
     When I delete user group details by name: TC.21008-Limited-3
     Then TC.21008-Limited-3 user group should be deleted
 
-    When I delete user group details by name: TC.21008-None-4
-    Then TC.21008-None-4 user group should be deleted
-
     Then I navigate to Resource Summary section from bus admin console page
     And I refresh Resource Summary section
     Then Itemized storage summary should be:
@@ -214,7 +198,7 @@ Feature: Edit existing user group
         | period | users | server plan | net terms | company name                       |
         | 12     | 10    | 100 GB      | yes       | [Itemized] Delete User Group |
       Then New partner should be created
-      And I enable stash for the partner with default stash storage
+      And I enable stash for the partner
       And I act as newly created partner
     When I navigate to User Group List section from bus admin console page
     And Itemized user groups table should be:

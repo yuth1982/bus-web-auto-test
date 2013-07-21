@@ -419,10 +419,10 @@ Feature:
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner with default stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 2 GB (change)          |
+      | Enable Stash: |
+      | Yes           |
     When I act as newly created partner account
     When I add a new user group:
       | name           | stash quota |

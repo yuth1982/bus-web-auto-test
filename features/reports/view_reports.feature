@@ -185,7 +185,7 @@ Feature: View Report
       | 12     | 1     |
     Then New partner should be created
     When I act as newly created partner account
-    And I change account subscription up to biennial billing period!
+    And I change account subscription to biennial billing period!
     Then Subscription changed message should be Your account has been changed to biennial billing.
     When I download Credit Card Transactions (CSV) quick report
     Then Quick report Credit Card Transactions csv file details should be:

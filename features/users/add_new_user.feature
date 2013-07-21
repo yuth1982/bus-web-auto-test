@@ -23,7 +23,7 @@ Feature: Add a new user
       | period | reseller type | reseller quota | server plan |
       | 12     | Silver        | 100            | yes         |
     Then New partner should be created
-    When I enable stash for the partner with default stash storage
+    When I enable stash for the partner
     And I act as newly created partner
     And I add new user(s):
       | name       | user_group           | storage_type | storage_limit | devices | enable_stash |
@@ -72,7 +72,7 @@ Feature: Add a new user
       | period | reseller type | reseller quota | server plan | net terms |
       | 12     | Silver        | 100            | yes         | yes       |
     Then New partner should be created
-    When I enable stash for the partner with default stash storage
+    When I enable stash for the partner
     And I act as newly created partner
     When I add a new Bundled user group:
       | name          | storage_type | server_support | enable_stash |
@@ -133,7 +133,7 @@ Feature: Add a new user
       | period | users | server plan | company name            |
       | 12     | 10    | 100 GB      | [Itemized] Tooltips Test|
     Then New partner should be created
-    When I enable stash for the partner with default stash storage
+    When I enable stash for the partner
     And I act as newly created partner
     And I add new user(s):
       | name       | user_group           | storage_type | storage_limit | devices | enable_stash |
@@ -182,7 +182,7 @@ Feature: Add a new user
       | period | users | server plan | net terms |
       | 12     | 10    | 100 GB      | yes       |
     Then New partner should be created
-    When I enable stash for the partner with default stash storage
+    When I enable stash for the partner
     And I act as newly created partner
     When I add a new Itemized user group:
       | name          | desktop_storage_type | desktop_devices | enable_stash | server_storage_type | server_devices |
@@ -243,7 +243,7 @@ Feature: Add a new user
       | period | base plan | server plan | net terms |
       | 1      | 100 GB    | yes         | yes       |
     And New partner should be created
-    When I enable stash for the partner with default stash storage
+    When I enable stash for the partner
     And I act as newly created partner
     And I add new user(s):
       | name       | storage_type | storage_limit | devices | enable_stash |
