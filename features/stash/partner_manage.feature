@@ -64,7 +64,7 @@ Feature:
     When I enable stash for the partner
     Then Partner general information should be:
       | Enable Stash: |
-      | Yes           |
+      | Yes (change)  |
     When I act as newly created partner account
     And I add a new user to a MozyEnterprise partner:
       | name           | enable stash | stash quota |
@@ -94,7 +94,7 @@ Feature:
     When I enable stash for the partner
     Then Partner general information should be:
       | Enable Stash: |
-      | Yes           |
+      | Yes (change)  |
     When I act as newly created partner account
     And I add a new user to a MozyPro partner:
       | name           | enable stash | stash quota |
@@ -124,7 +124,7 @@ Feature:
     When I enable stash for the partner
     Then Partner general information should be:
       | Enable Stash: |
-      | Yes           |
+      | Yes (change)  |
     When I act as newly created partner account
     And I allocate 50 GB Desktop quota with (default user group) user group to Reseller partner
     Then Reseller resource quota should be changed
@@ -156,7 +156,7 @@ Feature:
     When I enable stash for the partner
     Then Partner general information should be:
       | Enable Stash: |
-      | Yes           |
+      | Yes (change)  |
     When I act as newly created partner account
     And I add a new user to a MozyPro partner:
       | name           | enable stash | stash quota |
@@ -178,14 +178,14 @@ Feature:
     When I enable stash for the partner
     Then Partner general information should be:
       | Enable Stash: |
-      | Yes           |
+      | Yes (change)  |
     When I act as newly created partner account
     When I navigate to List User Groups section from bus admin console page
     And I view (default user group) * user group details
     And I disable stash for the user group
     Then User group details should be:
       | Enable Stash: |
-      | No            |
+      | No (change)   |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
@@ -198,14 +198,14 @@ Feature:
     When I enable stash for the partner
     Then Partner general information should be:
       | Enable Stash: |
-      | Yes           |
+      | Yes (change)  |
     When I act as newly created partner account
     When I navigate to List User Groups section from bus admin console page
     And I view (default user group) * user group details
     And I enable stash for the user group
     Then User group details should be:
       | Enable Stash: |
-      | Yes           |
+      | Yes (change)  |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 

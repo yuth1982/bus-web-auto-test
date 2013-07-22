@@ -55,9 +55,9 @@ Feature: Add a new user
     And I sort user search results by Name
     Then User search results should be:
       | Name        | User Group            | Stash    | Storage        |
-      | TC.20875-1  | (default user group)  | Enabled  | 10 GB(Limited) |
+      | TC.20875-1  | (default user group)  | Enabled  | 10 GB (Limited) |
       | TC.20875-2  | (default user group)  | Disabled | Shared         |
-      | TC.20875-3  | (default user group)  | Disabled | 10 GB(Limited) |
+      | TC.20875-3  | (default user group)  | Disabled | 10 GB (Limited) |
       | TC.20875-4  | (default user group)  | Disabled | Shared         |
       | TC.20875-5  | (default user group)  | Disabled | Shared         |
       | TC.20875-6  | (default user group)  | Disabled | Shared         |
@@ -116,9 +116,9 @@ Feature: Add a new user
     And I sort user search results by Name
     Then User search results should be:
       | Name        | User Group     | Stash    | Storage        |
-      | TC.20910-1  | TC.20910 UG 1  | Enabled  | 10 GB(Limited) |
+      | TC.20910-1  | TC.20910 UG 1  | Enabled  | 10 GB (Limited) |
       | TC.20910-2  | TC.20910 UG 1  | Disabled | Shared         |
-      | TC.20910-3  | TC.20910 UG 2  | Disabled | 10 GB(Limited) |
+      | TC.20910-3  | TC.20910 UG 2  | Disabled | 10 GB (Limited) |
       | TC.20910-4  | TC.20910 UG 2  | Disabled | Shared         |
       | TC.20910-5  | TC.20910 UG 3  | Disabled | Shared         |
       | TC.20910-6  | TC.20910 UG 3  | Disabled | Shared         |
@@ -165,9 +165,9 @@ Feature: Add a new user
     And I sort user search results by Name
     Then User search results should be:
       | Name        | User Group            | Stash    | Storage                 |
-      | TC.20871-1  | (default user group)  | Enabled  | Desktop: 10 GB(Limited) |
+      | TC.20871-1  | (default user group)  | Enabled  | Desktop: 10 GB (Limited) |
       | TC.20871-2  | (default user group)  | Disabled | Desktop: Shared         |
-      | TC.20871-3  | (default user group)  | Disabled | Server: 10 GB(Limited)  |
+      | TC.20871-3  | (default user group)  | Disabled | Server: 10 GB (Limited)  |
       | TC.20871-4  | (default user group)  | Disabled | Server: Shared          |
       | TC.20871-5  | (default user group)  | Disabled | Desktop: Shared         |
       | TC.20871-6  | (default user group)  | Disabled | Desktop: Shared         |
@@ -226,9 +226,9 @@ Feature: Add a new user
     And I sort user search results by Name
     Then User search results should be:
       | Name        | User Group     | Stash    | Storage                 |
-      | TC.20906-1  | TC.20906 UG 1  | Enabled  | Desktop: 10 GB(Limited) |
+      | TC.20906-1  | TC.20906 UG 1  | Enabled  | Desktop: 10 GB (Limited) |
       | TC.20906-2  | TC.20906 UG 1  | Disabled | Desktop: Shared         |
-      | TC.20906-3  | TC.20906 UG 2  | Disabled | Server: 10 GB(Limited)  |
+      | TC.20906-3  | TC.20906 UG 2  | Disabled | Server: 10 GB (Limited)  |
       | TC.20906-4  | TC.20906 UG 2  | Disabled | Server: Shared          |
       | TC.20906-5  | TC.20906 UG 3  | Disabled | Desktop: Shared         |
       | TC.20906-6  | TC.20906 UG 3  | Disabled | Desktop: Shared         |
@@ -275,9 +275,9 @@ Feature: Add a new user
     And I sort user search results by Name
     Then User search results should be:
       | Name        | Stash    | Storage        |
-      | TC.20921-1  | Enabled  | 10 GB(Limited) |
+      | TC.20921-1  | Enabled  | 10 GB (Limited) |
       | TC.20921-2  | Disabled | Shared         |
-      | TC.20921-3  | Disabled | 10 GB(Limited) |
+      | TC.20921-3  | Disabled | 10 GB (Limited) |
       | TC.20921-4  | Disabled | Shared         |
       | TC.20921-5  | Disabled | Shared         |
       | TC.20921-6  | Disabled | Shared         |

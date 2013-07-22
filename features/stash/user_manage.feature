@@ -454,7 +454,7 @@ Feature: User stash setting management
     When I enable stash for the partner
     Then Partner general information should be:
       | Enable Stash: |
-      | Yes           |
+      | Yes (change)  |
     When I act as newly created partner account
     And I add a new user to a MozyEnterprise partner:
       | name           |
@@ -487,7 +487,7 @@ Feature: User stash setting management
     When I enable stash for the partner
     Then Partner general information should be:
       | Enable Stash: |
-      | Yes           |
+      | Yes (change)  |
     When I act as newly created partner account
     And I add a new user to a MozyEnterprise partner:
       | name           | enable stash | stash quota | send stash invite |

@@ -362,7 +362,7 @@ Feature: User group stash setting management
     When I enable stash for the partner
     Then Partner general information should be:
       | Enable Stash: |
-      | Yes           |
+      | Yes (change)  |
     When I act as newly created partner account
     When I navigate to List User Groups section from bus admin console page
     And I view (default user group) * user group details
