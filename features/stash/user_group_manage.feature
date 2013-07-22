@@ -130,32 +130,32 @@ Feature: User group stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-#  @TC.19007 @BSA.2010 @bus @stash
-#  Scenario: 19007 Modify default stash storage quota for a user group in user group edit page when stash is enabled for partner
-#    When I add a new Reseller partner:
-#      | period | reseller type | reseller quota |
-#      | 1      | Platinum      | 100            |
-#    Then New partner should be created
-#    When I enable stash for the partner
-#    Then Partner general information should be:
-#      | Enable Stash: |
-#      | Yes (change)  |
-#    When I act as newly created partner account
-#    And I add new user(s):
-#      | name            | user_group           | storage_type | devices | enable_stash |
-#      | TC.19007.1-user | (default user group) | Desktop      | 1       | yes          |
-#    Then 1 new user should be created
-#    And I add a new Bundled user group:
-#      | name | storage_type |
-#      | Test | Shared       |
-#    Then Test user group should be created
-#    When I view details of TC.19007.1-user's user group
-#    And I enable stash for the user group
-#    Then User group details should be:
-#      | Enable Stash: |
-#      | Yes (change)  |
-#    When I stop masquerading
-#    And I search and delete partner account by newly created partner company name
+  @TC.19007 @BSA.2010 @bus @stash
+  Scenario: 19007 Modify default stash storage quota for a user group in user group edit page when stash is enabled for partner
+    When I add a new Reseller partner:
+      | period | reseller type | reseller quota |
+      | 1      | Platinum      | 100            |
+    Then New partner should be created
+    When I enable stash for the partner
+    Then Partner general information should be:
+      | Enable Stash: |
+      | Yes (change)  |
+    When I act as newly created partner account
+    And I add new user(s):
+      | name            | user_group           | storage_type | devices | enable_stash |
+      | TC.19007.1-user | (default user group) | Desktop      | 1       | yes          |
+    Then 1 new user should be created
+    And I add a new Bundled user group:
+      | name | storage_type |
+      | Test | Shared       |
+    Then Test user group should be created
+    When I view details of TC.19007.1-user's user group
+    And I enable stash for the user group
+    Then User group details should be:
+      | Enable Stash: |
+      | Yes (change)  |
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name
 
   @TC.19008 @BSA.2020 @bus @stash
   Scenario: 19008 Disable stash for a user group in user group detail section

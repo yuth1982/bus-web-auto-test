@@ -505,10 +505,10 @@ Feature:
     And I act as newly created partner account
     And I navigate to Billing History section from bus admin console page
     Then Billing history table should be:
-      | Date    | Amount  | Total Paid | Balance Due |
-      | today  | $275.00  | $275.00    | $0.00       |
-      | today  | $190.00  | $190.00     | $0.00       |
-      | today  | $0.00    | $0.00      | $0.00       |
+      | Date  | Amount  | Total Paid | Balance Due |
+      | today | $275.00 | $275.00    | $0.00       |
+      | today | $190.00 | $190.00    | $0.00       |
+      | today | $0.00   | $0.00      | $0.00       |
     And I search and delete partner account by newly created partner company name
 
   @TC.21978 @bus @data_shuttle @status @BUG.91049

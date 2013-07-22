@@ -23,7 +23,7 @@ Feature: Add a new partner
     And New partner should be created
     And Partner general information should be:
       | Status:         | Root Admin:          | Root Role:             | Parent: | Next Charge:  | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro | after 1 month | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro | after 1 month | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | <%=@partner.admin_info.email%> |
@@ -63,7 +63,7 @@ Feature: Add a new partner
     And New partner should be created
     And Partner general information should be:
       | Status:         | Root Admin:          | Root Role:             | Parent:                  | Next Charge: | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro France (MozyPro) | after 1 year | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro France (MozyPro) | after 1 year | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:                 | VAT Number:   |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | France           | 1-877-486-9273 |           |                 | <%=@partner.admin_info.email%> | FR08410091490 |
@@ -103,7 +103,7 @@ Feature: Add a new partner
     And New partner should be created
     And Partner general information should be:
       | Status:         | Root Admin:          | Root Role:             | Parent:                   | Next Charge:  | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro Germany (MozyPro) | after 1 month | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro Germany (MozyPro) | after 1 month | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:                 | VAT Number: |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | Germany          | 1-877-486-9273 |           |                 | <%=@partner.admin_info.email%> | DE812321109 |
@@ -145,7 +145,7 @@ Feature: Add a new partner
     And New partner should be created
     And Partner general information should be:
       | Status:         | Root Admin:          | Root Role:             | Parent:                   | Next Charge: | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro Ireland (MozyPro) | after 1 year | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro Ireland (MozyPro) | after 1 year | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)           |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 | VAT Number: |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | Ireland          | 1-877-486-9273 | <%=@partner.admin_info.email%> | IE9691104A  |
@@ -186,7 +186,7 @@ Feature: Add a new partner
     And New partner should be created
     And Partner general information should be:
       | Status:         | Root Admin:          | Root Role:             | Parent:              | Next Charge:  | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro UK (MozyPro) | after 1 month | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro UK (MozyPro) | after 1 month | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)           |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 | VAT Number: |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United Kingdom   | 1-877-486-9273 | <%=@partner.admin_info.email%> | GB117223643 |
@@ -225,7 +225,7 @@ Feature: Add a new partner
     And New partner should be created
     And Partner general information should be:
       | Status:         | Root Admin:          | Root Role:             | Parent: | Next Charge: | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro | after 1 year | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro | after 1 year | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | <%=@partner.admin_info.email%> |
@@ -264,7 +264,7 @@ Feature: Add a new partner
     And New partner should be created
     And Partner general information should be:
       | Status:         | Root Admin:          | Root Role:             | Parent:                  | Next Charge:  | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro France (MozyPro) | after 1 month | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro France (MozyPro) | after 1 month | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | France           | 1-877-486-9273 | <%=@partner.admin_info.email%> |
@@ -303,7 +303,7 @@ Feature: Add a new partner
     And New partner should be created
     And Partner general information should be:
       | Status:         | Root Admin:          | Root Role:             | Parent:                   | Next Charge: | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro Germany (MozyPro) | after 1 year | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro Germany (MozyPro) | after 1 year | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | Germany          | 1-877-486-9273 | <%=@partner.admin_info.email%> |
@@ -342,7 +342,7 @@ Feature: Add a new partner
     And New partner should be created
     And Partner general information should be:
       | Status:         | Root Admin:          | Root Role:             | Parent:                   | Next Charge:  | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro Ireland (MozyPro) | after 1 month | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro Ireland (MozyPro) | after 1 month | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | Ireland          | 1-877-486-9273 | <%=@partner.admin_info.email%> |
@@ -382,7 +382,7 @@ Feature: Add a new partner
     And New partner should be created
     And Partner general information should be:
       | Status:         | Root Admin:          | Root Role:             | Parent:              | Next Charge: | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro UK (MozyPro) | after 1 year | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro UK (MozyPro) | after 1 year | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United Kingdom   | 1-877-486-9273 | <%=@partner.admin_info.email%> |
@@ -415,7 +415,7 @@ Feature: Add a new partner
     And New partner should be created
     And Partner general information should be:
       | Status:         | Root Admin:          | Root Role:             | Parent: | Next Charge:  | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro | after 1 month | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No            |
+      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro | after 1 month | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
       | Reseller      | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | <%=@partner.admin_info.email%> |
