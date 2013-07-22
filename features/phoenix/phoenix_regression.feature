@@ -21,6 +21,24 @@ Feature: Phoenix regression Test
       | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> |
     Then I delete partner account
 
+  @TC.2348 @bus @capture @city @state @zip
+  Scenario: 2348 Create a new Mozypro partner part2(mozy.com)
+    When I add a phoenix Direct partner:
+      | period | base plan | country       | server plan |
+      | 24     | 100 GB    | United States | yes         |
+    Then the order summary looks like:
+      | Description           | Price     | Quantity | Amount    |
+      | 100 GB - Biennial     | $839.79   | 1        | $839.79   |
+      | Server Plan - Biennial| $272.79   | 1        | $272.79   |
+      | Total Charge          | $1,112.58 |          | $1,112.58 |
+    And the partner is successfully added.
+    When I log in bus admin console as administrator
+    And I view partner details by newly created partner company name
+    Then Partner contact information should be:
+      | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   |
+      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> |
+    Then I delete partner account
+
   @TC.2356 @bus @capture @city @state @zip
   Scenario: 2356 Create a new MozyPro partner part3 (BUS)
     When I log in bus admin console as administrator

@@ -32,4 +32,7 @@ class PhoenixSite
   def verify_email_address
     Phoenix::AccountVerification.new
   end
+  def pro_direct_fill_out
+    Phoenix::NewPartnerProDirectFillout.new
+  end
 end

@@ -21,7 +21,7 @@
 #   fill in billing info
 #   click create
 
-When /^I add a phoenix Pro partner:$/ do |partner_table|
+When /^I add a phoenix (Pro|Direct) partner:$/ do |type ,partner_table|
   # table is a Cucumber::Ast::Table
   attributes = partner_table.hashes.first
   @partner = Bus::DataObj::MozyPro.new
@@ -64,9 +64,15 @@ When /^I add a phoenix Pro partner:$/ do |partner_table|
 
   # for info review
   # puts @partner.to_s
-  @phoenix_site.select_dom.select_country(@partner)
-  @phoenix_site.admin_fill_out.admin_info_fill_out(@partner)
-  @phoenix_site.partner_fill_out.fill_out_partner_info(@partner)
+  if type == 'Pro'
+    @phoenix_site.select_dom.select_country(@partner)
+    @phoenix_site.admin_fill_out.admin_info_fill_out(@partner)
+    @phoenix_site.partner_fill_out.fill_out_partner_info(@partner)
+  elsif type == 'Direct'
+    @phoenix_site.pro_direct_fill_out.load
+    @phoenix_site.pro_direct_fill_out.select_country(@partner)
+    @phoenix_site.pro_direct_fill_out.pro_fill_out(@partner)
+  end
   @phoenix_site.licensing_fill_out.licensing_billing_fillout(@partner)
   @phoenix_site.billing_fill_out.billing_info_fill_out(@partner)
 end
