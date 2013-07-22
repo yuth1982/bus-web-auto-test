@@ -42,8 +42,18 @@ module Phoenix
     #
     # Returns nothing
     def select_country(partner)
-    country_select.select(partner.company_info.country)
+      country_select.select(partner.company_info.country)
       continue_btn.click
+      localize_country!(partner)
     end
+      
+    def localize_country!(partner)
+      case partner.company_info.country
+      when 'Germany'
+        partner.company_info.country = 'Deutschland'
+      end
+    end
+      
+      
   end
 end

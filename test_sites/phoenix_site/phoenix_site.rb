@@ -5,14 +5,6 @@ class PhoenixSite
     Phoenix::DomSelection.new
   end
 
-  def admin_fill_out
-    Phoenix::AddNewPhoenixPartner.new
-  end
-
-  def partner_fill_out
-    Phoenix::NewPartnerFillout.new
-  end
-
   def licensing_fill_out
     Phoenix::NewPartnerLicensingFillout.new
   end
@@ -32,7 +24,8 @@ class PhoenixSite
   def verify_email_address
     Phoenix::AccountVerification.new
   end
-  def pro_direct_fill_out
-    Phoenix::NewPartnerProDirectFillout.new
+    
+  def phoenix_partner_into_fill_out
+    Phoenix::PhoenixCreation.new
   end
 end
