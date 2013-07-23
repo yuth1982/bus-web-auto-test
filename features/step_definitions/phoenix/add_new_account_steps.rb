@@ -29,11 +29,16 @@ When /^I (.+) a phoenix (Home|Pro|Direct) (partner|user):$/ do |string,type, par
     # Partner info attributes
     @partner.partner_info.coupon_code = attributes["coupon"] unless attributes["coupon"].nil?
     @partner.partner_info.parent = attributes["create under"] || CONFIGS['bus']['mozy_root_partner']['mozypro']
-    
+
+    # Admin existing email check
+    attributes['admin email'] = @existing_user_email if attributes['admin email'] == '@existing_user_email'
+    attributes['admin email'] = @existing_admin_email if attributes['admin email'] == '@existing_admin_email'
+
+
     # Admin info attributes
     @partner.admin_info.full_name = attributes["admin name"] unless attributes["admin name"].nil?
-    @partner.admin_info.email = attributes["admin email"] unless attributes["admin name"].nil?
-    
+    @partner.admin_info.email = attributes["admin email"] unless attributes["admin email"].nil?
+
     # Billing info attributes
     # Not implemented, always use company info
     
@@ -69,9 +74,12 @@ When /^I (.+) a phoenix (Home|Pro|Direct) (partner|user):$/ do |string,type, par
         @phoenix_site.select_dom.select_country(@partner)
         @phoenix_site.phoenix_partner_into_fill_out.admin_info_fill_out(@partner)
     end
-    @phoenix_site.licensing_fill_out.licensing_billing_fillout(@partner)
-    @phoenix_site.billing_fill_out.billing_info_fill_out(@partner)
-    
+
+    #If catches an error of already used email
+    if @phoenix_site.phoenix_partner_into_fill_out.rp_error_messages.eql?(nil)
+      @phoenix_site.licensing_fill_out.licensing_billing_fillout(@partner)
+      @phoenix_site.billing_fill_out.billing_info_fill_out(@partner)
+    end
     
 end
 
