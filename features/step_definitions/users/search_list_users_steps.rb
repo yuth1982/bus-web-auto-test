@@ -74,7 +74,7 @@ end
 
 When /^I view user details by (.+)$/ do |user|
   user.replace ERB.new(user).result(binding)
-  if @user.nil?
+  if @users.nil?
     @bus_site.admin_console_page.search_list_users_section.view_user_details(user[0..26])
   else
     @bus_site.admin_console_page.search_list_users_section.view_user_details(user.gsub(/@user_email/,@new_users.first.email).slice!(0..26))

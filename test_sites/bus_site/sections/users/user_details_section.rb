@@ -55,7 +55,10 @@ module Bus
 
     # user backup information table
     element(:user_backup_details_table, xpath: "//div[starts-with(@id, 'user-show')]//div[2]/table")
-    element(:user_resource_details_table, css: "div.show-details > table")
+
+    # User Storage Device Info
+    elements(:storage_device_labels, css: ".div_row .label")
+    elements(:storage_device_text, css: ".div_row:nth-child(2)")
 
     element(:verify_user_link, css: 'a[onclick*=consumer_verify]')
     element(:user_verified_msg, css: "ul[class='flash successes'] li")
@@ -264,16 +267,23 @@ module Bus
       delete_stash_link.click
     end
 
-    # Public: Return user back up details table headers
+    # Public: User details storage, devices, storage limit hash
     #
-    # @params [] none
+    # @param [] none
     #
     # Example:
-    #   @bus_site.admin_console_page.user_details_section.user_backup_details_table_headers
+    #   # => user_details_details_section.storage_device_info
     #
-    # @return [String] 
-    def user_backup_details_table_headers
-      user_backup_details_table.headers_text
+    # @return [Hash]
+    # e.g. {"Storage" => "Desktop: 0 Used / 10 GB Available", "Devices" => "Desktop: 0 Used / 1 Available Edit", "Desktop User Storage Limit:" => "10 GB Edit Remove"}
+    # NOTE: Only tested new partners, for migrated users with 2 types of storage may not work properly
+    # TODO: Test users with 2 types of storage
+    def storage_device_info
+      table = {}
+      storage_device_labels.each_with_index do | key, index |
+        table[key.text] = storage_device_text[index].text
+      end
+      Hash[*table.flatten]
     end
 
     # Public: Return user back up details table rows
@@ -286,30 +296,6 @@ module Bus
     # @return [String]
     def user_backup_details_table_rows
       user_backup_details_table.rows_text
-    end
-
-    # Public: Return string of table headers
-    #
-    # @param [] none
-    #
-    # Example
-    #  @bus_site.admin_console_page.user_details_section.user_resource_details_table_headers
-    #
-    # @return [String]    
-    def user_resource_details_table_headers
-      user_resource_details_table.headers_text
-    end
-
-    # Public: Return string of table rows
-    #
-    # @param [] none
-    #
-    # Example
-    #  @bus_site.admin_console_page.user_details_section.user_resource_details_table_rows
-    #
-    # @return String 
-    def user_resource_details_table_rows
-      user_resource_details_table.rows_text
     end
 
     # Public: Activate user 

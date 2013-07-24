@@ -55,41 +55,58 @@ Feature: Add new user, user group device details
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-#    @TC.19944 This is duplicated with 20716
-#    Scenario: Mozy-19944:Devices Add New User (Mult UG) Metallic Reseller
-#      Given I log in bus admin console as administrator
-#      When I add a new Reseller partner:
-#        | period | reseller type | reseller quota | server plan |
-#        | 1      | Silver        | 10             | yes         |
-#      Then New partner should be created
-#      When I act as newly created partner account
-#      And I add a new user group:
-#        | name         |
-#        | User Group 1 |
-#      Then New user group should be created
-#      And I navigate to Add New User section from bus admin console page
-#      And I choose User Group 1 from Choose a Group
-#      Then desktop and server devices should not be displayed in Add New User module
-#      And I stop masquerading
-#      And I search and delete partner account by newly created partner company name
+    Scenario: Mozy-19944:Devices Add New User (Mult UG) Metallic Reseller
+      Given I log in bus admin console as administrator
+      When I add a new Reseller partner:
+        | period | reseller type | reseller quota | server plan |
+        | 1      | Silver        | 15             | yes         |
+      Then New partner should be created
+      When I enable stash for the partner
+      And I act as newly created partner account
+      And I add a new Bundled user group:
+        | name       | storage_type |
+        | Shared UG  | Shared       |
+      Then Shared UG user group should be created
+      When I add a new Bundled user group:
+        | name       | storage_type | limited_quota |
+        | Limited UG | Limited      | 1             |
+      Then Limited UG user group should be created
+      When I add a new Bundled user group:
+        | name        | storage_type | assigned_quota |
+        | Assigned UG | Assigned     | 2              |
+      Then Assigned UG user group should be created
+      And I navigate to Add New User section from bus admin console page
+      And I choose Shared UG from Choose a Group
+      Then User group storage details table should be:
+        | Storage(GB) | 3 |
+      And I choose Assigned UG from Choose a Group
+      Then User group storage details table should be:
+        | Storage(GB) | 2 |
+      And I choose Limited UG from Choose a Group
+      Then User group storage details table should be:
+        | Storage(GB) | 1 |
+      And I stop masquerading
+      And I search and delete partner account by newly created partner company name
 
-# Non storage pooled partner, move to 2.4
-#    @TC.19935
-#    Scenario: Mozy-19935:Devices Add New User (Single UG) Reseller Itemized
-#      Given I log in bus admin console as administrator
-#      When I act as partner by:
-#        | name                               |
-#        | qa1+test82143Itemizedcreseller@mozy.com |
-#      And I navigate to Add New User section from bus admin console page
-#      Then desktop and server devices should be displayed in Add New User module
-#      And the user groups should not be visible in the Add New User module
-#      When I note the desktop and server amounts in Add New User module for user group (default user group)
-#      And I change Itemized account plan to:
-#        | desktop licenses | server licenses |
-#        | 2                | 2               |
-#      Then the Itemized account plan should be changed
-#      And I navigate to Add New User section from bus admin console page
-#      Then I note the desktop and server amounts in Add New User module for user group (default user group)
+    @TC.19935
+    Scenario: Mozy-19935:Devices Add New User (Single UG) Reseller Itemized
+      When I log in to legacy bus01 as administrator
+      And I successfully add an itemized Reseller partner:
+        | period | desktop licenses | desktop quota | server licenses | server quota |
+        | 12     | 5                | 5             | 5               | 5            |
+      And I log in bus admin console as administrator
+      And I search partner by:
+        | name          | filter |
+        | @company_name | None   |
+      And I view partner details by newly created partner company name
+      And I get the partner_id
+      And I migrate the partner to aria
+      And I migrate the partner to pooled storage
+      When I enable stash for the partner
+      And I act as newly created partner account
+      And I navigate to Add New User section from bus admin console page
+      #
+      Then I note the desktop and server amounts in Add New User module for user group (default user group)
 
 # Non storage pooled partner, move to 2.4
 #    @TC.19958

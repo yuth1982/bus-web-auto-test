@@ -3,20 +3,6 @@ Feature: Add a new user
   Background:
     Given I log in bus admin console as administrator
 
-#  @TC.806 @need_test_account
-#  Scenario: 806 Add a new user to MozyEnterprise partner
-#    When I act as partner by:
-#      | email                                    |
-#      | qa1+users+features+test+account@mozy.com |
-#    When I add a new user:
-#      | desktop licenses | desktop quota |
-#      | 1                | 10            |
-#    Then New user should be created
-#    When I search user by newly created user email
-#    Then User search results should be:
-#      | User        | Name       | User Group           |
-#      | @user_email | @user_name | (default user group) |
-
   @TC.20875 @bus @2.5 @manage_storage @add_new_user
   Scenario: 20875 [Bundled] Add New User with default user group
     When I add a new Reseller partner:

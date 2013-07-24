@@ -15,6 +15,10 @@ Then /^user details should be:$/ do |user_table|
   actual = @bus_site.admin_console_page.user_details_section.user_details_hash
   expected = user_table.hashes.first
 
+  expected.each do |_, v|
+    v.replace ERB.new(v).result(binding)
+  end
+
   expected.keys.each do |header|
     case header
       when 'ID:'
@@ -118,12 +122,13 @@ Then /^User details changed message should be (.+)$/ do |message|
   @bus_site.admin_console_page.user_details_section.messages.should == message
 end
 
-Then /^user resources details headers should be:$/ do |resource_table|
-  @bus_site.admin_console_page.user_details_section.user_resource_details_table_headers.should == resource_table.headers
-end
-
 Then /^user resources details rows should be:$/ do |resource_table|
-  @bus_site.admin_console_page.user_details_section.user_resource_details_table_rows.should == resource_table.rows
+  actual = @bus_site.admin_console_page.user_details_section.storage_device_info
+  expected = resource_table.hashes.first
+
+  expected.keys.each do |header|
+    actual[header].should == expected[header]
+  end
 end
 
 Then /^MozyHome user details should be:$/ do |user_table|
