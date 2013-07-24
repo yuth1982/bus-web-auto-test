@@ -42,12 +42,8 @@ Then /^I should not see (.+) text on user group details section$/ do |text|
   @bus_site.admin_console_page.user_group_details_section.has_no_content?(text).should be_true
 end
 
-When /^I enable stash for the user group with (default|\d+ GB) stash storage$/ do |quota|
-  if quota == 'default'
-    @bus_site.admin_console_page.user_group_details_section.enable_stash(2)
-  else
-    @bus_site.admin_console_page.user_group_details_section.enable_stash(quota)
-  end
+When /^I enable stash for the user group$/ do
+  @bus_site.admin_console_page.user_group_details_section.enable_stash
 end
 
 When /^I disable stash for the user group$/ do

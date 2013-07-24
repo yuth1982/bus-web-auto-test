@@ -8,9 +8,10 @@ module SiteHelper
     #   # => <Capybara::Element>
     #
     # Returns element
-    def element(element_name, element_hash)
+    def element(element_name, element_hash, wait_visible = false)
       define_method(element_name.to_sym) do
         el = find(element_hash.keys.first, element_hash.values.first)
+        wait_until { el.visible? } if wait_visible
         el.highlight
         el
       end

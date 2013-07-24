@@ -9,7 +9,7 @@ module Bus
     element(:delete_user_link, xpath: "//a[text()='Delete User']")
     element(:change_user_password_link, xpath: "//a[text()='Change User Password']")
 
-    elements(:user_details_dls, xpath: "//div[starts-with(@id,'user-show')]//div[2]/dl")
+    elements(:user_details_dls, xpath: "//div[starts-with(@id,'user-show')]//div[3]/dl")
     element(:change_status_link, xpath: "//span[starts-with(@id,'user-display-status-')]//a")
     element(:status_selection, css: 'select#status')
     element(:submit_status_btn, css: 'span[id^=user-change-status-]>input')

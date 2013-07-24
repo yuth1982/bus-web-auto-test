@@ -21,7 +21,7 @@ module Bus
     end
 
     def continue_change_subscription
-      continue_btn.click
+      continue_btn.click if continue_btn.visible?
       wait_until_bus_section_load
     end
 
@@ -46,6 +46,7 @@ module Bus
     #
     # Returns success or error message text
     def messages
+      wait_until_bus_section_load
       message_div.text
     end
 
