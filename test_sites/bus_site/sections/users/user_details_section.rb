@@ -40,6 +40,10 @@ module Bus
     element(:change_quota_tooltips, css: "span[id^=tooltip_for_user_show_]")
     element(:delete_stash_link, css: "a[onclick^=show_delete_stash_popup]")
 
+    # User Storage Device Info
+    elements(:storage_device_labels, css: ".div_row .label")
+    elements(:storage_device_text, css: ".div_row:nth-child(2)")
+
     # Change Device Quota
     element(:device_edit, css: "form[action^='/user/change_device_count/'] span[class=view] a")
     element(:device_count, css: "input#device_count")
@@ -66,6 +70,27 @@ module Bus
 
     # License Keys
     element(:send_keys_btn, xpath: '//div[starts-with(@id, "all-license-keys")]/descendant::input[starts-with(@id, "send_key")]')
+
+
+    # Public: User details storage, devices, storage limit hash
+    #
+    # @param [] none
+    #
+    # Example:
+    #   # => user_details_details_section.storage_device_info
+    #
+    # @return [Hash]
+    # e.g. {"Storage" => "Desktop: 0 Used / 10 GB Available", "Devices" => "Desktop: 0 Used / 1 Available Edit", "Desktop User Storage Limit:" => "10 GB Edit Remove"}
+    # NOTE: Only tested new partners, for migrated users with 2 types of storage may not work properly
+    # TODO: Test users with 2 types of storage
+    def storage_device_info
+      table = {}
+      storage_device_labels.each_with_index do | key, index |
+        table[key.text] = storage_device_text[index].text
+        Log.debug "current pair key #{key.text} and value #{table[key]}"
+      end
+      table
+    end
 
     def device_status_text
       device_status.text
