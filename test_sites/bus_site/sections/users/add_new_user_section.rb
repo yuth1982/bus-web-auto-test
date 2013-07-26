@@ -5,15 +5,15 @@ module Bus
     #
     element(:succ_msg_div, css: 'ul.flash.successes')
     element(:err_msg_div, xpath: "//div[starts-with(@id, 'user-new_users_in_batch-content')]/div[3]/div/div/ul")
-    element(:user_group_select, id: 'user_user_group_id')
+    element(:user_group_select, {id: 'user_user_group_id'}, true)
     element(:ug_resources_details_table, id: 'resource-details')
     element(:buy_more_link, css: 'span.buy_more>a[href*=change_billing_plan]')
     element(:add_group_link, css: 'a[href*=add_group]')
 
-    element(:storage_type_select, id: 'user_storage_pool_policy')
-    element(:storage_max_tb, id: 'desired_user_storage')
-    element(:device_tb, id: 'device_count')
-    element(:enable_stash_cb, id: 'user_enable_stash')
+    element(:storage_type_select, {:id => 'user_storage_pool_policy'}, true)
+    element(:storage_max_tb, {id: 'desired_user_storage'}, true)
+    element(:device_tb, {id: 'device_count'}, true)
+    element(:enable_stash_cb, {id: 'user_enable_stash'}, true)
 
     element(:name_tb, id: 'user1_name')
     element(:email_tb, id: 'user1_username')
@@ -34,7 +34,6 @@ module Bus
     def add_new_users(users)
       user = users.first
       user_group_select.select(user.user_group) unless user.user_group.nil?
-      sleep 2 # wait for ajax call back
       storage_type_select.select(user.storage_type) unless user.storage_type.nil?
       storage_max_tb.type_text(user.storage_limit) unless user.storage_limit.nil?
       device_tb.type_text(user.devices) unless user.devices.nil?
@@ -100,7 +99,6 @@ module Bus
 
     def select_user_group(group_name)
       user_group_select.select(group_name)
-      sleep 2 # wait for ajax call back
     end
 
     def click_buy_more_link
@@ -110,7 +108,6 @@ module Bus
     def has_stash_option?
       # For newly created test partner, if there
       user_group_select.select('(default user group)') if user_group_select.visible?
-      sleep 2 # wait for ajax call back
       storage_type_select.select('Desktop')
       enable_stash_cb.visible?
     end

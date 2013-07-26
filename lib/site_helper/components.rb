@@ -4,14 +4,15 @@ module SiteHelper
     # and highlight element
     #
     # Example
-    #   element(:username_tb, id: "username")
+    #   element(:username_tb, {id: "username"}, true)
     #   # => <Capybara::Element>
     #
     # Returns element
-    def element(element_name, element_hash, wait_visible = false)
+    def element(element_name, element_hash, wait_until_usable = false)
       define_method(element_name.to_sym) do
         el = find(element_hash.keys.first, element_hash.values.first)
-        wait_until { el.visible? } if wait_visible
+        puts element_hash[:wait_until_usable]
+        wait_until { el.visible? && el.enabled? } if wait_until_usable
         el.highlight
         el
       end

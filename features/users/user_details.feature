@@ -148,16 +148,13 @@ Feature: User Details
     When I get the partner_id
     And I act as newly created partner account
     And I add new user(s):
-      | name          | user_group           | storage_type | storage_limit | devices |
-      | TC.21020.User | (default user group) | Desktop      |               | 4       |
+      | name          | user_group           | storage_type | storage_limit | devices | enable_stash | send_email |
+      | TC.21020.User | (default user group) | Desktop      |               | 4       |       yes    |    no      |
     Then 1 new user should be created
     And I search user by:
       | keywords   |
       | @user_name |
     And I view user details by newly created user email
-    And I add stash for the user with:
-      | stash quota | send email |
-      | default     | no         |
     And I update the user password to default password
     And I add machines for the user and update its used quota
       | machine_name | machine_type | used_quota |
