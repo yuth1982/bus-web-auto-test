@@ -118,10 +118,15 @@ module SiteHelper
     #   @bus_site.admin_console_page.search_list_partner_section.wait_until_bus_section_load
     #
     # Returns nothing
-    def wait_until_bus_section_load
+    def wait_until_bus_section_load(element_hash = {})
       loading = root_element.find(:css, 'h2 a[onclick^=toggle_module]')
       unless loading[:class].nil?
         wait_until{ loading[:class].match(/loading/).nil? }
+      end
+      unless element_hash.empty?
+        element_hash.each do | key, value |
+          root_element.find(key, value)
+        end
       end
       # I found automation is still too faster, I need force to wait until table is loaded
       # Possible refactor here

@@ -274,7 +274,7 @@ Feature: User stash setting management
     When I enable stash for the partner
     Then Partner general information should be:
       | Enable Stash: |
-      | Yes           |
+      | Yes (change)  |
     When I act as newly created partner account
     And I allocate 10 GB Desktop quota with (default user group) user group to Reseller partner
     Then Reseller resource quota should be changed

@@ -132,8 +132,8 @@ Feature:
       | <%=@new_users.first.email%> | TC.19022 User | TC.19022 UG | Enabled | 0        | 10 GB (Limited)| None         |
     When I view user details by newly created user email
     Then user details should be:
-      | Name:                  | Enable Stash: |
-      | TC.19022 User (change) | Yes           |
+      | Name:                  | Enable Stash:               |
+      | TC.19022 User (change) | Yes (Send Invitation Email) |
     And stash device table in user details should be:
       | Stash Container | Used/Available     | Device Storage Limit | Last Update      |
       | Stash           | 0 / 10 GB          | Set                  | N/A              |

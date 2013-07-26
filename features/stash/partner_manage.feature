@@ -180,8 +180,15 @@ Feature:
       | Enable Stash: |
       | Yes (change)  |
     When I act as newly created partner account
-    When I navigate to List User Groups section from bus admin console page
-    And I view (default user group) * user group details
+    And I add new user(s):
+      | name            | user_group           | storage_type | devices |
+      | TC.19056-user | (default user group) | Desktop      | 1       |
+    Then 1 new user should be created
+    And I add a new Itemized user group:
+      | name           | desktop_storage_type | desktop_devices | enable_stash |
+      | TC.19056 group | Shared               | 5               | yes          |
+    Then TC.19056 group user group should be created
+    When I view details of TC.19056-user's user group
     And I disable stash for the user group
     Then User group details should be:
       | Enable Stash: |

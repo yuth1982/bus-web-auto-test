@@ -119,7 +119,7 @@ module Bus
     #
     # @return [Hash]
     def user_details_hash
-      wait_until_bus_section_load
+      wait_until_bus_section_load(:xpath => "//dt[text()='Name:']")
       output = user_details_dls.map{ |dl| dl.dt_dd_elements_text }.delete_if { |k| k.empty? }
       Hash[*output.flatten]
     end

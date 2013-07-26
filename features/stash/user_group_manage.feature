@@ -188,7 +188,7 @@ Feature: User group stash setting management
     When I navigate to User Group List section from bus admin console page
     And Itemized user groups table should be:
       | Group Name           | Stash | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total |
-      | (default user group) | true  | Shared               |                    | 0                    | 0                    | 5                     |
+      | (default user group) | false | Shared               |                    | 0                    | 0                    | 5                     |
       | Test                 | false | Shared               |                    | 0                    | 0                    | 5                     |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
@@ -307,51 +307,51 @@ Feature: User group stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19013 @BSA.2030 @bus @stash
-  Scenario: 19013 Enable stash to all users but not enough storage then I can choose buy more storage
-    When I add a new MozyEnterprise partner:
-      | period | users |
-      | 12     | 10    |
-    Then New partner should be created
-    When I enable stash for the partner
-    Then Partner general information should be:
-      | Enable Stash: |
-      | Yes           |
-    When I act as newly created partner account
-    And I add a new user to a MozyEnterprise partner:
-      | name           |
-      | TC.19013 user  |
-    When I navigate to List User Groups section from bus admin console page
-    And I view (default user group) * user group details
-    And I enable stash for all users
-    Then Popup window message should be There is not enough storage available to add the default storage amount.
-    And I click Buy More button on popup window
-    Then Change Plan section should be visible
-    When I stop masquerading
-    And I search and delete partner account by newly created partner company name
-
-  @TC.19014 @BSA.2030 @bus @stash
-  Scenario: 19014 Enable stash to all users but not enough storage then I can choose allocate more storage
-    When I add a new Reseller partner:
-      | period | reseller type | reseller quota |
-      | 1      | Gold          | 100            |
-    Then New partner should be created
-    When I enable stash for the partner
-    Then Partner general information should be:
-      | Enable Stash: |
-      | Yes           |
-    When I act as newly created partner account
-    And I add a new user to a Reseller partner:
-      | name           |
-      | TC.19014 user  |
-    When I navigate to List User Groups section from bus admin console page
-    And I view (default user group) * user group details
-    And I enable stash for all users
-    Then Popup window message should be You do not have enough storage available for the default storage entered. Use the Manage Resources panel to increase the amount of storage allocated or to purchase more storage.
-    And I click Allocate button on popup window
-    Then Manage Resources section should be visible
-    When I stop masquerading
-    And I search and delete partner account by newly created partner company name
+#  @TC.19013 @BSA.2030 @bus @stash
+#  Scenario: 19013 Enable stash to all users but not enough storage then I can choose buy more storage
+#    When I add a new MozyEnterprise partner:
+#      | period | users |
+#      | 12     | 10    |
+#    Then New partner should be created
+#    When I enable stash for the partner
+#    Then Partner general information should be:
+#      | Enable Stash: |
+#      | Yes (change)  |
+#    When I act as newly created partner account
+#    And I add a new user to a MozyEnterprise partner:
+#      | name           |
+#      | TC.19013 user  |
+#    When I navigate to List User Groups section from bus admin console page
+#    And I view (default user group) * user group details
+#    And I enable stash for all users
+#    Then Popup window message should be There is not enough storage available to add the default storage amount.
+#    And I click Buy More button on popup window
+#    Then Change Plan section should be visible
+#    When I stop masquerading
+#    And I search and delete partner account by newly created partner company name
+#
+#  @TC.19014 @BSA.2030 @bus @stash
+#  Scenario: 19014 Enable stash to all users but not enough storage then I can choose allocate more storage
+#    When I add a new Reseller partner:
+#      | period | reseller type | reseller quota |
+#      | 1      | Gold          | 100            |
+#    Then New partner should be created
+#    When I enable stash for the partner
+#    Then Partner general information should be:
+#      | Enable Stash: |
+#      | Yes (change)  |
+#    When I act as newly created partner account
+#    And I add a new user to a Reseller partner:
+#      | name           |
+#      | TC.19014 user  |
+#    When I navigate to List User Groups section from bus admin console page
+#    And I view (default user group) * user group details
+#    And I enable stash for all users
+#    Then Popup window message should be You do not have enough storage available for the default storage entered. Use the Manage Resources panel to increase the amount of storage allocated or to purchase more storage.
+#    And I click Allocate button on popup window
+#    Then Manage Resources section should be visible
+#    When I stop masquerading
+#    And I search and delete partner account by newly created partner company name
 
   @TC.19118 @BSA.2030 @bus @stash
   Scenario: 19118 User with a stash enabled group A should be moved to default non stash user group when I delete the user group A
@@ -400,7 +400,7 @@ Feature: User group stash setting management
     When I enable stash for the partner
     Then Partner general information should be:
       | Enable Stash: |
-      | Yes           |
+      | Yes (change)  |
     When I act as newly created partner account
     And I add a new user group:
       | name           |
