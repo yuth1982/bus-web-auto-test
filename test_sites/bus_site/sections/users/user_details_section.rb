@@ -267,25 +267,6 @@ module Bus
       delete_stash_link.click
     end
 
-    # Public: User details storage, devices, storage limit hash
-    #
-    # @param [] none
-    #
-    # Example:
-    #   # => user_details_details_section.storage_device_info
-    #
-    # @return [Hash]
-    # e.g. {"Storage" => "Desktop: 0 Used / 10 GB Available", "Devices" => "Desktop: 0 Used / 1 Available Edit", "Desktop User Storage Limit:" => "10 GB Edit Remove"}
-    # NOTE: Only tested new partners, for migrated users with 2 types of storage may not work properly
-    # TODO: Test users with 2 types of storage
-    def storage_device_info
-      table = {}
-      storage_device_labels.each_with_index do | key, index |
-        table[key.text] = storage_device_text[index].text
-      end
-      Hash[*table.flatten]
-    end
-
     # Public: Return user back up details table rows
     #
     # @params [] none
