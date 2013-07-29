@@ -353,79 +353,80 @@ Feature: User group stash setting management
 #    When I stop masquerading
 #    And I search and delete partner account by newly created partner company name
 
-  @TC.19118 @BSA.2030 @bus @stash
-  Scenario: 19118 User with a stash enabled group A should be moved to default non stash user group when I delete the user group A
-    When I add a new MozyEnterprise partner:
-      | period | users |
-      | 12     | 10    |
-    Then New partner should be created
-    When I enable stash for the partner
-    Then Partner general information should be:
-      | Enable Stash: |
-      | Yes (change)  |
-    When I act as newly created partner account
-    When I navigate to List User Groups section from bus admin console page
-    And I view (default user group) * user group details
-    And I disable stash for the user group
-    And I add a new user group:
-      | name           |
-      | TC.19118 group |
-    Then New user group should be created
-    When I transfer resources from (default user group) to TC.19118 group with:
-      | desktop licenses | desktop quota GB |
-      | 2                | 20               |
-    Then Resources should be transferred
-    When I add a new user to a MozyEnterprise partner:
-      | name           | user group     | enable stash |
-      | TC.19118 user  | TC.19118 group | yes          |
-    Then New user should be created
-    When I navigate to Search / List Users section from bus admin console page
-    Then User search results should be:
-      | User            | Name          | User Group      | Stash   | Machines | Storage | Storage Used |
-      | @new_user_email | TC.19118 user | TC.19118 group  | Enabled | 0        | 2 GB    | none         |
-    When I search and delete TC.19118 group user group
-    And I refresh Search List User section
-    Then User search results should be:
-      | User            | Name          | User Group           | Stash   | Machines | Storage | Storage Used |
-      | @new_user_email | TC.19118 user | (default user group) | Enabled | 0        | 2 GB    | none         |
-    When I stop masquerading
-    And I search and delete partner account by newly created partner company name
-
-  @TC.19020 @BSA.2020 @bus @stash
-  Scenario: 19020 Delete a user group and users with storage resources are returned to default user group
-    When I add a new MozyEnterprise partner:
-      | period | users |
-      | 12     | 10    |
-    Then New partner should be created
-    When I enable stash for the partner
-    Then Partner general information should be:
-      | Enable Stash: |
-      | Yes (change)  |
-    When I act as newly created partner account
-    And I add a new user group:
-      | name           |
-      | TC.19020 group |
-    Then New user group should be created
-    When I transfer resources from (default user group) to TC.19020 group with:
-      | desktop licenses | desktop quota GB |
-      | 2                | 20               |
-    Then Resources should be transferred
-    When I add a new user to a MozyEnterprise partner:
-      | name           | user group     | enable stash |
-      | TC.19020 user  | TC.19020 group | yes          |
-    Then New user should be created
-    When I navigate to List User Groups section from bus admin console page
-    Then User groups list table should be:
-      | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota            | Desktop Keys | Desktop Quota            |
-      | (default user group) * | 0     | 1      | 0           | 0 / 0       | 0.0 (0.0 active) / 0.0  | 0 / 8        | 0.0 (0.0 active) / 230.0 |
-      | TC.19020 group         | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 active) / 0.0  | 0 / 2        | 0.0 (10.0 active) / 20.0 |
-    When I search and delete TC.19020 group user group
-    And I refresh Search List User section
-    Then User groups list table should be:
-      | External ID | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota            | Desktop Keys | Desktop Quota              |
-      |             | (default user group) * | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 active) / 0.0  | 0 / 10       | 0.0 (10.0 active) / 250.0  |
-    When I stop masquerading
-    And I search and delete partner account by newly created partner company name
+#  There is no transfer resources now
+#  @TC.19118 @BSA.2030 @bus @stash
+#  Scenario: 19118 User with a stash enabled group A should be moved to default non stash user group when I delete the user group A
+#    When I add a new MozyEnterprise partner:
+#      | period | users |
+#      | 12     | 10    |
+#    Then New partner should be created
+#    When I enable stash for the partner
+#    Then Partner general information should be:
+#      | Enable Stash: |
+#      | Yes (change)  |
+#    When I act as newly created partner account
+#    When I navigate to List User Groups section from bus admin console page
+#    And I view (default user group) * user group details
+#    And I disable stash for the user group
+#    And I add a new user group:
+#      | name           |
+#      | TC.19118 group |
+#    Then New user group should be created
+#    When I transfer resources from (default user group) to TC.19118 group with:
+#      | desktop licenses | desktop quota GB |
+#      | 2                | 20               |
+#    Then Resources should be transferred
+#    When I add a new user to a MozyEnterprise partner:
+#      | name           | user group     | enable stash |
+#      | TC.19118 user  | TC.19118 group | yes          |
+#    Then New user should be created
+#    When I navigate to Search / List Users section from bus admin console page
+#    Then User search results should be:
+#      | User            | Name          | User Group      | Stash   | Machines | Storage | Storage Used |
+#      | @new_user_email | TC.19118 user | TC.19118 group  | Enabled | 0        | 2 GB    | none         |
+#    When I search and delete TC.19118 group user group
+#    And I refresh Search List User section
+#    Then User search results should be:
+#      | User            | Name          | User Group           | Stash   | Machines | Storage | Storage Used |
+#      | @new_user_email | TC.19118 user | (default user group) | Enabled | 0        | 2 GB    | none         |
+#    When I stop masquerading
+#    And I search and delete partner account by newly created partner company name
+#
+#  @TC.19020 @BSA.2020 @bus @stash
+#  Scenario: 19020 Delete a user group and users with storage resources are returned to default user group
+#    When I add a new MozyEnterprise partner:
+#      | period | users |
+#      | 12     | 10    |
+#    Then New partner should be created
+#    When I enable stash for the partner
+#    Then Partner general information should be:
+#      | Enable Stash: |
+#      | Yes (change)  |
+#    When I act as newly created partner account
+#    And I add a new user group:
+#      | name           |
+#      | TC.19020 group |
+#    Then New user group should be created
+#    When I transfer resources from (default user group) to TC.19020 group with:
+#      | desktop licenses | desktop quota GB |
+#      | 2                | 20               |
+#    Then Resources should be transferred
+#    When I add a new user to a MozyEnterprise partner:
+#      | name           | user group     | enable stash |
+#      | TC.19020 user  | TC.19020 group | yes          |
+#    Then New user should be created
+#    When I navigate to List User Groups section from bus admin console page
+#    Then User groups list table should be:
+#      | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota            | Desktop Keys | Desktop Quota            |
+#      | (default user group) * | 0     | 1      | 0           | 0 / 0       | 0.0 (0.0 active) / 0.0  | 0 / 8        | 0.0 (0.0 active) / 230.0 |
+#      | TC.19020 group         | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 active) / 0.0  | 0 / 2        | 0.0 (10.0 active) / 20.0 |
+#    When I search and delete TC.19020 group user group
+#    And I refresh Search List User section
+#    Then User groups list table should be:
+#      | External ID | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota            | Desktop Keys | Desktop Quota              |
+#      |             | (default user group) * | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 active) / 0.0  | 0 / 10       | 0.0 (10.0 active) / 250.0  |
+#    When I stop masquerading
+#    And I search and delete partner account by newly created partner company name
 
   @TC.18997 @BSA.3030 @bus @2.5 @user_stories
   Scenario: 18997 [List User Groups View][P]"Stash Users" column shows and has valid values

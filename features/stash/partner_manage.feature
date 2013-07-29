@@ -158,14 +158,15 @@ Feature:
       | Enable Stash: |
       | Yes (change)  |
     When I act as newly created partner account
-    And I add a new user to a MozyPro partner:
-      | name           | enable stash | stash quota |
-      | TC.19169 user1 | yes          | 30          |
-    Then New user should be created
-    When I navigate to Manage Resources section from bus admin console page
-    And Partner resources general information should be:
-      | Stash Users: | Stash Storage Usage: |
-      | 1            | 0 bytes / 30 GB      |
+    And I add new user(s):
+      | name          | storage_type | devices | enable_stash |
+      | TC.19169-user | Desktop      | 1       | yes          |
+    Then 1 new user should be created
+# no Manage Resource now
+#    When I navigate to Manage Resources section from bus admin console page
+#    And Partner resources general information should be:
+#      | Stash Users: | Stash Storage Usage: |
+#      | 1            | 0 bytes / 30 GB      |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -207,8 +208,15 @@ Feature:
       | Enable Stash: |
       | Yes (change)  |
     When I act as newly created partner account
-    When I navigate to List User Groups section from bus admin console page
-    And I view (default user group) * user group details
+    And I add new user(s):
+      | name          | user_group           | storage_type | devices |
+      | TC.19123-user | (default user group) | Desktop      | 1       |
+    Then 1 new user should be created
+    And I add a new Itemized user group:
+      | name           | desktop_storage_type | desktop_devices | enable_stash |
+      | TC.19123 group | Shared               | 5               | yes          |
+    Then TC.19123 group user group should be created
+    When I view details of TC.19123-user's user group
     And I enable stash for the user group
     Then User group details should be:
       | Enable Stash: |

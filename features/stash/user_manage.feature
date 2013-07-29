@@ -456,21 +456,16 @@ Feature: User stash setting management
       | Enable Stash: |
       | Yes (change)  |
     When I act as newly created partner account
-    And I add a new user to a MozyEnterprise partner:
-      | name           |
-      | TC.19121 user  |
-    Then New user should be created
+    And I add new user(s):
+      | name          | user_group           | storage_type | devices |
+      | TC.19121-user | (default user group) | Desktop      | 1       |
+    Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by newly created user email
-    And I add stash for the user with:
-      | stash quota | send email |
-      | 10 GB       | yes        |
+    And I enable stash with send email in user details section
     Then user details should be:
       | Name:                  | Enable Stash:               |
-      | TC.19121 user (change) | Yes (Send Invitation Email) |
-    And User backup details table should be:
-      | Computer | Encryption | Storage Used             | Last Update | License Key | Actions |
-      | Stash    | Default    | 0 bytes / 10 GB (change) | N/A         |             | delete  |
+      | TC.19121-user (change) | Yes (Send Invitation Email) |
     When I search emails by keywords:
       | to              | subject      |
       | @new_user_email | enable stash |
@@ -489,18 +484,19 @@ Feature: User stash setting management
       | Enable Stash: |
       | Yes (change)  |
     When I act as newly created partner account
-    And I add a new user to a MozyEnterprise partner:
-      | name           | enable stash | stash quota | send stash invite |
-      | TC.19122 user  | yes          | 5           | yes               |
-    Then New user should be created
+    And I add new user(s):
+      | name          | user_group           | storage_type | devices | enable_stash |
+      | TC.19121-user | (default user group) | Desktop      | 1       | yes          |
+    Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by newly created user email
-    Then User backup details table should be:
-      | Computer | Encryption | Storage Used            | Last Update | License Key | Actions |
-      | Stash    | Default    | 0 bytes / 5 GB (change) | N/A         |             | delete  |
-    When I search emails by keywords:
-      | to              | subject      |
-      | @new_user_email | enable stash |
+    And stash device table in user details should be:
+      | Stash Container | Used/Available     | Device Storage Limit | Last Update      | Action |
+      | Stash           | 0 / 250 GB         | Set                  | N/A              |        |
+# no send email option when adding a new user with stash
+#    When I search emails by keywords:
+#      | to              | subject      |
+#      | @new_user_email | enable stash |
     Then I should see 1 email(s)
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
@@ -548,22 +544,22 @@ Feature: User stash setting management
       | Name:               | Enable Stash:               |
       | stash19045 (change) | Yes (Send Invitation Email) |
 
-  @TC.19115 @BSA.3040 @bus @2.5 @user_stories @US @enterprise @partner
-  Scenario: 19115 Enterprise Partner View User storage usage
-    When I act as partner by:
-      | email                       |
-      | test3010_3030_3040@auto.com |
-    When I navigate to Search / List Users section from bus admin console page
-    Then User search results should be:
-      | User                   | Name           | User Group           | Stash    | Machines | Storage | Storage Used |
-      | backup@test.com        | backup         | backup               | Disabled | 1        | 1 GB    | 10 MB        |
-      | stash@test.com         | stash          | stash                | Enabled  | 0        | 2 GB    | 20 MB        |
-      | backup19045@test.com   | backup19045    | (default user group) | Disabled | 1        | 1 GB    | 10 MB        |
-      | stash19045@test.com    | stash19045     | (default user group) | Enabled  | 0        | 2 GB    | 20 MB        |
-    When I view user details by stash19045@test.com
-    Then User backup details table should be:
-      | Computer | Encryption | Storage Used            | Last Update | Product Key | Actions               |
-      | Stash    | Default    | 20 MB / 2 GB (change)   | N/A         |             | Access Files delete   |
+#  @TC.19115 @BSA.3040 @bus @2.5 @user_stories @US @enterprise @partner
+#  Scenario: 19115 Enterprise Partner View User storage usage
+#    When I act as partner by:
+#      | email                       |
+#      | test3010_3030_3040@auto.com |
+#    When I navigate to Search / List Users section from bus admin console page
+#    Then User search results should be:
+#      | User                   | Name           | User Group           | Stash    | Machines | Storage | Storage Used |
+#      | backup@test.com        | backup         | backup               | Disabled | 1        | 1 GB    | 10 MB        |
+#      | stash@test.com         | stash          | stash                | Enabled  | 0        | 2 GB    | 20 MB        |
+#      | backup19045@test.com   | backup19045    | (default user group) | Disabled | 1        | 1 GB    | 10 MB        |
+#      | stash19045@test.com    | stash19045     | (default user group) | Enabled  | 0        | 2 GB    | 20 MB        |
+#    When I view user details by stash19045@test.com
+#    Then User backup details table should be:
+#      | Computer | Encryption | Storage Used            | Last Update | Product Key | Actions               |
+#      | Stash    | Default    | 20 MB / 2 GB (change)   | N/A         |             | Access Files delete   |
 
   @TC.19116 @BSA.3040 @bus @2.5 @user_stories @US @mozypro @partner
   Scenario: 19116 Mozypro Partner View Stash status

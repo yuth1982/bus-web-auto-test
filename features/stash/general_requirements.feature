@@ -269,10 +269,10 @@ Feature:
     When I navigate to Add New User section from bus admin console page
     Then I should not see stash options
     When I add new user(s):
-      | name            | user_group           | storage_type | storage_limit | devices |
-      | TC.19102 user1  | (default user group) | Desktop      | 5             | 1       |
-      | TC.19102 user2  | (default user group) | Desktop      | 10            | 2       |
-      | TC.19102 user3  | (default user group) | Desktop      | 15            | 3       |
+      | name           | user_group           | storage_type | storage_limit | devices |
+      | TC.19102 user1 | (default user group) | Desktop      | 5             | 1       |
+      | TC.19102 user2 |                      |              |               |         |
+      | TC.19102 user3 |                      |              |               |         |
     Then 3 new user should be created
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
@@ -285,8 +285,8 @@ Feature:
     Then User search results should be:
       | User                     | Name           | User Group           | Stash   | Machines | Storage                 |
       | <%=@new_users[0].email%> | TC.19102 user1 | (default user group) | Enabled | 0        | Desktop: 5 GB (Limited) |
-      | <%=@new_users[1].email%> | TC.19102 user2 | (default user group) | Enabled | 0        | Desktop: 10 GB (Limited)|
-      | <%=@new_users[2].email%> | TC.19102 user3 | (default user group) | Enabled | 0        | Desktop: 15 GB (Limited)|
+      | <%=@new_users[1].email%> | TC.19102 user2 | (default user group) | Enabled | 0        | Desktop: 5 GB (Limited)|
+      | <%=@new_users[2].email%> | TC.19102 user3 | (default user group) | Enabled | 0        | Desktop: 5 GB (Limited)|
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -380,20 +380,20 @@ Feature:
     When I act as newly created partner account
     When I add a new Itemized user group:
       | name        | desktop_storage_type | desktop_assigned_quota | desktop_devices | enable_stash | server_storage_type |
-      | TC.19109 UG | Assigned             | 50                     | 1               | yes          | None                |
-    Then TC.19109 UG user group should be created
+      | TC.19111 UG | Assigned             | 50                     | 1               | yes          | None                |
+    Then TC.19111 UG user group should be created
     When I add new user(s):
       | name          | user_group  | storage_type | storage_limit | devices | enable_stash |
-      | TC.19109 User | TC.19109 UG | Desktop      | 10            | 1       | yes          |
+      | TC.19111 User | TC.19111 UG | Desktop      | 10            | 1       | yes          |
     Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
       | User                        | Name          | Stash   | Machines | Storage                 | Storage Used  |
-      | <%=@new_users.first.email%> | TC.19109 User | Enabled | 0        | Desktop: 10 GB (Limited)| Desktop: None |
+      | <%=@new_users.first.email%> | TC.19111 User | Enabled | 0        | Desktop: 10 GB (Limited)| Desktop: None |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                  | Enable Stash:               |
-      | TC.19109 User (change) | Yes (Send Invitation Email) |
+      | TC.19111 User (change) | Yes (Send Invitation Email) |
     And stash device table in user details should be:
       | Stash Container | Used/Available     | Device Storage Limit | Last Update      |
       | Stash           | 0 / 10 GB          | Set                  | N/A              |
@@ -404,7 +404,7 @@ Feature:
     When I navigate to Search / List Machines section from bus admin console page
     Then Machine search results should be:
       | Machine | User                        | User Group  | Data Center | Storage Used |
-      | Stash   | <%=@new_users.first.email%> | TC.19109 UG | qa6         | 0            |
+      | Stash   | <%=@new_users.first.email%> | TC.19111 UG | qa6         | 0            |
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
@@ -413,63 +413,63 @@ Feature:
       | Stash Storage Usage: | 0 |
     And I delete partner account
 
-  @TC.19113 @BSA.1000 @bus @stash
-  Scenario: 19113 MozyEnterprise Partner Delete Stash container using the Delete link - Custom User Group with Email
-    When I add a new MozyEnterprise partner:
-      | period | users |
-      | 12     | 10    |
-    Then New partner should be created
-    When I enable stash for the partner
-    Then Partner general information should be:
-      | Enable Stash: |
-      | Yes           |
-    When I act as newly created partner account
-    When I add a new user group:
-      | name           | stash quota |
-      | TC.19113 group | 5           |
-    Then New user group should be created
-    When I transfer resources from (default user group) to TC.19113 group with:
-      | desktop licenses | desktop quota GB |
-      | 2                | 20               |
-    Then Resources should be transferred
-    And I add a new user to a MozyEnterprise partner:
-      | name           | user group     | enable stash |
-      | TC.19113 user  | TC.19113 group | yes          |
-    Then New user should be created
-    When I navigate to Search / List Users section from bus admin console page
-    And I view user details by newly created user email
-    When I delete stash container for the user
-    Then Popup window message should be Do you want to delete the user's stash? Note: Deleting a user's Stash removes all of the user's Stash files from the Web.
-    And I click Cancel button on popup window
-    And User backup details table should be:
-      | Computer | Encryption | Storage Used            | Last Update | License Key | Actions |
-      | Stash    | Default    | 0 bytes / 5 GB (change) | N/A         |             | delete  |
-    When I delete stash container for the user
-    Then I click Continue button on popup window
-    And User backup details table should not have stash record
-    When I refresh Search List User section
-    Then User search results should be:
-      | User            | Name           | User Group     | Stash    | Machines | Storage | Storage Used |
-      | @new_user_eamil | TC.19113 user  | TC.19113 group | Disabled | 0        | 0 bytes | none         |
-    When I navigate to List User Groups section from bus admin console page
-    Then User groups list table should be:
-      | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota           | Desktop Keys | Desktop Quota            |
-      | (default user group) * | 0     | 1      | 0           | 0 / 0       | 0.0 (0.0 active) / 0.0 | 0 / 8        | 0.0 (0.0 active) / 230.0 |
-      | TC.19113 group         | 1     | 1      | 0           | 0 / 0       | 0.0 (0.0 active) / 0.0 | 0 / 2        | 0.0 (0.0 active) / 20.0  |
-    When I view TC.19113 group user group details
-    Then User group users list details should be:
-      | Name          | Stash    | Machines | Storage | Storage Used |
-      | TC.19113 user | Disabled | 0        | 0 bytes | none         |
-    When I stop masquerading
-    And I navigate to Search / List Partners section from bus admin console page
-    And I view partner details by newly created partner company name
-    Then Partner account attributes should be:
-      | Stash Users:            | -1        |
-      | Default Stash Storage:  | 2         |
-    And Partner stash info should be:
-      | Stash Users:         | 0                 |
-      | Stash Storage Usage: | 0 bytes / 0 bytes |
-    And I delete partner account
+#  @TC.19113 @BSA.1000 @bus @stash
+#  Scenario: 19113 MozyEnterprise Partner Delete Stash container using the Delete link - Custom User Group with Email
+#    When I add a new MozyEnterprise partner:
+#      | period | users |
+#      | 12     | 10    |
+#    Then New partner should be created
+#    When I enable stash for the partner
+#    Then Partner general information should be:
+#      | Enable Stash: |
+#      | Yes           |
+#    When I act as newly created partner account
+#    When I add a new user group:
+#      | name           | stash quota |
+#      | TC.19113 group | 5           |
+#    Then New user group should be created
+#    When I transfer resources from (default user group) to TC.19113 group with:
+#      | desktop licenses | desktop quota GB |
+#      | 2                | 20               |
+#    Then Resources should be transferred
+#    And I add a new user to a MozyEnterprise partner:
+#      | name           | user group     | enable stash |
+#      | TC.19113 user  | TC.19113 group | yes          |
+#    Then New user should be created
+#    When I navigate to Search / List Users section from bus admin console page
+#    And I view user details by newly created user email
+#    When I delete stash container for the user
+#    Then Popup window message should be Do you want to delete the user's stash? Note: Deleting a user's Stash removes all of the user's Stash files from the Web.
+#    And I click Cancel button on popup window
+#    And User backup details table should be:
+#      | Computer | Encryption | Storage Used            | Last Update | License Key | Actions |
+#      | Stash    | Default    | 0 bytes / 5 GB (change) | N/A         |             | delete  |
+#    When I delete stash container for the user
+#    Then I click Continue button on popup window
+#    And User backup details table should not have stash record
+#    When I refresh Search List User section
+#    Then User search results should be:
+#      | User            | Name           | User Group     | Stash    | Machines | Storage | Storage Used |
+#      | @new_user_eamil | TC.19113 user  | TC.19113 group | Disabled | 0        | 0 bytes | none         |
+#    When I navigate to List User Groups section from bus admin console page
+#    Then User groups list table should be:
+#      | Name                   | Users | Admins | Stash Users | Server Keys | Server Quota           | Desktop Keys | Desktop Quota            |
+#      | (default user group) * | 0     | 1      | 0           | 0 / 0       | 0.0 (0.0 active) / 0.0 | 0 / 8        | 0.0 (0.0 active) / 230.0 |
+#      | TC.19113 group         | 1     | 1      | 0           | 0 / 0       | 0.0 (0.0 active) / 0.0 | 0 / 2        | 0.0 (0.0 active) / 20.0  |
+#    When I view TC.19113 group user group details
+#    Then User group users list details should be:
+#      | Name          | Stash    | Machines | Storage | Storage Used |
+#      | TC.19113 user | Disabled | 0        | 0 bytes | none         |
+#    When I stop masquerading
+#    And I navigate to Search / List Partners section from bus admin console page
+#    And I view partner details by newly created partner company name
+#    Then Partner account attributes should be:
+#      | Stash Users:            | -1        |
+#      | Default Stash Storage:  | 2         |
+#    And Partner stash info should be:
+#      | Stash Users:         | 0                 |
+#      | Stash Storage Usage: | 0 bytes / 0 bytes |
+#    And I delete partner account
 
   @TC.19165 @BSA.3010 @bus @2.5 @user_stories @stash
   Scenario: 19165 US Pro admin can see stash details in manage resources
