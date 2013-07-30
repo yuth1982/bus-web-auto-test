@@ -14,10 +14,10 @@ Then /^I create a new client config:$/ do |table|
 end
 
 Then /^client configuration section message should be (.+)/ do |message|
-  @bus_site.admin_console_page.client_config_section.messages == message
+  @bus_site.admin_console_page.client_config_section.cc_iframe.messages == message
 end
 
 Then /^I delete configuration (.+)/ do |client_config|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['client_configuration'])
-  @bus_site.admin_console_page.client_config_section.delete_client_config(client_config)
+  @bus_site.admin_console_page.client_config_section.cc_iframe.delete_client_config(client_config)
 end

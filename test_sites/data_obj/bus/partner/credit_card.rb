@@ -8,7 +8,7 @@ module Bus
       #
       def initialize
         @first_name = Forgery::Name.first_name
-        @last_name = Forgery::Name.last_name
+        @last_name = Forgery(:basic).password(:at_least => 6, :at_most => 8)
         @full_name = "#@first_name #@last_name"
         @type = 'Visa'
         @number = Forgery::CreditCard.number(:type => 'Visa', :length => 16).to_s

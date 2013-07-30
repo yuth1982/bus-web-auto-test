@@ -11,6 +11,7 @@ module Bus
     element(:scheduling_tab, xpath: "//div[@id='setting-edit_client_config-tabs']/ul/li[2]")
     element(:bandwidth_throttling_tab, xpath: "//div[@id='setting-edit_client_config-tabs']/ul/li[3]")
     element(:throttle_cb, id: 'throttle_checkbox')
+    element(:throttle_amount_tb, id: 'throttle_kbps')
     element(:windows_backup_sets, xpath: "//div[@id='setting-edit_client_config-tabs']/ul/li[4]")
     element(:mac_backup_sets, xpath: "//div[@id='setting-edit_client_config-tabs']/ul/li[5]")
     element(:user_groups, xpath: "//div[@id='setting-edit_client_config-tabs']/ul/li[6]")
@@ -36,15 +37,15 @@ module Bus
       config_name_tb.type_text(client_config.name)
       config_license_type_id_select.select(client_config.type) unless client_config.type.nil?
       next_btn.click
+
+      bandwidth_throttling_tab.click
+      if client_config.throttle
+        throttle_amount_tb.type_text(client_config.throttle_amount)
+      else
+        throttle_cb.click
+      end
+
       client_config_save_changes_btn.click
-      #page.find(:xpath, "//div[@id='blank-div']/form/fieldset/div[3]/input").click
-      #page.find(:xpath, "//div[@id='setting-edit_client_config-tabs']/ul/li[3]").click
-      #if client_config.throttle
-      #  page.find(:id, 'throttle_kbps').type_text(client_config.throttle_amount)
-      #else
-      #  page.find(:id, 'throttle_checkbox').click
-      #end
-      #page.find(:xpath, "//div[@id='setting-edit_client_config-tabs']/ul[2]/li[7]/p/input[2]").click
     end
 
     # Public: Messages for client configuration section
@@ -55,7 +56,7 @@ module Bus
     #
     # Returns success or error message text
     def messages
-      page.find(:xpath, "//div[@id='setting-edit_client_config-errors']/ul/li").text
+      message_div.text
     end
 
     # Public: Select config
