@@ -26,7 +26,7 @@ Feature: Bus Smoke Test
     And Partner account attributes should be:
       | Backup Devices         |           |
       | Backup Device Soft Cap | Disabled  |
-      | Server                 | Disabled  |
+      | Server Enabled         | Disabled  |
       | Cloud Storage (GB)     |           |
       | Stash Users:           |           |
       | Default Stash Storage: |           |
@@ -64,8 +64,8 @@ Feature: Bus Smoke Test
 #    Then User group details should be:
 #      | ID:     | External ID: | Billing code: | Available Keys: | Available Quota: | Default quota for new installs:             | Default user group: |
 #      | @xxxxxx | (change)     | (change)      | 7               | 40 GB            | 10 GB (Desktop) and 20 GB (Server) (change) | No (make default)   |
-    When I add 1 new user:
-      | user_group | storage_type | storage_max | devices |
+    When I add new user(s):
+      | user_group | storage_type | storage_limit | devices |
       | test group | Desktop      | 10          | 1       |
     Then 1 new user should be created
 # I don't see manage resource section in 2.5, is this still valid?

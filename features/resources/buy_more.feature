@@ -83,7 +83,6 @@ Feature: Show warning message for depleted resources when used = total
       | period | reseller type | reseller quota | server plan | net terms |
       | 12     | Silver        | 100            | yes         | yes       |
     Then New partner should be created
-    When I enable stash for the partner
     And I act as newly created partner
     And I navigate to Resource Summary section from bus admin console page
     Then I should not see any storage error in resource summary

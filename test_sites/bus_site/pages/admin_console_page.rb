@@ -109,6 +109,14 @@ module Bus
       if links.first.element_parent[:class].match(/active/).nil? && links.last.element_parent[:class].match(/active/).nil?
         el.click
       end
+      # Make sure the destination section loaded correctly for further use in following steps
+      find(:css, 'h2 a[onclick^=toggle_module]')
+      sections = all(:css, 'h2 a[onclick^=toggle_module]')
+      sections.each do |s|
+        unless s[:class].nil?
+          wait_until{ s[:class].match(/loading/).nil? }
+        end
+      end
     end
 
     # Public: Stop Masquerading

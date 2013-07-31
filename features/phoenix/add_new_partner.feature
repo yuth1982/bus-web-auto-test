@@ -48,7 +48,7 @@ Background:
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
-    | Server                 | Disabled |
+    | Server Enabled         | Disabled |
     | Cloud Storage (GB)     |          |
     | Stash Users:           |          |
     | Default Stash Storage: |          |
@@ -87,7 +87,7 @@ Background:
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
-    | Server                 | Disabled |
+    | Server Enabled         | Disabled |
     | Cloud Storage (GB)     |          |
     | Stash Users:           |          |
     | Default Stash Storage: |          |
@@ -128,7 +128,7 @@ Background:
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
-    | Server                 | Disabled |
+    | Server Enabled         | Disabled |
     | Cloud Storage (GB)     |          |
     | Stash Users:           |          |
     | Default Stash Storage: |          |
@@ -169,7 +169,7 @@ Background:
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
-    | Server                 | Disabled |
+    | Server Enabled         | Disabled |
     | Cloud Storage (GB)     |          |
     | Stash Users:           |          |
     | Default Stash Storage: |          |
@@ -211,7 +211,7 @@ Background:
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
-    | Server                 | Enabled  |
+    | Server Enabled         | Enabled  |
     | Cloud Storage (GB)     |          |
     | Stash Users:           |          |
     | Default Stash Storage: |          |
@@ -251,7 +251,7 @@ Background:
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
-    | Server                 | Disabled |
+    | Server Enabled         | Disabled |
     | Cloud Storage (GB)     |          |
     | Stash Users:           |          |
     | Default Stash Storage: |          |
@@ -292,7 +292,7 @@ Background:
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
-    | Server                 | Enabled  |
+    | Server Enabled         | Enabled  |
     | Cloud Storage (GB)     |          |
     | Stash Users:           |          |
     | Default Stash Storage: |          |
@@ -333,7 +333,7 @@ Background:
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
-    | Server                 | Disabled |
+    | Server Enabled         | Disabled |
     | Cloud Storage (GB)     |          |
     | Stash Users:           |          |
     | Default Stash Storage: |          |
@@ -374,7 +374,7 @@ Background:
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
-    | Server                 | Enabled  |
+    | Server Enabled         | Enabled  |
     | Cloud Storage (GB)     |          |
     | Stash Users:           |          |
     | Default Stash Storage: |          |
@@ -415,7 +415,7 @@ Background:
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
-    | Server                 | Disabled |
+    | Server Enabled         | Disabled |
     | Cloud Storage (GB)     |          |
     | Stash Users:           |          |
     | Default Stash Storage: |          |
@@ -455,7 +455,7 @@ Background:
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
-    | Server                 | Disabled |
+    | Server Enabled         | Disabled |
     | Cloud Storage (GB)     |          |
     | Stash Users:           |          |
     | Default Stash Storage: |          |
@@ -496,7 +496,7 @@ Background:
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
-    | Server                 | Disabled |
+    | Server Enabled         | Disabled |
     | Cloud Storage (GB)     |          |
     | Stash Users:           |          |
     | Default Stash Storage: |          |
@@ -536,7 +536,7 @@ Background:
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
-    | Server                 | Disabled |
+    | Server Enabled         | Disabled |
     | Cloud Storage (GB)     |          |
     | Stash Users:           |          |
     | Default Stash Storage: |          |
@@ -577,7 +577,7 @@ Background:
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
-    | Server                 | Disabled |
+    | Server Enabled         | Disabled |
     | Cloud Storage (GB)     |          |
     | Stash Users:           |          |
     | Default Stash Storage: |          |
@@ -624,7 +624,7 @@ Background:
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
-    | Server                 | Enabled  |
+    | Server Enabled         | Enabled  |
     | Cloud Storage (GB)     |          |
     | Stash Users:           |          |
     | Default Stash Storage: |          |
@@ -668,7 +668,7 @@ Background:
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
-    | Server                 | Disabled |
+    | Server Enabled         | Disabled |
     | Cloud Storage (GB)     |          |
     | Stash Users:           |          |
     | Default Stash Storage: |          |
@@ -710,7 +710,7 @@ Background:
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
-    | Server                 | Disabled |
+    | Server Enabled         | Disabled |
     | Cloud Storage (GB)     |          |
     | Stash Users:           |          |
     | Default Stash Storage: |          |

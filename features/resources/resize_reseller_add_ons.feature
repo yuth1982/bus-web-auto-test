@@ -276,7 +276,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | 20 GB add-on            | 2        |
     And New partner should be created
     When I act as newly created partner
-    And I change account subscription to annual billing period
+    And I change account subscription to annual billing period!
     Then Subscription changed message should be Your account has been changed to yearly billing.
     When I stop masquerading
     And I search partner by newly created partner admin email
@@ -297,7 +297,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | 20 GB add-on            | 2        |
     And New partner should be created
     When I act as newly created partner
-    And I change account subscription to annual billing period
+    And I change account subscription to annual billing period!
     Then Subscription changed message should be Your account has been changed to yearly billing.
     When I stop masquerading
     And I search partner by newly created partner admin email
