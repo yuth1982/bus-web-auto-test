@@ -12,8 +12,8 @@ Feature: Send activated / unactivated license keys
     When I get the partner_id
     And I act as newly created partner
     And I add new user(s):
-      | user_group           | storage_type | storage_limit | devices | enable_stash |
-      | (default user group) | Server       | 10            | 0       | no           |
+      | user_group           | storage_type | storage_limit | devices |
+      | (default user group) | Server       | 10            | 0       |
     Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by newly created user email
@@ -21,8 +21,8 @@ Feature: Send activated / unactivated license keys
     Then I can see Send Keys button is disable
     Then I close user details section
     And I add new user(s):
-      | user_group           | storage_type | storage_limit | devices | enable_stash |
-      | (default user group) | Server       | 10            | 3       | no           |
+      | user_group           | storage_type | storage_limit | devices |
+      | (default user group) | Server       | 10            | 3       |
     Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by newly created user email

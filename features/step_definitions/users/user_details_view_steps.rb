@@ -200,11 +200,6 @@ Then /^I view the user's product keys$/ do
   @bus_site.admin_console_page.user_details_section.click_view_product_keys_link
 end
 
-Then /^I store the user's product key$/ do
-  @key = @bus_site.admin_console_page.user_details_section.product_key
-  Log.debug("product key is #{@key}")
-end
-
 Then /^I update the user password to (.+)$/ do |password|
   password = rand.to_s if password == '@user_password'
   @user_password = password

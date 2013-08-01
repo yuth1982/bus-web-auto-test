@@ -445,7 +445,7 @@ module Bus
 
     def click_view_product_keys_link
       view_product_keys_link.click
-      wait_until{ product_key_lbl.visible? }
+      wait_until{ send_keys_btn.visible? }
     end
 
     def product_key
