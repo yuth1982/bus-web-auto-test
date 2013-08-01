@@ -20,6 +20,7 @@ When /^I search user by:$/ do |search_key_table|
   end
 
   @bus_site.admin_console_page.search_list_users_section.search_user(keywords, filter, partner_filter)
+  @bus_site.admin_console_page.search_list_users_section.wait_until_bus_section_load
 end
 
 When /^I sort user search results by (User|Name|User Group|Stash|Machines|Storage|Storage Used|Created|Backed Up)$/ do |column_name|

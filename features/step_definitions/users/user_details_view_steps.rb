@@ -110,6 +110,10 @@ When /^I refresh User Details section$/ do
   @bus_site.admin_console_page.user_details_section.refresh_bus_section
 end
 
+When /^I close User Details section$/ do
+  @bus_site.admin_console_page.user_details_section.close_bus_section
+end
+
 When /^I send stash invitation email$/ do
   @bus_site.admin_console_page.user_details_section.send_stash_invitation_email
 end

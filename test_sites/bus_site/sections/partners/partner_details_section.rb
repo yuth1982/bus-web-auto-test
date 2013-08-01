@@ -169,13 +169,14 @@ module Bus
     # Public: Partner Account attributes hash
     #
     # Example:
-    #   partner_details_section.account_attributes_rows
-    #   # => "[["Backup Licenses", "200"], ["Backup License Soft Cap", "Enabled"], ["Server Enabled", "Disabled"], ["Cloud Storage (GB)", "10"], ["Stash Users:", ""], ["Default Stash Storage:", ""]]"
+    #   partner_details_section.account_attributes_hashes
+    #   # => "{"Backup Licenses" => "200"], "Backup License Soft Cap"=>"Enabled", "Server Enabled" => "Disabled", "Cloud Storage (GB)" => "10", "Stash Users:" =>  "", "Default Stash Storage:" =>  ""}"
     #
-    # Returns array
-    def account_attributes_rows
+    # Returns hash
+    def account_attributes_hashes
       # Remove hidden column inside table
-      account_attributes_table.rows_text.map{ |row| row[0..1] }
+      array = account_attributes_table.rows_text.map{ |row| row[0..1] }
+      Hash[*array.flatten]
     end
 
     def pooled_resource_table_rows

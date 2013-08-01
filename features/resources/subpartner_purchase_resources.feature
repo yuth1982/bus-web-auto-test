@@ -170,7 +170,8 @@ Feature: Sub partners can purchase resources
   Scenario: 19868 Existing Reseller itemized partner without subpartners can purchase resources
     When I act as partner by:
       | email                          |
-      | qa1+tc+19868+reserved@mozy.com |
+      #    | qa1+tc+19868+reserved@mozy.com |
+      | redacted-197770@notarealdomain.mozy.com |
     When I navigate to Change Plan section from bus admin console page
     And I increase Itemized account plan by:
       | desktop license | desktop quota | server license | server quota |
@@ -180,6 +181,7 @@ Feature: Sub partners can purchase resources
       | desktop license | desktop quota | server license | server quota |
       | 1               | 10            | 1              | 5            |
 
+  # need to find another account, this one will meet billing system error
   @TC.19872 @need_test_account @bus @subpartner_purchase_resources
   Scenario: 19872 Existing MozyPro itemized partner without subpartners can purchase resources
     When I act as partner by:

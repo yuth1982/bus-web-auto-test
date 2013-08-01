@@ -66,23 +66,20 @@ Feature:
       | Enable Stash: |
       | Yes (change)  |
     When I act as newly created partner account
-    And I add a new user to a MozyEnterprise partner:
-      | name           | enable stash | stash quota |
-      | TC.19738 user1 | yes          | 10          |
-    Then New user should be created
-    And I add a new user to a MozyEnterprise partner:
-      | name           | enable stash | stash quota |
-      | TC.19738 user2 | yes          | 15          |
-    Then New user should be created
+    And I add new user(s):
+      | name             | user_group           | storage_type | devices | enable_stash |
+      | TC.19738.1-user1 | (default user group) | Desktop      | 1       | yes          |
+      | TC.19738.2-user2 | (default user group) | Desktop      | 1       | yes          |
+    Then 2 new user should be created
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
     Then Partner account attributes should be:
       | Stash Users:            | -1        |
-      | Default Stash Storage:  | 5         |
+      | Default Stash Storage:  |           |
     And Partner stash info should be:
-      | Stash Users:         | 2               |
-      | Stash Storage Usage: | 0 bytes / 25 GB |
+      | Stash Users:         | 2 |
+      | Stash Storage Usage: | 0 |
     And I delete partner account
 
   @TC.19739 @BSA.3000 @bus @stash @partner_manage
@@ -96,23 +93,20 @@ Feature:
       | Enable Stash: |
       | Yes (change)  |
     When I act as newly created partner account
-    And I add a new user to a MozyPro partner:
-      | name           | enable stash | stash quota |
-      | TC.19739 user1 | yes          | 15          |
-    Then New user should be created
-    And I add a new user to a MozyPro partner:
-      | name           | enable stash | stash quota |
-      | TC.19739 user2 | yes          | 20          |
-    Then New user should be created
+    And I add new user(s):
+      | name            | storage_type | devices | enable_stash |
+      | TC.19739.1-user | Desktop      | 1       | yes          |
+      | TC.19739.2-user | Desktop      | 1       | yes          |
+    Then 2 new user should be created
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
-    And Partner account attributes should be:
+    Then Partner account attributes should be:
       | Stash Users:            | -1        |
-      | Default Stash Storage:  | 10        |
+      | Default Stash Storage:  |           |
     And Partner stash info should be:
-      | Stash Users:         | 2               |
-      | Stash Storage Usage: | 0 bytes / 35 GB |
+      | Stash Users:         | 2 |
+      | Stash Storage Usage: | 0 |
     And I delete partner account
 
   @TC.19740 @BSA.3000 @bus @stash @partner_manage
@@ -126,25 +120,22 @@ Feature:
       | Enable Stash: |
       | Yes (change)  |
     When I act as newly created partner account
-    And I allocate 50 GB Desktop quota with (default user group) user group to Reseller partner
-    Then Reseller resource quota should be changed
-    When I add a new user to a Reseller partner:
-      | name           | enable stash | stash quota |
-      | TC.19740 user1 | yes          | 15          |
-    Then New user should be created
-    When I add a new user to a Reseller partner:
-      | name           | enable stash | stash quota |
-      | TC.19740 user2 | yes          | 20          |
-    Then New user should be created
+    #    And I allocate 50 GB Desktop quota with (default user group) user group to Reseller partner
+    #Then Reseller resource quota should be changed
+    And I add new user(s):
+      | name           | user_group           | storage_type | devices | enable_stash |
+      | TC.19740-user1 | (default user group) | Desktop      | 1       | yes          |
+      | TC.19740-user2 | (default user group) | Desktop      | 1       | yes          |
+    Then 2 new user should be created
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
-    And Partner account attributes should be:
+    Then Partner account attributes should be:
       | Stash Users:            | -1        |
-      | Default Stash Storage:  | 10        |
+      | Default Stash Storage:  |           |
     And Partner stash info should be:
-      | Stash Users:         | 2               |
-      | Stash Storage Usage: | 0 bytes / 35 GB |
+      | Stash Users:         | 2 |
+      | Stash Storage Usage: | 0 |
     And I delete partner account
 
   @TC.19169 @BSA.3050 @bus @stash @partner_manage

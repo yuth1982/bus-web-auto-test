@@ -87,7 +87,9 @@ Then /^Partner ip whitelist should be (.+)$/ do |ip|
 end
 
 Then /^Partner account attributes should be:$/ do |attributes_table|
-  @bus_site.admin_console_page.partner_details_section.account_attributes_rows.should == attributes_table.raw
+  actual = @bus_site.admin_console_page.partner_details_section.account_attributes_hashes
+  expected = attributes_table.rows_hash
+  expected.keys.each{ |key| actual[key].should == expected[key] }
 end
 
 Then /^Partner resources should be:$/ do |resources_table|

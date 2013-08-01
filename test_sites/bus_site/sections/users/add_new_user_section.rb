@@ -109,7 +109,7 @@ module Bus
       # For newly created test partner, if there
       user_group_select.select('(default user group)') if user_group_select.visible?
       storage_type_select.select('Desktop')
-      enable_stash_cb.visible?
+      find(:id, 'user_enable_stash').visible?
     end
   end
 end
