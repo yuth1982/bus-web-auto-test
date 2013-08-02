@@ -6,8 +6,8 @@ Feature: Bus Smoke Test
   @TC.18361 @slow @bus @2.5 @smoke @enterprise
   Scenario: 18361 Mozy Enterprise Smoke Test
     When I add a new MozyEnterprise partner:
-      | period | users | server plan | server add on | company name | address           | city      | state abbrev | zip   | country       | phone          | admin name   | cc last name | cc first name | cc number        | expire month | expire year | cvv |
-      | 24     | 10    | 100 GB      | 1             | Smoke Test   | 3401 Hillview Ave | Palo Alto | CA           | 94304 | United States | 1-877-486-9273 | vmware admin | vmware       | mozy          | 4111111111111111 | 12           | 15          | 123 |
+      | period | users | server plan | server add on | company name | address           | city      | state abbrev | zip   | country       | phone          | admin name   | cc number        | expire month | expire year | cvv |
+      | 24     | 10    | 100 GB      | 1             | Smoke Test   | 3401 Hillview Ave | Palo Alto | CA           | 94304 | United States | 1-877-486-9273 | vmware admin | 4111111111111111 | 12           | 15          | 123 |
     Then Sub-total before taxes or discounts should be $4,917.37
     And Order summary table should be:
       | Description           | Quantity | Price Each | Total Price |
