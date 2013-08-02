@@ -3,7 +3,7 @@ module Bus
   # This class provides actions for bus login page
   class ItemizedLoginPage < SiteHelper::Page
 
-    set_url("#{BUS_ENV['bus01']}/login/admin?old_school=1")
+    set_url("#{QA_ENV['bus01']}/login/admin?old_school=1")
 
     # Private elements
     #

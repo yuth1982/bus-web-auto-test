@@ -3,7 +3,7 @@ module Migration
   # This class provides actions for bus login page
   class MigrationSite < SiteHelper::Page
 
-    set_url("#{TOOLS_ENV['migration_url']}")
+    set_url("#{QA_ENV['migration_url']}")
 
     # Private elements
     #

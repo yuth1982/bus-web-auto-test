@@ -34,7 +34,8 @@ When /^I search emails by keywords:$/ do |keywords_table|
       "#{key}:#{value}"
     end
   }.flatten.join(' AND ')
-  sleep 5
+  # wait 10s for the email to come in, previous 5s is prone to fail
+  sleep 10
   Log.info(@email_search_query)
   @found_emails = find_emails(@email_search_query)
 end

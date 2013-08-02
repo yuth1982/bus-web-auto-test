@@ -1,9 +1,9 @@
 require 'pg'
 module DBHelper
-  @host = BUS_ENV['db_host']
-  @port = BUS_ENV['db_port']
-  @db_user = BUS_ENV['db_user']
-  @db_name = BUS_ENV['db_name']
+  @host = QA_ENV['db_host']
+  @port = QA_ENV['db_port']
+  @db_user = QA_ENV['db_user']
+  @db_name = QA_ENV['db_name']
 
   # Public: change user's last sync at time to days's before by user_id
   #

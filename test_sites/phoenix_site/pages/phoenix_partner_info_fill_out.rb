@@ -2,7 +2,7 @@ module Phoenix
     # This class provides actions for phoenix registration page
     class PhoenixCreation < SiteHelper::Page
         
-        set_url("#{PHX_ENV['phx_host']}/registration")
+        set_url("https://#{QA_ENV['phoenix_host']}/registration")
                 
         ##Normal creation: mozy.com/registration create
         

@@ -1,8 +1,8 @@
 Given /^I log in bus admin console as administrator$/ do
   @bus_site = BusSite.new
   @bus_site.login_page.load
-  @admin_username = BUS_ENV['bus_username']
-  @admin_password = BUS_ENV['bus_password']
+  @admin_username = QA_ENV['bus_username']
+  @admin_password = QA_ENV['bus_password']
   @bus_site.login_page.login(@admin_username, @admin_password)
 end
 
@@ -35,14 +35,14 @@ And /^I log in bus admin console as new partner admin$/ do
 end
 
 Then /^the new partner admin should be asked to verify their email address$/ do
-  @bus_site.verify_email_page.current_url.should == "#{BUS_ENV['bus_host']}/login/email_needs_verification"
+  @bus_site.verify_email_page.current_url.should == "#{QA_ENV['bus_host']}/login/email_needs_verification"
   @bus_site.verify_email_page.links_present.should be_true
 end
 
 Given /^I log in to legacy bus01 as administrator$/ do
   @bus_site = BusSite.new
   @bus_site.itemized_login.load
-  @admin_username = BUS_ENV['bus_username']
-  @admin_password = BUS_ENV['bus_password']
+  @admin_username = QA_ENV['bus_username']
+  @admin_password = QA_ENV['bus_password']
   @bus_site.itemized_login.login(@admin_username, @admin_password)
 end

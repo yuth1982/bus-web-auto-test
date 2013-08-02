@@ -1,9 +1,9 @@
 require 'net/ssh'
 module SSHMigration
 
-  HOST = SSH_ENV['busclient04_qa6']
-  USER = SSH_ENV['admin_username']
-  PASSWORD = SSH_ENV['admin_password']
+  HOST = QA_ENV['client_host']
+  USER = QA_ENV['ssh_login']
+  PASSWORD = QA_ENV['ssh_password']
 
 # PUBLIC: Manual migration of partner to pooled storage
 # 	in the future there will be a button in the partner

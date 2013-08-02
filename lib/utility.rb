@@ -7,7 +7,7 @@ module Utility
 
   # added by leong
   def migrate_partners(start_pid, end_pid='')
-    response = RestClient::Request.execute(:method => :get, :url => "#{TOOLS_ENV['migration_url']}?starting=#{start_pid}&ending=#{end_pid}", :timeout => 120, :open_timeout => 120)
+    response = RestClient::Request.execute(:method => :get, :url => "#{QA_ENV['migration_url']}?starting=#{start_pid}&ending=#{end_pid}", :timeout => 120, :open_timeout => 120)
 
     if end_pid.empty?
       num = 1

@@ -40,7 +40,7 @@ module Activation
     +"&sendurl=1"\
     +"&codename="+@codename\
 
-      url = URI.parse("http://#{BUS_ENV['client_host']}")
+      url = URI.parse("http://#{QA_ENV['client_host']}")
       Log.debug("host = #{url.host}, port = #{url.port}")
       resp = Net::HTTP.start(url.host, url.port) {|http|
         http.set_debug_output $stderr
@@ -105,7 +105,7 @@ module KeylessDeviceActivation
     end
 
     def enable_partner_to_sso(partner_id, partner_name)
-      uri = URI.parse("http://#{BUS_ENV['sso_host']}")
+      uri = URI.parse("http://#{QA_ENV['sso_host']}")
       Net::HTTP.start(uri.host, uri.port,
                       :use_ssl => uri.scheme == 'https') do |http|
         partner_name = CGI::escape (partner_name)
@@ -127,7 +127,7 @@ module KeylessDeviceActivation
     end
 
     def create_oauth_client
-      uri = URI.parse("http://#{BUS_ENV['sso_host']}")
+      uri = URI.parse("http://#{QA_ENV['sso_host']}")
       Net::HTTP.start(uri.host, uri.port,
                       :use_ssl => uri.scheme == 'https') do |http|
         string = "/oauth/clients"\
@@ -164,7 +164,7 @@ module KeylessDeviceActivation
       #http://sso01.qa6.mozyops.com/#oauth/clients
       # =>{"code": 129383238042ABCDE23}
 
-      uri = URI.parse("http://#{BUS_ENV['auth_host']}")
+      uri = URI.parse("http://#{QA_ENV['auth_host']}")
 
       Net::HTTP.start(uri.host, uri.port,
                       :use_ssl => uri.scheme == 'https') do |http|
@@ -196,7 +196,7 @@ module KeylessDeviceActivation
       #
       #grant_type=authorization_code&code=<authorization_code>
       # =>{'access_token': 123454354354ABCDEF2134}
-      uri = URI.parse("http://#{BUS_ENV['auth_host']}")
+      uri = URI.parse("http://#{QA_ENV['auth_host']}")
       Net::HTTP.start(uri.host, uri.port,
                       :use_ssl => uri.scheme == 'https') do |http|
         request = Net::HTTP::Post.new("/login/oauth/access_token?grant_type=authorization_code&code=#{@auth_code["code"]}")
@@ -213,7 +213,7 @@ module KeylessDeviceActivation
       #
       #alias=abc&mac_hash=xxxxxxxxxxxx&sid_hash=xxxxxxxxx&country=US&type=Desktop
 
-      uri = URI.parse("#{BUS_ENV['bus_host']}")
+      uri = URI.parse("#{QA_ENV['bus_host']}")
       Net::HTTP.start(uri.host, uri.port,
                       :use_ssl => uri.scheme == 'https', :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
         url =  "/client/devices/#{@machine_hash}/activate?alias=#{@machine_alias}&mac_hash=#{@mac}&sid_hash=#{@sid}&country=US&type=#{@device_type}&codename=#{@codename}"
@@ -258,7 +258,7 @@ module DataShuttleSeeding
 &total_bytes_seeded=#{total_bytes_seeded.to_s}\
 &physical_drive_id=12345"
 
-    uri = URI.parse("http://#{BUS_ENV['client_host']}")
+    uri = URI.parse("http://#{QA_ENV['client_host']}")
     Net::HTTP.start(uri.host, uri.port,
                     :use_ssl => uri.scheme == 'https') do |http|
       http.set_debug_output $stderr

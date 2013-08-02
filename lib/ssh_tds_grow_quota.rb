@@ -17,8 +17,8 @@ module SSHTDSGrowQuota
     object_id = "73aecc4d92453e5dacaa1eddf1df55487cfb50af"
     filename = "gig-ishfile#{rand(500)}#{i}.txt"
 
-    Log.debug "#{BUS_ENV['tds_host']}, #{username}, #{password}, #{machine_id}, #{filename}, #{object_id}, #{encrypted_file_size}"
-    http_conn = http_connect(BUS_ENV['tds_host'])
+    Log.debug "#{QA_ENV['tds_host']}, #{username}, #{password}, #{machine_id}, #{filename}, #{object_id}, #{encrypted_file_size}"
+    http_conn = http_connect(QA_ENV['tds_host'])
     url = "/namedObjects/#{machine_id}/#{uri_escape(filename)}"
     request = Net::HTTP::Put.new(url)
     request.basic_auth(username, password)

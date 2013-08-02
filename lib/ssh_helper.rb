@@ -15,9 +15,9 @@ module SSHHelper
 end
 
 module SSHRecordOverdraft
-  HOST = BUS_ENV['client_host']
-  USER = SSH_ENV['admin_username']
-  PASSWORD = SSH_ENV['admin_password']
+  HOST = QA_ENV['client_host']
+  USER = QA_ENV['ssh_login']
+  PASSWORD = QA_ENV['ssh_password']
 
   # Public: Connect to bus client, run the record_overdraft script and return results
   #

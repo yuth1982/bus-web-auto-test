@@ -72,7 +72,7 @@ When /^I delete admin by:$/ do |table|
   attributes['email'] = @admin.email[0..26] if attributes['email'] == '@admin_email'
 
   page.find_link(attributes["email"].slice(0, 27) || attributes["name"]).click
-  @bus_site.admin_console_page.admin_details_section.delete_admin(BUS_ENV['bus_password'])
+  @bus_site.admin_console_page.admin_details_section.delete_admin(QA_ENV['bus_password'])
   step "I navigate to Search Admins section from bus admin console page"
   @bus_site.admin_console_page.search_admins_section.refresh_bus_section
 end

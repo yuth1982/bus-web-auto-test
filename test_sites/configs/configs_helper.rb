@@ -8,8 +8,8 @@ CONFIGS = YAML.load_file("#{File.dirname(__FILE__)}/configs.yaml")
 # used for localized links, etc
 LANG = YAML.load_file("#{File.dirname(__FILE__)}/lang.yaml")
 
-# Active bus test environment, for example qa5, qa6
-BUS_ENV = ALL_ENV[ENV['BUS_ENV'] || 'qa6']
+# Active QA test environment, for example qa5, qa6
+QA_ENV = ALL_ENV[ENV['BUS_ENV'] || 'qa6']
 
 # Active aria test environment, for example aria qa
 ARIA_ENV = ALL_ENV[ENV['ARIA_ENV'] || 'aria_qa']
@@ -19,15 +19,6 @@ ARIA_API_ENV = ALL_ENV[ENV['ARIA_API_ENV'] || 'aria_api_qa']
 
 # Active zimbra mail
 ZIMBRA_ENV = ALL_ENV['zimbra']
-
-# Active phoenix test environment, for example qa5, qa6
-PHX_ENV = ALL_ENV[ENV['PHX_ENV'] || 'phx-qa6']
-
-# Active phoenix test environment, for example qa5, qa6
-TOOLS_ENV = ALL_ENV[ENV['TOOLS_ENV'] || 'tools']
-
-# Adding refs for ssh connectivity to boxes for script execution and log fetching
-SSH_ENV = ALL_ENV[ENV['SSH_ENV'] || 'ssh']
 
 # ATF uses br env variable to decide which browser will launch
 # available browser: firefox, chrome, ie, webkit

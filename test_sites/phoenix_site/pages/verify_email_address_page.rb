@@ -1,7 +1,7 @@
 module Phoenix
   class AccountVerification < SiteHelper::Page
 
-    set_url("#{PHX_ENV['phx_host']}/")
+    set_url("https://#{QA_ENV['phoenix_host']}")
 
     # Private elements
     #

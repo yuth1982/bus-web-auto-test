@@ -55,7 +55,7 @@ Transform /^existing user email$/ do |step_arg|
 end
 
 Transform /^automation admin email$/ do |step_arg|
-  BUS_ENV['bus_username']
+  QA_ENV['bus_username']
 end
 
 Transform /^the newly created machine$/ do |step_arg|

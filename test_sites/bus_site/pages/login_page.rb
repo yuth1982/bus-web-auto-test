@@ -3,7 +3,7 @@ module Bus
   # This class provides actions for bus login page
   class LoginPage < SiteHelper::Page
 
-    set_url("#{BUS_ENV['bus_host']}/login/admin?old_school=1")
+    set_url("#{QA_ENV['bus_host']}/login/admin?old_school=1")
 
     # Private elements
     #
