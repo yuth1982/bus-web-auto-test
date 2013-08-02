@@ -86,7 +86,7 @@ Feature: Change subscription period
     Then Subscription changed message should be Your account will be switched to monthly billing schedule at your next renewal.
     When I stop masquerading
     And I view partner details by newly created partner company name
-      Then Partner internal billing should be:
+    Then Partner internal billing should be:
         | Account Type:   | Net Terms 30  | Current Period: | Yearly   |
         | Unpaid Balance: | £189.28       | Collect On:     | N/A      |
         | Renewal Date:   | after 1 year  | Renewal Period: | Monthly  |
