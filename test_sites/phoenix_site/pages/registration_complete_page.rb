@@ -64,7 +64,6 @@ module Phoenix
       page.driver.browser.manage.delete_cookie("user_lang_pref");
     end
 
-
     # pro section
     # code here relates
     # to mozypro related items
@@ -133,13 +132,24 @@ module Phoenix
       reg_dl_mac2_btn.present?
     end
 
+    # check url for home free VS home pay
+    # paid acct url ends with: registration/mozy_home_finish
+    # free acct url end with: registration/free_finish
+    def check_url
+      if url.eql?(/https?:\/\/secure.mozy.[\S]\/registration\/mozy_home_finish\/[\S]+/)
+        "Home"
+        else
+          "Free"
+      end
+    end
+
     # home registration complete
     def home_success(partner)
+      check_url
       reg_comp_banner_present
       reg_comp_text
       reg_get_started
       reg_referral_banner
-      reg_home_dl_buttons
       localized_click(partner, 'acct_page_link')
       reg_comp_banner_present
       localized_click(partner, 'resend_verify_email_link')
@@ -148,6 +158,21 @@ module Phoenix
       clear_phoenix_cookies
     end
 
+    # free home registration complete
+    def free_home_success(partner)
+      reg_comp_banner_present
+      reg_comp_text
+      reg_get_started
+      reg_referral_banner
+      clear_phoenix_cookies
+    end
+
+    # free verification success
+    def free_home_verified(partner)
+      reg_comp_banner_present
+      reg_comp_text
+      clear_phoenix_cookies
+    end
     # user/partner verification section
     # code here relates to
     # partner/user verification

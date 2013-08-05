@@ -149,6 +149,20 @@ Then /^MozyHome user details should be:$/ do |user_table|
   end
 end
 
+Then /^MozyHome subscription details should be:$/ do |subscription_table|
+  # table is a | mozyhome 50 gb, +0 gb |
+  actual = @bus_site.admin_console_page.user_details_section.mozyhome_user_details_hash
+  expected = subscription_table.hashes.first
+
+  expected.each do |_, v|
+    v.replace ERB.new(v).result(binding)
+  end
+  # iteration
+  expected.keys.each do |header|
+    actual[header].should == expected[header]
+  end
+end
+
 When /^I verify the user$/ do
   @bus_site.admin_console_page.user_details_section.verify_user
 end

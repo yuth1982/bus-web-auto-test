@@ -397,6 +397,7 @@ module Bus
     def delete_user
       delete_user_link.click
       alert_accept
+      sleep 2 # leaving the session too fast, delete not taking hold
     end
 
     def device_table_headers
@@ -571,6 +572,17 @@ module Bus
       range.each do |k, v|
         tooltip[k.downcase].should == v
       end
+    end
+
+    # jm: code for hashing user subscription info
+    element(:bar_information, css: "div.show-details > table.mini-table[2]")
+
+    # returns a hash of user subscription data
+    def mozyhome_user_details_hash
+      user_details_hash = Hash.new
+      bar_information.headers_text.each_with_index { |header,index| user_details_hash[header] = bar_information.rows_text[0][index] }
+      Log.debug(user_details_hash)
+      user_details_hash
     end
 
     # Public: Is "Send Keys" button disabled?

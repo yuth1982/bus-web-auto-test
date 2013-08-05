@@ -93,31 +93,31 @@ end
 # has_navigation returns a value if items are present, otherwise it will return empty
 # in the case, am verifying that items are present by ensuring a value is present
 Then /^new section & navigation items are present for (MozyPro|MozyEnterprise|Reseller|Itemized) partner$/ do |type|
-  @bus_site.admin_console_page.has_navigation?('quick_link_item').should_not be_empty
+  @bus_site.admin_console_page.has_navigation?('quick_link_item').should be_true
   case type
     when CONFIGS['bus']['company_type']['mozypro']
-      @bus_site.admin_console_page.has_navigation?("Resource Summary").should_not be_empty
-      @bus_site.admin_console_page.has_navigation?("Change Plan").should_not be_empty
-      @bus_site.admin_console_page.has_navigation?("Add New User").should_not be_empty
-      @bus_site.admin_console_page.has_navigation?("Download MozyPro Client").should_not be_empty
+      @bus_site.admin_console_page.has_navigation?("Resource Summary").should be_true
+      @bus_site.admin_console_page.has_navigation?("Change Plan").should be_true
+      @bus_site.admin_console_page.has_navigation?("Add New User").should be_true
+      @bus_site.admin_console_page.has_navigation?("Download MozyPro Client").should be_true
     when CONFIGS['bus']['company_type']['mozyenterprise']
-      @bus_site.admin_console_page.has_navigation?("Resource Summary").should_not be_empty
-      @bus_site.admin_console_page.has_navigation?("User Group List").should_not be_empty
-      @bus_site.admin_console_page.has_navigation?("Add New User").should_not be_empty
-      @bus_site.admin_console_page.has_navigation?("Change Plan").should_not be_empty
-      @bus_site.admin_console_page.has_navigation?("Download MozyEnterprise Client").should_not be_empty
+      @bus_site.admin_console_page.has_navigation?("Resource Summary").should be_true
+      @bus_site.admin_console_page.has_navigation?("User Group List").should be_true
+      @bus_site.admin_console_page.has_navigation?("Add New User").should be_true
+      @bus_site.admin_console_page.has_navigation?("Change Plan").should be_true
+      @bus_site.admin_console_page.has_navigation?("Download MozyEnterprise Client").should be_true
     when CONFIGS['bus']['company_type']['reseller']
-      @bus_site.admin_console_page.has_navigation?("Resource Summary").should_not be_empty
-      @bus_site.admin_console_page.has_navigation?("User Group List").should_not be_empty
-      @bus_site.admin_console_page.has_navigation?("Add New User").should_not be_empty
-      @bus_site.admin_console_page.has_navigation?("Change Plan").should_not be_empty
-      @bus_site.admin_console_page.has_navigation?("Download MozyPro Client").should_not be_empty
+      @bus_site.admin_console_page.has_navigation?("Resource Summary").should be_true
+      @bus_site.admin_console_page.has_navigation?("User Group List").should be_true
+      @bus_site.admin_console_page.has_navigation?("Add New User").should be_true
+      @bus_site.admin_console_page.has_navigation?("Change Plan").should be_true
+      @bus_site.admin_console_page.has_navigation?("Download MozyPro Client").should be_true
     when "Itemized"
-      @bus_site.admin_console_page.has_navigation?("Resource Summary").should_not be_empty
-      @bus_site.admin_console_page.has_navigation?("User Group List").should_not be_empty
-      @bus_site.admin_console_page.has_navigation?("Add New User").should_not be_empty
-      @bus_site.admin_console_page.has_navigation?("Change Plan").should_not be_empty
-      @bus_site.admin_console_page.has_navigation?("Download MozyPro Client").should_not be_empty
+      @bus_site.admin_console_page.has_navigation?("Resource Summary").should be_true
+      @bus_site.admin_console_page.has_navigation?("User Group List").should be_true
+      @bus_site.admin_console_page.has_navigation?("Add New User").should be_true
+      @bus_site.admin_console_page.has_navigation?("Change Plan").should be_true
+      @bus_site.admin_console_page.has_navigation?("Download MozyPro Client").should be_true
     else
       raise "Error: Company type #{type} does not exist."
   end

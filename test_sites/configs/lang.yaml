@@ -7,7 +7,7 @@ global:
 #  verification of actual text within pages should be subject of later work
 #  this is for purposes of navigation
 # will try to keep all lang specific items here, if needed will seperate by home/pro type
-
+  verify_mail_link_base:  https://secure.mozy.com/registration/verify_email_address/
 
 United States:
   language: en
@@ -26,6 +26,7 @@ United States:
     man_res: Manage Resources
 
   MozyHome:
+    go_to_acct: Go to Account
     acct_page_link: account page
     resend_verify_email_link: Resend
     back_2_login_link: Back to Login Page
@@ -41,7 +42,20 @@ United States:
     winclient_man_link: Windows Client Manual
     macclient_man_link: OS X Client Manual
     support_page_link: MozyHome Support Portal
-  
+    verify_mail_subject:  Please verify your email for MozyHome
+    verify_mail_success:  Email Address has been verified
+    verify_mail_banner: Email Address Verified
+    free_mail_subject:  Welcome to MozyHome!
+    gender: Male
+    birth_year: 1970
+    survey_num_coworkers: 1,000-9,999
+    job_cat:  Technology Related
+    job_role: IT Consultant
+    job_industry: Aerospace/Travel
+    my_account: My Account
+    refer_link: Referrals
+    upgrade_link: Upgrade
+
 Ireland:
   language: en-gb
   MozyPro:
@@ -59,6 +73,7 @@ Ireland:
     man_res: Manage Resources
 
   MozyHome:
+    go_to_acct: Go to Account
     acct_page_link: account page
     resend_verify_email_link: Resend
     back_2_login_link: Back to Login Page
@@ -74,6 +89,19 @@ Ireland:
     winclient_man_link: Windows Client Manual
     macclient_man_link: OS X Client Manual
     support_page_link: MozyHome Support Portal
+    verify_mail_subject:  Please verify your email for MozyHome
+    verify_mail_success:  Email Address has been verified
+    verify_mail_banner: Email Address Verified
+    free_mail_subject:  Welcome to MozyHome!
+    gender: Female
+    birth_year: 1971
+    survey_num_coworkers: 50-99
+    job_cat:  Technology Related
+    job_role: Database Administration
+    job_industry: Health Care
+    my_account: My Account
+    refer_link: Referrals
+    upgrade_link: Upgrade
 
 United Kingdom:
   language: en-gb
@@ -92,6 +120,7 @@ United Kingdom:
     man_res: Manage Resources
 
   MozyHome:
+    go_to_acct: Go to Account
     acct_page_link: account page
     resend_verify_email_link: Resend
     back_2_login_link: Back to Login Page
@@ -107,6 +136,19 @@ United Kingdom:
     winclient_man_link: Windows Client Manual
     macclient_man_link: OS X Client Manual
     support_page_link: MozyHome Support Portal
+    verify_mail_subject:  Please verify your email for MozyHome
+    verify_mail_success:  Email Address has been verified
+    verify_mail_banner: Email Address Verified
+    free_mail_subject:  Welcome to MozyHome!
+    gender: Male
+    birth_year: 1972
+    survey_num_coworkers: 500-999
+    job_cat:  Non-Technology Related
+    job_role: Education
+    job_industry: Education
+    my_account: My Account
+    refer_link: Referrals
+    upgrade_link: Upgrade
 
 Germany:
   language: de
@@ -127,6 +169,33 @@ Germany:
     man_res: Ressourcen verwalten
 
   MozyHome:
+    acct_page_link: Kontoseite
+    resend_verify_email_link: Erneut senden
+    back_2_login_link: Zurück zur Anmeldeseite
+    logout: ABMELDEN
+    dl-win: Download für Win
+    dl-mac: Download für Mac
+    go_to_acct: Zum Konto gehen
+    acct_link: Konto-Startseite
+    plan_link: Mein Tarif
+    devices_link: Arbeitsplatz
+    profile_link: Mein Profil
+    dl_link: Mozy herunterladen
+    logout_link: Abmelden
+    verify_mail_subject:  Bitte bestätigen Sie Ihre E-Mail für MozyHome
+    verify_mail_success:  Die E-Mail-Adresse wurde bestätigt
+    verify_mail_banner: E-Mail-Adresse überprüft
+    free_mail_subject:  Willkommen bei MozyHome!
+    gender: Weiblich
+    birth_year: 1969
+    survey_num_coworkers: 100-499
+    job_cat:  Technikbezogen
+    job_role: Projektmanagement Entwicklung
+    job_industry: Produzent (technisch)
+    refer_link: Weiterempfehlungen
+    change_plan:  Aktualisieren
+    my_account: Mein Konto
+    upgrade_link: Aktualisieren
 
 France:
   language: fr
@@ -146,3 +215,30 @@ France:
     man_res: Gérer les ressources
 
   MozyHome:
+    acct_page_link: page de votre compte
+    resend_verify_email_link: Renvoyer
+    back_2_login_link:  Retour à la page de connexion
+    logout: DÉCONNEXION
+    dl-win: Télécharger pour Windows
+    dl-mac: Télécharger pour Mac
+    go_to_acct: Accéder au compte
+    acct_link: Accueil du compte
+    plan_link: Mon plan
+    devices_link: Mon Ordinateur
+    profile_link: Mon profil
+    dl_link: Télécharger Mozy
+    logout_link: Déconnexion
+    verify_mail_subject:  Vérifiez votre adresse électronique pour MozyHome
+    verify_mail_success:  L'adresse électronique a été vérifiée.
+    verify_mail_banner: Adresse électronique vérifiée
+    free_mail_subject:  Bienvenue dans MozyHome !
+    gender: Homme
+    birth_year: 1968
+    survey_num_coworkers: 2-9
+    job_cat:  Technologique
+    job_role: Administration eBusiness
+    job_industry: Conception graphique
+    refer_link: Parrainages
+    change_plan:  Mettre à niveau
+    my_account: Mon Compte
+    upgrade_link: Mettre à niveau

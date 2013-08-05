@@ -27,6 +27,7 @@ When /^I search emails by keywords:$/ do |keywords_table|
       v.replace ERB.new(v).result(binding)
     end
   end
+  sleep 15
   @email_search_query = keywords_table.hashes.first.map {|key, value|
     if value.match(/^\[.+\]$/) # Convert to Array if it is
       eval(value).map {|v| "#{key}:#{v}" }
@@ -35,7 +36,6 @@ When /^I search emails by keywords:$/ do |keywords_table|
     end
   }.flatten.join(' AND ')
   # wait 10s for the email to come in, previous 5s is prone to fail
-  sleep 10
   Log.info(@email_search_query)
   @found_emails = find_emails(@email_search_query)
 end
@@ -45,6 +45,7 @@ Then /^I should see (\d+) email\(s\)$/ do |num_emails|
 end
 
 When /^I retrieve email content by keywords:$/ do |keywords_table|
+  sleep 30
   step %{I search emails by keywords:}, table(%{
       |#{keywords_table.headers.join('|')}|
       |#{keywords_table.rows.first.join('|')}|
@@ -60,7 +61,11 @@ Then /^I can find (\d+) elements by (xpath|css) "(.*?)" from email content$/ do 
 end
 
 Then /^I get verify email address from email content$/ do
-  match = @mail_content.match(/https?:\/\/secure.mozy.[\S]+\/registration\/verify_email_address\/[\S]+/)
+    if @partner.base_plan.eql?("free") # free account url is different
+      match = @mail_content.match(/https?:\/\/secure.mozy.[\S]+\/c\/[\S]+/)
+    else # standard email url piece
+      match = @mail_content.match(/https?:\/\/secure.mozy.[\S]+\/registration\/verify_email_address\/[\S]+/)
+    end
   @verify_email_query = match[0] unless match.nil?
   #response = send_request(url)
   #response.code.should == '200'

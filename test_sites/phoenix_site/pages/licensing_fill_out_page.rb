@@ -80,9 +80,13 @@ module Phoenix
   # fill base plan
   #   fill_base_plan(partner.base_plan) where base plan = 50 gb
   #     instructs code to find 50gb field and click it
-  #
+  #     jm: code change for FR dom
   def fill_base_plan(base_plan)
-    find_field("#{base_plan}").click
+    base_plan_words = base_plan.split(/[[:space:]]+/)
+      correct_label =  all('label').select do |label|
+      base_plan_words.all?{|word| label.text.include?(word)}
+      end
+    find_by_id(correct_label[0][:for]).click
   end
 
   # fill subscription period
@@ -96,6 +100,26 @@ module Phoenix
     else
       find_by_id("period_#{partner.subscription_period}").click
     end
+  end
+
+  # filling out additional computers
+  #   mozyhome customers have the option of selecting to add a few computers
+  #   to their plan, the plan starts with - 50gb - 1, 125gb - 3
+  #   total max value for computers allowed on account = 5
+  def fill_additional_computers(partner)
+    add_machine_select.select(partner.additional_computers)
+  end
+
+  # filling out additional storage
+  #   max avail = 99, so by entering 'max' can auto set it to max val
+  #   otherwise, it will be what you decide in the setup
+  #   so total max possible = 125gb + (99x20 gb=1980 gb) = 2.1 tb
+  def fill_additional_storage(partner)
+      if partner.additional_storage.eql?("max")
+        add_storage_tb.type_text("99")
+      else
+        add_storage_tb.type_text(partner.additional_storage)
+      end
   end
 
   # server plan fill out
@@ -132,6 +156,12 @@ module Phoenix
       fill_base_plan(partner.base_plan)
       # define base plan subscription period
       fill_subscription_period(partner)
+      # home specific items
+      if partner.partner_info.type.eql?("MozyHome")
+        fill_additional_storage(partner)
+        fill_additional_computers(partner)
+        else
+      end
       # server add-on
       server_plan_fill_out(partner)
       # coupon code
