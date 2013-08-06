@@ -48,3 +48,44 @@ Then /^API\* Aria account credit card info should be:$/ do |info_table|
     end
   end
 end
+
+#This is a universal Aria API Checker
+Then /API\* Aria account should be:/ do |info_table|
+  expected = info_table.hashes.first
+  expected.keys.each do |header|
+    #Log.debug("Aria API Check, Key = #{header}: Expected = \"#{expected[header]}\", Aria = \"#{ @aria_acc_details[header]}\"")
+    unless @aria_acc_details[header].nil?
+      @aria_acc_details[header].should == expected[header]
+    else
+      raise "Unknown Aria Key: \"#{header}\""
+    end
+  end
+
+  #List of Aria API Keys - So you can check anything
+  # "first_name", "mi", "last_name", "userid", "birthdate", "job_title", "salutation",
+  # "senior_acct_no", "client_acct_id", "resp_level_cd", "is_test_acct", "alt_email",
+  # "address1", "address2", "city", "state_prov", "locality", "postal_code", "country",
+  # "company_name", "cell_phone_npa", "cell_phone_nxx", "cell_phone_suffix", "fax_phone",
+  # "intl_cell_phone", "intl_phone", "phone_extension", "phone_npa", "phone_nxx", "phone_suffix",
+  # "work_phone", "work_phone_extension", "work_phone_npa", "work_phone_nxx", "work_phone_suffix",
+  # "bill_day", "created", "date_to_expire", "date_to_suspend", "last_arrears_bill_thru_date",
+  # "last_bill_date", "last_bill_thru_date", "next_bill_date", "plan_date", "status_date",
+  # "status_degrade_date", "status_cd", "status_label", "plan_no", "plan_name", "plan_units",
+  # "notify_method", "notify_method_name", "PASSWORD", "pin", "secret_question",
+  # "secret_question_answer", "pay_method", "pay_method_name", "currency_cd", "tax_id",
+  # "billing_email", "billing_first_name", "billing_middle_initial", "billing_last_name",
+  # "billing_address1", "billing_address2", "billing_city", "billing_state", "billing_locality",
+  # "billing_zip", "billing_country", "cc_suffix", "cc_expire_mm", "cc_expire_yyyy", "cc_id",
+  # "bank_acct_suffix", "bank_routing_no", "billing_cell_phone", "billing_cell_phone_npa",
+  # "billing_cell_phone_nxx", "billing_cell_phone_suffix", "billing_company_name",
+  # "billing_intl_phone", "billing_phone_extension", "billing_phone_npa", "billing_phone_nxx",
+  # "billing_phone_suffix", "billing_work_phone", "billing_work_phone_extension",
+  # "billing_work_phone_npa", "billing_work_phone_nxx", "billing_work_phone_suffix", "balance",
+  # "acct_create_client_receipt_id", "plan_client_receipt_id", "status_client_receipt_id",
+  # "taxpayer_id", "promo_cd", "error_code", "alt_msg_template_no", "address3", "billing_address3",
+  # "seq_func_group_no", "address_verification_code", "address_match_score",
+  # "billing_address_verification_code", "billing_address_match_score", "error_msg",
+end
+
+
+
