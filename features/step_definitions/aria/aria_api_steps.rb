@@ -54,7 +54,8 @@ Then /API\* Aria account should be:/ do |info_table|
   expected = info_table.hashes.first
   expected.keys.each do |header|
     #Log.debug("Aria API Check, Key = #{header}: Expected = \"#{expected[header]}\", Aria = \"#{ @aria_acc_details[header]}\"")
-    unless @aria_acc_details[header].nil?
+    if @aria_acc_details.has_key?(header)
+      expected[header] = nil if expected[header] == "" || expected[header] == "nil"
       @aria_acc_details[header].should == expected[header]
     else
       raise "Unknown Aria Key: \"#{header}\""
