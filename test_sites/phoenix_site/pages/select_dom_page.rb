@@ -81,7 +81,7 @@ module Phoenix
           url.eql?(/https?:\/\/secure.mozy.ie\/registration\/[\S]+location\/[\S]+/);
         # united kingdom
         when ('United Kingdom' || 'Isle of Man' || 'Falkland Islands' || 'Jersey' || 'British Ind Ocean Terr.' || 'South Georgia' || 'Saint Helena' || 'Pitcairn');
-          url.match(/https?:\/\/secure.mozy.co.uk\/registration\/[\S]+location\/[\S]+/)
+          url.eql?(/https?:\/\/secure.mozy.co.uk\/registration\/[\S]+location\/[\S]+/)
         else
         # us dom - encompasses all those not mentioned here
           url.eql?(/https?:\/\/secure.mozy.com\/registration\/[\S]+location\/[\S]+/);

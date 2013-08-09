@@ -109,7 +109,7 @@ module Phoenix
       home_cc_cvv_tb.type_text(partner.credit_card.cvv)
       home_cc_exp_mm_select.select(partner.credit_card.expire_month)
       home_cc_exp_yy_select.select(partner.credit_card.expire_year)
-      home_country_select..select(partner.company_info.country)
+      localized_country(home_country_select, partner)
       home_bill_fname_tb.type_text(partner.credit_card.first_name)
       home_bill_lname_tb.type_text(partner.credit_card.last_name)
       home_bill_company_tb.type_text(partner.company_info.name)
@@ -125,6 +125,16 @@ module Phoenix
       home_bill_email_tb.eql?(partner.admin_info.email)
     end
 
+    def localized_country(loc_select, partner)
+      # jason: we may just be able to render the old case statement like this,
+      # ((partner.company_info.country == "Germany") ? loc_select.select("Deutschland") : loc_select.select(partner.company_info.country))
+      case partner.company_info.country
+        when 'Germany'
+          loc_select.select("Deutschland")
+        else
+          loc_select.select(partner.company_info.country)
+      end
+    end
 
     # code for the billing / payment page
     #

@@ -169,19 +169,23 @@ Germany:
     man_res: Ressourcen verwalten
 
   MozyHome:
+    go_to_acct: Konto-Startseite
     acct_page_link: Kontoseite
     resend_verify_email_link: Erneut senden
     back_2_login_link: Zurück zur Anmeldeseite
     logout: ABMELDEN
+    acct_link: Konto-Startseite
     dl-win: Download für Win
     dl-mac: Download für Mac
-    go_to_acct: Zum Konto gehen
     acct_link: Konto-Startseite
     plan_link: Mein Tarif
     devices_link: Arbeitsplatz
     profile_link: Mein Profil
     dl_link: Mozy herunterladen
     logout_link: Abmelden
+    know_base_link: Mozy-Wissensdatenbank
+    winclient_man_link: Windows-Client-Handbuch
+    macclient_man_link: OS-X-Client-Handbuch
     verify_mail_subject:  Bitte bestätigen Sie Ihre E-Mail für MozyHome
     verify_mail_success:  Die E-Mail-Adresse wurde bestätigt
     verify_mail_banner: E-Mail-Adresse überprüft
@@ -192,9 +196,9 @@ Germany:
     job_cat:  Technikbezogen
     job_role: Projektmanagement Entwicklung
     job_industry: Produzent (technisch)
-    refer_link: Weiterempfehlungen
     change_plan:  Aktualisieren
     my_account: Mein Konto
+    refer_link: Weiterempfehlungen
     upgrade_link: Aktualisieren
 
 France:
@@ -215,19 +219,22 @@ France:
     man_res: Gérer les ressources
 
   MozyHome:
+    go_to_acct: Accueil du compte
     acct_page_link: page de votre compte
     resend_verify_email_link: Renvoyer
     back_2_login_link:  Retour à la page de connexion
     logout: DÉCONNEXION
     dl-win: Télécharger pour Windows
     dl-mac: Télécharger pour Mac
-    go_to_acct: Accéder au compte
     acct_link: Accueil du compte
     plan_link: Mon plan
     devices_link: Mon Ordinateur
     profile_link: Mon profil
     dl_link: Télécharger Mozy
     logout_link: Déconnexion
+    know_base_link: Base de connaissances de Mozy
+    winclient_man_link: Manuel du client Windows
+    macclient_man_link: Manuel du client OS X
     verify_mail_subject:  Vérifiez votre adresse électronique pour MozyHome
     verify_mail_success:  L'adresse électronique a été vérifiée.
     verify_mail_banner: Adresse électronique vérifiée
@@ -238,7 +245,7 @@ France:
     job_cat:  Technologique
     job_role: Administration eBusiness
     job_industry: Conception graphique
-    refer_link: Parrainages
     change_plan:  Mettre à niveau
     my_account: Mon Compte
+    refer_link: Parrainages
     upgrade_link: Mettre à niveau
