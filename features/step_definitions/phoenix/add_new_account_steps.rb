@@ -103,9 +103,9 @@ end
 
 #AMMENDED: For some reason this works intermittently.  Original is unchange, commented out '# unless portion'.
 Then /^the (order|billing) summary looks like:$/ do |type, billing_table|
-    attributes = billing_table.hashes.first
-    @phoenix_site.billing_fill_out.billing_summary_table_headers.should == billing_table.headers unless @partner.partner_info.type == "MozyHome"
-    @phoenix_site.billing_fill_out.billing_summary_table_rows.should == billing_table.rows unless @partner.partner_info.type == "MozyHome"
+    actual = @partner.billing_summary
+    expected = billing_table.hashes
+    expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
 
 ## Changed to more useful or the different account types

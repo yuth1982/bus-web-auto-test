@@ -49,15 +49,6 @@ module Phoenix
     end
   end
 
-  # plan summary
-  #   retrieve plan summary data from licensing page
-  #
-  #   headers
-  #
-  def plan_summary_table_headers
-    plan_summary_table.headers_text
-  end
-
   #   rows
   #
   def plan_summary_table_rows
@@ -73,6 +64,9 @@ module Phoenix
       # for home, we show plan summary on licensing page
       # this code attempts to get it for verification
       plan_summary_table_rows
+      # TODO: Use Plan summary to verify the expected plan summary on licensing filling page
+      # sample output: {"Total Storage:" => "50 GB", "Total Computers:" => "1", "Discounts:" => "-", "Total Price: $5.99" => nil}
+      partner.plan_summary = Hash[plan_summary_table_rows[1..4]]
       puts plan_summary_table_rows.to_s
     end
   end

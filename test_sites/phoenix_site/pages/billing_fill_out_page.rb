@@ -58,28 +58,15 @@ module Phoenix
     # Public elements & methods
     #
 
-    # Returns order summary table headers text
-    #
-    def billing_summary_table_headers
-      billing_summary_table.headers_text
-    end
-
-    # Returns order summary table rows text
-    #
-    def billing_summary_table_rows
-      billing_summary_table.rows_text
-    end
-
     # calls method that checks for existence of billing summary table
     #   and then get data from the table
     #
     #   get billing summary info as a hash , for verifications later
     #     headers = 'css=th.' (desc, price, quantity, amount)
     #     rows = 'css=td.desc.' (base_product, add_on_product, sub_price, discount, total)
-    def billing_summary_info_get
-      billing_summary_table.visible?
-      billing_summary_table_headers
-      billing_summary_table_rows
+    def billing_summary_info_get(partner)
+      wait_until {billing_summary_table.visible?}
+      partner.billing_summary = billing_summary_table.rows_text.map{ |row| Hash[billing_summary_table.headers_text.zip(row)] }
     end
 
     #   pro: filling in cc payment fields + click 'same as' link
@@ -139,7 +126,7 @@ module Phoenix
     # code for the billing / payment page
     #
     def billing_info_fill_out(partner)
-      billing_summary_info_get
+      billing_summary_info_get(partner)
       # code for filling in billing / cc payment info
       #   based on home or pro type of acct
       #

@@ -4,7 +4,8 @@ module Bus
     # 	rather than re-invent new object versions whereever possible we will be
     #	reusing partner objects, which alos will give us latitude in conversions, etc.
     class MozyHome < PartnerAccount
-      attr_accessor :base_plan, :has_server_plan, :has_stash, :additional_computers, :additional_storage
+      attr_accessor :base_plan, :has_server_plan, :has_stash, :additional_computers, :additional_storage,
+                    :plan_summary, :billing_summary
 
       # Public: Initialize a MozyHome Object
       #
@@ -15,6 +16,8 @@ module Bus
         @has_stash = false
         @additional_computers = ""
         @additional_storage = ""
+        @plan_summary = {}
+        @billing_summary = []
       end
 
       # Public: output mozy home attributes

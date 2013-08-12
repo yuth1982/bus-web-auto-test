@@ -22,9 +22,9 @@ Feature: Add a new user through phoenix
       | Total Charge                          | $5.99 |          | $5.99  |
     Then the user is successfully added.
     #steps for email-verification & account-access
-      And the user has activated their account
-      And I login as the user on the account.
-      And I verify the user account.
+    And the user has activated their account
+    And I login as the user on the account.
+    And I verify the user account.
     #step to verify in bus admin console
     And I log in bus admin console as administrator
     And I search user by:
