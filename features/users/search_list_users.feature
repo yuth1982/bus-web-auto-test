@@ -312,7 +312,7 @@ Feature: Search and list user
     #   This is also the banner case for integration of pooled storage with phoenix
     #   Redmine: 98385
     #
-    @TC.21317 @bus @2.5 @pooled_storage
+    @TC.21317 @bus @phoenix @2.5 @pooled_storage
     Scenario: 21317 - Pooled Storage - Pro SMB - Phoenix Integration - User List View - removal of assigned/used quota
       When I am at dom selection point:
       And I add a phoenix Pro partner:

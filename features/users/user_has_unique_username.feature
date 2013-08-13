@@ -145,7 +145,7 @@ Feature: User Has Unique Username
       | email        |
       | @admin_email |
 
-  @TC.21366 @bus @2.5 @existing_username @mozyhome
+  @TC.21366 @bus @phoenix @2.5 @existing_username @mozyhome
   Scenario:  Mozy-21366:Update User(MH) With Existing Admin Username
     When I get an admin email from the database
     And I am at dom selection point:
@@ -180,7 +180,7 @@ Feature: User Has Unique Username
     And I view MozyHome user details by existing admin email
     And I delete user
 
-  @TC.21365 @bus @2.5 @existing_username @mozyhome
+  @TC.21365 @bus @phoenix @2.5 @existing_username @mozyhome
   Scenario: Mozy-21365:Update User(MH) With Existing User Username
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -236,7 +236,7 @@ Feature: User Has Unique Username
     When I change the username to automation admin email
     Then username changed success message should be displayed
 
-  @TC.21383 @bus @2.5 @mozyhome @suspened_username
+  @TC.21383 @bus @phoenix  @2.5 @mozyhome @suspened_username
   Scenario: Mozy-21383:Update User(MH) With Suspended User Username
     When I get a suspended user email from the database
     And I am at dom selection point:
@@ -260,7 +260,7 @@ Feature: User Has Unique Username
     Then edit user email error message to existing user email should be displayed
     And I delete user
 
-  @TC.21384 @bus @2.5 @mozyhome
+  @TC.21384 @bus @phoenix @2.5 @mozyhome
   Scenario: Mozy-21384:Update User(MH) With Deleted User Username
     When I get a deleted user email from the database
     And I am at dom selection point:
@@ -295,7 +295,7 @@ Feature: User Has Unique Username
     And I view MozyHome user details by existing user email
     And I delete user
 
-  @TC.21800 @bus @2.5 @existing_username @mozyhome
+  @TC.21800 @bus @phoenix @2.5 @existing_username @mozyhome
   Scenario: Mozy-21800:Web Sign Up - Add New User With Existing Admin Username
     When I get an admin email from the database
     And I am at dom selection point:
