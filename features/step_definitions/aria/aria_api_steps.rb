@@ -51,6 +51,7 @@ end
 
 #This is a universal Aria API Checker
 Then /API\* Aria account should be:/ do |info_table|
+  step "API* I get Aria account details by newly created partner aria id"
   expected = info_table.hashes.first
   expected.keys.each do |header|
     #Log.debug("Aria API Check, Key = #{header}: Expected = \"#{expected[header]}\", Aria = \"#{ @aria_acc_details[header]}\"")
