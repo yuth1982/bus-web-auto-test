@@ -205,12 +205,12 @@ Feature: User Details
       | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices | enable_stash |
       | Test | Shared               | 5               | Shared              | 10             | yes          |
     And I add new user(s):
-      | name  | user_group | storage_type | storage_limit | devices | enable_stash |
-      | User1 | Test       | Server       | 50            | 3       | no           |
+      | name  | user_group | storage_type | storage_limit | devices |
+      | User1 | Test       | Server       | 50            | 3       |
     Then 1 new user should be created
     And I add new user(s):
-      | name  | user_group | storage_type | storage_limit | devices | enable_stash |
-      | User2 | Test       | Server       | 50            | 5       | no           |
+      | name  | user_group | storage_type | storage_limit | devices |
+      | User2 | Test       | Server       | 50            | 5       |
     Then 1 new user should be created
     And I search user by:
       | keywords   |
@@ -232,12 +232,12 @@ Feature: User Details
       | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices | enable_stash |
       | Test | Shared               | 5               | Shared              | 50             | yes          |
     And I add new user(s):
-      | name  | user_group | storage_type | storage_limit | devices | enable_stash |
-      | User1 | Test       | Server       | 50            | 3       | no           |
+      | name  | user_group | storage_type | storage_limit | devices |
+      | User1 | Test       | Server       | 50            | 3       |
     Then 1 new user should be created
     And I add new user(s):
-      | name  | user_group | storage_type | storage_limit | devices | enable_stash |
-      | User2 | Test       | Server       | 50            | 40      | no           |
+      | name  | user_group | storage_type | storage_limit | devices |
+      | User2 | Test       | Server       | 50            | 40      |
     Then 1 new user should be created
     And I search user by:
       | keywords   |
