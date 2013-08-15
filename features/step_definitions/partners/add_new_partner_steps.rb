@@ -130,7 +130,7 @@ Then /^Sub-total before taxes or discounts should be (.+)$/ do |amount|
 end
 
 Then /^Order summary table should be:$/ do |order_summary_table|
-  actual = @bus_site.admin_console_page.add_new_partner_section.order_summary_hashes
+  actual = @partner.order_summary
   expected = order_summary_table.hashes
   expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end

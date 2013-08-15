@@ -95,6 +95,7 @@ module Bus
           cc_payment_input.click
           fill_credit_card_info(partner.credit_card)
         end
+        set_order_summary(partner)
         create_partner_btn.click
       else
         include_initial_purchase_cb.uncheck
@@ -129,7 +130,7 @@ module Bus
     #
     # Returns hash array
     def order_summary_hashes
-      order_summary_table.rows_text.map{ |row| Hash[*order_summary_table.headers_text.zip(row).flatten] }
+      order_summary_table.rows_text.map{ |row| Hash[order_summary_table.headers_text.zip(row)] }
     end
 
     # Public: Add new partner subscription period labels text
@@ -308,6 +309,10 @@ module Bus
       # possible refactor here, remove sleep method
       sleep 2
       partner.pre_sub_total = pre_sub_total_label.text.strip
+    end
+
+    def set_order_summary(partner)
+      partner.order_summary = order_summary_hashes
     end
 
     def wait_until_plans_loaded(type)
