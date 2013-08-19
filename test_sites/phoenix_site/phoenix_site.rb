@@ -1,16 +1,9 @@
+Dir.glob("#{File.dirname(__FILE__)}/sections/**/*.rb").each{ |file| require file }
 Dir.glob("#{File.dirname(__FILE__)}/pages/**/*.rb").each{ |file| require file }
 
 class PhoenixSite
   def select_dom
     Phoenix::DomSelection.new
-  end
-
-  def admin_fill_out
-    Phoenix::AddNewPhoenixPartner.new
-  end
-
-  def partner_fill_out
-    Phoenix::NewPartnerFillout.new
   end
 
   def licensing_fill_out
@@ -29,8 +22,15 @@ class PhoenixSite
     Phoenix::Account.new
   end
 
-  # stub for account verification
-  #def acct_verify
-    #Phoenix::AccountVerification.new
-  #end
+  def verify_email_address
+    Phoenix::AccountVerification.new
+  end
+    
+  def phoenix_acct_fill_out
+    Phoenix::PhoenixCreation.new
+  end
+
+  def user_account
+    Phoenix::UserAccount.new
+  end
 end

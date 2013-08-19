@@ -2,10 +2,13 @@ module Bus
   # This class provides actions for change plan section
   class ChangePlanSection < SiteHelper::Section
 
+    element(:addon_plans_group, id: 'addon_plans_group')
     # Plans
     element(:pro_base_plan_select, id: "products_base_exclusive")
     element(:enterprise_users_tb, css: "input[id^=products_base_]")
-
+    element(:desktop_licenses_tb, xpath: "//div[@id='base_plans']/div[3]/input")
+    element(:server_licenses_tb, xpath: "//div[@id='base_plans']/div[4]/input")
+    
     element(:storage_add_on_tb, css: "input[id^=products_addon_]")
     element(:server_plan_select, css: "select[id^=products_addon_]")
     element(:server_plan_change_link, css: "span#clickable-change-link a")
@@ -34,14 +37,20 @@ module Bus
     end
 
     # Public: Change MozyPro plan
+    # 
+    # @base_plan [String]
+    # @server_plan [String]
+    # @storage_add_on [Integer]
+    # @coupon [String] coupon
     #
     # Example
-    #   @bus_site.admin_console_page.change_mozypro_plan('100 GB', 'yes', '2', 'COUPONCODE')
+    #   @bus_site.admin_console_page.change_mozypro_plan('100 GB', 'yes', '2', 'COUPON CODE')
     #
-    # Returns nothing
+    # @return [nothing]
+
     def change_mozypro_plan(base_plan, server_plan, storage_add_on, coupon)
-      server_plan_locator = "//label[contains(text(),'Server Plan')]"
       # Find current server plan id e.g. 'products_addon_10353251, Server Plan, $12.99'
+      server_plan_locator = '//label[starts-with(.,"Server Plan")]'
       current_server_plan_id = find(:xpath, server_plan_locator)[:for]
       unless base_plan.nil?
         pro_base_plan_select.select(base_plan)
@@ -68,12 +77,18 @@ module Bus
     end
 
     # Public: Change MozypEnterprise plan
+    # 
+    # @users [Integer]
+    # @server_plan [String]
+    # @server_add_on [Integer]
+    # @coupon [String]
     #
     # Example
     #   @bus_site.admin_console_page.change_mozyenterprise_plan(2,"50 GB Server Plan, $296.78",2,"COUPONCODE")
     #
-    # Returns nothing
+    # @return [nothing]
     def change_mozyenterprise_plan(users, server_plan, server_add_on, coupon)
+      wait_for_all_elements_loaded
       enterprise_users_tb.type_text(users) unless users.nil?
       server_plan_select.select(server_plan) unless server_plan.nil?
       storage_add_on_tb.type_text(server_add_on) unless server_add_on.nil?
@@ -84,17 +99,53 @@ module Bus
     # Public: Change reseller plan
     #
     # Example
-    #   @bus_site.admin_console_page.change_reseller_plan(100,"yes",2,"COUPONCODE")
+    #   @bus_site.admin_console_page.change_reseller_plan("yes",2)
     #
-    # Returns nothing
-    def change_reseller_plan(server_plan, server_add_on)
-      storage_add_on_tb.type_text(server_add_on) unless server_add_on.nil?
+    # @returns [] nothing
+    def change_reseller_plan(server_plan, storage_add_on)
+      storage_add_on_tb.type_text(storage_add_on) unless storage_add_on.nil?
       unless server_plan.nil?
         server_plan_change_link.click
         wait_until{ server_plan_select.visible? }
         server_plan_select.select(server_plan.capitalize)
       end
       confirm_change
+    end
+    
+    # Public: Change itemized plan
+    #
+    # @param [String] server_licenses
+    # @param [String] desktop_licenses
+    # @param [Object] user_group
+    #
+    # Example
+    #  @bus_site.admin_console_page.change_plan_section.change_itemized_plan("2", "2", @user_group)
+    #
+    # @return [nothing]     
+    def change_itemized_plan(server_licenses, desktop_licenses, user_group)
+      
+      unless server_licenses.nil?
+        if !user_group.nil? && user_group.name == "(default user group)"
+          #update @user_group obj will refactor later
+          user_group.server_device = user_group.server_device + server_licenses.to_i
+        end
+        wait_until { server_licenses_tb.visible? }
+        server_licenses = server_licenses.to_i + server_licenses_tb.value.to_i
+        server_licenses_tb.type_text(server_licenses)
+      end
+      
+      unless desktop_licenses.nil?
+        if !user_group.nil? && user_group.name == "(default user group)"
+          #update @user_group obj will refactor later
+          user_group.desktop_device = user_group.desktop_device + desktop_licenses.to_i
+        end
+        wait_until { desktop_licenses_tb.visible? }
+        desktop_licenses = desktop_licenses.to_i + desktop_licenses_tb.value.to_i
+        desktop_licenses_tb.type_text(desktop_licenses)
+      end
+
+      confirm_change
+      
     end
 
     # Public: Change itemized partner plan
@@ -241,12 +292,16 @@ module Bus
     # Example
     #   @bus_site.admin_console_page.change_plan_section.confirm_change
     #
-    # Returns nothing
+    # @return [] nothing
     def confirm_change
-      page.execute_script("document.getElementById('submit_new_resources_btn').disabled=false")
-      sleep 2 # refactor later
+      wait_until{ submit_btn['disabled'] != 'true' }
       submit_btn.click
+      wait_until_bus_section_load
       continue_btn.click
+    end
+
+    def wait_for_all_elements_loaded
+      wait_until { addon_plans_group.visible? }
     end
   end
 end

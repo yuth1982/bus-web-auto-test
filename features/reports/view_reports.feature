@@ -6,7 +6,7 @@ Feature: View Report
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.16255 @slow
+  @TC.16255 @bus @2.5 @view_reports
   Scenario: 16255 Verify available report links and descriptions in report builder view UI
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -15,15 +15,15 @@ Feature: View Report
     When I act as newly created partner account
     And I navigate to Report Builder section from bus admin console page
     Then I should see available reports are:
-      | Report Type        | Description                                                                                                                        |
-      | Billing Summary    | Gives a summary of resources and usage by partner and user group.                                                                  |
-      | Billing Detail     | Provides a breakdown of resources and usage by user and device.                                                                    |
-      | Machine Watchlist  | Calls out problems with backups on each device, signaling issues and potential issues that need attention.                         |
-      | Machine Status     | Provides the state of the backup service by device, including the time of the most recent backup and the amount of quota consumed. |
-      | Resources Added    | Lists all purchases of resources (licenses and storage) by Mozy administrators and storage added by Autogrow.                     |
-      | Machine Over Quota | Provides a list of users that have exceeded a user determined threshold.                                                           |
+      | Report Type        | Description                                                                                                                           |
+      | Billing Summary    | Gives a summary of resources and usage by partner and user group.                                                                     |
+      | Billing Detail     | Provides a breakdown of resources and usage by user and device.                                                                       |
+      | Machine Watchlist  | Calls out problems with backups on each device, signaling issues and potential issues that need attention.                            |
+      | Machine Status     | Provides the state of the backup service by device, including the time of the most recent backup and the amount of quota consumed.    |
+      | Resources Added    | Lists all purchases of resources (product keys and storage) by Mozy administrators and storage added by Autogrow.                     |
+      | Machine Over Quota | Provides a list of users that have exceeded a user determined threshold.                                                              |
 
-  @TC.17846 @slow
+  @TC.17846 @bus @2.5 @view_reports @quick_reports
   Scenario: 17846 Verify quick report links and descriptions in quick reports view UI
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -42,7 +42,7 @@ Feature: View Report
       | Mozy Pro Keys (CSV)            | List of all unassigned Mozy Pro keys                      |
       | Machine Details (CSV)          | List of all Machine Details                               |
 
-  @TC.16245 @slow
+  @TC.16245 @bus @2.5 @view_reports @billing_summary
   Scenario: 16245 Verify create then delete daily billing summary report
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -54,12 +54,12 @@ Feature: View Report
       | Billing Summary | billing summary test  | Daily     |
     Then Billing summary report should be created
     And Scheduled report list should be:
-      | Name                 | Type             | Recipients | Schedule | Actions |
-      | billing summary test | Billing Summary  | @email     | Daily    | Run     |
+      | Name                 | Type             | Recipients                      | Schedule | Actions |
+      | billing summary test | Billing Summary  | <%=@partner.admin_info.email%>  | Daily    | Run     |
     When I delete billing summary test scheduled report
     Then I should see No results found in scheduled reports list
 
-  @TC.17937 @slow
+  @TC.17937 @bus @2.5 @view_reports @billing_summary
   Scenario: 17937 Verify create then delete weekly billing summary report
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -71,12 +71,12 @@ Feature: View Report
       | Billing Summary | billing summary test  | Weekly    |
     Then Billing summary report should be created
     And Scheduled report list should be:
-      | Name                 | Type             | Recipients | Schedule | Actions |
-      | billing summary test | Billing Summary  | @email     | Weekly   | Run     |
+      | Name                 | Type             | Recipients                     | Schedule | Actions |
+      | billing summary test | Billing Summary  | <%=@partner.admin_info.email%> | Weekly   | Run     |
     When I delete billing summary test scheduled report
     Then I should see No results found in scheduled reports list
 
-  @TC.17938 @slow
+  @TC.17938 @bus @2.5 @view_reports @billing_summary
   Scenario: 17938 Verify create then delete monthly billing summary report
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -88,12 +88,12 @@ Feature: View Report
       | Billing Summary | billing summary test | Monthly   |
     Then Billing summary report should be created
     And Scheduled report list should be:
-      | Name                 | Type             | Recipients | Schedule | Actions |
-      | billing summary test | Billing Summary  | @email     | Monthly  | Run     |
+      | Name                 | Type             | Recipients | Schedule           | Actions |
+      | billing summary test | Billing Summary  | <%=@partner.admin_info.email%>  | Monthly  | Run     |
     When I delete billing summary test scheduled report
     Then I should see No results found in scheduled reports list
 
-  @TC.16251 @slow @firefox
+  @TC.16251 @bus @2.5 @view_reports @billing_summary
   Scenario: 16251 Verify MozyEtnerprise billing summary report csv all fields
     When I add a new MozyEnterprise partner:
       | period | users | server plan        | server add-on |
@@ -108,9 +108,9 @@ Feature: View Report
     Then Scheduled Billing Summary report csv file details should be:
       | Column A | Column B              | Column C     | Column D           | Column E              | Column F            | Column G               | Column H             | Column I                           | Column J                            | Column K               |
       | Partner  | User Group            | Billing Code | Total GB Purchased | Server Keys Purchased | Server GB Purchased | Desktop Keys Purchased | Desktop GB Purchased | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
-      | @name    | (default user group)  |              | 625                | 200                   | 600                 | 1                      | 25                   |                                    |                                     | $0.369008              |
+      | @name    | (default user group)  |              | N/A                | 200                   | Shared              | 1                      | Shared               |                                    |                                     | $0.45                  |
 
-  @TC.17847 @slow @firefox
+  @TC.17847 @bus @2.5 @view_reports @billing_summary
   Scenario: 17847 Verify Reseller billing summary report csv all fields
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | server add-on |
@@ -125,9 +125,9 @@ Feature: View Report
     Then Scheduled Billing Summary report csv file details should be:
       | Column A | Column B              | Column C     | Column D           | Column E              | Column F            | Column G               | Column H             | Column I                           | Column J                            | Column K               |
       | Partner  | User Group            | Billing Code | Total GB Purchased | Server Keys Purchased | Server GB Purchased | Desktop Keys Purchased | Desktop GB Purchased | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
-      | @name    | (default user group)  |              | 140                |                       |                     |                        |                      |                                    |                                     | $0.598571428571429     |
+      | @name    | (default user group)  |              | Shared             | 0                     | N/A                 | 0                      | N/A                  |                                    |                                     | $0.67                  |
 
-  @TC.16250 @slow
+  @TC.16250 @bus @2.5 @view_reports @billing_detail
   Scenario: 16250 Verify create and delete billing detail report
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -139,12 +139,12 @@ Feature: View Report
       | Billing Detail  | billing detail test |
     Then Billing detail report should be created
     And Scheduled report list should be:
-      | Name                | Type            | Recipients  | Schedule | Actions |
-      | billing detail test | Billing Detail  | @email      | Daily    | Run     |
+      | Name                | Type            | Recipients                      | Schedule | Actions |
+      | billing detail test | Billing Detail  | <%=@partner.admin_info.email%>  | Daily    | Run     |
     When I delete billing detail test scheduled report
     Then I should see No results found in scheduled reports list
 
-  @TC.16252 @slow @firefox
+  @TC.16252 @slow @firefox @bus @2.5 @view_reports @billing_detail
   Scenario: 16252 Verify MozyEtnerprise billing detail report csv all fields
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add-on |
@@ -158,11 +158,11 @@ Feature: View Report
     When I download billing detail test scheduled report
     Then Scheduled Billing Detail report csv file details should be:
       | Column A | Column B              | Column C     | Column D           | Column E                    | Column F                    | Column G               | Column H              | Column I              | Column J                               | Column K                     | Column L                     | Column M                | Column N               | Column O               | Column P                                | Column Q                           | Column R                            | Column S               |
-      | Partner  | User Group            | Billing Code | Total GB Purchased | Server Quota Purchased (GB) | Server Quota Allocated (GB) | Server Quota Used (GB) | Server Keys Purchased | Server Keys Activated | Server Keys Assigned But Not Activated | Desktop Quota Purchased (GB) | Desktop Quota Allocated (GB) | Desktop Quota Used (GB) | Desktop Keys Purchased | Desktop Keys Activated | Desktop Keys Assigned But Not Activated | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
-      | @name    | (default user group)  |              | 625                | 600                         | 0                           | 0                      | 200                   | 0                     | 0                                      | 25                           | 0                            | 0                       | 1                      | 0                      | 0                                       |                                    |                                     | $0.352210666666667     |
+      | Partner  | User Group            | Billing Code | Total GB Purchased | Server GB Purchased         | Server Quota Allocated (GB) | Server Quota Used (GB) | Server Keys Purchased | Server Keys Activated | Server Keys Assigned But Not Activated | Desktop GB Purchased         | Desktop Quota Allocated (GB) | Desktop Quota Used (GB) | Desktop Keys Purchased | Desktop Keys Activated | Desktop Keys Assigned But Not Activated | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
+      | @name    | (default user group)  |              | N/A                | Shared                      | N/A                         | 0                      | 200                   | 0                     | 0                                      | Shared                       | N/A                          | 0                       | 1                      | 0                      | 0                                       |                                    |                                     | $0.43                  |
 
-  @TC.17848 @slow @firefox
-  Scenario: 17484 Verify Reseller billing detail report csv all fields
+  @TC.17848 @bus @2.5 @view_reports @billing_detail
+  Scenario: 17848 Verify Reseller billing detail report csv all fields
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | server add-on |
       | 1      | Silver        | 100            | yes         | 2             |
@@ -175,17 +175,17 @@ Feature: View Report
     When I download billing detail test scheduled report
     Then Scheduled Billing Detail report csv file details should be:
       | Column A | Column B              | Column C     | Column D           | Column E                    | Column F                    | Column G               | Column H              | Column I              | Column J                               | Column K                     | Column L                     | Column M                | Column N               | Column O               | Column P                                | Column Q                           | Column R                            | Column S               |
-      | Partner  | User Group            | Billing Code | Total GB Purchased | Server Quota Purchased (GB) | Server Quota Allocated (GB) | Server Quota Used (GB) | Server Keys Purchased | Server Keys Activated | Server Keys Assigned But Not Activated | Desktop Quota Purchased (GB) | Desktop Quota Allocated (GB) | Desktop Quota Used (GB) | Desktop Keys Purchased | Desktop Keys Activated | Desktop Keys Assigned But Not Activated | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
-      | @name    | (default user group)  |              | 140                |                             | 0                           | 0                      |                       | 0                     | 0                                      |                              | 0                            | 0                       |                        | 0                      | 0                                       |                                    |                                     | $0.598571428571429     |
+      | Partner  | User Group            | Billing Code | Total GB Purchased | Server GB Purchased         | Server Quota Allocated (GB) | Server Quota Used (GB) | Server Keys Purchased | Server Keys Activated | Server Keys Assigned But Not Activated | Desktop GB Purchased         | Desktop Quota Allocated (GB) | Desktop Quota Used (GB) | Desktop Keys Purchased | Desktop Keys Activated | Desktop Keys Assigned But Not Activated | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
+      | @name    | (default user group)  |              | Shared             | N/A                         | N/A                         | 0                      | 0                     | 0                     | 0                                      | N/A                          | N/A                          | 0                       | 0                      | 0                      | 0                                       |                                    |                                     | $0.67                  |
 
-  @TC.16263 @slow @firefox
+  @TC.16263 @bus @2.5 @view_reports @quick_reports
   Scenario: 16263 Verify all credit card transactions from the creation of the partner to the current date
     When I add a new MozyEnterprise partner:
       | period | users |
       | 12     | 1     |
     Then New partner should be created
     When I act as newly created partner account
-    And I change account subscription up to biennial billing period
+    And I change account subscription to biennial billing period!
     Then Subscription changed message should be Your account has been changed to biennial billing.
     When I download Credit Card Transactions (CSV) quick report
     Then Quick report Credit Card Transactions csv file details should be:
@@ -194,7 +194,7 @@ Feature: View Report
       | @today   | $86.00   | @XXXX    | Visa      |
       | @today   | $95.00   | @XXXX    | Visa      |
 
-  @TC.17849 @slow
+  @TC.17849 @bus @2.5 @view_reports
   Scenario: 17849 Verify report type drop down list values in scheduled report view
     When I add a new MozyEnterprise partner:
       | period | users |

@@ -4,13 +4,15 @@ module SiteHelper
     # and highlight element
     #
     # Example
-    #   element(:username_tb, id: "username")
+    #   element(:username_tb, {id: "username"}, true)
     #   # => <Capybara::Element>
     #
     # Returns element
-    def element(element_name, element_hash)
+    def element(element_name, element_hash, wait_until_usable = false)
       define_method(element_name.to_sym) do
         el = find(element_hash.keys.first, element_hash.values.first)
+        puts element_hash[:wait_until_usable]
+        wait_until { el.visible? && el.enabled? } if wait_until_usable
         el.highlight
         el
       end
@@ -38,6 +40,23 @@ module SiteHelper
     def section(section_name, section_class, element_hash)
       define_method(section_name) do
         section_class.new(find(element_hash.keys[0], element_hash.values[0]))
+      end
+    end
+
+    # Define iframe of the page
+    #
+    # Examples:
+    #   class DemoPage < SiteHelper::Page
+    #     iframe(:outer_iframe, OuterIframe, :id, 'outer_iframe')
+    #   end
+    #
+    # @param [Symbol] name        The name of new iframe
+    # @param [Array]  find_args
+    #
+    # @return [SiteHelper::Iframe]
+    def iframe(name, iframe_class, *find_args)
+      define_method(name) do
+        iframe_class.new(find(*find_args))
       end
     end
 

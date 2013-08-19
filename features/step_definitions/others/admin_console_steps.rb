@@ -11,6 +11,10 @@ When /^I stop masquerading$/ do
   @bus_site.admin_console_page.has_no_link?('stop masquerading').should be_true
 end
 
+When /^I stop masquerading as sub partner$/ do
+  @bus_site.admin_console_page.stop_masquerading
+end
+
 Then /^I should not see (.+) link$/ do |link|
   @bus_site.admin_console_page.has_no_link?(link).should be_true
 end
@@ -70,6 +74,75 @@ end
 When /^I close alert window$/ do
   @bus_site.admin_console_page.alert_dismiss
 end
+
 When /^I view the partner info$/ do
   @bus_site.admin_console_page.view_partner_info
+end
+
+# has_navigation returns a value if items are present, otherwise it will return empty
+# in the case, am verifying that items are not present by checking for empty value
+Then /^navigation items should be removed$/ do
+  # this should apply regardless of the partner type
+  @bus_site.admin_console_page.has_navigation?("Assign Keys").should be_empty
+  @bus_site.admin_console_page.has_navigation?("Transfer Resources").should be_empty
+  @bus_site.admin_console_page.has_navigation?("Return Unused Resources").should be_empty
+  @bus_site.admin_console_page.has_navigation?("Add New User Group").should be_empty
+  @bus_site.admin_console_page.has_navigation?("List User Groups").should be_empty
+end
+
+# has_navigation returns a value if items are present, otherwise it will return empty
+# in the case, am verifying that items are present by ensuring a value is present
+Then /^new section & navigation items are present for (MozyPro|MozyEnterprise|Reseller|Itemized) partner$/ do |type|
+  @bus_site.admin_console_page.has_navigation?('quick_link_item').should be_true
+  case type
+    when CONFIGS['bus']['company_type']['mozypro']
+      @bus_site.admin_console_page.has_navigation?("Resource Summary").should be_true
+      @bus_site.admin_console_page.has_navigation?("Change Plan").should be_true
+      @bus_site.admin_console_page.has_navigation?("Add New User").should be_true
+      @bus_site.admin_console_page.has_navigation?("Download MozyPro Client").should be_true
+    when CONFIGS['bus']['company_type']['mozyenterprise']
+      @bus_site.admin_console_page.has_navigation?("Resource Summary").should be_true
+      @bus_site.admin_console_page.has_navigation?("User Group List").should be_true
+      @bus_site.admin_console_page.has_navigation?("Add New User").should be_true
+      @bus_site.admin_console_page.has_navigation?("Change Plan").should be_true
+      @bus_site.admin_console_page.has_navigation?("Download MozyEnterprise Client").should be_true
+    when CONFIGS['bus']['company_type']['reseller']
+      @bus_site.admin_console_page.has_navigation?("Resource Summary").should be_true
+      @bus_site.admin_console_page.has_navigation?("User Group List").should be_true
+      @bus_site.admin_console_page.has_navigation?("Add New User").should be_true
+      @bus_site.admin_console_page.has_navigation?("Change Plan").should be_true
+      @bus_site.admin_console_page.has_navigation?("Download MozyPro Client").should be_true
+    when "Itemized"
+      @bus_site.admin_console_page.has_navigation?("Resource Summary").should be_true
+      @bus_site.admin_console_page.has_navigation?("User Group List").should be_true
+      @bus_site.admin_console_page.has_navigation?("Add New User").should be_true
+      @bus_site.admin_console_page.has_navigation?("Change Plan").should be_true
+      @bus_site.admin_console_page.has_navigation?("Download MozyPro Client").should be_true
+    else
+      raise "Error: Company type #{type} does not exist."
+  end
+end
+
+Then /^I verify the new links for (MozyPro|MozyEnterprise|Reseller) partner$/ do |type|
+  case type
+    when CONFIGS['bus']['company_type']['mozypro']
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['resource_summary']), true)
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['add_new_user']), true)
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['download_client']), true)
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['change_plan']), true)
+    when CONFIGS['bus']['company_type']['mozyenterprise']
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['resource_summary']), true)
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['user_group_list']), true)
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['add_new_user']), true)
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['download_client']), true)
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['change_plan']), true)
+    when CONFIGS['bus']['company_type']['reseller']
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['resource_summary']), true)
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['user_group_list']), true)
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['add_new_user']), true)
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['download_client']), true)
+      @bus_site.admin_console_page.navigate_to_menu((CONFIGS['bus']['menu']['change_plan']), true)
+    else
+      raise "Error: Company type #{type} does not exist."
+  end
 end

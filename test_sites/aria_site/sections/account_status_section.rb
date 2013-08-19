@@ -4,7 +4,7 @@ module Aria
 
     # Private elements
     #
-    element(:change_acc_status_link, xpath: "//a[text()='Change Account Status']")
+    element(:change_acc_status_link, xpath: "//a[@title='Change Account Status']")
     element(:remove_queued_req_link, xpath: "//a[text()='Remove Queued Status Change Request']")
     element(:change_acc_status_btn, xpath: "//input[@value='Change Account Status']")
     element(:save_status_change_btn, id: "submit-button")
@@ -32,6 +32,9 @@ module Aria
     #
     # Returns success or error message text
     def messages
+      wait_until(CONFIGS['global']['aria_wait_time']) do
+        message_div.visible?
+      end
       message_div.text
     end
   end

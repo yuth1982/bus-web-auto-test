@@ -4,7 +4,7 @@ Feature: View billing history
   I want to view itemized statements for the services I have used
   so that I can understand why I was charged what I was charged
 
-  @TC.18898 @smoke
+  @TC.18898 @smoke @bus @2.0 @view_billing_history
   Scenario: 18898 Verify billing history after create MozyPro partner
     Given I log in bus admin console as administrator
     When I add a new MozyPro partner:

@@ -8,10 +8,6 @@ After do |scenario|
 
 end
 
-AfterStep do
-  # Todo
-end
-
 Before('@chrome') do
   Capybara.current_driver = :chrome
 end

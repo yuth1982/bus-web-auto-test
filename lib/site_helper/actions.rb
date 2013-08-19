@@ -80,8 +80,8 @@ module SiteHelper
     #
     # Returns nothing
     def refresh_bus_section
-      root_element.find(:css, "h2 a[onclick^=refresh_module]").click
-      loading = root_element.find(:css, "h2 a[onclick^=toggle_module]")
+      root_element.find(:css, 'h2>a[onclick^=refresh_module]').click
+      loading = root_element.find(:css, 'h2>a[onclick^=toggle_module]')
       unless loading[:class].nil?
         wait_until{ loading[:class].match(/loading/).nil? }
       end
@@ -101,15 +101,46 @@ module SiteHelper
     end
 
     def collapse_bus_section
-      if root_element[:class] == 'adminbox-active'
+      if root_element[:class] =~ /adminbox-active/
         root_element.find(:css, 'a.title').click
       end
     end
 
     def expand_bus_section
-      if root_element[:class] == 'adminbox-inactive'
+      if root_element[:class] =~ /adminbox-inactive/
         root_element.find(:css, 'a.title').click
       end
+    end
+
+    # Public: Wait until bus admin console section loaded
+    #
+    # Example:
+    #   @bus_site.admin_console_page.search_list_partner_section.wait_until_bus_section_load
+    #
+    # Returns nothing
+    def wait_until_bus_section_load(element_hash = {})
+      loading = root_element.find(:css, 'h2 a[onclick^=toggle_module]')
+      unless loading[:class].nil?
+        wait_until{ loading[:class].match(/loading/).nil? }
+      end
+      unless element_hash.empty?
+        element_hash.each do | key, value |
+          root_element.find(key, value)
+        end
+      end
+      # I found automation is still too faster, I need force to wait until table is loaded
+      # Possible refactor here
+      sleep 2
+    end
+
+    # Public: Is section visible and active
+    #
+    # Example:
+    #   @bus_site.admin_console_page.search_list_partner_section.section_visible?
+    #
+    # Returns bool
+    def section_visible?
+      root_element.visible?
     end
 
     # Public: Find element by args

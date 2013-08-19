@@ -15,6 +15,11 @@ module Zimbra
       parse_email_obj(response.body)
     end
 
+    def get_html_from_email(id, format='jason')
+      mail_content = find_email_content(id, format)
+      mail_content[(4 + mail_content.index("\r\n\r\n"))..-1]
+    end
+
     def send_request(url)
       RestClient.get(url)
     end

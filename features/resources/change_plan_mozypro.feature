@@ -1,10 +1,10 @@
-Feature: Change plan
+Feature: Change Plan for MozyPro Partners
 
   Background:
     Given I log in bus admin console as administrator
 
   # This scenario is highly depend on our product plans, if scenario failed, please login bus and update plan table below
-  @TC.18730 @Bug.83813 @regression
+  @TC.18730 @Bug.83813 @regression @bus @2.5 @change_plan @mozypro
   Scenario: 18730 Verify MozyPro monthly base plans info
     When I add a new MozyPro partner:
       | period | base plan |
@@ -33,7 +33,7 @@ Feature: Change plan
   Then I search and delete partner account by newly created partner company name
 
 # This scenario is highly depend on our product plans, if scenario failed, please login bus and update plan table below
-  @TC.18731 @Bug.83813 @regression
+  @TC.18731 @Bug.83813 @regression @bus @2.5 @change_plan @mozypro
   Scenario: 18731 Verify MozyPro yearly base plans info
     When I add a new MozyPro partner:
       | period | base plan |
@@ -62,11 +62,11 @@ Feature: Change plan
   Then I search and delete partner account by newly created partner company name
 
   # This scenario is highly depend on our product plans, if scenario failed, please login bus and update plan table below
-  @TC.18732 @Bug.83813 @regression
+  @TC.18732 @Bug.83813 @regression  @bus @2.5 @change_plan @mozypro
   Scenario: 18732 Verify MozyPro biennially base plans info
     When I add a new MozyPro partner:
-      | period | base plan |
-      | 24     | 10 GB     |
+      | period | base plan | net terms |
+      | 24     | 10 GB     | yes       |
     Then New partner should be created
     When I act as newly created partner account
     And I navigate to Change Plan section from bus admin console page
@@ -90,7 +90,7 @@ Feature: Change plan
   When I stop masquerading
   Then I search and delete partner account by newly created partner company name
 
-  @TC.16485 @Smoke
+  @TC.16485 @Smoke @bus @2.5 @change_plan @mozypro
   Scenario: 16485 MozyPro monthly US partner 10 GB moves to 50 GB plan
     When I add a new MozyPro partner:
       | period | base plan |
@@ -113,15 +113,13 @@ Feature: Change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.18424 @Smoke
+  @TC.18424 @Smoke @bus @2.5 @change_plan @mozypro
   Scenario: 18424 MozyPro monthly US partner 1 TB moves to 250 GB plan
     When I add a new MozyPro partner:
       | period | base plan |
       | 1      | 1 TB      |
     Then New partner should be created
     When I act as newly created partner account
-    And I allocate 250 GB Desktop quota to MozyPro partner
-    Then MozyPro resource quota should be changed
     When I change MozyPro account plan to:
       | base plan |
       | 250 GB    |
@@ -132,11 +130,11 @@ Feature: Change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.18336 @Smoke
+  @TC.18336 @Smoke @bus @2.5 @change_plan @mozypro
   Scenario: 18336 MozyPro yearly UK partner 500 GB moves to 1 TB plan
     When I add a new MozyPro partner:
-      | period | base plan | country        |
-      | 12     | 500 GB    | United Kingdom |
+      | period | base plan | country        | net terms |
+      | 12     | 500 GB    | United Kingdom | yes       |
     Then New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
@@ -155,15 +153,13 @@ Feature: Change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.18443 @Smoke
+  @TC.18443 @Smoke @bus @2.5 @change_plan @mozypro
   Scenario: 18443 MozyPro yearly UK partner 500 GB moves to 250 GB plan
     When I add a new MozyPro partner:
-      | period | base plan | country        |
-      | 12     | 500 GB    | United Kingdom |
+      | period | base plan | country        | net terms |
+      | 12     | 500 GB    | United Kingdom | yes       |
     Then New partner should be created
     When I act as newly created partner account
-    And I allocate 250 GB Desktop quota to MozyPro partner
-    Then MozyPro resource quota should be changed
     When I change MozyPro account plan to:
       | base plan |
       | 250 GB    |
@@ -174,7 +170,7 @@ Feature: Change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.18248 @Smoke @Bug.84931
+  @TC.18248 @Smoke @Bug.84931 @bus @2.5 @change_plan @mozypro
   Scenario: 18248 MozyPro biennially Ireland partner 1 TB moves to 2 TB plan
     When I add a new MozyPro partner:
       | period | base plan | country |
@@ -197,15 +193,13 @@ Feature: Change plan
   When I stop masquerading
   Then I search and delete partner account by newly created partner company name
 
-  @TC.18407
+  @TC.18407 @bus @2.5 @change_plan @mozypro
   Scenario: 18407 MozyPro biennially Ireland partner 2 TB moves to 1 TB plan
     When I add a new MozyPro partner:
       | period | base plan | country |
       | 24     | 2 TB      | Ireland |
     Then New partner should be created
     When I act as newly created partner account
-    And I allocate 1024 GB Desktop quota to MozyPro partner
-    Then MozyPro resource quota should be changed
     When I change MozyPro account plan to:
       | base plan |
       | 1 TB      |
@@ -216,7 +210,7 @@ Feature: Change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.17104 @Smoke
+  @TC.17104 @Smoke @bus @2.5 @change_plan @mozypro
   Scenario: 17104 Add server plan option to MozyPro monthly US partner
     When I add a new MozyPro partner:
       | period | base plan |
@@ -236,11 +230,11 @@ Feature: Change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.17105 @Smoke
+  @TC.17105 @Smoke @bus @2.5 @change_plan @mozypro
   Scenario: 17105 Add server storage add on to MozyPro monthly US partner
     When I add a new MozyPro partner:
-      | period | base plan |
-      | 1      | 1 TB      |
+      | period | base plan | net terms |
+      | 1      | 1 TB      | yes       |
     Then New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
@@ -256,11 +250,11 @@ Feature: Change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.17274 @Smoke
+  @TC.17274 @Smoke @bus @2.5 @change_plan @mozypro
   Scenario: 17274 Add server plan option to MozyPro yearly UK partner
     When I add a new MozyPro partner:
-      | period | base plan | country        |
-      | 12     | 500 GB    | United Kingdom |
+      | period | base plan | country        | net terms |
+      | 12     | 500 GB    | United Kingdom | yes       |
     Then New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
@@ -276,11 +270,11 @@ Feature: Change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.17275 @Smoke
+  @TC.17275 @Smoke @bus @2.5 @change_plan @mozypro
   Scenario: 17275 Add server storage add on to MozyPro yearly UK partner
     When I add a new MozyPro partner:
-      | period | base plan | country        |
-      | 12     | 1 TB      | United Kingdom |
+      | period | base plan | country        | net terms |
+      | 12     | 1 TB      | United Kingdom | yes       |
     Then New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
@@ -296,7 +290,7 @@ Feature: Change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.17276 @Smoke
+  @TC.17276 @Smoke @bus @2.5 @change_plan @mozypro
   Scenario: 17276 Add server plan option to MozyPro biennially Ireland partner
     When I add a new MozyPro partner:
       | period | base plan | country |
@@ -316,7 +310,7 @@ Feature: Change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.17277 @Smoke
+  @TC.17277 @Smoke @bus @2.5 @change_plan @mozypro
   Scenario: 17277 Add server storage add on to MozyPro biennially Ireland partner
     When I add a new MozyPro partner:
       | period | base plan | country |
@@ -336,7 +330,7 @@ Feature: Change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @test_coupon @Bug.85011 @regression
+  @test_coupon @Bug.85011 @regression @2.0
   Scenario: MozyPro monthly US partner 10 GB moves to 1T GB plan with 10 percent inline coupon
     When I add a new MozyPro partner:
       | period | base plan |

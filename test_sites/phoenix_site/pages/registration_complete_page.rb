@@ -5,50 +5,42 @@ module Phoenix
   # This class provides actions for phoenix registration page
   class NewRegistrationComplete < SiteHelper::Page
 
-    set_url("#{PHX_ENV['phx_host']}/registration")
+    set_url("https://#{QA_ENV['phoenix_host']}/registration")
 
     # Private elements
     #
     # Main elements within registration complete frame
     #
-	element(:reg_comp_center_form, css: "div.center-form-container")
-	element(:reg_comp_inner_center_form, css: "div.inner-center-form-box")
-	element(:reg_comp_banner, css: "div.center-form-box > h2")
-	element(:reg_comp_banner_txt, css: "div.inner-center-form-box > p")
-	element(:reg_comp_txt_par_1, xpath: "//div[@id='main']/div/div/div/div/div[2]/div/div/p[2]")
-	element(:reg_comp_txt_par_2, xpath: "//div[@id='main']/div/div/div/div/div[2]/div/div/p[3]")
+    element(:reg_comp_center_form, css: "div.center-form-container")
+    element(:reg_comp_inner_center_form, css: "div.inner-center-form-box")
+    element(:reg_comp_banner, css: "div.center-form-box > h2")
+    element(:reg_comp_banner_txt, css: "div.inner-center-form-box > p")
+    element(:reg_comp_txt_par_1, xpath: "//div[@id='main']/div/div/div/div/div[2]/div/div/p[2]")
+    element(:reg_comp_txt_par_2, xpath: "//div[@id='main']/div/div/div/div/div[2]/div/div/p[3]")
     # home specific - may be related
-  element(:reg_get_started_txt, xpath: "//div[@id='main']/div/div/div/div/div[2]/div/div/p[2]")
-  element(:reg_referral_txt, css: "div.referrer-info > p")
-    # download specific - redmine 90306
-  element(:win_dl_lbl, css: "div.download")
-  element(:reg_dl_win_btn, xpath: "//input[@value='Download for Win']")
-  element(:mac_1_dl_lbl, xpath: "//div[@id='main']/div/div/div/div/div[2]/div/div/div[2]")
-  element(:reg_dl_mac_btn, xpath: "//input[@value='Download for Mac']")
-  element(:mac_2_dl_lbl, xpath: "//div[@id='main']/div/div/div/div/div[2]/div/div/div[3]")
-  element(:reg_dl_mac2_btn, xpath: "(//input[@value='Download for Mac'])[2]")
-  element(:mac_3_dl_lbl, xpath: "//div[@id='main']/div/div/div/div/div[2]/div/div/div[4]")
-  element(:reg_dl_mac3_btn, xpath: "(//input[@value='Download for Mac'])[3]")
-  element(:logout_btn, xpath: "//a[text()='LOG OUT']")
-  #element(:go_to_acct_lnk, link: "Go to Account")
-  # adding a few items for quick and dirty acct verification, if items present and value good - acct=good.
-  # additional verification being done @ admin level in admin console
-  element(:h3_section, css: "h3") # partner detail info section
-  element(:partner_server_setting, css: "span.partner_generic_resource_shown.info")
-  element(:h4_section, css: "h4") # renewal heading in billing info
-  element(:bill_info_plan_amnt, css: "strong") # billing info - plan size in bold
-  element(:man_resource_plan_size, css: "span.value") # manage resources section - 'total account storage'
-  element(:man_resource_server_value , xpath: "//div[@id='resource-available_key_list-content']/div[2]/div[3]/div/span[6]") # manage resources section "server enabled" value
+    element(:reg_get_started_txt, xpath: "//div[@id='main']/div/div/div/div/div[2]/div/div/p[2]")
+    element(:reg_referral_txt, css: "div.referrer-info > p")
+    element(:reg_dl_win_btn, xpath: "//input[@value='Download for Win']")
+    element(:reg_dl_mac_btn, xpath: "//input[@value='Download for Mac']")
+    element(:reg_dl_mac2_btn, xpath: "(//input[@value='Download for Mac'])[2]")
+    element(:logout_btn, xpath: "//a[text()='LOG OUT']")
+    element(:start_using_mozy, id: "btn_start_using")
+    # adding a few minimal items for acct verification, if items present / value good - acct=good.
+    # additional verification being done @ admin level in admin console
+    element(:h3_section, css: "h3") # partner detail info section
+    element(:pooled_resources, css: "table.form-box2")
+    element(:h4_section, css: "h4") # renewal heading in billing info
+    element(:refresh, css: "img[alt='Refresh']")
+    element(:pooled_resource_tbl, css: "table.form-box2")
+    element(:bill_info_plan_amnt, css: "strong") # billing info - plan size in bold
     #
-    #	Public : reg complete banner present
+    # Public : reg complete banner visible
+    # required: nothing
     #
-    #	required: nothing
+    # Example
+    #   xx('yy')
     #
-    #	Example
-    #
-    #		xx('yy')
-    #
-    #	Returns nothing
+    # Returns nothing
     def navigate_to_link(link)
       find_link(link).click
     end
@@ -64,10 +56,17 @@ module Phoenix
     def logout(partner)
       localized_click(partner, 'logout')
     end
+
+    # clears pertinent cookies for phoenix
+    def clear_phoenix_cookies
+      page.driver.browser.manage.delete_cookie("_session_id");
+      page.driver.browser.manage.delete_cookie("_phoenix_session_id");
+      page.driver.browser.manage.delete_cookie("user_lang_pref");
+    end
+
     # pro section
     # code here relates
     # to mozypro related items
-
     def partner_created(partner)
       find_link(partner.company_info.name).present?
     end
@@ -89,7 +88,14 @@ module Phoenix
     def partner_info_section(partner)
       go_to_partner_info(partner)
       h3_section.eql?(partner.company_info.name).present?
-      partner_server_setting.eql?(partner.has_server_plan).present?
+      until pooled_resource_tbl.visible?
+        refresh
+      end
+      pooled_resources.visible?
+    end
+
+    def refresh
+      refresh.click
     end
 
     # billing info verification - if specific values are present, section should be good
@@ -100,19 +106,10 @@ module Phoenix
       bill_info_plan_amnt.eql?(partner.base_plan).present?
     end
 
-    # manage resources info verification - if specific values are present, section should be good
-    # additional verification being done @ admin level in admin console
-    def manage_resources_section(partner)
-      localized_click(partner, 'man_res')
-      man_resource_plan_size.eql?(partner.base_plan).present?
-      man_resource_server_value.eql?(partner.has_server_plan).present?
-    end
-
     # pro registration complete
     def reg_complete(partner)
       reg_comp_banner_present
       localized_click(partner, 'go_to_acct')
-      localized_click(partner, 'skip_stash')
       partner_created(partner)
       localized_click(partner, 'logout')
     end
@@ -120,7 +117,6 @@ module Phoenix
     # home section
     # code here relates
     # to mozyhome related items
-
     def reg_get_started
       reg_get_started_txt.present?
     end
@@ -130,32 +126,53 @@ module Phoenix
     end
 
     # here we check for windows and both mac client download buttons
-    # specifc for redmine 90306, till changed
-    def reg_home_dl_items
-      win_dl_lbl.eql?("Version 2.12.1.160, 0 bytes, Windows 7 / Vista / XP")
+    def reg_home_dl_buttons
       reg_dl_win_btn.present?
-      mac_1_dl_lbl.eql?("Version 2.10.0.1110, 0 bytes, Mac OS X 10.6+ (Intel)")
       reg_dl_mac_btn.present?
-      mac_2_dl_lbl.eql?("Version 2.9.1.609, 0 bytes, Mac OS X 10.5 (Intel)")
       reg_dl_mac2_btn.present?
-      mac_3_dl_lbl.eql?("Version 1.7.3.0, 0 bytes, Mac OS X 10.4 (PPC, Intel), Mac OS X 10.5 (PPC)")
-      reg_dl_mac3_btn.present?
+    end
+
+    # check url for home free VS home pay
+    # paid acct url ends with: registration/mozy_home_finish
+    # free acct url end with: registration/free_finish
+    def check_url
+      if url.eql?(/https?:\/\/secure.mozy.[\S]\/registration\/mozy_home_finish\/[\S]+/)
+        "Home"
+        else
+          "Free"
+      end
     end
 
     # home registration complete
     def home_success(partner)
+      check_url
       reg_comp_banner_present
       reg_comp_text
       reg_get_started
       reg_referral_banner
-      reg_home_dl_items
       localized_click(partner, 'acct_page_link')
       reg_comp_banner_present
       localized_click(partner, 'resend_verify_email_link')
       localized_click(partner, 'back_2_login_link')
-      # logout(partner)
+      #logout(partner)
+      clear_phoenix_cookies
     end
 
+    # free home registration complete
+    def free_home_success(partner)
+      reg_comp_banner_present
+      reg_comp_text
+      reg_get_started
+      reg_referral_banner
+      clear_phoenix_cookies
+    end
+
+    # free verification success
+    def free_home_verified(partner)
+      reg_comp_banner_present
+      reg_comp_text
+      clear_phoenix_cookies
+    end
     # user/partner verification section
     # code here relates to
     # partner/user verification
@@ -163,7 +180,13 @@ module Phoenix
       partner_created(partner)
       partner_info_section(partner)
       billing_info_section(partner)
-      manage_resources_section(partner)
+      # manage resources is no longer available w/ pooled storage
+      # TODO: GET THIS CALL FOR RESOURCE SUMMARY VERIFICATION WORKING PROPERLY
+      # step %{Bundled storage summary should be:}, table(%{
+      #    | Available | Used |
+      #    | #{partner.base_plan} | 0 |
+      #  })
+      clear_phoenix_cookies
     end
   end
 end

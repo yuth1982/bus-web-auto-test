@@ -9,6 +9,7 @@ Capybara.register_driver :firefox do |app|
   profile['browser.download.manager.showWhenStarting'] = false
   profile['browser.download.manager.closeWhenDone'] = true
   profile['browser.helperApps.neverAsk.saveToDisk'] = "application/csv;text/csv;application/vnd.ms-excel;"
+  profile.assume_untrusted_certificate_issuer = false
   #profile.native_events = true
   Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => profile)
 end
@@ -17,7 +18,12 @@ Capybara.register_driver :firefox_profile do |app|
   profile_address = "#{FileHelper.default_test_data_path}/#{CONFIGS['global']['profile_name']}"
   profile = Selenium::WebDriver::Firefox::Profile.new profile_address
   profile.add_extension("#{FileHelper.default_test_data_path}/autoauth-2.1-fx+fn.xpi")
-  profile.add_extension("#{FileHelper.default_test_data_path}/firebug-1.11.2-fx.xpi")
+  Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => profile)
+end
+
+Capybara.register_driver :firefox_debug do |app|
+  profile = Selenium::WebDriver::Firefox::Profile.new
+  profile.add_extension("#{FileHelper.default_test_data_path}/firebug-1.11.4-fx.xpi")
   Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => profile)
 end
 
@@ -52,8 +58,8 @@ end
 
 Capybara.default_wait_time = CONFIGS['global']['default_wait_time']
 
-# Aria's timezone is UTC -04, Atlantic Standard Time
-Time.zone = "Atlantic Time (Canada)"
+# Aria's timezone is Eastern Time
+Time.zone = "Eastern Time (US & Canada)"
 Chronic.time_class = Time.zone
 
 # Setup Aria API

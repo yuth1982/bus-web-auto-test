@@ -11,8 +11,8 @@ Feature: Manage Horizon related settings
       | congshanl+usersync@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
 
-  @TC.17476 @TC.17477
-  Scenario: Successfully verify 'Test Connection' button should work with valid host
+  @TC.17476 @TC.17477 @bus @2.1 @direct_ldap_integration @authentication_migration
+  Scenario: 17476 17477 Successfully verify 'Test Connection' button should work with valid host
     When I use Directory Service as authentication provider
     And I de-select Horizon Manager
     And I click Connection Settings tab
@@ -28,8 +28,8 @@ Feature: Manage Horizon related settings
       | Server Host          | Protocol | SSL Cert | Port | Base DN                   | Bind Username         | Bind Password |
       | 10.135.16.154        | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com|  QAP@SSw0rd   |
 
-  @TC.17825
-  Scenario: 'Test Connection' should report invalid credentials error
+  @TC.17825 @bus @2.1 @direct_ldap_integration @authentication_migration
+  Scenario: 17825 'Test Connection' should report invalid credentials error
     When I use Directory Service as authentication provider
     And I de-select Horizon Manager
     And I click Connection Settings tab
@@ -41,8 +41,8 @@ Feature: Manage Horizon related settings
     When I Test Connection for AD
     Then AD server test connection message should be Test failed. Error: Could not connect to the AD server. Reason: BIND failed. Please verify you entered the correct BIND settings.
 
-  @TC.17478
-  Scenario: Successfully verify 'Test Connection' button should work with valid domain name input
+  @TC.17478 @bus @2.1 @direct_ldap_integration @authentication_migration
+  Scenario: 17478 Successfully verify 'Test Connection' button should work with valid domain name input
     When I use Directory Service as authentication provider
     And I de-select Horizon Manager
     And I click Connection Settings tab
@@ -59,8 +59,8 @@ Feature: Manage Horizon related settings
       | ad01.qa5.mozyops.com | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com|  QAP@SSw0rd   |
 
 
-  @TC.17479
-  Scenario: Host input should reject invalid parameters
+  @TC.17479 @bus @2.1 @direct_ldap_integration @authentication_migration
+  Scenario: 17479 Host input should reject invalid parameters
     When I use Directory Service as authentication provider
     And I de-select Horizon Manager
     And I click Connection Settings tab
@@ -72,8 +72,8 @@ Feature: Manage Horizon related settings
       | Save failed  |
       | Invalid data.|
 
-  @TC.17480
-  Scenario: Port input should reject invalid parameters
+  @TC.17480 @bus @2.1 @direct_ldap_integration @authentication_migration
+  Scenario: 17480 Port input should reject invalid parameters
     When I use Directory Service as authentication provider
     And I de-select Horizon Manager
     And I click Connection Settings tab
@@ -85,8 +85,8 @@ Feature: Manage Horizon related settings
       | Save failed  |
       | Invalid data.|
 
-  @TC.17482
-  Scenario: Base Tree should reject invalid empty inputs
+  @TC.17482 @bus @2.1 @direct_ldap_integration @authentication_migration
+  Scenario: 17482 Base Tree should reject invalid empty inputs
     When I use Directory Service as authentication provider
     And I de-select Horizon Manager
     And I click Connection Settings tab
@@ -98,8 +98,8 @@ Feature: Manage Horizon related settings
     When I Test Connection for AD
     Then AD server test connection message should be Test failed. Error: AD base DN is not provided.
 
-  @TC.17484
-  Scenario: Certificate should only be enabled with SSL enabled
+  @TC.17484 @bus @2.1 @direct_ldap_integration @authentication_migration
+  Scenario: 17484 Certificate should only be enabled with SSL enabled
     When I use Directory Service as authentication provider
     And I de-select Horizon Manager
     And I click Connection Settings tab
@@ -108,8 +108,8 @@ Feature: Manage Horizon related settings
     And I select Protocol as StartTLS
     Then certificate text field is enabled
 
-  @TC.17486 @TC.17487
-  Scenario: Authentication tab should be able to save inputs correctly
+  @TC.17486 @TC.17487 @bus @2.1 @direct_ldap_integration @authentication_migration
+  Scenario: 17486 17487 Authentication tab should be able to save inputs correctly
     When I use Directory Service as authentication provider
     And I de-select Horizon Manager
     And I click SAML Authentication tab

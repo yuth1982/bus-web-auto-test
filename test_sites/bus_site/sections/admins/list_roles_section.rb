@@ -6,5 +6,8 @@ module Bus
       find(:xpath, "//a[text() = '#{role_name}']").click
     end
 
+    def all_role_name_started_with(name)
+      all(:xpath, "//a[starts-with(., \"#{name}\")]")
+    end
   end
 end

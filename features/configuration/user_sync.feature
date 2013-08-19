@@ -5,7 +5,7 @@
 # | partner name                      | admin                                    | usage                               |
 # | Never Synced Test                 | user_sync_never_synced@auto.com          | the partner never synced            |
 # | User Sync Automation              | user_sync_automation@auto.com            | general, mainly for the ui          |
-# | Fed ID Partner                    | mikeg+newfedid@mozy.com                      | users in this partner can login     |
+# | Fed ID Partner                    | dvg@dvg.dvg                      | users in this partner can login     |
 # | Machine Migration for TC16273     | user_sync_add_delete@auto.com            | add/delete users in the AD          |
 # | Partner that has subpartner       | usrsync@test.com                         | scheduled sync                      |
 # (2). add 3 groups to each partner: dev, qa, pm
@@ -25,8 +25,8 @@ Feature: User sync
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.17518 @ui
-  Scenario: Check the UI when the partner has never synced
+  @TC.17518 @ui @bus @2.1 @direct_ldap_integration @use_provision
+  Scenario: 17518 Check the UI when the partner has never synced
     When I act as partner by:
       | email                           |
       | user_sync_never_synced@auto.com |
@@ -37,8 +37,8 @@ Feature: User sync
       | current status       | last sync | next sync |
       | Never synchronized   |           |           |
 
-  @TC.17519 @ui
-  Scenario: Sync Now
+  @TC.17519 @ui @bus @2.1 @direct_ldap_integration @use_provision
+  Scenario: 17519 Sync Now
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -55,8 +55,8 @@ Feature: User sync
       | current status       | last sync           |
       | Synchronized         |   @last_sync_time   |
 
-  @TC.17529 @ui
-  Scenario: Check the Attribute mapping UI
+  @TC.17529 @ui @bus @2.1 @direct_ldap_integration @use_provision
+  Scenario: 17529 Check the Attribute mapping UI
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -69,8 +69,8 @@ Feature: User sync
     When I save the changes
     Then Authentication Policy has been updated successfully
 
-  @TC.17530 @ui
-  Scenario: Local groups dropdown list check
+  @TC.17530 @ui @bus @2.1 @direct_ldap_integration @use_provision
+  Scenario: 17530 Local groups dropdown list check
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -83,8 +83,8 @@ Feature: User sync
     Then There should be 4 provision items:
       | (default user group) | dev | pm | qa |
 
-  @TC.17531 @ui
-  Scenario: User provision - Rules ordering interaction
+  @TC.17531 @ui @bus @2.1 @direct_ldap_integration @use_provision
+  Scenario: 17531 User provision - Rules ordering interaction
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -115,8 +115,8 @@ Feature: User sync
     And I delete 3 provision rules
     And I save the changes
 
-  @TC.17532 @ui
-  Scenario: User provision - Delete rules
+  @TC.17532 @ui @bus @2.1 @direct_ldap_integration @use_provision
+  Scenario: 17532 User provision - Delete rules
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -137,8 +137,8 @@ Feature: User sync
     Then The provision rule number is 0
     And Authentication Policy has been updated successfully
 
-  @TC.17534 @ui
-  Scenario: UserDestruction - UI Components check
+  @TC.17534 @ui @bus @2.1 @direct_ldap_integration @use_provision
+  Scenario: 17534 UserDestruction - UI Components check
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -152,8 +152,8 @@ Feature: User sync
       | Take no action | Suspend | Delete |
     And The selected deprovision option is Take no action
 
-  @TC.17535 @ui
-  Scenario: UserDestruction - Rules ordering interaction
+  @TC.17535 @ui @bus @2.1 @direct_ldap_integration @use_provision
+  Scenario: 17535 UserDestruction - Rules ordering interaction
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -184,8 +184,8 @@ Feature: User sync
     And I delete 3 deprovision rules
     And I save the changes
 
-  @TC.17536 @ui
-  Scenario: UserDestruction - Rules deletion
+  @TC.17536 @ui @bus @2.1 @direct_ldap_integration @use_provision
+  Scenario: 17536 UserDestruction - Rules deletion
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -206,8 +206,8 @@ Feature: User sync
     Then The deprovision rule number is 0
     And Authentication Policy has been updated successfully
 
-  @TC.17538 @TC.17551  @smoke @function
-  Scenario: One Rule/Match All/Multiple Users
+  @TC.17538 @TC.17551  @smoke @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction
+  Scenario: 17538 17551 One Rule/Match All/Multiple Users
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -250,8 +250,8 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
 
-  @TC.17540 @TC.17552 @function
-  Scenario: One Rule/Multiple Rules
+  @TC.17540 @TC.17552 @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction
+  Scenario: 17540 17552 One Rule/Multiple Rules
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -300,8 +300,8 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
 
-  @TC.17542 @TC.17554 @function
-  Scenario: Multiple Ruls/Multiple Users
+  @TC.17542 @TC.17554 @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction
+  Scenario: 17542 17554 Multiple Ruls/Multiple Users
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -354,8 +354,8 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
 
-  @TC.17543 @TC.17557 @TC.17558 @function
-  Scenario: Multiple Ruls/Multiple Users/Rule order matters
+  @TC.17543 @TC.17557 @TC.17558 @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction
+  Scenario: 17543 17557 17558 Multiple Ruls/Multiple Users/Rule order matters
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -436,8 +436,8 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
 
-  @TC.17544 @function
-  Scenario: UserProvision - Multiple Ruls/Multiple Users/Change Rules
+  @TC.17544 @function @bus @2.1 @direct_ldap_integration @use_provision
+  Scenario: 17544 UserProvision - Multiple Ruls/Multiple Users/Change Rules
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -518,8 +518,8 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
 
-  @TC.17559 @function
-  Scenario: Empty rules will be filtered
+  @TC.17559 @function @bus @2.1 @direct_ldap_integration @user_deconstruction
+  Scenario: 17559 Empty rules will be filtered
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -534,8 +534,8 @@ Feature: User sync
     And I save the changes
     Then Authentication Policy has been updated successfully
 
-  @TC.17560 @function
-  Scenario: Unknown query string
+  @TC.17560 @function @bus @2.1 @direct_ldap_integration @user_deconstruction
+  Scenario: 17560 Unknown query string
     When I act as partner by:
       | email                         |
       | user_sync_automation@auto.com |
@@ -550,66 +550,67 @@ Feature: User sync
       | Save failed                          |
       | abcd is not a valid value for query. |
 
-  @TC.18738 @function
-  Scenario: UserProvision-Delete a group, the users belong to this group will be moved to default group
-    When I act as partner by:
-      | email                                |
-      | user_sync_delete_user_group@auto.com |
-    And I navigate to Add New User Group section from bus admin console page
-    And I add a new user group:
-      | name        |
-      | test_delete |
-    When I navigate to Authentication Policy section from bus admin console page
-    And I use Directory Service as authentication provider
-    And I save the changes
-    Then Authentication Policy has been updated successfully
-    When I click Sync Rules tab
-    And I add 1 new provision rules:
-      | rule         | group       |
-      | cn=dev_test* | test_delete |
-    And I click the sync now button
-    And I wait for 80 seconds
-    And I delete 1 provision rules
-    And I save the changes
-    And I click Connection Settings tab
-    Then The sync status result should like:
-      | current status       | last sync           |
-      | Synchronized         |   @last_sync_time   |
-    When I navigate to Search / List Users section from bus admin console page
-    Then User search results should be:
-      | User               |      Name     | User Group  |
-      | dev_test3@test.com |   dev_test3   | test_delete |
-      | dev_test2@test.com |   dev_test2   | test_delete |
-      | dev_test1@test.com |   dev_test1   | test_delete |
-    And I search and delete test_delete user group
-    And I refresh Search List User section
-    Then User search results should be:
-      | User               |      Name     | User Group          |
-      | dev_test1@test.com |   dev_test1   | (default user group)|
-      | dev_test2@test.com |   dev_test2   | (default user group)|
-      | dev_test3@test.com |   dev_test3   | (default user group)|
-    And I navigate to Authentication Policy section from bus admin console page
-    And I use Directory Service as authentication provider
-    And I click Sync Rules tab
-    And I add 1 new deprovision rules:
-      | rule         | action  |
-      | cn=dev_test* | Delete  |
-    And I click the sync now button
-    And I wait for 80 seconds
-    And I delete 1 deprovision rules
-    And I save the changes
-    And I click Connection Settings tab
-    Then The sync status result should like:
-      | current status       | last sync           |
-      | Synchronized         |   @last_sync_time   |
-    When I navigate to Search / List Users section from bus admin console page
-    Then The users table should be empty
+#  Invalid. Now the you must delete users first before deleting the user group
+#  @TC.18738 @function   @bus @2.1 @direct_ldap_integration @use_provision
+#  Scenario: 18738 UserProvision-Delete a group, the users belong to this group will be moved to default group
+#    When I act as partner by:
+#      | email                                |
+#      | user_sync_delete_user_group@auto.com |
+#    And I add a new Itemized user group:
+#      | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
+#      | Test | Shared               | 10              | Shared              | 10             |
+#    When I navigate to Authentication Policy section from bus admin console page
+#    And I use Directory Service as authentication provider
+#    And I save the changes
+#    Then Authentication Policy has been updated successfully
+#    When I click Sync Rules tab
+#    And I add 1 new provision rules:
+#      | rule         | group       |
+#      | cn=dev_test* | test_delete |
+#    And I click the sync now button
+#    And I wait for 80 seconds
+#    And I delete 1 provision rules
+#    And I save the changes
+#    And I click Connection Settings tab
+#    Then The sync status result should like:
+#      | current status       | last sync           |
+#      | Synchronized         |   @last_sync_time   |
+#    When I navigate to Search / List Users section from bus admin console page
+#    Then User search results should be:
+#      | User               |      Name     | User Group  |
+#      | dev_test3@test.com |   dev_test3   | test_delete |
+#      | dev_test2@test.com |   dev_test2   | test_delete |
+#      | dev_test1@test.com |   dev_test1   | test_delete |
+#    And I navigate to User Group List section from bus admin console page
+#    When I delete user group details by name: Test
+#    And I refresh Search List User section
+#    Then User search results should be:
+#      | User               |      Name     | User Group          |
+#      | dev_test1@test.com |   dev_test1   | (default user group)|
+#      | dev_test2@test.com |   dev_test2   | (default user group)|
+#      | dev_test3@test.com |   dev_test3   | (default user group)|
+#    And I navigate to Authentication Policy section from bus admin console page
+#    And I use Directory Service as authentication provider
+#    And I click Sync Rules tab
+#    And I add 1 new deprovision rules:
+#      | rule         | action  |
+#      | cn=dev_test* | Delete  |
+#    And I click the sync now button
+#    And I wait for 80 seconds
+#    And I delete 1 deprovision rules
+#    And I save the changes
+#    And I click Connection Settings tab
+#    Then The sync status result should like:
+#      | current status       | last sync           |
+#      | Synchronized         |   @last_sync_time   |
+#    When I navigate to Search / List Users section from bus admin console page
+#    Then The users table should be empty
 
-  @TC.17592 @firefox_profile @vpn
-  Scenario: UserProvision - Deleted users in BUS can be resumed
+  @TC.17592 @firefox_profile @vpn  @bus @2.1 @direct_ldap_integration @use_provision
+  Scenario: 17592 UserProvision - Deleted users in BUS can be resumed
     When I act as partner by:
-      | email                   |
-      | mikeg+newfedid@mozy.com |
+      | email        |
+      | dvg@dvg.dvg  |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I save the changes
@@ -617,7 +618,7 @@ Feature: User sync
     When I click Sync Rules tab
     And I add 1 new provision rules:
       | rule             | group |
-      | cn=auto1         | dev   |
+      | cn=auto          | dev   |
     And I click the sync now button
     And I wait for 100 seconds
     And I delete 1 provision rules
@@ -628,26 +629,26 @@ Feature: User sync
       | Synchronized         | @last_sync_time    |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                   | filter |
-      | auto1@okta.mozyqa.local    | None   |
+      | keywords                              | filter |
+      | <%=CONFIGS['fedid']['user_email']%>   | None   |
     Then User search results should be:
-      | User                      | Name       | User Group  |
-      | auto1@okta.mozyqa.local   | auto1      | dev         |
-    When I view user details by auto1@okta.mozyqa.local
+      | User                                 | Name                               | User Group  |
+      | <%=CONFIGS['fedid']['user_email']%>  | <%=CONFIGS['fedid']['user_name']%> | dev         |
+    When I view user details by <%= CONFIGS['fedid']['user_email'] %>
     Then The user status should be Active
-    When I login the subdomain okta
+    When I login the subdomain <%= CONFIGS['fedid']['subdomain'] %>
     Then I will see the user account page
 
     When I log in bus admin console as administrator
     When I act as partner by:
-      | email                   |
-      | mikeg+newfedid@mozy.com |
+      | email       |
+      | dvg@dvg.dvg |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
     And I add 1 new deprovision rules:
       | rule             | action |
-      | cn=auto1         | Delete |
+      | cn=auto          | Delete |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 1 deprovision rules
@@ -658,22 +659,22 @@ Feature: User sync
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                   | filter |
-      | auto1@okta.mozyqa.local    | None   |
+      | keywords                            | filter |
+      | <%=CONFIGS['fedid']['user_email']%> | None   |
     Then The users table should be empty
-    When I login the subdomain okta
+    When I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
     Then I will see the Authentication Failed page
 
     When I log in bus admin console as administrator
     When I act as partner by:
-      | email                   |
-      | mikeg+newfedid@mozy.com |
+      | email       |
+      | dvg@dvg.dvg |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
     And I add 1 new provision rules:
       | rule             | group |
-      | cn=auto1         | dev   |
+      | cn=auto          | dev   |
     And I click the sync now button
     And I wait for 60 seconds
     And I delete 1 provision rules
@@ -684,21 +685,21 @@ Feature: User sync
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                | filter |
-      | auto1@okta.mozyqa.local | None   |
+      | keywords                            | filter |
+      | <%=CONFIGS['fedid']['user_email']%> | None   |
     Then User search results should be:
-      | User                    | Name       | User Group  |
-      | auto1@okta.mozyqa.local | auto1      | dev         |
-    When I view user details by auto1@okta.mozyqa.local
+      | User                                | Name                               | User Group  |
+      | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%> | dev         |
+    When I view user details by <%=CONFIGS['fedid']['user_email']%>
     Then The user status should be Active
-    When I login the subdomain okta
+    When I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
     Then I will see the user account page
 
-  @TC.17593 @firefox_profile @vpn
-  Scenario: UserProvision - Suspended users in BUS can't be resumed
+  @TC.17593 @firefox_profile @vpn  @bus @2.1 @direct_ldap_integration @use_provision
+  Scenario: 17593 UserProvision - Suspended users in BUS can't be resumed
     When I act as partner by:
       | email                   |
-      | mikeg+newfedid@mozy.com |
+      | dvg@dvg.dvg |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I save the changes
@@ -706,7 +707,7 @@ Feature: User sync
     When I click Sync Rules tab
     And I add 1 new provision rules:
       | rule             | group |
-      | cn=auto1         | dev   |
+      | cn=auto          | dev   |
     And I click the sync now button
     And I wait for 100 seconds
     And I delete 1 provision rules
@@ -717,26 +718,26 @@ Feature: User sync
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                | filter |
-      | auto1@okta.mozyqa.local | None   |
+      | keywords                            | filter |
+      | <%=CONFIGS['fedid']['user_email']%> | None   |
     Then User search results should be:
-      | User                    | Name       | User Group  |
-      | auto1@okta.mozyqa.local | auto1      | dev         |
-    When I view user details by auto1@okta.mozyqa.local
+      | User                                | Name                                    | User Group  |
+      | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%>      | dev         |
+    When I view user details by <%=CONFIGS['fedid']['user_email']%>
     Then The user status should be Active
-    When I login the subdomain okta
+    When I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
     Then I will see the user account page
 
     When I log in bus admin console as administrator
     And I act as partner by:
-      | email                   |
-      | mikeg+newfedid@mozy.com |
+      | email        |
+      | dvg@dvg.dvg  |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
     And I add 1 new deprovision rules:
       | rule             | action  |
-      | cn=auto1         | Suspend |
+      | cn=auto          | Suspend |
     And I click the sync now button
     And I wait for 60 seconds
     And I delete 1 deprovision rules
@@ -747,26 +748,26 @@ Feature: User sync
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                | filter |
-      | auto1@okta.mozyqa.local | None   |
+      | keywords                            | filter |
+      | <%=CONFIGS['fedid']['user_email']%> | None   |
     Then User search results should be:
-      | User                    | Name       | User Group  |
-      | auto1@okta.mozyqa.local | auto1      | dev         |
-    When I view user details by auto1@okta.mozyqa.local
+      | User                                | Name                                    | User Group  |
+      | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%>      | dev         |
+    When I view user details by <%=CONFIGS['fedid']['user_email']%>
     And The user status should be Suspended
-    When I login the subdomain okta
+    When I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
     Then I will see the Authentication Failed page
 
     When I log in bus admin console as administrator
     And I act as partner by:
-      | email                   |
-      | mikeg+newfedid@mozy.com |
+      | email       |
+      | dvg@dvg.dvg |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
     And I add 1 new provision rules:
       | rule             | group |
-      | cn=auto1         | dev   |
+      | cn=auto          | dev   |
     And I click the sync now button
     And I wait for 60 seconds
     And I delete 1 provision rules
@@ -777,28 +778,28 @@ Feature: User sync
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                   | filter |
-      | auto1@okta.mozyqa.local | None   |
+      | keywords                            | filter |
+      | <%=CONFIGS['fedid']['user_email']%> | None   |
     Then User search results should be:
-      | User                    | Name       | User Group  |
-      | auto1@okta.mozyqa.local | auto1      | dev         |
-    When I view user details by auto1@okta.mozyqa.local
+      | User                                 | Name                                    | User Group  |
+      | <%=CONFIGS['fedid']['user_email']%>  | <%=CONFIGS['fedid']['user_name']%>      | dev         |
+    When I view user details by <%=CONFIGS['fedid']['user_email']%>
     Then The user status should be Suspended
-    When I login the subdomain okta
+    When I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
     Then I will see the Authentication Failed page
 
     And I log in bus admin console as administrator
     And I search user by:
-      | keywords                | filter |
-      | auto1@okta.mozyqa.local | None   |
-    And I view user details by auto1@okta.mozyqa.local
-    And I active the user
+      | keywords                            | filter |
+      | <%=CONFIGS['fedid']['user_email']%> | None   |
+    And I view user details by <%=CONFIGS['fedid']['user_email']%>
+    And I activate the user
 
-  @TC.17594 @firefox_profile @vpn
-  Scenario: UserProvision - Delete user after several days of not synced
+  @TC.17594 @firefox_profile @vpn @bus @2.1 @direct_ldap_integration @use_provision
+  Scenario: 17594 UserProvision - Delete user after several days of not synced
     When I act as partner by:
-      | email                   |
-      | mikeg+newfedid@mozy.com |
+      | email       |
+      | dvg@dvg.dvg |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I save the changes
@@ -806,7 +807,7 @@ Feature: User sync
     When I click Sync Rules tab
     And I add 1 new provision rules:
       | rule             | group |
-      | cn=auto1         | dev   |
+      | cn=auto          | dev   |
     And I click the sync now button
     And I wait for 60 seconds
     And I delete 1 provision rules
@@ -817,20 +818,20 @@ Feature: User sync
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                | filter |
-      | auto1@okta.mozyqa.local | None   |
+      | keywords                            | filter |
+      | <%=CONFIGS['fedid']['user_email']%> | None   |
     Then User search results should be:
-      | User                    | Name       | User Group  |
-      | auto1@okta.mozyqa.local | auto1      | dev         |
-    When I view user details by auto1@okta.mozyqa.local
+      | User                                | Name                                    | User Group  |
+      | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%>      | dev         |
+    When I view user details by <%=CONFIGS['fedid']['user_email']%>
     And I get the user id
-    And I login the subdomain okta
+    And I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
     Then I will see the user account page
 
     When I log in bus admin console as administrator
     And I act as partner by:
-      | email                   |
-      | mikeg+newfedid@mozy.com |
+      | email       |
+      | dvg@dvg.dvg |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -846,17 +847,17 @@ Feature: User sync
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                | filter |
-      | auto1@okta.mozyqa.local | None   |
+      | keywords                            | filter |
+      | <%=CONFIGS['fedid']['user_email']%> | None   |
     Then The users table should be empty
-    When I login the subdomain okta
+    When I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
     Then I will see the Authentication Failed page
 
-  @TC.17595 @firefox_profile @vpn
-  Scenario: UserProvision - Suspend user after several days of not synced
+  @TC.17595 @firefox_profile @vpn @bus @2.1 @direct_ldap_integration @use_provision
+  Scenario: 17595 UserProvision - Suspend user after several days of not synced
     When I act as partner by:
-      | email                   |
-      | mikeg+newfedid@mozy.com |
+      | email       |
+      | dvg@dvg.dvg |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I save the changes
@@ -864,7 +865,7 @@ Feature: User sync
     When I click Sync Rules tab
     And I add 1 new provision rules:
       | rule             | group |
-      | cn=auto1         | dev   |
+      | cn=auto          | dev   |
     And I click the sync now button
     And I wait for 60 seconds
     And I delete 1 provision rules
@@ -875,20 +876,20 @@ Feature: User sync
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                   | filter |
-      | auto1@okta.mozyqa.local | None   |
+      | keywords                            | filter |
+      | <%=CONFIGS['fedid']['user_email']%> | None   |
     Then User search results should be:
-      | User                    | Name       | User Group  |
-      | auto1@okta.mozyqa.local | auto1      | dev         |
-    When I view user details by auto1@okta.mozyqa.local
+      | User                                | Name                                    | User Group  |
+      | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%>      | dev         |
+    When I view user details by <%=CONFIGS['fedid']['user_email']%>
     And I get the user id
-    And I login the subdomain okta
+    And I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
     Then I will see the user account page
 
     When I log in bus admin console as administrator
     And I act as partner by:
-      | email                   |
-      | mikeg+newfedid@mozy.com |
+      | email       |
+      | dvg@dvg.dvg |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -904,25 +905,25 @@ Feature: User sync
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                | filter |
-      | auto1@okta.mozyqa.local | None   |
+      | keywords                            | filter |
+      | <%=CONFIGS['fedid']['user_email']%> | None   |
     Then User search results should be:
-      | User                    | Name       | User Group  |
-      | auto1@okta.mozyqa.local | auto1      | dev         |
-    When I view user details by auto1@okta.mozyqa.local
+      | User                                | Name                                    | User Group  |
+      | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%>      | dev         |
+    When I view user details by <%=CONFIGS['fedid']['user_email']%>
     Then The user status should be Suspended
-    When I login the subdomain okta
+    When I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
     Then I will see the Authentication Failed page
 
     And I log in bus admin console as administrator
     And I search user by:
-      | keywords                | filter |
-      | auto1@okta.mozyqa.local | None   |
-    And I view user details by auto1@okta.mozyqa.local
-    And I active the user
+      | keywords                            | filter |
+      | <%=CONFIGS['fedid']['user_email']%> | None   |
+    And I view user details by <%=CONFIGS['fedid']['user_email']%>
+    And I activate the user
 
-  @TC.17546 @TC.17548 @TC.17549 @vpn
-  Scenario: UserProvision/Sync - Add(Delete, Modify) a new user in AD
+  @TC.17546 @TC.17548 @TC.17549 @vpn @bus @2.1 @direct_ldap_integration @use_provision
+  Scenario: 17546 17548 17549 UserProvision/Sync - Add(Delete, Modify) a new user in AD
     When I act as partner by:
       | email                         |
       | user_sync_add_delete@auto.com |
@@ -932,8 +933,8 @@ Feature: User sync
     Then Authentication Policy has been updated successfully
     When I click Sync Rules tab
     And I add 1 new provision rules:
-      | rule         | group |
-      | cn=dev_user* | dev   |
+      | rule          | group |
+      | cn=fediduser* | dev   |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 1 provision rules
@@ -944,63 +945,15 @@ Feature: User sync
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User               |      Name     | User Group  |
-      | dev_user3@test.com |   dev_user3   | dev         |
-      | dev_user2@test.com |   dev_user2   | dev         |
-      | dev_user1@test.com |   dev_user1   | dev         |
+      | User                |      Name      | User Group  |
+      | fediduser1@test.com |   fediduser1   | dev         |
     When I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
-    And I add a user dev_user4 to the AD
+    And I add a user fediduser2 to the AD
     And I add 1 new provision rules:
-      | rule         | group |
-      | cn=dev_user* | dev   |
-    And I click the sync now button
-    And I wait for 80 seconds
-    And I delete 1 provision rules
-    And I save the changes
-    And I click Connection Settings tab
-    Then The sync status result should like:
-      | current status       | last sync           |
-      | Synchronized         |   @last_sync_time   |
-    When I navigate to Search / List Users section from bus admin console page
-    Then User search results should be:
-      | User               |      Name     | User Group  |
-      | dev_user4@test.com |   dev_user4   | dev         |
-      | dev_user3@test.com |   dev_user3   | dev         |
-      | dev_user2@test.com |   dev_user2   | dev         |
-      | dev_user1@test.com |   dev_user1   | dev         |
-
-    When I navigate to Authentication Policy section from bus admin console page
-    And I use Directory Service as authentication provider
-    And I click Sync Rules tab
-    And I modify a user dev_user4 to dev_user44 in the AD
-    And I add 1 new provision rules:
-      | rule         | group |
-      | cn=dev_user* | dev   |
-    And I click the sync now button
-    And I wait for 80 seconds
-    And I delete 1 provision rules
-    And I save the changes
-    And I click Connection Settings tab
-    Then The sync status result should like:
-      | current status       | last sync           |
-      | Synchronized         |   @last_sync_time   |
-    When I navigate to Search / List Users section from bus admin console page
-    Then User search results should be:
-      | User               |      Name     | User Group  |
-      | dev_user4@test.com |   dev_user44   | dev        |
-      | dev_user3@test.com |   dev_user3   | dev         |
-      | dev_user2@test.com |   dev_user2   | dev         |
-      | dev_user1@test.com |   dev_user1   | dev         |
-
-    When I navigate to Authentication Policy section from bus admin console page
-    And I use Directory Service as authentication provider
-    And I click Sync Rules tab
-    And I delete a user dev_user44 in the AD
-    And I add 1 new provision rules:
-      | rule         | group |
-      | cn=dev_user* | dev   |
+      | rule          | group |
+      | cn=fediduser* | dev   |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 1 provision rules
@@ -1012,19 +965,57 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
       | User                |      Name     | User Group  |
-      | dev_user4@test.com  |   dev_user44  | dev         |
-      | dev_user3@test.com  |   dev_user3   | dev         |
-      | dev_user2@test.com  |   dev_user2   | dev         |
-      | dev_user1@test.com  |   dev_user1   | dev         |
+      | fediduser2@test.com |   fediduser2   | dev         |
+      | fediduser1@test.com |   fediduser1   | dev         |
 
     When I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
-    And I add a user dev_user4 to the AD
-    And I modify a user dev_user4 to dev_user44 in the AD
+    And I modify the username from fediduser2 to fediduser0 for user fediduser2@test.com in the AD
+    And I add 1 new provision rules:
+      | rule          | group |
+      | cn=fediduser* | dev   |
+    And I click the sync now button
+    And I wait for 80 seconds
+    And I delete 1 provision rules
+    And I save the changes
+    And I click Connection Settings tab
+    Then The sync status result should like:
+      | current status       | last sync           |
+      | Synchronized         |   @last_sync_time   |
+    When I navigate to Search / List Users section from bus admin console page
+    Then User search results should be:
+      | User                |      Name      | User Group  |
+      | fediduser2@test.com |   fediduser0   | dev         |
+      | fediduser1@test.com |   fediduser1   | dev         |
+
+    When I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
+    And I click Sync Rules tab
+    And I modify the username from fediduser0 to fediduser2 for user fediduser2@test.com in the AD
+    And I add 1 new provision rules:
+      | rule          | group |
+      | cn=fediduser* | dev   |
+    And I click the sync now button
+    And I wait for 80 seconds
+    And I delete 1 provision rules
+    And I save the changes
+    And I click Connection Settings tab
+    Then The sync status result should like:
+      | current status       | last sync           |
+      | Synchronized         |   @last_sync_time   |
+    When I navigate to Search / List Users section from bus admin console page
+    Then User search results should be:
+      | User                |      Name      | User Group  |
+      | fediduser2@test.com |   fediduser2   | dev         |
+      | fediduser1@test.com |   fediduser1   | dev         |
+
+    When I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
+    And I click Sync Rules tab
     And I add 1 new deprovision rules:
-      | rule         | action  |
-      | cn=dev_user* | Delete  |
+      | rule          | action  |
+      | cn=fediduser* | Delete  |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 1 deprovision rules
@@ -1036,11 +1027,10 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
 
-    And I modify a user dev_user44 to dev_user4 in the AD
-    And I delete a user dev_user4 in the AD
+    And I delete a user fediduser2 in the AD
 
-  @TC.18273 @vpn
-  Scenario: UserProvision-Fixed Attribute
+  @TC.18723 @vpn @bus @2.1 @direct_ldap_integration @use_provision
+  Scenario: 18723 UserProvision-Fixed Attribute
     When I act as partner by:
       | email                         |
       | user_sync_add_delete@auto.com |
@@ -1051,10 +1041,10 @@ Feature: User sync
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I click Sync Rules tab
-    And I add a user dev_user4 to the AD
+    And I add a user fediduser2 to the AD
     And I add 1 new provision rules:
-      | rule         | group |
-      | cn=dev_user* | dev   |
+      | rule          | group |
+      | cn=fediduser* | dev   |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 1 provision rules
@@ -1065,21 +1055,19 @@ Feature: User sync
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User               |      Name     | User Group  |
-      | dev_user4@test.com |   dev_user4   | dev         |
-      | dev_user3@test.com |   dev_user3   | dev         |
-      | dev_user2@test.com |   dev_user2   | dev         |
-      | dev_user1@test.com |   dev_user1   | dev         |
+      | User                |      Name      | User Group  |
+      | fediduser2@test.com |   fediduser2   | dev         |
+      | fediduser1@test.com |   fediduser1   | dev         |
 
     When I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
     And I update a user in the AD:
-      | username  | attribute | value                        |
-      | dev_user4 | mail       | dev_user44@test.com   |
+      | username   | attribute  | value                 |
+      | fediduser2 | mail       | fediduser0@test.com   |
     And I add 1 new provision rules:
-      | rule         | group |
-      | cn=dev_user* | dev   |
+      | rule          | group |
+      | cn=fediduser* | dev   |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 1 provision rules
@@ -1090,18 +1078,16 @@ Feature: User sync
       | Synchronized         |   @last_sync_time   |
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                |      Name     | User Group  |
-      | dev_user44@test.com |   dev_user4   | dev         |
-      | dev_user3@test.com  |   dev_user3   | dev         |
-      | dev_user2@test.com  |   dev_user2   | dev         |
-      | dev_user1@test.com  |   dev_user1   | dev         |
+      | User                |      Name      | User Group  |
+      | fediduser0@test.com |   fediduser2   | dev         |
+      | fediduser1@test.com |   fediduser1   | dev         |
 
     When I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
     And I add 1 new deprovision rules:
-      | rule         | action  |
-      | cn=dev_user* | Delete  |
+      | rule          | action  |
+      | cn=fediduser* | Delete  |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 1 deprovision rules
@@ -1115,11 +1101,11 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
 
-    And I delete a user dev_user4 in the AD
+    And I delete a user fediduser2 in the AD
 
 
-  @TC.17521 @TC.17522 @TC.17523 @scheduled_sync
-  Scenario: Scheduled Sync (UI, cancel)
+  @TC.17521 @TC.17522 @TC.17523 @scheduled_sync  @bus @2.1 @direct_ldap_integration @use_provision
+  Scenario: 17521 17522 17523 Scheduled Sync (UI, cancel)
     When I act as partner by:
       | email            |
       | usrsync@test.com |
@@ -1147,8 +1133,8 @@ Feature: User sync
       | current status       | last sync           | next sync       |
       | Synchronized         |   @last_sync_time   |                 |
 
-  @TC.17520  @slow @scheduled_sync
-  Scenario: Scheduled Sync
+  @TC.17520  @slow @scheduled_sync @bus @2.1 @direct_ldap_integration @use_provision
+  Scenario: 17520 Scheduled Sync
     When I act as partner by:
       | email            |
       | usrsync@test.com |

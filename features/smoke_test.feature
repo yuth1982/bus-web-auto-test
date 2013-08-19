@@ -3,11 +3,11 @@ Feature: Bus Smoke Test
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.18361 @slow
+  @TC.18361 @slow @bus @2.5 @smoke @enterprise
   Scenario: 18361 Mozy Enterprise Smoke Test
     When I add a new MozyEnterprise partner:
-      | period | users | server plan | server add on | company name | address           | city      | state abbrev | zip   | country       | phone          | admin name   | cc last name | cc first name | cc number        | expire month | expire year | cvv |
-      | 24     | 10    | 100 GB      | 1             | Smoke Test   | 3401 Hillview Ave | Palo Alto | CA           | 94304 | United States | 1-877-486-9273 | vmware admin | vmware       | mozy          | 4111111111111111 | 12           | 15          | 123 |
+      | period | users | server plan | server add on | company name | address           | city      | state abbrev | zip   | country       | phone          | admin name   | cc number        | expire month | expire year | cvv |
+      | 24     | 10    | 100 GB      | 1             | Smoke Test   | 3401 Hillview Ave | Palo Alto | CA           | 94304 | United States | 1-877-486-9273 | vmware admin | 4111111111111111 | 12           | 15          | 123 |
     Then Sub-total before taxes or discounts should be $4,917.37
     And Order summary table should be:
       | Description           | Quantity | Price Each | Total Price |
@@ -18,22 +18,22 @@ Feature: Bus Smoke Test
       | Total Charges         |          |            | $4,917.37   |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:           | Root Role:          | Parent:        | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Autogrow: |
-      | Active (change) | vmware admin (act as) | Enterprise (change) | MozyEnterprise | after 2 years  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)      |
+      | Status:         | Root Admin:                                 | Root Role:          | Parent:        | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Autogrow: |
+      | Active (change) | <%=@partner.admin_info.full_name%> (act as) | Enterprise (change) | MozyEnterprise | after 2 years  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)      |
     And Partner contact information should be:
-      | Company Type:  | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:   |
-      | MozyEnterprise | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | @new_admin_email |
+      | Company Type:  | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         |
+      | MozyEnterprise | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 |
     And Partner account attributes should be:
-      | Backup Licenses         |           |
-      | Backup License Soft Cap | Disabled  |
-      | Server Enabled          | Disabled  |
-      | Cloud Storage (GB)      |           |
-      | Stash Users:            |           |
-      | Default Stash Storage:  |           |
-    And Partner license types should be:
-      |         | Licenses: | Licenses Used: | Quota:   | Quota Used: | Resource Policy: |
-      | Desktop | 10        | 0              | 250 GB   | 0 bytes     | Enabled          |
-      | Server  | 200       | 0              | 350 GB   | 0 bytes     | Enabled          |
+      | Backup Devices         |           |
+      | Backup Device Soft Cap | Disabled  |
+      | Server Enabled         | Disabled  |
+      | Cloud Storage (GB)     |           |
+      | Stash Users:           |           |
+      | Default Stash Storage: |           |
+    And Partner pooled storage information should be:
+      |         | Used | Available | Assigned | Used | Available | Assigned |
+      | Desktop | 0    | 250       | 250      | 0    | 10        | 10       |
+      | Server  | 0    | 350       | 350      | 0    | 200       | 200      |
     And Partner internal billing should be:
       | Account Type:   | Credit Card   | Current Period: | Biennial            |
       | Unpaid Balance: | $0.00         | Collect On:     | N/A                 |
@@ -53,50 +53,40 @@ Feature: Bus Smoke Test
     And MozyEnterprise new plan should be:
       | users | server plan | server add-on |
       | 15    | 500 GB      | 5             |
-    When I add a new user group:
-      | name       | server quota | desktop quota |
-      | test group | 20           | 10            |
-    Then New user group should be created
-    When I transfer resources from (default user group) to test group with:
-    | server licenses | server quota GB | desktop licenses | desktop quota GB |
-    | 2               | 20              | 2                | 20               |
-    Then Resources should be transferred
-    When I view newly created user group name user group details
-    Then User group details should be:
-      | ID:     | External ID: | Billing code: | Available Keys: | Available Quota: | Default quota for new installs:             | Default user group: |
-      | @xxxxxx | (change)     | (change)      | 4               | 40 GB            | 10 GB (Desktop) and 20 GB (Server) (change) | No (make default)   |
-    When I add a new user:
-      | user group  | server licenses | server quota | desktop licenses | desktop quota |
-      | test group  | 1               | 10           | 1                | 10            |
-    Then New user should be created
-    And I batch assign MozyEnterprise partner Server keys to (default user group) user group with send emails:
-      | email                         | quota |
-      | qa1+test+user+group@mozy.com  | 5     |
-    And I refresh Manage User Group Resources section
-    And User group license details table should be:
-      |         | Active | Assigned | Unassigned |
-      | Desktop | 0      | 0        | 13         |
-      | Server  | 0      | 1        | 197        |
-    When I change account subscription up to 3-year billing period
+    When I add a new Itemized user group:
+      | name        | desktop_storage_type | desktop_assigned_quota | desktop_devices | server_storage_type | server_assigned_quota | server_devices |
+      | test group  | Assigned             | 10                     | 1               | Assigned            | 20                    | 2              |
+    Then test group user group should be created
+    When I navigate to User Group List section from bus admin console page
+    And Itemized user groups table should be:
+      | Group Name           | Stash | DT Storage Type | DT Storage Value | DT Storage Used | Desktop Used | Desktop Total | SR Storage Type | SR Storage Value | SR Storage Used | Server Used | Total |
+      | (default user group) | false | Shared          |                  | 0               | 0            | 14            | Shared          |                  | 0               | 0           | 198   |
+      | test group           | false | Assigned        | 10 GB            | 0               | 0            | 1             | Assigned	     | 20 GB	        | 0	              | 0	        | 2     |
+    When I add new user(s):
+      | user_group | storage_type | storage_limit | devices |
+      | test group | Desktop      | 10            | 1       |
+    Then 1 new user should be created
+    When I change account subscription to 3-year billing period!
     Then Subscription changed message should be Your account has been changed to 3-year billing.
     When I create a new client config:
-      | name                | user group |
-      | smoke_client_config | test group |
+      | name                | user group | type   |
+      | smoke_client_config | test group | Server |
     Then client configuration section message should be Your configuration was saved.
-    And existing client config should be:
-      | Name 	              | License Type 	| User Groups |
-      | smoke_client_config   |	Server 	        | test group  |
     When I log in aria admin console as administrator
     Then newly created partner admin email account status should be ACTIVE
     When I log in bus admin console as administrator
     Then I search and delete partner account by Smoke Test
     When I search emails by keywords:
-      | content          |
-      | @new_admin_email |
-    Then I should see 2 email(s)
+      | content                             |
+      | <%=@partner.credit_card.full_name%> |
+    Then I should see 7 email(s)
+    When I search emails by keywords:
+      | content                            |
+      | <%=@partner.admin_info.email%>     |
+    Then I should see 1 email(s)
 
   @TC.112
-  Scenario: MozyPro France
+  Scenario: 112 MozyPro France
     When I add a new MozyPro partner:
       | period | base plan | create under   | country | vat number    |
       | 12     | 50 GB     | MozyPro France | France  | BE0883236072  |

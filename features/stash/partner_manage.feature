@@ -7,226 +7,226 @@ Feature:
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.19045 @BSA.3000
+  @TC.19045 @BSA.3000 @bus @stash @partner_manage
   Scenario: 19045 MozyEnterprise admin view stash details in list users section
     When I add a new MozyEnterprise partner:
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner with 5 GB stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 5 GB (change)          |
+      | Enable Stash: |
+      | Yes (change)  |
     When I act as newly created partner account
-    And I add a new user:
-      | name           | enable stash | stash quota |
-      | TC.19045 user1 | yes          | 10          |
-    Then New user should be created
-    And I add a new user:
-      | name           | enable stash | stash quota |
-      | TC.19045 user2 | yes          | 15          |
-    Then New user should be created
+    And I add new user(s):
+      | name           | user_group           | storage_type | devices | enable_stash |
+      | TC.19045 user1 | (default user group) | Desktop      | 1       | yes          |
+      | TC.19045 user2 | (default user group) | Desktop      | 1       | yes          |
+    Then 2 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | Name           | User Group           | Stash   | Storage | Created |
-      | TC.19045 user2 | (default user group) | Enabled | 15 GB   | today   |
-      | TC.19045 user1 | (default user group) | Enabled | 10 GB   | today   |
+      | User                     | Name           | Stash   | Machines | Storage         | Storage Used  | Created | Backed Up |
+      | <%=@new_users[1].email%> | TC.19045 user2 | Enabled | 0        | Desktop: Shared | Desktop: None | today   | never     |
+      | <%=@new_users[0].email%> | TC.19045 user1 | Enabled | 0        | Desktop: Shared | Desktop: None | today   | never     |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19057 @BSA.3000
+  @TC.19057 @BSA.3000 @bus @stash @partner_manage
   Scenario: 19057 MozyPro admin view stash details in list users section
     When I add a new MozyPro partner:
       | period | base plan | net terms |
       | 12     | 100 GB    | yes       |
     Then New partner should be created
-    When I enable stash for the partner with 5 GB stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 5 GB (change)          |
+      | Enable Stash: |
+      | Yes (change)  |
     When I act as newly created partner account
-    And I add a new user:
-      | name           | enable stash | stash quota |
-      | TC.19057 user1 | yes          | 10          |
-    Then New user should be created
-    And I add a new user:
-      | name           | enable stash | stash quota |
-      | TC.19057 user2 | yes          | 15          |
-    Then New user should be created
+    And I add new user(s):
+      | name            | storage_type | devices | enable_stash |
+      | TC.19057.1-user | Desktop      | 1       | yes          |
+      | TC.19057.2-user | Desktop      | 1       | yes          |
+    Then 2 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | Name           | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
-      | TC.19057 user2 | Enabled | 0        | 15 GB   | none         | today   | never     |
-      | TC.19057 user1 | Enabled | 0        | 10 GB   | none         | today   | never     |
+      | User                     | Name            | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
+      | <%=@new_users[1].email%> | TC.19057.2-user | Enabled | 0        | Shared  | None         | today   | never     |
+      | <%=@new_users[0].email%> | TC.19057.1-user | Enabled | 0        | Shared  | None         | today   | never     |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19738 @BSA.3000
+  @TC.19738 @BSA.3000 @bus @stash @partner_manage
   Scenario: 19738 MozyEnterprise admin view stash details in partner details section
     When I add a new MozyEnterprise partner:
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner with 5 GB stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 5 GB (change)          |
+      | Enable Stash: |
+      | Yes (change)  |
     When I act as newly created partner account
-    And I add a new user:
-      | name           | enable stash | stash quota |
-      | TC.19738 user1 | yes          | 10          |
-    Then New user should be created
-    And I add a new user:
-      | name           | enable stash | stash quota |
-      | TC.19738 user2 | yes          | 15          |
-    Then New user should be created
+    And I add new user(s):
+      | name             | user_group           | storage_type | devices | enable_stash |
+      | TC.19738.1-user1 | (default user group) | Desktop      | 1       | yes          |
+      | TC.19738.2-user2 | (default user group) | Desktop      | 1       | yes          |
+    Then 2 new user should be created
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
     Then Partner account attributes should be:
       | Stash Users:            | -1        |
-      | Default Stash Storage:  | 5         |
+      | Default Stash Storage:  |           |
     And Partner stash info should be:
-      | Stash Users:         | 2               |
-      | Stash Storage Usage: | 0 bytes / 25 GB |
+      | Stash Users:         | 2 |
+      | Stash Storage Usage: | 0 |
     And I delete partner account
 
-  @TC.19739 @BSA.3000
+  @TC.19739 @BSA.3000 @bus @stash @partner_manage
   Scenario: 19739 MozyPro admin view stash details in partner details section
     When I add a new MozyPro partner:
       | period | base plan | net terms |
       | 12     | 100 GB    | yes       |
     Then New partner should be created
-    When I enable stash for the partner with 10 GB stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 10 GB (change)         |
+      | Enable Stash: |
+      | Yes (change)  |
     When I act as newly created partner account
-    And I add a new user:
-      | name           | enable stash | stash quota |
-      | TC.19739 user1 | yes          | 15          |
-    Then New user should be created
-    And I add a new user:
-      | name           | enable stash | stash quota |
-      | TC.19739 user2 | yes          | 20          |
-    Then New user should be created
+    And I add new user(s):
+      | name            | storage_type | devices | enable_stash |
+      | TC.19739.1-user | Desktop      | 1       | yes          |
+      | TC.19739.2-user | Desktop      | 1       | yes          |
+    Then 2 new user should be created
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
-    And Partner account attributes should be:
+    Then Partner account attributes should be:
       | Stash Users:            | -1        |
-      | Default Stash Storage:  | 10        |
+      | Default Stash Storage:  |           |
     And Partner stash info should be:
-      | Stash Users:         | 2               |
-      | Stash Storage Usage: | 0 bytes / 35 GB |
+      | Stash Users:         | 2 |
+      | Stash Storage Usage: | 0 |
     And I delete partner account
 
-  @TC.19740 @BSA.3000
+  @TC.19740 @BSA.3000 @bus @stash @partner_manage
   Scenario: 19740 Reseller admin view stash details in partner details section
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
       | 12     | Silver        | 100            |
     Then New partner should be created
-    When I enable stash for the partner with 10 GB stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 10 GB (change)         |
+      | Enable Stash: |
+      | Yes (change)  |
     When I act as newly created partner account
-    And I allocate 50 GB Desktop quota with (default user group) user group to Reseller partner
-    Then Reseller resource quota should be changed
-    When I add a new user:
-      | name           | enable stash | stash quota |
-      | TC.19740 user1 | yes          | 15          |
-    Then New user should be created
-    When I add a new user:
-      | name           | enable stash | stash quota |
-      | TC.19740 user2 | yes          | 20          |
-    Then New user should be created
+    #    And I allocate 50 GB Desktop quota with (default user group) user group to Reseller partner
+    #Then Reseller resource quota should be changed
+    And I add new user(s):
+      | name           | user_group           | storage_type | devices | enable_stash |
+      | TC.19740-user1 | (default user group) | Desktop      | 1       | yes          |
+      | TC.19740-user2 | (default user group) | Desktop      | 1       | yes          |
+    Then 2 new user should be created
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
-    And Partner account attributes should be:
+    Then Partner account attributes should be:
       | Stash Users:            | -1        |
-      | Default Stash Storage:  | 10        |
+      | Default Stash Storage:  |           |
     And Partner stash info should be:
-      | Stash Users:         | 2               |
-      | Stash Storage Usage: | 0 bytes / 35 GB |
+      | Stash Users:         | 2 |
+      | Stash Storage Usage: | 0 |
     And I delete partner account
 
-  @TC.19169 @BSA.3050
+  @TC.19169 @BSA.3050 @bus @stash @partner_manage
   Scenario: 19169 MozyPro admin view stash details in manage resources section
     When I add a new MozyPro partner:
       | period | base plan | net terms |
       | 12     | 100 GB    | yes       |
     Then New partner should be created
-    When I enable stash for the partner with 5 GB stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 5 GB (change)          |
+      | Enable Stash: |
+      | Yes (change)  |
     When I act as newly created partner account
-    And I add a new user:
-      | name           | enable stash | stash quota |
-      | TC.19169 user1 | yes          | 30          |
-    Then New user should be created
-    When I navigate to Manage Resources section from bus admin console page
-    And Partner resources general information should be:
-      | Stash Users: | Stash Storage Usage: |
-      | 1            | 0 bytes / 30 GB      |
+    And I add new user(s):
+      | name          | storage_type | devices | enable_stash |
+      | TC.19169-user | Desktop      | 1       | yes          |
+    Then 1 new user should be created
+# no Manage Resource now
+#    When I navigate to Manage Resources section from bus admin console page
+#    And Partner resources general information should be:
+#      | Stash Users: | Stash Storage Usage: |
+#      | 1            | 0 bytes / 30 GB      |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19056 @BSA.4000
+  @TC.19056 @BSA.4000 @bus @stash @partner_manage
   Scenario: 19056 MozyEnterprise admin disable stash in user group view
     When I add a new MozyEnterprise partner:
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner with 15 GB stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 15 GB (change)         |
+      | Enable Stash: |
+      | Yes (change)  |
     When I act as newly created partner account
-    When I navigate to List User Groups section from bus admin console page
-    And I view (default user group) * user group details
+    And I add new user(s):
+      | name            | user_group           | storage_type | devices |
+      | TC.19056-user | (default user group) | Desktop      | 1       |
+    Then 1 new user should be created
+    And I add a new Itemized user group:
+      | name           | desktop_storage_type | desktop_devices | enable_stash |
+      | TC.19056 group | Shared               | 5               | yes          |
+    Then TC.19056 group user group should be created
+    When I view details of TC.19056-user's user group
     And I disable stash for the user group
     Then User group details should be:
       | Enable Stash: |
-      | No            |
+      | No (change)   |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19123 @BSA.4000
+  @TC.19123 @BSA.4000 @bus @stash @partner_manage
   Scenario: 19123 MozyEnterprise admin change default stash quota in user group view
     When I add a new MozyEnterprise partner:
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner with default stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 2 GB (change)          |
+      | Enable Stash: |
+      | Yes (change)  |
     When I act as newly created partner account
-    When I navigate to List User Groups section from bus admin console page
-    And I view (default user group) * user group details
-    And I enable stash for the user group with 20 GB stash storage
+    And I add new user(s):
+      | name          | user_group           | storage_type | devices |
+      | TC.19123-user | (default user group) | Desktop      | 1       |
+    Then 1 new user should be created
+    And I add a new Itemized user group:
+      | name           | desktop_storage_type | desktop_devices | enable_stash |
+      | TC.19123 group | Shared               | 5               | yes          |
+    Then TC.19123 group user group should be created
+    When I view details of TC.19123-user's user group
+    And I enable stash for the user group
     Then User group details should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 20 GB (change)         |
+      | Enable Stash: |
+      | Yes (change)  |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.18913 @BSA.6000
+  @TC.18913 @BSA.6000 @bus @stash @partner_manage
   Scenario: 18913 Root admin disable Stash for a new MozyPro partner
     When I add a new MozyPro partner:
       | period | base plan |
       | 12     | 100 GB    |
     Then New partner should be created
-    When I enable stash for the partner with default stash storage
+    When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: | Default Stash Storage: |
-      | Yes           | 2 GB (change)          |
+      | Enable Stash: |
+      | Yes (change)  |
     When I disable stash for the partner
     Then Partner general information should be:
       | Enable Stash: |
-      | No            |
+      | No (change)   |
     When I delete partner account

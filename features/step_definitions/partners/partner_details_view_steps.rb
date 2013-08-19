@@ -1,7 +1,8 @@
-
 When /^I act as newly created partner|sub partner account$/ do
+  @current_partner = @bus_site.admin_console_page.partner_details_section.partner
   @bus_site.admin_console_page.partner_details_section.act_as_partner
   @bus_site.admin_console_page.has_stop_masquerading_link?
+  @partner_id = @bus_site.admin_console_page.current_partner_id
 end
 
 When /^I search and delete partner account by (.+)/ do |account_name|
@@ -11,13 +12,13 @@ When /^I search and delete partner account by (.+)/ do |account_name|
   rows = @bus_site.admin_console_page.search_list_partner_section.search_results_table_rows
   unless rows.to_s.include?('No results found.')
     @bus_site.admin_console_page.search_list_partner_section.view_partner_detail(account_name)
-    @bus_site.admin_console_page.partner_details_section.delete_partner(BUS_ENV['bus_password'])
+    @bus_site.admin_console_page.partner_details_section.delete_partner(QA_ENV['bus_password'])
   end
 end
 
 # When you are on partner details section, you are able to execute this steps
 When /^I delete partner account$/ do
-  @bus_site.admin_console_page.partner_details_section.delete_partner(BUS_ENV['bus_password'])
+  @bus_site.admin_console_page.partner_details_section.delete_partner(QA_ENV['bus_password'])
 end
 
 When /^I get the partner_id$/ do
@@ -34,6 +35,7 @@ Then /^Partner general information should be:$/ do |details_table|
   expected = details_table.hashes.first
 
   expected.each do |k,v|
+    # Using erb instead of place holder such as @external_id
     case k
       when 'External ID:'
         v.gsub!(/@external_id/, @new_p_external_id) unless @new_p_external_id.nil?
@@ -46,6 +48,7 @@ Then /^Partner general information should be:$/ do |details_table|
       else
         # do nothing
     end
+    v.replace ERB.new(v).result(binding)
   end
   expected.keys.each{ |key| actual[key].should == expected[key] }
 end
@@ -63,28 +66,16 @@ Then /^Partner contact information should be:$/ do |contact_table|
   actual = @bus_site.admin_console_page.partner_details_section.contact_info_hash
   expected = contact_table.hashes.first
 
-  expected.keys.each do |header|
-    case header
-      when 'Contact Email:'
-        actual[header].should == expected[header].gsub(/@new_admin_email/,@partner.admin_info.email)
-      when 'Contact Address:'
-        actual[header].should == expected[header].gsub(/@address/, @partner.company_info.address)
-      when 'Contact City:'
-        actual[header].should == expected[header].gsub(/@city/, @partner.company_info.city)
-      when 'Contact State:'
-        actual[header].should == expected[header].gsub(/@state/, @partner.company_info.state_abbrev)
-      when 'Contact ZIP/Postal Code:'
-        actual[header].should == expected[header].gsub(/@zip_code/, @partner.company_info.zip)
-      when 'Contact Country:'
-        actual[header].should == expected[header].gsub(/@country/, @partner.company_info.country)
-      else
-        actual[header].should == expected[header]
-    end
+  expected.each do |_,v|
+    v.replace ERB.new(v).result(binding)
   end
+
+  expected.keys.each{ |key| actual[key].should == expected[key] }
 end
 
 When /^I Create an API key for current partner$/ do
   @bus_site.admin_console_page.partner_details_section.create_api_key
+  @api_key = @bus_site.admin_console_page.partner_details_section.api_key
 end
 
 Then /^Partner API key should be (.+)$/ do |api_key|
@@ -97,16 +88,28 @@ When /^I add a new ip whitelist (.+)$/ do |ip|
 end
 
 Then /^Partner ip whitelist should be (.+)$/ do |ip|
+  @bus_site.admin_console_page.partner_details_section.wait_until_bus_section_load
   @bus_site.admin_console_page.partner_details_section.ip_whitelist.should == ip
 end
 
 Then /^Partner account attributes should be:$/ do |attributes_table|
-  (@bus_site.admin_console_page.partner_details_section.account_attributes_rows && attributes_table.raw).should == attributes_table.raw
+  actual = @bus_site.admin_console_page.partner_details_section.account_attributes_hashes
+  expected = attributes_table.rows_hash
+  expected.keys.each{ |key| actual[key].should == expected[key] }
 end
 
 Then /^Partner resources should be:$/ do |resources_table|
   @bus_site.admin_console_page.partner_details_section.generic_resources_table_headers.should == resources_table.headers
   @bus_site.admin_console_page.partner_details_section.generic_resources_table_rows.should == resources_table.rows
+end
+
+Then /^Itemized partner resources should be:$/ do |resources_table|
+  @bus_site.admin_console_page.partner_details_section.license_types_table_headers.should == resources_table.headers
+  @bus_site.admin_console_page.partner_details_section.license_types_table_rows.should == resources_table.rows
+end
+
+Then /^Partner pooled storage information should be:$/ do |resources_table|
+  @bus_site.admin_console_page.partner_details_section.pooled_resource_table_rows.should == resources_table.raw
 end
 
 Then /^Partner license types should be:$/ do |license_types_table|
@@ -152,6 +155,10 @@ Then /^Partner billing history should be:$/ do |billing_history_table|
   expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
 
+When /^I enable stash for the partner$/ do
+  @bus_site.admin_console_page.partner_details_section.enable_stash
+end
+
 When /^I enable stash for the partner with (default|\d+ GB) stash storage$/ do |quota|
   if quota == 'default'
     @bus_site.admin_console_page.partner_details_section.enable_stash(2)
@@ -166,9 +173,13 @@ When /^I disable stash for the partner$/ do
 end
 
 When /^I add stash to all users for the partner$/ do
-  @bus_site.admin_console_page.partner_details_section.add_stash_to_all_users
+  step 'I try to add stash to all users for the partner'
   @bus_site.admin_console_page.click_continue
   @bus_site.admin_console_page.partner_details_section.wait_until_bus_section_load
+end
+
+When /^I try to add stash to all users for the partner$/ do
+  @bus_site.admin_console_page.partner_details_section.add_stash_to_all_users
 end
 
 # From partner details view, click Status: Active (change) link
@@ -236,4 +247,18 @@ end
 
 Then /^Partner contact information is changed$/ do
   @bus_site.admin_console_page.partner_details_section.wait_until_bus_section_load
+end
+
+Then /^partner details message should be$/ do |message|
+  @bus_site.admin_console_page.partner_details_section.success_messages == message
+end
+
+When /^I (Enable|Disable) partner details autogrow$/ do |status|
+  case status
+    when "Enable"
+      @bus_site.admin_console_page.partner_details_section.enable_autogrow
+    when "Disable"
+      @bus_site.admin_console_page.partner_details_section.disable_autogrow
+    else
+  end
 end

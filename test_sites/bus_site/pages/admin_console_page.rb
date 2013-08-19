@@ -2,11 +2,12 @@ module Bus
   # This class manage all sections for bus admin console page
   class AdminConsolePage < SiteHelper::Page
 
-    set_url("#{BUS_ENV['bus_host']}/dashboard")
+    set_url("#{QA_ENV['bus_host']}/dashboard")
 
     # Partner section
     section(:search_list_partner_section, SearchListPartnerSection, id: "partner-list")
     section(:add_new_partner_section, AddNewPartnerSection, id: "partner-new")
+    section(:add_itemized_partner_section, AddItemizedPartnerSection, id: "partner-new-content")
 
     section(:partner_details_section, PartnerDetailsSection, css: "div[id^=partner-show-]")
     section(:admin_details_section, AdminDetailsSection, css: "div[id^=admin-show-]")
@@ -15,16 +16,23 @@ module Bus
     section(:account_details_section, AccountDetailsSection, id: "setting-edit_account_settings")
     section(:authentication_policy_section, AuthenticationPolicySection, id: 'authentication_policies-edit')
     section(:client_config_section, ClientConfigSection, id: 'setting-edit_client_config')
+    section(:add_new_pro_plan_section, AddNewProPlanSection, id: 'plan-pro_new')
 
     # Users section
-    section(:search_list_users_section, SearchListUsersSection, id: "user-list")
-    section(:search_list_machines_section, SearchListMachinesSection, id: "machine-list")
-    section(:add_new_user_group_section, AddNewUserGroupSection, id: "user_groups-new")
-    section(:add_new_user_section, AddNewUserSection, id: "user-new")
-    section(:machine_mapping_section, MachineMappingSection, id: "machine-machine_migration")
-    section(:user_group_details_section, UserGroupDetailsSection, css: "div[id^=user_groups-show-]")
-    section(:list_user_groups_section, ListUserGroupsSection, id: "user_groups-list")
-    section(:user_details_section, UserDetailsSection, css: "div[id^=user-show-]")
+    section(:search_list_users_section, SearchListUsersSection, id: 'user-list')
+    section(:search_list_itemized_users_section, SearchListItemizedUsersSection, id: 'user-list-content')
+    section(:search_list_machines_section, SearchListMachinesSection, id: 'machine-list')
+    section(:user_group_list_section, UserGroupListSection, id: 'user_groups-list')
+    section(:add_new_user_group_section, AddEditUserGroupSection, id: 'user_groups-new')
+    section(:add_new_itemized_user_group_section, AddEditItemizedUserGroupSection, id: 'user_groups-new-content')
+    section(:edit_user_group_section, AddEditUserGroupSection, css: 'div[id^=user_groups-edit_storage_pool_policy-]')
+    section(:add_new_user_section, AddNewUserSection, id: 'user-new_users_in_batch')
+    section(:add_new_itemized_user_section, AddNewItemizedUserSection, id: 'user-new-content')
+    section(:machine_mapping_section, MachineMappingSection, id: 'machine-machine_migration')
+    section(:user_group_details_section, UserGroupDetailsSection, css: 'div[id^=user_groups-show-]')
+    section(:list_user_groups_section, ListUserGroupsSection, id: 'user_groups-list')
+    section(:user_details_section, UserDetailsSection, css: 'div[id^=user-show]')
+    section(:machine_details_section, MachineDetailsSection, css: 'div[id^=machine-show-]')
 
     # Admin section
     section(:add_new_role_section, AddNewRoleSection, id: "roles-new-content")
@@ -44,6 +52,7 @@ module Bus
     section(:transfer_resources_section, TransferResourcesSection, id: "resource-transfer_resources")
     section(:purchase_resources_section, PurchaseResourcesSection, id: "resource-purchase_resources")
     section(:return_resources_section, ReturnResourcesSection, id: "resource-unpurchase_resources")
+    section(:resource_summary_section, ResourceSummarySection, id: 'storage-summary')
 
     # Data shuttle section
     section(:data_shuttle_status_section, DataShuttleStatusSection, id: 'resource-data_shuttle_status')
@@ -63,11 +72,12 @@ module Bus
     section(:quick_reports_section, QuickReportsSection, id: "jobs-quick_reports")
 
     # Private element
-    element(:current_admin_div, id: "identify-me")
+    element(:current_admin_div, id: 'identify-me')
     element(:stop_masquerading_link, xpath: "//a[text()='stop masquerading']")
-
+    element(:quick_link_item, id: "nav-cat-quick")
 
     # Popup window
+    element(:start_using_mozy_btn, id: "btn_start_using")
     element(:popup_content_div, css: "div.popup-window-content")
     element(:close_popup_link, css: "div.close_bar a")
     element(:close_btn, css: "div.popup-window-footer input[value=Close]")
@@ -76,16 +86,36 @@ module Bus
     element(:submit_btn, css: "div.popup-window-footer input[value=Submit]")
     element(:buy_more_btn, css: "div.popup-window-footer input[value='Buy More']")
     element(:allocate_resources_btn, css: "div.popup-window-footer input[value=Allocate]")
+    element(:ok_btn, css: "div.popup-window-footer input[value=Ok]")
+
+    def partner_id
+      find(:xpath, "//div[@id='identify-me']/a[1]")[:href][/partner-show-(\d+)/, 1]
+    end
 
     # Public: Navigate to menu item on admin console page
     # Note: if bus module is opened, menu will not be clicked
     #
-    # Returns nothing
-    def navigate_to_menu(link)
-      el = find(:xpath, "//a[text()='#{link}']")
-      el_class = el.element_parent[:class]
-      if el_class.match(/active/).nil?
+    # @link_name          [String] link name
+    # @use_quick_link     [Boolean] click link in Quick Links if link exists
+    #
+    # @return [nothing]
+    def navigate_to_menu(link_name, use_quick_link = false)
+      start_using_mozy_btn.click if has_start_using_mozy_btn?
+      # Looking for link in navigation menu
+      find(:xpath, "//ul//a[text()='#{link_name}']")
+      # calling all method does not require to wait
+      links = all(:xpath, "//ul//a[text()='#{link_name}']")
+      el = use_quick_link ? links.first : links.last
+      if links.first.element_parent[:class].match(/active/).nil? && links.last.element_parent[:class].match(/active/).nil?
         el.click
+      end
+      # Make sure the destination section loaded correctly for further use in following steps
+      find(:css, 'h2 a[onclick^=toggle_module]')
+      sections = all(:css, 'h2 a[onclick^=toggle_module]')
+      sections.each do |s|
+        unless s[:class].nil?
+          wait_until{ s[:class].match(/loading/).nil? }
+        end
       end
     end
 
@@ -96,6 +126,13 @@ module Bus
       current_admin = current_admin_div.text
       stop_masquerading_link.click
       wait_until{ current_admin != current_admin_div.text}
+    end
+
+    # Public: Get partner id from top admin identification div
+    #
+    #
+    def current_partner_id
+      current_admin_div.find(:css, 'a:first-child')[:href].match(/partner-show-(\d+)&/)[1]
     end
 
     def has_navigation?(link)
@@ -136,6 +173,10 @@ module Bus
 
     def click_submit
       submit_btn.click
+    end
+
+    def click_ok
+      ok_btn.click
     end
   end
 end

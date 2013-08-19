@@ -40,6 +40,10 @@ module Bus
       reports_table.rows_text.map{|row| row[0..4]}
     end
 
+    def reports_table_hashes
+      reports_table.hashes
+    end
+
     # Public: Find first matched reports row text by reports name
     #
     # Example
@@ -60,7 +64,7 @@ module Bus
     def download_report(report_name)
       wait = 0
       report_row = ""
-      while wait < DEFAULT_WAIT_TIME
+      while wait < CONFIGS['global']['default_wait_time']
         report_row = find_report(report_name)
         message = report_row[6].text
         case

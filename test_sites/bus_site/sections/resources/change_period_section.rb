@@ -9,26 +9,20 @@ module Bus
     element(:message_div, xpath: "//div[@id='resource-change_billing_period-errors']/ul")
     elements(:confirmation_p, xpath: "//div[@id='billing_change_confirmation']/p")
 
-    # Public: Move upstream with subscription period
+    # Public: Move with subscription period
     #
     # Example
-    #   @bus_admin_console_page.change_period_section.change_subscription_up("MozyPro annual billing period")
+    #   @bus_admin_console_page.change_period_section.change_subscription_to("MozyPro annual billing period")
     #
     # Returns nothing
-    def change_subscription_up(link_text)
+    def change_subscription_to(link_text)
       find_link(link_text).click
       sleep 5 # force to wait due to slow internet connection
-      continue_btn.click
     end
 
-    # Public: Move downstream with subscription period
-    #
-    # Example
-    #   @bus_admin_console_page.change_period_section.change_subscription_down("Reseller monthly billing period")
-    #
-    # Returns nothing
-    def change_subscription_down(link_text)
-      find_link(link_text).click
+    def continue_change_subscription
+      continue_btn.click if continue_btn.visible?
+      wait_until_bus_section_load
     end
 
     # Public: Change subscription period confirmation text
@@ -52,6 +46,7 @@ module Bus
     #
     # Returns success or error message text
     def messages
+      wait_until_bus_section_load
       message_div.text
     end
 

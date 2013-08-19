@@ -1,7 +1,7 @@
 module Phoenix
   class NewPartnerLicensingFillout < SiteHelper::Page
 
-  set_url("#{PHX_ENV['phx_host']}")
+  set_url("https://#{QA_ENV['phoenix_host']}")
 
   # Private elements
   #
@@ -11,7 +11,7 @@ module Phoenix
   element(:billing_period_radio, id: "interval_")
   # changed to xpath ref - pending resolution of https://redmine.mozycorp.com/issues/90134
   # then will change back to proper css: "label.add_on_name" reference afterwards
-	element(:server_add_on_lbl, xpath: "//td[@id='add_on_list']/div[1]/label")
+  element(:server_add_on_lbl, xpath: "//td[@id='add_on_list']/div[1]/label")
   element(:server_add_on_cb, id: :"add_id_")
   element(:vat_number_tb, id: "vat_num")
   element(:coupon_code_tb, id: "coupon_code")
@@ -49,15 +49,6 @@ module Phoenix
     end
   end
 
-  # plan summary
-  #   retrieve plan summary data from licensing page
-  #
-  #   headers
-  #
-  def plan_summary_table_headers
-    plan_summary_table.headers_text
-  end
-
   #   rows
   #
   def plan_summary_table_rows
@@ -73,6 +64,9 @@ module Phoenix
       # for home, we show plan summary on licensing page
       # this code attempts to get it for verification
       plan_summary_table_rows
+      # TODO: Use Plan summary to verify the expected plan summary on licensing filling page
+      # sample output: {"Total Storage:" => "50 GB", "Total Computers:" => "1", "Discounts:" => "-", "Total Price: $5.99" => nil}
+      partner.plan_summary = Hash[plan_summary_table_rows[1..4]]
       puts plan_summary_table_rows.to_s
     end
   end
@@ -80,9 +74,13 @@ module Phoenix
   # fill base plan
   #   fill_base_plan(partner.base_plan) where base plan = 50 gb
   #     instructs code to find 50gb field and click it
-  #
+  #     jm: code change for FR dom
   def fill_base_plan(base_plan)
-    find_field("#{base_plan}").click
+    base_plan_words = base_plan.split(/[[:space:]]+/)
+      correct_label =  all('label').select do |label|
+      base_plan_words.all?{|word| label.text.include?(word)}
+      end
+    find_by_id(correct_label[0][:for]).click
   end
 
   # fill subscription period
@@ -96,6 +94,26 @@ module Phoenix
     else
       find_by_id("period_#{partner.subscription_period}").click
     end
+  end
+
+  # filling out additional computers
+  #   mozyhome customers have the option of selecting to add a few computers
+  #   to their plan, the plan starts with - 50gb - 1, 125gb - 3
+  #   total max value for computers allowed on account = 5
+  def fill_additional_computers(partner)
+    add_machine_select.select(partner.additional_computers)
+  end
+
+  # filling out additional storage
+  #   max avail = 99, so by entering 'max' can auto set it to max val
+  #   otherwise, it will be what you decide in the setup
+  #   so total max possible = 125gb + (99x20 gb=1980 gb) = 2.1 tb
+  def fill_additional_storage(partner)
+      if partner.additional_storage.eql?("max")
+        add_storage_tb.type_text("99")
+      else
+        add_storage_tb.type_text(partner.additional_storage)
+      end
   end
 
   # server plan fill out
@@ -132,6 +150,12 @@ module Phoenix
       fill_base_plan(partner.base_plan)
       # define base plan subscription period
       fill_subscription_period(partner)
+      # home specific items
+      if partner.partner_info.type.eql?("MozyHome")
+        fill_additional_storage(partner)
+        fill_additional_computers(partner)
+        else
+      end
       # server add-on
       server_plan_fill_out(partner)
       # coupon code

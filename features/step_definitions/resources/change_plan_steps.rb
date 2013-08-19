@@ -9,27 +9,25 @@
 #
 When /^I change (MozyPro|MozyEnterprise|Reseller|Itemized) account plan to:$/ do |type, plan_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['change_plan'])
+
   cells = plan_table.hashes.first
   base_plan = cells['base plan'] # MozyPro
   users = cells['users'] # MozyEnterprise
   server_plan = cells['server plan']
   storage_add_on = cells['storage add-on']
   coupon = cells['coupon']
-  # Itemized
-  server_license = cells['server license']
-  server_quota = cells['server quota']
-  desktop_license = cells['desktop license']
-  desktop_quota = cells['desktop quota']
+  desktop_licenses = cells['desktop licenses'] #Itemized
+  server_licenses = cells['server licenses'] #Itemized
 
   case type
-    when 'MozyPro'
-      @bus_site.admin_console_page.change_plan_section.change_mozypro_plan(base_plan, server_plan, storage_add_on, coupon)
     when 'MozyEnterprise'
       @bus_site.admin_console_page.change_plan_section.change_mozyenterprise_plan(users, server_plan, storage_add_on, coupon)
     when 'Reseller'
       @bus_site.admin_console_page.change_plan_section.change_reseller_plan(server_plan, storage_add_on)
-    when 'Itemized'
-      @bus_site.admin_console_page.change_plan_section.change_itemized_partner_plan(server_license, server_quota, desktop_license, desktop_quota)
+    when 'MozyPro'
+      @bus_site.admin_console_page.change_plan_section.change_mozypro_plan(base_plan, server_plan, storage_add_on, coupon)
+    when "Itemized"
+      @bus_site.admin_console_page.change_plan_section.change_itemized_plan(server_licenses, desktop_licenses)
     else
       raise "#{type} Company type not exist"
   end
@@ -80,14 +78,8 @@ end
 # which is determined by the company type of the account
 Then /^the (MozyPro|MozyEnterprise|Reseller|Itemized) account plan should be changed$/ do |type|
   case type
-    when "MozyPro"
-      @bus_site.admin_console_page.change_plan_section.messages.should == "Successfully changed plan. Visit Manage Resources to distribute your new resources."
-    when "MozyEnterprise"
-      @bus_site.admin_console_page.change_plan_section.messages.should == "Successfully changed plan."
-    when "Reseller"
-      @bus_site.admin_console_page.change_plan_section.messages.should == "Successfully changed plan. Visit Manage Resources to distribute your new resources."
-    when "Itemized"
-      @bus_site.admin_console_page.change_plan_section.messages.should == "Successfully changed plan."
+    when 'MozyEnterprise', 'Itemized', 'MozyPro', 'Reseller'
+      @bus_site.admin_console_page.change_plan_section.messages.should =~ /Successfully changed plan\./
     else
       raise "#{type} Company type not exist"
   end

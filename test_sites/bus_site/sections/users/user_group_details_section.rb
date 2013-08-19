@@ -72,10 +72,9 @@ module Bus
     #   @bus_site.admin_console_page.user_group_details_section.enable_stash
     #
     # Returns nothing
-    def enable_stash(quota)
+    def enable_stash
       change_stash_link.click
       stash_status_select.select('Yes')
-      stash_default_quota_tb.type_text(quota)
       submit_stash_status_btn.click
       wait_until{ !submit_stash_status_btn.visible? }
     end

@@ -4,6 +4,7 @@ module Bus
 
     # Private elements
     #
+    element(:msg_div, css: 'ul.flash.successes')
     element(:billing_info_link, xpath: "//a[text()='Billing Info']")
     element(:act_as_link, xpath: "//a[text()='act as']")
     element(:change_name_link, xpath: "//a[text()='Change Name']")
@@ -57,8 +58,14 @@ module Bus
     # Account attribute table
     element(:account_attributes_table, css: 'form[id^=account_attributes_form] table')
 
+    # Pooled Storage
+    element(:pooled_resources_table, css: 'form[id^=pooled_resources_form] table')
+
     # Resources table, for MozyPro
     element(:generic_resources_table, css: 'form[id^=generic_resources_form] table')
+
+    # Pooled Resources table, for Pooled partner
+    element(:pooled_resources_table, css: 'form[id^=pooled_resources_form] table')
 
     # License types table
     element(:license_types_table, css: 'div[id^=partner_license_types] table')
@@ -80,9 +87,13 @@ module Bus
     element(:change_stash_link, css: 'a[onclick*=change_stash]')
     element(:cancel_stash_link, css: 'a[onclick*=cancel_change]')
     element(:stash_status_select, css: 'select[id^=partner-stash-status-]')
-    element(:stash_default_quota_tb, id: 'stash_default_quota')
     element(:submit_stash_status_btn, css: 'input[onclick*=submit_stash_status]')
     element(:add_stash_to_all_users_link, css: 'a[onclick*=enable_stash_for_all_confirm]')
+
+    #autogrow section
+    element(:change_autogrow_status_link, css: 'a[onclick*=partner-display-overdraft-status]')
+    element(:autogrow_status_select, css: 'select[id^=overdraft_status]')
+    element(:submit_autogrow_status_btn, css: 'span[id^=partner-change-overdraft-status-] input[value=Submit]')
 
     # Subdomain
     element(:change_subdomain_link, css: "a[onclick*='/partner/subdomain']")
@@ -92,6 +103,12 @@ module Bus
     # Return string
     def partner_id
       general_info_hash['ID:']
+    end
+
+    def partner
+      wait_until_bus_section_load
+      { :id => general_info_hash['ID:'],
+        :name => find(:xpath, "//div[starts-with(@id,'partner-show-')]/div[2]/div/h3").text }
     end
 
     # Public: General information hash
@@ -105,7 +122,7 @@ module Bus
     # @return [Hash]
     def general_info_hash
       wait_until_bus_section_load
-      output = general_info_dls[0].dt_dd_elements_text + general_info_dls[1].dt_dd_elements_text
+      output = general_info_dls[0,4].inject([]){ |sum, dls| sum + dls.dt_dd_elements_text}
       if has_stash_info_dl?
         stash = stash_info_dl.dt_dd_elements_text.delete_if{ |pair| pair.first.empty? }.map{ |row| [row.first, row[1..-1].join(' ')] }
         output = output + stash
@@ -173,13 +190,18 @@ module Bus
     # Public: Partner Account attributes hash
     #
     # Example:
-    #   partner_details_section.account_attributes_rows
-    #   # => "[["Backup Licenses", "200"], ["Backup License Soft Cap", "Enabled"], ["Server Enabled", "Disabled"], ["Cloud Storage (GB)", "10"], ["Stash Users:", ""], ["Default Stash Storage:", ""]]"
+    #   partner_details_section.account_attributes_hashes
+    #   # => "{"Backup Licenses" => "200"], "Backup License Soft Cap"=>"Enabled", "Server Enabled" => "Disabled", "Cloud Storage (GB)" => "10", "Stash Users:" =>  "", "Default Stash Storage:" =>  ""}"
     #
-    # Returns array
-    def account_attributes_rows
+    # Returns hash
+    def account_attributes_hashes
       # Remove hidden column inside table
-      account_attributes_table.rows_text.map{ |row| row[0..1] }
+      array = account_attributes_table.rows_text.map{ |row| row[0..1] }
+      Hash[*array.flatten]
+    end
+
+    def pooled_resource_table_rows
+      pooled_resources_table.rows_text
     end
 
     # Public: Generic resources table headers text
@@ -318,12 +340,11 @@ module Bus
     #   @bus_site.admin_console_page.partner_details_section.enable_stash
     #
     # Returns nothing
-    def enable_stash(quota)
+    def enable_stash
       change_stash_link.click
       stash_status_select.select('Yes')
-      stash_default_quota_tb.type_text(quota)
       submit_stash_status_btn.click
-      wait_until{ !submit_stash_status_btn.visible? }
+      wait_until_bus_section_load
     end
 
     # Public: Disable stash for a partner
@@ -337,6 +358,33 @@ module Bus
       change_stash_link.click
       stash_status_select.select('No')
       submit_stash_status_btn.click
+      wait_until_bus_section_load
+    end
+
+    # Public: Enable autogrow for a partner
+    #
+    # Example:
+    #   @bus_site.admin_console_page.partner_details_section.enable_autogrow
+    #
+    # Returns nothing
+    def enable_autogrow
+      change_autogrow_status_link.click
+      autogrow_status_select.select('Yes')
+      submit_autogrow_status_btn.click
+      wait_until{ !submit_autogrow_status_btn.visible? }
+    end
+
+    # Public: Disable autogrow for a partner
+    #
+    # Example:
+    #   @bus_site.admin_console_page.partner_details_section.disable_autogrow
+    #
+    # Returns nothing
+    def disable_autogrow
+      change_autogrow_status_link.click
+      autogrow_status_select.select('No')
+      submit_autogrow_status_btn.click
+      wait_until{ success_messages == "Overdraft protection disabled." }
     end
 
     # Public: Add stash to all users
@@ -395,12 +443,10 @@ module Bus
     end
 
     def add_ip_whitelist(ip)
+      refresh_bus_section
       ip_whitelist_div.find(:css, 'a:first-child').click
       ip_whitelist_div.find(:css, 'input#api_allowed_ips').type_text(ip.to_s)
       ip_whitelist_div.find(:css, 'input[value=Submit]').click
-      wait_until_bus_section_load
-      # This method call is a walk around of bug #95827, it should be removed when bug is fixed
-      refresh_bus_section
     end
 
     # Public: Close partner details frame
@@ -523,8 +569,15 @@ module Bus
       save_changes_btn.click
     end
 
-    def save_changes?
-
+    # Public: Success messages for partner details section
+    #
+    # Example
+    #  @bus_admin_console_page.partner_details_section.success_messages
+    #  # => "API IP whitelist has been updated"
+    #
+    # @return [String]
+    def success_messages
+      msg_div.text
     end
 
   end
