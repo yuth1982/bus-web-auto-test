@@ -218,7 +218,7 @@ Feature: User sync
     When I click Sync Rules tab
     And I add 1 new provision rules:
       | rule         | group |
-      | cn=dev_test* | dev   |
+      | cn=dev-17538-test* | dev   |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 1 provision rules
@@ -230,15 +230,15 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
       | User               |      Name     | User Group  |
-      | dev_test3@test.com |   dev_test3   | dev         |
-      | dev_test2@test.com |   dev_test2   | dev         |
-      | dev_test1@test.com |   dev_test1   | dev         |
+      | dev-17538-test3@test.com |   dev-17538-test3   | dev         |
+      | dev-17538-test2@test.com |   dev-17538-test2   | dev         |
+      | dev-17538-test1@test.com |   dev-17538-test1   | dev         |
     When I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
     And I add 1 new deprovision rules:
       | rule         | action  |
-      | cn=dev_test* | Delete  |
+      | cn=dev-17538-test* | Delete  |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 1 deprovision rules
@@ -262,7 +262,7 @@ Feature: User sync
     When I click Sync Rules tab
     And I add 1 new provision rules:
       | rule                                                                  | group |
-      | (&(objectClass=user)(\|(\|(cn=dev_test*)(cn=pm_test*))(cn=qa_test*))) | dev   |
+      | (&(objectClass=user)(\|(\|(cn=dev-17540-test*)(cn=pm-17540-test*))(cn=qa-17540-test*))) | dev   |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 1 provision rules
@@ -274,21 +274,21 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
       | User               |      Name     | User Group  |
-      | qa_test3@test.com  |   qa_test3    | dev         |
-      | qa_test2@test.com  |   qa_test2    | dev         |
-      | qa_test1@test.com  |   qa_test1    | dev         |
-      | pm_test3@test.com  |   pm_test3    | dev         |
-      | pm_test2@test.com  |   pm_test2    | dev         |
-      | pm_test1@test.com  |   pm_test1    | dev         |
-      | dev_test3@test.com |   dev_test3   | dev         |
-      | dev_test2@test.com |   dev_test2   | dev         |
-      | dev_test1@test.com |   dev_test1   | dev         |
+      | qa-17540-test3@test.com  |   qa-17540-test3    | dev         |
+      | qa-17540-test2@test.com  |   qa-17540-test2    | dev         |
+      | qa-17540-test1@test.com  |   qa-17540-test1    | dev         |
+      | pm-17540-test3@test.com  |   pm-17540-test3    | dev         |
+      | pm-17540-test2@test.com  |   pm-17540-test2    | dev         |
+      | pm-17540-test1@test.com  |   pm-17540-test1    | dev         |
+      | dev-17540-test3@test.com |   dev-17540-test3   | dev         |
+      | dev-17540-test2@test.com |   dev-17540-test2   | dev         |
+      | dev-17540-test1@test.com |   dev-17540-test1   | dev         |
     When I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
     And I add 1 new deprovision rules:
       | rule                                                                  | action  |
-      | (&(objectClass=user)(\|(\|(cn=dev_test*)(cn=pm_test*))(cn=qa_test*))) | Delete  |
+      | (&(objectClass=user)(\|(\|(cn=dev-17540-test*)(cn=pm-17540-test*))(cn=qa-17540-test*))) | Delete  |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 1 deprovision rules
@@ -312,9 +312,9 @@ Feature: User sync
     When I click Sync Rules tab
     And I add 3 new provision rules:
       | rule         | group |
-      | cn=dev_test* | dev   |
-      | cn=pm_test*  | pm    |
-      | cn=qa_test*  | qa    |
+      | cn=dev-17542-test* | dev   |
+      | cn=pm-17542-test*  | pm    |
+      | cn=qa-17542-test*  | qa    |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 3 provision rules
@@ -326,23 +326,23 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
       | User               |      Name     | User Group  |
-      | qa_test3@test.com  |   qa_test3    | qa          |
-      | qa_test2@test.com  |   qa_test2    | qa          |
-      | qa_test1@test.com  |   qa_test1    | qa          |
-      | pm_test3@test.com  |   pm_test3    | pm          |
-      | pm_test2@test.com  |   pm_test2    | pm          |
-      | pm_test1@test.com  |   pm_test1    | pm          |
-      | dev_test3@test.com |   dev_test3   | dev         |
-      | dev_test2@test.com |   dev_test2   | dev         |
-      | dev_test1@test.com |   dev_test1   | dev         |
+      | qa-17542-test3@test.com  |   qa-17542-test3    | qa          |
+      | qa-17542-test2@test.com  |   qa-17542-test2    | qa          |
+      | qa-17542-test1@test.com  |   qa-17542-test1    | qa          |
+      | pm-17542-test3@test.com  |   pm-17542-test3    | pm          |
+      | pm-17542-test2@test.com  |   pm-17542-test2    | pm          |
+      | pm-17542-test1@test.com  |   pm-17542-test1    | pm          |
+      | dev-17542-test3@test.com |   dev-17542-test3   | dev         |
+      | dev-17542-test2@test.com |   dev-17542-test2   | dev         |
+      | dev-17542-test1@test.com |   dev-17542-test1   | dev         |
     When I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
     And I add 3 new deprovision rules:
       | rule         | action   |
-      | cn=dev_test* | Delete   |
-      | cn=pm_test*  | Delete   |
-      | cn=qa_test*  | Delete   |
+      | cn=dev-17542-test* | Delete   |
+      | cn=pm-17542-test*  | Delete   |
+      | cn=qa-17542-test*  | Delete   |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 3 deprovision rules
@@ -366,10 +366,10 @@ Feature: User sync
     When I click Sync Rules tab
     And I add 4 new provision rules:
       | rule                                                | group |
-      | cn=dev_test*                                        | dev   |
-      | cn=pm_test*                                         | dev   |
-      | cn=pm_test*                                         | pm    |
-      | cn=qa_test*                                         | qa    |
+      | cn=dev-17543-test*                                        | dev   |
+      | cn=pm-17543-test*                                         | dev   |
+      | cn=pm-17543-test*                                         | pm    |
+      | cn=qa-17543-test*                                         | qa    |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 4 provision rules
@@ -381,22 +381,22 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
       | User               |      Name     | User Group  |
-      | qa_test3@test.com  |   qa_test3    | qa          |
-      | qa_test2@test.com  |   qa_test2    | qa          |
-      | qa_test1@test.com  |   qa_test1    | qa          |
-      | pm_test3@test.com  |   pm_test3    | dev         |
-      | pm_test2@test.com  |   pm_test2    | dev         |
-      | pm_test1@test.com  |   pm_test1    | dev         |
-      | dev_test3@test.com |   dev_test3   | dev         |
-      | dev_test2@test.com |   dev_test2   | dev         |
-      | dev_test1@test.com |   dev_test1   | dev         |
+      | qa-17543-test3@test.com  |   qa-17543-test3    | qa          |
+      | qa-17543-test2@test.com  |   qa-17543-test2    | qa          |
+      | qa-17543-test1@test.com  |   qa-17543-test1    | qa          |
+      | pm-17543-test3@test.com  |   pm-17543-test3    | dev         |
+      | pm-17543-test2@test.com  |   pm-17543-test2    | dev         |
+      | pm-17543-test1@test.com  |   pm-17543-test1    | dev         |
+      | dev-17543-test3@test.com |   dev-17543-test3   | dev         |
+      | dev-17543-test2@test.com |   dev-17543-test2   | dev         |
+      | dev-17543-test1@test.com |   dev-17543-test1   | dev         |
     When I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
     And I add 2 new deprovision rules:
       | rule         | action           |
-      | cn=dev_test* | Take no action   |
-      | cn=dev_test* | Delete           |
+      | cn=dev-17543-test* | Take no action   |
+      | cn=dev-17543-test* | Delete           |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 2 deprovision rules
@@ -408,23 +408,23 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
       | User               |      Name     | User Group  |
-      | qa_test3@test.com  |   qa_test3    | qa          |
-      | qa_test2@test.com  |   qa_test2    | qa          |
-      | qa_test1@test.com  |   qa_test1    | qa          |
-      | pm_test3@test.com  |   pm_test3    | dev         |
-      | pm_test2@test.com  |   pm_test2    | dev         |
-      | pm_test1@test.com  |   pm_test1    | dev         |
-      | dev_test3@test.com |   dev_test3   | dev         |
-      | dev_test2@test.com |   dev_test2   | dev         |
-      | dev_test1@test.com |   dev_test1   | dev         |
+      | qa-17543-test3@test.com  |   qa-17543-test3    | qa          |
+      | qa-17543-test2@test.com  |   qa-17543-test2    | qa          |
+      | qa-17543-test1@test.com  |   qa-17543-test1    | qa          |
+      | pm-17543-test3@test.com  |   pm-17543-test3    | dev         |
+      | pm-17543-test2@test.com  |   pm-17543-test2    | dev         |
+      | pm-17543-test1@test.com  |   pm-17543-test1    | dev         |
+      | dev-17543-test3@test.com |   dev-17543-test3   | dev         |
+      | dev-17543-test2@test.com |   dev-17543-test2   | dev         |
+      | dev-17543-test1@test.com |   dev-17543-test1   | dev         |
     When I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
     And I add 3 new deprovision rules:
       | rule         | action   |
-      | cn=dev_test* | Delete   |
-      | cn=pm_test*  | Delete   |
-      | cn=qa_test*  | Delete   |
+      | cn=dev-17543-test* | Delete   |
+      | cn=pm-17543-test*  | Delete   |
+      | cn=qa-17543-test*  | Delete   |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 3 deprovision rules
@@ -448,9 +448,9 @@ Feature: User sync
     When I click Sync Rules tab
     And I add 3 new provision rules:
       | rule         | group |
-      | cn=dev_test* | dev   |
-      | cn=pm_test*  | pm    |
-      | cn=qa_test*  | qa    |
+      | cn=dev-17544-test* | dev   |
+      | cn=pm-17544-test*  | pm    |
+      | cn=qa-17544-test*  | qa    |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 3 provision rules
@@ -462,23 +462,23 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
       | User               |      Name     | User Group |
-      | qa_test3@test.com  |   qa_test3    | qa         |
-      | qa_test2@test.com  |   qa_test2    | qa         |
-      | qa_test1@test.com  |   qa_test1    | qa         |
-      | pm_test3@test.com  |   pm_test3    | pm         |
-      | pm_test2@test.com  |   pm_test2    | pm         |
-      | pm_test1@test.com  |   pm_test1    | pm         |
-      | dev_test3@test.com |   dev_test3   | dev        |
-      | dev_test2@test.com |   dev_test2   | dev        |
-      | dev_test1@test.com |   dev_test1   | dev        |
+      | qa-17544-test3@test.com  |   qa-17544-test3    | qa         |
+      | qa-17544-test2@test.com  |   qa-17544-test2    | qa         |
+      | qa-17544-test1@test.com  |   qa-17544-test1    | qa         |
+      | pm-17544-test3@test.com  |   pm-17544-test3    | pm         |
+      | pm-17544-test2@test.com  |   pm-17544-test2    | pm         |
+      | pm-17544-test1@test.com  |   pm-17544-test1    | pm         |
+      | dev-17544-test3@test.com |   dev-17544-test3   | dev        |
+      | dev-17544-test2@test.com |   dev-17544-test2   | dev        |
+      | dev-17544-test1@test.com |   dev-17544-test1   | dev        |
     When I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
     And I add 3 new provision rules:
       | rule         | group |
-      | cn=dev_test* | (default user group)   |
-      | cn=pm_test*  | (default user group)   |
-      | cn=qa_test*  | (default user group)   |
+      | cn=dev-17544-test* | (default user group)   |
+      | cn=pm-17544-test*  | (default user group)   |
+      | cn=qa-17544-test*  | (default user group)   |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 3 provision rules
@@ -490,23 +490,23 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
       | User               |      Name     | User Group  |
-      | qa_test3@test.com  |   qa_test3    | (default user group)        |
-      | qa_test2@test.com  |   qa_test2    | (default user group)        |
-      | qa_test1@test.com  |   qa_test1    | (default user group)        |
-      | pm_test3@test.com  |   pm_test3    | (default user group)        |
-      | pm_test2@test.com  |   pm_test2    | (default user group)        |
-      | pm_test1@test.com  |   pm_test1    | (default user group)        |
-      | dev_test3@test.com |   dev_test3   | (default user group)        |
-      | dev_test2@test.com |   dev_test2   | (default user group)        |
-      | dev_test1@test.com |   dev_test1   | (default user group)        |
+      | qa-17544-test3@test.com  |   qa-17544-test3    | (default user group)        |
+      | qa-17544-test2@test.com  |   qa-17544-test2    | (default user group)        |
+      | qa-17544-test1@test.com  |   qa-17544-test1    | (default user group)        |
+      | pm-17544-test3@test.com  |   pm-17544-test3    | (default user group)        |
+      | pm-17544-test2@test.com  |   pm-17544-test2    | (default user group)        |
+      | pm-17544-test1@test.com  |   pm-17544-test1    | (default user group)        |
+      | dev-17544-test3@test.com |   dev-17544-test3   | (default user group)        |
+      | dev-17544-test2@test.com |   dev-17544-test2   | (default user group)        |
+      | dev-17544-test1@test.com |   dev-17544-test1   | (default user group)        |
     When I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
     And I add 3 new deprovision rules:
       | rule         | action   |
-      | cn=dev_test* | Delete   |
-      | cn=pm_test*  | Delete   |
-      | cn=qa_test*  | Delete   |
+      | cn=dev-17544-test* | Delete   |
+      | cn=pm-17544-test*  | Delete   |
+      | cn=qa-17544-test*  | Delete   |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 3 deprovision rules
