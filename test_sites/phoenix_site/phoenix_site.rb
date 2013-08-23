@@ -33,4 +33,9 @@ class PhoenixSite
   def user_account
     Phoenix::UserAccount.new
   end
+
+  def update_profile
+    Phoenix::ChangeProfilePage.new
+  end
+
 end

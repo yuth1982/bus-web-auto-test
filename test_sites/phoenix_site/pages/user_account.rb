@@ -137,6 +137,12 @@ module Phoenix
       submit_btn.click
     end
 
+    def user_login_changed_pw(partner)
+      username_tb.type_text(partner.admin_info.email)
+      password_tb.type_text(QA_ENV['bus_password'])
+      submit_btn.click
+    end
+
     def logout(partner)
       localized_click(partner, 'logout_link')
     end

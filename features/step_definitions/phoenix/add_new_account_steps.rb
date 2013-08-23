@@ -192,10 +192,17 @@ Then /^sign up page error message to (.+) should be displayed$/ do |username|
 end
 
 # this piece may be combinable with the bus admin login step
-When /^I login as the user on the account.$/ do
+When /^I login (as the user|under changed password) on the account.$/ do |login_condition|
   @phoenix_site = PhoenixSite.new
   @phoenix_site.user_account.load
-  @phoenix_site.user_account.user_login(@partner)
+  case login_condition
+    when "as the user"
+      @phoenix_site.user_account.user_login(@partner)
+    when "under changed password"
+      @phoenix_site.user_account.user_login_changed_pw(@partner)
+      step %{I verify the user account:}
+  end
+
 end
 
 # this piece may be combinable with the verification of account step
