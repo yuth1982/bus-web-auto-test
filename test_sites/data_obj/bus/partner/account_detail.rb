@@ -7,16 +7,16 @@ module Bus
       # Public: Initialize a AccountDetail Object
       #
       def initialize
-        @acct_type = "Internal Test"
-        @sales_origin = ""
-        @sales_channel = ""
+        @account_type = "Internal Test"
+        @sales_origin = "Sales"
+        @sales_channel = "Inside Sales"
       end
 
       # Public: Output AdminInfo object attributes
       #
       # Returns text
       def to_s
-        %{account_type: #@acct_type
+        %{account_type: #@account_type
         sales origin: #@sales_origin
         sales channel: #@sales_channel}
       end

@@ -133,6 +133,12 @@ module SiteHelper
       sleep 2
     end
 
+    def wait_until_ajax_finished(elements)
+      elements.each do |el|
+        wait_until{ el.text.match(/.*Loading.*/).nil? }
+      end
+    end
+
     # Public: Is section visible and active
     #
     # Example:

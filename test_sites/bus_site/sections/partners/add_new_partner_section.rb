@@ -30,6 +30,11 @@ module Bus
     element(:coupon_code_tb, id: 'coupon_code')
     element(:plan_loading_div, id: 'plan_loading')
 
+    # Account Detail
+    element(:account_type_select, id: 'acct_type')
+    element(:sales_origin_select, id: 'sales_origin')
+    element(:sales_channel_select, id: 'sales_channel')
+
     # Billing Info
     element(:use_company_info_cb, id: 'use_company_info')
     element(:cc_address_tb, id: 'cc_address')
@@ -79,6 +84,7 @@ module Bus
     def add_new_account(partner)
       fill_company_info(partner.company_info)
       fill_partner_admin_info(partner.partner_info, partner.admin_info)
+      fill_account_detail(partner.account_detail)
       fill_billing_info(partner)
 
       # define master plan subscription period
@@ -177,6 +183,12 @@ module Bus
       new_admin_username_tb.type_text(admin_info.email)
     end
 
+    def fill_account_detail(account_detail)
+      account_type_select.select(account_detail.account_type)
+      sales_origin_select.select(account_detail.sales_origin)
+      sales_channel_select.select(account_detail.sales_channel)
+    end
+
     def fill_billing_info(partner)
       if partner.use_company_info
         use_company_info_cb.check
@@ -184,7 +196,9 @@ module Bus
     end
 
     def fill_subscription_period(period)
-      find_with_highlight(:id, "billing_period_#{period}").click
+      el = find(:id, "billing_period_#{period}")
+      wait_until { el.visible? && el.enabled? }
+      el.click
     end
 
     def fill_initial_purchase(partner)

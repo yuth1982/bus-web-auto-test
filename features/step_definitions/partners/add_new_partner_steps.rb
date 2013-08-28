@@ -53,6 +53,7 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partne
       @partner.has_server_plan = (attributes["server plan"] || "no").eql?("yes")
       @partner.has_stash_grant_plan = (attributes["stash grant plan"] || "no").eql?("yes")
       @partner.admin_info.root_role = attributes["root role"] || CONFIGS['bus']['root_role']['reseller']
+      @partner.account_detail.sales_channel = 'Reseller'
     else
       raise "Error: Company type #{type} does not exist."
   end
@@ -66,34 +67,39 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partne
   @partner.company_info.country = attributes["country"] unless attributes['country'].nil?
   @partner.company_info.zip = attributes['zip'] unless attributes['zip'].nil?
   @partner.company_info.phone = attributes['phone'] unless attributes['phone'].nil?
-  @partner.company_info.vat_num = attributes["vat number"] unless attributes["vat number"].nil?
+  @partner.company_info.vat_num = attributes['vat number'] unless attributes["vat number"].nil?
 
   # Partner info attributes
-  @partner.partner_info.coupon_code = attributes["coupon"] unless attributes["coupon"].nil?
-  @partner.partner_info.parent = attributes["create under"] || CONFIGS['bus']['mozy_root_partner']['mozypro']
+  @partner.partner_info.coupon_code = attributes['coupon'] unless attributes['coupon'].nil?
+  @partner.partner_info.parent = attributes['create under'] || CONFIGS['bus']['mozy_root_partner']['mozypro']
 
   # Admin existing email check
   attributes['admin email'] = @existing_user_email if attributes['admin email'] == '@existing_user_email'
   attributes['admin email'] = @existing_admin_email if attributes['admin email'] == '@existing_admin_email'
 
   # Admin info attributes
-  @partner.admin_info.full_name = attributes["admin name"] unless attributes["admin name"].nil?
-  @partner.admin_info.email = attributes["admin email"] unless attributes["admin email"].nil?
+  @partner.admin_info.full_name = attributes['admin name'] unless attributes['admin name'].nil?
+  @partner.admin_info.email = attributes['admin email'] unless attributes['admin email'].nil?
+
+  # Account Details
+  @partner.account_detail.account_type = attributes['account type'] unless attributes['account type'].nil?
+  @partner.account_detail.sales_origin = attributes['sales origin'] unless attributes['sales origin'].nil?
+  @partner.account_detail.sales_channel = attributes['sales channel'] unless attributes['sales channel'].nil?
 
   # Billing info attributes
   # Not implemented, always use company info
 
   # Credit card info attributes
-  @partner.credit_card.first_name = attributes["cc first name"] unless attributes["cc first name"].nil?
-  @partner.credit_card.last_name = attributes["cc last name"] unless attributes["cc last name"].nil?
-  @partner.credit_card.number = attributes["cc number"] unless attributes["cc number"].nil?
-  @partner.credit_card.expire_month = attributes["expire month"] unless attributes["expire month"].nil?
-  @partner.credit_card.expire_year = attributes["expire year"] unless attributes["expire year"].nil?
-  @partner.credit_card.cvv = attributes["cvv"] unless attributes["cvv"].nil?
+  @partner.credit_card.first_name = attributes['cc first name'] unless attributes['cc first name'].nil?
+  @partner.credit_card.last_name = attributes['cc last name'] unless attributes['cc last name'].nil?
+  @partner.credit_card.number = attributes['cc number'] unless attributes['cc number'].nil?
+  @partner.credit_card.expire_month = attributes['expire month'] unless attributes['expire month'].nil?
+  @partner.credit_card.expire_year = attributes['expire year'] unless attributes['expire year'].nil?
+  @partner.credit_card.cvv = attributes['cvv'] unless attributes['cvv'].nil?
 
   # Common attributes
-  @partner.subscription_period = attributes["period"]
-  @partner.net_term_payment = (attributes["net terms"] || "no").eql?("yes")
+  @partner.subscription_period = attributes['period']
+  @partner.net_term_payment = (attributes['net terms'] || 'no').eql?('yes')
 
   Log.debug(@partner.to_s)
   @bus_site.admin_console_page.add_new_partner_section.add_new_account(@partner)
