@@ -35,6 +35,7 @@ module Bus
     element(:stash_info_dl, css: 'div>dl>form')
 
     # Contact information
+    element(:account_details_icon, css: 'i[id$=account-dtl-icon]')
     elements(:contact_info_dls, css: 'div>form>dl')
     element(:contact_address_tb, id: 'contact_address')
     element(:contact_city_tb, id: 'contact_city')
@@ -77,10 +78,13 @@ module Bus
     element(:internal_billing_table, css: 'div[id$=internal-billing-content] table')
 
     # Subadmins
+    element(:subadmins_icon, css: 'i[id$=subadmin-icon]')
     element(:sub_admins_div, id: 'subadminbox')
     element(:sub_admins_table, css: 'div#subadminbox table')
 
     # Billing history
+    element(:billing_information_icon, css: 'i[id$=bill-info-icon]')
+    element(:show_billing_history_link, css: 'a[onclick*=billing-history]')
     element(:billing_history_table, css: 'table.table-view')
 
     # Stash section
@@ -163,6 +167,8 @@ module Bus
     # Returns hash table
     def contact_info_hash
       wait_until_bus_section_load
+      expand(account_details_icon)
+      wait_until_ajax_finished(general_info_dls)
       output = Hash[*contact_info_dls.map{ |el| el.dt_dd_elements_text.delete_if{ |pair| pair.first.empty?}}.delete_if{ |el| el.empty?}.flatten]
       output['Contact Address:'] = contact_address_tb.value
       output['Contact City:'] = contact_city_tb.value
@@ -197,11 +203,13 @@ module Bus
     # Returns hash
     def account_attributes_hashes
       # Remove hidden column inside table
+      expand(account_details_icon)
       array = account_attributes_table.rows_text.map{ |row| row[0..1] }
       Hash[*array.flatten]
     end
 
     def pooled_resource_table_rows
+      expand(account_details_icon)
       pooled_resources_table.rows_text
     end
 
@@ -212,6 +220,7 @@ module Bus
     #
     # Return array
     def generic_resources_table_headers
+      expand(account_details_icon)
       generic_resources_table.headers_text
     end
 
@@ -223,6 +232,7 @@ module Bus
     # Returns array
     def generic_resources_table_rows
       # Remove hidden column inside table
+      expand(account_details_icon)
       output = generic_resources_table.rows_text.map{ |row| row[0..3] }
       output[2] = output[2] + ['','']
       output
@@ -235,6 +245,7 @@ module Bus
     #
     # Returns array
     def license_types_table_headers
+      expand(account_details_icon)
       license_types_table.headers_text
     end
 
@@ -245,6 +256,7 @@ module Bus
     #
     # Returns array
     def license_types_table_rows
+      expand(account_details_icon)
       license_types_table.rows_text
     end
 
@@ -252,6 +264,7 @@ module Bus
     #
     # Returns array
     def stash_info_table_rows
+      expand(account_details_icon)
       stash_info_table.rows_text
     end
 
@@ -262,6 +275,8 @@ module Bus
     #
     # Returns array
     def internal_billing_table_rows
+      expand(billing_information_icon)
+      wait_until_ajax_finished(general_info_dls)
       internal_billing_table.rows_text
     end
 
@@ -269,6 +284,8 @@ module Bus
     #
     # Return string
     def sub_admins_text
+      expand(subadmins_icon)
+      wait_until_ajax_finished(general_info_dls)
       sub_admins_div.text
     end
 
@@ -276,6 +293,8 @@ module Bus
     #
     # Returns array
     def sub_admins_table_headers
+      expand(subadmins_icon)
+      wait_until_ajax_finished(general_info_dls)
       sub_admins_table.headers_text
     end
 
@@ -283,6 +302,8 @@ module Bus
     #
     # Returns array
     def sub_admins_table_rows
+      expand(subadmins_icon)
+      wait_until_ajax_finished(general_info_dls)
       sub_admins_table.rows_text
     end
 
@@ -293,6 +314,9 @@ module Bus
     #
     # Returns hash array
     def billing_history_hashes
+      expand(billing_information_icon)
+      show_billing_history_link.click
+      wait_until_ajax_finished(general_info_dls)
       billing_history_table.rows_text.map{ |row| Hash[*billing_history_table.headers_text.zip(row).flatten] }
     end
 
@@ -581,5 +605,21 @@ module Bus
       msg_div.text
     end
 
+    private
+    def expanded?(element)
+      element['class'] == 'icon-chevron-down'
+    end
+
+    def collapsed?(element)
+      element['class'] == 'icon-chevron-right'
+    end
+
+    def expand(element)
+      element.click if collapsed?(element)
+    end
+
+    def collapse(element)
+      element.click if expanded?(element)
+    end
   end
 end

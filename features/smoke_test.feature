@@ -26,7 +26,7 @@ Feature: Bus Smoke Test
     And Partner account attributes should be:
       | Backup Devices         |           |
       | Backup Device Soft Cap | Disabled  |
-      | Server Enabled         | Disabled  |
+      | Server                 | Disabled  |
       | Cloud Storage (GB)     |           |
       | Stash Users:           |           |
       | Default Stash Storage: |           |

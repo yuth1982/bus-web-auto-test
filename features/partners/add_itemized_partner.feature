@@ -36,7 +36,7 @@ Feature: Add a new partner
     And Partner account attributes should be:
       | Backup Devices         |          |
       | Backup Device Soft Cap | Disabled |
-      | Server Enabled         | Disabled |
+      | Server                 | Disabled |
       | Cloud Storage (GB)     |          |
       | Stash Users:           |          |
       | Default Stash Storage: |          |
@@ -82,7 +82,7 @@ Feature: Add a new partner
     And Partner account attributes should be:
       | Backup Devices         |          |
       | Backup Device Soft Cap | Disabled |
-      | Server Enabled         | Disabled |
+      | Server                 | Disabled |
       | Cloud Storage (GB)     |          |
       | Stash Users:           |          |
       | Default Stash Storage: |          |

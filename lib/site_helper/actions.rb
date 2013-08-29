@@ -134,6 +134,7 @@ module SiteHelper
     end
 
     def wait_until_ajax_finished(elements)
+      elements = [elements] unless elements.is_a? Array
       elements.each do |el|
         wait_until{ el.text.match(/.*Loading.*/).nil? }
       end

@@ -35,7 +35,7 @@ Feature: Add a new partner through phoenix
     And Partner account attributes should be:
       | Backup Devices         |          |
       | Backup Device Soft Cap | Disabled |
-      | Server Enabled         | Enabled  |
+      | Server                 | Enabled  |
       | Cloud Storage (GB)     |          |
       | Stash Users:           |          |
       | Default Stash Storage: |          |
