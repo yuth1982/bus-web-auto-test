@@ -112,7 +112,6 @@ module Phoenix
     def go_to_phoenix
       find(:xpath, "//a[contains(@href,'/registration')]").click
     end
-
     # go to pro-direct flow
     def go_to_pro_direct_page
       find(:xpath, "//a[text()='Products']").click

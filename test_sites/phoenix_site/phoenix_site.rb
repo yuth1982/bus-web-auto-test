@@ -37,5 +37,4 @@ class PhoenixSite
   def update_profile
     Phoenix::ChangeProfilePage.new
   end
-
 end

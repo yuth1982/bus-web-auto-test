@@ -89,5 +89,22 @@ Then /API\* Aria account should be:/ do |info_table|
   # "billing_address_verification_code", "billing_address_match_score", "error_msg",
 end
 
+When(/^API\\\* I get aria client defined field data by (.+)$/) do |aria_id|
+  # returns value of user defined fields in hash
+  #   [{"field_name"=>"Channel", "field_value"=>"ISS"}, {"field_name"=>"Subsidiary", "field_value"=>"Mozy Inc. (US)"}]
+  @aria_supp_fields = AriaApi.get_acct_supp_fields({:acct_no=> aria_id})
+end
 
+Then(/^API\\\* Aria client defined field data should be:$/) do |client_defined_fields|
+  # | Channel | ISS | Subsidiary | Mozy Inc. (US) |
+  # table is a Cucumber::Ast::Table
+  expected_values = client_defined_fields.hashes
 
+  r = []
+  @aria_supp_fields["supp_fields"].each {|item| r << item.values }
+  actual = Hash[r]
+
+  expected_values.each do |key, value|
+    actual[key].should == value
+  end
+end
