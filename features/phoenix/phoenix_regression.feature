@@ -51,12 +51,12 @@ Feature: Phoenix regression Test
       | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> |
     Then I delete partner account
 
-  @TC.2357 @fail    @bus @phoenix @capture @city @state @zip
-  Scenario: 2357 Verify that the United States is the default country (MozyPro)
-    When I add a phoenix Pro partner to the billing page:
-      | period | base plan | country       | server plan |
-      | 24     | 100 GB    | United States | yes         |
-    Then the default country is us in the pro billing page
+#  @TC.2357 @fail    @bus @phoenix @capture @city @state @zip
+#  Scenario: 2357 Verify that the United States is the default country (MozyPro)
+#    When I add a phoenix Pro partner to the billing page:
+#      | period | base plan | country       | server plan |
+#      | 24     | 100 GB    | United States | yes         |
+#    Then the default country is us in the pro billing page
 
 #  @TC.2359 @fail
 #  Scenario: 2359 Verify that the United States is the default country (MozyHome)

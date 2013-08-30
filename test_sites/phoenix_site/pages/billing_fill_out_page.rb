@@ -2,7 +2,7 @@ module Phoenix
   class NewPartnerBillingFillout < SiteHelper::Page
 
     set_url("https://#{QA_ENV['phoenix_host']}")
-  
+
     # Private elements
     #
     # Credit Card Info
@@ -66,7 +66,7 @@ module Phoenix
     #     rows = 'css=td.desc.' (base_product, add_on_product, sub_price, discount, total)
     def billing_summary_info_get(partner)
       wait_until {billing_summary_table.visible?}
-      partner.billing_summary = billing_summary_table.rows_text.map{ |row| Hash[billing_summary_table.headers_text.zip(row)] }
+      partner.order_summary = billing_summary_table.rows_text.map{ |row| Hash[billing_summary_table.headers_text.zip(row)] }
     end
 
     #   pro: filling in cc payment fields + click 'same as' link
