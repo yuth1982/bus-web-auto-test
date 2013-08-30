@@ -265,30 +265,30 @@ Feature: User stash setting management
     #    When I stop masquerading
     #    And I search and delete partner account by newly created partner company name
 
-  @TC.19018 @BSA.2050 @bus @stash
-  Scenario: 19018 Add new user with custom Desired Storage for Stash
-    When I add a new Reseller partner:
-      | period | reseller type | reseller quota |
-      | 1      | Gold          | 100            |
-    Then New partner should be created
-    When I enable stash for the partner
-    Then Partner general information should be:
-      | Enable Stash: |
-      | Yes (change)  |
-    When I act as newly created partner account
-    And I allocate 10 GB Desktop quota with (default user group) user group to Reseller partner
-    Then Reseller resource quota should be changed
-    When I add a new user to a Reseller partner:
-      | name           | enable stash | stash quota |
-      | TC.19018 user  | yes          | 5           |
-    Then New user should be created
-    When I navigate to Search / List Users section from bus admin console page
-    And I view user details by newly created user email
-    Then User backup details table should be:
-      | Computer | Encryption | Storage Used            | Last Update | License Key | Actions |
-      | Stash    | Default    | 0 bytes / 5 GB (change) | N/A         |             | delete  |
-    When I stop masquerading
-    And I search and delete partner account by newly created partner company name
+    #  @TC.19018 @BSA.2050 @bus @stash
+    #  Scenario: 19018 Add new user with custom Desired Storage for Stash
+    #    When I add a new Reseller partner:
+    #      | period | reseller type | reseller quota |
+    #      | 1      | Gold          | 100            |
+    #    Then New partner should be created
+    #    When I enable stash for the partner
+    #    Then Partner general information should be:
+    #      | Enable Stash: |
+    #      | Yes (change)  |
+    #    When I act as newly created partner account
+    #    And I allocate 10 GB Desktop quota with (default user group) user group to Reseller partner
+    #    Then Reseller resource quota should be changed
+    #    When I add a new user to a Reseller partner:
+    #      | name           | enable stash | stash quota |
+    #      | TC.19018 user  | yes          | 5           |
+    #    Then New user should be created
+    #    When I navigate to Search / List Users section from bus admin console page
+    #    And I view user details by newly created user email
+    #    Then User backup details table should be:
+    #      | Computer | Encryption | Storage Used            | Last Update | License Key | Actions |
+    #      | Stash    | Default    | 0 bytes / 5 GB (change) | N/A         |             | delete  |
+    #    When I stop masquerading
+    #    And I search and delete partner account by newly created partner company name
 
   @TC.19019 @BSA.2050 @bus @stash
   Scenario: 19019 Add new user with stash not enabled
@@ -576,9 +576,9 @@ Feature: User stash setting management
       | keywords   |
       | TC.19115   |
     Then User search results should be:
-      | User                 | Name                 | Stash    | Machines | Storage         | Storage Used | Created | Backed Up |
-      | <%=@users[1].email%> | TC.19115.stash-user  | Enabled  | 0        | Desktop: Shared | 20 GB        | today   | never     |
-      | <%=@users[0].email%> | TC.19115.backup-user | Disabled | 1        | Desktop: Shared | 10 GB        | today   | never     |
+      | User                 | Name                 | Stash    | Machines | Storage         | Storage Used   | Created | Backed Up |
+      | <%=@users[1].email%> | TC.19115.stash-user  | Enabled  | 0        | Desktop: Shared | Desktop: 20 GB | today   | never     |
+      | <%=@users[0].email%> | TC.19115.backup-user | Disabled | 1        | Desktop: Shared | Desktop: 10 GB | today   | never     |
 
   @TC.19116 @TC.19117  @BSA.3040 @bus @2.5 @user_stories @US @mozypro @partner
   Scenario: 19116 19117 Mozypro Partner View Stash status

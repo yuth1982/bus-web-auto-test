@@ -48,7 +48,6 @@ Feature: Notify about and collect past-due balances
     And I act as partner by:
       | email        |
       | @admin_email |
-    And I navigate to Change Payment Information section from bus admin console page
     Then Change payment information message should be Your account is backup-suspended. You will not be able to access your account until your credit card is billed.
 
   @TC.16147 @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers

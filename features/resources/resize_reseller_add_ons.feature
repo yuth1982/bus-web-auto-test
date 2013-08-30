@@ -143,12 +143,13 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
     And I search aria account by newly created partner admin email
     And I change Mozy Reseller 20 GB add-on - Gold (Annual) plan units to 3
     Then Supplemental plan units should be changed
+    And I wait for 30 seconds
     When I log in bus admin console as administrator
     And I search partner by newly created partner admin email
     And I view partner details by newly created partner company name
     And Partner pooled storage information should be:
       | Used | Available | Assigned | Used | Available | Assigned  |
-      | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
+      | 0    | 260       | 260      | 0    | Unlimited | Unlimited |
     And I delete partner account
 
   @TC.20187 @bus @resizing_reseller_add-ons_plan
@@ -165,12 +166,13 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
     And I search aria account by newly created partner admin email
     And I change Mozy Reseller 20 GB add-on - Platinum (Annual) plan units to 3
     Then Supplemental plan units should be changed
+    And I wait for 30 seconds
     When I log in bus admin console as administrator
     And I search partner by newly created partner admin email
     And I view partner details by newly created partner company name
     And Partner pooled storage information should be:
       | Used | Available | Assigned | Used | Available | Assigned  |
-      | 0    | 240       | 240      | 0    | Unlimited | Unlimited |
+      | 0    | 260       | 260      | 0    | Unlimited | Unlimited |
     And I delete partner account
 
   @TC.20188 @bus @resizing_reseller_add-ons_plan

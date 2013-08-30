@@ -437,7 +437,7 @@ module Bus
     def delete_device(device_name)
       device_table.rows.each do |row|
         if row[0].text == device_name
-          row[-1].find(:css, 'a.action').click
+          row[-1].find(:css, 'form[id^=machine-delete] a.action').click
           alert_accept
           break;
         end
@@ -465,6 +465,7 @@ module Bus
       new_password_tb.type_text(password)
       new_password_confirm_tb.type_text(password)
       new_password_change_btn.click
+      wait_until_bus_section_load
     end
 
     def change_device_quota(count)
@@ -554,6 +555,7 @@ module Bus
       case type
         when 'machine'
           max_input = find(:xpath, "//table[@class='mini-table']//a[text()='#{name}']/../../*[last()-2]//*[starts-with(@id, 'input-machine-storage-max')]")
+          wait_until { max_input.visible? }
           max_input.click
           Log.debug machine_max_tooltips.text
           max_input.type_text(quota)
