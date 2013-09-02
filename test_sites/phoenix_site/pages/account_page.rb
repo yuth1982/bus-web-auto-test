@@ -1,5 +1,7 @@
 module Phoenix
   class Account < SiteHelper::Page
+    #section(:my_profile_section, MyProfileSection, id: "maincontent")
+
     element(:account_pages_tb, xpath: "//div[@id='mainleftnav']/h1[1]")
     element(:my_profile_link, css: "a[href='/account/profile']")
     element(:name_tb, id: 'user_name')
@@ -11,6 +13,7 @@ module Phoenix
     element(:submit_btn, css: 'input.ui-button')
     element(:profile_saved_tb, css: 'p.flash')
     element(:upgrade_link, css: "a[href='/registration/mozy_home']")
+    element(:message_text, css: "p.notice")
 
     def account_pages
       if page.driver.is_a?(Capybara::Selenium::Driver)
