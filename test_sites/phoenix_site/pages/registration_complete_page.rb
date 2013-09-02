@@ -188,5 +188,12 @@ module Phoenix
       #  })
       clear_phoenix_cookies
     end
+
+    def upgrade_success(partner)
+      reg_comp_banner_present
+      reg_comp_text
+      reg_get_started
+      find(:xpath, "//a[text()='#{LANG[partner.company_info.country][partner.partner_info.type]['acct_page_link']}']").click
+    end
   end
 end

@@ -3,7 +3,7 @@ source :rubygems
 gem 'rake','~>0.9.2.2'
 gem 'rspec','~>2.11.0'
 gem 'cucumber','~>1.2.1'
-gem 'selenium-webdriver','>=2.26.0'
+gem 'selenium-webdriver','>=2.34.0'
 gem 'capybara', '~>1.1.2'
 gem 'capybara-webkit','~>0.12.1'
 gem 'nokogiri','~>1.5.5'
