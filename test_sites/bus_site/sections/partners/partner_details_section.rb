@@ -79,7 +79,7 @@ module Bus
 
     # Subadmins
     element(:subadmins_icon, css: 'i[id$=subadmin-icon]')
-    element(:sub_admins_div, id: 'subadminbox')
+    element(:sub_admins_div, css: '.adminbox.subadminbox')
     element(:sub_admins_table, css: 'div#subadminbox table')
 
     # Billing history

@@ -33,7 +33,7 @@ Feature: User Resources
       | 0 Used / 50 GB Available | Desktop: 0 Used / 1 Available Edit  |
     And I log out bus admin console
     Then I log in bus admin console as administrator
-    And I search and delete partner account by newly created partner name
+    And I search and delete partner account by newly created partner company name
 
   @TC.19646 @bus @user_storage_details @metallic_resellers @desktop
 Scenario: Mozy-19646:Access Partner as Bus Admin
@@ -163,7 +163,7 @@ Scenario: Mozy-19844: Access an Enterprise Partner's User's details as Partner A
     | Server: 0 Used / 10 GB Available | Server: 0 Used / 1 Available Edit  |
   And I log out bus admin console
   Then I log in bus admin console as administrator
-  And I search and delete partner account by newly created partner name
+  And I search and delete partner account by newly created partner company name
 
 @TC.19850 @bus @user_storage_details @emea @IE @bundled @server
 Scenario: Mozy-19850: Access an Irish Partner's User's details as Partner Admin
@@ -190,11 +190,11 @@ Scenario: Mozy-19850: Access an Irish Partner's User's details as Partner Admin
     | Name:                           |
     | <%=@users.first.name%> (change) |
   And user resources details rows should be:
-    | Storage                  | Devices                    |
-    | 0 Used / 50 GB Available | 0 Used / 1 Available Edit  |
+    | Storage                  | Devices                            |
+    | 0 Used / 50 GB Available | Server: 0 Used / 1 Available Edit  |
   And I log out bus admin console
   Then I log in bus admin console as administrator
-  And I search and delete partner account by newly created partner name
+  And I search and delete partner account by newly created partner company name
 
 @TC.19853 @bus @user_storage_details @emea @UK @enterprise @stash
 Scenario: Mozy-19853: Access an United Kingdom Partner's User's details as Partner Admin
@@ -226,7 +226,7 @@ Scenario: Mozy-19853: Access an United Kingdom Partner's User's details as Partn
     | Desktop: 0 Used / 50 GB Available | Desktop: 0 Used / 1 Available Edit |
   And I log out bus admin console
   Then I log in bus admin console as administrator
-  And I search and delete partner account by newly created partner name
+  And I search and delete partner account by newly created partner company name
 
 @TC.19856 @bus @user_storage_details @emea @FR @metallic_reseller @server
   Scenario: Mozy-19856:Access French Reseller's User's details as Bus Admin
