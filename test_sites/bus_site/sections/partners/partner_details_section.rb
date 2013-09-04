@@ -102,6 +102,8 @@ module Bus
     # Subdomain
     element(:change_subdomain_link, css: "a[onclick*='/partner/subdomain']")
 
+    element(:h3_section, css: "h3")
+
     # Public: Partner Id
     #
     # Return string
@@ -603,6 +605,14 @@ module Bus
     # @return [String]
     def success_messages
       msg_div.text
+    end
+
+    # partner info verification - if specific values are present, section should be good
+    # additional verification being done @ admin level in admin console
+    def partner_info_verify(partner)
+      h3_section.text.eql?(partner.company_info.name).present?
+      expand(account_details_icon)
+      pooled_resources_table.visible?
     end
 
     private

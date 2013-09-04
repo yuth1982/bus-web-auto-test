@@ -25,15 +25,7 @@ module Phoenix
     element(:reg_dl_mac2_btn, xpath: "(//input[@value='Download for Mac'])[2]")
     element(:logout_btn, xpath: "//a[text()='LOG OUT']")
     element(:start_using_mozy, id: "btn_start_using")
-    # adding a few minimal items for acct verification, if items present / value good - acct=good.
-    # additional verification being done @ admin level in admin console
-    element(:h3_section, css: "h3") # partner detail info section
-    element(:pooled_resources, css: "table.form-box2")
-    element(:h4_section, css: "h4") # renewal heading in billing info
-    element(:refresh, css: "img[alt='Refresh']")
-    element(:pooled_resource_tbl, css: "table.form-box2")
-    element(:bill_info_plan_amnt, css: "strong") # billing info - plan size in bold
-    #
+
     # Public : reg complete banner visible
     # required: nothing
     #
@@ -42,6 +34,7 @@ module Phoenix
     #
     # Returns nothing
     def navigate_to_link(link)
+      wait_until { find_link(link) }
       find_link(link).click
     end
 
@@ -64,17 +57,6 @@ module Phoenix
       page.driver.browser.manage.delete_cookie("user_lang_pref");
     end
 
-    # pro section
-    # code here relates
-    # to mozypro related items
-    def partner_created(partner)
-      find_link(partner.company_info.name).present?
-    end
-
-    def go_to_partner_info(partner)
-      navigate_to_link(partner.company_info.name)
-    end
-
     def reg_comp_banner_present
       reg_comp_banner.present?
     end
@@ -83,35 +65,9 @@ module Phoenix
       reg_comp_banner_txt.present?
     end
 
-    # partner info verification - if specific values are present, section should be good
-    # additional verification being done @ admin level in admin console
-    def partner_info_section(partner)
-      go_to_partner_info(partner)
-      h3_section.eql?(partner.company_info.name).present?
-      until pooled_resource_tbl.visible?
-        refresh
-      end
-      pooled_resources.visible?
-    end
-
-    def refresh
-      refresh.click
-    end
-
-    # billing info verification - if specific values are present, section should be good
-    # additional verification being done @ admin level in admin console
-    def billing_info_section(partner)
-      localized_click(partner, 'bill_info')
-      h4_section.present?
-      bill_info_plan_amnt.eql?(partner.base_plan).present?
-    end
-
     # pro registration complete
-    def reg_complete(partner)
-      reg_comp_banner_present
+    def go_to_account_verify(partner)
       localized_click(partner, 'go_to_acct')
-      partner_created(partner)
-      localized_click(partner, 'logout')
     end
 
     # home section
@@ -171,21 +127,6 @@ module Phoenix
     def free_home_verified(partner)
       reg_comp_banner_present
       reg_comp_text
-      clear_phoenix_cookies
-    end
-    # user/partner verification section
-    # code here relates to
-    # partner/user verification
-    def new_partner_verify(partner)
-      partner_created(partner)
-      partner_info_section(partner)
-      billing_info_section(partner)
-      # manage resources is no longer available w/ pooled storage
-      # TODO: GET THIS CALL FOR RESOURCE SUMMARY VERIFICATION WORKING PROPERLY
-      # step %{Bundled storage summary should be:}, table(%{
-      #    | Available | Used |
-      #    | #{partner.base_plan} | 0 |
-      #  })
       clear_phoenix_cookies
     end
 

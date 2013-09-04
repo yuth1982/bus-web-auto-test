@@ -12,6 +12,7 @@ module Bus
     element(:login_btn, css: "span.login_button")
     element(:logout_btn, xpath: "//a[text()='LOG OUT']")
     element(:message_div, css: "div#inner-content div ul")
+    element(:set_dialect_select, id: "set_dialect")
 
     # Public: Login bus admin console
     #
@@ -73,6 +74,11 @@ module Bus
     # @return [Boolean]
     def logged_in
       logout_btn.visible?
+    end
+
+    def choose_english
+      set_dialect_select.select('English')
+      sleep 2
     end
   end
 end

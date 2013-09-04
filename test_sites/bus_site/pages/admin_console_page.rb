@@ -178,5 +178,24 @@ module Bus
     def click_ok
       ok_btn.click
     end
+
+    # user/partner verification section
+    # code here relates to
+    # partner/user verification
+    def open_partner_details_from_header(partner)
+      partner_created(partner)
+      go_to_partner_info(partner)
+    end
+
+    # pro section
+    # code here relates
+    # to mozypro related items
+    def partner_created(partner)
+      find_link(partner.company_info.name).present?
+    end
+
+    def go_to_partner_info(partner)
+      find_link(partner.company_info.name).click
+    end
   end
 end

@@ -37,7 +37,50 @@ When /^I (.+) a phoenix (Home|Pro|Direct|Free) (partner|user):$/ do |string,type
 
   # Partner info attributes
   @partner.partner_info.coupon_code = attributes["coupon"] unless attributes["coupon"].nil?
-  @partner.partner_info.parent = attributes["create under"] || CONFIGS['bus']['mozy_root_partner']['mozypro']
+
+  # Partners added through phoenix do not get to select their parent.
+  # It is assigned based on their 'dom' and product selection
+  if type == "Pro"
+    #parent is MozyPro
+    @partner.partner_info.parent = case @partner.company_info.country
+                                     when "Ireland"
+                                       #parent is
+                                       'MozyPro Ireland'
+                                     when "United Kingdom"
+                                       #parent is
+                                       'MozyPro UK'
+                                     when "Germany"
+                                       #parent is
+                                       'MozyPro Germany'
+                                     when "France"
+                                       #parent is
+                                       'MozyPro France'
+                                     when "United States"
+                                       #parent is
+                                       'MozyPro'
+                                   end
+  elsif type == "Direct"
+    #parent is MozyHome
+    @partner.partner_info.parent = case @partner.company_info.country
+                                     when "Ireland"
+                                       #parent is
+                                       'MozyHome Ireland'
+                                     when "United Kingdom"
+                                       #parent is
+                                       'MozyHome UK'
+                                     when "Germany"
+                                       #parent is
+                                       'MozyHome Germany'
+                                     when "France"
+                                       #parent is
+                                       'MozyHome France'
+                                     when "United States"
+                                       #parent is
+                                       'MozyHome'
+                                   end
+  else
+    raise "unsupported user type"
+  end
 
   # Admin existing email check
   attributes['admin email'] = @existing_user_email if attributes['admin email'] == '@existing_user_email'
@@ -47,6 +90,10 @@ When /^I (.+) a phoenix (Home|Pro|Direct|Free) (partner|user):$/ do |string,type
   # Admin info attributes
   @partner.admin_info.full_name = attributes["admin name"] unless attributes["admin name"].nil?
   @partner.admin_info.email = attributes["admin email"] unless attributes["admin email"].nil?
+
+  # Account Details
+  @partner.account_detail.account_type = "Live"
+  @partner.account_detail.sales_origin = "Web"
 
   # Billing info attributes
   # Not implemented, always use company info
@@ -111,7 +158,11 @@ end
 ## Changed to more useful or the different account types
 And /^the (partner|user) is successfully added(.|)$/ do  |_,_|
   if @partner.partner_info.type == "MozyPro"
-    @phoenix_site.reg_complete_pg.reg_complete(@partner)
+    @phoenix_site.reg_complete_pg.go_to_account_verify(@partner)
+    @bus_site = BusSite.new unless !@bus_site.nil?
+    @bus_site.admin_console_page.partner_created(@partner)
+    #TODO: localized logic is tied to phoenix even if this is verified in BUS(@phoenix_site is misleading)
+    @phoenix_site.reg_complete_pg.logout(@partner)
   else
     # if not a pro acct - its a home acct, but need to determine type still
     if @partner.base_plan == "free" #reg_complete_pg.check_url == "Home"
@@ -131,10 +182,13 @@ Then /^the default country is (.+) in the pro billing page$/ do |country|
 end
 
 And /^they have logged in and verified their account.$/ do
-  @bus_site = BusSite.new
+  @phoenix_site.reg_complete_pg.clear_phoenix_cookies
+  @bus_site = BusSite.new unless !@bus_site.nil?
   @bus_site.login_page.load
   @bus_site.login_page.partner_login(@partner)
-  @phoenix_site.reg_complete_pg.new_partner_verify(@partner)
+  @bus_site.admin_console_page.open_partner_details_from_header(@partner)
+  @bus_site.admin_console_page.partner_details_section.partner_info_verify(@partner)
+  #TODO: localized logic is tied to phoenix even if this is verified in BUS(@phoenix_site is misleading)
   @phoenix_site.reg_complete_pg.logout(@partner)
 end
 
