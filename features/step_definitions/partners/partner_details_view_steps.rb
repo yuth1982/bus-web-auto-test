@@ -13,6 +13,8 @@ When /^I search and delete partner account by (.+)/ do |account_name|
   unless rows.to_s.include?('No results found.')
     @bus_site.admin_console_page.search_list_partner_section.view_partner_detail(account_name)
     @bus_site.admin_console_page.partner_details_section.delete_partner(QA_ENV['bus_password'])
+  else
+    raise "Cannot find newly created partner #{account_name}."
   end
 end
 
