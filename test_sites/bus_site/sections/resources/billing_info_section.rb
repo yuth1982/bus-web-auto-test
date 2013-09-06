@@ -30,7 +30,7 @@ module Bus
     # Returns transposed next renewal table rows array
     def next_renewal_table_rows
       wait_until_bus_section_load
-      tables.first.rows_text
+      tables[1].rows_text
     end
 
     # Public: Next renewal hashes
@@ -41,7 +41,7 @@ module Bus
     # Returns hash array
     def next_renewal_hashes
       wait_until_bus_section_load
-      tables.first.hashes
+      tables[1].hashes
     end
 
     # Public: Supplemental plan table rows text
@@ -58,7 +58,7 @@ module Bus
     # Returns transposed supplemental table rows array of first supplemental plan
     def supp_plan_table_rows
       wait_until_bus_section_load
-      tables[1].rows_text
+      tables[2].rows_text
     end
 
     # Public: Supplemental plan hashes
@@ -69,7 +69,7 @@ module Bus
     # Returns hash array
     def supp_plan_hashes
       wait_until_bus_section_load
-      tables[1].hashes
+      tables[2].hashes
     end
 
     # Public: VAT info hashes

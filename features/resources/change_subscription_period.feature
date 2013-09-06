@@ -16,6 +16,9 @@ Feature: Change subscription period
     When I act as newly created partner account
     And I change account subscription to annual billing period!
     Then Subscription changed message should be Your account has been changed to yearly billing.
+    Then Next renewal info table should be:
+      | Period          | Date         | Amount                                |
+      | Yearly (change) | after 1 year | $219.89 (Without taxes or discounts)  |
     When I stop masquerading
     And I view partner details by newly created partner company name
     Then Partner internal billing should be:
@@ -33,6 +36,9 @@ Feature: Change subscription period
     When I act as newly created partner account
     And I change account subscription to biennial billing period!
     Then Subscription changed message should be Your account has been changed to biennial billing.
+    Then Next renewal info table should be:
+      | Period            | Date          | Amount                                |
+      | Biennial (change) | after 2 years | €335.79 (Without taxes or discounts)  |
     When I stop masquerading
     And I view partner details by newly created partner company name
     Then Partner internal billing should be:
@@ -50,6 +56,9 @@ Feature: Change subscription period
     When I act as newly created partner account
     And I change account subscription to biennial billing period!
     Then Subscription changed message should be Your account has been changed to biennial billing.
+    Then Next renewal info table should be:
+      | Period            | Date          | Amount                                |
+      | Biennial (change) | after 2 years | €335.79 (Without taxes or discounts)  |
     When I stop masquerading
     And I view partner details by newly created partner company name
     Then Partner internal billing should be:
@@ -67,6 +76,9 @@ Feature: Change subscription period
     When I act as newly created partner account
     And I change account subscription to annual billing period!
     Then Subscription changed message should be Your account will be switched to yearly billing schedule at your next renewal.
+    Then Next renewal info table should be:
+      | Period          | Date          | Amount                                |
+      | Yearly (change) | after 2 years | €175.89 (Without taxes or discounts)  |
     When I stop masquerading
     And I view partner details by newly created partner company name
     Then Partner internal billing should be:
@@ -84,6 +96,9 @@ Feature: Change subscription period
     When I act as newly created partner account
     And I change account subscription to monthly billing period!
     Then Subscription changed message should be Your account will be switched to monthly billing schedule at your next renewal.
+    Then Next renewal info table should be:
+      | Period           | Date         | Amount                               |
+      | Monthly (change) | after 1 year | £13.99 (Without taxes or discounts)  |
     When I stop masquerading
     And I view partner details by newly created partner company name
     Then Partner internal billing should be:
@@ -101,6 +116,9 @@ Feature: Change subscription period
     When I act as newly created partner account
     And I change account subscription to monthly billing period!
     Then Subscription changed message should be Your account will be switched to monthly billing schedule at your next renewal.
+    Then Next renewal info table should be:
+      | Period           | Date          | Amount                               |
+      | Monthly (change) | after 2 years | $19.99 (Without taxes or discounts)  |
     When I stop masquerading
     And I view partner details by newly created partner company name
     Then Partner internal billing should be:
@@ -118,6 +136,9 @@ Feature: Change subscription period
     When I act as newly created partner account
     And I change account subscription to biennial billing period!
     Then Subscription changed message should be Your account has been changed to biennial billing.
+    Then Next renewal info table should be:
+      | Period            | Date          | Amount                                 |
+      | Biennial (change) | after 2 years | $1,810.00 (Without taxes or discounts) |
     When I stop masquerading
     And I view partner details by newly created partner company name
     Then Partner internal billing should be:
@@ -135,6 +156,9 @@ Feature: Change subscription period
     When I act as newly created partner account
     And I change account subscription to 3-year billing period!
     Then Subscription changed message should be Your account has been changed to 3-year billing.
+    Then Next renewal info table should be:
+      | Period          | Date          | Amount                                  |
+      | 3-year (change) | after 3 years | $2,590.00 (Without taxes or discounts)  |
     When I stop masquerading
     And I view partner details by newly created partner company name
     Then Partner internal billing should be:
@@ -152,6 +176,9 @@ Feature: Change subscription period
     When I act as newly created partner account
     And I change account subscription to 3-year billing period!
     Then Subscription changed message should be Your account has been changed to 3-year billing.
+    Then Next renewal info table should be:
+      | Period          | Date          | Amount                                 |
+      | 3-year (change) | after 3 years | $2,590.00 (Without taxes or discounts) |
     When I stop masquerading
     And I view partner details by newly created partner company name
     Then Partner internal billing should be:
@@ -169,6 +196,9 @@ Feature: Change subscription period
     When I act as newly created partner account
     And I change account subscription to annual billing period!
     Then Subscription changed message should be Your account will be switched to yearly billing schedule at your next renewal.
+    Then Next renewal info table should be:
+      | Period          | Date          | Amount                                |
+      | Yearly (change) | after 2 years | $950.00 (Without taxes or discounts)  |
     When I stop masquerading
     And I view partner details by newly created partner company name
     Then Partner internal billing should be:
@@ -186,6 +216,9 @@ Feature: Change subscription period
     When I act as newly created partner account
     And I change account subscription to biennial billing period!
     Then Subscription changed message should be Your account will be switched to biennial billing schedule at your next renewal.
+    Then Next renewal info table should be:
+      | Period            | Date          | Amount                                 |
+      | Biennial (change) | after 3 years | $1,810.00 (Without taxes or discounts) |
     When I stop masquerading
     And I view partner details by newly created partner company name
     Then Partner internal billing should be:
@@ -203,6 +236,9 @@ Feature: Change subscription period
     When I act as newly created partner account
     And I change account subscription to annual billing period!
     Then Subscription changed message should be Your account will be switched to yearly billing schedule at your next renewal.
+    Then Next renewal info table should be:
+      | Period          | Date          | Amount                               |
+      | Yearly (change) | after 3 years | $950.00 (Without taxes or discounts) |
     When I stop masquerading
     And I view partner details by newly created partner company name
     Then Partner internal billing should be:
@@ -220,6 +256,9 @@ Feature: Change subscription period
     When I act as newly created partner account
     And I change account subscription to annual billing period!
     Then Subscription changed message should be Your account has been changed to yearly billing.
+    Then Next renewal info table should be:
+      | Period          | Date         | Amount                                |
+      | Yearly (change) | after 1 year | $462.00 (Without taxes or discounts)  |
     When I stop masquerading
     And I view partner details by newly created partner company name
     Then Partner internal billing should be:
@@ -237,6 +276,9 @@ Feature: Change subscription period
     When I act as newly created partner account
     And I change account subscription to monthly billing period!
     Then Subscription changed message should be Your account will be switched to monthly billing schedule at your next renewal.
+    Then Next renewal info table should be:
+      | Period           | Date         | Amount                               |
+      | Monthly (change) | after 1 year | $35.00 (Without taxes or discounts)  |
     When I stop masquerading
     And I view partner details by newly created partner company name
     Then Partner internal billing should be:
@@ -266,6 +308,9 @@ Feature: Change subscription period
       | Total amount to be charged                    | $420.00  |
     When I continue to change account subscription
     Then Subscription changed message should be Your account has been changed to yearly billing.
+    Then Next renewal info table should be:
+      | Period          | Date         | Amount                                |
+      | Yearly (change) | after 1 year | $462.00 (Without taxes or discounts)  |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -290,6 +335,9 @@ Feature: Change subscription period
       | Total amount to be charged                    | $399.80  |
     When I continue to change account subscription
     Then Subscription changed message should be Your account has been changed to biennial billing.
+    Then Next renewal info table should be:
+      | Period            | Date          | Amount                                |
+      | Biennial (change) | after 2 years | $419.79 (Without taxes or discounts)  |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -314,6 +362,9 @@ Feature: Change subscription period
       | Total amount to be charged                    | $164.00  |
     When I continue to change account subscription
     Then Subscription changed message should be Your account has been changed to 3-year billing.
+    Then Next renewal info table should be:
+      | Period          | Date          | Amount                                |
+      | 3-year (change) | after 3 years | $259.00 (Without taxes or discounts)  |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 

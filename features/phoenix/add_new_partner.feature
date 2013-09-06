@@ -177,7 +177,7 @@ Background:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 250       | 250      | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
-    | Account Type:   | Credit Card  | Current Period: | Annual              |
+    | Account Type:   | Credit Card  | Current Period: | Yearly              |
     | Unpaid Balance: | €0.00        | Collect On:     | N/A                 |
     | Renewal Date:   | after 1 year | Renewal Period: | Use Current Period  |
     And I delete partner account
@@ -300,7 +300,7 @@ Background:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 10        | 10       | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
-    | Account Type:   | Credit Card  | Current Period: | Annual              |
+    | Account Type:   | Credit Card  | Current Period: | Yearly              |
     | Unpaid Balance: | £0.00        | Collect On:     | N/A                 |
     | Renewal Date:   | after 1 year | Renewal Period: | Use Current Period  |
     And I delete partner account
@@ -496,7 +496,7 @@ Background:
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
-    | Server                 | Disabled |
+    | Server                 | Enabled  |
     | Cloud Storage (GB)     |          |
     | Stash Users:           |          |
     | Default Stash Storage: |          |
@@ -544,7 +544,7 @@ Background:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 500       | 500      | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
-    | Account Type:   | Credit Card  | Current Period: | Annual              |
+    | Account Type:   | Credit Card  | Current Period: | Yearly              |
     | Unpaid Balance: | €0.00        | Collect On:     | N/A                 |
     | Renewal Date:   | after 1 year | Renewal Period: | Use Current Period  |
     And I delete partner account
@@ -668,7 +668,7 @@ Background:
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
-    | Server                 | Disabled |
+    | Server                 | Enabled  |
     | Cloud Storage (GB)     |          |
     | Stash Users:           |          |
     | Default Stash Storage: |          |
@@ -676,7 +676,7 @@ Background:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 50        | 50       | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
-    | Account Type:   | Credit Card  | Current Period: | Annual              |
+    | Account Type:   | Credit Card  | Current Period: | Yearly              |
     | Unpaid Balance: | €0.00        | Collect On:     | N/A                 |
     | Renewal Date:   | after 1 year | Renewal Period: | Use Current Period  |
     And I delete partner account
@@ -718,7 +718,7 @@ Background:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 1024      | 1024     | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
-    | Account Type:   | Credit Card  | Current Period: | Annual              |
+    | Account Type:   | Credit Card  | Current Period: | Yearly              |
     | Unpaid Balance: | €0.00        | Collect On:     | N/A                 |
     | Renewal Date:   | after 1 year | Renewal Period: | Use Current Period  |
     And I delete partner account
