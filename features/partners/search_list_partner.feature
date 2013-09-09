@@ -118,7 +118,6 @@ Feature: Search and list partner
     Then Partner search results should be:
       | Partner       |
       | @company_name |
-    And I search and delete partner account by newly created partner company name
 
   @TC.795 @bus @2.5 @partner @partner_search
   Scenario: 795 Search for partners with the business type

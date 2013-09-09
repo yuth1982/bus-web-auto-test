@@ -23,7 +23,7 @@ Then /^Next renewal info table should be:$/ do |next_renewal_table|
     col.each do |k,v|
       case k
         when 'Date'
-          v.replace(Chronic.parse(v).strftime('%b %d, %Y'))
+          with_timezone(ARIA_ENV['timezone']) { v.replace(Chronic.parse(v).strftime('%b %d, %Y')) }
         when 'Payment Type'
           v.gsub!(/@XXXX/,@partner.credit_card.last_four_digits) unless @partner.nil?
         else

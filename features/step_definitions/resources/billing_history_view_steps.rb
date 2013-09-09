@@ -6,7 +6,7 @@ Then /^Billing history table should be:$/ do |billing_table|
     col.each do |k,v|
       case k
         when "Date"
-          v.replace(Chronic.parse(v).strftime("%m/%d/%y"))
+          with_timezone(ARIA_ENV['timezone']) { v.replace(Chronic.parse(v).strftime('%m/%d/%y')) }
         else
           # do nothing
       end
