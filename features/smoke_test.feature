@@ -18,8 +18,8 @@ Feature: Bus Smoke Test
       | Total Charges         |          |            | $4,917.37   |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:                                 | Root Role:          | Parent:        | Next Charge:   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Autogrow: |
-      | Active (change) | <%=@partner.admin_info.full_name%> (act as) | Enterprise (change) | MozyEnterprise | after 2 years  | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)      |
+      | Status:         | Root Admin:                                 | Root Role:          | Parent:        | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Autogrow: |
+      | Active (change) | <%=@partner.admin_info.full_name%> (act as) | Enterprise (change) | MozyEnterprise | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)      |
     And Partner contact information should be:
       | Company Type:  | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         |
       | MozyEnterprise | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 |
@@ -35,9 +35,10 @@ Feature: Bus Smoke Test
       | Desktop | 0    | 250       | 250      | 0    | 10        | 10       |
       | Server  | 0    | 350       | 350      | 0    | 200       | 200      |
     And Partner internal billing should be:
-      | Account Type:   | Credit Card   | Current Period: | Biennial            |
-      | Unpaid Balance: | $0.00         | Collect On:     | N/A                 |
-      | Renewal Date:   | after 2 years | Renewal Period: | Use Current Period  |
+      | Account Type:   | Credit Card            | Current Period: | Biennial            |
+      | Unpaid Balance: | $0.00                  | Collect On:     | N/A                 |
+      | Renewal Date:   | after 2 years          | Renewal Period: | Use Current Period  |
+      | Next Charge:    | after 2 years (extend) |                 |                     |
     And Partner sub admins should be empty
     When I act as newly created partner account
     And I change MozyEnterprise account plan to:
