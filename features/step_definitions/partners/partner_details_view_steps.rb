@@ -43,8 +43,6 @@ Then /^Partner general information should be:$/ do |details_table|
         v.gsub!(/@external_id/, @new_p_external_id) unless @new_p_external_id.nil?
       when 'Root Admin:'
         v.gsub!(/@root_admin/, @partner.admin_info.full_name) unless @partner.nil?
-      when 'Next Charge:'
-        v.replace(Chronic.parse(v).strftime('%m/%d/%y') + ' (extend)')
       when 'Marketing Referrals:'
         v.gsub!(/@login_admin_email/,@admin_username)
       else

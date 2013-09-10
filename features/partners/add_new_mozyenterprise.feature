@@ -62,8 +62,8 @@ Feature: Add a new partner
       | Total Charges        |          |            | $58,478.48  |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:          | Parent:        | Next Charge:  | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | after 2 years | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+      | Status:         | Root Admin:          | Root Role:          | Parent:        | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type:  | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
       | MozyEnterprise | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | <%=@partner.admin_info.email%> |
@@ -79,9 +79,10 @@ Feature: Add a new partner
       | Desktop | 0    | 5000      | 5000     | 0    | 200       | 200      |
       | Server  | 0    | 2750      | 2750     | 0    | 200       | 200      |
     And Partner internal billing should be:
-      | Account Type:   | Credit Card   | Current Period: | Biennial           |
-      | Unpaid Balance: | $0.00         | Collect On:     | N/A                |
-      | Renewal Date:   | after 2 years | Renewal Period: | Use Current Period |
+      | Account Type:   | Credit Card           | Current Period: | Biennial           |
+      | Unpaid Balance: | $0.00                 | Collect On:     | N/A                |
+      | Renewal Date:   | after 2 years         | Renewal Period: | Use Current Period |
+      | Next Charge:    | after 2 year (extend) |                 |                    |
     And Partner billing history should be:
       | Date  | Amount     | Total Paid | Balance Due |
       | today | $58,478.48 | $58,478.48 | $0.00       |
@@ -104,8 +105,8 @@ Feature: Add a new partner
       | Total Charges        |          |            | $89,997.12  |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:          | Parent:        | Next Charge:  | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | after 3 years | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+      | Status:         | Root Admin:          | Root Role:          | Parent:        | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type:  | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:                 |
       | MozyEnterprise | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 |           |                 | <%=@partner.admin_info.email%> |
@@ -121,9 +122,10 @@ Feature: Add a new partner
       | Desktop | 0    | 7500      | 7500     | 0    | 300       | 300      |
       | Server  | 0    | 3000      | 3000     | 0    | 200       | 200      |
     And Partner internal billing should be:
-      | Account Type:   | Credit Card   | Current Period: | 3-year             |
-      | Unpaid Balance: | $0.00         | Collect On:     | N/A                |
-      | Renewal Date:   | after 3 years | Renewal Period: | Use Current Period |
+      | Account Type:   | Credit Card            | Current Period: | 3-year             |
+      | Unpaid Balance: | $0.00                  | Collect On:     | N/A                |
+      | Renewal Date:   | after 3 years          | Renewal Period: | Use Current Period |
+      | Next Charge:    | after 3 years (extend) |                 |                    |
     And Partner billing history should be:
       | Date  | Amount     | Total Paid | Balance Due |
       | today | $89,997.12 | $89,997.12 | $0.00       |
@@ -145,8 +147,8 @@ Feature: Add a new partner
       | Total Charges        |          |            | $52,958.68  |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:          | Parent:        | Next Charge: | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | after 1 year | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+      | Status:         | Root Admin:          | Root Role:          | Parent:        | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type:  | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
       | MozyEnterprise | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | <%=@partner.admin_info.email%> |
@@ -162,9 +164,10 @@ Feature: Add a new partner
       | Desktop | 0    | 10000     | 10000    | 0    | 400       | 400      |
       | Server  | 0    | 3524      | 3524     | 0    | 200       | 200      |
     And Partner internal billing should be:
-      | Account Type:   | Credit Card  | Current Period: | Yearly             |
-      | Unpaid Balance: | $0.00        | Collect On:     | N/A                |
-      | Renewal Date:   | after 1 year | Renewal Period: | Use Current Period |
+      | Account Type:   | Credit Card           | Current Period: | Yearly             |
+      | Unpaid Balance: | $0.00                 | Collect On:     | N/A                |
+      | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period |
+      | Next Charge:    | after 1 year (extend) |                 |                    |
     And Partner billing history should be:
       | Date  | Amount     | Total Paid | Balance Due |
       | today | $52,958.68 | $52,958.68 | $0.00       |
@@ -186,8 +189,8 @@ Feature: Add a new partner
       | Total Charges       |          |            | $85,671.66  |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:          | Parent:        | Next Charge:  | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | after 2 years | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+      | Status:         | Root Admin:          | Root Role:          | Parent:        | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type:  | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
       | MozyEnterprise | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | <%=@partner.admin_info.email%> |
@@ -203,9 +206,10 @@ Feature: Add a new partner
       | Desktop | 0    | 12500     | 12500    | 0    | 500       | 500      |
       | Server  | 0    | 2048      | 2048     | 0    | 200       | 200      |
     And Partner internal billing should be:
-      | Account Type:   | Net Terms 30  | Current Period: | Biennial           |
-      | Unpaid Balance: | $85,671.66    | Collect On:     | N/A                |
-      | Renewal Date:   | after 2 years | Renewal Period: | Use Current Period |
+      | Account Type:   | Net Terms 30           | Current Period: | Biennial           |
+      | Unpaid Balance: | $85,671.66             | Collect On:     | N/A                |
+      | Renewal Date:   | after 2 years          | Renewal Period: | Use Current Period |
+      | Next Charge:    | after 2 years (extend) |                 |                    |
     And Partner billing history should be:
       | Date  | Amount     | Total Paid | Balance Due |
       | today | $85,671.66 | $0.00      | $85,671.66  |
@@ -227,8 +231,8 @@ Feature: Add a new partner
       | Total Charges        |          |            | $228,596.40 |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:          | Parent:        | Next Charge:  | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | after 3 years | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+      | Status:         | Root Admin:          | Root Role:          | Parent:        | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type:  | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
       | MozyEnterprise | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | <%=@partner.admin_info.email%> |
@@ -244,9 +248,10 @@ Feature: Add a new partner
       | Desktop | 0    | 15000     | 15000    | 0    | 600       | 600      |
       | Server  | 0    | 6596      | 6596     | 0    | 200       | 200      |
     And Partner internal billing should be:
-      | Account Type:   | Net Terms 30  | Current Period: | 3-year             |
-      | Unpaid Balance: | $228,596.40   | Collect On:     | N/A                |
-      | Renewal Date:   | after 3 years | Renewal Period: | Use Current Period |
+      | Account Type:   | Net Terms 30           | Current Period: | 3-year             |
+      | Unpaid Balance: | $228,596.40            | Collect On:     | N/A                |
+      | Renewal Date:   | after 3 years          | Renewal Period: | Use Current Period |
+      | Next Charge:    | after 3 years (extend) |                 |                    |
     And Partner billing history should be:
       | Date  | Amount      | Total Paid | Balance Due |
       | today | $228,596.40 | $0.00      | $228,596.40 |
@@ -261,8 +266,8 @@ Feature: Add a new partner
     Then Sub-total before taxes or discounts should be 0
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:          | Parent:        | Next Charge: | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | after 1 year | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+      | Status:         | Root Admin:          | Root Role:          | Parent:        | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type:  | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
       | MozyEnterprise | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | <%=@partner.admin_info.email%> |
@@ -274,9 +279,10 @@ Feature: Add a new partner
       | Stash Users:           |          |
       | Default Stash Storage: |          |
     And Partner internal billing should be:
-      | Account Type:   | Other/None   | Current Period: | Yearly             |
-      | Unpaid Balance: | $0.00        | Collect On:     | N/A                |
-      | Renewal Date:   | after 1 year | Renewal Period: | Use Current Period |
+      | Account Type:   | Other/None            | Current Period: | Yearly             |
+      | Unpaid Balance: | $0.00                 | Collect On:     | N/A                |
+      | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period |
+      | Next Charge:    | after 1 year (extend) |                 |                    |
     And Partner billing history should be:
       | Date  | Amount | Total Paid | Balance Due |
       | today | $0.00  | $0.00      | $0.00       |

@@ -125,7 +125,7 @@ module Bus
     #
     # Example:
     #   partner_details_section.general_info_hash
-    #   # => {"ID:"=>"325379", "External ID:"=>"(change)", "Aria ID:"=>"4475660", "Approved:"=>"04/02/13 12:04", "Status:"=>"Active (change)", "Root Admin:"=>"Ann Dunn (act as)", "Root Role:"=>"Enterprise (change)", "Parent:"=>"MozyEnterprise", "Next Charge:"=>"04/02/14 (extend)", "Marketing Referrals:"=>"qa1+automation+admin@mozy.com [X] (add referral)", "Subdomain:"=>"(learn more and set up)", "Enable Mobile Access:"=>"Yes (change)", "Enable Co-branding:"=>"No (change)", "Require Ingredient:"=>"No (change)", "Enable Autogrow:"=>"No (change)", "Enable Stash:"=>"No", "Account Type"=>"Trial (change)", "Sales Origin"=>"Sales", "Sales Channel"=>"Inside Sales (change)"}
+    #   # => {"ID:"=>"325379", "External ID:"=>"(change)", "Aria ID:"=>"4475660", "Approved:"=>"04/02/13 12:04", "Status:"=>"Active (change)", "Root Admin:"=>"Ann Dunn (act as)", "Root Role:"=>"Enterprise (change)", "Parent:"=>"MozyEnterprise", "Marketing Referrals:"=>"qa1+automation+admin@mozy.com [X] (add referral)", "Subdomain:"=>"(learn more and set up)", "Enable Mobile Access:"=>"Yes (change)", "Enable Co-branding:"=>"No (change)", "Require Ingredient:"=>"No (change)", "Enable Autogrow:"=>"No (change)", "Enable Stash:"=>"No", "Account Type"=>"Trial (change)", "Sales Origin"=>"Sales", "Sales Channel"=>"Inside Sales (change)"}
     #
     # @return [Hash]
     def general_info_hash
