@@ -21,8 +21,8 @@ Feature: Add a new partner
       | Total Charges       |          |            | $7,600.00   |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:          | Parent:        | Next Charge: | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | after 1 year | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+      | Status:         | Root Admin:          | Root Role:          | Parent:        | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type:  | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
       | MozyEnterprise | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | <%=@partner.admin_info.email%> |
@@ -37,9 +37,10 @@ Feature: Add a new partner
       |         | Used | Available | Assigned | Used | Available | Assigned |
       | Desktop | 0    | 2500      | 2500     | 0    | 100       | 100      |
     And Partner internal billing should be:
-      | Account Type:   | Credit Card  | Current Period: | Yearly             |
-      | Unpaid Balance: | $0.00        | Collect On:     | N/A                |
-      | Renewal Date:   | after 1 year | Renewal Period: | Use Current Period |
+      | Account Type:   | Credit Card           | Current Period: | Yearly             |
+      | Unpaid Balance: | $0.00                 | Collect On:     | N/A                |
+      | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period |
+      | Next Charge:    | after 1 year (extend) |                 |                    |
     And Partner billing history should be:
       | Date  | Amount    | Total Paid | Balance Due |
       | today | $7,600.00 | $7,600.00  | $0.00       |

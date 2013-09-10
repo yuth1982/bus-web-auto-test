@@ -35,6 +35,7 @@ module Bus
     element(:stash_info_dl, css: 'div>dl>form')
 
     # Contact information
+    element(:partner_details_div, css: 'div[id$=account_details] div:first-child')
     element(:account_details_icon, css: 'i[id$=account-dtl-icon]')
     elements(:contact_info_dls, css: 'div>form>dl')
     element(:contact_address_tb, id: 'contact_address')
@@ -75,6 +76,7 @@ module Bus
     element(:stash_info_table, css: 'div.show-details>table.form-box2')
 
     # Internal billing table
+    element(:internal_billing_div, css: 'div[id$=internal-billing]')
     element(:internal_billing_table, css: 'div[id$=internal-billing-content] table')
 
     # Subadmins
@@ -128,7 +130,6 @@ module Bus
     # @return [Hash]
     def general_info_hash
       wait_until_bus_section_load
-      wait_until_ajax_finished(general_info_dls)
       output = general_info_dls[0,4].inject([]){ |sum, dls| sum + dls.dt_dd_elements_text}
       if has_stash_info_dl?
         stash = stash_info_dl.dt_dd_elements_text.delete_if{ |pair| pair.first.empty? }.map{ |row| [row.first, row[1..-1].join(' ')] }
@@ -170,7 +171,7 @@ module Bus
     def contact_info_hash
       wait_until_bus_section_load
       expand(account_details_icon)
-      wait_until_ajax_finished(general_info_dls)
+      wait_until_ajax_finished(partner_details_div)
       output = Hash[*contact_info_dls.map{ |el| el.dt_dd_elements_text.delete_if{ |pair| pair.first.empty?}}.delete_if{ |el| el.empty?}.flatten]
       output['Contact Address:'] = contact_address_tb.value
       output['Contact City:'] = contact_city_tb.value
@@ -278,7 +279,7 @@ module Bus
     # Returns array
     def internal_billing_table_rows
       expand(billing_information_icon)
-      wait_until_ajax_finished(general_info_dls)
+      wait_until_ajax_finished(internal_billing_div)
       internal_billing_table.rows_text
     end
 
@@ -287,7 +288,7 @@ module Bus
     # Return string
     def sub_admins_text
       expand(subadmins_icon)
-      wait_until_ajax_finished(general_info_dls)
+      wait_until_ajax_finished(sub_admin_div)
       sub_admins_div.text
     end
 
@@ -296,7 +297,7 @@ module Bus
     # Returns array
     def sub_admins_table_headers
       expand(subadmins_icon)
-      wait_until_ajax_finished(general_info_dls)
+      wait_until_ajax_finished(sub_admin_div)
       sub_admins_table.headers_text
     end
 
@@ -305,7 +306,7 @@ module Bus
     # Returns array
     def sub_admins_table_rows
       expand(subadmins_icon)
-      wait_until_ajax_finished(general_info_dls)
+      wait_until_ajax_finished(sub_admin_div)
       sub_admins_table.rows_text
     end
 
@@ -318,7 +319,6 @@ module Bus
     def billing_history_hashes
       expand(billing_information_icon)
       show_billing_history_link.click
-      wait_until_ajax_finished(general_info_dls)
       billing_history_table.rows_text.map{ |row| Hash[*billing_history_table.headers_text.zip(row).flatten] }
     end
 

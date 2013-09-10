@@ -7,6 +7,7 @@ Feature: Change subscription period
   Background:
     Given I log in bus admin console as administrator
 
+  # This case will fail due to #108559 session is wriong when I stop masqerading
   @TC.15231 @bus @change_period
   Scenario: 15231 MozyPro US - Change Period from Monthly to Yearly - CC
     When I add a new MozyPro partner:
@@ -16,9 +17,6 @@ Feature: Change subscription period
     When I act as newly created partner account
     And I change account subscription to annual billing period!
     Then Subscription changed message should be Your account has been changed to yearly billing.
-    Then Next renewal info table should be:
-      | Period          | Date         | Amount                                |
-      | Yearly (change) | after 1 year | $219.89 (Without taxes or discounts)  |
     When I stop masquerading
     And I view partner details by newly created partner company name
     Then Partner internal billing should be:

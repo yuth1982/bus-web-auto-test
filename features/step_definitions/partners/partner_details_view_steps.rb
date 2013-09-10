@@ -126,10 +126,11 @@ end
 Then /^Partner internal billing should be:$/ do |internal_billing_table|
   actual = @bus_site.admin_console_page.partner_details_section.internal_billing_table_rows
   expected = internal_billing_table.raw
-
-  renewal_date = Chronic.parse(expected[2][1])
-  expected[2][1] =  renewal_date.strftime("%m/%d/%y") unless renewal_date.nil?
-  actual.should == expected
+  with_timezone(ARIA_ENV['timezone']) do
+    expected[2][1].replace(Chronic.parse(expected[2][1]).strftime('%m/%d/%y'))
+    expected[3][1].replace(Chronic.parse(expected[3][1]).strftime('%m/%d/%y') << ' (extend)')
+  end
+  actual.flatten.should == expected.flatten.select { |item| item != '' }
 end
 
 Then /^Partner sub admins should be empty$/ do
