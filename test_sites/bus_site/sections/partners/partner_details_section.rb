@@ -73,7 +73,7 @@ module Bus
     element(:license_types_table, css: 'div[id^=partner_license_types] table')
 
     # Stash table
-    element(:stash_info_table, css: 'div.show-details>table.form-box2')
+    element(:stash_info_table, css: 'div[id$=account_details]>table.form-box2')
 
     # Internal billing table
     element(:internal_billing_div, css: 'div[id$=internal-billing]')

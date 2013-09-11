@@ -513,7 +513,7 @@ Feature:
     And I search and delete partner account by newly created partner company name
 
   @TC.21978 @bus @data_shuttle @status @BUG.91049
-  Scenario:  Data shuttle backed up til load complete, then second data shuttle seeded for same user/key/machine
+  Scenario: 21978 Data shuttle backed up til load complete, then second data shuttle seeded for same user/key/machine
     When I add a new MozyEnterprise partner:
       | period | users |
       | 12 | 2 |

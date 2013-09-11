@@ -26,7 +26,7 @@ Feature: User Has Unique Username
   - Don't cause failures when updating users in other products (for example, MozyOEM)
 
   @TC.21339 @bus @2.5 @add_new_partner @existing_email
-  Scenario: Mozy-21339 : Add New Partner With Non Unique Admin Email
+  Scenario: 21339 : Add New Partner With Non Unique Admin Email
     When I get an admin email from the database
     And I log in bus admin console as administrator
     And I add a new MozyPro partner:
@@ -38,7 +38,7 @@ Feature: User Has Unique Username
     """
 
   @TC.21343 @bus @2.5 @add_new_partner @existing_email
-  Scenario: Mozy-21343:Add New Partner with Existing User Email as Admin Email
+  Scenario: 21343:Add New Partner with Existing User Email as Admin Email
     When I get a user email from the database
     And I log in bus admin console as administrator
     And I add a new MozyPro partner:
@@ -48,7 +48,7 @@ Feature: User Has Unique Username
     And I delete partner account
 
   @TC.21340 @bus @2.5 @existing_email
-  Scenario: Mozy-21340:Edit Admin Email With Admin Email That Is Already in Use
+  Scenario: 21340:Edit Admin Email With Admin Email That Is Already in Use
     When I log in bus admin console as administrator
     And I navigate to Add New Admin section from bus admin console page
     And I add a new admin:
@@ -67,7 +67,7 @@ Feature: User Has Unique Username
       | @existing_admin_email |
 
   @TC.21346 @bus @2.5 @existing_email
-  Scenario:  Mozy-21346:Edit Admin Email With User Email That Is Already in Use
+  Scenario:  21346:Edit Admin Email With User Email That Is Already in Use
     When I get a user email from the database
     And I log in bus admin console as administrator
     And I view the partner info
@@ -77,7 +77,7 @@ Feature: User Has Unique Username
     Then username changed success message should be displayed
 
   @TC.21341 @bus @2.5 @existing_email
-  Scenario: Mozy-21341:Add New Admin Role with Existing User Email
+  Scenario: 21341:Add New Admin Role with Existing User Email
     When I get a user email from the database
     And I log in bus admin console as administrator
     And I navigate to Add New Admin section from bus admin console page
@@ -90,7 +90,7 @@ Feature: User Has Unique Username
       | @existing_user_email |
 
   @TC.21342 @bus @2.5 @existing_email
-  Scenario: Mozy-21342:Add New Admin Role with Existing Admin Email
+  Scenario: 21342:Add New Admin Role with Existing Admin Email
     When I get an admin email from the database
     And I log in bus admin console as administrator
     And I navigate to Add New Admin section from bus admin console page
@@ -103,7 +103,7 @@ Feature: User Has Unique Username
     """
 
   @TC.21347 @bus @2.5 @existing_email
-  Scenario: Mozy-21347:Edit Sub Admin with Existing User Email
+  Scenario: 21347:Edit Sub Admin with Existing User Email
     When I get a user email from the database
     And I log in bus admin console as administrator
     And I navigate to Add New Admin section from bus admin console page
@@ -123,7 +123,7 @@ Feature: User Has Unique Username
       | @existing_user_email |
 
   @TC.21348 @bus @2.5 @existing_email
-  Scenario: Mozy-21348:Edit Sub Admin with Existing Admin Email
+  Scenario: 21348:Edit Sub Admin with Existing Admin Email
     When I get an admin email from the database
     And I log in bus admin console as administrator
     And I navigate to Add New Admin section from bus admin console page
@@ -146,7 +146,7 @@ Feature: User Has Unique Username
       | @admin_email |
 
   @TC.21366 @bus @phoenix @2.5 @existing_username @mozyhome
-  Scenario:  Mozy-21366:Update User(MH) With Existing Admin Username
+  Scenario:  21366:Update User(MH) With Existing Admin Username
     When I get an admin email from the database
     And I am at dom selection point:
     And I add a phoenix Home user:
@@ -226,7 +226,7 @@ Feature: User Has Unique Username
     Then edit user email error message to existing user email should be displayed
     And I delete user
 
-  @TC.21351 @bus @2.5 @existing_email @mozyhome
+  @TC.21351 @bus @2.5 @existing_email @mozyhome @phoenix
   Scenario: Mozy-21351:Edit Admin Email With Existing User Email(MH)
     When I get a Mozy Home user email from the database
     And I log in bus admin console as administrator
@@ -315,7 +315,7 @@ Feature: User Has Unique Username
     And I view MozyHome user details by newly created MozyHome username
     And I delete user
 
-  @TC.21357 @BUG.99434 @BUG2.102097 @bus @2.5 @mozyhome @existing_username
+  @TC.21357 @BUG.99434 @BUG2.102097 @bus @2.5 @mozyhome @existing_username @phoenix
   Scenario: Mozy-21357:Web Sign Up - Add New User With Existing(Created) User Username(MH)
     When I am at dom selection point:
     And I get a MH user username from the database
@@ -348,7 +348,7 @@ Feature: User Has Unique Username
       | 1      | 50 GB     | United States | @existing_user_email |
     Then sign up page error message to existing user email should be displayed
 
-  @TC.21809 @bus @2.5 @existing_username @UK @mozyhome
+  @TC.21809 @bus @2.5 @existing_username @UK @mozyhome @phoenix
   Scenario: Mozy-21809:Web Sign Up - Add New User With Existing(Created) User Username(MH-UK) under MH tree
     When I get a MH user username from the database
     And I am at dom selection point:
@@ -360,7 +360,7 @@ Feature: User Has Unique Username
      An account with this email address already exists
     """
 
-  @TC.21810 @bus @2.5 @existing_username @IE @mozyhome
+  @TC.21810 @bus @2.5 @existing_username @IE @mozyhome @phoenix
   Scenario: Mozy-21810:Web Sign Up - Add New User With Existing(Created) User Username(MH-IE) under MP tree
     When I get a MP user username from the database
     And I am at dom selection point:
@@ -372,7 +372,7 @@ Feature: User Has Unique Username
      An account with this email address already exists
     """
 
-  @TC.21811 @bus @2.5 @existing_username @FR @mozyhome
+  @TC.21811 @bus @2.5 @existing_username @FR @mozyhome @phoenix
   Scenario: Mozy-21811:Web Sign Up - Add New User With Existing(Created) User Username(MH-FR) under ME tree
     When I get a ME user username from the database
     And I am at dom selection point:
@@ -384,7 +384,7 @@ Feature: User Has Unique Username
      Un compte avec cette adresse électronique existe déjà.
     """
 
-  @TC.21812 @bus @2.5 @existing_username @DE @mozyhome
+  @TC.21812 @bus @2.5 @existing_username @DE @mozyhome @phoenix
   Scenario: Mozy-21812:Web Sign Up - Add New User With Existing(Created) User Username(MH-DE) under MEO tree
     When I get a MEO user username from the database
     And I am at dom selection point:
