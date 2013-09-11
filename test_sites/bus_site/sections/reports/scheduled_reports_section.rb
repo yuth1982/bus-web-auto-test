@@ -64,19 +64,10 @@ module Bus
     def download_report(report_name)
       wait = 0
       report_row = ""
-      while wait < CONFIGS['global']['default_wait_time']
-        report_row = find_report(report_name)
-        message = report_row[6].text
-        case
-          when message.include?("(Error)")
-            raise "Unable to create #{report_name}"
-          when message.include?("Download")
-            break
-          else
-        end
-        wait = wait + 1
-        sleep 1
+      wait_until do 
+        !find(:xpath, "//a[text()='#{report_name}']/../../*[7]").text.match(/.*Download.*/).nil?
       end
+      report_row = find_report(report_name)
       report_row[6].find(:css, "a:contains('Download')").click
       puts "Wait 10 seconds to download csv reports file"
       sleep 10
