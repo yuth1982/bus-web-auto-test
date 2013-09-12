@@ -40,11 +40,11 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent: | Next Charge:  | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro | after 1 month | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                          | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
-    | Company Type: | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | MozyPro       | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
@@ -56,9 +56,10 @@ Background:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 1024      | 1024     | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
-    | Account Type:   | Credit Card   | Current Period: | Monthly             |
-    | Unpaid Balance: | $0.00         | Collect On:     | N/A                 |
-    | Renewal Date:   | after 1 month | Renewal Period: | Use Current Period  |
+    | Account Type:   | Credit Card            | Current Period: | Monthly             |
+    | Unpaid Balance: | $0.00                  | Collect On:     | N/A                 |
+    | Renewal Date:   | after 1 month          | Renewal Period: | Use Current Period  |
+    | Next Charge:    | after 1 month (extend) |                 |                     |
     And I delete partner account
 
   @TC.20966 @bus @2.5 @regression_test @phoenix @mozypro
@@ -79,11 +80,11 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent: | Next Charge:  | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro | after 2 years | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                          | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
-    | Company Type: | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | MozyPro       | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
@@ -95,9 +96,10 @@ Background:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 10        | 10       | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
-    | Account Type:   | Credit Card   | Current Period: | Biennial            |
-    | Unpaid Balance: | $0.00         | Collect On:     | N/A                 |
-    | Renewal Date:   | after 2 years | Renewal Period: | Use Current Period  |
+    | Account Type:   | Credit Card            | Current Period: | Biennial            |
+    | Unpaid Balance: | $0.00                  | Collect On:     | N/A                 |
+    | Renewal Date:   | after 2 years          | Renewal Period: | Use Current Period  |
+    | Next Charge:    | after 2 years (extend) |                 |                     |
     And I delete partner account
 
   @TC.20967 @bus @2.5 @regression_test @phoenix @mozypro
@@ -120,11 +122,11 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                   | Next Charge:  | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro Ireland (MozyPro) | after 1 month | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
-    | Company Type: | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | MozyPro       | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
@@ -136,9 +138,10 @@ Background:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 50        | 50       | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
-    | Account Type:   | Credit Card   | Current Period: | Monthly             |
-    | Unpaid Balance: | €0.00         | Collect On:     | N/A                 |
-    | Renewal Date:   | after 1 month | Renewal Period: | Use Current Period  |
+    | Account Type:   | Credit Card            | Current Period: | Monthly             |
+    | Unpaid Balance: | €0.00                  | Collect On:     | N/A                 |
+    | Renewal Date:   | after 1 month          | Renewal Period: | Use Current Period  |
+    | Next Charge:    | after 1 month (extend) |                 |                     |
     And I delete partner account
 
   @TC.20968 @bus @2.5 @regression_test @phoenix @mozypro
@@ -161,11 +164,11 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                   | Next Charge: | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro Ireland (MozyPro) | after 1 year | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
-    | Company Type: | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | MozyPro       | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
@@ -177,9 +180,10 @@ Background:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 250       | 250      | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
-    | Account Type:   | Credit Card  | Current Period: | Yearly              |
-    | Unpaid Balance: | €0.00        | Collect On:     | N/A                 |
-    | Renewal Date:   | after 1 year | Renewal Period: | Use Current Period  |
+    | Account Type:   | Credit Card           | Current Period: | Yearly              |
+    | Unpaid Balance: | €0.00                 | Collect On:     | N/A                 |
+    | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period  |
+    | Next Charge:    | after 1 year (extend) |                 |                     |
     And I delete partner account
 
   @TC.20969 @bus @2.5 @regression_test @phoenix @mozypro
@@ -203,11 +207,11 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                   | Next Charge:  | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro Ireland (MozyPro) | after 2 years | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
-    | Company Type: | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | MozyPro       | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
@@ -219,9 +223,10 @@ Background:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 1024      | 1024     | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
-    | Account Type:   | Credit Card   | Current Period: | Biennial            |
-    | Unpaid Balance: | €0.00         | Collect On:     | N/A                 |
-    | Renewal Date:   | after 2 years | Renewal Period: | Use Current Period  |
+    | Account Type:   | Credit Card            | Current Period: | Biennial            |
+    | Unpaid Balance: | €0.00                  | Collect On:     | N/A                 |
+    | Renewal Date:   | after 2 years          | Renewal Period: | Use Current Period  |
+    | Next Charge:    | after 2 years (extend) |                 |                     |
     And I delete partner account
 
   @TC.20970 @bus @2.5 @regression_test @phoenix @mozypro
@@ -243,11 +248,11 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:              | Next Charge:  | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro UK (MozyPro) | after 1 month | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
-    | Company Type: | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | MozyPro       | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
@@ -259,9 +264,10 @@ Background:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 100       | 100      | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
-    | Account Type:   | Credit Card   | Current Period: | Monthly             |
-    | Unpaid Balance: | £0.00         | Collect On:     | N/A                 |
-    | Renewal Date:   | after 1 month | Renewal Period: | Use Current Period  |
+    | Account Type:   | Credit Card            | Current Period: | Monthly             |
+    | Unpaid Balance: | £0.00                  | Collect On:     | N/A                 |
+    | Renewal Date:   | after 1 month          | Renewal Period: | Use Current Period  |
+    | Next Charge:    | after 1 month (extend) |                 |                     |
     And I delete partner account
 
   @TC.20971 @bus @2.5 @regression_test @phoenix @mozypro
@@ -284,11 +290,11 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:              | Next Charge: | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro UK (MozyPro) | after 1 year | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
-    | Company Type: | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | MozyPro       | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
@@ -300,9 +306,10 @@ Background:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 10        | 10       | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
-    | Account Type:   | Credit Card  | Current Period: | Yearly              |
-    | Unpaid Balance: | £0.00        | Collect On:     | N/A                 |
-    | Renewal Date:   | after 1 year | Renewal Period: | Use Current Period  |
+    | Account Type:   | Credit Card           | Current Period: | Yearly              |
+    | Unpaid Balance: | £0.00                 | Collect On:     | N/A                 |
+    | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period  |
+    | Next Charge:    | after 1 year (extend) |                 |                     |
     And I delete partner account
 
   @TC.20972 @bus @2.5 @regression_test @phoenix @mozypro
@@ -325,11 +332,11 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:              | Next Charge:  | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro UK (MozyPro) | after 2 years | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
-    | Company Type: | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | MozyPro       | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
@@ -341,9 +348,10 @@ Background:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 500       | 500      | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
-    | Account Type:   | Credit Card   | Current Period: | Biennial            |
-    | Unpaid Balance: | £0.00         | Collect On:     | N/A                 |
-    | Renewal Date:   | after 2 years | Renewal Period: | Use Current Period  |
+    | Account Type:   | Credit Card            | Current Period: | Biennial            |
+    | Unpaid Balance: | £0.00                  | Collect On:     | N/A                 |
+    | Renewal Date:   | after 2 years          | Renewal Period: | Use Current Period  |
+    | Next Charge:    | after 2 years (extend) |                 |                     |
     And I delete partner account
 
   @TC.20973 @bus @2.5 @regression_test @phoenix @mozypro
@@ -366,11 +374,11 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                   | Next Charge:  | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro Germany (MozyPro) | after 1 month | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
-    | Company Type: | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | MozyPro       | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
@@ -382,9 +390,10 @@ Background:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 500       | 500      | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
-    | Account Type:   | Credit Card   | Current Period: | Monthly             |
-    | Unpaid Balance: | €0.00         | Collect On:     | N/A                 |
-    | Renewal Date:   | after 1 month | Renewal Period: | Use Current Period  |
+    | Account Type:   | Credit Card            | Current Period: | Monthly             |
+    | Unpaid Balance: | €0.00                  | Collect On:     | N/A                 |
+    | Renewal Date:   | after 1 month          | Renewal Period: | Use Current Period  |
+    | Next Charge:    | after 1 month (extend) |                 |                     |
     And I delete partner account
 
   @TC.20974 @bus @2.5 @regression_test @phoenix @mozypro
@@ -407,11 +416,11 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                   | Next Charge:  | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro Germany (MozyPro) | after 2 years | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
-    | Company Type: | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | MozyPro       | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
@@ -423,9 +432,10 @@ Background:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 100       | 100      | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
-    | Account Type:   | Credit Card   | Current Period: | Biennial            |
-    | Unpaid Balance: | €0.00         | Collect On:     | N/A                 |
-    | Renewal Date:   | after 2 years | Renewal Period: | Use Current Period  |
+    | Account Type:   | Credit Card            | Current Period: | Biennial            |
+    | Unpaid Balance: | €0.00                  | Collect On:     | N/A                 |
+    | Renewal Date:   | after 2 years          | Renewal Period: | Use Current Period  |
+    | Next Charge:    | after 2 years (extend) |                 |                     |
     And I delete partner account
 
   @TC.20975 @bus @2.5 @regression_test @phoenix @mozypro
@@ -447,11 +457,11 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                   | Next Charge:  | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro Germany (MozyPro) | after 2 years | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
-    | Company Type: | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | MozyPro       | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
@@ -463,9 +473,10 @@ Background:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 250       | 250      | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
-    | Account Type:   | Credit Card   | Current Period: | Biennial            |
-    | Unpaid Balance: | €0.00         | Collect On:     | N/A                 |
-    | Renewal Date:   | after 2 years | Renewal Period: | Use Current Period  |
+    | Account Type:   | Credit Card            | Current Period: | Biennial            |
+    | Unpaid Balance: | €0.00                  | Collect On:     | N/A                 |
+    | Renewal Date:   | after 2 years          | Renewal Period: | Use Current Period  |
+    | Next Charge:    | after 2 years (extend) |                 |                     |
     And I delete partner account
 
   @TC.20976 @bus @2.5 @regression_test @phoenix @mozypro
@@ -488,11 +499,11 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                  | Next Charge:  | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro France (MozyPro) | after 1 month | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
-    | Company Type: | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | MozyPro       | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
@@ -504,9 +515,10 @@ Background:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 250       | 250      | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
-    | Account Type:   | Credit Card   | Current Period: | Monthly             |
-    | Unpaid Balance: | €0.00         | Collect On:     | N/A                 |
-    | Renewal Date:   | after 1 month | Renewal Period: | Use Current Period  |
+    | Account Type:   | Credit Card            | Current Period: | Monthly             |
+    | Unpaid Balance: | €0.00                  | Collect On:     | N/A                 |
+    | Renewal Date:   | after 1 month          | Renewal Period: | Use Current Period  |
+    | Next Charge:    | after 1 month (extend) |                 |                     |
     And I delete partner account
 
   @TC.20977 @bus @2.5 @regression_test @phoenix @mozypro
@@ -528,11 +540,11 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                  | Next Charge: | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro France (MozyPro) | after 1 year | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
-    | Company Type: | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | MozyPro       | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
@@ -544,9 +556,10 @@ Background:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 500       | 500      | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
-    | Account Type:   | Credit Card  | Current Period: | Yearly              |
-    | Unpaid Balance: | €0.00        | Collect On:     | N/A                 |
-    | Renewal Date:   | after 1 year | Renewal Period: | Use Current Period  |
+    | Account Type:   | Credit Card           | Current Period: | Yearly              |
+    | Unpaid Balance: | €0.00                 | Collect On:     | N/A                 |
+    | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period  |
+    | Next Charge:    | after 1 year (extend) |                 |                     |
     And I delete partner account
 
   @TC.20978 @bus @2.5 @regression_test @phoenix @mozypro
@@ -569,11 +582,11 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                  | Next Charge:  | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro France (MozyPro) | after 2 years | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
-    | Company Type: | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | MozyPro       | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
@@ -585,9 +598,10 @@ Background:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 50        | 50       | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
-    | Account Type:   | Credit Card   | Current Period: | Biennial            |
-    | Unpaid Balance: | €0.00         | Collect On:     | N/A                 |
-    | Renewal Date:   | after 2 years | Renewal Period: | Use Current Period  |
+    | Account Type:   | Credit Card            | Current Period: | Biennial            |
+    | Unpaid Balance: | €0.00                  | Collect On:     | N/A                 |
+    | Renewal Date:   | after 2 years          | Renewal Period: | Use Current Period  |
+    | Next Charge:    | after 2 years (extend) |                 |                     |
     And I delete partner account
 
 #---------------------------------------------------------------------------------
@@ -616,11 +630,11 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                   | Next Charge:  | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro Ireland (MozyPro) | after 1 month | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
-    | Company Type: | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | MozyPro       | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
@@ -632,9 +646,10 @@ Background:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 10        | 10       | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
-    | Account Type:   | Credit Card   | Current Period: | Monthly             |
-    | Unpaid Balance: | €0.00         | Collect On:     | N/A                 |
-    | Renewal Date:   | after 1 month | Renewal Period: | Use Current Period  |
+    | Account Type:   | Credit Card            | Current Period: | Monthly             |
+    | Unpaid Balance: | €0.00                  | Collect On:     | N/A                 |
+    | Renewal Date:   | after 1 month          | Renewal Period: | Use Current Period  |
+    | Next Charge:    | after 1 month (extend) |                 |                     |
     And I delete partner account
 
   @TC.20980 @bus @2.5 @regression_test @phoenix @mozypro
@@ -660,11 +675,11 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                   | Next Charge: | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro Germany (MozyPro) | after 1 year | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
-    | Company Type: | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | MozyPro       | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
@@ -676,9 +691,10 @@ Background:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 50        | 50       | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
-    | Account Type:   | Credit Card  | Current Period: | Yearly              |
-    | Unpaid Balance: | €0.00        | Collect On:     | N/A                 |
-    | Renewal Date:   | after 1 year | Renewal Period: | Use Current Period  |
+    | Account Type:   | Credit Card           | Current Period: | Yearly              |
+    | Unpaid Balance: | €0.00                 | Collect On:     | N/A                 |
+    | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period  |
+    | Next Charge:    | after 1 year (extend) |                 |                     |
     And I delete partner account
 
   @TC.20982 @bus @2.5 @regression_test @phoenix @mozypro
@@ -702,11 +718,11 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                  | Next Charge: | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro France (MozyPro) | after 1 year | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
-    | Company Type: | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | MozyPro       | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
@@ -718,9 +734,10 @@ Background:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 1024      | 1024     | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
-    | Account Type:   | Credit Card  | Current Period: | Yearly              |
-    | Unpaid Balance: | €0.00        | Collect On:     | N/A                 |
-    | Renewal Date:   | after 1 year | Renewal Period: | Use Current Period  |
+    | Account Type:   | Credit Card           | Current Period: | Yearly              |
+    | Unpaid Balance: | €0.00                 | Collect On:     | N/A                 |
+    | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period  |
+    | Next Charge:    | after 1 year (extend) |                 |                     |
     And I delete partner account
 
 #---------------------------------------------------------------------------------

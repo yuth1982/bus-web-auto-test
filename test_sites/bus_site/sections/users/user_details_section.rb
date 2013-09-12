@@ -397,7 +397,7 @@ module Bus
     def delete_user
       delete_user_link.click
       alert_accept
-      sleep 2 # leaving the session too fast, delete not taking hold
+      wait_until{ has_no_link?("Delete User") }
     end
 
     def device_table_headers

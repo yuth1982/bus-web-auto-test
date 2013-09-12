@@ -145,6 +145,8 @@ Then /^MozyHome user details should be:$/ do |user_table|
         actual[header].should == expected[header].gsub(/@country/, @partner.company_info.country)
       when 'Name:'
         actual[header].should == expected[header].gsub(/@user_name/, @partner.admin_info.full_name)
+      when 'Partner:'
+        actual[header].should == expected[header].gsub(/@partner/, @partner.partner_info.parent)
       else
         actual[header].should == expected[header]
     end

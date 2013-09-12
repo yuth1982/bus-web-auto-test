@@ -59,7 +59,7 @@ When /^I (.+) a phoenix (Home|Pro|Direct|Free) (partner|user):$/ do |string,type
                                        #parent is
                                        'MozyPro'
                                    end
-  elsif type == "Direct"
+  elsif type == "Home" || type == "Direct"
     #parent is MozyHome
     @partner.partner_info.parent = case @partner.company_info.country
                                      when "Ireland"

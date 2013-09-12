@@ -33,7 +33,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
       | Partner:          | Country: |
-      | MozyHome (change) | @country |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
       | Subscription                                | Total Quota | Total Cost |
       | MozyHome 50 GB, + 0 GB, 1 machines, monthly | 50 GB       | $5.99      |
@@ -67,7 +67,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
       | Partner:          | Country: |
-      | MozyHome (change) | @country |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
       | Subscription                               | Total Quota | Total Cost |
       | MozyHome 50 GB, + 0 GB, 1 machines, yearly | 50 GB       | $65.89     |
@@ -96,7 +96,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
       | Partner:          | Country: |
-      | MozyHome (change) | @country |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
       | Subscription                                 | Total Quota | Total Cost |
       | MozyHome 50 GB, + 0 GB, 1 machines, biennial | 50 GB       | $125.79    |
@@ -124,8 +124,8 @@ Feature: Add a new user through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
-      | Partner:         | Country: |
-      | MozyHome Ireland | @country |
+      | Partner:          | Country: |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
       | Subscription                                | Total Quota | Total Cost |
       | MozyHome 50 GB, + 0 GB, 1 machines, monthly | 50 GB       | €4.99      |
@@ -153,8 +153,8 @@ Feature: Add a new user through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
-      | Partner:         | Country: |
-      | MozyHome Ireland | @country |
+      | Partner:          | Country: |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
       | Subscription                               | Total Quota | Total Cost |
       | MozyHome 50 GB, + 0 GB, 1 machines, yearly | 50 GB       | €54.89     |
@@ -182,8 +182,8 @@ Feature: Add a new user through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
-      | Partner:         | Country: |
-      | MozyHome Ireland | @country |
+      | Partner:          | Country: |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
       | Subscription                                 | Total Quota | Total Cost |
       | MozyHome 50 GB, + 0 GB, 1 machines, biennial | 50 GB       | €104.79    |
@@ -211,8 +211,8 @@ Feature: Add a new user through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
-      | Partner:    | Country: |
-      | MozyHome UK | @country |
+      | Partner:          | Country: |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
       | Subscription                                | Total Quota | Total Cost |
       | MozyHome 50 GB, + 0 GB, 1 machines, monthly | 50 GB       | £4.99      |
@@ -240,8 +240,8 @@ Feature: Add a new user through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
-      | Partner:    | Country: |
-      | MozyHome UK | @country |
+      | Partner:          | Country: |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
       | Subscription                               | Total Quota | Total Cost |
       | MozyHome 50 GB, + 0 GB, 1 machines, yearly | 50 GB       | £54.89     |
@@ -269,8 +269,8 @@ Feature: Add a new user through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
-      | Partner:    | Country: |
-      | MozyHome UK | @country |
+      | Partner:          | Country: |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
       | Subscription                                 | Total Quota | Total Cost |
       | MozyHome 50 GB, + 0 GB, 1 machines, biennial | 50 GB       | £104.79    |
@@ -298,8 +298,8 @@ Feature: Add a new user through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
-      | Partner:         | Country: |
-      | MozyHome Germany | @country |
+      | Partner:          | Country: |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
       # as this is on EN-US dom, will show as EN amount representation
       | Subscription                                | Total Quota | Total Cost |
@@ -328,8 +328,8 @@ Feature: Add a new user through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
-      | Partner:         | Country: |
-      | MozyHome Germany | @country |
+      | Partner:          | Country: |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
       # as this is on EN-US dom, will show as EN amount representation
       | Subscription                               | Total Quota | Total Cost |
@@ -358,8 +358,8 @@ Feature: Add a new user through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
-      | Partner:         | Country: |
-      | MozyHome Germany | @country |
+      | Partner:          | Country: |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
       # as this is on EN-US dom, will show as EN amount representation
       | Subscription                                 | Total Quota | Total Cost |
@@ -388,8 +388,8 @@ Feature: Add a new user through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
-      | Partner:        | Country: |
-      | MozyHome France | @country |
+      | Partner:          | Country: |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
     # as this is on EN-US dom, will show as EN amount representation
       | Subscription                                | Total Quota | Total Cost |
@@ -418,8 +418,8 @@ Feature: Add a new user through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
-      | Partner:        | Country: |
-      | MozyHome France | @country |
+      | Partner:          | Country: |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
     # as this is on EN-US dom, will show as EN amount representation
       | Subscription                               | Total Quota | Total Cost |
@@ -448,8 +448,8 @@ Feature: Add a new user through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
-      | Partner:        | Country: |
-      | MozyHome France | @country |
+      | Partner:          | Country: |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
     # as this is on EN-US dom, will show as EN amount representation
       | Subscription                                | Total Quota | Total Cost |
@@ -482,7 +482,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
       | Partner:          | Country: |
-      | MozyHome (change) | @country |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
       | Subscription                                 | Total Quota | Total Cost |
       | MozyHome 125 GB, + 0 GB, 3 machines, monthly | 125 GB      | $9.99      |
@@ -511,7 +511,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
       | Partner:          | Country: |
-      | MozyHome (change) | @country |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
       | Subscription                                | Total Quota | Total Cost |
       | MozyHome 125 GB, + 0 GB, 3 machines, yearly | 125 GB      | $109.89    |
@@ -540,7 +540,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
       | Partner:          | Country: |
-      | MozyHome (change) | @country |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
       | Subscription                                  | Total Quota | Total Cost |
       | MozyHome 125 GB, + 0 GB, 3 machines, biennial | 125 GB      | $209.79    |
@@ -568,8 +568,8 @@ Feature: Add a new user through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
-      | Partner:         | Country: |
-      | MozyHome Ireland | @country |
+      | Partner:          | Country: |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
       | Subscription                                 | Total Quota | Total Cost |
       | MozyHome 125 GB, + 0 GB, 3 machines, monthly | 125 GB      | €8.99      |
@@ -597,8 +597,8 @@ Feature: Add a new user through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
-      | Partner:         | Country: |
-      | MozyHome Ireland | @country |
+      | Partner:          | Country: |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
       | Subscription                                | Total Quota | Total Cost |
       | MozyHome 125 GB, + 0 GB, 3 machines, yearly | 125 GB      | €98.89     |
@@ -626,8 +626,8 @@ Feature: Add a new user through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
-      | Partner:         | Country: |
-      | MozyHome Ireland | @country |
+      | Partner:          | Country: |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
       | Subscription                                  | Total Quota | Total Cost |
       | MozyHome 125 GB, + 0 GB, 3 machines, biennial | 125 GB      | €188.79    |
@@ -655,8 +655,8 @@ Feature: Add a new user through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
-      | Partner:    | Country: |
-      | MozyHome UK | @country |
+      | Partner:          | Country: |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
       | Subscription                                 | Total Quota | Total Cost |
       | MozyHome 125 GB, + 0 GB, 3 machines, monthly | 125 GB      | £7.99      |
@@ -684,8 +684,8 @@ Feature: Add a new user through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
-      | Partner:    | Country: |
-      | MozyHome UK | @country |
+      | Partner:          | Country: |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
       | Subscription                                | Total Quota | Total Cost |
       | MozyHome 125 GB, + 0 GB, 3 machines, yearly | 125 GB      | £87.89     |
@@ -713,8 +713,8 @@ Feature: Add a new user through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
-      | Partner:    | Country: |
-      | MozyHome UK | @country |
+      | Partner:          | Country: |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
       | Subscription                                  | Total Quota | Total Cost |
       | MozyHome 125 GB, + 0 GB, 3 machines, biennial | 125 GB      | £167.79    |
@@ -742,8 +742,8 @@ Feature: Add a new user through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
-      | Partner:         | Country: |
-      | MozyHome Germany | @country |
+      | Partner:          | Country: |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
     # as this is on EN-US dom, will show as EN amount representation
       | Subscription                                 | Total Quota | Total Cost |
@@ -772,8 +772,8 @@ Feature: Add a new user through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
-      | Partner:         | Country: |
-      | MozyHome Germany | @country |
+      | Partner:          | Country: |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
     # as this is on EN-US dom, will show as EN amount representation
       | Subscription                                | Total Quota | Total Cost |
@@ -802,8 +802,8 @@ Feature: Add a new user through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
-      | Partner:         | Country: |
-      | MozyHome Germany | @country |
+      | Partner:          | Country: |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
     # as this is on EN-US dom, will show as EN amount representation
       | Subscription                                  | Total Quota | Total Cost |
@@ -832,8 +832,8 @@ Feature: Add a new user through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
-      | Partner:        | Country: |
-      | MozyHome France | @country |
+      | Partner:          | Country: |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
     # as this is on EN-US dom, will show as EN amount representation
       | Subscription                                 | Total Quota | Total Cost |
@@ -862,8 +862,8 @@ Feature: Add a new user through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
-      | Partner:        | Country: |
-      | MozyHome France | @country |
+      | Partner:          | Country: |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
     # as this is on EN-US dom, will show as EN amount representation
       | Subscription                                | Total Quota | Total Cost |
@@ -892,8 +892,8 @@ Feature: Add a new user through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
-      | Partner:        | Country: |
-      | MozyHome France | @country |
+      | Partner:          | Country: |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
     # as this is on EN-US dom, will show as EN amount representation
       | Subscription                                 | Total Quota | Total Cost |
@@ -920,8 +920,8 @@ Feature: Add a new user through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
-      | Partner:    | Country: |
-      | MozyHome (change) | @country |
+      | Partner:          | Country: |
+      | @partner (change) | @country |
     And MozyHome subscription details should be:
       | Subscription     |
       | No subscriptions |
