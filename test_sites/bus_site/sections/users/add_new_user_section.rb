@@ -6,6 +6,7 @@ module Bus
     element(:succ_msg_div, css: 'ul.flash.successes')
     element(:err_msg_div, xpath: "//div[starts-with(@id, 'user-new_users_in_batch-content')]/div[3]/div/div/ul")
     element(:user_group_select, {id: 'user_user_group_id'}, true)
+    element(:user_group_select_invisible, {id: 'user_user_group_id'})
     element(:ug_resources_details_table, id: 'resource-details')
     element(:buy_more_link, css: 'span.buy_more>a[href*=change_billing_plan]')
     element(:add_group_link, css: 'a[href*=add_group]')
@@ -107,7 +108,8 @@ module Bus
 
     def has_stash_option?
       # For newly created test partner, if there
-      user_group_select.select('(default user group)') if user_group_select.visible?
+      # xxx_invisible element wont wait element to be visible and enabled before returned
+      user_group_select_invisible.select('(default user group)') if user_group_select_invisible.visible?
       storage_type_select.select('Desktop')
       find(:id, 'user_enable_stash').visible?
     end

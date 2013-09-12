@@ -126,8 +126,8 @@ Feature: Manage resources
     And I allocate 200 GB Desktop quota to MozyPro partner
     Then MozyPro resource quota should be changed
     And Partner resources general information should be:
-      | Total Account Storage: | Unallocated Storage: | Server Enabled: |
-      | 500 GB                 | 300 GB               | No              |
+      | Total Account Storage: | Unallocated Storage: | Server: |
+      | 500 GB                 | 300 GB               | No      |
     # Bug 90677
     #And Partner total resources details table should be:
     #  |         | Active    | Assigned | Unassigned | Allocated       |

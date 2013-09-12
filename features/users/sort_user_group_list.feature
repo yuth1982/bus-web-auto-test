@@ -100,39 +100,41 @@ Feature: Sort user group list
       Then Column Stash sorts in ascending order
       Then Bundled user groups table should be:
         | Group Name            | Stash | Server | Storage Type | Type Value | Storage Used | Devices Used |
+        | User Group A          | false | false  | Shared       |            | 0            | 0            |
         | (default user group)  | true  | true   | Shared       |            | 3 GB         | 3            |
         | User Group B          | true  | false  | Assigned     | 10 GB      | 2 GB         | 2            |
         | User Group C          | true  | false  | Limited      | 10 GB      | 5 GB         | 1            |
-        | User Group A          | false | false  | Shared       |            | 0            | 0            |
+
 
       When I click Stash table header
       Then Column Stash sorts in descending order
       Then Bundled user groups table should be:
         | Group Name            | Stash | Server | Storage Type | Type Value | Storage Used | Devices Used |
-        | User Group A          | false | false  | Shared       |            | 0            | 0            |
         | (default user group)  | true  | true   | Shared       |            | 3 GB         | 3            |
         | User Group B          | true  | false  | Assigned     | 10 GB      | 2 GB         | 2            |
         | User Group C          | true  | false  | Limited      | 10 GB      | 5 GB         | 1            |
+        | User Group A          | false | false  | Shared       |            | 0            | 0            |
 
       Then I refresh User Group list section
       When I click Server Enabled table header
       Then Column Server Enabled sorts in ascending order
       Then Bundled user groups table should be:
         | Group Name            | Stash | Server | Storage Type | Type Value | Storage Used | Devices Used |
-        | (default user group)  | true  | true   | Shared       |            | 3 GB         | 3            |
         | User Group A          | false | false  | Shared       |            | 0            | 0            |
         | User Group B          | true  | false  | Assigned     | 10 GB      | 2 GB         | 2            |
         | User Group C          | true  | false  | Limited      | 10 GB      | 5 GB         | 1            |
+        | (default user group)  | true  | true   | Shared       |            | 3 GB         | 3            |
 
 
       When I click Server Enabled table header
       Then Column Server Enabled sorts in descending order
       Then Bundled user groups table should be:
         | Group Name            | Stash | Server | Storage Type | Type Value | Storage Used | Devices Used |
+        | (default user group)  | true  | true   | Shared       |            | 3 GB         | 3            |
         | User Group A          | false | false  | Shared       |            | 0            | 0            |
         | User Group B          | true  | false  | Assigned     | 10 GB      | 2 GB         | 2            |
         | User Group C          | true  | false  | Limited      | 10 GB      | 5 GB         | 1            |
-        | (default user group)  | true  | true   | Shared       |            | 3 GB         | 3            |
+
 
       Then I refresh User Group list section
       When I click Device Used table header
@@ -344,20 +346,20 @@ Scenario: 20933 [Itemized] Sort Columns
     Then Column Stash sorts in ascending order
     And Itemized user groups table should be:
       | Group Name           | Stash | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
-      | (default user group) | true  | Shared               |                    | 1 GB                 | 1                    | 4                     | Shared              |                   | 1 GB                | 1                   | 194                  |
-      | User Group A         | true  | Shared               |                    | 2 GB                 | 1                    | 3                     | Shared              |                   | 2 GB                | 1                   | 3                    |
       | User Group B         | false | Assigned             | 10 GB              | 3 GB                 | 1                    | 2                     | Assigned            | 10 GB             | 3 GB                | 1                   | 2                    |
       | User Group C         | false | Limited              | 10 GB              | 4 GB                 | 1                    | 1                     | Limited             | 10 GB             | 4 GB                | 1                   | 1                    |
+      | (default user group) | true  | Shared               |                    | 1 GB                 | 1                    | 4                     | Shared              |                   | 1 GB                | 1                   | 194                  |
+      | User Group A         | true  | Shared               |                    | 2 GB                 | 1                    | 3                     | Shared              |                   | 2 GB                | 1                   | 3                    |
 
 
     Then I click Stash table header
     Then Column Stash sorts in descending order
     And Itemized user groups table should be:
       | Group Name           | Stash | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
-      | User Group B         | false | Assigned             | 10 GB              | 3 GB                 | 1                    | 2                     | Assigned            | 10 GB             | 3 GB                | 1                   | 2                    |
-      | User Group C         | false | Limited              | 10 GB              | 4 GB                 | 1                    | 1                     | Limited             | 10 GB             | 4 GB                | 1                   | 1                    |
       | (default user group) | true  | Shared               |                    | 1 GB                 | 1                    | 4                     | Shared              |                   | 1 GB                | 1                   | 194                  |
       | User Group A         | true  | Shared               |                    | 2 GB                 | 1                    | 3                     | Shared              |                   | 2 GB                | 1                   | 3                    |
+      | User Group B         | false | Assigned             | 10 GB              | 3 GB                 | 1                    | 2                     | Assigned            | 10 GB             | 3 GB                | 1                   | 2                    |
+      | User Group C         | false | Limited              | 10 GB              | 4 GB                 | 1                    | 1                     | Limited             | 10 GB             | 4 GB                | 1                   | 1                    |
 
 
     Then I refresh User Group list section
@@ -378,7 +380,6 @@ Scenario: 20933 [Itemized] Sort Columns
       | User Group B         | false | Assigned             | 10 GB              | 3 GB                 | 1                    | 2                     | Assigned            | 10 GB             | 3 GB                | 1                   | 2                    |
       | User Group A         | true  | Shared               |                    | 2 GB                 | 1                    | 3                     | Shared              |                   | 2 GB                | 1                   | 3                    |
       | (default user group) | true  | Shared               |                    | 1 GB                 | 1                    | 4                     | Shared              |                   | 1 GB                | 1                   | 194                  |
-
 
     Then I refresh User Group list section
     Then I click Desktop Storage Used table header
@@ -438,4 +439,3 @@ Scenario: 20933 [Itemized] Sort Columns
       | User Group A         | true  | Shared               |                    | 2 GB                 | 1                    | 3                     | Shared              |                   | 2 GB                | 1                   | 3                    |
       | User Group B         | false | Assigned             | 10 GB              | 3 GB                 | 1                    | 2                     | Assigned            | 10 GB             | 3 GB                | 1                   | 2                    |
       | User Group C         | false | Limited              | 10 GB              | 4 GB                 | 1                    | 1                     | Limited             | 10 GB             | 4 GB                | 1                   | 1                    |
-

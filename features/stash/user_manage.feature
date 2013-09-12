@@ -576,9 +576,9 @@ Feature: User stash setting management
       | keywords   |
       | TC.19115   |
     Then User search results should be:
-      | User                 | Name                 | Stash    | Machines | Storage         | Storage Used   | Created | Backed Up |
-      | <%=@users[1].email%> | TC.19115.stash-user  | Enabled  | 0        | Desktop: Shared | Desktop: 20 GB | today   | never     |
-      | <%=@users[0].email%> | TC.19115.backup-user | Disabled | 1        | Desktop: Shared | Desktop: 10 GB | today   | never     |
+      | User                 | Name                 | Stash    | Machines | Storage         | Storage Used   | Created | Backed Up      |
+      | <%=@users[1].email%> | TC.19115.stash-user  | Enabled  | 0        | Desktop: Shared | Desktop: 20 GB | today   | < a minute ago |
+      | <%=@users[0].email%> | TC.19115.backup-user | Disabled | 1        | Desktop: Shared | Desktop: 10 GB | today   | 1 minute ago   |
 
   @TC.19116 @TC.19117  @BSA.3040 @bus @2.5 @user_stories @US @mozypro @partner
   Scenario: 19116 19117 Mozypro Partner View Stash status

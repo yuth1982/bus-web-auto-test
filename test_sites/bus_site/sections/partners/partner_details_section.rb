@@ -288,7 +288,7 @@ module Bus
     # Return string
     def sub_admins_text
       expand(subadmins_icon)
-      wait_until_ajax_finished(sub_admin_div)
+      wait_until_ajax_finished(sub_admins_div)
       sub_admins_div.text
     end
 
@@ -297,7 +297,7 @@ module Bus
     # Returns array
     def sub_admins_table_headers
       expand(subadmins_icon)
-      wait_until_ajax_finished(sub_admin_div)
+      wait_until_ajax_finished(sub_admins_div)
       sub_admins_table.headers_text
     end
 
@@ -306,7 +306,7 @@ module Bus
     # Returns array
     def sub_admins_table_rows
       expand(subadmins_icon)
-      wait_until_ajax_finished(sub_admin_div)
+      wait_until_ajax_finished(sub_admins_div)
       sub_admins_table.rows_text
     end
 
