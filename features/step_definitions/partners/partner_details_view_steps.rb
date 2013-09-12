@@ -147,7 +147,10 @@ Then /^Partner billing history should be:$/ do |billing_history_table|
     col.each do |k,v|
       case k
         when "Date"
-          v.replace(Chronic.parse(v).strftime("%m/%d/%y"))
+          with_timezone(ARIA_ENV['timezone']) do
+            v.replace(Chronic.parse(v).strftime("%m/%d/%y"))
+            Log.debug "Aria time is #{Chronic.now}"
+          end
         else
           # do nothing
       end
