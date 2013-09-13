@@ -72,17 +72,27 @@ namespace :testlink do
   end
 end
 
-Cucumber::Rake::Task.new(:update_config) do |t|
-  t.cucumber_opts = "-d -f Cucumber::Formatter::UpdateConfig"
+# update_config by feature file or tags
+# example:
+#   # @abc or @123
+#   rake update_config OPT='-t @abc,@123 features/abc.feature'
+#   # @abc and @123
+#   rake update_config OPT='-t @abc -t @123 features/abc.feature'
+#   # not @abc
+#   rake update_config OPT='-t ~@abc features/abc.feature'
+# for fedid cases, you can run:
+#   rake update_config OPT='features/configuration/ features/users/machine_migration.feature'
+Cucumber::Rake::Task.new(:update_config, 'e.g. rake update_config features/configuration/') do |t|
+  t.cucumber_opts = "-d -f Cucumber::Formatter::UpdateConfig #{ARGV[1]}"
 end
 
 desc 'Run Cucumber features and generate an HTML summary and a plain text log'
 
-Cucumber::Rake::Task.new(:all) do |t|
+Cucumber::Rake::Task.new(:all, 'run all the testcases') do |t|
   t.cucumber_opts = "--color --format html --out all_features_#{Time.now.strftime("%Y%m%dT%H%M")}.html features"
 end
 
-Cucumber::Rake::Task.new(:smoke) do |t|
+Cucumber::Rake::Task.new(:smoke, 'run smoke cases') do |t|
   t.cucumber_opts = "--color --format html --out smoke_test_#{Time.now.strftime("%Y%m%dT%H%M")}.html --tags @smoke"
 end
 
