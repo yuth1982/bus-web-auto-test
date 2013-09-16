@@ -45,6 +45,7 @@ Then /^Partner general information should be:$/ do |details_table|
         v.gsub!(/@root_admin/, @partner.admin_info.full_name) unless @partner.nil?
       when 'Marketing Referrals:'
         v.gsub!(/@login_admin_email/,@admin_username)
+        v.gsub!(/@bus01_admin/, QA_ENV['bus01_admin'])
       else
         # do nothing
     end
