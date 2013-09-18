@@ -10,7 +10,7 @@ module Zimbra
     end
 
     def find_emails(query, format='xml')
-      url = "#{ZIMBRA_ENV['host']}/zimbra/home/#{ZIMBRA_ENV['username']}/inbox?fmt=#{format}&query=#{query.gsub(' ','%20')}&auth=qp&zauthtoken=#{auth_token}"
+      url = "#{ZIMBRA_ENV['host']}/zimbra/home/#{ZIMBRA_ENV['username']}/inbox?fmt=#{format}&query=#{query}&auth=qp&zauthtoken=#{auth_token}"
       response = RestClient.get(URI.escape(url))
       parse_email_obj(response.body)
     end

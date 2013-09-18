@@ -238,11 +238,11 @@ When /^verify email address link should show success message$/ do
 end
 
 Then /^sign up page error message should be:$/ do |message|
-  @phoenix_site.phoenix_partner_into_fill_out.rp_error_messages.should eq(message)
+  @phoenix_site.phoenix_acct_fill_out.rp_error_messages.should eq(message)
 end
 
 Then /^sign up page error message to (.+) should be displayed$/ do |username|
-  @phoenix_site.phoenix_partner_into_fill_out.rp_error_messages.should eq(" An account with email address \"#{username}\" already exists")
+  @phoenix_site.phoenix_acct_fill_out.rp_error_messages.should eq(" An account with email address \"#{username}\" already exists")
 end
 
 # this piece may be combinable with the bus admin login step

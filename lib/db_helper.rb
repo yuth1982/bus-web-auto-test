@@ -109,7 +109,7 @@ module DBHelper
   def get_admin_email
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "select username from public.admins where username like '%@decho.com%' and deleted_at IS NULL order by id DESC limit 1;"
+      sql = "select username from public.admins where username like '%@decho.com%' and deleted_at IS NULL and passwordhash IS NOT NULL order by id DESC limit 1;"
       c = conn.exec(sql)
       c.values[0][0]
     rescue PGError => e

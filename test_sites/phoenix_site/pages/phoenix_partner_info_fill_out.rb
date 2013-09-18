@@ -224,7 +224,9 @@ module Phoenix
       msg1 = "Sign Up"
       msg2 = "MozyFree: Register for an Account"
       msg3 = "Sign up for MozyPro (Business Account)"
-      page_banner.text == msg1 || page_banner.text == msg2 || page_banner.text == msg3
+      msg4 = "Registrieren"
+      msg5 = "Abonnement"
+      page_banner.text == msg1 || page_banner.text == msg2 || page_banner.text == msg3 || page_banner.text == msg4 || page_banner.text == msg5
     end
 
     #localized selection/clicking of items
