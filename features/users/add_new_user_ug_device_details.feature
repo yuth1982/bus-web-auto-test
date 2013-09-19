@@ -55,6 +55,7 @@ Feature: Add new user, user group device details
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
+  @TC.19944 @bus @2.5 @user_centric_storage @add_new_user @devices @metallic
     Scenario: Mozy-19944:Devices Add New User (Mult UG) Metallic Reseller
       Given I log in bus admin console as administrator
       When I add a new Reseller partner:
