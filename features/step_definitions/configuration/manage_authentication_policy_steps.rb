@@ -162,7 +162,7 @@ Then /^There should be (\d+) (.+) items:$/ do |num, type, table|
 end
 
 Then /^The sync status result should be:$/ do |table|
-  @bus_site.admin_console_page.authentication_policy_section.sync_result.should == table.rows.first
+  @bus_site.admin_console_page.authentication_policy_section.sync_result.should == table.transpose.rows.first
 end
 
 Then /^The layout of attribute should:$/ do |table|
@@ -229,38 +229,39 @@ When /^I click the sync now button$/ do
 end
 
 Then /^The sync status result should like:$/ do |table|
-#  sleep(1)
-#  pre_time = @bus_site.admin_console_page.authentication_policy_section.sync_result[0]
-#  while @bus_site.admin_console_page.authentication_policy_section.sync_result[0] == pre_time
-#    pre_time = @bus_site.admin_console_page.authentication_policy_section.sync_result[0]
-#    @bus_site.admin_console_page.authentication_policy_section.refresh
-#  end
-  @bus_site.admin_console_page.authentication_policy_section.refresh
-  sleep(6)
-  @bus_site.admin_console_page.authentication_policy_section.sync_result[0].should == table.rows.first[0]
-  last_sync_time = @bus_site.admin_console_page.authentication_policy_section.sync_result[1]
+  @bus_site.admin_console_page.authentication_policy_section.refresh_bus_section
+  @bus_site.admin_console_page.authentication_policy_section.wait_until_bus_section_load
+  expected = table.transpose.rows.first
+  actual = @bus_site.admin_console_page.authentication_policy_section.sync_result
+  time_re = '\d+/\d+/\d+ \d+:\d+'
+  last_sync_time = actual[0].match(time_re)[0]
+  costed_time = actual[0].match('about (.+) sec')[1].to_f
+  whole_time = (Time.strptime(last_sync_time, '%m/%d/%y %H:%M') - @sync_time).abs
   Log.debug("last sync time is #{last_sync_time}")
-  Log.debug("the time to click sync now is #{@sync_time}")
-  Log.debug(Time.strptime(last_sync_time, '%m/%d/%y %H:%M %Z') - @sync_time)
+  Log.debug("costed_time is #{costed_time}")
 
-  (Time.strptime(last_sync_time, '%m/%d/%y %H:%M %Z') - @sync_time).abs.should be < 120
-  expected_next_sync = table.rows.first[2]
+  # verfiy Sync Status
+  actual[0].match(expected[0].gsub('%m/%d/%y %H:%M', time_re)).should_not be_nil
+  costed_time.should be < (whole_time + 60)
+  whole_time.should be < 120
+  expected_next_sync = expected[2]
+  # verify Sync Result
+  actual[1].should == expected[1]
+  # verify Next Sync
   unless expected_next_sync.nil?
-    if expected_next_sync == ''
+    if expected_next_sync == 'Not Scheduled(SET)'
       @bus_site.admin_console_page.authentication_policy_section.sync_result[2].should == expected_next_sync
-    elsif expected_next_sync != '@next_sync_time'
-      next_time_got = @bus_site.admin_console_page.authentication_policy_section.sync_result[2]
-      p next_sync_time = Time.strptime(next_time_got, '%m/%d/%y %H:%M %Z')
+    else
+      next_time_got = actual[2]
+      next_sync_time = Time.strptime(next_time_got, '%m/%d/%y %H:%M')
       t = Time.now
-      p expected_time = Time.utc(t.year,t.month, t.day, expected_next_sync.to_i, 0, 0).getlocal
+      expected_time = Time.utc(t.year,t.month, t.day, expected_next_sync.to_i, 0, 0).getlocal
       if Time.now > expected_time
         expected_time = Time.utc(t.year,t.month, t.day + 1, expected_next_sync.to_i, 0, 0).getlocal
       end
-      Log.debug("the next sync time is #{@bus_site.admin_console_page.authentication_policy_section.sync_result[2]}")
+      Log.debug("the next sync time is #{actual[2]}")
       next_sync_time.should == expected_time
-    else
     end
-#  @bus_site.admin_console_page.authentication_policy_section.sync_result[2].should == '09/20/12 11:00 +08:00'
   end
 end
 

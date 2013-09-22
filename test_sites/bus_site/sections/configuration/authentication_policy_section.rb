@@ -294,13 +294,6 @@ module Bus
       sync_now_button.click
     end
 
-    # Public: Refresh the page
-    #
-    def refresh
-#      find(:xpath, "//a[@class='mod-button']").click
-      page.find(:xpath, "//div[@id='authentication_policies-edit']//a[@class='mod-button']").click
-    end
-
     # Public: Delete or suspend users if not synced for several days
     #
     def handle_user(method, days)
