@@ -40,7 +40,7 @@ When /^I (.+) a phoenix (Home|Pro|Direct|Free) (partner|user):$/ do |string,type
 
   # Partners added through phoenix do not get to select their parent.
   # It is assigned based on their 'dom' and product selection
-  if type == "Pro"
+  if type == "Pro" || type == "Direct"
     #parent is MozyPro
     @partner.partner_info.parent = case @partner.company_info.country
                                      when "Ireland"
@@ -59,7 +59,7 @@ When /^I (.+) a phoenix (Home|Pro|Direct|Free) (partner|user):$/ do |string,type
                                        #parent is
                                        'MozyPro'
                                    end
-  elsif type == "Home" || type == "Direct"
+  elsif type == "Home" || type == "Free"
     #parent is MozyHome
     @partner.partner_info.parent = case @partner.company_info.country
                                      when "Ireland"
