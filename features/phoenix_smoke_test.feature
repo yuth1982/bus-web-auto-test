@@ -27,8 +27,8 @@ Feature: Add a new partner through phoenix
       | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:                  | Parent: | Next Charge: | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro | after 1 year | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+      | Status:         | Root Admin:          | Root Role:                  | Parent: | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
       | MozyPro       | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -43,9 +43,10 @@ Feature: Add a new partner through phoenix
       | Used | Available | Assigned | Used | Available | Assigned  |
       | 0    | 100       | 100      | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
-      | Account Type:   | Credit Card  | Current Period: | Yearly              |
-      | Unpaid Balance: | $0.00        | Collect On:     | N/A                 |
-      | Renewal Date:   | after 1 year | Renewal Period: | Use Current Period  |
+      | Account Type:   | Credit Card           | Current Period: | Yearly              |
+      | Unpaid Balance: | $0.00                 | Collect On:     | N/A                 |
+      | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period  |
+      | Next Charge:    | after 1 year (extend) |                 |                     |
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan |
@@ -71,6 +72,11 @@ Feature: Add a new partner through phoenix
     When I log in bus admin console as administrator
     Then I search and delete partner account by newly created partner company name
     When I search emails by keywords:
-      | content          |
-      | @new_admin_email |
-    Then I should see 2 email(s)
+      | content                             |
+      | <%=@partner.credit_card.full_name%> |
+    Then I should see 4 email(s)
+    When I search emails by keywords:
+      | content                        |
+      | <%=@partner.admin_info.email%> |
+    Then I should see 1 email(s)
+
