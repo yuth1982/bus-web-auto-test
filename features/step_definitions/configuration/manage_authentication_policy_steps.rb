@@ -224,8 +224,7 @@ end
 
 When /^I click the sync now button$/ do
   @bus_site.admin_console_page.authentication_policy_section.sync_now
-  @sync_time = Time.now
-  Log.debug(@sync_time)
+  Log.debug("Time to click sync now: #{Time.now}")
 end
 
 Then /^The sync status result should like:$/ do |table|
@@ -236,14 +235,12 @@ Then /^The sync status result should like:$/ do |table|
   time_re = '\d+/\d+/\d+ \d+:\d+'
   last_sync_time = actual[0].match(time_re)[0]
   costed_time = actual[0].match('about (.+) sec')[1].to_f
-  whole_time = (Time.strptime(last_sync_time, '%m/%d/%y %H:%M') - @sync_time).abs
   Log.debug("last sync time is #{last_sync_time}")
   Log.debug("costed_time is #{costed_time}")
 
   # verfiy Sync Status
   actual[0].match(expected[0].gsub('%m/%d/%y %H:%M', time_re)).should_not be_nil
-  costed_time.should be < (whole_time + 60)
-  whole_time.should be < 120
+  costed_time.should be < 120
   expected_next_sync = expected[2]
   # verify Sync Result
   actual[1].should == expected[1]
@@ -251,7 +248,8 @@ Then /^The sync status result should like:$/ do |table|
   unless expected_next_sync.nil?
     if expected_next_sync == 'Not Scheduled(SET)'
       @bus_site.admin_console_page.authentication_policy_section.sync_result[2].should == expected_next_sync
-    else
+    elsif expected_next_sync == '@next_sync_time'
+      expected_next_sync = @next_sync_time
       next_time_got = actual[2]
       next_sync_time = Time.strptime(next_time_got, '%m/%d/%y %H:%M')
       t = Time.now
@@ -259,8 +257,11 @@ Then /^The sync status result should like:$/ do |table|
       if Time.now > expected_time
         expected_time = Time.utc(t.year,t.month, t.day + 1, expected_next_sync.to_i, 0, 0).getlocal
       end
-      Log.debug("the next sync time is #{actual[2]}")
+      Log.debug("the actual next sync time is #{actual[2]}")
+      Log.debug("the expected next sync time is #{expected_time}")
       next_sync_time.should == expected_time
+    else
+      raise 'next sync time is wrong'
     end
   end
 end
@@ -283,10 +284,9 @@ end
 When /^I choose to sync daily at the nearest sharp time$/ do
   t = Time.now
   # needs to refine here
-  @sync_time = Time.new(t.year,t.month,t.day,(t.hour+1),0,0)
-  next_sync_time = (t.getutc.hour + 1) % 24
-  Log.debug("The scheduled sync time is #{next_sync_time} utc")
-  @bus_site.admin_console_page.authentication_policy_section.sync_daily_at(next_sync_time)
+  @next_sync_time = (t.getutc.hour + 1) % 24
+  Log.debug("The scheduled sync time is #{@next_sync_time} utc")
+  @bus_site.admin_console_page.authentication_policy_section.sync_daily_at(@next_sync_time)
 end
 
 When /^I clear the user sync information$/ do

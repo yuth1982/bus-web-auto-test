@@ -1,4 +1,5 @@
 When /^I navigate to the machine mapping page$/ do
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_machines'])
   @bus_site.admin_console_page.search_list_machines_section.navigate_to_machine_mapping
 end
 

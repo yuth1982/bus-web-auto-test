@@ -36,31 +36,44 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       | Machine Name  | Machine Hash                           | Current Owner   | New Owner |
       |WIN-F13I7JF06G5|87f9fa5583e952cf76fe53e1eab0123923dc92e4|new_user@test.com|           |
 
-  @TC.16270 @bus @2.5 @machine_migration
-  Scenario: 16270 Export a CSV file in Synchronized way after deleting one user-machine mapping
-    When I act as partner by:
-      | email                                 |
-      | machine_migration_add_delete@auto.com |
+  @TC.16270 @TC.16271 @bus @2.5 @machine_migration
+  Scenario: 16271 Export a CSV file in Synchronized way after adding/deleting one user-machine mapping
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | net terms | company name                   |
+      | 12     | 8     | 100 GB      | yes       | Machine Migration Add & Delete |
+    Then New partner should be created
+    When I get the partner_id
+    And I act as newly created partner account
     And I navigate to the machine mapping page
     And I download the machine csv file
-    And I refresh the machine mapping page
     And I rename the machine csv file
-    And I delete a new user and machine mapping
-    When I download the machine csv file
-    Then The exported csv file should be 1 rows less than the former one
-
-  @TC.16271 @bus @2.5 @machine_migration
-  Scenario: 16271 Export a CSV file in Synchronized way after adding one user-machine mapping
-    When I act as partner by:
-      | email                                 |
-      | machine_migration_add_delete@auto.com |
+    And I add new user(s):
+      | name          | user_group           | storage_type | storage_limit | devices |
+      | TC.16270.User | (default user group) | Desktop      | 50            | 3       |
+    Then 1 new user should be created
+    When I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And I use keyless activation to activate devices
+      | user_email  | machine_name | machine_type | partner_name  |
+      | @user_email | Machine1     | Desktop      | @partner_name |
     And I navigate to the machine mapping page
-    And I download the machine csv file
-    And I refresh the machine mapping page
-    And I rename the machine csv file
-    And I add a new user and machine mapping
     When I download the machine csv file
     Then The exported csv file should be 1 rows more than the former one
+    And I rename the machine csv file
+    # now delete the user machine
+    When I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I delete user
+    And I navigate to the machine mapping page
+    When I download the machine csv file
+    Then The exported csv file should be 1 rows less than the former one
+    Then I stop masquerading
+    And I search and delete partner account by newly created partner company name
 
   @TC.16272 @bus @2.5 @machine_migration
   Scenario: 16272 Export a CSV file in Synchronized way while the partner has 10000 machines before
@@ -241,8 +254,8 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
   @TC.16343 @bug @2.5 @machine_migration
   Scenario: 16343 Export a CSV file when the partner has subpartners
     When I act as partner by:
-      | name    |
-      | Freecom |
+      | email                                    |
+      | robert.bartelds-at-freecom.com@mozy.test |
     And I navigate to the machine mapping page
     When I download the machine csv file
     And The exported csv file should be:
