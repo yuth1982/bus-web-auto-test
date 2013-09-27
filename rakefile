@@ -82,8 +82,12 @@ end
 #   rake update_config OPT='-t ~@abc features/abc.feature'
 # for fedid cases, you can run:
 #   rake update_config OPT='features/configuration/ features/users/machine_migration.feature'
-Cucumber::Rake::Task.new(:update_config, 'e.g. rake update_config features/configuration/') do |t|
-  t.cucumber_opts = "-d -f Cucumber::Formatter::UpdateConfig #{ARGV[1]}"
+Cucumber::Rake::Task.new(:update_config, 'e.g. rake update_config  OPT="-e \'configuration|users/machine_migration\' -t ~@phoenix"') do |t|
+  if ARGV[1]
+    tags = ARGV[1].gsub(/.+=/, '')
+    cucumber_options = ARGV[1].gsub(/.+=/, '') if ARGV[1].match /^OPT=/
+  end
+  t.cucumber_opts = "-d -f Cucumber::Formatter::UpdateConfig #{cucumber_options}"
 end
 
 desc 'Run Cucumber features and generate an HTML summary and a plain text log'
