@@ -53,7 +53,7 @@ Feature: User sync
     And I wait for 70 seconds
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\) |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                |
       | Next Sync   | Not Scheduled(SET)                                            |
 
@@ -227,7 +227,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 3 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
@@ -247,7 +247,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 3 succeeded, 0 failed |
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
@@ -271,7 +271,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 9 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
@@ -297,7 +297,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 9 succeeded, 0 failed |
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
@@ -323,7 +323,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 9 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
@@ -351,7 +351,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 9 succeeded, 0 failed |
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
@@ -378,7 +378,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 9 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
@@ -405,7 +405,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 3 succeeded, 0 failed |
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
@@ -433,7 +433,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 9 succeeded, 0 failed |
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
@@ -459,7 +459,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 9 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
@@ -487,7 +487,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 9 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
@@ -515,7 +515,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 9 succeeded, 0 failed |
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
@@ -627,7 +627,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
@@ -657,7 +657,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 1 succeeded, 0 failed |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
@@ -683,7 +683,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
@@ -716,7 +716,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
@@ -746,7 +746,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 1 succeeded, 0 failed |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
@@ -776,7 +776,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
@@ -816,7 +816,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
@@ -845,7 +845,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\) |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
@@ -874,7 +874,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
@@ -903,7 +903,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\) |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
@@ -943,7 +943,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
@@ -962,7 +962,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 2 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
@@ -983,7 +983,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 2 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
@@ -1004,7 +1004,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 2 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
@@ -1024,7 +1024,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 2 succeeded, 0 failed |
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
@@ -1053,7 +1053,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 2 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
@@ -1076,7 +1076,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 2 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
@@ -1098,7 +1098,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\)      |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 2 succeeded, 0 failed |
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
@@ -1123,9 +1123,9 @@ Feature: User sync
     When I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\) |
-      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                |
-      | Next Sync   | 0                                                             |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                      |
+      | Next Sync   | 0                                                                   |
     And I click Sync Rules tab
     And I clear the daily sync information
     And I click the sync now button
@@ -1133,9 +1133,9 @@ Feature: User sync
     Then The daily sync time should be empty
     When I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\) |
-      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                |
-      | Next Sync   | Not Scheduled(SET)                                            |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                     |
+      | Next Sync   | Not Scheduled(SET)                                                 |
 
   @TC.17520  @slow @scheduled_sync @bus @2.1 @direct_ldap_integration @use_provision
   Scenario: 17520 Scheduled Sync
@@ -1153,6 +1153,6 @@ Feature: User sync
     And I wait for 80 seconds
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M \(costed about \d+\.\d+ seconds*\) |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                |
       | Next Sync   | @next_sync_time                                               |

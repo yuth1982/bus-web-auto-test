@@ -232,14 +232,15 @@ Then /^The sync status result should like:$/ do |table|
   @bus_site.admin_console_page.authentication_policy_section.wait_until_bus_section_load
   expected = table.transpose.rows.first
   actual = @bus_site.admin_console_page.authentication_policy_section.sync_result
-  time_re = '\d+/\d+/\d+ \d+:\d+'
+  time_re = '\d+/\d+/\d+ \d+:\d+ \+\d+:\d+'
+  time_re_sub = '\d+/\d+/\d+ \d+:\d+ \\\+\d+:\d+'
   last_sync_time = actual[0].match(time_re)[0]
   costed_time = actual[0].match('about (.+) sec')[1].to_f
   Log.debug("last sync time is #{last_sync_time}")
   Log.debug("costed_time is #{costed_time}")
 
   # verfiy Sync Status
-  actual[0].match(expected[0].gsub('%m/%d/%y %H:%M', time_re)).should_not be_nil
+  actual[0].match(expected[0].gsub('%m/%d/%y %H:%M %:z', time_re_sub)).should_not be_nil
   costed_time.should be < 120
   expected_next_sync = expected[2]
   # verify Sync Result
@@ -248,10 +249,10 @@ Then /^The sync status result should like:$/ do |table|
   unless expected_next_sync.nil?
     if expected_next_sync == 'Not Scheduled(SET)'
       @bus_site.admin_console_page.authentication_policy_section.sync_result[2].should == expected_next_sync
-    elsif expected_next_sync == '@next_sync_time'
-      expected_next_sync = @next_sync_time
+    else
+      expected_next_sync = @next_sync_time if expected_next_sync == '@next_sync_time'
       next_time_got = actual[2]
-      next_sync_time = Time.strptime(next_time_got, '%m/%d/%y %H:%M')
+      next_sync_time = Time.strptime(next_time_got, '%m/%d/%y %H:%M %:z')
       t = Time.now
       expected_time = Time.utc(t.year,t.month, t.day, expected_next_sync.to_i, 0, 0).getlocal
       if Time.now > expected_time
@@ -260,8 +261,6 @@ Then /^The sync status result should like:$/ do |table|
       Log.debug("the actual next sync time is #{actual[2]}")
       Log.debug("the expected next sync time is #{expected_time}")
       next_sync_time.should == expected_time
-    else
-      raise 'next sync time is wrong'
     end
   end
 end
