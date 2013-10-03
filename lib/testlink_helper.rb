@@ -5,7 +5,7 @@ require 'xmlrpc/client'
 
 module TestlinkHelper
   class TestlinkAPIClient
-    SERVER_URL = "http://10.135.8.18/testlink/lib/api/xmlrpc.php"
+    SERVER_URL = "http://10.135.10.139/testlink/lib/api/xmlrpc/v1/xmlrpc.php"
     API_KEY = "997f1d69d1300b66b914480651cf095d"
     def initialize(dev_key = API_KEY)
       @server = XMLRPC::Client.new2(SERVER_URL)
