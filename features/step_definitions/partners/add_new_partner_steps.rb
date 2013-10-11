@@ -23,6 +23,7 @@
 #   click create
 
 When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partner_table|
+  Log.debug '###########This change is to test ATF###############'
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_partner'])
   attributes = partner_table.hashes.first
   case type
