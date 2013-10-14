@@ -35,6 +35,10 @@ module CapybaraHelper
         raw.map{ |row| row.map{ |cell| cell.text.strip } }
       end
 
+      def has_footer?
+        self.all(:css, 'tfoot').size >= 1
+      end
+
       # Elements of table header
       #
       # @return [Array<Capybara::Node::Element>]
@@ -55,14 +59,17 @@ module CapybaraHelper
       # @return [Array[Array<Capybara::Node::Element>]]
       def rows
         th_size = raw.first.select{ |cell| cell.tag_name == 'th'}.size
-        case
-          when th_size == 1 # vertical header
-            raw.map{ |row| row[1..-1] }.transpose
-          when th_size > 1 # horizontal header
-            raw[1..-1]
-          else  # no header, raw is rows
-            raw
-        end
+        r =
+          case
+            when th_size == 1 # vertical header
+              raw.map{ |row| row[1..-1] }.transpose
+            when th_size > 1 # horizontal header
+              raw[1..-1]
+            else  # no header, raw is rows
+              raw
+          end
+        r = r[0..-2] if has_footer?
+        r
       end
 
       # Table headers text

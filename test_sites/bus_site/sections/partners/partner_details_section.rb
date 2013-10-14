@@ -172,6 +172,7 @@ module Bus
       wait_until_bus_section_load
       expand(account_details_icon)
       wait_until_ajax_finished(partner_details_div)
+      wait_until { !(contact_info_dls.first.dt_dd_elements_text.first.first == '') }
       output = Hash[*contact_info_dls.map{ |el| el.dt_dd_elements_text.delete_if{ |pair| pair.first.empty?}}.delete_if{ |el| el.empty?}.flatten]
       output['Contact Address:'] = contact_address_tb.value
       output['Contact City:'] = contact_city_tb.value
@@ -319,7 +320,8 @@ module Bus
     def billing_history_hashes
       expand(billing_information_icon)
       show_billing_history_link.click
-      billing_history_table.rows_text.map{ |row| Hash[*billing_history_table.headers_text.zip(row).flatten] }
+      wait_until { !billing_history_table.hashes.first.values.first.nil? }
+      billing_history_table.hashes
     end
 
     # Public: Click act as partner link
