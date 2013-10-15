@@ -6,8 +6,8 @@ Feature: Remove a user
   @TC.20938 @bus @2.5 @manage_storage @remove_user @bundled @reseller
   Scenario: 20938 [Bundled][Reseller] Delete user from new user group
     When I add a new Reseller partner:
-      | period | reseller type | reseller quota | server plan | net terms | company name                    |
-      | 12     | Silver        | 100            | yes         | yes       | [Bundled][Reseller] Delete User |
+      | period | reseller type | reseller quota | server plan | net terms |
+      | 12     | Silver        | 100            | yes         | yes       |
     Then New partner should be created
     When I get the partner_id
     And I act as newly created partner
@@ -61,8 +61,8 @@ Feature: Remove a user
   @TC.20945 @bus @2.5 @manage_storage @remove_user @itemized @enterprise
   Scenario: 20945 [Itemized][Enterprise] Delete user from new user group
     When I add a new MozyEnterprise partner:
-      | period | users | server plan | net terms | company name                           |
-      | 12     | 10    | 100 GB      | yes       | [Itemized][MozyEnterprise] Delete User |
+      | period | users | server plan | net terms |
+      | 12     | 10    | 100 GB      | yes       |
     Then New partner should be created
     When I get the partner_id
     And I act as newly created partner

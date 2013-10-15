@@ -592,4 +592,5 @@ Feature:
     Then the data shuttle machine details should be:
       | Order ID | Data Shuttle Device ID | Phase |
       | <%=@seed_id%> | <%=@seed_id%> | Seeding |
+    And I stop masquerading
     And I search and delete partner account by newly created partner company name

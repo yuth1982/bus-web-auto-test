@@ -551,6 +551,7 @@ Feature: User Has Unique Username
       | email                 |
       | @existing_admin_email |
     Then edit user email success message to existing admin email should be displayed
+    And I delete user
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -631,6 +632,11 @@ Feature: User Has Unique Username
       | email                 | user_group           | storage_type | storage_limit | devices |
       | @existing_admin_email | (default user group) | Desktop      | 10            | 1       |
     And 1 new user should be created
+    And I search user by:
+      | keywords              |
+      | @existing_admin_email |
+    And I view user details by newly created user email
+    And I delete user
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -709,6 +715,7 @@ Feature: User Has Unique Username
       | email                 |
       | @existing_admin_email |
     Then edit user email success message to existing admin email should be displayed
+    And I delete user
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 

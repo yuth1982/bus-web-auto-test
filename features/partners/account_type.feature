@@ -21,8 +21,9 @@ Feature: Account Type
     When I search partner by Enterprise Trial Partner
     And I view partner details by Enterprise Trial Partner
     Then partner account details should be:
-      | Account Type   | Sales Origin | Sales Channel         |
-      | Trial (change) | Sales        | Inside Sales (change) |
+    # No Sales Channel in partner details anymore for partners with ARIA id
+      | Account Type   | Sales Origin |
+      | Trial (change) | Sales        |
     And I delete partner account
 
   @TC.20923 @BUG.98477 @v.2.4.3
@@ -34,8 +35,8 @@ Feature: Account Type
     When I search partner by Reseller Internal Test Partner
     And I view partner details by Reseller Internal Test Partner
     Then partner account details should be:
-      | Account Type           | Sales Origin | Sales Channel         |
-      | Internal Test (change) | Sales        | Inside Sales (change) |
+      | Account Type           | Sales Origin |
+      | Internal Test (change) | Sales        |
     And I delete partner account
 
   @TC.20698 @BUG.98477 @v.2.4.3
@@ -47,8 +48,8 @@ Feature: Account Type
     When I search partner by MozyPro Live Partner
     And I view partner details by MozyPro Live Partner
     Then partner account details should be:
-      | Account Type  | Sales Origin | Sales Channel         |
-      | Live (change) | Sales        | Inside Sales (change) |
+      | Account Type  | Sales Origin |
+      | Live (change) | Sales        |
     And I delete partner account
 
   @TC.20707 @BUG.98491 @BUG.98477 @v.2.4.3
