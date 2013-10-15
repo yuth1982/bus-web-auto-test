@@ -71,6 +71,7 @@ end
 Then /^(.+) account current notification method is set to (.+)$/ do |user_name, method|
   step "I search aria account by #{user_name}"
   step "I navigate to Notification Method view from side menu"
+  @aria_site.accounts_page.outer_if.main_if.work_if.inner_work_if.notification_method_section.click_notify_method
   @aria_site.accounts_page.outer_if.main_if.work_if.inner_work_if.notification_method_section.messages.should == "This account is currently notified via method \"#{method}\"."
 end
 

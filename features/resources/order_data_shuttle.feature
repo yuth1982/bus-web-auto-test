@@ -418,8 +418,8 @@ Feature:
     And activate the user's Desktop device without a key and with the default password
     Then I stop masquerading
     When I order data shuttle for newly created partner company name
-      | power adapter   | key from  | quota |
-      | Data Shuttle US | available | 3800  |
+      | power adapter   | key from  | quota | drive type     |
+      | Data Shuttle US | available | 3800  | 3.5" 2TB Drive |
     And Data shuttle order summary should be:
       | Description         | Quantity | Total   |
       | Data Shuttle 5.4 TB | 1        | $475.00 |

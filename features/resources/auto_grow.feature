@@ -43,10 +43,6 @@ Feature: Auto Grow
     And I upload 2 GB of data to device
     Then tds returns successful upload
     And I stop masquerading
-    And I search partner by:
-      | name          | filter |
-      | @company_name | None   |
-    And I view partner details by newly created partner company name
     And I search and delete partner account by newly created partner company name
 
 

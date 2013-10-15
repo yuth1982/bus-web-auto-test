@@ -26,6 +26,7 @@ module Bus
     # Create order section
     element(:available_keys_table, css: "div.box table.table-view")
     element(:add_new_key, xpath: "//a[text()='Add New Key']")
+    element(:drive_type_select, id: 'data_shuttle_sku_type')
 
     # Summary section
     element(:num_win_drivers_tb, id: "seed_device_order_win_drive_num")
@@ -115,6 +116,7 @@ module Bus
         os_tb.select(order.os) unless order.os.nil?
         order_quota_tb.type_text(order.quota) unless order.quota.nil?
         order_assign_to_tb.type_text(order.assign_to) unless order.assign_to.nil?
+        drive_type_select.select(order.drive_type) unless order.drive_type.nil?
 
         wait_until_bus_section_load
         next_btns[1].click

@@ -12,6 +12,7 @@ module Aria
     element(:change_notify_method_btn, {:xpath => "//input[@value='Change Notify Method']"})
     elements(:notify_methods_td, {:xpath => "#{NOTIFY_METHODS_TXT_LOC}"})
     elements(:notify_methods_rb, {:xpath => "#{NOTIFY_METHODS_TXT_LOC}/input"})
+    element(:notify_method_link, :css => "a[title='Notification Method']")
 
     # Public: List notification methods text
     #
@@ -21,7 +22,12 @@ module Aria
     #
     # Returns notification methods text array
     def notify_methods
+      click_notify_method
       notify_methods_td.map{ |cell| cell.text }
+    end
+
+    def click_notify_method
+      notify_method_link.click
     end
 
     # Public: List notification methods text

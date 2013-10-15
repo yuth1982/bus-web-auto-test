@@ -20,9 +20,10 @@ Feature: Change subscription period
     When I stop masquerading
     And I view partner details by newly created partner company name
     Then Partner internal billing should be:
-      | Account Type:   | Credit Card   | Current Period: | Yearly              |
-      | Unpaid Balance: | $0.00         | Collect On:     | N/A                 |
-      | Renewal Date:   | after 1 year  | Renewal Period: | Use Current Period  |
+      | Account Type:   | Credit Card  | Current Period: | Yearly             |
+      | Unpaid Balance: | $0.00        | Collect On:     | N/A                |
+      | Renewal Date:   | after 1 year | Renewal Period: | Use Current Period |
+      | Next Charge:    | after 1 year |                 |                    |
     And I delete partner account
 
   @TC.15232 @bus @change_period
@@ -40,9 +41,10 @@ Feature: Change subscription period
     When I stop masquerading
     And I view partner details by newly created partner company name
     Then Partner internal billing should be:
-      | Account Type:   | Credit Card   | Current Period: | Biennial            |
-      | Unpaid Balance: | €0.00         | Collect On:     | N/A                 |
-      | Renewal Date:   | after 2 years | Renewal Period: | Use Current Period  |
+      | Account Type:   | Credit Card   | Current Period: | Biennial           |
+      | Unpaid Balance: | €0.00         | Collect On:     | N/A                |
+      | Renewal Date:   | after 2 years | Renewal Period: | Use Current Period |
+      | Next Charge:    | after 2 years |                 |                    |
     And I delete partner account
 
   @TC.15233 @bus @change_period
@@ -63,6 +65,7 @@ Feature: Change subscription period
       | Account Type:   | Credit Card   | Current Period: | Biennial            |
       | Unpaid Balance: | €0.00         | Collect On:     | N/A                 |
       | Renewal Date:   | after 2 years | Renewal Period: | Use Current Period  |
+      | Next Charge:    | after 2 years |                 |                     |
     And I delete partner account
 
   @TC.15234 @bus @change_period
@@ -83,6 +86,7 @@ Feature: Change subscription period
       | Account Type:   | Net Terms 30  | Current Period: | Biennial  |
       | Unpaid Balance: | €413.02       | Collect On:     | N/A       |
       | Renewal Date:   | after 2 years | Renewal Period: | Yearly    |
+      | Next Charge:    | after 2 years |                 |           |
     And I delete partner account
 
   @TC.15235 @bus @change_period
@@ -100,9 +104,10 @@ Feature: Change subscription period
     When I stop masquerading
     And I view partner details by newly created partner company name
     Then Partner internal billing should be:
-        | Account Type:   | Net Terms 30  | Current Period: | Yearly   |
-        | Unpaid Balance: | £189.28       | Collect On:     | N/A      |
-        | Renewal Date:   | after 1 year  | Renewal Period: | Monthly  |
+        | Account Type:   | Net Terms 30 | Current Period: | Yearly  |
+        | Unpaid Balance: | £189.28      | Collect On:     | N/A     |
+        | Renewal Date:   | after 1 year | Renewal Period: | Monthly |
+        | Next Charge:    | after 1 year |                 |         |
     And I delete partner account
 
   @TC.15236 @bus @change_period
@@ -123,6 +128,7 @@ Feature: Change subscription period
       | Account Type:   | Net Terms 30  | Current Period: | Biennial    |
       | Unpaid Balance: | $419.79       | Collect On:     | N/A         |
       | Renewal Date:   | after 2 years | Renewal Period: | Monthly     |
+      | Next Charge:    | after 2 years |                 |          |
     And I delete partner account
 
   @TC.15238 @bus @change_period
@@ -143,6 +149,7 @@ Feature: Change subscription period
       | Account Type:   | Credit Card   | Current Period: | Biennial            |
       | Unpaid Balance: | $0.00         | Collect On:     | N/A                 |
       | Renewal Date:   | after 2 years | Renewal Period: | Use Current Period  |
+      | Next Charge:    | after 2 years |                 |                     |
     And I delete partner account
 
   @TC.15239 @bus @change_period
@@ -163,6 +170,7 @@ Feature: Change subscription period
       | Account Type:   | Credit Card   | Current Period: | 3-year              |
       | Unpaid Balance: | $0.00         | Collect On:     | N/A                 |
       | Renewal Date:   | after 3 years | Renewal Period: | Use Current Period  |
+      | Next Charge:    | after 3 years |                 |                     |
     And I delete partner account
 
   @TC.15240 @bus @change_period
@@ -183,6 +191,7 @@ Feature: Change subscription period
       | Account Type:   | Credit Card   | Current Period: | 3-year              |
       | Unpaid Balance: | $0.00         | Collect On:     | N/A                 |
       | Renewal Date:   | after 3 years | Renewal Period: | Use Current Period  |
+      | Next Charge:    | after 3 years |                 |                     |
     And I delete partner account
 
   @TC.15241 @bus @change_period
@@ -203,6 +212,7 @@ Feature: Change subscription period
       | Account Type:   | Net Terms 30  | Current Period: | Biennial  |
       | Unpaid Balance: | $1,810.00     | Collect On:     | N/A       |
       | Renewal Date:   | after 2 years | Renewal Period: | Yearly    |
+      | Next Charge:    | after 2 years |                 |           |
     And I delete partner account
 
   @TC.15243 @bus @change_period
@@ -220,9 +230,10 @@ Feature: Change subscription period
     When I stop masquerading
     And I view partner details by newly created partner company name
     Then Partner internal billing should be:
-      | Account Type:   | Net Terms 30  | Current Period: | 3-year      |
-      | Unpaid Balance: | $2,590.00     | Collect On:     | N/A         |
-      | Renewal Date:   | after 3 years | Renewal Period: | Biennially  |
+      | Account Type:   | Net Terms 30  | Current Period: | 3-year     |
+      | Unpaid Balance: | $2,590.00     | Collect On:     | N/A        |
+      | Renewal Date:   | after 3 years | Renewal Period: | Biennially |
+      | Next Charge:    | after 3 years |                 |            |
     And I delete partner account
 
   @TC.15244 @bus @change_period
@@ -240,9 +251,10 @@ Feature: Change subscription period
     When I stop masquerading
     And I view partner details by newly created partner company name
     Then Partner internal billing should be:
-      | Account Type:   | Net Terms 30  | Current Period: | 3-year    |
-      | Unpaid Balance: | $2,590.00     | Collect On:     | N/A       |
-      | Renewal Date:   | after 3 year  | Renewal Period: | Yearly    |
+      | Account Type:   | Net Terms 30  | Current Period: | 3-year |
+      | Unpaid Balance: | $2,590.00     | Collect On:     | N/A    |
+      | Renewal Date:   | after 3 year  | Renewal Period: | Yearly |
+      | Next Charge:    | after 3 years |                 |        |
     And I delete partner account
 
   @TC.15245 @bus @change_period
@@ -260,9 +272,10 @@ Feature: Change subscription period
     When I stop masquerading
     And I view partner details by newly created partner company name
     Then Partner internal billing should be:
-      | Account Type:   | Credit Card   | Current Period: | Yearly              |
-      | Unpaid Balance: | $0.00         | Collect On:     | N/A                 |
-      | Renewal Date:   | after 1 year  | Renewal Period: | Use Current Period  |
+      | Account Type:   | Credit Card  | Current Period: | Yearly             |
+      | Unpaid Balance: | $0.00        | Collect On:     | N/A                |
+      | Renewal Date:   | after 1 year | Renewal Period: | Use Current Period |
+      | Next Charge:    | after 1 year |                 |                    |
     And I delete partner account
 
   @TC.15246 @bus @change_period
@@ -280,9 +293,10 @@ Feature: Change subscription period
     When I stop masquerading
     And I view partner details by newly created partner company name
     Then Partner internal billing should be:
-      | Account Type:   | Net Terms 30  | Current Period: | Yearly   |
-      | Unpaid Balance: | $385.00       | Collect On:     | N/A      |
-      | Renewal Date:   | after 1 year  | Renewal Period: | Monthly  |
+      | Account Type:   | Net Terms 30 | Current Period: | Yearly  |
+      | Unpaid Balance: | $385.00      | Collect On:     | N/A     |
+      | Renewal Date:   | after 1 year | Renewal Period: | Monthly |
+      | Next Charge:    | after 1 year |                 |         |
     And I delete partner account
 
   @TC.15383 @bus @change_period

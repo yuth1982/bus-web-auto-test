@@ -73,6 +73,7 @@ When /^I order data shuttle for (.+)$/ do |company_name, order_table|
   @order.num_win_drivers = cell['win drivers']
   @order.num_mac_drivers = cell['mac drivers']
   @order.ship_driver = cell['ship driver']
+  @order.drive_type = cell['drive type']
   @bus_site.admin_console_page.process_order_section.create_order(@order)
  end
 
