@@ -71,7 +71,7 @@ end
 When /^The users table should be empty$/ do
   rows = @bus_site.admin_console_page.search_list_users_section.search_results_table_rows
   #rows.to_s.include?('No results found.').should be_true
-  (rows[0][0]=="").should be_true
+  (rows.empty? || (rows[0][0]=="")).should be_true
 end
 
 When /^I view user details by (.+)$/ do |user|

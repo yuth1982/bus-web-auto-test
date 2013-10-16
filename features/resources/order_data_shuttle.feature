@@ -229,8 +229,8 @@ Feature:
     And activate the user's Desktop device without a key and with the default password
     Then I stop masquerading
     And I order data shuttle for newly created partner company name
-      | power adapter   | key from  | quota |
-      | Data Shuttle US | available | 5000  |
+      | power adapter   | key from  | quota | drive type     |
+      | Data Shuttle US | available | 5000  | 2.5" 1TB Drive |
     Then order data shuttle message should be:
     """
     The resources added in this Data Shuttle order exceed those available for machine 'AUTOTEST'. Please visit the Edit Machine page to add more resources.
@@ -256,8 +256,8 @@ Feature:
     And activate the user's Desktop device without a key and with the default password
     Then I stop masquerading
     When I order data shuttle for newly created partner company name
-      | power adapter   | key from  | discount |
-      | Data Shuttle US | available | 110      |
+      | power adapter   | key from  | discount | drive type     |
+      | Data Shuttle US | available | 110      | 3.5" 2TB Drive |
     Then order data shuttle message should be:
     """
     Discount >100% are not allowed. Please correct the value in the red box
@@ -307,8 +307,8 @@ Feature:
     And activate the user's Desktop device without a key and with the default password
     Then I stop masquerading
     When I order data shuttle for newly created partner company name
-      | power adapter   | key from  | quota | discount |
-      | Data Shuttle US | available | 10    | 50       |
+      | power adapter   | key from  | quota | discount | drive type     |
+      | Data Shuttle US | available | 10    | 50       | 3.5" 2TB Drive |
     Then Data shuttle order summary should be:
       | Description         | Quantity | Total    |
       | Data Shuttle 1.8 TB | 1        | $275.00  |
@@ -335,8 +335,8 @@ Feature:
     And activate the user's Desktop device without a key and with the default password
     Then I stop masquerading
     When I order data shuttle for newly created partner company name
-      | power adapter   | key from  | quota | discount |
-      | Data Shuttle US | available | 10    | 100      |
+      | power adapter   | key from  | quota | discount | drive type     |
+      | Data Shuttle US | available | 10    | 100      | 3.5" 2TB Drive |
     Then Data shuttle order summary should be:
       | Description         | Quantity | Total   |
       | Data Shuttle 1.8 TB | 1        | $275.00 |
@@ -389,8 +389,8 @@ Feature:
     And activate the user's Desktop device without a key and with the default password
     Then I stop masquerading
     When I order data shuttle for newly created partner company name
-      | power adapter   | key from  | quota |
-      | Data Shuttle US | available | 2000  |
+      | power adapter   | key from  | quota | drive type     |
+      | Data Shuttle US | available | 2000  | 3.5" 2TB Drive |
     And Data shuttle order summary should be:
       | Description         | Quantity | Total   |
       | Data Shuttle 3.6 TB | 1        | $375.00 |
@@ -447,8 +447,8 @@ Feature:
     And activate the user's Desktop device without a key and with the default password
     Then I stop masquerading
     When I order data shuttle for newly created partner company name
-      | power adapter   | key from  | quota | win drivers |
-      | Data Shuttle US | available | 1000  | 2           |
+      | power adapter   | key from  | quota | win drivers | drive type     |
+      | Data Shuttle US | available | 1000  | 2           | 3.5" 2TB Drive |
     And The number of win drivers should be 2
     Then Data shuttle order should be created
     And I search and delete partner account by newly created partner company name
@@ -472,8 +472,8 @@ Feature:
     And activate the user's Desktop device without a key and with the default password
     Then I stop masquerading
     When I order data shuttle for newly created partner company name
-      | power adapter   | key from  | quota | win drivers | mac drivers |
-      | Data Shuttle US | available | 500   | 0           | 2           |
+      | power adapter   | key from  | quota | win drivers | mac drivers | drive type     |
+      | Data Shuttle US | available | 500   | 0           | 2           | 3.5" 2TB Drive |
     And The number of mac drivers should be 2
     Then Data shuttle order should be created
     And I search and delete partner account by newly created partner company name
@@ -497,8 +497,8 @@ Feature:
     And activate the user's Desktop device without a key and with the default password
     Then I stop masquerading
     When I order data shuttle for newly created partner company name
-      | power adapter   | key from  | quota |
-      | Data Shuttle US | available | 20    |
+      | power adapter   | key from  | quota | drive type     |
+      | Data Shuttle US | available | 20    | 3.5" 2TB Drive |
     Then Data shuttle order should be created
     When I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
@@ -533,8 +533,8 @@ Feature:
     And activate the user's Desktop device without a key and with the default password
     Then I stop masquerading
     When I order data shuttle for newly created partner company name
-      | power adapter | key from | quota |
-      | Data Shuttle US | available | 20 |
+      | power adapter   | key from  | quota | drive type     |
+      | Data Shuttle US | available | 20    | 3.5" 2TB Drive |
     Then Data shuttle order should be created
     Then I get the data shuttle seed id
     When I navigate to Search / List Partners section from bus admin console page
@@ -577,8 +577,8 @@ Feature:
       | <%=@seed_id%> | <%=@seed_id%> | Load Complete |
     Then I stop masquerading
     When I order data shuttle for newly created partner company name
-      | power adapter | key from | quota |
-      | Data Shuttle US | available | 20 |
+      | power adapter   | key from  | quota | drive type     |
+      | Data Shuttle US | available | 20    | 3.5" 2TB Drive |
     Then Data shuttle order should be created
     Then I get the data shuttle seed id
     When I navigate to Search / List Partners section from bus admin console page
