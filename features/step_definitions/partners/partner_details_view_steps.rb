@@ -110,6 +110,13 @@ Then /^Itemized partner resources should be:$/ do |resources_table|
 end
 
 Then /^Partner pooled storage information should be:$/ do |resources_table|
+  resources_table.raw[1..-1].each do |row|
+    row[1..3].each do |v|
+      unless v.match(/\d+ .B/)
+        v.replace(number_to_human_size(v.match(/\d+/)[0].to_i))
+      end
+    end
+  end
   @bus_site.admin_console_page.partner_details_section.pooled_resource_table_rows.should == resources_table.raw
 end
 

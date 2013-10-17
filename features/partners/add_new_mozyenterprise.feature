@@ -35,7 +35,7 @@ Feature: Add a new partner
       | Default Stash Storage: |          |
     And Partner pooled storage information should be:
       |         | Used | Available | Assigned | Used | Available | Assigned |
-      | Desktop | 0    | 2500      | 2500     | 0    | 100       | 100      |
+      | Desktop | 0    | 2.4 TB      | 2.4 TB | 0    | 100       | 100      |
     And Partner internal billing should be:
       | Account Type:   | Credit Card           | Current Period: | Yearly             |
       | Unpaid Balance: | $0.00                 | Collect On:     | N/A                |
