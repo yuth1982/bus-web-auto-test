@@ -111,7 +111,8 @@ end
 
 Then /^Partner pooled storage information should be:$/ do |resources_table|
   resources_table.raw[1..-1].each do |row|
-    row[1..3].each do |v|
+    range = row.first.match(/(Desktop|Server)/) ? 1..3 : 0..2
+    row[range].each do |v|
       unless v.match(/\d+ .B/)
         v.replace(number_to_human_size(v.match(/\d+/)[0].to_i))
       end
