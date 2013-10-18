@@ -200,6 +200,13 @@ module Bus
       output
     end
 
+    def expand_contact_info
+      wait_until_bus_section_load
+      expand(account_details_icon)
+      wait_until_ajax_finished(partner_details_div)
+      wait_until { !(contact_info_dls.first.dt_dd_elements_text.first.first == '') }
+    end
+
     # Public: Partner Account attributes hash
     #
     # Example:

@@ -118,6 +118,7 @@ end
 Then /^I can edit partner details fields:$/ do |table|
   # table is a | Phone  |pending
   # table is a | External ID |pending
+  @bus_site.admin_console_page.partner_details_section.expand_contact_info
   data = table.raw[1..-1]
   data.each do | d |
     case d[0]
