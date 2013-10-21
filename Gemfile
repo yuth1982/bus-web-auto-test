@@ -10,7 +10,7 @@ gem 'nokogiri','~>1.5.5'
 gem 'forgery','~>0.5.0'                 # Create Random Values
 gem 'chronic', '~>0.8.0'                # Date Time Parser
 gem 'rest-client','~>1.6.7'             # Email API
-gem 'pg', '~>0.14.1'                    # PostgreSQL
+gem 'pg', '~>0.17.0'                    # PostgreSQL
 gem 'net-ldap', '~>0.3.1'
 gem 'activesupport', '~>3.2.8'
 gem 'tzinfo', '~>0.3.35'

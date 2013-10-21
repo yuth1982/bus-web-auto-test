@@ -51,14 +51,15 @@ module Bus
     def change_mozypro_plan(base_plan, server_plan, storage_add_on, coupon)
       # Find current server plan id e.g. 'products_addon_10353251, Server Plan, $12.99'
       server_plan_locator = '//label[starts-with(.,"Server Plan")]'
-      current_server_plan_id = find(:xpath, server_plan_locator)[:for]
+      current_server_plan_id = find(:xpath, server_plan_locator)[:for]  unless server_plan.nil?
       unless base_plan.nil?
         pro_base_plan_select.select(base_plan)
         wait_until{
           # Wait for ajax call back
           # Find target server plan id e.g. 'products_addon_10353259, Server Plan, $19.99'
-          target_server_plan_id = find(:xpath, server_plan_locator)[:for]
-          target_server_plan_id != current_server_plan_id
+          target_server_plan_id = find(:xpath, server_plan_locator)[:for] unless server_plan.nil?
+          target_server_plan_id != current_server_plan_id  unless server_plan.nil?
+
         }
       end
 

@@ -14,6 +14,10 @@ When /^I add new user\(s\):$/ do |user_table|
     hash_to_object(hash, user)
     @new_users << user
     @users << user
+
+    #Please leave debug statement for end to end
+    Log.debug("user email: #{@new_users.last.email}")
+
   end
   @bus_site.admin_console_page.add_new_user_section.add_new_users(@new_users)
 end
