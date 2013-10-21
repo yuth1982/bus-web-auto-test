@@ -507,12 +507,13 @@ Feature: User stash setting management
       | email                        |
       | test3010_3030_3040@auto.com  |
     When I navigate to Search / List Users section from bus admin console page
+    And I sort user search results by User
     Then User search results should be:
       | User                   | Name           | User Group           | Stash    |
-      | backup@test.com        | backup         | backup               | Disabled |
-      | stash@test.com         | stash          | stash                | Enabled  |
       | backup19045@test.com   | backup19045    | (default user group) | Disabled |
+      | backup@test.com        | backup         | backup               | Disabled |
       | stash19045@test.com    | stash19045     | (default user group) | Enabled  |
+      | stash@test.com         | stash          | stash                | Enabled  |
 
   @TC.18996 @BSA.3030 @bus @2.5 @user_stories @stash
   Scenario: 18996 [Search/List Users View][P]"Storage" and "Storage Used" column includes backup and stash
@@ -520,12 +521,13 @@ Feature: User stash setting management
       | email                       |
       | test3010_3030_3040@auto.com |
     When I navigate to Search / List Users section from bus admin console page
+    And I sort user search results by User
     Then User search results should be:
       | User                   | Name           | User Group           | Stash    | Machines | Storage | Storage Used |
-      | backup@test.com        | backup         | backup               | Disabled | 1        | 1 GB    | 10 MB        |
-      | stash@test.com         | stash          | stash                | Enabled  | 0        | 2 GB    | 20 MB        |
       | backup19045@test.com   | backup19045    | (default user group) | Disabled | 1        | 1 GB    | 10 MB        |
+      | backup@test.com        | backup         | backup               | Disabled | 1        | 1 GB    | 10 MB        |
       | stash19045@test.com    | stash19045     | (default user group) | Enabled  | 0        | 2 GB    | 20 MB        |
+      | stash@test.com         | stash          | stash                | Enabled  | 0        | 2 GB    | 20 MB        |
 
   @TC.19114 @TC.19115 @BSA.3040 @bus @2.5 @user_stories @US @enterprise @partner
   Scenario: 19114 19115 Enterprise Partner View User storage usage

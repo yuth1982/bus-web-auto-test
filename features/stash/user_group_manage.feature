@@ -466,8 +466,8 @@ Feature: User group stash setting management
     When I view (default user group) * user group details
     Then User group users list details should be:
       | User                 | Name        | Stash    |
-      | backup19045@test.com | backup19045 | Disabled |
       | stash19045@test.com  | stash19045  | Enabled  |
+      | backup19045@test.com | backup19045 | Disabled |
     And I close the user group detail page
     When I view stash user group details
     Then User group users list details should be:
@@ -493,8 +493,8 @@ Feature: User group stash setting management
     When I view (default user group) * user group details
     Then User group users list details should be:
       | User                 | Name        | Stash    | Machines | Storage | Storage Used |
-      | backup19045@test.com | backup19045 | Disabled | 1        | 1 GB    | 10 MB        |
       | stash19045@test.com  | stash19045  | Enabled  | 0        | 2 GB    | 20 MB        |
+      | backup19045@test.com | backup19045 | Disabled | 1        | 1 GB    | 10 MB        |
     And I close the user group detail page
     When I view stash user group details
     Then User group users list details should be:
