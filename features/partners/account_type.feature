@@ -29,11 +29,11 @@ Feature: Account Type
   @TC.20923 @BUG.98477 @v.2.4.3
   Scenario: Mozy-20923:Create a New Internal Test Partner
     When I add a new Reseller partner:
-      | period | reseller type | reseller quota | company name                   | account type  | sales channel |
-      | 1      | Silver        | 10             | Reseller Internal Test Partner | Internal Test | Inside Sales  |
+      | period | reseller type | reseller quota | company name                   | account type  |
+      | 1      | Silver        | 10             | Reseller Internal Test Partner | Internal Test |
     Then New partner should be created
     When I search partner by Reseller Internal Test Partner
-    And I view partner details by Reseller Internal Test Partner
+    And I view partner details by Internal Test - Reseller Internal Test Partner
     Then partner account details should be:
       | Account Type           | Sales Origin |
       | Internal Test (change) | Sales        |

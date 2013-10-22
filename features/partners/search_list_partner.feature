@@ -113,8 +113,8 @@ Feature: Search and list partner
     Then New partner should be created
     And I delete partner account
     When I search partner by:
-      | name          | filter  |
-      | @company_name | Deleted |
+      | name          | filter         |
+      | @company_name | Pending Delete |
     Then Partner search results should be:
       | Partner       |
       | @company_name |

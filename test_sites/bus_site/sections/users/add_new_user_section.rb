@@ -24,6 +24,9 @@ module Bus
     element(:send_emails_cb, id: 'send_email_to_users')
     element(:submit_btn, id: 'new_users_in_batch_submit_btn')
 
+    element(:desktop_devices_tb, id: 'Desktop_device')
+    element(:server_devices_tb, id: 'Server_device')
+
     # Public: Add new users
     #
     # @users     [Object] users
@@ -112,6 +115,14 @@ module Bus
       user_group_select_invisible.select('(default user group)') if user_group_select_invisible.visible?
       storage_type_select.select('Desktop')
       find(:id, 'user_enable_stash').visible?
+    end
+
+    def desktop_device
+      desktop_devices_tb.text
+    end
+
+    def server_device
+      server_devices_tb.text
     end
   end
 end

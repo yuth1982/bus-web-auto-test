@@ -86,14 +86,14 @@ When /^I note the desktop and server amounts in Add New User module for user gro
   @bus_site.admin_console_page.add_new_user_section.select_user_group(user_group)
   @bus_site.admin_console_page.add_new_user_section.wait_until_bus_section_load
    if @user_group.nil?
-     @user_group = Bus::DataObj::UserGroup.new
+     @user_group = Bus::DataObj::ItemizedUserGroup.new
      @user_group.name = user_group
-     @user_group.desktop_device = @bus_site.admin_console_page.add_new_user_section.desktop_device.to_i
-     @user_group.server_device = @bus_site.admin_console_page.add_new_user_section.server_device.to_i
+     @user_group.desktop_devices = @bus_site.admin_console_page.add_new_user_section.desktop_device.to_i
+     @user_group.server_devices = @bus_site.admin_console_page.add_new_user_section.server_device.to_i
    else
      # "Available:" device and storage calculations happen after frame load
-     @user_group.desktop_device.should == @bus_site.admin_console_page.add_new_user_section.desktop_device.to_i 
-     @user_group.server_device.should == @bus_site.admin_console_page.add_new_user_section.server_device.to_i 
+     @user_group.desktop_devices.should == @bus_site.admin_console_page.add_new_user_section.desktop_device.to_i
+     @user_group.server_devices.should == @bus_site.admin_console_page.add_new_user_section.server_device.to_i
    end
 end
 

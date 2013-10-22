@@ -155,7 +155,7 @@ module Bus
       wait_until_bus_section_load
       wait_until { !(general_info_dls.first.dt_dd_elements_text.first.first == '') }
       # v.2.4.3 account type details
-      account_detail = general_info_dls[2].dt_dd_elements_text.first.include?('Enable Stash') ? general_info_dls[3] : general_info_dls[2]
+      account_detail = general_info_dls[2].text.include?('Enable Stash') ? general_info_dls[3] : general_info_dls[2]
       output = account_detail.nil? ? [] : account_detail.dt_dd_elements_text
       Hash[*output.flatten]
     end

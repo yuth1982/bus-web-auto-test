@@ -691,6 +691,7 @@ Feature: User Has Unique Username
       | email                 |
       | @existing_user_email |
     And edit user email success message to existing user email should be displayed
+    And I delete user
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 

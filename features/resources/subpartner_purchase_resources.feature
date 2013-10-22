@@ -168,10 +168,26 @@ Feature: Sub partners can purchase resources
 
   @TC.19868 @need_test_account @bus @subpartner_purchase_resources
   Scenario: 19868 Existing Reseller itemized partner without subpartners can purchase resources
-    When I act as partner by:
-      | email                          |
-      #    | qa1+tc+19868+reserved@mozy.com |
-      | redacted-197770@notarealdomain.mozy.com |
+    When I log in to legacy bus01 as administrator
+    And I successfully add an itemized Reseller partner:
+      | period | server licenses | server quota | desktop licenses | desktop quota |
+      | 12     | 10              | 250          | 10               | 250           |
+    And I log in bus admin console as administrator
+    And I search partner by:
+      | name          | filter |
+      | @company_name | None   |
+    And I view partner details by newly created partner company name
+    And I get the partner_id
+    And I migrate the partner to aria
+    And I log in bus admin console as administrator
+    And I search partner by:
+      | name          | filter |
+      | @company_name | None   |
+    And Partner search results should be:
+      | Partner       | Type              |
+      | @company_name | Reseller Itemized |
+    And I view partner details by newly created partner company name
+    And I act as newly created partner
     When I navigate to Change Plan section from bus admin console page
     And I increase Itemized account plan by:
       | desktop license | desktop quota | server license | server quota |
@@ -184,9 +200,26 @@ Feature: Sub partners can purchase resources
   # need to find another account, this one will meet billing system error
   @TC.19872 @need_test_account @bus @subpartner_purchase_resources
   Scenario: 19872 Existing MozyPro itemized partner without subpartners can purchase resources
-    When I act as partner by:
-      | email                          |
-      | qa1+tc+19872+reserved@mozy.com |
+    When I log in to legacy bus01 as administrator
+    And I successfully add an itemized MozyPro partner:
+      | period | server licenses | server quota | desktop licenses | desktop quota |
+      | 12     | 5               | 50           | 5                | 50            |
+    And I log in bus admin console as administrator
+    And I search partner by:
+      | name          | filter |
+      | @company_name | None   |
+    And I view partner details by newly created partner company name
+    And I get the partner_id
+    And I migrate the partner to aria
+    And I log in bus admin console as administrator
+    And I search partner by:
+      | name          | filter |
+      | @company_name | None   |
+    And Partner search results should be:
+      | Partner       | Type             |
+      | @company_name | MozyPro Itemized |
+    And I view partner details by newly created partner company name
+    And I act as newly created partner
     When I navigate to Change Plan section from bus admin console page
     And I increase Itemized account plan by:
       | desktop license | desktop quota | server license | server quota |
