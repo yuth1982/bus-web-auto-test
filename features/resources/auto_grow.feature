@@ -264,8 +264,8 @@ Feature: Auto Grow
       | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner pooled storage information should be:
-      | Used  | Available | Assigned | Used | Available | Assigned  |
-      | 24.56 | -4.56     | 20       | 3    | Unlimited | Unlimited |
+      | Used    | Available | Assigned | Used | Available | Assigned  |
+      | 24.6 GB | 0         | 20 GB    | 3    | Unlimited | Unlimited |
     And the overdraft script should report:
     """
     Partner <%=@current_partner[:id]%> is using autogrow and is overdrafted on its Generic license by 5 GB
