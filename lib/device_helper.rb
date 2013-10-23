@@ -55,6 +55,8 @@ module Activation
       @codename = case company_type
                     when 'MozyEnterprise'
                       "MozyEnterprise"
+                    when 'MozyEnterprise DPS'
+                      "MozyEnterprise"
                     when 'MozyPro'
                       "mozypro"
                     when 'MozyHome'
@@ -229,6 +231,8 @@ module KeylessDeviceActivation
     def get_codename(company_type)
       @codename = case company_type
                     when 'MozyEnterprise'
+                      "MozyEnterprise"
+                    when 'MozyEnterprise DPS'
                       "MozyEnterprise"
                     when 'MozyPro'
                       "mozypro"

@@ -19,6 +19,7 @@ bus:
   company_type:
     mozypro:                    MozyPro
     mozyenterprise:             MozyEnterprise
+    mozyenterprise_dps:         MozyEnterprise DPS
     reseller:                   Reseller
     itemized_pro:               MozyPro Itemized
     itemized_reseller:          Reseller Itemized

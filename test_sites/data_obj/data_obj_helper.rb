@@ -2,6 +2,7 @@ $:.unshift(File.dirname(__FILE__))
 require 'bus/partner/partner_account'
 require 'bus/partner/mozypro'
 require 'bus/partner/mozyenterprise'
+require 'bus/partner/mozyenterprise_dps'
 require 'bus/partner/reseller'
 require 'bus/partner/credit_card'
 require 'bus/partner/itemized_partner'

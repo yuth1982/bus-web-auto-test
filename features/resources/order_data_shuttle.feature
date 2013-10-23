@@ -594,3 +594,91 @@ Feature:
       | <%=@seed_id%> | <%=@seed_id%> | Seeding |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
+
+  @TC.119234 @bus @data_shuttle
+  Scenario: 119234 order a data shuttle for DPS partner when drive type is 2TB
+    When I add a new MozyEnterprise DPS partner:
+      | period | base plan | sales channel |
+      | 12     | 2         | Velocity      |
+    Then Sub-total before taxes or discounts should be $0.00
+    And Order summary table should be:
+      | Description   | Quantity | Price Each | Total Price |
+      |               | 2        | $0.00      | $0.00       |
+      | Total Charges |          |            | $0.00       |
+    Then New partner should be created
+    When I get the partner_id
+    And I act as newly created partner account
+    And I add new user(s):
+      | user_group           | storage_type | storage_limit | devices |
+      | (default user group) | Desktop      | 20            | 1       |
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    Then I stop masquerading
+    When I order data shuttle for newly created partner company name
+      | power adapter   | key from  | quota | drive type     |
+      | Data Shuttle US | available | 20    | 3.5" 2TB Drive |
+    And Data shuttle order summary should be:
+      | Description         | Quantity | Total   |
+      | Data Shuttle 1.8 TB | 1        | $275.00 |
+      | Total Price         |          | $275.00 |
+    Then The number of win drivers should be 1
+    Then Data shuttle order should be created
+    When I navigate to Search / List Partners section from bus admin console page
+    And I view partner details by newly created partner company name
+    And I act as newly created partner account
+    And I navigate to Billing History section from bus admin console page
+    Then Billing history table should be:
+      | Date  | Amount  | Total Paid | Balance Due |
+      | today | $275.00 | $275.00    | $0.00       |
+      | today | $0.00   | $0.00      | $0.00       |
+      | today | $0.00   | $0.00      | $0.00       |
+    Then I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.119235 @bus @data_shuttle
+  Scenario: 119235 order a data shuttle for DPS partner when driver type is 1TB
+    When I add a new MozyEnterprise DPS partner:
+      | period | base plan | sales channel |
+      | 12     | 10        | Velocity      |
+    Then Sub-total before taxes or discounts should be $0.00
+    And Order summary table should be:
+      | Description   | Quantity | Price Each | Total Price |
+      |               | 10       | $0.00      | $0.00       |
+      | Total Charges |          |            | $0.00       |
+    Then New partner should be created
+    When I get the partner_id
+    And I act as newly created partner account
+    And I add new user(s):
+      | user_group           | storage_type | storage_limit | devices |
+      | (default user group) | Desktop      | 8000          | 1       |
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    Then I stop masquerading
+    When I order data shuttle for newly created partner company name
+      | power adapter   | key from  | quota | drive type     |
+      | Data Shuttle US | available | 2000  | 2.5" 1TB Drive |
+    And Data shuttle order summary should be:
+      | Description         | Quantity | Total   |
+      | Data Shuttle 3.6 TB | 1        | $375.00 |
+      | Total Price         |          | $375.00 |
+    Then The number of win drivers should be 3
+    Then Data shuttle order should be created
+    When I navigate to Search / List Partners section from bus admin console page
+    And I view partner details by newly created partner company name
+    And I act as newly created partner account
+    And I navigate to Billing History section from bus admin console page
+    Then Billing history table should be:
+      | Date  | Amount  | Total Paid | Balance Due |
+      | today | $375.00 | $375.00    | $0.00       |
+      | today | $0.00   | $0.00      | $0.00       |
+      | today | $0.00   | $0.00      | $0.00       |
+    Then I stop masquerading
+    And I search and delete partner account by newly created partner company name

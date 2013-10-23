@@ -22,7 +22,7 @@
 #   fill in credit card information
 #   click create
 
-When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partner_table|
+When /^I add a new (MozyPro|MozyEnterprise|Reseller|MozyEnterprise DPS) partner:$/ do |type, partner_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_partner'])
   attributes = partner_table.hashes.first
   case type
@@ -42,6 +42,12 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller) partner:$/ do |type, partne
       @partner.num_enterprise_users = attributes["users"] || 0
       @partner.server_plan = attributes["server plan"] || "None"
       @partner.num_server_add_on = attributes["server add on"] || 0
+      @partner.admin_info.root_role = attributes["root role"] || CONFIGS['bus']['root_role']['mozyenterprise']
+    when CONFIGS['bus']['company_type']['mozyenterprise_dps']
+      @partner = Bus::DataObj::MozyEnterpriseDPS.new
+      @partner.partner_info.type = type
+      @partner.has_initial_purchase = false if attributes['base plan'].nil?
+      @partner.base_plan = attributes["base plan"] || 0
       @partner.admin_info.root_role = attributes["root role"] || CONFIGS['bus']['root_role']['mozyenterprise']
     when CONFIGS['bus']['company_type']['reseller']
       @partner = Bus::DataObj::Reseller.new

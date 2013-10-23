@@ -175,7 +175,7 @@ module Bus
       wait_until_plans_loaded(partner_info.type)
 
       # MozyEnterprise is for US only
-      parent_partner_select.select(partner_info.parent) unless partner_info.type.eql?(CONFIGS['bus']['company_type']['mozyenterprise'])
+      parent_partner_select.select(partner_info.parent) unless [CONFIGS['bus']['company_type']['mozyenterprise'], CONFIGS['bus']['company_type']['mozyenterprise_dps']].include? partner_info.type
       wait_until_plans_loaded(partner_info.type)
 
       coupon_code_tb.type_text(partner_info.coupon_code) unless partner_info.coupon_code.nil?
@@ -208,6 +208,9 @@ module Bus
         when CONFIGS['bus']['company_type']['mozyenterprise']
           raise('MozyEnterprise parent partner error') unless create_under_txt.text.eql?('(Creating under MozyEnterprise)')
           fill_mozyenterprise_purchase(partner)
+        when CONFIGS['bus']['company_type']['mozyenterprise_dps']
+          raise('MozyEnterprise DPS parent partner error') unless create_under_txt.text.eql?('(Creating under MozyEnterprise)')
+          fill_mozyenterprise_dps_purchase(partner)
         when CONFIGS['bus']['company_type']['reseller']
           fill_reseller_purchase(partner)
       else
@@ -257,6 +260,12 @@ module Bus
       storage_add_on_input = find_with_highlight(:id, "#{base_plan_id}_add_on_plan_#{server_add_on_id}")
       storage_add_on_input.clear_value
       storage_add_on_input.type_text(partner.num_server_add_on)
+    end
+
+    def fill_mozyenterprise_dps_purchase(partner)
+      base_plan_input = find(:css, "input[id^='#{partner.subscription_period}_base_plan'][type=text]")
+      base_plan_input.clear_value
+      base_plan_input.type_text(partner.base_plan)
     end
 
     def fill_reseller_purchase(partner)
@@ -334,6 +343,8 @@ module Bus
         when CONFIGS['bus']['company_type']['mozypro']
           role = CONFIGS['bus']['root_role']['mozypro']
         when CONFIGS['bus']['company_type']['mozyenterprise']
+          role = CONFIGS['bus']['root_role']['mozyenterprise']
+        when CONFIGS['bus']['company_type']['mozyenterprise_dps']
           role = CONFIGS['bus']['root_role']['mozyenterprise']
         when CONFIGS['bus']['company_type']['reseller']
           role = CONFIGS['bus']['root_role']['reseller']
