@@ -49,7 +49,7 @@ namespace :testlink do
   def get_cases_from_testplan(testplan_id)
     # Get cases from testlink
     cases = CLIENT.run_api("getTestCasesForTestPlan", {:testplanid => testplan_id})
-    cases.values.map{|c| c["external_id"]}
+    cases.values.flatten.map{|c| c["external_id"]}
   end
 
   def get_cases_from_config
