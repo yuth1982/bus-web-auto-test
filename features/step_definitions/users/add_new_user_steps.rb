@@ -134,3 +134,40 @@ When /^I view latest created user details$/ do
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_users'])
   @bus_site.admin_console_page.search_list_users_section.view_user_details((@new_users.last.email).slice(0,27))
 end
+
+And /^I add a new user and activate a machine for him$/ do |table|
+#  step %{And I add new user(s):}, table(%{
+#    | name          | user_group           | storage_type | storage_limit | devices |
+#    | TC.16266.User | (default user group) | Desktop      | 50            | 3       |
+#  })
+  header = table.headers[0..-2].join('|')
+  row = table.rows.first[0..-2].join('|')
+  step %{I add new user\(s\):}, table(%{
+    |#{header}|
+    |#{row}|
+  })
+  step %{1 new user should be created}
+  step %{I search user by:}, table(%{
+    | keywords   |
+    | @user_name |
+  })
+  step %{I view user details by newly created user email}
+  step %{I update the user password to default password}
+  machine_type = table.hashes.first['storage_type']
+  machine_name = table.hashes.first['machine_name']
+  step %{I use keyless activation to activate devices}, table(%{
+    | user_email  | machine_name    | machine_type    | partner_name  |
+    | @user_email | #{machine_name} | #{machine_type} | @partner_name |
+  })
+  step %{I close the user detail page}
+end
+
+And /^I add some new users and activate one machine for each$/ do |table|
+  header = table.headers.join('|')
+  table.rows.each do |row|
+    step %{I add a new user and activate a machine for him}, table(%{
+      |#{header}|
+      |#{row.join('|')}|
+    })
+  end
+end

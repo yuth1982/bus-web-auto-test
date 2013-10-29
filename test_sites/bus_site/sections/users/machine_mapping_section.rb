@@ -96,11 +96,8 @@ module Bus
     #
     # Returns 0 if succeed
     def result_msg
-      Log.debug('begin waiting')
-      page.wait_until { p page.find(:id, 'msg_show').visible? }
-      Log.debug('msg_show visible')
+      page.wait_until { page.find(:id, 'msg_show').visible? }
       wait_until(CONFIGS['global']['max_wait_time']) do
-        Log.debug("#{Time.now}")
         !import_msg.visible?
       end
       switch_to_iframe(['msg_show'])
@@ -110,18 +107,15 @@ module Bus
       (1..3).each do |index|
         msg << page.find(:xpath, "/html/body/dl/dd[#{index}]").text
       end
-      Log.debug('1..3')
       error_num = "/html/body/dl/dd[4]"
       error_value = "/html/body/dl/dd[5]/ul/li"
       # quite slow here
       if page.has_xpath?(error_num)
         msg << page.find(:xpath, error_num).text
       end
-      Log.debug('4')
       if page.has_xpath?(error_value)
         msg << page.find(:xpath, error_value).text
       end
-      Log.debug('5')
       msg
     end
 
@@ -291,7 +285,7 @@ module Bus
       order = current_owner.sort == current_owner
       machine_user.delete_at(0)
       unique = machine_user.uniq == machine_user
-      [header, mapping_num, order, unique]
+      [header, mapping_num, order, unique, r]
     end
 
     def change_10000_machines(old_csv, new_csv)

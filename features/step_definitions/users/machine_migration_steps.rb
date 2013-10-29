@@ -4,6 +4,7 @@ When /^I navigate to the machine mapping page$/ do
 end
 
 When /^I download the machine csv file$/ do
+  FileHelper.delete_csv('machine_mapping')
   @bus_site.admin_console_page.machine_mapping_section.export_machine_csv
 end
 
@@ -18,11 +19,17 @@ Then /^The exported csv file should be:$/ do |table|
 end
 
 Then /^The exported csv file should be like:\(header as below, row number is (\d+), order by current owner, no duplicated rows\)$/ do |num, table|
-  header, mapping_num, order, unique = @bus_site.admin_console_page.machine_mapping_section.parse_download_csv
+  header, mapping_num, order, unique, all = @bus_site.admin_console_page.machine_mapping_section.parse_download_csv
   header.should == table.rows[0]
   mapping_num.should == num.to_i
   order.should be_true
   unique.should be_true
+  all = all[1..-1].sort! {|x, y| x[0] <=> y[0]}.insert(0, all[0])
+  table.rows[1..-1].each_with_index do |r, index|
+    all[index+1][0].should == r[0]
+    r[2].replace ERB.new(r[2]).result(binding)
+    all[index+1][2].should == r[2]
+  end
 end
 
 #import machine related

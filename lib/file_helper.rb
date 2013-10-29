@@ -80,6 +80,11 @@ module FileHelper
     Dir.glob("#{default_download_path}/*.csv").each{ |path| File.delete(path) }
   end
 
+  def delete_csv(name)
+    file = File.join(default_download_path, "#{name}.csv")
+    File.delete(file) if File.file?(file)
+  end
+
   # Public: rename file
   #
   # Example
