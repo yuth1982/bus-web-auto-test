@@ -8,6 +8,7 @@ module Bus
     element(:search_partner_btn, css: 'div#partner-list-content input[value=Submit]')
     element(:partner_filter_select, id: 'pro_partner_filter')
     element(:include_sub_partners_cb, id: 'include_subpartners')
+    element(:full_search_cb, id: 'full_search')
     element(:clear_search_link, xpath: "//a[text()='Clear search']")
     element(:search_results_table, css: 'div#partner-list-content table.table-view')
 
@@ -21,17 +22,23 @@ module Bus
     #  @bus_admin_console_page.search_list_partner_section.search_partner("qa1+test@mozy.com")
     #
     # Returns nothing
-    def search_partner(search_key, filter = 'None', include_sub_partners = true)
+    def search_partner(search_key, filter = 'None', include_sub_partners = true, full_search =true)
       # By default, include sub partners is checked
       if include_sub_partners
         include_sub_partners_cb.check
       else
         include_sub_partners_cb.uncheck
       end
+      if full_search
+        full_search_cb.check
+      else
+        full_search_cb.uncheck
+      end
       wait_until_bus_section_load # Wait to load sub partners
       search_partner_tb.type_text(search_key)
       partner_filter_select.select(filter)
       search_partner_btn.click
+      alert_accept
       wait_until_bus_section_load
     end
 
