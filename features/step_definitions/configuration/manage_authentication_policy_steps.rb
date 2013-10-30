@@ -247,7 +247,7 @@ Then /^The sync status result should like:$/ do |table|
   actual[1].should == expected[1]
   # verify Next Sync
   unless expected_next_sync.nil?
-    if expected_next_sync == 'Not Scheduled(SET)'
+    if expected_next_sync == 'Not Scheduled(Set)'
       @bus_site.admin_console_page.authentication_policy_section.sync_result[2].should == expected_next_sync
     else
       expected_next_sync = @next_sync_time if expected_next_sync == '@next_sync_time'

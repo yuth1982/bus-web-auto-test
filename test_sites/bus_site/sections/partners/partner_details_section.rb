@@ -4,6 +4,15 @@ module Bus
 
     # Private elements
     #
+    # element(:settings_link, css: 'ul.actions>li:nth-child(2)>a')
+    element(:settings_link, xpath: "//a[text()='Settings']")
+    element(:new_setting_btn, {css: 'span[id^=new_setting]>input'}, true)
+    element(:setting_key_select, id: 'pro_partner_setting_key')
+    element(:setting_value_input, id: 'pro_partner_setting_value')
+    element(:setting_locked_checkbox, id: 'pro_partner_setting_is_locked')
+    element(:setting_save_btn, css: 'input[name=create_setting]')
+    element(:setting_cancel_link, css: 'input[name=create_setting]+a')
+    element(:close_settings_link, css: 'a[id^=close_settings]')
     element(:msg_div, css: 'ul.flash.successes')
     element(:billing_info_link, xpath: "//a[text()='Billing Info']")
     element(:act_as_link, xpath: "//a[text()='act as']")
@@ -624,6 +633,62 @@ module Bus
       h3_section.text.eql?(partner.company_info.name).present?
       expand(account_details_icon)
       pooled_resources_table.visible?
+    end
+
+    def close_settings
+      close_settings_link.click
+    end
+
+    def add_settings(settings) 
+      settings_link.click
+      settings.each do |setting|
+        unless has_setting?(setting)
+          if has_setting_name?(setting['Name'])
+            edit_setting(setting)
+          else
+            add_setting(setting)
+          end
+        end
+      end
+    end
+
+    def edit_setting(setting)
+      row_el = find(:xpath, "//td[text()='#{setting['Name']}']/..")
+#      row_el.find(:xpath, '/td[5]').hover
+      #execute_script("$('#element').trigger('mouseenter')")
+      # this only work for selenium webdriver now
+      page.driver.browser.action.move_to(row_el.native).perform
+      row_el.find(:css, 'span.settings_editor>a').click
+      row_el.find(:id, 'pro_partner_setting_value').type_text(setting['Value'])
+      locked_el = row_el.find(:id, 'pro_partner_setting_is_locked')
+      case setting['Locked']
+      when 'true'
+        locked_el.check unless locked_el.checked?
+      when 'false'
+        locked_el.uncheck if locked_el.checked?
+      else
+        raise 'you can only input true or false for the Locked value'
+      end
+     row_el.find(:css, 'input[name=update_setting]').click 
+    end
+
+    def add_setting(setting)
+      new_setting_btn.click
+      setting_key_select.select(setting['Name'])
+      setting_value_input.set(setting['Value'])
+      setting_locked_checkbox.check if setting['Locked'] == 'true'
+      setting_save_btn.click
+    end
+
+    def has_setting?(setting)
+      wait_until { find(:css, 'table[id^=pro_partner_settings_table]').visible? }
+      all(:xpath, "//td[text()=\'#{setting['Name']}\']").size >= 1 &&
+        find(:xpath, "//td[text()=\'#{setting['Name']}\']/../td[2]").text == setting['Value'] &&
+        find(:xpath, "//td[text()=\'#{setting['Name']}\']/../td[3]").text == setting['Locked']
+    end
+
+    def has_setting_name?(setting_name)
+      all(:xpath, "//td[text()=\'#{setting_name}\']").size >= 1
     end
 
     private

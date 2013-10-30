@@ -56,6 +56,10 @@ module Bus
       else
         raise "Unable to find provider of #{provider}"
       end
+      wait_until_bus_section_load
+      save_changes
+      confirm_change_auth
+      wait_until_bus_section_load
     end
 
     def provider_mozy_checked?
@@ -207,6 +211,14 @@ module Bus
     #
     def save_changes
       save_changes_button.click
+    end
+
+    def confirm_change_auth
+      if find(:css, 'div#change-provider-confirm-box').visible?
+        find(:css, 'div#change-provider-confirm-box>div>input[value=Submit]').click
+        find(:css, 'div#change-provider-password-confirm>input#password').set(QA_ENV['bus_password'])
+        find(:css, 'div#change-provider-password-confirm>input.button').click
+      end
     end
 
     # Public: The message show after saving changes

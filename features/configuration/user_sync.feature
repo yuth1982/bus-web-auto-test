@@ -38,13 +38,26 @@ Feature: User sync
       | Sync Result |                    |
       | Next Sync   | Not Scheduled(SET) |
 
-  @TC.17519 @ui @bus @2.1 @direct_ldap_integration @use_provision
+  @TC.17519 @ui @bus @2.1 @direct_ldap_integration @use_provision @firefox_debug
   Scenario: 17519 Sync Now
-    When I act as partner by:
-      | email                         |
-      | user_sync_automation@auto.com |
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | net terms |
+      | 12     | 8     | 100 GB      | yes       |
+    Then New partner should be created
+    When I add partner settings
+      | Name                    | Value | Locked |
+      | allow_ad_authentication | t     | true   |
+    And I change root role to FedID role
+    And I act as newly created partner account
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
+    And I input server connection settings
+      | Server Host   | Protocol | SSL Cert | Port | Base DN                    | Bind Username          | Bind Password |
+      | 10.135.16.154 | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com | leongh@qa5.mozyops.com | QAP@SSw0rd    |
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I Test Connection for AD
+    Then test connection message should be Test passed
     And I click Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
@@ -53,9 +66,9 @@ Feature: User sync
     And I wait for 70 seconds
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                |
-      | Next Sync   | Not Scheduled(SET)                                            |
+      | Next Sync   | Not Scheduled(Set)                                            |
 
   @TC.17529 @ui @bus @2.1 @direct_ldap_integration @use_provision
   Scenario: 17529 Check the Attribute mapping UI

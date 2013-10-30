@@ -5,6 +5,13 @@ When /^I act as newly created partner|sub partner account$/ do
   @partner_id = @bus_site.admin_console_page.current_partner_id
 end
 
+When /^I add partner settings$/ do |table|
+  #    | Name                    | Value | Locked |
+  #    | allow_ad_authentication | t     | yes    |
+  @bus_site.admin_console_page.partner_details_section.add_settings(table.hashes)
+  @bus_site.admin_console_page.partner_details_section.close_settings
+end
+
 When /^I search and delete partner account by (.+)/ do |account_name|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_partner'])
   @bus_site.admin_console_page.search_list_partner_section.search_partner(account_name)
