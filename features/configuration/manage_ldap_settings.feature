@@ -6,14 +6,20 @@ Feature: Manage Horizon related settings
 
   Background:
     Given I log in bus admin console as administrator
-    When I act as partner by:
-      | email                       |
-      | congshanl+usersync@mozy.com |
-    And I navigate to Authentication Policy section from bus admin console page
 
-  @TC.17476 @TC.17477 @bus @2.1 @direct_ldap_integration @authentication_migration
-  Scenario: 17476 17477 Successfully verify 'Test Connection' button should work with valid host
-    When I use Directory Service as authentication provider
+  @TC.17476 @TC.17477 @TC.17825 @TC.17478 @TC.17479 @TC.17480 @TC.17482 @TC.17484 @TC.17487 @bus @2.1 @direct_ldap_integration @authentication_migration
+  Scenario: 17476 17477 17825 17478 17479 17480 17482 17484 17487 Successfully verify 'Test Connection' button should work with valid host
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | net terms |
+      | 12     | 8     | 100 GB      | yes       |
+    Then New partner should be created
+    When I add partner settings
+      | Name                    | Value | Locked |
+      | allow_ad_authentication | t     | true   |
+    And I change root role to FedID role
+    And I act as newly created partner account
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
     And I de-select Horizon Manager
     And I click Connection Settings tab
     And I input server connection settings
@@ -27,9 +33,7 @@ Feature: Manage Horizon related settings
     Then server connection settings information should include
       | Server Host          | Protocol | SSL Cert | Port | Base DN                   | Bind Username         | Bind Password |
       | 10.135.16.154        | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com|  QAP@SSw0rd   |
-
-  @TC.17825 @bus @2.1 @direct_ldap_integration @authentication_migration
-  Scenario: 17825 'Test Connection' should report invalid credentials error
+    # Scenario: 17825 'Test Connection' should report invalid credentials error
     When I use Directory Service as authentication provider
     And I de-select Horizon Manager
     And I click Connection Settings tab
@@ -40,9 +44,7 @@ Feature: Manage Horizon related settings
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
     Then AD server test connection message should be Test failed. Error: Could not connect to the AD server. Reason: BIND failed. Please verify you entered the correct BIND settings.
-
-  @TC.17478 @bus @2.1 @direct_ldap_integration @authentication_migration
-  Scenario: 17478 Successfully verify 'Test Connection' button should work with valid domain name input
+    # Scenario: 17478 Successfully verify 'Test Connection' button should work with valid domain name input
     When I use Directory Service as authentication provider
     And I de-select Horizon Manager
     And I click Connection Settings tab
@@ -57,10 +59,7 @@ Feature: Manage Horizon related settings
     Then server connection settings information should include
       | Server Host          | Protocol | SSL Cert | Port | Base DN                   | Bind Username         | Bind Password |
       | ad01.qa5.mozyops.com | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com|  QAP@SSw0rd   |
-
-
-  @TC.17479 @bus @2.1 @direct_ldap_integration @authentication_migration
-  Scenario: 17479 Host input should reject invalid parameters
+    # Scenario: 17479 Host input should reject invalid parameters
     When I use Directory Service as authentication provider
     And I de-select Horizon Manager
     And I click Connection Settings tab
@@ -71,9 +70,7 @@ Feature: Manage Horizon related settings
     Then The save error message should be:
       | Save failed  |
       | Invalid data.|
-
-  @TC.17480 @bus @2.1 @direct_ldap_integration @authentication_migration
-  Scenario: 17480 Port input should reject invalid parameters
+    # Scenario: 17480 Port input should reject invalid parameters
     When I use Directory Service as authentication provider
     And I de-select Horizon Manager
     And I click Connection Settings tab
@@ -84,9 +81,7 @@ Feature: Manage Horizon related settings
     Then The save error message should be:
       | Save failed  |
       | Invalid data.|
-
-  @TC.17482 @bus @2.1 @direct_ldap_integration @authentication_migration
-  Scenario: 17482 Base Tree should reject invalid empty inputs
+    # Scenario: 17482 Base Tree should reject invalid empty inputs
     When I use Directory Service as authentication provider
     And I de-select Horizon Manager
     And I click Connection Settings tab
@@ -97,9 +92,7 @@ Feature: Manage Horizon related settings
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
     Then AD server test connection message should be Test failed. Error: AD base DN is not provided.
-
-  @TC.17484 @bus @2.1 @direct_ldap_integration @authentication_migration
-  Scenario: 17484 Certificate should only be enabled with SSL enabled
+    # Scenario: 17484 Certificate should only be enabled with SSL enabled
     When I use Directory Service as authentication provider
     And I de-select Horizon Manager
     And I click Connection Settings tab
@@ -107,9 +100,7 @@ Feature: Manage Horizon related settings
     Then certificate text field is disabled
     And I select Protocol as StartTLS
     Then certificate text field is enabled
-
-  @TC.17486 @TC.17487 @bus @2.1 @direct_ldap_integration @authentication_migration
-  Scenario: 17486 17487 Authentication tab should be able to save inputs correctly
+    # Scenario: 17486 17487 Authentication tab should be able to save inputs correctly
     When I use Directory Service as authentication provider
     And I de-select Horizon Manager
     And I click SAML Authentication tab
@@ -121,3 +112,5 @@ Feature: Manage Horizon related settings
     Then SAML authentication information should include
       | URL                        | Endpoint                    | Certificate      |
       |sso.connect.pingidentity.com|sso.connect.pingidentity.com | abcdefghijkl     |
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name

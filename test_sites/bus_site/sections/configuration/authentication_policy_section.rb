@@ -214,7 +214,7 @@ module Bus
     end
 
     def confirm_change_auth
-      if find(:css, 'div#change-provider-confirm-box').visible?
+      if all(:css, 'div#change-provider-confirm-box').size >=1 && find(:css, 'div#change-provider-confirm-box').visible?
         find(:css, 'div#change-provider-confirm-box>div>input[value=Submit]').click
         find(:css, 'div#change-provider-password-confirm>input#password').set(QA_ENV['bus_password'])
         find(:css, 'div#change-provider-password-confirm>input.button').click
@@ -292,6 +292,13 @@ module Bus
     def delete_rule(type)
       find(:xpath, "//ol[@id='#{type}-rules']//li[1]/a[3]").click
       Log.debug("delete a rule")
+    end
+
+    def delete_all_rules
+      wait_until { find(:css, 'a.delete').visible? }
+      all(:css, 'a.delete').each do |e|
+        e.click
+      end
     end
 
     # Public: The selected option of a dropdownlist

@@ -25,24 +25,11 @@ Feature: User sync
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.17518 @ui @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: 17518 Check the UI when the partner has never synced
-    When I act as partner by:
-      | email                           |
-      | user_sync_never_synced@auto.com |
-    And I navigate to Authentication Policy section from bus admin console page
-    And I use Directory Service as authentication provider
-    And I click Connection Settings tab
-    Then The sync status result should be:
-      | Sync Status | Never Run          |
-      | Sync Result |                    |
-      | Next Sync   | Not Scheduled(SET) |
-
-  @TC.17519 @ui @bus @2.1 @direct_ldap_integration @use_provision @firefox_debug
+  @TC.17519 @ui @bus @2.1 @direct_ldap_integration @use_provision
   Scenario: 17519 Sync Now
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
-      | 12     | 8     | 100 GB      | yes       |
+      | 12     | 18    | 100 GB      | yes       |
     Then New partner should be created
     When I add partner settings
       | Name                    | Value | Locked |
@@ -69,43 +56,63 @@ Feature: User sync
       | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                |
       | Next Sync   | Not Scheduled(Set)                                            |
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name
 
-  @TC.17529 @ui @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: 17529 Check the Attribute mapping UI
-    When I act as partner by:
-      | email                         |
-      | user_sync_automation@auto.com |
+  @TC.17518 @TC.17529 @TC.17530 @TC.17531 @TC.17532 @TC.17534 @TC.17535 @TC.17536 @ui @bus @2.1 @direct_ldap_integration @use_provision
+  Scenario: 17518 17529 17530 17531 17532 17534 17535 17536 Check the UI when the partner has never synced(all the UI check)
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | net terms |
+      | 12     | 18    | 100 GB      | yes       |
+    Then New partner should be created
+    When I add partner settings
+      | Name                    | Value | Locked |
+      | allow_ad_authentication | t     | true   |
+    And I change root role to FedID role
+    And I act as newly created partner account
+    And I add a new Itemized user group:
+      | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
+      | dev  | Shared               | 5               | Shared              | 10             |
+    Then dev user group should be created
+    And I add a new Itemized user group:
+      | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
+      | pm   | Shared               | 5               | Shared              | 10             |
+    Then pm user group should be created
+    And I add a new Itemized user group:
+      | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
+      | qa   | Shared               | 5               | Shared              | 10             |
+    Then qa user group should be created
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
-    And I click Attribute Mapping tab
+    And I input server connection settings
+      | Server Host   | Protocol | SSL Cert | Port | Base DN                    | Bind Username          | Bind Password |
+      | 10.135.16.154 | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com | leongh@qa5.mozyops.com | QAP@SSw0rd    |
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I Test Connection for AD
+    Then test connection message should be Test passed
+    When I click Connection Settings tab
+    Then The sync status result should be:
+      | Sync Status | Never Run          |
+      | Sync Result |                    |
+      | Next Sync   | Not Scheduled(Set) |
+    # Scenario: 17529 Check the Attribute mapping UI
+    When I click Attribute Mapping tab
     Then The layout of attribute should:
       | Mozy              | Username:      | Name:      |Fixed Attribute |
       | Directory Service | mail           |  cn        |                |
     When I save the changes
     Then Authentication Policy has been updated successfully
-
-  @TC.17530 @ui @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: 17530 Local groups dropdown list check
-    When I act as partner by:
-      | email                         |
-      | user_sync_automation@auto.com |
-    And I navigate to Authentication Policy section from bus admin console page
-    And I use Directory Service as authentication provider
-    And I click Sync Rules tab
+    # Scenario: 17530 Local groups dropdown list check
+    When I click Sync Rules tab
     And I add 1 new provision rules:
       | rule         | group|
       | cn=dev_test* |      |
     Then There should be 4 provision items:
       | (default user group) | dev | pm | qa |
-
-  @TC.17531 @ui @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: 17531 User provision - Rules ordering interaction
-    When I act as partner by:
-      | email                         |
-      | user_sync_automation@auto.com |
-    And I navigate to Authentication Policy section from bus admin console page
-    And I use Directory Service as authentication provider
-    And I click Sync Rules tab
+    And I delete all the rules
+    # Scenario: 17531 User provision - Rules ordering interaction
+    When I click Sync Rules tab
     And I add 3 new provision rules:
       | rule         | group|
       | cn=dev_test* | dev  |
@@ -126,18 +133,10 @@ Feature: User sync
       | cn=dev_test* | dev  |
     When I save the changes
     Then Authentication Policy has been updated successfully
-
     And I delete 3 provision rules
     And I save the changes
-
-  @TC.17532 @ui @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: 17532 User provision - Delete rules
-    When I act as partner by:
-      | email                         |
-      | user_sync_automation@auto.com |
-    And I navigate to Authentication Policy section from bus admin console page
-    And I use Directory Service as authentication provider
-    And I click Sync Rules tab
+    # Scenario: 17532 User provision - Delete rules
+    When I click Sync Rules tab
     And I add 3 new provision rules:
       | rule         | group|
       | cn=dev_test* | dev  |
@@ -151,30 +150,17 @@ Feature: User sync
     And I save the changes
     Then The provision rule number is 0
     And Authentication Policy has been updated successfully
-
-  @TC.17534 @ui @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: 17534 UserDestruction - UI Components check
-    When I act as partner by:
-      | email                         |
-      | user_sync_automation@auto.com |
-    And I navigate to Authentication Policy section from bus admin console page
-    And I use Directory Service as authentication provider
-    And I click Sync Rules tab
+    # Scenario: 17534 UserDestruction - UI Components check
+    When I click Sync Rules tab
     And I add 1 new deprovision rules:
       | rule         | action |
       | cn=dev_test* |        |
     Then There should be 3 deprovision items:
       | Take no action | Suspend | Delete |
     And The selected deprovision option is Take no action
-
-  @TC.17535 @ui @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: 17535 UserDestruction - Rules ordering interaction
-    When I act as partner by:
-      | email                         |
-      | user_sync_automation@auto.com |
-    And I navigate to Authentication Policy section from bus admin console page
-    And I use Directory Service as authentication provider
-    And I click Sync Rules tab
+    And I delete all the rules
+    # Scenario: 17535 UserDestruction - Rules ordering interaction
+    When I click Sync Rules tab
     And I add 3 new deprovision rules:
       | rule         | action  |
       | cn=dev_test* | Delete  |
@@ -195,18 +181,10 @@ Feature: User sync
       | cn=dev_test* | Delete  |
     When I save the changes
     Then Authentication Policy has been updated successfully
-
     And I delete 3 deprovision rules
     And I save the changes
-
-  @TC.17536 @ui @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: 17536 UserDestruction - Rules deletion
-    When I act as partner by:
-      | email                         |
-      | user_sync_automation@auto.com |
-    And I navigate to Authentication Policy section from bus admin console page
-    And I use Directory Service as authentication provider
-    And I click Sync Rules tab
+    # Scenario: 17536 UserDestruction - Rules deletion
+    When I click Sync Rules tab
     And I add 3 new deprovision rules:
       | rule         | action |
       | cn=dev_test* | Delete |
@@ -220,19 +198,36 @@ Feature: User sync
     And I save the changes
     Then The deprovision rule number is 0
     And Authentication Policy has been updated successfully
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name
 
   @TC.17538 @TC.17551  @smoke @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction
   Scenario: 17538 17551 One Rule/Match All/Multiple Users
-    When I act as partner by:
-      | email                         |
-      | user_sync_automation@auto.com |
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | net terms |
+      | 12     | 18    | 100 GB      | yes       |
+    Then New partner should be created
+    When I add partner settings
+      | Name                    | Value | Locked |
+      | allow_ad_authentication | t     | true   |
+    And I change root role to FedID role
+    And I act as newly created partner account
+    And I add a new Itemized user group:
+      | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
+      | dev  | Shared               | 5               | Shared              | 10             |
+    Then dev user group should be created
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
+    And I input server connection settings
+      | Server Host   | Protocol | SSL Cert | Port | Base DN                    | Bind Username          | Bind Password |
+      | 10.135.16.154 | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com | leongh@qa5.mozyops.com | QAP@SSw0rd    |
     And I save the changes
     Then Authentication Policy has been updated successfully
-    When I click Sync Rules tab
+    When I Test Connection for AD
+    Then test connection message should be Test passed
+    And I click Sync Rules tab
     And I add 1 new provision rules:
-      | rule         | group |
+      | rule               | group |
       | cn=dev-17538-test* | dev   |
     And I click the sync now button
     And I wait for 80 seconds
@@ -240,41 +235,67 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 3 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
+    And I sort user search results by User desc
     Then User search results should be:
-      | User               |      Name     | User Group  |
-      | dev-17538-test3@test.com |   dev-17538-test3   | dev         |
-      | dev-17538-test2@test.com |   dev-17538-test2   | dev         |
-      | dev-17538-test1@test.com |   dev-17538-test1   | dev         |
+      | User                     | Name            | User Group |
+      | dev-17538-test3@test.com | dev-17538-test3 | dev        |
+      | dev-17538-test2@test.com | dev-17538-test2 | dev        |
+      | dev-17538-test1@test.com | dev-17538-test1 | dev        |
     When I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
     And I add 1 new deprovision rules:
-      | rule         | action  |
-      | cn=dev-17538-test* | Delete  |
+      | rule               | action |
+      | cn=dev-17538-test* | Delete |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 1 deprovision rules
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 3 succeeded, 0 failed |
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name
 
-  @TC.17540 @TC.17552 @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction
-  Scenario: 17540 17552 One Rule/Multiple Rules
-    When I act as partner by:
-      | email                         |
-      | user_sync_automation@auto.com |
+  @TC.17540 @TC.17552 @TC.17542 @TC.17554 @TC.17543 @TC.17557 @TC.17554 @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction
+  Scenario: 17540 17552 17542 17554 17543 17557 17554 One Rule/Multiple Rules
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | net terms |
+      | 12     | 18    | 100 GB      | yes       |
+    Then New partner should be created
+    When I add partner settings
+      | Name                    | Value | Locked |
+      | allow_ad_authentication | t     | true   |
+    And I change root role to FedID role
+    And I act as newly created partner account
+    And I add a new Itemized user group:
+      | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
+      | dev  | Shared               | 5               | Shared              | 10             |
+    Then dev user group should be created
+    And I add a new Itemized user group:
+      | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
+      | pm   | Shared               | 5               | Shared              | 10             |
+    Then pm user group should be created
+    And I add a new Itemized user group:
+      | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
+      | qa   | Shared               | 5               | Shared              | 10             |
+    Then qa user group should be created
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
+    And I input server connection settings
+      | Server Host   | Protocol | SSL Cert | Port | Base DN                    | Bind Username          | Bind Password |
+      | 10.135.16.154 | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com | leongh@qa5.mozyops.com | QAP@SSw0rd    |
     And I save the changes
     Then Authentication Policy has been updated successfully
-    When I click Sync Rules tab
+    When I Test Connection for AD
+    Then test connection message should be Test passed
+    And I click Sync Rules tab
     And I add 1 new provision rules:
       | rule                                                                  | group |
       | (&(objectClass=user)(\|(\|(cn=dev-17540-test*)(cn=pm-17540-test*))(cn=qa-17540-test*))) | dev   |
@@ -284,20 +305,21 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 9 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
+    And I sort user search results by User desc
     Then User search results should be:
-      | User               |      Name     | User Group  |
-      | qa-17540-test3@test.com  |   qa-17540-test3    | dev         |
-      | qa-17540-test2@test.com  |   qa-17540-test2    | dev         |
-      | qa-17540-test1@test.com  |   qa-17540-test1    | dev         |
-      | pm-17540-test3@test.com  |   pm-17540-test3    | dev         |
-      | pm-17540-test2@test.com  |   pm-17540-test2    | dev         |
-      | pm-17540-test1@test.com  |   pm-17540-test1    | dev         |
-      | dev-17540-test3@test.com |   dev-17540-test3   | dev         |
-      | dev-17540-test2@test.com |   dev-17540-test2   | dev         |
-      | dev-17540-test1@test.com |   dev-17540-test1   | dev         |
+      | User                     | Name            | User Group |
+      | qa-17540-test3@test.com  | qa-17540-test3  | dev        |
+      | qa-17540-test2@test.com  | qa-17540-test2  | dev        |
+      | qa-17540-test1@test.com  | qa-17540-test1  | dev        |
+      | pm-17540-test3@test.com  | pm-17540-test3  | dev        |
+      | pm-17540-test2@test.com  | pm-17540-test2  | dev        |
+      | pm-17540-test1@test.com  | pm-17540-test1  | dev        |
+      | dev-17540-test3@test.com | dev-17540-test3 | dev        |
+      | dev-17540-test2@test.com | dev-17540-test2 | dev        |
+      | dev-17540-test1@test.com | dev-17540-test1 | dev        |
     When I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -310,21 +332,13 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 9 succeeded, 0 failed |
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
-
-  @TC.17542 @TC.17554 @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction
-  Scenario: 17542 17554 Multiple Ruls/Multiple Users
-    When I act as partner by:
-      | email                         |
-      | user_sync_automation@auto.com |
-    And I navigate to Authentication Policy section from bus admin console page
-    And I use Directory Service as authentication provider
-    And I save the changes
-    Then Authentication Policy has been updated successfully
-    When I click Sync Rules tab
+    # Scenario: 17542 17554 Multiple Ruls/Multiple Users
+    When I navigate to Authentication Policy section from bus admin console page
+    And I click Sync Rules tab
     And I add 3 new provision rules:
       | rule         | group |
       | cn=dev-17542-test* | dev   |
@@ -336,9 +350,10 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 9 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
+    And I sort user search results by User desc
     Then User search results should be:
       | User               |      Name     | User Group  |
       | qa-17542-test3@test.com  |   qa-17542-test3    | qa          |
@@ -364,36 +379,29 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 9 succeeded, 0 failed |
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
-
-  @TC.17543 @TC.17557 @TC.17558 @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction
-  Scenario: 17543 17557 17558 Multiple Ruls/Multiple Users/Rule order matters
-    When I act as partner by:
-      | email                         |
-      | user_sync_automation@auto.com |
-    And I navigate to Authentication Policy section from bus admin console page
-    And I use Directory Service as authentication provider
-    And I save the changes
-    Then Authentication Policy has been updated successfully
-    When I click Sync Rules tab
+    # Scenario: 17543 17557 17558 Multiple Ruls/Multiple Users/Rule order matters
+    When I navigate to Authentication Policy section from bus admin console page
+    And I click Sync Rules tab
     And I add 4 new provision rules:
-      | rule                                                | group |
-      | cn=dev-17543-test*                                        | dev   |
-      | cn=pm-17543-test*                                         | dev   |
-      | cn=pm-17543-test*                                         | pm    |
-      | cn=qa-17543-test*                                         | qa    |
+      | rule               | group |
+      | cn=dev-17543-test* | dev   |
+      | cn=pm-17543-test*  | dev   |
+      | cn=pm-17543-test*  | pm    |
+      | cn=qa-17543-test*  | qa    |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 4 provision rules
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 9 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
+    And I sort user search results by User desc
     Then User search results should be:
       | User               |      Name     | User Group  |
       | qa-17543-test3@test.com  |   qa-17543-test3    | qa          |
@@ -418,9 +426,10 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 3 succeeded, 0 failed |
     When I navigate to Search / List Users section from bus admin console page
+    And I sort user search results by User desc
     Then User search results should be:
       | User               |      Name     | User Group  |
       | qa-17543-test3@test.com  |   qa-17543-test3    | qa          |
@@ -446,20 +455,12 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 9 succeeded, 0 failed |
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
-
-  @TC.17544 @function @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: 17544 UserProvision - Multiple Ruls/Multiple Users/Change Rules
-    When I act as partner by:
-      | email                         |
-      | user_sync_automation@auto.com |
-    And I navigate to Authentication Policy section from bus admin console page
-    And I use Directory Service as authentication provider
-    And I save the changes
-    Then Authentication Policy has been updated successfully
+    # Scenario: 17544 UserProvision - Multiple Ruls/Multiple Users/Change Rules
+    When I navigate to Authentication Policy section from bus admin console page
     When I click Sync Rules tab
     And I add 3 new provision rules:
       | rule         | group |
@@ -472,9 +473,10 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 9 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
+    And I sort user search results by User desc
     Then User search results should be:
       | User               |      Name     | User Group |
       | qa-17544-test3@test.com  |   qa-17544-test3    | qa         |
@@ -500,9 +502,10 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 9 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
+    And I sort user search results by User desc
     Then User search results should be:
       | User               |      Name     | User Group  |
       | qa-17544-test3@test.com  |   qa-17544-test3    | (default user group)        |
@@ -528,34 +531,44 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 9 succeeded, 0 failed |
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name
 
-  @TC.17559 @function @bus @2.1 @direct_ldap_integration @user_deconstruction
-  Scenario: 17559 Empty rules will be filtered
-    When I act as partner by:
-      | email                         |
-      | user_sync_automation@auto.com |
+  @TC.17559 @TC.17560 @function @bus @2.1 @direct_ldap_integration @user_deconstruction
+  Scenario: 17559 17560 Empty rules will be filtered
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | net terms |
+      | 12     | 18    | 100 GB      | yes       |
+    Then New partner should be created
+    When I add partner settings
+      | Name                    | Value | Locked |
+      | allow_ad_authentication | t     | true   |
+    And I change root role to FedID role
+    And I act as newly created partner account
+    And I add a new Itemized user group:
+      | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
+      | dev  | Shared               | 5               | Shared              | 10             |
+    Then dev user group should be created
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
+    And I input server connection settings
+      | Server Host   | Protocol | SSL Cert | Port | Base DN                    | Bind Username          | Bind Password |
+      | 10.135.16.154 | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com | leongh@qa5.mozyops.com | QAP@SSw0rd    |
     And I save the changes
     Then Authentication Policy has been updated successfully
+    When I Test Connection for AD
+    Then test connection message should be Test passed
     When I click Sync Rules tab
     And I add 1 new deprovision rules:
       | rule         | action |
       |              |        |
     And I save the changes
     Then Authentication Policy has been updated successfully
-
-  @TC.17560 @function @bus @2.1 @direct_ldap_integration @user_deconstruction
-  Scenario: 17560 Unknown query string
-    When I act as partner by:
-      | email                         |
-      | user_sync_automation@auto.com |
-    And I navigate to Authentication Policy section from bus admin console page
-    And I use Directory Service as authentication provider
+    # Scenario: 17560 Unknown query string
     And I click Sync Rules tab
     And I add 1 new deprovision rules:
       | rule         | action |
@@ -564,6 +577,8 @@ Feature: User sync
     Then The save error message should be:
       | Save failed                          |
       | abcd is not a valid value for query. |
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name
 
 #  Invalid. Now the you must delete users first before deleting the user group
 #  @TC.18738 @function   @bus @2.1 @direct_ldap_integration @use_provision
@@ -621,7 +636,7 @@ Feature: User sync
 #    When I navigate to Search / List Users section from bus admin console page
 #    Then The users table should be empty
 
-  @TC.17592 @firefox_profile @vpn  @bus @2.1 @direct_ldap_integration @use_provision
+  @TC.17592 @firefox_profile @vpn  @bus @2.1 @direct_ldap_integration @use_provision @qa5
   Scenario: 17592 UserProvision - Deleted users in BUS can be resumed
     When I act as partner by:
       | email        |
@@ -640,7 +655,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
@@ -670,7 +685,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 1 succeeded, 0 failed |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
@@ -696,7 +711,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
@@ -710,7 +725,7 @@ Feature: User sync
     When I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
     Then I will see the user account page
 
-  @TC.17593 @firefox_profile @vpn  @bus @2.1 @direct_ldap_integration @use_provision
+  @TC.17593 @firefox_profile @vpn  @bus @2.1 @direct_ldap_integration @use_provision @qa5
   Scenario: 17593 UserProvision - Suspended users in BUS can't be resumed
     When I act as partner by:
       | email                   |
@@ -729,7 +744,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
@@ -759,7 +774,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 1 succeeded, 0 failed |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
@@ -789,7 +804,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
@@ -810,7 +825,7 @@ Feature: User sync
     And I view user details by <%=CONFIGS['fedid']['user_email']%>
     And I activate the user
 
-  @TC.17594 @firefox_profile @vpn @bus @2.1 @direct_ldap_integration @use_provision
+  @TC.17594 @firefox_profile @vpn @bus @2.1 @direct_ldap_integration @use_provision @qa5
   Scenario: 17594 UserProvision - Delete user after several days of not synced
     When I act as partner by:
       | email       |
@@ -829,7 +844,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
@@ -858,7 +873,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
@@ -868,7 +883,7 @@ Feature: User sync
     When I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
     Then I will see the Authentication Failed page
 
-  @TC.17595 @firefox_profile @vpn @bus @2.1 @direct_ldap_integration @use_provision
+  @TC.17595 @firefox_profile @vpn @bus @2.1 @direct_ldap_integration @use_provision @qa5
   Scenario: 17595 UserProvision - Suspend user after several days of not synced
     When I act as partner by:
       | email       |
@@ -887,7 +902,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
@@ -916,7 +931,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
@@ -937,15 +952,40 @@ Feature: User sync
     And I view user details by <%=CONFIGS['fedid']['user_email']%>
     And I activate the user
 
-  @TC.17546 @TC.17548 @TC.17549 @vpn @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: 17546 17548 17549 UserProvision/Sync - Add(Delete, Modify) a new user in AD
-    When I act as partner by:
-      | email                         |
-      | user_sync_add_delete@auto.com |
+  @TC.17546 @TC.17548 @TC.17549 @TC.18723 @vpn @bus @2.1 @direct_ldap_integration @use_provision
+  Scenario: 17546 17548 17549 18723 UserProvision/Sync - Add(Delete, Modify) a new user in AD
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | net terms |
+      | 12     | 18     | 100 GB      | yes       |
+    Then New partner should be created
+    When I add partner settings
+      | Name                    | Value | Locked |
+      | allow_ad_authentication | t     | true   |
+    And I change root role to FedID role
+    And I act as newly created partner account
+    And I add a new Itemized user group:
+      | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
+      | dev  | Shared               | 5               | Shared              | 10             |
+    Then dev user group should be created
+    And I add a new Itemized user group:
+      | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
+      | pm   | Shared               | 5               | Shared              | 10             |
+    Then pm user group should be created
+    And I add a new Itemized user group:
+      | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
+      | qa   | Shared               | 5               | Shared              | 10             |
+    Then qa user group should be created
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
+    And I input server connection settings
+      | Server Host   | Protocol | SSL Cert | Port | Base DN                    | Bind Username          | Bind Password |
+      | 10.135.16.154 | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com | leongh@qa5.mozyops.com | QAP@SSw0rd    |
     And I save the changes
     Then Authentication Policy has been updated successfully
+    And I delete a user fediduser2 in the AD
+    And I delete a user fediduser0 in the AD
+    When I Test Connection for AD
+    Then test connection message should be Test passed
     When I click Sync Rules tab
     And I add 1 new provision rules:
       | rule          | group |
@@ -956,7 +996,7 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
@@ -975,9 +1015,10 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 2 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
+    And I sort user search results by User desc
     Then User search results should be:
       | User                |      Name     | User Group  |
       | fediduser2@test.com |   fediduser2   | dev         |
@@ -996,9 +1037,10 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 2 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
+    And I sort user search results by User desc
     Then User search results should be:
       | User                |      Name      | User Group  |
       | fediduser2@test.com |   fediduser0   | dev         |
@@ -1017,9 +1059,10 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 2 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
+    And I sort user search results by User desc
     Then User search results should be:
       | User                |      Name      | User Group  |
       | fediduser2@test.com |   fediduser2   | dev         |
@@ -1037,20 +1080,14 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 2 succeeded, 0 failed |
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
 
     And I delete a user fediduser2 in the AD
-
-  @TC.18723 @vpn @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: 18723 UserProvision-Fixed Attribute
-    When I act as partner by:
-      | email                         |
-      | user_sync_add_delete@auto.com |
+    # Scenario: 18723 UserProvision-Fixed Attribute
     And I navigate to Authentication Policy section from bus admin console page
-    And I use Directory Service as authentication provider
     And I click Attribute Mapping tab
     And I set the fixed attribute to uid
     And I save the changes
@@ -1066,9 +1103,10 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 2 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
+    And I sort user search results by User desc
     Then User search results should be:
       | User                |      Name      | User Group  |
       | fediduser2@test.com |   fediduser2   | dev         |
@@ -1089,9 +1127,10 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 2 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
+    And I sort user search results by User
     Then User search results should be:
       | User                |      Name      | User Group  |
       | fediduser0@test.com |   fediduser2   | dev         |
@@ -1111,23 +1150,36 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 2 succeeded, 0 failed |
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
 
     And I delete a user fediduser2 in the AD
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name
 
 
-  @TC.17521 @TC.17522 @TC.17523 @scheduled_sync  @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: 17521 17522 17523 Scheduled Sync (UI, cancel)
-    When I act as partner by:
-      | email            |
-      | usrsync@test.com |
+  @TC.17521 @TC.17522 @TC.17523 @TC.17520 @scheduled_sync  @bus @2.1 @direct_ldap_integration @use_provision
+  Scenario: 17521 17522 17523 17520 Scheduled Sync (UI, cancel)
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | net terms |
+      | 12     | 18    | 100 GB      | yes       |
+    Then New partner should be created
+    When I add partner settings
+      | Name                    | Value | Locked |
+      | allow_ad_authentication | t     | true   |
+    And I change root role to FedID role
+    And I act as newly created partner account
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
+    And I input server connection settings
+      | Server Host   | Protocol | SSL Cert | Port | Base DN                    | Bind Username          | Bind Password |
+      | 10.135.16.154 | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com | leongh@qa5.mozyops.com | QAP@SSw0rd    |
     And I save the changes
     Then Authentication Policy has been updated successfully
+    When I Test Connection for AD
+    Then test connection message should be Test passed
     When I click Sync Rules tab
     And I choose to daily sync at 0 GMT
     And I click the sync now button
@@ -1136,7 +1188,7 @@ Feature: User sync
     When I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                      |
       | Next Sync   | 0                                                                   |
     And I click Sync Rules tab
@@ -1146,19 +1198,10 @@ Feature: User sync
     Then The daily sync time should be empty
     When I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                     |
-      | Next Sync   | Not Scheduled(SET)                                                 |
-
-  @TC.17520  @slow @scheduled_sync @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: 17520 Scheduled Sync
-    When I act as partner by:
-      | email            |
-      | usrsync@test.com |
-    And I navigate to Authentication Policy section from bus admin console page
-    And I use Directory Service as authentication provider
-    And I save the changes
-    Then Authentication Policy has been updated successfully
+      | Next Sync   | Not Scheduled(Set)                                                 |
+    # Scenario: 17520 Scheduled Sync
     When I click Sync Rules tab
     And I choose to sync daily at the nearest sharp time
     And I save the changes
@@ -1166,6 +1209,8 @@ Feature: User sync
     And I wait for 80 seconds
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(costed about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                |
       | Next Sync   | @next_sync_time                                               |
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name

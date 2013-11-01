@@ -47,7 +47,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       | TestMachine3 | @machine_hash | <%=@users[2].email%> |           |
 
   @TC.16270 @TC.16271 @bus @2.5 @machine_migration
-  Scenario: 16271 Export a CSV file in Synchronized way after adding/deleting one user-machine mapping
+  Scenario: 16270 16271 Export a CSV file in Synchronized way after adding/deleting one user-machine mapping
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | company name                   |
       | 12     | 8     | 100 GB      | yes       | Machine Migration Add & Delete |
@@ -138,7 +138,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       |Import Results:| 3 rows imported |3 machines moved to new users | 0 machines skipped (no new user specified) |
 
   @TC.16280 @TC.16281 @TC.16282 @TC.16283 @bus @2.5 @machine_migration
-  Scenario: 16280 16281 16282 Import a CSV file with a column absent
+  Scenario: 16280 16281 16282 16283 Import a CSV file with a column absent
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
       | 12     | 8     | 100 GB      | yes       |

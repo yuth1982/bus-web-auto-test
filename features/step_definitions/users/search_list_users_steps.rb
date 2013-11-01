@@ -23,8 +23,9 @@ When /^I search user by:$/ do |search_key_table|
   @bus_site.admin_console_page.search_list_users_section.wait_until_bus_section_load
 end
 
-When /^I sort user search results by (User|Name|User Group|Stash|Machines|Storage|Storage Used|Created|Backed Up)$/ do |column_name|
+When /^I sort user search results by (User|Name|User Group|Stash|Machines|Storage|Storage Used|Created|Backed Up)(| desc)$/ do |column_name, order|
   @bus_site.admin_console_page.search_list_users_section.sort_users_by(column_name)
+  @bus_site.admin_console_page.search_list_users_section.sort_users_by(column_name) if order == ' desc'
 end
 
 Then /^User search results should be:$/ do |results_table|

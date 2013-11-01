@@ -206,6 +206,10 @@ When /^I delete (\d+) (.+) rules$/ do |num, type|
   end
 end
 
+When /^I delete all the rules$/ do
+  @bus_site.admin_console_page.authentication_policy_section.delete_all_rules
+end
+
 Then /^The (.+) rule number is (\d+)$/ do |type, num|
   @bus_site.admin_console_page.authentication_policy_section.rule_num(type).should == num.to_i
 end
