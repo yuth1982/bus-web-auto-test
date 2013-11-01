@@ -28,12 +28,12 @@ Feature: Bus Smoke Test
       | Backup Device Soft Cap | Disabled  |
       | Server                 | Disabled  |
       | Cloud Storage (GB)     |           |
-      | Stash Users:           |           |
-      | Default Stash Storage: |           |
+      | Sync Users:            |           |
+      | Default Sync Storage:  |           |
     And Partner pooled storage information should be:
       |         | Used | Available | Assigned | Used | Available | Assigned |
-      | Desktop | 0    | 250       | 250      | 0    | 10        | 10       |
-      | Server  | 0    | 350       | 350      | 0    | 200       | 200      |
+      | Desktop | 0    | 250 GB    | 250 GB   | 0    | 10        | 10       |
+      | Server  | 0    | 350 GB    | 350 GB   | 0    | 200       | 200      |
     And Partner internal billing should be:
       | Account Type:   | Credit Card            | Current Period: | Biennial            |
       | Unpaid Balance: | $0.00                  | Collect On:     | N/A                 |
