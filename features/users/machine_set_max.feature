@@ -15,7 +15,7 @@ Feature: Set/Remove Max at Machine
     Given I log in bus admin console as administrator
 
   @TC.21071 @bus @2.5 @user_view @max_at_machine @itemized
-  Scenario: 21071 [Itemized]Desktop machine and Stash can Set/Edit/Remove max
+  Scenario: 21071 [Itemized]Desktop machine and Sync can Set/Edit/Remove max
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | company name             |
       | 12     | 8     | 100 GB      | yes       | Set Max for Machine      |
@@ -43,8 +43,8 @@ Feature: Set/Remove Max at Machine
       | Device          | Storage Type | Used/Available | Device Storage Limit | Last Update  | Action |
       | Machine1        | Desktop      | 0 / 50 GB      | Set                  | N/A          |        |
     And stash device table in user details should be:
-      | Stash Container | Storage Type | Used/Available | Device Storage Limit | Last Update  | Action |
-      | Stash           | Desktop      | 0 / 50 GB      | Set                  | N/A          |        |
+      | Sync Container | Storage Type | Used/Available | Device Storage Limit | Last Update  | Action |
+      | Sync           | Desktop      | 0 / 50 GB      | Set                  | N/A          |        |
     When I set machine max for Machine1
     And I input the machine max value for Machine1 to 10 GB
     And I cancel machine max for Machine1
@@ -130,15 +130,15 @@ Feature: Set/Remove Max at Machine
       | Min | Max |
       | 0   | 50  |
     When I update Machine1 used quota to 10 GB
-    And I update Stash used quota to 5 GB
-    And The range of machine max for Stash by tooltips should be:
+    And I update Sync used quota to 5 GB
+    And The range of machine max for Sync by tooltips should be:
       | Min | Max |
       | 0   | 50  |
     Then Available quota of Machine1 should be 0 GB
-    And Available quota of Stash should be 0 GB
+    And Available quota of Sync should be 0 GB
     When I refresh User Details section
     Then I change user stash quota to 6 GB
-    Then Available quota of Stash should be 1 GB
+    Then Available quota of Sync should be 1 GB
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -220,18 +220,18 @@ Feature: Set/Remove Max at Machine
     And The range of machine max for Machine1 by tooltips should be:
       | Min | Max |
       | 0   | 50  |
-    And The range of machine max for Stash by tooltips should be:
+    And The range of machine max for Sync by tooltips should be:
       | Min | Max |
       | 0   | 50  |
     When I update Machine1 used quota to 10 GB
     Then The range of machine max for Machine1 by tooltips should be:
       | Min | Max |
       | 0   | 50  |
-    And I update Stash used quota to 5 GB
-    Then The range of machine max for Stash by tooltips should be:
+    And I update Sync used quota to 5 GB
+    Then The range of machine max for Sync by tooltips should be:
       | Min | Max |
       | 0   | 50  |
     Then Available quota of Machine1 should be 0 GB
-    And Available quota of Stash should be 0 GB
+    And Available quota of Sync should be 0 GB
     And I stop masquerading
     And I search and delete partner account by newly created partner company name

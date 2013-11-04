@@ -40,7 +40,7 @@ Feature: Add a new user
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     Then User search results should be:
-      | Name        | User Group            | Stash    | Storage        |
+      | Name        | User Group            | Sync    | Storage        |
       | TC.20875-1  | (default user group)  | Enabled  | 10 GB (Limited)|
       | TC.20875-2  | (default user group)  | Disabled | Shared         |
       | TC.20875-3  | (default user group)  | Disabled | 10 GB (Limited)|
@@ -101,7 +101,7 @@ Feature: Add a new user
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     Then User search results should be:
-      | Name        | User Group     | Stash    | Storage        |
+      | Name        | User Group     | Sync    | Storage        |
       | TC.20910-1  | TC.20910 UG 1  | Enabled  | 10 GB (Limited)|
       | TC.20910-2  | TC.20910 UG 1  | Disabled | Shared         |
       | TC.20910-3  | TC.20910 UG 2  | Disabled | 10 GB (Limited)|
@@ -150,7 +150,7 @@ Feature: Add a new user
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     Then User search results should be:
-      | Name        | User Group            | Stash    | Storage                 |
+      | Name        | User Group            | Sync    | Storage                 |
       | TC.20871-1  | (default user group)  | Enabled  | Desktop: 10 GB (Limited) |
       | TC.20871-2  | (default user group)  | Disabled | Desktop: Shared         |
       | TC.20871-3  | (default user group)  | Disabled | Server: 10 GB (Limited)  |
@@ -211,7 +211,7 @@ Feature: Add a new user
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     Then User search results should be:
-      | Name        | User Group     | Stash    | Storage                 |
+      | Name        | User Group     | Sync    | Storage                 |
       | TC.20906-1  | TC.20906 UG 1  | Enabled  | Desktop: 10 GB (Limited) |
       | TC.20906-2  | TC.20906 UG 1  | Disabled | Desktop: Shared         |
       | TC.20906-3  | TC.20906 UG 2  | Disabled | Server: 10 GB (Limited)  |
@@ -260,7 +260,7 @@ Feature: Add a new user
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     Then User search results should be:
-      | Name        | Stash    | Storage        |
+      | Name        | Sync    | Storage        |
       | TC.20921-1  | Enabled  | 10 GB (Limited)|
       | TC.20921-2  | Disabled | Shared         |
       | TC.20921-3  | Disabled | 10 GB (Limited)|

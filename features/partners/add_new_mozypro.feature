@@ -21,7 +21,7 @@ Feature: Add a new partner
       | Total Charges     |          |            | $8.99       |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:                  | Parent: | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Status:         | Root Admin:          | Root Role:                  | Parent: | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
       | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
@@ -31,8 +31,8 @@ Feature: Add a new partner
       | Backup Device Soft Cap | Disabled |
       | Server                 | Disabled |
       | Cloud Storage (GB)     |          |
-      | Stash Users:           |          |
-      | Default Stash Storage: |          |
+      | Sync Users:           |          |
+      | Default Sync Storage: |          |
     And Partner pooled storage information should be:
       | Used | Available | Assigned | Used | Available | Assigned  |
       | 0    | 10        | 10       | 0    | Unlimited | Unlimited |
@@ -61,7 +61,7 @@ Feature: Add a new partner
       | Total Charges     |          |            | €158.30     |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:                  | Parent:                  | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Status:         | Root Admin:          | Root Role:                  | Parent:                  | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
       | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro France (MozyPro) | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 | VAT Number:   |
@@ -71,8 +71,8 @@ Feature: Add a new partner
       | Backup Device Soft Cap | Disabled |
       | Server                 | Disabled |
       | Cloud Storage (GB)     |          |
-      | Stash Users:           |          |
-      | Default Stash Storage: |          |
+      | Sync Users:           |          |
+      | Default Sync Storage: |          |
     And Partner pooled storage information should be:
       | Used | Available | Assigned | Used | Available | Assigned  |
       | 0    | 50        | 50       | 0    | Unlimited | Unlimited |
@@ -101,7 +101,7 @@ Feature: Add a new partner
       | Total Charges     |          |            | €585.71     |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:                  | Parent:                   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Status:         | Root Admin:          | Root Role:                  | Parent:                   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
       | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro Germany (MozyPro) | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 | VAT Number: |
@@ -111,8 +111,8 @@ Feature: Add a new partner
       | Backup Device Soft Cap | Disabled |
       | Server                 | Disabled |
       | Cloud Storage (GB)     |          |
-      | Stash Users:           |          |
-      | Default Stash Storage: |          |
+      | Sync Users:           |          |
+      | Default Sync Storage: |          |
     And Partner pooled storage information should be:
       | Used | Available | Assigned | Used | Available | Assigned  |
       | 0    | 100       | 100      | 0    | Unlimited | Unlimited |
@@ -142,7 +142,7 @@ Feature: Add a new partner
       | Total Charges     |          |            | €84.74      |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:                  | Parent:                   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Status:         | Root Admin:          | Root Role:                  | Parent:                   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
       | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro Ireland (MozyPro) | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 | VAT Number: |
@@ -152,8 +152,8 @@ Feature: Add a new partner
       | Backup Device Soft Cap    | Disabled |
       | Server                 | Disabled |
       | Cloud Storage (GB)     |          |
-      | Stash Users:           |          |
-      | Default Stash Storage: |          |
+      | Sync Users:           |          |
+      | Default Sync Storage: |          |
     And Partner pooled storage information should be:
       | Used | Available | Assigned | Used | Available | Assigned  |
       | 0    | 250       | 250      | 0    | Unlimited | Unlimited |
@@ -182,7 +182,7 @@ Feature: Add a new partner
       | Total Charges     |          |            | £1,237.40   |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:                  | Parent:              | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Status:         | Root Admin:          | Root Role:                  | Parent:              | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
       | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro UK (MozyPro) | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 | VAT Number: |
@@ -192,8 +192,8 @@ Feature: Add a new partner
       | Backup Device Soft Cap | Disabled |
       | Server                 | Disabled |
       | Cloud Storage (GB)     |          |
-      | Stash Users:           |          |
-      | Default Stash Storage: |          |
+      | Sync Users:           |          |
+      | Default Sync Storage: |          |
     And Partner pooled storage information should be:
       | Used | Available | Assigned | Used | Available | Assigned  |
       | 0    | 500       | 500      | 0    | Unlimited | Unlimited |
@@ -223,7 +223,7 @@ Feature: Add a new partner
       | Total Charges    |          |            | $28,557.48  |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:                  | Parent: | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Status:         | Root Admin:          | Root Role:                  | Parent: | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
       | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
@@ -233,8 +233,8 @@ Feature: Add a new partner
       | Backup Device Soft Cap | Disabled |
       | Server                 | Enabled  |
       | Cloud Storage (GB)     |          |
-      | Stash Users:           |          |
-      | Default Stash Storage: |          |
+      | Sync Users:           |          |
+      | Default Sync Storage: |          |
     And Partner pooled storage information should be:
       | Used | Available | Assigned | Used | Available | Assigned  |
       | 0    | 3524      | 3524     | 0    | Unlimited | Unlimited |
@@ -264,7 +264,7 @@ Feature: Add a new partner
       | Total Charges    |          |            | €750.28     |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:                  | Parent:                  | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Status:         | Root Admin:          | Root Role:                  | Parent:                  | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
       | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro France (MozyPro) | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
@@ -274,8 +274,8 @@ Feature: Add a new partner
       | Backup Device Soft Cap | Disabled |
       | Server                 | Enabled  |
       | Cloud Storage (GB)     |          |
-      | Stash Users:           |          |
-      | Default Stash Storage: |          |
+      | Sync Users:           |          |
+      | Default Sync Storage: |          |
     And Partner pooled storage information should be:
       | Used | Available | Assigned | Used | Available | Assigned  |
       | 0    | 2048      | 2048     | 0    | Unlimited | Unlimited |
@@ -305,7 +305,7 @@ Feature: Add a new partner
       | Total Charges    |          |            | €15,559.22  |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:                  | Parent:                   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Status:         | Root Admin:          | Root Role:                  | Parent:                   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
       | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro Germany (MozyPro) | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
@@ -315,8 +315,8 @@ Feature: Add a new partner
       | Backup Device Soft Cap | Disabled |
       | Server                 | Enabled  |
       | Cloud Storage (GB)     |          |
-      | Stash Users:           |          |
-      | Default Stash Storage: |          |
+      | Sync Users:           |          |
+      | Default Sync Storage: |          |
     And Partner pooled storage information should be:
       | Used | Available | Assigned | Used | Available | Assigned  |
       | 0    | 4096      | 4096     | 0    | Unlimited | Unlimited |
@@ -346,7 +346,7 @@ Feature: Add a new partner
       | Total Charges    |          |            | €59,407.96  |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:                  | Parent:                   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Status:         | Root Admin:          | Root Role:                  | Parent:                   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
       | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro Ireland (MozyPro) | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
@@ -356,8 +356,8 @@ Feature: Add a new partner
       | Backup Device Soft Cap | Disabled |
       | Server                 | Enabled  |
       | Cloud Storage (GB)     |          |
-      | Stash Users:           |          |
-      | Default Stash Storage: |          |
+      | Sync Users:           |          |
+      | Default Sync Storage: |          |
     And Partner pooled storage information should be:
       | Used | Available | Assigned | Used | Available | Assigned  |
       | 0    | 8192      | 8192     | 0    | Unlimited | Unlimited |
@@ -387,7 +387,7 @@ Feature: Add a new partner
       | Total Charges    |          |            | £3,490.66   |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:                  | Parent:              | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Status:         | Root Admin:          | Root Role:                  | Parent:              | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
       | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro UK (MozyPro) | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
@@ -397,8 +397,8 @@ Feature: Add a new partner
       | Backup Device Soft Cap | Disabled |
       | Server                 | Enabled  |
       | Cloud Storage (GB)     |          |
-      | Stash Users:           |          |
-      | Default Stash Storage: |          |
+      | Sync Users:           |          |
+      | Default Sync Storage: |          |
     And Partner pooled storage information should be:
       | Used | Available | Assigned | Used | Available | Assigned  |
       | 0    | 12288     | 12288    | 0    | Unlimited | Unlimited |
@@ -428,7 +428,7 @@ Feature: Add a new partner
       | Total Charges    |          |            | $76,008.02  |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:                  | Parent: | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Status:         | Root Admin:          | Root Role:                  | Parent: | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
       | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
@@ -438,8 +438,8 @@ Feature: Add a new partner
       | Backup Device Soft Cap | Disabled |
       | Server                 | Enabled  |
       | Cloud Storage (GB)     |          |
-      | Stash Users:           |          |
-      | Default Stash Storage: |          |
+      | Sync Users:           |          |
+      | Default Sync Storage: |          |
     And Partner pooled storage information should be:
       | Used | Available | Assigned | Used | Available | Assigned  |
       | 0    | 18884     | 18884    | 0    | Unlimited | Unlimited |
@@ -470,7 +470,7 @@ Feature: Add a new partner
       | Total Charges     |          |             | €122,846.21 |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:                  | Parent:                  | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Status:         | Root Admin:          | Root Role:                  | Parent:                  | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
       | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro France (MozyPro) | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
@@ -480,8 +480,8 @@ Feature: Add a new partner
       | Backup Device Soft Cap | Disabled |
       | Server                 | Enabled  |
       | Cloud Storage (GB)     |          |
-      | Stash Users:           |          |
-      | Default Stash Storage: |          |
+      | Sync Users:           |          |
+      | Default Sync Storage: |          |
     And Partner pooled storage information should be:
       | Used | Available | Assigned | Used | Available | Assigned  |
       | 0    | 22980     | 22980    | 0    | Unlimited | Unlimited |
@@ -504,7 +504,7 @@ Feature: Add a new partner
     Then Sub-total before taxes or discounts should be 0
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:                  | Parent: | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Status:         | Root Admin:          | Root Role:                  | Parent: | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
       | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
@@ -514,8 +514,8 @@ Feature: Add a new partner
       | Backup Device Soft Cap | Disabled |
       | Server                 | Disabled |
       | Cloud Storage (GB)     |          |
-      | Stash Users:           |          |
-      | Default Stash Storage: |          |
+      | Sync Users:           |          |
+      | Default Sync Storage: |          |
     And Partner pooled storage information should be:
       | Used | Available | Assigned | Used | Available | Assigned  |
       | 0    | 0         | 0        | 0    | Unlimited | Unlimited |

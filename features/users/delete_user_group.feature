@@ -12,7 +12,7 @@ Feature: Edit existing user group
     And I act as newly created partner
 
     And Bundled user groups table should be:
-      | Group Name            | Stash | Server | Storage Type | Type Value | Storage Used | Devices Used |
+      | Group Name            | Sync | Server | Storage Type | Type Value | Storage Used | Devices Used |
       | (default user group)  | false | true   | Shared       |            | 0            | 0            |
 
 
@@ -76,7 +76,7 @@ Feature: Edit existing user group
     And I act as newly created partner
 
     And Bundled user groups table should be:
-      | Group Name            | Stash | Server | Storage Type | Type Value | Storage Used | Devices Used |
+      | Group Name            | Sync | Server | Storage Type | Type Value | Storage Used | Devices Used |
       | (default user group)  | false | true   | Shared       |            | 0            | 0            |
 
     And I add new user(s):
@@ -202,7 +202,7 @@ Feature: Edit existing user group
       And I act as newly created partner
     When I navigate to User Group List section from bus admin console page
     And Itemized user groups table should be:
-      | Group Name           | Stash | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
+      | Group Name           | Sync | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
       | (default user group) | true  | Shared               |                    | 0                    | 0                    | 10                    | Shared              |                   | 0                   | 0                   | 200                  |
     And I add new user(s):
       | user_group           | name       | storage_type | storage_limit | devices |

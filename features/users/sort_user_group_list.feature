@@ -80,7 +80,7 @@ Feature: Sort user group list
 
       Then Column Group Name sorts in ascending order
       And Bundled user groups table should be:
-        | Group Name            | Stash | Server | Storage Type | Type Value | Storage Used | Devices Used |
+        | Group Name            | Sync | Server | Storage Type | Type Value | Storage Used | Devices Used |
         | (default user group)  | true  | true   | Shared       |            | 3 GB         | 3            |
         | User Group A          | false | false  | Shared       |            | 0            | 0            |
         | User Group B          | true  | false  | Assigned     | 10 GB      | 2 GB         | 2            |
@@ -89,27 +89,27 @@ Feature: Sort user group list
       When I click Group Name table header
       Then Column Group Name sorts in descending order
       Then Bundled user groups table should be:
-        | Group Name            | Stash | Server | Storage Type | Type Value | Storage Used | Devices Used |
+        | Group Name            | Sync | Server | Storage Type | Type Value | Storage Used | Devices Used |
         | User Group C          | true  | false  | Limited      | 10 GB      | 5 GB         | 1            |
         | User Group B          | true  | false  | Assigned     | 10 GB      | 2 GB         | 2            |
         | User Group A          | false | false  | Shared       |            | 0            | 0            |
         | (default user group)  | true  | true   | Shared       |            | 3 GB         | 3            |
 
       Then I refresh User Group list section
-      When I click Stash table header
-      Then Column Stash sorts in ascending order
+      When I click Sync table header
+      Then Column Sync sorts in ascending order
       Then Bundled user groups table should be:
-        | Group Name            | Stash | Server | Storage Type | Type Value | Storage Used | Devices Used |
+        | Group Name            | Sync | Server | Storage Type | Type Value | Storage Used | Devices Used |
         | User Group A          | false | false  | Shared       |            | 0            | 0            |
         | (default user group)  | true  | true   | Shared       |            | 3 GB         | 3            |
         | User Group B          | true  | false  | Assigned     | 10 GB      | 2 GB         | 2            |
         | User Group C          | true  | false  | Limited      | 10 GB      | 5 GB         | 1            |
 
 
-      When I click Stash table header
-      Then Column Stash sorts in descending order
+      When I click Sync table header
+      Then Column Sync sorts in descending order
       Then Bundled user groups table should be:
-        | Group Name            | Stash | Server | Storage Type | Type Value | Storage Used | Devices Used |
+        | Group Name            | Sync | Server | Storage Type | Type Value | Storage Used | Devices Used |
         | (default user group)  | true  | true   | Shared       |            | 3 GB         | 3            |
         | User Group B          | true  | false  | Assigned     | 10 GB      | 2 GB         | 2            |
         | User Group C          | true  | false  | Limited      | 10 GB      | 5 GB         | 1            |
@@ -119,7 +119,7 @@ Feature: Sort user group list
       When I click Server Enabled table header
       Then Column Server Enabled sorts in ascending order
       Then Bundled user groups table should be:
-        | Group Name            | Stash | Server | Storage Type | Type Value | Storage Used | Devices Used |
+        | Group Name            | Sync | Server | Storage Type | Type Value | Storage Used | Devices Used |
         | User Group A          | false | false  | Shared       |            | 0            | 0            |
         | User Group B          | true  | false  | Assigned     | 10 GB      | 2 GB         | 2            |
         | User Group C          | true  | false  | Limited      | 10 GB      | 5 GB         | 1            |
@@ -129,7 +129,7 @@ Feature: Sort user group list
       When I click Server Enabled table header
       Then Column Server Enabled sorts in descending order
       Then Bundled user groups table should be:
-        | Group Name            | Stash | Server | Storage Type | Type Value | Storage Used | Devices Used |
+        | Group Name            | Sync | Server | Storage Type | Type Value | Storage Used | Devices Used |
         | (default user group)  | true  | true   | Shared       |            | 3 GB         | 3            |
         | User Group A          | false | false  | Shared       |            | 0            | 0            |
         | User Group B          | true  | false  | Assigned     | 10 GB      | 2 GB         | 2            |
@@ -140,7 +140,7 @@ Feature: Sort user group list
       When I click Device Used table header
       Then Column Device Used sorts in ascending order
       Then Bundled user groups table should be:
-        | Group Name            | Stash | Server | Storage Type | Type Value | Storage Used | Devices Used |
+        | Group Name            | Sync | Server | Storage Type | Type Value | Storage Used | Devices Used |
         | User Group A          | false | false  | Shared       |            | 0            | 0            |
         | User Group C          | true  | false  | Limited      | 10 GB      | 5 GB         | 1            |
         | User Group B          | true  | false  | Assigned     | 10 GB      | 2 GB         | 2            |
@@ -150,7 +150,7 @@ Feature: Sort user group list
       When I click Device Used table header
       Then Column Device Used sorts in descending order
       Then Bundled user groups table should be:
-        | Group Name            | Stash | Server | Storage Type | Type Value | Storage Used | Devices Used |
+        | Group Name            | Sync | Server | Storage Type | Type Value | Storage Used | Devices Used |
         | (default user group)  | true  | true   | Shared       |            | 3 GB         | 3            |
         | User Group B          | true  | false  | Assigned     | 10 GB      | 2 GB         | 2            |
         | User Group C          | true  | false  | Limited      | 10 GB      | 5 GB         | 1            |
@@ -160,7 +160,7 @@ Feature: Sort user group list
       When I click Storage Used table header
       Then Column Storage Used sorts in ascending order
       Then Bundled user groups table should be:
-        | Group Name            | Stash | Server | Storage Type | Type Value | Storage Used | Devices Used |
+        | Group Name            | Sync | Server | Storage Type | Type Value | Storage Used | Devices Used |
         | User Group A          | false | false  | Shared       |            | 0            | 0            |
         | User Group B          | true  | false  | Assigned     | 10 GB      | 2 GB         | 2            |
         | (default user group)  | true  | true   | Shared       |            | 3 GB         | 3            |
@@ -169,7 +169,7 @@ Feature: Sort user group list
       When I click Storage Used table header
       Then Column Storage Used sorts in descending order
       Then Bundled user groups table should be:
-        | Group Name            | Stash | Server | Storage Type | Type Value | Storage Used | Devices Used |
+        | Group Name            | Sync | Server | Storage Type | Type Value | Storage Used | Devices Used |
         | User Group C          | true  | false  | Limited      | 10 GB      | 5 GB         | 1            |
         | (default user group)  | true  | true   | Shared       |            | 3 GB         | 3            |
         | User Group B          | true  | false  | Assigned     | 10 GB      | 2 GB         | 2            |
@@ -325,7 +325,7 @@ Scenario: 20933 [Itemized] Sort Columns
 
     Then Column Group Name sorts in ascending order
     And Itemized user groups table should be:
-      | Group Name           | Stash | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
+      | Group Name           | Sync | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
       | (default user group) | true  | Shared               |                    | 1 GB                 | 1                    | 4                     | Shared              |                   | 1 GB                | 1                   | 194                  |
       | User Group A         | true  | Shared               |                    | 2 GB                 | 1                    | 3                     | Shared              |                   | 2 GB                | 1                   | 3                    |
       | User Group B         | false | Assigned             | 10 GB              | 3 GB                 | 1                    | 2                     | Assigned            | 10 GB             | 3 GB                | 1                   | 2                    |
@@ -334,7 +334,7 @@ Scenario: 20933 [Itemized] Sort Columns
     When I click Group Name table header
     Then Column Group Name sorts in descending order
     And Itemized user groups table should be:
-      | Group Name           | Stash | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
+      | Group Name           | Sync | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
       | User Group C         | false | Limited              | 10 GB              | 4 GB                 | 1                    | 1                     | Limited             | 10 GB             | 4 GB                | 1                   | 1                    |
       | User Group B         | false | Assigned             | 10 GB              | 3 GB                 | 1                    | 2                     | Assigned            | 10 GB             | 3 GB                | 1                   | 2                    |
       | User Group A         | true  | Shared               |                    | 2 GB                 | 1                    | 3                     | Shared              |                   | 2 GB                | 1                   | 3                    |
@@ -342,20 +342,20 @@ Scenario: 20933 [Itemized] Sort Columns
 
 
     Then I refresh User Group list section
-    When I click Stash table header
-    Then Column Stash sorts in ascending order
+    When I click Sync table header
+    Then Column Sync sorts in ascending order
     And Itemized user groups table should be:
-      | Group Name           | Stash | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
+      | Group Name           | Sync | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
       | User Group B         | false | Assigned             | 10 GB              | 3 GB                 | 1                    | 2                     | Assigned            | 10 GB             | 3 GB                | 1                   | 2                    |
       | User Group C         | false | Limited              | 10 GB              | 4 GB                 | 1                    | 1                     | Limited             | 10 GB             | 4 GB                | 1                   | 1                    |
       | (default user group) | true  | Shared               |                    | 1 GB                 | 1                    | 4                     | Shared              |                   | 1 GB                | 1                   | 194                  |
       | User Group A         | true  | Shared               |                    | 2 GB                 | 1                    | 3                     | Shared              |                   | 2 GB                | 1                   | 3                    |
 
 
-    Then I click Stash table header
-    Then Column Stash sorts in descending order
+    Then I click Sync table header
+    Then Column Sync sorts in descending order
     And Itemized user groups table should be:
-      | Group Name           | Stash | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
+      | Group Name           | Sync | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
       | (default user group) | true  | Shared               |                    | 1 GB                 | 1                    | 4                     | Shared              |                   | 1 GB                | 1                   | 194                  |
       | User Group A         | true  | Shared               |                    | 2 GB                 | 1                    | 3                     | Shared              |                   | 2 GB                | 1                   | 3                    |
       | User Group B         | false | Assigned             | 10 GB              | 3 GB                 | 1                    | 2                     | Assigned            | 10 GB             | 3 GB                | 1                   | 2                    |
@@ -366,7 +366,7 @@ Scenario: 20933 [Itemized] Sort Columns
     Then I click Server Storage Used table header
     Then Column Server Storage Used sorts in ascending order
     And Itemized user groups table should be:
-      | Group Name           | Stash | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
+      | Group Name           | Sync | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
       | (default user group) | true  | Shared               |                    | 1 GB                 | 1                    | 4                     | Shared              |                   | 1 GB                | 1                   | 194                  |
       | User Group A         | true  | Shared               |                    | 2 GB                 | 1                    | 3                     | Shared              |                   | 2 GB                | 1                   | 3                    |
       | User Group B         | false | Assigned             | 10 GB              | 3 GB                 | 1                    | 2                     | Assigned            | 10 GB             | 3 GB                | 1                   | 2                    |
@@ -375,7 +375,7 @@ Scenario: 20933 [Itemized] Sort Columns
     When I click Server Storage Used table header
     Then Column Server Storage Used sorts in descending order
     And Itemized user groups table should be:
-      | Group Name           | Stash | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
+      | Group Name           | Sync | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
       | User Group C         | false | Limited              | 10 GB              | 4 GB                 | 1                    | 1                     | Limited             | 10 GB             | 4 GB                | 1                   | 1                    |
       | User Group B         | false | Assigned             | 10 GB              | 3 GB                 | 1                    | 2                     | Assigned            | 10 GB             | 3 GB                | 1                   | 2                    |
       | User Group A         | true  | Shared               |                    | 2 GB                 | 1                    | 3                     | Shared              |                   | 2 GB                | 1                   | 3                    |
@@ -385,7 +385,7 @@ Scenario: 20933 [Itemized] Sort Columns
     Then I click Desktop Storage Used table header
     Then Column Desktop Storage Used sorts in ascending order
     And Itemized user groups table should be:
-      | Group Name           | Stash | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
+      | Group Name           | Sync | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
       | (default user group) | true  | Shared               |                    | 1 GB                 | 1                    | 4                     | Shared              |                   | 1 GB                | 1                   | 194                  |
       | User Group A         | true  | Shared               |                    | 2 GB                 | 1                    | 3                     | Shared              |                   | 2 GB                | 1                   | 3                    |
       | User Group B         | false | Assigned             | 10 GB              | 3 GB                 | 1                    | 2                     | Assigned            | 10 GB             | 3 GB                | 1                   | 2                    |
@@ -394,7 +394,7 @@ Scenario: 20933 [Itemized] Sort Columns
     When I click Desktop Storage Used table header
     Then Column Desktop Storage Used sorts in descending order
     And Itemized user groups table should be:
-      | Group Name           | Stash | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
+      | Group Name           | Sync | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
       | User Group C         | false | Limited              | 10 GB              | 4 GB                 | 1                    | 1                     | Limited             | 10 GB             | 4 GB                | 1                   | 1                    |
       | User Group B         | false | Assigned             | 10 GB              | 3 GB                 | 1                    | 2                     | Assigned            | 10 GB             | 3 GB                | 1                   | 2                    |
       | User Group A         | true  | Shared               |                    | 2 GB                 | 1                    | 3                     | Shared              |                   | 2 GB                | 1                   | 3                    |
@@ -405,7 +405,7 @@ Scenario: 20933 [Itemized] Sort Columns
     When I click Desktop Device Total table header
     Then Column Desktop Device Total sorts in ascending order
     And Itemized user groups table should be:
-      | Group Name           | Stash | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
+      | Group Name           | Sync | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
       | User Group C         | false | Limited              | 10 GB              | 4 GB                 | 1                    | 1                     | Limited             | 10 GB             | 4 GB                | 1                   | 1                    |
       | User Group B         | false | Assigned             | 10 GB              | 3 GB                 | 1                    | 2                     | Assigned            | 10 GB             | 3 GB                | 1                   | 2                    |
       | User Group A         | true  | Shared               |                    | 2 GB                 | 1                    | 3                     | Shared              |                   | 2 GB                | 1                   | 3                    |
@@ -414,7 +414,7 @@ Scenario: 20933 [Itemized] Sort Columns
     When I click Desktop Device Total table header
     Then Column Desktop Device Total sorts in descending order
     And Itemized user groups table should be:
-      | Group Name           | Stash | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
+      | Group Name           | Sync | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
       | (default user group) | true  | Shared               |                    | 1 GB                 | 1                    | 4                     | Shared              |                   | 1 GB                | 1                   | 194                  |
       | User Group A         | true  | Shared               |                    | 2 GB                 | 1                    | 3                     | Shared              |                   | 2 GB                | 1                   | 3                    |
       | User Group B         | false | Assigned             | 10 GB              | 3 GB                 | 1                    | 2                     | Assigned            | 10 GB             | 3 GB                | 1                   | 2                    |
@@ -425,7 +425,7 @@ Scenario: 20933 [Itemized] Sort Columns
     When I click Server Device Total table header
     Then Column Server Device Total sorts in ascending order
     And Itemized user groups table should be:
-      | Group Name           | Stash | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
+      | Group Name           | Sync | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
       | User Group C         | false | Limited              | 10 GB              | 4 GB                 | 1                    | 1                     | Limited             | 10 GB             | 4 GB                | 1                   | 1                    |
       | User Group B         | false | Assigned             | 10 GB              | 3 GB                 | 1                    | 2                     | Assigned            | 10 GB             | 3 GB                | 1                   | 2                    |
       | User Group A         | true  | Shared               |                    | 2 GB                 | 1                    | 3                     | Shared              |                   | 2 GB                | 1                   | 3                    |
@@ -434,7 +434,7 @@ Scenario: 20933 [Itemized] Sort Columns
     When I click Server Device Total table header
     Then Column Server Device Total sorts in descending order
     And Itemized user groups table should be:
-      | Group Name           | Stash | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
+      | Group Name           | Sync | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
       | (default user group) | true  | Shared               |                    | 1 GB                 | 1                    | 4                     | Shared              |                   | 1 GB                | 1                   | 194                  |
       | User Group A         | true  | Shared               |                    | 2 GB                 | 1                    | 3                     | Shared              |                   | 2 GB                | 1                   | 3                    |
       | User Group B         | false | Assigned             | 10 GB              | 3 GB                 | 1                    | 2                     | Assigned            | 10 GB             | 3 GB                | 1                   | 2                    |

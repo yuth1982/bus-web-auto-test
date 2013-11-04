@@ -2,7 +2,7 @@ Feature:
 
   As partner administrator
   I want to view a MozyPro or MozyEnterprise customers plan details
-  so that I can find out how many users have Stash and how much quota has been Activated and Used by Stash
+  so that I can find out how many users have Sync and how much quota has been Activated and Used by Sync
 
   Background:
     Given I log in bus admin console as administrator
@@ -15,7 +15,7 @@ Feature:
     Then New partner should be created
     When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: |
+      | Enable Sync: |
       | Yes (change)  |
     When I act as newly created partner account
     And I add new user(s):
@@ -25,7 +25,7 @@ Feature:
     Then 2 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                     | Name           | Stash   | Machines | Storage         | Storage Used  | Created | Backed Up |
+      | User                     | Name           | Sync   | Machines | Storage         | Storage Used  | Created | Backed Up |
       | <%=@new_users[1].email%> | TC.19045 user2 | Enabled | 0        | Desktop: Shared | Desktop: None | today   | never     |
       | <%=@new_users[0].email%> | TC.19045 user1 | Enabled | 0        | Desktop: Shared | Desktop: None | today   | never     |
     When I stop masquerading
@@ -39,7 +39,7 @@ Feature:
     Then New partner should be created
     When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: |
+      | Enable Sync: |
       | Yes (change)  |
     When I act as newly created partner account
     And I add new user(s):
@@ -49,7 +49,7 @@ Feature:
     Then 2 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                     | Name            | Stash   | Machines | Storage | Storage Used | Created | Backed Up |
+      | User                     | Name            | Sync   | Machines | Storage | Storage Used | Created | Backed Up |
       | <%=@new_users[1].email%> | TC.19057.2-user | Enabled | 0        | Shared  | None         | today   | never     |
       | <%=@new_users[0].email%> | TC.19057.1-user | Enabled | 0        | Shared  | None         | today   | never     |
     When I stop masquerading
@@ -63,7 +63,7 @@ Feature:
     Then New partner should be created
     When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: |
+      | Enable Sync: |
       | Yes (change)  |
     When I act as newly created partner account
     And I add new user(s):
@@ -75,11 +75,11 @@ Feature:
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
     Then Partner account attributes should be:
-      | Stash Users:            | -1        |
-      | Default Stash Storage:  |           |
+      | Users:            | -1        |
+      | Default Sync Storage:  |           |
     And Partner stash info should be:
-      | Stash Users:         | 2 |
-      | Stash Storage Usage: | 0 |
+      | Users:         | 2 |
+      | Storage Usage: | 0 |
     And I delete partner account
 
   @TC.19739 @BSA.3000 @bus @stash @partner_manage
@@ -90,7 +90,7 @@ Feature:
     Then New partner should be created
     When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: |
+      | Enable Sync: |
       | Yes (change)  |
     When I act as newly created partner account
     And I add new user(s):
@@ -102,11 +102,11 @@ Feature:
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
     Then Partner account attributes should be:
-      | Stash Users:            | -1        |
-      | Default Stash Storage:  |           |
+      | Users:            | -1        |
+      | Default Sync Storage:  |           |
     And Partner stash info should be:
-      | Stash Users:         | 2 |
-      | Stash Storage Usage: | 0 |
+      | Users:         | 2 |
+      | Storage Usage: | 0 |
     And I delete partner account
 
   @TC.19740 @BSA.3000 @bus @stash @partner_manage
@@ -117,7 +117,7 @@ Feature:
     Then New partner should be created
     When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: |
+      | Enable Sync: |
       | Yes (change)  |
     When I act as newly created partner account
     #    And I allocate 50 GB Desktop quota with (default user group) user group to Reseller partner
@@ -131,11 +131,11 @@ Feature:
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
     Then Partner account attributes should be:
-      | Stash Users:            | -1        |
-      | Default Stash Storage:  |           |
+      | Users:            | -1        |
+      | Default Sync Storage:  |           |
     And Partner stash info should be:
-      | Stash Users:         | 2 |
-      | Stash Storage Usage: | 0 |
+      | Users:         | 2 |
+      | Storage Usage: | 0 |
     And I delete partner account
 
   @TC.19169 @BSA.3050 @bus @stash @partner_manage
@@ -146,7 +146,7 @@ Feature:
     Then New partner should be created
     When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: |
+      | Enable Sync: |
       | Yes (change)  |
     When I act as newly created partner account
     And I add new user(s):
@@ -156,7 +156,7 @@ Feature:
 # no Manage Resource now
 #    When I navigate to Manage Resources section from bus admin console page
 #    And Partner resources general information should be:
-#      | Stash Users: | Stash Storage Usage: |
+#      | Users: | Storage Usage: |
 #      | 1            | 0 bytes / 30 GB      |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
@@ -169,7 +169,7 @@ Feature:
     Then New partner should be created
     When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: |
+      | Enable Sync: |
       | Yes (change)  |
     When I act as newly created partner account
     And I add new user(s):
@@ -183,7 +183,7 @@ Feature:
     When I view details of TC.19056-user's user group
     And I disable stash for the user group
     Then User group details should be:
-      | Enable Stash: |
+      | Enable Sync: |
       | No (change)   |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
@@ -196,7 +196,7 @@ Feature:
     Then New partner should be created
     When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: |
+      | Enable Sync: |
       | Yes (change)  |
     When I act as newly created partner account
     And I add new user(s):
@@ -210,23 +210,23 @@ Feature:
     When I view details of TC.19123-user's user group
     And I enable stash for the user group
     Then User group details should be:
-      | Enable Stash: |
+      | Enable Sync: |
       | Yes (change)  |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
   @TC.18913 @BSA.6000 @bus @stash @partner_manage
-  Scenario: 18913 Root admin disable Stash for a new MozyPro partner
+  Scenario: 18913 Root admin disable Sync for a new MozyPro partner
     When I add a new MozyPro partner:
       | period | base plan |
       | 12     | 100 GB    |
     Then New partner should be created
     When I enable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: |
+      | Enable Sync: |
       | Yes (change)  |
     When I disable stash for the partner
     Then Partner general information should be:
-      | Enable Stash: |
+      | Enable Sync: |
       | No (change)   |
     When I delete partner account

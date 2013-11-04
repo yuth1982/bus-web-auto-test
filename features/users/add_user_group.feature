@@ -68,7 +68,7 @@ Feature: Add a new user group
     When I navigate to User Group List section from bus admin console page
     # User group table has an irregular headers, therefore headers verification will be ignored.
     And Bundled user groups table should be:
-    | Group Name           | Stash | Server | Storage Type | Type Value | Storage Used | Devices Used |
+    | Group Name           | Sync | Server | Storage Type | Type Value | Storage Used | Devices Used |
     | (default user group) | true  | true   | Shared       |            | 0            | 0            |
     | TC.20716%^^&&&%$$#   | false | false  | Shared       |            | 0            | 0            |
     | TC.20716-Assigned    | false | false  | Assigned     | 50 GB      | 0            | 0            |
@@ -115,7 +115,7 @@ Feature: Add a new user group
     When I navigate to User Group List section from bus admin console page
     # User group table has an irregular headers, therefore headers verification will be ignored.
     And Itemized user groups table should be:
-      | Group Name           | Stash | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
+      | Group Name           | Sync | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
       | (default user group) | true  | Shared               |                    | 0                    | 0                    | 4                     | Shared              |                   | 0                   | 0                   | 194                  |
       | TC.20899-Assigned    | true  | Assigned             | 5 GB               | 0                    | 0                    | 1                     | Shared              |                   | 0                   | 0                   | 0                    |
       | TC.20899-Assigned-1  | false | Assigned             | 5 GB               | 0                    | 0                    | 1                     | Assigned            | 10 GB             | 0                   | 0                   | 2                    |

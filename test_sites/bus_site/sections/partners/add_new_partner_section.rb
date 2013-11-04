@@ -296,9 +296,9 @@ module Bus
         find_with_highlight(:id, "#{base_plan_id}_add_on_plan_check_box_#{stash_grant_id}").check
       end
 
-      #{base plan id}_add_on_plan_check_box_2 is serer plan id
+      #{base plan id}_add_on_plan_check_box_1 is serer plan id
       if partner.has_server_plan
-        server_plan_id = find(:id, "#{base_plan_id}_add_on_plan_check_box_2").value
+        server_plan_id = find(:id, "#{base_plan_id}_add_on_plan_check_box_1").value
         find_with_highlight(:id, "#{base_plan_id}_add_on_plan_check_box_#{server_plan_id}").check
       end
 

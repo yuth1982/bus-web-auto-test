@@ -43,7 +43,7 @@ Feature: Search and list user
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     And User search results should be:
-      | Name        | Stash    | Storage        |
+      | Name        | Sync    | Storage        |
       | TC.21012-1  | Enabled  | 10 GB (Limited)|
       | TC.21012-2  | Disabled | Shared         |
     And I stop masquerading
@@ -95,7 +95,7 @@ Feature: Search and list user
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     Then User search results should be:
-      | Name        | Stash    | Storage        |
+      | Name        | Sync    | Storage        |
       | TC.21014-1  | Disabled | 15 GB (Limited)|
       | TC.21014-2  | Enabled  | Shared         |
       | TC.21014-3  | Enabled  | 20 GB (Limited)|
@@ -146,7 +146,7 @@ Feature: Search and list user
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     Then User search results should be:
-      | Name        | User Group            | Stash    | Storage        |
+      | Name        | User Group            | Sync    | Storage        |
       | TC.21016-1  | (default user group)  | Enabled  | 15 GB (Limited)|
       | TC.21016-2  | (default user group)  | Enabled  | Shared         |
       | TC.21016-3  | (default user group)  | Disabled | 35 GB (Limited)|
@@ -197,7 +197,7 @@ Feature: Search and list user
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     Then User search results should be:
-      | Name        | User Group            | Stash    | Storage                 |
+      | Name        | User Group            | Sync    | Storage                 |
       | TC.21015-1  | (default user group)  | Enabled  | Desktop: 10 GB (Limited) |
       | TC.21015-2  | (default user group)  | Disabled | Desktop: Shared         |
       | TC.21015-3  | (default user group)  | Enabled  | Desktop: Shared         |
@@ -338,7 +338,7 @@ Feature: Search and list user
       When I navigate to Search / List Users section from bus admin console page
       And I sort user search results by Name
       Then User search results should be:
-        | Name        | Stash    | Storage        |
+        | Name        | Sync    | Storage        |
         | TC.21012-1  | Enabled  | 10 GB (Limited)|
         | TC.21012-2  | Disabled | Shared         |
       And I stop masquerading

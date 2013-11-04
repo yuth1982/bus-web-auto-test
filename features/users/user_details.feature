@@ -10,7 +10,7 @@ Feature: User Details
       | keywords             |
       | last_update@test.com |
     Then User search results should be:
-      | User                 | Name        | Machines |Stash    | Machines | Storage | Storage Used |
+      | User                 | Name        | Machines |Sync    | Machines | Storage | Storage Used |
       | last_update@test.com | last_update | 0        | Enabled | 3        | Shared  | 60 GB        |
     When I view user details by last_update@test.com
     Then device table in user details should be:
@@ -19,8 +19,8 @@ Feature: User Details
       | machine2        | 30 GB / 40 GB      | Set                  | 04/08/2013 03:51 |        |
       | machine3        | 30 GB / 40 GB      | Set                  | 03/01/2013 15:51 |        |
     And stash device table in user details should be:
-      | Stash Container | Used/Available     | Device Storage Limit | Last Update      | Action |
-      | Stash           | 0 / 40 GB          | Set                  | N/A              |        |
+      | Sync Container | Used/Available     | Device Storage Limit | Last Update      | Action |
+      | Sync           | 0 / 40 GB          | Set                  | N/A              |        |
 
   @TC.20986__   @bus @2.5 @user_view @last_update @dynamic_create
   Scenario: 20986 (create machine dynamically) "Last Update" shows the time for the 3 device whose last backup time is 5 days ago
@@ -65,7 +65,7 @@ Feature: User Details
       | keywords             |
       | last_update@test.com |
     Then User search results should be:
-      | User                 | Name        | Machines |Stash    | Machines | Storage | Storage Used |
+      | User                 | Name        | Machines |Sync    | Machines | Storage | Storage Used |
       | last_update@test.com | last_update | 0        | Enabled | 3        | Shared  | 60 GB        |
     When I view user details by last_update@test.com
     And I update the user password to @user_password
@@ -82,8 +82,8 @@ Feature: User Details
       | machine3        | 30 GB / 30 GB      | Set                  | 03/01/2013 15:51 |        |
       | machine4        | 10 GB / 30 GB      | Set                  | < a minute ago   |        |
     And stash device table in user details should be:
-      | Stash Container | Used/Available     | Device Storage Limit | Last Update      | Action |
-      | Stash           | 0 / 30 GB          | Set                  | N/A              |        |
+      | Sync Container | Used/Available     | Device Storage Limit | Last Update      | Action |
+      | Sync           | 0 / 30 GB          | Set                  | N/A              |        |
     When I delete device by name: machine4
     Then device table in user details should be:
       | Device          | Used/Available     | Device Storage Limit | Last Update      | Action |
@@ -91,8 +91,8 @@ Feature: User Details
       | machine2        | 30 GB / 40 GB      | Set                  | 04/08/2013 03:51 |        |
       | machine3        | 30 GB / 40 GB      | Set                  | 03/01/2013 15:51 |        |
     And stash device table in user details should be:
-      | Stash Container | Used/Available     | Device Storage Limit | Last Update      | Action |
-      | Stash           | 0 / 40 GB          | Set                  | N/A              |        |
+      | Sync Container | Used/Available     | Device Storage Limit | Last Update      | Action |
+      | Sync           | 0 / 40 GB          | Set                  | N/A              |        |
     And I close user details section
     When I add new user(s):
       | name          | user_group           | storage_type | storage_limit | devices |
@@ -145,8 +145,8 @@ Feature: User Details
       | Machine2        | Desktop      |20 GB / 140 GB     | Set                  | < a minute ago   |        |
       | Machine3        | Desktop      |30 GB / 140 GB     | Set                  | < a minute ago   |        |
     Then stash device table in user details should be:
-      | Stash Container | Used/Available     | Device Storage Limit | Last Update      | Action |
-      | Stash           | 0 / 140 GB         | Set                  | N/A              |        |
+      | Sync Container | Used/Available     | Device Storage Limit | Last Update      | Action |
+      | Sync           | 0 / 140 GB         | Set                  | N/A              |        |
 
   @TC.21096 @bus @2.5 @user_view @itemized
   Scenario: 21096 [Itemized]Edit the number of Desktop Device

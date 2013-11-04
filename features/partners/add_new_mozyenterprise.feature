@@ -21,7 +21,7 @@ Feature: Add a new partner
       | Total Charges       |          |            | $7,600.00   |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:          | Parent:        | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Status:         | Root Admin:          | Root Role:          | Parent:        | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
       | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type:  | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
@@ -31,8 +31,8 @@ Feature: Add a new partner
       | Backup Device Soft Cap | Disabled |
       | Server                 | Disabled |
       | Cloud Storage (GB)     |          |
-      | Stash Users:           |          |
-      | Default Stash Storage: |          |
+      | Sync Users:           |          |
+      | Default Sync Storage: |          |
     And Partner pooled storage information should be:
       |         | Used | Available | Assigned | Used | Available | Assigned |
       | Desktop | 0    | 2.4 TB      | 2.4 TB | 0    | 100       | 100      |
@@ -62,7 +62,7 @@ Feature: Add a new partner
       | Total Charges        |          |            | $58,478.48  |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:          | Parent:        | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Status:         | Root Admin:          | Root Role:          | Parent:        | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
       | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type:  | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
@@ -72,8 +72,8 @@ Feature: Add a new partner
       | Backup Device Soft Cap | Disabled |
       | Server                 | Disabled |
       | Cloud Storage (GB)     |          |
-      | Stash Users:           |          |
-      | Default Stash Storage: |          |
+      | Sync Users:           |          |
+      | Default Sync Storage: |          |
     And Partner pooled storage information should be:
       |         | Used | Available | Assigned | Used | Available | Assigned |
       | Desktop | 0    | 5000      | 5000     | 0    | 200       | 200      |
@@ -105,7 +105,7 @@ Feature: Add a new partner
       | Total Charges        |          |            | $89,997.12  |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:          | Parent:        | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Status:         | Root Admin:          | Root Role:          | Parent:        | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
       | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type:  | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Industry: | # of employees: | Contact Email:                 |
@@ -115,8 +115,8 @@ Feature: Add a new partner
       | Backup Device Soft Cap | Disabled |
       | Server                 | Disabled |
       | Cloud Storage (GB)     |          |
-      | Stash Users:           |          |
-      | Default Stash Storage: |          |
+      | Sync Users:           |          |
+      | Default Sync Storage: |          |
     And Partner pooled storage information should be:
       |         | Used | Available | Assigned | Used | Available | Assigned |
       | Desktop | 0    | 7500      | 7500     | 0    | 300       | 300      |
@@ -147,7 +147,7 @@ Feature: Add a new partner
       | Total Charges        |          |            | $52,958.68  |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:          | Parent:        | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Status:         | Root Admin:          | Root Role:          | Parent:        | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
       | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type:  | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
@@ -157,8 +157,8 @@ Feature: Add a new partner
       | Backup Device Soft Cap | Disabled |
       | Server                 | Disabled |
       | Cloud Storage (GB)     |          |
-      | Stash Users:           |          |
-      | Default Stash Storage: |          |
+      | Sync Users:           |          |
+      | Default Sync Storage: |          |
     And Partner pooled storage information should be:
       |         | Used | Available | Assigned | Used | Available | Assigned |
       | Desktop | 0    | 10000     | 10000    | 0    | 400       | 400      |
@@ -189,7 +189,7 @@ Feature: Add a new partner
       | Total Charges       |          |            | $85,671.66  |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:          | Parent:        | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Status:         | Root Admin:          | Root Role:          | Parent:        | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
       | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type:  | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
@@ -199,8 +199,8 @@ Feature: Add a new partner
       | Backup Device Soft Cap | Disabled |
       | Server                 | Disabled |
       | Cloud Storage (GB)     |          |
-      | Stash Users:           |          |
-      | Default Stash Storage: |          |
+      | Sync Users:           |          |
+      | Default Sync Storage: |          |
     And Partner pooled storage information should be:
       |         | Used | Available | Assigned | Used | Available | Assigned |
       | Desktop | 0    | 12500     | 12500    | 0    | 500       | 500      |
@@ -231,7 +231,7 @@ Feature: Add a new partner
       | Total Charges        |          |            | $228,596.40 |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:          | Parent:        | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Status:         | Root Admin:          | Root Role:          | Parent:        | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
       | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type:  | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
@@ -241,8 +241,8 @@ Feature: Add a new partner
       | Backup Device Soft Cap | Disabled |
       | Server                 | Disabled |
       | Cloud Storage (GB)     |          |
-      | Stash Users:           |          |
-      | Default Stash Storage: |          |
+      | Sync Users:           |          |
+      | Default Sync Storage: |          |
     And Partner pooled storage information should be:
       |         | Used | Available | Assigned | Used | Available | Assigned |
       | Desktop | 0    | 15000     | 15000    | 0    | 600       | 600      |
@@ -266,7 +266,7 @@ Feature: Add a new partner
     Then Sub-total before taxes or discounts should be 0
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:          | Parent:        | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
+      | Status:         | Root Admin:          | Root Role:          | Parent:        | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
       | Active (change) | @root_admin (act as) | Enterprise (change) | MozyEnterprise | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
     And Partner contact information should be:
       | Company Type:  | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
@@ -276,8 +276,8 @@ Feature: Add a new partner
       | Backup Device Soft Cap | Disabled |
       | Server                 | Disabled |
       | Cloud Storage (GB)     |          |
-      | Stash Users:           |          |
-      | Default Stash Storage: |          |
+      | Sync Users:           |          |
+      | Default Sync Storage: |          |
     And Partner internal billing should be:
       | Account Type:   | Other/None            | Current Period: | Yearly             |
       | Unpaid Balance: | $0.00                 | Collect On:     | N/A                |

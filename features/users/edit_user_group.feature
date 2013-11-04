@@ -47,7 +47,7 @@ Feature: Edit existing user group
     When I navigate to User Group List section from bus admin console page
   # User group table has an irregular headers, therefore headers verification will be ignored.
     And Bundled user groups table should be:
-      | Group Name            | Stash | Server | Storage Type | Type Value | Storage Used | Devices Used |
+      | Group Name            | Sync | Server | Storage Type | Type Value | Storage Used | Devices Used |
       | (default user group)  | true  | false  | Assigned     | 50 GB      | 0            | 0            |
       | TC.20894 UG New       | false | true   | Limited      | 100 GB     | 0            | 0            |
     And I stop masquerading
@@ -97,7 +97,7 @@ Feature: Edit existing user group
     When I navigate to User Group List section from bus admin console page
     # User group table has an irregular headers, therefore headers verification will be ignored.
     And Itemized user groups table should be:
-      | Group Name           | Stash | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
+      | Group Name           | Sync | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
       | (default user group) | false | Assigned             | 150 GB             | 0                    | 0                    | 6                     | Assigned            | 50 GB             | 0                   | 0                   | 196                  |
       | TC.20818 UG New      | true  | Assigned             | 50 GB              | 0                    | 0                    | 4                     | Assigned            | 50 GB             | 0                   | 0                   | 4                    |
     And I stop masquerading
