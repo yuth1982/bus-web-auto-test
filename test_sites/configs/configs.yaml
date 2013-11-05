@@ -4,7 +4,7 @@ global:
   # Max wait time in seconds, e.g downloading a big file
   max_wait_time:                1800
   # Aria wait time in seconds, it usually need more time
-  aria_wait_time:               300
+  aria_wait_time:               600
   # Fixed test password for all password field
   test_pwd:                     test1234
   # User email prefix, e.g qa1+reg+test@mozy.com
