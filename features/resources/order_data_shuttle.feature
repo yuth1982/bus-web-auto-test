@@ -602,9 +602,9 @@ Feature:
       | 12     | 2         | Velocity      |
     Then Sub-total before taxes or discounts should be $0.00
     And Order summary table should be:
-      | Description   | Quantity | Price Each | Total Price |
-      |               | 2        | $0.00      | $0.00       |
-      | Total Charges |          |            | $0.00       |
+      | Description             | Quantity | Price Each | Total Price |
+      | TB - MozyEnterprise DPS | 2        | $0.00      | $0.00       |
+      | Total Charges           |          |            | $0.00       |
     Then New partner should be created
     When I get the partner_id
     And I act as newly created partner account
@@ -646,9 +646,9 @@ Feature:
       | 12     | 10        | Velocity      |
     Then Sub-total before taxes or discounts should be $0.00
     And Order summary table should be:
-      | Description   | Quantity | Price Each | Total Price |
-      |               | 10       | $0.00      | $0.00       |
-      | Total Charges |          |            | $0.00       |
+      | Description             | Quantity | Price Each | Total Price |
+      | TB - MozyEnterprise DPS | 10       | $0.00      | $0.00       |
+      | Total Charges           |          |            | $0.00       |
     Then New partner should be created
     When I get the partner_id
     And I act as newly created partner account

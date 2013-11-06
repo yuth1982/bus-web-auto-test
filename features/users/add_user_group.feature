@@ -382,31 +382,17 @@ Feature: Add a new user group
     And I navigate to Add User Group section
     Then I should see correct UI for Bundled user group with:
       | storage_type | enable_stash | server_support |
-      | Shared       | no           | no             |
+      | Shared       | yes          | no             |
     Then I should see correct UI for Bundled user group with:
       | storage_type | enable_stash | server_support |
-      | Limited      | no           | no             |
+      | Limited      | yes          | no             |
     Then I should see correct UI for Bundled user group with:
       | storage_type | enable_stash | server_support |
-      | Assigned     | no           | no             |
+      | Assigned     | yes          | no             |
     When I change Reseller account plan to:
       | server plan |
       | yes         |
     And the Reseller account plan should be changed
-    And I navigate to Add User Group section
-    Then I should see correct UI for Bundled user group with:
-      | storage_type | enable_stash | server_support |
-      | Shared       | no           | yes            |
-    Then I should see correct UI for Bundled user group with:
-      | storage_type | enable_stash | server_support |
-      | Limited      | no           | yes            |
-    Then I should see correct UI for Bundled user group with:
-      | storage_type | enable_stash | server_support |
-      | Assigned     | no           | yes            |
-    When I stop masquerading
-    And I view partner details by newly created partner company name
-    And I enable stash for the partner
-    And I act as newly created partner
     And I navigate to Add User Group section
     Then I should see correct UI for Bundled user group with:
       | storage_type | enable_stash | server_support |
@@ -417,6 +403,20 @@ Feature: Add a new user group
     Then I should see correct UI for Bundled user group with:
       | storage_type | enable_stash | server_support |
       | Assigned     | yes          | yes            |
+    When I stop masquerading
+    And I view partner details by newly created partner company name
+    And I disable stash for the partner
+    And I act as newly created partner
+    And I navigate to Add User Group section
+    Then I should see correct UI for Bundled user group with:
+      | storage_type | enable_stash | server_support |
+      | Shared       | no           | yes            |
+    Then I should see correct UI for Bundled user group with:
+      | storage_type | enable_stash | server_support |
+      | Limited      | no           | yes            |
+    Then I should see correct UI for Bundled user group with:
+      | storage_type | enable_stash | server_support |
+      | Assigned     | no           | yes            |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
@@ -430,13 +430,13 @@ Feature: Add a new user group
     And I navigate to Add User Group section
     Then I should see correct UI for Itemized user group with:
       | storage_type | enable_stash | server_support |
-      | Shared       | no           | no             |
+      | Shared       | yes           | no             |
     Then I should see correct UI for Itemized user group with:
       | storage_type | enable_stash | server_support |
-      | Limited      | no           | no             |
+      | Limited      | yes           | no             |
     Then I should see correct UI for Itemized user group with:
       | storage_type | enable_stash | server_support |
-      | Assigned     | no           | no             |
+      | Assigned     | yes           | no             |
     When I change MozyEnterprise account plan to:
       | server plan |
       | 100 GB      |
@@ -444,27 +444,27 @@ Feature: Add a new user group
     And I navigate to Add User Group section
     Then I should see correct UI for Itemized user group with:
       | storage_type | enable_stash | server_support |
-      | Shared       | no           | yes            |
+      | Shared       | yes           | yes            |
     Then I should see correct UI for Itemized user group with:
       | storage_type | enable_stash | server_support |
-      | Limited      | no           | yes            |
+      | Limited      | yes           | yes            |
     Then I should see correct UI for Itemized user group with:
       | storage_type | enable_stash | server_support |
-      | Assigned     | no           | yes            |
+      | Assigned     | yes           | yes            |
     When I stop masquerading
     And I view partner details by newly created partner company name
-    And I enable stash for the partner
+    And I disable stash for the partner
     And I act as newly created partner
     And I navigate to Add User Group section
     Then I should see correct UI for Itemized user group with:
       | storage_type | enable_stash | server_support |
-      | Shared       | yes          | yes            |
+      | Shared       | no          | yes            |
     Then I should see correct UI for Itemized user group with:
       | storage_type | enable_stash | server_support |
-      | Limited      | yes          | yes            |
+      | Limited      | no          | yes            |
     Then I should see correct UI for Itemized user group with:
       | storage_type | enable_stash | server_support |
-      | Assigned     | yes          | yes            |
+      | Assigned     | no          | yes            |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 

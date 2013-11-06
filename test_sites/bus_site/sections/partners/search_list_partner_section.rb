@@ -29,16 +29,16 @@ module Bus
       else
         include_sub_partners_cb.uncheck
       end
+      wait_until_bus_section_load # Wait to load sub partners
       if full_search
         full_search_cb.check
       else
         full_search_cb.uncheck
       end
-      wait_until_bus_section_load # Wait to load sub partners
       search_partner_tb.type_text(search_key)
       partner_filter_select.select(filter)
       search_partner_btn.click
-      alert_accept
+      alert_accept if full_search
       wait_until_bus_section_load
     end
 

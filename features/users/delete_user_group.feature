@@ -13,7 +13,7 @@ Feature: Edit existing user group
 
     And Bundled user groups table should be:
       | Group Name            | Sync | Server | Storage Type | Type Value | Storage Used | Devices Used |
-      | (default user group)  | false | true   | Shared       |            | 0            | 0            |
+      | (default user group)  | true | true   | Shared       |            | 0            | 0            |
 
 
     When I delete user group details by name: (default user group)
@@ -77,7 +77,7 @@ Feature: Edit existing user group
 
     And Bundled user groups table should be:
       | Group Name            | Sync | Server | Storage Type | Type Value | Storage Used | Devices Used |
-      | (default user group)  | false | true   | Shared       |            | 0            | 0            |
+      | (default user group)  | true | true   | Shared       |            | 0            | 0            |
 
     And I add new user(s):
       | user_group           | name       | storage_type | storage_limit | devices |
