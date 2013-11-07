@@ -157,7 +157,7 @@ Feature:
     Then New partner should be created
     When I act as newly created partner account
     And I navigate to Add New User section from bus admin console page
-    Then I should not see stash options
+    Then I should see stash options
     When I add new user(s):
       | name           | user_group           | storage_type | storage_limit | devices |
       | TC.18967 user1 | (default user group) | Desktop      | 5             | 1       |
@@ -355,8 +355,8 @@ Feature:
       | Sync | 0 / 10 GB          | Set                  | N/A              |
     When I send stash invitation email
     When I search emails by keywords:
-      | to                          | subject      |
-      | <%=@new_users.first.email%> | enable stash |
+      | to                          | subject     |
+      | <%=@new_users.first.email%> | enable sync |
     Then I should see 1 email(s)
     When I navigate to Search / List Machines section from bus admin console page
     Then Machine search results should be:

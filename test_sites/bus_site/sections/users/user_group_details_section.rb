@@ -17,8 +17,7 @@ module Bus
     element(:stash_default_quota_tb, id: "stash_default_quota")
     element(:submit_stash_status_btn, xpath: "//input[contains(@onclick,'submit_stash_status')]")
     element(:add_stash_to_all_users_link, xpath: "//a[contains(@onclick,'enable_stash_for_all_confirm')]")
-    element(:add_stash_to_all_link, xpath: "//a[text()='Add Stash to All Users']")
-
+    element(:add_stash_to_all_link, xpath: "//a[text()='Enable sync for all users']")
     # Public: User group details information
     #
     # Example:

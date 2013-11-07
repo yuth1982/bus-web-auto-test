@@ -253,7 +253,7 @@ Scenario: Mozy-19853: Access an United Kingdom Partner's User's details as Partn
       | @xxxxxxxx | (change)     | <%=@users.first.name%> (change) |
   And user resources details rows should be:
     | Storage                  | Devices                           |
-    | 0 Used / 30 GB Available | Server: 0 Used / 1 Available Edit |
+    | 0 Used / 10 GB Available | Server: 0 Used / 1 Available Edit |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 

@@ -75,8 +75,8 @@ Feature:
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
     Then Partner account attributes should be:
-      | Users:            | -1        |
-      | Default Sync Storage:  |           |
+      | Sync Users:            | -1 |
+      | Default Sync Storage:  |    |
     And Partner stash info should be:
       | Users:         | 2 |
       | Storage Usage: | 0 |
@@ -102,8 +102,8 @@ Feature:
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
     Then Partner account attributes should be:
-      | Users:            | -1        |
-      | Default Sync Storage:  |           |
+      | Sync Users:            | -1 |
+      | Default Sync Storage:  |    |
     And Partner stash info should be:
       | Users:         | 2 |
       | Storage Usage: | 0 |
@@ -131,8 +131,8 @@ Feature:
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
     Then Partner account attributes should be:
-      | Users:            | -1        |
-      | Default Sync Storage:  |           |
+      | Sync Users:            | -1 |
+      | Default Sync Storage:  |    |
     And Partner stash info should be:
       | Users:         | 2 |
       | Storage Usage: | 0 |

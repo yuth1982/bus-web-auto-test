@@ -25,7 +25,7 @@ module Bus
     elements(:product_keys_tables, css: 'div[id^=all-license-keys-] table.mini-table')
 
     # Add Stash
-    element(:add_stash_link, xpath: "//a[text()='(Add Stash)']")
+    element(:add_stash_link, xpath: "//a[text()='(Add Sync)']")
     element(:stash_quota_tb, css: "form[id^=stash-form-] input#quota")
     element(:send_email_cb, css: "form[id^=stash-form-] input#send_email")
     element(:submit_stash_btn, css: "form[id^=stash-form-] input[value=Submit]")
@@ -182,9 +182,9 @@ module Bus
     end
 
     def add_stash_quota(quota)
-      handle_max('set', 'machine', 'Stash')
-      set_max_value('machine', 'Stash', quota)
-      handle_max('save', 'machine', 'Stash')
+      handle_max('set', 'machine', 'Sync')
+      set_max_value('machine', 'Sync', quota)
+      handle_max('save', 'machine', 'Sync')
     end
 
     # Public: Click change stash link then click cancel link

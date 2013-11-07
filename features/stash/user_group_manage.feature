@@ -64,7 +64,7 @@ Feature: User group stash setting management
     And I search and delete partner account by newly created partner company name
 
   @TC.19005 @BSA.2010 @bus @stash
-  Scenario: 19005 No Enable Sync settings in user group edit page when stash is disabled for partner
+  Scenario: 19005 No Enable sync for all users settings in user group edit page when stash is disabled for partner
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
       | 1      | Silver        | 100            |
@@ -79,7 +79,8 @@ Feature: User group stash setting management
       | Test | Shared       |
     Then Test user group should be created
     When I view details of TC.19005.1-user's user group
-    Then I should not see Enable Sync text on user group details section
+    When I disable stash for the user group
+    Then I should not see Enable sync for all users text on user group details section
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -237,7 +238,7 @@ Feature: User group stash setting management
       | Enable Sync: |
       | Yes (change)  |
     When I try to add stash to all users for the partner
-    Then Popup window message should be Nothing got changed. All users in this partner already have Sync.
+    Then Popup window message should be Nothing was changed. All users in this partner already have sync.
     And I click Close button on popup window
     And I search and delete partner account by newly created partner company name
 
@@ -267,11 +268,11 @@ Feature: User group stash setting management
     Then Test user group should be created
     When I view details of TC.19012.1-user's user group
     And I enable stash for all users
-    Then Popup window message should be Do you want to create a Sync for all 2 users?
+    Then Popup window message should be Do you want to enable sync for all 2 users?
     When I click Continue button on popup window
     And I refresh User Group Details section
     Then User group users list details should be:
-    | Name            | Sync   | Machines | Storage         | Storage Used  |
+    | Name            | Sync    | Machines | Storage         | Storage Used  |
     | TC.19012.3-user | Enabled | 0        | Desktop: Shared | Desktop: None |
     | TC.19012.2-user | Enabled | 0        | Desktop: Shared | Desktop: None |
     | TC.19012.1-user | Enabled | 0        | Desktop: Shared | Desktop: None |

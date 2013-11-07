@@ -101,7 +101,7 @@ Feature: User stash setting management
     Then New partner should be created
     When I act as newly created partner account
     And I navigate to Add New User section from bus admin console page
-    Then I should not see stash options
+    Then I should see stash options
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -186,8 +186,8 @@ Feature: User stash setting management
     And I view user details by newly created user email
     And I send stash invitation email
     When I search emails by keywords:
-      | to              | subject      |
-      | @new_user_email | enable stash |
+      | to              | subject     |
+      | @new_user_email | enable sync |
     Then I should see 1 email(s)
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
@@ -214,8 +214,8 @@ Feature: User stash setting management
       | Name:                  | Enable Sync:               |
       | TC.19121-user (change) | Yes (Send Invitation Email) |
     When I search emails by keywords:
-      | to              | subject      |
-      | @new_user_email | enable stash |
+      | to              | subject     |
+      | @new_user_email | enable sync |
     Then I should see 1 email(s)
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
@@ -355,7 +355,7 @@ Feature: User stash setting management
     And I refresh User Details section
     Then device table in user details should be:
       | Device   | Used/Available | Device Storage Limit | Last Update    | Action |
-      | Machine1 | 10 GB / 95 GB  | Set                  | < a minute ago |        |
+      | Machine1 | 10 GB / 90 GB  | Set                  | < a minute ago |        |
     And I close User Details section
     When I add new user(s):
       | name                | storage_type | devices | enable_stash |
@@ -372,7 +372,7 @@ Feature: User stash setting management
       | TC.19116.stash-user (change) | Yes (Send Invitation Email) |
     And stash device table in user details should be:
       | Sync Container | Used/Available | Device Storage Limit | Last Update    | Action |
-      | Sync           | 20 GB / 75 GB  | Set                  | < a minute ago |        |
+      | Sync           | 20 GB / 70 GB  | Set                  | < a minute ago |        |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
       | keywords   |
