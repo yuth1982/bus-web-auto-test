@@ -29,7 +29,7 @@ Feature: Add a new partner
     And I view partner details by newly created partner company name
     And Partner general information should be:
       | Status:         | Root Admin:          | Root Role:             | Parent: | Marketing Referrals:            | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Autogrow: | Enable Sync: |
-      | Active (change) | @root_admin (act as) | Business Root (change) | MozyPro | @bus01_admin [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)      | No            |
+      | Active (change) | @root_admin (act as) | Business Root (change) | MozyPro | @bus01_admin [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)      | No           |
     And Partner contact information should be:
       | Company Type:    | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
       | MozyPro Itemized | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -38,8 +38,8 @@ Feature: Add a new partner
       | Backup Device Soft Cap | Disabled |
       | Server                 | Disabled |
       | Cloud Storage (GB)     |          |
-      | Sync Users:           |          |
-      | Default Sync Storage: |          |
+      | Sync Users:            |          |
+      | Default Sync Storage:  |          |
     And Itemized partner resources should be:
       |         | Devices: | Devices Used: | Quota: | Quota Used: | Resource Policy: |
       | Desktop | 5        | 0             | 50 GB  | 0           | Enabled          |
@@ -76,7 +76,7 @@ Feature: Add a new partner
     And I view partner details by newly created partner company name
     And Partner general information should be:
       | Status:         | Root Admin:          | Root Role:             | Parent: | Marketing Referrals:            | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Autogrow: | Enable Sync: |
-      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro | @bus01_admin [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)      | No            |
+      | Active (change) | @root_admin (act as) | Reseller Root (change) | MozyPro | @bus01_admin [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)      | No           |
     And Partner contact information should be:
       | Company Type:     | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
       | Reseller Itemized | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -85,8 +85,8 @@ Feature: Add a new partner
       | Backup Device Soft Cap | Disabled |
       | Server                 | Disabled |
       | Cloud Storage (GB)     |          |
-      | Sync Users:           |          |
-      | Default Sync Storage: |          |
+      | Sync Users:            |          |
+      | Default Sync Storage:  |          |
     And Itemized partner resources should be:
       |         | Devices: | Devices Used: | Quota: | Quota Used: | Resource Policy: |
       | Desktop | 10       | 0             | 250 GB | 0           | Enabled          |

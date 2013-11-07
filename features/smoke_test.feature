@@ -28,7 +28,7 @@ Feature: Bus Smoke Test
       | Backup Device Soft Cap | Disabled  |
       | Server                 | Disabled  |
       | Cloud Storage (GB)     |           |
-      | Sync Users:            |           |
+      | Sync Users:            |   -1     |
       | Default Sync Storage:  |           |
     And Partner pooled storage information should be:
       |         | Used | Available | Assigned | Used | Available | Assigned |
