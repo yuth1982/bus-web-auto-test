@@ -230,3 +230,32 @@ Feature:
       | Enable Sync: |
       | No (change)   |
     When I delete partner account
+
+  @TC.22080 @2.7 @bus @stash @partner_manage
+  Scenario: 22080 MozyEnterprise(Fortress tree) admin view stash details in partner detail section
+    When I act as partner by:
+      | email                                   | including sub-partners |
+      | redacted-36090@notarealdomain.mozy.com  | yes                    |
+    And I add a new sub partner:
+      | name                                  |
+      | Fortress Test Enable Sync Sub Partner |
+    Then New partner should be created
+    When I stop masquerading as sub partner
+    And I search partner by Fortress Test Enable Sync Sub Partner
+    And I view partner details by Fortress Test Enable Sync Sub Partner
+    And Partner general information should be:
+      | Status:         | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Co-branding: | Require Ingredient: | Enable Autogrow: | Enable Sync: |  Default Sync Storage: |
+      | Active (change) | MozyEnterprise (Fortress) (MozyEnterprise) | (add referral)       | (learn more and set up) | No (change)         | No (change)         | No (change)      | Yes          |  2 GB (change)         |
+    And Partner account attributes should be:
+      | Device Desktop Limit:  |          |
+      | Device Server Limit:   |          |
+      | Backup Devices         |          |
+      | Backup Device Soft Cap | Disabled |
+      | Server                 | Disabled |
+      | Cloud Storage (GB)     |          |
+      | Sync Users:            |  -1      |
+      | Default Sync Storage:  |   2      |
+    And Partner stash info should be:
+      | Users:         | 0     |
+      | Storage Usage: | 0 / 0 |
+  And I delete partner account
