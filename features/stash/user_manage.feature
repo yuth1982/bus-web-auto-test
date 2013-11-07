@@ -276,7 +276,7 @@ Feature: User stash setting management
       | stash19045@test.com    | stash19045     | (default user group) | Enabled  | 0        | 2 GB    | 20 MB        |
       | stash@test.com         | stash          | stash                | Enabled  | 0        | 2 GB    | 20 MB        |
 
-  @TC.19114 @TC.19115 @BSA.3040 @bus @2.5 @user_stories @US @enterprise @partner
+  @TC.19114 @BSA.3040 @bus @2.5 @user_stories @US @enterprise @partner
   Scenario: 19114 19115 Enterprise Partner View User storage usage
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -329,7 +329,7 @@ Feature: User stash setting management
       | <%=@users[1].email%> | TC.19115.stash-user  | Enabled  | 0        | Desktop: Shared | Desktop: 20 GB | today   | < a minute ago |
       | <%=@users[0].email%> | TC.19115.backup-user | Disabled | 1        | Desktop: Shared | Desktop: 10 GB | today   | 1 minute ago   |
 
-  @TC.19116 @TC.19117  @BSA.3040 @bus @2.5 @user_stories @US @mozypro @partner
+  @TC.19116  @BSA.3040 @bus @2.5 @user_stories @US @mozypro @partner
   Scenario: 19116 19117 Mozypro Partner View Sync status
     When I add a new MozyPro partner:
       | period | base plan | net terms |

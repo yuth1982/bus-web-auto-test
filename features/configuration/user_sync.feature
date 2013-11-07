@@ -59,8 +59,9 @@ Feature: User sync
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.17518 @TC.17529 @TC.17530 @TC.17531 @TC.17532 @TC.17534 @TC.17535 @TC.17536 @ui @bus @2.1 @direct_ldap_integration @use_provision
-  Scenario: 17518 17529 17530 17531 17532 17534 17535 17536 Check the UI when the partner has never synced(all the UI check)
+  @TC.17518 @ui @bus @2.1 @direct_ldap_integration @use_provision
+  Scenario: 17518 17529 17530 17531 17532 17534 17535 17536 Check the user sync UI
+    # Scenario: 17518 Check the UI when the partner has never synced(all the UI check)
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
       | 12     | 18    | 100 GB      | yes       |
@@ -201,8 +202,9 @@ Feature: User sync
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.17538 @TC.17551  @smoke @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction
-  Scenario: 17538 17551 One Rule/Match All/Multiple Users
+  @TC.17538  @smoke @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction
+  Scenario: 17538 17551 Provision and Deprovision Users with One Rule/Match All/Multiple
+    # Scenario: 17538 17551 One Rule/Match All/Multiple Users
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
       | 12     | 18    | 100 GB      | yes       |
@@ -263,8 +265,9 @@ Feature: User sync
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.17540 @TC.17552 @TC.17542 @TC.17554 @TC.17543 @TC.17557 @TC.17554 @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction
-  Scenario: 17540 17552 17542 17554 17543 17557 17554 One Rule/Multiple Rules
+  @TC.17540 @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction
+  Scenario: 17540 17552 17542 17554 17543 17557 17554 User sync with different conditions
+    # Scenario: 17540 One Rule/Multiple Rules
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
       | 12     | 18    | 100 GB      | yes       |
@@ -538,8 +541,9 @@ Feature: User sync
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.17559 @TC.17560 @function @bus @2.1 @direct_ldap_integration @user_deconstruction
-  Scenario: 17559 17560 Empty rules will be filtered
+  @TC.17559 @function @bus @2.1 @direct_ldap_integration @user_deconstruction
+  Scenario: 17559 17560 Error cases for user sync 
+    # Scenario: 17559 Empty rules will be filtered
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
       | 12     | 18    | 100 GB      | yes       |
@@ -952,8 +956,9 @@ Feature: User sync
     And I view user details by <%=CONFIGS['fedid']['user_email']%>
     And I activate the user
 
-  @TC.17546 @TC.17548 @TC.17549 @TC.18723 @vpn @bus @2.1 @direct_ldap_integration @use_provision
+  @TC.17546 @vpn @bus @2.1 @direct_ldap_integration @use_provision @qa5
   Scenario: 17546 17548 17549 18723 UserProvision/Sync - Add(Delete, Modify) a new user in AD
+    # Scenario: 17546 UserProvision/Sync - Add(Delete, Modify) a new user in AD
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
       | 12     | 18     | 100 GB      | yes       |
@@ -1160,8 +1165,9 @@ Feature: User sync
     And I search and delete partner account by newly created partner company name
 
 
-  @TC.17521 @TC.17522 @TC.17523 @TC.17520 @scheduled_sync  @bus @2.1 @direct_ldap_integration @use_provision
+  @TC.17521 @scheduled_sync  @bus @2.1 @direct_ldap_integration @use_provision
   Scenario: 17521 17522 17523 17520 Scheduled Sync (UI, cancel)
+    # Scenario: 17521 Scheduled Sync (UI, cancel)
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
       | 12     | 18    | 100 GB      | yes       |

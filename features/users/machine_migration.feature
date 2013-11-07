@@ -46,8 +46,9 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       | TestMachine2 | @machine_hash | <%=@users[1].email%> |           |
       | TestMachine3 | @machine_hash | <%=@users[2].email%> |           |
 
-  @TC.16270 @TC.16271 @bus @2.5 @machine_migration
+  @TC.16270 @bus @2.5 @machine_migration
   Scenario: 16270 16271 Export a CSV file in Synchronized way after adding/deleting one user-machine mapping
+    # Scenario: 16270 Export a CSV file in Synchronized way after adding/deleting one user-machine mapping
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | company name                   |
       | 12     | 8     | 100 GB      | yes       | Machine Migration Add & Delete |
@@ -97,7 +98,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       | Machine Name  | Machine Hash                           | Current Owner   | New Owner |
       |WIN-F13I7JF06G5|87f9fa5583e952cf76fe53e1eab0123923dc92e4|new_user@test.com|           |
 
-  @TC.16273 @TC.16279 @bus @2.5 @machine_migration
+  @TC.16273 @bus @2.5 @machine_migration
   Scenario: 16273 16279 Export a CSV file in Synchronized way while the partner has no Mozy users before; Import a CSV file whose type is not CSV in non-passive way
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -137,7 +138,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       | column 1      |  column 2       |  column 3                    | column 4                                   |
       |Import Results:| 3 rows imported |3 machines moved to new users | 0 machines skipped (no new user specified) |
 
-  @TC.16280 @TC.16281 @TC.16282 @TC.16283 @bus @2.5 @machine_migration
+  @TC.16280 @bus @2.5 @machine_migration
   Scenario: 16280 16281 16282 16283 Import a CSV file with a column absent
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -177,7 +178,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       | column 1      |  column 2       |  column 3                    | column 4                                   |
       |Import Results:| 3 rows imported |0 machines moved to new users | 3 machines skipped (no new user specified) |
 
-  @TC.16284 @TC.16285 @TC.16286 @TC.16287 @bus @2.5 @machine_migration
+  @TC.16284 @bus @2.5 @machine_migration
   Scenario: 16284 16285 16286 16287 Import a CSV file whose one column has unknown value
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -218,7 +219,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       | column 1      |  column 2       |  column 3                    | column 4                                   | column 5  | column 6          |
       |Import Results:| 3 rows imported |0 machines moved to new users | 0 machines skipped (no new user specified) | 3 Errors: | Unknown new owner |
 
-  @TC.16288 @TC.16289 @TC.16290 @TC.16291 @bug @2.5 @machine_migration
+  @TC.16288 @bug @2.5 @machine_migration
   Scenario: 16288 16289 16290 16291 Import a CSV file with current owners invalid format
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
