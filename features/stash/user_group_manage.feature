@@ -13,7 +13,6 @@ Feature: User group stash setting management
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |
@@ -39,7 +38,6 @@ Feature: User group stash setting management
       | period | users | net terms |
       | 12     | 10    | yes       |
     Then New partner should be created
-    When I enable stash for the partner
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |
@@ -135,7 +133,6 @@ Feature: User group stash setting management
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |
@@ -171,7 +168,6 @@ Feature: User group stash setting management
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |
@@ -207,7 +203,6 @@ Feature: User group stash setting management
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |
@@ -233,7 +228,6 @@ Feature: User group stash setting management
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |
@@ -248,7 +242,6 @@ Feature: User group stash setting management
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |

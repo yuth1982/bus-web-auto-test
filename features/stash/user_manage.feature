@@ -28,7 +28,6 @@ Feature: User stash setting management
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |
@@ -99,9 +98,13 @@ Feature: User stash setting management
       | period | users |
       | 12     | 10    |
     Then New partner should be created
+    Then Partner general information should be:
+      | Enable Sync: |
+      | Yes (change) |
+    Then I disable stash for the partner
     When I act as newly created partner account
     And I navigate to Add New User section from bus admin console page
-    Then I should see stash options
+    Then I should not see stash options
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -111,7 +114,6 @@ Feature: User stash setting management
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |
@@ -127,7 +129,6 @@ Feature: User stash setting management
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |
@@ -198,7 +199,6 @@ Feature: User stash setting management
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |
@@ -226,7 +226,6 @@ Feature: User stash setting management
       | period | users |
       | 12     | 10    |
     Then New partner should be created
-    When I enable stash for the partner
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |
@@ -282,7 +281,6 @@ Feature: User stash setting management
       | period | users |
       | 12     | 4     |
     Then New partner should be created
-    When I enable stash for the partner
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |

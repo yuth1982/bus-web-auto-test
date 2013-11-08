@@ -226,15 +226,14 @@ Feature:
       | period | users | server plan | net terms |
       | 12     | 10    | 100 GB      | yes       |
     Then New partner should be created
-    When I enable stash for the partner
-    And I act as newly created partner account
+    When I act as newly created partner account
     And I add new user(s):
       | name          | user_group           | storage_type | storage_limit | devices | enable_stash |
       | TC.19035 User | (default user group) | Desktop      | 10            | 1       | yes          |
     Then 1 new user should be created
     When I search emails by keywords:
       | to                          | subject      |
-      | <%=@new_users.first.email%> | enable stash |
+      | <%=@new_users.first.email%> | enable sync  |
     Then I should see 0 email(s)
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
@@ -277,7 +276,6 @@ Feature:
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
-    When I enable stash for the partner
     And I add stash to all users for the partner
     And I act as newly created partner account
     And I navigate to Search / List Users section from bus admin console page
@@ -296,7 +294,6 @@ Feature:
       | period | users | net terms |
       | 12     | 10    | yes       |
     Then New partner should be created
-    When I enable stash for the partner
     When I act as newly created partner account
     And I add new user(s):
       | name          | user_group           | storage_type | storage_limit | devices | enable_stash |
@@ -332,7 +329,6 @@ Feature:
       | period | users | server plan | net terms |
       | 12     | 10    | 100 GB      | yes       |
     Then New partner should be created
-    When I enable stash for the partner
     When I act as newly created partner account
     When I add a new Itemized user group:
       | name        | desktop_storage_type | desktop_assigned_quota | desktop_devices | enable_stash | server_storage_type |
@@ -376,7 +372,6 @@ Feature:
       | period | users | server plan | net terms |
       | 12     | 10    | 100 GB      | yes       |
     Then New partner should be created
-    When I enable stash for the partner
     When I act as newly created partner account
     When I add a new Itemized user group:
       | name        | desktop_storage_type | desktop_assigned_quota | desktop_devices | enable_stash | server_storage_type |
@@ -399,7 +394,7 @@ Feature:
       | Sync | 0 / 10 GB          | Set                  | N/A              |
     When I search emails by keywords:
       | to                          | subject      |
-      | <%=@new_users.first.email%> | enable stash |
+      | <%=@new_users.first.email%> | enable sync  |
     Then I should see 0 email(s)
     When I navigate to Search / List Machines section from bus admin console page
     Then Machine search results should be:
