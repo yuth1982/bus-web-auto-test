@@ -52,7 +52,7 @@ Feature:
     Then New partner should be created
     When I act as newly created partner account
     And I navigate to Add New User section from bus admin console page
-    Then I should not see stash options
+    Then I should see stash options
     When I add new user(s):
       | name          | storage_type | storage_limit | devices |
       | TC.19078 User | Desktop      | 10            | 1       |
@@ -267,7 +267,7 @@ Feature:
     Then New partner should be created
     When I act as newly created partner account
     When I navigate to Add New User section from bus admin console page
-    Then I should not see stash options
+    Then I should see stash options
     When I add new user(s):
       | name           | user_group           | storage_type | storage_limit | devices |
       | TC.19102 user1 | (default user group) | Desktop      | 5             | 1       |
