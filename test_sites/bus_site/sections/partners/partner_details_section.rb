@@ -654,10 +654,9 @@ module Bus
 
     def edit_setting(setting)
       row_el = find(:xpath, "//td[text()='#{setting['Name']}']/..")
-#      row_el.find(:xpath, '/td[5]').hover
-      #execute_script("$('#element').trigger('mouseenter')")
-      # this only work for selenium webdriver now
-      page.driver.browser.action.move_to(row_el.native).perform
+      capability_id = /[\d]+/.match(row_el[:id]).to_s.to_i
+      #Enable style.display forcelly
+      page.driver.execute_script("document.querySelector('span[id^=settings_editor_for_#{capability_id}]').style.display=''")
       row_el.find(:css, 'span.settings_editor>a').click
       row_el.find(:id, 'pro_partner_setting_value').type_text(setting['Value'])
       locked_el = row_el.find(:id, 'pro_partner_setting_is_locked')

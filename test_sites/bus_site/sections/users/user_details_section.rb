@@ -176,9 +176,9 @@ module Bus
     #
     # @return [] nothing
     def change_stash_quota(quota)
-      handle_max('edit', 'machine', 'Stash')
-      set_max_value('machine', 'Stash', quota)
-      handle_max('save', 'machine', 'Stash')
+      handle_max('edit', 'machine', 'Sync')
+      set_max_value('machine', 'Sync', quota)
+      handle_max('save', 'machine', 'Sync')
     end
 
     def add_stash_quota(quota)

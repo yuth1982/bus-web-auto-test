@@ -101,6 +101,7 @@ When /^I search report by name (.+)$/ do |report_name|
 end
 
 Then /^Scheduled report list should be:$/ do |results_table|
+  @bus_site.admin_console_page.scheduled_reports_section.wait_until_bus_section_load
   actual = @bus_site.admin_console_page.scheduled_reports_section.reports_table_hashes.first
   expected = results_table.hashes.first
 
