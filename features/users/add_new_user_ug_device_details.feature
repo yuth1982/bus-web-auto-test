@@ -79,7 +79,7 @@ Feature: Add new user, user group device details
       And I navigate to Add New User section from bus admin console page
       And I choose Shared UG from Choose a Group
       Then User group storage details table should be:
-        | Storage(GB) | 3 |
+        | Storage(GB) | 13 |
       And I choose Assigned UG from Choose a Group
       Then User group storage details table should be:
         | Storage(GB) | 2 |

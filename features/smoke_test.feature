@@ -28,7 +28,7 @@ Feature: Bus Smoke Test
       | Backup Device Soft Cap | Disabled  |
       | Server                 | Disabled  |
       | Cloud Storage (GB)     |           |
-      | Sync Users:            |   -1     |
+      | Sync Users:            |   -1      |
       | Default Sync Storage:  |           |
     And Partner pooled storage information should be:
       |         | Used | Available | Assigned | Used | Available | Assigned |
@@ -61,7 +61,7 @@ Feature: Bus Smoke Test
     When I navigate to User Group List section from bus admin console page
     And Itemized user groups table should be:
       | Group Name           | Stash | DT Storage Type | DT Storage Value | DT Storage Used | Desktop Used | Desktop Total | SR Storage Type | SR Storage Value | SR Storage Used | Server Used | Total |
-      | (default user group) | false | Shared          |                  | 0               | 0            | 14            | Shared          |                  | 0               | 0           | 198   |
+      | (default user group) | true  | Shared          |                  | 0               | 0            | 14            | Shared          |                  | 0               | 0           | 198   |
       | test group           | false | Assigned        | 10 GB            | 0               | 0            | 1             | Assigned	     | 20 GB	        | 0	              | 0	        | 2     |
     When I add new user(s):
       | user_group | storage_type | storage_limit | devices |
