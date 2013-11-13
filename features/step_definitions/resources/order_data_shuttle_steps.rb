@@ -92,6 +92,10 @@ Then /^order data shuttle message should be:$/ do |messages|
   @bus_site.admin_console_page.process_order_section.messages.gsub(/\n/," ").should == messages
 end
 
+Then /^order data shuttle notification should be:$/ do |messages|
+  @order.notification_msg.gsub(/\n/," ").should == messages
+end
+
 Then /^Order data shuttle message should include (.+)$/ do |messages|
   @bus_site.admin_console_page.process_order_section.messages.include?(messages).should be_true
 end

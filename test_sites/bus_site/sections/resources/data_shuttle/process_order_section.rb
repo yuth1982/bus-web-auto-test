@@ -8,6 +8,7 @@ module Bus
     element(:verify_shipping_address_table, css: "table.form-box2")
 
     element(:message_div, xpath: "//ul[@class='flash successes' or @class='flash errors']")
+    element(:order_notification_p, css: "div.show-details > p")
 
     element(:name_tb, id: "seed_device_order_name")
     element(:address1_tb, id: "seed_device_order_address1")
@@ -122,6 +123,9 @@ module Bus
         next_btns[1].click
 
         wait_until_bus_section_load
+
+        #seperate from error/success message
+        order.notification_msg = order_notification_p.text
 
         # fill summary section
         if messages.empty?

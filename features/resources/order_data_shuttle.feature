@@ -682,3 +682,31 @@ Feature:
       | today | $0.00   | $0.00      | $0.00       |
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
+
+
+  @TC.119990 @bus @data_shuttle
+  Scenario: 119990 Order Data Shuttle for Invoiced Customer
+    When I add a new MozyEnterprise partner:
+      | period | users | net terms |
+      | 12     | 2     | yes       |
+    Then New partner should be created
+    When I get the partner_id
+    And I act as newly created partner account
+    And I add new user(s):
+      | user_group           | storage_type | storage_limit | devices |
+      | (default user group) | Desktop      | 10            | 1       |
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    Then I stop masquerading
+    And I order data shuttle for newly created partner company name
+      | power adapter   | key from  |
+      | Data Shuttle US | available |
+    Then order data shuttle notification should be:
+    """
+    This account will be billed for this Data Shuttle order when you click "Finish". If this order is intended to be free of charge, please type "100" in the Discount field then click somewhere outside the field to update the order total.
+    """
+    And I search and delete partner account by newly created partner company name
