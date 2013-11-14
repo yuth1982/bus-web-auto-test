@@ -51,6 +51,7 @@ module Bus
       end
 
       users.each_index do |index|
+        Log.debug "##########adding the #{index} user"
         find(:id, "user#{index+1}_name").type_text(users[index].name)
         find(:id, "user#{index+1}_username").type_text(users[index].email)
         add_user_btn.click if index != users.length-1

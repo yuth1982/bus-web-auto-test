@@ -237,8 +237,8 @@ Then /^The sync status result should like:$/ do |table|
   expected = table.transpose.rows.first
   actual = @bus_site.admin_console_page.authentication_policy_section.sync_result
   Log.debug "########Actual is #{actual}"
-  time_re = '\d+/\d+/\d+ \d+:\d+ \+\d+:\d+'
-  time_re_sub = '\d+/\d+/\d+ \d+:\d+ \\\+\d+:\d+'
+  time_re = '\d+/\d+/\d+ \d+:\d+ (\+|-)\d+:\d+'
+  time_re_sub = '\d+/\d+/\d+ \d+:\d+ (\\\+|-)\d+:\d+'
   last_sync_time = actual[0].match(time_re)[0]
   costed_time = actual[0].match('about (.+) sec')[1].to_f
   Log.debug("last sync time is #{last_sync_time}")
