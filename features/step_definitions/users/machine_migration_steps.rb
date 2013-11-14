@@ -222,3 +222,8 @@ end
 When /^I change the csv file by adding new owners to the machines for (\d+) machines$/ do |arg|
   @bus_site.admin_console_page.machine_mapping_section.change_10000_machines('machine_mapping', 'import')
 end
+
+When /^I refresh the machine mapping section$/ do
+  @bus_site.admin_console_page.machine_mapping_section.refresh_bus_section
+  @bus_site.admin_console_page.machine_mapping_section.wait_until_bus_section_load
+end

@@ -87,6 +87,7 @@ module Bus
     element(:buy_more_btn, css: "div.popup-window-footer input[value='Buy More']")
     element(:allocate_resources_btn, css: "div.popup-window-footer input[value=Allocate]")
     element(:ok_btn, css: "div.popup-window-footer input[value=Ok]")
+    element(:yes_btn, css: "div.popup-window-footer input[value=Yes]")
 
     def partner_id
       find(:xpath, "//div[@id='identify-me']/a[1]")[:href][/partner-show-(\d+)/, 1]
@@ -177,6 +178,10 @@ module Bus
 
     def click_ok
       ok_btn.click
+    end
+
+    def click_yes
+      yes_btn.click
     end
 
     # user/partner verification section

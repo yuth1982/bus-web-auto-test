@@ -31,8 +31,8 @@ Then /^I click Close button on popup window$/ do
   @bus_site.admin_console_page.click_close
 end
 
-Then /^I click Continue button on popup window$/ do
-  @bus_site.admin_console_page.click_continue
+Then /^I click Yes button on popup window$/ do
+  @bus_site.admin_console_page.click_yes
 end
 
 Then /^I click Cancel button on popup window$/ do

@@ -158,18 +158,21 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
     Then The import result should be like:
       | column 1      |  column 2       |  column 3                    | column 4                                   | column 5  | column 6                                                                                         |
       |Import Results:| 3 rows imported |0 machines moved to new users | 0 machines skipped (no new user specified) | 3 Errors: | Row 2 - Invalid record - one or more of machine name, machine hash, and current owner are blank. |
+    And I refresh the machine mapping section
     When I download the machine csv file
     And I make the Machine Hash absent
     When I upload the machine csv file
     Then The import result should be like:
       | column 1      |  column 2       |  column 3                    | column 4                                   | column 5  | column 6                                                                                         |
       |Import Results:| 3 rows imported |0 machines moved to new users | 0 machines skipped (no new user specified) | 3 Errors: | Row 2 - Invalid record - one or more of machine name, machine hash, and current owner are blank. |
+    And I refresh the machine mapping section
     When I download the machine csv file
     And I make the Current Owner absent
     When I upload the machine csv file
     Then The import result should be like:
       | column 1      |  column 2       |  column 3                    | column 4                                   | column 5  | column 6                                                                                         |
       |Import Results:| 3 rows imported |0 machines moved to new users | 0 machines skipped (no new user specified) | 3 Errors: | Row 2 - Invalid record - one or more of machine name, machine hash, and current owner are blank. |
+    And I refresh the machine mapping section
     # 16283 Import a CSV file with a column absent (new owner)
     When I download the machine csv file
     And I make the New Owner absent
@@ -204,6 +207,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
     Then The import result should be like:
       | column 1      |  column 2       |  column 3                    | column 4                                   | column 5  | column 6        |
       |Import Results:| 3 rows imported |0 machines moved to new users | 0 machines skipped (no new user specified) | 3 Errors: | Unknown machine |
+    And I refresh the machine mapping section
     # Scenario: 16286 Import a CSV file whose one column has unknown value (current Owner)
     When I download the machine csv file
     And I make the Current Owner an unknown value
@@ -211,6 +215,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
     Then The import result should be like:
       | column 1      |  column 2       |  column 3                    | column 4                                   | column 5  | column 6             |
       |Import Results:| 3 rows imported |0 machines moved to new users | 0 machines skipped (no new user specified) | 3 Errors: | does not own machine |
+    And I refresh the machine mapping section
     # Scenario: 16287 Import a CSV file whose one column has unknown value (New Owner)
     When I download the machine csv file
     And I make the New Owner an unknown value
@@ -239,6 +244,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
     Then The import result should be like:
       | column 1      |  column 2       |  column 3                    | column 4                                   | column 5  | column 6             |
       |Import Results:| 3 rows imported |0 machines moved to new users | 0 machines skipped (no new user specified) | 3 Errors: | does not own machine |
+    And I refresh the machine mapping section
     # Scenario: 16289 Import a CSV file with new owners invalid format
     When I download the machine csv file
     And I make the New Owner an invalid value
@@ -246,6 +252,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
     Then The import result should be like:
       | column 1      |  column 2       |  column 3                    | column 4                                   | column 5  | column 6          |
       |Import Results:| 3 rows imported |0 machines moved to new users | 0 machines skipped (no new user specified) | 3 Errors: | Unknown new owner |
+    And I refresh the machine mapping section
     # Scenario: 16290 Import a CSV file with mismatched machine name and machine hash
     When I download the machine csv file
     And I make a column with mismatched machine name and machine hash
@@ -253,6 +260,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
     Then The import result should be like:
       | column 1      |  column 2       |  column 3                    | column 4                                   | column 5  | column 6        |
       |Import Results:| 3 rows imported |0 machines moved to new users | 0 machines skipped (no new user specified) | 3 Errors: | Unknown machine |
+    And I refresh the machine mapping section
     # Scenario: 16291 Import a CSV file with new owner an empty string in non-passive way
     When I download the machine csv file
     And I make the new owner column with a space

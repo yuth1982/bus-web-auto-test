@@ -262,7 +262,7 @@ Feature: User group stash setting management
     When I view details of TC.19012.1-user's user group
     And I enable stash for all users
     Then Popup window message should be Do you want to enable sync for all 2 users?
-    When I click Continue button on popup window
+    When I click Yes button on popup window
     And I refresh User Group Details section
     Then User group users list details should be:
     | Name            | Sync    | Machines | Storage         | Storage Used  |

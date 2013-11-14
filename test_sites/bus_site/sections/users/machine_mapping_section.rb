@@ -96,7 +96,9 @@ module Bus
     #
     # Returns 0 if succeed
     def result_msg
+      Log.debug "#####wait for the mgs_show is visible"
       page.wait_until { page.find(:id, 'msg_show').visible? }
+      Log.debug "#####wait for the import_msg is not visible"
       wait_until(CONFIGS['global']['max_wait_time']) do
         !import_msg.visible?
       end

@@ -50,7 +50,7 @@ Feature: User sync
     Then Authentication Policy has been updated successfully
     When I click Sync Rules tab
     And I click the sync now button
-    And I wait for 70 seconds
+    And I wait for 90 seconds
     And I click Connection Settings tab
     Then The sync status result should like:
       | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
@@ -232,7 +232,7 @@ Feature: User sync
       | rule               | group |
       | cn=dev-17538-test* | dev   |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 90 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
@@ -253,7 +253,7 @@ Feature: User sync
       | rule               | action |
       | cn=dev-17538-test* | Delete |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 90 seconds
     And I delete 1 deprovision rules
     And I save the changes
     And I click Connection Settings tab
@@ -303,7 +303,7 @@ Feature: User sync
       | rule                                                                  | group |
       | (&(objectClass=user)(\|(\|(cn=dev-17540-test*)(cn=pm-17540-test*))(cn=qa-17540-test*))) | dev   |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 90 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
@@ -330,7 +330,7 @@ Feature: User sync
       | rule                                                                  | action  |
       | (&(objectClass=user)(\|(\|(cn=dev-17540-test*)(cn=pm-17540-test*))(cn=qa-17540-test*))) | Delete  |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 90 seconds
     And I delete 1 deprovision rules
     And I save the changes
     And I click Connection Settings tab
@@ -348,7 +348,7 @@ Feature: User sync
       | cn=pm-17542-test*  | pm    |
       | cn=qa-17542-test*  | qa    |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 90 seconds
     And I delete 3 provision rules
     And I save the changes
     And I click Connection Settings tab
@@ -377,7 +377,7 @@ Feature: User sync
       | cn=pm-17542-test*  | Delete   |
       | cn=qa-17542-test*  | Delete   |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 90 seconds
     And I delete 3 deprovision rules
     And I save the changes
     And I click Connection Settings tab
@@ -396,7 +396,7 @@ Feature: User sync
       | cn=pm-17543-test*  | pm    |
       | cn=qa-17543-test*  | qa    |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 90 seconds
     And I delete 4 provision rules
     And I save the changes
     And I click Connection Settings tab
@@ -424,7 +424,7 @@ Feature: User sync
       | cn=dev-17543-test* | Take no action   |
       | cn=dev-17543-test* | Delete           |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 90 seconds
     And I delete 2 deprovision rules
     And I save the changes
     And I click Connection Settings tab
@@ -453,7 +453,7 @@ Feature: User sync
       | cn=pm-17543-test*  | Delete   |
       | cn=qa-17543-test*  | Delete   |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 90 seconds
     And I delete 3 deprovision rules
     And I save the changes
     And I click Connection Settings tab
@@ -471,7 +471,7 @@ Feature: User sync
       | cn=pm-17544-test*  | pm    |
       | cn=qa-17544-test*  | qa    |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 90 seconds
     And I delete 3 provision rules
     And I save the changes
     And I click Connection Settings tab
@@ -500,7 +500,7 @@ Feature: User sync
       | cn=pm-17544-test*  | (default user group)   |
       | cn=qa-17544-test*  | (default user group)   |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 90 seconds
     And I delete 3 provision rules
     And I save the changes
     And I click Connection Settings tab
@@ -529,7 +529,7 @@ Feature: User sync
       | cn=pm-17544-test*  | Delete   |
       | cn=qa-17544-test*  | Delete   |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 90 seconds
     And I delete 3 deprovision rules
     And I save the changes
     And I click Connection Settings tab
