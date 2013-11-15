@@ -331,7 +331,7 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
     And I delete partner account
 
   @TC.20197 @bus @resizing_reseller_add-ons_plan
-  Scenario: 20197 Change Subscription Period of Platinum Reseller - US - 20 GB Add on - Monthly to Yearly
+  Scenario: 20197 Change Subscription Period of Platinum Reseller - US - 20 GB Add on - Yearly to Monthly
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | storage add on | country        | create under |
       | 12      | Platinum      | 200            | 2              | United Kingdom | MozyPro UK   |

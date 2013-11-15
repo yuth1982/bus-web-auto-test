@@ -139,7 +139,9 @@ module Bus
     #
     # Returns 0 if succeed
     def fill_in_import_file(file_name, file_path = default_download_path)
-      page.attach_file('file', "#{file_path}/#{file_name}")
+      file = File.join(file_path, file_name)
+      page.attach_file('file', file) 
+      Log.debug "Attach file #{file}"
     end
 
     # Public: Create the new csv file to upload
