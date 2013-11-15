@@ -26,7 +26,7 @@ module FileHelper
   end
 
   def ff_profile_path
-    "#{default_test_data_path}/#{PROFILE_NAME}"
+    File.join(default_test_data_path, "#{PROFILE_NAME}")
   end
 
   # Public: read csv file
@@ -36,7 +36,7 @@ module FileHelper
   #
   # Returns cvs rows array
   def read_csv_file(file_name, file_path = default_download_path)
-    report_file = Dir.glob("#{file_path}/#{file_name}.csv").first
+    report_file = Dir.glob(File.join(file_path, "#{file_name}.csv")).first
     rows = []
     CSV.foreach(report_file) do |row|
       if row.size > 1  #data header and data
@@ -53,7 +53,7 @@ module FileHelper
   #
   # Returns null
   def write_csv_file(file_name, data, file_path = default_download_path)
-    file = "#{file_path}/#{file_name}.csv"
+    file = File.join(file_path, "#{file_name}.csv")
     CSV.open(file, 'w') do |writer|
       data.each do |row|
         writer << row
@@ -68,8 +68,8 @@ module FileHelper
   #
   # Returns null
   def rename(old_name, new_name, file_path = default_download_path)
-    old_file = "#{file_path}/#{old_name}"
-    new_file = "#{file_path}/#{new_name}"
+    old_file = File.join(file_path, old_name)
+    new_file = File.join(file_path, old_name)
     File.rename(old_file, new_file)
   end
 
@@ -92,7 +92,8 @@ module FileHelper
   #
   # Return Boolean
   def file_exists?(file_name, file_path = default_download_path)
-    File.file?("#{file_path}/#{file_name}")
+    file = File.join(file_path, file_name)
+    File.file?(file)
   end
 
 end

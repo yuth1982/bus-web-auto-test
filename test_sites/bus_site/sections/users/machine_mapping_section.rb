@@ -8,7 +8,7 @@ module Bus
     element(:export_machine_csv_btn, id: "export_btn")
     element(:import_machine_csv_btn, id: "import_btn")
     element(:export_msg, id: "export_msg")
-    element(:import_msg, id: "import_msg")
+    element(:import_msg, {id: "import_msg"}, true)
     element(:browser_btn, id: "file")
     element(:msg_show, id: "msg_show")
 
@@ -98,10 +98,10 @@ module Bus
     # Returns 0 if succeed
     def result_msg
       Log.debug "#####wait for the mgs_show is visible"
-      page.wait_until(600) { page.find(:id, 'msg_show').visible? }
+      page.wait_until { page.find(:id, 'msg_show').visible? }
       Log.debug "#####wait for the import_msg is not visible"
       wait_until(CONFIGS['global']['max_wait_time']) do
-        !import_msg.visible?
+        !find(:id, 'import_msg').visible?
       end
       switch_to_iframe(['msg_show'])
       Log.debug('switch to the iframe')

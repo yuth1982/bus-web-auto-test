@@ -260,8 +260,10 @@ Then /^The sync status result should like:$/ do |table|
       next_sync_time = Time.strptime(next_time_got, '%m/%d/%y %H:%M %:z')
       t = Time.now
       expected_time = Time.utc(t.year,t.month, t.day, expected_next_sync.to_i, 0, 0).getlocal
-      if Time.now > expected_time
-        expected_time = Time.utc(t.year,t.month, t.day + 1, expected_next_sync.to_i, 0, 0).getlocal
+      day = t.day
+      while t > expected_time
+        expected_time = Time.utc(t.year,t.month, day + 1, expected_next_sync.to_i, 0, 0).getlocal
+        day = day + 1
       end
       Log.debug("the actual next sync time is #{actual[2]}")
       Log.debug("the expected next sync time is #{expected_time}")
