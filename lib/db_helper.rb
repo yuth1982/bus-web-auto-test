@@ -109,7 +109,7 @@ module DBHelper
   def get_admin_email
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "select username from public.admins where username like '%@decho.com%' and deleted_at IS NULL and passwordhash IS NOT NULL order by id DESC limit 1;"
+      sql = "select username from public.admins where username like '%@decho.com%' and deleted_at IS NULL and passwordhash IS NOT NULL and username not in (select username from users where username like '%@decho.com%' and deleted = false) order by id DESC limit 1;"
       c = conn.exec(sql)
       c.values[0][0]
     rescue PGError => e
@@ -122,7 +122,7 @@ module DBHelper
   def get_mh_user_email
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "select username from public.users where username like '%@decho.com%' and deleted = false and user_group_id = 4151 order by id DESC limit 1;"
+      sql = "select username from public.users where username like '%@decho.com%' and deleted = false and user_group_id = 4151 and username not in (select username from users where username like '%@decho.com%' and deleted = false) order by id DESC limit 1;"
       c = conn.exec(sql)
       c.values[0][0]
     rescue PGError => e
@@ -135,7 +135,7 @@ module DBHelper
   def get_suspended_user_email
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "select username from public.users where (username like '%@decho.com%' or username like '%redacted-%') and deleted = false and suspended_at NOTNULL order by id DESC limit 1;"
+      sql = "select username from public.users where (username like '%@decho.com%' or username like '%redacted-%') and deleted = false and suspended_at NOTNULL and username not in (select username from users where username like '%@decho.com%' and deleted = false) order by id DESC limit 1;"
       c = conn.exec(sql)
       c.values[0][0]
     rescue PGError => e
