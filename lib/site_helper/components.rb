@@ -11,7 +11,6 @@ module SiteHelper
     def element(element_name, element_hash, wait_until_usable = false)
       define_method(element_name.to_sym) do
         el = find(element_hash.keys.first, element_hash.values.first)
-        puts element_hash[:wait_until_usable]
         wait_until { el.visible? && el.enabled? } if wait_until_usable
         el.highlight
         el
