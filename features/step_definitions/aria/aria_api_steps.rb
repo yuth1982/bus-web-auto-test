@@ -1,6 +1,5 @@
-
 When /^API\* I get Aria account details by (.+)$/ do |aria_id|
-  @aria_acc_details = AriaApi.get_acct_details_all({:acct_no=> aria_id})
+  @aria_acc_details = AriaApi.get_acct_details_all({:acct_no=> aria_id.to_i})
 end
 
 Then /^API\* Aria account billing info should be:$/ do |info_table|
@@ -107,4 +106,25 @@ Then(/^API\\\* Aria client defined field data should be:$/) do |client_defined_f
   expected_values.each do |key, value|
     actual[key].should == value
   end
+end
+
+When /^API\* I change the Aria account status by (.+) to (.+)$/ do |aria_id, status_cd|
+  @aria_acc_details = AriaApi.update_acct_status({:account_no=> aria_id.to_i, :status_cd=> status_cd})
+end
+
+When /^API\* I assign the Aria account by (.+) to collections account group (.+)$/ do |aria_id, group_no|
+  @aria_acc_groups_assigned_response = AriaApi.assign_collections_acct_group({:acct_no=> aria_id.to_i, :group_no=> group_no})
+end
+
+When /^API\* I get the list of account groups for (.+)$/ do |aria_id|
+  @aria_acc_groups = AriaApi.get_acct_groups_by_acct({:acct_no=> aria_id.to_i})
+end
+
+When /^API\* Aria tax exempt status for (.+) should be (.+)$/ do |aria_id, tax_status|
+  @aria_acc_tax_exempt_status = AriaApi.get_acct_tax_exempt_status({:acct_no=> aria_id.to_i})
+  @aria_acc_tax_exempt_status["exemption_level_desc"].should == tax_status
+end
+
+When /^API\* I change the Aria tax exemption level for (.+) to (.+)$/ do |aria_id, exemption_level|
+  @aria_acc_tax_exempt_level = AriaApi.set_acct_tax_exempt_status({:acct_no=> aria_id.to_i, :exemption_level=> exemption_level})
 end
