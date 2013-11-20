@@ -11,6 +11,10 @@ When /^I check capabilities for the new role:$/ do |table|
   @bus_site.admin_console_page.add_new_role_section.add_capabilities(capability_table[1..-1])
 end
 
+When /^I check all the capabilities for the new role$/ do
+  @bus_site.admin_console_page.role_details_section.add_all_available_capabilities
+end
+
 When /^I delete role (.+)$/ do | role_name |
   sleep 5 # Without sleep, the (stop masquerade) link comes back again
   step "I navigate to List Roles section from bus admin console page"

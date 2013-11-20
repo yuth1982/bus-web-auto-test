@@ -12,5 +12,13 @@ module Bus
       delete_role_lnk.click
       alert_accept
     end
+
+    def add_all_available_capabilities
+      wait_until_bus_section_load
+      all(:css, 'input[id^=capability]').each do |ch|
+        ch.check
+      end
+      find(:css, 'div[id^=roles-show] input[class=button]').click
+    end
   end
 end

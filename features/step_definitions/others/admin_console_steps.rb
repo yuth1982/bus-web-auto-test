@@ -6,9 +6,9 @@ When /^I close Mozy Stash invitation popup window$/ do
   @bus_site.admin_console_page.close_stash_invitation_popup
 end
 
-When /^I stop masquerading$/ do
+When /^I stop masquerading( from subpartner)*$/ do |sub|
   @bus_site.admin_console_page.stop_masquerading
-  @bus_site.admin_console_page.has_no_link?('stop masquerading').should be_true
+  @bus_site.admin_console_page.has_no_link?('stop masquerading').should be_true if sub.nil?
 end
 
 When /^I stop masquerading as sub partner$/ do

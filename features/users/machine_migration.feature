@@ -45,6 +45,8 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       | TestMachine1 | @machine_hash | <%=@users[0].email%> |           |
       | TestMachine2 | @machine_hash | <%=@users[1].email%> |           |
       | TestMachine3 | @machine_hash | <%=@users[2].email%> |           |
+    Then I stop masquerading
+    And I search and delete partner account by newly created partner company name
 
   @TC.16270 @bus @2.5 @machine_migration
   Scenario: 16270 16271 Export a CSV file in Synchronized way after adding/deleting one user-machine mapping
@@ -271,18 +273,50 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
 
   @TC.16343 @bug @2.5 @machine_migration @TODO @qa5
   Scenario: 16343 Export a CSV file when the partner has subpartners
-    When I act as partner by:
-      | email                                    |
-      | robert.bartelds-at-freecom.com@mozy.test |
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | net terms |
+      | 12     | 8     | 100 GB      | yes       |
+    Then New partner should be created
+    And I act as newly created partner account
+    And I add some new users and activate one machine for each
+      | name          | user_group           | storage_type | storage_limit | devices | machine_name       |
+      | partner.User1 | (default user group) | Desktop      | 50            | 3       | PartnerTestMachine |
+    When I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          | Parent     |
+      | subrole | Partner admin | Enterprise |
+    And I check all the capabilities for the new role
+    When I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for MozyEnterprise partner:
+      | Name    | Company Type | Root Role | Enabled | Public | Currency                        | Periods | Tax Percentage | Tax Name | Auto-include tax | Server Price per key | Server Min keys | Server Price per gigabyte | Server Min gigabytes | Desktop Price per key | Desktop Min keys | Desktop Price per gigabyte | Desktop Min gigabytes |
+      | subplan | business     | subrole   | Yes     | No     | $ — US Dollar (Partner Default) | yearly  | 10             | test     | false            | 1                    | 1               | 1                         | 1                    | 1                     | 1                | 1                          | 1                     |
+    Then add new pro plan success message should be displayed
+    And I add a new sub partner:
+      | Company Name | Pricing Plan | Admin Name |
+      | subpartner   | subplan      | subadmin   |
+    Then New partner should be created
+    And I change pooled resource for the subpartner:
+      | Desktop Storage | Desktop Devices | Server Storage | Server Devices |
+      | 30              | 3               | 50             | 5              |
+    And I act as newly created partner account
+    And I add some new users and activate one machine for each
+      | name             | user_group           | storage_type | storage_limit | devices | machine_name   |
+      | subpartner.User1 | (default user group) | Desktop      | 10            | 3       | SubTestMachine |
     And I navigate to the machine mapping page
     When I download the machine csv file
-    And The exported csv file should be:
-      | column 1      | column 2                                 | column 3                                 | column 4  |
-      | Machine Name  | Machine Hash                             | Current Owner                            | New Owner |
-      | SUPPORT-PC    | c58d8af103f37ffa82351ef500115b4b2e32     | hussin.diraki-at-freecom.com@mozy.test   |           |
-      | R620          | 7a712089bc55ff31aa22efe9fb417083aa795138 | ingmar.heinecke-at-freecom.com@mozy.test |           |
-      | FREECOM-TEST  | 323e04be11da0abb2b3be5070010c617bb3e     | rbartelds-at-gmail.com@mozy.test         |           |
-      | BLN039        | 351eeb340475694284f7a08218c9474f474afb70 | robert.bartelds-at-freecom.com@mozy.test |           |
+    And The exported csv file should be like:(header as below, row number is 1, order by current owner, no duplicated rows)
+      | column 1       | column 2      | column 3             | column 4  |
+      | Machine Name   | Machine Hash  | Current Owner        | New Owner |
+      | SubTestMachine | @machine_hash | <%=@users[1].email%> |           |
+    Then I stop masquerading from subpartner
+    And I navigate to the machine mapping page
+    When I download the machine csv file
+    And The exported csv file should be like:(header as below, row number is 1, order by current owner, no duplicated rows)
+      | column 1           | column 2      | column 3             | column 4  |
+      | Machine Name       | Machine Hash  | Current Owner        | New Owner |
+      | PartnerTestMachine | @machine_hash | <%=@users[0].email%> |           |
+    Then I stop masquerading
+    And I search and delete partner account by newly created partner company name
 
   @TC.17936 @bug @2.2 @machine_migration @qa5
   Scenario: 17936 Import a CSV file while two users have same machine

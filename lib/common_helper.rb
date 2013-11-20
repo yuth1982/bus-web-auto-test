@@ -24,3 +24,7 @@ def number_to_human_size(size, allow_negative = false)
 rescue
   nil
 end
+
+def friendly_hash(h)
+  Hash[h.map{ |k, v| [k.gsub(/[\s|-]+/, '_').downcase, v]}]
+end

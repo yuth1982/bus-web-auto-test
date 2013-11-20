@@ -44,10 +44,6 @@ module Bus
       save_btn.click
     end
 
-    def delete_role(role_name)
-
-    end
-
     def messages
       message_div.text
     end

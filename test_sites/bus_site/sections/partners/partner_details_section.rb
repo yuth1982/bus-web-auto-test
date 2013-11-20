@@ -71,6 +71,8 @@ module Bus
 
     # Pooled Storage
     element(:pooled_resources_table, css: 'form[id^=pooled_resources_form] table')
+    element(:pooled_resource_edit_link, css: 'a[id^=toggle_partner_pooled_resource_item_edit]')
+    element(:pooled_resource_submit_btn, css: 'div.resource_item_edit input[type=submit]')
 
     # Resources table, for MozyPro
     element(:generic_resources_table, css: 'form[id^=generic_resources_form] table')
@@ -688,6 +690,23 @@ module Bus
 
     def has_setting_name?(setting_name)
       all(:xpath, "//td[text()=\'#{setting_name}\']").size >= 1
+    end
+
+    # this is for subpartner
+    def change_pooled_resource(pooled_resource)
+      previous_root = root_element
+      @root_element = root_element.next_sibling.next_sibling
+      wait_until_bus_section_load
+      expand(account_details_icon)
+      pooled_resource_edit_link.click
+      pooled_resource.each do |k, v|
+        if k.match(/(desktop|server)_(storage|devices)/)
+          find(:css, "input[name='assigned_#{$2}[#{$1.capitalize}]']".gsub('storage', 'quota').gsub('devices', 'licenses')).type_text(v)
+        end
+      end
+      pooled_resource_submit_btn.click
+      wait_until_bus_section_load
+      @root_element = previous_root
     end
 
     private

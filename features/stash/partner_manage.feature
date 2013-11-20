@@ -233,7 +233,7 @@ Feature:
       | email                                   | including sub-partners |
       | redacted-36090@notarealdomain.mozy.com  | yes                    |
     And I add a new sub partner:
-      | name                                  |
+      | Company Name                          |
       | Fortress Test Enable Sync Sub Partner |
     Then New partner should be created
     When I stop masquerading as sub partner

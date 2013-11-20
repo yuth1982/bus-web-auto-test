@@ -18,6 +18,7 @@ require 'net/http'
 require 'digest/sha1'
 require 'openssl'
 require 'erb'
+require 'ostruct'
 
 require 'capybara/cucumber'
 require 'capybara-webkit'

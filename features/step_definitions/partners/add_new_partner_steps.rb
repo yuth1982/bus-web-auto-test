@@ -155,12 +155,8 @@ end
 
 When /^I add a new sub partner:$/ do |sub_partner_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_partner'])
-  attributes = sub_partner_table.hashes.first
-  # @parnter is only available after parnter creation step is executed, otherwise use name provided instead
-  partner_name = @parnter && attributes["name"].gsub(/@company_name/,@partner.company_info.name) || attributes["name"]
-  admin_name = attributes["admin name"] || Forgery::Name.first_name
-  admin_email = attributes["admin email"] || "#{CONFIGS['global']['email_prefix']}+#{Forgery(:basic).password(:at_least => 9, :at_most => 12)}@decho.com".downcase
-  @bus_site.admin_console_page.add_new_partner_section.add_new_sub_partner(partner_name, admin_name, admin_email)
+  subpartner = Bus::DataObj::SubPartner.new(friendly_hash(sub_partner_table.hashes.first))
+  @bus_site.admin_console_page.add_new_partner_section.add_new_subpartner(subpartner)
 end
 
 Then /^the default billing country is (.+) in add new partner section$/ do |country|

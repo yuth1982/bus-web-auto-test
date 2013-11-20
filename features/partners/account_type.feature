@@ -58,7 +58,7 @@ Feature: Account Type
       | name     | including sub-partners |
       | Fortress | no                     |
     And I add a new sub partner:
-      | name                               |
+      | Company Name                       |
       | Fortress Internal Test Sub Partner |
     Then New partner should be created
     When I stop masquerading

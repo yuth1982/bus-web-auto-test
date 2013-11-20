@@ -22,6 +22,7 @@ module Bus
     element(:new_admin_display_name_tb, id: 'new_admin_display_name')
     element(:new_admin_username_tb, id: 'new_admin_username')
     element(:root_role_td, id: 'root-role-options')
+    element(:root_role_select, id: 'root_role_id')
 
     # Partner Info
     element(:parent_partner_select, id: 'parent_partner_id')
@@ -69,11 +70,13 @@ module Bus
     element(:net_term_payment_input, id: 'formOfPaymentNT')
 
     element(:message_div, css: 'div#partner-new-errors ul')
-    element(:create_partner_btn, css: 'div#cc-details input#submit_button')
+    # element(:create_partner_btn, css: 'div#cc-details input#submit_button')
+    element(:create_partner_btn, css: "input[value='Create Partner']")
     element(:back_btn, id: 'back_button')
 
     # sub partner
     element(:create_sub_partner_btn, css: 'input[type="submit"]')
+    element(:pricing_plan_select, id: 'pro_plan_id')
 
     # Public: Add a new partner account
     #
@@ -108,13 +111,6 @@ module Bus
         set_pre_sub_total(partner)
         next_btn.click
       end
-    end
-
-    def add_new_sub_partner(partner_name, admin_name, admin_email)
-      new_partner_name_tb.type_text(partner_name)
-      new_admin_display_name_tb.type_text(admin_name)
-      new_admin_username_tb.type_text(admin_email)
-      create_sub_partner_btn.click
     end
 
     # Public: Messages for change account details actions
@@ -359,6 +355,14 @@ module Bus
     def billing_country
       cc_country_select.value
     end
+
+    def add_new_subpartner(partner)
+      new_partner_name_tb.type_text(partner.company_name)
+      partner.instance_variable_defined?('@pricing_plan') && pricing_plan_select.select(partner.pricing_plan) unless pricing_plan_select['type'] == 'hidden'
+      partner.instance_variable_defined?('@root_role') && root_role_select.select(partner.root_role) unless root_role_select['type'] == 'hidden'
+      new_admin_display_name_tb.type_text(partner.admin_name)
+      new_admin_username_tb.type_text(partner.admin_email_address)
+      create_partner_btn.click
+    end
   end
 end
-

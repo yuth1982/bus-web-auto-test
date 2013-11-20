@@ -282,3 +282,7 @@ When /^I (Enable|Disable) partner details autogrow$/ do |status|
     else
   end
 end
+
+When /^I change pooled resource for the subpartner:$/ do |table|
+  @bus_site.admin_console_page.partner_details_section.change_pooled_resource(friendly_hash(table.hashes.first))
+end
