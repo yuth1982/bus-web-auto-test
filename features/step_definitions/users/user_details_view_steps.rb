@@ -186,6 +186,7 @@ Then /^I reassign the user to user group (.+)$/ do |new_user_group|
 end
 
 Then /^I reassign the user to partner (.+)$/ do |new_partner|
+  new_partner.replace(ERB.new(new_partner).result(binding))
   @bus_site.admin_console_page.user_details_section.update_partner(new_partner)
 end
 

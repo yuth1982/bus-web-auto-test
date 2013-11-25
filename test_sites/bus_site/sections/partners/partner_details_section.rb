@@ -700,7 +700,7 @@ module Bus
       expand(account_details_icon)
       pooled_resource_edit_link.click
       pooled_resource.each do |k, v|
-        if k.match(/(desktop|server)_(storage|devices)/)
+        if k.match(/(desktop|server|generic)_(storage|devices)/)
           find(:css, "input[name='assigned_#{$2}[#{$1.capitalize}]']".gsub('storage', 'quota').gsub('devices', 'licenses')).type_text(v)
         end
       end

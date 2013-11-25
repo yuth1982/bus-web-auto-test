@@ -13,6 +13,8 @@ When /^I add a new pro plan for (MozyEnterprise|Mozypro|Reseller) partner:$/ do 
   if partner_type == 'MozyEnterprise'
     plan[:server] ||= desktop_server_default
     plan[:desktop] ||= desktop_server_default
+  else
+    plan[:generic] ||= {price_per_gigabyte:1, min_gigabytes:1}
   end
   pro_plan = Bus::DataObj::ProPlan.new(plan)
   @bus_site.admin_console_page.add_new_pro_plan_section.add_new_pro_plan(pro_plan)

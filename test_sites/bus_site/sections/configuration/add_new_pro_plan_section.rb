@@ -48,13 +48,17 @@ module Bus
       auto_include_tax_checkbox.check if pro_plan.auto_include_tax == 'yes'
       # pricing by key type input
       %w(server desktop).each do |type|
-        unless pro_plan.send(type).nil?
+        if pro_plan.instance_variable_defined?("@#{type}")
           self.send("#{type}_tab").click
           price_per_key_input.type_text(pro_plan.send(type)[:price_per_key])
           min_keys_input.type_text(pro_plan.send(type)[:min_keys])
           price_per_gigabyte_input.type_text(pro_plan.send(type)[:price_per_gigabyte])
           min_gigabytes_input.type_text(pro_plan.send(type)[:min_gigabytes])
         end
+      end
+      if pro_plan.instance_variable_defined?('@generic')
+        price_per_gigabyte_input.type_text(pro_plan.generic[:price_per_gigabyte])
+        min_gigabytes_input.type_text(pro_plan.generic[:min_gigabytes])
       end
       #quota_price_tb.type_text(pro_plan.price_per_gb.to_s)
       #minimum_quota_tb.type_text(pro_plan.min_gb.to_s)

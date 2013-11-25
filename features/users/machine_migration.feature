@@ -271,7 +271,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       | column 1      |  column 2       |  column 3                    | column 4                                   |
       |Import Results:| 3 rows imported |0 machines moved to new users | 3 machines skipped (no new user specified) |
 
-  @TC.16343 @bug @2.5 @machine_migration @TODO @qa5
+  @TC.16343 @bug @2.5 @machine_migration @qa5
   Scenario: 16343 Export a CSV file when the partner has subpartners
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
