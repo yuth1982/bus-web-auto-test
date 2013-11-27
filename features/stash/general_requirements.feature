@@ -408,6 +408,135 @@ Feature:
       | Storage Usage: | 0 |
     And I delete partner account
 
+  @TC.22189 @stash
+  Scenario: 22189 MozyEnterprise Partner Enable and Disable cycle by adding sync to all users
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | net terms |
+      | 12     | 10    | 100 GB      | yes       |
+    Then New partner should be created
+    When I act as newly created partner account
+    And I add new user(s):
+      | name          | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | TC.22189 User | (default user group) | Desktop      | 10            | 1       | yes          |
+    Then 1 new user should be created
+    When I search emails by keywords:
+      | to                          | subject      |
+      | <%=@new_users.first.email%> | enable sync  |
+    Then I should see 0 email(s)
+    When I navigate to Search / List Users section from bus admin console page
+    Then User search results should be:
+      | User                        | Name          | Sync    | Machines | Storage                 | Storage Used  |
+      | <%=@new_users.first.email%> | TC.22189 User | Enabled | 0        | Desktop: 10 GB (Limited)| Desktop: None |
+    When I view user details by newly created user email
+    Then user details should be:
+      | Name:                  | Enable Sync:               |
+      | TC.22189 User (change) | Yes (Send Invitation Email) |
+    And stash device table in user details should be:
+      | Sync Container | Used/Available     | Device Storage Limit | Last Update      |
+      | Sync           | 0 / 10 GB          | Set                  | N/A              |
+    When I stop masquerading
+    And I navigate to Search / List Partners section from bus admin console page
+    And I view partner details by newly created partner company name
+    Then Partner stash info should be:
+      | Users:         | 1 |
+      | Storage Usage: | 0 |
+    When I disable stash for the partner
+    Then I act as newly created partner account
+    And I navigate to Search / List Users section from bus admin console page
+    Then User search results should be:
+      | User                        | Name          | Machines | Storage                 | Storage Used  |
+      | <%=@new_users.first.email%> | TC.22189 User | 0        | Desktop: 10 GB (Limited)| Desktop: None |
+    When I view user details by newly created user email
+    Then I stop masquerading
+    And I navigate to Search / List Partners section from bus admin console page
+    And I view partner details by newly created partner company name
+    And I enable stash for the partner
+    And I add stash to all users for the partner
+    Then I act as newly created partner account
+    And I navigate to Search / List Users section from bus admin console page
+    Then User search results should be:
+      | User                        | Name          | Sync   | Machines | Storage                 | Storage Used  |
+      | <%=@new_users.first.email%> | TC.22189 User | Enabled| 0        | Desktop: 10 GB (Limited)| Desktop: None |
+    When I view user details by newly created user email
+    Then user details should be:
+      | Name:                  | Enable Sync:                |
+      | TC.22189 User (change) | Yes (Send Invitation Email) |
+    When I delete stash container for the user
+    And I refresh User Details section
+    Then user details should be:
+      | Name:                  | Enable Sync:  |
+      | TC.22189 User (change) | No (Add Sync) |
+    Then I stop masquerading
+    And I navigate to Search / List Partners section from bus admin console page
+    And I view partner details by newly created partner company name
+    And I delete partner account
+
+  @TC.22194 @stash
+  Scenario: 22194 MozyEnterprise Partner Enable and Disable cycle by add sync with single user
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | net terms |
+      | 12     | 10    | 100 GB      | yes       |
+    Then New partner should be created
+    When I act as newly created partner account
+    And I add new user(s):
+      | name          | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | TC.22194 User | (default user group) | Desktop      | 10            | 1       | yes          |
+    Then 1 new user should be created
+    When I search emails by keywords:
+      | to                          | subject      |
+      | <%=@new_users.first.email%> | enable sync  |
+    Then I should see 0 email(s)
+    When I navigate to Search / List Users section from bus admin console page
+    Then User search results should be:
+      | User                        | Name          | Sync    | Machines | Storage                 | Storage Used  |
+      | <%=@new_users.first.email%> | TC.22194 User | Enabled | 0        | Desktop: 10 GB (Limited)| Desktop: None |
+    When I view user details by newly created user email
+    Then user details should be:
+      | Name:                  | Enable Sync:               |
+      | TC.22194 User (change) | Yes (Send Invitation Email)|
+    And stash device table in user details should be:
+      | Sync Container | Used/Available     | Device Storage Limit | Last Update      |
+      | Sync           | 0 / 10 GB          | Set                  | N/A              |
+    When I stop masquerading
+    And I navigate to Search / List Partners section from bus admin console page
+    And I view partner details by newly created partner company name
+    Then Partner stash info should be:
+      | Users:         | 1 |
+      | Storage Usage: | 0 |
+    When I disable stash for the partner
+    Then I act as newly created partner account
+    And I navigate to Search / List Users section from bus admin console page
+    Then User search results should be:
+      | User                        | Name          | Machines | Storage                 | Storage Used  |
+      | <%=@new_users.first.email%> | TC.22194 User | 0        | Desktop: 10 GB (Limited)| Desktop: None |
+    Then I stop masquerading
+    And I navigate to Search / List Partners section from bus admin console page
+    And I view partner details by newly created partner company name
+    And I enable stash for the partner
+    Then I act as newly created partner account
+    And I navigate to Search / List Users section from bus admin console page
+    Then User search results should be:
+      | User                        | Name          | Sync     | Machines | Storage                 | Storage Used  |
+      | <%=@new_users.first.email%> | TC.22194 User | Disabled | 0        | Desktop: 10 GB (Limited)| Desktop: None |
+    When I view user details by newly created user email
+    Then user details should be:
+      | Name:                  | Enable Sync:  |
+      | TC.22194 User (change) | No (Add Sync) |
+    When I enable stash without send email in user details section
+    Then user details should be:
+      | Name:                  | Enable Sync:                |
+      | TC.22194 User (change) | Yes (Send Invitation Email) |
+    And stash device table in user details should be:
+      | Sync Container | Used/Available     | Device Storage Limit | Last Update      |
+      | Sync           | 0 / 10 GB          | Set                  | N/A              |
+    Then I delete stash container for the user
+    Then user details should be:
+      | Name:                  | Enable Sync:  |
+      | TC.22194 User (change) | No (Add Sync) |
+    Then I stop masquerading
+    And I navigate to Search / List Partners section from bus admin console page
+    And I view partner details by newly created partner company name
+    And I delete partner account
 
   @TC.19165 @BSA.3010 @bus @2.5 @user_stories @stash
   Scenario: 19165 US Pro admin can see stash details in manage resources

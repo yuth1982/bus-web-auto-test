@@ -96,6 +96,7 @@ end
 
 When /^I delete stash container for the user$/ do
   @bus_site.admin_console_page.user_details_section.click_delete_stash
+  @bus_site.admin_console_page.click_continue
 end
 
 When /^I click change stash quota text box$/ do
