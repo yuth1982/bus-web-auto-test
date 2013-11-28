@@ -114,6 +114,7 @@ end
 Then /^the Buy More link should open the Change Plan module$/ do
   @bus_site.admin_console_page.add_new_user_section.click_buy_more_link
   @bus_site.admin_console_page.change_plan_section.section_visible?
+  @bus_site.admin_console_page.change_plan_section.wait_until_bus_section_load
 end
 
 Then /^the Add More link should be visible$/ do
