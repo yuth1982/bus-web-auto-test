@@ -69,7 +69,7 @@ module FileHelper
   # Returns null
   def rename(old_name, new_name, file_path = default_download_path)
     old_file = File.join(file_path, old_name)
-    new_file = File.join(file_path, old_name)
+    new_file = File.join(file_path, new_name)
     File.rename(old_file, new_file)
   end
 
