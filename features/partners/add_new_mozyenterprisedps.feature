@@ -41,7 +41,7 @@ Scenario: 22365 Add New MozyEnterprise DPS Partner - US - Yearly - 2 TB
     | Account Type:   | Credit Card           | Current Period: | Yearly             |
     | Unpaid Balance: | $0.00                 | Collect On:     | N/A                |
     | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period |
-    | Next Charge:    | after 1 year (extend) |                 |                    |
+    | Next Charge:    | after 1 year          |                 |                    |
   And Partner billing history should be:
     | Date  | Amount    | Total Paid | Balance Due |
     | today | $0.00     | $0.00      | $0.00       |

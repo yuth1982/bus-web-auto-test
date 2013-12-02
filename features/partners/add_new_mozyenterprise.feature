@@ -40,7 +40,7 @@ Feature: Add a new partner
       | Account Type:   | Credit Card           | Current Period: | Yearly             |
       | Unpaid Balance: | $0.00                 | Collect On:     | N/A                |
       | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period |
-      | Next Charge:    | after 1 year (extend) |                 |                    |
+      | Next Charge:    | after 1 year          |                 |                    |
     And Partner billing history should be:
       | Date  | Amount    | Total Paid | Balance Due |
       | today | $7,600.00 | $7,600.00  | $0.00       |
@@ -82,7 +82,7 @@ Feature: Add a new partner
       | Account Type:   | Credit Card           | Current Period: | Biennial           |
       | Unpaid Balance: | $0.00                 | Collect On:     | N/A                |
       | Renewal Date:   | after 2 years         | Renewal Period: | Use Current Period |
-      | Next Charge:    | after 2 year (extend) |                 |                    |
+      | Next Charge:    | after 2 years         |                 |                    |
     And Partner billing history should be:
       | Date  | Amount     | Total Paid | Balance Due |
       | today | $58,478.48 | $58,478.48 | $0.00       |
@@ -125,7 +125,7 @@ Feature: Add a new partner
       | Account Type:   | Credit Card            | Current Period: | 3-year             |
       | Unpaid Balance: | $0.00                  | Collect On:     | N/A                |
       | Renewal Date:   | after 3 years          | Renewal Period: | Use Current Period |
-      | Next Charge:    | after 3 years (extend) |                 |                    |
+      | Next Charge:    | after 3 years          |                 |                    |
     And Partner billing history should be:
       | Date  | Amount     | Total Paid | Balance Due |
       | today | $89,997.12 | $89,997.12 | $0.00       |
@@ -167,7 +167,7 @@ Feature: Add a new partner
       | Account Type:   | Credit Card           | Current Period: | Yearly             |
       | Unpaid Balance: | $0.00                 | Collect On:     | N/A                |
       | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period |
-      | Next Charge:    | after 1 year (extend) |                 |                    |
+      | Next Charge:    | after 1 year          |                 |                    |
     And Partner billing history should be:
       | Date  | Amount     | Total Paid | Balance Due |
       | today | $52,958.68 | $52,958.68 | $0.00       |
@@ -209,7 +209,7 @@ Feature: Add a new partner
       | Account Type:   | Net Terms 30           | Current Period: | Biennial           |
       | Unpaid Balance: | $85,671.66             | Collect On:     | N/A                |
       | Renewal Date:   | after 2 years          | Renewal Period: | Use Current Period |
-      | Next Charge:    | after 2 years (extend) |                 |                    |
+      | Next Charge:    | after 2 years          |                 |                    |
     And Partner billing history should be:
       | Date  | Amount     | Total Paid | Balance Due |
       | today | $85,671.66 | $0.00      | $85,671.66  |
@@ -251,7 +251,7 @@ Feature: Add a new partner
       | Account Type:   | Net Terms 30           | Current Period: | 3-year             |
       | Unpaid Balance: | $228,596.40            | Collect On:     | N/A                |
       | Renewal Date:   | after 3 years          | Renewal Period: | Use Current Period |
-      | Next Charge:    | after 3 years (extend) |                 |                    |
+      | Next Charge:    | after 3 years          |                 |                    |
     And Partner billing history should be:
       | Date  | Amount      | Total Paid | Balance Due |
       | today | $228,596.40 | $0.00      | $228,596.40 |
@@ -282,7 +282,7 @@ Feature: Add a new partner
       | Account Type:   | Other/None            | Current Period: | Yearly             |
       | Unpaid Balance: | $0.00                 | Collect On:     | N/A                |
       | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period |
-      | Next Charge:    | after 1 year (extend) |                 |                    |
+      | Next Charge:    | after 1 year          |                 |                    |
     And Partner billing history should be:
       | Date  | Amount | Total Paid | Balance Due |
       | today | $0.00  | $0.00      | $0.00       |

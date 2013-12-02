@@ -229,7 +229,7 @@ Feature: Search and list partner
       | Account Type:   | Credit Card            | Current Period: | Monthly            |
       | Unpaid Balance: | $0.00                  | Collect On:     | N/A                |
       | Renewal Date:   | after 1 month          | Renewal Period: | Use Current Period |
-      | Next Charge:    | after 1 month (extend) |                 |                    |
+      | Next Charge:    | after 1 month          |                 |                    |
     And Partner billing history should be:
       | Date  | Amount | Total Paid | Balance Due |
       | today | $9.99  | $9.99      | $0.00       |

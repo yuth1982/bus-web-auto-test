@@ -40,7 +40,7 @@ Feature: Add a new partner
       | Account Type:   | Credit Card            | Current Period: | Monthly            |
       | Unpaid Balance: | $0.00                  | Collect On:     | N/A                |
       | Renewal Date:   | after 1 month          | Renewal Period: | Use Current Period |
-      | Next Charge:    | after 1 month (extend) |                 |                    |
+      | Next Charge:    | after 1 month          |                 |                    |
     And Partner billing history should be:
       | Date  | Amount | Total Paid | Balance Due |
       | today | $8.99  | $8.99      | $0.00       |
@@ -80,7 +80,7 @@ Feature: Add a new partner
       | Account Type:   | Credit Card           | Current Period: | Yearly             |
       | Unpaid Balance: | €0.00                 | Collect On:     | N/A                |
       | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period |
-      | Next Charge:    | after 1 year (extend) |                 |                    |
+      | Next Charge:    | after 1 year          |                 |                    |
     And Partner billing history should be:
       | Date  | Amount  | Total Paid | Balance Due |
       | today | €158.30 | €158.30    | €0.00       |
@@ -120,7 +120,7 @@ Feature: Add a new partner
       | Account Type:   | Credit Card            | Current Period: | Biennial           |
       | Unpaid Balance: | €0.00                  | Collect On:     | N/A                |
       | Renewal Date:   | after 2 years          | Renewal Period: | Use Current Period |
-      | Next Charge:    | after 2 years (extend) |                 |                    |
+      | Next Charge:    | after 2 years          |                 |                    |
   And Partner billing history should be:
       | Date  | Amount  | Total Paid | Balance Due |
       | today | €585.71 | €585.71    | €0.00       |
@@ -161,7 +161,7 @@ Feature: Add a new partner
       | Account Type:   | Credit Card            | Current Period: | Monthly            |
       | Unpaid Balance: | €0.00                  | Collect On:     | N/A                |
       | Renewal Date:   | after 1 month          | Renewal Period: | Use Current Period |
-      | Next Charge:    | after 1 month (extend) |                 |                    |
+      | Next Charge:    | after 1 month          |                 |                    |
     And Partner billing history should be:
       | Date  | Amount | Total Paid | Balance Due |
       | today | €84.74 | €84.74     | €0.00       |
@@ -201,7 +201,7 @@ Feature: Add a new partner
       | Account Type:   | Credit Card           | Current Period: | Yearly             |
       | Unpaid Balance: | £0.00                 | Collect On:     | N/A                |
       | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period |
-      | Next Charge:    | after 1 year (extend) |                 |                    |
+      | Next Charge:    | after 1 year          |                 |                    |
     And Partner billing history should be:
       | Date  | Amount    | Total Paid | Balance Due |
       | today | £1,237.40 | £1,237.40  | £0.00       |
@@ -242,7 +242,7 @@ Feature: Add a new partner
       | Account Type:   | Net Terms 30           | Current Period: | Biennial           |
       | Unpaid Balance: | $28,557.48             | Collect On:     | N/A                |
       | Renewal Date:   | after 2 years          | Renewal Period: | Use Current Period |
-      | Next Charge:    | after 2 years (extend) |                 |                    |
+      | Next Charge:    | after 2 years          |                 |                    |
     And Partner billing history should be:
       | Date  | Amount     | Total Paid | Balance Due |
       | today | $28,557.48 | $0.00      | $28,557.48  |
@@ -283,7 +283,7 @@ Feature: Add a new partner
       | Account Type:   | Net Terms 30           | Current Period: | Monthly            |
       | Unpaid Balance: | €750.28                | Collect On:     | N/A                |
       | Renewal Date:   | after 1 month          | Renewal Period: | Use Current Period |
-      | Next Charge:    | after 1 month (extend) |                 |                    |
+      | Next Charge:    | after 1 month          |                 |                    |
     And Partner billing history should be:
       | Date  | Amount  | Total Paid | Balance Due |
       | today | €750.28 | €0.00      | €750.28     |
@@ -324,7 +324,7 @@ Feature: Add a new partner
       | Account Type:   | Net Terms 30          | Current Period: | Yearly             |
       | Unpaid Balance: | €15,559.22            | Collect On:     | N/A                |
       | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period |
-      | Next Charge:    | after 1 year (extend) |                 |                    |
+      | Next Charge:    | after 1 year          |                 |                    |
     And Partner billing history should be:
       | Date  | Amount     | Total Paid | Balance Due |
       | today | €15,559.22 | €0.00      | €15,559.22  |
@@ -365,7 +365,7 @@ Feature: Add a new partner
       | Account Type:   | Net Terms 30           | Current Period: | Biennial           |
       | Unpaid Balance: | €59,407.96             | Collect On:     | N/A                |
       | Renewal Date:   | after 2 years          | Renewal Period: | Use Current Period |
-      | Next Charge:    | after 2 years (extend) |                 |                    |
+      | Next Charge:    | after 2 years          |                 |                    |
     And Partner billing history should be:
       | Date  | Amount     | Total Paid | Balance Due |
       | today | €59,407.96 | €0.00      | €59,407.96  |
@@ -406,7 +406,7 @@ Feature: Add a new partner
       | Account Type:   | Net Terms 30           | Current Period: | Monthly            |
       | Unpaid Balance: | £3,490.66              | Collect On:     | N/A                |
       | Renewal Date:   | after 1 month          | Renewal Period: | Use Current Period |
-      | Next Charge:    | after 1 month (extend) |                 |                    |
+      | Next Charge:    | after 1 month          |                 |                    |
   And Partner billing history should be:
       | Date  | Amount    | Total Paid | Balance Due |
       | today | £3,490.66 | £0.00      | £3,490.66   |
@@ -447,7 +447,7 @@ Feature: Add a new partner
       | Account Type:   | Credit Card            | Current Period: | Yearly             |
       | Unpaid Balance: | $0.00                  | Collect On:     | N/A                |
       | Renewal Date:   | after 1 year           | Renewal Period: | Use Current Period |
-      | Next Charge:    | after 1 year (extend) |                 |                    |
+      | Next Charge:    | after 1 year          |                 |                    |
     And Partner billing history should be:
       | Date  | Amount     | Total Paid | Balance Due |
       | today | $76,008.02 | $76,008.02 | $0.00       |
@@ -489,7 +489,7 @@ Feature: Add a new partner
       | Account Type:   | Net Terms 30           | Current Period: | Biennial           |
       | Unpaid Balance: | €122,846.21            | Collect On:     | N/A                |
       | Renewal Date:   | after 2 years          | Renewal Period: | Use Current Period |
-      | Next Charge:    | after 2 years (extend) |                 |                    |
+      | Next Charge:    | after 2 years          |                 |                    |
     And Partner billing history should be:
       | Date  | Amount      | Total Paid | Balance Due |
       | today | €122,846.21 | €0.00      | €122,846.21 |
@@ -523,7 +523,7 @@ Feature: Add a new partner
       | Account Type:   | Other/None             | Current Period: | Monthly            |
       | Unpaid Balance: | $0.00                  | Collect On:     | N/A                |
       | Renewal Date:   | after 1 month          | Renewal Period: | Use Current Period |
-      | Next Charge:    | after 1 month (extend) |                 |                    |
+      | Next Charge:    | after 1 month          |                 |                    |
     And Partner billing history should be:
       | Date  | Amount | Total Paid | Balance Due |
       | today | $0.00  | $0.00      | $0.00       |

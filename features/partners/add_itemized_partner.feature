@@ -48,7 +48,7 @@ Feature: Add a new partner
       | Account Type:   | Tokenized Credit Card | Current Period: | Yearly             |
       | Unpaid Balance: | $0.00                 | Collect On:     | N/A                |
       | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period |
-      | Next Charge:    | after 1 year (extend) |                 |                    |
+      | Next Charge:    | after 1 year          |                 |                    |
     And I delete partner account
 
   # RESELLERS HERE
@@ -95,6 +95,6 @@ Feature: Add a new partner
       | Account Type:   | Tokenized Credit Card | Current Period: | Yearly             |
       | Unpaid Balance: | $0.00                 | Collect On:     | N/A                |
       | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period |
-      | Next Charge:    | after 1 year (extend) |                 |                    |
+      | Next Charge:    | after 1 year          |                 |                    |
     And I delete partner account
 

@@ -38,7 +38,7 @@ Feature: Bus Smoke Test
       | Account Type:   | Credit Card            | Current Period: | Biennial            |
       | Unpaid Balance: | $0.00                  | Collect On:     | N/A                 |
       | Renewal Date:   | after 2 years          | Renewal Period: | Use Current Period  |
-      | Next Charge:    | after 2 years (extend) |                 |                     |
+      | Next Charge:    | after 2 years          |                 |                     |
     And Partner sub admins should be empty
     When I act as newly created partner account
     And I change MozyEnterprise account plan to:

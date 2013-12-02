@@ -46,7 +46,7 @@ Feature: Add a new partner through phoenix
       | Account Type:   | Credit Card           | Current Period: | Yearly              |
       | Unpaid Balance: | $0.00                 | Collect On:     | N/A                 |
       | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period  |
-      | Next Charge:    | after 1 year (extend) |                 |                     |
+      | Next Charge:    | after 1 year          |                 |                     |
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan |

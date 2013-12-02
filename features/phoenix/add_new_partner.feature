@@ -59,7 +59,7 @@ Background:
     | Account Type:   | Credit Card            | Current Period: | Monthly             |
     | Unpaid Balance: | $0.00                  | Collect On:     | N/A                 |
     | Renewal Date:   | after 1 month          | Renewal Period: | Use Current Period  |
-    | Next Charge:    | after 1 month (extend) |                 |                     |
+    | Next Charge:    | after 1 month          |                 |                     |
     And I delete partner account
 
   @TC.20966 @bus @2.5 @regression_test @phoenix @mozypro
@@ -99,7 +99,7 @@ Background:
     | Account Type:   | Credit Card            | Current Period: | Biennial            |
     | Unpaid Balance: | $0.00                  | Collect On:     | N/A                 |
     | Renewal Date:   | after 2 years          | Renewal Period: | Use Current Period  |
-    | Next Charge:    | after 2 years (extend) |                 |                     |
+    | Next Charge:    | after 2 years          |                 |                     |
     And I delete partner account
 
   @TC.20967 @bus @2.5 @regression_test @phoenix @mozypro
@@ -141,7 +141,7 @@ Background:
     | Account Type:   | Credit Card            | Current Period: | Monthly             |
     | Unpaid Balance: | €0.00                  | Collect On:     | N/A                 |
     | Renewal Date:   | after 1 month          | Renewal Period: | Use Current Period  |
-    | Next Charge:    | after 1 month (extend) |                 |                     |
+    | Next Charge:    | after 1 month          |                 |                     |
     And I delete partner account
 
   @TC.20968 @bus @2.5 @regression_test @phoenix @mozypro
@@ -183,7 +183,7 @@ Background:
     | Account Type:   | Credit Card           | Current Period: | Yearly              |
     | Unpaid Balance: | €0.00                 | Collect On:     | N/A                 |
     | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period  |
-    | Next Charge:    | after 1 year (extend) |                 |                     |
+    | Next Charge:    | after 1 year          |                 |                     |
     And I delete partner account
 
   @TC.20969 @bus @2.5 @regression_test @phoenix @mozypro
@@ -226,7 +226,7 @@ Background:
     | Account Type:   | Credit Card            | Current Period: | Biennial            |
     | Unpaid Balance: | €0.00                  | Collect On:     | N/A                 |
     | Renewal Date:   | after 2 years          | Renewal Period: | Use Current Period  |
-    | Next Charge:    | after 2 years (extend) |                 |                     |
+    | Next Charge:    | after 2 years          |                 |                     |
     And I delete partner account
 
   @TC.20970 @bus @2.5 @regression_test @phoenix @mozypro
@@ -267,7 +267,7 @@ Background:
     | Account Type:   | Credit Card            | Current Period: | Monthly             |
     | Unpaid Balance: | £0.00                  | Collect On:     | N/A                 |
     | Renewal Date:   | after 1 month          | Renewal Period: | Use Current Period  |
-    | Next Charge:    | after 1 month (extend) |                 |                     |
+    | Next Charge:    | after 1 month          |                 |                     |
     And I delete partner account
 
   @TC.20971 @bus @2.5 @regression_test @phoenix @mozypro
@@ -309,7 +309,7 @@ Background:
     | Account Type:   | Credit Card           | Current Period: | Yearly              |
     | Unpaid Balance: | £0.00                 | Collect On:     | N/A                 |
     | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period  |
-    | Next Charge:    | after 1 year (extend) |                 |                     |
+    | Next Charge:    | after 1 year          |                 |                     |
     And I delete partner account
 
   @TC.20972 @bus @2.5 @regression_test @phoenix @mozypro
@@ -351,7 +351,7 @@ Background:
     | Account Type:   | Credit Card            | Current Period: | Biennial            |
     | Unpaid Balance: | £0.00                  | Collect On:     | N/A                 |
     | Renewal Date:   | after 2 years          | Renewal Period: | Use Current Period  |
-    | Next Charge:    | after 2 years (extend) |                 |                     |
+    | Next Charge:    | after 2 years          |                 |                     |
     And I delete partner account
 
   @TC.20973 @bus @2.5 @regression_test @phoenix @mozypro
@@ -393,7 +393,7 @@ Background:
     | Account Type:   | Credit Card            | Current Period: | Monthly             |
     | Unpaid Balance: | €0.00                  | Collect On:     | N/A                 |
     | Renewal Date:   | after 1 month          | Renewal Period: | Use Current Period  |
-    | Next Charge:    | after 1 month (extend) |                 |                     |
+    | Next Charge:    | after 1 month          |                 |                     |
     And I delete partner account
 
   @TC.20974 @bus @2.5 @regression_test @phoenix @mozypro
@@ -435,7 +435,7 @@ Background:
     | Account Type:   | Credit Card            | Current Period: | Biennial            |
     | Unpaid Balance: | €0.00                  | Collect On:     | N/A                 |
     | Renewal Date:   | after 2 years          | Renewal Period: | Use Current Period  |
-    | Next Charge:    | after 2 years (extend) |                 |                     |
+    | Next Charge:    | after 2 years          |                 |                     |
     And I delete partner account
 
   @TC.20975 @bus @2.5 @regression_test @phoenix @mozypro
@@ -476,7 +476,7 @@ Background:
     | Account Type:   | Credit Card            | Current Period: | Biennial            |
     | Unpaid Balance: | €0.00                  | Collect On:     | N/A                 |
     | Renewal Date:   | after 2 years          | Renewal Period: | Use Current Period  |
-    | Next Charge:    | after 2 years (extend) |                 |                     |
+    | Next Charge:    | after 2 years          |                 |                     |
     And I delete partner account
 
   @TC.20976 @bus @2.5 @regression_test @phoenix @mozypro
@@ -518,7 +518,7 @@ Background:
     | Account Type:   | Credit Card            | Current Period: | Monthly             |
     | Unpaid Balance: | €0.00                  | Collect On:     | N/A                 |
     | Renewal Date:   | after 1 month          | Renewal Period: | Use Current Period  |
-    | Next Charge:    | after 1 month (extend) |                 |                     |
+    | Next Charge:    | after 1 month          |                 |                     |
     And I delete partner account
 
   @TC.20977 @bus @2.5 @regression_test @phoenix @mozypro
@@ -559,7 +559,7 @@ Background:
     | Account Type:   | Credit Card           | Current Period: | Yearly              |
     | Unpaid Balance: | €0.00                 | Collect On:     | N/A                 |
     | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period  |
-    | Next Charge:    | after 1 year (extend) |                 |                     |
+    | Next Charge:    | after 1 year          |                 |                     |
     And I delete partner account
 
   @TC.20978 @bus @2.5 @regression_test @phoenix @mozypro
@@ -601,7 +601,7 @@ Background:
     | Account Type:   | Credit Card            | Current Period: | Biennial            |
     | Unpaid Balance: | €0.00                  | Collect On:     | N/A                 |
     | Renewal Date:   | after 2 years          | Renewal Period: | Use Current Period  |
-    | Next Charge:    | after 2 years (extend) |                 |                     |
+    | Next Charge:    | after 2 years          |                 |                     |
     And I delete partner account
 
 #---------------------------------------------------------------------------------
@@ -649,7 +649,7 @@ Background:
     | Account Type:   | Credit Card            | Current Period: | Monthly             |
     | Unpaid Balance: | €0.00                  | Collect On:     | N/A                 |
     | Renewal Date:   | after 1 month          | Renewal Period: | Use Current Period  |
-    | Next Charge:    | after 1 month (extend) |                 |                     |
+    | Next Charge:    | after 1 month          |                 |                     |
     And I delete partner account
 
   @TC.20980 @bus @2.5 @regression_test @phoenix @mozypro
@@ -694,7 +694,7 @@ Background:
     | Account Type:   | Credit Card           | Current Period: | Yearly              |
     | Unpaid Balance: | €0.00                 | Collect On:     | N/A                 |
     | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period  |
-    | Next Charge:    | after 1 year (extend) |                 |                     |
+    | Next Charge:    | after 1 year          |                 |                     |
     And I delete partner account
 
   @TC.20982 @bus @2.5 @regression_test @phoenix @mozypro
@@ -737,7 +737,7 @@ Background:
     | Account Type:   | Credit Card           | Current Period: | Yearly              |
     | Unpaid Balance: | €0.00                 | Collect On:     | N/A                 |
     | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period  |
-    | Next Charge:    | after 1 year (extend) |                 |                     |
+    | Next Charge:    | after 1 year          |                 |                     |
     And I delete partner account
 
 #---------------------------------------------------------------------------------

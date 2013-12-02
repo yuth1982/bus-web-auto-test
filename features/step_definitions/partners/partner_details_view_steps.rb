@@ -142,7 +142,7 @@ Then /^Partner internal billing should be:$/ do |internal_billing_table|
   expected = internal_billing_table.raw
   with_timezone(ARIA_ENV['timezone']) do
     expected[2][1].replace(Chronic.parse(expected[2][1]).strftime('%m/%d/%y'))
-    expected[3][1].replace(Chronic.parse(expected[3][1]).strftime('%m/%d/%y') << ' (extend)')
+    expected[3][1].replace(Chronic.parse(expected[3][1]).strftime('%m/%d/%y'))
   end
   actual.flatten.should == expected.flatten.select { |item| item != '' }
 end
