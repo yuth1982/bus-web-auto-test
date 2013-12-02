@@ -14,7 +14,7 @@ Feature: Notify about and collect past-due balances
       | 1      | 50 GB     |
     Then New partner should be created
     And I get partner aria id
-    And I wait for 10 seconds
+    And I wait for 40 seconds
     When I delete partner account
     And I wait for 10 seconds
     And API* I get Aria account details by newly created partner aria id
@@ -29,7 +29,7 @@ Feature: Notify about and collect past-due balances
       | 1      | 50 GB     |
     Then New partner should be created
     And I get partner aria id
-    And I wait for 10 seconds
+    And I wait for 40 seconds
     And API* I change the Aria account status by newly created partner aria id to -1
     And I wait for 30 seconds
     And API* I get Aria account details by newly created partner aria id
@@ -50,7 +50,7 @@ Feature: Notify about and collect past-due balances
       | 1      | 50 GB     | yes         |
     Then New partner should be created
     And I get partner aria id
-    And I wait for 10 seconds
+    And I wait for 40 seconds
     And API* I change the Aria account status by newly created partner aria id to -1
     And I wait for 30 seconds
     And API* I get Aria account details by newly created partner aria id
@@ -71,7 +71,7 @@ Feature: Notify about and collect past-due balances
       | 12     | 1     |
     Then New partner should be created
     And I get partner aria id
-    And I wait for 10 seconds
+    And I wait for 40 seconds
     And API* I change the Aria account status by newly created partner aria id to 11
     And I wait for 30 seconds
     And API* I get Aria account details by newly created partner aria id
@@ -91,7 +91,7 @@ Feature: Notify about and collect past-due balances
       | 1      | Silver        | 100            |
     Then New partner should be created
     And I get partner aria id
-    And I wait for 10 seconds
+    And I wait for 40 seconds
     And API* I change the Aria account status by newly created partner aria id to 12
     And I wait for 30 seconds
     And API* I get Aria account details by newly created partner aria id
@@ -111,7 +111,7 @@ Feature: Notify about and collect past-due balances
       | 1      | 50 GB     |
     Then New partner should be created
     And I get partner aria id
-    And I wait for 10 seconds
+    And I wait for 40 seconds
     And API* I change the Aria account status by newly created partner aria id to 13
     And I wait for 30 seconds
     And API* I get Aria account details by newly created partner aria id
@@ -131,7 +131,7 @@ Feature: Notify about and collect past-due balances
       | 12     | 1     |
     Then New partner should be created
     And I get partner aria id
-    And I wait for 10 seconds
+    And I wait for 40 seconds
     And API* I change the Aria account status by newly created partner aria id to -1
     And I wait for 30 seconds
     And API* I get Aria account details by newly created partner aria id
@@ -151,7 +151,7 @@ Feature: Notify about and collect past-due balances
     | 1      | 50 GB     | yes       |
     Then New partner should be created
     And I get partner aria id
-    And I wait for 10 seconds
+    And I wait for 40 seconds
     And API* I change the Aria account status by newly created partner aria id to 11
     And I wait for 30 seconds
     And API* I get Aria account details by newly created partner aria id
@@ -171,7 +171,7 @@ Feature: Notify about and collect past-due balances
       | 12     | 1        | yes       |
     Then New partner should be created
     And I get partner aria id
-    And I wait for 10 seconds
+    And I wait for 40 seconds
     And API* I change the Aria account status by newly created partner aria id to 12
     And I wait for 30 seconds
     And API* I get Aria account details by newly created partner aria id
@@ -192,7 +192,7 @@ Feature: Notify about and collect past-due balances
       | 1      | Silver        | 100            | yes       |
     Then New partner should be created
     And I get partner aria id
-    And I wait for 10 seconds
+    And I wait for 40 seconds
     And API* I change the Aria account status by newly created partner aria id to 13
     And I wait for 30 seconds
     And API* I get Aria account details by newly created partner aria id
@@ -212,7 +212,7 @@ Feature: Notify about and collect past-due balances
       | 1      | 50 GB     | yes       |
     Then New partner should be created
     And I get partner aria id
-    And I wait for 10 seconds
+    And I wait for 40 seconds
     And API* I change the Aria account status by newly created partner aria id to -1
     And I wait for 30 seconds
     And API* I get Aria account details by newly created partner aria id
@@ -251,7 +251,7 @@ Feature: Notify about and collect past-due balances
       | period | base plan |
       | 1      | 50 GB     |
     Then New partner should be created
-    And I wait for 10 seconds
+    And I wait for 40 seconds
     And I get partner aria id
     #Assign to Fail Test CAG
     And API* I assign the Aria account by newly created partner aria id to collections account group 10030097
@@ -286,7 +286,7 @@ Feature: Notify about and collect past-due balances
       | period | base plan |
       | 1      | 50 GB     |
     Then New partner should be created
-    And I wait for 10 seconds
+    And I wait for 40 seconds
     And I get partner aria id
     #Assign to Fail Test CAG
     And API* I assign the Aria account by newly created partner aria id to collections account group 10030097
@@ -321,7 +321,7 @@ Feature: Notify about and collect past-due balances
       | period | base plan |
       | 1      | 50 GB     |
     Then New partner should be created
-    And I wait for 10 seconds
+    And I wait for 40 seconds
     And I get partner aria id
     #Assign to Fail Test CAG
     And API* I assign the Aria account by newly created partner aria id to collections account group 10030097
