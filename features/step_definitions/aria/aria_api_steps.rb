@@ -128,3 +128,6 @@ end
 When /^API\* I change the Aria tax exemption level for (.+) to (.+)$/ do |aria_id, exemption_level|
   @aria_acc_tax_exempt_level = AriaApi.set_acct_tax_exempt_status({:acct_no=> aria_id.to_i, :exemption_level=> exemption_level})
 end
+Then /^API\* I set (.+) account notification method to (.+)$/ do |aria_id, notification_method |
+  @aria_notification_method = AriaApi.update_acct_notify_method({:account_no=> aria_id.to_i, :notify_method=> notification_method})
+end
