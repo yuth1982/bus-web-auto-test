@@ -177,6 +177,7 @@ module Bus
       coupon_code_tb.type_text(partner_info.coupon_code) unless partner_info.coupon_code.nil?
       new_admin_display_name_tb.type_text(admin_info.full_name)
       new_admin_username_tb.type_text(admin_info.email)
+      root_role_select.select(admin_info.root_role)
     end
 
     def fill_account_detail(account_detail)

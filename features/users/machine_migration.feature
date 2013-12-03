@@ -96,9 +96,9 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
     And I navigate to the machine mapping page
     When I download the machine csv file
     Then The exported csv file should be like:(header as below, row number is 9793, order by current owner, no duplicated rows)
-      | column 1      |  column 2                              |  column 3       | column 4  |
-      | Machine Name  | Machine Hash                           | Current Owner   | New Owner |
-      |WIN-F13I7JF06G5|87f9fa5583e952cf76fe53e1eab0123923dc92e4|new_user@test.com|           |
+      | column 1      | column 2                                 | column 3          | column 4  |
+      | Machine Name  | Machine Hash                             | Current Owner     | New Owner |
+      | @machine_name | 87f9fa5583e952cf76fe53e1eab0123923dc92e4 | new_user@test.com |           |
 
   @TC.16273 @bus @2.5 @machine_migration
   Scenario: 16273 16279 Export a CSV file in Synchronized way while the partner has no Mozy users before; Import a CSV file whose type is not CSV in non-passive way
@@ -271,11 +271,11 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       | column 1      |  column 2       |  column 3                    | column 4                                   |
       |Import Results:| 3 rows imported |0 machines moved to new users | 3 machines skipped (no new user specified) |
 
-  @TC.16343 @bug @2.5 @machine_migration @qa5
+  @TC.16343 @bug @2.5 @machine_migration
   Scenario: 16343 Export a CSV file when the partner has subpartners
     When I add a new MozyEnterprise partner:
-      | period | users | server plan | net terms |
-      | 12     | 8     | 100 GB      | yes       |
+      | period | users | server plan | net terms | root role  |
+      | 12     | 8     | 100 GB      | yes       | FedID role |
     Then New partner should be created
     And I act as newly created partner account
     And I add some new users and activate one machine for each
@@ -284,7 +284,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
     When I navigate to Add New Role section from bus admin console page
     And I add a new role:
       | Name    | Type          | Parent     |
-      | subrole | Partner admin | Enterprise |
+      | subrole | Partner admin | FedID role |
     And I check all the capabilities for the new role
     When I navigate to Add New Pro Plan section from bus admin console page
     And I add a new pro plan for MozyEnterprise partner:

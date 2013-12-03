@@ -24,11 +24,13 @@ Then /^The exported csv file should be like:\(header as below, row number is (\d
   mapping_num.should == num.to_i
   order.should be_true
   unique.should be_true
-  all = all[1..-1].sort! {|x, y| x[0] <=> y[0]}.insert(0, all[0])
-  table.rows[1..-1].each_with_index do |r, index|
-    all[index+1][0].should == r[0]
-    r[2].replace ERB.new(r[2]).result(binding)
-    all[index+1][2].should == r[2]
+  unless table.rows[1][0] == '@machine_name'
+    all = all[1..-1].sort! {|x, y| x[0] <=> y[0]}.insert(0, all[0])
+    table.rows[1..-1].each_with_index do |r, index|
+      all[index+1][0].should == r[0]
+      r[2].replace ERB.new(r[2]).result(binding)
+      all[index+1][2].should == r[2]
+    end
   end
 end
 

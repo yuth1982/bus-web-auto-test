@@ -19,6 +19,7 @@ module Bus
         ch.check
       end
       find(:css, 'div[id^=roles-show] input[class=button]').click
+      wait_until_bus_section_load
     end
   end
 end
