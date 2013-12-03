@@ -26,8 +26,14 @@ When /^I search and delete partner account by (.+)/ do |account_name|
 end
 
 # When you are on partner details section, you are able to execute this steps
-When /^I delete partner account$/ do
-  @bus_site.admin_console_page.partner_details_section.delete_partner(QA_ENV['bus_password'])
+When /^I delete (partner|subpartner) account$/ do |status|
+  case status
+    when "partner"
+      @bus_site.admin_console_page.partner_details_section.delete_partner(QA_ENV['bus_password'])
+    when "subpartner"
+      @bus_site.admin_console_page.partner_details_section.subpartner.delete_partner(QA_ENV['bus_password'])
+    else
+  end
 end
 
 When /^I get the partner_id$/ do
@@ -39,8 +45,14 @@ When /^I get partner aria id$/ do
   @aria_id = @bus_site.admin_console_page.partner_details_section.general_info_hash['Aria ID:']
 end
 
-Then /^Partner general information should be:$/ do |details_table|
-  actual = @bus_site.admin_console_page.partner_details_section.general_info_hash
+Then /^(Partner|SubPartner) general information should be:$/ do |status,details_table|
+  case status
+    when "Partner"
+      actual = @bus_site.admin_console_page.partner_details_section.general_info_hash
+    when "SubPartner"
+      actual = @bus_site.admin_console_page.partner_details_section.subpartner.general_info_hash
+    else
+  end
   expected = details_table.hashes.first
 
   expected.each do |k,v|
@@ -133,8 +145,14 @@ Then /^Partner license types should be:$/ do |license_types_table|
   @bus_site.admin_console_page.partner_details_section.license_types_table_rows.should == license_types_table.rows
 end
 
-Then /^Partner stash info should be:$/ do |stash_info_table|
-  @bus_site.admin_console_page.partner_details_section.stash_info_table_rows.should == stash_info_table.raw
+Then /^(Partner|SubPartner) stash info should be:$/ do |status,stash_info_table|
+  case status
+    when "Partner"
+      @bus_site.admin_console_page.partner_details_section.stash_info_table_rows.should == stash_info_table.raw
+    when "SubPartner"
+      @bus_site.admin_console_page.partner_details_section.subpartner.stash_info_table_rows.should == stash_info_table.raw
+    else
+  end
 end
 
 Then /^Partner internal billing should be:$/ do |internal_billing_table|
