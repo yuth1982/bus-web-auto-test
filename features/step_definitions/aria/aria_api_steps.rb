@@ -109,7 +109,7 @@ Then(/^API\\\* Aria client defined field data should be:$/) do |client_defined_f
 end
 
 When /^API\* I change the Aria account status by (.+) to (.+)$/ do |aria_id, status_cd|
-  @aria_acc_details = AriaApi.update_acct_status({:account_no=> aria_id.to_i, :status_cd=> status_cd})
+  @aria_acc_details = AriaApi.update_acct_status({:account_no=> aria_id.to_i, :status_cd=> status_cd.to_i})
 end
 
 When /^API\* I assign the Aria account by (.+) to collections account group (.+)$/ do |aria_id, group_no|

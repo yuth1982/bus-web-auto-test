@@ -26,9 +26,10 @@ Feature: Add a new partner through phoenix
       | name          | filter |
       | @company_name | None   |
     And I view partner details by newly created partner company name
+    And I get partner aria id
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:                  | Parent: | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-      | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+      | Status:         | Root Admin:          | Root Role:                  | Parent: | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+      | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change) |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
       | MozyPro       | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -37,8 +38,8 @@ Feature: Add a new partner through phoenix
       | Backup Device Soft Cap | Disabled |
       | Server                 | Enabled  |
       | Cloud Storage (GB)     |          |
-      | Stash Users:           |          |
-      | Default Stash Storage: |          |
+      | Sync Users:            |   -1     |
+      | Default Sync Storage:  |          |
     And Partner pooled storage information should be:
       | Used | Available | Assigned | Used | Available | Assigned  |
       | 0    | 100       | 100      | 0    | Unlimited | Unlimited |
@@ -67,9 +68,10 @@ Feature: Add a new partner through phoenix
     Then 1 new user should be created
     When I change account subscription to biennial period!
     Then Subscription changed message should be Your account has been changed to biennial billing.
-    When I log in aria admin console as administrator
-    Then newly created partner admin email account status should be ACTIVE
-    When I log in bus admin console as administrator
+    Then API* Aria account should be:
+      | status_label |
+      | ACTIVE       |
+    When I stop masquerading
     Then I search and delete partner account by newly created partner company name
     When I search emails by keywords:
       | content                             |

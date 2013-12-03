@@ -20,6 +20,7 @@ Feature: Bus Smoke Test
     And Partner general information should be:
       | Status:         | Root Admin:                                 | Root Role:          | Parent:        | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Autogrow: |
       | Active (change) | <%=@partner.admin_info.full_name%> (act as) | Enterprise (change) | MozyEnterprise | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)      |
+    And I get partner aria id
     And Partner contact information should be:
       | Company Type:  | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         |
       | MozyEnterprise | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 |
@@ -73,9 +74,10 @@ Feature: Bus Smoke Test
       | name                | user group | type   |
       | smoke_client_config | test group | Server |
     Then client configuration section message should be Your configuration was saved.
-    When I log in aria admin console as administrator
-    Then newly created partner admin email account status should be ACTIVE
-    When I log in bus admin console as administrator
+    Then API* Aria account should be:
+      | status_label |
+      | ACTIVE       |
+    When I stop masquerading
     Then I search and delete partner account by Smoke Test
     When I search emails by keywords:
       | content                             |
