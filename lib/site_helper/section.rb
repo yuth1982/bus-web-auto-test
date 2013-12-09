@@ -27,8 +27,8 @@ module SiteHelper
       el
     end
 
-    def all(type, locator)
-      root_element.all(type, locator)
+    def all(type, locator, options={})
+      root_element.all(type, locator, options)
     end
 
     def find_link(locator)

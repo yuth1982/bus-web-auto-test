@@ -26,9 +26,9 @@ module SiteHelper
     #   # => <Capybara::Elements>
     #
     # Returns elements
-    def elements(element_name,element_hash)
+    def elements(element_name,element_hash, visible = false)
       define_method(element_name) do
-        all(element_hash.keys.first, element_hash.values.first)
+        all(element_hash.keys.first, element_hash.values.first, :visible => visible)
       end
       private element_name
     end
