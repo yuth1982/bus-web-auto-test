@@ -187,7 +187,9 @@ Then /^I reassign the user to user group (.+)$/ do |new_user_group|
 end
 
 Then /^I reassign the user to partner (.+)$/ do |new_partner|
-  new_partner.replace(ERB.new(new_partner).result(binding))
+  #new_partner.replace(ERB.new(new_partner).result(binding))
+  #The above statement cause strange problem, new partner is the former one
+  new_partner = ERB.new(new_partner).result(binding)
   @bus_site.admin_console_page.user_details_section.update_partner(new_partner)
 end
 
@@ -288,13 +290,22 @@ When /^I set device quota field to (\d+) and cancel$/ do |count|
   @bus_site.admin_console_page.user_details_section.device_edit_and_cancel(count)
 end
 
-When /^I edit user device quota to (\d+)$/ do |count|
-  @bus_site.admin_console_page.user_details_section.change_device_quota(count)
+When /^I edit user( Desktop| Server)* device quota to (\d+)$/ do |type, count|
+  @bus_site.admin_console_page.user_details_section.change_device_quota(count, type)
   @bus_site.admin_console_page.user_details_section.wait_until_bus_section_load
 end
 
-Then /^The range of device by tooltips should be:$/ do | range |
-  @bus_site.admin_console_page.user_details_section.check_device_range(range.hashes.first)
+Then /^The range of( Desktop| Server|) device by tooltips should be:$/ do | type, range |
+  type =
+    if type.empty?
+      nil
+    else
+      type.strip
+    end
+  device_range = @bus_site.admin_console_page.user_details_section.device_range(type)
+  range.hashes.first.each do |k, v|
+    device_range[k.downcase].should == v
+  end
 end
 
 Then /^Show error: (.+)$/ do |message|
@@ -302,13 +313,11 @@ Then /^Show error: (.+)$/ do |message|
 end
 
 When /^users' device status should be:$/ do |device_status_table|
-  device_status = @bus_site.admin_console_page.user_details_section.device_status_text
-  actual = {}
-  actual['storage_type'] = device_status[/\b(\w*):/, 1]
-  actual['used'] = device_status[/(\d+) Used/, 1]
-  actual['available'] = device_status[/(\d+) Available/, 1]
-  expected = device_status_table.hashes.first
-  expected.keys.each{ |header| actual[header.downcase].should == expected[header] }
+  actual = @bus_site.admin_console_page.user_details_section.device_status_hashes
+  expected_hashes = device_status_table.hashes
+  expected_hashes.each_with_index do |expected, i|
+    expected.keys.each{ |header| actual[i][header.downcase].should == expected[header] }
+  end
 end
 
 

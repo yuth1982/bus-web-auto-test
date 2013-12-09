@@ -20,7 +20,7 @@ module Bus
     def add_new_role(role_obj)
       role_select.select(role_obj.type)
       name_tb.type_text(role_obj.name)
-      role_parent_select.select(role_obj.parent)
+      role_parent_select.visible? && role_parent_select.select(role_obj.parent) unless role_obj.parent.nil?
       submit_btn.click
     end
 

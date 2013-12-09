@@ -303,8 +303,116 @@ Feature: User Details
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
+  @TC.120019
+  Scenario: 120019:[Bundled]newly synced FedID users can edit device limit
+    Given I log in bus admin console as administrator
+    When I add a new Reseller partner:
+      | period | reseller type | reseller quota | net terms | server plan |
+      | 12     | Silver        | 100            | yes       | yes         |
+    Then New partner should be created
+    And I act as newly created partner account
+    When I add a new Bundled user group:
+      | name | storage_type | limited_quota | server_support |
+      | Test | Limited      | 50            | yes            |
+    Then Test user group should be created
+    And I add new user(s):
+      | name  | user_group | storage_type | storage_limit | devices |
+      | User1 | Test       | Server       | 50            | 3       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | User1      |
+    And I view user details by User1
+    When  I edit user Server device quota to 2
+    Then The range of device by tooltips should be:
+      | Min | Max |
+      | 0   | 20  |
+    And users' device status should be:
+      | Used | Available | storage_type |
+      |  0   | 2         | Server       |
+    When I stop masquerading
+    And I view partner details by newly created partner company name
+    When I add partner settings
+      | Name                    | Value | Locked |
+      | allow_ad_authentication | t     | true   |
+    And I act as newly created partner account
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
+    And I search user by:
+      | keywords   |
+      | User1      |
+    And I view user details by User1
+    And users' device status should be:
+      | Used | Available | storage_type |
+      |  0   | 2         | Server       |
+    And I navigate to Authentication Policy section from bus admin console page
+    When I click Connection Settings tab
+    And I input server connection settings
+      | Server Host   | Protocol | SSL Cert | Port | Base DN                    | Bind Username          | Bind Password |
+      | 10.135.16.154 | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com | leongh@qa5.mozyops.com | QAP@SSw0rd    |
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I Test Connection for AD
+    Then test connection message should be Test passed
+    When I click Sync Rules tab
+    And I add 1 new provision rules:
+      | rule          | group |
+      | cn=test110836 | Test  | 
+    And I click the sync now button
+    And I wait for 70 seconds
+    And I click Connection Settings tab
+    Then The sync status result should like:
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
+      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0   |
+      | Next Sync   | Not Scheduled(Set)                                                   |
+    When I navigate to Search / List Users section from bus admin console page
+    And I sort user search results by Name
+    Then User search results should be:
+      | User                 | Name       | User Group |
+      | <%=@users[0].email%> | User1      | Test       |
+      | test110836@test.com  | test110836 | Test       |
+    And I view user details by test110836
+    And users' device status should be:
+      | Used | Available | storage_type |
+      |  0   | Unlimited | Server       |
+    When I edit user Server device quota to 3
+    Then The range of device by tooltips should be:
+      | Min | Max |
+      | 0   | 20  |
+    And users' device status should be:
+      | Used | Available | storage_type |
+      |  0   | 3         | Server       |
+    And I close user details section
+    When I view user details by User1
+    Then users' device status should be:
+      | Used | Available | storage_type |
+      | 0    | 2         | Server       |
+    When  I edit user Server device quota to 1
+    Then The range of device by tooltips should be:
+      | Min | Max |
+      | 0   | 20  |
+    And users' device status should be:
+      | Used | Available | storage_type |
+      |  0   | 1         | Server       |
+    And I navigate to Authentication Policy section from bus admin console page
+    When I click Sync Rules tab
+    And I delete all the rules
+    And I add 1 new deprovision rules:
+      | rule          | action |
+      | cn=test110836 | Delete |
+    And I click the sync now button
+    And I wait for 70 seconds
+    And I click Connection Settings tab
+    Then The sync status result should like:
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
+      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 1 succeeded, 0 failed   |
+      | Next Sync   | Not Scheduled(Set)                                                   |
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
   @TC.120020
   Scenario: 120020 [Bundled]user moved from subpartner to partner can edit device limit
+    Given I log in bus admin console as administrator
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
       | 12     | Silver        | 100            | yes       |
@@ -327,7 +435,7 @@ Feature: User Details
     And I change pooled resource for the subpartner:
       | Generic Storage |
       | 30              |
-    And I act as newly created partner account
+    And I act as newly created subpartner account
     And I add some new users and activate one machine for each
       | name             | user_group           | storage_type | storage_limit | devices | machine_name   |
       | subpartner.User1 | (default user group) | Desktop      | 10            | 3       | SubTestMachine |
@@ -354,6 +462,181 @@ Feature: User Details
     Then The range of device by tooltips should be:
       | Min | Max |
       | 1   | 20  |
+    And users' device status should be:
+      | Used | Available | storage_type |
+      | 1    | 3         | Desktop      |
+    Then I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.120021
+  Scenario: 120021 [Enterprise]newly synced FedID users can edit device limit
+    Given I log in bus admin console as administrator
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | net terms |
+      | 12     | 18    | 100 GB      | yes       |
+    Then New partner should be created
+    And I act as newly created partner account
+    And I add a new Itemized user group:
+      | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices | enable_stash |
+      | Test | Shared               | 5               | Shared              | 10             | yes          |
+    And I add new user(s):
+      | name  | user_group | storage_type | storage_limit | devices |
+      | User1 | Test       | Server       | 50            | 3       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | User1      |
+    And I view user details by User1
+    When  I edit user device quota to 2
+    Then The range of device by tooltips should be:
+      | Min | Max |
+      | 0   | 10  |
+    And users' device status should be:
+      | Used | Available | storage_type |
+      |  0   | 2         | Server       |
+    When I stop masquerading
+    And I view partner details by newly created partner company name
+    When I add partner settings
+      | Name                    | Value | Locked |
+      | allow_ad_authentication | t     | true   |
+    And I change root role to FedID role
+    And I act as newly created partner account
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
+    And I search user by:
+      | keywords   |
+      | User1      |
+    And I view user details by User1
+    And users' device status should be:
+      | Used | Available | storage_type |
+      |  0   | 2         | Server       |
+    And I navigate to Authentication Policy section from bus admin console page
+    When I click Connection Settings tab
+    And I input server connection settings
+      | Server Host   | Protocol | SSL Cert | Port | Base DN                    | Bind Username          | Bind Password |
+      | 10.135.16.154 | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com | leongh@qa5.mozyops.com | QAP@SSw0rd    |
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I Test Connection for AD
+    Then test connection message should be Test passed
+    When I click Sync Rules tab
+    And I add 1 new provision rules:
+      | rule          | group |
+      | cn=test110836 | Test  |
+    And I click the sync now button
+    And I wait for 70 seconds
+    And I click Connection Settings tab
+    Then The sync status result should like:
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
+      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0   |
+      | Next Sync   | Not Scheduled(Set)                                                   |
+    When I navigate to Search / List Users section from bus admin console page
+    And I sort user search results by Name
+    Then User search results should be:
+      | User                 | Name       | User Group |
+      | <%=@users[0].email%> | User1      | Test       |
+      | test110836@test.com  | test110836 | Test       |
+    And I view user details by test110836
+    And users' device status should be:
+      | Used | Available | storage_type |
+      | 0    | 8         | Server       |
+      | 0    | 5         | Desktop      |
+    When I edit user Server device quota to 3
+    Then The range of Server device by tooltips should be:
+      | Min | Max |
+      | 0   | 8   |
+    And users' device status should be:
+      | Used | Available | storage_type |
+      |  0   | 3         | Server       |
+      | 0    | 5         | Desktop      |
+    When I edit user Desktop device quota to 2
+    Then The range of Desktop device by tooltips should be:
+      | Min | Max |
+      | 0   | 5   |
+    And users' device status should be:
+      | Used | Available | storage_type |
+      | 0    | 3         | Server       |
+      | 0    | 2         | Desktop      |
+    And I close user details section
+    When I view user details by User1
+    Then users' device status should be:
+      | Used | Available | storage_type |
+      |  0   | 2         | Server       |
+    When  I edit user device quota to 1
+    Then The range of device by tooltips should be:
+      | Min | Max |
+      | 0   | 5   |
+    And users' device status should be:
+      | Used | Available | storage_type |
+      |  0   | 1         | Server       |
+    And I navigate to Authentication Policy section from bus admin console page
+    When I click Sync Rules tab
+    And I delete all the rules
+    And I add 1 new deprovision rules:
+      | rule          | action |
+      | cn=test110836 | Delete |
+    And I click the sync now button
+    And I wait for 70 seconds
+    And I click Connection Settings tab
+    Then The sync status result should like:
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
+      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 1 succeeded, 0 failed   |
+      | Next Sync   | Not Scheduled(Set)                                                   |
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.120022
+  Scenario: 120022 [Enterprisde]user moved from subpartner to partner can edit device limit
+    Given I log in bus admin console as administrator
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | net terms | root role  |
+      | 12     | 18    | 100 GB      | yes       | FedID role |
+    Then New partner should be created
+    And I act as newly created partner account
+    When I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          | Parent     |
+      | subrole | Partner admin | FedID role |
+    And I check all the capabilities for the new role
+    When I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for MozyEnterprise partner:
+      | Name    | Company Type | Root Role | Enabled | Public | Currency                        | Periods | Tax Percentage | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
+      | subplan | business     | subrole   | Yes     | No     | $ — US Dollar (Partner Default) | yearly  | 10             | test     | false            | 1                          | 1                     |
+    Then add new pro plan success message should be displayed
+    And I add a new sub partner:
+      | Company Name | Pricing Plan | Admin Name |
+      | subpartner   | subplan      | subadmin   |
+    Then New partner should be created
+    And I change pooled resource for the subpartner:
+      | Desktop Storage | Desktop Devices | Server Storage | Server Devices |
+      | 30              | 3               | 50             | 5              |
+    And I act as newly created subpartner account
+    And I add some new users and activate one machine for each
+      | name             | user_group           | storage_type | storage_limit | devices | machine_name   |
+      | subpartner.User1 | (default user group) | Desktop      | 10            | 3       | SubTestMachine |
+    And I search user by:
+      | keywords         |
+      | subpartner.User1 |
+    And I view user details by subpartner.User1
+    And users' device status should be:
+      | Used | Available | storage_type |
+      | 1    | 2         | Desktop      |
+    Then I stop masquerading from subpartner
+    And I search user by:
+      | keywords         |
+      | subpartner.User1 |
+    And I view user details by subpartner.User1
+    And users' device status should be:
+      | Used | Available | storage_type |
+      | 1    | 2         | Desktop      |
+    When I reassign the user to partner <%=@partner.company_info.name%>
+    Then users' device status should be:
+      | Used | Available | storage_type |
+      | 1    | 0         | Desktop      |
+    When  I edit user device quota to 4
+    Then The range of device by tooltips should be:
+      | Min | Max |
+      | 1   | 15  |
     And users' device status should be:
       | Used | Available | storage_type |
       | 1    | 3         | Desktop      |

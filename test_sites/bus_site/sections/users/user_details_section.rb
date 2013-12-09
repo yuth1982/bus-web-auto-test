@@ -45,13 +45,14 @@ module Bus
     elements(:storage_device_text, css: ".div_row:nth-child(2)")
 
     # Change Device Quota
-    element(:device_edit, css: "form[action^='/user/change_device_count/'] span[class=view] a")
-    element(:device_count, css: "input#device_count")
-    element(:device_edit_submit, css: "input#device_count + input.button")
-    element(:device_edit_cancel, css: "input#device_count + input.button + a")
-    element(:device_status, css: "div.show-details>div>div:first-child>div:nth-child(2) span.view:first-child")
-    element(:device_tooltip, css: "span.storage_pool_quota_tooltip")
-    element(:machine_max_tooltips, css: "span[id^=tooltip_for_machine]")
+    elements(:device_edits, {css: "form[action^='/user/change_device_count/'] span[class=view] a"}, true)
+    element(:device_count, {css: "input#device_count"}, true)
+    elements(:device_counts, css: "input#device_count")
+    element(:device_edit_submit, {css: "input#device_count + input.button"}, true)
+    element(:device_edit_cancel, {css: "input#device_count + input.button + a"}, true)
+    elements(:device_status, {css: "div.show-details>div>div:first-child>div:nth-child(2)>div>span.view:first-child"}, true)
+    elements(:device_tooltips, {css: "span.storage_pool_quota_tooltip"}, true)
+    elements(:machine_max_tooltips, {css: "span[id^=tooltip_for_machine]"}, true)
 
     # user backup information table
     element(:user_backup_details_table, xpath: "//div[starts-with(@id, 'user-show')]//div[2]/table")
@@ -95,8 +96,18 @@ module Bus
       table
     end
 
-    def device_status_text
-      device_status.text
+    def device_status_hashes
+      wait_until_bus_section_load
+      r = []
+      device_status.each do |status|
+        status = status.text
+        actual = {}
+        actual['storage_type'] = status[/\b(\w*):/, 1]
+        actual['used'] = status[/(\d+) Used/, 1]
+        actual['available'] = status[/(\d+|Unlimited) Available/, 1]
+        r << actual
+      end
+      r
     end
 
     def activated_keys_table_rows
@@ -367,6 +378,7 @@ module Bus
     #
     # @return [nothing]
     def update_partner(new_partner)
+      puts "new partner is #{new_partner}"
       change_partner_link.click
       user_group_search_img.click
       sleep 2
@@ -468,26 +480,38 @@ module Bus
       wait_until_bus_section_load
     end
 
-    def change_device_quota(count)
-      device_edit.click
-      device_count.type_text(count)
-      device_edit_submit.click
-    end
-
-    def device_edit_and_cancel(count)
-      device_edit.click
-      device_count.type_text(count)
-      device_edit_cancel.click
-    end
-
-    def check_device_range(range)
-      tooltip = {}
-      tip_text = device_count[:onfocus][/'(Min: \d+, Max: \d+)'/, 1]
-      tooltip['min'] = tip_text[/Min: (\d+)/, 1]
-      tooltip['max'] = tip_text[/Max: (\d+)/, 1]
-      range.each do |k, v|
-        tooltip[k.downcase].should == v
+    def change_device_quota(count, type=nil)
+      wait_until_bus_section_load
+      device_edits.each_index do |i|
+        if type.nil? || device_edits[i].great_grandparent.text =~ Regexp.new(type.strip.capitalize)
+          device_edits[i].click
+          device_count.type_text(count)
+          device_edit_submit.click
+          wait_until_bus_section_load
+        end
       end
+    end
+
+    def device_edit_and_cancel(count, type=nil)
+      device_edits.each_index do |i|
+        if type.nil? || device_edits[i].great_grandparent.text =~ Regexp.new(type.strip.capitalize)
+          device_edit[i].click
+          device_count.type_text(count)
+          device_edit_cancel.click
+        end
+      end
+    end
+
+    def device_range(type=nil)
+      tooltip = {}
+      device_counts.each do |device_count|
+        if type.nil? || device_count.great_grandparent.text =~ Regexp.new(type.strip.capitalize)
+          tip_text = device_count[:onfocus][/'(Min: \d+, Max: \d+)'/, 1]
+          tooltip['min'] = tip_text[/Min: (\d+)/, 1]
+          tooltip['max'] = tip_text[/Max: (\d+)/, 1]
+        end
+      end
+      tooltip
     end
 
     def get_machine_id(device)

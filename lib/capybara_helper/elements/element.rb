@@ -45,6 +45,10 @@ class Capybara::Node::Element
     find(:xpath, "..")  #parent::*[1]
   end
 
+  def great_grandparent
+    find(:xpath, "../../..")
+  end
+
   # Public: Get next sibling element of current element
   #
   # Returns next sibling element of current element

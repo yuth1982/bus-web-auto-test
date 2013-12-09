@@ -298,7 +298,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
     And I change pooled resource for the subpartner:
       | Desktop Storage | Desktop Devices | Server Storage | Server Devices |
       | 30              | 3               | 50             | 5              |
-    And I act as newly created partner account
+    And I act as newly created subpartner account
     And I add some new users and activate one machine for each
       | name             | user_group           | storage_type | storage_limit | devices | machine_name   |
       | subpartner.User1 | (default user group) | Desktop      | 10            | 3       | SubTestMachine |
