@@ -64,6 +64,8 @@ Feature: Modify credit card information and billing contact information
       | period | users |
       | 12     | 10    |
     Then New partner should be created
+    And I wait for 10 seconds
+    And I get partner aria id
     When I act as newly created partner account
     And I navigate to Change Payment Information section from bus admin console page
     And I update payment contact information to:
@@ -71,12 +73,11 @@ Feature: Modify credit card information and billing contact information
       | 333 Songhu Road | Shanghai | Shanghai | China   | 200433 | 12345678 | test@mozy.com |
     And I save payment information changes
     Then Payment information should be updated
-    When I log in aria admin console as administrator
-    And I search aria account by newly created partner admin email
-    Then Aria account billing contact should include:
-      | address         | city     | state    | country | zip    | phone    | email         |
-      | 333 Songhu Road | Shanghai | Shanghai | China   | 200433 | 12345678 | test@mozy.com |
-    When I log in bus admin console as administrator
+    When I wait for 10 seconds
+    Then API* Aria account should be:
+      | billing_address1 | billing_city | billing_locality | billing_country | billing_zip | billing_intl_phone | billing_email |
+      | 333 Songhu Road  | Shanghai     | Shanghai         | CN              | 200433      | 12345678           | test@mozy.com |
+    When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
   @TC.15275 @bus @2.5 @modify @cc @billing_contact_info @BUG.96359

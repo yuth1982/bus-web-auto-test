@@ -139,10 +139,6 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
       | GB - Gold Reseller | 200      |
       | 20 GB add-on       | 2        |
     And New partner should be created
-    When I log in aria admin console as administrator
-    And I search aria account by newly created partner admin email
-    And I change Mozy Reseller 20 GB add-on - Gold (Annual) plan units to 3
-    Then Supplemental plan units should be changed
     And I wait for 30 seconds
     When I log in bus admin console as administrator
     And I search partner by newly created partner admin email
@@ -155,21 +151,30 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
   @TC.20187 @bus @resizing_reseller_add-ons_plan
   Scenario: 20187 Assign new Platinum Reseller 20 GB add on plan in Aria
     When I add a new Reseller partner:
-      | period  | reseller type | reseller quota | storage add on |
-      | 12      | Platinum      | 200            | 2              |
+      | company name | period  | reseller type | reseller quota | storage add on |
+      | TC.20187     | 12      | Platinum      | 200            | 2              |
     And Order summary table should be:
       | Description            | Quantity |
       | GB - Platinum Reseller | 200      |
       | 20 GB add-on           | 2        |
     And New partner should be created
-    When I log in aria admin console as administrator
-    And I search aria account by newly created partner admin email
-    And I change Mozy Reseller 20 GB add-on - Platinum (Annual) plan units to 3
-    Then Supplemental plan units should be changed
-    And I wait for 30 seconds
-    When I log in bus admin console as administrator
-    And I search partner by newly created partner admin email
-    And I view partner details by newly created partner company name
+    And I wait for 10 seconds
+    And I get partner aria id
+    Then API* Aria account plans for newly created partner aria id should be:
+      | plan_name                                      | plan_units |
+      | Annual EN                                      | 1          |
+      | Mozy Reseller GB - Platinum (Annual)           | 200        |
+      | Mozy Reseller 20 GB add-on - Platinum (Annual) | 2          |
+    When API* I replace aria supplemental units plans for newly created partner aria id
+      | plan_name                                      | num_plan_units |
+      | Mozy Reseller 20 GB add-on - Platinum (Annual) | 3              |
+    And I wait for 10 seconds
+    Then API* Aria account plans for newly created partner aria id should be:
+      | plan_name                                      | plan_units |
+      | Annual EN                                      | 1          |
+      | Mozy Reseller GB - Platinum (Annual)           | 200        |
+      | Mozy Reseller 20 GB add-on - Platinum (Annual) | 3          |
+    And I refresh the partner details section
     And Partner pooled storage information should be:
       | Used | Available | Assigned | Used | Available | Assigned  |
       | 0    | 260       | 260      | 0    | Unlimited | Unlimited |

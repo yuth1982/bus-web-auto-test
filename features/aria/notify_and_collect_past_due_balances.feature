@@ -349,3 +349,43 @@ Feature: Notify about and collect past-due balances
       | ACTIVE       |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
+
+
+  @TC.120030 @BUG.113148 @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers
+  Scenario: 120030 Verify account reinstate from suspended state if charge goes through
+    When I add a new MozyPro partner:
+      | period | base plan |
+      | 1      | 50 GB     |
+    Then New partner should be created
+    And I wait for 40 seconds
+    And I get partner aria id
+  #Assign to Fail Test CAG
+    And API* I assign the Aria account by newly created partner aria id to collections account group 10030097
+    And I wait for 10 seconds
+    And I act as partner by:
+      | email        |
+      | @admin_email |
+    And I change MozyPro account plan to:
+      | base plan |
+      | 100 GB    |
+    Then the MozyPro account plan should be changed
+    And I stop masquerading
+    And API* I change the Aria account status by newly created partner aria id to -1
+  #Assign to CyberSource Credit Card
+    And API* I assign the Aria account by newly created partner aria id to collections account group 10026095
+    And I wait for 10 seconds
+    And I act as partner by:
+      | email        |
+      | @admin_email |
+    And I wait for 10 seconds
+    And I update credit card information to:
+      | cc name       | cc number        | expire month | expire year | cvv |
+      | new card name | 4111111111111111 | 12           | 18          | 123 |
+    And I save payment information changes
+    Then Payment information should be updated
+    And I wait for 10 seconds
+    Then API* Aria account should be:
+      | status_label |
+      | ACTIVE       |
+    When I stop masquerading
+    Then I search and delete partner account by newly created partner company name

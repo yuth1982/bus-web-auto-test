@@ -128,6 +128,35 @@ end
 When /^API\* I change the Aria tax exemption level for (.+) to (.+)$/ do |aria_id, exemption_level|
   @aria_acc_tax_exempt_level = AriaApi.set_acct_tax_exempt_status({:acct_no=> aria_id.to_i, :exemption_level=> exemption_level})
 end
+
 Then /^API\* I set (.+) account notification method to (.+)$/ do |aria_id, notification_method |
   @aria_notification_method = AriaApi.update_acct_notify_method({:account_no=> aria_id.to_i, :notify_method=> notification_method})
+end
+
+Then /^API\* Aria account plans for (.+) should be:$/ do |aria_id, info_table|
+
+  actual = AriaApi.get_acct_plans_all({:acct_no=> aria_id.to_i})
+  expected = info_table.hashes
+  expected.each_index{ |index| expected[index].keys.each{ |key| actual['all_acct_plans'][index][key].to_s.should == expected[index][key]} }
+
+end
+
+When(/^API\* I replace aria supplemental units plans for (.+)$/) do |aria_id, table|
+  ##param plan_name and plan_units only
+  @new_plan = table.hashes
+  #get current supplemental plan
+  @current_plan_info = AriaApi.get_acct_plans_all({:acct_no=> aria_id.to_i})
+  #find plan num based on plan name
+  @current_plan_info['all_acct_plans'].each_index do |i|
+    #loop through through each account plan
+    @new_plan.each_index do |n|
+      #loop through each new plan and compare
+      if @current_plan_info['all_acct_plans'][i]['plan_name'] == @new_plan[n]['plan_name']
+        #modify the plan units
+        supp_plan_no = @current_plan_info['all_acct_plans'][i]['plan_no']
+        @aria_supp_plans = AriaApi.modify_supp_plan(:acct_no=> aria_id.to_i, :supp_plan_no=> supp_plan_no, :num_plan_units=> @new_plan[n]['num_plan_units'])
+      end
+    end
+  end
+
 end

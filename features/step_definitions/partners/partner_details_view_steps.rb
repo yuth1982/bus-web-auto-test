@@ -304,3 +304,7 @@ end
 When /^I change pooled resource for the subpartner:$/ do |table|
   @bus_site.admin_console_page.partner_details_section.subpartner.change_pooled_resource(friendly_hash(table.hashes.first))
 end
+
+When /^I refresh the partner details section$/ do
+  @bus_site.admin_console_page.partner_details_section.refresh_bus_section
+end
