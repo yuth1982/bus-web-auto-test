@@ -74,6 +74,7 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller|MozyEnterprise DPS) partner:
   @partner.company_info.zip = attributes['zip'] unless attributes['zip'].nil?
   @partner.company_info.phone = attributes['phone'] unless attributes['phone'].nil?
   @partner.company_info.vat_num = attributes['vat number'] unless attributes["vat number"].nil?
+  @partner.company_info.security = attributes['security'] unless attributes["security"].nil?
 
   # Partner info attributes
   @partner.partner_info.coupon_code = attributes['coupon'] unless attributes['coupon'].nil?
@@ -155,8 +156,8 @@ end
 
 When /^I add a new sub partner:$/ do |sub_partner_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_partner'])
-  subpartner = Bus::DataObj::SubPartner.new(friendly_hash(sub_partner_table.hashes.first))
-  @bus_site.admin_console_page.add_new_partner_section.add_new_subpartner(subpartner)
+  @subpartner = Bus::DataObj::SubPartner.new(friendly_hash(sub_partner_table.hashes.first))
+  @bus_site.admin_console_page.add_new_partner_section.add_new_subpartner(@subpartner)
 end
 
 Then /^the default billing country is (.+) in add new partner section$/ do |country|

@@ -1,6 +1,9 @@
 When /^I add a new role:$/ do |table|
   # table is a | ATC695 |pending
   role_hash = table.hashes.first
+  role_hash.each do |_, v|
+    v.replace ERB.new(v).result(binding)
+  end
   role = Bus::DataObj::Role.new(role_hash['Type'], role_hash['Name'], role_hash['Parent'])
   @bus_site.admin_console_page.add_new_role_section.add_new_role(role)
 end
@@ -30,4 +33,13 @@ When /^I clean all roles with name which started with "([^"]+)"$/ do |prefix|
   names.each do |name|
     step %{I delete role #{name}}
   end
+end
+
+When /^I refresh the add new role section$/ do
+  @bus_site.admin_console_page.add_new_role_section.refresh_bus_section
+  @bus_site.admin_console_page.add_new_role_section.wait_until_bus_section_load
+end
+
+When /^I close the role details section$/ do
+  @bus_site.admin_console_page.role_details_section.close_bus_section
 end

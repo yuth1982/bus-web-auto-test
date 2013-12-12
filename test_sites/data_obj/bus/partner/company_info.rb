@@ -2,7 +2,7 @@ module Bus
   module DataObj
     # This class contains attributes for company information
     class CompanyInfo
-      attr_accessor :name, :address, :city, :state_abbrev, :state, :country, :zip, :phone, :vat_num
+      attr_accessor :name, :address, :city, :state_abbrev, :state, :country, :zip, :phone, :vat_num, :security
 
       # Public: Initialize a CompanyInfo Object
       #
@@ -16,6 +16,7 @@ module Bus
         @zip = Random.new.rand(10000..99999).to_s
         @phone = Forgery::Address.phone
         @vat_num = ""
+        @security = 'NONE'
       end
 
       # Public: Output CompanyInfo object attributes
@@ -30,7 +31,8 @@ module Bus
         country: #@country
         zip: #@zip
         phone: #@phone
-        vat_num: #@vat_num}
+        vat_num: #@vat_num
+        secruity: #@security}
       end
     end
   end

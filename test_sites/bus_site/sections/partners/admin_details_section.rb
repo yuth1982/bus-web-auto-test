@@ -38,6 +38,10 @@ module Bus
       sleep 10 # Wait for admin to be activated
     end
 
+    def has_activate_admin_link?
+      all(:xpath, "//a[text()='Activate Admin']").size > 0
+    end
+
     # Public: As as admin
     #
     # Returns nothing

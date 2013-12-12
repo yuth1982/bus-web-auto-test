@@ -35,9 +35,10 @@ module Bus
     section(:machine_details_section, MachineDetailsSection, css: 'div[id^=machine-show-]')
 
     # Admin section
-    section(:add_new_role_section, AddNewRoleSection, id: "roles-new-content")
+    section(:add_new_role_section, AddNewRoleSection, id: "roles-new")
     section(:add_new_admin_section, AddNewAdminSection, id: "admin-new")
     section(:search_admins_section, SearchAdminsSection, id: "admin-search")
+    section(:list_admins_section, ListAdminsSection, id: 'admin-list')
     section(:role_details_section, RoleDetailsSection, css: "div[id^=roles-show-]")
     section(:list_roles_section, ListRolesSection, id: "roles-list")
 

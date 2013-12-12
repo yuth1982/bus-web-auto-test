@@ -16,6 +16,7 @@ module Bus
     element(:contact_zip_tb, id: 'contact_zip')
     element(:contact_phone_tb, id: 'contact_phone')
     element(:vat_number_tb, id: 'vat_info_vat_number')
+    element(:security_select, id: 'security_requirement')
 
     # Admin info
     #
@@ -163,6 +164,7 @@ module Bus
       contact_address_tb.type_text(company_info.address)
       contact_city_tb.type_text(company_info.city)
       contact_zip_tb.type_text(company_info.zip)
+      security_select.select(company_info.security)
       contact_phone_tb.type_text(company_info.phone)
     end
 

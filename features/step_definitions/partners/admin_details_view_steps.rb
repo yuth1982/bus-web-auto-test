@@ -15,6 +15,38 @@ When /^I activate new partner admin with default password$/ do
   @bus_site.admin_console_page.admin_details_section.activate_admin(password, password)
 end
 
+When /^I view the newly created (sub)*partner admin details$/ do |sub|
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_partner'])
+  if sub
+    @bus_site.admin_console_page.search_list_partner_section.search_partner(@subpartner.admin_email_address)
+    @bus_site.admin_console_page.search_list_partner_section.view_partner_detail(@subpartner.admin_email_address)
+  else
+    @bus_site.admin_console_page.search_list_partner_section.search_partner(@partner.admin_info.email)
+    @bus_site.admin_console_page.search_list_partner_section.view_partner_detail(@partner.admin_info.email)
+  end
+  @bus_site.admin_console_page.admin_details_section.wait_until_bus_section_load
+end
+
+#Then /^I should see the (.+) link$/ do |link_name|
+#  @bus_site.admin_console_page.admin_details_section.links.should inlcude(link_name);
+#end
+
+Then /^I will( not)? see the activate admin link$/ do |t|
+  if t.nil?
+    @bus_site.admin_console_page.admin_details_section.has_activate_admin_link?.should be_true
+  else
+    @bus_site.admin_console_page.admin_details_section.has_activate_admin_link?.should be_false
+  end
+end
+
+When /^I view the admin details of (.+)$/ do |admin|
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['list_admins'])
+  @bus_site.admin_console_page.list_admins_section.refresh_bus_section
+  @bus_site.admin_console_page.list_admins_section.wait_until_bus_section_load
+  @bus_site.admin_console_page.list_admins_section.view_admin(admin)
+  @bus_site.admin_console_page.list_admins_section.wait_until_bus_section_load
+end
+
 When /^I get the admin id from partner details$/ do
   @bus_site.admin_console_page.partner_details_section.find_link(@partner.admin_info.full_name).click
   @admin_id = @bus_site.admin_console_page.admin_details_section.admin_id
@@ -47,4 +79,8 @@ end
 
 When /^edit sub admin personal information error message\(s\) should be:$/ do |message|
   @bus_site.admin_console_page.admin_details_section.admin_info_box_message.should == message.to_s
+end
+
+When /^I close the admin details section$/ do
+  @bus_site.admin_console_page.admin_details_section.close_bus_section
 end

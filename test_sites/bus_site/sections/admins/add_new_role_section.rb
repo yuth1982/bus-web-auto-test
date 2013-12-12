@@ -6,7 +6,7 @@ module Bus
     element(:role_parent_select, id: "role_parent_role_id")
     element(:message_div, css: 'div#roles-new-errors ul')
 
-    element(:submit_btn, xpath: "//input[contains(@value, 'Save Changes')]")
+    element(:submit_btn, xpath: "//div[@id='roles-new-content']//input[contains(@value, 'Save Changes')]")
 
 
     # Public: Add a new role with given role object information
