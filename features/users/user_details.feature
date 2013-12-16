@@ -636,7 +636,7 @@ Feature: User Details
     When  I edit user device quota to 4
     Then The range of device by tooltips should be:
       | Min | Max |
-      | 1   | 15  |
+      | 1   | 16  |
     And users' device status should be:
       | Used | Available | storage_type |
       | 1    | 3         | Desktop      |
