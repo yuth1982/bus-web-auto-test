@@ -1,4 +1,4 @@
-When /^I act as newly created (sub)*partner account$/ do |type|
+When /^I act as newly created (sub)*partner( account)?$/ do |type, account|
   if type.nil?
     @current_partner = @bus_site.admin_console_page.partner_details_section.partner
     @bus_site.admin_console_page.partner_details_section.act_as_partner
