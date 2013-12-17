@@ -334,7 +334,10 @@ Then(/^set max message should be:$/) do | msg|
 end
 Then(/^The range of machine max for (.+) by tooltips should be:$/) do |machine, range|
   # table is a | 0   | 12  |
-  @bus_site.admin_console_page.user_details_section.check_machine_max_range(machine, range.hashes.first)
+  tooltip = @bus_site.admin_console_page.user_details_section.machine_max_range(machine)
+  range.hashes.first.each do |k, v|
+    tooltip[k.downcase].should == v
+  end
 end
 
 When /^I view details of (.+)'s user group$/ do |user|

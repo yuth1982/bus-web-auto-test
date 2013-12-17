@@ -52,7 +52,7 @@ module Bus
     element(:device_edit_cancel, {css: "input#device_count + input.button + a"}, true)
     elements(:device_status, {css: "div.show-details>div>div:first-child>div:nth-child(2)>div>span.view:first-child"}, true)
     elements(:device_tooltips, {css: "span.storage_pool_quota_tooltip"}, true)
-    elements(:machine_max_tooltips, {css: "span[id^=tooltip_for_machine]"}, true)
+    element(:machine_max_tooltips, css: "span[id^=tooltip_for_machine]")
 
     # user backup information table
     element(:user_backup_details_table, xpath: "//div[starts-with(@id, 'user-show')]//div[2]/table")
@@ -588,16 +588,14 @@ module Bus
       end
     end
 
-    def check_machine_max_range(name, range)
+    def machine_max_range(name)
       tooltip = {}
       max_input = find(:xpath, "//table[@class='mini-table']//a[text()='#{name}']/../../*[last()-2]//*[starts-with(@id, 'input-machine-storage-max')]")
       tip_text = max_input[:onfocus][/'(Min: \d+ GB, Max: \d+ GB)'/, 1]
       Log.debug tip_text
       tooltip['min'] = tip_text[/Min: (\d+)/, 1]
       tooltip['max'] = tip_text[/Max: (\d+)/, 1]
-      range.each do |k, v|
-        tooltip[k.downcase].should == v
-      end
+      tooltip
     end
 
     # jm: code for hashing user subscription info
