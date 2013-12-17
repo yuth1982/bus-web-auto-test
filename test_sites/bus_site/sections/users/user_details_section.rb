@@ -495,7 +495,7 @@ module Bus
     def device_edit_and_cancel(count, type=nil)
       device_edits.each_index do |i|
         if type.nil? || device_edits[i].great_grandparent.text =~ Regexp.new(type.strip.capitalize)
-          device_edit[i].click
+          device_edits[i].click
           device_count.type_text(count)
           device_edit_cancel.click
         end
