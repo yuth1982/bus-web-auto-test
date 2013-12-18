@@ -125,6 +125,8 @@ phoenix:
     os_x_client_manual:         OS X Client Manual
     mozyhome_support_portal:    MozyHome Support Portal
 
+  captcha:                      kwpa3121
+
 fedid:
   user_email:                   auto@mtdev.mozypro.local
   user_name:                    auto

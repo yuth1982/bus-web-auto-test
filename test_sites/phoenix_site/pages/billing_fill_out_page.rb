@@ -50,6 +50,7 @@ module Phoenix
     #
     # Various elements
     #
+    element(:captcha, id: "captcha")
     element(:next_btn, id: "next-button")
     element(:continue_btn, css: "input.img-button")
     element(:back_btn, id: "back_button")
@@ -83,6 +84,8 @@ module Phoenix
       cc_first_name_tb.type_text(partner.credit_card.first_name)
       cc_last_name_tb.type_text(partner.credit_card.last_name)
       cc_company_tb.type_text(partner.company_info.name )
+      #captch
+      captcha.type_text(CONFIGS['phoenix']['captcha'])
       # billing company info
       same_as_company_info_link.click
     end
@@ -110,6 +113,8 @@ module Phoenix
       home_bill_post_tb.type_text(partner.company_info.zip)
       home_bill_phone_tb.type_text(partner.company_info.phone)
       home_bill_email_tb.eql?(partner.admin_info.email)
+      #captch
+      captcha.type_text(CONFIGS['phoenix']['captcha'])
     end
 
     def localized_country(loc_select, partner)

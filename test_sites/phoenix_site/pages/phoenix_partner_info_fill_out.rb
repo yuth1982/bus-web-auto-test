@@ -19,6 +19,7 @@ module Phoenix
     element(:mozyhome_radio, id: "product_mozyhome")
 
     # key elements
+    element(:captcha, id: "captcha")
     element(:next_btn, id: "next-button")
     element(:continue_btn, css: "input.img-button")
     element(:back_btn, id: "back_button")
@@ -114,8 +115,8 @@ module Phoenix
     end
     # go to pro-direct flow
     def go_to_pro_direct_page
-      find(:xpath, "//a[text()='Products']").click
-      find(:xpath, "//a[contains(@href,'/registration/business')]").click
+      url = 'https://secure.mozy.com/registration/business'
+      visit(url)
     end
 
     def direct_fill_out(partner)
@@ -128,10 +129,8 @@ module Phoenix
 
     # go to home-free flow
     def go_to_home_free
-      find(:xpath, "//a[text()='Products']").click
-      find(:xpath, "//a[contains(@href,'/home')]").click
-      find(:xpath, "//a[contains(@href,'/home/free')]").click
-      find(:xpath, "//a[contains(@href,'/registration/free')]").click
+      url = 'https://secure.mozy.com/registration/free'
+      visit(url)
     end
 
     def free_user_info_input(partner)
@@ -197,6 +196,7 @@ module Phoenix
         email_entry_tb.type_text(partner.admin_info.email)
         free_password_tb.type_text(CONFIGS['global']['test_pwd'])
         free_password_again_tb.type_text(CONFIGS['global']['test_pwd'])
+        captcha.type_text(CONFIGS['phoenix']['captcha'])
         continue_btn.click
       end
       #
