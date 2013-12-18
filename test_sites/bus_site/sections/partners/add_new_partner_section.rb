@@ -17,6 +17,7 @@ module Bus
     element(:contact_phone_tb, id: 'contact_phone')
     element(:vat_number_tb, id: 'vat_info_vat_number')
     element(:security_select, id: 'security_requirement')
+    element(:subpartner_company_type_select, id: 'company_type')
 
     # Admin info
     #
@@ -363,6 +364,8 @@ module Bus
       new_partner_name_tb.type_text(partner.company_name)
       partner.instance_variable_defined?('@pricing_plan') && pricing_plan_select.select(partner.pricing_plan) unless pricing_plan_select['type'] == 'hidden'
       partner.instance_variable_defined?('@root_role') && root_role_select.select(partner.root_role) unless root_role_select['type'] == 'hidden'
+      security_select.select(partner.security) unless all(:id, 'security_requirement').empty?
+      subpartner_company_type_select.select(partner.company_type) unless all(:id, 'company_type').empty?
       new_admin_display_name_tb.type_text(partner.admin_name)
       new_admin_username_tb.type_text(partner.admin_email_address)
       create_partner_btn.click
