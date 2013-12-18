@@ -78,7 +78,7 @@ Feature: Add a new partner
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-    @120079
+    @TC.120079
     Scenario: 120079 HIPAA for Mozy Enterprize and sub-partners
       When I add a new MozyEnterprise partner:
         | period | users  | net terms | security |
@@ -113,7 +113,7 @@ Feature: Add a new partner
       And I stop masquerading
       And I search and delete partner account by newly created partner company name
 
-  @120080
+  @TC.120080
   Scenario: 120080 HIPAA for Mozy OEM and sub-partners
     When I add a new OEM partner:
       | company_name  | security |

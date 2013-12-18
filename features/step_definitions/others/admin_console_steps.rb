@@ -146,3 +146,11 @@ Then /^I verify the new links for (MozyPro|MozyEnterprise|Reseller) partner$/ do
       raise "Error: Company type #{type} does not exist."
   end
 end
+
+When /^I will( not)* see the (.+) link from navigation links$/ do |t, link|
+  if t.nil?
+    @bus_site.admin_console_page.has_navigation?(link).should be_true
+  else
+    @bus_site.admin_console_page.has_navigation?(link).should be_false
+  end
+end

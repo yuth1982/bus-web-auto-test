@@ -15,8 +15,9 @@ module Bus
     element(:tax_percentage_input, css: "input[name='plan[tax]']")
     element(:tax_name_input, css: "input[name='plan[tax_name]']")
     element(:auto_include_tax_checkbox, id: 'plan_auto_include_tax')
-    element(:server_tab, xpath: "//div[@id='plan-pro_new-tabs']//li[text()='Server']")
-    element(:desktop_tab, xpath: "//div[@id='plan-pro_new-tabs']//li[text()='Desktop']")
+    elements(:server_tab, xpath: "//div[@id='plan-pro_new-tabs']//li[text()='Server']")
+    elements(:desktop_tab, xpath: "//div[@id='plan-pro_new-tabs']//li[text()='Desktop']")
+    elements(:grandfathered_tab, xpath: "//div[@id='plan-pro_new-tabs']//li[text()='Grandfathered']")
     element(:price_per_key_input, css: 'input[id$=license_price]')
     element(:min_keys_input, css: 'input[id$=minimum_licenses]')
     element(:price_per_gigabyte_input, css: 'input[id$=quota_price]')
@@ -47,9 +48,9 @@ module Bus
       tax_name_input.type_text(pro_plan.tax_name)
       auto_include_tax_checkbox.check if pro_plan.auto_include_tax == 'yes'
       # pricing by key type input
-      %w(server desktop).each do |type|
+      %w(server desktop grandfathered).each do |type|
         if pro_plan.instance_variable_defined?("@#{type}")
-          self.send("#{type}_tab").click
+          self.send("#{type}_tab").first.click
           price_per_key_input.type_text(pro_plan.send(type)[:price_per_key])
           min_keys_input.type_text(pro_plan.send(type)[:min_keys])
           price_per_gigabyte_input.type_text(pro_plan.send(type)[:price_per_gigabyte])
@@ -64,6 +65,7 @@ module Bus
       #minimum_quota_tb.type_text(pro_plan.min_gb.to_s)
 
       submit_btn.click
+      wait_until_bus_section_load
     end
 
     # Public: Return messages

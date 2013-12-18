@@ -138,7 +138,7 @@ module Bus
     end
 
     def has_navigation?(link)
-      all(:xpath, "//a[text() = '#{link}']")
+      !all(:xpath, "//a[text() = '#{link}']").empty?
     end
 
     def close_stash_invitation_popup

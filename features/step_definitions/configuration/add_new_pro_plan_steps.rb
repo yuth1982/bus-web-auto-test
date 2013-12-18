@@ -1,8 +1,8 @@
-When /^I add a new pro plan for (MozyEnterprise|Mozypro|Reseller) partner:$/ do |partner_type, table|
+When /^I add a new pro plan for (MozyEnterprise|Mozypro|Reseller|OEM) partner:$/ do |partner_type, table|
   pro_plan = friendly_hash(table.hashes.first)
   plan = {}
   pro_plan.each do |k, v|
-    if k.match(/(server|desktop)_(.+)/)
+    if k.match(/(server|desktop|grandfather)_(.+)/)
       plan[$1] ||= {}
       plan[$1][$2] = v
     else
@@ -13,6 +13,10 @@ When /^I add a new pro plan for (MozyEnterprise|Mozypro|Reseller) partner:$/ do 
   if partner_type == 'MozyEnterprise'
     (plan[:server] ||= desktop_server_default) unless @partner.server_plan == 'None'
     plan[:desktop] ||= desktop_server_default
+  elsif partner_type == 'OEM'
+    plan[:server] ||= desktop_server_default
+    plan[:desktop] ||= desktop_server_default
+    plan[:grandfathered] ||= desktop_server_default
   else
     plan[:generic] ||= {price_per_gigabyte:1, min_gigabytes:1}
   end
