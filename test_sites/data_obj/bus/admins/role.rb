@@ -8,8 +8,8 @@ module Bus
         first_name = Forgery::Name.first_name
         last_name = Forgery::Name.last_name
         @name = name || "AA #{first_name} #{last_name}"
-        @parent = parent || 'Root' # default value for 'Root'
-        @type = type || "Mozy, Inc. admin" # default value for 'Mozy, Inc. admin'
+        @parent = parent
+        @type = type
       end
     end
   end

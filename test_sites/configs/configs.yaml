@@ -23,6 +23,7 @@ bus:
     reseller:                   Reseller
     itemized_pro:               MozyPro Itemized
     itemized_reseller:          Reseller Itemized
+    oem:                        OEM
 
   reseller_type:
     silver:                     Silver

@@ -11,7 +11,7 @@ When /^I add a new pro plan for (MozyEnterprise|Mozypro|Reseller) partner:$/ do 
   end
   desktop_server_default = {price_per_key:1, min_keys:1, price_per_gigabyte:1, min_gigabytes:1}
   if partner_type == 'MozyEnterprise'
-    plan[:server] ||= desktop_server_default
+    (plan[:server] ||= desktop_server_default) unless @partner.server_plan == 'None'
     plan[:desktop] ||= desktop_server_default
   else
     plan[:generic] ||= {price_per_gigabyte:1, min_gigabytes:1}

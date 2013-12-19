@@ -11,6 +11,11 @@ Transform /^newly created partner company name$/ do |step_arg|
   @partner.company_info.name
 end
 
+Transform /^newly created subpartner company name$/ do |step_arg|
+  @subpartner.company_name
+end
+
+
 Transform /^newly created (Bundled|Itemized) user group name$/ do |type|
   case type
     when 'Bundled'
