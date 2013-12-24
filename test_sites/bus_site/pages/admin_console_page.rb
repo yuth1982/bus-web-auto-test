@@ -141,6 +141,10 @@ module Bus
       !all(:xpath, "//a[text() = '#{link}']").empty?
     end
 
+    def has_content?(content)
+      page.has_content?(content)
+    end
+
     def close_stash_invitation_popup
       find_link("Don't Show This Again").click
     end

@@ -94,9 +94,9 @@ end
 When /^I (can|cannot) change partner name$/ do | c |
   case c
     when "can"
-      @bus_site.admin_console_page.has_navigation?("Change Name").size.should == 1
+      @bus_site.admin_console_page.has_navigation?("Change Name").should be_true
     when "cannot"
-      @bus_site.admin_console_page.has_navigation?("Change Name").should be_empty
+      @bus_site.admin_console_page.has_navigation?("Change Name").should be_false
     else
 
   end
