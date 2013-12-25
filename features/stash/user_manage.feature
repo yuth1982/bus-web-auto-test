@@ -333,7 +333,6 @@ Feature: User stash setting management
       | period | base plan | net terms |
       | 12     | 100 GB    | yes       |
     Then New partner should be created
-    When I enable stash for the partner
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |

@@ -31,12 +31,11 @@ Feature:
     And I search and delete partner account by newly created partner company name
 
   @TC.19057 @BSA.3000 @bus @stash @partner_manage
-  Scenario: 19057 MozyPro admin view stash details in list users section
+  Scenario: 19057 22011 MozyPro admin view stash details in list users section
     When I add a new MozyPro partner:
       | period | base plan | net terms |
       | 12     | 100 GB    | yes       |
     Then New partner should be created
-    When I enable stash for the partner
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |
@@ -81,12 +80,11 @@ Feature:
     And I delete partner account
 
   @TC.19739 @BSA.3000 @bus @stash @partner_manage
-  Scenario: 19739 MozyPro admin view stash details in partner details section
+  Scenario: 19739 22010 MozyPro admin view stash details in partner details section
     When I add a new MozyPro partner:
       | period | base plan | net terms |
       | 12     | 100 GB    | yes       |
     Then New partner should be created
-    When I enable stash for the partner
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |
@@ -108,12 +106,11 @@ Feature:
     And I delete partner account
 
   @TC.19740 @BSA.3000 @bus @stash @partner_manage
-  Scenario: 19740 Reseller admin view stash details in partner details section
+  Scenario: 19740 22023 Reseller admin view stash details in partner details section
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
       | 12     | Silver        | 100            |
     Then New partner should be created
-    When I enable stash for the partner
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |
@@ -142,7 +139,6 @@ Feature:
       | period | base plan | net terms |
       | 12     | 100 GB    | yes       |
     Then New partner should be created
-    When I enable stash for the partner
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |
@@ -217,7 +213,6 @@ Feature:
       | period | base plan |
       | 12     | 100 GB    |
     Then New partner should be created
-    When I enable stash for the partner
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |

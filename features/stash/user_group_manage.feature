@@ -101,12 +101,11 @@ Feature: User group stash setting management
     And I search and delete partner account by newly created partner company name
 
   @TC.19007 @BSA.2010 @bus @stash
-  Scenario: 19007 Modify default stash storage quota for a user group in user group edit page when stash is enabled for partner
+  Scenario: 19007 22054 Modify default stash storage quota for a user group in user group edit page when stash is enabled for partner
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
       | 1      | Platinum      | 100            |
     Then New partner should be created
-    When I enable stash for the partner
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |

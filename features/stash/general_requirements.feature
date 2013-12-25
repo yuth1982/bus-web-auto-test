@@ -11,7 +11,6 @@ Feature:
       | period | base plan | net terms |
       | 12     | 100 GB    | yes       |
     Then New partner should be created
-    When I enable stash for the partner
     And I act as newly created partner account
     And I add new user(s):
       | name          | storage_type | storage_limit | devices | enable_stash | send_email |
@@ -79,7 +78,6 @@ Feature:
       | period | base plan | net terms |
       | 12     | 100 GB    | yes       |
     Then New partner should be created
-    When I enable stash for the partner
     And I act as newly created partner account
     And I add new user(s):
       | name          | storage_type | storage_limit | devices |
@@ -116,7 +114,6 @@ Feature:
       | period | reseller type | reseller quota | net terms |
       | 12     | Silver        | 100            | yes       |
     Then New partner should be created
-    When I enable stash for the partner
     And I act as newly created partner account
     And I add a new Bundled user group:
       | name        | storage_type | enable_stash |
@@ -186,7 +183,6 @@ Feature:
       | period | reseller type | reseller quota | net terms |
       | 12     | Silver        | 100            | yes       |
     Then New partner should be created
-    When I enable stash for the partner
     And I act as newly created partner account
     And I add a new Bundled user group:
       | name        | storage_type | enable_stash |
