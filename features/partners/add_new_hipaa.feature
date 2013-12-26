@@ -138,3 +138,19 @@ Feature: Add a new partner
     And I stop masquerading from subpartner
     Then I search and delete partner account by TC.120080.OEM
 
+  @TC.120167
+  Scenario: 120167 Error will occur if no 'Security' option is selected during partner creation
+    When I add a new MozyPro partner:
+      | period | security |
+      | 12     |          |
+    Then Add New Partner error message should be:
+    """
+    Security field cannot be blank
+    """
+    Then I add a new OEM partner:
+      | company_name  | security |
+      | TC.120167.OEM |          |
+    Then Add New Partner error message should be:
+    """
+    Security field cannot be blank
+    """
