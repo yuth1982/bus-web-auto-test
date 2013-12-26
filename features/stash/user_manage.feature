@@ -50,7 +50,6 @@ Feature: User stash setting management
       | period | base plan |
       | 12     | 50 GB     |
     Then New partner should be created
-    When I enable stash for the partner
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |
@@ -74,7 +73,6 @@ Feature: User stash setting management
       | period | base plan |
       | 12     | 50 GB     |
     Then New partner should be created
-    When I enable stash for the partner
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |
@@ -151,7 +149,6 @@ Feature: User stash setting management
       | period | base plan |
       | 1      | 50 GB     |
     Then New partner should be created
-    When I enable stash for the partner
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |
@@ -174,7 +171,6 @@ Feature: User stash setting management
       | period | base plan |
       | 12     | 50 GB     |
     Then New partner should be created
-    When I enable stash for the partner
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |

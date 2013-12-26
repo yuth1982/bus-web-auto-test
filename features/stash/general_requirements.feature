@@ -59,7 +59,6 @@ Feature:
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
-    When I enable stash for the partner
     And I act as newly created partner account
     And I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
@@ -164,7 +163,6 @@ Feature:
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
-    When I enable stash for the partner
     And I add stash to all users for the partner
     And I act as newly created partner account
     And I navigate to Search / List Users section from bus admin console page
