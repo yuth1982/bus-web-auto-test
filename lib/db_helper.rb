@@ -224,4 +224,31 @@ module DBHelper
       conn.close unless conn.nil?
     end
   end
+
+  def get_password_config(partner_id, type='user')
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select * from password_policies where pro_partner_id = #{partner_id} and (user_type = '#{type}' or user_type = 'all');"
+      puts sql
+      c = conn.exec sql
+      c[0]
+    rescue PGError => e
+      puts 'postgres error'
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_password_character_classes(password_policy_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select character_class from password_policies_character_classes where password_policy_id = #{password_policy_id};"
+      c = conn.exec sql
+      c.field_values('character_class')
+    rescue PGError => e
+      puts 'postgres error'
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
 end
