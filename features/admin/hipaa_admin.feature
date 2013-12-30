@@ -227,3 +227,26 @@ Feature: The capabilities that govern the HIPAA compliant root admin role should
     Then I stop masquerading from subpartner
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
+
+  @TC.120090
+  Scenario: 120090 [OEM]Hippa admin cannot see the password policy link in admin console
+    When I add a new OEM partner:
+      | Security |
+      | HIPAA    |
+    Then New partner should be created
+    When I view the newly created subpartner admin details
+    And I act as newly created partner account
+    Then I will not see the Password Policy link from navigation links
+    When I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          |
+      | subrole | Partner admin |
+    And I check all the capabilities for the new role
+    And I add a new sub partner:
+      | Company Name | Admin Name |
+      | subpartner   | subadmin   |
+    Then New partner should be created
+    And I act as newly created subpartner account
+    Then I will not see the Password Policy link from navigation links
+    Then I stop masquerading from subpartner
+    And I search and delete partner account by newly created subpartner company name
