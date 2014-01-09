@@ -21,6 +21,18 @@ module SSHHelper
       result = Hash[*output.match(/#<PasswordPolicy (.+)>/)[1].split(/(,|:) /).delete_if{|d| d.match(/,|:/)}.map {|d|d.gsub('true', 't').gsub('false', 'f')}]
     end
   end
+
+  def ssh_phoenix(cmd)
+    host = QA_ENV['phoenix01_host']
+    user, password = QA_ENV['ssh_login'], QA_ENV['ssh_password']
+    Net::SSH.start(host, user , :password => password ) {|ssh|  ssh.exec!(cmd)}
+  end
+
+  def ssh_bus(cmd)
+    host = QA_ENV['client_host']
+    user, password = QA_ENV['ssh_login'], QA_ENV['ssh_password']
+    Net::SSH.start(host, user , :password => password ) {|ssh|  ssh.exec!(cmd)}
+  end
 end
 
 module SSHRecordOverdraft
@@ -46,3 +58,63 @@ module SSHRecordOverdraft
     end
   end
 end
+
+module SSHReap
+
+  def enable_cybersoure_payment_force_failure
+    #This makes mozyhome payments fail
+    cmd = 'cd /etc'
+    cmd += '; touch cybersource_payment_force_failure'
+    cmd += '; /etc/init.d/apache2 restart'
+    ssh_phoenix(cmd)
+  end
+
+  def disable_cybersoure_payment_force_failure
+    #This makes mozyhome payments work again
+    cmd = 'cd /etc'
+    cmd += '; rm cybersource_payment_force_failure'
+    cmd += '; /etc/init.d/apache2 restart'
+    ssh_phoenix(cmd)
+  end
+
+  def run_phoenix_process_subscription_script(user_id)
+    cmd = 'cd /var/www/phoenix'
+    cmd += "; script/process_subscriptions -e production -u #{user_id}"
+    ssh_phoenix(cmd)
+  end
+
+  def change_reap_yml_file(user_id,days_ago)
+
+    fail('Reaps needs a User ID') if user_id.nil?
+
+    #Get reap.yml from server
+    cmd = 'cd /var/www/bus/config/'
+    cmd += '; cat reap.yml'
+    reap_yml = ssh_bus(cmd)
+
+    #Edit reap.yml
+    edited_yml = ''
+    reap_yml.each_line do |line|
+      if line.include? 'user_ids:'
+        line = line.gsub('[',']').split(']')
+        line = "#{line[0]}[#{user_id}]#{line[2]}"
+      elsif line.include? 'reap_restart_date:'
+        line = "#{line.split(/'/)[0]} '#{Date.today - days_ago}'\n"
+      end
+      edited_yml += line
+    end
+
+    #Update reap.yml on server
+    cmd = 'cd /var/www/bus/config/'
+    cmd += "; echo \"#{edited_yml}\" > reap.yml"
+    ssh_bus(cmd)
+  end
+
+  def start_reap
+    cmd = 'cd /var/www/bus'
+    cmd += '; script/reap -v -f -e production mozy_home_delinquent'
+    ssh_bus(cmd)
+  end
+
+end
+

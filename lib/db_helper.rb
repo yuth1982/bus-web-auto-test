@@ -251,4 +251,74 @@ module DBHelper
       conn.close unless conn.nil?
     end
   end
+
+  def set_expiration_time(user_id,days_ago)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "UPDATE subscriptions SET expiration_time='#{Date.today - days_ago.to_i} 12:12:12' WHERE user_id = #{user_id};"
+      puts sql
+      conn.exec sql
+    rescue PGError => e
+      puts 'postgres error'
+      fail e
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def set_backup_suspended_at(user_id,weeks_ago)
+
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "UPDATE users SET backup_suspended_at = '#{Date.today - (weeks_ago * 7)}' WHERE id = #{user_id};"
+      conn.exec sql
+    rescue PGError => e
+      puts 'postgres error'
+      fail e
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def set_gc_notify_at(user_id,weeks_ago)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "UPDATE users SET gc_notify_at = '#{Date.today - (weeks_ago * 7)}' WHERE id = #{user_id};"
+      conn.exec sql
+    rescue PGError => e
+      puts 'postgres error'
+      fail e
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  ## Helpers ##
+  def get_gc_notify_at(user_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select gc_notify_at from users where id = #{user_id};"
+      conn.exec sql
+      c.values[0][0].to_i
+    rescue PGError => e
+      puts 'postgres error'
+      fail e
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_user_table(user_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select * from users where id = #{user_id};"
+      conn.exec sql
+      c.values[0][0].to_i
+    rescue PGError => e
+      puts 'postgres error'
+      fail e
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
 end

@@ -46,6 +46,7 @@ include DBHelper
 include LDAPHelper
 include SSHHelper
 include SSHMigration
+include SSHReap
 include SSHTDSGrowQuota
 include SSHRecordOverdraft
 include AriaApi
