@@ -17,3 +17,12 @@ Then /^Number of (Server|Desktop) (activated|unactivated) keys should be (\d+)$/
     section.unactivated_keys_table_rows.each {|column| column[1].should == type }
   end
 end
+
+Then /^Log (activated|unactivated) keys$/ do | status|
+  section = @bus_site.admin_console_page.user_details_section
+  if status == 'activated'
+    section.activated_keys_table_rows.each.with_index {|column,index| Log.debug("key#{index+1}:#{column[2]}-#{column[1]}")}
+  elsif status == 'unactivated'
+    section.unactivated_keys_table_rows.each.with_index {|column,index| Log.debug("key#{index+1}:#{column[1]}-#{column[0]}")}
+  end
+end
