@@ -16,7 +16,7 @@ module Bus
         @zip = Random.new.rand(10000..99999).to_s
         @phone = Forgery::Address.phone
         @vat_num = ""
-        @security = 'NONE'
+        @security = 'Standard'
       end
 
       # Public: Output CompanyInfo object attributes
