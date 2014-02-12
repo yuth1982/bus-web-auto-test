@@ -259,6 +259,28 @@ When /^I login (as the user|under changed password) on the account.$/ do |login_
 
 end
 
+When /^I log into phoenix with username (.+) and password (.+)$/ do |username,password|
+  @bus_site = BusSite.new #In case you log into bus through the phoenix page
+  @phoenix_site = PhoenixSite.new
+  @phoenix_site.user_account.load
+  @phoenix_site.user_account.phoenix_login(username,password)
+end
+
+Given /^I log into phoenix with capitalized username$/ do
+  username = QA_ENV['bus_username'].upcase
+  password = QA_ENV['bus_password']
+  step %{I log into phoenix with username #{username} and password #{password}}
+end
+
+Given /^I log into phoenix with mixed case username$/ do
+  username = QA_ENV['bus_username']
+  until username.match(/[A-Z]/) do
+    username = username.gsub /[a-z]/i do |x| rand(2)>0 ? x.downcase : x.upcase end
+  end
+  password = QA_ENV['bus_password']
+  step %{I log into phoenix with username #{username} and password #{password}}
+end
+
 # this piece may be combinable with the verification of account step
 When /^I verify the user account.$/ do
   @phoenix_site.user_account.login_verify(@partner)

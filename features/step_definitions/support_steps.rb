@@ -70,3 +70,28 @@ end
 Transform /^the newly created device name$/ do |step_arg|
   @clients.last.machine_alias
 end
+
+Transform /^Hipaa admin$/ do |step_arg|
+  QA_ENV['hipaa_admin']
+end
+
+Transform /^Standard admin$/ do |step_arg|
+  QA_ENV['nohipaa_admin']
+end
+
+Transform /^Hipaa subdomain$/ do |step_arg|
+  QA_ENV['hipaa_subdomain']
+end
+
+Transform /^Standard subdomain$/ do |step_arg|
+  QA_ENV['nohipaa_subdomain']
+end
+
+Transform /^Standard user$/ do |step_arg|
+  QA_ENV['nohipaa_user']
+end
+
+Transform /^Hipaa user$/ do |step_arg|
+  QA_ENV['hipaa_user']
+end
+

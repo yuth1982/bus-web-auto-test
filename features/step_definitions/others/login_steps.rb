@@ -21,12 +21,21 @@ When /^I navigate to bus admin console login page$/ do
   @bus_site.login_page.load
 end
 
+When /^I navigate to (.+) user login page$/ do |subdomain|
+  @bus_site = BusSite.new
+  @bus_site.user_login_page(subdomain, 'mozy').load
+end
+
 When /^I log in bus admin console with user name (.+) and password (.+)$/ do |username, password|
   @bus_site.login_page.login(username, password)
 end
 
 When /^I log out bus admin console$/ do
   @bus_site.login_page.logout
+end
+
+When /^I log out user$/ do
+  @bus_site.user_login_page(type = 'mozy').logout
 end
 
 Then /^Login page error message should be (.+)$/ do |messages|
@@ -47,4 +56,30 @@ end
 Then /^the new partner admin should be asked to verify their email address$/ do
   @bus_site.verify_email_page.current_url.should == "#{QA_ENV['bus_host']}/login/email_needs_verification"
   @bus_site.verify_email_page.links_present.should be_true
+end
+
+When /^I log into bus admin console with uppercase (.+)$/ do |username|
+  username = username.upcase
+  step %{I log in bus admin console with user name #{username} and password #{QA_ENV['bus_password']}}
+end
+
+When /^I log into bus admin console with mixed case (.+)$/ do |username|
+  until username.match(/[A-Z]/) do
+    username = username.gsub /[a-z]/i do |x| rand(2)==0 ? x.downcase : x.upcase end
+  end
+  step %{I log in bus admin console with user name #{username} and password #{QA_ENV['bus_password']}}
+end
+
+When /^I log into (.+) with uppercase username (.+)$/ do |subdomain,username|
+  username = username.upcase
+  user_account = {:user_name => username, :password => QA_ENV['bus_password']}
+  @bus_site.user_login_page(subdomain, 'mozy').login(user_account)
+end
+
+When /^I log into (.+) with mixed case username (.+)$/ do |subdomain,username|
+  until username.match(/[A-Z]/) do
+    username = username.gsub /[a-z]/i do |x| rand(2)==0 ? x.downcase : x.upcase end
+  end
+  user_account = {:user_name => username, :password => QA_ENV['bus_password']}
+  @bus_site.user_login_page(subdomain, 'mozy').login(user_account)
 end

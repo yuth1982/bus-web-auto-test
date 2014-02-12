@@ -132,14 +132,20 @@ module Phoenix
       loc_item.select("#{LANG[partner.company_info.country][partner.partner_info.type][loc_select]}")	;end
 
     def user_login(partner)
-      username_tb.type_text(partner.admin_info.email)
-      password_tb.type_text(CONFIGS['global']['test_pwd'])
-      submit_btn.click
+      username = partner.admin_info.email
+      password = CONFIGS['global']['test_pwd']
+      phoenix_login(username,password)
     end
 
     def user_login_changed_pw(partner)
-      username_tb.type_text(partner.admin_info.email)
-      password_tb.type_text(QA_ENV['bus_password'])
+      username = partner.admin_info.email
+      password = QA_ENV['bus_password']
+      phoenix_login(username,password)
+    end
+
+    def phoenix_login(username,password)
+      username_tb.type_text(username)
+      password_tb.type_text(password)
       submit_btn.click
     end
 

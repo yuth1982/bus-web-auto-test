@@ -8,6 +8,7 @@ module Bus
     element(:username_tb, id: "username")
     element(:password_tb, id: "password")
     element(:login_btn, css: "span.login_button")
+    element(:logout_btn, xpath: "//a[text()='LOG OUT']")
 
     attr_accessor :subdomain, :type
 
@@ -32,5 +33,16 @@ module Bus
           login_btn.click
       end
     end
+
+    # Public: Logout bus admin console
+    #
+    # Example
+    #   @bus_login_page.logout
+    #
+    # Returns nothing
+    def logout
+      logout_btn.click
+    end
+
   end
 end
