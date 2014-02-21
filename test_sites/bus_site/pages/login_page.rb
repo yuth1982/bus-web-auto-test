@@ -40,7 +40,8 @@ module Bus
     # Returns nothing
     def partner_login(partner)
       username_tb.type_text(partner.admin_info.email)
-      password_tb.type_text(CONFIGS['global']['test_pwd'])
+      password = (partner.company_info.security == "HIPAA") ? CONFIGS['global']['test_hipaa_pwd']:CONFIGS['global']['test_pwd']
+      password_tb.type_text(password)
       login_btn.click
     end
     # Public: Logout bus admin console

@@ -9,20 +9,20 @@ Background:
 # base coverage section:
 #   represents a balanced set of coverage
 #----------------------------------------test matrix------------------------------
-#	partner size:	10        | 50          | 100     | 250     | 500     | 1tb
-#	monthly:		ie,sv,cp  | ie          | uk      | fr,sv   | de,sv   | us
-#	yearly:			uk,sv     | de,sv,nv,cp | us,sv   | ie,nv   | fr      | fr,cp
-#	biannual:		us        | fr,nv       | de,nv   | de      | uk,nv   | ie,sv
+#	partner size:	10        | 50          | 100    | 250      | 500      | 1tb
+#	monthly:		ie,sv,cp  | ie          | uk     | fr,sv    | de,sv,hp | us
+#	yearly:			uk,sv     | de,sv,nv,cp | us,sv  | ie,nv,hp | fr       | fr,cp
+#	biannual:		us,hp     | fr,nv       | de,nv  | de       | uk,nv    | ie,sv
 #----------------------------------------test legend------------------------------
-#		entries by: country,server/dsk,novat,coupon
+#		entries by: country,server/dsk,novat,coupon,hipaa
 #
-#		key: sv=server, nv=novat, cp=coupon
+#		key: sv=server, nv=novat, cp=coupon, hp=hipaa
 #		coupon code = 10PERCENTOFFOUTLINE
 #
 #     base smoke test = us yearly, 100gb, server
 #---------------------------------------------------------------------------------
 
-  @TC.20965 @bus @2.5 @regression_test @phoenix @mozypro
+  @TC.20965 @bus @2.9 @regression_test @phoenix @mozypro
   Scenario: 20965 Add a new US yearly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -40,18 +40,18 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                          | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | <%=@partner.partner_info.type%>| 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
     | Server                 | Disabled |
     | Cloud Storage (GB)     |          |
-    | Stash Users:           |          |
-    | Default Stash Storage: |          |
+    | Sync Users:            |    -1    |
+    | Default Sync Storage:  |          |
     And Partner pooled storage information should be:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 1024      | 1024     | 0    | Unlimited | Unlimited |
@@ -62,12 +62,12 @@ Background:
     | Next Charge:    | after 1 month          |                 |                     |
     And I delete partner account
 
-  @TC.20966 @bus @2.5 @regression_test @phoenix @mozypro
+  @TC.20966 @bus @2.9 @regression_test @phoenix @mozypro
   Scenario: 20966 Add a new US biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-    | period | base plan | country      |
-    | 24     | 10 GB     | United States |
+    | period | base plan | country       | security |
+    | 24     | 10 GB     | United States |   HIPAA  |
     Then the order summary looks like:
     | Description      | Price   | Quantity | Amount  |
     | 10 GB - Biennial | $209.79 | 1        | $209.79 |
@@ -80,18 +80,18 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                          | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
-    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                  | Users: | Contact Address:                    | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
     | Server                 | Disabled |
     | Cloud Storage (GB)     |          |
-    | Stash Users:           |          |
-    | Default Stash Storage: |          |
+    | Sync Users:            |    -1    |
+    | Default Sync Storage:  |          |
     And Partner pooled storage information should be:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 10        | 10       | 0    | Unlimited | Unlimited |
@@ -102,7 +102,7 @@ Background:
     | Next Charge:    | after 2 years          |                 |                     |
     And I delete partner account
 
-  @TC.20967 @bus @2.5 @regression_test @phoenix @mozypro
+  @TC.20967 @bus @2.9 @regression_test @phoenix @mozypro
   Scenario: 20967 Add a new IE monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -122,18 +122,18 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
-    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
     | Server                 | Disabled |
     | Cloud Storage (GB)     |          |
-    | Stash Users:           |          |
-    | Default Stash Storage: |          |
+    | Sync Users:            |    -1    |
+    | Default Sync Storage:  |          |
     And Partner pooled storage information should be:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 50        | 50       | 0    | Unlimited | Unlimited |
@@ -144,12 +144,12 @@ Background:
     | Next Charge:    | after 1 month          |                 |                     |
     And I delete partner account
 
-  @TC.20968 @bus @2.5 @regression_test @phoenix @mozypro
+  @TC.20968 @bus @2.9 @regression_test @phoenix @mozypro
   Scenario: 20968 Add a new IE yearly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-    | period | base plan | country | vat number |
-    | 12     | 250 GB    | Ireland |            |
+    | period | base plan | country | vat number | security |
+    | 12     | 250 GB    | Ireland |            |   HIPAA  |
     Then the order summary looks like:
     | Description        | Price     | Quantity | Amount    |
     | 250 GB - Annual    | €824.89   | 1        | €824.89   |
@@ -164,18 +164,18 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
-    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
     | Server                 | Disabled |
     | Cloud Storage (GB)     |          |
-    | Stash Users:           |          |
-    | Default Stash Storage: |          |
+    | Sync Users:            |    -1    |
+    | Default Sync Storage:  |          |
     And Partner pooled storage information should be:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 250       | 250      | 0    | Unlimited | Unlimited |
@@ -186,7 +186,7 @@ Background:
     | Next Charge:    | after 1 year          |                 |                     |
     And I delete partner account
 
-  @TC.20969 @bus @2.5 @regression_test @phoenix @mozypro
+  @TC.20969 @bus @2.9 @regression_test @phoenix @mozypro
   Scenario: 20969 Add a new IE biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -207,18 +207,18 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
-    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
     | Server                 | Enabled  |
     | Cloud Storage (GB)     |          |
-    | Stash Users:           |          |
-    | Default Stash Storage: |          |
+    | Sync Users:            |    -1    |
+    | Default Sync Storage:  |          |
     And Partner pooled storage information should be:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 1024      | 1024     | 0    | Unlimited | Unlimited |
@@ -229,7 +229,7 @@ Background:
     | Next Charge:    | after 2 years          |                 |                     |
     And I delete partner account
 
-  @TC.20970 @bus @2.5 @regression_test @phoenix @mozypro
+  @TC.20970 @bus @2.9 @regression_test @phoenix @mozypro
   Scenario: 20970 Add a new UK monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -248,18 +248,18 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
-    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
     | Server                 | Disabled |
     | Cloud Storage (GB)     |          |
-    | Stash Users:           |          |
-    | Default Stash Storage: |          |
+    | Sync Users:            |    -1    |
+    | Default Sync Storage:  |          |
     And Partner pooled storage information should be:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 100       | 100      | 0    | Unlimited | Unlimited |
@@ -270,7 +270,7 @@ Background:
     | Next Charge:    | after 1 month          |                 |                     |
     And I delete partner account
 
-  @TC.20971 @bus @2.5 @regression_test @phoenix @mozypro
+  @TC.20971 @bus @2.9 @regression_test @phoenix @mozypro
   Scenario: 20971 Add a new UK yearly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -290,18 +290,18 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
-    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
     | Server                 | Enabled  |
     | Cloud Storage (GB)     |          |
-    | Stash Users:           |          |
-    | Default Stash Storage: |          |
+    | Sync Users:            |    -1    |
+    | Default Sync Storage:  |          |
     And Partner pooled storage information should be:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 10        | 10       | 0    | Unlimited | Unlimited |
@@ -312,7 +312,7 @@ Background:
     | Next Charge:    | after 1 year          |                 |                     |
     And I delete partner account
 
-  @TC.20972 @bus @2.5 @regression_test @phoenix @mozypro
+  @TC.20972 @bus @2.9 @regression_test @phoenix @mozypro
   Scenario: 20972 Add a new UK biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -332,18 +332,18 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
-    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
     | Server                 | Disabled |
     | Cloud Storage (GB)     |          |
-    | Stash Users:           |          |
-    | Default Stash Storage: |          |
+    | Sync Users:            |    -1    |
+    | Default Sync Storage:  |          |
     And Partner pooled storage information should be:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 500       | 500      | 0    | Unlimited | Unlimited |
@@ -354,12 +354,12 @@ Background:
     | Next Charge:    | after 2 years          |                 |                     |
     And I delete partner account
 
-  @TC.20973 @bus @2.5 @regression_test @phoenix @mozypro
+  @TC.20973 @bus @2.9 @regression_test @phoenix @mozypro
   Scenario: 20973 Add a new DE monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-    | period | base plan | country | vat number  | server plan |
-    | 1      | 500 GB    | Germany | DE812321109 | yes         |
+    | period | base plan | country | vat number  | server plan | security |
+    | 1      | 500 GB    | Germany | DE812321109 | yes         |   HIPAA  |
     Then the order summary looks like:
     | Beschreibung           | Preis   | Menge  | Betrag  |
     | 500 GB - Monatlich     | 149,99€ | 1      | 149,99€ |
@@ -374,18 +374,18 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
-    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
     | Server                 | Enabled  |
     | Cloud Storage (GB)     |          |
-    | Stash Users:           |          |
-    | Default Stash Storage: |          |
+    | Sync Users:            |    -1    |
+    | Default Sync Storage:  |          |
     And Partner pooled storage information should be:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 500       | 500      | 0    | Unlimited | Unlimited |
@@ -396,7 +396,7 @@ Background:
     | Next Charge:    | after 1 month          |                 |                     |
     And I delete partner account
 
-  @TC.20974 @bus @2.5 @regression_test @phoenix @mozypro
+  @TC.20974 @bus @2.9 @regression_test @phoenix @mozypro
   Scenario: 20974 Add a new DE biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -416,18 +416,18 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
-    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
     | Server                 | Disabled |
     | Cloud Storage (GB)     |          |
-    | Stash Users:           |          |
-    | Default Stash Storage: |          |
+    | Sync Users:           |    -1    |
+    | Default Sync Storage: |          |
     And Partner pooled storage information should be:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 100       | 100      | 0    | Unlimited | Unlimited |
@@ -438,7 +438,7 @@ Background:
     | Next Charge:    | after 2 years          |                 |                     |
     And I delete partner account
 
-  @TC.20975 @bus @2.5 @regression_test @phoenix @mozypro
+  @TC.20975 @bus @2.9 @regression_test @phoenix @mozypro
   Scenario: 20975 Add a new DE biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -457,18 +457,18 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
-    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
     | Server                 | Disabled |
     | Cloud Storage (GB)     |          |
-    | Stash Users:           |          |
-    | Default Stash Storage: |          |
+    | Sync Users:            |    -1    |
+    | Default Sync Storage:  |          |
     And Partner pooled storage information should be:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 250       | 250      | 0    | Unlimited | Unlimited |
@@ -479,7 +479,7 @@ Background:
     | Next Charge:    | after 2 years          |                 |                     |
     And I delete partner account
 
-  @TC.20976 @bus @2.5 @regression_test @phoenix @mozypro
+  @TC.20976 @bus @2.9 @regression_test @phoenix @mozypro
   Scenario: 20976 Add a new FR monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -499,18 +499,18 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
-    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
     | Server                 | Enabled  |
     | Cloud Storage (GB)     |          |
-    | Stash Users:           |          |
-    | Default Stash Storage: |          |
+    | Sync Users:            |    -1    |
+    | Default Sync Storage:  |          |
     And Partner pooled storage information should be:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 250       | 250      | 0    | Unlimited | Unlimited |
@@ -521,7 +521,7 @@ Background:
     | Next Charge:    | after 1 month          |                 |                     |
     And I delete partner account
 
-  @TC.20977 @bus @2.5 @regression_test @phoenix @mozypro
+  @TC.20977 @bus @2.9 @regression_test @phoenix @mozypro
   Scenario: 20977 Add a new FR yearly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -540,18 +540,18 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
-    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
     | Server                 | Disabled |
     | Cloud Storage (GB)     |          |
-    | Stash Users:           |          |
-    | Default Stash Storage: |          |
+    | Sync Users:            |    -1    |
+    | Default Sync Storage:  |          |
     And Partner pooled storage information should be:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 500       | 500      | 0    | Unlimited | Unlimited |
@@ -562,7 +562,7 @@ Background:
     | Next Charge:    | after 1 year          |                 |                     |
     And I delete partner account
 
-  @TC.20978 @bus @2.5 @regression_test @phoenix @mozypro
+  @TC.20978 @bus @2.9 @regression_test @phoenix @mozypro
   Scenario: 20978 Add a new FR biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -582,18 +582,18 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
-    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
     | Server                 | Disabled |
     | Cloud Storage (GB)     |          |
-    | Stash Users:           |          |
-    | Default Stash Storage: |          |
+    | Sync Users:            |    -1    |
+    | Default Sync Storage:  |          |
     And Partner pooled storage information should be:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 50        | 50       | 0    | Unlimited | Unlimited |
@@ -607,7 +607,7 @@ Background:
 #---------------------------------------------------------------------------------
 # coupons : new section
 #---------------------------------------------------------------------------------
-  @TC.20979 @bus @2.5 @regression_test @phoenix @mozypro
+  @TC.20979 @bus @2.9 @regression_test @phoenix @mozypro
   Scenario: 20979 Add a new IE monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -630,18 +630,18 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
-    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
     | Server                 | Enabled  |
     | Cloud Storage (GB)     |          |
-    | Stash Users:           |          |
-    | Default Stash Storage: |          |
+    | Sync Users:            |    -1    |
+    | Default Sync Storage:  |          |
     And Partner pooled storage information should be:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 10        | 10       | 0    | Unlimited | Unlimited |
@@ -652,7 +652,7 @@ Background:
     | Next Charge:    | after 1 month          |                 |                     |
     And I delete partner account
 
-  @TC.20980 @bus @2.5 @regression_test @phoenix @mozypro
+  @TC.20980 @bus @2.9 @regression_test @phoenix @mozypro
   Scenario: 20980 Add a new DE biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -675,18 +675,18 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
-    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
     | Server                 | Enabled  |
     | Cloud Storage (GB)     |          |
-    | Stash Users:           |          |
-    | Default Stash Storage: |          |
+    | Sync Users:            |    -1    |
+    | Default Sync Storage:  |          |
     And Partner pooled storage information should be:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 50        | 50       | 0    | Unlimited | Unlimited |
@@ -697,7 +697,7 @@ Background:
     | Next Charge:    | after 1 year          |                 |                     |
     And I delete partner account
 
-  @TC.20982 @bus @2.5 @regression_test @phoenix @mozypro
+  @TC.20982 @bus @2.9 @regression_test @phoenix @mozypro
   Scenario: 20982 Add a new FR yearly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -718,18 +718,18 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Stash: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | No (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
-    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | <%=@partner.partner_info.type> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
     | Server                 | Disabled |
     | Cloud Storage (GB)     |          |
-    | Stash Users:           |          |
-    | Default Stash Storage: |          |
+    | Sync Users:            |    -1    |
+    | Default Sync Storage:  |          |
     And Partner pooled storage information should be:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 1024      | 1024     | 0    | Unlimited | Unlimited |
@@ -752,7 +752,7 @@ Background:
 #   Name: Phoenix generated pro acct missing internal values
 #---------------------------------------------------------------------------------
 
-  @TC.20985 @bus @2.5 @regression_test @phoenix @mozypro @BUG.97647
+  @TC.20985 @bus @2.9 @regression_test @phoenix @mozypro @BUG.97647
   Scenario: 20985 Verification of new internal acct attributes for phoenix generated MozyPro partner
   When I am at dom selection point:
   And I add a phoenix Pro partner:
@@ -765,6 +765,6 @@ Background:
   | @company_name | None   |
   And I view partner details by newly created partner company name
   Then Partner general information should be:
-  | Account Type  | Sales Origin  | Sales Channel         |
-  | Live (change) | Web           | Inside Sales (change) |
+  | Account Type  | Sales Origin  |
+  | Live (change) | Web           |
   And I delete partner account

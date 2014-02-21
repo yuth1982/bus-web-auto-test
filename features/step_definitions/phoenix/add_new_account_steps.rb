@@ -34,7 +34,8 @@ When /^I (.+) a phoenix (Home|Pro|Direct|Free) (partner|user):$/ do |string,type
   @partner.company_info.zip = attributes['zip'] unless attributes['zip'].nil?
   @partner.company_info.phone = attributes['phone'] unless attributes['phone'].nil?
   @partner.company_info.vat_num = attributes["vat number"] unless attributes["vat number"].nil?
-
+  @partner.company_info.security = attributes["security"].nil? ? "Standard" : attributes['security']
+  
   # Partner info attributes
   @partner.partner_info.coupon_code = attributes["coupon"] unless attributes["coupon"].nil?
 

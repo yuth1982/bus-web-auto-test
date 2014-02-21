@@ -17,6 +17,7 @@ module Phoenix
     element(:reenter_password_tb, id: "person_password_confirmation")
     element(:mozypro_radio, id: "product_mozypro")
     element(:mozyhome_radio, id: "product_mozyhome")
+    element(:security_select, id: "security_requirement")
 
     # key elements
     element(:captcha, id: "captcha")
@@ -141,10 +142,10 @@ module Phoenix
     # pro flow info entry
     def admin_info_fill_out(partner)
       verify_registration_page_elements
-      # admin info fill out
-      acct_admin_info_fill_out(partner)
       # pro/home selection
       partner.partner_info.type.eql?("MozyHome") ? mozyhome_radio.click : mozypro_radio.click
+      # admin info fill out
+      acct_admin_info_fill_out(partner)
       continue_btn.click
 
       fill_in_pro_elements(partner) if partner.partner_info.type.eql?("MozyPro")
@@ -156,8 +157,10 @@ module Phoenix
       def acct_admin_info_fill_out(partner)
         new_admin_display_name_tb.type_text(partner.admin_info.full_name)
         new_admin_username_tb.type_text(partner.admin_info.email)
-        password_tb.type_text(CONFIGS['global']['test_pwd'])
-        reenter_password_tb.type_text(CONFIGS['global']['test_pwd'])
+	      security_select.select(partner.company_info.security) if (partner.partner_info.type == "MozyPro")
+        password = (partner.company_info.security == "HIPAA") ? CONFIGS['global']['test_hipaa_pwd']:CONFIGS['global']['test_pwd']
+        password_tb.type_text(password)
+        reenter_password_tb.type_text(password)       
         # changed to new localized_country method
         localized_country(new_admin_country_select, partner)
         # this can be removed
