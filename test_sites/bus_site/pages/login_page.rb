@@ -78,8 +78,13 @@ module Bus
     end
 
     def choose_english
-      set_dialect_select.select('English')
-      sleep 2
+      #If the elemenet exists then select English
+      using_wait_time 3 do
+        if page.has_css?('#set_dialect')
+          set_dialect_select.select('English')
+          sleep 2
+        end
+      end
     end
   end
 end
