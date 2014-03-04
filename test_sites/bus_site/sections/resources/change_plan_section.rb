@@ -298,7 +298,9 @@ module Bus
       wait_until{ submit_btn['disabled'] != 'true' }
       submit_btn.click
       wait_until_bus_section_load
-      continue_btn.click
+      using_wait_time 1 do
+        continue_btn.click unless page.has_css?("div#resource-change_billing_plan-errors ul")
+      end
     end
 
     def wait_for_all_elements_loaded

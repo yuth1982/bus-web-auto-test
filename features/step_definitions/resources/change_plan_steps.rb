@@ -141,3 +141,8 @@ Then /^Reseller supplemental plans should be:$/ do |plans_table|
     actual[header].should == expected[header]
   end
 end
+
+Then /^Change Plan error message should be (.+)$/ do |expected|
+  actual = @bus_site.admin_console_page.change_plan_section.messages
+  actual.should == expected
+end
