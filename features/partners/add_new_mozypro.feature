@@ -10,7 +10,7 @@ Feature: Add a new partner
   @TC.17942 @create_partner_sample @bus @2.5 @add_new_partner @mozypro
   Scenario: 17942 Add New MozyPro Partner - US - Monthly - 10 GB - Coupon - CC
     When I add a new MozyPro partner:
-      | period | base plan | coupon              | country       | address           | city      | state abbrev | zip   | phone          |
+      | period | base plan | coupon                | country       | address           | city      | state abbrev | zip   | phone          |
       | 1      | 10 GB     | 10PERCENTOFFOUTLINE | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
     Then Sub-total before taxes or discounts should be $9.99
     And Order summary table should be:
@@ -121,7 +121,7 @@ Feature: Add a new partner
       | Unpaid Balance: | €0.00                  | Collect On:     | N/A                |
       | Renewal Date:   | after 2 years          | Renewal Period: | Use Current Period |
       | Next Charge:    | after 2 years          |                 |                    |
-  And Partner billing history should be:
+    And Partner billing history should be:
       | Date  | Amount  | Total Paid | Balance Due |
       | today | €585.71 | €585.71    | €0.00       |
       | today | €0.00   | €0.00      | €0.00       |
@@ -407,7 +407,7 @@ Feature: Add a new partner
       | Unpaid Balance: | £3,490.66              | Collect On:     | N/A                |
       | Renewal Date:   | after 1 month          | Renewal Period: | Use Current Period |
       | Next Charge:    | after 1 month          |                 |                    |
-  And Partner billing history should be:
+    And Partner billing history should be:
       | Date  | Amount    | Total Paid | Balance Due |
       | today | £3,490.66 | £0.00      | £3,490.66   |
       | today | £0.00     | £0.00      | £0.00       |
