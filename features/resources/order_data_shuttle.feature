@@ -710,3 +710,12 @@ Feature:
     This account will be billed for this Data Shuttle order when you click "Finish". If this order is intended to be free of charge, please type "100" in the Discount field then click somewhere outside the field to update the order total.
     """
     And I search and delete partner account by newly created partner company name
+
+
+  @TC.120693 @bus @data_shuttle @Bug.116986
+  Scenario: 120693 Verify shipped drive has inbound number
+    When I search order in view data shuttle orders section by Jabberstorm Company 0311-1822-21
+    Then order search results in data shuttle orders section should be:
+      | # of Drives    | Drives Ordered  |
+      |        1       |       Yes       |
+    Then the data shuttle order details should contain valid inbound number

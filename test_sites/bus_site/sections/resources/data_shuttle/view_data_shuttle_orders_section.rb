@@ -36,5 +36,15 @@ module Bus
       wait_until_bus_section_load
       order_results_table.rows.first[0].find("a").text
     end
+
+    def order_results_hashes
+      wait_until_bus_section_load
+      order_results_table.rows_text.map{ |row| Hash[*order_results_table.headers_text.zip(row).flatten] }
+    end
+
+    def order_results_table_rows
+      order_results_table.rows_text
+    end
+
   end
 end

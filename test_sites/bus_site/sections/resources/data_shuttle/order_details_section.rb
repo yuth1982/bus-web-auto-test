@@ -40,5 +40,9 @@ module Bus
     def latest_order_status
       order_detail_table.rows.first[1].text
     end
+
+    def has_inbound_link?(inbound)
+      find_link(inbound).present?
+    end
   end
 end
