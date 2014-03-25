@@ -154,3 +154,7 @@ When /^I will( not)* see the (.+) link from navigation links$/ do |t, link|
     @bus_site.admin_console_page.has_navigation?(link).should be_false
   end
 end
+
+Given /^I verify Skeletor by visiting url$/ do
+  @bus_site.admin_console_page.visit_skeletor_url
+end

@@ -100,3 +100,7 @@ Feature: Bus Smoke Test
       | Total Charges     |          |            | €175.89     |
     And New partner should be created
     And I delete partner account
+
+  @TC.120711 @prod_206
+  Scenario: Verify Skeletor
+    Given I verify Skeletor by visiting url

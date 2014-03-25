@@ -207,5 +207,13 @@ module Bus
     def go_to_partner_info(partner)
       find_link(partner.company_info.name).click
     end
+
+    def visit_skeletor_url
+      url = find('div.dashboard-graphs img')[:src]
+      visit url
+      using_wait_time 2 do
+        fail('Skeletor not working') if page.has_css?('div#dashboard-e-content')
+      end
+    end
   end
 end
