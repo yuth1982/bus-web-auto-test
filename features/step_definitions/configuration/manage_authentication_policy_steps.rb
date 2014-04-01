@@ -170,6 +170,9 @@ Then /^The layout of attribute should:$/ do |table|
 end
 
 When /^I add (\d+) new (.+) rules:$/ do |num, type, table|
+  table.hashes.first.each do |k,v|
+    v.replace ERB.new(v).result(binding)
+  end
   @bus_site.admin_console_page.authentication_policy_section.add_rules(type, num.to_i, table.transpose.raw[0], table.transpose.raw[1])
 end
 
@@ -180,6 +183,7 @@ end
 
 When /^I save the changes$/ do
   @bus_site.admin_console_page.authentication_policy_section.save_changes
+  @bus_site.admin_console_page.authentication_policy_section.confirm_change_auth
   @bus_site.admin_console_page.authentication_policy_section.wait_until_bus_section_load
 end
 
@@ -302,6 +306,12 @@ end
 When /^I add a user (.+) to the AD$/ do |username|
   LDAPHelper.add_user(username)
 end
+
+When /^I add a user to the AD$/ do |table|
+  data = table.rows.first
+  LDAPHelper.add_user(data[0], data[1], data[2], data[3], data[4], data[5], data[6])
+end
+
 When /^I delete a user (.+) in the AD$/ do |username|
   LDAPHelper.delete_user(username)
 end

@@ -43,7 +43,14 @@ Then /^User search results should be:$/ do |results_table|
         else
           # do nothing
       end
-      v.replace ERB.new(v).result(binding)
+
+      if k == 'User'
+        v.replace ERB.new(v).result(binding).slice(0,27).downcase
+        v << '...' unless v.length < 26
+      else
+        v.replace ERB.new(v).result(binding)
+      end
+
     end
   end
   expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }

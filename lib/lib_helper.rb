@@ -49,6 +49,8 @@ include SSHMigration
 include SSHReap
 include SSHTDSGrowQuota
 include SSHRecordOverdraft
+include SSHPushConnector
+include SSHKalypsoE2E
 include AriaApi
 include Utility
 include KeylessDeviceActivation

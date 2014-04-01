@@ -418,7 +418,7 @@ module Bus
       fillin_ssl_cert(connection_info.ssl_cert) unless connection_info.protocol == 'false'
       fillin_port(connection_info.port)
       fillin_base_dn(connection_info.base_dn)
-      fillin_user(connection_info.bind_user, connection_info.bind_password)
+      fillin_user(connection_info.bind_user, connection_info.bind_password) unless connection_info.bind_user.nil?
     end
 
     def fillin_auth_url(auth_url)
