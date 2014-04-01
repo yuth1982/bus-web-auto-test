@@ -73,6 +73,19 @@ module SiteHelper
       end
     end
 
+    def alert_present?
+      begin
+        page.driver.browser.switch_to.alert
+        $alert_text = alert_text
+        #puts $alert_text
+        #puts "Alert present!"
+        return true
+      rescue
+        #puts "No alert present."
+        return false
+      end
+    end
+
     # Public: Refresh bus admin console section
     #
     # Example:

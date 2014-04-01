@@ -321,4 +321,32 @@ module DBHelper
       conn.close unless conn.nil?
     end
   end
+
+  def get_partner_setting_value(partner_id,setting_name)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select value from pro_partner_settings where key='#{setting_name}' and pro_partner_id = #{partner_id};"
+      c = conn.exec sql
+      c.values[0][0].to_i
+    rescue PGError => e
+      puts 'postgres error'
+      fail e
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_global_setting_value(setting_name)
+    begin
+      sql = "select value from global_settings where key='#{setting_name}';"
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      c = conn.exec sql
+      c.values[0][0].to_i
+    rescue PGError => e
+      puts 'postgres error'
+      fail e
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
 end

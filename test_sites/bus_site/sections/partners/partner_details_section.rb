@@ -648,6 +648,7 @@ module Bus
           else
             add_setting(setting)
           end
+          alert_accept if alert_present?
         end
       end
     end
@@ -677,6 +678,17 @@ module Bus
       setting_value_input.set(setting['Value'])
       setting_locked_checkbox.check if setting['Locked'] == 'true'
       setting_save_btn.click
+    end
+
+    def delete_settings(settings)
+      settings_link.click
+      settings.each do |setting|
+         row_el = find(:xpath, "//td[text()='#{setting['Name']}']/..")
+         capability_id = /[\d]+/.match(row_el[:id]).to_s.to_i
+         page.driver.execute_script("document.querySelector('span[id^=settings_editor_for_#{capability_id}]').style.display=''")
+         row_el.find(:css, 'span.delete_setting>a').click
+         alert_accept
+      end
     end
 
     def has_setting?(setting)
