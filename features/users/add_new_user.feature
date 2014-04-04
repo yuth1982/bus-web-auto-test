@@ -272,3 +272,17 @@ Feature: Add a new user
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
+  Scenario: create a user with all caps
+    When I add a new MozyPro partner:
+      | period | base plan | server plan | net terms |
+      | 1      | 100 GB    | yes         | yes       |
+    And New partner should be created
+    When I enable stash for the partner
+    And I act as newly created partner
+    And I add new user(s):
+      | name           | storage_type | storage_limit | devices |
+      | JEFFY MCBURTON | Desktop      | 10            | 1       |
+    Then 1 new user should be created
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
