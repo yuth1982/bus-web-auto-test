@@ -1,6 +1,6 @@
 global:
   # Browser wait time in seconds, e.g. locating a UI element
-  default_wait_time:            180
+  default_wait_time:            1800
   # Max wait time in seconds, e.g downloading a big file
   max_wait_time:                1800
   # Aria wait time in seconds, it usually need more time
