@@ -11,5 +11,21 @@ class FreyjaSite
     Freyja::FreyjaPage.new
   end
 
+  def mainUI
+    Freyja::MainUI.new
+  end
+
+  def actionPanel
+    Freyja::ActionPanel.new
+  end
+
+  def detailPanel
+    Freyja::DetailPanel.new
+  end
+
+  def restoreWizard
+    Freyja::RestoreWizard.new
+  end
+
 end
 

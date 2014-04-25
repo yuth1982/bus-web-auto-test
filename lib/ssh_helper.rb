@@ -2,7 +2,7 @@ require 'net/scp'
 module SSHHelper
   PROXY_HOST = 'authproxy01.qa5.mozyops.com'
   SOCKD_CONF = '/etc/sockd.conf'
-  BUS_HOST = QA_ENV['bus_host'].gsub("https://", '')
+  #BUS_HOST = QA_ENV['bus_host'].gsub("https://", '')
   USER = QA_ENV['ssh_login']
   PASSWORD = QA_ENV['ssh_password']
 
