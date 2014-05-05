@@ -27,5 +27,8 @@ class FreyjaSite
     Freyja::RestoreWizard.new
   end
 
-end
+  def restores_page
+    Freyja::RestoresPage.new
+  end
 
+end
