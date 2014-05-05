@@ -3,7 +3,7 @@ Feature: Restore all files
   Background:
     Given I log in freyja as MozyPro user
 
-  @restore_all_files @archive_restore
+  @TC.121288 @freyja @restore_all_files @archive_restore
   Scenario: MozyPro user do restore all files in Freyja (archive)
     When I restore all files from the details panel
     And I go through restore wizard
@@ -13,7 +13,7 @@ Feature: Restore all files
     And I select event history from user menu section
     Then the restore is Processing
 
-  @restore_all_files @restore_manager
+  @TC.121288 @freyja @restore_all_files @restore_manager
   Scenario: MozyPro user do restore all files in Freyja (restore manager)
     When I restore all files from the details panel
     And I go through restore wizard
@@ -23,7 +23,7 @@ Feature: Restore all files
     And I select event history from user menu section
     Then the restore is Ready for Download
 
-  @restore_all_files @media_restore
+  @TC.121288 @freyja @restore_all_files @media_restore
   Scenario: MozyPro user do restore all files in Freyja (media)
     When I restore all files from the details panel
     And I go through restore wizard

@@ -3,7 +3,7 @@ Feature: Meida Restore
   Background:
     Given I log in freyja as MozyPro user
 
-  @media_restore
+  @TC.121295 @freyja @media_restore
   Scenario: MozyPro user do media restore
     When I restore all files from the details panel
     And I go through restore wizard

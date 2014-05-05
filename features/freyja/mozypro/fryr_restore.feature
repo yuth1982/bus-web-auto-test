@@ -3,7 +3,7 @@ Feature: Fryr Restore
   Background:
     Given I log in freyja as MozyPro user
 
-  @restore_manager
+  @TC.121294 @freyja @restore_manager
   Scenario: MozyPro user do fryr restore
     When I restore all files from the details panel
     And I go through restore wizard
