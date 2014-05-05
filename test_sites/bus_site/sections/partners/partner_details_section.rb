@@ -364,11 +364,9 @@ module Bus
       wait_until_bus_section_load
       delete_partner_link.click
 
-      submit_btn = find(:css, 'div[id^=cancellation_reasons_] input[value=Submit]')
-      password_tb = find(:css, 'div[id$=-delete_form] input[name=password]')
-      submit_delete_btn = find(:css, 'div[id$=-delete_form] input[name=commit]')
+      password_tb = find(:css, 'form[id$=-delete_form] input[name=password]')
+      submit_delete_btn = find(:css, 'div[class=popup-window-footer] input[value=Submit]')
 
-      submit_btn.click
       wait_until{ password_tb.visible? } # wait for load delete password div
       password_tb.type_text(password)
       submit_delete_btn.click
