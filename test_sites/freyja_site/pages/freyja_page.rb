@@ -1,10 +1,14 @@
 module Freyja
-  # This class provides actions for freyja login page
+  # This class manage all sections for Freyja page
   class FreyjaPage < SiteHelper::Page
 
+    # sections
     section(:menu_user_section, MenuUserSection, id: "menu-user")
     #section(:devices_section, DevicesSection, id: "backup_tab")
     #section(:synced_section, SyncedSection, id: "stash_tab_button")
+
+    # Private element
+    element(:view_actions_pane_btn, xpath: "//*[@id='backup-layout']//*[@title='View Actions pane']")
 
     # Public: Navigate to menu item on admin console page
     # Note: if bus module is opened, menu will not be clicked
@@ -22,6 +26,16 @@ module Freyja
       if sections.first.element_parent[:class].match(/active/).nil? && sections.last.element_parent[:class].match(/active/).nil?
         el.click
       end
+    end
+
+    # Public: Click View Actions pane
+    #
+    # Example
+    #   @freyja_site.freyja_page.view_actions_pane
+    #
+    # Returns nothing
+    def click_view_actions_pane
+      view_actions_pane_btn.click
     end
 
   end
