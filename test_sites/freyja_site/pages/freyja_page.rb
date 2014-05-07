@@ -8,7 +8,7 @@ module Freyja
     #section(:synced_section, SyncedSection, id: "stash_tab_button")
 
     # Private element
-    element(:view_actions_pane_btn, xpath: "//*[@id='backup-layout']//*[@title='View Actions pane']")
+    element(:view_actions_pane_btn, xpath: "//*[@id='backup_tab']//*[@title='View Actions pane']")
 
     # Public: Navigate to menu item on admin console page
     # Note: if bus module is opened, menu will not be clicked

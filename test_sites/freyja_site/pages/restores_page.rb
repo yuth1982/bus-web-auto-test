@@ -4,6 +4,7 @@ module Freyja
     # Private elements
     #
     # Restore wizard
+    element(:backup_download_btn, xpath: "//*[@id='backup_tab']//*[text()='Download']")
     element(:restore_all_files_btn, xpath: "//a//*[text()='Restore All Files...']")
     element(:restore_name_tb, xpath: "//*[@id='wizard_main']//*[@id='restore_name']")
     element(:next_btn, xpath: "//*[@id='wizard_buttons']//*[@id='button-next']")
@@ -30,14 +31,27 @@ module Freyja
     element(:cc_cvv2_tb, id: "cc_cvv2")
     element(:agreement_checkbox, id: "agree_with_mozy_policy_check_box")
 
+    # restore status
+    element(:restore_status_div, xpath: "//*[@id='dt_all_restores']/tbody/tr[1]/td[5]/div")
+
     # Public: Click restore all files button in details pane
     #
     # Example
-    #   @freyja_site.restores.click_restore_all_files_btn
+    #   @freyja_site.restores_page.click_restore_all_files_btn
     #
     # Returns nothing
     def click_restore_all_files_btn
       restore_all_files_btn.click
+    end
+
+    # Public: Click download button in details pane
+    #
+    # Example
+    #   @freyja_site.restores_page.click_download_btn
+    #
+    # Returns nothing
+    def click_backup_download_btn
+      backup_download_btn.click
     end
 
     # Public: Go through the restore wizard for restore all files
@@ -45,7 +59,7 @@ module Freyja
     # restore - restore object
     #
     # Example
-    #   @freyja_site.restores.create_restore_all_files(restore)
+    #   @freyja_site.restores_page.create_restore_all_files(restore)
     #
     # Returns nothing
     def create_restore_all_files(restore)
@@ -65,16 +79,47 @@ module Freyja
       end
     end
 
+    # Public: Go through the restore wizard for large download options
+    #
+    # restore - restore object
+    #
+    # Example
+    #   @freyja_site.restores_page.create_large_download_options_restore(restore)
+    #
+    # Returns nothing
+    def create_large_download_options_restore(restore)
+      fill_restore_name(restore.restore_name)
+      click_next
+      case restore.restore_type
+        when 'fryr'
+          select_fryr
+        when 'archive'
+          select_archive
+        when 'media'
+          select_media(restore)
+      end
+    end
+
     # Public: Get restore status
     #
     # restore_id - restore_id of the restore object
     #
     # Example
-    #   @freyja_site.restores.get_restore_status(restore_id)
+    #   @freyja_site.restores_page.get_restore_status(restore_id)
     #
     # @return restore_status
     def get_restore_status(restore_id)
       return find(:xpath, "//tr[@id='#{restore_id}']/td[5]/div").text.to_s
+    end
+
+    # Public: Get restore status
+    #
+    # Example
+    #   @freyja_site.restores_page.get_instant_download_restore_status
+    #
+    # @return restore_status
+    def get_instant_download_restore_status
+      return restore_status_div.text.to_s
     end
 
     private

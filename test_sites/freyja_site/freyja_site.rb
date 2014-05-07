@@ -31,4 +31,12 @@ class FreyjaSite
     Freyja::RestoresPage.new
   end
 
+  def files_page
+    Freyja::FilesPage.new
+  end
+
+  def actions_pane_page
+    Freyja::ActionsPanePage.new
+  end
+
 end
