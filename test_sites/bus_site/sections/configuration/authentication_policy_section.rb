@@ -38,9 +38,18 @@ module Bus
     element(:options_delete_missing_users, id: 'options_delete_missing_users')
     element(:options_suspend_missing_users, id: 'options_suspend_missing_users')
     element(:scheduled_sync_options, id: 'options_daily')
+    element(:data_sync_options_suspend_after_miss, id: 'data_sync_options_suspend_after_miss')
+    element(:data_sync_options_delete_after_miss, id: 'data_sync_options_delete_after_miss')
     element(:scheduled_sync_time, id: 'data_sync_options_schedule')
+    element(:next_sync, id: 'next_sync_div')
     element(:fixed_attribute, xpath: "//ul[@class='tab-panes']/li[3]//div[4]/div/input")
+    element(:user_name, xpath: "//ul[@class='tab-panes']/li[3]//div[3]/div/input")
+    element(:name, xpath: "//ul[@class='tab-panes']/li[3]//div[2]/div/input")
     element(:loading_link, xpath: "//a[contains(@onclick,'toggle_module')]")
+    # Directory Service Provider
+    element(:provider_ldap_pull_rd, id: "data_provider_ldap")
+    element(:provider_ldap_push_rd, id: "data_provider_ldap_push")
+    element(:provider_horizon_rd, id: "data_provider_horizon")
 
     # Public: Select authentication provider
     #
@@ -56,6 +65,23 @@ module Bus
         provider_ldap_rd.check
       else
         raise "Unable to find provider of #{provider}"
+      end
+      wait_until_bus_section_load
+      save_changes
+      confirm_change_auth
+      wait_until_bus_section_load
+    end
+
+    def select_ds_provider(provider)
+      case provider
+        when 'horizon'
+          provider_horizon_rd.check
+        when 'LDAP Pull'
+          provider_ldap_pull_rd.check
+        when 'LDAP Push'
+          provider_ldap_push_rd.check
+        else
+          raise "Unable to find provider of #{provider}"
       end
       wait_until_bus_section_load
       save_changes
@@ -169,7 +195,11 @@ module Bus
     #
     def sync_result
       r = []
-      (1..3).each { |num| r << find(:xpath, "//fieldset[@id='sync-status']/div[#{num}]/div").text }
+      (1..3).each do |num|
+        result = find(:xpath, "//fieldset[@id='sync-status']/div[#{num}]/div")
+        result_div = find(:xpath, "//fieldset[@id='sync-status']/div[#{num}]")
+        r << result.text if result_div.visible?
+      end
       r
     end
 
@@ -212,6 +242,7 @@ module Bus
     #
     def save_changes
       save_changes_button.click
+      confirm_change_auth
     end
 
     def confirm_change_auth
@@ -323,6 +354,38 @@ module Bus
       find(:id, "data_sync_options_#{method}_after_miss").set(days)
     end
 
+    # Public: Check if Deleting or suspending users if not synced for several days is correctly set
+    #
+    def check_rules(method, days)
+      case method
+        when "delete"
+          options_delete_missing_users.checked?.should == true
+          options_suspend_missing_users.checked?.should == false
+          days.should == data_sync_options_delete_after_miss.value.to_i
+        when "suspend"
+          options_delete_missing_users.checked?.should == false
+          options_suspend_missing_users.checked?.should == true
+          days.should == data_sync_options_suspend_after_miss.value.to_i
+      end
+    end
+
+    def is_element_invisible(element)
+      case element
+        when "Test Connection"
+          test_ad_connection.visible?.should == false
+        when "Bind Username"
+          data_ad_connection_bind_username.visible?.should == false
+        when "Bind Password"
+          data_ad_connection_bind_password.visible?.should == false
+        when "Scheduled Sync"
+          scheduled_sync_time.visible?.should == false
+        when "Sync Now"
+          sync_now_button.visible?.should == false
+        when "Next Sync"
+          next_sync.visible?.should == false
+      end
+    end
+
     def clear_user_sync_info
       options_delete_missing_users.uncheck
       options_suspend_missing_users.uncheck
@@ -341,6 +404,14 @@ module Bus
 
     def set_fixed_attribute(attr)
       fixed_attribute.set(attr)
+    end
+
+    def set_user_name(attr)
+      user_name.set(attr)
+    end
+
+    def set_name(attr)
+      name.set(attr)
     end
 
     def load_attributes_result
@@ -420,7 +491,7 @@ module Bus
       fillin_ssl_cert(connection_info.ssl_cert) unless connection_info.protocol == 'false'
       fillin_port(connection_info.port)
       fillin_base_dn(connection_info.base_dn)
-      fillin_user(connection_info.bind_user, connection_info.bind_password) unless connection_info.bind_user.nil?
+      fillin_user(connection_info.bind_user, connection_info.bind_password) unless (provider_ldap_push_rd.checked? or connection_info.bind_user.nil?)
     end
 
     def fillin_auth_url(auth_url)

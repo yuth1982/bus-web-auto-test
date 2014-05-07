@@ -78,7 +78,7 @@ module Bus
     element(:quick_link_item, id: "nav-cat-quick")
 
     # Popup window
-    element(:start_using_mozy_btn, id: "start_useing_mozy")
+    element(:start_using_mozy_btn, id: "start_using_mozy")
     element(:popup_content_div, css: "div.popup-window-content")
     element(:close_popup_link, css: "div.close_bar a")
     element(:close_btn, css: "div.popup-window-footer input[value=Close]")

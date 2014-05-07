@@ -2,6 +2,11 @@ When /^I use (Directory Service|Mozy) as authentication provider$/ do |provider|
   @bus_site.admin_console_page.authentication_policy_section.select_auth(provider)
 end
 
+When /^I choose (LDAP Pull|LDAP Push|horizon) as Directory Service provider$/ do |provider|
+  @bus_site.admin_console_page.authentication_policy_section.select_ds_provider(provider)
+  @provider = provider
+end
+
 When /^I select Horizon Manager with organization name (.*)$/ do |org_name|
   @bus_site.admin_console_page.authentication_policy_section.check_horizon(true)
   case org_name
@@ -120,7 +125,7 @@ Then /^server connection settings information should include$/ do |table|
   #data['SSL Cert'].should include(connection_info.ssl_cert)
   data['Port'].should include(connection_info.port)
   data['Base DN'].should include(connection_info.base_dn)
-  data['Bind Username'].should include(connection_info.bind_user)
+  data['Bind Username'].should include(connection_info.bind_user) if data.has_key? 'Bind Username'
   #data['Bind Password'].should include(connection_info.bind_password)
 end
 
@@ -280,6 +285,10 @@ When /^I Choose to (.+) users if missing from LDAP for (\d+) days$/ do |method, 
   @bus_site.admin_console_page.authentication_policy_section.handle_user(method, days.to_i)
 end
 
+When /^The chosen rule should be (.+) users if missing from LDAP for (\d+) days$/ do |method, days|
+  @bus_site.admin_console_page.authentication_policy_section.check_rules(method, days.to_i)
+end
+
 When /^I change the user last sync field in the db to be (\d+) days earlier$/ do |days|
   DBHelper.change_last_sync_at(@user_id, days.to_i)
 end
@@ -333,8 +342,19 @@ When /^I choose to daily sync at (\d+) GMT$/ do |hour|
   @bus_site.admin_console_page.authentication_policy_section.sync_daily_at(hour)
 end
 
-When /^I set the fixed attribute to (.+)$/ do |attr|
-  @bus_site.admin_console_page.authentication_policy_section.set_fixed_attribute(attr)
+When /^I set the (fixed attribute|user name|name) to (.+)$/ do |attr, value|
+  case attr
+    when 'fixed attribute'
+      @bus_site.admin_console_page.authentication_policy_section.set_fixed_attribute(value)
+    when 'user name'
+      @bus_site.admin_console_page.authentication_policy_section.set_user_name(value)
+    when 'name'
+      @bus_site.admin_console_page.authentication_policy_section.set_name(value)
+  end
+end
+
+When /^(Bind Username|Bind Password|Test Connection|Scheduled Sync|Sync Now|Next Sync) should be invisible$/ do |element|
+  @bus_site.admin_console_page.authentication_policy_section.is_element_invisible(element).should == true
 end
 
 Then /^The daily sync time should be (\d+) GMT$/ do |hour|
@@ -349,8 +369,15 @@ Then /^The daily sync time should be empty$/ do
   @bus_site.admin_console_page.authentication_policy_section.sync_daily_time.should == ''
 end
 
-When /^I clear the fixed attribute$/ do
-  @bus_site.admin_console_page.authentication_policy_section.set_fixed_attribute('')
+When /^I clear the (fixed attribute|user name|name)$/ do |attr|
+  case attr
+    when 'fixed attribute'
+      @bus_site.admin_console_page.authentication_policy_section.set_fixed_attribute('')
+    when 'user name'
+      @bus_site.admin_console_page.authentication_policy_section.set_user_name('')
+    when 'name'
+      @bus_site.admin_console_page.authentication_policy_section.set_name('')
+  end
 end
 
 Then /^I change root role to (.+)$/ do | role |
@@ -382,4 +409,9 @@ end
 
 When /^The new Server Host and Port should be the same as input according to (.+) and (.+)$/ do |old_file, new_file|
   @bus_site.admin_console_page.authentication_policy_section.host_port_changed(old_file, new_file)[0].should == [@connection_info.server_host, @connection_info.port.to_s]
+end
+
+When /^I refresh the authentication policy section$/ do
+  @bus_site.admin_console_page.authentication_policy_section.refresh_bus_section
+  @bus_site.admin_console_page.authentication_policy_section.wait_until_bus_section_load
 end
