@@ -375,8 +375,6 @@ module Bus
       else
         return_text = alert_text
         alert_accept
-        cancel_btn = find(:xpath, "//a[text() = 'Cancel']")
-        cancel_btn.click
         return_text
       end
     end

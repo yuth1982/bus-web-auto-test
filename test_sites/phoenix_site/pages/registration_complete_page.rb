@@ -105,7 +105,7 @@ module Phoenix
       reg_comp_banner_present
       reg_comp_text
       reg_get_started
-      reg_referral_banner
+      #reg_referral_banner
       localized_click(partner, 'acct_page_link')
       reg_comp_banner_present
       localized_click(partner, 'resend_verify_email_link')
@@ -119,7 +119,7 @@ module Phoenix
       reg_comp_banner_present
       reg_comp_text
       reg_get_started
-      reg_referral_banner
+      #reg_referral_banner
       clear_phoenix_cookies
     end
 
