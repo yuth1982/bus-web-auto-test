@@ -5,7 +5,9 @@ Feature: Restore all files
 
   @TC.121288 @freyja @restore_all_files @archive_restore
   Scenario: MozyPro user do restore all files in Freyja (archive)
-    When I restore all files from the details panel
+    When I go to Devices
+    And I choose one device
+    And I restore all files from the details panel
     And I go through restore all files restore wizard
       | restore name     | restore type |
       | restore all files| archive      |
@@ -15,7 +17,9 @@ Feature: Restore all files
 
   @TC.121288 @freyja @restore_all_files @restore_manager
   Scenario: MozyPro user do restore all files in Freyja (restore manager)
-    When I restore all files from the details panel
+    When I go to Devices
+    And I choose one device
+    And I restore all files from the details panel
     And I go through restore all files restore wizard
       | restore name     | restore type |
       | restore all files| fryr         |
@@ -25,7 +29,9 @@ Feature: Restore all files
 
   @TC.121288 @freyja @restore_all_files @media_restore
   Scenario: MozyPro user do restore all files in Freyja (media)
-    When I restore all files from the details panel
+    When I go to Devices
+    And I choose one device
+    And I restore all files from the details panel
     And I go through restore all files restore wizard
       | restore name     | restore type |
       | restore all files| media        |

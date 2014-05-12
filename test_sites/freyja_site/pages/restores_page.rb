@@ -5,7 +5,7 @@ module Freyja
     #
     # Restore wizard
     element(:backup_download_btn, xpath: "//*[@id='backup_tab']//*[text()='Download']")
-    element(:restore_all_files_btn, xpath: "//a//*[text()='Restore All Files...']")
+    element(:restore_all_files_btn, xpath: "//*[@id='backup_tab']//a[@title='Restore All Files...']")
     element(:restore_name_tb, xpath: "//*[@id='wizard_main']//*[@id='restore_name']")
     element(:next_btn, xpath: "//*[@id='wizard_buttons']//*[@id='button-next']")
     element(:close_btn, xpath: "//*[@id='restore_complete_buttons']//*[@id='button-close']")

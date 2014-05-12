@@ -75,9 +75,9 @@ module Freyja
     def login_button_visible
       case @partnertype
         when 'MozyHome'
-          home_login_btn.visible?
+          return home_login_btn.visible?
         else
-          login_btn.visible?
+          return login_btn.visible?
       end
     end
 
