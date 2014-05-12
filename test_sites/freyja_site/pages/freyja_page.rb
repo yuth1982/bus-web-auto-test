@@ -5,10 +5,17 @@ module Freyja
     # sections
     section(:menu_user_section, MenuUserSection, id: "menu-user")
     #section(:devices_section, DevicesSection, id: "backup_tab")
-    #section(:synced_section, SyncedSection, id: "stash_tab_button")
+    #section(:synced_section, SyncedSection, id: "stash_tab")
 
     # Private element
-    element(:view_actions_pane_btn, xpath: "//*[@id='backup_tab']//*[@title='View Actions pane']")
+    # Backup element
+    element(:devices_tab_btn, id: "backup_tab_button")
+    element(:backup_view_actions_pane_btn, xpath: "//*[@id='backup_tab']//*[@title='View Actions pane']")
+    element(:device_checkbox, xpath: "//*[starts-with(@id,'4565:Folder:')][1]/td[1]/div/span")
+
+    # Sync element
+    element(:synced_tab_btn, id: "stash_tab_button")
+    element(:synced_view_actions_pane_btn, xpath: "//*[@id='stash_tab']//*[@title='View Actions pane']")
 
     # Public: Navigate to menu item on admin console page
     # Note: if bus module is opened, menu will not be clicked
@@ -28,14 +35,54 @@ module Freyja
       end
     end
 
+    # Public: Click Devices tab
+    #
+    # Example
+    #   @freyja_site.freyja_page.click_devices_tab
+    #
+    # Returns nothing
+    def click_devices_tab
+      devices_tab_btn.click
+    end
+
+    # Public: Click Synced tab
+    #
+    # Example
+    #   @freyja_site.freyja_page.click_synced_tab
+    #
+    # Returns nothing
+    def click_synced_tab
+      synced_tab_btn.click
+    end
+
+    # Public: Click one device
+    #
+    # Example
+    #   @freyja_site.freyja_page.choose_one_device
+    #
+    # Returns nothing
+    def choose_one_device
+      device_checkbox.click
+    end
+
     # Public: Click View Actions pane
     #
     # Example
-    #   @freyja_site.freyja_page.view_actions_pane
+    #   @freyja_site.freyja_page.click_backup_view_actions_pane
     #
     # Returns nothing
-    def click_view_actions_pane
-      view_actions_pane_btn.click
+    def click_backup_view_actions_pane
+      backup_view_actions_pane_btn.click
+    end
+
+    # Public: Click View Actions pane
+    #
+    # Example
+    #   @freyja_site.freyja_page.click_sync_view_actions_pane
+    #
+    # Returns nothing
+    def click_sync_view_actions_pane
+      synced_view_actions_pane_btn.click
     end
 
   end
