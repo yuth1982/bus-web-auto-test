@@ -40,9 +40,10 @@ module Bus
 
       bandwidth_throttling_tab.click
       if client_config.throttle
+        throttle_amount_tb.click unless throttle_cb.checked?
         throttle_amount_tb.type_text(client_config.throttle_amount)
       else
-        throttle_cb.click
+        throttle_cb.click if throttle_cb.checked?
       end
 
       client_config_save_changes_btn.click
