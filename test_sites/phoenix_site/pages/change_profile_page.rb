@@ -30,6 +30,7 @@ module Phoenix
   element(:change_bill_state_select, id: "billTo_state_us")
   element(:change_bill_zip_tb, id: "billTo_postalCode")
   element(:change_submit_btn, id: "submit_button")
+  element(:captcha, id: "captcha")
 
   # items relating to changing the account
   element(:change_plan_select, id: "consumer_plan_id")
@@ -71,6 +72,7 @@ module Phoenix
     change_bill_zip_tb.type_text(partner.company_info.zip)
 
     # submission
+    captcha.type_text(CONFIGS['phoenix']['captcha'])
     change_submit_btn.click
     message_text.eql?("Your card has been successfully filed. All future payments will be charged to your #{partner.credit_card.type} ending in #{partner.credit_card.last_four_digits}.")
   end
