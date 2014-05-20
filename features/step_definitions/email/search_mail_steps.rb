@@ -1,5 +1,5 @@
 When /^I search emails by keywords:$/ do |keywords_table|
-  #zimbra search keywords avail https://mail.dechocorp.com/zimbra/help/en_US/advanced/Zimbra_User_Help.htm
+  @email_search_query = []
   expected = keywords_table.hashes
   expected.each do |col|
     col.each do |k,v|
@@ -9,8 +9,6 @@ When /^I search emails by keywords:$/ do |keywords_table|
           v.gsub!(/@new_admin_email/, @partner.admin_info.email) unless @partner.nil?
           v.gsub!(/@existing_admin_email/, @existing_admin_email) unless @existing_admin_email.nil?
           v.gsub!(/@existing_user_email/, @existing_user_email) unless @existing_user_email.nil?
-        when 'subject'
-          # Skipped
         when 'content'
           unless @partner.nil?
             v.gsub!(/@new_admin_email/, @partner.admin_info.email)
@@ -19,21 +17,32 @@ When /^I search emails by keywords:$/ do |keywords_table|
             v.gsub!(/@admin_first_name/,@partner.admin_info.first_name)
             v.gsub!(/@first_name/, @partner.credit_card.first_name)
           end
+        #Legacy from Zimbra
+        when  'date','after'
+          #IMAP doesn't search over minutes just dates
+            v = Date.today if v == 'today'
         else
           # do nothing
       end
       v.replace ERB.new(v).result(binding)
+
+      case k.downcase
+        when 'to','cc','from','subject','body';
+        when 'before','since', 'on' ;
+        #Legacy Zimbra corrections
+        when 'date'; k = 'on'
+        when 'after'; k = 'since'
+        when 'content'; k = 'body'
+        else
+          Log.debug("'#{k}' is not a valid imap search key")
+          next
+        end
+        @email_search_query << k.upcase
+        @email_search_query << v
     end
   end
   sleep 15
-  @email_search_query = keywords_table.hashes.first.map {|key, value|
-    if value.match(/^\[.+\]$/) # Convert to Array if it is
-      eval(value).map {|v| "#{key}:#{v}" }
-    else
-      "#{key}:#{value}"
-    end
-  }.flatten.join(' AND ')
-  # wait 10s for the email to come in, previous 5s is prone to fail
+
   Log.info(@email_search_query)
   @found_emails = find_emails(@email_search_query)
 end
@@ -49,13 +58,8 @@ When /^I retrieve email content by keywords:$/ do |keywords_table|
       |#{keywords_table.rows.first.join('|')}|
     })
   Log.debug("#{@found_emails.size} emails found, please update your search query") if @found_emails.size != 1
-  @mail_content = find_email_content(@found_emails.first.id)
+  @mail_content = find_email_content(@email_search_query)
   Log.debug(@mail_content)
-end
-
-Then /^I can find (\d+) elements by (xpath|css) "(.*?)" from email content$/ do |size, method, query|
-  doc = Nokogiri.XML(get_html_from_email(@found_emails.first.id))
-  doc.send(method, query).size.should == size.to_i
 end
 
 Then /^I get verify email address from email content$/ do
@@ -65,6 +69,4 @@ Then /^I get verify email address from email content$/ do
       match = @mail_content.match(/https?:\/\/secure.mozy.[\S]+\/registration\/verify_email_address\/[\S]+/)
     end
   @verify_email_query = match[0] unless match.nil?
-  #response = send_request(url)
-  #response.code.should == '200'
 end

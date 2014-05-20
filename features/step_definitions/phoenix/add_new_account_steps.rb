@@ -299,27 +299,15 @@ end
 
 # added "( |partner)" for future flexibility
 Then /^the (user|partner) has activated their account$/ do |_|
-  # modified to search on subject first, then on user based on subset returned
-  if @partner.base_plan.eql?("free")
-    step %{I search emails by keywords:}, table(%{
-      | subject |
-      | #{LANG[@partner.company_info.country][@partner.partner_info.type]["free_mail_subject"]} |
-      })
-  else
-    step %{I search emails by keywords:}, table(%{
-      | subject |
-      | #{LANG[@partner.company_info.country][@partner.partner_info.type]["verify_mail_subject"]} |
-      })
-  end
   if @partner.base_plan.eql?("free")
     step %{I retrieve email content by keywords:}, table(%{
-      | to |
-      | @new_admin_email |
+      | to | subject |
+      | @new_admin_email | #{LANG[@partner.company_info.country][@partner.partner_info.type]["free_mail_subject"]} |
       })
   else
     step %{I retrieve email content by keywords:}, table(%{
-      | to |
-      | @new_admin_email |
+      | to | subject |
+      | @new_admin_email | #{LANG[@partner.company_info.country][@partner.partner_info.type]["verify_mail_subject"]} |
       })
   end
   step %{I get verify email address from email content}

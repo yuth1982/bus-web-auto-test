@@ -7,7 +7,7 @@ module Bus
 
       def initialize
         @name = Forgery::Name.first_name
-        @email = "#{CONFIGS['global']['email_prefix']}+#{Forgery(:basic).password(:at_least => 12, :at_most => 15)}@decho.com".downcase
+        @email = create_user_email
       end
 
     end

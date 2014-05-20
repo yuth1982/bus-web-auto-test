@@ -6,7 +6,6 @@ gem 'cucumber','~>1.2.1'
 gem 'selenium-webdriver','>=2.34.0'
 gem 'capybara', '~>1.1.2'
 gem 'capybara-webkit','~>0.12.1'
-gem 'nokogiri','~>1.5.5'
 gem 'forgery','~>0.5.0'                 # Create Random Values
 gem 'chronic', '~>0.8.0'                # Date Time Parser
 gem 'rest-client','~>1.6.7'             # Email API
@@ -20,3 +19,4 @@ gem 'diffy', '~>2.1.0'
 gem 'httparty', '~>0.10.0'              # Aria API
 gem 'json', '~>1.7.5'                   # Aria API
 gem 'savon', '~>1.1.0'                  # Aria API
+gem 'ruby-gmail', '~> 0.3.0'
