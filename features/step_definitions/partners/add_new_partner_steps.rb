@@ -119,7 +119,7 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller|MozyEnterprise DPS|OEM) part
     @partner.subscription_period = attributes['period']
     @partner.net_term_payment = (attributes['net terms'] || 'no').eql?('yes')
 
-    @partner.company_info.name = "Internal Test - #{@partner.company_info.name}" if  !!attributes['account type'] && attributes['account type'] == "Internal Test"
+    @partner.company_info.name = "Internal Mozy - #{@partner.company_info.name}" if  !!attributes['account type'] && attributes['account type'] == "Internal Test"
 
     Log.debug(@partner.to_s)
     @bus_site.admin_console_page.add_new_partner_section.add_new_account(@partner)

@@ -353,3 +353,11 @@ end
 When /^I close the user detail page$/ do
   @bus_site.admin_console_page.user_details_section.close_bus_section
 end
+
+Then /^I display login information$/ do
+  if @partner.partner_info.type == 'MozyHome'
+    Log.info("un: #{@partner.admin_info.email}, pw: #{CONFIGS['global']['test_pwd']}")
+  else
+    Log.info("pn: #{@partner.admin_info.email}, un: #{@new_users.last.email}, pw: #{CONFIGS['global']['test_pwd']}")
+  end
+end
