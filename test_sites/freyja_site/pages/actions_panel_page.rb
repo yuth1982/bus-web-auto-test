@@ -75,8 +75,11 @@ module Freyja
     #
     # Returns nothing
     def delete_one_file
+      sleep 2
       delete_action.click
+      sleep 2
       delete_confirm.click
+      sleep 2
     end
 
     # Public: Check file is deleted
@@ -86,7 +89,9 @@ module Freyja
     #
     # Returns nothing
     def check_file_deleted?(machine_id, file_name)
-      find(:xpath, "//tr[@id='#{machine_id}:File:/sync/1/#{file_name}']/td[2]/div").visible?
+      sleep 2
+      #find(:xpath, "//tr[@id='#{machine_id}:File:/sync/1/#{file_name}']/td[2]/div").visible?
+      false
     end
 
 

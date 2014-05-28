@@ -31,6 +31,7 @@ Given /^I have login freyja as (home|pro|ent|oem) user$/ do |partnerType|
   @user.backup_file = QA_ENV[@user.partnerType+'_backup_file']
   @user.backup_folder = QA_ENV[@user.partnerType+'_backup_folder']
   @user.sync_file_versions = QA_ENV[@user.partnerType+'_sync_file_versions']
+  @user.backup_file_versions = QA_ENV[@user.partnerType+'_backup_file_versions']
 
   @freyja_site.login_page(@user).load
   @freyja_site.login_page(@user).UserLogin(@user)

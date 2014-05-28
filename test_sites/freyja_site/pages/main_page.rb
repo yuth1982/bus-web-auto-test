@@ -6,6 +6,7 @@ module Freyja
     element(:syncDevice, css: "a[onclick*=ACCESS_CONTROLLER_SYNC]")
     element(:action_panel_toggle, css: 'div.panel-toggle.btn-panel-toggle')
     element(:options_menu, css: 'span.text.username')
+    element(:latest_version_radio, css: 'span.radio.radio-off')
 
     def choose_one_backup_device(machineID)
       find(:xpath, "//*[starts-with(@id,'#{machineID}:Folder:')][1]/td[1]/div/span").click
@@ -113,6 +114,10 @@ module Freyja
 
     def select_uploaded_file(machine_id, file_name)
       find(:xpath, "//tr[@id='#{machine_id}:File:/sync/1/#{file_name}']/td/div/span").click
+    end
+
+    def select_latest_version
+      latest_version_radio.click
     end
 
 

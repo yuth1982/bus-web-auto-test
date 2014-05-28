@@ -46,7 +46,11 @@ And /^I choose one file with versions$/ do
     when 'Synced'
       @freyja_site.main_page.Drillin_sync_file(@user.sync_machineID, @user.sync_file_versions)
     when 'Devices'
-      #@freyja_site.main_page.Drillin_backup_file_versions(@user.backup_machineID, @user.backup_file)
+      @freyja_site.main_page.Drillin_win_backup_file(@user.backup_machineID, @user.backup_file_versions)
   end
+end
+
+When /^I select the latest version$/ do
+  @freyja_site.main_page.select_latest_version
 end
 
