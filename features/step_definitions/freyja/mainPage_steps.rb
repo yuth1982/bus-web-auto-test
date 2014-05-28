@@ -1,7 +1,7 @@
 
 When /^I select the (Devices|Synced) tab$/ do |device_choice|
   @user.deviceTab = device_choice
-  @freyja_site.main_page.chooseDevice(@user)
+  @freyja_site.main_page.chooseDevice(@user.deviceTab)
 
 end
 
@@ -52,5 +52,24 @@ end
 
 When /^I select the latest version$/ do
   @freyja_site.main_page.select_latest_version
+end
+
+And /^I choose one deleted file$/ do
+  case @user.deviceTab
+    when 'Synced'
+      uploaded_file_path = QA_ENV['local_file_upload']
+      uploaded_file_name = uploaded_file_path.split('/')[-1]
+      @freyja_site.main_page.select_uploaded_file(@user.sync_machineID, uploaded_file_name)
+  end
+
+end
+
+Then /^deleted files isn't shown$/ do
+  case @user.deviceTab
+    when 'Synced'
+      uploaded_file_path = QA_ENV['local_file_upload']
+      uploaded_file_name = uploaded_file_path.split('/')[-1]
+      @freyja_site.main_page.check_file_exist(@user.sync_machineID, uploaded_file_name).should be_false
+  end
 end
 

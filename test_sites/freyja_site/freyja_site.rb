@@ -35,4 +35,8 @@ class FreyjaSite
     Freyja::DetailPanelPage.new
   end
 
+  def preference_page
+    Freyja::PreferencePage.new
+  end
+
 end

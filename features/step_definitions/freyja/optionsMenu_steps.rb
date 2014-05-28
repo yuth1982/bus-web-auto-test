@@ -9,6 +9,10 @@ And /^I click Change password$/ do
   @freyja_site.options_menu_page.change_password_wizard(section_id)
 end
 
+And /^I select Preferences$/ do
+  @freyja_site.options_menu_page.open_preference
+end
+
 And /^I logout$/ do
   @freyja_site.options_menu_page.logout
 end

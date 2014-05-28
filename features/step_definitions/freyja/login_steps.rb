@@ -37,6 +37,12 @@ Given /^I have login freyja as (home|pro|ent|oem) user$/ do |partnerType|
   @freyja_site.login_page(@user).UserLogin(@user)
   @freyja_site.login_page(@user).login_verify.should be_true
 
+end
 
-
+And /^I re-login$/ do
+  @freyja_site.main_page.select_options_panel
+  @freyja_site.options_menu_page.logout
+  @freyja_site.login_page(@user).load
+  @freyja_site.login_page(@user).UserLogin(@user)
+  @freyja_site.login_page(@user).login_verify.should be_true
 end

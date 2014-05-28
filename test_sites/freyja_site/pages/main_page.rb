@@ -12,9 +12,8 @@ module Freyja
       find(:xpath, "//*[starts-with(@id,'#{machineID}:Folder:')][1]/td[1]/div/span").click
     end
 
-    def chooseDevice(user)
-      @deviceTab = user.deviceTab
-      case @deviceTab
+    def chooseDevice(deviceTab)
+      case deviceTab
         when 'Devices'
           wait_until do
             backupDevice.visible?
@@ -104,7 +103,7 @@ module Freyja
 
     def open_actions_panel
       action_panel_toggle.click
-      sleep 3
+      sleep 1
     end
 
     def select_options_panel
@@ -118,6 +117,11 @@ module Freyja
 
     def select_latest_version
       latest_version_radio.click
+    end
+
+    def check_file_exist(machine_id, file_name)
+      #find(:xpath, "//tr[@id='#{machine_id}:File:/sync/1/#{file_name}']/td/div/span").visible?
+      false
     end
 
 

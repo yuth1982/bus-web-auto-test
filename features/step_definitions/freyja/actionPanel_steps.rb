@@ -39,11 +39,6 @@ And /^I click Delete and confirm$/ do
   @freyja_site.action_panel_page.delete_one_file
 end
 
-Then /^file is Deleted$/ do
-  uploaded_file_path = QA_ENV['local_file_upload']
-  uploaded_file_name = uploaded_file_path.split('/')[-1]
-  @freyja_site.action_panel_page.check_file_deleted?(@user.sync_machineID, uploaded_file_name).should be_false
-end
 
 And /^I click Show Versions$/ do
   @freyja_site.action_panel_page.click_show_versions
@@ -51,4 +46,12 @@ end
 
 Then /^file versions are displayed$/ do
   @freyja_site.action_panel_page.check_file_versions
+end
+
+And /^I click Include Deleted Files$/ do
+  @freyja_site.action_panel_page.click_include_exclude_deleted
+end
+
+And /^I click Exclude Deleted Files$/ do
+  @freyja_site.action_panel_page.click_include_exclude_deleted
 end

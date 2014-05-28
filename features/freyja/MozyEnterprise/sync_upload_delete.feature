@@ -11,7 +11,7 @@ Feature: Upload and delete files in Sync
     Then one file is uploaded successfully
     And I choose the uploaded file
     And I click Delete and confirm
-    Then file is Deleted
+    Then deleted files isn't shown
     When I select options menu
     And I logout
 

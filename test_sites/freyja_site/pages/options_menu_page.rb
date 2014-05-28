@@ -3,10 +3,13 @@ module Freyja
   class OptionsMenuPage < SiteHelper::Page
 
     element(:event_history, css: "#panel-action-event-history")
-    section(:change_password_section, ChangePasswordSection, xpath: "//li[@id='panel-action-change-password']")
+    element(:preference, css: "#panel-action-preferences")
 
     element(:log_out_action, id: "panel-action-sign-out")
     element(:log_out_yes_btn, xpath: "//*[@id='logout_confirm_dialog']//a//*[text()='Yes']")
+
+    section(:change_password_section, ChangePasswordSection, xpath: "//li[@id='panel-action-change-password']")
+
 
     def change_password_wizard(section_id, use_quick_link = false)
       # Looking for link in navigation menu
@@ -21,6 +24,10 @@ module Freyja
 
     def open_event_history
       event_history.click
+    end
+
+    def open_preference
+      preference.click
     end
 
     def logout

@@ -7,6 +7,7 @@ module Freyja
     element(:include_deleted_files_action, xpath: "//*[@title='Include Deleted Files']")
     element(:show_versions_action, xpath: "//*[@title='Show Versions...']")
     element(:file_versions_radio, xpath: "//span[@title='Select this Version']")
+    element(:include_delete_file_link, xpath: "//div[@id='act-showDeleted']/div[2]")
 
     # Sync element
     element(:delete_action, xpath: "//*[@title='Delete...']")
@@ -82,17 +83,6 @@ module Freyja
       sleep 2
     end
 
-    # Public: Check file is deleted
-    #
-    # Example
-    #   @freyja_site.action_panel_page.check_file_deleted
-    #
-    # Returns nothing
-    def check_file_deleted?(machine_id, file_name)
-      sleep 2
-      #find(:xpath, "//tr[@id='#{machine_id}:File:/sync/1/#{file_name}']/td[2]/div").visible?
-      false
-    end
 
 
     # Public: Check file is uploaded
@@ -145,6 +135,10 @@ module Freyja
       upload_files_btn.click
     end
 
+     def click_include_exclude_deleted
+       include_delete_file_link.click
+       sleep 2
+     end
 
 
   end
