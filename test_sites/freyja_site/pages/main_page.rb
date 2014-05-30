@@ -121,6 +121,7 @@ module Freyja
 
     def check_file_exist(machine_id, file_name)
       #find(:xpath, "//tr[@id='#{machine_id}:File:/sync/1/#{file_name}']/td/div/span").visible?
+      #puts page.has_xpath?("//tr[@id='#{machine_id}:File:/sync/1/#{file_name}']/td/div/span")
       false
     end
 

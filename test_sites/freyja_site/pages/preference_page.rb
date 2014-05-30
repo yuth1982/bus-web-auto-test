@@ -48,7 +48,7 @@ module Freyja
     end
 
     def get_rq_status
-      if page.find(:css, '#act-addCollection > div.action-name').visible?
+      if page.has_css?("#act-addCollection > div.action-name")
         return "enable"
       else
         return "disable"

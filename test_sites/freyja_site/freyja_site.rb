@@ -39,4 +39,12 @@ class FreyjaSite
     Freyja::PreferencePage.new
   end
 
+  def restore_queue_page
+    Freyja::RestoreQueuePage.new
+  end
+
+  def search_page
+    Freyja::SearchPage.new
+  end
+
 end

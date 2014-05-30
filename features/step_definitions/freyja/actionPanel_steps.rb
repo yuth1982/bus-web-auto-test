@@ -55,3 +55,15 @@ end
 And /^I click Exclude Deleted Files$/ do
   @freyja_site.action_panel_page.click_include_exclude_deleted
 end
+
+And /^I click Add to Restore Queue$/ do
+  @freyja_site.action_panel_page.add_restore_queue
+end
+
+When /^I click View Restore Queue$/ do
+  @freyja_site.action_panel_page.view_restore_queue
+end
+
+And /^I click Remove from Restore Queue$/ do
+  @freyja_site.action_panel_page.remove_restore_queue
+end

@@ -1,24 +1,22 @@
 Feature: Change Preference Settings
 
   Background:
-    Given I have login freyja as ent user
+    Given I have login freyja as home user
 
-  @freyja  @ent  @ent_preference
-Scenario: MozyEnterprise user change preference settings through Freyja
+  @freyja  @home  @home_preference
+Scenario: Mozyhome user change preference settings through Freyja
   When I select options menu
   And I select Preferences
   And I choose Devices radio
   And I choose Yes for restore queue
   And I click save Preferences button
-  Then freyja page should be Devices start
-  Then freyja page should be enable restore queue
+  Then page preference should be Devices start and enable restore queue
   When I select options menu
   And I select Preferences
   And I choose Synced radio
   And I choose No for restore queue
   And I click save Preferences button
   And I re-login
-  Then freyja page should be Devices start
-  Then freyja page should be enable restore queue
+  Then page preference should be Synced start and disable restore queue
   When I select options menu
   And I logout

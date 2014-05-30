@@ -36,7 +36,7 @@ module Freyja
         when 'oem'
           login_btn.click
           ent_restore_link.click
-        end
+      end
     end
 
     def login_verify

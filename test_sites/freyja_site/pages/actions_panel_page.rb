@@ -8,6 +8,9 @@ module Freyja
     element(:show_versions_action, xpath: "//*[@title='Show Versions...']")
     element(:file_versions_radio, xpath: "//span[@title='Select this Version']")
     element(:include_delete_file_link, xpath: "//div[@id='act-showDeleted']/div[2]")
+    element(:add_restore_queue_link, xpath: "//div[@id='act-addCollection']/div[2]")
+    element(:view_restore_queue_link, xpath: "//div[@id='act-showCollection']/div[2]")
+    element(:remove_restore_queue_link, xpath: "//div[@id='act-subCollection']/div[2]")
 
     # Sync element
     element(:delete_action, xpath: "//*[@title='Delete...']")
@@ -135,10 +138,23 @@ module Freyja
       upload_files_btn.click
     end
 
-     def click_include_exclude_deleted
-       include_delete_file_link.click
-       sleep 2
-     end
+    def click_include_exclude_deleted
+      include_delete_file_link.click
+      sleep 2
+    end
+
+    def add_restore_queue
+      add_restore_queue_link.click
+      sleep 1
+    end
+
+    def view_restore_queue
+      view_restore_queue_link.click
+    end
+
+    def remove_restore_queue
+      remove_restore_queue_link.click
+    end
 
 
   end

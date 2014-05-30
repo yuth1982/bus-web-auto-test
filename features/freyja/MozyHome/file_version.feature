@@ -50,7 +50,7 @@ Scenario: home user view file versions in Sync container
     | Restore_Manager_folder | fryr         |
   When I select options menu
   And I select event history
-  Then this restore is Completed
+  Then this restore is Ready for Download
   When I select options menu
   And I logout
 

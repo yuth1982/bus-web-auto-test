@@ -12,3 +12,7 @@ And /^I fill out the restore all files wizard$/ do |restore_table|
   @freyja_site.detail_panel_page.restore_all_files_section.restore_all_files(@restore)
 
 end
+
+And /^I click Download in detail panel$/ do
+  @freyja_site.detail_panel_page.click_download
+end
