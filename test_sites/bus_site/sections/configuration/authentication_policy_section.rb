@@ -216,8 +216,8 @@ module Bus
     def confirm_change_auth
       if all(:css, 'div#change-provider-confirm-box').size >=1 && find(:css, 'div#change-provider-confirm-box').visible?
         find(:css, 'div#change-provider-confirm-box>div>input[value=Submit]').click
-        find(:css, 'div#change-provider-password-confirm>input#password').set(QA_ENV['bus_password'])
-        find(:css, 'div#change-provider-password-confirm>input.button').click
+        find(:css, 'div#auth_config_fields>div>div>input[name="password"]').set(QA_ENV['bus_password'])
+        find(:css, 'div#auth_config_fields>div>div>input[value=Submit]').click
       end
     end
 

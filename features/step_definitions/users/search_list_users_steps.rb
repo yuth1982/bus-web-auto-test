@@ -46,7 +46,7 @@ Then /^User search results should be:$/ do |results_table|
 
       if k == 'User'
         v.replace ERB.new(v).result(binding).slice(0,27).downcase
-        v << '...' unless v.length < 26
+        v << '...' unless v.length <= 26
       else
         v.replace ERB.new(v).result(binding)
       end
