@@ -33,8 +33,8 @@ Feature:
       | Sync           | 0 / 10 GB          | Set                  | N/A              |
     When I navigate to Search / List Machines section from bus admin console page
     Then Machine search results should be:
-      | Machine | User                        | User Group           | Data Center | Storage Used |
-      | Sync    | <%=@new_users.first.email%> | (default user group) | qa6         | 0            |
+      | Machine | User                        | User Group           | Data Center                | Storage Used |
+      | Sync    | <%=@new_users.first.email%> | (default user group) | <%=QA_ENV['data_center']%> | 0            |
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
@@ -86,7 +86,7 @@ Feature:
     And I view user details by newly created user email
     And I enable stash without send email in user details section
     Then user details should be:
-      | Name:                  | Enable Sync:               |
+      | Name:                  | Enable Sync:                |
       | TC.19080 User (change) | Yes (Send Invitation Email) |
     When I search emails by keywords:
       | to                          | subject      |
@@ -94,10 +94,10 @@ Feature:
     Then I should see 0 email(s)
     And stash device table in user details should be:
       | Sync Container | Used/Available     | Device Storage Limit | Last Update      |
-      | Sync | 0 / 10 GB          | Set                  | N/A              |
+      | Sync           | 0 / 10 GB          | Set                  | N/A              |
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | Sync | Machines | Storage        | Storage Used |
+      | User                        | Name          | Sync    | Machines | Storage        | Storage Used |
       | <%=@new_users.first.email%> | TC.19080 User | Enabled | 0        | 10 GB (Limited)| None         |
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
@@ -124,19 +124,19 @@ Feature:
     Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | User Group  | Sync | Machines | Storage        | Storage Used |
+      | User                        | Name          | User Group  | Sync    | Machines | Storage        | Storage Used |
       | <%=@new_users.first.email%> | TC.19022 User | TC.19022 UG | Enabled | 0        | 10 GB (Limited)| None         |
     When I view user details by newly created user email
     Then user details should be:
-      | Name:                  | Enable Sync:               |
+      | Name:                  | Enable Sync:                |
       | TC.19022 User (change) | Yes (Send Invitation Email) |
     And stash device table in user details should be:
       | Sync Container | Used/Available     | Device Storage Limit | Last Update      |
-      | Sync | 0 / 10 GB          | Set                  | N/A              |
+      | Sync           | 0 / 10 GB          | Set                  | N/A              |
     When I navigate to Search / List Machines section from bus admin console page
     Then Machine search results should be:
-      | Machine | User                        | User Group  | Data Center | Storage Used |
-      | Sync | <%=@new_users.first.email%> | TC.19022 UG | qa6         | 0            |
+      | Machine | User                        | User Group  | Data Center                | Storage Used |
+      | Sync    | <%=@new_users.first.email%> | TC.19022 UG | <%=QA_ENV['data_center']%> | 0            |
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
@@ -168,7 +168,7 @@ Feature:
     And I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     Then User search results should be:
-      | User                     | Name           | User Group           | Sync | Machines | Storage        |
+      | User                     | Name           | User Group           | Sync    | Machines | Storage        |
       | <%=@new_users[0].email%> | TC.18967 user1 | (default user group) | Enabled | 0        | 5 GB (Limited) |
       | <%=@new_users[1].email%> | TC.18967 user2 | (default user group) | Enabled | 0        | 5 GB (Limited) |
       | <%=@new_users[2].email%> | TC.18967 user3 | (default user group) | Enabled | 0        | 5 GB (Limited) |
@@ -194,18 +194,18 @@ Feature:
     And I view user details by newly created user email
     And I set user stash quota to 999999999 GB
     Then set max message should be:
-      """
+    """
       The Sync Storage limit cannot be more than what is available for this user.
       """
     When I refresh User Details section
     And stash device table in user details should be:
       | Sync Container | Used/Available     | Device Storage Limit | Last Update      |
-      | Sync | 0 / 10 GB          | Set                  | N/A              |
+      | Sync           | 0 / 10 GB          | Set                  | N/A              |
     And I set user stash quota to 5 GB
     When I refresh User Details section
     And stash device table in user details should be:
       | Sync Container | Used/Available     | Device Storage Limit | Last Update      |
-      | Sync | 0 / 5 GB           | 5 GB Edit Remove     | N/A              |
+      | Sync           | 0 / 5 GB           | 5 GB Edit Remove     | N/A              |
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
@@ -231,19 +231,19 @@ Feature:
     Then I should see 0 email(s)
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | Sync | Machines | Storage                 | Storage Used  |
+      | User                        | Name          | Sync    | Machines | Storage                 | Storage Used  |
       | <%=@new_users.first.email%> | TC.19035 User | Enabled | 0        | Desktop: 10 GB (Limited)| Desktop: None |
     When I view user details by newly created user email
     Then user details should be:
-      | Name:                  | Enable Sync:               |
+      | Name:                  | Enable Sync:                |
       | TC.19035 User (change) | Yes (Send Invitation Email) |
     And stash device table in user details should be:
       | Sync Container | Used/Available     | Device Storage Limit | Last Update      |
-      | Sync | 0 / 10 GB          | Set                  | N/A              |
+      | Sync           | 0 / 10 GB          | Set                  | N/A              |
     When I navigate to Search / List Machines section from bus admin console page
     Then Machine search results should be:
-      | Machine | User                        | User Group           | Data Center | Storage Used |
-      | Sync | <%=@new_users.first.email%> | (default user group) | qa6         | 0            |
+      | Machine | User                        | User Group           | Data Center                | Storage Used |
+      | Sync    | <%=@new_users.first.email%> | (default user group) | <%=QA_ENV['data_center']%> | 0            |
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
@@ -275,10 +275,10 @@ Feature:
     And I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     Then User search results should be:
-      | User                     | Name           | User Group           | Sync | Machines | Storage                 |
+      | User                     | Name           | User Group           | Sync    | Machines | Storage                 |
       | <%=@new_users[0].email%> | TC.19102 user1 | (default user group) | Enabled | 0        | Desktop: 5 GB (Limited) |
-      | <%=@new_users[1].email%> | TC.19102 user2 | (default user group) | Enabled | 0        | Desktop: 5 GB (Limited)|
-      | <%=@new_users[2].email%> | TC.19102 user3 | (default user group) | Enabled | 0        | Desktop: 5 GB (Limited)|
+      | <%=@new_users[1].email%> | TC.19102 user2 | (default user group) | Enabled | 0        | Desktop: 5 GB (Limited) |
+      | <%=@new_users[2].email%> | TC.19102 user3 | (default user group) | Enabled | 0        | Desktop: 5 GB (Limited) |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -297,18 +297,18 @@ Feature:
     And I view user details by newly created user email
     And I set user stash quota to 999999999 GB
     Then set max message should be:
-      """
+    """
       The Sync Storage limit cannot be more than what is available for this user.
       """
     When I refresh User Details section
     And stash device table in user details should be:
       | Sync Container | Used/Available     | Device Storage Limit | Last Update      |
-      | Sync | 0 / 10 GB          | Set                  | N/A              |
+      | Sync           | 0 / 10 GB          | Set                  | N/A              |
     And I set user stash quota to 5 GB
     When I refresh User Details section
     And stash device table in user details should be:
       | Sync Container | Used/Available     | Device Storage Limit | Last Update      |
-      | Sync | 0 / 5 GB           | 5 GB Edit Remove     | N/A              |
+      | Sync           | 0 / 5 GB           | 5 GB Edit Remove     | N/A              |
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
@@ -334,15 +334,15 @@ Feature:
     Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | Sync | Machines | Storage                 | Storage Used  |
+      | User                        | Name          | Sync    | Machines | Storage                 | Storage Used  |
       | <%=@new_users.first.email%> | TC.19109 User | Enabled | 0        | Desktop: 10 GB (Limited)| Desktop: None |
     When I view user details by newly created user email
     Then user details should be:
-      | Name:                  | Enable Sync:               |
+      | Name:                  | Enable Sync:                |
       | TC.19109 User (change) | Yes (Send Invitation Email) |
     And stash device table in user details should be:
       | Sync Container | Used/Available     | Device Storage Limit | Last Update      |
-      | Sync | 0 / 10 GB          | Set                  | N/A              |
+      | Sync           | 0 / 10 GB          | Set                  | N/A              |
     When I send stash invitation email
     When I search emails by keywords:
       | to                          | subject     |
@@ -350,8 +350,8 @@ Feature:
     Then I should see 1 email(s)
     When I navigate to Search / List Machines section from bus admin console page
     Then Machine search results should be:
-      | Machine | User                        | User Group  | Data Center | Storage Used |
-      | Sync | <%=@new_users.first.email%> | TC.19109 UG | qa6         | 0            |
+      | Machine | User                        | User Group  | Data Center                | Storage Used |
+      | Sync    | <%=@new_users.first.email%> | TC.19109 UG | <%=QA_ENV['data_center']%> | 0            |
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
@@ -377,23 +377,23 @@ Feature:
     Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | Sync   | Machines | Storage                 | Storage Used  |
+      | User                        | Name          | Sync    | Machines | Storage                 | Storage Used  |
       | <%=@new_users.first.email%> | TC.19111 User | Enabled | 0        | Desktop: 10 GB (Limited)| Desktop: None |
     When I view user details by newly created user email
     Then user details should be:
-      | Name:                  | Enable Sync:               |
+      | Name:                  | Enable Sync:                |
       | TC.19111 User (change) | Yes (Send Invitation Email) |
     And stash device table in user details should be:
       | Sync Container | Used/Available     | Device Storage Limit | Last Update      |
-      | Sync | 0 / 10 GB          | Set                  | N/A              |
+      | Sync           | 0 / 10 GB          | Set                  | N/A              |
     When I search emails by keywords:
       | to                          | subject      |
       | <%=@new_users.first.email%> | enable sync  |
     Then I should see 0 email(s)
     When I navigate to Search / List Machines section from bus admin console page
     Then Machine search results should be:
-      | Machine | User                        | User Group  | Data Center | Storage Used |
-      | Sync | <%=@new_users.first.email%> | TC.19111 UG | qa6         | 0            |
+      | Machine | User                        | User Group  | Data Center                | Storage Used |
+      | Sync    | <%=@new_users.first.email%> | TC.19111 UG | <%=QA_ENV['data_center']%> | 0            |
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
@@ -423,7 +423,7 @@ Feature:
       | <%=@new_users.first.email%> | TC.22189 User | Enabled | 0        | Desktop: 10 GB (Limited)| Desktop: None |
     When I view user details by newly created user email
     Then user details should be:
-      | Name:                  | Enable Sync:               |
+      | Name:                  | Enable Sync:                |
       | TC.22189 User (change) | Yes (Send Invitation Email) |
     And stash device table in user details should be:
       | Sync Container | Used/Available     | Device Storage Limit | Last Update      |
@@ -546,7 +546,7 @@ Feature:
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by newly created user email
     Then user details should be:
-      | Name:                  | Enable Sync:               |
+      | Name:                  | Enable Sync:                |
       | TC.22186 User (change) | Yes (Send Invitation Email) |
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
