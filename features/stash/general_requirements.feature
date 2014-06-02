@@ -766,7 +766,7 @@ Feature:
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.19165 @BSA.3010 @bus @2.5 @user_stories @stash
+  @TC.19165 @BSA.3010 @bus @2.5 @user_stories @stash @need_test_account
   Scenario: 19165 US Pro admin can see stash details in manage resources
     When I act as partner by:
       | email                 |

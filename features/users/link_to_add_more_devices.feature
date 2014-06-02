@@ -124,7 +124,7 @@ Scenario: 19945 EMEA (1UG) France Metallic Reseller Verify Buy More Link in Add 
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 	
-  @TC.19952 @bus @2.5 @user_centric_storage @1UG @emea @DE @mozypro @itemzied
+  @TC.19952 @bus @2.5 @user_centric_storage @1UG @emea @DE @mozypro @itemzied @need_test_account
   Scenario: Mozy-19952:EMEA(1UG), Germany, MozyPro Itemized, Verify Add More Link in Add New User
     When I act as partner by:
       | name                                    |

@@ -270,7 +270,7 @@ Feature: User group stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.18997 @BSA.3030 @bus @2.5 @user_stories
+  @TC.18997 @BSA.3030 @bus @2.5 @user_stories @need_test_account
   Scenario: 18997 [List User Groups View][P]"Sync Users" column shows and has valid values
     When I act as partner by:
       | email                        |
@@ -282,7 +282,7 @@ Feature: User group stash setting management
       | backup                 | 1     | 1      | 0           |
       | stash                  | 1     | 1      | 1           |
 
-  @TC.18998 @BSA.3030 @bus @2.5 @user_stories
+  @TC.18998 @BSA.3030 @bus @2.5 @user_stories @need_test_account
   Scenario: 18998 [List User Groups View][P]"Desktop Quota" column includes backup and stash
     When I act as partner by:
       | email                        |
@@ -294,7 +294,7 @@ Feature: User group stash setting management
       | backup                 | 1     | 1      | 0           | 0 / 0       | 0.0 (0.0 active) / 0.0 | 1 / 10       | 0.01 (1.0 active) / 10.0  |
       | stash                  | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 active) / 0.0 | 0 / 0        | 0.02 (2.0 active) / 10.0  |
 
-  @TC.18999 @BSA.3030 @bus @2.5 @user_stories
+  @TC.18999 @BSA.3030 @bus @2.5 @user_stories @need_test_account
   Scenario: 18999 [Group Detail View][P]"Sync" column shows and has valid value
     When I act as partner by:
       | email                        |
@@ -321,7 +321,7 @@ Feature: User group stash setting management
       | User            | Name   | Sync    |
       | backup@test.com | backup | Disabled |
 
-  @TC.19000 @BSA.3030 @bus @2.5 @user_stories
+  @TC.19000 @BSA.3030 @bus @2.5 @user_stories @need_test_account
   Scenario: 19000 [Group Detail View][P]"Storage" and "Storage Used" column includes backup and stash
     When I act as partner by:
       | email                        |

@@ -25,7 +25,7 @@ Feature: User sync
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.17519 @ui @bus @2.1 @direct_ldap_integration @use_provision
+  @TC.17519 @ui @bus @2.1 @direct_ldap_integration @use_provision @need_ad_server
   Scenario: 17519 Sync Now
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -59,7 +59,7 @@ Feature: User sync
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.17518 @ui @bus @2.1 @direct_ldap_integration @use_provision
+  @TC.17518 @ui @bus @2.1 @direct_ldap_integration @use_provision @need_ad_server
   Scenario: 17518 17529 17530 17531 17532 17534 17535 17536 Check the user sync UI
     # Scenario: 17518 Check the UI when the partner has never synced(all the UI check)
     When I add a new MozyEnterprise partner:
@@ -202,7 +202,7 @@ Feature: User sync
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.17538  @smoke @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction
+  @TC.17538  @smoke @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction @need_ad_server
   Scenario: 17538 17551 Provision and Deprovision Users with One Rule/Match All/Multiple
     # Scenario: 17538 17551 One Rule/Match All/Multiple Users
     When I add a new MozyEnterprise partner:
@@ -265,7 +265,7 @@ Feature: User sync
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.17540 @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction
+  @TC.17540 @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction @need_ad_server
   Scenario: 17540 17552 17542 17554 17543 17557 17554 User sync with different conditions
     # Scenario: 17540 One Rule/Multiple Rules
     When I add a new MozyEnterprise partner:
@@ -541,7 +541,7 @@ Feature: User sync
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.17559 @function @bus @2.1 @direct_ldap_integration @user_deconstruction
+  @TC.17559 @function @bus @2.1 @direct_ldap_integration @user_deconstruction @need_ad_server
   Scenario: 17559 17560 Error cases for user sync 
     # Scenario: 17559 Empty rules will be filtered
     When I add a new MozyEnterprise partner:
@@ -1165,7 +1165,7 @@ Feature: User sync
     And I search and delete partner account by newly created partner company name
 
 
-  @TC.17521 @scheduled_sync  @bus @2.1 @direct_ldap_integration @use_provision
+  @TC.17521 @scheduled_sync  @bus @2.1 @direct_ldap_integration @use_provision @need_ad_server
   Scenario: 17521 17522 17523 17520 Scheduled Sync (UI, cancel)
     # Scenario: 17521 Scheduled Sync (UI, cancel)
     When I add a new MozyEnterprise partner:
