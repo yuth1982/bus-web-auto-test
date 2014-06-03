@@ -23,6 +23,7 @@ module Freyja
     element(:upload_files_btn, xpath: "//span[text()='Upload Files']")
 
     section(:large_download_options_section, RestoreOptionsSection, xpath: "//*[@title='Large Download Options...']")
+    section(:non_default_key_download_section, RestoreOptionsSection, xpath: "//div[@id='act-download']/div[2]")
 
     iframe(:upload_iframe, UploadIframe, :id, 'uploadFrame')
 

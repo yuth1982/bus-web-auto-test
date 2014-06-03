@@ -2,23 +2,30 @@ module Freyja
 
   class SearchPage < SiteHelper::Page
 
-      element(:search_input, id: 'search-input')           #xpath: "//*[@id='search-input']"
-      element(:conduct_search_btn, css: 'div.search-magnify-icon.icon-search-filter')
+      element(:search_input, xpath: "//*[@id='search-input']")           #        id: 'search-input'
+      element(:conduct_search_btn, xpath: "//section[@id='application']/header/div[2]/div/div")
 
 
       def input_search(search_string)
-        puts search_string
+        sleep 2
+        search_input.type_text(search_string)
+        search_input.click
+      end
+
+      def input_search_device(search_string)
+        sleep 2
         search_input.type_text(search_string)
       end
 
       def execute_search
+        sleep 5
         conduct_search_btn.click
       end
 
       def verify_search_result(search_string)
-        wait_until do
-          !find(:css, '#stash-layout > header').text.match(/.\*#{search_string}*/).nil?
-        end
+        sleep 1
+        page.has_content?("Search Results for '"+search_string.to_s+"'")
+        sleep 10
       end
 
   end

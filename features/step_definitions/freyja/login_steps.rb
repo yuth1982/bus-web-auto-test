@@ -39,6 +39,23 @@ Given /^I have login freyja as (home|pro|ent|oem) user$/ do |partnerType|
 
 end
 
+Given /^I have login freyja as (home|pro|ent|oem) and (private_key|ckey) user$/ do |partnerType, keyType|
+  @freyja_site = FreyjaSite.new
+  @user = Freyja::DataObj::User.new
+  @user.partnerType = partnerType
+  @user.keyType = keyType
+  @user.username = QA_ENV[@user.partnerType+'_username_'+@user.keyType]
+  @user.password = QA_ENV[@user.partnerType+'_password_'+@user.keyType]
+  @user.sync_machineID = QA_ENV[@user.partnerType+'_sync_machineID_'+@user.keyType]
+  @user.sync_file = QA_ENV[@user.partnerType+'_sync_file_'+@user.keyType]
+  @user.backup_machineID = QA_ENV[@user.partnerType+'_backup_machineID_'+@user.keyType]
+  @user.backup_file = QA_ENV[@user.partnerType+'_backup_file_'+@user.keyType]
+
+  @freyja_site.login_page(@user).load
+  @freyja_site.login_page(@user).UserLogin(@user)
+  @freyja_site.login_page(@user).login_verify.should be_true
+end
+
 And /^I re-login$/ do
   @freyja_site.main_page.select_options_panel
   @freyja_site.options_menu_page.logout

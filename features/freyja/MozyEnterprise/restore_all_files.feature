@@ -31,7 +31,7 @@ Scenario: MozyEnterprise user restore all file through archive in Freyja
   When I select options menu
   And I logout
 
-@freyja @ent_restore_all_media @ent_restore_all
+@freyja @ent  @ent_restore_all_media @ent_restore_all
 Scenario: MozyEnterprise user restore all file through media in Freyja
   When I select the Devices tab
   And I choose one device

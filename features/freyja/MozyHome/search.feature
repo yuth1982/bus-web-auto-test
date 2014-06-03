@@ -1,10 +1,10 @@
 Feature: Search
 
   Background:
-    Given I have login freyja as ent user
+    Given I have login freyja as home user
 
-  @freyja  @ent @ent_search  @ent_search_files
-Scenario: MozyEnterprise user search files through Freyja
+  @freyja  @home @home_search  @home_search_files
+Scenario: Home user search files through Freyja
   When I select the Synced tab
   When I enter search file keyword in search box
   And I click search
@@ -14,8 +14,9 @@ Scenario: MozyEnterprise user search files through Freyja
   And I click search
   Then search results is displayed
 
-@freyja  @ent @ent_search  @ent_search_folders
-  Scenario: MozyEnterprise user search folders through Freyja
+
+@freyja  @home @home_search  @home_search_folders
+  Scenario: Home user search folders through Freyja
     When I select the Synced tab
     When I enter search folder keyword in search box
     And I click search

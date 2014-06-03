@@ -31,7 +31,7 @@ Scenario: home user restore all file through archive in Freyja
   When I select options menu
   And I logout
 
-@freyja @home_restore_all_media @home_restore_all
+@freyja @home @home_restore_all_media @home_restore_all
 Scenario: home user restore all file through media in Freyja
   When I select the Devices tab
   And I choose one device

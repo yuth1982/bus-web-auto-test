@@ -67,3 +67,18 @@ end
 And /^I click Remove from Restore Queue$/ do
   @freyja_site.action_panel_page.remove_restore_queue
 end
+
+And /^I click download now for non-default key files$/ do
+  @restore = Freyja::DataObj::Restore.new
+  section_id = "//div[@id='act-download']/div[2]"
+  @freyja_site.action_panel_page.open_restore_wizard(section_id)
+end
+
+
+And /^I fill out non-default key restore wizard$/ do |restore_table|
+  attributes = restore_table.hashes.first
+  @restore.restore_name = attributes["restore_name"] + "#{Time.now.strftime("%Y%m%d-%H%M%S")}" unless attributes["restore_name"].nil?
+  @restore.restore_type = attributes["restore_type"] unless attributes["restore_type"].nil?
+
+  @freyja_site.action_panel_page.non_default_key_download_section.large_download_options_restore(@restore)
+end

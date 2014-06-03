@@ -12,11 +12,29 @@ module Freyja
 
     def initialize(user)
       partnerType = user.partnerType
-      case partnerType
-        when 'home'
-          self.class.set_url("#{QA_ENV[partnerType+'_url']}/login")
+      keyType = user.keyType
+      case  keyType
+        when  'private_key'
+          case partnerType
+            when 'home'
+              self.class.set_url("#{QA_ENV[partnerType+'_url_'+keyType]}/login")
+            else
+              self.class.set_url("#{QA_ENV[partnerType+'_url_'+keyType]}")
+          end
+        when  'ckey'
+          case partnerType
+            when 'home'
+              self.class.set_url("#{QA_ENV[partnerType+'_url_'+keyType]}/login")
+            else
+              self.class.set_url("#{QA_ENV[partnerType+'_url_'+keyType]}")
+          end
         else
-          self.class.set_url("#{QA_ENV[partnerType+'_url']}")
+          case partnerType
+            when 'home'
+              self.class.set_url("#{QA_ENV[partnerType+'_url']}/login")
+            else
+              self.class.set_url("#{QA_ENV[partnerType+'_url']}")
+          end
       end
     end
 
@@ -29,7 +47,7 @@ module Freyja
           home_login_btn.click
         when 'pro'
           login_btn.click
-          restore_link.click
+          ent_restore_link.click
         when 'ent'
           login_btn.click
           ent_restore_link.click
