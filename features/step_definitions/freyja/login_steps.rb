@@ -1,4 +1,5 @@
 
+# open Freyja login page
 When /^I navigate to freyja (.+) login page$/ do |partnerType|
   @freyja_site = FreyjaSite.new
   @user = Freyja::DataObj::User.new
@@ -18,6 +19,7 @@ Then /^freyja page is displayed$/ do
   @freyja_site.login_page(@user).login_verify.should be_true
 end
 
+# login Freyja with username and passowrd
 Given /^I have login freyja as (home|pro|ent|oem) user$/ do |partnerType|
   @freyja_site = FreyjaSite.new
   @user = Freyja::DataObj::User.new
@@ -39,6 +41,7 @@ Given /^I have login freyja as (home|pro|ent|oem) user$/ do |partnerType|
 
 end
 
+# for private key or ckey users, login Freyja with username and passowrd
 Given /^I have login freyja as (home|pro|ent|oem) and (private_key|ckey) user$/ do |partnerType, keyType|
   @freyja_site = FreyjaSite.new
   @user = Freyja::DataObj::User.new

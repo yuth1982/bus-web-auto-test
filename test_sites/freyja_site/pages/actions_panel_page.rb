@@ -11,6 +11,8 @@ module Freyja
     element(:add_restore_queue_link, xpath: "//div[@id='act-addCollection']/div[2]")
     element(:view_restore_queue_link, xpath: "//div[@id='act-showCollection']/div[2]")
     element(:remove_restore_queue_link, xpath: "//div[@id='act-subCollection']/div[2]")
+    element(:change_date_link, xpath: "//div[@id='act-backInTime']/div[2]")
+
 
     # Sync element
     element(:delete_action, xpath: "//*[@title='Delete...']")
@@ -22,11 +24,19 @@ module Freyja
     element(:notification_badge, id: "notifications-count")
     element(:upload_files_btn, xpath: "//span[text()='Upload Files']")
 
+    # sections
     section(:large_download_options_section, RestoreOptionsSection, xpath: "//*[@title='Large Download Options...']")
     section(:non_default_key_download_section, RestoreOptionsSection, xpath: "//div[@id='act-download']/div[2]")
 
+    #frames
     iframe(:upload_iframe, UploadIframe, :id, 'uploadFrame')
 
+    # Public: launch restore wizard
+    #
+    # Example
+    #   @freyja_site.action_panel_page.open_restore_wizard(section_id)
+    #
+    # Returns nothing
     def open_restore_wizard(section_id, use_quick_link = false)
       # Looking for link in navigation menu
       find(:xpath, section_id)
@@ -40,6 +50,13 @@ module Freyja
 
     def click_download_now
       download_now.click
+      sleep 2
+    end
+
+    def click_download_now_non_default_key
+      download_now.click
+      sleep 2
+      download_key_btn.click
       sleep 2
     end
 
@@ -87,8 +104,6 @@ module Freyja
       sleep 2
     end
 
-
-
     # Public: Check file is uploaded
     #
     # Example
@@ -126,7 +141,7 @@ module Freyja
     # Example
     #   @freyja_site.action_panel_page.check_file_versions
     #
-    # Returns nothing
+    # Returns true or false
     def check_file_versions
       file_versions_radio.visible?
     end
@@ -157,6 +172,9 @@ module Freyja
       remove_restore_queue_link.click
     end
 
+    def click_change_date
+      change_date_link.click
+    end
 
   end
 

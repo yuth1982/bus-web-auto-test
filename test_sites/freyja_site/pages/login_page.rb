@@ -10,6 +10,12 @@ module Freyja
     element(:ent_restore_link, css: "i.icon-folder-open-alt.icon-2x")
     element(:username_freyja, css: "span.text.username")
 
+    # Public: open login page
+    #
+    # Example
+    #   @freyja_site.login_page.load
+    #
+    # Returns nothing
     def initialize(user)
       partnerType = user.partnerType
       keyType = user.keyType
@@ -38,6 +44,12 @@ module Freyja
       end
     end
 
+    # Public: enter username and password, click to confirm
+    #
+    # Example
+    #   @freyja_site.login_page.UserLogin(user)
+    #
+    # Returns nothing
     def UserLogin(user)
       username_tb.type_text(user.username)
       password_tb.type_text(user.password)

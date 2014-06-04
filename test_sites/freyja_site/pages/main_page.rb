@@ -8,10 +8,22 @@ module Freyja
     element(:options_menu, css: 'span.text.username')
     element(:latest_version_radio, css: 'span.radio.radio-off')
 
+    # Public: enter into one backup device
+    #
+    # Example
+    #   @freyja_site.main_page.choose_one_backup_device(machineID)
+    #
+    # Returns nothing
     def choose_one_backup_device(machineID)
       find(:xpath, "//*[starts-with(@id,'#{machineID}:Folder:')][1]/td[1]/div/span").click
     end
 
+    # Public: choose one device tab
+    #
+    # Example
+    #   @freyja_site.main_page.chooseDevice(deviceTab)
+    #
+    # Returns nothing
     def chooseDevice(deviceTab)
       case deviceTab
         when 'Devices'
@@ -27,6 +39,12 @@ module Freyja
       end
     end
 
+    # Public: choose one file in sync
+    #
+    # Example
+    #   @freyja_site.main_page.Drillin_sync_file
+    #
+    # Returns nothing
     def Drillin_sync_file(machineID, filePath)
       pathArray = filePath.split('/')
       pathLength = 0
@@ -45,6 +63,12 @@ module Freyja
       sleep 2
     end
 
+    # Public: choose one folder in sync
+    #
+    # Example
+    #   @freyja_site.main_page.Drillin_sync_folder
+    #
+    # Returns nothing
     def Drillin_sync_folder(machineID, folderPath)
       pathArray = folderPath.split('/')
       pathLength = 0
@@ -63,6 +87,12 @@ module Freyja
       sleep 2
     end
 
+    # Public: choose one file in backup
+    #
+    # Example
+    #   @freyja_site.main_page.Drillin_win_backup_file
+    #
+    # Returns nothing
     def Drillin_win_backup_file(machineID, filePath)
       pathArray = filePath.split('\\')
       pathLength = 0
@@ -82,6 +112,12 @@ module Freyja
       sleep 2
     end
 
+    # Public: choose one folder in backup
+    #
+    # Example
+    #   @freyja_site.main_page.Drillin_win_backup_folder
+    #
+    # Returns nothing
     def Drillin_win_backup_folder(machineID, folderPath)
       pathArray = folderPath.split('\\')
       pathLength = 0
@@ -125,6 +161,9 @@ module Freyja
       false
     end
 
+    def select_backup_device(machineID)
+      find(:xpath, "//tr[@id='#{machineID}:Folder:']/td[2]/div/span[2]/span").click
+    end
 
   end
 end

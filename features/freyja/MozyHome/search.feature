@@ -13,7 +13,8 @@ Scenario: Home user search files through Freyja
   When I enter search file keyword in search box
   And I click search
   Then search results is displayed
-
+  When I select options menu
+  And I logout
 
 @freyja  @home @home_search  @home_search_folders
   Scenario: Home user search folders through Freyja

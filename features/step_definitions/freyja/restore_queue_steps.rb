@@ -1,3 +1,5 @@
+
+# verify restore queue displayed
 Then /^Restore Queue is shown$/ do
   @freyja_site.restore_queue_page.verify_show_restore_queue.should be_true
 end

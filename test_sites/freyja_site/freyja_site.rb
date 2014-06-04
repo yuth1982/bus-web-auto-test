@@ -47,4 +47,12 @@ class FreyjaSite
     Freyja::SearchPage.new
   end
 
+  def select_date_page
+    Freyja::SelectDate.new
+  end
+
+  def product_download_page
+    Freyja::ProductDownloadPage.new
+  end
+
 end

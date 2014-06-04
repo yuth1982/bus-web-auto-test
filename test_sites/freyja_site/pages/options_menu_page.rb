@@ -4,13 +4,20 @@ module Freyja
 
     element(:event_history, css: "#panel-action-event-history")
     element(:preference, css: "#panel-action-preferences")
+    element(:notification, css: "#notifications-count")
+    element(:product_download, css: "div[title='Product Downloads'] > a")
 
     element(:log_out_action, id: "panel-action-sign-out")
     element(:log_out_yes_btn, xpath: "//*[@id='logout_confirm_dialog']//a//*[text()='Yes']")
 
     section(:change_password_section, ChangePasswordSection, xpath: "//li[@id='panel-action-change-password']")
 
-
+    # Public: launch change password wizard
+    #
+    # Example
+    #   @freyja_site.options_menu_page.change_password_wizard
+    #
+    # Returns nothing
     def change_password_wizard(section_id, use_quick_link = false)
       # Looking for link in navigation menu
       find(:xpath, section_id)
@@ -28,6 +35,19 @@ module Freyja
 
     def open_preference
       preference.click
+    end
+
+    def open_notifications
+      notification.click
+      sleep 5
+    end
+
+    def notifications_detail_slide_in
+      page.has_content?("Restore ID")
+    end
+
+    def open_product_downloads
+      product_download.click
     end
 
     def logout

@@ -14,7 +14,9 @@ module Freyja
     element(:archive_rb, xpath: "//span[@id='choose_delivery_method_archive']")
     element(:media_rb, xpath: "//span[@id='choose_delivery_method_media']")
     element(:fryr_download_link, xpath: "//*[@id='install_download_manager']//*[@id='download_download_manager_link']")
+    element(:fryr_download_link_sync, xpath: "//div[@id='install_download_manager']/table/tbody/tr/td[2]/a")
     element(:begin_download_btn, xpath: "//div[text()='Begin Download']")
+    element(:stop, xpath: "//div[29]/span")
 
     # Media restore shipping address info
     element(:order_name_tb, xpath: "//input[@id='dvd_order_name']")
@@ -66,6 +68,13 @@ module Freyja
       end
     end
 
+    def non_default_key_sync_Fryr_restore(restore)
+      fill_restore_name(restore.restore_name)
+      click_next
+      stop.click
+      #restore_manager_restore_sync
+    end
+
     def fill_restore_name(restore_name)
       restore_name_tb.type_text(restore_name)
     end
@@ -97,6 +106,20 @@ module Freyja
         end
         fryr_download_link.click
       end
+      sleep 10
+      begin_download_btn.click
+      click_close
+      sleep 1
+    end
+
+    def restore_manager_restore_sync
+      if has_xpath?("//span[@id='choose_delivery_method_download_manager']") then
+        fryr_restore_option.click
+      end
+      sleep 5
+      click_next
+      sleep 10
+      fryr_download_link.click
       sleep 10
       begin_download_btn.click
       click_close

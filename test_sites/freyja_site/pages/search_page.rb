@@ -5,21 +5,29 @@ module Freyja
       element(:search_input, xpath: "//*[@id='search-input']")           #        id: 'search-input'
       element(:conduct_search_btn, xpath: "//section[@id='application']/header/div[2]/div/div")
 
-
+      # Public: type search keyword
+      #
+      # Example
+      #   @freyja_site.search_page.input_search
+      #
+      # Returns nothing
       def input_search(search_string)
         sleep 2
-        search_input.type_text(search_string)
         search_input.click
-      end
-
-      def input_search_device(search_string)
-        sleep 2
+        sleep 20
         search_input.type_text(search_string)
+        sleep 3
       end
 
+      # Public: click search button to begin search
+      #
+      # Example
+      #   @freyja_site.search_page.execute_search
+      #
+      # Returns nothing
       def execute_search
-        sleep 5
         conduct_search_btn.click
+        sleep 5
       end
 
       def verify_search_result(search_string)

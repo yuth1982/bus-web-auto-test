@@ -16,6 +16,12 @@ module Freyja
     element(:devices_verify, css: "a.selected_device_name")
     element(:rq_verify, css: "#act-addCollection > div.action-name")
 
+    # Public: choose Devices or Synced radio
+    #
+    # Example
+    #   @freyja_site.preference_page.chooseRadio
+    #
+    # Returns nothing
     def chooseRadio(device_type)
       case device_type
         when 'Devices'

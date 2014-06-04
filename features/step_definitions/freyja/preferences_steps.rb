@@ -1,3 +1,5 @@
+
+# select (Devices|Synced) radio
 And /^I choose (Devices|Synced) radio$/ do |device_choice|
   @user.device_Radio_preference = device_choice
   @freyja_site.preference_page.chooseRadio(@user.device_Radio_preference)
