@@ -3,7 +3,7 @@ Feature: Search
   Background:
     Given I have login freyja as home user
 
-  @freyja @smoke  @home @home_search  @home_search_files
+  @freyja @freyja_smoke  @home @home_search  @home_search_files
 Scenario: Home user search files through Freyja
   When I select the Synced tab
   When I enter search file keyword in search box
@@ -16,7 +16,7 @@ Scenario: Home user search files through Freyja
   When I select options menu
   And I logout
 
-@freyja @smoke  @home @home_search  @home_search_folders
+@freyja @freyja_smoke  @home @home_search  @home_search_folders
   Scenario: Home user search folders through Freyja
     When I select the Synced tab
     When I enter search folder keyword in search box

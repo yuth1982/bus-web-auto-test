@@ -32,7 +32,7 @@ If run automation on QA13 environment, please add the following in hosts file
        Switch to branch freyja: git checkout freyja
     2. Navigate to bus-web-auto-test folder, and run Freyja automation test cases: cucumber -t <Tag>.
        For example, cucumber -t @freyja: run all of Freyja automation test cases
-                    cucumber -t @smoke: run all smoke automation test cases
+                    cucumber -t @freyja_smoke: run all of Freyja smoke automation test cases
                     cucumber -t @ent: run all of Enterprise partner automation test cases
                     cucumber -t @home_archive_restore_one_file: run MozyHome user do archive restore
 

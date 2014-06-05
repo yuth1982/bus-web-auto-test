@@ -3,7 +3,7 @@ Feature: Private Key user Restore Files
   Background:
     Given I have login freyja as pro and private_key user
 
-  @freyja @smoke  @pro  @pro_restore_all_fryr_pk @pro_restore_pk
+  @freyja @freyja_smoke  @pro  @pro_restore_all_fryr_pk @pro_restore_pk
   Scenario: pro user restore all file through restore manager in Freyja
     When I select the Devices tab
     And I choose one device
@@ -17,7 +17,7 @@ Feature: Private Key user Restore Files
     When I select options menu
     And I logout
 
-  @freyja @smoke @pro  @pro_restore_all_archive_pk @pro_restore_pk
+  @freyja @freyja_smoke @pro  @pro_restore_all_archive_pk @pro_restore_pk
   Scenario: pro user restore all file through archive in Freyja
     When I select the Devices tab
     And I choose one device
@@ -31,7 +31,7 @@ Feature: Private Key user Restore Files
     When I select options menu
     And I logout
 
-  @freyja @smoke @pro @pro_restore_all_media_pk @pro_restore_pk
+  @freyja @freyja_smoke @pro @pro_restore_all_media_pk @pro_restore_pk
 Scenario: pro user restore all file through media in Freyja
   When I select the Devices tab
   And I choose one device
@@ -45,7 +45,7 @@ Scenario: pro user restore all file through media in Freyja
   When I select options menu
   And I logout
 
-@freyja  @smoke  @pro  @pro_instant_download_Sync_file_pk  @pro_restore_pk
+@freyja  @freyja_smoke  @pro  @pro_instant_download_Sync_file_pk  @pro_restore_pk
   Scenario: pro user instant download one file in Freyja
     When I select the Synced tab
     And I choose one file

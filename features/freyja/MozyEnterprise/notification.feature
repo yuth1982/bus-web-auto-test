@@ -3,7 +3,7 @@ Feature: View Notification
   Background:
     Given I have login freyja as ent user
 
-  @freyja @smoke  @ent  @ent_notification
+  @freyja @freyja_smoke  @ent  @ent_notification
 Scenario: MozyEnterprise user view Notification through Freyja
   When I select options menu
   And I click Change password

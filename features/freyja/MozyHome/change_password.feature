@@ -3,7 +3,7 @@ Feature: Change Password
   Background:
     Given I have login freyja as home user
 
-  @freyja  @smoke @home  @home_change_password
+  @freyja  @freyja_smoke @home  @home_change_password
 Scenario: home user change password through Freyja
   When I select options menu
   And I click Change password

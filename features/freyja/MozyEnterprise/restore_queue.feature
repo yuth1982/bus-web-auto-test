@@ -3,7 +3,7 @@ Feature: Restore files in Restore Queue
   Background:
     Given I have login freyja as ent user
 
-  @freyja @smoke @ent  @ent_add_remove_files_restore_queue
+  @freyja @freyja_smoke @ent  @ent_add_remove_files_restore_queue
   Scenario: MozyEnterprise user instant download files in Restore Queue from Freyja
     When I select options menu
     And I select Preferences
@@ -26,7 +26,7 @@ Feature: Restore files in Restore Queue
     When I select options menu
     And I logout
 
-#@freyja @ent  @ent_instant_restore_files_restore_queue
+#@freyja @freyja_smoke @ent  @ent_instant_restore_files_restore_queue
 Scenario: MozyEnterprise user instant download files in Restore Queue from Freyja
   When I select options menu
   And I select Preferences
@@ -47,7 +47,7 @@ Scenario: MozyEnterprise user instant download files in Restore Queue from Freyj
   When I select options menu
   And I logout
 
-@freyja @smoke @ent  @ent_Fryr_restore_files_restore_queue
+@freyja @freyja_smoke @ent  @ent_Fryr_restore_files_restore_queue
 Scenario: MozyEnterprise user Fryr download files in Restore Queue from Freyja
   When I select options menu
   And I select Preferences
@@ -76,7 +76,7 @@ Scenario: MozyEnterprise user Fryr download files in Restore Queue from Freyja
   And I logout
 
 
-@freyja @smoke @ent  @ent_archive_restore_files_restore_queue
+@freyja @freyja_smoke @ent  @ent_archive_restore_files_restore_queue
 Scenario: MozyEnterprise user archive download files in Restore Queue from Freyja
   When I select options menu
   And I select Preferences
@@ -104,7 +104,7 @@ Scenario: MozyEnterprise user archive download files in Restore Queue from Freyj
   When I select options menu
   And I logout
 
-@freyja @smoke @ent  @ent_media_restore_files_restore_queue
+@freyja @freyja_smoke @ent  @ent_media_restore_files_restore_queue
 Scenario: MozyEnterprise user media download files in Restore Queue from Freyja
   When I select options menu
   And I select Preferences

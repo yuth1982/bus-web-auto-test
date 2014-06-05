@@ -3,7 +3,7 @@ Feature: View Event History
   Background:
     Given I have login freyja as home user
 
-  @freyja @smoke  @home  @home_event_history
+  @freyja @freyja_smoke  @home  @home_event_history
 Scenario: home user view event history through Freyja
   When I select options menu
   And I select event history
