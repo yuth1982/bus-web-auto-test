@@ -94,7 +94,7 @@ module Phoenix
           #skip stash
         else
             localized_click(partner, 'stash_link')
-            main_section_head.eql?("#{LANG[partner.company_info.country][partner.partner_info.type]['stash_link']}")
+            main_section_head.text.match("#{LANG[partner.company_info.country][partner.partner_info.type]['stash_link']}")
       end
     end
 

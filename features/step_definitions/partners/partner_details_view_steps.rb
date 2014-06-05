@@ -82,7 +82,8 @@ Then /^(Partner|SubPartner) general information should be:$/ do |status,details_
     end
     v.replace ERB.new(v).result(binding)
   end
-  expected.keys.each{ |key| actual[key].should == expected[key] }
+  #(BDS Online Backup) in parent string for some env but not others
+  expected.keys.each{ |key| actual[key].should include(expected[key]) }
 end
 
 Then /^partner account details should be:$/ do |account_details_table|

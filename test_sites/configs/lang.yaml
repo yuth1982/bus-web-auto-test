@@ -12,7 +12,7 @@ global:
 United States:
   language: en
   MozyPro:
-    go_to_acct: Go to Account
+    go_to_acct: Mozy Admin Console
     start_using_mozy: Start using Mozy
     #pending removal
     skip_stash: Don't Show This Again
@@ -35,8 +35,8 @@ United States:
     plan_link: My Plan
     devices_link: My Computer
     profile_link: My Profile
-    dl_link: Download Mozy
-    stash_link: Stash Beta
+    dl_link: Download Backup Software
+    stash_link: Download Mozy Sync
     logout_link: Log Out
     know_base_link: Mozy Knowledge Base
     winclient_man_link: Windows Client Manual
@@ -59,7 +59,7 @@ United States:
 Ireland:
   language: en-gb
   MozyPro:
-    go_to_acct: Go to Account
+    go_to_acct: Mozy Admin Console
     start_using_mozy: Start using Mozy
     #pending removal
     skip_stash: Don't Show This Again
@@ -82,8 +82,8 @@ Ireland:
     plan_link: My Plan
     devices_link: My Computer
     profile_link: My Profile
-    dl_link: Download Mozy
-    stash_link: Stash Beta
+    dl_link: Download Backup Software
+    stash_link: Download Mozy Sync
     logout_link: Log Out
     know_base_link: Mozy Knowledge Base
     winclient_man_link: Windows Client Manual
@@ -106,7 +106,7 @@ Ireland:
 United Kingdom:
   language: en-gb
   MozyPro:
-    go_to_acct: Go to Account
+    go_to_acct: Mozy Admin Console
     start_using_mozy: Start using Mozy
     #pending removal
     skip_stash: Don't Show This Again
@@ -120,7 +120,7 @@ United Kingdom:
     man_res: Manage Resources
 
   MozyHome:
-    go_to_acct: Go to Account
+    go_to_acct: Mozy Admin Console
     acct_page_link: account page
     resend_verify_email_link: Resend
     back_2_login_link: Back to Login Page
@@ -129,8 +129,8 @@ United Kingdom:
     plan_link: My Plan
     devices_link: My Computer
     profile_link: My Profile
-    dl_link: Download Mozy
-    stash_link: Stash Beta
+    dl_link: Download Backup Software
+    stash_link: Download Mozy Sync
     logout_link: Log Out
     know_base_link: Mozy Knowledge Base
     winclient_man_link: Windows Client Manual
@@ -153,7 +153,7 @@ United Kingdom:
 Germany:
   language: de
   MozyPro:
-    go_to_acct: Zur Kontoseite gehen
+    go_to_acct: Mozy Admin Console
     #pending translation
     start_using_mozy: Start using Mozy
     #pending removal
@@ -169,7 +169,7 @@ Germany:
     man_res: Ressourcen verwalten
 
   MozyHome:
-    go_to_acct: Konto-Startseite
+    go_to_acct: Mozy Admin Console
     acct_page_link: Kontoseite
     resend_verify_email_link: Erneut senden
     back_2_login_link: Zurück zur Anmeldeseite
@@ -204,7 +204,7 @@ Germany:
 France:
   language: fr
   MozyPro:
-    go_to_acct: Accéder au compte
+    go_to_acct: Mozy Admin Console
     #pending translation
     start_using_mozy: Start using Mozy
     #pending removal
@@ -219,7 +219,7 @@ France:
     man_res: Gérer les ressources
 
   MozyHome:
-    go_to_acct: Accueil du compte
+    go_to_acct: Mozy Admin Console
     acct_page_link: page de votre compte
     resend_verify_email_link: Renvoyer
     back_2_login_link:  Retour à la page de connexion

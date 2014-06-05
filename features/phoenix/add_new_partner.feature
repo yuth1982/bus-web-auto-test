@@ -122,8 +122,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -164,8 +164,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -207,8 +207,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -248,8 +248,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -290,8 +290,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -332,8 +332,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -374,8 +374,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -416,8 +416,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -457,8 +457,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -499,8 +499,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -540,8 +540,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -582,8 +582,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -630,8 +630,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -675,8 +675,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -718,8 +718,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |

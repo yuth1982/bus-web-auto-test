@@ -48,6 +48,8 @@ module Phoenix
 
     def logout(partner)
       localized_click(partner, 'logout')
+      page.execute_script "window.close();"
+      page.driver.browser.switch_to().window(page.driver.browser.window_handles.last)
     end
 
     # clears pertinent cookies for phoenix

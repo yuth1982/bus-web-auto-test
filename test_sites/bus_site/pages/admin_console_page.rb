@@ -78,7 +78,7 @@ module Bus
     element(:quick_link_item, id: "nav-cat-quick")
 
     # Popup window
-    element(:start_using_mozy_btn, id: "btn_start_using")
+    element(:start_using_mozy_btn, id: "start_useing_mozy")
     element(:popup_content_div, css: "div.popup-window-content")
     element(:close_popup_link, css: "div.close_bar a")
     element(:close_btn, css: "div.popup-window-footer input[value=Close]")
@@ -201,6 +201,8 @@ module Bus
     # code here relates
     # to mozypro related items
     def partner_created(partner)
+      page.driver.browser.switch_to().window(page.driver.browser.window_handles.last)
+      start_using_mozy_btn.click if has_start_using_mozy_btn?
       find_link(partner.company_info.name).present?
     end
 
