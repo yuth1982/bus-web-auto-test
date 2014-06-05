@@ -3,7 +3,7 @@ Feature: Restore Manager Restore
   Background:
     Given I have login freyja as home user
 
-  @freyja  @home  @home_restore_manager_restore_one_file     @home_restore_manager_restore
+  @freyja @smoke  @home  @home_restore_manager_restore_one_file     @home_restore_manager_restore
 Scenario: home user restore one file through restore manager in Freyja
   When I select the Devices tab
   And I choose one file
@@ -18,7 +18,7 @@ Scenario: home user restore one file through restore manager in Freyja
   When I select options menu
   And I logout
 
-@freyja  @home  @home_restore_manager_restore_one_folder       @home_restore_manager_restore
+@freyja @smoke  @home  @home_restore_manager_restore_one_folder       @home_restore_manager_restore
   Scenario: home user restore one file through restore manager in Freyja
     When I select the Devices tab
     And I choose one folder

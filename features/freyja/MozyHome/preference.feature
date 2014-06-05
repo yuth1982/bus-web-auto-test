@@ -3,7 +3,7 @@ Feature: Change Preference Settings
   Background:
     Given I have login freyja as home user
 
-  @freyja  @home  @home_preference
+  @freyja @smoke  @home  @home_preference
 Scenario: Mozyhome user change preference settings through Freyja
   When I select options menu
   And I select Preferences

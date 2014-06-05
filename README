@@ -1,26 +1,39 @@
-== Description
+== Description ==
 
 Welcome to bus-web-auto-test.
 
 This project is intended to house the test automation for the BUS, Phoenix and Freyja projects.
 
-== Documentation
+== Installation ==
 
-See https://redmine.dechocorp.com/projects/busqa/wiki for project documentation.
+For Mac automation installation, please refer to https://redmine.mozycorp.com/projects/chinaqa/wiki/Setup_Automation_Development_Environment_-_Mac
 
-Environment variables:
-bus_user
-bus_pwd
-aria_user
-aria_pwd
-zimbra_user
-zimbra_pwd
-timeout
-aria_url
-bus_url
-zimbra_url
-screen_shot
-timeout
-delete_test_partner
-timestamp
-email_prefix
+For Windows automation installation, please refer to https://redmine.mozycorp.com/projects/chinaqa/wiki/Setup_Automation_Development_Environment_-_Windows
+
+== Configuration ==
+
+If run automation on QA13 environment, please add the following in hosts file
+    10.29.73.198 secure.mozy.com secure.mozy.ie secure.mozy.fr secure.mozy.co.uk secure.mozy.de
+    10.29.73.197 www.mozypro.com secure.mozypro.com busmaster01.qa13.mozyops.com
+    10.29.73.241 freyja05.qa13.mozyops.com
+    10.29.73.208 tds02.qa13.mozyops.com
+    10.29.73.236 tds05.qa13.mozyops.com
+    10.29.73.203 auth01.qa13.mozyops.com
+    10.29.73.252 cas01.qa13.mozyops.com
+
+== Preparation ==
+
+    1. Put the file named test_for_upload.pptx in root folder. This file is ready for upload to Sync device
+
+
+== Execution ==
+
+    1. Checkout Freyja automation code:  git clone -b freyja ssh://christinef@gerrit.dechocorp.com:29418/bus-web-auto-test.git
+       Switch to branch freyja: git checkout freyja
+    2. Navigate to bus-web-auto-test folder, and run Freyja automation test cases: cucumber -t <Tag>.
+       For example, cucumber -t @freyja: run all of Freyja automation test cases
+                    cucumber -t @smoke: run all smoke automation test cases
+                    cucumber -t @ent: run all of Enterprise partner automation test cases
+                    cucumber -t @home_archive_restore_one_file: run MozyHome user do archive restore
+
+

@@ -3,7 +3,7 @@ Feature: Search
   Background:
     Given I have login freyja as ent user
 
-  @freyja  @ent @ent_search  @ent_search_files
+  @freyja @smoke  @ent @ent_search  @ent_search_files
 Scenario: MozyEnterprise user search files through Freyja
   When I select the Synced tab
   When I enter search file keyword in search box
@@ -16,7 +16,7 @@ Scenario: MozyEnterprise user search files through Freyja
   When I select options menu
   And I logout
 
-@freyja  @ent @ent_search  @ent_search_folders
+@freyja @smoke  @ent @ent_search  @ent_search_folders
   Scenario: MozyEnterprise user search folders through Freyja
     When I select the Synced tab
     When I enter search folder keyword in search box

@@ -3,7 +3,7 @@ Feature: Change Date
   Background:
     Given I have login freyja as ent user
 
-  @freyja  @ent  @ent_change_date
+  @freyja @smoke  @ent  @ent_change_date
 Scenario: MozyEnterprise user change date through Freyja
   When I select the Devices tab
   And I select the device

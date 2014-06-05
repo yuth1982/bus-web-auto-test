@@ -3,7 +3,7 @@ Feature: Media Restore
   Background:
     Given I have login freyja as home user
 
-  @freyja  @home  @home_media_restore_one_file   @home_media_restore
+  @freyja @smoke  @home  @home_media_restore_one_file   @home_media_restore
   Scenario: home user media restore one file in Freyja
     When I select the Devices tab
     And I choose one file
@@ -19,7 +19,7 @@ Feature: Media Restore
     And I logout
 
 
-  @freyja  @home  @home_media_restore_one_folder   @home_media_restore
+  @freyja @smoke  @home  @home_media_restore_one_folder   @home_media_restore
   Scenario: home user media restore one folder in Freyja
     When I select the Devices tab
     And I choose one folder
