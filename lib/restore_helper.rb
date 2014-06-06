@@ -6,6 +6,7 @@ module RestoreHelper
   @db_name = QA_ENV['db_restores']
 
   def self.get_restore_id(restore_name)
+    sleep 10
     begin
       conn = PG::Connection.open(:host => @db_host, :port=> @db_port, :user => @db_user, :dbname => @db_name)
       sql = "select id from restores where name = '#{restore_name}' order by id DESC limit 1;"
