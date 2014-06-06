@@ -1,6 +1,6 @@
 Feature: Login freyja
 
-  @freyja @freyja_smoke  @ent  @ent_login_logout
+  @TC.121708 @freyja @freyja_smoke  @ent  @ent_login_logout   @ent_smoke
   Scenario: MozyEnterprise user login freyja valid username and password
     When I navigate to freyja ent login page
     And I login as a existing user

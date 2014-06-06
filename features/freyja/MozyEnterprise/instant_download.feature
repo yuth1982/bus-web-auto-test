@@ -3,7 +3,7 @@ Feature: Instant Download
   Background:
     Given I have login freyja as ent user
 
-  @freyja  @freyja_smoke  @ent  @ent_instant_download_Sync_file    @ent_instant_download
+  @TC.121723 @freyja  @freyja_smoke  @ent  @ent_instant_download_Sync_file    @ent_instant_download   @ent_smoke
   Scenario: MozyEnterprise user instant download one file in Freyja
     When I select the Synced tab
     And I choose one file
@@ -15,7 +15,7 @@ Feature: Instant Download
     When I select options menu
     And I logout
 
-@freyja @freyja_smoke   @ent  @ent_instant_download_Sync_folder   @ent_instant_download
+  @TC.121723 @freyja @freyja_smoke   @ent  @ent_instant_download_Sync_folder   @ent_instant_download  @ent_smoke
   Scenario: MozyEnterprise user instant download one folder in Freyja
     When I select the Synced tab
     And I choose one folder

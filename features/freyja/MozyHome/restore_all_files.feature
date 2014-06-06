@@ -3,7 +3,7 @@ Feature: Restore All Files
   Background:
     Given I have login freyja as home user
 
-  @freyja @freyja_smoke  @home  @home_restore_all_fryr @home_restore_all
+  @TC.120475 @freyja @freyja_smoke  @home  @home_restore_all_fryr @home_restore_all
   Scenario: home user restore all file through restore manager in Freyja
     When I select the Devices tab
     And I choose one device
@@ -17,7 +17,7 @@ Feature: Restore All Files
     When I select options menu
     And I logout
 
-@freyja @freyja_smoke  @home  @home_restore_all_archive @home_restore_all
+  @TC.120475 @freyja @freyja_smoke  @home  @home_restore_all_archive @home_restore_all
 Scenario: home user restore all file through archive in Freyja
   When I select the Devices tab
   And I choose one device
@@ -31,7 +31,7 @@ Scenario: home user restore all file through archive in Freyja
   When I select options menu
   And I logout
 
-@freyja @freyja_smoke @home @home_restore_all_media @home_restore_all
+@TC.120475 @freyja @freyja_smoke @home @home_restore_all_media @home_restore_all
 Scenario: home user restore all file through media in Freyja
   When I select the Devices tab
   And I choose one device

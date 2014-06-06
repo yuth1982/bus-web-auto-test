@@ -3,7 +3,7 @@ Feature: Restore Deleted Files
   Background:
     Given I have login freyja as ent user
 
-  @freyja @freyja_smoke  @ent  @ent_sync_delete_file_restore
+  @TC.121717 @freyja @freyja_smoke  @ent  @ent_sync_delete_file_restore @ent_smoke
 Scenario: MozyEnterprise user restore deleted files in Sync container through Freyja
   When I select the Synced tab
   And I open Actions panel

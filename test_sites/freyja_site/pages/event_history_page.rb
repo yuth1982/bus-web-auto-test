@@ -4,6 +4,9 @@ module Freyja
 
     # restore status
     element(:restore_status_div, xpath: "//*[@id='dt_all_restores']/tbody/tr[1]/td[5]/div")
+    element(:restore_status_div2, xpath: "//*[@id='dt_all_restores']/tbody/tr[2]/td[5]/div")
+    element(:sort_by_type_column, xpath: "//div[@id='dt_all_restores_wrapper']/div[2]/div/div/div/div/table/thead/tr/th[3]/div")
+    element(:archive_download,xpath: "//div[@id='restore_downloads']/div[3]/a")
 
     # Public: get restore status
     #
@@ -26,6 +29,23 @@ module Freyja
 
     def event_detail_slide_in
       page.has_content?("Status:")
+    end
+
+    def sort_by_type
+      sort_by_type_column.click
+      sleep 5
+    end
+
+    def download_latest_archive_result
+      archive_download.click
+    end
+
+    def restore_second_event
+      if restore_status_div2.text.to_s == "Ready for Download"
+        restore_status_div2.click
+        sleep 10
+        archive_download.click
+      end
     end
 
   end

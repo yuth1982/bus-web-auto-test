@@ -4,6 +4,7 @@ module Freyja
 
       element(:search_input, xpath: "//*[@id='search-input']")           #        id: 'search-input'
       element(:conduct_search_btn, xpath: "//section[@id='application']/header/div[2]/div/div")
+      element(:search_box, css: "div.search-box.search-box-container")
 
       # Public: type search keyword
       #
@@ -12,11 +13,11 @@ module Freyja
       #
       # Returns nothing
       def input_search(search_string)
-        sleep 2
-        search_input.click
-        sleep 20
+        sleep 5
+        search_box.click
+        sleep 5
         search_input.type_text(search_string)
-        sleep 3
+        sleep 5
       end
 
       # Public: click search button to begin search

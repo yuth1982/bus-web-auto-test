@@ -6,10 +6,16 @@ Then /^this restore is (.+)/ do  |restore_status|
       status = @freyja_site.event_history_page.get_download_restore_status
       status.should == restore_status
     else
-      @restore.restore_id = RestoreHelper.get_restore_id(@restore.restore_name)
-      status = @freyja_site.event_history_page.get_restore_status(@restore.restore_id)
-      status.should == restore_status
-    end
+      case QA_ENV['environment']
+        when "staging"
+          status = @freyja_site.event_history_page.get_download_restore_status
+          status.should == restore_status
+        else
+          @restore.restore_id = RestoreHelper.get_restore_id(@restore.restore_name)
+          status = @freyja_site.event_history_page.get_restore_status(@restore.restore_id)
+          status.should == restore_status
+      end
+  end
 end
 
 And /^I choose the latest event$/ do
@@ -18,4 +24,8 @@ end
 
 Then /^detail panel slide in$/ do
   @freyja_site.event_history_page.event_detail_slide_in.should be_true
+end
+
+And /^I download the previous archive result$/ do
+  @freyja_site.event_history_page.restore_second_event
 end

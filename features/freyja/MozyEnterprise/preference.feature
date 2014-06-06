@@ -3,7 +3,7 @@ Feature: Change Preference Settings
   Background:
     Given I have login freyja as ent user
 
-  @freyja @freyja_smoke  @ent  @ent_preference
+  @TC.121712 @freyja @freyja_smoke  @ent  @ent_preference  @ent_smoke
 Scenario: MozyEnterprise user change preference settings through Freyja
   When I select options menu
   And I select Preferences
@@ -18,7 +18,7 @@ Scenario: MozyEnterprise user change preference settings through Freyja
   And I choose No for restore queue
   And I click save Preferences button
   And I re-login
-  Then freyja page should be Devices start
+  Then freyja page should be Synced start
   Then freyja page should be enable restore queue
   When I select options menu
   And I logout

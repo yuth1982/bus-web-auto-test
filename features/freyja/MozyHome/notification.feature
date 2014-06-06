@@ -3,7 +3,7 @@ Feature: View Notification
   Background:
     Given I have login freyja as home user
 
-  @freyja @freyja_smoke  @home  @home_notification
+  @TC.120701 @freyja @freyja_smoke  @home  @home_notification
 Scenario: home user view Notification through Freyja
   When I select options menu
   And I click Change password

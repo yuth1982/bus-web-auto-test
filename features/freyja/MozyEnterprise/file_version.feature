@@ -3,7 +3,7 @@ Feature: File Versions
   Background:
     Given I have login freyja as ent user
 
-  @freyja @freyja_smoke  @ent  @ent_view_download_sync_file_versions
+  @TC.121716 @freyja @freyja_smoke  @ent  @ent_view_download_sync_file_versions @ent_smoke
   Scenario: MozyEnterprise user view file versions in Sync container
     When I select the Synced tab
     And I choose one file with versions

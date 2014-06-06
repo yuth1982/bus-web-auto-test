@@ -3,7 +3,7 @@ Feature: Change Date
   Background:
     Given I have login freyja as home user
 
-  @freyja  @freyja_smoke @home  @home_change_date
+  @TC.120248 @freyja  @freyja_smoke @home  @home_change_date
 Scenario: home user change date through Freyja
   When I select the Devices tab
   And I select the device

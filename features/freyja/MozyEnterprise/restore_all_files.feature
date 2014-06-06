@@ -3,7 +3,7 @@ Feature: Restore All Files
   Background:
     Given I have login freyja as ent user
 
-  @freyja @freyja_smoke  @ent  @ent_restore_all_fryr @ent_restore_all
+  @TC.121719 @freyja @freyja_smoke  @ent  @ent_restore_all_fryr @ent_restore_all @ent_smoke
   Scenario: MozyEnterprise user restore all file through restore manager in Freyja
     When I select the Devices tab
     And I choose one device
@@ -17,7 +17,7 @@ Feature: Restore All Files
     When I select options menu
     And I logout
 
-@freyja @freyja_smoke  @ent  @ent_restore_all_archive @ent_restore_all
+  @TC.121719 @freyja @freyja_smoke  @ent  @ent_restore_all_archive @ent_restore_all @ent_smoke
 Scenario: MozyEnterprise user restore all file through archive in Freyja
   When I select the Devices tab
   And I choose one device
@@ -31,7 +31,7 @@ Scenario: MozyEnterprise user restore all file through archive in Freyja
   When I select options menu
   And I logout
 
-@freyja @freyja_smoke @ent  @ent_restore_all_media @ent_restore_all
+  @TC.121719 @freyja @freyja_smoke @ent  @ent_restore_all_media @ent_restore_all  @ent_smoke
 Scenario: MozyEnterprise user restore all file through media in Freyja
   When I select the Devices tab
   And I choose one device

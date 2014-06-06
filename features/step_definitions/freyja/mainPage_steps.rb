@@ -42,7 +42,7 @@ end
 And /^I choose the uploaded file$/ do
   uploaded_file_path = QA_ENV['local_file_upload']
   uploaded_file_name = uploaded_file_path.split('/')[-1]
-  @freyja_site.main_page.select_uploaded_file(@user.sync_machineID, uploaded_file_name)
+  @freyja_site.main_page.Drillin_sync_file(@user.sync_machineID, uploaded_file_name)
 end
 
 # choose one file with versions

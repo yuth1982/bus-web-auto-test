@@ -3,7 +3,7 @@ Feature: File Versions
   Background:
     Given I have login freyja as home user
 
-  @freyja @freyja_smoke  @home  @home_view_download_sync_file_versions
+  @TC.120515 @freyja @freyja_smoke  @home  @home_view_download_sync_file_versions
   Scenario: home user view file versions in Sync container
   When I select the Synced tab
   And I choose one file with versions
@@ -19,7 +19,7 @@ Feature: File Versions
   When I select options menu
   And I logout
 
-@freyja  @freyja_smoke @home  @home_view_download_backup_file_versions @home_view_instant_download_backup_file_versions
+@TC.120515 @freyja  @freyja_smoke @home  @home_view_download_backup_file_versions @home_view_instant_download_backup_file_versions
   Scenario: home user view file versions in Sync container
     When I select the Devices tab
     And I choose one file with versions
@@ -35,7 +35,7 @@ Feature: File Versions
     When I select options menu
     And I logout
 
-@freyja  @freyja_smoke @home  @home_view_download_backup_file_versions @home_view_Fryr_download_backup_file_versions
+  @TC.120515 @freyja  @freyja_smoke @home  @home_view_download_backup_file_versions @home_view_Fryr_download_backup_file_versions
 Scenario: home user view file versions in Sync container
   When I select the Devices tab
   And I choose one file with versions
@@ -54,7 +54,7 @@ Scenario: home user view file versions in Sync container
   When I select options menu
   And I logout
 
-@freyja @freyja_smoke  @home  @home_view_download_backup_file_versions @home_view_archive_download_backup_file_versions
+@TC.120515 @freyja @freyja_smoke  @home  @home_view_download_backup_file_versions @home_view_archive_download_backup_file_versions
   Scenario: home user view file versions in Sync container
     When I select the Devices tab
     And I choose one file with versions
@@ -73,7 +73,7 @@ Scenario: home user view file versions in Sync container
     When I select options menu
     And I logout
 
-  @freyja @freyja_smoke  @home  @home_view_download_backup_file_versions @home_view_media_download_backup_file_versions
+  @TC.120515 @freyja @freyja_smoke  @home  @home_view_download_backup_file_versions @home_view_media_download_backup_file_versions
   Scenario: home user view file versions in Sync container
     When I select the Devices tab
     And I choose one file with versions

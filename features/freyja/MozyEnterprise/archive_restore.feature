@@ -3,7 +3,7 @@ Feature: Archive Restore
 Background:
     Given I have login freyja as ent user
 
-    @freyja @freyja_smoke @ent  @ent_archive_restore_one_file  @ent_archive_restore
+  @TC.121724   @freyja @freyja_smoke @ent  @ent_archive_restore_one_file  @ent_archive_restore  @ent_smoke
   Scenario: MozyEnterprise user archive restore one file in Freyja
     When I select the Devices tab
     And I choose one file
@@ -15,11 +15,12 @@ Background:
     When I select options menu
     And I select event history
     Then this restore is Processing
+    And I download the previous archive result
     When I select options menu
     And I logout
 
 
-  @freyja @freyja_smoke  @ent  @ent_archive_restore_one_folder   @ent_archive_restore
+  @TC.121724   @freyja @freyja_smoke  @ent  @ent_archive_restore_one_folder   @ent_archive_restore @ent_smoke
   Scenario: MozyEnterprise user archive restore one folder in Freyja
     When I select the Devices tab
     And I choose one folder
@@ -31,6 +32,7 @@ Background:
     When I select options menu
     And I select event history
     Then this restore is Processing
+    And I download the previous archive result
     When I select options menu
     And I logout
 

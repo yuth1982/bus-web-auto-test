@@ -94,16 +94,13 @@ module Freyja
     end
 
     def restore_manager_restore
-      if has_xpath?("//span[@id='choose_delivery_method_download_manager']") then
+      if page.has_xpath?("//span[@id='choose_delivery_method_download_manager']") then
         fryr_restore_option.click
       end
-      sleep 1
+      sleep 5
       click_next
-      sleep 1
-      if has_xpath?("//*[@id='install_download_manager']//*[@id='download_download_manager_link']") then
-        wait_until do
-          fryr_download_link.visible?
-        end
+      sleep 15
+      if fryr_download_link.visible? then
         fryr_download_link.click
       end
       sleep 10
@@ -113,13 +110,15 @@ module Freyja
     end
 
     def restore_manager_restore_sync
-      if has_xpath?("//span[@id='choose_delivery_method_download_manager']") then
+      if page.has_xpath?("//span[@id='choose_delivery_method_download_manager']") then
         fryr_restore_option.click
       end
       sleep 5
       click_next
-      sleep 10
-      fryr_download_link.click
+      sleep 15
+      if fryr_download_link.visible? then
+        fryr_download_link.click
+      end
       sleep 10
       begin_download_btn.click
       click_close
@@ -128,11 +127,11 @@ module Freyja
 
     def archive_restore
       archive_rb.click
-      sleep 1
+      sleep 2
       click_next
-      sleep 1
+      sleep 2
       click_close
-      sleep 1
+      sleep 2
     end
 
     def media_restore(restore)

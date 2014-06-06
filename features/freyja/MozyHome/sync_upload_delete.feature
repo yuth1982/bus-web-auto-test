@@ -2,7 +2,7 @@ Feature: Upload and delete files in Sync
   Background:
     Given I have login freyja as home user
 
-  @freyja @freyja_smoke  @home  @home_upload_delete_one_file_Sync
+  @TC.120361 @TC.120362 @freyja @freyja_smoke  @home  @home_upload_delete_one_file_Sync
   Scenario: home user upload and delete one file in Sync
     When I select the Synced tab
     And I open Actions panel

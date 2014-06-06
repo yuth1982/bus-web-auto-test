@@ -46,7 +46,7 @@ module Freyja
     #
     # Returns nothing
     def Drillin_sync_file(machineID, filePath)
-      pathArray = filePath.split('/')
+      pathArray = filePath.to_s.split('/')
       pathLength = 0
       folderPath = ""
       (pathArray.size-1).times do
@@ -70,7 +70,7 @@ module Freyja
     #
     # Returns nothing
     def Drillin_sync_folder(machineID, folderPath)
-      pathArray = folderPath.split('/')
+      pathArray = folderPath.to_s.split('/')
       pathLength = 0
       folderPathList = ""
       (pathArray.size-1).times do
@@ -94,7 +94,7 @@ module Freyja
     #
     # Returns nothing
     def Drillin_win_backup_file(machineID, filePath)
-      pathArray = filePath.split('\\')
+      pathArray = filePath.to_s.split('\\')
       pathLength = 0
       folderPath = ""
       find(:xpath, "//tr[@id='#{machineID}:Folder:']/td[2]/div/span[2]/span").click
@@ -119,7 +119,7 @@ module Freyja
     #
     # Returns nothing
     def Drillin_win_backup_folder(machineID, folderPath)
-      pathArray = folderPath.split('\\')
+      pathArray = folderPath.to_s.split('\\')
       pathLength = 0
       folderPathList = ""
       find(:xpath, "//tr[@id='#{machineID}:Folder:']/td[2]/div/span[2]/span").click

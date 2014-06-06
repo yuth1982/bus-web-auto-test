@@ -24,7 +24,8 @@ If run automation on QA13 environment, please add the following in hosts file
 == Preparation ==
 
     1. Put the file named test_for_upload.pptx in root folder. This file is ready for upload to Sync device
-
+    2. Edit /System/Library/Frameworks/Ruby.framework/Versions/2.0/usr/lib/ruby/2.0.0/net/protocol.rb
+       Increase @read_timeout to 600
 
 == Execution ==
 

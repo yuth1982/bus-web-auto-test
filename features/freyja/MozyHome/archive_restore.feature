@@ -3,7 +3,7 @@ Feature: Archive Restore
 Background:
     Given I have login freyja as home user
 
-    @freyja @freyja_smoke @home  @home_archive_restore_one_file  @home_archive_restore
+@TC.120347 @freyja @freyja_smoke @home  @home_archive_restore_one_file  @home_archive_restore
   Scenario: home user archive restore one file in Freyja
     When I select the Devices tab
     And I choose one file
@@ -19,7 +19,7 @@ Background:
     And I logout
 
 
-  @freyja  @freyja_smoke @home  @home_archive_restore_one_folder  @home_archive_restore
+  @TC.120347   @freyja  @freyja_smoke @home  @home_archive_restore_one_folder  @home_archive_restore
   Scenario: home user archive restore one folder in Freyja
     When I select the Devices tab
     And I choose one folder

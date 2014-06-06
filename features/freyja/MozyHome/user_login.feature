@@ -1,6 +1,6 @@
 Feature: Login freyja
 
-  @freyja @freyja_smoke  @home  @home_login_logout
+  @TC.120358 @freyja @freyja_smoke  @home  @home_login_logout
   Scenario: home user login freyja valid username and password
     When I navigate to freyja home login page
     And I login as a existing user
