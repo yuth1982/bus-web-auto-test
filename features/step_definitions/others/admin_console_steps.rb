@@ -99,25 +99,25 @@ Then /^new section & navigation items are present for (MozyPro|MozyEnterprise|Re
       @bus_site.admin_console_page.has_navigation?("Resource Summary").should be_true
       @bus_site.admin_console_page.has_navigation?("Change Plan").should be_true
       @bus_site.admin_console_page.has_navigation?("Add New User").should be_true
-      @bus_site.admin_console_page.has_navigation?("Download BDS Online Backup Client").should be_true
+      @bus_site.admin_console_page.has_navigation?(/^Download .* Client$/).should be_true
     when CONFIGS['bus']['company_type']['mozyenterprise']
       @bus_site.admin_console_page.has_navigation?("Resource Summary").should be_true
       @bus_site.admin_console_page.has_navigation?("User Group List").should be_true
       @bus_site.admin_console_page.has_navigation?("Add New User").should be_true
       @bus_site.admin_console_page.has_navigation?("Change Plan").should be_true
-      @bus_site.admin_console_page.has_navigation?("Download MozyEnterprise Client").should be_true
+      @bus_site.admin_console_page.has_navigation?(/^Download .* Client$/).should be_true
     when CONFIGS['bus']['company_type']['reseller']
       @bus_site.admin_console_page.has_navigation?("Resource Summary").should be_true
       @bus_site.admin_console_page.has_navigation?("User Group List").should be_true
       @bus_site.admin_console_page.has_navigation?("Add New User").should be_true
       @bus_site.admin_console_page.has_navigation?("Change Plan").should be_true
-      @bus_site.admin_console_page.has_navigation?("Download MozyPro Client").should be_true
+      @bus_site.admin_console_page.has_navigation?(/^Download .* Client$/).should be_true
     when "Itemized"
       @bus_site.admin_console_page.has_navigation?("Resource Summary").should be_true
       @bus_site.admin_console_page.has_navigation?("User Group List").should be_true
       @bus_site.admin_console_page.has_navigation?("Add New User").should be_true
       @bus_site.admin_console_page.has_navigation?("Change Plan").should be_true
-      @bus_site.admin_console_page.has_navigation?("Download MozyPro Client").should be_true
+      @bus_site.admin_console_page.has_navigation?(/^Download .* Client$/).should be_true
     else
       raise "Error: Company type #{type} does not exist."
   end
