@@ -150,6 +150,7 @@ When /^I (.+) a phoenix (Home|Pro|Direct|Free) (partner|user):$/ do |string,type
   #If catches an error of already used email
   unless @phoenix_site.phoenix_acct_fill_out.stuck_on_sign_up? || type == "Free"
     @phoenix_site.licensing_fill_out.licensing_billing_fillout(@partner)
+    @phoenix_site.licensing_fill_out.has_vat_error?.should_not be_true
     @phoenix_site.billing_fill_out.billing_info_fill_out(@partner)
   end
 
