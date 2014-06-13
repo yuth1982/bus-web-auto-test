@@ -145,7 +145,7 @@ Feature: User Has Unique Username
       | email        |
       | @admin_email |
 
-  @TC.21366 @bus @phoenix @2.5 @existing_username @mozyhome
+  @TC.21366 @bus @phoenix @2.5 @existing_username @mozyhome @email
   Scenario:  21366:Update User(MH) With Existing Admin Username
     When I get an admin email from the database
     And I am at dom selection point:
@@ -260,7 +260,7 @@ Feature: User Has Unique Username
     Then edit user email error message to existing user email should be displayed
     And I delete user
 
-  @TC.21384 @bus @phoenix @2.5 @mozyhome
+  @TC.21384 @bus @phoenix @2.5 @mozyhome @email
   Scenario: Mozy-21384:Update User(MH) With Deleted User Username
     When I get a deleted user email from the database
     And I am at dom selection point:

@@ -13,7 +13,7 @@ Feature: Mozy Home Smoke Test via Phoenix
   Background:
   # info to be added here: coverage matrix
 
-  @TC.53 @TC.54 @TC.55 @TC.58 @TC.176 @bus @regression_test @phoenix @mozyhome @free
+  @TC.53 @TC.54 @TC.55 @TC.58 @TC.176 @bus @regression_test @phoenix @mozyhome @free @email
   Scenario: 53 54 55 58 176 Add a new US monthly free MozyHome user
     When I am at dom selection point:
     And I add a phoenix Free user:

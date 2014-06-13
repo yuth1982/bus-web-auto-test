@@ -5,7 +5,7 @@ Feature:
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.19040 @BSA.1000 @bus @stash @general_requirements
+  @TC.19040 @BSA.1000 @bus @stash @general_requirements @email
   Scenario: 19040 MozyPro Partner Provision Sync Container - Default User Group no email invite
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -71,7 +71,7 @@ Feature:
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19080 @BSA.1000 @bus @stash
+  @TC.19080 @BSA.1000 @bus @stash @email
   Scenario: 19080 MozyPro Partner Add Sync Container Default User Group No Email
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -214,7 +214,7 @@ Feature:
       | Storage Usage: | 0 |
     And I delete partner account
 
-  @TC.19035 @BSA.1000 @bus @stash
+  @TC.19035 @BSA.1000 @bus @stash @email
   Scenario: 19035 MozyEnterprise Partner Provision Sync Container - Default User Group no email invite
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -317,7 +317,7 @@ Feature:
       | Storage Usage: | 0 |
     And I delete partner account
 
-  @TC.19109 @BSA.1000 @bus @stash
+  @TC.19109 @BSA.1000 @bus @stash @email
   Scenario: 19109 MozyEnterprise Partner Add Sync Container - Custom User Group with Email
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -360,7 +360,7 @@ Feature:
       | Storage Usage: | 0 |
     And I delete partner account
 
-  @TC.19111 @BSA.1000 @bus @stash
+  @TC.19111 @BSA.1000 @bus @stash @email
   Scenario: 19111 MozyEnterprise Partner Edit Sync Container - Custom User Group No Email
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -402,7 +402,7 @@ Feature:
       | Storage Usage: | 0 |
     And I delete partner account
 
-  @TC.22189 @stash
+  @TC.22189 @stash @email
   Scenario: 22189 MozyEnterprise Partner Enable and Disable cycle by adding sync to all users
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -465,7 +465,7 @@ Feature:
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.22194 @stash
+  @TC.22194 @stash @email
   Scenario: 22194 MozyEnterprise Partner Enable and Disable cycle by add sync with single user
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -640,7 +640,7 @@ Feature:
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.22188 @stash
+  @TC.22188 @stash @email
   Scenario: 22188 Reseller Partner Enable and Disable cycle by add sync with single user
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -703,7 +703,7 @@ Feature:
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.22022 @stash
+  @TC.22022 @stash @email
   Scenario: 22022 MozyPro Partner Enable and Disable cycle by adding sync to all users
     When I add a new MozyPro partner:
       | period | base plan | net terms |

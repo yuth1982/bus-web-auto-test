@@ -165,7 +165,7 @@ Feature: User stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.18990 @BSA.2070 @bus @stash
+  @TC.18990 @BSA.2070 @bus @stash @email
   Scenario: 18990 Send stash invitation email in user details section
     When I add a new MozyPro partner:
       | period | base plan |
@@ -189,7 +189,7 @@ Feature: User stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19121 @BSA.2070 @bus @stash
+  @TC.19121 @BSA.2070 @bus @stash @email
   Scenario: 19121 Click Add Sync link with default quota and send email
     When I add a new MozyEnterprise partner:
       | period | users |

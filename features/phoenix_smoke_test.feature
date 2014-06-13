@@ -8,7 +8,7 @@ Feature: Add a new partner through phoenix
   #-- phoenix smoke test --
   #   adding bus smoke test line items to a phoenix test
   #     & verifying that they will work without any problem, once tweaked.
-  @TC.20959 @slow @phoenix @bus @2.5 @smoke @mozypro
+  @TC.20959 @slow @phoenix @bus @2.5 @smoke @mozypro @email
   Scenario: 20959 Add a new US yearly MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:

@@ -10,7 +10,7 @@ Feature: Add a new user through phoenix
   #
   # 50 GB Cases
   #
-  @TC.13462 @bus @regression_test @phoenix @mozyhome
+  @TC.13462 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13462 Add a new US monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -44,7 +44,7 @@ Feature: Add a new user through phoenix
     #And I login as the user on the account.
     #And I verify the user account.
 
-@TC.13463 @bus @regression_test @phoenix @mozyhome
+@TC.13463 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13463 Add a new US yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -73,7 +73,7 @@ Feature: Add a new user through phoenix
       | MozyHome 50 GB, + 0 GB, 1 machines, yearly | 50 GB       | $65.89     |
     And I delete user
 
-  @TC.13464 @bus @regression_test @phoenix @mozyhome
+  @TC.13464 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13464 Add a new US biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -102,7 +102,7 @@ Feature: Add a new user through phoenix
       | MozyHome 50 GB, + 0 GB, 1 machines, biennial | 50 GB       | $125.79    |
     And I delete user
 
-  @TC.13468 @bus @regression_test @phoenix @mozyhome
+  @TC.13468 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13468 Add a new IE monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -131,7 +131,7 @@ Feature: Add a new user through phoenix
       | MozyHome 50 GB, + 0 GB, 1 machines, monthly | 50 GB       | €4.99      |
     And I delete user
 
-  @TC.13469 @bus @regression_test @phoenix @mozyhome
+  @TC.13469 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13469 Add a new IE yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -160,7 +160,7 @@ Feature: Add a new user through phoenix
       | MozyHome 50 GB, + 0 GB, 1 machines, yearly | 50 GB       | €54.89     |
     And I delete user
 
-  @TC.13470 @bus @regression_test @phoenix @mozyhome
+  @TC.13470 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13470 Add a new IE biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -189,7 +189,7 @@ Feature: Add a new user through phoenix
       | MozyHome 50 GB, + 0 GB, 1 machines, biennial | 50 GB       | €104.79    |
     And I delete user
 
-  @TC.13467 @bus @regression_test @phoenix @mozyhome
+  @TC.13467 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13467 Add a new UK monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -218,7 +218,7 @@ Feature: Add a new user through phoenix
       | MozyHome 50 GB, + 0 GB, 1 machines, monthly | 50 GB       | £4.99      |
     And I delete user
 
-  @TC.13471 @bus @regression_test @phoenix @mozyhome
+  @TC.13471 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13471 Add a new UK yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -247,7 +247,7 @@ Feature: Add a new user through phoenix
       | MozyHome 50 GB, + 0 GB, 1 machines, yearly | 50 GB       | £54.89     |
     And I delete user
 
-  @TC.13472 @bus @regression_test @phoenix @mozyhome
+  @TC.13472 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13472 Add a new UK biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -276,7 +276,7 @@ Feature: Add a new user through phoenix
       | MozyHome 50 GB, + 0 GB, 1 machines, biennial | 50 GB       | £104.79    |
     And I delete user
 
-  @TC.13465 @bus @regression_test @phoenix @mozyhome
+  @TC.13465 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13465 Add a new DE monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -306,7 +306,7 @@ Feature: Add a new user through phoenix
       | MozyHome 50 GB, + 0 GB, 1 machines, monthly | 50 GB       | €4.99      |
     And I delete user
 
-  @TC.13476 @bus @regression_test @phoenix @mozyhome
+  @TC.13476 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13476 Add a new DE yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -336,7 +336,7 @@ Feature: Add a new user through phoenix
       | MozyHome 50 GB, + 0 GB, 1 machines, yearly | 50 GB       | €54.89     |
     And I delete user
 
-  @TC.13475 @bus @regression_test @phoenix @mozyhome
+  @TC.13475 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13475 Add a new DE biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -366,7 +366,7 @@ Feature: Add a new user through phoenix
       | MozyHome 50 GB, + 0 GB, 1 machines, biennial | 50 GB       | €104.79    |
     And I delete user
 
-  @TC.13466 @bus @regression_test @phoenix @mozyhome
+  @TC.13466 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13466 Add a new FR monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -396,7 +396,7 @@ Feature: Add a new user through phoenix
       | MozyHome 50 Go, + 0 GB, 1 machines, monthly | 50 GB       | €4.99      |
     And I delete user
 
-  @TC.13474 @bus @regression_test @phoenix @mozyhome
+  @TC.13474 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13474 Add a new FR yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -426,7 +426,7 @@ Feature: Add a new user through phoenix
       | MozyHome 50 Go, + 0 GB, 1 machines, yearly | 50 GB       | €54.89     |
     And I delete user
 
-  @TC.13473 @bus @regression_test @phoenix @mozyhome
+  @TC.13473 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13473 Add a new FR biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -459,7 +459,7 @@ Feature: Add a new user through phoenix
 #
 # 125 GB Cases
 #
-  @TC.13477 @bus @regression_test @phoenix @mozyhome
+  @TC.13477 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13477 Add a new US monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -488,7 +488,7 @@ Feature: Add a new user through phoenix
       | MozyHome 125 GB, + 0 GB, 3 machines, monthly | 125 GB      | $9.99      |
     And I delete user
 
-  @TC.13483 @bus @regression_test @phoenix @mozyhome
+  @TC.13483 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13483 Add a new US yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -517,7 +517,7 @@ Feature: Add a new user through phoenix
       | MozyHome 125 GB, + 0 GB, 3 machines, yearly | 125 GB      | $109.89    |
     And I delete user
 
-  @TC.13482 @bus @regression_test @phoenix @mozyhome
+  @TC.13482 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13482 Add a new US biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -546,7 +546,7 @@ Feature: Add a new user through phoenix
       | MozyHome 125 GB, + 0 GB, 3 machines, biennial | 125 GB      | $209.79    |
     And I delete user
 
-  @TC.13478 @bus @regression_test @phoenix @mozyhome
+  @TC.13478 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13478 Add a new IE monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -575,7 +575,7 @@ Feature: Add a new user through phoenix
       | MozyHome 125 GB, + 0 GB, 3 machines, monthly | 125 GB      | €8.99      |
     And I delete user
 
-  @TC.13485 @bus @regression_test @phoenix @mozyhome
+  @TC.13485 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13485 Add a new IE yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -604,7 +604,7 @@ Feature: Add a new user through phoenix
       | MozyHome 125 GB, + 0 GB, 3 machines, yearly | 125 GB      | €98.89     |
     And I delete user
 
-  @TC.13484 @bus @regression_test @phoenix @mozyhome
+  @TC.13484 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13484 Add a new IE biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -633,7 +633,7 @@ Feature: Add a new user through phoenix
       | MozyHome 125 GB, + 0 GB, 3 machines, biennial | 125 GB      | €188.79    |
     And I delete user
 
-  @TC.13479 @bus @regression_test @phoenix @mozyhome
+  @TC.13479 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13479 Add a new UK monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -662,7 +662,7 @@ Feature: Add a new user through phoenix
       | MozyHome 125 GB, + 0 GB, 3 machines, monthly | 125 GB      | £7.99      |
     And I delete user
 
-  @TC.13487 @bus @regression_test @phoenix @mozyhome
+  @TC.13487 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13487 Add a new UK yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -691,7 +691,7 @@ Feature: Add a new user through phoenix
       | MozyHome 125 GB, + 0 GB, 3 machines, yearly | 125 GB      | £87.89     |
     And I delete user
 
-  @TC.13486 @bus @regression_test @phoenix @mozyhome
+  @TC.13486 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13486 Add a new UK biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -720,7 +720,7 @@ Feature: Add a new user through phoenix
       | MozyHome 125 GB, + 0 GB, 3 machines, biennial | 125 GB      | £167.79    |
     And I delete user
 
-  @TC.13481 @bus @regression_test @phoenix @mozyhome
+  @TC.13481 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13481 Add a new DE monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -750,7 +750,7 @@ Feature: Add a new user through phoenix
       | MozyHome 125 GB, + 0 GB, 3 machines, monthly | 125 GB      | €8.99      |
     And I delete user
 
-  @TC.13491 @bus @regression_test @phoenix @mozyhome
+  @TC.13491 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13491 Add a new DE yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -780,7 +780,7 @@ Feature: Add a new user through phoenix
       | MozyHome 125 GB, + 0 GB, 3 machines, yearly | 125 GB      | €98.89     |
     And I delete user
 
-  @TC.13492 @bus @regression_test @phoenix @mozyhome
+  @TC.13492 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13492 Add a new DE biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -810,7 +810,7 @@ Feature: Add a new user through phoenix
       | MozyHome 125 GB, + 0 GB, 3 machines, biennial | 125 GB      | €188.79    |
     And I delete user
 
-  @TC.13480 @bus @regression_test @phoenix @mozyhome
+  @TC.13480 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13480 Add a new FR monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -840,7 +840,7 @@ Feature: Add a new user through phoenix
       | MozyHome 125 Go, + 0 GB, 3 machines, monthly | 125 GB      | €8.99      |
     And I delete user
 
-  @TC.13488 @bus @regression_test @phoenix @mozyhome
+  @TC.13488 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13488 Add a new FR yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -870,7 +870,7 @@ Feature: Add a new user through phoenix
       | MozyHome 125 Go, + 0 GB, 3 machines, yearly | 125 GB      | €98.89     |
     And I delete user
 
-  @TC.13489 @bus @regression_test @phoenix @mozyhome
+  @TC.13489 @bus @regression_test @phoenix @mozyhome @email
   Scenario: 13489 Add a new FR biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -902,7 +902,7 @@ Feature: Add a new user through phoenix
 
   #-- FREE ACCT SIGNUP --
   #--technically we have only one case for this (us)
-  @TC.3573 @bus @regression_test @phoenix @mozyhome @free
+  @TC.3573 @bus @regression_test @phoenix @mozyhome @free @email
   Scenario: 3573 Add a new US monthly free MozyHome user
     When I am at dom selection point:
     And I add a phoenix Free user:

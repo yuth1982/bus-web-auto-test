@@ -64,7 +64,7 @@ Feature: Notify about and collect past-due balances
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.16147 @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers
+  @TC.16147 @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers @email
   Scenario: 16147 Verify aria sends email when change MozyEnterprise account status to Active Dunning 1
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -84,7 +84,7 @@ Feature: Notify about and collect past-due balances
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 
-  @TC.16148 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers
+  @TC.16148 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers @email
   Scenario: 16148 Verify aria sends email when change Reseller account status to Active Dunning 2
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -104,7 +104,7 @@ Feature: Notify about and collect past-due balances
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 
-  @TC.16149 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers
+  @TC.16149 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers @email
   Scenario: 16149 Verify aria sends email when change MozyPro account status to Active Dunning 3
     When I add a new MozyPro partner:
       | period | base plan |
@@ -124,7 +124,7 @@ Feature: Notify about and collect past-due balances
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 
-  @TC.16243 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers
+  @TC.16243 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers @email
   Scenario: 16243 Verify aria sends email when MozyPro account status sets to suspended
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -144,7 +144,7 @@ Feature: Notify about and collect past-due balances
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 
-  @TC.16165 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @net_terms_customers
+  @TC.16165 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @net_terms_customers @email
   Scenario: 16165 Verify aria sends email when change MozyPro account status to Active Dunning 1 net terms
     When I add a new MozyPro partner:
     | period | base plan | net terms |
@@ -164,7 +164,7 @@ Feature: Notify about and collect past-due balances
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 
-  @TC.16166 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @net_terms_customers
+  @TC.16166 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @net_terms_customers @email
   Scenario: 16166 Verify aria sends email when change MozyEnterprise account status to Active Dunning 2 net terms
     When I add a new MozyEnterprise partner:
       | period | users    | net terms |
@@ -185,7 +185,7 @@ Feature: Notify about and collect past-due balances
     Then I search and delete partner account by newly created partner company name
 
   # need update subject information
-  @TC.16244 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @net_terms_customers
+  @TC.16244 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @net_terms_customers @email
   Scenario: 16244 Verify aria sends email when change Reseller account status to Active Dunning 3 net terms
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -205,7 +205,7 @@ Feature: Notify about and collect past-due balances
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 
-  @TC.17978 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @net_terms_customers
+  @TC.17978 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @net_terms_customers @email
   Scenario: 17978 Verify aria sends email when MozyPro account status sets to suspended net terms
     When I add a new MozyPro partner:
       | period | base plan | net terms |
