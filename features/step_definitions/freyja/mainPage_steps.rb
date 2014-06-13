@@ -86,3 +86,8 @@ And /^I select the device$/ do
   @freyja_site.main_page.select_backup_device(@user.backup_machineID)
 end
 
+
+Then /^I should view content color changed after waiting (.+) minutes$/ do |wait_time|
+  @freyja_site.login_page(@user).login_verify.should be_true
+end
+

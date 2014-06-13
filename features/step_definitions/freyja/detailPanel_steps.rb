@@ -20,6 +20,8 @@ end
 
 # launch download
 And /^I click Download in detail panel$/ do
+  @restore = Freyja::DataObj::Restore.new
+  @restore.restore_type = 'instant'
   case  @user.keyType
     when 'ckey'
       @freyja_site.detail_panel_page.click_download_non_default_key

@@ -8,8 +8,8 @@ module Freyja
     element(:product_download, css: "div[title='Product Downloads'] > a")
 
     element(:log_out_action, id: "panel-action-sign-out")
-    element(:log_out_yes_btn, xpath: "//*[@id='logout_confirm_dialog']//a//*[text()='Yes']")
-
+    #element(:log_out_yes_btn, xpath: "//*[@id='logout_confirm_dialog']//a//*[text()='Yes']")
+    element(:log_out_yes_btn, xpath: "//div[@id='logout_confirm_dialog']/div[3]/div/a[2]/span")
     section(:change_password_section, ChangePasswordSection, xpath: "//li[@id='panel-action-change-password']")
 
     # Public: launch change password wizard

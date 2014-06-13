@@ -16,7 +16,7 @@ end
 #  launch large download options section
 And /^I click Large Download Options restore wizard$/ do
   @restore = Freyja::DataObj::Restore.new
-  section_id = "//*[@title='Large Download Options...']"
+  section_id = "//div[@id='act-moreDownload']/div[2]"
   @freyja_site.action_panel_page.open_restore_wizard(section_id)
 end
 
@@ -29,7 +29,7 @@ And /^I fill out the restore wizard$/ do |restore_table|
   @restore.restore_name = attributes["restore_name"] + "#{Time.now.strftime("%Y%m%d-%H%M%S")}" unless attributes["restore_name"].nil?
   @restore.restore_type = attributes["restore_type"] unless attributes["restore_type"].nil?
 
-  @freyja_site.action_panel_page.large_download_options_section.large_download_options_restore(@restore)
+  @freyja_site.action_panel_page.large_download_options_section.large_download_options_restore(@restore, @user.language)
 
 end
 

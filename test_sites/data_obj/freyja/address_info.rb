@@ -12,7 +12,7 @@ module Freyja
         @city = Forgery::Address.city
         @state = Forgery::Address.state
         @zip = Random.new.rand(10000..99999).to_s
-        @country = "United States"
+        @country = "Afghanistan"
         @phone = Forgery::Address.phone
       end
 

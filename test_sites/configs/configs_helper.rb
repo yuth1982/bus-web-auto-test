@@ -22,6 +22,6 @@ ZIMBRA_ENV = ALL_ENV['zimbra']
 
 # ATF uses br env variable to decide which browser will launch
 # available browser: firefox, chrome, ie, webkit
-BROWSER = (ENV['br'] || 'firefox').downcase
+BROWSER = (ENV['br'] || 'chrome').downcase
 
 SCREEN_SHOT = (ENV["SCREEN_SHOT"] || "no").eql?("yes")

@@ -154,3 +154,16 @@ When /^I will( not)* see the (.+) link from navigation links$/ do |t, link|
     @bus_site.admin_console_page.has_navigation?(link).should be_false
   end
 end
+
+
+When /^I input content color (hex|name) for header and footer$/ do |color_format|
+  case color_format
+    when "hex"
+      @bus_site.admin_console_page.branding_section.css_header_color_hex
+  end
+
+end
+
+And /^I save changes$/ do
+  @bus_site.admin_console_page.branding_section.click_save_changes
+end

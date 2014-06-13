@@ -72,6 +72,10 @@ module Bus
     section(:scheduled_reports_section, ScheduledReportsSection, id: "jobs-index")
     section(:quick_reports_section, QuickReportsSection, id: "jobs-quick_reports")
 
+    # Branding
+    #section(:branding_section, BrandingSection, xpath: "//li[@id='nav-cat-site_branding']/ul/li[4]/a")
+    iframe(:css_iframe, CSSIframe, :id, 'CSSIframe')
+
     # Private element
     element(:current_admin_div, id: 'identify-me')
     element(:stop_masquerading_link, xpath: "//a[text()='stop masquerading']")

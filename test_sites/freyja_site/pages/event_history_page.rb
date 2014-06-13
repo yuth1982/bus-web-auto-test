@@ -15,10 +15,12 @@ module Freyja
     #
     # Returns nothing
     def get_restore_status(restore_id)
+      sleep 5
       return find(:xpath, "//tr[@id='#{restore_id}']/td[5]/div").text.to_s
     end
 
     def get_download_restore_status
+      sleep 5
       return restore_status_div.text.to_s
     end
 

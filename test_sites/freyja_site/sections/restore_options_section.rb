@@ -15,7 +15,8 @@ module Freyja
     element(:media_rb, xpath: "//span[@id='choose_delivery_method_media']")
     element(:fryr_download_link, xpath: "//*[@id='install_download_manager']//*[@id='download_download_manager_link']")
     element(:fryr_download_link_sync, xpath: "//div[@id='install_download_manager']/table/tbody/tr/td[2]/a")
-    element(:begin_download_btn, xpath: "//div[text()='Begin Download']")
+    #element(:begin_download_btn, xpath: "//div[text()='Begin Download']")
+    element(:begin_download_btn, xpath: "(//div[@id='button-next']/div[2])[2]")
     element(:stop, xpath: "//div[29]/span")
 
     # Media restore shipping address info
@@ -37,7 +38,7 @@ module Freyja
     # restore status
     element(:restore_status_div, xpath: "//*[@id='dt_all_restores']/tbody/tr[1]/td[5]/div")
 
-    def large_download_options_restore(restore)
+    def large_download_options_restore(restore, language)
       fill_restore_name(restore.restore_name)
       click_next
       case restore.restore_type
@@ -46,7 +47,7 @@ module Freyja
         when 'archive'
           archive_restore
         when 'media'
-          media_restore(restore)
+          media_restore(restore, language)
       end
     end
 
@@ -134,12 +135,12 @@ module Freyja
       sleep 2
     end
 
-    def media_restore(restore)
+    def media_restore(restore, language = "English")
       media_rb.click
       sleep 1
       click_next
       sleep 1
-      fill_media_address(restore.address_info)
+      fill_media_address(restore.address_info, language)
       click_next
       fill_media_payment(restore.credit_card)
       click_next
@@ -147,12 +148,28 @@ module Freyja
       sleep 1
     end
 
-    def fill_media_address(address_info)
+    def fill_media_address(address_info, language)
       order_name_tb.type_text(address_info.name)
       order_address1_tb.type_text(address_info.address)
       order_city_tb.type_text(address_info.city)
       order_state_tb.type_text(address_info.state)
       order_zip_tb.type_text(address_info.zip)
+      case language
+        when "Deutsch"
+          address_info.country = "Afghanistan"
+        when "Español (castellano)"
+          address_info.country = "Australia"
+        when "Français"
+          address_info.country = "Australie"
+        when "Italiano"
+          address_info.country = "Guyana"
+        when "日本語"
+          address_info.country = "中国"
+        when "Nederlands"
+          address_info.country = "Ghana"
+        when "Português (Brasil)"
+          address_info.country = "Catar"
+      end
       order_country_select.select(address_info.country)
       order_phonenumber_tb.type_text(address_info.phone)
     end

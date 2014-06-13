@@ -18,13 +18,24 @@ When /^I search partner by (.+)$/ do |keywords|
   @bus_site.admin_console_page.search_list_partner_section.search_partner(keywords)
 end
 
+When /^I not full search partner by:$/ do |search_key_table|
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_partner'])
+  attributes = search_key_table.hashes.first
+  keywords = (attributes['name'] || attributes['email'])
+  keywords = keywords.gsub(/@company_name/,@partner.company_info.name).gsub(/@admin_email/,@partner.admin_info.email) unless @partner.nil?
+  filter = attributes['filter'] || 'None'
+  including_sub_partners = (attributes['including sub-partners'] || 'yes').eql?('yes')
+  @bus_site.admin_console_page.search_list_partner_section.search_partner(keywords, filter, including_sub_partners, false)
+end
 
 When /^I act as partner by:$/ do |search_key_table|
   attributes = search_key_table.hashes.first
-  step %{I search partner by:}, table(%{
+  sleep 10
+  step %{I not full search partner by:}, table(%{
       |#{search_key_table.headers.join('|')}|
       |#{search_key_table.rows.first.join('|')}|
     })
+  sleep 10
   if attributes['name'].nil? == false
     page.find(:xpath, "//div[@id='partner-list-content']//table[@class='table-view']//tr[1]//td[2]/a").click
     @current_partner = @bus_site.admin_console_page.partner_details_section.partner

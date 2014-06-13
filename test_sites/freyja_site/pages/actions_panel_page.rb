@@ -25,7 +25,7 @@ module Freyja
     element(:upload_files_btn, xpath: "//span[text()='Upload Files']")
 
     # sections
-    section(:large_download_options_section, RestoreOptionsSection, xpath: "//*[@title='Large Download Options...']")
+    section(:large_download_options_section, RestoreOptionsSection, xpath: "//div[@id='act-moreDownload']/div[2]")
     section(:non_default_key_download_section, RestoreOptionsSection, xpath: "//div[@id='act-download']/div[2]")
 
     #frames
@@ -45,19 +45,20 @@ module Freyja
       el = use_quick_link ? sections.first : sections.last
       if sections.first.element_parent[:class].match(/active/).nil? && sections.last.element_parent[:class].match(/active/).nil?
         el.click
+        sleep 5
       end
     end
 
     def click_download_now
       download_now.click
-      sleep 2
+      sleep 10
     end
 
     def click_download_now_non_default_key
       download_now.click
-      sleep 2
+      sleep 10
       download_key_btn.click
-      sleep 2
+      sleep 10
     end
 
     # Public: Click Large Download Options from Actions pane
