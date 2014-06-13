@@ -254,6 +254,12 @@ end
 When /^edit user details:$/ do |info_table|
   # table is a | email          | name          | status     |
   new_info = info_table.hashes.first
+
+  new_info.each do |header,attribute| #can use variable inside <%= %>
+    attribute.replace ERB.new(attribute).result(binding)
+    new_info[header] = nil if attribute == ''
+  end
+
   new_info.keys.each do |header|
     case header
       when 'email'

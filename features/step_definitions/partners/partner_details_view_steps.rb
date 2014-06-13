@@ -321,3 +321,21 @@ end
 When /^I refresh the partner details section$/ do
   @bus_site.admin_console_page.partner_details_section.refresh_bus_section
 end
+
+Then /^I delete partner and verify pending delete$/ do
+
+  if  ENV['BUS_ENV'] == 'prod'
+    #TODO email the partner details
+    next #Because we don't have partner deletion rights in prod
+  end
+
+  step "I search and delete partner account by newly created partner company name"
+  step %{I search partner by:}, table(%{
+    | name          | filter         |
+    | @company_name | Pending Delete |
+  })
+  step %{Partner search results should be:}, table(%{
+    | Partner       |
+    | @company_name |
+  })
+end

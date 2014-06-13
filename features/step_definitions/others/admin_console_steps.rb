@@ -1,4 +1,7 @@
 When /^I navigate to (.+) section from bus admin console page$/ do |link_name|
+  if link_name == 'Download * Client'
+    link_name.replace find(:xpath, '//a[contains(text(),"Download")][contains(text(),"Client")]').text
+  end
   @bus_site.admin_console_page.navigate_to_menu(link_name)
 end
 

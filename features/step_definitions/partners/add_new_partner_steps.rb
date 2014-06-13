@@ -25,6 +25,12 @@
 When /^I add a new (MozyPro|MozyEnterprise|Reseller|MozyEnterprise DPS|OEM) partner:$/ do |type, partner_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_partner']) unless type == "OEM"
   attributes = partner_table.hashes.first
+
+  attributes.each do |header,attribute| #can use variable inside <%= %>
+    attribute.replace ERB.new(attribute).result(binding)
+    attributes[header] = nil if attribute == ''
+  end
+
   case type
     when CONFIGS['bus']['company_type']['oem']
       step %{I act as partner by:}, table(%{
@@ -119,7 +125,7 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller|MozyEnterprise DPS|OEM) part
     @partner.subscription_period = attributes['period']
     @partner.net_term_payment = (attributes['net terms'] || 'no').eql?('yes')
 
-    @partner.company_info.name = "Internal Mozy - #{@partner.company_info.name}" if  !!attributes['account type'] && attributes['account type'] == "Internal Test"
+    @partner.company_info.name = "Internal Mozy - #{@partner.company_info.name}" if  ENV['BUS_ENV'] == 'prod'
 
     Log.debug(@partner.to_s)
     @bus_site.admin_console_page.add_new_partner_section.add_new_account(@partner)

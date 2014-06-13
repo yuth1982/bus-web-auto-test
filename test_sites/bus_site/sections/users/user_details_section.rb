@@ -344,14 +344,12 @@ module Bus
     # @return [nothing]
     def update_user_group(user, new_user_group)
       change_user_group_link.click
-      unless user.user_group.nil?
-        user_group_search_img.click
-        sleep 2
-        find(:xpath, "//li[text()='#{new_user_group}']").click
-        change_user_group_submit_button.click
-        wait_until{ !change_user_group_submit_button.visible? }
-        user.user_group = new_user_group
-      end
+      user_group_search_img.click
+      sleep 2
+      find(:xpath, "//li[text()='#{new_user_group}']").click
+      change_user_group_submit_button.click
+      wait_until{ !change_user_group_submit_button.visible? }
+      user.user_group = new_user_group unless user.user_group.nil? unless user.nil?
     end
 
     # Public: Returns user's user group

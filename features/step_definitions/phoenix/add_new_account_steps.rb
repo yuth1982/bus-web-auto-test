@@ -10,6 +10,11 @@ When /^I (.+) a phoenix (Home|Pro|Direct|Free) (partner|user):$/ do |string,type
   #(partner | user) is keep all tests cases working from when Home and Pro where separate
   attributes = partner_table.hashes.first
 
+  attributes.each do |header,attribute| #can use variable inside <%= %>
+    attribute.replace ERB.new(attribute).result(binding)
+    attributes[header] = nil if attribute == ''
+  end
+
   # initial object instantiation
   @partner = ((type == "Pro" || type == "Direct") ? Bus::DataObj::MozyPro.new : Bus::DataObj::MozyHome.new )
 
@@ -26,6 +31,7 @@ When /^I (.+) a phoenix (Home|Pro|Direct|Free) (partner|user):$/ do |string,type
 
   # Company info attributes
   @partner.company_info.name = attributes['company name'] unless attributes['company name'].nil?
+  @partner.company_info.name = "Internal Mozy - #{@partner.company_info.name}" if  ENV['BUS_ENV'] == 'prod'
   @partner.company_info.address = attributes['address'] unless attributes['address'].nil?
   @partner.company_info.city = attributes['city'] unless attributes['city'].nil?
   @partner.company_info.state = attributes['state'] unless attributes['state'].nil?
