@@ -73,8 +73,8 @@ module Bus
     section(:quick_reports_section, QuickReportsSection, id: "jobs-quick_reports")
 
     # Branding
-    #section(:branding_section, BrandingSection, xpath: "//li[@id='nav-cat-site_branding']/ul/li[4]/a")
-    iframe(:css_iframe, CSSIframe, :id, 'CSSIframe')
+    section(:css_branding_section, CSSBrandingSection, xpath: "//li[@id='nav-cat-site_branding']/ul/li[4]/a")
+    #iframe(:css_iframe, CSSIframe, :id, 'site_branding-webrestore_site-content')
 
     # Private element
     element(:current_admin_div, id: 'identify-me')

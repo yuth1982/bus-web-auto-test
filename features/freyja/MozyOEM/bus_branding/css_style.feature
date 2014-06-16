@@ -12,9 +12,11 @@ Feature: BUS branding - css style
     And I navigate to Web Access Site Branding section from bus admin console page
 
   @TC @freyja @oem_css
-  Scenario: Successfully verify 'Test Connection' button should work with valid organization name
+  Scenario: Successfully change header and footer color
    When I input content color hex for header and footer
    And I save changes
-   When I navigate to freyja ent login page
+   Then I waited 1 minutes
+   When I navigate to freyja oem login page
    And I login as a existing user
-   Then I should view content color changed after waiting 2 minutes
+   Then freyja page is displayed
+

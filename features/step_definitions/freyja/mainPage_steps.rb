@@ -87,7 +87,7 @@ And /^I select the device$/ do
 end
 
 
-Then /^I should view content color changed after waiting (.+) minutes$/ do |wait_time|
-  @freyja_site.login_page(@user).login_verify.should be_true
+Then /^I waited (.+) minutes$/ do |wait_time|
+  sleep (wait_time.to_i)*60
 end
 

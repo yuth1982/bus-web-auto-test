@@ -11,7 +11,6 @@ module Bus
     element(:go_btn, id: 'ctl00_ContentPlaceHolder1_GoButton')
     element(:stslabel, id: 'ctl00_STSLabel')
 
-
     # Public: get current url
     #
     def choose_mozy_radio
