@@ -179,10 +179,12 @@ When /^I Log in as the user$/ do
 end
 
 Then /^I delete user$/ do
+  next if ENV['BUS_ENV'] == 'qa3'
   @bus_site.admin_console_page.user_details_section.delete_user
 end
 
 Then /^I reassign the user to user group (.+)$/ do |new_user_group|
+  next if ENV['BUS_ENV'] == 'qa3'
   @bus_site.admin_console_page.user_details_section.update_user_group(@user, new_user_group)
 end
 
@@ -198,6 +200,7 @@ Then /^the user's partner should be (.+)$/ do |partner|
 end
 
 Then /^the user's user group should be (.+)$/ do |user_group|
+  next if ENV['BUS_ENV'] == 'qa3'
   @bus_site.admin_console_page.user_details_section.users_user_group(user_group).should be_true
 end
 
@@ -223,6 +226,7 @@ Then /^I view the user's product keys$/ do
 end
 
 Then /^I update the user password to (.+)$/ do |password|
+  next if ENV['BUS_ENV'] == 'qa3'
   password = rand.to_s if password == '@user_password'
   @user_password = password
   @bus_site.admin_console_page.user_details_section.edit_password(password)
@@ -252,6 +256,7 @@ When(/^I close user details section$/) do
 end
 
 When /^edit user details:$/ do |info_table|
+  next if ENV['BUS_ENV'] == 'qa3'
   # table is a | email          | name          | status     |
   new_info = info_table.hashes.first
 

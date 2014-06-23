@@ -8,10 +8,10 @@ Feature: These are the test we run for every deploy
 
 
   Additional Things to check:
-  - Verify Activation Email
   - Delete partner if in prod
   - Prod 50 - Check Download Manifests
   - Prod 29 - Check the support link
+  - Prod 89 - Activate in Email
 
   @bus_smoke
   Scenario: Bus Mozypro smoke
@@ -28,25 +28,29 @@ Feature: These are the test we run for every deploy
     Then API* Aria account should be:
       | status_label |
       | ACTIVE       |
-    #Prod 89 - Activate in Email -
-    #TODO - Fix when mail server working - Remove Tyler's Staging Branding
-    #When the partner has activated their account
-      But I activate the partner
+    But I activate the partner
     #Prod 22
     When I act as newly created partner account
     #Prod 23
     And I add a new Bundled user group:
       | name   | storage_type |
-      | first | Shared       |
-    Then first user group should be created
+      | alpha | Shared       |
+    Then alpha user group should be created
     When I add a new Bundled user group:
       | name   | storage_type |
-      | second | Shared       |
-    Then second user group should be created
+      | omega | Shared       |
+    Then omega user group should be created
+    #Prod 36 - Delete user group
+    When I add a new Bundled user group:
+      | name   | storage_type |
+      | gamma | Shared       |
+    Then gamma user group should be created
+    When I delete user group details by name: gamma
+    Then gamma user group should be deleted
     #Prod 24 - Create a user
     And I add new user(s):
       | name | user_group | storage_type |  devices |
-      | user | first      | Desktop      |  1       |
+      | user | alpha      | Desktop      |  1       |
     Then 1 new user should be created
     #Prod 31 - Run report
     Given I build a new report:
@@ -67,15 +71,11 @@ Feature: These are the test we run for every deploy
       | <%=create_user_email%> |
     Then I update the user password to Test1234
     #Prod 26
-    But I reassign the user to user group second
-    Then the user's user group should be second
+    But I reassign the user to user group omega
+    Then the user's user group should be omega
     #I close the user detail page
     #Prod 32
     Given I delete user
-    #Prod 36 - Delete user group
-    And I navigate to User Group List section from bus admin console page
-    When I delete user group details by name: first
-    Then first user group should be deleted
     #Prod 27 - Open all Resources headers
     Given I navigate to Resource Summary section from bus admin console page
     When I navigate to User Group List section from bus admin console page
