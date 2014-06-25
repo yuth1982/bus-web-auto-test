@@ -68,6 +68,8 @@ module Freyja
           login_btn.click
           ent_restore_link.click
       end
+      #puts "**********"
+      #puts page.response_headers()
     end
 
     def login_verify

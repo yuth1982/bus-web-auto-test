@@ -16,6 +16,16 @@ And /^I login as a existing user$/ do
   @freyja_site.login_page(@user).UserLogin(@user)
 end
 
+And /^I login as a existing sub-partner user$/ do
+  @user.username = QA_ENV['sub_'+@user.partnerType+'_username']
+  @user.password = QA_ENV['sub_'+@user.partnerType+'_password']
+  partnerType = @user.partnerType
+  @user.partnerType = 'sub_' + partnerType
+  @freyja_site.login_page(@user).load
+  @user.partnerType = partnerType
+  @freyja_site.login_page(@user).UserLogin(@user)
+end
+
 Then /^freyja page is displayed$/ do
   @freyja_site.login_page(@user).login_verify.should be_true
 end
