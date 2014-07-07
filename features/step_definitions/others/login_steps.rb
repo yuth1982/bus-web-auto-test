@@ -1,4 +1,4 @@
-Given /^I log in (bus admin console|to legacy bus01) as administrator$/ do | environment |
+Given /^I log in (bus admin console|to legacy bus01) as administrator$/ do |environment|
   @bus_site = BusSite.new
   case environment
     when "bus admin console"
@@ -58,28 +58,28 @@ Then /^the new partner admin should be asked to verify their email address$/ do
   @bus_site.verify_email_page.links_present.should be_true
 end
 
-When /^I log into bus admin console with uppercase (.+)$/ do |username|
+When /^I log into bus admin console with uppercase (.+) and (.+)$/ do |username, password|
   username = username.upcase
-  step %{I log in bus admin console with user name #{username} and password #{QA_ENV['bus_password']}}
+  step %{I log in bus admin console with user name #{username} and password #{password}}
 end
 
-When /^I log into bus admin console with mixed case (.+)$/ do |username|
+When /^I log into bus admin console with mixed case (.+) and (.+)$/ do |username, password|
   until username.match(/[A-Z]/) do
     username = username.gsub /[a-z]/i do |x| rand(2)==0 ? x.downcase : x.upcase end
   end
-  step %{I log in bus admin console with user name #{username} and password #{QA_ENV['bus_password']}}
+  step %{I log in bus admin console with user name #{username} and password #{password}}
 end
 
-When /^I log into (.+) with uppercase username (.+)$/ do |subdomain,username|
+When /^I log into (.+) with uppercase username (.+) and (.+)$/ do |subdomain, username, password|
   username = username.upcase
-  user_account = {:user_name => username, :password => QA_ENV['bus_password']}
+  user_account = {:user_name => username, :password => password}
   @bus_site.user_login_page(subdomain, 'mozy').login(user_account)
 end
 
-When /^I log into (.+) with mixed case username (.+)$/ do |subdomain,username|
+When /^I log into (.+) with mixed case username (.+) and (.+)$/ do |subdomain, username, password|
   until username.match(/[A-Z]/) do
     username = username.gsub /[a-z]/i do |x| rand(2)==0 ? x.downcase : x.upcase end
   end
-  user_account = {:user_name => username, :password => QA_ENV['bus_password']}
+  user_account = {:user_name => username, :password => password}
   @bus_site.user_login_page(subdomain, 'mozy').login(user_account)
 end

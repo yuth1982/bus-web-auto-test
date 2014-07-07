@@ -75,8 +75,16 @@ Transform /^Hipaa admin$/ do |step_arg|
   QA_ENV['hipaa_admin']
 end
 
+Transform /^Hipaa password$/ do |step_arg|
+  QA_ENV['hipaa_password']
+end
+
 Transform /^Standard admin$/ do |step_arg|
   QA_ENV['nohipaa_admin']
+end
+
+Transform /^Standard password$/ do |step_arg|
+  QA_ENV['bus_password']
 end
 
 Transform /^Hipaa subdomain$/ do |step_arg|
