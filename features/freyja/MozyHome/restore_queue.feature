@@ -26,7 +26,7 @@ Feature: Restore files in Restore Queue
     When I select options menu
     And I logout
 
-#@TC.120700 @freyja @freyja_smoke @home  @home_instant_restore_files_restore_queue @home_restore_queue
+@TC.120700 @freyja @freyja_smoke @home  @home_instant_restore_files_restore_queue @home_restore_queue
 Scenario: MozyEnterprise user instant download files in Restore Queue from Freyja
   When I select options menu
   And I select Preferences

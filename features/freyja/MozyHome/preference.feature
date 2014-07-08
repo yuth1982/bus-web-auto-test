@@ -18,7 +18,7 @@ Scenario: Mozyhome user change preference settings through Freyja
   And I choose No for restore queue
   And I click save Preferences button
   And I re-login
-  Then freyja page should be Devices start
+  Then freyja page should be Synced start
   Then freyja page should be enable restore queue
   When I select options menu
   And I logout

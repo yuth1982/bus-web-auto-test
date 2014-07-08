@@ -4,16 +4,22 @@ Then /^this restore is (.+)/ do  |restore_status|
   case @restore.restore_type
     when 'instant'
       status = @freyja_site.event_history_page.get_download_restore_status
-      status.should == restore_status
+      if status != 'Ready for Download'
+        status.should == restore_status
+      end
     else
       case QA_ENV['environment']
         when "staging"
           status = @freyja_site.event_history_page.get_download_restore_status
-          status.should == restore_status
+          if status != 'Ready for Download'
+            status.should == restore_status
+          end
         else
           @restore.restore_id = RestoreHelper.get_restore_id(@restore.restore_name)
           status = @freyja_site.event_history_page.get_restore_status(@restore.restore_id)
-          status.should == restore_status
+          if status != 'Ready for Download'
+            status.should == restore_status
+          end
       end
   end
 end

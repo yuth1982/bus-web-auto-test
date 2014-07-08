@@ -9,7 +9,7 @@ CONFIGS = YAML.load_file("#{File.dirname(__FILE__)}/configs.yaml")
 LANG = YAML.load_file("#{File.dirname(__FILE__)}/lang.yaml")
 
 # Active QA test environment, for example qa5, qa6
-QA_ENV = ALL_ENV[ENV['BUS_ENV'] || 'qa13']
+QA_ENV = ALL_ENV[ENV['BUS_ENV'] || 'qa12']
 
 # Active aria test environment, for example aria qa
 ARIA_ENV = ALL_ENV[ENV['ARIA_ENV'] || 'aria_qa']
