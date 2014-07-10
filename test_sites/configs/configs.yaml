@@ -134,7 +134,7 @@ phoenix:
 fedid:
   user_email:                   auto@mtdev.mozypro.local
   user_name:                    auto
-  subdomain:                    fedid01
+  subdomain:                    qa8saml
 
 gmail:
   username:                     mozybus@gmail.com

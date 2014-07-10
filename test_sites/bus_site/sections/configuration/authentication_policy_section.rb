@@ -37,6 +37,7 @@ module Bus
     element(:sync_now_button, xpath: "//input[@name='sync_now']")
     element(:options_delete_missing_users, id: 'options_delete_missing_users')
     element(:options_suspend_missing_users, id: 'options_suspend_missing_users')
+    element(:scheduled_sync_options, id: 'options_daily')
     element(:scheduled_sync_time, id: 'data_sync_options_schedule')
     element(:fixed_attribute, xpath: "//ul[@class='tab-panes']/li[3]//div[4]/div/input")
     element(:loading_link, xpath: "//a[contains(@onclick,'toggle_module')]")
@@ -330,6 +331,7 @@ module Bus
     # Public: Set the daily sync at time
     #
     def sync_daily_at(hour)
+      scheduled_sync_options.check
       scheduled_sync_time.set(hour)
     end
 

@@ -9,5 +9,5 @@ end
 When /^I login the subdomain (.+)$/ do |subdomain|
   subdomain.replace ERB.new(subdomain).result(binding)
   @bus_site.user_login_page(subdomain, 'ldap').load
-  @bus_site.adfs_login_page.log_in
+  @bus_site.adfs_login_page.log_in(subdomain)
 end

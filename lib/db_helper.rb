@@ -10,8 +10,11 @@ module DBHelper
   def change_last_sync_at(user_id, days)
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      t = (Time.now - (days + 1) * 24 * 3600)
-      sql = "update user_sync_details set last_sync_at='#{t}' where user_id=#{user_id};"
+      t = (Time.now - (days + 10) * 24 * 3600)
+      Log.debug "########Time.now is #{Time.now}"
+      Log.debug "########t is #{t}"
+      Log.debug "########user_id is #{user_id}"
+      sql = "update user_sync_details set last_sync_at='#{t}' where user_id='#{user_id}';"
       c = conn.exec(sql)
     rescue PG::Error => e
       puts "postgres error: #{e}"

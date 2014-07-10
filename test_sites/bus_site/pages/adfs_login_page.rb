@@ -18,7 +18,7 @@ module Bus
       sign_mozy_radio.click
     end
 
-    def site_select(value='Mozy Fedid01')
+    def site_select(value='qa8saml')
       site_selecter.select value
     end
 
@@ -30,15 +30,15 @@ module Bus
       go_btn.click
     end
 
-    def log_in
+    def log_in(subdomain)
       if stslabel.visible?
         Log.debug 'come into login page'
         if page.has_button? 'ctl00_ContentPlaceHolder1_GoButton'
-          site_select
+          site_select(subdomain)
           go
         elsif page.has_button? 'ctl00_ContentPlaceHolder1_SignInButton'
           choose_mozy_radio
-          site_select
+          site_select(subdomain)
           continue_login
         else
           raise 'Cannot log in'
