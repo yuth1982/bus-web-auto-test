@@ -70,7 +70,7 @@ Feature: Manage Horizon related settings
     And I save the changes
     Then The save error message should be:
       | Save failed  |
-      | Invalid data.|
+      | 400 ERROR: Invalid hosts : 10.34.9. |
     # Scenario: 17480 Port input should reject invalid parameters
     When I use Directory Service as authentication provider
     And I de-select Horizon Manager
@@ -81,7 +81,7 @@ Feature: Manage Horizon related settings
     And I save the changes
     Then The save error message should be:
       | Save failed  |
-      | Invalid data.|
+      | 400 ERROR: Invalid port: 0 |
     # Scenario: 17482 Base Tree should reject invalid empty inputs
     When I use Directory Service as authentication provider
     And I de-select Horizon Manager
