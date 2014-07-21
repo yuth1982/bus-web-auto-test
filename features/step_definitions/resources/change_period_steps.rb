@@ -16,6 +16,7 @@ end
 
 Then /^Subscription changed message should be (.+)$/ do |message|
   @bus_site.admin_console_page.change_period_section.messages.should == message
+  @bus_site.admin_console_page.billing_info_section.wait_until_bus_section_load
 end
 
 Then /^I continue to change account subscription$/ do
