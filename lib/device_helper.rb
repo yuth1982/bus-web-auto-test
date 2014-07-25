@@ -262,9 +262,9 @@ module DataShuttleSeeding
 &total_bytes_seeded=#{total_bytes_seeded.to_s}\
 &physical_drive_id=12345"
 
-    uri = URI.parse("http://#{QA_ENV['client_host']}")
+    uri = URI.parse("https://#{QA_ENV['client_host']}")
     Net::HTTP.start(uri.host, uri.port,
-                    :use_ssl => uri.scheme == 'https') do |http|
+                    :use_ssl => uri.scheme == 'https', :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
       http.set_debug_output $stderr
       req = Net::HTTP::Get.new(string)
       req.basic_auth userhash, password
