@@ -37,16 +37,20 @@ Then /^User search results should be:$/ do |results_table|
         when 'Created'
           v.replace(Chronic.parse(v).strftime('%m/%d/%y'))
         when 'Name'
-          v.gsub!(/@user_name/, @new_users.first.name.slice(0,27)) unless @new_users.nil?
+          v.gsub!(/@user_name/, @new_users.first.name) unless @new_users.nil?
         when 'User'
-          v.gsub!(/@user_email/, @new_users.first.email.slice(0,27)) unless @new_users.nil?
+          v.gsub!(/@user_email/, @new_users.first.email) unless @new_users.nil?
         else
           # do nothing
       end
 
       if k == 'User'
-        v.replace ERB.new(v).result(binding).slice(0,27).downcase
-        v << '...' unless v.length <= 26
+        if @new_users.first.email.length <= 30
+          v.replace ERB.new(v).result(binding).downcase
+        else
+          v.replace ERB.new(v).result(binding).slice(0,27).downcase
+          v << '...'
+        end
       else
         v.replace ERB.new(v).result(binding)
       end
