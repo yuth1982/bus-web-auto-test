@@ -33,7 +33,7 @@ Feature: Account Type
       | 1      | Silver        | 10             | Reseller Internal Test Partner | Internal Test |
     Then New partner should be created
     When I search partner by Reseller Internal Test Partner
-    And I view partner details by Internal Test - Reseller Internal Test Partner
+    And I view partner details by Reseller Internal Test Partner
     Then partner account details should be:
       | Account Type           | Sales Origin |
       | Internal Test (change) | Sales        |
