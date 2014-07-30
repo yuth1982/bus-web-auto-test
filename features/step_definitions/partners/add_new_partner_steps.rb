@@ -176,6 +176,7 @@ When /^I add a new sub partner:$/ do |sub_partner_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_partner'])
   @subpartner = Bus::DataObj::SubPartner.new(friendly_hash(sub_partner_table.hashes.first))
   @bus_site.admin_console_page.add_new_partner_section.add_new_subpartner(@subpartner)
+  @bus_site.admin_console_page.partner_details_section.wait_until_bus_section_load
 end
 
 Then /^the default billing country is (.+) in add new partner section$/ do |country|
