@@ -45,7 +45,7 @@ Then /^User search results should be:$/ do |results_table|
       end
 
       if k == 'User'
-        if @new_users.first.email.length <= 30
+        if v.length <= 30
           v.replace ERB.new(v).result(binding).downcase
         else
           v.replace ERB.new(v).result(binding).slice(0,27).downcase
