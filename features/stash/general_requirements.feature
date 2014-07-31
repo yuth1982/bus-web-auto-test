@@ -195,7 +195,7 @@ Feature:
     And I set user stash quota to 999999999 GB
     Then set max message should be:
     """
-      The Sync Storage limit cannot be more than what is available for this user.
+    The Sync Storage limit cannot be more than what is available for this user.
       """
     When I refresh User Details section
     And stash device table in user details should be:
@@ -298,7 +298,7 @@ Feature:
     And I set user stash quota to 999999999 GB
     Then set max message should be:
     """
-      The Sync Storage limit cannot be more than what is available for this user.
+    The Sync Storage limit cannot be more than what is available for this user.
       """
     When I refresh User Details section
     And stash device table in user details should be:
