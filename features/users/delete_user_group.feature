@@ -19,7 +19,7 @@ Feature: Edit existing user group
     When I delete user group details by name: (default user group)
     Then Delete user group error messages should be:
       """
-      Can't delete last user group of a non-deleted partner
+      At least one user group must exist.
       """
 
     And I add a new Bundled user group:
@@ -111,19 +111,19 @@ Feature: Edit existing user group
     When I delete user group details by name: TC.21007-Assigned-2
     Then Delete user group error messages should be:
       """
-      Before delete TC.21007-Assigned-2, you need to delete all the user of user group.
+      All users must be removed from this user group before you can delete it.
       """
 
     When I delete user group details by name: TC.21007-Limited-3
     Then Delete user group error messages should be:
       """
-      Before delete TC.21007-Limited-3, you need to delete all the user of user group.
+      All users must be removed from this user group before you can delete it.
       """
 
     When I delete user group details by name: (default user group)
     Then Delete user group error messages should be:
       """
-      Before delete (default user group), you need to delete all the user of user group.
+      All users must be removed from this user group before you can delete it.
       """
 
     And I stop masquerading
@@ -144,7 +144,7 @@ Feature: Edit existing user group
     When I delete user group details by name: (default user group)
     Then Delete user group error messages should be:
       """
-      Can't delete last user group of a non-deleted partner
+      At least one user group must exist.
       """
 
     And I add a new Itemized user group:
@@ -228,17 +228,17 @@ Feature: Edit existing user group
     And I delete user group details by name: TC.21009-Assigned-2
     Then Delete user group error messages should be:
       """
-      Before delete TC.21009-Assigned-2, you need to delete all the user of user group.
+      All users must be removed from this user group before you can delete it.
       """
     When I delete user group details by name: TC.21009-Limited-3
     Then Delete user group error messages should be:
       """
-      Before delete TC.21009-Limited-3, you need to delete all the user of user group.
+      All users must be removed from this user group before you can delete it.
       """
     When I delete user group details by name: (default user group)
     Then Delete user group error messages should be:
       """
-      Before delete (default user group), you need to delete all the user of user group.
+      All users must be removed from this user group before you can delete it.
       """
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
