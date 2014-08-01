@@ -374,3 +374,56 @@ Feature: User stash setting management
       | User                 | Name                 | Sync    | Machines | Storage | Storage Used | Created |
       | <%=@users[1].email%> | TC.19116.stash-user  | Enabled  | 0        | Shared  | 20 GB        | today   |
       | <%=@users[0].email%> | TC.19116.backup-user | Disabled | 1        | Shared  | 10 GB        | today   |
+
+  @TC.120694 @TC.120695 @2.10 @bus @stash
+  Scenario: 120694 120695 Check existing/new sync container's encryption type
+    When I act as partner by:
+      | email                |
+      | test_120694@auto.com |
+    And I add new user(s):
+      | name           | storage_type | storage_limit | devices | enable_stash |
+      | TC.120695 user | Desktop      | 10            | 1       | yes          |
+    Then 1 new user should be created
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    Then user details should be:
+      | Name:                   | Enable Sync:                |
+      | TC.120695 user (change) | Yes (Send Invitation Email) |
+    And stash device table in user details should be:
+      | Sync Container | Device Storage Limit | Action |
+      | Sync           |  Set                 |        |
+    Then I view Sync details
+    And machine details should be:
+      | External ID: | Owner:       | Encryption: | Data Center: |
+      |  (change)    | @user_email  |  Default    |    qa6       |
+    And I delete user
+    And I close machine details section
+
+    And I search user by:
+      | keywords               |
+      | tc120694user1@auto.com |
+    Then I view user details by tc120694user1@auto.com
+    And stash device table in user details should be:
+      | Sync Container | Device Storage Limit | Action |
+      | Sync           |  Set                 |        |
+    And I view Sync details
+    And machine details should be:
+      | External ID: | Owner:                  | Encryption: | Data Center: |
+      |  (change)    | tc120694user1@auto.com  |  Custom     |    qa6       |
+    And I close user details section
+    And I close machine details section
+
+    Then I search user by:
+      | keywords               |
+      | tc120694user2@auto.com |
+    And I view user details by tc120694user2@auto.com
+    And stash device table in user details should be:
+      | Sync Container | Device Storage Limit | Action |
+      | Sync           |  Set                 |        |
+    And I view Sync details
+    And machine details should be:
+      | External ID: | Owner:                  | Encryption: | Data Center: |
+      |  (change)    | tc120694user2@auto.com  |  Default    |    qa6       |
+    And I close user details section
+    And I close machine details section
+

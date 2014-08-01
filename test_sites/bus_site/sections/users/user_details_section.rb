@@ -67,6 +67,9 @@ module Bus
 
     element(:device_table, css: 'table.mini-table')
 
+    #Sync details link
+    element(:sync_details_link, xpath: "//table[@class='mini-table']//a[text()='Sync']")
+
     # Change User Password
     element(:new_password_tb, id: 'new_password')
     element(:new_password_confirm_tb, id: 'new_password_confirmation')
@@ -515,6 +518,10 @@ module Bus
     def get_machine_id(device)
       a = find(:xpath, "//table[@class='mini-table']//td[1]/a[text()='#{device}']")[:href]
       a[/\/admin\/view_restores\/(\d+)$/, 1].to_i
+    end
+
+    def view_sync_details
+      sync_details_link.click
     end
 
     # Public: Click send user keys
