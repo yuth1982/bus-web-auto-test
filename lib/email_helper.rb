@@ -20,7 +20,7 @@ module Email
   def find_email_content(query,_=nil)
     content = nil
     Gmail.new(CONFIGS['gmail']['username'],CONFIGS['gmail']['password']) do |gmail|
-      content = gmail.mailbox('[Gmail]/All Mail').emails(query)[0].body
+      content = gmail.mailbox('[Gmail]/All Mail').emails(query)[-1].body
     end
     content
   end
