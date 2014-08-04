@@ -12,8 +12,9 @@ module Phoenix
     element(:country_select, xpath: "//table//tr[6]//select")
     element(:submit_btn, css: 'input.ui-button')
     element(:profile_saved_tb, css: 'p.flash')
-    element(:upgrade_link, css: "a[href='/registration/mozy_home']")
+    element(:change_credit_card_link, css: "a[href='/account/change_credit_card']")
     element(:message_text, css: "p.notice")
+    element(:confirm_btn, id: "submit_button")
 
     def account_pages
       if page.driver.is_a?(Capybara::Selenium::Driver)
@@ -69,13 +70,8 @@ module Phoenix
       end
     end
 
-    def navigate_to_upgrade
-      if page.driver.is_a?(Capybara::Selenium::Driver)
-        upgrade_link.click
-        page.driver.browser.switch_to().window(page.driver.browser.window_handles.last)
-      else
-        raise 'You must use Selenium Driver'
-      end
+    def navigate_to_change_credit_card
+      change_credit_card_link.click
     end
 
     def profile_hashes
@@ -87,6 +83,15 @@ module Phoenix
       output['Zip/Postal Code:'] = zip_tb.value
       output['Country:'] = country_select.first_selected_option.text
       output
+    end
+
+    def credit_card_updated
+      puts message_text.text
+      message_text.text
+    end
+
+    def confirm
+      confirm_btn.click
     end
   end
 end

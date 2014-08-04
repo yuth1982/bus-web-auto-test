@@ -205,34 +205,6 @@ Then /^the default country is (.+) in the home billing page$/ do |country|
   @phoenix_site.billing_fill_out.home_billing_country.should == country
 end
 
-When /^I change credit card info to:$/ do |contact_table|
-  # table is a | Name: | Street Address: | City: | State/Province: | Zip/Postal Code: | Country: |
-  company_info = contact_table.hashes.first
-  company_info.keys.each do |header|
-    case header
-      when 'Name:'
-        @partner.company_info.name = company_info['Name:']
-      when 'Street Address:'
-        @partner.company_info.address = company_info['Street Address:']
-      when 'City:'
-        @partner.company_info.city = company_info['City:']
-      when 'State/Province:'
-        @partner.company_info.state_abbrev = company_info['State/Province:']
-      when 'Zip/Postal Code:'
-        @partner.company_info.zip = company_info['Zip/Postal Code:']
-      when 'Country:'
-        @partner.company_info.country = company_info['Country:']
-      else
-        raise "Unexpected #{header}"
-    end
-  end
-  # for info review
-  # puts @partner.to_s
-  puts @partner
-  @phoenix_site.licensing_fill_out.licensing_billing_fillout(@partner)
-  @phoenix_site.billing_fill_out.billing_info_fill_out(@partner)
-end
-
 # changed to add in locale and different verbage for home
 When /^verify email address link should show success message$/ do
   @phoenix_site.verify_email_address.visit(@verify_email_query)
@@ -264,7 +236,6 @@ When /^I login (as the user|under changed password) on the account.$/ do |login_
       @phoenix_site.user_account.user_login_changed_pw(@partner)
       step %{I verify the user account:}
   end
-
 end
 
 When /^I log into phoenix with username (.+) and password (.+)$/ do |username,password|

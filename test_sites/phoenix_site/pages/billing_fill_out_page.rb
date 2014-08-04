@@ -16,11 +16,11 @@ module Phoenix
     element(:cc_last_name_tb, id: "cc_last_name")
     element(:cc_company_tb, id: "cc_company")
     # home flow
-    element(:home_cc_type_select, id: "card_cardType")
-    element(:home_cc_acct_num_tb, id: "card_accountNumber")
-    element(:home_cc_cvv_tb, id: "card_cvNumber")
-    element(:home_cc_exp_mm_select, id: "card_expirationMonth")
-    element(:home_cc_exp_yy_select, id: "card_expirationYear")
+    element(:home_cc_type_select, id: "card_type")
+    element(:home_cc_acct_num_tb, id: "card_number")
+    element(:home_cc_cvv_tb, id: "card_cvn")
+    element(:home_cc_exp_mm_select, id: "card_expiry_month")
+    element(:home_cc_exp_yy_select, id: "card_expiry_year")
     #
     # Billing Info
     # pro flow
@@ -36,17 +36,17 @@ module Phoenix
     element(:cc_zip_tb, id: "cc_zip")
     element(:billing_summary_table, css: "table.order-summary")
     # home flow
-    element(:home_country_select, id: "billTo_country")
-    element(:home_bill_fname_tb, id: "billTo_firstName")
-    element(:home_bill_lname_tb, id: "billTo_lastName")
-    element(:home_bill_company_tb, id: "billTo_company")
-    element(:home_bill_addr1_tb, id: "billTo_street1")
-    element(:home_bill_city_tb, id: "billTo_city")
-    element(:home_bill_state_tb, id: "billTo_state")
-    element(:home_bill_state_select, id: "billTo_state_us")
-    element(:home_bill_post_tb, id: "billTo_postalCode")
-    element(:home_bill_phone_tb, id: "billTo_phoneNumber")
-    element(:home_bill_email_tb, id: "billTo_email")
+    element(:home_country_select, id: "bill_to_address_country")
+    element(:home_bill_fname_tb, id: "bill_to_forename")
+    element(:home_bill_lname_tb, id: "bill_to_surname")
+    element(:home_bill_company_tb, id: "bill_to_company_name")
+    element(:home_bill_addr1_tb, id: "bill_to_address_line1")
+    element(:home_bill_city_tb, id: "bill_to_address_city")
+    element(:home_bill_state_tb, id: "bill_to_address_state")
+    element(:home_bill_state_select, id: "bill_to_address_state_us")
+    element(:home_bill_post_tb, id: "bill_to_address_postal_code")
+    element(:home_bill_phone_tb, id: "bill_to_phone")
+    element(:home_bill_email_tb, id: "bill_to_email_display")
     #
     # Various elements
     #

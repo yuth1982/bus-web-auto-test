@@ -176,7 +176,7 @@ Feature: Phoenix regression Test
       | address                 | 12345678       | city          | Canada           | AB                      | 123456                   | email@email.com |
 
   @TC.2362 @firefox @bus @phoenix @capture @city @state @zip
-  Scenario: 2362 Edit an existing MozyHome user as a user
+  Scenario: 2362 Change credit card information for a MozyHome user
     When I add a phoenix Home user:
       | period | base plan | country       |
       | 1      | 50 GB     | United States |
@@ -191,8 +191,9 @@ Feature: Phoenix regression Test
     Then The user is verified
     When I Log in as the user
     Then I will see the account page
-    When I navigate to Upgrade section in Phoenix
+    When I navigate to My Profile section in Phoenix
+    When I navigate to Change Credit Card section in Phoenix
     And I change credit card info to:
-      | Name: | Street Address: | City: | Zip/Postal Code: | Country: |
-      | Name  | Street Address  | City  | 123456           | Canada   |
-    Then the user is successfully added
+      | Name: | Street Address: | City: | State/Province: | Zip/Postal Code: | Country: |
+      | Name  | Street Address  | City  | AB              | A0A0A0           | Canada   |
+    Then The credit card is updated

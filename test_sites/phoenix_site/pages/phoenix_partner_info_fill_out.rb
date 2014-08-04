@@ -123,6 +123,7 @@ module Phoenix
     def direct_fill_out(partner)
       direct_admin_display_name.type_text(partner.admin_info.full_name)
       direct_admin_username.type_text(partner.admin_info.email)
+      security_select.select(partner.company_info.security)
       direct_password.type_text(CONFIGS['global']['test_pwd'])
       direct_reenter_password.type_text(CONFIGS['global']['test_pwd'])
       fill_in_pro_elements(partner)
