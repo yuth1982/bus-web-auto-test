@@ -24,7 +24,7 @@ Then /^user details should be:$/ do |user_table|
       when 'ID:'
         if expected[header].start_with?('@')
           actual[header].length.should == expected[header].length - 1
-          actual[header].match(/\d{8}/).nil?.should be_false
+          actual[header].match(/\d{9}/).nil?.should be_false
         else
           actual[header].should == expected[header]
         end

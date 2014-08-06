@@ -55,8 +55,8 @@ Scenario: Mozy-19646:Access Partner as Bus Admin
     |             | @user_email | @user_name | (default user group) | 0        | Shared  | None         | today    | never     |
   When I view user details by newly created user email
   Then user details should be:
-    | ID:       | External ID: | Name:                           |
-    | @xxxxxxxx | (change)     | <%=@users.first.name%> (change) |
+    | ID:        | External ID: | Name:                           |
+    | @xxxxxxxxx | (change)     | <%=@users.first.name%> (change) |
   And user resources details rows should be:
     | Storage                  | Devices                             |
     | 0 Used / 10 GB Available | Desktop: 0 Used / 1 Available Edit  |
@@ -249,8 +249,8 @@ Scenario: Mozy-19853: Access an United Kingdom Partner's User's details as Partn
       | @user_email | @user_name   | 0 	      | Shared  | None  	   | today    | never     |
     When I view user details by newly created user email
     Then user details should be:
-      | ID:       | External ID: | Name:                           |
-      | @xxxxxxxx | (change)     | <%=@users.first.name%> (change) |
+      | ID:        | External ID: | Name:                           |
+      | @xxxxxxxxx | (change)     | <%=@users.first.name%> (change) |
   And user resources details rows should be:
     | Storage                  | Devices                           |
     | 0 Used / 10 GB Available | Server: 0 Used / 1 Available Edit |
@@ -284,8 +284,8 @@ Scenario: Mozy-19859:Access German Partner's User's details as Bus Admin
     |             | @user_email | @user_name   | (default user group) | 0 	     | Server: Shared | Server: None | today    | never     |
   When I view user details by newly created user email
   Then user details should be:
-    | ID:       | External ID: | Name:                           |
-    | @xxxxxxxx | (change)     | <%=@users.first.name%> (change) |
+    | ID:        | External ID: | Name:                           |
+    | @xxxxxxxxx | (change)     | <%=@users.first.name%> (change) |
   And user resources details rows should be:
     | Storage                         | Devices                           |
     | Server: 0 Used / 2 GB Available | Server: 0 Used / 1 Available Edit |
