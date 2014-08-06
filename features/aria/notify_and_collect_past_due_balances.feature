@@ -79,8 +79,8 @@ Feature: Notify about and collect past-due balances
       | status_label     |
       | ACTIVE DUNNING 1 |
     When I search emails by keywords:
-      | from                    | subject                               | after    | content                             |
-      | AccountManager@mozy.com | [Mozy] Mozy invoice, due upon receipt | -5minute |<%=@partner.credit_card.first_name%> |
+      | from                    | subject                               | after | content                             |
+      | AccountManager@mozy.com | [Mozy] Mozy invoice, due upon receipt | today |<%=@partner.credit_card.first_name%> |
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 
@@ -99,8 +99,8 @@ Feature: Notify about and collect past-due balances
       | status_label     |
       | ACTIVE DUNNING 2 |
     When I search emails by keywords:
-      | from                    | subject                                  | after    | content                             |
-      | AccountManager@mozy.com | [Mozy] Mozy subscription invoice overdue | -5minute |<%=@partner.credit_card.first_name%> |
+      | from                    | subject                                  | after | content                             |
+      | AccountManager@mozy.com | [Mozy] Mozy subscription invoice overdue | today |<%=@partner.credit_card.first_name%> |
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 
@@ -119,8 +119,8 @@ Feature: Notify about and collect past-due balances
       | status_label     |
       | ACTIVE DUNNING 3 |
     When I search emails by keywords:
-      | from                    | after    | content                              |
-      | AccountManager@mozy.com | -5minute | <%=@partner.credit_card.first_name%> |
+      | from                    | subject                                                        | after | content                              |
+      | AccountManager@mozy.com | [Mozy] Your account is suspended - all users unable to back up | today | <%=@partner.credit_card.first_name%> |
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 
@@ -139,8 +139,8 @@ Feature: Notify about and collect past-due balances
       | status_label |
       | SUSPENDED    |
     When I search emails by keywords:
-      | from        | subject                   | after    | content                             |
-      | ar@mozy.com | Account Suspension Notice | -5minute |<%=@partner.credit_card.first_name%> |
+      | from        | subject                   | after | content                             |
+      | ar@mozy.com | Account Suspension Notice | today |<%=@partner.credit_card.first_name%> |
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 
@@ -159,8 +159,8 @@ Feature: Notify about and collect past-due balances
       | status_label     |
       | ACTIVE DUNNING 1 |
     When I search emails by keywords:
-      | from                    | subject                               | after    | content                             |
-      | AccountManager@mozy.com | [Mozy] Mozy invoice, due upon receipt | -5minute | <%=@partner.admin_info.first_name%> |
+      | from                    | subject                               | after | content                             |
+      | AccountManager@mozy.com | [Mozy] Mozy invoice, due upon receipt | today | <%=@partner.admin_info.first_name%> |
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 
@@ -179,12 +179,11 @@ Feature: Notify about and collect past-due balances
       | status_label     |
       | ACTIVE DUNNING 2 |
     When I search emails by keywords:
-      | from                    | subject                                  | after    | content                             |
-      | AccountManager@mozy.com | [Mozy] Mozy subscription invoice overdue | -5minute | <%=@partner.admin_info.first_name%> |
+      | from                    | subject                                  | after | content                             |
+      | AccountManager@mozy.com | [Mozy] Mozy subscription invoice overdue | today | <%=@partner.admin_info.first_name%> |
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 
-  # need update subject information
   @TC.16244 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @net_terms_customers @email
   Scenario: 16244 Verify aria sends email when change Reseller account status to Active Dunning 3 net terms
     When I add a new Reseller partner:
@@ -200,8 +199,8 @@ Feature: Notify about and collect past-due balances
       | status_label     |
       | ACTIVE DUNNING 3 |
     When I search emails by keywords:
-      | from                    | after    | content                             |
-      | AccountManager@mozy.com | -5minute | <%=@partner.admin_info.first_name%> |
+      | from                    | subject                                                        | after | content                             |
+      | AccountManager@mozy.com | [Mozy] Your account is suspended - all users unable to back up | today | <%=@partner.admin_info.first_name%> |
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 
@@ -220,8 +219,8 @@ Feature: Notify about and collect past-due balances
       | status_label |
       | SUSPENDED    |
     When I search emails by keywords:
-      | from        | subject                   | after    | content                            |
-      | ar@mozy.com | Account Suspension Notice | -5minute | <%=@partner.admin_info.full_name%> |
+      | from        | subject                   | after | content                            |
+      | ar@mozy.com | Account Suspension Notice | today | <%=@partner.admin_info.full_name%> |
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 

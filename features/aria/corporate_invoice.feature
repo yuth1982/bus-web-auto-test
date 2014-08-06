@@ -18,8 +18,8 @@ Feature: Corporate Invoices
       | @new_admin_email | MozyPro Account Created! |
     Then I should see 1 email(s)
     When I search emails by keywords:
-      | from        | to            | subject                    | content          |
-      | ar@mozy.com | qa1@decho.com | Mozy Inc Account Statement | @company_address |
+      | from        | subject                    | content          |
+      | ar@mozy.com | Mozy Inc Account Statement | @company_address |
     Then I should see 1 email(s)
 
   @TC.15687 @bus @2.0 @corporate_invoices @email
@@ -32,8 +32,8 @@ Feature: Corporate Invoices
     And I change account subscription to annual billing period!
     Then Subscription changed message should be Your account has been changed to yearly billing.
     When I search emails by keywords:
-      | from        | to            | subject                    | content          |
-      | ar@mozy.com | qa1@decho.com | Mozy Inc Account Statement | @company_address |
+      | from        | subject                    | content          |
+      | ar@mozy.com | Mozy Inc Account Statement | @company_address |
     Then I should see 2 email(s)
 
   @TC.17841 @bus @2.0 @corporate_invoices @email
@@ -47,8 +47,8 @@ Feature: Corporate Invoices
       | @new_admin_email | MozyEnterprise Account Created! |
     Then I should see 1 email(s)
     When I search emails by keywords:
-      | from        | to            | subject                    | content          |
-      | ar@mozy.com | qa1@decho.com | Mozy Inc Account Statement | @company_address |
+      | from        | subject                    | content          |
+      | ar@mozy.com | Mozy Inc Account Statement | @company_address |
     Then I should see 1 email(s)
 
   @TC.17842 @slow @javascript @bus @2.0 @corporate_invoices @email
@@ -61,6 +61,6 @@ Feature: Corporate Invoices
     And I change account subscription to biennial billing period!
     Then Subscription changed message should be Your account has been changed to biennial billing.
     When I search emails by keywords:
-      | from        | to            | subject                    | content          |
-      | ar@mozy.com | qa1@decho.com | Mozy Inc Account Statement | @company_address |
+      | from        | subject                    | content          |
+      | ar@mozy.com | Mozy Inc Account Statement | @company_address |
     Then I should see 2 email(s)

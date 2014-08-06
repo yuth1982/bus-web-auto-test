@@ -20,7 +20,7 @@ When /^I search emails by keywords:$/ do |keywords_table|
         #Legacy from Zimbra
         when  'date','after'
           #IMAP doesn't search over minutes just dates
-            v = Date.today if v == 'today'
+            v = Net::IMAP.format_date(Date.today) if v == 'today'
         else
           # do nothing
       end
