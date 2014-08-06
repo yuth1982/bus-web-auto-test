@@ -283,7 +283,7 @@ Feature: User Has Unique Username
       | @existing_user_email |
     And edit user email change confirmation message to existing user email should be displayed
     And I retrieve email content by keywords:
-      | to                    | subject                    | date  |
+      | to                   | subject                    | date  |
       | @existing_user_email | Email Address Verification | today |
     And I get verify email address from email content
     Then verify email address link should show success message
