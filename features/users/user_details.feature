@@ -264,7 +264,7 @@ Feature: User Details
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120019
+  @TC.120019 @edit_device_limit
   Scenario: 120019:[Bundled]newly synced FedID users can edit device limit
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms | server plan |
@@ -308,16 +308,16 @@ Feature: User Details
     And I navigate to Authentication Policy section from bus admin console page
     When I click Connection Settings tab
     And I input server connection settings
-      | Server Host   | Protocol | SSL Cert | Port | Base DN                    | Bind Username          | Bind Password |
-      | 10.135.16.154 | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com | leongh@qa5.mozyops.com | QAP@SSw0rd    |
+      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
     Then test connection message should be Test passed
     When I click Sync Rules tab
     And I add 1 new provision rules:
-      | rule          | group |
-      | cn=test110836 | Test  | 
+      | rule            | group |
+      | cn=120019-test1 | Test  |
     And I click the sync now button
     And I wait for 70 seconds
     And I click Connection Settings tab
@@ -328,10 +328,10 @@ Feature: User Details
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     Then User search results should be:
-      | User                 | Name       | User Group |
-      | <%=@users[0].email%> | User1      | Test       |
-      | test110836@test.com  | test110836 | Test       |
-    And I view user details by test110836
+      | User                   | Name         | User Group |
+      | 120019-test1@test.com  | 120019-test1 | Test       |
+      | <%=@users[0].email%>   | User1        | Test       |
+    And I view user details by 120019-test1
     And users' device status should be:
       | Used | Available | storage_type |
       |  0   | Unlimited | Server       |
@@ -358,8 +358,8 @@ Feature: User Details
     When I click Sync Rules tab
     And I delete all the rules
     And I add 1 new deprovision rules:
-      | rule          | action |
-      | cn=test110836 | Delete |
+      | rule            | action |
+      | cn=120019-test1 | Delete |
     And I click the sync now button
     And I wait for 70 seconds
     And I click Connection Settings tab
@@ -370,7 +370,7 @@ Feature: User Details
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120020
+  @TC.120020 @edit_device_limit
   Scenario: 120020 [Bundled]user moved from subpartner to partner can edit device limit
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -427,7 +427,7 @@ Feature: User Details
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120021
+  @TC.120021 @edit_device_limit
   Scenario: 120021 [Enterprise]newly synced FedID users can edit device limit
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -471,16 +471,16 @@ Feature: User Details
     And I navigate to Authentication Policy section from bus admin console page
     When I click Connection Settings tab
     And I input server connection settings
-      | Server Host   | Protocol | SSL Cert | Port | Base DN                    | Bind Username          | Bind Password |
-      | 10.135.16.154 | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com | leongh@qa5.mozyops.com | QAP@SSw0rd    |
+      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
     Then test connection message should be Test passed
     When I click Sync Rules tab
     And I add 1 new provision rules:
-      | rule          | group |
-      | cn=test110836 | Test  |
+      | rule            | group |
+      | cn=120021-test1 | Test  |
     And I click the sync now button
     And I wait for 70 seconds
     And I click Connection Settings tab
@@ -491,10 +491,10 @@ Feature: User Details
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     Then User search results should be:
-      | User                 | Name       | User Group |
-      | <%=@users[0].email%> | User1      | Test       |
-      | test110836@test.com  | test110836 | Test       |
-    And I view user details by test110836
+      | User                   | Name         | User Group |
+      | 120021-test1@test.com  | 120021-test1 | Test       |
+      | <%=@users[0].email%>   | User1        | Test       |
+    And I view user details by 120021-test1
     And users' device status should be:
       | Used | Available | storage_type |
       | 0    | 8         | Server       |
@@ -523,7 +523,7 @@ Feature: User Details
     When  I edit user device quota to 1
     Then The range of device by tooltips should be:
       | Min | Max |
-      | 0   | 5   |
+      | 0   | 7   |
     And users' device status should be:
       | Used | Available | storage_type |
       |  0   | 1         | Server       |
@@ -531,8 +531,8 @@ Feature: User Details
     When I click Sync Rules tab
     And I delete all the rules
     And I add 1 new deprovision rules:
-      | rule          | action |
-      | cn=test110836 | Delete |
+      | rule            | action |
+      | cn=120021-test1 | Delete |
     And I click the sync now button
     And I wait for 70 seconds
     And I click Connection Settings tab
@@ -543,7 +543,7 @@ Feature: User Details
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120022
+  @TC.120022 @edit_device_limit
   Scenario: 120022 [Enterprisde]user moved from subpartner to partner can edit device limit
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | root role  |
