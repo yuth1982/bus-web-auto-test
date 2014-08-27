@@ -20,7 +20,6 @@ require 'erb'
 require 'ostruct'
 
 require 'capybara/cucumber'
-require 'capybara-webkit'
 
 require 'aria_api/lib/aria_api'
 require 'file_helper'
