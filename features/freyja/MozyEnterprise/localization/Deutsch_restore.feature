@@ -3,7 +3,7 @@ Feature: Localization login and restore
   Background:
     Given I have login freyja as ent user using language Deutsch
 
-  @TC. @freyja @freyja_smoke  @ent  @ent_localization @ent_localization_Deutsch @ent_localization_Deutsch_instant_restore  @ent_smoke
+  @TC. @freyja @freyja_smoke  @ent  @ent_localization @ent_localization_Deutsch @ent_localization_Deutsch_instant_restore
   Scenario: MozyEnterprise user Deutsch localization login and instant restore
   When I select the Synced tab
   And I choose one folder
@@ -16,7 +16,7 @@ Feature: Localization login and restore
   And I logout
 
 
-  @TC. @freyja @freyja_smoke  @ent  @ent_localization @ent_localization_Deutsch @ent_localization_Deutsch_restore_manager_restore  @ent_smoke
+  @TC. @freyja @freyja_smoke  @ent  @ent_localization @ent_localization_Deutsch @ent_localization_Deutsch_restore_manager_restore
   Scenario: MozyEnterprise user Deutsch localization login and restore manager restore
     When I select the Devices tab
     And I choose one file
@@ -32,7 +32,7 @@ Feature: Localization login and restore
     And I logout
 
 
-  @TC. @freyja @freyja_smoke  @ent  @ent_localization @ent_localization_Deutsch @ent_localization_Deutsch_archive_restore  @ent_smoke
+  @TC. @freyja @freyja_smoke  @ent  @ent_localization @ent_localization_Deutsch @ent_localization_Deutsch_archive_restore
   Scenario: MozyEnterprise user Deutsch localization login and archive restore
     When I select the Devices tab
     And I choose one folder
@@ -48,7 +48,7 @@ Feature: Localization login and restore
     When I select options menu
     And I logout
 
-  @TC. @freyja @freyja_smoke  @ent  @ent_localization @ent_localization_Deutsch @ent_localization_Deutsch_media_restore  @ent_smoke
+  @TC. @freyja @freyja_smoke  @ent  @ent_localization @ent_localization_Deutsch @ent_localization_Deutsch_media_restore
   Scenario: MozyEnterprise user Deutsch localization login and media restore
     When I select the Devices tab
     And I choose one folder

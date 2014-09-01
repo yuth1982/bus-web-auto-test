@@ -16,6 +16,7 @@ module Freyja
     # Returns nothing
     def get_restore_status(restore_id)
       sleep 5
+      puts  "//tr[@id='#{restore_id}']/td[5]/div"
       return find(:xpath, "//tr[@id='#{restore_id}']/td[5]/div").text.to_s
     end
 

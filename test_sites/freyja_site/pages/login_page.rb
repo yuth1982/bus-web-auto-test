@@ -8,6 +8,7 @@ module Freyja
     element(:login_btn, css: "span.login_button")
     element(:restore_link, xpath: "//a[contains(text(),'Restore Files')]")
     element(:ent_restore_link, css: "i.icon-folder-open-alt.icon-2x")
+    #element(:ent_restore_link, xpath: "//*[@id='account-index-content']/table/tbody/tr[1]/td[6]/a")
     element(:username_freyja, css: "span.text.username")
     element(:set_dialect_select, id: "set_dialect")
 

@@ -14,6 +14,11 @@ Then /^this restore is (.+)/ do  |restore_status|
           if status != 'Ready for Download'
             status.should == restore_status
           end
+        when "production"
+          status = @freyja_site.event_history_page.get_download_restore_status
+          if status != 'Ready for Download'
+            status.should == restore_status
+          end
         else
           @restore.restore_id = RestoreHelper.get_restore_id(@restore.restore_name)
           status = @freyja_site.event_history_page.get_restore_status(@restore.restore_id)
