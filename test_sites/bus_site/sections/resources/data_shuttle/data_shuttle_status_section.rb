@@ -5,7 +5,7 @@ module Bus
     # Private elements
     #
     element(:device_status_table, xpath: "//table[@class='mini-table']/thead[1]")
-    element(:device_stuck_table, css: 'table.mini-table:nth-child(2)')
+    element(:device_stuck_table, xpath: "//table[@class='mini-table'][2]")
     element(:inventory_status_table, css: 'table.mini-table:last-child')
 
     # Device status tables
