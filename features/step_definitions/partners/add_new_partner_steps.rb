@@ -28,7 +28,7 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller|MozyEnterprise DPS|OEM) part
 
   attributes.each do |header,attribute| #can use variable inside <%= %>
     attribute.replace ERB.new(attribute).result(binding)
-    attributes[header] = nil if attribute == ''
+    attributes[header] = nil  if (attribute == '' && !attributes.has_key?("security") )
   end
 
   case type

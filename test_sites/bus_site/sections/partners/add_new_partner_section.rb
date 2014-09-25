@@ -165,7 +165,7 @@ module Bus
       contact_address_tb.type_text(company_info.address)
       contact_city_tb.type_text(company_info.city)
       contact_zip_tb.type_text(company_info.zip)
-      security_select.select(company_info.security)
+      security_select.select(company_info.security) if company_info.security != ""
       contact_phone_tb.type_text(company_info.phone)
     end
 
