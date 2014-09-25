@@ -7,7 +7,7 @@ Feature: Add a new partner
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.120069
+  @TC.120069 @bus
   Scenario: 120069 HIPAA for MozyPro US partner and sub-partners
    When I add a new MozyPro partner:
     | period | base plan | security | net terms |
@@ -43,7 +43,7 @@ Feature: Add a new partner
    And I stop masquerading
    And I search and delete partner account by newly created partner company name
 
-  @TC.120077
+  @TC.120077 @bus
   Scenario: 120077 HIPAA for Mozy Reseller US partner and sub-partners
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms | security |
@@ -78,7 +78,7 @@ Feature: Add a new partner
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-    @TC.120079
+    @TC.120079 @bus
     Scenario: 120079 HIPAA for Mozy Enterprize and sub-partners
       When I add a new MozyEnterprise partner:
         | period | users  | net terms | security |
@@ -113,7 +113,7 @@ Feature: Add a new partner
       And I stop masquerading
       And I search and delete partner account by newly created partner company name
 
-  @TC.120080
+  @TC.120080 @bus
   Scenario: 120080 HIPAA for Mozy OEM and sub-partners
     When I add a new OEM partner:
       | company_name  | security |
@@ -138,7 +138,7 @@ Feature: Add a new partner
     And I stop masquerading from subpartner
     Then I search and delete partner account by TC.120080.OEM
 
-  @TC.120167
+  @TC.120167 @bus
   Scenario: 120167 Error will occur if no 'Security' option is selected during partner creation
     When I add a new MozyPro partner:
       | period | security |

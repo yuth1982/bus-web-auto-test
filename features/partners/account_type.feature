@@ -12,7 +12,7 @@ Feature: Account Type
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.20925 @BUG.98477 @v.2.4.3
+  @TC.20925 @BUG.98477 @v.2.4.3 @bus
   Scenario: Mozy-20925:Create a New Trial Partner
     When I add a new MozyEnterprise partner:
       | period | users | company name             | account type | sales channel |
@@ -26,7 +26,7 @@ Feature: Account Type
       | Trial (change) | Sales        |
     And I delete partner account
 
-  @TC.20923 @BUG.98477 @v.2.4.3
+  @TC.20923 @BUG.98477 @v.2.4.3 @bus
   Scenario: Mozy-20923:Create a New Internal Test Partner
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | company name                   | account type  |
@@ -39,7 +39,7 @@ Feature: Account Type
       | Internal Test (change) | Sales        |
     And I delete partner account
 
-  @TC.20698 @BUG.98477 @v.2.4.3
+  @TC.20698 @BUG.98477 @v.2.4.3 @bus
   Scenario: Mozy-20698:Create a New Live Partner
     When I add a new MozyPro partner:
       | period | base plan | company name         | account type  | sales channel |
@@ -52,7 +52,7 @@ Feature: Account Type
       | Live (change) | Sales        |
     And I delete partner account
 
-  @TC.20707 @BUG.98491 @BUG.98477 @v.2.4.3
+  @TC.20707 @BUG.98491 @BUG.98477 @v.2.4.3  @bus
   Scenario: Mozy-20707:Create a New Fortress Internal Test Sub Partner
     When I act as partner by:
       | name     | including sub-partners |
