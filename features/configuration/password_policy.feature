@@ -3,7 +3,7 @@ Feature: Password policy is saved successfully to db
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.120092
+  @TC.120092 @bus
   Scenario: 120092 [MozyEnterprise]Hipaa partner password policy settings should be saved to database correctly
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | root role  | security |
@@ -50,7 +50,7 @@ Feature: Password policy is saved successfully to db
     And I search and delete partner account by newly created partner company name
 
 
-  @TC.120103
+  @TC.120103 @bus
   Scenario: 120103 [Reseller]Hipaa partner password policy settings should be saved to database correctly
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms | security |
@@ -96,7 +96,7 @@ Feature: Password policy is saved successfully to db
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120104
+  @TC.120104 @bus
   Scenario: 120104 [OEM]Hipaa partner password policy settings should be saved to database correctly
     When I act as partner by: 
       | name     | including sub-partners |

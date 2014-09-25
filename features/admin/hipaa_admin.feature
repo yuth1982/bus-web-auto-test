@@ -3,7 +3,7 @@ Feature: The capabilities that govern the HIPAA compliant root admin role should
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.120082
+  @TC.120082  @bus
   Scenario: 120082 [MozyEnterprise]Hipaa sub admin cannot see the activate admin link in admin console
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | root role  | security |
@@ -60,7 +60,7 @@ Feature: The capabilities that govern the HIPAA compliant root admin role should
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120087
+  @TC.120087  @bus
   Scenario: [Reseller]120087 Hipaa sub admin cannot see the activate admin link in admin console
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms | security |
@@ -117,7 +117,7 @@ Feature: The capabilities that govern the HIPAA compliant root admin role should
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
     
-  @TC.120085
+  @TC.120085 @bus
   Scenario: 120085 [OEM]Hippa admin cannot see the activate admin link in admin console
     When I add a new OEM partner:
       | Root role     | Security | Company Type |
@@ -172,7 +172,7 @@ Feature: The capabilities that govern the HIPAA compliant root admin role should
     Then I stop masquerading from subpartner
     And I search and delete partner account by newly created subpartner company name
 
-  @TC.120088
+  @TC.120088  @bus
   Scenario: 120088 [MozyEnterprise]Hipaa admin cannot see the password policy link in admin console
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | root role  | security |
@@ -200,7 +200,7 @@ Feature: The capabilities that govern the HIPAA compliant root admin role should
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120089
+  @TC.120089  @bus
   Scenario: [Reseller]120089 Hipaa admin cannot see the password policy link in admin console
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms | security |
@@ -228,7 +228,7 @@ Feature: The capabilities that govern the HIPAA compliant root admin role should
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120090
+  @TC.120090 @bus
   Scenario: 120090 [OEM]Hippa admin cannot see the password policy link in admin console
     When I add a new OEM partner:
       | Security |
