@@ -39,7 +39,7 @@ Feature: Phoenix regression Test
       | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> |
     Then I delete partner account
 
-  @TC.2356 @bus @capture @city @state @zip
+  @TC.2356 @bus @capture @city @state @zip @phoenix
   Scenario: 2356 Create a new MozyPro partner part3 (BUS)
     When I log in bus admin console as administrator
     When I add a new MozyPro partner:
@@ -157,7 +157,7 @@ Feature: Phoenix regression Test
       | Country: |
       | Thailand |
 
-  @TC.2361 @bus @capture @city @state @zip
+  @TC.2361 @bus @capture @city @state @zip @phoenix
   Scenario: 2361 Change credit card information for a MozyPro partner
     When I log in bus admin console as administrator
     And I add a new MozyPro partner:
