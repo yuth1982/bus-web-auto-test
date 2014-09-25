@@ -1,10 +1,10 @@
 require 'net-ldap'
 module LDAPHelper
-  USER = 'congshanliu@qa5.mozyops.com'
-  PASSWORD = 'QAP@SSw0rd'
-  HOST = 'ad01.qa5.mozyops.com'
+  USER = 'admin@mtdev.mozypro.local'
+  PASSWORD = 'abc!@#123'
+  HOST = '10.29.99.120'
   PORT = 389
-  TREEBASE = 'dc=qa5, dc=mozyops, dc=com'
+  TREEBASE = 'dc=mtdev,dc=mozypro,dc=local'
   EMAIL_POSTFIX = '@test.com'
   @ldap_user_mail = ''
 

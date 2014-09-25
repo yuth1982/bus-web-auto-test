@@ -39,8 +39,8 @@ Feature: User sync
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I input server connection settings
-      | Server Host   | Protocol | SSL Cert | Port | Base DN                    | Bind Username          | Bind Password |
-      | 10.135.16.154 | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com | leongh@qa5.mozyops.com | QAP@SSw0rd    |
+      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
@@ -86,8 +86,8 @@ Feature: User sync
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I input server connection settings
-      | Server Host   | Protocol | SSL Cert | Port | Base DN                    | Bind Username          | Bind Password |
-      | 10.135.16.154 | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com | leongh@qa5.mozyops.com | QAP@SSw0rd    |
+      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
@@ -221,8 +221,8 @@ Feature: User sync
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I input server connection settings
-      | Server Host   | Protocol | SSL Cert | Port | Base DN                    | Bind Username          | Bind Password |
-      | 10.135.16.154 | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com | leongh@qa5.mozyops.com | QAP@SSw0rd    |
+      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
@@ -292,8 +292,8 @@ Feature: User sync
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I input server connection settings
-      | Server Host   | Protocol | SSL Cert | Port | Base DN                    | Bind Username          | Bind Password |
-      | 10.135.16.154 | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com | leongh@qa5.mozyops.com | QAP@SSw0rd    |
+      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
@@ -542,7 +542,7 @@ Feature: User sync
     And I search and delete partner account by newly created partner company name
 
   @TC.17559 @function @bus @2.1 @direct_ldap_integration @user_deconstruction
-  Scenario: 17559 17560 Error cases for user sync 
+  Scenario: 17559 17560 Error cases for user sync
     # Scenario: 17559 Empty rules will be filtered
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -560,8 +560,8 @@ Feature: User sync
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I input server connection settings
-      | Server Host   | Protocol | SSL Cert | Port | Base DN                    | Bind Username          | Bind Password |
-      | 10.135.16.154 | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com | leongh@qa5.mozyops.com | QAP@SSw0rd    |
+      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
@@ -607,14 +607,15 @@ Feature: User sync
       | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                              | filter |
-      | <%=CONFIGS['fedid']['user_email']%>   | None   |
+      | keywords                            | filter |
+      | <%=CONFIGS['fedid']['user_email']%> | None   |
     Then User search results should be:
-      | User                                 | Name                               | User Group  |
-      | <%=CONFIGS['fedid']['user_email']%>  | <%=CONFIGS['fedid']['user_name']%> | dev         |
-    When I view user details by <%= CONFIGS['fedid']['user_email'] %>
+      | User                                | Name                               | User Group |
+      | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%> | dev        |
+    When I view user details by <%=CONFIGS['fedid']['user_email']%>
     Then The user status should be Active
-    When I login the subdomain <%= CONFIGS['fedid']['subdomain'] %>
+    When I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
+    And I sign in with user name <%=CONFIGS['fedid']['user_email']%> and password QAP@SSw0rd
     Then I will see the user account page
 
     When I log in bus admin console as administrator
@@ -676,8 +677,8 @@ Feature: User sync
   @TC.17593 @firefox_profile  @bus @2.1 @direct_ldap_integration @use_provision @qa8
   Scenario: 17593 UserProvision - Suspended users in BUS can't be resumed
     When I act as partner by:
-      | email                       |
-      |qa8+saml+test+admin@mozy.com |
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I save the changes
@@ -699,11 +700,12 @@ Feature: User sync
       | keywords                            | filter |
       | <%=CONFIGS['fedid']['user_email']%> | None   |
     Then User search results should be:
-      | User                                | Name                                    | User Group  |
-      | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%>      | dev         |
+      | User                                | Name                               | User Group  |
+      | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%> | dev         |
     When I view user details by <%=CONFIGS['fedid']['user_email']%>
     Then The user status should be Active
     When I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
+    And I sign in with user name <%=CONFIGS['fedid']['user_email']%> and password QAP@SSw0rd
     Then I will see the user account page
 
     When I log in bus admin console as administrator
@@ -808,6 +810,7 @@ Feature: User sync
     When I view user details by <%=CONFIGS['fedid']['user_email']%>
     And I get the user id
     And I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
+    And I sign in with user name <%=CONFIGS['fedid']['user_email']%> and password QAP@SSw0rd
     Then I will see the user account page
 
     When I log in bus admin console as administrator
@@ -866,6 +869,7 @@ Feature: User sync
     When I view user details by <%=CONFIGS['fedid']['user_email']%>
     And I get the user id
     And I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
+    And I sign in with user name <%=CONFIGS['fedid']['user_email']%> and password QAP@SSw0rd
     Then I will see the user account page
 
     When I log in bus admin console as administrator
@@ -935,18 +939,18 @@ Feature: User sync
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I input server connection settings
-      | Server Host   | Protocol | SSL Cert | Port | Base DN                    | Bind Username          | Bind Password |
-      | 10.135.16.154 | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com | leongh@qa5.mozyops.com | QAP@SSw0rd    |
+      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
-    And I delete a user fediduser2 in the AD
-    And I delete a user fediduser0 in the AD
+    And I delete a user dev-17546-test2 in the AD
+    And I delete a user dev-17546-test3 in the AD
     When I Test Connection for AD
     Then test connection message should be Test passed
     When I click Sync Rules tab
     And I add 1 new provision rules:
-      | rule          | group |
-      | cn=fediduser* | dev   |
+      | rule               | group |
+      | cn=dev-17546-test* | dev   |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 1 provision rules
@@ -957,15 +961,15 @@ Feature: User sync
       | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                |      Name      | User Group  |
-      | fediduser1@test.com |   fediduser1   | dev         |
+      | User                     | Name            | User Group |
+      | dev-17546-test1@test.com | dev-17546-test1 | dev        |
     When I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
-    And I add a user fediduser2 to the AD
+    And I add a user dev-17546-test2 to the AD
     And I add 1 new provision rules:
-      | rule          | group |
-      | cn=fediduser* | dev   |
+      | rule               | group |
+      | cn=dev-17546-test* | dev   |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 1 provision rules
@@ -977,17 +981,17 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by User desc
     Then User search results should be:
-      | User                |      Name     | User Group  |
-      | fediduser2@test.com |   fediduser2   | dev         |
-      | fediduser1@test.com |   fediduser1   | dev         |
+      | User                     | Name            | User Group |
+      | dev-17546-test2@test.com | dev-17546-test2 | dev        |
+      | dev-17546-test1@test.com | dev-17546-test1 | dev        |
 
     When I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
-    And I modify the username from fediduser2 to fediduser0 for user fediduser2@test.com in the AD
+    And I modify the username from dev-17546-test2 to dev-17546-test3 for user dev-17546-test2@test.com in the AD
     And I add 1 new provision rules:
-      | rule          | group |
-      | cn=fediduser* | dev   |
+      | rule               | group |
+      | cn=dev-17546-test* | dev   |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 1 provision rules
@@ -999,17 +1003,17 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by User desc
     Then User search results should be:
-      | User                |      Name      | User Group  |
-      | fediduser2@test.com |   fediduser0   | dev         |
-      | fediduser1@test.com |   fediduser1   | dev         |
+      | User                     | Name            | User Group |
+      | dev-17546-test2@test.com | dev-17546-test3 | dev        |
+      | dev-17546-test1@test.com | dev-17546-test1 | dev        |
 
     When I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
-    And I modify the username from fediduser0 to fediduser2 for user fediduser2@test.com in the AD
+    And I modify the username from dev-17546-test3 to dev-17546-test2 for user dev-17546-test2@test.com in the AD
     And I add 1 new provision rules:
-      | rule          | group |
-      | cn=fediduser* | dev   |
+      | rule               | group |
+      | cn=dev-17546-test* | dev   |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 1 provision rules
@@ -1021,16 +1025,16 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by User desc
     Then User search results should be:
-      | User                |      Name      | User Group  |
-      | fediduser2@test.com |   fediduser2   | dev         |
-      | fediduser1@test.com |   fediduser1   | dev         |
+      | User                     | Name            | User Group |
+      | dev-17546-test2@test.com | dev-17546-test2 | dev        |
+      | dev-17546-test1@test.com | dev-17546-test1 | dev        |
 
     When I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
     And I add 1 new deprovision rules:
-      | rule          | action  |
-      | cn=fediduser* | Delete  |
+      | rule               | action |
+      | cn=dev-17546-test* | Delete |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 1 deprovision rules
@@ -1042,7 +1046,7 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
 
-    And I delete a user fediduser2 in the AD
+    And I delete a user dev-17546-test2 in the AD
     # Scenario: 18723 UserProvision-Fixed Attribute
     And I navigate to Authentication Policy section from bus admin console page
     And I click Attribute Mapping tab
@@ -1050,10 +1054,10 @@ Feature: User sync
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I click Sync Rules tab
-    And I add a user fediduser2 to the AD
+    And I add a user dev-17546-test2 to the AD
     And I add 1 new provision rules:
-      | rule          | group |
-      | cn=fediduser* | dev   |
+      | rule               | group |
+      | cn=dev-17546-test* | dev   |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 1 provision rules
@@ -1065,19 +1069,19 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by User desc
     Then User search results should be:
-      | User                |      Name      | User Group  |
-      | fediduser2@test.com |   fediduser2   | dev         |
-      | fediduser1@test.com |   fediduser1   | dev         |
+      | User                     | Name            | User Group |
+      | dev-17546-test2@test.com | dev-17546-test2 | dev        |
+      | dev-17546-test1@test.com | dev-17546-test1 | dev        |
 
     When I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
     And I update a user in the AD:
-      | username   | attribute  | value                 |
-      | fediduser2 | mail       | fediduser0@test.com   |
+      | username        | attribute | value                    |
+      | dev-17546-test2 | mail      | dev-17546-test0@test.com |
     And I add 1 new provision rules:
-      | rule          | group |
-      | cn=fediduser* | dev   |
+      | rule               | group |
+      | cn=dev-17546-test* | dev   |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 1 provision rules
@@ -1089,16 +1093,16 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by User
     Then User search results should be:
-      | User                |      Name      | User Group  |
-      | fediduser0@test.com |   fediduser2   | dev         |
-      | fediduser1@test.com |   fediduser1   | dev         |
+      | User                     | Name            | User Group |
+      | dev-17546-test0@test.com | dev-17546-test2 | dev        |
+      | dev-17546-test1@test.com | dev-17546-test1 | dev        |
 
     When I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
     And I add 1 new deprovision rules:
-      | rule          | action  |
-      | cn=fediduser* | Delete  |
+      | rule               | action |
+      | cn=dev-17546-test* | Delete |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 1 deprovision rules
@@ -1112,7 +1116,7 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
 
-    And I delete a user fediduser2 in the AD
+    And I delete a user dev-17546-test2 in the AD
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -1132,8 +1136,8 @@ Feature: User sync
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I input server connection settings
-      | Server Host   | Protocol | SSL Cert | Port | Base DN                    | Bind Username          | Bind Password |
-      | 10.135.16.154 | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com | leongh@qa5.mozyops.com | QAP@SSw0rd    |
+      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
@@ -1187,8 +1191,8 @@ Feature: User sync
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I input server connection settings
-      | Server Host   | Protocol | SSL Cert | Port | Base DN                    | Bind Username          | Bind Password |
-      | 10.135.16.155 | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com | leongh@qa5.mozyops.com | QAP@SSw0rd    |
+      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.99.123 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     And I click Sync Rules tab
