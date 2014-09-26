@@ -7,7 +7,7 @@
 
 require File.expand_path('../../lib/testlink_helper', __FILE__)
 
-LorFilePath = File.expand_path('../../lor', __FILE__)
+LOR_FILE = File.expand_path('../../lor', __FILE__)
 
 TEST_PLAN = 424299                           #"Bus Postgres Upgrade - Automation"
 BUILD_NAME = 'bus2.15.0.9_qa12_postgres9.2'
@@ -30,29 +30,38 @@ def  get_result_from_lor(file)
 
   passed = []
   failed = []
+  case_match = true
   failed_num = (lines[-3].match(/31m\d+\sfailed/) != nil)? lines[-3][/31m\d+\sfailed/].gsub('31m','').gsub('failed','').to_i : 0
   passed_num = (lines[-3].match(/32m\d+\spassed/) != nil)? lines[-3][/32m\d+\spassed/].gsub('32m','').gsub('passed','').to_i : 0
-  lines[(-4-failed_num)..(-5)].each {|line| failed << line[/Scenario:\s\d+\s/].gsub('Scenario:','').to_i if line.match(/Scenario:\s\d+\s/) != nil} if failed_num!=0
+  lines[(-4-failed_num)..(-5)].each {|line| failed << line[/Scenario:\D*\d+/].gsub(/Scenario:\D*/,'').to_i if line.match(/Scenario:\D*\d+/) != nil} if failed_num!=0
   if passed_num !=0
     lines[0...(-5-failed_num)].each_index {|x| passed << lines[x][/36m@TC.\d+/].gsub('36m@TC.','').to_i if lines[x].match(/36m@TC.\d+/) != nil and lines[x+2].match(/32m/)!=nil}
     passed.select! {|case_id| !failed.include?(case_id)}
   end
 
-
-  puts "failed case num is not match!" if failed_num != failed.length
-  puts "passed case num is not match!" if passed_num != passed.length
-
   puts "failed num is #{failed.length}, failed case is :", failed
   puts "passed num is #{passed.length}, passed case is :", passed
 
-  return passed, failed
+  if failed_num != failed.length
+    puts "failed case num is not match!"
+    case_match = false
+  end
+
+  if passed_num != passed.length
+    puts "passed case num is not match!"
+    case_match = false
+  end
+
+  return passed, failed, case_match
 
 end
 
 
-pass_tcid, fail_tcid = get_result_from_lor(LorFilePath)
+pass_tcid, fail_tcid, case_num_correct = get_result_from_lor(LOR_FILE)
 
+if case_num_correct
+  pass_tcid.each {|tcid| puts report_result_for_testcase(testcase_externalid=tcid, result='p')}
+  fail_tcid.each {|tcid| puts report_result_for_testcase(testcase_externalid=tcid, result='f')}
+end
 
-pass_tcid.each {|tcid| puts report_result_for_testcase(testcase_externalid=tcid, result='p')}
-fail_tcid.each {|tcid| puts report_result_for_testcase(testcase_externalid=tcid, result='f')}
 
