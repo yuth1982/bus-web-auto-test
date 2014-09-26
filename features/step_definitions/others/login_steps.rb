@@ -59,11 +59,7 @@ Then /^the new partner admin should be asked to verify their email address$/ do
 end
 
 When /^I log into bus admin console with uppercase (.+) and (.+)$/ do |username, password|
-  if username != nil
-    username = username.upcase
-  else
-    raise('Failed to get username from demeter database.')
-  end
+  username = username.upcase
   step %{I log in bus admin console with user name #{username} and password #{password}}
 end
 
@@ -75,11 +71,7 @@ When /^I log into bus admin console with mixed case (.+) and (.+)$/ do |username
 end
 
 When /^I log into (.+) with uppercase username (.+) and (.+)$/ do |subdomain, username, password|
-  if username != nil
-    username = username.upcase
-  else
-    raise('Failed to get username from demeter database')
-  end
+  username = username.upcase
   user_account = {:user_name => username, :password => password}
   @bus_site.user_login_page(subdomain, 'mozy').login(user_account)
 end
