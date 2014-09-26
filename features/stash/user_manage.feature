@@ -47,22 +47,22 @@ Feature: User stash setting management
   @TC.18974 @BSA.2040 @bus @stash
   Scenario: 18974 Click Add Sync link in user details section to enable stash
     When I add a new MozyPro partner:
-      | period | base plan |
-      | 12     | 50 GB     |
+      | period | base plan | root role               |
+      | 12     | 50 GB     | Bundle Pro Partner Root |
     Then New partner should be created
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |
     When I act as newly created partner account
     And I add new user(s):
-      | name          | storage_type | storage_limit | devices |
-      | TC.18974 user | Desktop      | 10            | 1       |
+      | name          | user_group           | storage_type | storage_limit | devices |
+      | TC.18974 user | (default user group) | Desktop      | 10            | 1       |
     Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by newly created user email
     And I enable stash without send email in user details section
     Then user details should be:
-      | Name:                  | Enable Sync:               |
+      | Name:                  | Enable Sync:                |
       | TC.18974 user (change) | Yes (Send Invitation Email) |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
@@ -70,16 +70,16 @@ Feature: User stash setting management
   @TC.19017 @BSA.2040 @bus @stash
   Scenario: 19017 User click Cancel will not enable stash
     When I add a new MozyPro partner:
-      | period | base plan |
-      | 12     | 50 GB     |
+      | period | base plan | root role |
+      | 12     | 50 GB     | Bundle Pro Partner Root |
     Then New partner should be created
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |
     When I act as newly created partner account
     And I add new user(s):
-      | name          | storage_type | storage_limit | devices |
-      | TC.19017 user | Desktop      | 10            | 1       |
+      | name          | user_group          | storage_type | storage_limit | devices |
+      | TC.19017 user |(default user group) | Desktop      | 10            | 1       |
     Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by newly created user email
@@ -146,16 +146,16 @@ Feature: User stash setting management
   @TC.19019 @BSA.2050 @bus @stash
   Scenario: 19019 Add new user with stash not enabled
     When I add a new MozyPro partner:
-      | period | base plan |
-      | 1      | 50 GB     |
+      | period | base plan | root role |
+      | 1      | 50 GB     | Bundle Pro Partner Root |
     Then New partner should be created
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |
     When I act as newly created partner account
     And I add new user(s):
-      | name          | storage_type | storage_limit | enable_stash |
-      | TC.19019 user | Desktop      | 10            | no           |
+      | name          | user_group           | storage_type | storage_limit | enable_stash |
+      | TC.19019 user | (default user group) | Desktop      | 10            | no           |
     Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by newly created user email
@@ -168,16 +168,16 @@ Feature: User stash setting management
   @TC.18990 @BSA.2070 @bus @stash @email
   Scenario: 18990 Send stash invitation email in user details section
     When I add a new MozyPro partner:
-      | period | base plan |
-      | 12     | 50 GB     |
+      | period | base plan | root role |
+      | 12     | 50 GB     | Bundle Pro Partner Root |
     Then New partner should be created
     Then Partner general information should be:
       | Enable Sync: |
       | Yes (change)  |
     When I act as newly created partner account
     And I add new user(s):
-      | name          | storage_type | storage_limit | devices | enable_stash |
-      | TC.18990 user | Desktop      | 10            | 1       | yes          |
+      | name          | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | TC.18990 user | (default user group) | Desktop      | 10            | 1       | yes          |
     Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by newly created user email

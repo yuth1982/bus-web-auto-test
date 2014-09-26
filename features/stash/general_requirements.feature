@@ -8,13 +8,13 @@ Feature:
   @TC.19040 @BSA.1000 @bus @stash @general_requirements @email
   Scenario: 19040 MozyPro Partner Provision Sync Container - Default User Group no email invite
     When I add a new MozyPro partner:
-      | period | base plan | net terms |
-      | 12     | 100 GB    | yes       |
+      | period | base plan | net terms | root role               |
+      | 12     | 100 GB    | yes       | Bundle Pro Partner Root |
     Then New partner should be created
     And I act as newly created partner account
     And I add new user(s):
-      | name          | storage_type | storage_limit | devices | enable_stash | send_email |
-      | TC.19040 User | Desktop      | 10            | 1       | yes          | no         |
+      | name          | user_group           | storage_type | storage_limit | devices | enable_stash | send_email |
+      | TC.19040 User | (default user group) | Desktop      | 10            | 1       | yes          | no         |
     Then 1 new user should be created
     When I search emails by keywords:
       | to                          | subject      |
@@ -46,15 +46,15 @@ Feature:
   @TC.19078 @BSA.1000 @bus @stash
   Scenario: 19078 MozyPro Partner Add Sync to existing partner
     When I add a new MozyPro partner:
-      | period | base plan | net terms |
-      | 12     | 100 GB    | yes       |
+      | period | base plan | net terms | root role |
+      | 12     | 100 GB    | yes       | Bundle Pro Partner Root |
     Then New partner should be created
     When I act as newly created partner account
     And I navigate to Add New User section from bus admin console page
     Then I should see stash options
     When I add new user(s):
-      | name          | storage_type | storage_limit | devices |
-      | TC.19078 User | Desktop      | 10            | 1       |
+      | name          | user_group           | storage_type | storage_limit | devices |
+      | TC.19078 User | (default user group) | Desktop      | 10            | 1       |
     Then 1 new user should be created
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
@@ -74,13 +74,13 @@ Feature:
   @TC.19080 @BSA.1000 @bus @stash @email
   Scenario: 19080 MozyPro Partner Add Sync Container Default User Group No Email
     When I add a new MozyPro partner:
-      | period | base plan | net terms |
-      | 12     | 100 GB    | yes       |
+      | period | base plan | net terms | root role |
+      | 12     | 100 GB    | yes       | Bundle Pro Partner Root |
     Then New partner should be created
     And I act as newly created partner account
     And I add new user(s):
-      | name          | storage_type | storage_limit | devices |
-      | TC.19080 User | Desktop      | 10            | 1       |
+      | name          |user_group           | storage_type | storage_limit | devices |
+      | TC.19080 User |(default user group) | Desktop      | 10            | 1       |
     Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by newly created user email
@@ -535,13 +535,13 @@ Feature:
   @TC.22186 @stash
   Scenario: 22186 MozyPro Partner Enable and Disable cycle by add sync with single user
     When I add a new MozyPro partner:
-      | period | base plan | net terms |
-      | 12     | 100 GB    | yes       |
+      | period | base plan | net terms | root role |
+      | 12     | 100 GB    | yes       | Bundle Pro Partner Root |
     Then New partner should be created
     And I act as newly created partner account
     And I add new user(s):
-      | name          | storage_type | storage_limit | devices | enable_stash  |
-      | TC.22186 User | Desktop      | 10            | 1       | yes           |
+      | name          | user_group           | storage_type | storage_limit | devices | enable_stash  |
+      | TC.22186 User | (default user group) | Desktop      | 10            | 1       | yes           |
     Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by newly created user email
@@ -706,13 +706,13 @@ Feature:
   @TC.22022 @stash @email
   Scenario: 22022 MozyPro Partner Enable and Disable cycle by adding sync to all users
     When I add a new MozyPro partner:
-      | period | base plan | net terms |
-      | 12     | 50 GB     | yes       |
+      | period | base plan | net terms | root role |
+      | 12     | 50 GB     | yes       | Bundle Pro Partner Root |
     Then New partner should be created
     When I act as newly created partner account
     And I add new user(s):
-      | name          | storage_type | storage_limit | devices | enable_stash |
-      | TC.22022 User | Desktop      | 10            | 1       | yes          |
+      | name          | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | TC.22022 User | (default user group) | Desktop      | 10            | 1       | yes          |
     Then 1 new user should be created
     When I search emails by keywords:
       | to                          | subject      |

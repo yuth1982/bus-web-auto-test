@@ -37,6 +37,7 @@ module Bus
     # @return [] nothing
     def add_new_users(users)
       user = users.first
+      wait_until_bus_section_load
       user_group_select.select(user.user_group) unless user.user_group.nil?
       storage_type_select.select(user.storage_type) unless user.storage_type.nil?
       storage_max_tb.type_text(user.storage_limit) unless user.storage_limit.nil?
