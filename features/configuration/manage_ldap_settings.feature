@@ -24,23 +24,23 @@ Feature: Manage Horizon related settings
     And I de-select Horizon Manager
     And I click Connection Settings tab
     And I input server connection settings
-      | Server Host          | Protocol | SSL Cert | Port | Base DN                   | Bind Username         | Bind Password |
-      | 10.135.16.154        | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com| QAP@SSw0rd    |
+      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
-    Then AD server test connection message should be Test passed. Successfully connected to 10.135.16.154 on port 389 using No SSL.
+    Then AD server test connection message should be Test passed. Successfully connected to 10.29.99.120 on port 389 using No SSL.
     And I save the Connection Settings information
     Then server connection settings information should include
-      | Server Host          | Protocol | SSL Cert | Port | Base DN                   | Bind Username         | Bind Password |
-      | 10.135.16.154        | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com|  QAP@SSw0rd   |
+      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     # Scenario: 17825 'Test Connection' should report invalid credentials error
     When I use Directory Service as authentication provider
     And I de-select Horizon Manager
     And I click Connection Settings tab
     And I input server connection settings
-      | Server Host          | Protocol | SSL Cert | Port | Base DN                   | Bind Username         | Bind Password |
-      | ad01.qa5.mozyops.com | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| 1hkc9ad@qa5.mozyops.com| daf145gvi    |
+      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username            | Bind Password |
+      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | fake@mtdev.mozypro.local | daf145gvi     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
@@ -50,16 +50,16 @@ Feature: Manage Horizon related settings
     And I de-select Horizon Manager
     And I click Connection Settings tab
     And I input server connection settings
-      | Server Host          | Protocol | SSL Cert | Port | Base DN                   | Bind Username         | Bind Password |
-      | ad01.qa5.mozyops.com | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com| QAP@SSw0rd    |
+      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
-    Then AD server test connection message should be Test passed. Successfully connected to ad01.qa5.mozyops.com on port 389 using No SSL.
+    Then AD server test connection message should be Test passed. Successfully connected to 10.29.99.120 on port 389 using No SSL.
     And I save the Connection Settings information
     Then server connection settings information should include
-      | Server Host          | Protocol | SSL Cert | Port | Base DN                   | Bind Username         | Bind Password |
-      | ad01.qa5.mozyops.com | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com|  QAP@SSw0rd   |
+      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     # Scenario: 17479 Host input should reject invalid parameters
     When I use Directory Service as authentication provider
     And I de-select Horizon Manager
