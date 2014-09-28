@@ -120,8 +120,8 @@ Feature: The capabilities that govern the HIPAA compliant root admin role should
   @TC.120085 @bus
   Scenario: 120085 [OEM]Hippa admin cannot see the activate admin link in admin console
     When I add a new OEM partner:
-      | Root role     | Security | Company Type |
-      | ITOK OEM Root | HIPAA    | OEM          |
+      | Root role     | Security | Company Type     |
+      | ITOK OEM Root | HIPAA    | Service Provider |
     Then New partner should be created
     When I view the newly created subpartner admin details
     Then I will see the activate admin link
