@@ -377,6 +377,7 @@ Feature: Notify about and collect past-due balances
       | email        |
       | @admin_email |
     And I wait for 10 seconds
+    And I navigate to Change Payment Information section from bus admin console page
     And I update credit card information to:
       | cc name       | cc number        | expire month | expire year | cvv |
       | new card name | 4111111111111111 | 12           | 18          | 123 |
