@@ -57,7 +57,16 @@ Then /^User search results should be:$/ do |results_table|
 
     end
   end
-  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
+  expected.each_index { |index|
+    expected[index].keys.each { |key|
+      #depending on the performance of the testing env, the "Backed Up" time could be different
+      if !(expected[index][key].match(/^@[1 2] minute(s)* ago$/).nil?)
+        actual[index][key].match(/^(1|< a|2) minute(s)* ago$/).nil?.should be_false
+      else
+        actual[index][key].should == expected[index][key]
+      end
+    }
+  }
 end
 
 Then /^Itemized user search results should be:$/ do |results_table|

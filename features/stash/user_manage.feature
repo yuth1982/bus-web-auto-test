@@ -30,7 +30,7 @@ Feature: User stash setting management
     Then New partner should be created
     Then Partner general information should be:
       | Enable Sync: |
-      | Yes (change)  |
+      | Yes (change) |
     When I act as newly created partner account
     And I add new user(s):
       | name          | user_group           | storage_type | storage_limit | devices |
@@ -52,7 +52,7 @@ Feature: User stash setting management
     Then New partner should be created
     Then Partner general information should be:
       | Enable Sync: |
-      | Yes (change)  |
+      | Yes (change) |
     When I act as newly created partner account
     And I add new user(s):
       | name          | user_group           | storage_type | storage_limit | devices |
@@ -70,12 +70,12 @@ Feature: User stash setting management
   @TC.19017 @BSA.2040 @bus @stash
   Scenario: 19017 User click Cancel will not enable stash
     When I add a new MozyPro partner:
-      | period | base plan | root role |
+      | period | base plan | root role               |
       | 12     | 50 GB     | Bundle Pro Partner Root |
     Then New partner should be created
     Then Partner general information should be:
       | Enable Sync: |
-      | Yes (change)  |
+      | Yes (change) |
     When I act as newly created partner account
     And I add new user(s):
       | name          | user_group          | storage_type | storage_limit | devices |
@@ -114,7 +114,7 @@ Feature: User stash setting management
     Then New partner should be created
     Then Partner general information should be:
       | Enable Sync: |
-      | Yes (change)  |
+      | Yes (change) |
     When I act as newly created partner account
     And I navigate to Add New User section from bus admin console page
     Then I should see stash options
@@ -129,7 +129,7 @@ Feature: User stash setting management
     Then New partner should be created
     Then Partner general information should be:
       | Enable Sync: |
-      | Yes (change)  |
+      | Yes (change) |
     When I act as newly created partner account
     And I add new user(s):
       | name          | user_group           | storage_type | storage_limit | devices | enable_stash |
@@ -138,7 +138,7 @@ Feature: User stash setting management
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by newly created user email
     Then user details should be:
-      | Name:                  | Enable Sync:               |
+      | Name:                  | Enable Sync:                |
       | TC.18981 user (change) | Yes (Send Invitation Email) |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
@@ -146,12 +146,12 @@ Feature: User stash setting management
   @TC.19019 @BSA.2050 @bus @stash
   Scenario: 19019 Add new user with stash not enabled
     When I add a new MozyPro partner:
-      | period | base plan | root role |
+      | period | base plan | root role               |
       | 1      | 50 GB     | Bundle Pro Partner Root |
     Then New partner should be created
     Then Partner general information should be:
       | Enable Sync: |
-      | Yes (change)  |
+      | Yes (change) |
     When I act as newly created partner account
     And I add new user(s):
       | name          | user_group           | storage_type | storage_limit | enable_stash |
@@ -168,12 +168,12 @@ Feature: User stash setting management
   @TC.18990 @BSA.2070 @bus @stash @email
   Scenario: 18990 Send stash invitation email in user details section
     When I add a new MozyPro partner:
-      | period | base plan | root role |
+      | period | base plan | root role               |
       | 12     | 50 GB     | Bundle Pro Partner Root |
     Then New partner should be created
     Then Partner general information should be:
       | Enable Sync: |
-      | Yes (change)  |
+      | Yes (change) |
     When I act as newly created partner account
     And I add new user(s):
       | name          | user_group           | storage_type | storage_limit | devices | enable_stash |
@@ -197,7 +197,7 @@ Feature: User stash setting management
     Then New partner should be created
     Then Partner general information should be:
       | Enable Sync: |
-      | Yes (change)  |
+      | Yes (change) |
     When I act as newly created partner account
     And I add new user(s):
       | name          | user_group           | storage_type | devices |
@@ -207,7 +207,7 @@ Feature: User stash setting management
     And I view user details by newly created user email
     And I enable stash with send email in user details section
     Then user details should be:
-      | Name:                  | Enable Sync:               |
+      | Name:                  | Enable Sync:                |
       | TC.19121-user (change) | Yes (Send Invitation Email) |
     When I search emails by keywords:
       | to              | subject     |
@@ -224,7 +224,7 @@ Feature: User stash setting management
     Then New partner should be created
     Then Partner general information should be:
       | Enable Sync: |
-      | Yes (change)  |
+      | Yes (change) |
     When I act as newly created partner account
     And I add new user(s):
       | name          | user_group           | storage_type | devices | enable_stash |
@@ -251,7 +251,7 @@ Feature: User stash setting management
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by User
     Then User search results should be:
-      | User                   | Name           | User Group           | Sync    |
+      | User                   | Name           | User Group           | Sync     |
       | backup19045@test.com   | backup19045    | (default user group) | Disabled |
       | backup@test.com        | backup         | backup               | Disabled |
       | stash19045@test.com    | stash19045     | (default user group) | Enabled  |
@@ -265,13 +265,13 @@ Feature: User stash setting management
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by User
     Then User search results should be:
-      | User                   | Name           | User Group           | Sync    | Machines | Storage | Storage Used |
+      | User                   | Name           | User Group           | Sync     | Machines | Storage | Storage Used |
       | backup19045@test.com   | backup19045    | (default user group) | Disabled | 1        | 1 GB    | 10 MB        |
       | backup@test.com        | backup         | backup               | Disabled | 1        | 1 GB    | 10 MB        |
       | stash19045@test.com    | stash19045     | (default user group) | Enabled  | 0        | 2 GB    | 20 MB        |
       | stash@test.com         | stash          | stash                | Enabled  | 0        | 2 GB    | 20 MB        |
 
-  @TC.19114 @BSA.3040 @bus @2.5 @user_stories @US @enterprise @partner
+  @TC.19114 @BSA.3040 @bus @2.5 @user_stories @US @enterprise @partner @stash
   Scenario: 19114 19115 Enterprise Partner View User storage usage
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -279,7 +279,7 @@ Feature: User stash setting management
     Then New partner should be created
     Then Partner general information should be:
       | Enable Sync: |
-      | Yes (change)  |
+      | Yes (change) |
     When I act as newly created partner account
     And I add new user(s):
       | name                 | user_group           | storage_type | devices |
@@ -309,7 +309,7 @@ Feature: User stash setting management
     And I update Sync used quota to 20 GB
     And I refresh User Details section
     Then user details should be:
-      | Name:                        | Enable Sync:               |
+      | Name:                        | Enable Sync:                |
       | TC.19115.stash-user (change) | Yes (Send Invitation Email) |
     And stash device table in user details should be:
       | Sync Container | Used/Available | Device Storage Limit | Last Update    | Action |
@@ -319,23 +319,23 @@ Feature: User stash setting management
       | keywords   |
       | TC.19115   |
     Then User search results should be:
-      | User                 | Name                 | Sync     | Machines | Storage         | Storage Used   | Created | Backed Up     |
-      | <%=@users[1].email%> | TC.19115.stash-user  | Enabled  | 0        | Desktop: Shared | Desktop: 20 GB | today   | 1 minute ago  |
-      | <%=@users[0].email%> | TC.19115.backup-user | Disabled | 1        | Desktop: Shared | Desktop: 10 GB | today   | 2 minutes ago |
+      | User                 | Name                 | Sync     | Machines | Storage         | Storage Used   | Created | Backed Up      |
+      | <%=@users[1].email%> | TC.19115.stash-user  | Enabled  | 0        | Desktop: Shared | Desktop: 20 GB | today   | @1 minute ago  |
+      | <%=@users[0].email%> | TC.19115.backup-user | Disabled | 1        | Desktop: Shared | Desktop: 10 GB | today   | @2 minutes ago |
 
-  @TC.19116  @BSA.3040 @bus @2.5 @user_stories @US @mozypro @partner
+  @TC.19116  @BSA.3040 @bus @2.5 @user_stories @US @mozypro @partner @stash
   Scenario: 19116 19117 Mozypro Partner View Sync status
     When I add a new MozyPro partner:
-      | period | base plan | net terms |
-      | 12     | 100 GB    | yes       |
+      | period | base plan | net terms | root role               |
+      | 12     | 100 GB    | yes       | Bundle Pro Partner Root |
     Then New partner should be created
     Then Partner general information should be:
       | Enable Sync: |
-      | Yes (change)  |
+      | Yes (change) |
     When I act as newly created partner account
     And I add new user(s):
-      | name                 | storage_type | devices | 
-      | TC.19116.backup-user | Desktop      | 1       |
+      | name                 | user_group           | storage_type | devices |
+      | TC.19116.backup-user | (default user group) | Desktop      | 1       |
     Then 1 new user should be created
     And I search user by:
       | keywords   |
@@ -351,8 +351,8 @@ Feature: User stash setting management
       | Machine1 | 10 GB / 90 GB  | Set                  | < a minute ago |        |
     And I close User Details section
     When I add new user(s):
-      | name                | storage_type | devices | enable_stash |
-      | TC.19116.stash-user | Desktop      | 1       | yes          |
+      | name                | user_group           | storage_type | devices | enable_stash |
+      | TC.19116.stash-user | (default user group) | Desktop      | 1       | yes          |
     Then 1 new user should be created
     When I search user by:
       | keywords   |
@@ -361,7 +361,7 @@ Feature: User stash setting management
     And I update Sync used quota to 20 GB
     And I refresh User Details section
     Then user details should be:
-      | Name:                        | Enable Sync:               |
+      | Name:                        | Enable Sync:                |
       | TC.19116.stash-user (change) | Yes (Send Invitation Email) |
     And stash device table in user details should be:
       | Sync Container | Used/Available | Device Storage Limit | Last Update    | Action |
@@ -372,8 +372,8 @@ Feature: User stash setting management
       | TC.19116   |
     Then User search results should be:
       | User                 | Name                 | Sync    | Machines | Storage | Storage Used | Created |
-      | <%=@users[1].email%> | TC.19116.stash-user  | Enabled  | 0        | Shared  | 20 GB        | today   |
-      | <%=@users[0].email%> | TC.19116.backup-user | Disabled | 1        | Shared  | 10 GB        | today   |
+      | <%=@users[1].email%> | TC.19116.stash-user  | Enabled  | 0       | Shared  | 20 GB        | today   |
+      | <%=@users[0].email%> | TC.19116.backup-user | Disabled | 1       | Shared  | 10 GB        | today   |
 
   @TC.120694 @TC.120695 @2.10 @bus @stash
   Scenario: 120694 120695 Check existing/new sync container's encryption type
