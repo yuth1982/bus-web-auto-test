@@ -19,7 +19,8 @@ require 'openssl'
 require 'erb'
 require 'ostruct'
 
-require 'capybara/cucumber'
+require 'capybara/cucumber' unless @no_cucumber
+require 'capybara/dsl' if @no_cucumber
 
 require 'aria_api/lib/aria_api'
 require 'file_helper'
@@ -54,3 +55,6 @@ include KeylessDeviceActivation
 include Activation
 include DataShuttleSeeding
 include Email
+
+#Needed for use without cucumber Stuff!
+require "bus_phx_lib/lib_require"
