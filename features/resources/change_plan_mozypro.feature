@@ -330,7 +330,7 @@ Feature: Change Plan for MozyPro Partners
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @test_coupon @Bug.85011 @regression @2.0
+  @test_coupon @Bug.85011 @regression @2.0 @env_dependent
   Scenario: MozyPro monthly US partner 10 GB moves to 1T GB plan with 10 percent inline coupon
     When I add a new MozyPro partner:
       | period | base plan |

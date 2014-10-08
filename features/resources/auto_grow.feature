@@ -6,7 +6,7 @@ Feature: Auto Grow
 
   Success Criteria:
 
-  @TC.14115
+  @TC.14115 @env_dependent
   Scenario: Mozy-14115::Enable autogrow partner admin
     When I log in to legacy bus01 as administrator
     And I successfully add an itemized Reseller partner:

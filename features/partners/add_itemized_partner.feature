@@ -6,7 +6,7 @@ Feature: Add a new partner
 
   #
   # base creation cases for itemized pro
-  @TC.20843 @itemized @bus @2.5 @create_partner
+  @TC.20843 @itemized @bus @2.5 @create_partner @env_dependent
   Scenario: 20843 Add New MozyPro Itemized Partner - US - Monthly - 10 GB
     When I log in to legacy bus01 as administrator
     And I successfully add an itemized MozyPro partner:
@@ -53,7 +53,7 @@ Feature: Add a new partner
 
   # RESELLERS HERE
   # base creation case for itemized reseller
-  @TC.20846 @itemized @bus @2.5
+  @TC.20846 @itemized @bus @2.5 @env_dependent
   Scenario: 20846 Add New Reseller Itemized Partner - US - Monthly - 10 GB
     When I log in to legacy bus01 as administrator
     And I successfully add an itemized Reseller partner:
@@ -97,4 +97,3 @@ Feature: Add a new partner
       | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period |
       | Next Charge:    | after 1 year          |                 |                    |
     And I delete partner account
-
