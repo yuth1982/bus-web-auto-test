@@ -22,7 +22,7 @@ module LDAPHelper
         :givenname => "#{user_name}",
         :mail => @ldap_user_mail || "#{user_name}#{email_postfix || EMAIL_POSTFIX}",
         :uid => '123',
-        :userprincipalname => @ldap_user_mail,
+        :userprincipalname => @ldap_user_mail || "#{user_name}#{email_postfix || EMAIL_POSTFIX}",
         :useraccountcontrol => '66080'
     }
     ldap = Net::LDAP.new :host => host || HOST,
@@ -132,8 +132,8 @@ module LDAPHelper
     unless mail.nil?
       if mail.match("email@mozy.com")
         mail = "#{username.gsub(/\s+/, "")}#{emailpostfix}"
-        return mail
       end
+      return mail
     end
   end
 
