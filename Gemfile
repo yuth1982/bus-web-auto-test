@@ -2,13 +2,13 @@ source 'https://rubygems.org'
 
 gem 'rake','~>0.9.2.2'
 gem 'rspec','~>2.11.0'
-gem 'cucumber','~>1.2.1'
+gem 'cucumber','~>1.2'
 gem 'selenium-webdriver','>=2.34.0'
 gem 'capybara', '~>1.1.2'
 gem 'forgery','~>0.5.0'                 # Create Random Values
 gem 'chronic', '~>0.8.0'                # Date Time Parser
 gem 'rest-client','~>1.6.7'             # Email API
-gem 'pg', '~>0.14.1'                    # PostgreSQL
+gem 'pg', '~>0.14'                      # PostgreSQL
 gem 'net-ldap', '~>0.3.1'
 gem 'activesupport', '~>3.2.8'
 gem 'tzinfo', '~>0.3.35'
