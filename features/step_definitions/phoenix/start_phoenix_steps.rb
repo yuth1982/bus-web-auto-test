@@ -1,3 +1,5 @@
 Given /^I am at dom selection point:$/ do
-  phx_navigate_to_signup
+	@phoenix_site = PhoenixSite.new
+	@phoenix_site.select_dom.load
+	# pending - add step here
 end

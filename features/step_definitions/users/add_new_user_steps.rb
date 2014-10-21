@@ -4,12 +4,18 @@
 # available columns:
 # name, email, user_group, storage_type, storage_max, devices, enable_stash, send_email
 When /^I add new user\(s\):$/ do |user_table|
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_user'])
+  @new_users =[]
+  @users =[] if @users.nil?
   user_table.hashes.each do |hash|
     hash['email'] = @existing_user_email if hash['email'] == '@existing_user_email'
     hash['email'] = @existing_admin_email if hash['email'] == '@existing_admin_email'
+    user = Bus::DataObj::User.new
+    hash_to_object(hash, user)
+    @new_users << user
+    @users << user
   end
-
-  add_users(user_table.hashes)
+  @bus_site.admin_console_page.add_new_user_section.add_new_users(@new_users)
 end
 
 # If you are create one user: You can specify user name and email
@@ -29,7 +35,7 @@ When /^I add new itemized user\(s\):$/ do |itemized_table|
 end
 
 Then /^(\d+) new user should be created$/ do |num|
-  add_users_success_message(num)
+  @bus_site.admin_console_page.add_new_user_section.success_messages.should == "Successfully created #{num} user(s)"
 end
 
 Then /^new itemized user should be created$/ do

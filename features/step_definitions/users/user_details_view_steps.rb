@@ -365,5 +365,9 @@ When /^I close the user detail page$/ do
 end
 
 Then /^I display login information$/ do
-  display_login_info
+  if @partner.partner_info.type == 'MozyHome'
+    Log.info("un: #{@partner.admin_info.email}, pw: #{CONFIGS['global']['test_pwd']}")
+  else
+    Log.info("pn: #{@partner.admin_info.email}, un: #{@new_users.last.email}, pw: #{CONFIGS['global']['test_pwd']}")
+  end
 end
