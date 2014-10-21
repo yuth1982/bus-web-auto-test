@@ -243,7 +243,7 @@ Feature: User stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.18995 @BSA.3030 @bus @2.5 @user_stories @stash @need_test_account @env_dependent
+  @TC.18995 @BSA.3030 @bus @2.5 @user_stories @stash @need_test_account
   Scenario: 18995 [Search/List Users View][P]"Sync" column shows and has valid value
     When I act as partner by:
       | email                        |
@@ -257,7 +257,7 @@ Feature: User stash setting management
       | stash19045@test.com    | stash19045     | (default user group) | Enabled  |
       | stash@test.com         | stash          | stash                | Enabled  |
 
-  @TC.18996 @BSA.3030 @bus @2.5 @user_stories @stash @need_test_account @env_dependents
+  @TC.18996 @BSA.3030 @bus @2.5 @user_stories @stash @need_test_account
   Scenario: 18996 [Search/List Users View][P]"Storage" and "Storage Used" column includes backup and stash
     When I act as partner by:
       | email                       |
@@ -426,3 +426,4 @@ Feature: User stash setting management
       |  (change)    | tc120694user2@auto.com  |  Default    |    qa6       |
     And I close user details section
     And I close machine details section
+

@@ -3,7 +3,7 @@ Feature:
   Background:
 
 
-  @redmine.119233 @qa8 @env_dependent
+  @redmine.119233 @qa8
   Scenario: QA8 Modify the query to pull the new user
     When I add a user to the AD
       | user name  | mail           | host           | user                            | password   | treebase                             | email_postfix             |
@@ -32,7 +32,7 @@ Feature:
       | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
       | Next Sync   | Not Scheduled(Set)                                                 |
 
-  @qa12 @env_dependent
+  @qa12
   Scenario: QA12 Modify the query to pull the new user
     When I add a user to the AD
       | user name  | mail           | host          | user                              | password   | treebase                                | email_postfix                |
@@ -61,7 +61,7 @@ Feature:
       | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
       | Next Sync   | Not Scheduled(Set)                                                 |
 
-  @qa8 @push_connector @env_dependent
+  @qa8 @push_connector
   Scenario: QA8 Modify the query to push the new user
     When I add a user to the AD
       | user name  | mail           | host           | user                            | password   | treebase                             | email_postfix             |

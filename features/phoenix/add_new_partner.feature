@@ -607,7 +607,7 @@ Background:
 #---------------------------------------------------------------------------------
 # coupons : new section
 #---------------------------------------------------------------------------------
-  @TC.20979 @bus @2.9 @regression_test @phoenix @mozypro @env_dependent
+  @TC.20979 @bus @2.9 @regression_test @phoenix @mozypro
   Scenario: 20979 Add a new IE monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -652,7 +652,7 @@ Background:
     | Next Charge:    | after 1 month          |                 |                     |
     And I delete partner account
 
-  @TC.20980 @bus @2.9 @regression_test @phoenix @mozypro @env_dependent
+  @TC.20980 @bus @2.9 @regression_test @phoenix @mozypro
   Scenario: 20980 Add a new DE biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -697,7 +697,7 @@ Background:
     | Next Charge:    | after 1 year          |                 |                     |
     And I delete partner account
 
-  @TC.20982 @bus @2.9 @regression_test @phoenix @mozypro @env_dependent
+  @TC.20982 @bus @2.9 @regression_test @phoenix @mozypro
   Scenario: 20982 Add a new FR yearly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:

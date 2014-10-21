@@ -7,7 +7,7 @@ Feature: Search and list partner
   # Test account Barclays Root - Reserved is in QA6 only
   #
   # Todo: this case need to check create ip white list successful message
-  @TC.643 @need_test_account @bus @2.5 @partner @ip_white_list_visibility @env_dependents
+  @TC.643 @need_test_account @bus @2.5 @partner @ip_white_list_visibility
   Scenario: 643 Verify White List visibility for an OEM partner with an API Key
     When I search partner by:
       | name                     | filter |
@@ -31,7 +31,7 @@ Feature: Search and list partner
   # This test cases requires an OEM partner without API Key
   # Test account Charter Business Trial - Reserved is in QA6 only
   #
-  @TC.645 @need_test_account @bus @2.5 @partner @ip_white_list_visibility @env_dependent
+  @TC.645 @need_test_account @bus @2.5 @partner @ip_white_list_visibility
   Scenario: 645 Verify White List visibility for an OEM partner without an API Key
     When I search partner by:
       | name                              | filter |
@@ -65,7 +65,7 @@ Feature: Search and list partner
   # This test cases requires an OEM partner
   # Test account Charter Business Trial - Reserved is in QA6 only
   #
-  @TC.790 @need_test_account @bus @2.5 @partner @partner_search @env_dependent
+  @TC.790 @need_test_account @bus @2.5 @partner @partner_search
   Scenario: 790 Do a search for all partners
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -136,7 +136,7 @@ Feature: Search and list partner
   # This test cases requires an incompleted partner
   # Test account Quigley-Effertz - Reserved is in QA6 only
   #
-  @TC.794 @need_test_account @bus @2.5 @partner @partner_search @env_dependent
+  @TC.794 @need_test_account @bus @2.5 @partner @partner_search
   Scenario: 794 Search incomplete all partners
     When I search partner by:
       | name                       | filter           |
@@ -162,7 +162,7 @@ Feature: Search and list partner
   # This test cases requires an OEM partner
   # Test account Charter Business Trial - Reserved is in QA6 only
   #
-  @TC.797 @need_test_account @bus @2.5 @partner @partner_search @env_dependent
+  @TC.797 @need_test_account @bus @2.5 @partner @partner_search
   Scenario: 797 Search for partners with the OEMs type
     When I search partner by:
       | name                              | filter |
@@ -174,7 +174,7 @@ Feature: Search and list partner
   # This test cases requires any existing partner
   # Test account Charter Business Trial - Reserved is in QA6 only
   #
-  @TC.799 @need_test_account @bus @2.5 @partner @partner_search @env_dependent
+  @TC.799 @need_test_account @bus @2.5 @partner @partner_search
   Scenario: 799 Uncheck the include sub-partners
     When I search partner by:
       | name                              | including sub-partners |
@@ -184,7 +184,7 @@ Feature: Search and list partner
   # This test cases requires any existing partner
   # Test account Charter Business Trial - Reserved is in QA6 only
   #
-  @TC.800 @need_test_account @bus @2.5 @partner @partner_search @env_dependents
+  @TC.800 @need_test_account @bus @2.5 @partner @partner_search
   Scenario: 800 Clear the search results for a partner
     When I search partner by:
       | name                              | filter |

@@ -3,7 +3,7 @@ Feature: User Details
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.20986 @bus @2.5 @user_view @last_update @need_test_account @env_dependent
+  @TC.20986 @bus @2.5 @user_view @last_update @need_test_account
   Scenario: 20986 "Last Update" shows the time for the 3 device whose last backup time is 5 days ago
     When I act as partner by:
       | email                |

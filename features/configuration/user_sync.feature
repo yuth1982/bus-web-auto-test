@@ -1177,7 +1177,7 @@ Feature: User sync
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.121745 @firefox @direct_ldap_integration @qa8 @bus @env_dependent
+  @TC.121745 @firefox @direct_ldap_integration @qa8 @bus
   Scenario: 121745 Error during ssosync will reflect in the UI
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -1206,7 +1206,7 @@ Feature: User sync
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.121744 @firefox @direct_ldap_integration @qa8 @bus @env_dependent
+  @TC.121744 @firefox @direct_ldap_integration @qa8 @bus
   Scenario: 121744 non-ASCII in cn can be synced
     When I act as partner by:
       | email                   |

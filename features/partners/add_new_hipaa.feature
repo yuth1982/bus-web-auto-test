@@ -7,7 +7,7 @@ Feature: Add a new partner
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.120069 @bus  @need_test_account @env_dependent
+  @TC.120069 @bus  @need_test_account
   Scenario: 120069 HIPAA for MozyPro US partner and sub-partners
    When I add a new MozyPro partner:
     | period | base plan | security | net terms |

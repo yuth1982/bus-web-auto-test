@@ -7,7 +7,7 @@ Feature: Add a new partner
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.17942 @create_partner_sample @bus @2.5 @add_new_partner @mozypro @env_dependent
+  @TC.17942 @create_partner_sample @bus @2.5 @add_new_partner @mozypro
   Scenario: 17942 Add New MozyPro Partner - US - Monthly - 10 GB - Coupon - CC
     When I add a new MozyPro partner:
       | period | base plan | coupon                | country       | address           | city      | state abbrev | zip   | phone          |
@@ -47,7 +47,7 @@ Feature: Add a new partner
       | today | $0.00  | $0.00      | $0.00       |
     And I delete partner account
 
-  @TC.17955 @bus @2.5 @add_new_partner @mozypro @env_dependent
+  @TC.17955 @bus @2.5 @add_new_partner @mozypro
   Scenario: 17955 Add New MozyPro Partner - FR - Yearly - 50 GB - VAT - Coupon - CC
     When I add a new MozyPro partner:
       | period | base plan | create under   | vat number    | coupon              | country | address           | city      | state | zip   | phone          |
@@ -87,7 +87,7 @@ Feature: Add a new partner
       | today | €0.00   | €0.00      | €0.00       |
     And I delete partner account
 
-  @TC.18142 @bus @2.5 @add_new_partner @mozypro @env_dependent
+  @TC.18142 @bus @2.5 @add_new_partner @mozypro
   Scenario: 18142 Add New MozyPro Partner - DE - Biennially - 100 GB - VAT - Coupon CC
     When I add a new MozyPro partner:
       | period | base plan | create under    | vat number  | coupon              | country | address           | city      | state | zip   | phone          |
@@ -127,7 +127,7 @@ Feature: Add a new partner
       | today | €0.00   | €0.00      | €0.00       |
     And I delete partner account
 
-  @TC.18145 @bus @2.5 @add_new_partner @mozypro @env_dependent
+  @TC.18145 @bus @2.5 @add_new_partner @mozypro
   Scenario: 18145 Add New MozyPro Partner - IE - Monthly - 250 GB - VAT - Coupon - CC
     When I add a new MozyPro partner:
       | period | base plan | create under    | vat number | coupon              | country | address           | city      | state | zip   | phone          |
@@ -168,7 +168,7 @@ Feature: Add a new partner
       | today | €0.00  | €0.00      | €0.00       |
     And I delete partner account
 
-  @TC.18148 @bus @2.5 @add_new_partner @mozypro @env_dependent
+  @TC.18148 @bus @2.5 @add_new_partner @mozypro
   Scenario: 18148 Add New MozyPro Partner - UK - Yearly - 500 GB - VAT - Coupon - CC
     When I add a new MozyPro partner:
       | period | base plan | create under | vat number  | coupon              | country        | address           | city      | state | zip   | phone          |
@@ -454,7 +454,7 @@ Feature: Add a new partner
       | today | $0.00      | $0.00      | $0.00       |
     And I delete partner account
 
-  @TC.17957 @bus @2.5 @add_new_partner @mozypro @env_dependent
+  @TC.17957 @bus @2.5 @add_new_partner @mozypro
   Scenario: 17957 Add New MozyPro Partner - FR - Biennially - 20 TB - Server Plan - 10 Storage Add on - VAT - Coupon - Net Terms
     When I add a new MozyPro partner:
       | period | base plan | create under   | server plan | storage add on | net terms | vat number    | coupon              | country | address           | city      | state | zip   | phone          |
@@ -535,7 +535,7 @@ Feature: Add a new partner
     Then MozyPro partner subscription period options should be:
       | Monthly | Yearly | Biennially |
 
-  @TC.20377 @bus @2.5 @add_new_partner @mozypro @env_dependent
+  @TC.20377 @bus @2.5 @add_new_partner @mozypro
   Scenario: 20377 Add New MozyPro Partner - US - Monthly - 50 GB - Server Plan - 100PercentDiscountCoupon - CC
     When I add a new MozyPro partner:
       | period | base plan | server plan | coupon               |

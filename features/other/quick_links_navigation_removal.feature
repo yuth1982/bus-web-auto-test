@@ -58,7 +58,7 @@ Feature: Quick Links section & Link removal from left navigation
     #
     #   Cases for itemized Pro/Reseller
     #
-    @TC.21182 @itemized @bus @2.5 @nav_link_removal @mozypro @env_dependent
+    @TC.21182 @itemized @bus @2.5 @nav_link_removal @mozypro
     Scenario: 21182 Pooled Storage - MozyPro Itemized - BUS Admin UI -  Nav link removal
       When I log in to legacy bus01 as administrator
       And I successfully add an itemized MozyPro partner:
@@ -82,7 +82,7 @@ Feature: Quick Links section & Link removal from left navigation
       And I stop masquerading
       And I search and delete partner account by newly created partner company name
 
-    @TC.21183 @itemized @bus @2.5 @nav_link_removal @reseller @env_dependent
+    @TC.21183 @itemized @bus @2.5 @nav_link_removal @reseller
     Scenario: 21183 Pooled Storage - Reseller Itemized - BUS Admin UI -  Nav link removal
       When I log in to legacy bus01 as administrator
       And I successfully add an itemized Reseller partner:
@@ -186,7 +186,7 @@ Feature: Quick Links section & Link removal from left navigation
     #
     #   Cases for itemized Pro/Reseller
     #
-    @TC.21300 @itemized  @bus @2.5 @quick_link @mozypro @env_dependent
+    @TC.21300 @itemized  @bus @2.5 @quick_link @mozypro
     Scenario: 21300 Pooled Storage - MozyPro Itemized - BUS Admin UI - New Quick Links Section
       When I log in to legacy bus01 as administrator
       And I successfully add an itemized MozyPro partner:
@@ -210,7 +210,7 @@ Feature: Quick Links section & Link removal from left navigation
       And I stop masquerading
       And I search and delete partner account by newly created partner company name
 
-    @TC.21301 @itemized  @bus @2.5 @quick_link @reseller @env_dependent
+    @TC.21301 @itemized  @bus @2.5 @quick_link @reseller
     Scenario: 21301 Pooled Storage - Reseller - BUS Admin UI - New Quick Links Section
       When I log in to legacy bus01 as administrator
       And I successfully add an itemized Reseller partner:

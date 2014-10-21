@@ -87,7 +87,7 @@ Feature: Manage resources
     And I create 10 new Server keys for MozyPro partner
     And I create 10 new Desktop keys for MozyPro partner
 
-  @mozyenterprise_manage_resources_example @env_dependent
+  @mozyenterprise_manage_resources_example
   Scenario: MozyEnterprise partner manage resources example
     When I act as partner by:
       | email                                     |
