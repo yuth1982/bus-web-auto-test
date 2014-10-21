@@ -1,6 +1,6 @@
 Feature: Search and list user
 
-  @TC.683 @need_test_account @bus @regression_test @users @search
+  @TC.683 @need_test_account @bus @regression_test @users @search @env_dependent
   Scenario: 683 Search user
     When I log in bus admin console as administrator
     And I act as partner by:
@@ -210,7 +210,7 @@ Feature: Search and list user
   # creation itemized (pro) partner to pooled storage w/ user
   #   & adding machine, quota to accts will be in future commits
   #   all as setup steps for verification of migration of itemized partners to pooled storage
-  @TC.21013 @itemized @bus @2.5 @pooled_storage
+  @TC.21013 @itemized @bus @2.5 @pooled_storage @env_dependent
   Scenario: 21013 Pooled Storage - Pro Itemized - User List View - removal of assigned/used quota
     When I log in to legacy bus01 as administrator
     And I successfully add an itemized MozyPro partner:
@@ -260,7 +260,7 @@ Feature: Search and list user
   # creation itemized (reseller) partner to pooled storage w/ user
   #   & adding machine, quota to accts will be in future commits
   #   all as setup steps for verification of migration of itemized partners to pooled storage
-  @TC.21017 @itemized @bus @2.5 @pooled_storage
+  @TC.21017 @itemized @bus @2.5 @pooled_storage @env_dependent
   Scenario: 21017 Pooled Storage - Reseller Itemized - User List View - removal of assigned/used quota
     When I log in to legacy bus01 as administrator
     And I successfully add an itemized Reseller partner:

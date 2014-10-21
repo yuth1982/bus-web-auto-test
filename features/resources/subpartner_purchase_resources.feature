@@ -6,7 +6,7 @@ Feature: Sub partners can purchase resources
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.19864 @need_test_account @bus @subpartner_purchase_resources
+  @TC.19864 @need_test_account @bus @subpartner_purchase_resources @env_dependent
   Scenario: 19864 Existing OEM partner with sub partners whose sub partners can purchase resources
     When I act as partner by:
       | email                          | filter |
@@ -24,7 +24,7 @@ Feature: Sub partners can purchase resources
       | desktop license | desktop quota | server license | server quota |
       | 2               | 20            | 2              | 10           |
 
-  @TC.19865 @need_test_account @bus @subpartner_purchase_resources
+  @TC.19865 @need_test_account @bus @subpartner_purchase_resources @env_dependent
   Scenario: 19865 Existing OEM partner with sub partners whose OEM partner can purchase resources
     When I act as partner by:
       | email                          | filter |
@@ -39,7 +39,7 @@ Feature: Sub partners can purchase resources
       | desktop license | desktop quota | server license | server quota |
       | 1               | 10            | 1              | 5            |
 
-  @TC.19867 @need_test_account @bus @subpartner_purchase_resources
+  @TC.19867 @need_test_account @bus @subpartner_purchase_resources @env_dependent
   Scenario: 19867 Existing OEM partner without subpartners can purchase resources
     When I act as partner by:
       | email                                   | filter |
@@ -105,7 +105,7 @@ Feature: Sub partners can purchase resources
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19953 @need_test_account @bus @subpartner_purchase_resources
+  @TC.19953 @need_test_account @bus @subpartner_purchase_resources @env_dependent
   Scenario: 19953 Existing MozyPro bundle partner without sub partner can purchase resource
     When I act as partner by:
       | email                          |
@@ -126,7 +126,7 @@ Feature: Sub partners can purchase resources
       | base plan | server plan |
       | 50 GB     | no          |
 
-  @TC.19954 @need_test_account @bus @subpartner_purchase_resources
+  @TC.19954 @need_test_account @bus @subpartner_purchase_resources @env_dependent
   Scenario: 19954 Existing Reseller Metallic partner without sub partner can purchase resource
     When I act as partner by:
       | email                          |
@@ -147,8 +147,8 @@ Feature: Sub partners can purchase resources
       | storage add-on | server plan |
       | 5              | yes         |
 
-   @TC.19871 @need_test_account @not_implemented    @bus @subpartner_purchase_resources
-   Scenario: 19871 Reseller Metallic partner with subparnter whose subparnter buy resources will raise error message
+#   @TC.19871 @need_test_account @not_implemented    @bus @subpartner_purchase_resources @env_dependent
+#   Scenario: 19871 Reseller Metallic partner with subparnter whose subparnter buy resources will raise error message
 #    When I act as partner by:
 #      | email                          |
 #      | qa1+tc+19871+reserved@mozy.com |
@@ -166,7 +166,7 @@ Feature: Sub partners can purchase resources
 #      | Total Account Storage: | Unallocated Storage: | Server Enabled: |
 #      | 0 GB                   | 0 GB                 | No              |
 
-  @TC.19868 @need_test_account @bus @subpartner_purchase_resources
+  @TC.19868 @need_test_account @bus @subpartner_purchase_resources @env_dependent
   Scenario: 19868 Existing Reseller itemized partner without subpartners can purchase resources
     When I log in to legacy bus01 as administrator
     And I successfully add an itemized Reseller partner:
@@ -198,7 +198,7 @@ Feature: Sub partners can purchase resources
       | 1               | 10            | 1              | 5            |
 
   # need to find another account, this one will meet billing system error
-  @TC.19872 @need_test_account @bus @subpartner_purchase_resources
+  @TC.19872 @need_test_account @bus @subpartner_purchase_resources @env_dependent
   Scenario: 19872 Existing MozyPro itemized partner without subpartners can purchase resources
     When I log in to legacy bus01 as administrator
     And I successfully add an itemized MozyPro partner:
@@ -229,7 +229,7 @@ Feature: Sub partners can purchase resources
       | desktop license | desktop quota | server license | server quota |
       | 1               | 10            | 1              | 5            |
 
-  @TC.19370 @need_test_account @bus @subpartner_purchase_resources
+  @TC.19370 @need_test_account @bus @subpartner_purchase_resources @env_dependent
   Scenario: 19370 Existing Reseller itemized partner with subpartners whose subpartner can purchase resources
     When I act as partner by:
       | email                          |

@@ -39,7 +39,7 @@ Feature: Link to More Devices
 #    And the Add More link should open the Change Plan module
 #    Then I stop masquerading
 #    And I search and delete partner account by newly created partner company name
-	
+
   @TC.19951 @bus @2.5 @user_centric_storage @1UG @metallic_reseller
   Scenario: 19951 Metallic Reseller (1UG) Verify Buy More Link in Add New User
     When I add a new Reseller partner:
@@ -64,7 +64,7 @@ Feature: Link to More Devices
 #    And I choose User Group 1 from Choose a Group
 #    Then the Add More link should be visible
 #    And the Add More link should open the Manage Resources module
-	
+
   @TC.19948 @bus @2.5 @user_centric_storage @1UG @enterprise
 Scenario: 19948 Enterprise (2UG) Verify Buy More Link in Add New User
     When I add a new MozyEnterprise partner:
@@ -82,7 +82,7 @@ Scenario: 19948 Enterprise (2UG) Verify Buy More Link in Add New User
     And the Buy More link should open the Change Plan module
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
-	
+
   @TC.19947 @bus @2.5 @user_centric_storage @1UG @emea @IE @bundled
 Scenario: 19947 EMEA (1UG) Ireland Bundled Verify Buy More Link in Add New User
     When I add a new MozyPro partner:
@@ -109,7 +109,7 @@ Scenario: 19946 EMEA (1UG) UK Enterprise Verify Buy More Link in Add New User
     And the Buy More link should open the Change Plan module
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
-	
+
   @TC.19945 @bus @2.5 @user_centric_storage @1UG @emea @FR @metallic_reseller
 Scenario: 19945 EMEA (1UG) France Metallic Reseller Verify Buy More Link in Add New User
     When I add a new Reseller partner:
@@ -123,8 +123,8 @@ Scenario: 19945 EMEA (1UG) France Metallic Reseller Verify Buy More Link in Add 
     And the Buy More link should open the Change Plan module
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
-	
-  @TC.19952 @bus @2.5 @user_centric_storage @1UG @emea @DE @mozypro @itemzied @need_test_account
+
+  @TC.19952 @bus @2.5 @user_centric_storage @1UG @emea @DE @mozypro @itemzied @need_test_account @env_dependent
   Scenario: Mozy-19952:EMEA(1UG), Germany, MozyPro Itemized, Verify Add More Link in Add New User
     When I act as partner by:
       | name                                    |
@@ -133,4 +133,3 @@ Scenario: 19945 EMEA (1UG) France Metallic Reseller Verify Buy More Link in Add 
     And I choose (default user group) from Choose a Group
     Then the Buy More link should be visible
     And the Buy More link should open the Change Plan module
-	

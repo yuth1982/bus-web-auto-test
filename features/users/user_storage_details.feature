@@ -63,7 +63,7 @@ Scenario: Mozy-19646:Access Partner as Bus Admin
   When I stop masquerading
   Then I search and delete partner account by newly created partner company name
 
-@TC.19839 @bus @user_storage_details @itemized @reseller @desktop
+@TC.19839 @bus @user_storage_details @itemized @reseller @desktop @env_dependent
   Scenario: Mozy-19839:Access Reseller Itemized Partner as Partner Admin
     Given I navigate to bus admin console login page
     When I log in to legacy bus01 as administrator
@@ -99,7 +99,7 @@ Scenario: Mozy-19646:Access Partner as Bus Admin
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19841 @bus @user_storage_details @mozypro @itemized @desktop
+  @TC.19841 @bus @user_storage_details @mozypro @itemized @desktop @env_dependent
   Scenario: Mozy-19841: Access an MozyPro Itemized Partner's User's details as Bus Admin
     When I log in to legacy bus01 as administrator
     And I successfully add an itemized MozyPro partner:
@@ -257,7 +257,7 @@ Scenario: Mozy-19853: Access an United Kingdom Partner's User's details as Partn
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19859 @bus @user_storage_details @emea @DE @mozypro @itemized @server
+  @TC.19859 @bus @user_storage_details @emea @DE @mozypro @itemized @server @env_dependent
 Scenario: Mozy-19859:Access German Partner's User's details as Bus Admin
   When I log in to legacy bus01 as administrator
   And I successfully add an itemized MozyPro partner:

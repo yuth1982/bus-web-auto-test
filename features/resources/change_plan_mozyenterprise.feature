@@ -189,7 +189,7 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19271 @bus @2.5 @change_plan @mozyenterprise
+  @TC.19271 @bus @2.5 @change_plan @mozyenterprise @env_dependent
   Scenario: 19271 MozyEnterprise initial purchase coupon 100 gbs storage add-on yearly to 250 GB add-on
     When I add a new MozyEnterprise partner:
       | period | users | server plan  | coupon              |
@@ -263,7 +263,7 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19275 @bus @2.5 @change_plan @mozyenterprise
+  @TC.19275 @bus @2.5 @change_plan @mozyenterprise @env_dependent
   Scenario: 19275 MozyEnterprise initial purchase coupon 100 gbs storage add-on yearly to 250 GB add-on
     When I add a new MozyEnterprise partner:
       | period | users | server plan  | coupon              |
@@ -280,7 +280,7 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19392 @bus @2.5 @change_plan @mozyenterprise
+  @TC.19392 @bus @2.5 @change_plan @mozyenterprise @env_dependent
   Scenario: 19392 MozyEnterprise initial purchase coupon no server add on to 10gb server add on
     When I add a new MozyEnterprise partner:
       | period | users | coupon              | country       | address           | city      | state abbrev | zip   | phone          |
@@ -323,7 +323,7 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19394 @bus @2.5 @change_plan @mozyenterprise
+  @TC.19394 @bus @2.5 @change_plan @mozyenterprise @env_dependent
   Scenario: 19394 MozyEnterprise initial purchase coupon 500gb server add on to 1tb server add on
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add on | coupon              | country       | address           | city      | state abbrev | zip   | phone          |
@@ -363,7 +363,7 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19397 @bus @2.5 @change_plan @mozyenterprise
+  @TC.19397 @bus @2.5 @change_plan @mozyenterprise @env_dependent
   Scenario: 19397 MozyEnterprise initial purchase coupon and net terms 2tb server add on to no server add on
     When I add a new MozyEnterprise partner:
       | period | users | server plan | coupon              | net terms | country       | address           | city      | state abbrev | zip   | phone          |

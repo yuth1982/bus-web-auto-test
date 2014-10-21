@@ -89,7 +89,7 @@ Feature: Add new user, user group device details
       And I stop masquerading
       And I search and delete partner account by newly created partner company name
 
-    @TC.19935
+    @TC.19935 @env_dependent
     Scenario: Mozy-19935:Devices Add New User (Single UG) Reseller Itemized
       When I log in to legacy bus01 as administrator
       And I successfully add an itemized Reseller partner:

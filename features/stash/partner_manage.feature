@@ -222,7 +222,7 @@ Feature:
       | No (change)   |
     When I delete partner account
 
-  @TC.22080 @2.7 @bus @stash @partner_manage @need_test_account
+  @TC.22080 @2.7 @bus @stash @partner_manage @need_test_account @env_dependent
   Scenario: 22080 MozyEnterprise(Fortress tree) admin view stash details in partner detail section
     When I act as partner by:
       | email                                   | including sub-partners |

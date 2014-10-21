@@ -7,7 +7,7 @@ Feature: Add a new partner
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.18144 @bus @2.5 @add_new_partner @mozyenterprise
+  @TC.18144 @bus @2.5 @add_new_partner @mozyenterprise @env_dependent
   Scenario: 18144 Add New MozyEnterprise Partner - US - Yearly - 100 Users - Coupon - CC
     When I add a new MozyEnterprise partner:
       | period | users | coupon              | country       | address           | city      | state abbrev | zip   | phone          |
@@ -89,7 +89,7 @@ Feature: Add a new partner
       | today | $0.00      | $0.00      | $0.00       |
     And I delete partner account
 
-  @TC.18150 @bus @2.5 @add_new_partner @mozyenterprise
+  @TC.18150 @bus @2.5 @add_new_partner @mozyenterprise @env_dependent
   Scenario: 18150 Add New MozyEnterprise Partner - US - 3 Years - 300 Users - 500 GB Server Plan - 10 Add on - Coupon - CC
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add on | coupon              | country       | address           | city      | state abbrev | zip   | phone          |
@@ -174,7 +174,7 @@ Feature: Add a new partner
       | today | $0.00      | $0.00      | $0.00       |
     And I delete partner account
 
-  @TC.17962 @bus @2.5 @add_new_partner @mozyenterprise
+  @TC.17962 @bus @2.5 @add_new_partner @mozyenterprise @env_dependent
   Scenario: 17962 Add New MozyEnterprise Partner - US - Biennially - 500 Users - 2 TB Server Plan - Coupon - Net Terms
     When I add a new MozyEnterprise partner:
       | period | users | server plan | coupon              | net terms | country       | address           | city      | state abbrev | zip   | phone          |
@@ -294,7 +294,7 @@ Feature: Add a new partner
     Then MozyEnterprise partner subscription period options should be:
       | Yearly | Biennially | 3 years |
 
-  @TC.20378 @bus @2.5 @add_new_partner @mozyenterprise
+  @TC.20378 @bus @2.5 @add_new_partner @mozyenterprise @env_dependent
   Scenario: 20378 Add New MozyEnterprise Partner - US - Yearly - 10 Users - 500 B Server Plan - 2 Add on - Coupon - CC
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add on | coupon               |

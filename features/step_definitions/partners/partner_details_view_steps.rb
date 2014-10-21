@@ -1,14 +1,5 @@
 When /^I act as newly created (sub)*partner( account)?$/ do |type, account|
-  if type.nil?
-    @current_partner = @bus_site.admin_console_page.partner_details_section.partner
-    @bus_site.admin_console_page.partner_details_section.act_as_partner
-    @bus_site.admin_console_page.has_stop_masquerading_link?
-  else
-    @current_partner = @bus_site.admin_console_page.partner_details_section.subpartner.partner
-    @bus_site.admin_console_page.partner_details_section.subpartner.act_as_partner
-    @bus_site.admin_console_page.has_content?(@subpartner.company_name)
-  end
-  @partner_id = @bus_site.admin_console_page.current_partner_id
+  act_as_partner(!!type)
 end
 
 When /^I add partner settings$/ do |table|
@@ -207,7 +198,7 @@ Then /^Partner billing history should be:$/ do |billing_history_table|
 end
 
 When /^I enable stash for the partner$/ do
-  @bus_site.admin_console_page.partner_details_section.enable_stash
+  partner_enable_sync
 end
 
 When /^I enable stash for the partner with (default|\d+ GB) stash storage$/ do |quota|
