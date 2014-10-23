@@ -604,7 +604,7 @@ module Bus
     end
 
     # jm: code for hashing user subscription info
-    element(:bar_information, css: "div.show-details > table.mini-table[2]")
+    element(:bar_information, xpath: "//div[@class='show-details']/table[@class='mini-table'][2]")
 
     # returns a hash of user subscription data
     def mozyhome_user_details_hash
