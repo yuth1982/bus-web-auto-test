@@ -817,9 +817,9 @@ Feature: Add a new user through phoenix
       | period | base plan | country |
       | 1      | 125 Go    | France  |
     Then the billing summary looks like:
-      | Description                              | Prix  | Quantité | Montant |
-      | MozyHome 125 Go (3 ordinateur) - Mensuel | 8,99€ | 1        | 8,99€   |
-      | Montant total des frais                  | 8,99€ |          | 8,99€   |
+      | Description                                       | Prix  | Quantité | Montant |
+      | MozyHome 125 Go (Jusqu'à 3 ordinateurs) - Mensuel | 8,99€ | 1        | 8,99€   |
+      | Montant total des frais                           | 8,99€ |          | 8,99€   |
     And the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -847,9 +847,9 @@ Feature: Add a new user through phoenix
       | period  | base plan | country |
       | 12      | 125 Go    | France  |
     Then the billing summary looks like:
-      | Description                             | Prix   | Quantité | Montant |
-      | MozyHome 125 Go (3 ordinateur) - Annuel | 98,89€ | 1        | 98,89€  |
-      | Montant total des frais                 | 98,89€ |          | 98,89€  |
+      | Description                                      | Prix   | Quantité | Montant |
+      | MozyHome 125 Go (Jusqu'à 3 ordinateurs) - Annuel | 98,89€ | 1        | 98,89€  |
+      | Montant total des frais                          | 98,89€ |          | 98,89€  |
     And the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -877,9 +877,9 @@ Feature: Add a new user through phoenix
       | period  | base plan | country |
       | 24      | 125 Go    | France  |
     Then the billing summary looks like:
-      | Description                                | Prix    | Quantité | Montant |
-      | MozyHome 125 Go (3 ordinateur) - Bisannuel | 188,79€ | 1        | 188,79€ |
-      | Montant total des frais                    | 188,79€ |          | 188,79€ |
+      | Description                                         | Prix    | Quantité | Montant |
+      | MozyHome 125 Go (Jusqu'à 3 ordinateurs) - Bisannuel | 188,79€ | 1        | 188,79€ |
+      | Montant total des frais                             | 188,79€ |          | 188,79€ |
     And the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
