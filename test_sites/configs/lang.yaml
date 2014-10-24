@@ -204,7 +204,7 @@ Germany:
 France:
   language: fr
   MozyPro:
-    go_to_acct: Mozy Admin Console
+    go_to_acct: Console d'administration Mozy
     #pending translation
     start_using_mozy: Start using Mozy
     #pending removal
