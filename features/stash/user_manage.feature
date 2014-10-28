@@ -243,34 +243,6 @@ Feature: User stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.18995 @BSA.3030 @bus @2.5 @user_stories @stash @need_test_account @env_dependent
-  Scenario: 18995 [Search/List Users View][P]"Sync" column shows and has valid value
-    When I act as partner by:
-      | email                        |
-      | test3010_3030_3040@auto.com  |
-    When I navigate to Search / List Users section from bus admin console page
-    And I sort user search results by User
-    Then User search results should be:
-      | User                   | Name           | User Group           | Sync     |
-      | backup19045@test.com   | backup19045    | (default user group) | Disabled |
-      | backup@test.com        | backup         | backup               | Disabled |
-      | stash19045@test.com    | stash19045     | (default user group) | Enabled  |
-      | stash@test.com         | stash          | stash                | Enabled  |
-
-  @TC.18996 @BSA.3030 @bus @2.5 @user_stories @stash @need_test_account @env_dependents
-  Scenario: 18996 [Search/List Users View][P]"Storage" and "Storage Used" column includes backup and stash
-    When I act as partner by:
-      | email                       |
-      | test3010_3030_3040@auto.com |
-    When I navigate to Search / List Users section from bus admin console page
-    And I sort user search results by User
-    Then User search results should be:
-      | User                   | Name           | User Group           | Sync     | Machines | Storage | Storage Used |
-      | backup19045@test.com   | backup19045    | (default user group) | Disabled | 1        | 1 GB    | 10 MB        |
-      | backup@test.com        | backup         | backup               | Disabled | 1        | 1 GB    | 10 MB        |
-      | stash19045@test.com    | stash19045     | (default user group) | Enabled  | 0        | 2 GB    | 20 MB        |
-      | stash@test.com         | stash          | stash                | Enabled  | 0        | 2 GB    | 20 MB        |
-
   @TC.19114 @BSA.3040 @bus @2.5 @user_stories @US @enterprise @partner @stash
   Scenario: 19114 19115 Enterprise Partner View User storage usage
     When I add a new MozyEnterprise partner:
