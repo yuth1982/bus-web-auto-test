@@ -4,17 +4,18 @@ Feature: Quick Links section & Link removal from left navigation
     # Base case for nav link removal
     #   Redmine: 99538
     #
-    @TC.21175 @bus @2.5 @nav_link_removal
-    Scenario: 21175 Removal of nav menu items
+    @TC.21175 @bus @2.5 @nav_link_removal @mozyenterprisedps
+    Scenario: 21175 MozyEnteprise DPS - BUS Admin UI - Nav link removal
       When I log in bus admin console as administrator
-      And I add a new MozyEnterprise partner:
-        | period | users | server plan | net terms |
-        | 12     | 10    | 100 GB      | yes       |
-      Then New partner should be created
+      And I add a new MozyEnterprise DPS partner:
+        | period | base plan | sales channel | net terms |
+        | 12     | 2         | Velocity      | yes       |
+      And New partner should be created
       And I act as newly created partner
       And navigation items should be removed
       And I stop masquerading
       And I search and delete partner account by newly created partner company name
+
 
     #
     #   Cases for bundled Pro/Metallic Reseller/Enterprise
@@ -132,15 +133,15 @@ Feature: Quick Links section & Link removal from left navigation
     #   Section heading is only a title, as each link goes to different modules
     #   Redmine: 99171
     #
-    @TC.21295 @bus @2.5 @quick_link
-    Scenario: 21295 New Quick Link Section
+    @TC.21295 @bus @2.5 @quick_link @mozyenterprisedps
+    Scenario: 21295 MozyEnteprise DPS - BUS Admin UI - New Quick Link Section
       When I log in bus admin console as administrator
-      And I add a new MozyPro partner:
-        | period | base plan | server plan | net terms |
-        | 1      | 100 GB    | yes         | yes       |
+      And I add a new MozyEnterprise DPS partner:
+        | period | base plan | sales channel | net terms |
+        | 12     | 2         | Velocity      | yes       |
       And New partner should be created
       And I act as newly created partner
-      And new section & navigation items are present for MozyPro partner
+      And new section & navigation items are present for MozyEnterprise DPS partner
       And I stop masquerading
       And I search and delete partner account by newly created partner company name
 

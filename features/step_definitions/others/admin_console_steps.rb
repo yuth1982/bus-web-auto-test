@@ -95,7 +95,7 @@ end
 
 # has_navigation returns a value if items are present, otherwise it will return empty
 # in the case, am verifying that items are present by ensuring a value is present
-Then /^new section & navigation items are present for (MozyPro|MozyEnterprise|Reseller|Itemized) partner$/ do |type|
+Then /^new section & navigation items are present for (MozyPro|MozyEnterprise|MozyEnterprise DPS|Reseller|Itemized) partner$/ do |type|
   @bus_site.admin_console_page.has_content?('Quick Links').should be_true
   case type
     when CONFIGS['bus']['company_type']['mozypro']
@@ -104,6 +104,12 @@ Then /^new section & navigation items are present for (MozyPro|MozyEnterprise|Re
       @bus_site.admin_console_page.has_navigation?("Add New User").should be_true
       @bus_site.admin_console_page.has_navigation?(/^Download .* Client$/).should be_true
     when CONFIGS['bus']['company_type']['mozyenterprise']
+      @bus_site.admin_console_page.has_navigation?("Resource Summary").should be_true
+      @bus_site.admin_console_page.has_navigation?("User Group List").should be_true
+      @bus_site.admin_console_page.has_navigation?("Add New User").should be_true
+      @bus_site.admin_console_page.has_navigation?("Change Plan").should be_true
+      @bus_site.admin_console_page.has_navigation?(/^Download .* Client$/).should be_true
+    when CONFIGS['bus']['company_type']['mozyenterprise_dps']
       @bus_site.admin_console_page.has_navigation?("Resource Summary").should be_true
       @bus_site.admin_console_page.has_navigation?("User Group List").should be_true
       @bus_site.admin_console_page.has_navigation?("Add New User").should be_true
