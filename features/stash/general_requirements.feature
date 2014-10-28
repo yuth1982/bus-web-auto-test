@@ -586,7 +586,7 @@ Feature:
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.22187 @stash
+  @TC.22187 @bus @stash
   Scenario: 22187 Reseller Partner Enable and Disable cycle by add sync with single user
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |

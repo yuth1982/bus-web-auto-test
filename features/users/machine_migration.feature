@@ -226,7 +226,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       | column 1      |  column 2       |  column 3                    | column 4                                   | column 5  | column 6          |
       |Import Results:| 3 rows imported |0 machines moved to new users | 0 machines skipped (no new user specified) | 3 Errors: | Unknown new owner |
 
-  @TC.16288 @bug @2.5 @machine_migration
+  @TC.16288 @bus @bug @2.5 @machine_migration
   Scenario: 16288 16289 16290 16291 Import a CSV file with current owners invalid format
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -271,7 +271,7 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
       | column 1      |  column 2       |  column 3                    | column 4                                   |
       |Import Results:| 3 rows imported |0 machines moved to new users | 3 machines skipped (no new user specified) |
 
-  @TC.16343 @bug @2.5 @machine_migration
+  @TC.16343 @bus @bug @2.5 @machine_migration
   Scenario: 16343 Export a CSV file when the partner has subpartners
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | root role  |

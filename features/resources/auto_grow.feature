@@ -6,7 +6,7 @@ Feature: Auto Grow
 
   Success Criteria:
 
-  @TC.14115 @env_dependent
+  @TC.14115 @bus @env_dependent
   Scenario: Mozy-14115::Enable autogrow partner admin
     When I log in to legacy bus01 as administrator
     And I successfully add an itemized Reseller partner:
@@ -46,7 +46,7 @@ Feature: Auto Grow
     And I search and delete partner account by newly created partner company name
 
 
-  @TC.14116
+  @TC.14116 @bus
   Scenario: Mozy-14116::Autogrow enabled billing
     When I log in bus admin console as administrator
     And I add a new Reseller partner:
@@ -101,7 +101,7 @@ Feature: Auto Grow
     And I view partner details by newly created partner company name
     And I search and delete partner account by newly created partner company name
 
-  @TC.21963 @slow
+  @TC.21963 @bus @slow
   Scenario: 21963 - Autogrow Smoke - A Partner with Autogrow Enabled Can Overdraft Resources on Shared Usergroups
     When an Auto Grow Org is created
     And I navigate to Search / List Users section from bus admin console page

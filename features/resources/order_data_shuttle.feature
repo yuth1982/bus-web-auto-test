@@ -264,7 +264,7 @@ Feature:
     """
     And I search and delete partner account by newly created partner company name
 
-  @TC.21985 @slow
+  @TC.21985 @bus @slow
   Scenario: 21985 Ordering data shuttle for MozyPro
     When I add a new MozyPro partner:
       | period | base plan |

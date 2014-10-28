@@ -70,7 +70,7 @@ Feature: Send activated / unactivated license keys
     And I can find 3 Activated Server license key(s) from the mail
     And I cannot find any Unactivated license key(s) from the mail
 
-  @TC.21006 @email
+  @TC.21006 @bus @email
   Scenario: 21006 [BundleReseller][Desktop License]Admin can send activated/unactivated license keys
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan |
