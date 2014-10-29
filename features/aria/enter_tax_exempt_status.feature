@@ -128,3 +128,16 @@
       | Pre-tax Subtotal       |          |            | $30.00      |
       | Total Charges          |          |            | $30.00      |
     And New partner should be created
+
+  @TC.18897 @bus @others
+  Scenario: 18897 Deletion is triggered by admins in the bus(Mozypro,business,yearly)
+    When I add a new MozyPro partner:
+      | period | users | server plan | server add on |
+      | 12     | 10    | 100 GB      | 1             |
+    And New partner should be created
+    And I get partner aria id
+    And I delete partner account
+    When API* I get Aria account details by newly created partner aria id
+    Then API* Aria account should be:
+      | status_label |
+      | CANCELLED    |
