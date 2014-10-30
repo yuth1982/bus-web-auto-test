@@ -186,7 +186,7 @@ module DBHelper
       Log.debug sql
       mozy_pro_key_ids.each_with_index do |mozy_pro_key_id, index|
         Log.debug "#{index} / #{mozy_pro_key_ids.size}"
-        sql = "insert into machines(alias, machine, user_id, site, sync, created_at, updated_at) values ('AUTOTEST', 'machinehash#{Time.now.to_i}', #{user_id}, 'qa6', false, now(), now());"
+        sql = "insert into machines(alias, machine, user_id, site, sync, created_at, updated_at) values ('AUTOTEST', 'machinehash#{Time.now.to_i+index}', #{user_id}, '#{QA_ENV['data_center']}', false, now(), now());"
         conn.exec sql
         Log.debug sql
 
