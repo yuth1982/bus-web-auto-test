@@ -26,3 +26,10 @@ end
 Before('@firefox_profile') do
   Capybara.current_driver = :firefox_profile
 end
+
+After do |scenario|
+  if scenario.failed?
+    page.driver.browser.save_screenshot("html-report/#{scenario.__id__}.png")
+    embed("#{scenario.__id__}.png", "image/png", "#{scenario.__id__}_screenshot")
+  end
+end
