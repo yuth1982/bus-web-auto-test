@@ -192,7 +192,22 @@ module Bus
     def fill_billing_info(partner)
       if partner.use_company_info
         use_company_info_cb.check
+      else
+        cc_address_tb.type_text(partner.billing_info.address)
+        cc_city_tb.type_text(partner.billing_info.city)
+        cc_country_select.select(partner.billing_info.country)
+        if partner.billing_info.country.eql?('United States')
+          cc_state_us_select.select(partner.billing_info.state_abbrev)
+        elsif partner.billing_info.country.eql?('Canada')
+          cc_state_ca_select.select(partner.billing_info.state_abbrev)
+        else
+          cc_state_tb.type_text(partner.billing_info.state)
+        end
+        cc_zip_tb.type_text(partner.billing_info.zip)
+        cc_email_tb.type_text(partner.billing_info.email)
+        cc_phone_tb.type_text(partner.billing_info.phone)
       end
+
     end
 
     def fill_subscription_period(period)

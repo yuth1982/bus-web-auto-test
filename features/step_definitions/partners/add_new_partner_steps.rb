@@ -111,7 +111,10 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller|MozyEnterprise DPS|OEM) part
     @partner.account_detail.sales_channel = attributes['sales channel'] unless attributes['sales channel'].nil?
 
     # Billing info attributes
-    # Not implemented, always use company info
+    @partner.use_company_info = attributes['billing country'].nil?
+    @partner.billing_info.country = attributes["billing country"] unless attributes['billing country'].nil?
+    @partner.billing_info.state = attributes["billing state"] unless attributes['billing state'].nil?
+    @partner.billing_info.state_abbrev = attributes['billing state abbrev'] unless attributes['billing state abbrev'].nil?
 
     # Credit card info attributes
     @partner.credit_card.first_name = attributes['cc first name'] unless attributes['cc first name'].nil?
