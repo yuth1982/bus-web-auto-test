@@ -289,15 +289,20 @@ end
 # added "( |partner)" for future flexibility
 Then /^the (user|partner) has activated their account$/ do |_|
   if @partner.base_plan.eql?("free")
+    subject = "free_mail_subject"
+  else
+    subject = "verify_mail_subject"
+  end
+  if (@partner.company_info.country.eql?("France")||@partner.company_info.country.eql?("Germany"))
     step %{I retrieve email content by keywords:}, table(%{
-      | to | subject |
-      | @new_admin_email | #{LANG[@partner.company_info.country][@partner.partner_info.type]["free_mail_subject"]} |
+      | to |
+      | @new_admin_email |
       })
   else
     step %{I retrieve email content by keywords:}, table(%{
-      | to | subject |
-      | @new_admin_email | #{LANG[@partner.company_info.country][@partner.partner_info.type]["verify_mail_subject"]} |
-      })
+        | to | subject |
+        | @new_admin_email | #{LANG[@partner.company_info.country][@partner.partner_info.type]['#{subject}']} |
+        })
   end
   step %{I get verify email address from email content}
   step %{verify email address link should show success message}
