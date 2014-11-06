@@ -543,7 +543,7 @@ Feature: User Details
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120022 @bus @edit_device_limit
+  @TC.120022 @bus @edit_device_limit @env_dependent
   Scenario: 120022 [Enterprisde]user moved from subpartner to partner can edit device limit
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | root role  |

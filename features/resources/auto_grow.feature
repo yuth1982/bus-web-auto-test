@@ -101,7 +101,7 @@ Feature: Auto Grow
     And I view partner details by newly created partner company name
     And I search and delete partner account by newly created partner company name
 
-  @TC.21963 @bus @slow
+  @TC.21963 @bus @slow @env_dependent
   Scenario: 21963 - Autogrow Smoke - A Partner with Autogrow Enabled Can Overdraft Resources on Shared Usergroups
     When an Auto Grow Org is created
     And I navigate to Search / List Users section from bus admin console page

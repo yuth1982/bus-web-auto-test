@@ -712,7 +712,7 @@ Feature:
     And I search and delete partner account by newly created partner company name
 
 
-  @TC.120693 @bus @data_shuttle @Bug.116986
+  @TC.120693 @bus @data_shuttle @Bug.116986 @need_test_account
   Scenario: 120693 Verify shipped drive has inbound number
     When I search order in view data shuttle orders section by Jabberstorm Company 0311-1822-21
     Then order search results in data shuttle orders section should be:

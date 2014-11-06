@@ -59,7 +59,7 @@ Feature: View billing information
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15359 @bus @2.0 @billing_information
+  @TC.15359 @bus @2.0 @billing_information @env_dependent
   Scenario: 15359 Verify MozyEnterprise Autogrow status is set to disabled by default
     When I add a new MozyEnterprise partner:
       | period | users |

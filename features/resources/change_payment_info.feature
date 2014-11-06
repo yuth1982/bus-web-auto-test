@@ -131,14 +131,14 @@ Feature: Modify credit card information and billing contact information
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15376 @bus @2.5 @modify @cc @billing_contact_info
+  @TC.15376 @bus @2.5 @modify @cc @billing_contact_info @need_test_account
   Scenario: 15376 Verify OEM Do Not Keep Credit Card
     When I act as partner by:
       | name            | filter  |
       | Muskadel Backup | OEMs    |
     Then I should not see Change Payment Information link
 
-  @TC.19276 @bus @2.5 @modify @cc @billing_contact_info
+  @TC.19276 @bus @2.5 @modify @cc @billing_contact_info @need_test_account
   Scenario: 19276 Velocity Partner Do Not Keep Credit Card
     When I act as partner by:
       | name                |
