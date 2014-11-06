@@ -102,9 +102,6 @@ When /^I (.+) a phoenix (Home|Pro|Direct|Free) (partner|user):$/ do |string,type
   @partner.account_detail.account_type = "Live"
   @partner.account_detail.sales_origin = "Web"
 
-  # Billing info attributes
-  # Not implemented, always use company info
-
   # Credit card info attributes
   @partner.credit_card.first_name = attributes["cc first name"] unless attributes["cc first name"].nil?
   @partner.credit_card.last_name = attributes["cc last name"] unless attributes["cc last name"].nil?
@@ -112,6 +109,19 @@ When /^I (.+) a phoenix (Home|Pro|Direct|Free) (partner|user):$/ do |string,type
   @partner.credit_card.expire_month = attributes["expire month"] unless attributes["expire month"].nil?
   @partner.credit_card.expire_year = attributes["expire year"] unless attributes["expire year"].nil?
   @partner.credit_card.cvv = attributes["cvv"] unless attributes["cvv"].nil?
+
+  # Billing info attributes
+  @partner.use_company_info = attributes['billing country'].nil?
+  unless @partner.use_company_info
+    @partner.billing_info.country = attributes["billing country"] unless attributes['billing country'].nil?
+    @partner.billing_info.state = attributes["billing state"] unless attributes['billing state'].nil?
+    @partner.billing_info.state_abbrev = attributes['billing state abbrev'] unless attributes['billing state abbrev'].nil?
+    @partner.billing_info.company_name = attributes["billing company name"] unless attributes['billing company name'].nil?
+    @partner.billing_info.address = attributes['billing address'] unless attributes['billing address'].nil?
+    @partner.billing_info.city = attributes['billing city'] unless attributes['billing city'].nil?
+    @partner.billing_info.zip = attributes['billing zip'] unless attributes['billing zip'].nil?
+    @partner.billing_info.phone = attributes['billing phone'] unless attributes['billing phone'].nil?
+  end
 
   # Common attributes
   @partner.subscription_period = attributes["period"]

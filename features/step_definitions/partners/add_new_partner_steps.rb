@@ -112,9 +112,16 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller|MozyEnterprise DPS|OEM) part
 
     # Billing info attributes
     @partner.use_company_info = attributes['billing country'].nil?
-    @partner.billing_info.country = attributes["billing country"] unless attributes['billing country'].nil?
-    @partner.billing_info.state = attributes["billing state"] unless attributes['billing state'].nil?
-    @partner.billing_info.state_abbrev = attributes['billing state abbrev'] unless attributes['billing state abbrev'].nil?
+    unless @partner.use_company_info
+      @partner.billing_info.country = attributes["billing country"] unless attributes['billing country'].nil?
+      @partner.billing_info.state = attributes["billing state"] unless attributes['billing state'].nil?
+      @partner.billing_info.state_abbrev = attributes['billing state abbrev'] unless attributes['billing state abbrev'].nil?
+      @partner.billing_info.address = attributes['billing address'] unless attributes['billing address'].nil?
+      @partner.billing_info.city = attributes['billing city'] unless attributes['billing city'].nil?
+      @partner.billing_info.zip = attributes['billing zip'] unless attributes['billing zip'].nil?
+      @partner.billing_info.phone = attributes['billing phone'] unless attributes['billing phone'].nil?
+      @partner.billing_info.email = attributes["billing email"] unless attributes['billing email'].nil?
+    end
 
     # Credit card info attributes
     @partner.credit_card.first_name = attributes['cc first name'] unless attributes['cc first name'].nil?

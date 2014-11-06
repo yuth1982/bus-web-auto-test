@@ -35,6 +35,7 @@ module Phoenix
     element(:cc_phone_tb, id: "cc_phone")
     element(:cc_zip_tb, id: "cc_zip")
     element(:billing_summary_table, css: "table.order-summary")
+    element(:use_company_info_label, id: 'insert_partner_contact')
     # home flow
     element(:home_country_select, id: "bill_to_address_country")
     element(:home_bill_fname_tb, id: "bill_to_forename")
@@ -83,7 +84,25 @@ module Phoenix
       # payee info
       cc_first_name_tb.type_text(partner.credit_card.first_name)
       cc_last_name_tb.type_text(partner.credit_card.last_name)
-      cc_company_tb.type_text(partner.company_info.name )
+      if partner.use_company_info
+        cc_company_tb.type_text(partner.company_info.name)
+        use_company_info_label.check
+      else
+        cc_company_tb.type_text(partner.billing_info.company_name)
+        cc_country_select.select(partner.billing_info.country)
+        cc_address_tb.type_text(partner.billing_info.address)
+        cc_city_tb.type_text(partner.billing_info.city)
+        if partner.billing_info.country.eql?("United States")
+          cc_state_us_select.select(partner.billing_info.state_abbrev)
+        elsif partner.billing_info.country.eql?('Canada')
+          cc_state_ca_select.select(partner.billing_info.state_abbrev)
+        else
+          cc_state_tb.type_text(partner.billing_info.state)
+        end
+        cc_zip_tb.type_text(partner.billing_info.zip)
+        cc_phone_tb.type_text(partner.billing_info.phone)
+      end
+      cc_email_tb.eql?(partner.admin_info.email)
       #captch
       captcha.type_text(CONFIGS['phoenix']['captcha'])
       # billing company info
@@ -99,19 +118,33 @@ module Phoenix
       home_cc_cvv_tb.type_text(partner.credit_card.cvv)
       home_cc_exp_mm_select.select(partner.credit_card.expire_month)
       home_cc_exp_yy_select.select(partner.credit_card.expire_year)
-      localized_country(home_country_select, partner)
       home_bill_fname_tb.type_text(partner.credit_card.first_name)
       home_bill_lname_tb.type_text(partner.credit_card.last_name)
-      home_bill_company_tb.type_text(partner.company_info.name)
-      home_bill_addr1_tb.type_text(partner.company_info.address)
-      home_bill_city_tb.type_text(partner.company_info.city)
-      if partner.company_info.country.eql?("United States")
-        home_bill_state_select.select(partner.company_info.state_abbrev)
+      if partner.use_company_info
+        home_bill_company_tb.type_text(partner.company_info.name)
+        home_country_select.select(partner.company_info.country)
+        home_bill_addr1_tb.type_text(partner.company_info.address)
+        home_bill_city_tb.type_text(partner.company_info.city)
+        if partner.company_info.country.eql?("United States")
+          home_bill_state_select.select(partner.company_info.state_abbrev)
+        else
+          home_bill_state_tb.type_text(partner.company_info.state)
+        end
+        home_bill_post_tb.type_text(partner.company_info.zip)
+        home_bill_phone_tb.type_text(partner.company_info.phone)
       else
-        home_bill_state_tb.type_text(partner.company_info.state)
+        home_bill_company_tb.type_text(partner.billing_info.company_name)
+        home_country_select.select(partner.billing_info.country)
+        home_bill_addr1_tb.type_text(partner.billing_info.address)
+        home_bill_city_tb.type_text(partner.billing_info.city)
+        if partner.billing_info.country.eql?("United States")
+          home_bill_state_select.select(partner.billing_info.state_abbrev)
+        else
+          home_bill_state_tb.type_text(partner.billing_info.state)
+        end
+        home_bill_post_tb.type_text(partner.billing_info.zip)
+        home_bill_phone_tb.type_text(partner.billing_info.phone)
       end
-      home_bill_post_tb.type_text(partner.company_info.zip)
-      home_bill_phone_tb.type_text(partner.company_info.phone)
       home_bill_email_tb.eql?(partner.admin_info.email)
       #captch
       captcha.type_text(CONFIGS['phoenix']['captcha'])

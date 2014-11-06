@@ -2,11 +2,12 @@ module Bus
   module DataObj
     # This class contains attributes for billing information
     class BillingInfo
-      attr_accessor :address, :city, :state_abbrev, :state, :country, :zip, :email, :phone, :billing, :order_summary
+      attr_accessor :company_name, :address, :city, :state_abbrev, :state, :country, :zip, :email, :phone, :billing, :order_summary
 
       # Public: Initialize a BillingInfo Object
       #
       def initialize
+        @company_name = "#{Forgery::Name.company_name} Company #{Time.now.strftime("%m%d-%H%M-%S")}"
         @address= Forgery::Address.street_address
         @city = Forgery::Address.city
         @state_abbrev = Forgery::Address.state_abbrev
@@ -34,7 +35,8 @@ module Bus
       #
       # Returns text
       def to_s
-        %{address: #@address
+        %{company name: #@company_name
+        address: #@address
         city: #@city
         state abbrev (for US & CA only): #@state_abbrev
         state: #@state
