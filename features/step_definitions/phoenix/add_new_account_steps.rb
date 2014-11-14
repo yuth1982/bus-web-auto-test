@@ -160,8 +160,9 @@ When /^I (.+) a phoenix (Home|Pro|Direct|Free) (partner|user):$/ do |string,type
   #If catches an error of already used email
   unless @phoenix_site.phoenix_acct_fill_out.stuck_on_sign_up? || type == "Free"
     @phoenix_site.licensing_fill_out.licensing_billing_fillout(@partner)
-    @phoenix_site.licensing_fill_out.has_vat_error?.should_not be_true
-    @phoenix_site.billing_fill_out.billing_info_fill_out(@partner)
+    unless @phoenix_site.licensing_fill_out.stuck_on_mozy_plan?
+      @phoenix_site.billing_fill_out.billing_info_fill_out(@partner)
+    end
   end
 
 end
@@ -300,4 +301,12 @@ Then /^the (user|partner) has activated their account$/ do |_|
   end
   step %{I get verify email address from email content}
   step %{verify email address link should show success message}
+end
+
+Then /^mozy plan page error message should be:$/ do |message|
+  @phoenix_site.licensing_fill_out.pc_error_messages.should eq(message)
+end
+
+Then /^billing details page error message should be:$/ do |message|
+  @phoenix_site.billing_fill_out.bc_error_messages.should eq(message)
 end

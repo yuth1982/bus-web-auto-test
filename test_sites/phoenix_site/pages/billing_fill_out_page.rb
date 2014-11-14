@@ -35,7 +35,6 @@ module Phoenix
     element(:cc_phone_tb, id: "cc_phone")
     element(:cc_zip_tb, id: "cc_zip")
     element(:billing_summary_table, css: "table.order-summary")
-    element(:use_company_info_label, id: 'insert_partner_contact')
     # home flow
     element(:home_country_select, id: "bill_to_address_country")
     element(:home_bill_fname_tb, id: "bill_to_forename")
@@ -56,6 +55,7 @@ module Phoenix
     element(:continue_btn, css: "input.img-button")
     element(:back_btn, id: "back_button")
     element(:submit_btn, id: "submit_button")
+    element(:error_message, css: "p.error")
 
     # Public elements & methods
     #
@@ -86,7 +86,7 @@ module Phoenix
       cc_last_name_tb.type_text(partner.credit_card.last_name)
       if partner.use_company_info
         cc_company_tb.type_text(partner.company_info.name)
-        use_company_info_label.check
+        same_as_company_info_link.check
       else
         cc_company_tb.type_text(partner.billing_info.company_name)
         cc_country_select.select(partner.billing_info.country)
@@ -183,6 +183,17 @@ module Phoenix
 
     def home_billing_country
       home_country_select.value
+    end
+
+    # Public: Error Messages when billing and credit card country not match
+    #
+    # Example
+    #  @phoenix_site.billing_info_fill_out.bc_error_messages
+    #  # => ""
+    #
+    # Returns success or error message text
+    def bc_error_messages
+      error_message.text
     end
   end
 end
