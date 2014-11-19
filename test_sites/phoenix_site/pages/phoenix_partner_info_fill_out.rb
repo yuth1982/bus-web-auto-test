@@ -162,8 +162,8 @@ module Phoenix
         password = (partner.company_info.security == "HIPAA") ? CONFIGS['global']['test_hipaa_pwd']:CONFIGS['global']['test_pwd']
         password_tb.type_text(password)
         reenter_password_tb.type_text(password)       
-        # changed to new localized_country method
-        localized_country(new_admin_country_select, partner)
+        # changed to new localized_country method, comment as no change of the country and failed for localized country
+        # localized_country(new_admin_country_select, partner)
         # this can be removed
         # new_admin_country_select.select(partner.company_info.country)
         new_admin_zip_tb.type_text(partner.company_info.zip)
@@ -178,8 +178,8 @@ module Phoenix
         else
           contact_state_tb.type_text(partner.company_info.state)
         end
-        # changed to new localized_country method
-        localized_country(contact_country_select, partner)
+        # changed to new localized_country method, comment as no change of the country and failed for localized country
+        # localized_country(contact_country_select, partner)
         # this can be removed
         # contact_country_select.select(partner.company_info.country)
         contact_zip_tb.type_text(partner.company_info.zip)
@@ -235,9 +235,9 @@ module Phoenix
 
     #localized selection/clicking of items
     def localized_select(loc_item, partner, loc_select)
-      loc_item.select("#{LANG[partner.company_info.country][partner.partner_info.type][loc_select]}"); end
+      loc_item.select("#{LANG[partner.partner_info.parent][partner.partner_info.type][loc_select]}"); end
     def localized_click(partner, loc_click)
-      navigate_to_link("#{LANG[partner.company_info.country][partner.partner_info.type][loc_click]}"); end
+      navigate_to_link("#{LANG[partner.partner_info.parent][partner.partner_info.type][loc_click]}"); end
 
     #questionaire for pro accts
     def survey_industry(partner)

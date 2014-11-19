@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Phoenix
   class NewPartnerLicensingFillout < SiteHelper::Page
 
@@ -45,7 +46,7 @@ module Phoenix
     #
     def vat_fill_out(partner)
       if partner.partner_info.type.eql?("MozyPro")
-        unless partner.company_info.country.eql?("United States")
+        unless partner.partner_info.parent == 'MozyPro' || partner.partner_info.parent == 'MozyPro Ireland'
           vat_number_tb.type_text(partner.company_info.vat_num)
         end
       end
