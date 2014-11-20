@@ -171,7 +171,7 @@ end
 Then /^the (order|billing) summary looks like:$/ do |type, billing_table|
   actual = @partner.order_summary
   expected = billing_table.hashes
-  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
+  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key] unless actual[index][key].nil?} }
 end
 
 ## Changed to more useful or the different account types
