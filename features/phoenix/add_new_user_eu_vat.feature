@@ -7,6 +7,16 @@ Feature: Add a new user through phoenix
   Background:
   # info to be added here: coverage matrix
 
+#---------------------------------------------------------------------------------
+# precondition
+# ssh root@phoenix01.qa6.mozyops.com  QAP@SSw0rd
+# /var/www/phoenix/app/controllers/account_controller.rb
+# /var/www/phoenix/app/controllers/registration_controller.rb
+# IpCountry.country_with_ip(request.remote_ip)
+# set to 'FR' if @ip_country=fr
+# restart: /etc/init.d/apache2 restart
+#---------------------------------------------------------------------------------
+
   @TC.138001 @phoenix @mozypro @profile_country=at @ip_country=at @billing_country=at
   Scenario: 138001 Add a new AT monthly basic MozyHome user
     When I am at dom selection point:
@@ -371,7 +381,7 @@ Feature: Add a new user through phoenix
       | Total Charge:                                | €98.89 |          |
     Then the user is successfully added.
 
-  @TC.138027 @phoenix @mozypro @profile_country=UK @ip_country=UK @billing_country=UK
+  @TC.138027 @phoenix @mozypro @profile_country=uk @ip_country=uk @billing_country=uk
   Scenario: 138027 Add a new UK monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -379,8 +389,8 @@ Feature: Add a new user through phoenix
       | 12     | 125 GB    | United Kingdom | United Kingdom  |
     Then the billing summary looks like:
       | Description                                  | Price  | Quantity |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | £82.41 | 1        |
-      | Amount:                                      | £82.41 |          |
-      | VAT Rate (20.0%):                            | £16.48 |          |
-      | Total Charge:                                | £98.89 |          |
+      | MozyHome 125 GB (Up to 3 computers) - Annual | £73.24 | 1        |
+      | Amount:                                      | £73.24 |          |
+      | VAT Rate (20.0%):                            | £14.65 |          |
+      | Total Charge:                                | £87.89 |          |
     Then the user is successfully added.

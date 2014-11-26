@@ -22,6 +22,15 @@ Feature: Add a new partner through phoenix
 #     base smoke test = us yearly, 100gb, server
 #---------------------------------------------------------------------------------
 
+#---------------------------------------------------------------------------------
+# precondition
+# ssh root@phoenix01.qa6.mozyops.com  QAP@SSw0rd
+# /var/www/phoenix/app/views/registration/_payment_details.rhtml
+# 'ip_country' : '<%= country_with_ip(request.remote_ip)%>’
+# set 'ip_country' : 'FR' if @ip_country=fr
+# restart: /etc/init.d/apache2 restart
+#---------------------------------------------------------------------------------
+
   @TC.133001 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
   Scenario: 133001 Add a new FR monthly basic MozyPro partner
     When I am at dom selection point:

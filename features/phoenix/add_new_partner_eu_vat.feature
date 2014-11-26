@@ -22,6 +22,15 @@ Feature: Add a new partner through phoenix
 #     base smoke test = us yearly, 100gb, server
 #---------------------------------------------------------------------------------
 
+#---------------------------------------------------------------------------------
+# precondition
+# ssh root@phoenix01.qa6.mozyops.com  QAP@SSw0rd
+# /var/www/phoenix/app/views/registration/_payment_details.rhtml
+# 'ip_country' : '<%= country_with_ip(request.remote_ip)%>’
+# set 'ip_country' : 'FR' if @ip_country=fr
+# restart: /etc/init.d/apache2 restart
+#---------------------------------------------------------------------------------
+
   @TC.136001 @phoenix @mozypro @profile_country=at @ip_country=at @billing_country=at
   Scenario: 136001 Add a new AT monthly basic MozyPro partner
     When I am at dom selection point:
@@ -298,8 +307,8 @@ Feature: Add a new partner through phoenix
   Scenario: 136018 Add a new MT monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country   | billing country |
-      | 1      | 100 GB    | Lithuania | Lithuania       |
+      | period | base plan | country | billing country |
+      | 1      | 100 GB    | Malta   | Malta           |
     Then the order summary looks like:
       | Description        | Price  | Quantity | Amount |
       | 100 GB - Monthly   | €30.99 | 1        | €30.99 |
@@ -411,7 +420,7 @@ Feature: Add a new partner through phoenix
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country |
-      | 1      | 100 GB    | Latvia  | Latvia          |
+      | 1      | 100 GB    | Spain   | Spain           |
     Then the order summary looks like:
       | Description        | Price  | Quantity | Amount |
       | 100 GB - Monthly   | €30.99 | 1        | €30.99 |
@@ -438,7 +447,7 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.136027 @phoenix @mozypro @profile_country=UK @ip_country=UK @billing_country=UK
+  @TC.136027 @phoenix @mozypro @profile_country=uk @ip_country=uk @billing_country=uk
   Scenario: 136027 Add a new UK monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:

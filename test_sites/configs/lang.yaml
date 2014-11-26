@@ -430,7 +430,7 @@ MozyHome Germany:
     plan_link: Mein Tarif
     devices_link: Arbeitsplatz
     profile_link: Mein Profil
-    dl_link: Mozy herunterladen
+    dl_link: Backup-Software herunterladen
     logout_link: Abmelden
     know_base_link: Mozy-Wissensdatenbank
     winclient_man_link: Windows-Client-Handbuch
@@ -481,7 +481,7 @@ MozyHome France:
     plan_link: Mon plan
     devices_link: Mon Ordinateur
     profile_link: Mon profil
-    dl_link: Télécharger Mozy
+    dl_link: Télécharger le logiciel de sauvegarde
     logout_link: Déconnexion
     know_base_link: Base de connaissances de Mozy
     winclient_man_link: Manuel du client Windows

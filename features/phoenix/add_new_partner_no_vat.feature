@@ -22,6 +22,15 @@ Feature: Add a new partner through phoenix
 #     base smoke test = us yearly, 100gb, server
 #---------------------------------------------------------------------------------
 
+#---------------------------------------------------------------------------------
+# precondition
+# ssh root@phoenix01.qa6.mozyops.com  QAP@SSw0rd
+# /var/www/phoenix/app/views/registration/_payment_details.rhtml
+# 'ip_country' : '<%= country_with_ip(request.remote_ip)%>’
+# set 'ip_country' : 'FR' if @ip_country=fr
+# restart: /etc/init.d/apache2 restart
+#---------------------------------------------------------------------------------
+
   @TC.131001 @phoenix @mozypro @profile_country=us @ip_country=us @billing_country=us
   Scenario: 131001 Add a new US monthly basic MozyPro partner
     When I am at dom selection point:
@@ -196,7 +205,7 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.131013 @phoenix @mozypro @profile_country=us @ip_country=cn @billing_country=fr
+  @TC.131013 @phoenix @mozypro @profile_country=us @ip_country=jp @billing_country=fr
   Scenario: 131013 Add a new US biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -210,7 +219,7 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.131014 @phoenix @mozypro @profile_country=us @ip_country=cn @billing_country=fr
+  @TC.131014 @phoenix @mozypro @profile_country=us @ip_country=jp @billing_country=fr
   Scenario: 131014 Add a new US monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:

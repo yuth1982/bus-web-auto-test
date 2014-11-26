@@ -7,6 +7,16 @@ Feature: Add a new user through phoenix
   Background:
   # info to be added here: coverage matrix
 
+#---------------------------------------------------------------------------------
+# precondition
+# ssh root@phoenix01.qa6.mozyops.com  QAP@SSw0rd
+# /var/www/phoenix/app/controllers/account_controller.rb
+# /var/www/phoenix/app/controllers/registration_controller.rb
+# IpCountry.country_with_ip(request.remote_ip)
+# set to 'FR' if @ip_country=fr
+# restart: /etc/init.d/apache2 restart
+#---------------------------------------------------------------------------------
+
   #
   # 50 GB Cases
   #
@@ -149,26 +159,30 @@ Feature: Add a new user through phoenix
   Scenario: 130011 Add a new US yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country       | billing country | addl storage |
-      | 12     | 125 GB    | United States | United States   | 98           |
+      | period | base plan | country       | billing country | addl storage | coupon       |
+      | 12     | 125 GB    | United States | United States   | 98           | 10percentoff |
     Then the billing summary looks like:
       | Description                                  | Price     | Quantity | Amount    |
       | MozyHome 125 GB (Up to 3 computers) - Annual | $109.89   | 1        | $109.89   |
       | 20 Additional Storage - Annual               | $22.00    | 98       | $2,156.00 |
-      | Total Charge                                 | $2,265.89 |          | $2,265.89 |
+      | Subscription Price                           | $2,265.89 |          | $2,265.89 |
+      | 12 months at 10.0% off                       | $-226.58  |          | $-226.58  |
+      | Total Charge                                 | $2,039.31 |          | $2,039.31 |
     Then the user is successfully added.
 
   @TC.130012 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=us
   Scenario: 130012 Add a new US biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country       | billing country | addl computers |
-      | 24     | 125 GB    | United States | United States   | 1              |
+      | period | base plan | country       | billing country | addl computers | coupon       |
+      | 24     | 125 GB    | United States | United States   | 1              | 10percentoff |
     Then the billing summary looks like:
       | Description                                    | Price   | Quantity | Amount  |
       | MozyHome 125 GB (Up to 3 computers) - Biennial | $209.79 | 1        | $209.79 |
       | Additional Computers - Biennial                | $42.00  | 1        | $42.00  |
-      | Total Charge                                   | $251.79 |          | $251.79 |
+      | Subscription Price                             | $251.79 |          | $251.79 |
+      | 24 months at 10.0% off                         | $-25.17 |          | $-25.17 |
+      | Total Charge                                   | $226.62 |          | $226.62 |
     Then the user is successfully added.
 
   #
@@ -412,7 +426,7 @@ Feature: Add a new user through phoenix
   #
   # 50 GB Cases
   #
-  @TC.130031 @phoenix @mozyhome @profile_country=us @ip_country=cn @billing_country=fr
+  @TC.130031 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=fr
   Scenario: 130031 Add a new US monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -424,7 +438,7 @@ Feature: Add a new user through phoenix
       | Total Charge                          | $5.99 |          | $5.99  |
     Then the user is successfully added.
 
-  @TC.130032 @phoenix @mozyhome @profile_country=us @ip_country=cn @billing_country=fr
+  @TC.130032 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=fr
   Scenario: 130032 Add a new US yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -436,7 +450,7 @@ Feature: Add a new user through phoenix
       | Total Charge                         | $65.89 |          | $65.89 |
     Then the user is successfully added.
 
-  @TC.130033 @phoenix @mozyhome @profile_country=us @ip_country=cn @billing_country=fr
+  @TC.130033 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=fr
   Scenario: 130033 Add a new US biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -451,7 +465,7 @@ Feature: Add a new user through phoenix
   #
   # 125 GB Cases
   #
-  @TC.130034 @phoenix @mozyhome @profile_country=us @ip_country=cn @billing_country=fr
+  @TC.130034 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=fr
   Scenario: 130034 Add a new US monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -463,7 +477,7 @@ Feature: Add a new user through phoenix
       | Total Charge                                  | $9.99 |          | $9.99  |
     Then the user is successfully added.
 
-  @TC.130035 @phoenix @mozyhome @profile_country=us @ip_country=cn @billing_country=fr
+  @TC.130035 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=fr
   Scenario: 130035 Add a new US yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -475,7 +489,7 @@ Feature: Add a new user through phoenix
       | Total Charge                                 | $109.89 |          | $109.89 |
     Then the user is successfully added.
 
-  @TC.130036 @phoenix @mozyhome @profile_country=us @ip_country=cn @billing_country=fr
+  @TC.130036 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=fr
   Scenario: 130036 Add a new US biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:

@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Phoenix
   class NewPartnerBillingFillout < SiteHelper::Page
 
@@ -56,6 +57,7 @@ module Phoenix
     element(:back_btn, id: "back_button")
     element(:submit_btn, id: "submit_button")
     element(:error_message, css: "p.error")
+    element(:pro_error_message, xpath: "//*[@id='ariaErrors']/ul/li")
 
     # Public elements & methods
     #
@@ -92,12 +94,13 @@ module Phoenix
         cc_country_select.select(partner.billing_info.country)
         cc_address_tb.type_text(partner.billing_info.address)
         cc_city_tb.type_text(partner.billing_info.city)
-        if partner.billing_info.country.eql?("United States")
-          cc_state_us_select.select(partner.billing_info.state_abbrev)
-        elsif partner.billing_info.country.eql?('Canada')
-          cc_state_ca_select.select(partner.billing_info.state_abbrev)
-        else
-          cc_state_tb.type_text(partner.billing_info.state)
+        case partner.billing_info.country
+          when 'United States', 'États-Unis', 'Vereinigte Staaten'
+            cc_state_us_select.select(partner.billing_info.state_abbrev)
+          when 'Canada'
+            cc_state_ca_select.select(partner.billing_info.state_abbrev)
+          else
+            cc_state_tb.type_text(partner.billing_info.state)
         end
         cc_zip_tb.type_text(partner.billing_info.zip)
         cc_phone_tb.type_text(partner.billing_info.phone)
@@ -105,8 +108,6 @@ module Phoenix
       cc_email_tb.eql?(partner.admin_info.email)
       #captch
       captcha.type_text(CONFIGS['phoenix']['captcha'])
-      # billing company info
-      same_as_company_info_link.click
     end
 
     #   home : filling all available fields
@@ -137,10 +138,11 @@ module Phoenix
         home_country_select.select(partner.billing_info.country)
         home_bill_addr1_tb.type_text(partner.billing_info.address)
         home_bill_city_tb.type_text(partner.billing_info.city)
-        if partner.billing_info.country.eql?("United States")
-          home_bill_state_select.select(partner.billing_info.state_abbrev)
-        else
-          home_bill_state_tb.type_text(partner.billing_info.state)
+        case partner.billing_info.country
+          when 'United States', 'États-Unis', 'Vereinigte Staaten'
+            home_bill_state_select.select(partner.billing_info.state_abbrev)
+          else
+            home_bill_state_tb.type_text(partner.billing_info.state)
         end
         home_bill_post_tb.type_text(partner.billing_info.zip)
         home_bill_phone_tb.type_text(partner.billing_info.phone)
@@ -185,15 +187,26 @@ module Phoenix
       home_country_select.value
     end
 
-    # Public: Error Messages when billing and credit card country not match
+    # Public: Error Messages when profile, ip, billing, credit card country not match
     #
     # Example
-    #  @phoenix_site.billing_info_fill_out.bc_error_messages
+    #  @phoenix_site.billing_info_fill_out.home_error_messages
     #  # => ""
     #
     # Returns success or error message text
-    def bc_error_messages
+    def home_error_messages
       error_message.text
+    end
+
+    # Public: Error Messages when profile, ip, billing, credit card country not match
+    #
+    # Example
+    #  @phoenix_site.billing_info_fill_out.pro_error_messages
+    #  # => ""
+    #
+    # Returns success or error message text
+    def pro_error_messages
+      pro_error_message.text
     end
   end
 end

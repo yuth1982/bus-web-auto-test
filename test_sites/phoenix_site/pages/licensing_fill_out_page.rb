@@ -17,6 +17,7 @@ module Phoenix
     element(:vat_number_tb, id: "vat_num")
     element(:coupon_code_tb, id: "coupon_code")
     element(:error_message, css: "p.error")
+    element(:vat_error_message, xpath: "//dd[@class='error left']")
     # home specific items
     element(:add_storage_tb, id: "additional_storage")
     element(:add_machine_select, id: "extra_machine_count")
@@ -196,6 +197,17 @@ module Phoenix
     # Returns success or error message text
     def pc_error_messages
       error_message.text
+    end
+
+    # Public: Error Messages for apply Promotional Code
+    #
+    # Example
+    #  @phoenix_site.licensing_fill_out.pro_pc_error_messages
+    #  # => "The promotion code 5percentoff is invalid or has expired."
+    #
+    # Returns success or error message text
+    def vat_error_messages
+      vat_error_message.text
     end
   end
 end

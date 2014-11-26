@@ -7,6 +7,16 @@ Feature: Add a new user through phoenix
   Background:
   # info to be added here: coverage matrix
 
+#---------------------------------------------------------------------------------
+# precondition
+# ssh root@phoenix01.qa6.mozyops.com  QAP@SSw0rd
+# /var/www/phoenix/app/controllers/account_controller.rb
+# /var/www/phoenix/app/controllers/registration_controller.rb
+# IpCountry.country_with_ip(request.remote_ip)
+# set to 'FR' if @ip_country=fr
+# restart: /etc/init.d/apache2 restart
+#---------------------------------------------------------------------------------
+
   #
   # 50 Go Cases
   #

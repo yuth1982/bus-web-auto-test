@@ -312,6 +312,14 @@ Then /^mozy plan page error message should be:$/ do |message|
   @phoenix_site.licensing_fill_out.pc_error_messages.should eq(message)
 end
 
+Then /^vat error message should be:$/ do |message|
+  @phoenix_site.licensing_fill_out.vat_error_messages.should eq(message)
+end
+
 Then /^billing details page error message should be:$/ do |message|
-  @phoenix_site.billing_fill_out.bc_error_messages.should eq(message)
+  @phoenix_site.billing_fill_out.home_error_messages.should eq(message)
+end
+
+Then /^payment information page error message should be:$/ do |message|
+  @phoenix_site.billing_fill_out.pro_error_messages.should eq(message)
 end
