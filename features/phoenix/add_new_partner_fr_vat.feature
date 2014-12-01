@@ -486,3 +486,78 @@ Feature: Add a new partner through phoenix
     And the partner is successfully added.
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
+
+  @TC.133029 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
+  Scenario: 133029 Add a new FR biennial basic MozyPro partner
+    When I am at dom selection point:
+    And I add a phoenix Pro partner:
+      | period | base plan | country | billing country | vat number    |
+      | 1      | 10 Go     | France  | France          | FR08410091490 |
+    Then the order summary looks like:
+      | Description             | Prix      | Quantité | Montant   |
+      | 10 Go - Mensuel         | 7,99€     | 1        | 7,99€     |
+      | TVA                     | Exemption |          | Exemption |
+      | Montant total des frais | 7,99€     |          | 7,99€     |
+    And the partner is successfully added.
+    And I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
+
+  @TC.133030 @phoenix @mozypro @profile_country=fr @ip_country=uk @billing_country=fr
+  Scenario: 133030 Add a new FR biennial basic MozyPro partner
+    When I am at dom selection point:
+    And I add a phoenix Pro partner:
+      | period | base plan | country | billing country | vat number    |
+      | 24     | 100 Go    | France  | France          | FR08410091490 |
+    Then the order summary looks like:
+      | Description             | Prix      | Quantité | Montant   |
+      | 100 Go - Bisannuel      | 650,79€   | 1        | 650,79€   |
+      | TVA                     | Exemption |          | Exemption |
+      | Montant total des frais | 650,79€   |          | 650,79€   |
+    And the partner is successfully added.
+    And I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
+
+  @TC.133031 @phoenix @mozypro @profile_country=fr @ip_country=uk @billing_country=uk
+  Scenario: 133031 Add a new FR monthly basic MozyPro partner
+    When I am at dom selection point:
+    And I add a phoenix Pro partner:
+      | period | base plan | country | billing country | vat number    |
+      | 1      | 250 Go    | France  | Royaume-Uni     | FR08410091490 |
+    Then the order summary looks like:
+      | Description             | Prix      | Quantité | Montant   |
+      | 250 Go - Mensuel        | 74,99€    | 1        | 74,99€    |
+      | TVA                     | Exemption |          | Exemption |
+      | Montant total des frais | 74,99€    |          | 74,99€    |
+    And the partner is successfully added.
+    And I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
+
+  @TC.133032 @phoenix @mozypro @profile_country=fr @ip_country=uk @billing_country=it
+  Scenario: 133032 Add a new FR yearly basic MozyPro partner
+    When I am at dom selection point:
+    And I add a phoenix Pro partner:
+      | period | base plan | country | billing country | vat number    |
+      | 12     | 500 Go    | France  | Royaume-Uni     | FR08410091490 |
+    Then the order summary looks like:
+      | Description             | Prix      | Quantité | Montant   |
+      | 500 Go - Annuel         | 1 649,89€ | 1        | 1 649,89€ |
+      | TVA                     | Exemption |          | Exemption |
+      | Montant total des frais | 1 649,89€ |          | 1 649,89€ |
+    And the partner is successfully added.
+    And I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
+
+  @TC.133033 @phoenix @mozypro @profile_country=fr @ip_country=us @billing_country=us
+  Scenario: 133033 Add a new FR biennial basic MozyPro partner
+    When I am at dom selection point:
+    And I add a phoenix Pro partner:
+      | period | base plan | country | billing country | vat number    |
+      | 24     | 1 To      | France  | États-Unis      | FR08410091490 |
+    Then the order summary looks like:
+      | Description             | Prix      | Quantité | Montant   |
+      | 1 To - Bisannuel        | 6 299,79€ | 1        | 6 299,79€ |
+      | TVA                     | Exemption |          | Exemption |
+      | Montant total des frais | 6 299,79€ |          | 6 299,79€ |
+    And the partner is successfully added.
+    And I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
