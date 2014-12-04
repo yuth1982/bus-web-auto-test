@@ -54,6 +54,7 @@ bus:
     change_plan:                Change Plan
     download_enterprise:        Download MozyEnterprise Client
     download_client:            Download MozyPro Client
+    manage_vatfx_rates:         Manage VAT/FX Rates
 
     # Partners
     add_new_partner:            Add New Partner

@@ -72,6 +72,9 @@ module Bus
     section(:scheduled_reports_section, ScheduledReportsSection, id: "jobs-index")
     section(:quick_reports_section, QuickReportsSection, id: "jobs-quick_reports")
 
+    # internal tools
+    section(:manage_vatfx_rates_section, ManageVATTXRatesSection, id: "internal-add_vat_rate")
+
     # Private element
     element(:current_admin_div, id: 'identify-me')
     element(:stop_masquerading_link, xpath: "//a[text()='stop masquerading']")
