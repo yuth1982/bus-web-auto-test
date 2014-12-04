@@ -38,8 +38,27 @@ module Phoenix
   element(:change_machines_select, id: "machines")
   element(:change_period_select, id: "period")
   element(:payment_confirm, css: "div.inner-center-form-box > p")
-  element(:upgrade_continue_btn, css: "input.ui-button[Value=Continue]")
-  element(:upgrade_submit_btn, css: "input.ui-button[Value=Submit]")
+  element(:upgrade_continue_btn, xpath: "//div[@id='maincontent']//input[@name='submit']")
+  element(:upgrade_last_continue_btn, xpath: "//div[@id='maincontent']//input[@type='submit']")
+
+  # items in the Payment Details page during change current plan
+  elements(:curplan_payment_details_tb, xpath: "//table[@class='subscription_summary']")
+  element(:upgrade_submit_btn, xpath: "//input[@id='submit_button']")
+  element(:prorated_cost_text, xpath: "//form[@id='update_finish_form']/p/b")
+
+  # my plan page elements
+  element(:curplan_summary_tb, xpath: "//div[@id='maincontent']/div/table//td[1]/table")
+  element(:renewal_plan_summary_tb, xpath: "//div[@id='maincontent']/div/table//td[2]/table")
+  element(:renewal_plan_same_as_div, xpath: "//div[@id='maincontent']//table//td[2]/table//tr[2]//div")
+
+  # during change renewal plan the table of renwal plan summary
+  element(:renewal_plan_subscription_tbl, xpath: "//form[@id='update_renewal_form']/table[1]")
+  element(:renewal_plan_submit_btn, xpath: "//form[@id='update_renewal_form']//input[@type='submit']")
+
+  # upgrade home free user to paid
+  element(:free2paid_country_name, xpath: "//input[@id='user_name']")
+  element(:free2paid_country_select, xpath: "//select[@name='user[country]']")
+  element(:free2paid_continue_btn, xpath: "//input[@id='conti_button']")
 
   #--change credit card information section--
   # calls the whole process
@@ -115,52 +134,134 @@ module Phoenix
     message_profile.eql?("Profile saved")
   end
 
+  def click_my_plan_link
+    find(:xpath, "//ul[@class='side-menu']//a[contains(@href,'plan')]").click if all(:xpath,"//ul[@class='side-menu']//a[contains(@href,'plan')]").size > 0
+
+  end
   #--change plan section
   #--methods here are for changing plan specifics (GB, Adding Machines/Storage, Billing Cycle)
   # change plan - current
-  def change_plan_current(partner)
+  def change_plan_current(partner, new_base_plan, new_additional_storage, new_additional_computers)
+    click_my_plan_link
     find(:xpath, "//a[contains(@href,'/plan/edit')]").click
-    change_plan_select.select("MozyHome #{partner.base_plan}")
-    fill_addl_quota(partner)
-    fill_addl_mach(partner)
+    if !new_base_plan.nil?
+      change_plan_select.select("MozyHome #{new_base_plan}") unless new_base_plan.empty?
+    end
+    fill_addl_quota(new_additional_storage) unless new_additional_storage.nil?
+    fill_addl_mach(new_additional_computers) unless new_additional_computers.nil?
     # current plan's billing cycle is fixed
     upgrade_continue_btn.click
+    partner.curplan_payment_summary = curplan_payment_details_tb_rows
     upgrade_submit_btn.click
     payment_confirm.present?
-    upgrade_continue_btn.click
+    upgrade_last_continue_btn.click
   end
 
   # change plan - future
-  def change_plan_future(partner)
+  def change_plan_future(new_base_plan, new_additional_storage, total_computers, new_subscription)
+    click_my_plan_link
     find(:xpath, "//a[contains(@href,'/plan/edit_renewal')]").click
-    change_plan_select.select("MozyHome #{partner.base_plan}")
-    fill_addl_quota(partner)
-    fill_addl_mach(partner)
-    period_fill_out(partner)
-    upgrade_submit_btn.click
+    if !new_base_plan.nil?
+      change_plan_select.select("MozyHome #{new_base_plan}") unless new_base_plan.empty?
+    end
+    fill_addl_quota(new_additional_storage) unless new_additional_storage.nil?
+    fill_addl_mach(total_computers) unless total_computers.nil?
+    period_fill_out(new_subscription)
+    #upgrade_submit_btn.click
   end
 
-  def fill_addl_quota(partner)
-    if partner.additional_storage.eql?("max")
+  # click 'Submit' button during renewal plan
+  def submit_renewal_plan()
+    # get base plan value
+    base_plan_value = find(:xpath, "//select[@id='consumer_plan_id']").find('option[selected]').text
+    gb_value = find(:xpath, "//select[@id='consumer_plan_id']").value.eql?('104')? '50':'125'
+    base_plan = base_plan_value.gsub(/125|50/, gb_value)
+    # get Computers value
+    computers = find(:xpath, "//select[@id='machines']").value
+    # get Subscription value
+    subscription_value = find(:xpath, "//select[@id='period']").value
+    subscription = find(:xpath, "//select[@id='period']/option[@value='#{subscription_value}']").text
+    # get additional storage default value
+    addl_storage = find(:xpath, "//input[@id='num_quota_buckets']").value
+    array = renewal_plan_subscription_tbl.raw_text
+    array[0][1] = base_plan
+    array[1][1] = addl_storage + " " + array[1][1]
+    array[3][1] = computers
+    array[4][1] = subscription
+    array.delete_at array.index(["",""]) unless array.index(["",""]).nil?
+    renewal_plan_submit_btn.click
+    array
+  end
+
+  def fill_addl_quota(additional_storage)
+    change_quota_tb.clear_value
+    if additional_storage.eql?("max")
       change_quota_tb.type_text("99")
     else
-      change_quota_tb.type_text(partner.additional_storage)
+      change_quota_tb.type_text(additional_storage)
     end
+    find(:xpath, "//td[@id='num_quota_total']").click
   end
 
-  def fill_addl_mach(partner)
-    change_machines_select.select(partner.additional_computers)
+  def fill_addl_mach(additional_computers)
+    change_machines_select.select(additional_computers)
   end
 
-  def period_fill_out(partner)
-    case partner.subscription_period
-      when "M"
-        change_period_select.select("Monthly")
-      when "Y"
-        change_period_select.select("Yearly")
-      when "2"
-        change_period_select.select("Biennial")
+  def period_fill_out(subscription_period)
+    # for other language e.g. FR, the option text is not Monthly, Yearly,Biennial
+    change_period_select.find("option[value='#{subscription_period}']").click
+     # case subscription_period
+      #    when "M"
+      #      change_period_select.select("Monthly")
+      #    when "Y"
+      #      change_period_select.select("Yearly")
+      #    when "2"
+      #      change_period_select.select("Biennial")
+      #  end
+ end
+
+  # the Payment Details information during change current plan
+  def  curplan_payment_details_tb_rows
+    wait_until{curplan_payment_details_tb[0].visible?}
+    new_array = Array.new
+    curplan_payment_details_tb.each do |table|
+      array = table.raw_text
+      array.delete_at 0
+      new_array = new_array + array
     end
+    new_array
+  end
+
+  # current plan information in my plan page
+  def  curplan_summary_tb_rows
+    click_my_plan_link
+    wait_until{curplan_summary_tb.visible?}
+    array = curplan_summary_tb.raw_text
+    array.delete_at 0
+    array
+  end
+
+  # renewal  plany information in my plan page
+  def  renewal_plan_summary_tb_rows
+    wait_until{renewal_plan_summary_tb.visible?}
+    array = renewal_plan_summary_tb.raw_text
+    array.delete_at 0
+    array
+  end
+
+  def  renewal_plan_same_as_message
+    wait_until{renewal_plan_same_as_div.visible?}
+    renewal_plan_same_as_div.text
+  end
+
+  def get_prorated_cost
+    prorated_cost_text.text
+  end
+
+  def select_country_free_paid(partner)
+    free2paid_country_name.type_text(partner.admin_info.full_name)
+    free2paid_country_select.select(partner.company_info.country)
+    free2paid_continue_btn.click
   end
 
   end

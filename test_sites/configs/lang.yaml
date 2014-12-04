@@ -249,6 +249,7 @@ France:
     my_account: Mon Compte
     refer_link: Parrainages
     upgrade_link: Mettre à niveau
+    same_as_current_plan: Identique au plan en cours
 
 MozyPro:
   language: en

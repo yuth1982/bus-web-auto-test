@@ -137,7 +137,7 @@ module Phoenix
 
     def free_user_info_input(partner)
       free_user_idpass_fill_out(partner)
-      remaining_info_entry(partner)
+      #remaining_info_entry(partner)
     end
 
     # pro flow info entry

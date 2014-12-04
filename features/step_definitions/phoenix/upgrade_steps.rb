@@ -5,14 +5,15 @@ And /^I (upgrade|change) my (partner|user|free) account to:$/ do |change_type,ac
   case change_type
     # for upgrading an account - ie .. going from free to paid
     when "upgrade"
-    case acct_type
+     case acct_type
       when "free"
         # general info for upgrading user acct to diff values
-
         @partner.base_plan = attributes["base plan"] || ""
         @partner.has_stash = (attributes["has stash"] || "no").eql?("yes")
         @partner.additional_computers = attributes['addl computers'] unless attributes['addl computers'].nil?
         @partner.additional_storage = attributes['addl storage'] unless attributes['addl storage'].nil?
+        # Partner info attributes
+        @partner.partner_info.coupon_code = attributes["coupon"] unless attributes["coupon"].nil?
 
         # subscription period
 
@@ -26,49 +27,70 @@ And /^I (upgrade|change) my (partner|user|free) account to:$/ do |change_type,ac
             @partner.subscription_period = "2"
         end
 
-        find(:xpath, "//a[contains(@href,'/registration/mozy_home')]").click
+        # Billing info attributes
+        @partner.use_company_info = attributes['billing country'].nil?
+        unless @partner.use_company_info
+          @partner.billing_info.country = attributes["billing country"] unless attributes['billing country'].nil?
+          @partner.billing_info.state = attributes["billing state"] unless attributes['billing state'].nil?
+          @partner.billing_info.state_abbrev = attributes['billing state abbrev'] unless attributes['billing state abbrev'].nil?
+          @partner.billing_info.company_name = attributes["billing company name"] unless attributes['billing company name'].nil?
+          @partner.billing_info.address = attributes['billing address'] unless attributes['billing address'].nil?
+          @partner.billing_info.city = attributes['billing city'] unless attributes['billing city'].nil?
+          @partner.billing_info.zip = attributes['billing zip'] unless attributes['billing zip'].nil?
+          @partner.billing_info.phone = attributes['billing phone'] unless attributes['billing phone'].nil?
+        end
+
+        find(:xpath, "//a[contains(@href,'/account/upgrade_to_paid')]").click
+        @phoenix_site.update_profile.select_country_free_paid(@partner)
         @phoenix_site.licensing_fill_out.licensing_billing_fillout(@partner)
         @phoenix_site.billing_fill_out.billing_info_fill_out(@partner)
-        @phoenix_site.reg_complete_pg.upgrade_success(@partner)
-        @phoenix_site.user_account.localized_click(@partner, 'my_account')
+        #@phoenix_site.reg_complete_pg.upgrade_success(@partner)
+        #@phoenix_site.user_account.localized_click(@partner, 'my_account')
       when "partner"
 
         # general info for upgrading acct from home to pro
 
       when "user"
-        @partner.base_plan = attributes["base plan"] || ""
-        @partner.has_stash = (attributes["has stash"] || "no").eql?("yes")
-        @partner.additional_computers = attributes['addl computers'] unless attributes['addl computers'].nil?
-        @partner.additional_storage = attributes['addl storage'] unless attributes['addl storage'].nil?
+        #@partner.base_plan = attributes["base plan"] || ""
+        #@partner.has_stash = (attributes["has stash"] || "no").eql?("yes")
+        #@partner.additional_computers = attributes['addl computers'] unless attributes['addl computers'].nil?
+        #@partner.additional_storage = attributes['addl storage'] unless attributes['addl storage'].nil?
 
+        new_base_plan =  attributes["base plan"] || ""
+        new_additional_computers = attributes['addl computers'] unless attributes['addl computers'].nil?
+        new_additional_storage = attributes['addl storage'] unless attributes['addl storage'].nil?
         # general info relevant to upgrading a current home user acct
-
-        find(:xpath, "//a[contains(@href,'/plan')]").click
-        @phoenix_site.update_profile.change_plan_current(@partner)
-        step %{I logout of my user account}
+        # @phoenix_site.user_account.go_to_plan(@partner)
+        #find(:xpath, "//a[@href='/plan/edit']").click
+        #@phoenix_site.update_profile.change_plan_current(@partner)
+        @phoenix_site.update_profile.change_plan_current(@partner, new_base_plan, new_additional_storage, new_additional_computers)
+        #step %{I logout of my user account}
+     # for changing the current account - ie .. going from monthly to biennial billing
     end
-    # for changing the current account - ie .. going from monthly to biennial billing
-    when "change"
+   when "change"
       case acct_type
         when "user"
-          @partner.base_plan = attributes["base plan"] || "" unless attributes['base plan'].nil?
-          @partner.additional_computers = attributes['addl computers'] unless attributes['addl computers'].nil?
-          @partner.additional_storage = attributes['addl storage'] unless attributes['addl storage'].nil?
-
-          # general info relevant to upgrading a current home user acct
+          #@partner.base_plan = attributes["base plan"] || "" unless attributes['base plan'].nil?
+          #@partner.additional_computers = attributes['addl computers'] unless attributes['addl computers'].nil?
+          #@partner.additional_storage = attributes['addl storage'] unless attributes['addl storage'].nil?
+          new_base_plan =  attributes["base plan"] || ""
+          total_computers = attributes['computers'] unless attributes['computers'].nil?
+          new_additional_storage = attributes['addl storage'] unless attributes['addl storage'].nil?
+          new_subscription_period = attributes['period'] unless attributes['period'].nil?
           case
             when attributes["period"].eql?("1")
-              @partner.subscription_period = "M"
+              new_subscription_period = "M"
             when attributes["period"].eql?("12")
-              @partner.subscription_period = "Y"
+              new_subscription_period = "Y"
             when attributes["period"].eql?("24")
-              @partner.subscription_period = "2"
+              new_subscription_period = "2"
           end
-
-          find(:xpath, "//a[contains(@href,'/plan')]").click
-          @phoenix_site.update_profile.change_plan_future(@partner)
-    end
-  end
+          @phoenix_site.user_account.go_to_plan(@partner)
+          #find(:xpath, "//a[contains(@href,'/plan/edit_renewal')]").click
+          #@phoenix_site.update_profile.change_plan_future(@partner)
+          @phoenix_site.update_profile.change_plan_future(new_base_plan, new_additional_storage, total_computers, new_subscription_period)
+       end
+   end
 end
 
 And /^I change my profile attributes to:$/ do |change_info_table|
@@ -104,4 +126,52 @@ And /^I logout of my (user|partner) account$/ do |account|
       @phoenix_site.user_account.logout(@partner)
     when "partner"
   end
+end
+
+# current plan summary check  or payment detials during change current plan
+And /^the (current plan|payment details) summary looks like:$/ do |type, data_table|
+  date_format = '%m/%d/%y'
+  date_format = '%d/%m/%y' if @partner.company_info.country.include? 'France'
+  expected = data_table.raw
+  expected.each{|i|
+    if i[1].start_with? '@'
+      with_timezone(ARIA_ENV['timezone']) {i[1].replace(Chronic.parse(i[1].sub('@','')).strftime(date_format))}
+      break
+    end
+  }
+  if type == 'current plan'
+    actual = @phoenix_site.update_profile.curplan_summary_tb_rows
+  else
+    actual = @partner.curplan_payment_summary
+  end
+  actual.should == expected
+end
+
+And /^the renewal plan summary looks like:$/ do |renewal_plan_table|
+  expected = renewal_plan_table.raw
+  actual = @phoenix_site.update_profile.renewal_plan_summary_tb_rows
+  actual.should == expected
+end
+
+And /^the renewal plan summary is Same as current plan$/ do
+  expected_text = "Same as current plan"
+  if ["France", "Germany"].include?@partner.company_info.country
+    expected_text = " #{LANG[@partner.company_info.country][@partner.partner_info.type]['same_as_current_plan']}"
+  end
+  @phoenix_site.update_profile.renewal_plan_same_as_message.should == expected_text.strip
+end
+
+And /^the renewal plan subscription looks like:$/ do |subscription_table|
+  expected = subscription_table.raw
+  actual = @phoenix_site.update_profile.submit_renewal_plan
+  actual.should == expected
+end
+
+Then /^upgrade from free to paid will be successful$/ do
+  @phoenix_site.reg_complete_pg.reg_comp_banner_present.should==true
+  @phoenix_site.reg_complete_pg.upgrade_success(@partner)
+end
+
+And /^The prorated cost for these charge is (\S+)/ do |amount|
+  #@phoenix_site.update_profile.get_prorated_cost.should == amount
 end

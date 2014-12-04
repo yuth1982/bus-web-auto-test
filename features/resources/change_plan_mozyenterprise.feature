@@ -155,10 +155,10 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
       | 15    | 50 GB       |
     Then Change plan charge summary should be:
       | Description                                | Amount      |
-      | Credit for remainder of 10 GB Server Plan  | -$361.10    |
-      | Charge for upgraded plans                  | $1,810.04   |
+      | Credit for remainder of 10 GB Server Plan  | -$349.36    |
+      | Charge for upgraded plans                  | $1,751.18   |
       |                                            |             |
-      | Total amount to be charged                 | $1,448.94   |
+      | Total amount to be charged                 | $1,401.82   |
     And the MozyEnterprise account plan should be changed
     And MozyEnterprise new plan should be:
       | users | server plan |

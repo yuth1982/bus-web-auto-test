@@ -122,6 +122,10 @@ Then /^Change plan charge summary should be:$/ do |charge_table|
   @bus_site.admin_console_page.change_plan_section.charge_summary_table_rows.should == charge_table.rows
 end
 
+Then /^Change plan charge message should be:$/ do |message|
+  @bus_site.admin_console_page.change_plan_section.charge_message.strip.should eq(message.strip)
+end
+
 Then /^MozyPro available base plans should be:$/ do |plans_table|
   @bus_site.admin_console_page.change_plan_section.mozypro_available_base_plans.should == plans_table.rows.flatten
 end
