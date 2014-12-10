@@ -174,7 +174,7 @@ Feature: Add a new user through phoenix
       | Montant total des frais                           |                   |          | 16,99€  |
     Then the user is successfully added.
 
-  @TC.137011 @BUG.128707 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk
+  @TC.137011 @BUG.128707 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @qa6_dependent
   Scenario: 137011 Add a new FR yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -190,7 +190,7 @@ Feature: Add a new user through phoenix
       | Montant total des frais                          |                      |          | 2029,41€  |
     Then the user is successfully added.
 
-  @TC.137012 @BUG.128707 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk
+  @TC.137012 @BUG.128707 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @qa6_dependent
   Scenario: 137012 Add a new FR biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -209,7 +209,7 @@ Feature: Add a new user through phoenix
   #
   # 50 Go Cases
   #
-  @TC.137013 @BUG.128707 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr
+  @TC.137013 @BUG.128707 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr @qa6_dependent
   Scenario: 137013 Add a new FR monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -296,4 +296,74 @@ Feature: Add a new user through phoenix
       | Prix d'abonnement                                   |                     |          | 157,32€ |
       | VAT Rate (20.0%)                                    |                     |          | 31,47€  |
       | Montant total des frais                             |                     |          | 188,79€ |
+    Then the user is successfully added.
+
+  #
+  # 50 Go Cases
+  #
+  @TC.137019 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr
+  Scenario: 137019 Add a new FR monthly basic MozyHome user
+    When I am at dom selection point:
+    And I add a phoenix Home user:
+      | period | base plan | country | billing country | coupon                  |
+      | 1      | 50 Go     | France  | France          | 1dollaroffwithoutdollar |
+    Then the billing summary looks like:
+      | Description                             | Prix   | Quantité |
+      | MozyHome 50 Go (1 ordinateur) - Mensuel | 4,16€  | 1        |
+      | Prix d'abonnement                       | 4,16€  |          |
+      | 1 mois, avec 1,00€ de remise:           | -1,00€ |          |
+      | Montant:                                | 3,32€  |          |
+      | VAT Rate (20.0%):                       | 0,67€  |          |
+      | Montant total des frais:                | 3,99€  |          |
+    Then the user is successfully added.
+
+  @TC.137020 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @qa6_dependent
+  Scenario: 137020 Add a new fr yearly basic MozyHome user
+    When I am at dom selection point:
+    And I add a phoenix Home user:
+      | period | base plan | country | billing country | coupon                  |
+      | 12     | 50 Go     | France  | France          | 1dollaroffwithoutdollar |
+    Then the billing summary looks like:
+      | Description                             | Prix    | Quantité |
+      | MozyHome 50 Go (1 ordinateur) - Annuel  | 45,76€  | 1        |
+      | Prix d'abonnement                       | 45,74€  |          |
+      | 12 mois, avec 1,00€ de remise par mois: | -11,00€ |          |
+      | Montant:                                | 36,57€  |          |
+      | VAT Rate (20.0%):                       | 7,32€   |          |
+      | Montant total des frais:                | 43,89€  |          |
+    Then the user is successfully added.
+
+  @TC.137021 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @qa6_dependent
+  Scenario: 137021 Add a new FR biennial basic MozyHome user
+    When I am at dom selection point:
+    And I add a phoenix Home user:
+      | period | base plan | country | billing country | coupon                  |
+      | 24     | 50 Go     | France  | France          | 1dollaroffwithoutdollar |
+    Then the billing summary looks like:
+      | Description                               | Prix    | Quantité |
+      | MozyHome 50 Go (1 ordinateur) - Bisannuel | 87,36€  | 1        |
+      | Prix d'abonnement                         | 87,32€  |          |
+      | 24 mois, avec 1,00€ de remise par mois:   | -21,00€ |          |
+      | Montant:                                  | 69,82€  |          |
+      | VAT Rate (20.0%):                         | 13,97€  |          |
+      | Montant total des frais:                  | 83,79€  |          |
+    Then the user is successfully added.
+
+  #
+  # 125 Go Cases
+  #
+  @TC.137022 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @qa6_dependent
+  Scenario: 137022 Add a new FR monthly basic MozyHome user
+    When I am at dom selection point:
+    And I add a phoenix Home user:
+      | period | base plan | country | billing country | coupon                  |
+      | 1      | 125 Go    | France  | France          | 1dollaroffwithoutdollar |
+    Then the billing summary looks like:
+      | Description                                       | Prix   | Quantité |
+      | MozyHome 125 Go (Jusqu'à 3 ordinateurs) - Mensuel | 7,49€  | 1        |
+      | Prix d'abonnement                                 | 7,49€  |          |
+      | 1 mois, avec 1,00€ de remise:                     | -1,00€ |          |
+      | Montant:                                          | 6,66€  |          |
+      | VAT Rate (20.0%):                                 | 1,33€  |          |
+      | Montant total des frais:                          | 7,99€  |          |
     Then the user is successfully added.
