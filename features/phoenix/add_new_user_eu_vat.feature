@@ -24,11 +24,11 @@ Feature: Add a new user through phoenix
       | period | base plan | country | billing country |
       | 12     | 125 GB    | Austria | Österreich      |
     Then the billing summary looks like:
-      | Beschreibung                                   | Preis  | Menge |
-      | MozyHome 125 GB (Bis zu 3 Computer) - jährlich | 82,41€ | 1     |
-      | Betrag:                                        | 82,41€ |       |
-      | VAT Rate (20.0%):                              | 16,48€ |       |
-      | Gesamtbelastung:                               | 98,89€ |       |
+      | Beschreibung                                   | Preis              | Menge | Betrag |
+      | MozyHome 125 GB (Bis zu 3 Computer) - jährlich | 98,89€\n(inc. VAT) | 1     | 98,89€ |
+      | Abonnementpreis                                |                    |       | 82,41€ |
+      | VAT Rate (20.0%)                               |                    |       | 16,48€ |
+      | Gesamtbelastung                                |                    |       | 98,89€ |
     Then the user is successfully added.
 
   @TC.138002 @phoenix @mozypro @profile_country=be @ip_country=be @billing_country=be
@@ -38,11 +38,11 @@ Feature: Add a new user through phoenix
       | period | base plan | country | billing country |
       | 12     | 125 Go    | Belgium | Belgique        |
     Then the billing summary looks like:
-      | Description                                      | Prix   | Quantité |
-      | MozyHome 125 Go (Jusqu'à 3 ordinateurs) - Annuel | 81,73€ | 1        |
-      | Montant:                                         | 81,73€ |          |
-      | VAT Rate (21.0%):                                | 17,16€ |          |
-      | Montant total des frais:                         | 98,89€ |          |
+      | Description                                      | Prix               | Quantité | Montant |
+      | MozyHome 125 Go (Jusqu'à 3 ordinateurs) - Annuel | 98,89€\n(inc. VAT) | 1        | 98,89€  |
+      | Prix d'abonnement                                |                    |          | 81,73€  |
+      | VAT Rate (21.0%)                                 |                    |          | 17,16€  |
+      | Montant total des frais                          |                    |          | 98,89€  |
     Then the user is successfully added.
 
   @TC.138003 @phoenix @mozypro @profile_country=bg @ip_country=bg @billing_country=bg
@@ -52,11 +52,11 @@ Feature: Add a new user through phoenix
       | period | base plan | country  | billing country |
       | 12     | 125 GB    | Bulgaria | Bulgaria        |
     Then the billing summary looks like:
-      | Description                                  | Price  | Quantity |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | €82.41 | 1        |
-      | Amount:                                      | €82.41 |          |
-      | VAT Rate (20.0%):                            | €16.48 |          |
-      | Total Charge:                                | €98.89 |          |
+      | Description                                  | Price              | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89  |
+      | Subscription Price                           |                    |          | €82.41  |
+      | VAT Rate (20.0%)                             |                    |          | €16.48  |
+      | Total Charge                                 |                    |          | €98.89  |
     Then the user is successfully added.
 
   @TC.138004 @phoenix @mozypro @profile_country=hr @ip_country=hr @billing_country=hr
@@ -66,11 +66,11 @@ Feature: Add a new user through phoenix
       | period | base plan | country | billing country |
       | 12     | 125 GB    | Croatia | Croatia         |
     Then the billing summary looks like:
-      | Description                                  | Price  | Quantity |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | €79.11 | 1        |
-      | Amount:                                      | €79.11 |          |
-      | VAT Rate (25.0%):                            | €19.78 |          |
-      | Total Charge:                                | €98.89 |          |
+      | Description                                  | Price              | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
+      | Subscription Price                           |                    |          | €79.11 |
+      | VAT Rate (25.0%)                             |                    |          | €19.78 |
+      | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
   @TC.138005 @phoenix @mozypro @profile_country=cy @ip_country=cy @billing_country=cy
@@ -80,11 +80,11 @@ Feature: Add a new user through phoenix
       | period | base plan | country | billing country |
       | 12     | 125 GB    | Cyprus  | Cyprus          |
     Then the billing summary looks like:
-      | Description                                  | Price  | Quantity |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | €83.10 | 1        |
-      | Amount:                                      | €83.10 |          |
-      | VAT Rate (19.0%):                            | €15.79 |          |
-      | Total Charge:                                | €98.89 |          |
+      | Description                                  | Price              | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
+      | Subscription Price                           |                    |          | €83.10 |
+      | VAT Rate (19.0%)                             |                    |          | €15.79 |
+      | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
   @TC.138006 @phoenix @mozypro @profile_country=cz @ip_country=cz @billing_country=cz
@@ -94,11 +94,11 @@ Feature: Add a new user through phoenix
       | period | base plan | country        | billing country |
       | 12     | 125 GB    | Czech Republic | Czech Republic  |
     Then the billing summary looks like:
-      | Description                                  | Price  | Quantity |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | €81.73 | 1        |
-      | Amount:                                      | €81.73 |          |
-      | VAT Rate (21.0%):                            | €17.16 |          |
-      | Total Charge:                                | €98.89 |          |
+      | Description                                  | Price              | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
+      | Subscription Price                           |                    |          | €81.73 |
+      | VAT Rate (21.0%)                             |                    |          | €17.16 |
+      | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
   @TC.138007 @phoenix @mozypro @profile_country=dk @ip_country=dk @billing_country=dk
@@ -108,11 +108,11 @@ Feature: Add a new user through phoenix
       | period | base plan | country | billing country |
       | 12     | 125 GB    | Denmark | Denmark         |
     Then the billing summary looks like:
-      | Description                                  | Price  | Quantity |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | €79.11 | 1        |
-      | Amount:                                      | €79.11 |          |
-      | VAT Rate (25.0%):                            | €19.78 |          |
-      | Total Charge:                                | €98.89 |          |
+      | Description                                  | Price              | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
+      | Subscription Price                           |                    |          | €79.11 |
+      | VAT Rate (25.0%)                             |                    |          | €19.78 |
+      | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
   @TC.138008 @phoenix @mozypro @profile_country=ee @ip_country=ee @billing_country=ee
@@ -122,11 +122,11 @@ Feature: Add a new user through phoenix
       | period | base plan | country | billing country |
       | 12     | 125 GB    | Estonia | Estonia         |
     Then the billing summary looks like:
-      | Description                                  | Price  | Quantity |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | €82.41 | 1        |
-      | Amount:                                      | €82.41 |          |
-      | VAT Rate (20.0%):                            | €16.48 |          |
-      | Total Charge:                                | €98.89 |          |
+      | Description                                  | Price              | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
+      | Subscription Price                           |                    |          | €82.41 |
+      | VAT Rate (20.0%)                             |                    |          | €16.48 |
+      | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
   @TC.138009 @phoenix @mozypro @profile_country=fi @ip_country=fi @billing_country=fi
@@ -136,11 +136,11 @@ Feature: Add a new user through phoenix
       | period | base plan | country | billing country |
       | 12     | 125 GB    | Finland | Finland         |
     Then the billing summary looks like:
-      | Description                                  | Price  | Quantity |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | €79.75 | 1        |
-      | Amount:                                      | €79.75 |          |
-      | VAT Rate (24.0%):                            | €19.14 |          |
-      | Total Charge:                                | €98.89 |          |
+      | Description                                  | Price              | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
+      | Subscription Price                           |                    |          | €79.75 |
+      | VAT Rate (24.0%)                             |                    |          | €19.14 |
+      | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
   @TC.138010 @phoenix @mozypro @profile_country=de @ip_country=de @billing_country=de
@@ -150,11 +150,11 @@ Feature: Add a new user through phoenix
       | period | base plan | country | billing country |
       | 12     | 125 GB    | Germany | Deutschland     |
     Then the billing summary looks like:
-      | Beschreibung                                   | Preis  | Menge |
-      | MozyHome 125 GB (Bis zu 3 Computer) - jährlich | 83,10€ | 1     |
-      | Betrag:                                        | 83,10€ |       |
-      | VAT Rate (19.0%):                              | 15,79€ |       |
-      | Gesamtbelastung:                               | 98,89€ |       |
+      | Beschreibung                                   | Preis              | Menge    | Gesamtbelastung |
+      | MozyHome 125 GB (Bis zu 3 Computer) - jährlich | 98,89€\n(inc. VAT) | 1        | 98,89€          |
+      | Abonnementpreis                                |                    |          | 83,10€          |
+      | VAT Rate (19.0%)                               |                    |          | 15,79€          |
+      | Gesamtbelastung                                |                    |          | 98,89€          |
     Then the user is successfully added.
 
   @TC.138011 @phoenix @mozypro @profile_country=el @ip_country=el @billing_country=el
@@ -164,11 +164,11 @@ Feature: Add a new user through phoenix
       | period | base plan | country | billing country |
       | 12     | 125 GB    | Greece  | Greece          |
     Then the billing summary looks like:
-      | Description                                  | Price  | Quantity |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | €80.40 | 1        |
-      | Amount:                                      | €80.40 |          |
-      | VAT Rate (23.0%):                            | €18.49 |          |
-      | Total Charge:                                | €98.89 |          |
+      | Description                                  | Price              | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
+      | Subscription Price                           |                    |          | €80.40 |
+      | VAT Rate (23.0%)                             |                    |          | €18.49 |
+      | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
   @TC.138012 @phoenix @mozypro @profile_country=hu @ip_country=hu @billing_country=hu
@@ -178,11 +178,11 @@ Feature: Add a new user through phoenix
       | period | base plan | country | billing country |
       | 12     | 125 GB    | Hungary | Hungary         |
     Then the billing summary looks like:
-      | Description                                  | Price  | Quantity |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | €78.87 | 1        |
-      | Amount:                                      | €78.87 |          |
-      | VAT Rate (27.0%):                            | €20.02 |          |
-      | Total Charge:                                | €98.89 |          |
+      | Description                                  | Price              | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
+      | Subscription Price                           |                    |          | €77.87 |
+      | VAT Rate (27.0%)                             |                    |          | €21.02 |
+      | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
   @TC.138013 @phoenix @mozypro @profile_country=ie @ip_country=ie @billing_country=ie
@@ -192,11 +192,11 @@ Feature: Add a new user through phoenix
       | period | base plan | country | billing country |
       | 12     | 125 GB    | Ireland | Ireland         |
     Then the billing summary looks like:
-      | Description                                  | Price  | Quantity |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | €80.40 | 1        |
-      | Amount:                                      | €80.40 |          |
-      | VAT Rate (23.0%):                            | €18.49 |          |
-      | Total Charge:                                | €98.89 |          |
+      | Description                                  | Price              | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
+      | Subscription Price                           |                    |          | €80.40 |
+      | VAT Rate (23.0%)                             |                    |          | €18.49 |
+      | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
   @TC.138014 @phoenix @mozypro @profile_country=it @ip_country=it @billing_country=it
@@ -206,11 +206,11 @@ Feature: Add a new user through phoenix
       | period | base plan | country | billing country |
       | 12     | 125 GB    | Italy   | Italy           |
     Then the billing summary looks like:
-      | Description                                  | Price  | Quantity |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | €81.06 | 1        |
-      | Amount:                                      | €81.06 |          |
-      | VAT Rate (22.0%):                            | €17.83 |          |
-      | Total Charge:                                | €98.89 |          |
+      | Description                                  | Price              | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
+      | Subscription Price                           |                    |          | €81.06 |
+      | VAT Rate (22.0%)                             |                    |          | €17.83 |
+      | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
   @TC.138015 @phoenix @mozypro @profile_country=lv @ip_country=lv @billing_country=lv
@@ -220,11 +220,11 @@ Feature: Add a new user through phoenix
       | period | base plan | country | billing country |
       | 12     | 125 GB    | Latvia  | Latvia          |
     Then the billing summary looks like:
-      | Description                                  | Price  | Quantity |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | €81.73 | 1        |
-      | Amount:                                      | €81.73 |          |
-      | VAT Rate (21.0%):                            | €17.16 |          |
-      | Total Charge:                                | €98.89 |          |
+      | Description                                  | Price              | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
+      | Subscription Price                           |                    |          | €81.73 |
+      | VAT Rate (21.0%)                             |                    |          | €17.16 |
+      | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
   @TC.138016 @phoenix @mozypro @profile_country=lt @ip_country=lt @billing_country=lt
@@ -234,11 +234,11 @@ Feature: Add a new user through phoenix
       | period | base plan | country   | billing country |
       | 12     | 125 GB    | Lithuania | Lithuania       |
     Then the billing summary looks like:
-      | Description                                  | Price  | Quantity |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | €81.73 | 1        |
-      | Amount:                                      | €81.73 |          |
-      | VAT Rate (21.0%):                            | €17.16 |          |
-      | Total Charge:                                | €98.89 |          |
+      | Description                                  | Price              | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
+      | Subscription Price                           |                    |          | €81.73 |
+      | VAT Rate (21.0%)                             |                    |          | €17.16 |
+      | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
   @TC.138017 @phoenix @mozypro @profile_country=lu @ip_country=lu @billing_country=lu
@@ -248,11 +248,11 @@ Feature: Add a new user through phoenix
       | period | base plan | country    | billing country |
       | 12     | 125 Go    | Luxembourg | Luxembourg      |
     Then the billing summary looks like:
-      | Description                                      | Prix   | Quantité |
-      | MozyHome 125 Go (Jusqu'à 3 ordinateurs) - Annuel | 85,99€ | 1        |
-      | Montant:                                         | 85,99€ |          |
-      | VAT Rate (15.0%):                                | 12,90€ |          |
-      | Montant total des frais:                         | 98,89€ |          |
+      | Description                                      | PriX               | Quantité | Montant |
+      | MozyHome 125 Go (Jusqu'à 3 ordinateurs) - Annuel | 98,89€\n(inc. VAT) | 1        | 98,89€  |
+      | Prix d'abonnement                                |                    |          | 85,99€  |
+      | VAT Rate (15.0%)                                 |                    |          | 12,90€  |
+      | Montant total des frais                          |                    |          | 98,89€  |
     Then the user is successfully added.
 
   @TC.138018 @phoenix @mozypro @profile_country=mt @ip_country=mt @billing_country=mt
@@ -262,11 +262,11 @@ Feature: Add a new user through phoenix
       | period | base plan | country | billing country |
       | 12     | 125 GB    | Malta   | Malta           |
     Then the billing summary looks like:
-      | Description                                  | Price  | Quantity |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | €83.81 | 1        |
-      | Amount:                                      | €83.81 |          |
-      | VAT Rate (18.0%):                            | €15.08 |          |
-      | Total Charge:                                | €98.89 |          |
+      | Description                                  | Price              | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
+      | Subscription Price                           |                    |          | €83.81 |
+      | VAT Rate (18.0%)                             |                    |          | €15.08 |
+      | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
   @TC.138019 @phoenix @mozypro @profile_country=nl @ip_country=nl @billing_country=nl
@@ -276,11 +276,11 @@ Feature: Add a new user through phoenix
       | period | base plan | country     | billing country |
       | 12     | 125 GB    | Netherlands | Netherlands     |
     Then the billing summary looks like:
-      | Description                                  | Price  | Quantity |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | €81.73 | 1        |
-      | Amount:                                      | €81.73 |          |
-      | VAT Rate (21.0%):                            | €17.16 |          |
-      | Total Charge:                                | €98.89 |          |
+      | Description                                  | Price              | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
+      | Subscription Price                           |                    |          | €81.73 |
+      | VAT Rate (21.0%)                             |                    |          | €17.16 |
+      | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
   @TC.138020 @phoenix @mozypro @profile_country=pl @ip_country=pl @billing_country=pl
@@ -290,11 +290,11 @@ Feature: Add a new user through phoenix
       | period | base plan | country | billing country |
       | 12     | 125 GB    | Poland  | Poland          |
     Then the billing summary looks like:
-      | Description                                  | Price  | Quantity |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | €80.40 | 1        |
-      | Amount:                                      | €80.40 |          |
-      | VAT Rate (23.0%):                            | €18.49 |          |
-      | Total Charge:                                | €98.89 |          |
+      | Description                                  | Price              | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
+      | Subscription Price                           |                    |          | €80.40 |
+      | VAT Rate (23.0%)                             |                    |          | €18.49 |
+      | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
   @TC.138021 @phoenix @mozypro @profile_country=pt @ip_country=pt @billing_country=pt
@@ -304,11 +304,11 @@ Feature: Add a new user through phoenix
       | period | base plan | country  | billing country |
       | 12     | 125 GB    | Portugal | Portugal          |
     Then the billing summary looks like:
-      | Description                                  | Price  | Quantity |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | €80.40 | 1        |
-      | Amount:                                      | €80.40 |          |
-      | VAT Rate (23.0%):                            | €18.49 |          |
-      | Total Charge:                                | €98.89 |          |
+      | Description                                  | Price              | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
+      | Subscription Price                           |                    |          | €80.40 |
+      | VAT Rate (23.0%)                             |                    |          | €18.49 |
+      | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
   @TC.138022 @phoenix @mozypro @profile_country=ro @ip_country=ro @billing_country=ro
@@ -318,11 +318,11 @@ Feature: Add a new user through phoenix
       | period | base plan | country | billing country |
       | 12     | 125 GB    | Romania | Romania         |
     Then the billing summary looks like:
-      | Description                                  | Price  | Quantity |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | €79.75 | 1        |
-      | Amount:                                      | €79.75 |          |
-      | VAT Rate (24.0%):                            | €19.14 |          |
-      | Total Charge:                                | €98.89 |          |
+      | Description                                  | Price              | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
+      | Subscription Price                           |                    |          | €79.75 |
+      | VAT Rate (24.0%)                             |                    |          | €19.14 |
+      | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
   @TC.138023 @phoenix @mozypro @profile_country=sk @ip_country=sk @billing_country=sk
@@ -332,11 +332,11 @@ Feature: Add a new user through phoenix
       | period | base plan | country  | billing country |
       | 12     | 125 GB    | Slovakia | Slovakia        |
     Then the billing summary looks like:
-      | Description                                  | Price  | Quantity |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | €82.41 | 1        |
-      | Amount:                                      | €82.41 |          |
-      | VAT Rate (20.0%):                            | €16.48 |          |
-      | Total Charge:                                | €98.89 |          |
+      | Description                                  | Price              | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
+      | Subscription Price                           |                    |          | €82.41 |
+      | VAT Rate (20.0%)                             |                    |          | €16.48 |
+      | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
   @TC.138024 @phoenix @mozypro @profile_country=si @ip_country=si @billing_country=si
@@ -346,11 +346,11 @@ Feature: Add a new user through phoenix
       | period | base plan | country  | billing country |
       | 12     | 125 GB    | Slovenia | Slovenia        |
     Then the billing summary looks like:
-      | Description                                  | Price  | Quantity |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | €81.06 | 1        |
-      | Amount:                                      | €81.06 |          |
-      | VAT Rate (22.0%):                            | €17.83 |          |
-      | Total Charge:                                | €98.89 |          |
+      | Description                                  | Price              | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
+      | Subscription Price                           |                    |          | €81.06 |
+      | VAT Rate (22.0%)                             |                    |          | €17.83 |
+      | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
   @TC.138025 @phoenix @mozypro @profile_country=es @ip_country=es @billing_country=es
@@ -360,11 +360,11 @@ Feature: Add a new user through phoenix
       | period | base plan | country | billing country |
       | 12     | 125 GB    | Spain   | Spain           |
     Then the billing summary looks like:
-      | Description                                  | Price  | Quantity |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | €81.73 | 1        |
-      | Amount:                                      | €81.73 |          |
-      | VAT Rate (21.0%):                            | €17.16 |          |
-      | Total Charge:                                | €98.89 |          |
+      | Description                                  | Price              | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
+      | Subscription Price                           |                    |          | €81.73 |
+      | VAT Rate (21.0%)                             |                    |          | €17.16 |
+      | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
   @TC.138026 @phoenix @mozypro @profile_country=se @ip_country=se @billing_country=se
@@ -374,11 +374,11 @@ Feature: Add a new user through phoenix
       | period | base plan | country | billing country |
       | 12     | 125 GB    | Sweden  | Sweden          |
     Then the billing summary looks like:
-      | Description                                  | Price  | Quantity |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | €79.11 | 1        |
-      | Amount:                                      | €79.11 |          |
-      | VAT Rate (25.0%):                            | €19.78 |          |
-      | Total Charge:                                | €98.89 |          |
+      | Description                                  | Price              | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
+      | Subscription Price                           |                    |          | €79.11 |
+      | VAT Rate (25.0%)                             |                    |          | €19.78 |
+      | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
   @TC.138027 @phoenix @mozypro @profile_country=uk @ip_country=uk @billing_country=uk
@@ -388,9 +388,9 @@ Feature: Add a new user through phoenix
       | period | base plan | country        | billing country |
       | 12     | 125 GB    | United Kingdom | United Kingdom  |
     Then the billing summary looks like:
-      | Description                                  | Price  | Quantity |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | £73.24 | 1        |
-      | Amount:                                      | £73.24 |          |
-      | VAT Rate (20.0%):                            | £14.65 |          |
-      | Total Charge:                                | £87.89 |          |
+      | Description                                  | Price              | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Annual | £87.89\n(inc. VAT) | 1        | £87.89 |
+      | Subscription Price                           |                    |          | £73.24 |
+      | VAT Rate (20.0%)                             |                    |          | £14.65 |
+      | Total Charge                                 |                    |          | £87.89 |
     Then the user is successfully added.
