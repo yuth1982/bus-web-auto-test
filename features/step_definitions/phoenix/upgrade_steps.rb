@@ -14,7 +14,7 @@ And /^I (upgrade|change) my (partner|user|free) account to:$/ do |change_type,ac
         @partner.additional_storage = attributes['addl storage'] unless attributes['addl storage'].nil?
         # Partner info attributes
         @partner.partner_info.coupon_code = attributes["coupon"] unless attributes["coupon"].nil?
-
+        profile_country = attributes['country'] unless attributes['country'].nil?
         # subscription period
 
         @partner.subscription_period = attributes["period"]
@@ -41,7 +41,7 @@ And /^I (upgrade|change) my (partner|user|free) account to:$/ do |change_type,ac
         end
 
         find(:xpath, "//a[contains(@href,'/account/upgrade_to_paid')]").click
-        @phoenix_site.update_profile.select_country_free_paid(@partner)
+        @phoenix_site.update_profile.select_country_free_paid(@partner, profile_country)
         @phoenix_site.licensing_fill_out.licensing_billing_fillout(@partner)
         @phoenix_site.billing_fill_out.billing_info_fill_out(@partner)
         #@phoenix_site.reg_complete_pg.upgrade_success(@partner)
@@ -128,10 +128,11 @@ And /^I logout of my (user|partner) account$/ do |account|
   end
 end
 
-# current plan summary check  or payment detials during change current plan
+# current plan summary check  or payment details during change current plan
 And /^the (current plan|payment details) summary looks like:$/ do |type, data_table|
   date_format = '%m/%d/%y'
-  date_format = '%d/%m/%y' if @partner.company_info.country.include? 'France'
+  country = @partner.company_info.country
+  date_format = '%d/%m/%y' if (country.include? 'France')||(country.include? 'Germany')
   expected = data_table.raw
   expected.each{|i|
     if i[1].start_with? '@'
@@ -172,6 +173,16 @@ Then /^upgrade from free to paid will be successful$/ do
   @phoenix_site.reg_complete_pg.upgrade_success(@partner)
 end
 
-And /^The prorated cost for these charge is (\S+)/ do |amount|
-  #@phoenix_site.update_profile.get_prorated_cost.should == amount
+And /^I click change plan link in account home page$/ do
+  @phoenix_site.user_account.click_change_plan_account_page
+  @phoenix_site.update_profile.get_my_plan_title.should=="#{LANG[@partner.company_info.country][@partner.partner_info.type]['plan_link']}"
 end
+
+And /^I update profile country from link in billing page and upgrade again$/ do |country_table|
+  attributes = country_table.hashes.first
+  profile_country = attributes["profile country"] unless attributes['profile country'].nil?
+  @partner.billing_info.country = attributes["billing country"] unless attributes['billing country'].nil?
+  @phoenix_site.update_profile.update_profile_country_upgrade(profile_country)
+  @phoenix_site.billing_fill_out.billing_info_fill_out(@partner)
+end
+

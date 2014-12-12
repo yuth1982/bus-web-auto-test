@@ -136,7 +136,8 @@ module Phoenix
       reg_comp_banner_present
       reg_comp_text
       reg_get_started
-      find(:xpath, "//a[text()='#{LANG[partner.company_info.country][partner.partner_info.type]['acct_page_link']}']").click
+      #find(:xpath, "//a[text()='#{LANG[partner.company_info.country][partner.partner_info.type]['acct_page_link']}']").click
+      find(:xpath,"//div[@class='center']//a").click
     end
   end
 end

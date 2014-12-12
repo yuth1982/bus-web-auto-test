@@ -200,6 +200,7 @@ Germany:
     my_account: Mein Konto
     refer_link: Weiterempfehlungen
     upgrade_link: Aktualisieren
+    same_as_current_plan: Wie der aktuelle Tarif
 
 France:
   language: fr

@@ -47,11 +47,12 @@ module Phoenix
   element(:prorated_cost_text, xpath: "//form[@id='update_finish_form']/p/b")
 
   # my plan page elements
+  element(:my_plan_title, xpath: "//div[@id='maincontent']//h2")
   element(:curplan_summary_tb, xpath: "//div[@id='maincontent']/div/table//td[1]/table")
   element(:renewal_plan_summary_tb, xpath: "//div[@id='maincontent']/div/table//td[2]/table")
   element(:renewal_plan_same_as_div, xpath: "//div[@id='maincontent']//table//td[2]/table//tr[2]//div")
 
-  # during change renewal plan the table of renwal plan summary
+  # during change renewal plan the table of renewal plan summary
   element(:renewal_plan_subscription_tbl, xpath: "//form[@id='update_renewal_form']/table[1]")
   element(:renewal_plan_submit_btn, xpath: "//form[@id='update_renewal_form']//input[@type='submit']")
 
@@ -59,6 +60,8 @@ module Phoenix
   element(:free2paid_country_name, xpath: "//input[@id='user_name']")
   element(:free2paid_country_select, xpath: "//select[@name='user[country]']")
   element(:free2paid_continue_btn, xpath: "//input[@id='conti_button']")
+  element(:update_profile_country_upgrade_link, xpath: "//div[@id='cybersourceErrors']//a")
+  element(:continue_btn, css: "input.img-button")
 
   #--change credit card information section--
   # calls the whole process
@@ -136,8 +139,8 @@ module Phoenix
 
   def click_my_plan_link
     find(:xpath, "//ul[@class='side-menu']//a[contains(@href,'plan')]").click if all(:xpath,"//ul[@class='side-menu']//a[contains(@href,'plan')]").size > 0
-
   end
+
   #--change plan section
   #--methods here are for changing plan specifics (GB, Adding Machines/Storage, Billing Cycle)
   # change plan - current
@@ -258,10 +261,21 @@ module Phoenix
     prorated_cost_text.text
   end
 
-  def select_country_free_paid(partner)
+  def select_country_free_paid(partner, profile_country)
     free2paid_country_name.type_text(partner.admin_info.full_name)
-    free2paid_country_select.select(partner.company_info.country)
+    free2paid_country_select.select(profile_country)
     free2paid_continue_btn.click
+  end
+
+  def get_my_plan_title
+    my_plan_title.text
+  end
+
+  def update_profile_country_upgrade(profile_country)
+    update_profile_country_upgrade_link.click
+    free2paid_country_select.select(profile_country)
+    free2paid_continue_btn.click
+    continue_btn.click
   end
 
   end

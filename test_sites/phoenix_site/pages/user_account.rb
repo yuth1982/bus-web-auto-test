@@ -18,6 +18,13 @@ module Phoenix
     element(:current_pln_tbl, css: "td.subscription_viewpane_top") #current plan table on plan page
     element(:chg_plan_header, css: "div.center-form-box > h2") # change plan page head
     element(:chg_plan_content_txt, css: "div.inner-center-form-box > p")  # text of paragraph for change plan
+    # elements in Account Home page
+    # Computers section, e.g. '0 of 250 GB used'
+    element(:quota_account_span, xpath: "//div[@id='quota-box']/span")
+    # Plan Details table
+    element(:plan_details_account_tbl, xpath: "//table[@class='key_value_table fixed']")
+    # change plan link: To chagne your plan, click here
+    element(:change_plan_account_link, xpath: "//div[@id='maincontent']//a[@href='/plan']")
 
     # this method verifies that the acct logged into belongs to this specific user
     # the banner should match the users email address
@@ -151,6 +158,20 @@ module Phoenix
 
     def logout(partner)
       localized_click(partner, 'logout_link')
+    end
+
+    def get_quota_account_page(partner)
+      localized_click(partner, 'acct_link')
+      quota_account_span.text
+    end
+
+    def get_plan_details_account_page
+      wait_until{plan_details_account_tbl.visible?}
+      plan_details_account_tbl.rows_text
+    end
+
+    def click_change_plan_account_page
+      change_plan_account_link.click
     end
   end
 end

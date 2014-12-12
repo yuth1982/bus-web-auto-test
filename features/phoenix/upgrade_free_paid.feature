@@ -23,12 +23,12 @@ Feature: MozyHome user upgrades from free to paid through phoenix
       | 1       | 50 Go     | 1            | France          |
     Then upgrade from free to paid will be successful
     Then the billing summary looks like:
-      | Description                             | Prix  | Quantité |
-      | MozyHome 50 Go (1 ordinateur) - Mensuel | 4,16€ | 1        |
-      | 20 Stockage supplémentaire - Mensuel    | 1,67€ | 1        |
-      | Montant:                                | 5,82€ |          |
-      | VAT Rate (20.0%):                       | 1,17€ |          |
-      | Montant total des frais:                | 6,99€ |          |
+      | Description                             | Prix              | Quantité | Montant |
+      | MozyHome 50 Go (1 ordinateur) - Mensuel | 4,99€\n(inc. VAT) | 1        | 4,99€   |
+      | 20 Stockage supplémentaire - Mensuel    | 2,00€\n(inc. VAT) | 1        | 2,00€   |
+      | Prix d'abonnement                       |                   |          | 5,82€   |
+      | VAT Rate (20.0%)                        |                   |          | 1,17€   |
+      | Montant total des frais                 |                   |          | 6,99€   |
     And the current plan summary looks like:
       | Plan de base :                     | MozyHome 50 Go    |
       | Espace de stockage supplémentaire :| 20 Go             |
@@ -59,11 +59,11 @@ Feature: MozyHome user upgrades from free to paid through phoenix
       | 12      | 50 Go     | France          |
     Then upgrade from free to paid will be successful
     Then the billing summary looks like:
-      | Description                            | Prix   | Quantité |
-      | MozyHome 50 Go (1 ordinateur) - Annuel | 45,76€ | 1        |
-      | Montant:                               | 45,74€ |          |
-      | VAT Rate (20.0%):                      | 9,15€  |          |
-      | Montant total des frais:               | 54,89€ |          |
+      | Description                            | Prix               | Quantité | Montant |
+      | MozyHome 50 Go (1 ordinateur) - Annuel | 54,89€\n(inc. VAT) | 1        | 54,89€  |
+      | Prix d'abonnement                      |                    |          | 45,74€  |
+      | VAT Rate (20.0%)                       |                    |          | 9,15€   |
+      | Montant total des frais                |                    |          | 54,89€  |
     And the current plan summary looks like:
       | Plan de base :                     | MozyHome 50 Go   |
       | Espace de stockage supplémentaire :| 0 Go             |
@@ -95,12 +95,12 @@ Feature: MozyHome user upgrades from free to paid through phoenix
       | 24      | 125 Go    | 2              | France          |
     Then upgrade from free to paid will be successful
     Then the billing summary looks like:
-      | Description                                         | Prix    | Quantité |
-      | MozyHome 125 Go (Jusqu'à 3 ordinateurs) - Bisannuel | 157,29€ | 1        |
-      | Ordinateurs supplémentaires - Bisannuel             | 35,07€  | 2        |
-      | Montant:                                            | 227,32€ |          |
-      | VAT Rate (20.0%):                                   | 45,47€  |          |
-      | Montant total des frais:                            | 272,79€ |          |
+      | Description                                         | Prix                | Quantité | Montant |
+      | MozyHome 125 Go (Jusqu'à 3 ordinateurs) - Bisannuel | 188,79€\n(inc. VAT) | 1        | 188,79€ |
+      | Ordinateurs supplémentaires - Bisannuel             | 42,00€\n(inc. VAT)  | 2        | 84,00€  |
+      | Prix d'abonnement                                   |                     |          | 227,32€ |
+      | VAT Rate (20.0%)                                    |                     |          | 45,47€  |
+      | Montant total des frais                             |                     |          | 272,79€ |
     And the current plan summary looks like:
       | Plan de base :                     | MozyHome 125 Go   |
       | Espace de stockage supplémentaire :| 0 Go              |
@@ -119,7 +119,7 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.4 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @qa6_dependent @BUG.128707
+  @TC.4 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @qa6_dependent
   Scenario: TC.4 Upgrade FR MozyHome free user to paid with 50 GB Yearly additional storage promotional code
     When I add a phoenix Free user:
       | base plan | country |
@@ -132,14 +132,13 @@ Feature: MozyHome user upgrades from free to paid through phoenix
       | 12      | 50 Go     |  10          | 10percentoff | Royaume-Uni     |
     Then upgrade from free to paid will be successful
     Then the billing summary looks like:
-      | Description                             | Prix    | Quantité |
-      | MozyHome 50 Go (1 ordinateur) - Annuel  | 45,76€  | 1        |
-      | 20 Stockage supplémentaire - Annuel     | 18,37€  | 10       |
-      | Prix d'abonnement                       | 229,07€ |          |
-      | 24 mois à 10.0 % de réduction:          | -22,90€ |          |
-      | Montant:                                | 206,17€ |          |
-      | VAT Rate (20.0%):                       | 41,24€  |          |
-      | Montant total des frais:                | 247,41€ |          |
+      | Description                            | Prix                | Quantité | Montant |
+      | MozyHome 50 Go (1 ordinateur) - Annuel | 54,89€\n(inc. VAT)  | 1        | 54,89€  |
+      | 20 Stockage supplémentaire - Annuel    | 22,00€\n(inc. VAT)  | 10       | 220,00€ |
+      | 12 mois à 10.0 % de réduction          | -27,48€\n(inc. VAT) |          | -27,48€ |
+      | Prix d'abonnement                      |                     |          | 206,17€ |
+      | VAT Rate (20.0%)                       |                     |          | 41,24€  |
+      | Montant total des frais                |                     |          | 247,41€ |
     And the current plan summary looks like:
       | Plan de base :                     | MozyHome 50 Go   |
       | Espace de stockage supplémentaire :| 200 Go           |
@@ -171,11 +170,11 @@ Feature: MozyHome user upgrades from free to paid through phoenix
       | 24      | 50 Go     | Royaume-Uni     |
     Then upgrade from free to paid will be successful
     Then the billing summary looks like:
-      | Description                                | Prix    | Quantité |
-      | MozyHome 50 Go (1 ordinateur) - Bisannuel  | 87,32€  | 1        |
-      | Montant:                                   | 87,32€  |          |
-      | VAT Rate (20.0%):                          | 17,47€  |          |
-      | Montant total des frais:                   | 104,79€ |          |
+      | Description                               | Prix                | Quantité | Montant |
+      | MozyHome 50 Go (1 ordinateur) - Bisannuel | 104,79€\n(inc. VAT) | 1        | 104,79€ |
+      | Prix d'abonnement                         |                     |          | 87,32€  |
+      | VAT Rate (20.0%)                          |                     |          | 17,47€  |
+      | Montant total des frais                   |                     |          | 104,79€ |
     And the current plan summary looks like:
       | Plan de base :                     | MozyHome 50 Go    |
       | Espace de stockage supplémentaire :| 0 Go              |
@@ -207,22 +206,22 @@ Feature: MozyHome user upgrades from free to paid through phoenix
       | 1       | 125 Go    | 1            | 1              | Royaume-Uni     |
     Then upgrade from free to paid will be successful
     Then the billing summary looks like:
-      | Description                                       | Prix    | Quantité |
-      | MozyHome 125 Go (Jusqu'à 3 ordinateurs) - Mensuel | 7,49€   | 1        |
-      | 20 Stockage supplémentaire - Mensuel              | 1,67€   | 1        |
-      | Ordinateurs supplémentaires - Mensuel             | 1,67€   | 1        |
-      | Montant:                                          | 227,32€ |          |
-      | VAT Rate (20.0%):                                 | 45,47€  |          |
-      | Montant total des frais:                          | 272,79€ |          |
+      | Description                                       | Prix              | Quantité | Montant |
+      | MozyHome 125 Go (Jusqu'à 3 ordinateurs) - Mensuel | 8,99€\n(inc. VAT) | 1        | 8,99€   |
+      | 20 Stockage supplémentaire - Mensuel              | 2,00€\n(inc. VAT) | 1        | 2,00€   |
+      | Ordinateurs supplémentaires - Mensuel             | 2,00€\n(inc. VAT) | 1        | 2,00€   |
+      | Prix d'abonnement                                 |                   |          | 10,82€  |
+      | VAT Rate (20.0%)                                  |                   |          | 2,17€   |
+      | Montant total des frais                           |                   |          | 12,99€  |
     And the current plan summary looks like:
       | Plan de base :                     | MozyHome 125 Go   |
       | Espace de stockage supplémentaire :| 20 Go             |
       | Ordinateurs :                      | 4                 |
       | Abonnement :                       | Mensuel           |
       | Prochaine facture :                | @1 month from now |
-      | Montant:                           | 227,32€           |
-      | VAT Rate (20.0%):                  | 45,47€            |
-      | Total :                            | 272,79€           |
+      | Montant:                           | 10,82€            |
+      | VAT Rate (20.0%):                  | 2,17€             |
+      | Total :                            | 12,99€            |
     And the renewal plan summary is Same as current plan
     And I log in bus admin console as administrator
     And I search user by:
@@ -244,10 +243,12 @@ Feature: MozyHome user upgrades from free to paid through phoenix
       | 24      | 50 Go     |  4             | France          |
     Then upgrade from free to paid will be successful
     Then the billing summary looks like:
-      | Description                                | Prix    | Quantité | Montant |
-      | MozyHome 50 Go (1 ordinateur) - Bisannuel  | 104,79€ | 1        | 104,79€ |
-      | Ordinateurs supplémentaires - Bisannuel    | 42,00€  | 4        | 168,00€ |
-      | Montant total des frais                    | 272,79€ |          | 272,79€ |
+      | Description                                | Prix                | Quantité | Montant |
+      | MozyHome 50 Go (1 ordinateur) - Bisannuel  | 104,79€\n(inc. VAT) | 1        | 104,79€ |
+      | Ordinateurs supplémentaires - Bisannuel    | 42,00€\n(inc. VAT)  | 4        | 168,00€ |
+      | Prix d'abonnement                          |                     |          | 227,32€ |
+      | VAT Rate (20.0%)                           |                     |          | 45,47€  |
+      | Montant total des frais                    |                     |          | 272,79€ |
     And the current plan summary looks like:
       | Plan de base :                     | MozyHome 50 Go    |
       | Espace de stockage supplémentaire :| 0 Go              |
@@ -255,10 +256,9 @@ Feature: MozyHome user upgrades from free to paid through phoenix
       | Abonnement :                       | Bisannuel         |
       | Remise : 	                       | 3 mois gratuits   |
       | Prochaine facture :                | @2 years from now |
-      | Total :                            | 104,79€           |
-      | Montant:                           | 272,79€           |
-      | VAT Rate (20.0%):                  | 54,56€            |
-      | Montant total des frais:           | 327,35€           |
+      | Montant:                           | 227,32€           |
+      | VAT Rate (20.0%):                  | 45,47€            |
+      | Montant total des frais:           | 272,79€           |
     And the renewal plan summary is Same as current plan
     And I log in bus admin console as administrator
     And I search user by:
@@ -280,19 +280,20 @@ Feature: MozyHome user upgrades from free to paid through phoenix
       | 1       |  125 Go   | France          |
     Then upgrade from free to paid will be successful
     Then the billing summary looks like:
-      | Description                                       | Prix  | Quantité | Montant |
-      | MozyHome 125 Go (Jusqu'à 3 ordinateurs) - Mensuel | 8,99€ | 1        | 8,99€   |
-      | Montant total des frais                           | 8,99€ |          | 8,99€   |
+      | Description                                       | Prix              | Quantité | Montant |
+      | MozyHome 125 Go (Jusqu'à 3 ordinateurs) - Mensuel | 8,99€\n(inc. VAT) | 1        | 8,99€   |
+      | Prix d'abonnement                                 |                   |          | 7,49€   |
+      | VAT Rate (20.0%)                                  |                   |          | 1,50€   |
+      | Montant total des frais                           |                   |          | 8,99€   |
     And the current plan summary looks like:
       | Plan de base :                     | MozyHome 125 Go   |
       | Espace de stockage supplémentaire :| 0 Go              |
       | Ordinateurs :                      | 3                 |
       | Abonnement :                       | Mensuel           |
       | Prochaine facture :                | @1 month from now |
-      | Total :                            | 8,99€             |
-      | Montant:                           | 272,79€           |
-      | VAT Rate (20.0%):                  | 54,56€            |
-      | Montant total des frais:           | 327,35€           |
+      | Montant:                           | 7,49€             |
+      | VAT Rate (20.0%):                  | 1,50€             |
+      | Montant total des frais:           | 8,99€             |
     And the renewal plan summary is Same as current plan
     And I log in bus admin console as administrator
     And I search user by:
@@ -314,16 +315,14 @@ Feature: MozyHome user upgrades from free to paid through phoenix
         | 12      | 125 Go    | 5            | 2              | 10percentoff | France          |
       Then upgrade from free to paid will be successful
       Then the billing summary looks like:
-        | Description                                      | Prix    | Quantité |
-        | MozyHome 125 Go (Jusqu'à 3 ordinateurs) - Annuel | 98,89€  | 1        |
-        | 20 Stockage supplémentaire - Annuel              | 22,00€  | 5        |
-        | Ordinateurs supplémentaires - Annuel             | 22,00€  | 2        |
-        | Prix d'abonnement                                | 252,89€ |          |
-        | 24 mois à 10.0 % de réduction                    | -50,57€ |          |
-        | Montant total des frais                          | 202,32€ |          |
-        | Montant:                           | 252,89€          |
-        | VAT Rate (20.0%):                  | 50,58€           |
-        | Montant total des frais:           | 303,47€          |
+        | Description                                      | Prix                | Quantité | Montant |
+        | MozyHome 125 Go (Jusqu'à 3 ordinateurs) - Annuel | 98,89€\n(inc. VAT)  | 1        |  98,89€ |
+        | 20 Stockage supplémentaire - Annuel              | 22,00€\n(inc. VAT)  | 5        | 110,00€ |
+        | Ordinateurs supplémentaires - Annuel             | 22,00€\n(inc. VAT)  | 2        |  44,00€ |
+        | 12 mois à 10.0 % de réduction                    | -25,28€\n(inc. VAT) |          | -25,28€ |
+        | Prix d'abonnement                                |                     |          | 189,67€ |
+        | VAT Rate (20.0%)                                 |                     |          | 37,94€  |
+        | Montant total des frais                          |                     |          | 227,61€ |
       And the current plan summary looks like:
         | Plan de base :                     | MozyHome 125 Go  |
         | Espace de stockage supplémentaire :| 100 Go           |
@@ -331,9 +330,9 @@ Feature: MozyHome user upgrades from free to paid through phoenix
         | Abonnement :                       | Annuel           |
         | Remise : 	                         | 1 mois gratuit   |
         | Prochaine facture :                | @1 year from now |
-        | Montant:                           | 252,89€          |
-        | VAT Rate (20.0%):                  | 50,58€           |
-        | Montant total des frais:           | 303,47€          |
+        | Montant:                           | 210,74€          |
+        | VAT Rate (20.0%):                  | 42,15€           |
+        | Montant total des frais:           | 252,89€          |
       And the renewal plan summary is Same as current plan
       And I log in bus admin console as administrator
       And I search user by:
@@ -351,14 +350,16 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And the user has activated their account
     And I login as the user on the account.
     And I upgrade my free account to:
-      | period  | base plan | addl computers | billing country |
-      | 12      | 50 GB     | 2              | Deutschland     |
+      | period  | base plan | addl computers | country     | billing country |
+      | 12      | 50 GB     | 2              | Deutschland | Deutschland     |
     Then upgrade from free to paid will be successful
     Then the billing summary looks like:
-      | Beschreibung                           | Preis  | Menge | Betrag |
-      | MozyHome 50 GB (1 Computer) - jährlich | 54,89€ | 1     | 54,89€ |
-      | Zusätzliche Computer - jährlich        | 22,00€ | 2     | 44,00€ |
-      | Gesamtbelastung                        | 98,89€ |       | 98,89€ |
+      | Beschreibung                           | Preis              | Menge | Betrag |
+      | MozyHome 50 GB (1 Computer) - jährlich | 54,89€\n(inc. VAT) | 1     | 54,89€ |
+      | Zusätzliche Computer - jährlich        | 22,00€\n(inc. VAT) | 2     | 44,00€ |
+      | Abonnementpreis                        |                    |       | 83,10€ |
+      | VAT Rate (19.0%)                       |                    |       | 15,79€ |
+      | Gesamtbelastung                        |                    |       | 98,89€ |
     And the current plan summary looks like:
       | Basistarif: 	            | MozyHome 50 GB   |
       | Zusätzlicher Speicherplatz: | 0 GB             |
@@ -366,6 +367,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
       | Abonnement: 	            | Jährlich         |
       | Laufzeit Rabatt: 	        | 1 Monat gratis   |
       | Nächste Rechnungsstellung:  | @1 year from now |
+      | Betrag:                     | 83,10€           |
+      | VAT Rate (19.0%):           | 15,79€           |
       | Gesamt: 	                | 98,89€           |
     And the renewal plan summary is Same as current plan
     And I log in bus admin console as administrator
@@ -388,20 +391,20 @@ Feature: MozyHome user upgrades from free to paid through phoenix
       | 1       | 50 GB     | United States   |
     Then upgrade from free to paid will be successful
     Then the billing summary looks like:
-      | Description                           | Price | Quantity |
-      | MozyHome 50 GB (1 computer) - Monthly | €4.99 | 1        |
-      | Amount:                               | €4.99 |          |
-      | VAT Rate (23.0%):                     | €1.15 |          |
-      | Total Charge:                         | €6.14 |          |
+      | Description                           | Price             | Quantity | Amount |
+      | MozyHome 50 GB (1 computer) - Monthly | €4.99\n(inc. VAT) | 1        | €4.99  |
+      | Subscription Price                    |                   |          | €4.06  |
+      | VAT Rate (23.0%)                      |                   |          | €0.93  |
+      | Total Charge                          |                   |          | €4.99  |
     And the current plan summary looks like:
       | Base Plan:          | MozyHome 50 GB    |
       | Additional Storage: | 0 GB              |
       | Computers:          | 1                 |
       | Subscription:       | Monthly           |
       | Next Billing:       | @1 month from now |
-      | Amount:             | €4.99             |
-      | VAT Rate (23.0%):   | €1.15             |
-      | Total Charge:       | €6.14             |
+      | Amount:             | €4.06             |
+      | VAT Rate (23.0%):   | €0.93             |
+      | Total Charge:       | €4.99             |
     And the renewal plan summary is Same as current plan
     And I log in bus admin console as administrator
     And I search user by:
@@ -423,13 +426,13 @@ Feature: MozyHome user upgrades from free to paid through phoenix
       | 12      | 125 GB    | 2            | 2              | United Kingdom  |
     Then upgrade from free to paid will be successful
     Then the billing summary looks like:
-      | Description                                  | Price   | Quantity |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | £87.89  | 1        |
-      | 20 Additional Storage - Annual               | £19.25  | 2        |
-      | Additional Computers - Annual                | £19.25  | 2        |
-      | Amount:                                      | £164.89 |          |
-      | VAT Rate (20.0%):                            | £32.98  |          |
-      | Total Charge:                                | £197.87 |          |
+      | Description                                  | Price              | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Annual | £98.89\n(inc. VAT) | 1        | £98.89 |
+      | 20 Additional Storage - Annual               | £22.00\n(inc. VAT) | 2        | £44.00 |
+      | Additional Computers - Annual                | £22.00\n(inc. VAT) | 2        | £44.00 |
+      | Subscription Price                           |                    |          | £164.89 |
+      | VAT Rate (20.0%)                             |                    |          | £31.15  |
+      | Total Charge                                 |                    |          | £186.89 |
     And the current plan summary looks like:
       | Base Plan:          | MozyHome 125 GB  |
       | Additional Storage: | 40 GB            |
@@ -438,8 +441,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
       | Term Discount:      | 1 month free     |
       | Next Billing:       | @1 year from now |
       | Amount:             | £164.89          |
-      | VAT Rate (20.0%):   | £32.98           |
-      | Total Charge:       | £197.87          |
+      | VAT Rate (20.0%):   | £31.15           |
+      | Total Charge:       | £186.89          |
     And the renewal plan summary is Same as current plan
     And I log in bus admin console as administrator
     And I search user by:
@@ -486,7 +489,7 @@ Feature: MozyHome user upgrades from free to paid through phoenix
 
   @TC.14 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=us
   Scenario: Upgrade UK MozyHome free user to paid with 125GB Monthly promotional code
-    When I add a phoenix Free user:                                                              F
+    When I add a phoenix Free user:
       | base plan | country       |
       | free      | United States |
     Then the user is successfully added.
@@ -1095,13 +1098,13 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I upgrade my free account to:
       | period  | base plan | addl computers | billing country |
       | 24      | 50 Go     | 2              | États-Unis      |
-  Then billing details page error message should be:
-  """
-    The country of residence you provided does not match the country of the issuing bank of your credit card.
-  """
+   Then billing details page error message should be:
+    """
+     The country of residence you provided does not match the country of the issuing bank of your credit card. Please review the country you have chosen as your country of residence, or else enter a credit card which matches your country of residence. Click here if you want to update your residence country
+    """
 
- @TC.31 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=fr 
-  Scenario: Upgrade US MozyHome free user to paid failed us fr fr
+  @TC.31 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=fr
+  Scenario: TC.31 Upgrade US MozyHome free user to paid failed us fr fr
     When I add a phoenix Free user:
       | base plan | country       |
       | free      | United States |
@@ -1111,13 +1114,41 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I upgrade my free account to:
       | period  | base plan | addl storage | billing country |
       | 12      | 50  GB    | 20           | France          |
-   Then billing details page error message should be:
-   """
-    The country of residence you provided does not match the country of the issuing bank of your credit card.
-   """
+    Then billing details page error message should be:
+     """
+       The country of residence you provided does not match the country of the issuing bank of your credit card. Please review the country you have chosen as your country of residence, or else enter a credit card which matches your country of residence. Click here if you want to update your residence country
+     """
+    And I update profile country from link in billing page and upgrade again
+      | profile country | billing country |
+      | France          | France          |
+    Then upgrade from free to paid will be successful
+    Then the billing summary looks like:
+      | Description                          | Price   | Quantity |
+      | MozyHome 50 GB (1 computer) - Annual | $54.89  | 1 	      |
+      | 20 Additional Storage - Annual 	     | $18.37  | 20       |
+      | Amount:                              | $421.57 |          |
+      | VAT Rate (20.0%):                    | $84.32  |          |
+      | Total Charge: 	                     | $505.89 |	      |
+    And the current plan summary looks like:
+      | Base Plan:          | MozyHome 50 GB   |
+      | Additional Storage: | 400 GB           |
+      | Computers:          | 1                |
+      | Subscription:       | Yearly           |
+      | Term Discount:      | 1 month free     |
+      | Next Billing:       | @1 year from now |
+      | Amount:             | $421.57          |
+      | VAT Rate (20.0%):   | $84.32           |
+      | Total: 	            | $505.89          |
+    And the renewal plan summary is Same as current plan
+    And I log in bus admin console as administrator
+    And I search user by:
+      | keywords       |
+      | @mh_user_email |
+    And I view user details by newly created MozyHome username
+    And I delete user
 
   @TC.32 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=it
-  Scenario: Upgrade US MozyHome free user to paid failed us fr it
+  Scenario: TC.32 Upgrade US MozyHome free user to paid failed us fr it
     When I add a phoenix Free user:
       | base plan | country        |
       | free      | United States  |
@@ -1129,7 +1160,7 @@ Feature: MozyHome user upgrades from free to paid through phoenix
       | 1      | 50 GB     | Italy           |
     Then billing details page error message should be:
     """
-     The country of residence you provided does not match the country of the issuing bank of your credit card.
+     The country of residence you provided does not match the country of the issuing bank of your credit card. Please review the country you have chosen as your country of residence, or else enter a credit card which matches your country of residence. Click here if you want to update your residence country
     """
 
 

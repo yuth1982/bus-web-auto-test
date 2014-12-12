@@ -1,8 +1,7 @@
-Feature: Add a new user through phoenix
+Feature: MozyHome user changes current plan in phoenix
 
   As a private citizen
-  I want to create a user account through phoenix
-  So that I can organize my personal life in a way that works for me
+  I want to create current plan through phoenix
 
   #Background:
   # info to be added here: coverage matrix
@@ -20,8 +19,8 @@ Feature: Add a new user through phoenix
   #
   # 50 GB Cases
   #
-  @TC.130001 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=us
-  Scenario: 130001 Add a new US monthly basic MozyHome user
+  @TC.130001 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=us @change_plan
+  Scenario: 130001 Change plan for US monthly basic MozyHome user to 125 GB addl storage
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country       | billing country |
@@ -59,7 +58,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.130002 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=us
+  @TC.130002 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=us @change_plan
   Scenario: 130002 Add a new US yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -99,7 +98,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.130003 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=us
+  @TC.130003 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=us @change_plan
   Scenario: 130003 Add a new US biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -142,7 +141,7 @@ Feature: Add a new user through phoenix
   #
   # 125 GB Cases
   #
-  @TC.130004 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=us
+  @TC.130004 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=us @change_plan
   Scenario: 130004 Add a new US monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -181,7 +180,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.130005 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=us
+  @TC.130005 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=us @change_plan
   Scenario: 130005 Add a new US yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -221,7 +220,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.130006 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=us
+  @TC.130006 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=us @change_plan
   Scenario: 130006 Add a new US biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -264,7 +263,7 @@ Feature: Add a new user through phoenix
   #
   # 50 GB Cases
   #
-  @TC.130007 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=us
+  @TC.130007 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=us @change_plan
   Scenario: 130007 Add a new US monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -304,7 +303,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.130008 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=us
+  @TC.130008 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=us @change_plan
   Scenario: 130008 Add a new US yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -346,7 +345,7 @@ Feature: Add a new user through phoenix
     And I delete user
 
 
-  @TC.130009 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=us @qa6_dependent
+  @TC.130009 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=us @qa6_dependent @change_plan
   Scenario: 130009 Add a new US biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -391,7 +390,7 @@ Feature: Add a new user through phoenix
   #
   # 125 GB Cases
   #
-  @TC.130010 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=us
+  @TC.130010 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=us @change_plan
   Scenario: 130010 Add a new US monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -432,7 +431,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.130011 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=us
+  @TC.130011 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=us @change_plan
   Scenario: 130011 Add a new US yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -475,7 +474,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.130012 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=us
+  @TC.130012 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=us @change_plan
   Scenario: 130012 Add a new US biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -521,7 +520,7 @@ Feature: Add a new user through phoenix
   #
   # 50 GB Cases
   #
-  @TC.130013 @BUG.128707 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=fr
+  @TC.130013 @BUG.128707 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=fr @change_plan
   Scenario: 130013 Add a new US monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -534,7 +533,7 @@ Feature: Add a new user through phoenix
       | 20 Additional Storage - Monthly       | $2.00   | 99       | $198.00 |
       | Additional Computers - Monthly        | $2.00   | 2        | $4.00   |
       | Subscription Price                    | $207.99 |          | $207.99 |
-      | 24 months at 10.0% off                  | $-20.79 |          | $-20.79 |
+      | 24 months at 10.0% off                | $-20.79 |          | $-20.79 |
       | Total Charge                          | $187.20 |          | $187.20 |
     Then the user is successfully added.
     And the user has activated their account
@@ -565,7 +564,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.130014 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=fr
+  @TC.130014 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=fr @change_plan
   Scenario: 130014 Add a new US yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -605,7 +604,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.130015 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=fr
+  @TC.130015 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=fr @change_plan
   Scenario: 130015 Add a new US biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -648,7 +647,7 @@ Feature: Add a new user through phoenix
   #
   # 125 GB Cases
   #
-  @TC.130016 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=fr
+  @TC.130016 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=fr @change_plan
   Scenario: 130016 Add a new US monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -687,7 +686,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.130017 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=fr
+  @TC.130017 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=fr @change_plan
   Scenario: 130017 Add a new US yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -727,7 +726,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.130018 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=fr
+  @TC.130018 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=fr @change_plan
   Scenario: 130018 Add a new US biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -770,7 +769,7 @@ Feature: Add a new user through phoenix
   #
   # 50 GB Cases
   #
-  @TC.130019 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=cn
+  @TC.130019 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=cn @change_plan
   Scenario: 130019 Add a new US monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -809,7 +808,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.130020 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=cn
+  @TC.130020 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=cn @change_plan
   Scenario: 130020 Add a new US yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -849,7 +848,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.130021 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=cn
+  @TC.130021 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=cn @change_plan
   Scenario: 130021 Add a new US biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -892,7 +891,7 @@ Feature: Add a new user through phoenix
   #
   # 125 GB Cases
   #
-  @TC.130022 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=cn
+  @TC.130022 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=cn @change_plan
   Scenario: 130022 Add a new US monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -931,7 +930,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.130023 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=cn
+  @TC.130023 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=cn @change_plan
   Scenario: 130023 Add a new US yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -971,7 +970,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.130024 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=cn
+  @TC.130024 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=cn @change_plan
   Scenario: 130024 Add a new US biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -988,7 +987,7 @@ Feature: Add a new user through phoenix
       | addl computers | addl storage |
       | 4              | 14           |
     And the payment details summary looks like:
-      | Base Plan:       	| 125 GB           |
+      | Base Plan:       	| 125 GB            |
       | Additional Storage: | 14 x 20 GB        |
       | Total Storage:      | 405 GB            |
       | Computers:          | 4                 |
@@ -1013,7 +1012,7 @@ Feature: Add a new user through phoenix
   #
   # 50 GB Cases
   #
-  @TC.130025 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=cn
+  @TC.130025 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=cn @change_plan
   Scenario: 130025 Add a new US monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -1052,7 +1051,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.130026 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=cn
+  @TC.130026 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=cn @change_plan
   Scenario: 130026 Add a new US yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -1092,7 +1091,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.130027 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=cn
+  @TC.130027 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=cn @change_plan
   Scenario: 130027 Add a new US biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -1135,7 +1134,7 @@ Feature: Add a new user through phoenix
   #
   # 125 GB Cases
   #
-  @TC.130028 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=cn
+  @TC.130028 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=cn @change_plan
   Scenario: 130028 Add a new US monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -1174,7 +1173,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.130029 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=cn
+  @TC.130029 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=cn @change_plan
   Scenario: 130029 Add a new US yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -1214,7 +1213,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.130030 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=cn
+  @TC.130030 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=cn @change_plan
   Scenario: 130030 Add a new US biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -1231,7 +1230,7 @@ Feature: Add a new user through phoenix
       | addl computers |
       | 4              |
     And the payment details summary looks like:
-      | Base Plan:       	| 125 GB           |
+      | Base Plan:       	| 125 GB            |
       | Additional Storage: | 0 x 20 GB         |
       | Total Storage:      | 125 GB            |
       | Computers:          | 4                 |
@@ -1257,7 +1256,7 @@ Feature: Add a new user through phoenix
   #
   # 50 GB Cases
   #
-  @TC.130031 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=fr
+  @TC.130031 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=fr @change_plan
   Scenario: 130031 Add a new US monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -1274,7 +1273,7 @@ Feature: Add a new user through phoenix
       | base plan |
       | 125 GB    |
     And the payment details summary looks like:
-      | Base Plan:       	| 125 GB           |
+      | Base Plan:       	| 125 GB            |
       | Additional Storage: | 0 x 20 GB         |
       | Total Storage:      | 125 GB            |
       | Computers:          | 3                 |
@@ -1296,7 +1295,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.130032 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=fr
+  @TC.130032 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=fr @change_plan
   Scenario: 130032 Add a new US yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -1336,7 +1335,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.130033 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=fr
+  @TC.130033 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=fr @change_plan
   Scenario: 130033 Add a new US biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -1379,7 +1378,7 @@ Feature: Add a new user through phoenix
   #
   # 125 GB Cases
   #
-  @TC.130034 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=fr
+  @TC.130034 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=fr @change_plan
   Scenario: 130034 Add a new US monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -1418,7 +1417,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.130035 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=fr
+  @TC.130035 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=fr @change_plan
   Scenario: 130035 Add a new US yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -1458,7 +1457,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.130036 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=fr
+  @TC.130036 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=fr @change_plan
   Scenario: 130036 Add a new US biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -1502,7 +1501,7 @@ Feature: Add a new user through phoenix
   #
   # 50 Go Cases
   #
-  @TC.137001 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr
+  @TC.137001 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @change_plan
   Scenario: 137001 Add a new FR monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -1550,7 +1549,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.137002 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr
+  @TC.137002 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @change_plan
   Scenario: 137002 Add a new FR yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -1600,7 +1599,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.137003 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr
+  @TC.137003 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @change_plan
   Scenario: 137003 Add a new FR biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -1653,7 +1652,7 @@ Feature: Add a new user through phoenix
   #
   # 125 Go Cases
   #
-  @TC.137004 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr
+  @TC.137004 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @change_plan
   Scenario: 137004 Add a new FR monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -1701,7 +1700,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.137005 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr
+  @TC.137005 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @change_plan
   Scenario: 137005 Add a new FR yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -1751,7 +1750,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.137006 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr
+  @TC.137006 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @change_plan
   Scenario: 137006 Add a new FR biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -1804,7 +1803,7 @@ Feature: Add a new user through phoenix
   #
   # 50 Go Cases
   #
-  @TC.137007 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk
+  @TC.137007 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @change_plan
   Scenario: 137007 Add a new FR monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -1853,7 +1852,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.137008 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk
+  @TC.137008 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @change_plan
   Scenario: 137008 Add a new fr yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -1904,7 +1903,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.137009 @BUG.128707 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @qa6_dependent
+  @TC.137009 @BUG.128707 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @qa6_dependent @change_plan
   Scenario: 137009 Add a new FR biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -1959,7 +1958,7 @@ Feature: Add a new user through phoenix
   #
   # 125 Go Cases
   #
-  @TC.137010 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk
+  @TC.137010 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @change_plan
   Scenario: 137010 Add a new FR monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -2009,7 +2008,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.137011 @BUG.128707 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @qa6_dependent
+  @TC.137011 @BUG.128707 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @qa6_dependent @change_plan
   Scenario: 137011 Add a new FR yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -2046,7 +2045,7 @@ Feature: Add a new user through phoenix
       | Total : 	                       | 44,09€           |
     And the current plan summary looks like:
       | Plan de base :                  	| MozyHome 125 Go  |
-      | Espace de stockage supplémentaire : | 1 980 Go             |
+      | Espace de stockage supplémentaire : | 1 980 Go         |
       | Ordinateurs : 	                    | 5                |
       | Abonnement : 	                    | Annuel           |
       | Remise : 	                        | 1 mois gratuit   |
@@ -2062,7 +2061,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.137012 @BUG.128707 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @qa6_dependent
+  @TC.137012 @BUG.128707 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @qa6_dependent @change_plan
   Scenario: 137012 Add a new FR biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -2118,7 +2117,7 @@ Feature: Add a new user through phoenix
   #
   # 50 Go Cases
   #
-  @TC.137013 @BUG.128707 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr @qa6_dependent
+  @TC.137013 @BUG.128707 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr @qa6_dependent @change_plan
   Scenario: 137013 Add a new FR monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -2170,7 +2169,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.137014 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr
+  @TC.137014 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr @change_plan
   Scenario: 137014 Add a new FR yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -2220,7 +2219,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.137015 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr
+  @TC.137015 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr @change_plan
   Scenario: 137015 Add a new FR biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -2273,7 +2272,7 @@ Feature: Add a new user through phoenix
   #
   # 125 Go Cases
   #
-  @TC.137016 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr
+  @TC.137016 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr @change_plan
   Scenario: 137016 Add a new FR monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -2321,7 +2320,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.137017 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr
+  @TC.137017 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr @change_plan
   Scenario: 137017 Add a new FR yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -2371,7 +2370,7 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.137018 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr
+  @TC.137018 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr @change_plan
   Scenario: 137018 Add a new FR biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -2389,7 +2388,7 @@ Feature: Add a new user through phoenix
     And I login as the user on the account.
     And I upgrade my user account to:
       | addl computers |
-      | 4            |
+      | 4              |
     And the payment details summary looks like:
       | Plan de base :                     | 125 Go            |
       | Espace de stockage supplémentaire :| 0 x 20 Go         |
@@ -2409,7 +2408,7 @@ Feature: Add a new user through phoenix
       | Espace de stockage supplémentaire : | 0 Go              |
       | Ordinateurs : 	                    | 3                 |
       | Abonnement : 	                    | Bisnnuel          |
-      | Remise : 	                       | 3 mois gratuits    |
+      | Remise : 	                        | 3 mois gratuits   |
       | Prochaine facture :                 | @2 years from now |
       | Montant: 	                        | 7,49€             |
       | VAT Rate (20.0%): 	                | 1,50€             |
@@ -2422,3 +2421,43 @@ Feature: Add a new user through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
+  @TC.137019 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=us @change_plan
+  Scenario: 137019 check basic information for new signed up mozyhome user
+    When I am at dom selection point:
+    And I add a phoenix Home user:
+      | period | base plan | addl storage | addl computers | country       | billing country |
+      | 1      | 50 GB     | 10           | 3              | United States | United States   |
+    Then the billing summary looks like:
+      | Description                           | Price  | Quantity | Amount |
+      | MozyHome 50 GB (1 computer) - Monthly | $5.99  | 1        | $5.99  |
+      | 20 Additional Storage - Monthly 	  | $2.00  | 10 	  | $20.00 |
+      | Additional Computers - Monthly 	      | $2.00  | 3 	      | $6.00  |
+      | Total Charge 	                      | $31.99 |		  | $31.99 |
+    Then the user is successfully added.
+    And the user has activated their account
+    And I login as the user on the account.
+    Then the quota in account home page looks like:
+    """
+    0 of 250 GB used
+    """
+    Then the plan details in account home page looks like:
+      | MozyHome: 	        | 50 GB: 4 computers |
+      | Additional Storage:	| 200 GB             |
+      | Total Storage:      | 250 GB             |
+      | Last charge: 	    | $31.99 on          |
+      | Next charge: 	    | $31.99 on          |
+    And I click change plan link in account home page
+    And the current plan summary looks like:
+      | Base Plan:          | MozyHome 50 GB    |
+      | Additional Storage: | 200 GB            |
+      | Computers:          | 4                 |
+      | Subscription:       | Monthly           |
+      | Next Billing:       | @1 month from now |
+      | Total:              | $31.99            |
+    And the renewal plan summary is Same as current plan
+    And I log in bus admin console as administrator
+    And I search user by:
+      | keywords       |
+      | @mh_user_email |
+    And I view user details by newly created MozyHome username
+    And I delete user

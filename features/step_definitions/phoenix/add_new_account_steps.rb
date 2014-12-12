@@ -317,9 +317,31 @@ Then /^vat error message should be:$/ do |message|
 end
 
 Then /^billing details page error message should be:$/ do |message|
-  @phoenix_site.billing_fill_out.home_error_messages.should eq(message)
+  @phoenix_site.billing_fill_out.home_error_messages.strip.should eq(message.strip)
 end
 
 Then /^payment information page error message should be:$/ do |message|
   @phoenix_site.billing_fill_out.pro_error_messages.should eq(message)
 end
+
+Then /^the quota in account home page looks like:$/ do |quota_info|
+  @phoenix_site.user_account.get_quota_account_page(@partner).should eq(quota_info)
+end
+
+Then /^the plan details in account home page looks like:$/ do |plan_table|
+  actual = @phoenix_site.user_account.get_plan_details_account_page
+  expected = plan_table.raw
+  actual.each_with_index{ |item, index|
+    # for the last 2 lines, Last charge, Next charge, there are contains date information, will not check date here
+    item[0].strip.should==expected[index][0]
+      if index >= actual.size - 2
+         item[1].strip.should include expected[index][1]
+      else
+         item[1].strip.should==expected[index][1]
+      end
+  }
+end
+
+
+
+
