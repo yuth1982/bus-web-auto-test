@@ -32,7 +32,8 @@ module Bus
             :total => nil,
             :currency => nil,
             :zero => nil,
-            :total_str => nil
+            :total_str => nil,
+	    :last_total => nil
         }
 
       end

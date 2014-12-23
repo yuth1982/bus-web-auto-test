@@ -48,10 +48,10 @@ Feature: Change subscription period
     And I delete partner account
 
   @TC.15233 @bus @change_period
-  Scenario: 15233 MozyPro DE - Change Period from Monthly to Biennially - CC
+  Scenario: 15233 MozyPro PT - Change Period from Monthly to Biennially - CC
     When I add a new MozyPro partner:
-      | period | base plan | create under    | country | cc number        |
-      | 12     | 50 GB     | MozyPro Germany | Germany | 4188181111111112 |
+      | period | base plan | create under    | country  | cc number        |
+      | 1      | 50 GB     | MozyPro Germany | Portugal | 4556581910687747 |
     Then New partner should be created
     When I act as newly created partner account
     And I change account subscription to biennial billing period!
@@ -73,6 +73,7 @@ Feature: Change subscription period
     When I add a new MozyPro partner:
       | period | base plan | create under    | country | net terms |
       | 24     | 50 GB     | MozyPro Ireland | Ireland | yes       |
+    And the sub-total before taxes or discounts should be correct
     Then New partner should be created
     When I act as newly created partner account
     And I change account subscription to annual billing period!
@@ -82,9 +83,9 @@ Feature: Change subscription period
       | Yearly (change) | after 2 years | €175.89 (Without taxes or discounts)  |
     When I stop masquerading
     And I view partner details by newly created partner company name
-    Then Partner internal billing should be:
+    Then New Partner internal billing should be:
       | Account Type:   | Net Terms 30  | Current Period: | Biennial  |
-      | Unpaid Balance: | €413.02       | Collect On:     | N/A       |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:last_total]%> | Collect On:     | N/A       |
       | Renewal Date:   | after 2 years | Renewal Period: | Yearly    |
       | Next Charge:    | after 2 years |                 |           |
     And I delete partner account
@@ -94,6 +95,7 @@ Feature: Change subscription period
     When I add a new MozyPro partner:
       | period | base plan | create under | country        | net terms |
       | 12     | 50 GB     | MozyPro UK   | United Kingdom | yes       |
+    And the sub-total before taxes or discounts should be correct
     Then New partner should be created
     When I act as newly created partner account
     And I change account subscription to monthly billing period!
@@ -103,9 +105,9 @@ Feature: Change subscription period
       | Monthly (change) | after 1 year | £13.99 (Without taxes or discounts)  |
     When I stop masquerading
     And I view partner details by newly created partner company name
-    Then Partner internal billing should be:
+    Then New Partner internal billing should be:
         | Account Type:   | Net Terms 30 | Current Period: | Yearly  |
-        | Unpaid Balance: | £184.67      | Collect On:     | N/A     |
+        | Unpaid Balance: | <%=@partner.billing_info.billing[:last_total]%> | Collect On:     | N/A     |
         | Renewal Date:   | after 1 year | Renewal Period: | Monthly |
         | Next Charge:    | after 1 year |                 |         |
     And I delete partner account
@@ -381,5 +383,168 @@ Feature: Change subscription period
     And I search and delete partner account by newly created partner company name
 
 
+  @TC.124561 @bus @change_period
+  Scenario: 124561 Reseller UK - Change Period from Yearly to Monthly - CC
+    When I add a new Reseller partner:
+      | period | create under | country        | reseller type | reseller quota | cc number        |
+      | 12     | MozyPro UK   | United Kingdom | Gold          | 800            | 4916783606275713 |
+    And the sub-total before taxes or discounts should be correct
+    Then New partner should be created
+    When I act as newly created partner account
+    And I navigate to Billing Information section from bus admin console page
+    Then Next renewal info table should be:
+      | Period            | Date         | Amount                                                                                                                                         | Payment Type                  |
+      | Yearly (change)   | after 1 year | <%=format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>   | Visa ending in @XXXX (change) |
+    And I change account subscription to monthly billing period!
+    Then Subscription changed message should be Your account will be switched to monthly billing schedule at your next renewal.
+    Then Next renewal info table should be:
+      | Period            | Date         | Amount                                |
+      | Monthly (change)  | after 1 year | <%=format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
+    When I stop masquerading
+    And I search partner by newly created partner company name
+    And I view partner details by newly created partner company name
+    Then New Partner internal billing should be:
+      | Account Type:   | Credit Card  | Current Period: | Yearly             |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%>        | Collect On:     | N/A                |
+      | Renewal Date:   | after 1 year | Renewal Period: | Monthly    |
+      | Next Charge:    | after 1 year |                 |            |
+    And I search and delete partner account by newly created partner company name
 
 
+  @TC.124562 @bus @change_period
+  Scenario: 124562 Reseller DE - Change Period from Monthly to Yearly - Net Terms
+    When I add a new Reseller partner:
+      | period | create under    | country | reseller type | reseller quota | server plan | net terms |
+      | 1      | MozyPro Germany | Germany | Silver        | 800            |     yes     |    yes    |
+    And the sub-total before taxes or discounts should be correct
+    Then New partner should be created
+    When I act as newly created partner account
+    And I navigate to Billing Information section from bus admin console page
+    Then Next renewal info table should be:
+      | Period            | Date          | Amount                                                                                                                                         |
+      | Monthly (change)  | after 1 month | <%=format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>   |
+    And I change account subscription to annual billing period!
+    Then Subscription changed message should be Your account has been changed to yearly billing.
+    Then Next renewal info table should be:
+      | Period            | Date         | Amount                                |
+      | Yearly (change)   | after 1 year | <%=format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
+    When I stop masquerading
+    And I search partner by newly created partner company name
+    And I view partner details by newly created partner company name
+    Then New Partner internal billing should be:
+      | Account Type:   | Net Terms 30 | Current Period: | Yearly  |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:total_str]%>      | Collect On:     | N/A     |
+      | Renewal Date:   | after 1 year | Renewal Period: | Use Current Period |
+      | Next Charge:    | after 1 year |                 |                    |
+    And I search and delete partner account by newly created partner company name
+
+
+  @TC.124709 @TC.124563 @bus @change_period
+  Scenario: 124709 124563 Reseller FR - Change Period from Monthly to Yearly - VAT - CC
+    When I add a new Reseller partner:
+      | period | create under   | country | reseller type | reseller quota | server plan |    vat number   | cc number        |
+      | 1      | MozyPro France | France  | Platinum      | 800            |     yes     |   FR08410091490 | 4485393141463880 |
+    And the sub-total before taxes or discounts should be correct
+    Then New partner should be created
+    When I act as newly created partner account
+    And I navigate to Billing Information section from bus admin console page
+    Then Next renewal info table should be:
+      | Period            | Date          | Amount                                                                                                                                         | Payment Type                  |
+      | Monthly (change)  | after 1 month | <%=format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>   | Visa ending in @XXXX (change) |
+    And I change account subscription to annual billing period!
+    Then Subscription changed message should be Your account has been changed to yearly billing.
+    Then Next renewal info table should be:
+      | Period            | Date         | Amount                                |
+      | Yearly (change)   | after 1 year | <%=format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
+    When I stop masquerading
+    And I search partner by newly created partner company name
+    And I view partner details by newly created partner company name
+    Then New Partner internal billing should be:
+      | Account Type:   | Credit Card  | Current Period: | Yearly             |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
+      | Renewal Date:   | after 1 year | Renewal Period: | Use Current Period |
+      | Next Charge:    | after 1 year |                 |                    |
+    And I search and delete partner account by newly created partner company name
+
+  @TC.124564 @bus @change_period
+  Scenario: 124564 Reseller BE - Change Period from Yearly to Monthly - VAT - Net Terms
+    When I add a new Reseller partner:
+      | period | create under    | country | reseller type | reseller quota | server plan |    vat number  |  net terms |
+      | 12     | MozyPro Ireland | Belgium | Platinum      | 800            |     yes     |   BE0883236072 |     yes    |
+    And the sub-total before taxes or discounts should be correct
+    Then New partner should be created
+    When I act as newly created partner account
+    And I navigate to Billing Information section from bus admin console page
+    Then Next renewal info table should be:
+      | Period            | Date          | Amount                                                                                                                                         |
+      | Yearly (change)   | after 1 year  | <%=format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>   |
+    And I change account subscription to monthly billing period!
+    Then Subscription changed message should be Your account will be switched to monthly billing schedule at your next renewal.
+    Then Next renewal info table should be:
+      | Period            | Date         | Amount                                |
+      | Monthly (change)  | after 1 year | <%=format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
+    When I stop masquerading
+    And I search partner by newly created partner company name
+    And I view partner details by newly created partner company name
+    Then New Partner internal billing should be:
+      | Account Type:   | Net Terms 30 | Current Period: | Yearly  |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:last_total]%>      | Collect On:     | N/A     |
+      | Renewal Date:   | after 1 year | Renewal Period: | Monthly |
+      | Next Charge:    | after 1 year |                 |         |
+    And I search and delete partner account by newly created partner company name
+
+
+
+  @TC.124565 @bus @change_period
+  Scenario: 124565 MozyPro FR - Change Period from Monthly to Yearly - VAT - CC
+    When I add a new MozyPro partner:
+      | period | create under   | country | base plan | server plan |    vat number   | cc number        |
+      | 1      | MozyPro France | France  | 50 GB     |     yes     |   FR08410091490 | 4485393141463880 |
+    And the sub-total before taxes or discounts should be correct
+    Then New partner should be created
+    When I act as newly created partner account
+    And I navigate to Billing Information section from bus admin console page
+    Then Next renewal info table should be:
+      | Period            | Date          | Amount                                                                                                                                         | Payment Type                  |
+      | Monthly (change)  | after 1 month | <%=format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>   | Visa ending in @XXXX (change) |
+    And I change account subscription to annual billing period!
+    Then Subscription changed message should be Your account has been changed to yearly billing.
+    Then Next renewal info table should be:
+      | Period            | Date         | Amount                                |
+      | Yearly (change)   | after 1 year | <%=format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
+    When I stop masquerading
+    And I search partner by newly created partner company name
+    And I view partner details by newly created partner company name
+    Then New Partner internal billing should be:
+      | Account Type:   | Credit Card  | Current Period: | Yearly             |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
+      | Renewal Date:   | after 1 year | Renewal Period: | Use Current Period |
+      | Next Charge:    | after 1 year |                 |                    |
+    And I search and delete partner account by newly created partner company name
+
+  @TC.124710 @TC.124566 @bus @change_period
+  Scenario: 124710 124566 MozyPro IT - Change Period from Yearly to Monthly - VAT - Net Terms
+    When I add a new MozyPro partner:
+      | period | create under    | country | base plan | server plan |    vat number   |  net terms |
+      | 12     | MozyPro Germany | Italy   | 50 GB     |     yes     |   IT03018900245 |     yes    |
+    And the sub-total before taxes or discounts should be correct
+    Then New partner should be created
+    When I act as newly created partner account
+    And I navigate to Billing Information section from bus admin console page
+    Then Next renewal info table should be:
+      | Period            | Date          | Amount                                                                                                                                         |
+      | Yearly (change)   | after 1 year  | <%=format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>   |
+    And I change account subscription to monthly billing period!
+    Then Subscription changed message should be Your account will be switched to monthly billing schedule at your next renewal.
+    Then Next renewal info table should be:
+      | Period            | Date         | Amount                                |
+      | Monthly (change)  | after 1 year | <%=format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
+    When I stop masquerading
+    And I search partner by newly created partner company name
+    And I view partner details by newly created partner company name
+    Then New Partner internal billing should be:
+      | Account Type:   | Net Terms 30 | Current Period: | Yearly  |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:last_total]%>      | Collect On:     | N/A     |
+      | Renewal Date:   | after 1 year | Renewal Period: | Monthly |
+      | Next Charge:    | after 1 year |                 |         |
+    And I search and delete partner account by newly created partner company name

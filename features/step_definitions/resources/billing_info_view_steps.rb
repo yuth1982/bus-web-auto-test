@@ -29,7 +29,7 @@ Then /^Next renewal info table should be:$/ do |next_renewal_table|
         when 'Payment Type'
           v.gsub!(/@XXXX/,@partner.credit_card.last_four_digits) unless @partner.nil?
         else
-          # do nothing
+          v.replace ERB.new(v).result(binding)
       end
     end
   end
