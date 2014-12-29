@@ -102,12 +102,14 @@ module Bus
         wait_until{ back_btn.visible? } # wait for fill credit card info
         if partner.net_term_payment
           net_term_payment_input.click
+          alert_accept if alert_present?
         else
           cc_payment_input.click
           fill_credit_card_info(partner.credit_card)
         end
         set_order_summary(partner)
         create_partner_btn.click
+        alert_accept if alert_present?
       else
         include_initial_purchase_cb.uncheck
         set_pre_sub_total(partner)
@@ -123,6 +125,12 @@ module Bus
     #
     # Returns success or error message text
     def messages
+      # for EU partner, there will be warning dialog  pop up for
+      begin
+        message_div
+      rescue
+        alert_accept if alert_present?
+      end
       message_div.text
     end
 
@@ -160,7 +168,9 @@ module Bus
       else
         contact_country_select.select(company_info.country)
         contact_state_tb.type_text(company_info.state)
-        vat_number_tb.type_text(company_info.vat_num)
+        unless company_info.vat_num.nil?
+          vat_number_tb.type_text(company_info.vat_num) if company_info.vat_num != ""
+        end
       end
       contact_address_tb.type_text(company_info.address)
       contact_city_tb.type_text(company_info.city)

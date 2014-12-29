@@ -37,6 +37,7 @@ module Bus
       # Since country and state are close related, you have to change them together
       unless contact_info.country.nil?
         cc_country_select.select(contact_info.country)
+        alert_accept if alert_present?
         case contact_info.country
           when 'United States'
             cc_state_us_select.select(contact_info.state_abbrev)

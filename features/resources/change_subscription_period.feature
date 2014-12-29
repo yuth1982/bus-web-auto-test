@@ -29,8 +29,8 @@ Feature: Change subscription period
   @TC.15232 @bus @change_period
   Scenario: 15232 MozyPro FR - Change Period from Yearly to Biennially - CC
     When I add a new MozyPro partner:
-      | period | base plan | create under   | country |
-      | 12     | 50 GB     | MozyPro France | France  |
+      | period | base plan | create under   | country | cc number        |
+      | 12     | 50 GB     | MozyPro France | France  | 4485393141463880 |
     Then New partner should be created
     When I act as newly created partner account
     And I change account subscription to biennial billing period!
@@ -50,8 +50,8 @@ Feature: Change subscription period
   @TC.15233 @bus @change_period
   Scenario: 15233 MozyPro DE - Change Period from Monthly to Biennially - CC
     When I add a new MozyPro partner:
-      | period | base plan | create under    | country |
-      | 12     | 50 GB     | MozyPro Germany | Germany |
+      | period | base plan | create under    | country | cc number        |
+      | 12     | 50 GB     | MozyPro Germany | Germany | 4188181111111112 |
     Then New partner should be created
     When I act as newly created partner account
     And I change account subscription to biennial billing period!
@@ -105,7 +105,7 @@ Feature: Change subscription period
     And I view partner details by newly created partner company name
     Then Partner internal billing should be:
         | Account Type:   | Net Terms 30 | Current Period: | Yearly  |
-        | Unpaid Balance: | £189.28      | Collect On:     | N/A     |
+        | Unpaid Balance: | £184.67      | Collect On:     | N/A     |
         | Renewal Date:   | after 1 year | Renewal Period: | Monthly |
         | Next Charge:    | after 1 year |                 |         |
     And I delete partner account
