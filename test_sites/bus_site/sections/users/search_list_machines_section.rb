@@ -80,5 +80,9 @@ module Bus
     def view_machine_details(machine_name)
       find_link(machine_name).click
     end
+
+    def search_list_machines_opened
+      search_machine_tb.visible?
+    end
   end
 end

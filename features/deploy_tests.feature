@@ -88,4 +88,98 @@ Feature: These are the test we run for every deploy
     When I stop masquerading
     Then I delete partner and verify pending delete
 
+  @bus_smoke
+  Scenario: MozyEnterprise smoke
+    #Prod 198,179
+    Given I log in bus admin console as administrator
+    When I add a new MozyEnterprise partner:
+      | period | users  | coupon                |  server plan | net terms |
+      | 24     | 10     | <%=QA_ENV['coupon']%> |  100 GB      | yes       |
+    And New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | status_label |
+      | ACTIVE       |
+    When I act as newly created partner account
+    And I add new user(s):
+      | user_group           | storage_type | storage_limit | devices |
+      | (default user group) | Server       | 10            | 3       |
+    Then 1 new user should be created
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    And I view the user's product keys
+    Then Number of Server activated keys should be 0
+    And Number of Server unactivated keys should be 3
+    When I click Send Keys button
+    And I search emails by keywords:
+      | content                |
+      | <%=@unactivated_keys%> |
+    Then I should see 1 email(s)
+    When I stop masquerading
+    Then I delete partner and verify pending delete
+
+  @bus_smoke
+  Scenario: MozyFortress smoke
+    #Prod 199
+    Given I log in bus admin console as administrator
+    When I act as partner by:
+      | name     | including sub-partners |
+      | Fortress | no                     |
+    And I add a new sub partner:
+      | Company Name                       |
+      | Fortress Internal Test Sub Partner |
+    Then New partner should be created
+    When I stop masquerading
+    And I search partner by Fortress Internal Test Sub Partner
+    And I view partner details by Fortress Internal Test Sub Partner
+    Then partner account details should be:
+      | Account Type | Sales Origin | Sales Channel |
+      | N/A (change) | Sales        | N/A (change)  |
+    And I delete partner account
+
+  @bus_smoke
+  Scenario: MozyPro smoke: others for BUS_US
+    #Prod 377 order data shuttle
+    Given I log in bus admin console as administrator
+    When I add a new MozyPro partner:
+      | period | base plan | create under | server plan | net terms |
+      | 1      | 100 GB    | MozyPro      | yes         | yes       |
+    And New partner should be created
+    #Prod 180.1
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 100       | 100      | 0    | Unlimited | Unlimited |
+    And I change root role to FedID role
+    When I get the partner_id
+    And I act as newly created partner account
+    And I add new user(s):
+      | user_group           | storage_type | storage_limit | devices |
+      | (default user group) | Desktop      | 30            | 1       |
+    And I search user by:
+      | keywords |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    #Prod 25 - client config
+    When I create a new client config:
+      | name                 | type   |
+      | deploy_client_config | Server |
+    Then client configuration section message should be Your configuration was saved.
+    Then I stop masquerading
+    And I search partner by newly created partner company name
+    And I view partner details by newly created partner company name
+    #Prod 180.2
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 100       | 100      | 1    | Unlimited | Unlimited |
+    When I order data shuttle for newly created partner company name
+      | power adapter   | key from  | quota |
+      | Data Shuttle US | available | 20    |
+    Then Data shuttle order should be created
+    #Prod 178
+    When I navigate to Search / List Machines section from bus admin console page
+    Then Search list machines section is opened
+    And I search and delete partner account by newly created partner company name
+
 
