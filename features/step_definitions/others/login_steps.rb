@@ -16,6 +16,10 @@ Given /^I log in (bus admin console|to legacy bus01) as administrator$/ do |envi
   # there was redundant code here - removed.
 end
 
+And /^I login as mozypro admin successfully$/ do
+  @bus_site.admin_console_page.get_partner_name_topcorner.should eq(@partner.company_info.name)
+end
+
 When /^I navigate to bus admin console login page$/ do
   @bus_site = BusSite.new
   @bus_site.login_page.load

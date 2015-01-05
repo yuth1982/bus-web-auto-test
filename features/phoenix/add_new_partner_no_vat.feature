@@ -35,8 +35,8 @@ Feature: Add a new partner through phoenix
   Scenario: 131001 Add a new US monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country       | billing country |
-      | 1      | 50 GB     | United States | United States   |
+      | period | base plan | country       | billing country | cc number        |
+      | 1      | 50 GB     | United States | United States   | 4018121111111122 |
     Then the order summary looks like:
       | Description     | Price  | Quantity | Amount |
       | 50 GB - Monthly | $19.99 | 1        | $19.99 |
@@ -49,8 +49,8 @@ Feature: Add a new partner through phoenix
   Scenario: 131002 Add a new US biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country       | billing country |
-      | 24     | 500 GB    | United States | United States   |
+      | period | base plan | country       | billing country | cc number        |
+      | 24     | 500 GB    | United States | United States   | 4018121111111122 |
     Then the order summary looks like:
       | Description       | Price     | Quantity | Amount    |
       | 500 GB - Biennial | $3,989.79 | 1        | $3,989.79 |
@@ -63,8 +63,8 @@ Feature: Add a new partner through phoenix
   Scenario: 131003 Add a new US biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country       | billing country |
-      | 12     | 50 GB     | United States | United States   |
+      | period | base plan | country       | billing country | cc number        |
+      | 12     | 50 GB     | United States | United States   | 4018121111111122 |
     Then the order summary looks like:
       | Description    | Price   | Quantity | Amount  |
       | 50 GB - Annual | $219.89 | 1        | $219.89 |
@@ -77,8 +77,8 @@ Feature: Add a new partner through phoenix
   Scenario: 131004 Add a new US biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country       | billing country |
-      | 12     | 500 GB    | United States | United States   |
+      | period | base plan | country       | billing country | cc number        |
+      | 12     | 500 GB    | United States | United States   | 4018121111111122 |
     Then the order summary looks like:
       | Description     | Price     | Quantity | Amount    |
       | 500 GB - Annual | $2,089.89 | 1        | $2,089.89 |
@@ -91,8 +91,8 @@ Feature: Add a new partner through phoenix
   Scenario: 131005 Add a new US biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country       | billing country |
-      | 24     | 50 GB     | United States | France          |
+      | period | base plan | country       | billing country | cc number        |
+      | 24     | 50 GB     | United States | France          | 4018121111111122 |
     Then the order summary looks like:
       | Description      | Price   | Quantity | Amount  |
       | 50 GB - Biennial | $419.79 | 1        | $419.79 |
@@ -105,8 +105,8 @@ Feature: Add a new partner through phoenix
   Scenario: 131006 Add a new US biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country       | billing country | server plan |
-      | 24     | 250 GB    | United States | France          | yes         |
+      | period | base plan | country       | billing country | server plan | cc number        |
+      | 24     | 250 GB    | United States | France          | yes         | 4018121111111122 |
     Then the order summary looks like:
       | Description            | Price     | Quantity | Amount    |
       | 250 GB - Biennial      | $1,994.79 | 1        | $1,994.79 |
@@ -120,8 +120,8 @@ Feature: Add a new partner through phoenix
   Scenario: 131007 Add a new US monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country       | billing country | coupon              |
-      | 1      | 500 GB    | United States | France          | 10PERCENTOFFOUTLINE |
+      | period | base plan | country       | billing country | coupon              | cc number        |
+      | 1      | 500 GB    | United States | France          | 10PERCENTOFFOUTLINE | 4018121111111122 |
     Then the order summary looks like:
       | Description        | Price    | Quantity | Amount   |
       | 500 GB - Monthly   | $189.99  | 1        | $189.99  |
@@ -136,8 +136,8 @@ Feature: Add a new partner through phoenix
   Scenario: 131008 Add a new US annual basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country       | billing country | server plan | coupon              |
-      | 12     | 500 GB    | United States | France          | yes         | 10PERCENTOFFOUTLINE |
+      | period | base plan | country       | billing country | server plan | coupon              | cc number        |
+      | 12     | 500 GB    | United States | France          | yes         | 10PERCENTOFFOUTLINE | 4018121111111122 |
     Then the order summary looks like:
       | Description          | Price     | Quantity | Amount    |
       | 500 GB - Annual      | $2,089.89 | 1        | $2,089.89 |
@@ -153,8 +153,8 @@ Feature: Add a new partner through phoenix
   Scenario: 131009 Add a new US monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country       | billing country |
-      | 1      | 100 GB    | United States | China           |
+      | period | base plan | country       | billing country | cc number        |
+      | 1      | 100 GB    | United States | China           | 4018121111111122 |
     Then the order summary looks like:
       | Description      | Price  | Quantity | Amount |
       | 100 GB - Monthly | $39.99 | 1        | $39.99 |
@@ -167,8 +167,8 @@ Feature: Add a new partner through phoenix
   Scenario: 131010 Add a new US biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country       | billing country |
-      | 24     | 250 GB    | United States | China           |
+      | period | base plan | country       | billing country | cc number        |
+      | 24     | 250 GB    | United States | China           | 4018121111111122 |
     Then the order summary looks like:
       | Description            | Price     | Quantity | Amount    |
       | 250 GB - Biennial      | $1,994.79 | 1        | $1,994.79 |
@@ -181,8 +181,8 @@ Feature: Add a new partner through phoenix
   Scenario: 131004 Add a new US annual basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country       | billing country |
-      | 12     | 100 GB    | United States | China           |
+      | period | base plan | country       | billing country | cc number        |
+      | 12     | 100 GB    | United States | China           | 4018121111111122 |
     Then the order summary looks like:
       | Description     | Price   | Quantity | Amount  |
       | 100 GB - Annual | $439.89 | 1        | $439.89 |
@@ -195,8 +195,8 @@ Feature: Add a new partner through phoenix
   Scenario: 131004 Add a new US annual basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country       | billing country |
-      | 12     | 250 GB    | United States | China           |
+      | period | base plan | country       | billing country | cc number        |
+      | 12     | 250 GB    | United States | China           | 4018121111111122 |
     Then the order summary looks like:
       | Description     | Price     | Quantity | Amount    |
       | 250 GB - Annual | $1,044.89 | 1        | $1,044.89 |
@@ -209,8 +209,8 @@ Feature: Add a new partner through phoenix
   Scenario: 131013 Add a new US biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country       | billing country |
-      | 24     | 100 GB    | United States | France          |
+      | period | base plan | country       | billing country | cc number        |
+      | 24     | 100 GB    | United States | France          | 4018121111111122 |
     Then the order summary looks like:
       | Description            | Price   | Quantity | Amount  |
       | 100 GB - Biennial      | $839.79 | 1        | $839.79 |
@@ -223,8 +223,8 @@ Feature: Add a new partner through phoenix
   Scenario: 131014 Add a new US monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country       | billing country |
-      | 1      | 250 GB    | United States | France          |
+      | period | base plan | country       | billing country | cc number        |
+      | 1      | 250 GB    | United States | France          | 4018121111111122 |
     Then the order summary looks like:
       | Description      | Price  | Quantity | Amount |
       | 250 GB - Monthly | $94.99 | 1        | $94.99 |

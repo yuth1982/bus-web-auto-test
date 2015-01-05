@@ -185,6 +185,7 @@ module Phoenix
       msg4 = "Plan MozyHome"
       msg5 = "Choisir un plan"
       msg6 = "Plan auswählen"
+
       page_banner.text == msg1 || page_banner.text == msg2 || page_banner.text == msg3 || page_banner.text == msg4 || page_banner.text == msg5 || page_banner.text == msg6
     end
 

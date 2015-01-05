@@ -35,8 +35,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133001 Add a new FR monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 1      | 10 Go     | France  | France          |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 10 Go     | France  | France          | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix  | Quantité | Montant |
       | 10 Go - Mensuel         | 7,99€ | 1        | 7,99€   |
@@ -51,8 +51,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133002 Add a new FR yearly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 12     | 10 Go     | France  | France          |
+      | period | base plan | country | billing country | cc number        |
+      | 12     | 10 Go     | France  | France          | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix    | Quantité | Montant |
       | 10 Go - Annuel          | 87,89€  | 1        | 87,89€  |
@@ -67,8 +67,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133003 Add a new FR biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 24     | 10 Go     | France  | France          |
+      | period | base plan | country | billing country | cc number        |
+      | 24     | 10 Go     | France  | France          | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix    | Quantité | Montant |
       | 10 Go - Bisannuel       | 167,79€ | 1        | 167,79€ |
@@ -83,8 +83,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133004 Add a new FR monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 1      | 50 Go     | France  | France          |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 50 Go     | France  | France          | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix   | Quantité | Montant |
       | 50 Go - Mensuel         | 15,99€ | 1        | 15,99€  |
@@ -99,8 +99,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133005 Add a new FR yearly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 12     | 50 Go     | France  | France          |
+      | period | base plan | country | billing country | cc number        |
+      | 12     | 50 Go     | France  | France          | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix    | Quantité | Montant |
       | 50 Go - Annuel          | 175,89€ | 1        | 175,89€ |
@@ -115,8 +115,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133006 Add a new FR biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 24     | 50 Go     | France  | France          |
+      | period | base plan | country | billing country | cc number        |
+      | 24     | 50 Go     | France  | France          | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix    | Quantité | Montant |
       | 50 Go - Bisannuel       | 335,79€ | 1        | 335,79€ |
@@ -131,8 +131,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133007 Add a new FR monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 1      | 100 Go    | France  | France          |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 100 Go    | France  | France          | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix    | Quantité | Montant |
       | 100 Go - Mensuel        | 30,99€  | 1        | 30,99€  |
@@ -147,8 +147,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133008 Add a new FR yearly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 12     | 100 Go    | France  | France          |
+      | period | base plan | country | billing country | cc number        |
+      | 12     | 100 Go    | France  | France          | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix    | Quantité | Montant |
       | 100 Go - Annuel         | 340,89€ | 1        | 340,89€ |
@@ -163,8 +163,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133009 Add a new FR biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 24     | 100 Go    | France  | France          |
+      | period | base plan | country | billing country | cc number        |
+      | 24     | 100 Go    | France  | France          | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix    | Quantité | Montant |
       | 100 Go - Bisannuel      | 650,79€ | 1        | 650,79€ |
@@ -179,8 +179,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133010 Add a new FR monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 1      | 250 Go    | France  | France          |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 250 Go    | France  | France          | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix   | Quantité | Montant |
       | 250 Go - Mensuel        | 74,99€ | 1        | 74,99€  |
@@ -195,8 +195,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133011 Add a new FR yearly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 12     | 250 Go    | France  | France          |
+      | period | base plan | country | billing country | cc number        |
+      | 12     | 250 Go    | France  | France          | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix    | Quantité | Montant |
       | 250 Go - Annuel         | 824,89€ | 1        | 824,89€ |
@@ -211,8 +211,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133012 Add a new FR biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 24     | 250 Go     | France  | France          |
+      | period | base plan | country | billing country | cc number        |
+      | 24     | 250 Go     | France  | France         | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix      | Quantité | Montant   |
       | 250 Go - Bisannuel      | 1 574,79€ | 1        | 1 574,79€ |
@@ -227,8 +227,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133013 Add a new FR monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 1      | 500 Go    | France  | France          |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 500 Go    | France  | France          | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix    | Quantité | Montant |
       | 500 Go - Mensuel        | 149,99€ | 1        | 149,99€ |
@@ -243,8 +243,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133014 Add a new FR yearly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 12     | 500 Go    | France  | France          |
+      | period | base plan | country | billing country | cc number        |
+      | 12     | 500 Go    | France  | France          | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix      | Quantité | Montant   |
       | 500 Go - Annuel         | 1 649,89€ | 1        | 1 649,89€ |
@@ -259,8 +259,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133015 Add a new FR biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 24     | 500 Go    | France  | France          |
+      | period | base plan | country | billing country | cc number        |
+      | 24     | 500 Go    | France  | France          | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix      | Quantité | Montant   |
       | 500 Go - Bisannuel      | 3 149,79€ | 1        | 3 149,79€ |
@@ -272,11 +272,11 @@ Feature: Add a new partner through phoenix
     And I search and delete partner account by newly created partner company name
 
   @TC.133016 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
-  Scenario: 133001 Add a new FR monthly basic MozyPro partner
+  Scenario: 133016 Add a new FR monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 1      | 1 To      | France  | France          |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 1 To      | France  | France          | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix    | Quantité | Montant |
       | 1 To - Mensuel          | 299,99€ | 1        | 299,99€ |
@@ -291,8 +291,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133017 Add a new FR yearly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 12     | 1 To      | France  | France          |
+      | period | base plan | country | billing country | cc number        |
+      | 12     | 1 To      | France  | France          | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix      | Quantité | Montant   |
       | 1 To - Annuel           | 3 299,89€ | 1        | 3 299,89€ |
@@ -307,8 +307,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133018 Add a new FR biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 24     | 1 To      | France  | France          |
+      | period | base plan | country | billing country | cc number        |
+      | 24     | 1 To      | France  | France          | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix      | Quantité | Montant   |
       | 1 To - Bisannuel        | 6 299,79€ | 1        | 6 299,79€ |
@@ -323,8 +323,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133019 Add a new FR monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country | server plan |
-      | 1      | 10 Go     | France  | Royaume-Uni     | yes         |
+      | period | base plan | country | billing country | server plan | cc number        |
+      | 1      | 10 Go     | France  | Royaume-Uni     | yes         | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix   | Quantité | Montant |
       | 10 Go - Mensuel         | 7,99€  | 1        | 7,99€   |
@@ -340,8 +340,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133020 Add a new FR yearly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country | coupon              |
-      | 12     | 10 Go     | France  | Royaume-Uni     | 10PERCENTOFFOUTLINE |
+      | period | base plan | country | billing country | coupon              | cc number        |
+      | 12     | 10 Go     | France  | Royaume-Uni     | 10PERCENTOFFOUTLINE | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix    | Quantité | Montant |
       | 10 Go - Annuel          | 87,89€  | 1        | 87,89€  |
@@ -355,11 +355,11 @@ Feature: Add a new partner through phoenix
     And I search and delete partner account by newly created partner company name
 
   @TC.133021 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=uk
-  Scenario: 133003 Add a new FR biennial basic MozyPro partner
+  Scenario: 133021 Add a new FR biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country | vat number    |
-      | 24     | 10 Go     | France  | Royaume-Uni     | FR08410091490 |
+      | period | base plan | country | billing country | vat number    | cc number        |
+      | 24     | 10 Go     | France  | Royaume-Uni     | FR08410091490 | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix      | Quantité | Montant   |
       | 10 Go - Bisannuel       | 167,79€   | 1        | 167,79€   |
@@ -373,8 +373,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133022 Add a new FR monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country | server plan | coupon              |
-      | 1      | 50 Go     | France  | Royaume-Uni     | yes         | 10PERCENTOFFOUTLINE |
+      | period | base plan | country | billing country | server plan | coupon              | cc number        |
+      | 1      | 50 Go     | France  | Royaume-Uni     | yes         | 10PERCENTOFFOUTLINE | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix    | Quantité | Montant |
       | 50 Go - Mensuel         | 15,99€  | 1        | 15,99€  |
@@ -392,8 +392,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133023 Add a new FR yearly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country | server plan | vat number    |
-      | 12     | 50 Go     | France  | Royaume-Uni     | yes         | FR08410091490 |
+      | period | base plan | country | billing country | server plan | vat number    | cc number        |
+      | 12     | 50 Go     | France  | Royaume-Uni     | yes         | FR08410091490 | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix      | Quantité | Montant   |
       | 50 Go - Annuel          | 175,89€   | 1        | 175,89€   |
@@ -408,8 +408,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133024 Add a new FR biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country | coupon              | vat number    |
-      | 24     | 50 Go     | France  | Royaume-Uni     | 10PERCENTOFFOUTLINE | FR08410091490 |
+      | period | base plan | country | billing country | coupon              | vat number    | cc number        |
+      | 24     | 50 Go     | France  | Royaume-Uni     | 10PERCENTOFFOUTLINE | FR08410091490 | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix      | Quantité | Montant   |
       | 50 Go - Bisannuel       | 335,79€   | 1        | 335,79€   |
@@ -425,8 +425,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133025 Add a new FR monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country | server plan |coupon              | vat number    |
-      | 1      | 100 Go    | France  | Royaume-Uni     | yes         |10PERCENTOFFOUTLINE | FR08410091490 |
+      | period | base plan | country | billing country | server plan |coupon              | vat number    | cc number        |
+      | 1      | 100 Go    | France  | Royaume-Uni     | yes         |10PERCENTOFFOUTLINE | FR08410091490 | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix      | Quantité | Montant   |
       | 100 Go - Mensuel        | 30,99€    | 1        | 30,99€    |
@@ -443,8 +443,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133026 Add a new FR yearly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 12     | 1 To      | France  | Royaume-Uni     |
+      | period | base plan | country | billing country | cc number        |
+      | 12     | 1 To      | France  | Royaume-Uni     | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix      | Quantité | Montant   |
       | 1 To - Annuel           | 3 299,89€ | 1        | 3 299,89€ |
@@ -459,8 +459,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133027 Add a new FR biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 24     | 10 Go     | France  | France          |
+      | period | base plan | country | billing country | cc number        |
+      | 24     | 10 Go     | France  | France          | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix    | Quantité | Montant |
       | 10 Go - Bisannuel       | 167,79€ | 1        | 167,79€ |
@@ -475,8 +475,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133028 Add a new FR monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 1      | 1 To      | France  | France          |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 1 To      | France  | France          | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix    | Quantité | Montant |
       | 1 To - Mensuel          | 299,99€ | 1        | 299,99€ |
@@ -491,8 +491,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133029 Add a new FR biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country | vat number    |
-      | 1      | 10 Go     | France  | France          | FR08410091490 |
+      | period | base plan | country | billing country | vat number    | cc number        |
+      | 1      | 10 Go     | France  | France          | FR08410091490 | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix      | Quantité | Montant   |
       | 10 Go - Mensuel         | 7,99€     | 1        | 7,99€     |
@@ -506,8 +506,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133030 Add a new FR biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country | vat number    |
-      | 24     | 100 Go    | France  | France          | FR08410091490 |
+      | period | base plan | country | billing country | vat number    | cc number        |
+      | 24     | 100 Go    | France  | France          | FR08410091490 | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix      | Quantité | Montant   |
       | 100 Go - Bisannuel      | 650,79€   | 1        | 650,79€   |
@@ -521,8 +521,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133031 Add a new FR monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country | vat number    |
-      | 1      | 250 Go    | France  | Royaume-Uni     | FR08410091490 |
+      | period | base plan | country | billing country | vat number    | cc number        |
+      | 1      | 250 Go    | France  | Royaume-Uni     | FR08410091490 | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix      | Quantité | Montant   |
       | 250 Go - Mensuel        | 74,99€    | 1        | 74,99€    |
@@ -536,8 +536,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133032 Add a new FR yearly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country | vat number    |
-      | 12     | 500 Go    | France  | Royaume-Uni     | FR08410091490 |
+      | period | base plan | country | billing country | vat number    | cc number        |
+      | 12     | 500 Go    | France  | Royaume-Uni     | FR08410091490 | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix      | Quantité | Montant   |
       | 500 Go - Annuel         | 1 649,89€ | 1        | 1 649,89€ |
@@ -551,8 +551,8 @@ Feature: Add a new partner through phoenix
   Scenario: 133033 Add a new FR biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country | vat number    |
-      | 24     | 1 To      | France  | États-Unis      | FR08410091490 |
+      | period | base plan | country | billing country | vat number    | cc number        |
+      | 24     | 1 To      | France  | États-Unis      | FR08410091490 | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix      | Quantité | Montant   |
       | 1 To - Bisannuel        | 6 299,79€ | 1        | 6 299,79€ |

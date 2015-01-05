@@ -21,13 +21,13 @@ Feature: Add a new user through phoenix
   Scenario: 138001 Add a new AT monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country | billing country |
-      | 12     | 125 GB    | Austria | Österreich      |
+      | period | base plan | country | billing country | cc number        |
+      | 12     | 125 GB    | Austria | Österreich      | 4548181211111124 |
     Then the billing summary looks like:
       | Beschreibung                                   | Preis              | Menge | Betrag |
       | MozyHome 125 GB (Bis zu 3 Computer) - jährlich | 98,89€\n(inc. VAT) | 1     | 98,89€ |
       | Abonnementpreis                                |                    |       | 82,41€ |
-      | VAT Rate (20.0%)                               |                    |       | 16,48€ |
+      | Umsatzsteuersatz (20%)                         |                    |       | 16,48€ |
       | Gesamtbelastung                                |                    |       | 98,89€ |
     Then the user is successfully added.
 
@@ -35,13 +35,13 @@ Feature: Add a new user through phoenix
   Scenario: 138002 Add a new BE monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country | billing country |
-      | 12     | 125 Go    | Belgium | Belgique        |
+      | period | base plan | country | billing country | type       | cc number        |
+      | 12     | 125 Go    | Belgium | Belgique        | MasterCard | 5413271111111222 |
     Then the billing summary looks like:
       | Description                                      | Prix               | Quantité | Montant |
       | MozyHome 125 Go (Jusqu'à 3 ordinateurs) - Annuel | 98,89€\n(inc. VAT) | 1        | 98,89€  |
       | Prix d'abonnement                                |                    |          | 81,73€  |
-      | VAT Rate (21.0%)                                 |                    |          | 17,16€  |
+      | Taux de TVA (21%)                                |                    |          | 17,16€  |
       | Montant total des frais                          |                    |          | 98,89€  |
     Then the user is successfully added.
 
@@ -49,13 +49,13 @@ Feature: Add a new user through phoenix
   Scenario: 138003 Add a new BG monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country  | billing country |
-      | 12     | 125 GB    | Bulgaria | Bulgaria        |
+      | period | base plan | country  | billing country | cc number        |
+      | 12     | 125 GB    | Bulgaria | Bulgaria        | 4169912111111121 |
     Then the billing summary looks like:
       | Description                                  | Price              | Quantity | Amount |
       | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89  |
       | Subscription Price                           |                    |          | €82.41  |
-      | VAT Rate (20.0%)                             |                    |          | €16.48  |
+      | VAT Rate (20%)                               |                    |          | €16.48  |
       | Total Charge                                 |                    |          | €98.89  |
     Then the user is successfully added.
 
@@ -63,41 +63,42 @@ Feature: Add a new user through phoenix
   Scenario: 138004 Add a new HR monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country | billing country |
-      | 12     | 125 GB    | Croatia | Croatia         |
+      | period | base plan | country | billing country | type       | cc number        |
+      | 12     | 125 GB    | Croatia | Croatia         | MasterCard | 5437781111111222 |
     Then the billing summary looks like:
       | Description                                  | Price              | Quantity | Amount |
       | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
       | Subscription Price                           |                    |          | €79.11 |
-      | VAT Rate (25.0%)                             |                    |          | €19.78 |
+      | VAT Rate (25%)                               |                    |          | €19.78 |
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
-  @TC.138005 @phoenix @mozypro @profile_country=cy @ip_country=cy @billing_country=cy
-  Scenario: 138005 Add a new CY monthly basic MozyHome user
-    When I am at dom selection point:
-    And I add a phoenix Home user:
-      | period | base plan | country | billing country |
-      | 12     | 125 GB    | Cyprus  | Cyprus          |
-    Then the billing summary looks like:
-      | Description                                  | Price              | Quantity | Amount |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
-      | Subscription Price                           |                    |          | €83.10 |
-      | VAT Rate (19.0%)                             |                    |          | €15.79 |
-      | Total Charge                                 |                    |          | €98.89 |
+# comment out since there is no valid credit card for CY country
+#  @TC.138005 @phoenix @mozypro @profile_country=cy @ip_country=cy @billing_country=cy
+#  Scenario: 138005 Add a new CY monthly basic MozyHome user
+#    When I am at dom selection point:
+#    And I add a phoenix Home user:
+#      | period | base plan | country | billing country |
+#      | 12     | 125 GB    | Cyprus  | Cyprus          |
+#    Then the billing summary looks like:
+#      | Description                                  | Price              | Quantity | Amount |
+#      | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
+#      | Subscription Price                           |                    |          | €83.10 |
+#      | VAT Rate (19%)                               |                    |          | €15.79 |
+#      | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
   @TC.138006 @phoenix @mozypro @profile_country=cz @ip_country=cz @billing_country=cz
   Scenario: 138006 Add a new DK monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country        | billing country |
-      | 12     | 125 GB    | Czech Republic | Czech Republic  |
+      | period | base plan | country        | billing country | type       | cc number        |
+      | 12     | 125 GB    | Czech Republic | Czech Republic  | MasterCard | 5101420111111222 |
     Then the billing summary looks like:
       | Description                                  | Price              | Quantity | Amount |
       | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
       | Subscription Price                           |                    |          | €81.73 |
-      | VAT Rate (21.0%)                             |                    |          | €17.16 |
+      | VAT Rate (21%)                               |                    |          | €17.16 |
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
@@ -105,13 +106,13 @@ Feature: Add a new user through phoenix
   Scenario: 138007 Add a new DK monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country | billing country |
-      | 12     | 125 GB    | Denmark | Denmark         |
+      | period | base plan | country | billing country | type       | cc number        |
+      | 12     | 125 GB    | Denmark | Denmark         | MasterCard | 5578922111111122 |
     Then the billing summary looks like:
       | Description                                  | Price              | Quantity | Amount |
       | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
       | Subscription Price                           |                    |          | €79.11 |
-      | VAT Rate (25.0%)                             |                    |          | €19.78 |
+      | VAT Rate (25%)                               |                    |          | €19.78 |
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
@@ -119,13 +120,13 @@ Feature: Add a new user through phoenix
   Scenario: 138008 Add a new EE monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country | billing country |
-      | 12     | 125 GB    | Estonia | Estonia         |
+      | period | base plan | country | billing country | cc number        |
+      | 12     | 125 GB    | Estonia | Estonia         | 4238370111111111 |
     Then the billing summary looks like:
       | Description                                  | Price              | Quantity | Amount |
       | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
       | Subscription Price                           |                    |          | €82.41 |
-      | VAT Rate (20.0%)                             |                    |          | €16.48 |
+      | VAT Rate (20%)                             |                    |          | €16.48 |
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
@@ -133,13 +134,13 @@ Feature: Add a new user through phoenix
   Scenario: 138009 Add a new FI monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country | billing country |
-      | 12     | 125 GB    | Finland | Finland         |
+      | period | base plan | country | billing country | cc number        |
+      | 12     | 125 GB    | Finland | Finland         | 4920111111111112 |
     Then the billing summary looks like:
       | Description                                  | Price              | Quantity | Amount |
       | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
       | Subscription Price                           |                    |          | €79.75 |
-      | VAT Rate (24.0%)                             |                    |          | €19.14 |
+      | VAT Rate (24%)                               |                    |          | €19.14 |
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
@@ -147,13 +148,13 @@ Feature: Add a new user through phoenix
   Scenario: 138010 Add a new DE monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country | billing country |
-      | 12     | 125 GB    | Germany | Deutschland     |
+      | period | base plan | country | billing country | cc number        |
+      | 12     | 125 GB    | Germany | Deutschland     | 4188181111111112 |
     Then the billing summary looks like:
       | Beschreibung                                   | Preis              | Menge    | Gesamtbelastung |
       | MozyHome 125 GB (Bis zu 3 Computer) - jährlich | 98,89€\n(inc. VAT) | 1        | 98,89€          |
       | Abonnementpreis                                |                    |          | 83,10€          |
-      | VAT Rate (19.0%)                               |                    |          | 15,79€          |
+      | Umsatzsteuersatz (19%)                         |                    |          | 15,79€          |
       | Gesamtbelastung                                |                    |          | 98,89€          |
     Then the user is successfully added.
 
@@ -161,13 +162,13 @@ Feature: Add a new user through phoenix
   Scenario: 138011 Add a new EL monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country | billing country |
-      | 12     | 125 GB    | Greece  | Greece          |
+      | period | base plan | country | billing country | cc number        |
+      | 12     | 125 GB    | Greece  | Greece          | 4532121111111111 |
     Then the billing summary looks like:
       | Description                                  | Price              | Quantity | Amount |
       | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
       | Subscription Price                           |                    |          | €80.40 |
-      | VAT Rate (23.0%)                             |                    |          | €18.49 |
+      | VAT Rate (23%)                               |                    |          | €18.49 |
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
@@ -175,13 +176,13 @@ Feature: Add a new user through phoenix
   Scenario: 138012 Add a new HU monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country | billing country |
-      | 12     | 125 GB    | Hungary | Hungary         |
+      | period | base plan | country | billing country | cc number        |
+      | 12     | 125 GB    | Hungary | Hungary         | 4333112111111111 |
     Then the billing summary looks like:
       | Description                                  | Price              | Quantity | Amount |
       | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
       | Subscription Price                           |                    |          | €77.87 |
-      | VAT Rate (27.0%)                             |                    |          | €21.02 |
+      | VAT Rate (27%)                               |                    |          | €21.02 |
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
@@ -189,13 +190,13 @@ Feature: Add a new user through phoenix
   Scenario: 138013 Add a new IE monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country | billing country |
-      | 12     | 125 GB    | Ireland | Ireland         |
+      | period | base plan | country | billing country | cc number        |
+      | 12     | 125 GB    | Ireland | Ireland         | 4319402211111113 |
     Then the billing summary looks like:
       | Description                                  | Price              | Quantity | Amount |
       | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
       | Subscription Price                           |                    |          | €80.40 |
-      | VAT Rate (23.0%)                             |                    |          | €18.49 |
+      | VAT Rate (23%)                               |                    |          | €18.49 |
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
@@ -203,13 +204,13 @@ Feature: Add a new user through phoenix
   Scenario: 138014 Add a new IE monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country | billing country |
-      | 12     | 125 GB    | Italy   | Italy           |
+      | period | base plan | country | billing country | cc number        |
+      | 12     | 125 GB    | Italy   | Italy           | 4916921703777575 |
     Then the billing summary looks like:
       | Description                                  | Price              | Quantity | Amount |
       | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
       | Subscription Price                           |                    |          | €81.06 |
-      | VAT Rate (22.0%)                             |                    |          | €17.83 |
+      | VAT Rate (22%)                               |                    |          | €17.83 |
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
@@ -217,13 +218,13 @@ Feature: Add a new user through phoenix
   Scenario: 138015 Add a new LV monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country | billing country |
-      | 12     | 125 GB    | Latvia  | Latvia          |
+      | period | base plan | country | billing country | cc number        |
+      | 12     | 125 GB    | Latvia  | Latvia          | 4405211111111122 |
     Then the billing summary looks like:
       | Description                                  | Price              | Quantity | Amount |
       | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
       | Subscription Price                           |                    |          | €81.73 |
-      | VAT Rate (21.0%)                             |                    |          | €17.16 |
+      | VAT Rate (21%)                               |                    |          | €17.16 |
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
@@ -231,13 +232,13 @@ Feature: Add a new user through phoenix
   Scenario: 138016 Add a new LT monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country   | billing country |
-      | 12     | 125 GB    | Lithuania | Lithuania       |
+      | period | base plan | country   | billing country | cc number        |
+      | 12     | 125 GB    | Lithuania | Lithuania       | 4797121111111111 |
     Then the billing summary looks like:
       | Description                                  | Price              | Quantity | Amount |
       | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
       | Subscription Price                           |                    |          | €81.73 |
-      | VAT Rate (21.0%)                             |                    |          | €17.16 |
+      | VAT Rate (21%)                               |                    |          | €17.16 |
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
@@ -245,13 +246,13 @@ Feature: Add a new user through phoenix
   Scenario: 138017 Add a new LU monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country    | billing country |
-      | 12     | 125 Go    | Luxembourg | Luxembourg      |
+      | period | base plan | country    | billing country | cc number        |
+      | 12     | 125 Go    | Luxembourg | Luxembourg      | 4779531111111121 |
     Then the billing summary looks like:
       | Description                                      | PriX               | Quantité | Montant |
       | MozyHome 125 Go (Jusqu'à 3 ordinateurs) - Annuel | 98,89€\n(inc. VAT) | 1        | 98,89€  |
       | Prix d'abonnement                                |                    |          | 85,99€  |
-      | VAT Rate (15.0%)                                 |                    |          | 12,90€  |
+      | Taux de TVA (15%)                                |                    |          | 12,90€  |
       | Montant total des frais                          |                    |          | 98,89€  |
     Then the user is successfully added.
 
@@ -259,13 +260,13 @@ Feature: Add a new user through phoenix
   Scenario: 138018 Add a new MT monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country | billing country |
-      | 12     | 125 GB    | Malta   | Malta           |
+      | period | base plan | country | billing country | cc number        |
+      | 12     | 125 GB    | Malta   | Malta           | 4313801111111121 |
     Then the billing summary looks like:
       | Description                                  | Price              | Quantity | Amount |
       | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
       | Subscription Price                           |                    |          | €83.81 |
-      | VAT Rate (18.0%)                             |                    |          | €15.08 |
+      | VAT Rate (18%)                               |                    |          | €15.08 |
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
@@ -273,13 +274,13 @@ Feature: Add a new user through phoenix
   Scenario: 138019 Add a new NL monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country     | billing country |
-      | 12     | 125 GB    | Netherlands | Netherlands     |
+      | period | base plan | country     | billing country | type       | cc number        |
+      | 12     | 125 GB    | Netherlands | Netherlands     | MasterCard | 5100291111111111 |
     Then the billing summary looks like:
       | Description                                  | Price              | Quantity | Amount |
       | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
       | Subscription Price                           |                    |          | €81.73 |
-      | VAT Rate (21.0%)                             |                    |          | €17.16 |
+      | VAT Rate (21%)                               |                    |          | €17.16 |
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
@@ -287,13 +288,13 @@ Feature: Add a new user through phoenix
   Scenario: 138020 Add a new PL monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country | billing country |
-      | 12     | 125 GB    | Poland  | Poland          |
+      | period | base plan | country | billing country | cc number        |
+      | 12     | 125 GB    | Poland  | Poland          | 4056702111111122 |
     Then the billing summary looks like:
       | Description                                  | Price              | Quantity | Amount |
       | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
       | Subscription Price                           |                    |          | €80.40 |
-      | VAT Rate (23.0%)                             |                    |          | €18.49 |
+      | VAT Rate (23%)                               |                    |          | €18.49 |
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
@@ -301,13 +302,13 @@ Feature: Add a new user through phoenix
   Scenario: 138021 Add a new PT monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country  | billing country |
-      | 12     | 125 GB    | Portugal | Portugal          |
+      | period | base plan | country  | billing country | cc number        |
+      | 12     | 125 GB    | Portugal | Portugal        | 4556581910687747 |
     Then the billing summary looks like:
       | Description                                  | Price              | Quantity | Amount |
       | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
       | Subscription Price                           |                    |          | €80.40 |
-      | VAT Rate (23.0%)                             |                    |          | €18.49 |
+      | VAT Rate (23%)                               |                    |          | €18.49 |
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
@@ -315,13 +316,13 @@ Feature: Add a new user through phoenix
   Scenario: 138022 Add a new RO monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country | billing country |
-      | 12     | 125 GB    | Romania | Romania         |
+      | period | base plan | country | billing country | cc number        |
+      | 12     | 125 GB    | Romania | Romania         | 4493590111111122 |
     Then the billing summary looks like:
       | Description                                  | Price              | Quantity | Amount |
       | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
       | Subscription Price                           |                    |          | €79.75 |
-      | VAT Rate (24.0%)                             |                    |          | €19.14 |
+      | VAT Rate (24%)                               |                    |          | €19.14 |
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
@@ -329,13 +330,13 @@ Feature: Add a new user through phoenix
   Scenario: 138023 Add a new SK monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country  | billing country |
-      | 12     | 125 GB    | Slovakia | Slovakia        |
+      | period | base plan | country  | billing country | cc number        |
+      | 12     | 125 GB    | Slovakia | Slovakia        | 4544170111111122 |
     Then the billing summary looks like:
       | Description                                  | Price              | Quantity | Amount |
       | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
       | Subscription Price                           |                    |          | €82.41 |
-      | VAT Rate (20.0%)                             |                    |          | €16.48 |
+      | VAT Rate (20%)                               |                    |          | €16.48 |
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
@@ -343,13 +344,13 @@ Feature: Add a new user through phoenix
   Scenario: 138024 Add a new SI monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country  | billing country |
-      | 12     | 125 GB    | Slovenia | Slovenia        |
+      | period | base plan | country  | billing country | cc number        |
+      | 12     | 125 GB    | Slovenia | Slovenia        | 4493690111111112 |
     Then the billing summary looks like:
       | Description                                  | Price              | Quantity | Amount |
       | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
       | Subscription Price                           |                    |          | €81.06 |
-      | VAT Rate (22.0%)                             |                    |          | €17.83 |
+      | VAT Rate (22%)                               |                    |          | €17.83 |
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
@@ -357,13 +358,13 @@ Feature: Add a new user through phoenix
   Scenario: 138025 Add a new ES monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country | billing country |
-      | 12     | 125 GB    | Spain   | Spain           |
+      | period | base plan | country | billing country | cc number        |
+      | 12     | 125 GB    | Spain   | Spain           | 4328191211111111 |
     Then the billing summary looks like:
       | Description                                  | Price              | Quantity | Amount |
       | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
       | Subscription Price                           |                    |          | €81.73 |
-      | VAT Rate (21.0%)                             |                    |          | €17.16 |
+      | VAT Rate (21%)                               |                    |          | €17.16 |
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
@@ -371,13 +372,13 @@ Feature: Add a new user through phoenix
   Scenario: 138026 Add a new SE monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country | billing country |
-      | 12     | 125 GB    | Sweden  | Sweden          |
+      | period | base plan | country | billing country | cc number        |
+      | 12     | 125 GB    | Sweden  | Sweden          | 4581092111111122 |
     Then the billing summary looks like:
       | Description                                  | Price              | Quantity | Amount |
       | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
       | Subscription Price                           |                    |          | €79.11 |
-      | VAT Rate (25.0%)                             |                    |          | €19.78 |
+      | VAT Rate (25%)                               |                    |          | €19.78 |
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
@@ -385,12 +386,12 @@ Feature: Add a new user through phoenix
   Scenario: 138027 Add a new UK monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country        | billing country |
-      | 12     | 125 GB    | United Kingdom | United Kingdom  |
+      | period | base plan | country        | billing country | cc number        |
+      | 12     | 125 GB    | United Kingdom | United Kingdom  | 4916783606275713 |
     Then the billing summary looks like:
       | Description                                  | Price              | Quantity | Amount |
       | MozyHome 125 GB (Up to 3 computers) - Annual | £87.89\n(inc. VAT) | 1        | £87.89 |
       | Subscription Price                           |                    |          | £73.24 |
-      | VAT Rate (20.0%)                             |                    |          | £14.65 |
+      | VAT Rate (20%)                               |                    |          | £14.65 |
       | Total Charge                                 |                    |          | £87.89 |
     Then the user is successfully added.

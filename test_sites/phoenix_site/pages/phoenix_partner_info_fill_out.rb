@@ -25,7 +25,7 @@ module Phoenix
     element(:continue_btn, css: "input.img-button")
     element(:back_btn, id: "back_button")
     element(:submit_btn, id: "submit_button")
-    element(:error_message, css: "p.error")
+    element(:error_message, xpath: "//div[@class='inner-center-form-box']//form//p[@class='error']")
 
     # elements for verification
     element(:su_form_lbl, css: "div.center-form-box.vertical-align > h2")

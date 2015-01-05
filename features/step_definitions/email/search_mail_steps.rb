@@ -70,3 +70,10 @@ Then /^I get verify email address from email content$/ do
     end
   @verify_email_query = match[0] unless match.nil?
 end
+
+# for mozyhome user change email address the new email will receive Email Address Verification
+And /^I get verify email address from email content for mozyhome change email address$/ do
+  match = @mail_content.match(/https?:\/\/secure.mozy.[\S]+\/registration\/verify_email_address\/[\S]+/)
+  (match.nil?).should == false
+  @verify_email_query = match[0] unless match.nil?
+end

@@ -26,6 +26,7 @@ module Phoenix
     # Billing Info
     # pro flow
     element(:same_as_company_info_link, id: "insert_partner_contact")
+    element(:home_cc_acc_type_select, id: "card_type")
     element(:cc_address_tb, id: "cc_address")
     element(:cc_country_select, id: "cc_country")
     element(:cc_state_tb, id: "cc_state")
@@ -35,7 +36,7 @@ module Phoenix
     element(:cc_email_tb, id: "cc_email")
     element(:cc_phone_tb, id: "cc_phone")
     element(:cc_zip_tb, id: "cc_zip")
-    element(:billing_summary_table, css: "table.order-summary")
+    element(:billing_summary_table, xpath: "//table[@class='order-summary']")
     # home flow
     element(:home_country_select, id: "bill_to_address_country")
     element(:home_bill_fname_tb, id: "bill_to_forename")
@@ -56,7 +57,7 @@ module Phoenix
     element(:continue_btn, css: "input.img-button")
     element(:back_btn, id: "back_button")
     element(:submit_btn, id: "submit_button")
-    element(:error_message, css: "p.error")
+    element(:error_message, xpath: "//div[@id='cybersourceErrors']//ul//li")
     element(:pro_error_message, xpath: "//*[@id='ariaErrors']/ul/li")
 
     # Public elements & methods
@@ -115,6 +116,7 @@ module Phoenix
     #
     def home_fill_out(partner)
       # for mozy home, we have to fill the entire form out
+      home_cc_acc_type_select.select(partner.credit_card.type)
       home_cc_acct_num_tb.type_text(partner.credit_card.number)
       home_cc_cvv_tb.type_text(partner.credit_card.cvv)
       home_cc_exp_mm_select.select(partner.credit_card.expire_month)

@@ -94,6 +94,13 @@ module Bus
     element(:password_set_again_text, id: 'admin_password_confirmation')
     element(:continue_activate_btn, xpath: "//input[@name='commit']")
 
+    # partner name in the right top corner
+    element(:partner_top_link, xpath: "//div[@id='identify-me']/a[1]")
+
+    def get_partner_name_topcorner
+      find(:xpath, "//div[@id='identify-me']/a[1]").text
+    end
+
     def partner_id
       find(:xpath, "//div[@id='identify-me']/a[1]")[:href][/partner-show-(\d+)/, 1]
     end

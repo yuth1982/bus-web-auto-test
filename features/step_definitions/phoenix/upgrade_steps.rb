@@ -14,7 +14,6 @@ And /^I (upgrade|change) my (partner|user|free) account to:$/ do |change_type,ac
         @partner.additional_storage = attributes['addl storage'] unless attributes['addl storage'].nil?
         # Partner info attributes
         @partner.partner_info.coupon_code = attributes["coupon"] unless attributes["coupon"].nil?
-        profile_country = attributes['country'] unless attributes['country'].nil?
         # subscription period
 
         @partner.subscription_period = attributes["period"]
@@ -26,6 +25,17 @@ And /^I (upgrade|change) my (partner|user|free) account to:$/ do |change_type,ac
           when attributes["period"].eql?("24")
             @partner.subscription_period = "2"
         end
+
+        profile_country = attributes["country"] unless attributes["country"].nil?
+
+        # Credit card info attributes
+        @partner.credit_card.first_name = attributes["cc first name"] unless attributes["cc first name"].nil?
+        @partner.credit_card.last_name = attributes["cc last name"] unless attributes["cc last name"].nil?
+        @partner.credit_card.number = attributes["cc number"] unless attributes["cc number"].nil?
+        @partner.credit_card.expire_month = attributes["expire month"] unless attributes["expire month"].nil?
+        @partner.credit_card.expire_year = attributes["expire year"] unless attributes["expire year"].nil?
+        @partner.credit_card.cvv = attributes["cvv"] unless attributes["cvv"].nil?
+        @partner.credit_card.type = attributes["type"] unless attributes["type"].nil?
 
         # Billing info attributes
         @partner.use_company_info = attributes['billing country'].nil?
@@ -132,7 +142,7 @@ end
 And /^the (current plan|payment details) summary looks like:$/ do |type, data_table|
   date_format = '%m/%d/%y'
   country = @partner.company_info.country
-  date_format = '%d/%m/%y' if (country.include? 'France')||(country.include? 'Germany')
+  date_format = '%d/%m/%y' if ["France", "Germany", "Ireland", "United Kingdom"].include?country
   expected = data_table.raw
   expected.each{|i|
     if i[1].start_with? '@'

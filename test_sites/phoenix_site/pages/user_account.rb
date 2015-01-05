@@ -26,6 +26,11 @@ module Phoenix
     # change plan link: To chagne your plan, click here
     element(:change_plan_account_link, xpath: "//div[@id='maincontent']//a[@href='/plan']")
 
+    # elements on the change email address page
+    element(:new_email_input, id: "user_email_address")
+    element(:new_email_pwd_input, id: "password")
+    element(:change_email_submit_btn, xpath: "//div[@id='account-form']/table//td[2]/input")
+
     # this method verifies that the acct logged into belongs to this specific user
     # the banner should match the users email address
     #   it also clicks on the main left nav items:
@@ -78,6 +83,15 @@ module Phoenix
       main_section_head.eql?("#{LANG[partner.company_info.country][partner.partner_info.type]['devices_link']}")
     end
 
+    def get_download_backup_links
+       download_links_href = Array.new
+       download_links = all(:xpath, "//div[@id='maincontent']/table/tbody/tr/td/a")
+       download_links.each do |link|
+         download_links_href << link['href']
+       end
+       download_links_href
+    end
+
     # go to dl link
     def go_to_downloads(partner)
       localized_click(partner, 'dl_link')
@@ -88,6 +102,20 @@ module Phoenix
     def go_to_profile(partner)
       localized_click(partner, 'profile_link')
       main_section_head.eql?("#{LANG[partner.company_info.country][partner.partner_info.type]['profile_link']}")
+    end
+
+    # change email address
+    def change_email_address(partner, new_email, password)
+      go_to_profile(partner)
+      find(:xpath,"//a[contains(@href,'email')]").click
+      new_email_input.clear_value
+      new_email_input.type_text(new_email)
+      new_email_pwd_input.type_text(password)
+      change_email_submit_btn.click
+    end
+
+    def change_email_success_message
+      find(:xpath, "//div[@id='maincontent']/p").text
     end
 
     # go to stash
@@ -105,6 +133,14 @@ module Phoenix
       end
     end
 
+    def get_download_sync_links
+      download_links_href = Array.new
+      download_links = all(:xpath, "//div[@id='stash_left_col']/div/ul/li/div/a")
+      download_links.each do |link|
+        download_links_href << link['href']
+      end
+      download_links_href
+    end
     # go to referrals
     def go_to_referrals(partner)
       localized_click(partner, 'refer_link')

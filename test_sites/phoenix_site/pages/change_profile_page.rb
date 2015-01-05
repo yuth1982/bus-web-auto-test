@@ -4,7 +4,7 @@ module Phoenix
   # editing profile section
   # items relating to editing a user's profile
   element(:message_text, css: "p.notice")
-  element(:message_profile, css: "p.flash")
+  element(:message_profile, xpath: "//div[@id='maincontent']/p")
   # change user name
   element(:user_name_tb, id: "user_name")
   # change password section
@@ -13,22 +13,22 @@ module Phoenix
   element(:new_pw2, id: "new_password2")
   element(:change_btn, css: "input.ui-button")
   # change cc info
-  element(:change_cc_type_select, id: "card_cardType")
-  element(:change_cc_number_tb, id: "card_accountNumber")
-  element(:change_card_cvv_tb, id: "card_cvNumber")
-  element(:change_exp_mm_select, id: "card_expirationMonth")
-  element(:change_exp_yy_select, id: "card_expirationYear")
+  element(:change_cc_type_select, id: "card_type")
+  element(:change_cc_number_tb, id: "card_number")
+  element(:change_card_cvv_tb, id: "card_cvn")
+  element(:change_exp_mm_select, id: "card_expiry_month")
+  element(:change_exp_yy_select, id: "card_expiry_year")
   # cc addressing info
-  element(:change_billing_country_select, id: "billTo_country")
-  element(:change_bill_fname_tb, id: "billTo_firstName")
-  element(:change_bill_lname_tb, id: "billTo_lastName")
-  element(:change_bill_co_tb, id: "billTo_company")
-  element(:change_bill_addr1_tb, id: "billTo_street1")
-  element(:change_bill_addr2_tb, id: "billTo_street2")
-  element(:change_bill_city_tb, id: "billTo_city")
-  element(:change_bill_state_tb, id: "billTo_state")
-  element(:change_bill_state_select, id: "billTo_state_us")
-  element(:change_bill_zip_tb, id: "billTo_postalCode")
+  element(:change_billing_country_select, id: "bill_to_address_country")
+  element(:change_bill_fname_tb, id: "bill_to_forename")
+  element(:change_bill_lname_tb, id: "bill_to_surname")
+  element(:change_bill_co_tb, id: "bill_to_company_name")
+  element(:change_bill_addr1_tb, id: "bill_to_address_line1")
+  element(:change_bill_addr2_tb, id: "bill_to_address_line2")
+  element(:change_bill_city_tb, id: "bill_to_address_city")
+  element(:change_bill_state_tb, id: "bill_to_address_state")
+  element(:change_bill_state_select, id: "bill_to_address_state_us")
+  element(:change_bill_zip_tb, id: "bill_to_address_postal_code")
   element(:change_submit_btn, id: "submit_button")
   element(:captcha, id: "captcha")
 
@@ -134,7 +134,7 @@ module Phoenix
   def change_user_name(partner)
     user_name_tb.type_text(partner.admin_info.full_name)
     change_btn.click
-    message_profile.eql?("Profile saved")
+    message_profile.eql?("Profile saved.")
   end
 
   def click_my_plan_link
@@ -177,8 +177,9 @@ module Phoenix
   def submit_renewal_plan()
     # get base plan value
     base_plan_value = find(:xpath, "//select[@id='consumer_plan_id']").find('option[selected]').text
-    gb_value = find(:xpath, "//select[@id='consumer_plan_id']").value.eql?('104')? '50':'125'
-    base_plan = base_plan_value.gsub(/125|50/, gb_value)
+    gb_value = find(:xpath, "//select[@id='consumer_plan_id']").value
+    gb_value_selected = find(:xpath, "//select[@id='consumer_plan_id']//option[@value='"+gb_value.to_s+"']").text.include?('125')?'125':'50'
+    base_plan = base_plan_value.gsub(/125|50/, gb_value_selected)
     # get Computers value
     computers = find(:xpath, "//select[@id='machines']").value
     # get Subscription value
@@ -204,6 +205,7 @@ module Phoenix
       change_quota_tb.type_text(additional_storage)
     end
     find(:xpath, "//td[@id='num_quota_total']").click
+    sleep 2
   end
 
   def fill_addl_mach(additional_computers)
@@ -212,7 +214,7 @@ module Phoenix
 
   def period_fill_out(subscription_period)
     # for other language e.g. FR, the option text is not Monthly, Yearly,Biennial
-    change_period_select.find("option[value='#{subscription_period}']").click
+    change_period_select.find("option[value='#{subscription_period}']").click unless subscription_period.nil?
      # case subscription_period
       #    when "M"
       #      change_period_select.select("Monthly")
@@ -263,7 +265,7 @@ module Phoenix
 
   def select_country_free_paid(partner, profile_country)
     free2paid_country_name.type_text(partner.admin_info.full_name)
-    free2paid_country_select.select(profile_country)
+    free2paid_country_select.select(partner.company_info.country) if profile_country.nil?
     free2paid_continue_btn.click
   end
 

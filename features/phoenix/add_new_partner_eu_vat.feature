@@ -35,8 +35,8 @@ Feature: Add a new partner through phoenix
   Scenario: 136001 Add a new AT monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 1      | 100 GB    | Austria | Österreich      |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 100 GB    | Austria | Österreich      | 4548181211111124 |
     Then the order summary looks like:
       | Beschreibung       | Preis  | Menge  | Betrag |
       | 100 GB - Monatlich | 30,99€ | 1      | 30,99€ |
@@ -51,8 +51,8 @@ Feature: Add a new partner through phoenix
   Scenario: 136002 Add a new BE monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 1      | 100 Go    | Belgium | Belgique        |
+      | period | base plan | country | billing country | type       |cc number        |
+      | 1      | 100 Go    | Belgium | Belgique        | Mastercard |5413271111111222 |
     Then the order summary looks like:
       | Description             | Prix    | Quantité | Montant |
       | 100 Go - Mensuel        | 30,99€  | 1        | 30,99€  |
@@ -67,8 +67,8 @@ Feature: Add a new partner through phoenix
   Scenario: 136003 Add a new BG monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country  | billing country |
-      | 1      | 100 GB    | Bulgaria | Bulgaria        |
+      | period | base plan | country  | billing country | cc number        |
+      | 1      | 100 GB    | Bulgaria | Bulgaria        | 4169912111111121 |
     Then the order summary looks like:
       | Description        | Price  | Quantity | Amount |
       | 100 GB - Monthly   | €30.99 | 1        | €30.99 |
@@ -83,8 +83,8 @@ Feature: Add a new partner through phoenix
   Scenario: 136004 Add a new HR monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 1      | 100 GB    | Croatia | Croatia         |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 100 GB    | Croatia | Croatia         | 5437781111111222 |
     Then the order summary looks like:
       | Description        | Price  | Quantity | Amount |
       | 100 GB - Monthly   | €30.99 | 1        | €30.99 |
@@ -95,28 +95,29 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.136005 @phoenix @mozypro @profile_country=cy @ip_country=cy @billing_country=cy
-  Scenario: 136005 Add a new CY monthly basic MozyPro partner
-    When I am at dom selection point:
-    And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 1      | 100 GB    | Cyprus  | Cyprus          |
-    Then the order summary looks like:
-      | Description        | Price  | Quantity | Amount |
-      | 100 GB - Monthly   | €30.99 | 1        | €30.99 |
-      | Subscription Price | €30.99 |          | €30.99 |
-      | VAT                | €5.89  |          | €5.89  |
-      | Total Charge       | €36.88 |          | €36.88 |
-    And the partner is successfully added.
-    And I log in bus admin console as administrator
-    And I search and delete partner account by newly created partner company name
+   # comment out since there is no valid credit card for CY country
+#  @TC.136005 @phoenix @mozypro @profile_country=cy @ip_country=cy @billing_country=cy
+#  Scenario: 136005 Add a new CY monthly basic MozyPro partner
+#    When I am at dom selection point:
+#    And I add a phoenix Pro partner:
+#      | period | base plan | country | billing country |
+#      | 1      | 100 GB    | Cyprus  | Cyprus          |
+#    Then the order summary looks like:
+#      | Description        | Price  | Quantity | Amount |
+#      | 100 GB - Monthly   | €30.99 | 1        | €30.99 |
+#      | Subscription Price | €30.99 |          | €30.99 |
+#      | VAT                | €5.89  |          | €5.89  |
+#      | Total Charge       | €36.88 |          | €36.88 |
+#    And the partner is successfully added.
+#    And I log in bus admin console as administrator
+#    And I search and delete partner account by newly created partner company name
 
   @TC.136006 @phoenix @mozypro @profile_country=cz @ip_country=cz @billing_country=cz
   Scenario: 136006 Add a new DK monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country        | billing country |
-      | 1      | 100 GB    | Czech Republic | Czech Republic  |
+      | period | base plan | country        | billing country | cc number        |
+      | 1      | 100 GB    | Czech Republic | Czech Republic  | 5101420111111222 |
     Then the order summary looks like:
       | Description        | Price  | Quantity | Amount |
       | 100 GB - Monthly   | €30.99 | 1        | €30.99 |
@@ -131,8 +132,8 @@ Feature: Add a new partner through phoenix
   Scenario: 136007 Add a new DK monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 1      | 100 GB    | Denmark | Denmark         |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 100 GB    | Denmark | Denmark         | 5578922111111122 |
     Then the order summary looks like:
       | Description        | Price  | Quantity | Amount |
       | 100 GB - Monthly   | €30.99 | 1        | €30.99 |
@@ -147,8 +148,8 @@ Feature: Add a new partner through phoenix
   Scenario: 136008 Add a new EE monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 1      | 100 GB    | Estonia | Estonia         |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 100 GB    | Estonia | Estonia         | 4238370111111111 |
     Then the order summary looks like:
       | Description        | Price  | Quantity | Amount |
       | 100 GB - Monthly   | €30.99 | 1        | €30.99 |
@@ -163,8 +164,8 @@ Feature: Add a new partner through phoenix
   Scenario: 136009 Add a new FI monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 1      | 100 GB    | Finland | Finland         |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 100 GB    | Finland | Finland         | 4920111111111112 |
     Then the order summary looks like:
       | Description        | Price  | Quantity | Amount |
       | 100 GB - Monthly   | €30.99 | 1        | €30.99 |
@@ -179,8 +180,8 @@ Feature: Add a new partner through phoenix
   Scenario: 136010 Add a new DE monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 1      | 100 GB    | Germany | Deutschland     |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 100 GB    | Germany | Deutschland     | 4188181111111112 |
     Then the order summary looks like:
       | Beschreibung       | Preis  | Menge  | Betrag |
       | 100 GB - Monatlich | 30,99€ | 1      | 30,99€ |
@@ -195,8 +196,8 @@ Feature: Add a new partner through phoenix
   Scenario: 136011 Add a new EL monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 1      | 100 GB    | Greece  | Greece          |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 100 GB    | Greece  | Greece          | 4532121111111111 |
     Then the order summary looks like:
       | Description        | Price  | Quantity | Amount |
       | 100 GB - Monthly   | €30.99 | 1        | €30.99 |
@@ -211,8 +212,8 @@ Feature: Add a new partner through phoenix
   Scenario: 136012 Add a new HU monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 1      | 100 GB    | Hungary | Hungary         |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 100 GB    | Hungary | Hungary         | 4333112111111111 |
     Then the order summary looks like:
       | Description        | Price  | Quantity | Amount |
       | 100 GB - Monthly   | €30.99 | 1        | €30.99 |
@@ -227,8 +228,8 @@ Feature: Add a new partner through phoenix
   Scenario: 136013 Add a new IE monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 1      | 100 GB    | Ireland | Ireland         |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 100 GB    | Ireland | Ireland         | 4319402211111113 |
     Then the order summary looks like:
       | Description        | Price  | Quantity | Amount |
       | 100 GB - Monthly   | €30.99 | 1        | €30.99 |
@@ -243,8 +244,8 @@ Feature: Add a new partner through phoenix
   Scenario: 136014 Add a new IE monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 1      | 100 GB    | Italy   | Italy           |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 100 GB    | Italy   | Italy           | 4916921703777575 |
     Then the order summary looks like:
       | Description        | Price  | Quantity | Amount |
       | 100 GB - Monthly   | €30.99 | 1        | €30.99 |
@@ -259,8 +260,8 @@ Feature: Add a new partner through phoenix
   Scenario: 136015 Add a new LV monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 1      | 100 GB    | Latvia  | Latvia          |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 100 GB    | Latvia  | Latvia          | 4405211111111122 |
     Then the order summary looks like:
       | Description        | Price  | Quantity | Amount |
       | 100 GB - Monthly   | €30.99 | 1        | €30.99 |
@@ -275,8 +276,8 @@ Feature: Add a new partner through phoenix
   Scenario: 136016 Add a new LT monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country   | billing country |
-      | 1      | 100 GB    | Lithuania | Lithuania       |
+      | period | base plan | country   | billing country | cc number        |
+      | 1      | 100 GB    | Lithuania | Lithuania       | 4797121111111111 |
     Then the order summary looks like:
       | Description        | Price  | Quantity | Amount |
       | 100 GB - Monthly   | €30.99 | 1        | €30.99 |
@@ -291,8 +292,8 @@ Feature: Add a new partner through phoenix
   Scenario: 136017 Add a new LU monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country    | billing country |
-      | 1      | 100 Go    | Luxembourg | Luxembourg      |
+      | period | base plan | country    | billing country | cc number        |
+      | 1      | 100 Go    | Luxembourg | Luxembourg      | 4779531111111121 |
     Then the order summary looks like:
       | Description             | Prix    | Quantité | Montant |
       | 100 Go - Mensuel        | 30,99€  | 1        | 30,99€  |
@@ -307,14 +308,14 @@ Feature: Add a new partner through phoenix
   Scenario: 136018 Add a new MT monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 1      | 100 GB    | Malta   | Malta           |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 100 GB    | Malta   | Malta           | 4313801111111121 |
     Then the order summary looks like:
       | Description        | Price  | Quantity | Amount |
       | 100 GB - Monthly   | €30.99 | 1        | €30.99 |
       | Subscription Price | €30.99 |          | €30.99 |
-      | VAT                | €6.51  |          | €6.51  |
-      | Total Charge       | €37.50 |          | €37.50 |
+      | VAT                | €5.58  |          | €5.58  |
+      | Total Charge       | €36.57 |          | €36.57 |
     And the partner is successfully added.
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
@@ -323,8 +324,8 @@ Feature: Add a new partner through phoenix
   Scenario: 136019 Add a new NL monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country     | billing country |
-      | 1      | 100 GB    | Netherlands | Netherlands     |
+      | period | base plan | country     | billing country | cc number        |
+      | 1      | 100 GB    | Netherlands | Netherlands     | 5100291111111111 |
     Then the order summary looks like:
       | Description        | Price  | Quantity | Amount |
       | 100 GB - Monthly   | €30.99 | 1        | €30.99 |
@@ -339,8 +340,8 @@ Feature: Add a new partner through phoenix
   Scenario: 136020 Add a new PL monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 1      | 100 GB    | Poland  | Poland          |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 100 GB    | Poland  | Poland          | 4056702111111122 |
     Then the order summary looks like:
       | Description        | Price  | Quantity | Amount |
       | 100 GB - Monthly   | €30.99 | 1        | €30.99 |
@@ -355,8 +356,8 @@ Feature: Add a new partner through phoenix
   Scenario: 136021 Add a new PT monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country  | billing country |
-      | 1      | 100 GB    | Portugal | Portugal          |
+      | period | base plan | country  | billing country | cc number        |
+      | 1      | 100 GB    | Portugal | Portugal        | 4556581910687747 |
     Then the order summary looks like:
       | Description        | Price  | Quantity | Amount |
       | 100 GB - Monthly   | €30.99 | 1        | €30.99 |
@@ -371,8 +372,8 @@ Feature: Add a new partner through phoenix
   Scenario: 136022 Add a new RO monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 1      | 100 GB    | Romania | Romania         |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 100 GB    | Romania | Romania         | 4493590111111122 |
     Then the order summary looks like:
       | Description        | Price  | Quantity | Amount |
       | 100 GB - Monthly   | €30.99 | 1        | €30.99 |
@@ -387,8 +388,8 @@ Feature: Add a new partner through phoenix
   Scenario: 136023 Add a new SK monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country  | billing country |
-      | 1      | 100 GB    | Slovakia | Slovakia        |
+      | period | base plan | country  | billing country | cc number        |
+      | 1      | 100 GB    | Slovakia | Slovakia        | 4544170111111122 |
     Then the order summary looks like:
       | Description        | Price  | Quantity | Amount |
       | 100 GB - Monthly   | €30.99 | 1        | €30.99 |
@@ -403,8 +404,8 @@ Feature: Add a new partner through phoenix
   Scenario: 136024 Add a new SI monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country  | billing country |
-      | 1      | 100 GB    | Slovenia | Slovenia        |
+      | period | base plan | country  | billing country | cc number        |
+      | 1      | 100 GB    | Slovenia | Slovenia        | 4493690111111112 |
     Then the order summary looks like:
       | Description        | Price  | Quantity | Amount |
       | 100 GB - Monthly   | €30.99 | 1        | €30.99 |
@@ -419,8 +420,8 @@ Feature: Add a new partner through phoenix
   Scenario: 136025 Add a new ES monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 1      | 100 GB    | Spain   | Spain           |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 100 GB    | Spain   | Spain           | 4328191211111111 |
     Then the order summary looks like:
       | Description        | Price  | Quantity | Amount |
       | 100 GB - Monthly   | €30.99 | 1        | €30.99 |
@@ -435,8 +436,8 @@ Feature: Add a new partner through phoenix
   Scenario: 136026 Add a new SE monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country | billing country |
-      | 1      | 100 GB    | Sweden  | Sweden          |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 100 GB    | Sweden  | Sweden          | 4581092111111122 |
     Then the order summary looks like:
       | Description        | Price  | Quantity | Amount |
       | 100 GB - Monthly   | €30.99 | 1        | €30.99 |
@@ -451,8 +452,8 @@ Feature: Add a new partner through phoenix
   Scenario: 136027 Add a new UK monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-      | period | base plan | country        | billing country |
-      | 1      | 100 GB    | United Kingdom | United Kingdom  |
+      | period | base plan | country        | billing country | cc number        |
+      | 1      | 100 GB    | United Kingdom | United Kingdom  | 4916783606275713 |
     Then the order summary looks like:
       | Description        | Price  | Quantity | Amount |
       | 100 GB - Monthly   | £26.99 | 1        | £26.99 |

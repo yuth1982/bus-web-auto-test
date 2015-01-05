@@ -109,6 +109,7 @@ When /^I (.+) a phoenix (Home|Pro|Direct|Free) (partner|user):$/ do |string,type
   @partner.credit_card.expire_month = attributes["expire month"] unless attributes["expire month"].nil?
   @partner.credit_card.expire_year = attributes["expire year"] unless attributes["expire year"].nil?
   @partner.credit_card.cvv = attributes["cvv"] unless attributes["cvv"].nil?
+  @partner.credit_card.type = attributes["type"] unless attributes["type"].nil?
 
   # Billing info attributes
   @partner.use_company_info = attributes['billing country'].nil?
@@ -158,6 +159,7 @@ When /^I (.+) a phoenix (Home|Pro|Direct|Free) (partner|user):$/ do |string,type
   end
 
   #If catches an error of already used email
+
   unless @phoenix_site.phoenix_acct_fill_out.stuck_on_sign_up? || type == "Free"
     @phoenix_site.licensing_fill_out.licensing_billing_fillout(@partner)
     unless @phoenix_site.licensing_fill_out.stuck_on_mozy_plan?
@@ -250,10 +252,11 @@ When /^I login (as the user|under changed password) on the account.$/ do |login_
 end
 
 When /^I log into phoenix with username (.+) and password (.+)$/ do |username,password|
-  @bus_site = BusSite.new #In case you log into bus through the phoenix page
-  @phoenix_site = PhoenixSite.new
+  @bus_site ||= BusSite.new #In case you log into bus through the phoenix page
+  @phoenix_site ||= PhoenixSite.new
   @phoenix_site.user_account.load
-  @phoenix_site.user_account.phoenix_login(username,password)
+  username = @partner.admin_info.email if username == '@new_admin_email'
+  @phoenix_site.user_account.phoenix_login(username, password)
 end
 
 Given /^I log into phoenix with capitalized username$/ do
