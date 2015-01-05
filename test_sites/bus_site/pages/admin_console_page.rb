@@ -89,6 +89,10 @@ module Bus
     element(:allocate_resources_btn, css: "div.popup-window-footer input[value=Allocate]")
     element(:ok_btn, css: "div.popup-window-footer input[value=Ok]")
     element(:yes_btn, css: "div.popup-window-footer input[value=Yes]")
+    # Activate element
+    element(:password_set_text, id: 'admin_password')
+    element(:password_set_again_text, id: 'admin_password_confirmation')
+    element(:continue_activate_btn, xpath: "//input[@name='commit']")
 
     def partner_id
       find(:xpath, "//div[@id='identify-me']/a[1]")[:href][/partner-show-(\d+)/, 1]
@@ -216,6 +220,17 @@ module Bus
       using_wait_time 2 do
         fail('Skeletor not working') if page.has_css?('div#dashboard-e-content')
       end
+    end
+
+    def open_admin_activate_page(admin_link)
+      visit admin_link
+    end
+
+    def set_admin_password (password)
+      password_set_text.type_text(password)
+      password_set_again_text.type_text(password)
+      sleep 3
+      continue_activate_btn.click
     end
   end
 end

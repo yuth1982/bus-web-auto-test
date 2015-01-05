@@ -182,4 +182,109 @@ Feature: These are the test we run for every deploy
     Then Search list machines section is opened
     And I search and delete partner account by newly created partner company name
 
+  @emea_smoke
+  Scenario: Bus - EMEA smoke test
+ #Prod 74 log into bus
+    Given I log in bus admin console as administrator
+ #Prod 75 create a new partner (no vat number)
+    When I add a new MozyPro partner:
+      | period | base plan | create under   | server plan | net terms | country | billing country |
+      | 1      | 2 TB      | MozyPro France | yes         | yes       | France  |    France       |
+    And New partner should be created
+    And I change root role to FedID role
+ #Prod 76 verify partner in ARIA
+    And I get partner aria id
+    When API* I get Aria account details by newly created partner aria id
+    Then API* Aria account should be:
+      | status_label |
+      | ACTIVE       |
+ #Prod 90 active partner in email
+    And the standard partner has activated the admin account
+    Then I navigate to bus admin console login page
+    Then I log in bus admin console as new partner admin
+ #Prod 78 create a user group
+    When I add a new Bundled user group:
+      | name         | storage_type |
+      | group-test-1 | Shared       |
+    Then group-test-1 user group should be created
+    When I add a new Bundled user group:
+      | name         | storage_type |
+      | group-test-2 | Shared       |
+    Then group-test-2 user group should be created
+ #Prod 86 delete test user group
+    When I delete user group details by name: group-test-2
+ #Prod 79 Create a user
+    And I add new user(s):
+      | name   | user_group           | storage_type  | storage_limit | devices |
+      | test-2 | (default user group) | Desktop       | 10            |1       |
+    Then 1 new user should be created
+   #Prod 80 create a client config
+    When I create a new client config:
+      | name                | user group   | type   |
+      | smoke_client_config | group-test-1 | Server |
+    Then client configuration section message should be Your configuration was saved.
+   #Prod 81 move the user from one user group to a different user group
+    Given  I navigate to Search / List Users section from bus admin console page
+    When I view user details by @user_email
+    And I reassign the user to user group (default user group)
+    Then the user's user group should be (default user group)
+ #Prod-85 delete test user
+    And I delete user
+ #Prod 82 open all resource header to open all of the modules
+    Given I navigate to Resource Summary section from bus admin console page
+    When I navigate to User Group List section from bus admin console page
+    Then I navigate to Change Plan section from bus admin console page
+    And  I navigate to Billing Information section from bus admin console page
+    But  I navigate to Billing History section from bus admin console page
+    Then I navigate to Change Payment Information section from bus admin console page
+    When I navigate to Download * Client section from bus admin console page
+ #Prod 84 - Run report
+    Given I build a new report:
+      | type            | name                |
+      | Billing Detail  | billing detail test |
+    Then Billing detail report should be created
+    And Scheduled report list should be:
+      | Name                | Type            | Recipients                      | Schedule | Actions |
+      | billing detail test | Billing Detail  | <%=@partner.admin_info.email%>  | Daily    | Run     |
+    When I delete billing detail test scheduled report
+    Then I should see No results found in scheduled reports list
+
+  @emea_smoke
+  Scenario: Bus - EMEA smoke test:active user by email
+   #Prod 379 order data shuttle
+    Given I log in bus admin console as administrator
+    When I add a new MozyPro partner:
+      | period | base plan | create under   | server plan | net terms | country | billing country |
+      | 1      | 2 TB      | MozyPro France | yes         | yes       | France  |    France       |
+    And New partner should be created
+    And I change root role to FedID role
+    When I get the partner_id
+    And I act as newly created partner account
+    And I add new user(s):
+      | user_group           | storage_type | storage_limit | devices |
+      | (default user group) | Desktop      | 30            | 1       |
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    Then I stop masquerading
+    When I order data shuttle for newly created partner company name
+      | power adapter     | key from  | quota |
+      | Data Shuttle EMEA | available | 20    |
+    Then Data shuttle order should be created
+    #Prod 380 - update data shuttle
+    #Prod check the support link
+    #Prod 87 - delete test partner and validate they are in Pending Delete state
+
+  @bus_smoke
+  Scenario: Bus - US smoke test
+    #Prod 89 Activate partner in email
+    Given I log in bus admin console as administrator
+    When I add a new MozyPro partner:
+      | period | base plan | create under | server plan | net terms | country        | billing country  |
+      | 1      | 2 TB      | MozyPro      | yes         | yes       | United States  | United States    |
+    And New partner should be created
+    And the standard partner has activated the admin account
 
