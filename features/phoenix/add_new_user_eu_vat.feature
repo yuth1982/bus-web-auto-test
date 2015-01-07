@@ -86,7 +86,7 @@ Feature: Add a new user through phoenix
 #      | Subscription Price                           |                    |          | €83.10 |
 #      | VAT Rate (19%)                               |                    |          | €15.79 |
 #      | Total Charge                                 |                    |          | €98.89 |
-    Then the user is successfully added.
+#    Then the user is successfully added.
 
   @TC.138006 @phoenix @mozypro @profile_country=cz @ip_country=cz @billing_country=cz
   Scenario: 138006 Add a new DK monthly basic MozyHome user
@@ -251,8 +251,8 @@ Feature: Add a new user through phoenix
     Then the billing summary looks like:
       | Description                                      | PriX               | Quantité | Montant |
       | MozyHome 125 Go (Jusqu'à 3 ordinateurs) - Annuel | 98,89€\n(inc. VAT) | 1        | 98,89€  |
-      | Prix d'abonnement                                |                    |          | 85,99€  |
-      | Taux de TVA (15%)                                |                    |          | 12,90€  |
+      | Prix d'abonnement                                |                    |          | 84,52€  |
+      | Taux de TVA (17%)                                |                    |          | 14,37€  |
       | Montant total des frais                          |                    |          | 98,89€  |
     Then the user is successfully added.
 
