@@ -138,6 +138,17 @@ Feature: These are the test we run for every deploy
     And I delete partner account
 
   @bus_smoke
+  Scenario: MozyOEM smoke
+    #Prod 199
+    Given I log in bus admin console as administrator
+    When I add a new OEM partner:
+      | period |
+      | 1      |
+    Then New partner should be created
+    Then I stop masquerading as sub partner
+    And I search and delete partner account by newly created subpartner company name
+
+  @bus_smoke
   Scenario: MozyPro smoke: others for BUS_US
     #Prod 377 order data shuttle
     Given I log in bus admin console as administrator
@@ -149,7 +160,6 @@ Feature: These are the test we run for every deploy
     And Partner pooled storage information should be:
       | Used | Available | Assigned | Used | Available | Assigned  |
       | 0    | 100       | 100      | 0    | Unlimited | Unlimited |
-    And I change root role to FedID role
     When I get the partner_id
     And I act as newly created partner account
     And I add new user(s):
