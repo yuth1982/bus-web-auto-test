@@ -31,7 +31,7 @@ When /^I (.+) a phoenix (Home|Pro|Direct|Free) (partner|user):$/ do |string,type
 
   # Company info attributes
   @partner.company_info.name = attributes['company name'] unless attributes['company name'].nil?
-  @partner.company_info.name = "Internal Mozy - #{@partner.company_info.name}" if  ENV['BUS_ENV'] == 'prod'
+  @partner.company_info.name = "Internal Mozy - #{@partner.company_info.name}" if TEST_ENV == 'prod'
   @partner.company_info.address = attributes['address'] unless attributes['address'].nil?
   @partner.company_info.city = attributes['city'] unless attributes['city'].nil?
   @partner.company_info.state = attributes['state'] unless attributes['state'].nil?

@@ -166,7 +166,7 @@ Feature: Add a new partner through phoenix
     """
 
   @TC.134007 @phoenix @mozypro @profile_country=us @ip_country=us @billing_country=fr
-  Scenario: 134007 Add a new FR monthly basic MozyPro partner
+  Scenario: 134007 Add a new US monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country       | billing country | cc number        |
@@ -194,7 +194,7 @@ Feature: Add a new partner through phoenix
       | 1      | 100 GB    | Germany | Deutschland        | 4485393141463880 |
     Then payment information page error message should be:
     """
-     Zahlungsangaben konnten nicht bestätigt werden. Bitte überprüfen SIe, dass Ihre Rechnungsadresse mit dem Ausstellungsland Ihrer Kreditkarte übereinstimmt
+    Zahlungsangaben konnten nicht bestätigt werden. Bitte überprüfen SIe, dass Ihre Rechnungsadresse mit dem Ausstellungsland Ihrer Kreditkarte übereinstimmt
     """
 
   @TC.134010 @phoenix @mozypro @profile_country=uk @ip_country=us @billing_country=us @negative_test

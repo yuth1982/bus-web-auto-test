@@ -298,8 +298,8 @@ Feature: Add a new partner through phoenix
       | Description             | Prix    | Quantité | Montant |
       | 100 Go - Mensuel        | 30,99€  | 1        | 30,99€  |
       | Prix d'abonnement       | 30,99€  |          | 30,99€  |
-      | TVA                     | 4,65€   |          | 4,65€   |
-      | Montant total des frais | 35,64€  |          | 35,64€  |
+      | TVA                     | 5,27€   |          | 5,27€   |
+      | Montant total des frais | 36,26€  |          | 36,26€  |
     And the partner is successfully added.
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name

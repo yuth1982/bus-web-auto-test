@@ -324,7 +324,7 @@ end
 
 Then /^I delete partner and verify pending delete$/ do
 
-  if  ENV['BUS_ENV'] == 'prod'
+  if  TEST_ENV == 'prod'
     #TODO email the partner details
     next #Because we don't have partner deletion rights in prod
   end
