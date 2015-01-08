@@ -2,7 +2,7 @@ module Bus
   module DataObj
     # This class contains attributes for billing information
     class BillingInfo
-      attr_accessor :company_name, :address, :city, :state_abbrev, :state, :country, :zip, :email, :phone, :billing, :order_summary
+      attr_accessor :company_name, :address, :city, :state_abbrev, :state, :country, :zip, :email, :phone, :alert, :billing, :order_summary
 
       # Public: Initialize a BillingInfo Object
       #
@@ -16,6 +16,7 @@ module Bus
         @zip = Random.new.rand(10000..99999).to_s
         @email = create_admin_email(Forgery::Name.first_name,Forgery::Name.last_name)
         @phone = Forgery::Address.phone
+	@alert = ""
         @billing = {:base_plan_price => nil,
                     :server_plan_price => nil,
                     :add_on_quantity => nil,

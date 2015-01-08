@@ -168,6 +168,22 @@ Then /^New partner should be created$/ do
   @bus_site.admin_console_page.add_new_partner_section.messages.should == "New partner created."
 end
 
+Then /^Aria payment error message should be (.+)$/ do |message|
+  @bus_site.admin_console_page.add_new_partner_section.aria_errors.should == message
+end
+
+Then /^the billing country alert is (.+)$/ do |alert|
+  @partner.billing_info.alert.should == alert
+end
+
+Then /^there is no popup alert during partner creation$/ do
+  @partner.billing_info.alert.should == ""
+end
+
+Then /^Create partner error message should be (.+)$/ do |message|
+  @bus_site.admin_console_page.add_new_partner_section.messages.should == message
+end
+
 Then /^Sub-total before taxes or discounts should be (.+)$/ do |amount|
   @partner.pre_sub_total.should == amount
 end

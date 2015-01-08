@@ -72,6 +72,7 @@ module Bus
     element(:net_term_payment_input, id: 'formOfPaymentNT')
 
     element(:message_div, css: 'div#partner-new-errors ul')
+    element(:aria_errors_div, css: 'ul.errorExplanation')
     # element(:create_partner_btn, css: 'div#cc-details input#submit_button')
     element(:create_partner_btn, css: "input[value='Create Partner']")
     element(:back_btn, id: 'back_button')
@@ -102,14 +103,16 @@ module Bus
         wait_until{ back_btn.visible? } # wait for fill credit card info
         if partner.net_term_payment
           net_term_payment_input.click
-          alert_accept if alert_present?
+          if alert_present?
+            partner.billing_info.alert = alert_text
+            alert_accept
+          end
         else
           cc_payment_input.click
           fill_credit_card_info(partner.credit_card)
         end
         set_order_summary(partner)
         create_partner_btn.click
-        alert_accept if alert_present?
       else
         include_initial_purchase_cb.uncheck
         set_pre_sub_total(partner)
@@ -125,13 +128,18 @@ module Bus
     #
     # Returns success or error message text
     def messages
-      # for EU partner, there will be warning dialog  pop up for
-      begin
-        message_div
-      rescue
-        alert_accept if alert_present?
-      end
       message_div.text
+    end
+
+    # Public: Messages for credit card payment errors
+    #
+    # Example
+    #   add_new_partner_section.aria_errors
+    #   # => "Could not validate payment information"
+    #
+    # Returns error message text
+    def aria_errors
+      aria_errors_div.text
     end
 
     # Public: Order Summary Hashes
@@ -168,9 +176,7 @@ module Bus
       else
         contact_country_select.select(company_info.country)
         contact_state_tb.type_text(company_info.state)
-        unless company_info.vat_num.nil?
-          vat_number_tb.type_text(company_info.vat_num) if company_info.vat_num != ""
-        end
+	vat_number_tb.type_text(company_info.vat_num) if company_info.vat_num != ""
       end
       contact_address_tb.type_text(company_info.address)
       contact_city_tb.type_text(company_info.city)
@@ -206,6 +212,10 @@ module Bus
         cc_address_tb.type_text(partner.billing_info.address)
         cc_city_tb.type_text(partner.billing_info.city)
         cc_country_select.select(partner.billing_info.country)
+        if alert_present?
+          partner.billing_info.alert = alert_text
+          alert_accept
+        end
         if partner.billing_info.country.eql?('United States')
           cc_state_us_select.select(partner.billing_info.state_abbrev)
         elsif partner.billing_info.country.eql?('Canada')
