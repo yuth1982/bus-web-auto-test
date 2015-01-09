@@ -96,8 +96,8 @@ Feature: These are the test we run for every deploy
     #Prod 89 Activate partner in email
     Given I log in bus admin console as administrator
     When I add a new MozyPro partner:
-      | period | net terms |
-      | 1      | yes       |
+      | period | net terms | coupon                |
+      | 1      | yes       | <%=QA_ENV['coupon']%> |
     And New partner should be created
     And the standard partner has activated the admin account
     And I navigate to bus admin console login page
