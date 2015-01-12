@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 Then /^Autogrow details should be:$/ do |autogrow_table|
   actual = @bus_site.admin_console_page.billing_info_section.autogrow_hashes
   expected = autogrow_table.hashes
@@ -42,5 +44,46 @@ When /^I (Enable|Disable) billing info autogrow$/ do |status|
       @bus_site.admin_console_page.billing_info_section.disable_autogrow
     else
   end
+end
+
+Then /^VAT table (.+) display$/ do |type|
+  case type
+    when "should"
+      @bus_site.admin_console_page.billing_info_section.vat_table_visible?.should be_true
+    else
+      @bus_site.admin_console_page.billing_info_section.vat_table_visible?.should be_false
+  end
+end
+
+Then /^I change VAT number to:$/ do |vat_table|
+  attributes = vat_table.hashes.first
+  vat_number = attributes["VAT number"]
+  vat_number = " " if vat_number == "@blank_value"
+  @bus_site.admin_console_page.billing_info_section.change_vat_number(vat_number)
+end
+
+Then /^I delete VAT number$/ do
+  @bus_site.admin_console_page.billing_info_section.delete_vat_number
+end
+
+Then /^VAT number was saved successfully:$/ do |vat_table|
+  attributes = vat_table.hashes.first
+  vat_number = attributes["VAT number"]
+  @bus_site.admin_console_page.billing_info_section.vat_message.should == "VAT info has been successfully updated."
+  @bus_site.admin_console_page.billing_info_section.refresh_bus_section
+  @bus_site.admin_console_page.billing_info_section.wait_until_bus_section_load
+  vat_number = "—" if vat_number == "@blank_value"
+  @bus_site.admin_console_page.billing_info_section.current_vat_number.should == vat_number
+end
+
+Then /^VAT number was deleted successfully$/ do
+  @bus_site.admin_console_page.billing_info_section.refresh_bus_section
+  @bus_site.admin_console_page.billing_info_section.wait_until_bus_section_load
+  @bus_site.admin_console_page.billing_info_section.current_vat_number.should == "—"
+end
+
+
+Then /^Fail to change VAT number:$/ do |message|
+  @bus_site.admin_console_page.billing_info_section.vat_message.should eq(message)
 end
 

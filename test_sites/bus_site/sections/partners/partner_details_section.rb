@@ -13,7 +13,8 @@ module Bus
     element(:setting_save_btn, css: 'input[name=create_setting]')
     element(:setting_cancel_link, css: 'input[name=create_setting]+a')
     element(:close_settings_link, css: 'a[id^=close_settings]')
-    element(:msg_div, css: 'ul.flash.successes')
+    element(:msg_div, xpath: "//div[contains(@id,'partner-show')]/ul[@class='flash successes']")
+    element(:error_msg_div, xpath: "//ul[@class='flash errors']")
     element(:billing_info_link, xpath: "//a[text()='Billing Info']")
     element(:act_as_link, xpath: "//a[text()='act as']")
     element(:change_name_link, xpath: "//a[text()='Change Name']")
@@ -54,12 +55,19 @@ module Bus
     element(:contact_state_ca_select, id: 'contact_state_ca')
     element(:contact_zip_tb, id: 'contact_zip')
     element(:contact_country_select, id: 'contact_country')
+    element(:contact_country_text, xpath: '//div/form/dl[2]/dd[5]')
     element(:contact_phone_tb, id: 'partner_contact_phone')
     element(:contact_industry_select, id: 'partner_industry')
     element(:contact_employees_select, id: 'partner_num_employees')
     element(:contact_email_tb, id: 'contact_email')
     element(:contact_vat_tb, id: 'vat_info_vat_number')
     element(:save_changes_btn, css: 'input.button')
+
+    #change contact country section
+    element(:chg_country_link_a, xpath: "//a[text()='Change Contact Country']")
+    element(:contact_vat_number, xpath: "//input[@id='vat_num']")
+    element(:contact_chg_country_select, xpath: "//select[@id='country_and_vat_contact_country']")
+    element(:submit_btn, xpath: "//input[@id='submit_button']")
 
     # API Key
     element(:api_key_div, css: 'div[id^=api-key-box-] fieldset div:nth-child(1)')
@@ -114,7 +122,6 @@ module Bus
 
     # Subdomain
     element(:change_subdomain_link, css: "a[onclick*='/partner/subdomain']")
-
     element(:h3_section, css: "h3")
 
     # Public: Partner Id
@@ -202,7 +209,11 @@ module Bus
       output['Contact State:'] = @state
 
       output['Contact ZIP/Postal Code:'] = contact_zip_tb.value
-      output['Contact Country:'] = contact_country_select.first_selected_option.text
+      if contact_country_select.visible?
+        output['Contact Country:'] = contact_country_select.first_selected_option.text
+      else
+        output['Contact Country:'] = contact_country_text.text.gsub(' Change Contact Country','')
+      end
       output['Phone:'] = contact_phone_tb.value
       output['Industry:'] = contact_industry_select.first_selected_option.text
       output['# of employees:'] = contact_employees_select.first_selected_option.text
@@ -608,6 +619,48 @@ module Bus
 
     def set_contact_country country
       contact_country_select.select country
+      alert_accept
+    end
+
+    def set_vat_number vat
+      contact_vat_tb.type_text vat
+    end
+
+    def vat_number_visible?
+      find(:xpath, "//input[@id='vat_info_vat_number']").visible?
+    end
+
+    def click_change_country_lnk
+      chg_country_link_a.click
+      wait_until_bus_section_load
+    end
+
+    # Public: set country in change country section
+    #
+    # Example
+    #   @bus_site.admin_console_page.partner_details_section.set_country_for_partner_admin
+    #
+    # Returns nothing
+    def set_country_for_partner_admin country
+      contact_chg_country_select.select country
+    end
+
+    # Public: set vat number in change country section
+    #
+    # Example
+    #   @bus_site.admin_console_page.partner_details_section.set_vat_for_partner_admin
+    #
+    # Returns nothing
+    def set_vat_for_partner_admin vat
+      contact_vat_number.type_text vat
+    end
+
+    def vat_of_chg_contact_country_visible?
+      find(:xpath, "//input[@id='vat_num']").visible?
+    end
+
+    def submit_change
+      submit_btn.click
     end
 
     def save_changes
@@ -623,6 +676,11 @@ module Bus
     # @return [String]
     def success_messages
       msg_div.text
+    end
+
+    def error_message
+      wait_until{ error_msg_div.visible? }
+      error_msg_div.text
     end
 
     # partner info verification - if specific values are present, section should be good

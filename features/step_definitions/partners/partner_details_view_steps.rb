@@ -289,6 +289,8 @@ When /^I change the partner contact information to:$/ do |info_table|
         @bus_site.admin_console_page.partner_details_section.set_contact_state(new_info[header])
       when 'Contact ZIP/Postal Code:'
         @bus_site.admin_console_page.partner_details_section.set_contact_zip(new_info[header])
+      when 'VAT Number:'
+        @bus_site.admin_console_page.partner_details_section.set_vat_number(new_info[header])
       else
         raise "Unexpected #{new_info[header]}"
     end
@@ -342,11 +344,88 @@ end
 
 And /^the standard partner has activated the admin account$/ do
   step %{I retrieve email content by keywords:}, table(%{
-     | to |
-     | @new_admin_email |
-    })
+    | to |
+    | @new_admin_email |
+  })
   match = @mail_content.match(/https?:\/\/[\S]+.mozy[\S]+.[\S]+\/registration\/admin_confirm\/[\S]+/)
   @activate_email_query = match[0] unless match.nil?
+
   @bus_site.admin_console_page.open_admin_activate_page(@activate_email_query)
   @bus_site.admin_console_page.set_admin_password(CONFIGS['global']['test_pwd'])
+end
+
+Then /^I open partner details by partner name in header$/ do
+  @bus_site.admin_console_page.open_partner_details_from_header(@partner)
+  @bus_site.admin_console_page.partner_details_section.expand_contact_info
+end
+
+Then /^VAT number shouldn't be changed and the error message should be:$/ do  |message|
+  @bus_site.admin_console_page.partner_details_section.error_message.should eq(message)
+end
+
+And /^I change contact country and VAT number to:$/ do |country_vat_table|
+  attributes = country_vat_table.hashes.first
+  attributes.each do |header,attribute| #can use variable inside <%= %>
+    attribute.replace ERB.new(attribute).result(binding)
+    attributes[header] = nil if attribute == ''
+  end
+  vat = attributes['VAT Number']
+  country = attributes['Country']
+  @bus_site.admin_console_page.partner_details_section.click_change_country_lnk
+  @bus_site.admin_console_page.partner_details_section.set_country_for_partner_admin(country)
+  if(vat == "@blank_space")
+    @bus_site.admin_console_page.partner_details_section.set_vat_for_partner_admin("")
+  else
+    @bus_site.admin_console_page.partner_details_section.set_vat_for_partner_admin(vat) unless vat.nil?
+  end
+  @bus_site.admin_console_page.partner_details_section.submit_change
+end
+
+Then /^I am (.+) and I change contact country to (.+)$/ do |admin_type, country_type|
+  @bus_site.admin_console_page.partner_details_section.click_change_country_lnk if admin_type == "partner admin"
+  country = ""
+  case country_type
+    when "EU country"
+      country = "France"
+    else
+      country = "United States"
+  end
+  if admin_type == "partner admin"
+    @bus_site.admin_console_page.partner_details_section.set_country_for_partner_admin(country)
+  else
+    @bus_site.admin_console_page.partner_details_section.expand_contact_info
+    @bus_site.admin_console_page.partner_details_section.set_contact_country(country)
+  end
+end
+
+Then /^VAT number field of Change Contact Country section should (.+)$/ do |behavior|
+  case behavior
+    when "appear"
+      @bus_site.admin_console_page.partner_details_section.vat_of_chg_contact_country_visible?.should be_true
+    else
+      @bus_site.admin_console_page.partner_details_section.vat_of_chg_contact_country_visible?.should be_false
+  end
+end
+
+Then /^Change contact country and VAT number (.+) succeed and the message should be:$/ do |status,message|
+  case status
+    when 'should'
+      @bus_site.admin_console_page.partner_details_section.success_messages.should eq(message)
+    else
+      @bus_site.admin_console_page.partner_details_section.error_message.should eq(message)
+  end
+end
+
+
+Then /^VAT number field of Partner Details section should (.+)$/ do |behavior|
+  case behavior
+    when "appear"
+      @bus_site.admin_console_page.partner_details_section.vat_number_visible?.should be_true
+    else
+      @bus_site.admin_console_page.partner_details_section.vat_number_visible?.should be_false
+  end
+end
+
+Then /^I expand contact info from partner details section$/ do
+  @bus_site.admin_console_page.partner_details_section.expand_contact_info
 end

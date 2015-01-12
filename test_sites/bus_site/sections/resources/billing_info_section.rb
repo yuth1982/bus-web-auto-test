@@ -5,14 +5,22 @@ module Bus
     # Private elements
     #
     element(:change_subscription_link, css: "a[href='/resource/change_billing_period']")
-
     element(:vat_info_table, css: 'div[id^=partner-billing-info-vat-] table')
     element(:enable_autogrow_link, xpath: "//a[text()='(more info)']")
     element(:commit_autogrow_btn, xpath: "//div[@id='overdraft']/form/input[@name='commit']")
     element(:disable_autogrow_link, xpath: "//a[text()='(disable)']")
 
+    # vat table elements
+    element(:change_vat_link, xpath: "//div[contains(@id,'partner-billing-info-vat')]//td/a[text()='(change)']")
+    element(:delete_vat_link, xpath: "//div[contains(@id,'partner-billing-info-vat')]//td/a[text()='(delete)']")
+    element(:vat_num_input, xpath: "//input[@id='vat_info_vat_number']")
+    element(:vat_submit_input, xpath: "//input[@value='Submit']")
+
     # All tables in Billing Information section, including Next Renewal, Supplemental Plan, Autogrow
     elements(:tables, css: 'div#resource-billing-content table')
+
+    #vat_message
+    element(:vat_message_div, xpath: "//div[contains(@id,'partner-billing-info-vat-msg')]")
 
     # Public: Click change link
     #
@@ -81,6 +89,33 @@ module Bus
     def vat_hashes
       wait_until_bus_section_load
       [{ vat_info_table.raw[0][0].text => vat_info_table.raw[0][1].text }]
+    end
+
+    def vat_table_visible?
+      wait_until_bus_section_load
+      all(:xpath, "//div[contains(@id,'partner-billing-info-vat-')]/table").size > 0
+    end
+
+    def change_vat_number (vat_number)
+      wait_until_bus_section_load
+      change_vat_link.click
+      wait_until{ vat_num_input.visible? }
+      vat_num_input.type_text(vat_number)
+      vat_submit_input.click
+      wait_until_bus_section_load
+    end
+
+    def delete_vat_number
+      delete_vat_link.click
+      wait_until_bus_section_load
+    end
+
+    def vat_message
+      vat_message_div.text
+    end
+
+    def current_vat_number
+      vat_info_table.raw[0][1].text
     end
 
     # Public: Autogrow table rows
