@@ -28,6 +28,10 @@ module Bus
     element(:submit, id: "submit_button")
     element(:payment_info_table, css: "form#change_cc_form table")
 
+    #these elements will pop up when change billing country with inconsistent value
+    element(:contact_vat_number, xpath: "//input[@id='vat_num']")
+    element(:contact_chg_country_select, xpath: "//select[@id='country_and_vat_contact_country']")
+
     # Public: Update payment contact information
     #
     #
@@ -161,5 +165,26 @@ module Bus
       cc_no_tb.value
     end
 
+    # Public: set country in change payment information section
+    #
+    # Example
+    #   @bus_site.admin_console_page.change_payment_info_section.set_country
+    #
+    # Returns nothing
+    def set_country country
+      wait_until {contact_chg_country_select.visible?}
+      contact_chg_country_select.select country
+    end
+
+    # Public: set vat number in change payment information section
+    #
+    # Example
+    #   @bus_site.admin_console_page.change_payment_info_section.set_vat
+    #
+    # Returns nothing
+    def set_vat vat
+      wait_until {contact_vat_number.visible?}
+      contact_vat_number.type_text vat
+    end
   end
 end
