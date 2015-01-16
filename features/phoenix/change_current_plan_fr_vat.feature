@@ -20,8 +20,8 @@ Feature: MozyHome user changes current plan in phoenix
   #  50 Go Cases
   #
 
-  @TC.137001 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @change_plan
-  Scenario: 137001 Add a new FR monthly basic MozyHome user
+  @TC.124539 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @change_plan
+  Scenario: 124539 Add FR 50 GB monthly MozyHome user change to 125 GB
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | cc number        |
@@ -68,8 +68,8 @@ Feature: MozyHome user changes current plan in phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.137002 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @change_plan
-  Scenario: 137002 Add a new FR yearly basic MozyHome user
+  @TC.124540 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @change_plan
+  Scenario: 124540 Add FR 50 GB yearly MozyHome user change to 125 GB
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | cc number        |
@@ -117,8 +117,8 @@ Feature: MozyHome user changes current plan in phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.137003 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @change_plan
-  Scenario: 137003 Add a new FR biennial basic MozyHome user
+  @TC.124541 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @change_plan
+  Scenario: 124541 Add FR 50 GB biennial MozyHome user change to addl PC storage
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | cc number        |
@@ -169,8 +169,8 @@ Feature: MozyHome user changes current plan in phoenix
   #
   # 125 Go Cases
   #
-  @TC.137004 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @change_plan
-  Scenario: 137004 Add a new FR monthly basic MozyHome user
+  @TC.124542 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @change_plan
+  Scenario: 124542 Add FR 125 GB monthly MozyHome user change to addl storage
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | cc number        |
@@ -217,8 +217,8 @@ Feature: MozyHome user changes current plan in phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.137005 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @change_plan
-  Scenario: 137005 Add a new FR yearly basic MozyHome user
+  @TC.124543 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @change_plan
+  Scenario: 124543 Add FR 125 GB yearly MozyHome user change to addl PC
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | cc number        |
@@ -266,8 +266,8 @@ Feature: MozyHome user changes current plan in phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.137006 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @change_plan
-  Scenario: 137006 Add a new FR biennial basic MozyHome user
+  @TC.124544 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @change_plan
+  Scenario: 124544 Add FR 125 GB biennial MozyHome user change to addl PC storage
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | cc number        |
@@ -318,8 +318,8 @@ Feature: MozyHome user changes current plan in phoenix
   #
   # 50 Go Cases
   #
-  @TC.137007 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @change_plan
-  Scenario: 137007 Add a new FR monthly basic MozyHome user
+  @TC.124545 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @change_plan
+  Scenario: 124545 Add FR 50 GB addl storage monthly MozyHome user change to 125 GB addl storage
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | addl storage | cc number        |
@@ -367,8 +367,8 @@ Feature: MozyHome user changes current plan in phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.137008 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @change_plan
-  Scenario: 137008 Add a new fr yearly basic MozyHome user
+  @TC.124546 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @change_plan
+  Scenario: 124546 Add FR 50 GB addl PC yearly MozyHome user change to addl pc
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | addl computers | cc number        |
@@ -417,8 +417,8 @@ Feature: MozyHome user changes current plan in phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.137009 @BUG.128707 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @qa6_dependent @change_plan
-  Scenario: 137009 Add a new FR biennial basic MozyHome user
+  @TC.124547 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @qa6_dependent @change_plan
+  Scenario: 124547 Add FR 50 GB coupon biennial MozyHome user change to 125 GB
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | coupon       | cc number        |
@@ -470,8 +470,8 @@ Feature: MozyHome user changes current plan in phoenix
   #
   # 125 Go Cases
   #
-  @TC.137010 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @change_plan
-  Scenario: 137010 Add a new FR monthly basic MozyHome user
+  @TC.124548 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @change_plan
+  Scenario: 124548 Add FR 125 GB addl storage PC monthly MozyHome user change to addl storage
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | addl storage | addl computers | cc number        |
@@ -520,8 +520,8 @@ Feature: MozyHome user changes current plan in phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.137011 @BUG.128707 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @qa6_dependent @change_plan
-  Scenario: 137011 Add a new FR yearly basic MozyHome user
+  @TC.124549 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @qa6_dependent @change_plan
+  Scenario: 124549 Add FR 125 GB addl storage yearly MozyHome user change to addl PC
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | addl storage | coupon       | cc number        |
@@ -571,8 +571,8 @@ Feature: MozyHome user changes current plan in phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.137012 @BUG.128707 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @qa6_dependent @change_plan
-  Scenario: 137012 Add a new FR biennial basic MozyHome user
+  @TC.124550 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @qa6_dependent @change_plan
+  Scenario: 124550 Add FR 125 GB addl PC coupon biennial MozyHome user change to addl storage
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | addl computers | coupon       | cc number        |
@@ -625,8 +625,8 @@ Feature: MozyHome user changes current plan in phoenix
   #
   # 50 Go Cases
   #
-  @TC.137013 @BUG.128707 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr @qa6_dependent @change_plan
-  Scenario: 137013 Add a new FR monthly basic MozyHome user
+  @TC.124551 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr @qa6_dependent @change_plan
+  Scenario: 124551 Add FR 50 GB addl storage PC coupon monthly basic MozyHome user to addl PC
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | addl storage | addl computers | coupon       | cc number        |
@@ -676,8 +676,8 @@ Feature: MozyHome user changes current plan in phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.137014 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr @change_plan
-  Scenario: 137014 Add a new FR yearly basic MozyHome user
+  @TC.124552 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr @change_plan
+  Scenario: 124552 Add FR 50 GB yearly MozyHome user change to 125 GB addl storage
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | cc number        |
@@ -725,8 +725,8 @@ Feature: MozyHome user changes current plan in phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.137015 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr @change_plan
-  Scenario: 137015 Add a new FR biennial basic MozyHome user
+  @TC.124553 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr @change_plan
+  Scenario: 124553 Add FR 50 GB biennial MozyHome user change to 125 GB addl PC
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | cc number        |
@@ -777,8 +777,8 @@ Feature: MozyHome user changes current plan in phoenix
   #
   # 125 Go Cases
   #
-  @TC.137016 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr @change_plan
-  Scenario: 137016 Add a new FR monthly basic MozyHome user
+  @TC.124554 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr @change_plan
+  Scenario: 124554 Add FR 125 GB monthly MozyHome user change to addl PC
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | cc number        |
@@ -825,8 +825,8 @@ Feature: MozyHome user changes current plan in phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.137017 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr @change_plan
-  Scenario: 137017 Add a new FR yearly basic MozyHome user
+  @TC.124555 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr @change_plan
+  Scenario: 124555 Add FR 125 GB yearly MozyHome user change to addl storage
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | cc number        |
@@ -874,8 +874,8 @@ Feature: MozyHome user changes current plan in phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.137018 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr @change_plan
-  Scenario: 137018 Add a new FR biennial basic MozyHome user
+  @TC.124556 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr @change_plan
+  Scenario: 124556 Add FR 125 GB biennial MozyHome user change to addl PC
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | cc number        |
@@ -923,52 +923,11 @@ Feature: MozyHome user changes current plan in phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.137019 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=us @change_plan
-  Scenario: 137019 check basic information for new signed up mozyhome user
-    When I am at dom selection point:
-    And I add a phoenix Home user:
-      | period | base plan | addl storage | addl computers | country       | billing country |
-      | 1      | 50 GB     | 10           | 3              | United States | United States   |
-    Then the billing summary looks like:
-      | Description                           | Price  | Quantity | Amount |
-      | MozyHome 50 GB (1 computer) - Monthly | $5.99  | 1        | $5.99  |
-      | 20 Additional Storage - Monthly 	  | $2.00  | 10 	  | $20.00 |
-      | Additional Computers - Monthly 	      | $2.00  | 3 	      | $6.00  |
-      | Total Charge 	                      |        |		  | $31.99 |
-    Then the user is successfully added.
-    And the user has activated their account
-    And I login as the user on the account.
-    Then the quota in account home page looks like:
-    """
-    0 of 250 GB used
-    """
-    Then the plan details in account home page looks like:
-      | MozyHome: 	        | 50 GB: 4 computers |
-      | Additional Storage:	| 200 GB             |
-      | Total Storage:      | 250 GB             |
-      | Last charge: 	    | $31.99 on          |
-      | Next charge: 	    | $31.99 on          |
-    And I click change plan link in account home page
-    And the current plan summary looks like:
-      | Base Plan:          | MozyHome 50 GB    |
-      | Additional Storage: | 200 GB            |
-      | Computers:          | 4                 |
-      | Subscription:       | Monthly           |
-      | Next Billing:       | @1 month from now |
-      | Total:              | $31.99            |
-    And the renewal plan summary is Same as current plan
-    And I log in bus admin console as administrator
-    And I search user by:
-      | keywords       |
-      | @mh_user_email |
-    And I view user details by newly created MozyHome username
-    And I delete user
-
   #
   # 50 Go Cases
   #
-  @TC.137020 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr
-  Scenario: 137020 Add a new FR monthly basic MozyHome user
+  @TC.124557 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr
+  Scenario: 124557 Add a new FR 50 GB monthly MozyHome user with price coupon
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | coupon                  | cc number        |
@@ -982,8 +941,8 @@ Feature: MozyHome user changes current plan in phoenix
       | Montant total des frais                 |                     |          | 3,99€   |
     Then the user is successfully added.
 
-  @TC.137021 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @qa6_dependent
-  Scenario: 137021 Add a new fr yearly basic MozyHome user
+  @TC.124558 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @qa6_dependent
+  Scenario: 124558 Add a new FR 50 GB yearly MozyHome user with price coupon
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | coupon                  | cc number        |
@@ -997,8 +956,8 @@ Feature: MozyHome user changes current plan in phoenix
       | Montant total des frais                |                     |          | 43,89€  |
      Then the user is successfully added.
 
-  @TC.137022 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @qa6_dependent
-  Scenario: 137022 Add a new FR biennial basic MozyHome user
+  @TC.124559 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @qa6_dependent
+  Scenario: 124559 Add a new FR 50 GB biennial MozyHome user with price coupon
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | coupon                  | cc number        |
@@ -1015,8 +974,8 @@ Feature: MozyHome user changes current plan in phoenix
   #
   # 125 Go Cases
   #
-  @TC.137023 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @qa6_dependent
-  Scenario: 137023 Add a new FR monthly basic MozyHome user
+  @TC.124560 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @qa6_dependent
+  Scenario: 124560 Add a new FR 125 GB monthly MozyHome user with price coupon
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | coupon                  | cc number        |

@@ -10,8 +10,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
   #
   # FR VAT applied
   #
-  @TC.33001 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr
-  Scenario: TC.33001 Upgrade FR MozyHome free user to paid with 50 GB Monthly additional storage
+  @TC.124184 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr
+  Scenario: TC.124184 Upgrade FR MozyHome free user to paid with 50 GB Monthly additional storage
     When I add a phoenix Free user:
       | base plan | country |
       | free      | France  |
@@ -46,8 +46,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.33002 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr
-  Scenario: TC.33002 Upgrade FR MozyHome free user to paid with 50 GB Yearly
+  @TC.124185 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr
+  Scenario: TC.124185 Upgrade FR MozyHome free user to paid with 50 GB Yearly
     When I add a phoenix Free user:
       | base plan | country |
       | free      | France  |
@@ -82,8 +82,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.33003 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr
-  Scenario: TC.33003 Upgrade FR MozyHome free user to paid with 125 GB Biennial additional computers
+  @TC.124186 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr
+  Scenario: TC.124186 Upgrade FR MozyHome free user to paid with 125 GB Biennial additional computers
     When I add a phoenix Free user:
       | base plan | country |
       | free      | France  |
@@ -119,8 +119,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.33004 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @qa6_dependent
-  Scenario: TC.33004 Upgrade FR MozyHome free user to paid with 50 GB Yearly additional storage promotional code
+  @TC.124187 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @qa6_dependent
+  Scenario: TC.124187 Upgrade FR MozyHome free user to paid with 50 GB Yearly additional storage promotional code
     When I add a phoenix Free user:
       | base plan | country |
       | free      | France  |
@@ -157,8 +157,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.33005 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk
-  Scenario: TC.33005 Upgrade FR MozyHome free user to paid with 50 GB Biennial
+  @TC.124188 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk
+  Scenario: TC.124188 Upgrade FR MozyHome free user to paid with 50 GB Biennial
     When I add a phoenix Free user:
       | base plan | country |
       | free      | France  |
@@ -193,8 +193,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.33006 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk
-  Scenario: Upgrade FR MozyHome free user to paid with 125 GB Monthly additional Storage computers
+  @TC.124189 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk
+  Scenario: TC.124189 Upgrade FR MozyHome free user to paid with 125 GB Monthly additional Storage computers
     When I add a phoenix Free user:
       | base plan | country |
       | free      | France  |
@@ -230,8 +230,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.33007 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr
-  Scenario: TC.33007 Upgrade FR MozyHome free user to paid with 50 GB Biennial additional computers
+  @TC.124190 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr
+  Scenario: TC.124190 Upgrade FR MozyHome free user to paid with 50 GB Biennial additional computers
     When I add a phoenix Free user:
       | base plan | country |
       | free      | France  |
@@ -267,8 +267,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.33008 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr
-  Scenario: TC.33008 Upgrade FR MozyHome free user to paid with 125 GB Monthly
+  @TC.124191 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr
+  Scenario: TC.124191 Upgrade FR MozyHome free user to paid with 125 GB Monthly
     When I add a phoenix Free user:
       | base plan | country |
       | free      | France  |
@@ -302,8 +302,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-    @TC.33009 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr @qa6_dependent
-    Scenario: TC.33009 Upgrade FR MozyHome free user to paid with 125 GB Yearly additional Storage computers promotional code
+    @TC.124192 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=fr @qa6_dependent
+    Scenario: TC.124192 Upgrade FR MozyHome free user to paid with 125 GB Yearly additional Storage computers promotional code
       When I add a phoenix Free user:
         | base plan | country |
         | free      | France  |
@@ -341,8 +341,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
       And I view user details by newly created MozyHome username
       And I delete user
 
-  @TC.33010 @phoenix @mozyhome @profile_country=de @ip_country=de @billing_country=de
-  Scenario: TC.33010 Upgrade DE MozyHome free user to paid with 50GB Yearly additional computers
+  @TC.124193 @phoenix @mozyhome @profile_country=de @ip_country=de @billing_country=de
+  Scenario: TC.124193 Upgrade DE MozyHome free user to paid with 50GB Yearly additional computers
     When I add a phoenix Free user:
       | base plan | country |
       | free      | Germany |
@@ -378,8 +378,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.33011 @phoenix @mozyhome @profile_country=ie @ip_country=ie @billing_country=us
-  Scenario: TC.33011 Upgrade IE MozyHome free user to paid with 50 GB Monthly
+  @TC.124194 @phoenix @mozyhome @profile_country=ie @ip_country=ie @billing_country=us
+  Scenario: TC.124194 Upgrade IE MozyHome free user to paid with 50 GB Monthly
     When I add a phoenix Free user:
       | base plan | country |
       | free      | Ireland |
@@ -413,8 +413,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.33012 @phoenix @mozyhome @profile_country=uk @ip_country=de @billing_country=uk
-  Scenario: TC.33012 Upgrade UK MozyHome free user to paid with 125 GB Yearly additional storage computers
+  @TC.124195 @phoenix @mozyhome @profile_country=uk @ip_country=de @billing_country=uk
+  Scenario: TC.124195 Upgrade UK MozyHome free user to paid with 125 GB Yearly additional storage computers
     When I add a phoenix Free user:
       | base plan | country        |
       | free      | United Kingdom |
@@ -454,8 +454,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
   #
   # VAT not applicable
   #
-  @TC.33013 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=us
-  Scenario: TC.33013 Upgrade UK MozyHome free user to paid with 50GB Two Year additional Storage
+  @TC.124196 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=us
+  Scenario: TC.124196 Upgrade US MozyHome free user to paid with 50GB Two Year additional Storage
     When I add a phoenix Free user:
       | base plan | country       |
       | free      | United States |
@@ -487,8 +487,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.33014 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=us
-  Scenario: TC.33014 Upgrade UK MozyHome free user to paid with 125GB Monthly promotional code
+  @TC.124197 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=us
+  Scenario: TC.124197 Upgrade US MozyHome free user to paid with 125GB Monthly promotional code
     When I add a phoenix Free user:
       | base plan | country       |
       | free      | United States |
@@ -520,8 +520,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.33015 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=us
-  Scenario: TC.33015 Upgrade UK MozyHome free user to paid with 125 GB Yearly additional computers
+  @TC.124198 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=us
+  Scenario: TC.124198 Upgrade US MozyHome free user to paid with 125 GB Yearly additional computers
     When I add a phoenix Free user:
       | base plan | country       |
       | free      | United States |
@@ -553,8 +553,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.33016 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=us
-  Scenario: TC.33016 Upgrade UK MozyHome free user to paid with 50 GB Monthly additional storage
+  @TC.124199 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=us
+  Scenario: TC.124199 Upgrade US MozyHome free user to paid with 50 GB Monthly additional storage
     When I add a phoenix Free user:
       | base plan | country       |
       | free      | United States |
@@ -585,8 +585,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.33017 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=us
-  Scenario: TC.33017 Upgrade UK MozyHome free user to paid with 125 GB Yearly
+  @TC.124200 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=us
+  Scenario: TC.124200 Upgrade US MozyHome free user to paid with 125 GB Yearly
     When I add a phoenix Free user:
       | base plan | country       |
       | free      | United States |
@@ -617,8 +617,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.33018 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=us
-  Scenario: TC.33018 Upgrade UK MozyHome free user to paid with 125 GB Two Year additional storage computers
+  @TC.124201 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=us
+  Scenario: TC.124201 Upgrade US MozyHome free user to paid with 125 GB Two Year additional storage computers
     When I add a phoenix Free user:
       | base plan | country       |
       | free      | United States |
@@ -651,8 +651,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.33019 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=fr @qa6_dependent
-  Scenario: TC.33019 Upgrade UK MozyHome free user to paid with 50 GB Yearly additional computer promotional code
+  @TC.124202 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=fr @qa6_dependent
+  Scenario: TC.124202 Upgrade US MozyHome free user to paid with 50 GB Yearly additional computer promotional code
     When I add a phoenix Free user:
       | base plan | country       |
       | free      | United States |
@@ -686,8 +686,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.33020 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=fr
-  Scenario: TC.33020 Upgrade UK MozyHome free user to paid with 125 GB Monthly additional storage computers
+  @TC.124203 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=fr
+  Scenario: TC.124203 Upgrade US MozyHome free user to paid with 125 GB Monthly additional storage computers
     When I add a phoenix Free user:
       | base plan | country       |
       | free      | United States |
@@ -719,8 +719,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.33021 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=fr
-  Scenario: TC.33021 Upgrade UK MozyHome free user to paid with 125 GB Two Year
+  @TC.124204 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=fr
+  Scenario: TC.124204 Upgrade US MozyHome free user to paid with 125 GB Two Year
     When I add a phoenix Free user:
       | base plan | country       |
       | free      | United States |
@@ -751,8 +751,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.33022 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=cn @qa6_dependent
-  Scenario: TC.33022 Upgrade UK MozyHome free user to paid with 50 GB Monthly additional Storage promotional code
+  @TC.124205 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=cn @qa6_dependent
+  Scenario: TC.124205 Upgrade US MozyHome free user to paid with 50 GB Monthly additional Storage promotional code
     When I add a phoenix Free user:
       | base plan | country       |
       | free      | United States |
@@ -785,8 +785,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-@TC.33023 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=cn
- Scenario: TC.33023 Upgrade UK MozyHome free user to paid with 50 GB Yearly additional computer us jp cn
+  @TC.124206 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=cn
+  Scenario: TC.124206 Upgrade US MozyHome free user to paid with 50 GB Yearly additional computer us jp cn
     When I add a phoenix Free user:
       | base plan | country       |
       | free      | United States |
@@ -818,8 +818,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-   @TC.33024 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=cn
-   Scenario: TC.33024 Upgrade UK MozyHome free user to paid with 125 GB Two Year additional Storage
+   @TC.124207 @phoenix @mozyhome @profile_country=us @ip_country=jp @billing_country=cn
+   Scenario: TC.124207 Upgrade US MozyHome free user to paid with 125 GB Two Year additional Storage
     When I add a phoenix Free user:
       | base plan | country       |
       | free      | United States |
@@ -851,8 +851,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.33025 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=cn
-  Scenario: TC.33025 Upgrade UK MozyHome free user to paid with 50 GB Two Year
+  @TC.124208 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=cn
+  Scenario: TC.124208 Upgrade US MozyHome free user to paid with 50 GB Two Year
     When I add a phoenix Free user:
       | base plan | country       |
       | free      | United States |
@@ -883,8 +883,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.33026 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=cn @qa6_dependent
-  Scenario: TC.33026 Upgrade UK MozyHome free user to paid with 125 GB Monthly additional storage promotional code
+  @TC.124209 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=cn @qa6_dependent
+  Scenario: TC.124209 Upgrade US MozyHome free user to paid with 125 GB Monthly additional storage promotional code
     When I add a phoenix Free user:
       | base plan | country       |
       | free      | United States |
@@ -917,8 +917,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.33027 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=cn
-  Scenario: TC.33027 Upgrade UK MozyHome free user to paid with 125 GB Yearly additional Computers storage us fr cn
+  @TC.124210 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=cn
+  Scenario: TC.124210 Upgrade US MozyHome free user to paid with 125 GB Yearly additional Computers storage us fr cn
     When I add a phoenix Free user:
       | base plan | country       |
       | free      | United States |
@@ -951,8 +951,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.33028 @phoenix @mozyhome @profile_country=us @ip_country=cn @billing_country=fr
-  Scenario: TC.33028 Upgrade UK MozyHome free user to paid with 50 GB Two Year
+  @TC.124211 @phoenix @mozyhome @profile_country=us @ip_country=cn @billing_country=fr
+  Scenario: TC.124211 Upgrade US MozyHome free user to paid with 50 GB Two Year addl storage computer
     When I add a phoenix Free user:
       | base plan | country       |
       | free      | United States |
@@ -985,8 +985,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.33029 @phoenix @mozyhome @profile_country=us @ip_country=cn @billing_country=fr @qa6_dependent @bug
-  Scenario: TC.33029 Upgrade UK MozyHome free user to paid with 125 GB Monthly additional storage promotional code
+  @TC.124212 @phoenix @mozyhome @profile_country=us @ip_country=cn @billing_country=fr @qa6_dependent
+  Scenario: TC.124212 Upgrade US MozyHome free user to paid with 125 GB Monthly addl storage pc promotional code
     When I add a phoenix Free user:
       | base plan | country       |
       | free      | United States |
@@ -1020,8 +1020,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.33030 @phoenix @mozyhome @profile_country=us @ip_country=cn @billing_country=fr
-    Scenario: TC.33030 Upgrade UK MozyHome free user to paid with 125 GB Yearly additional storage computers
+  @TC.124213 @phoenix @mozyhome @profile_country=us @ip_country=cn @billing_country=fr
+    Scenario: TC.124213 Upgrade US MozyHome free user to paid with 125 GB Yearly additional storage computers
       When I add a phoenix Free user:
         | base plan | country       |
         | free      | United States |
@@ -1056,8 +1056,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
   #
   # negative test case failed to upgrade from free to paid
   #
-  @TC.33031 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=uk
-  Scenario: TC.33031 Upgrade US MozyHome free user to paid failed fr uk uk
+  @TC.124214 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=uk
+  Scenario: TC.124214 Upgrade FR MozyHome free user to paid failed fr uk uk
     When I add a phoenix Free user:
       | base plan | country |
       | free      | France  |
@@ -1073,8 +1073,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
 
     """
 
-@TC.33032 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=it
-  Scenario: TC.33032 Upgrade FR MozyHome free user to paid failed fr uk it
+@TC.124215 @phoenix @mozyhome @profile_country=fr @ip_country=uk @billing_country=it
+  Scenario: TC.124215 Upgrade FR MozyHome free user to paid failed fr uk it
     When I add a phoenix Free user:
       | base plan | country |
       | free      | France  |
@@ -1090,8 +1090,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
 
     """
 
- @TC.33033 @phoenix @mozyhome @profile_country=fr @ip_country=us @billing_country=us
-  Scenario: TC.33033 Upgrade FR mozyhome free user to paid failed fr us us
+ @TC.124216 @phoenix @mozyhome @profile_country=fr @ip_country=us @billing_country=us
+  Scenario: TC.124216 Upgrade FR mozyhome free user to paid failed fr us us
     When I add a phoenix Free user:
       | base plan | country |
       | free      | France  |
@@ -1107,8 +1107,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
 
     """
 
-  @TC.33034 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=fr
-  Scenario: TC.33034 Upgrade US MozyHome free user to paid failed us fr fr
+  @TC.124217 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=fr
+  Scenario: TC.124217 Upgrade US MozyHome free user to paid failed us fr fr
     When I add a phoenix Free user:
       | base plan | country       |
       | free      | United States |
@@ -1151,8 +1151,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.33035 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=it
-  Scenario: TC.33035 Upgrade US MozyHome free user to paid failed us fr it
+  @TC.124218 @phoenix @mozyhome @profile_country=us @ip_country=fr @billing_country=it
+  Scenario: TC.124218 Upgrade US MozyHome free user to paid failed us fr it
     When I add a phoenix Free user:
       | base plan | country        |
       | free      | United States  |

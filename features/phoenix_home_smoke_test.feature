@@ -98,8 +98,8 @@ Feature: Mozy Home Smoke Test via Phoenix
     Then upgrade from free to paid will be successful
     And I verify the user account.
 
-  @TC.52 @TC.56 @bus @regression_test @phoenix @mozypro
-  Scenario: TC.52 TC.56 Create a MozyPro partner
+  @TC.52 @TC.56 @bus @regression_test @phoenix @mozypro @emea
+  Scenario: TC.52 TC.56 Create a FR MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | cc number        |
@@ -114,6 +114,20 @@ Feature: Mozy Home Smoke Test via Phoenix
     And I login as the user on the account.
     And I login as mozypro admin successfully
     When I log out bus admin console
+    And I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
+
+  @TC.52 @TC.56 @bus @mozypro @phoenix @us
+  Scenario: 52,56 Create a US MozyPro partner
+    When I am at dom selection point:
+    And I add a phoenix Pro partner:
+      | period | base plan | country       | billing country | cc number        |
+      | 1      | 50 GB     | United States | United States   | 4018121111111122 |
+    Then the order summary looks like:
+      | Description     | Price  | Quantity | Amount |
+      | 50 GB - Monthly | $19.99 | 1        | $19.99 |
+      | Total Charge    | $19.99 |          | $19.99 |
+    And the partner is successfully added.
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 

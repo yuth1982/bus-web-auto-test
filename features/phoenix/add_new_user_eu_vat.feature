@@ -17,8 +17,8 @@ Feature: Add a new user through phoenix
 # restart: /etc/init.d/apache2 restart
 #---------------------------------------------------------------------------------
 
-  @TC.138001 @phoenix @mozypro @profile_country=at @ip_country=at @billing_country=at
-  Scenario: 138001 Add a new AT monthly basic MozyHome user
+  @TC.125137 @phoenix @mozypro @profile_country=at @ip_country=at @billing_country=at
+  Scenario: 125137 Add a new AT monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | cc number        |
@@ -31,8 +31,8 @@ Feature: Add a new user through phoenix
       | Gesamtbelastung                                |                    |       | 98,89€ |
     Then the user is successfully added.
 
-  @TC.138002 @phoenix @mozypro @profile_country=be @ip_country=be @billing_country=be
-  Scenario: 138002 Add a new BE monthly basic MozyHome user
+  @TC.125138 @phoenix @mozypro @profile_country=be @ip_country=be @billing_country=be
+  Scenario: 125138 Add a new BE monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | type       | cc number        |
@@ -45,8 +45,8 @@ Feature: Add a new user through phoenix
       | Montant total des frais                          |                    |          | 98,89€  |
     Then the user is successfully added.
 
-  @TC.138003 @phoenix @mozypro @profile_country=bg @ip_country=bg @billing_country=bg
-  Scenario: 138003 Add a new BG monthly basic MozyHome user
+  @TC.125139 @phoenix @mozypro @profile_country=bg @ip_country=bg @billing_country=bg
+  Scenario: 125139 Add a new BG monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country  | billing country | cc number        |
@@ -59,8 +59,8 @@ Feature: Add a new user through phoenix
       | Total Charge                                 |                    |          | €98.89  |
     Then the user is successfully added.
 
-  @TC.138004 @phoenix @mozypro @profile_country=hr @ip_country=hr @billing_country=hr
-  Scenario: 138004 Add a new HR monthly basic MozyHome user
+  @TC.125140 @phoenix @mozypro @profile_country=hr @ip_country=hr @billing_country=hr
+  Scenario: 125140 Add a new HR monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | type       | cc number        |
@@ -88,8 +88,8 @@ Feature: Add a new user through phoenix
 #      | Total Charge                                 |                    |          | €98.89 |
 #    Then the user is successfully added.
 
-  @TC.138006 @phoenix @mozypro @profile_country=cz @ip_country=cz @billing_country=cz
-  Scenario: 138006 Add a new DK monthly basic MozyHome user
+  @TC.125141 @phoenix @mozypro @profile_country=cz @ip_country=cz @billing_country=cz
+  Scenario: 125141 Add a new CZ monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country        | billing country | type       | cc number        |
@@ -102,8 +102,8 @@ Feature: Add a new user through phoenix
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
-  @TC.138007 @phoenix @mozypro @profile_country=dk @ip_country=dk @billing_country=dk
-  Scenario: 138007 Add a new DK monthly basic MozyHome user
+  @TC.125142 @phoenix @mozypro @profile_country=dk @ip_country=dk @billing_country=dk
+  Scenario: 125142 Add a new DK monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | type       | cc number        |
@@ -116,8 +116,8 @@ Feature: Add a new user through phoenix
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
-  @TC.138008 @phoenix @mozypro @profile_country=ee @ip_country=ee @billing_country=ee
-  Scenario: 138008 Add a new EE monthly basic MozyHome user
+  @TC.125143 @phoenix @mozypro @profile_country=ee @ip_country=ee @billing_country=ee
+  Scenario: 125143 Add a new EE monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | cc number        |
@@ -126,12 +126,12 @@ Feature: Add a new user through phoenix
       | Description                                  | Price              | Quantity | Amount |
       | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
       | Subscription Price                           |                    |          | €82.41 |
-      | VAT Rate (20%)                             |                    |          | €16.48 |
+      | VAT Rate (20%)                               |                    |          | €16.48 |
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
-  @TC.138009 @phoenix @mozypro @profile_country=fi @ip_country=fi @billing_country=fi
-  Scenario: 138009 Add a new FI monthly basic MozyHome user
+  @TC.125144 @phoenix @mozypro @profile_country=fi @ip_country=fi @billing_country=fi
+  Scenario: 125144 Add a new FI monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | cc number        |
@@ -144,8 +144,8 @@ Feature: Add a new user through phoenix
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
-  @TC.138010 @phoenix @mozypro @profile_country=de @ip_country=de @billing_country=de
-  Scenario: 138010 Add a new DE monthly basic MozyHome user
+  @TC.125145 @phoenix @mozypro @profile_country=de @ip_country=de @billing_country=de
+  Scenario: 125145 Add a new DE monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | cc number        |
@@ -158,8 +158,8 @@ Feature: Add a new user through phoenix
       | Gesamtbelastung                                |                    |          | 98,89€          |
     Then the user is successfully added.
 
-  @TC.138011 @phoenix @mozypro @profile_country=el @ip_country=el @billing_country=el
-  Scenario: 138011 Add a new EL monthly basic MozyHome user
+  @TC.125146 @phoenix @mozypro @profile_country=el @ip_country=el @billing_country=el
+  Scenario: 125146 Add a new EL monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | cc number        |
@@ -172,8 +172,8 @@ Feature: Add a new user through phoenix
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
-  @TC.138012 @phoenix @mozypro @profile_country=hu @ip_country=hu @billing_country=hu
-  Scenario: 138012 Add a new HU monthly basic MozyHome user
+  @TC.125147 @phoenix @mozypro @profile_country=hu @ip_country=hu @billing_country=hu
+  Scenario: 125147 Add a new HU monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | cc number        |
@@ -186,8 +186,8 @@ Feature: Add a new user through phoenix
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
-  @TC.138013 @phoenix @mozypro @profile_country=ie @ip_country=ie @billing_country=ie
-  Scenario: 138013 Add a new IE monthly basic MozyHome user
+  @TC.125148 @phoenix @mozypro @profile_country=ie @ip_country=ie @billing_country=ie
+  Scenario: 125148 Add a new IE monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | cc number        |
@@ -200,8 +200,8 @@ Feature: Add a new user through phoenix
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
-  @TC.138014 @phoenix @mozypro @profile_country=it @ip_country=it @billing_country=it
-  Scenario: 138014 Add a new IE monthly basic MozyHome user
+  @TC.125149 @phoenix @mozypro @profile_country=it @ip_country=it @billing_country=it
+  Scenario: 125149 Add a new IT monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | cc number        |
@@ -214,8 +214,8 @@ Feature: Add a new user through phoenix
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
-  @TC.138015 @phoenix @mozypro @profile_country=lv @ip_country=lv @billing_country=lv
-  Scenario: 138015 Add a new LV monthly basic MozyHome user
+  @TC.125150 @phoenix @mozypro @profile_country=lv @ip_country=lv @billing_country=lv
+  Scenario: 125150 Add a new LV monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | cc number        |
@@ -228,8 +228,8 @@ Feature: Add a new user through phoenix
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
-  @TC.138016 @phoenix @mozypro @profile_country=lt @ip_country=lt @billing_country=lt
-  Scenario: 138016 Add a new LT monthly basic MozyHome user
+  @TC.125151 @phoenix @mozypro @profile_country=lt @ip_country=lt @billing_country=lt
+  Scenario: 125151 Add a new LT monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country   | billing country | cc number        |
@@ -242,8 +242,8 @@ Feature: Add a new user through phoenix
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
-  @TC.138017 @phoenix @mozypro @profile_country=lu @ip_country=lu @billing_country=lu
-  Scenario: 138017 Add a new LU monthly basic MozyHome user
+  @TC.125152 @phoenix @mozypro @profile_country=lu @ip_country=lu @billing_country=lu
+  Scenario: 125152 Add a new LU monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country    | billing country | cc number        |
@@ -256,8 +256,8 @@ Feature: Add a new user through phoenix
       | Montant total des frais                          |                    |          | 98,89€  |
     Then the user is successfully added.
 
-  @TC.138018 @phoenix @mozypro @profile_country=mt @ip_country=mt @billing_country=mt
-  Scenario: 138018 Add a new MT monthly basic MozyHome user
+  @TC.125153 @phoenix @mozypro @profile_country=mt @ip_country=mt @billing_country=mt
+  Scenario: 125153 Add a new MT monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | cc number        |
@@ -270,8 +270,8 @@ Feature: Add a new user through phoenix
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
-  @TC.138019 @phoenix @mozypro @profile_country=nl @ip_country=nl @billing_country=nl
-  Scenario: 138019 Add a new NL monthly basic MozyHome user
+  @TC.125154 @phoenix @mozypro @profile_country=nl @ip_country=nl @billing_country=nl
+  Scenario: 125154 Add a new NL monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country     | billing country | type       | cc number        |
@@ -284,8 +284,8 @@ Feature: Add a new user through phoenix
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
-  @TC.138020 @phoenix @mozypro @profile_country=pl @ip_country=pl @billing_country=pl
-  Scenario: 138020 Add a new PL monthly basic MozyHome user
+  @TC.125155 @phoenix @mozypro @profile_country=pl @ip_country=pl @billing_country=pl
+  Scenario: 125155 Add a new PL monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | cc number        |
@@ -298,8 +298,8 @@ Feature: Add a new user through phoenix
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
-  @TC.138021 @phoenix @mozypro @profile_country=pt @ip_country=pt @billing_country=pt
-  Scenario: 138021 Add a new PT monthly basic MozyHome user
+  @TC.125156 @phoenix @mozypro @profile_country=pt @ip_country=pt @billing_country=pt
+  Scenario: 125156 Add a new PT monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country  | billing country | cc number        |
@@ -312,8 +312,8 @@ Feature: Add a new user through phoenix
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
-  @TC.138022 @phoenix @mozypro @profile_country=ro @ip_country=ro @billing_country=ro
-  Scenario: 138022 Add a new RO monthly basic MozyHome user
+  @TC.125157 @phoenix @mozypro @profile_country=ro @ip_country=ro @billing_country=ro
+  Scenario: 125157 Add a new RO monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | cc number        |
@@ -326,8 +326,8 @@ Feature: Add a new user through phoenix
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
-  @TC.138023 @phoenix @mozypro @profile_country=sk @ip_country=sk @billing_country=sk
-  Scenario: 138023 Add a new SK monthly basic MozyHome user
+  @TC.125158 @phoenix @mozypro @profile_country=sk @ip_country=sk @billing_country=sk
+  Scenario: 125158 Add a new SK monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country  | billing country | cc number        |
@@ -340,8 +340,8 @@ Feature: Add a new user through phoenix
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
-  @TC.138024 @phoenix @mozypro @profile_country=si @ip_country=si @billing_country=si
-  Scenario: 138024 Add a new SI monthly basic MozyHome user
+  @TC.125159 @phoenix @mozypro @profile_country=si @ip_country=si @billing_country=si
+  Scenario: 125159 Add a new SI monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country  | billing country | cc number        |
@@ -354,8 +354,8 @@ Feature: Add a new user through phoenix
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
-  @TC.138025 @phoenix @mozypro @profile_country=es @ip_country=es @billing_country=es
-  Scenario: 138025 Add a new ES monthly basic MozyHome user
+  @TC.125160 @phoenix @mozypro @profile_country=es @ip_country=es @billing_country=es
+  Scenario: 125160 Add a new ES monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | cc number        |
@@ -368,8 +368,8 @@ Feature: Add a new user through phoenix
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
-  @TC.138026 @phoenix @mozypro @profile_country=se @ip_country=se @billing_country=se
-  Scenario: 138026 Add a new SE monthly basic MozyHome user
+  @TC.125161 @phoenix @mozypro @profile_country=se @ip_country=se @billing_country=se
+  Scenario: 125161 Add a new SE monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | cc number        |
@@ -382,8 +382,8 @@ Feature: Add a new user through phoenix
       | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
 
-  @TC.138027 @phoenix @mozypro @profile_country=uk @ip_country=uk @billing_country=uk
-  Scenario: 138027 Add a new UK monthly basic MozyHome user
+  @TC.125162 @phoenix @mozypro @profile_country=uk @ip_country=uk @billing_country=uk
+  Scenario: 125162 Add a new UK monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country        | billing country | cc number        |

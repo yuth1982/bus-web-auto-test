@@ -33,8 +33,8 @@ Feature: Add a new partner through phoenix
 #  4916783606275713: UK
 #---------------------------------------------------------------------------------
 
-  @TC.132001 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr @negative_test
-  Scenario: 132001 Add a new FR monthly basic MozyPro partner
+  @TC.125273 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr @negative_test
+  Scenario: 125273 Add a new FR monthly basic MozyPro partner credit card not match fr_fr_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | vat number | cc number        |
@@ -44,8 +44,8 @@ Feature: Add a new partner through phoenix
      Le numéro de TVA n’est pas valide. Veuillez réessayer.
     """
 
-  @TC.132002 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=uk @negative_test
-  Scenario: 132002 Add a new FR monthly basic MozyPro partner
+  @TC.125274 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=uk @negative_test
+  Scenario: 125274 Add a new FR biennial basic MozyPro partner invalid VAT number fr_fr_uk
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | vat number           | cc number        |
@@ -55,8 +55,8 @@ Feature: Add a new partner through phoenix
      Le numéro de TVA n’est pas valide. Veuillez réessayer.
     """
 
-  @TC.132003 @phoenix @mozypro @profile_country=fr @ip_country=uk @billing_country=fr @negative_test
-  Scenario: 132003 Add a new FR monthly basic MozyPro partner
+  @TC.125275 @phoenix @mozypro @profile_country=fr @ip_country=uk @billing_country=fr @negative_test
+  Scenario: 125275 Add a new FR monthly basic MozyPro partner invalid coupon fr_uk_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | coupon      | cc number        |
@@ -66,8 +66,8 @@ Feature: Add a new partner through phoenix
     Code du coupon non valide
     """
 
-  @TC.132004 @phoenix @mozypro @profile_country=fr @ip_country=uk @billing_country=fr @negative_test
-  Scenario: 132004 Add a new FR monthly basic MozyPro partner
+  @TC.125276 @phoenix @mozypro @profile_country=fr @ip_country=uk @billing_country=fr @negative_test
+  Scenario: 125276 Add a new FR monthly basic MozyPro partner invalid VAT number fr_uk_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | vat number           | cc number        |
@@ -77,8 +77,8 @@ Feature: Add a new partner through phoenix
      Le numéro de TVA n’est pas valide. Veuillez réessayer.
     """
 
-  @TC.132005 @phoenix @mozypro @profile_country=us @ip_country=fr @billing_country=us @negative_test
-  Scenario: 132005 Add a new US monthly basic MozyPro partner
+  @TC.125277 @phoenix @mozypro @profile_country=us @ip_country=fr @billing_country=us @negative_test
+  Scenario: 125277 Add a new US biennial basic MozyPro partner invalid coupon us_fr_us
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country       | billing country | coupon      | cc number        |
@@ -88,8 +88,8 @@ Feature: Add a new partner through phoenix
     Invalid coupon code
     """
 
-  @TC.132006 @phoenix @mozypro @profile_country=us @ip_country=us @billing_country=fr @negative_test
-  Scenario: 132006 Add a new US monthly basic MozyPro partner
+  @TC.125278 @phoenix @mozypro @profile_country=us @ip_country=us @billing_country=fr @negative_test
+  Scenario: 125278 Add a new US biennial basic MozyPro partner invalid coupon us_us_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country       | billing country | coupon       | cc number        |
@@ -99,8 +99,8 @@ Feature: Add a new partner through phoenix
     Invalid coupon code
     """
 
-  @TC.134001 @phoenix @mozypro @profile_country=fr @ip_country=uk @billing_country=uk @negative_test
-  Scenario: 134001 Add a new FR monthly basic MozyPro partner
+  @TC.125279 @phoenix @mozypro @profile_country=fr @ip_country=uk @billing_country=uk @negative_test
+  Scenario: 125279 Add a new FR monthly basic MozyPro partner invalid location fr_uk_uk
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | cc number        |
@@ -110,8 +110,8 @@ Feature: Add a new partner through phoenix
      Échec de validation du pays de contact, de facturation, et du numéro de TVA.
     """
 
-  @TC.134002 @phoenix @mozypro @profile_country=fr @ip_country=uk @billing_country=it @negative_test
-  Scenario: 134002 Add a new FR monthly basic MozyPro partner
+  @TC.125280 @phoenix @mozypro @profile_country=fr @ip_country=uk @billing_country=it @negative_test
+  Scenario: 125280 Add a new FR monthly basic MozyPro partner invalid location fr_uk_it
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country |cc number        |
@@ -121,8 +121,8 @@ Feature: Add a new partner through phoenix
      Échec de validation du pays de contact, de facturation, et du numéro de TVA.
     """
 
-  @TC.134003 @phoenix @mozypro @profile_country=fr @ip_country=us @billing_country=us @negative_test
-  Scenario: 134003 Add a new FR monthly basic MozyPro partner
+  @TC.125281 @phoenix @mozypro @profile_country=fr @ip_country=us @billing_country=us @negative_test
+  Scenario: 125281 Add a new FR monthly basic MozyPro partner invalid location fr_us_us
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country |cc number        |
@@ -132,8 +132,8 @@ Feature: Add a new partner through phoenix
      Échec de validation du pays de contact, de facturation, et du numéro de TVA.
     """
 
-  @TC.134004 @phoenix @mozypro @profile_country=us @ip_country=fr @billing_country=fr @negative_test
-  Scenario: 134004 Add a new FR monthly basic MozyPro partner
+  @TC.125282 @phoenix @mozypro @profile_country=us @ip_country=fr @billing_country=fr @negative_test
+  Scenario: 125282 Add a new US monthly basic MozyPro partner invalid location us_fr_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country       | billing country | cc number        |
@@ -143,8 +143,8 @@ Feature: Add a new partner through phoenix
      Failed to validate contact country, billing country, and VAT number
     """
 
-  @TC.134005 @phoenix @mozypro @profile_country=us @ip_country=fr @billing_country=it @negative_test
-  Scenario: 134005 Add a new FR monthly basic MozyPro partner
+  @TC.125283 @phoenix @mozypro @profile_country=us @ip_country=fr @billing_country=it @negative_test
+  Scenario: 125283 Add a new US monthly basic MozyPro partner invalid location us_fr_it
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country       | billing country | cc number        |
@@ -154,8 +154,8 @@ Feature: Add a new partner through phoenix
      Failed to validate contact country, billing country, and VAT number
     """
 
-  @TC.134006 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=uk
-  Scenario: 134006 Add a new FR biennial basic MozyPro partner
+  @TC.125284 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=uk
+  Scenario: 125284 Add a new FR biennial basic MozyPro partner credit card not match fr_fr_uk
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | cc number        |
@@ -165,18 +165,18 @@ Feature: Add a new partner through phoenix
     Impossible de valider les informations de paiement. Veuillez s'il vous plait vous assurer que votre pays de résidence corresponde au pays de la banque qui a produit votre carte de crédit.
     """
 
-  @TC.134007 @phoenix @mozypro @profile_country=us @ip_country=us @billing_country=fr
-  Scenario: 134007 Add a new US monthly basic MozyPro partner
+  @TC.125285 @phoenix @mozypro @profile_country=us @ip_country=us @billing_country=fr
+  Scenario: 125285 Add a new US monthly basic MozyPro partner credit card not match us_us_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country       | billing country | cc number        |
-      | 1      | 1 TB      | United States | France          | 4485393141463880 |
+      | 1      | 1 TB      | United States | France          | 4018121111111122 |
     Then payment information page error message should be:
     """
     Could not validate payment information. Please make sure your country of residence matches the country of the bank which issued your credit card.
     """
-  @TC.134008 @phoenix @mozypro @profile_country=de @ip_country=us @billing_country=us @negative_test
-  Scenario: 134008 Add a new DE monthly basic MozyPro partner
+  @TC.125286 @phoenix @mozypro @profile_country=de @ip_country=us @billing_country=us @negative_test
+  Scenario: 125286 Add a new DE monthly basic MozyPro partner invalid location de_us_us
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country    | cc number        |
@@ -186,8 +186,8 @@ Feature: Add a new partner through phoenix
      Das Land des Ansprechpartners, das Land der Zahlung und die Umsatzsteuer konnten nicht bestätigt werden
     """
 
-  @TC.134009 @phoenix @mozypro @profile_country=de @ip_country=us @billing_country=de @negative_test
-  Scenario: 134009 Add a new DE monthly basic MozyPro partner
+  @TC.125287 @phoenix @mozypro @profile_country=de @ip_country=us @billing_country=de @negative_test
+  Scenario: 125287 Add a new DE monthly basic MozyPro partner credit card not match de_us_de
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country    | cc number        |
@@ -197,8 +197,8 @@ Feature: Add a new partner through phoenix
     Zahlungsangaben konnten nicht bestätigt werden. Bitte überprüfen SIe, dass Ihre Rechnungsadresse mit dem Ausstellungsland Ihrer Kreditkarte übereinstimmt
     """
 
-  @TC.134010 @phoenix @mozypro @profile_country=uk @ip_country=us @billing_country=us @negative_test
-  Scenario: 134010 Add a new UK monthly basic MozyPro partner
+  @TC.125288 @phoenix @mozypro @profile_country=uk @ip_country=us @billing_country=us @negative_test
+  Scenario: 125288 Add a new UK monthly basic MozyPro partner invalid location uk_us_us
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country        | billing country | cc number        |
@@ -208,8 +208,8 @@ Feature: Add a new partner through phoenix
      Failed to validate contact country, billing country, and VAT number
     """
 
-  @TC.134011 @phoenix @mozypro @profile_country=uk @ip_country=us @billing_country=uk @negative_test
-  Scenario: 134011 Add a new UK monthly basic MozyPro partner
+  @TC.125289 @phoenix @mozypro @profile_country=uk @ip_country=us @billing_country=uk @negative_test
+  Scenario: 125289 Add a new UK monthly basic MozyPro partner credit card not match uk_us_uk
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country        | billing country | cc number        |

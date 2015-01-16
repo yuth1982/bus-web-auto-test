@@ -31,8 +31,8 @@ Feature: Add a new partner through phoenix
 # restart: /etc/init.d/apache2 restart
 #---------------------------------------------------------------------------------
 
-  @TC.133001 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
-  Scenario: 133001 Add a new FR monthly basic MozyPro partner
+  @TC.125308 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
+  Scenario: 125308 Add a new FR 10 GB monthly basic MozyPro partner fr_fr_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | cc number        |
@@ -47,8 +47,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133002 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
-  Scenario: 133002 Add a new FR yearly basic MozyPro partner
+  @TC.125309 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
+  Scenario: 125309 Add a new FR 10 GB yearly basic MozyPro partner fr_fr_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | cc number        |
@@ -63,8 +63,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133003 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
-  Scenario: 133003 Add a new FR biennial basic MozyPro partner
+  @TC.125310 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
+  Scenario: 125310 Add a new FR 10 GB biennial basic MozyPro partner fr_fr_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | cc number        |
@@ -79,8 +79,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133004 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
-  Scenario: 133004 Add a new FR monthly basic MozyPro partner
+  @TC.125311 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
+  Scenario: 125311 Add a new FR 50 GB monthly basic MozyPro partner fr_fr_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | cc number        |
@@ -95,8 +95,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133005 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
-  Scenario: 133005 Add a new FR yearly basic MozyPro partner
+  @TC.125312 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
+  Scenario: 125312 Add a new FR 50 GB yearly basic MozyPro partner fr_fr_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | cc number        |
@@ -111,8 +111,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133006 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
-  Scenario: 133006 Add a new FR biennial basic MozyPro partner
+  @TC.125313 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
+  Scenario: 125313 Add a new FR 50 GB biennial basic MozyPro partner fr_fr_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | cc number        |
@@ -127,8 +127,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133007 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
-  Scenario: 133007 Add a new FR monthly basic MozyPro partner
+  @TC.125314 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
+  Scenario: 125314 Add a new FR 100 GB monthly basic MozyPro partner fr_fr_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | cc number        |
@@ -143,8 +143,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133008 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
-  Scenario: 133008 Add a new FR yearly basic MozyPro partner
+  @TC.125315 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
+  Scenario: 125315 Add a new FR 100 GB yearly basic MozyPro partner fr_fr_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | cc number        |
@@ -159,8 +159,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133009 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
-  Scenario: 133009 Add a new FR biennial basic MozyPro partner
+  @TC.125316 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
+  Scenario: 125316 Add a new FR 100 GB biennial basic MozyPro partner fr_fr_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | cc number        |
@@ -175,8 +175,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133010 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
-  Scenario: 133010 Add a new FR monthly basic MozyPro partner
+  @TC.125317 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
+  Scenario: 125317 Add a new FR 250 GB monthly basic MozyPro partner fr_fr_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | cc number        |
@@ -191,8 +191,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133011 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
-  Scenario: 133011 Add a new FR yearly basic MozyPro partner
+  @TC.125318 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
+  Scenario: 125318 Add a new FR 250 GB yearly basic MozyPro partner fr_fr_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | cc number        |
@@ -207,8 +207,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133012 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
-  Scenario: 133012 Add a new FR biennial basic MozyPro partner
+  @TC.125319 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
+  Scenario: 125319 Add a new FR 250 GB biennial basic MozyPro partner fr_fr_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | cc number        |
@@ -223,8 +223,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133013 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
-  Scenario: 133013 Add a new FR monthly basic MozyPro partner
+  @TC.125320 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
+  Scenario: 125320 Add a new FR 500 GB monthly basic MozyPro partner fr_fr_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | cc number        |
@@ -239,8 +239,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133014 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
-  Scenario: 133014 Add a new FR yearly basic MozyPro partner
+  @TC.125321 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
+  Scenario: 125321 Add a new FR 500 GB yearly basic MozyPro partner fr_fr_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | cc number        |
@@ -255,8 +255,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133015 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
-  Scenario: 133015 Add a new FR biennial basic MozyPro partner
+  @TC.125322 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
+  Scenario: 125322 Add a new FR 500 GB biennial basic MozyPro partner fr_fr_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | cc number        |
@@ -271,8 +271,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133016 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
-  Scenario: 133016 Add a new FR monthly basic MozyPro partner
+  @TC.125323 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
+  Scenario: 125323 Add a new FR 1 TB monthly basic MozyPro partner fr_fr_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | cc number        |
@@ -287,8 +287,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133017 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
-  Scenario: 133017 Add a new FR yearly basic MozyPro partner
+  @TC.125324 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
+  Scenario: 125324 Add a new FR 1 TB yearly basic MozyPro partner fr_fr_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | cc number        |
@@ -303,8 +303,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133018 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
-  Scenario: 133018 Add a new FR biennial basic MozyPro partner
+  @TC.125325 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
+  Scenario: 125325 Add a new FR 1 TB biennial basic MozyPro partner fr_fr_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | cc number        |
@@ -319,8 +319,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133019 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=uk
-  Scenario: 133019 Add a new FR monthly basic MozyPro partner
+  @TC.125326 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=uk
+  Scenario: 125326 Add a new FR 10 GB monthly basic MozyPro partner fr_fr_uk
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | server plan | cc number        |
@@ -336,8 +336,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133020 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=uk
-  Scenario: 133020 Add a new FR yearly basic MozyPro partner
+  @TC.125327 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=uk
+  Scenario: 125327 Add a new FR 10 GB coupon yearly basic MozyPro partner fr_fr_uk
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | coupon              | cc number        |
@@ -354,8 +354,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133021 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=uk
-  Scenario: 133021 Add a new FR biennial basic MozyPro partner
+  @TC.125328 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=uk
+  Scenario: 125328 Add a new FR 10 GB biennial basic MozyPro partner with VAT No fr_fr_uk
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | vat number    | cc number        |
@@ -369,8 +369,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133022 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=uk
-  Scenario: 133022 Add a new FR monthly basic MozyPro partner
+  @TC.125329 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=uk
+  Scenario: 125329 Add a new FR 50 GB coupon monthly basic MozyPro partner fr_fr_uk
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | server plan | coupon              | cc number        |
@@ -388,8 +388,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133023 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=uk
-  Scenario: 133023 Add a new FR yearly basic MozyPro partner
+  @TC.125330 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=uk
+  Scenario: 125330 Add a new FR 50 GB yearly basic MozyPro partner with VAT No fr_fr_uk
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | server plan | vat number    | cc number        |
@@ -404,8 +404,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133024 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=uk
-  Scenario: 133024 Add a new FR biennial basic MozyPro partner
+  @TC.125331 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=uk
+  Scenario: 125331 Add a new FR 50 GB coupon biennial basic MozyPro partner with VAT No fr_fr_uk
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | coupon              | vat number    | cc number        |
@@ -421,8 +421,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133025 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=uk
-  Scenario: 133025 Add a new FR monthly basic MozyPro partner
+  @TC.125332 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=uk
+  Scenario: 125332 Add a new FR 100 GB coupon monthly basic MozyPro partner with VAT No fr_fr_uk
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | server plan |coupon              | vat number    | cc number        |
@@ -439,8 +439,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133026 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=uk
-  Scenario: 133026 Add a new FR yearly basic MozyPro partner
+  @TC.125333 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=uk
+  Scenario: 125333 Add a new FR 1 TB yearly basic MozyPro partner fr_fr_uk
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | cc number        |
@@ -455,8 +455,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133027 @phoenix @mozypro @profile_country=fr @ip_country=uk @billing_country=fr
-  Scenario: 133027 Add a new FR biennial basic MozyPro partner
+  @TC.125334 @phoenix @mozypro @profile_country=fr @ip_country=uk @billing_country=fr
+  Scenario: 125334 Add a new FR 10 GB biennial basic MozyPro partner fr_uk_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | cc number        |
@@ -471,8 +471,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133028 @phoenix @mozypro @profile_country=fr @ip_country=uk @billing_country=fr
-  Scenario: 133028 Add a new FR monthly basic MozyPro partner
+  @TC.125335 @phoenix @mozypro @profile_country=fr @ip_country=uk @billing_country=fr
+  Scenario: 125335 Add a new FR 1 TB monthly basic MozyPro partner fr_uk_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | cc number        |
@@ -487,8 +487,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133029 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
-  Scenario: 133029 Add a new FR biennial basic MozyPro partner
+  @TC.125336 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
+  Scenario: 125336 Add a new FR 10 GB biennial basic MozyPro partner with VAT No fr_fr_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | vat number    | cc number        |
@@ -502,8 +502,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133030 @phoenix @mozypro @profile_country=fr @ip_country=uk @billing_country=fr
-  Scenario: 133030 Add a new FR biennial basic MozyPro partner
+  @TC.125337 @phoenix @mozypro @profile_country=fr @ip_country=uk @billing_country=fr
+  Scenario: 125337 Add a new FR 100 GB biennial basic MozyPro partner with VAT No fr_uk_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | vat number    | cc number        |
@@ -517,8 +517,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133031 @phoenix @mozypro @profile_country=fr @ip_country=uk @billing_country=uk
-  Scenario: 133031 Add a new FR monthly basic MozyPro partner
+  @TC.125338 @phoenix @mozypro @profile_country=fr @ip_country=uk @billing_country=uk
+  Scenario: 125338 Add a new FR 250 GB monthly basic MozyPro partner with VAT No fr_uk_uk
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | vat number    | cc number        |
@@ -532,8 +532,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133032 @phoenix @mozypro @profile_country=fr @ip_country=uk @billing_country=it
-  Scenario: 133032 Add a new FR yearly basic MozyPro partner
+  @TC.125339 @phoenix @mozypro @profile_country=fr @ip_country=uk @billing_country=it
+  Scenario: 125339 Add a new FR 500 GB yearly basic MozyPro partner with VAT No fr_uk_it
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | vat number    | cc number        |
@@ -547,8 +547,8 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.133033 @phoenix @mozypro @profile_country=fr @ip_country=us @billing_country=us
-  Scenario: 133033 Add a new FR biennial basic MozyPro partner
+  @TC.125340 @phoenix @mozypro @profile_country=fr @ip_country=us @billing_country=us
+  Scenario: 125340 Add a new FR 1 TB biennial basic MozyPro partner with VAT No fr_us_us
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | vat number    | cc number        |

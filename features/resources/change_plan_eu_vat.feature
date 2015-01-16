@@ -1,7 +1,7 @@
 Feature: Mozypro customers from 28 EU countries change plan
 
-  @TC.1 @change_plan @eu
-  Scenario: TC.1 change plan Austria AT 20
+  @TC.124587 @change_plan @eu
+  Scenario: TC.124587 change plan Austria AT 20
     When I log in bus admin console as administrator
     When I add a new MozyPro partner:
       | period | base plan | server plan | country | security | create under   | net terms |
@@ -24,8 +24,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.2 @change_plan @eu
-  Scenario: TC.2 change plan Belgium BE 21
+  @TC.124588 @change_plan @eu
+  Scenario: TC.124588 change plan Belgium BE 21
     When I log in bus admin console as administrator
     When I add a new MozyPro partner:
       | period | base plan | server plan | country | security | create under   | cc number        |
@@ -46,8 +46,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.3 @change_plan @eu
-  Scenario: TC.3 change plan Bulgaria BG 20
+  @TC.124589 @change_plan @eu
+  Scenario: TC.124589 change plan Bulgaria BG 20
     When I log in bus admin console as administrator
     When I add a new MozyPro partner:
       | period | base plan | country  | cc number        |
@@ -67,8 +67,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.4 @change_plan @eu @qa6_dependent
-  Scenario: TC.4 change plan Croatia HR 25
+  @TC.124590 @change_plan @eu @qa6_dependent
+  Scenario: TC.124590 change plan Croatia HR 25
     When I log in bus admin console as administrator
     When I add a new MozyPro partner:
       | period | base plan | country | security | create under   | cc number        |
@@ -91,8 +91,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.5 @change_plan @eu
-  Scenario: TC.5 change plan Cyprus CY 19
+  @TC.124591 @change_plan @eu
+  Scenario: TC.124591 change plan Cyprus CY 19
     When I log in bus admin console as administrator
     When I add a new MozyPro partner:
       | period | base plan | country | create under    | net terms |
@@ -115,8 +115,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.6 @change_plan @eu @qa6_dependent
-  Scenario: TC.6 change plan Czech Republic CZ 21
+  @TC.124592 @change_plan @eu @qa6_dependent
+  Scenario: TC.124592 change plan Czech Republic CZ 21
     When I log in bus admin console as administrator
     When I add a new MozyPro partner:
       | period | base plan | net terms | country        | security | create under   |
@@ -139,8 +139,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.7 @change_plan @eu @qa6_dependent
-  Scenario: TC.7 change plan Denmark DK 25
+  @TC.124593 @change_plan @eu @qa6_dependent
+  Scenario: TC.124593 change plan Denmark DK 25
     When I log in bus admin console as administrator
     When I add a new MozyPro partner:
       | period | base plan | country | create under    | net terms |
@@ -163,8 +163,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.8 @change_plan @eu @qa6_dependent
-  Scenario: TC.8 change plan Estonia EE 20
+  @TC.124594 @change_plan @eu @qa6_dependent
+  Scenario: TC.124594 change plan Estonia EE 20
     When I log in bus admin console as administrator
     When I add a new MozyPro partner:
       | period | base plan | country | create under    | net terms |
@@ -184,8 +184,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.9 @change_plan @eu
-  Scenario: TC.9 change plan Finland FI 24
+  @TC.124595 @change_plan @eu
+  Scenario: TC.124595 change plan Finland FI 24
     When I log in bus admin console as administrator
     When I add a new MozyPro partner:
       | period | base plan | server plan | storage add on | country | security | create under   | net terms |
@@ -208,8 +208,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.10 @change_plan @eu
-  Scenario: TC.10 change plan France FR 20
+  @TC.124596 @change_plan @eu
+  Scenario: TC.124596 change plan France FR 20
     When I log in bus admin console as administrator
     When I add a new MozyPro partner:
       | period | base plan | server plan | country | create under   | net terms |
@@ -232,8 +232,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.11 @change_plan @eu
-  Scenario: TC.11 change plan Germany DE 19
+  @TC.124597 @change_plan @eu
+  Scenario: TC.124597 change plan Germany DE 19
     When I log in bus admin console as administrator
     When I add a new MozyPro partner:
       | period | base plan | country  | create under    | net terms |
@@ -256,8 +256,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.12 @change_plan @eu
-  Scenario: TC.12 change plan for EL MozyPro partner which signed up in phoenix
+  @TC.124598 @change_plan @eu
+  Scenario: TC.124598 change plan for EL MozyPro partner which signed up in phoenix
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | server plan | country | billing country | cc number        |
@@ -290,8 +290,8 @@ Feature: Mozypro customers from 28 EU countries change plan
      When I stop masquerading
      Then I search and delete partner account by newly created partner company name
 
-  @TC.13 @change_plan @eu
-  Scenario: TC.13 change plan for HU MozyPro partner which signed up in phoenix
+  @TC.124599 @change_plan @eu
+  Scenario: TC.124599 change plan for HU MozyPro partner which signed up in phoenix
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | server plan | country | billing country | cc number        |
@@ -324,8 +324,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.14 @change_plan @eu @qa6_dependent
-  Scenario: TC.14 change plan for IE 23 MozyPro partner which signed up in phoenix
+  @TC.124600 @change_plan @eu @qa6_dependent
+  Scenario: TC.124600 change plan for IE 23 MozyPro partner which signed up in phoenix
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | coupon              | country | billing country | cc number        |
@@ -359,8 +359,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.15 @change_plan @eu
-  Scenario: TC.15 change plan for IT MozyPro partner which signed up in phoenix
+  @TC.124601 @change_plan @eu
+  Scenario: TC.124601 change plan for IT MozyPro partner which signed up in phoenix
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | cc number        |
@@ -389,8 +389,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.16 @change_plan @eu
-  Scenario: TC.16 change plan for Latvia LV MozyPro partner which signed up in phoenix
+  @TC.124602 @change_plan @eu
+  Scenario: TC.124602 change plan for Latvia LV MozyPro partner which signed up in phoenix
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | server plan | country | billing country | cc number        |
@@ -421,8 +421,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.17 @change_plan @eu
-  Scenario: TC.17 change plan for LT 21 MozyPro partner which signed up in phoenix
+  @TC.124603 @change_plan @eu
+  Scenario: TC.124603 change plan for LT 21 MozyPro partner which signed up in phoenix
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | server plan | country   | billing country | cc number        |
@@ -455,8 +455,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.18 @change_plan @eu  @qa6_dependent
-  Scenario: TC.18 change plan for Luxembourg LU 15 MozyPro partner which signed up in phoenix
+  @TC.124604 @change_plan @eu @qa6_dependent
+  Scenario: TC.124604 change plan for Luxembourg LU 17 MozyPro partner which signed up in phoenix
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country    | billing country | cc number        |
@@ -465,8 +465,8 @@ Feature: Mozypro customers from 28 EU countries change plan
       | Description             | Prix    | Quantité | Montant |
       | 1 To - Mensuel          | 299,99€ | 1        | 299,99€ |
       | Prix d'abonnement       | 299,99€ |          | 299,99€ |
-      | TVA                     | 45,00€  |          | 45,00€  |
-      | Montant total des frais | 344,99€ |          | 344,99€ |
+      | TVA                     | 45,00€  |          | 51,00€  |
+      | Montant total des frais | 344,99€ |          | 350,99€ |
     And the partner is successfully added.
     And I log in bus admin console as administrator
     When I act as partner by:
@@ -477,7 +477,7 @@ Feature: Mozypro customers from 28 EU countries change plan
       | 100 GB    | yes         | 10PERCENTOFFOUTLINE |
     Then Change plan charge summary should be:
       | Description                | Amount |
-      | Charge for new Server Plan | €10.49 |
+      | Charge for new Server Plan | €10.69 |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -485,8 +485,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19 @change_plan @eu
-  Scenario: TC.19 change plan for Malta LT 21 MozyPro partner which signed up in phoenix
+  @TC.124605 @change_plan @eu
+  Scenario: TC.124605 change plan for Malta LT 21 MozyPro partner which signed up in phoenix
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | server plan | country | billing country | cc number        |
@@ -517,8 +517,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.20 @change_plan @eu
-  Scenario: 20 change plan for Netherlands 21 MozyPro partner which signed up in phoenix
+  @TC.124606 @change_plan @eu
+  Scenario: TC.124606 change plan for Netherlands 21 MozyPro partner which signed up in phoenix
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | server plan | country     | billing country | cc number        |
@@ -551,8 +551,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.21 @change_plan @eu
-  Scenario: TC.21 change plan Poland PL 23
+  @TC.124607 @change_plan @eu
+  Scenario: TC.124607 change plan Poland PL 23
     When I log in bus admin console as administrator
     When I add a new MozyPro partner:
       | period | base plan | server plan | storage add on | country | create under    | net terms |
@@ -575,8 +575,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.22 @change_plan @eu
-  Scenario: TC.22 change plan Portugal PT 23
+  @TC.124608 @change_plan @eu
+  Scenario: TC.124608 change plan Portugal PT 23
     When I log in bus admin console as administrator
     When I add a new MozyPro partner:
       | period | base plan | server plan | storage add on | country  | create under    | cc number        |
@@ -597,8 +597,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.23 @change_plan @eu
-  Scenario: TC.23 change plan Romania Ro 24
+  @TC.124609 @change_plan @eu
+  Scenario: TC.124609 change plan Romania Ro 24
     When I log in bus admin console as administrator
     When I add a new MozyPro partner:
       | period | base plan | storage add on | country | create under   | net terms |
@@ -621,8 +621,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.24 @change_plan @eu
-  Scenario: TC.24 change plan Slovakia SK 20
+  @TC.124610 @change_plan @eu
+  Scenario: TC.124610 change plan Slovakia SK 20
     When I log in bus admin console as administrator
     When I add a new MozyPro partner:
       | period | base plan | storage add on | country  | create under   | cc number        |
@@ -643,8 +643,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.25 @change_plan @eu  @qa6_dependent
-  Scenario: TC.25 change plan Slovenia SI 22
+  @TC.124611 @change_plan @eu  @qa6_dependent
+  Scenario: TC.124611 change plan Slovenia SI 22
     When I log in bus admin console as administrator
     When I add a new MozyPro partner:
       | period | base plan | server plan | country  | create under    | net terms |
@@ -667,8 +667,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.26 @change_plan @eu
-  Scenario: TC.26 change plan Spain ES 21
+  @TC.124612 @change_plan @eu
+  Scenario: TC.124612 change plan Spain ES 21
     When I log in bus admin console as administrator
     When I add a new MozyPro partner:
       | period | base plan | server plan | storage add on | country | create under    | net terms |
@@ -691,8 +691,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.27 @change_plan @eu
-  Scenario: TC.27 change plan Sween SE 25
+  @TC.124613 @change_plan @eu
+  Scenario: TC.124613 change plan Sween SE 25
     When I log in bus admin console as administrator
     When I add a new MozyPro partner:
       | period | base plan | server plan | storage add on | country | create under | cc number        |
@@ -713,8 +713,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.28 @change_plan @eu
-  Scenario:TC.28 change plan United Kingdom UK 20
+  @TC.124614 @change_plan @eu
+  Scenario:TC.124614 change plan United Kingdom UK 20
     When I log in bus admin console as administrator
     When I add a new MozyPro partner:
       | period | base plan | server plan | country        | create under | net terms |
@@ -737,9 +737,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-
-  @TC.29 @change_plan @eu
-  Scenario:TC.29 change plan United Kingdom UK 20 with VAT number
+  @TC.124615 @change_plan @eu
+  Scenario:TC.124615 change plan United Kingdom UK 20 with VAT number
     When I log in bus admin console as administrator
     When I add a new MozyPro partner:
       | period | base plan | server plan | country        | create under | cc number        | vat number  |
