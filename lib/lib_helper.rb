@@ -23,6 +23,7 @@ require 'capybara/cucumber'
 
 require 'aria_api/lib/aria_api'
 require 'file_helper'
+require 'bill_helper'
 require 'email_helper'
 require 'db_helper'
 require 'ldap_helper'
@@ -54,3 +55,4 @@ include KeylessDeviceActivation
 include Activation
 include DataShuttleSeeding
 include Email
+include Billing

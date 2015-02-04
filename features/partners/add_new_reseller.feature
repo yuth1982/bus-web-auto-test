@@ -48,11 +48,11 @@ Feature: Add a new partner
       | today | $0.00   | $0.00      | $0.00       |
     And I delete partner account
 
-  @TC.18146 @bus @2.5 @add_new_partner @reseller @env_dependent
+  @TC.18146 @bus @2.5 @add_new_partner @reseller @env_dependent @vat
   Scenario: 18146 Add New Reseller Partner - FR - Yearly - Gold 500 GB - Server Plan - VAT - Coupon - CC
     When I add a new Reseller partner:
-      | period | reseller type | reseller quota | server plan | create under   | vat number    | coupon              | country | address           | city      | state | zip   | phone          |
-      | 12     | Gold          | 500            | yes         | MozyPro France | FR08410091490 | 10PERCENTOFFOUTLINE | France  | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 |
+      | period | reseller type | reseller quota | server plan | create under   | vat number    | coupon              | country | address           | city      | state | zip   | phone          | cc number        |
+      | 12     | Gold          | 500            | yes         | MozyPro France | FR08410091490 | 10PERCENTOFFOUTLINE | France  | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 | 4485393141463880 |
     Then Sub-total before taxes or discounts should be €2,420.00
     And Order summary table should be:
       | Description        | Quantity | Price Each | Total Price |
@@ -89,11 +89,11 @@ Feature: Add a new partner
       | today | €0.00     | €0.00      | €0.00       |
     And I delete partner account
 
-  @TC.18149 @bus @2.5 @add_new_partner @reseller @env_dependent
+  @TC.18149 @bus @2.5 @add_new_partner @reseller @env_dependent @vat
   Scenario: 18149 Add New Reseller Partner - DE - Monthly - Platinum 500 GB - Server Plan - VAT - Coupon - CC
     When I add a new Reseller partner:
-      | period | reseller type | reseller quota | server plan | create under    | vat number  | coupon              | country | address           | city      | state | zip   | phone          |
-      | 1      | Platinum      | 500            | yes         | MozyPro Germany | DE812321109 | 10PERCENTOFFOUTLINE | Germany | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 |
+      | period | reseller type | reseller quota | server plan | create under    | vat number  | coupon              | country | address           | city      | state | zip   | phone          | cc number        |
+      | 1      | Platinum      | 500            | yes         | MozyPro Germany | DE812321109 | 10PERCENTOFFOUTLINE | Germany | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 | 4188181111111112 |
     Then Sub-total before taxes or discounts should be €260.00
     And Order summary table should be:
       | Description            | Quantity | Price Each | Total Price |
@@ -130,11 +130,11 @@ Feature: Add a new partner
       | today | €0.00   | €0.00      | €0.00       |
     And I delete partner account
 
-  @TC.18152 @bus @2.5 @add_new_partner @reseller @env_dependent
+  @TC.18152 @bus @2.5 @add_new_partner @reseller @env_dependent @vat
   Scenario: 18152 Add New Reseller Partner - IE - Yearly - Silver 500 GB - Server Plan - 10 Add on - VAT - Coupon - CC
     When I add a new Reseller partner:
-      | period | reseller type | reseller quota | server plan | storage add on | create under    | vat number | coupon              | country | address           | city      | state | zip   | phone          |
-      | 12     | Silver        | 500            | yes         | 10             | MozyPro Ireland | IE9691104A | 10PERCENTOFFOUTLINE | Ireland | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 |
+      | period | reseller type | reseller quota | server plan | storage add on | create under    | vat number | coupon              | country | address           | city      | state | zip   | phone          | cc number        |
+      | 12     | Silver        | 500            | yes         | 10             | MozyPro Ireland | IE9691104A | 10PERCENTOFFOUTLINE | Ireland | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 | 4319402211111113 |
     Then Sub-total before taxes or discounts should be €2,761.00
     And Order summary table should be:
       | Description          | Quantity | Price Each | Total Price |
@@ -173,11 +173,11 @@ Feature: Add a new partner
       | today | €0.00     | €0.00      | €0.00       |
     And I delete partner account
 
-  @TC.18153 @bus @2.5 @add_new_partner @reseller @env_dependent
+  @TC.18153 @bus @2.5 @add_new_partner @reseller @env_dependent @vat
   Scenario: 18153 Add New Reseller Partner - UK - Monthly - Gold 500 GB - Server Plan -  10 Add on - VAT - Coupon - CC
     When I add a new Reseller partner:
-      | period | reseller type | reseller quota | server plan | storage add on | create under | vat number  | coupon              | country        | address           | city      | state | zip   | phone          |
-      | 1      | Gold          | 500            | yes         | 10             | MozyPro UK   | GB117223643 | 10PERCENTOFFOUTLINE | United Kingdom | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 |
+      | period | reseller type | reseller quota | server plan | storage add on | create under | vat number  | coupon              | country        | address           | city      | state | zip   | phone          | cc number        |
+      | 1      | Gold          | 500            | yes         | 10             | MozyPro UK   | GB117223643 | 10PERCENTOFFOUTLINE | United Kingdom | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 | 4916783606275713 |
     Then Sub-total before taxes or discounts should be £226.00
     And Order summary table should be:
       | Description        | Quantity | Price Each | Total Price |
@@ -265,8 +265,8 @@ Feature: Add a new partner
       | Description          | Quantity | Price Each | Total Price |
       | GB - Silver Reseller | 500      | €0.33      | €165.00     |
       | Pre-tax Subtotal     |          |            | €165.00     |
-      | Taxes                |          |            | €37.95      |
-      | Total Charges        |          |            | €202.95     |
+      | Taxes                |          |            | €33.00      |
+      | Total Charges        |          |            | €198.00     |
     And New partner should be created
     And Partner general information should be:
       | Status:         | Root Admin:          | Root Role:             | Parent:                   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
@@ -286,12 +286,12 @@ Feature: Add a new partner
       | 0    | 500       | 500      | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Net Terms 30           | Current Period: | Monthly            |
-      | Unpaid Balance: | €202.95                | Collect On:     | N/A                |
+      | Unpaid Balance: | €198.00                | Collect On:     | N/A                |
       | Renewal Date:   | after 1 month          | Renewal Period: | Use Current Period |
       | Next Charge:    | after 1 month          |                 |                    |
   And Partner billing history should be:
       | Date  | Amount  | Total Paid | Balance Due |
-      | today | €202.95 | €0.00      | €202.95     |
+      | today | €198.00 | €0.00      | €198.00     |
       | today | €0.00   | €0.00      | €0.00       |
     And I delete partner account
 
@@ -305,8 +305,8 @@ Feature: Add a new partner
       | Description        | Quantity | Price Each | Total Price |
       | GB - Gold Reseller | 500      | €3.08      | €1,540.00   |
       | Pre-tax Subtotal   |          |            | €1,540.00   |
-      | Taxes              |          |            | €354.20     |
-      | Total Charges      |          |            | €1,894.20   |
+      | Taxes              |          |            | €292.60     |
+      | Total Charges      |          |            | €1,832.60   |
     And New partner should be created
     And Partner general information should be:
       | Status:         | Root Admin:          | Root Role:             | Parent:                    | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
@@ -326,12 +326,12 @@ Feature: Add a new partner
       | 0    | 500       | 500      | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Net Terms 30          | Current Period: | Yearly             |
-      | Unpaid Balance: | €1,894.20             | Collect On:     | N/A                |
+      | Unpaid Balance: | €1,832.60             | Collect On:     | N/A                |
       | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period |
       | Next Charge:    | after 1 year          |                 |                    |
     And Partner billing history should be:
       | Date  | Amount    | Total Paid | Balance Due |
-      | today | €1,894.20 | €0.00      | €1,894.20   |
+      | today | €1,832.60 | €0.00      | €1,832.60   |
       | today | €0.00     | €0.00      | €0.00       |
     And I delete partner account
 
@@ -386,8 +386,8 @@ Feature: Add a new partner
       | GB - Silver Reseller | 500      | £2.97      | £1,485.00   |
       | 20 GB add-on         | 10       | £59.40     | £594.00     |
       | Pre-tax Subtotal     |          |            | £2,079.00   |
-      | Taxes                |          |            | £478.17     |
-      | Total Charges        |          |            | £2,557.17   |
+      | Taxes                |          |            | £415.80     |
+      | Total Charges        |          |            | £2,494.80   |
     And New partner should be created
     And Partner general information should be:
       | Status:         | Root Admin:          | Root Role:             | Parent:               | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
@@ -407,12 +407,12 @@ Feature: Add a new partner
       | 0    | 700       | 700      | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Net Terms 30          | Current Period: | Yearly             |
-      | Unpaid Balance: | £2,557.17             | Collect On:     | N/A                |
+      | Unpaid Balance: | £2,494.80             | Collect On:     | N/A                |
       | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period |
       | Next Charge:    | after 1 year          |                 |                    |
     And Partner billing history should be:
       | Date  | Amount    | Total Paid | Balance Due |
-      | today | £2,557.17 | £0.00      | £2,557.17   |
+      | today | £2,494.80 | £0.00      | £2,494.80   |
       | today | £0.00     | £0.00      | £0.00       |
     And I delete partner account
 

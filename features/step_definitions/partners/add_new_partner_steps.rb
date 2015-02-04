@@ -188,6 +188,29 @@ Then /^Sub-total before taxes or discounts should be (.+)$/ do |amount|
   @partner.pre_sub_total.should == amount
 end
 
+Then /^the sub-total before taxes or discounts should be correct$/ do
+  case @partner.partner_info.type
+    when CONFIGS['bus']['company_type']['mozypro']
+      get_mozypro_signup_order(@partner)
+    when CONFIGS['bus']['company_type']['reseller']
+      get_reseller_signup_order(@partner)
+  end
+  @partner.pre_sub_total.should == format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:pre_all_subtotal])
+  Log.debug(format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:pre_all_subtotal]))
+end
+
+Then /^the order summary table should be correct$/ do
+  actual = @partner.order_summary
+  case @partner.partner_info.type
+    when CONFIGS['bus']['company_type']['mozypro']
+      expected = get_bus_mozypro_order_summery(@partner)
+    when CONFIGS['bus']['company_type']['reseller']
+      expected = get_bus_reseller_order_summery(@partner)
+  end
+  actual.should == expected
+  Log.debug(expected)
+end
+
 Then /^Order summary table should be:$/ do |order_summary_table|
   actual = @partner.order_summary
   expected = order_summary_table.hashes

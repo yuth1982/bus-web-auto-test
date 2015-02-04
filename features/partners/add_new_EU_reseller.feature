@@ -1,188 +1,38 @@
-  Feature: Add a new EU mozypro partner
 
-    As a Mozy Administrator
-    I want to create MozyPro EU partners
-    So that I can organize my business in a way that works for me
+Feature: Add a new EU reseller partner
 
-    Background:
-      Given I log in bus admin console as administrator
+  As a Mozy Administrator
+  I want to create Reseller EU partners
+  So that I can organize my business in a way that works for me
 
-    #---------------------------------------------------------------------------------
-    #    negative test cases:
-    #---------------------------------------------------------------------------------
-
-  @TC.40001 @bus @2.17 @add_new_partner @mozypro @signup_neg @vat
-  Scenario: 40001 Add New MozyPro Partner - invalid VAT number
-
-  # no country code in vat number
-    When I add a new MozyPro partner:
-      | period |   create under   |  country  |    vat number     |
-      | 1      |  MozyPro Ireland |  Ireland  |   820c9dIN@#;v    |
-    Then Create partner error message should be VAT number is invalid. Please try again.
-
-  # country code match, vat number is invalid
-    When I add a new MozyPro partner:
-      | period |  country  |    vat number     |
-      | 1      |  Ireland  |   IE08410091490   |
-    Then Create partner error message should be VAT number is invalid. Please try again.
-
-  # vat number country code not match country
-    When I add a new MozyPro partner:
-      | period |  create under    | country   |    vat number      |
-      | 1      |  MozyPro Germany |  Ireland  |   FR08410091490    |
-    Then Create partner error message should be VAT number is invalid. Please try again.
+  Background:
+    Given I log in bus admin console as administrator
 
 
-  @TC.40003 @bus @2.17 @add_new_partner @mozypro @signup_neg
-  Scenario: 40003 Add New MozyPro Partner - invalid coupon
-    When I add a new MozyPro partner:
-      | period |  country          |    coupon              |
-      | 1      |  United Kingdom   |   10OffInvalidCoupon   |
-    Then Create partner error message should be Invalid coupon code
-
-  @TC.41001 @bus @2.17 @add_new_partner @mozypro @signup_alert
-  Scenario: 41001 Add New MozyPro Partner - If no vat number, profile country is EU, billing country is not EU, alert will pop up. Partner created failed if BIN country not match.
-    When I add a new MozyPro partner:
-      | period | base plan |   create under    |  country  | billing country   | cc number        |
-      | 1      | 50 GB     |  MozyPro Germany  |  Spain    |    United States  | 5232037812229004 |
-    And Aria payment error message should be Could not validate payment information.
-    And the billing country alert is This customer might be an EU customer without a VAT number, the billing contact address doesn't match the account country. Please verify the customer's location manually offline
-
-  @TC.41002 @bus @2.17 @add_new_partner @mozypro @signup_alert
-  Scenario: 41002 Add New MozyPro Partner - If no vat number, profile country is not EU, billing country is EU, alert will pop up. BIN country check will take effect.
-    When I add a new MozyPro partner:
-      | period | base plan |   create under    |  country       | billing country   | cc number        |
-      | 1      | 50 GB     |  MozyPro          |  United States |  United Kingdom   | 4916783606275713 |
+  @TC.70000 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 40301 Add New Reseller Partner - US - Monthly - Silver 780 GB - Server Plan - Coupon - CC
+    When I add a new Reseller partner:
+      | period | reseller type | reseller quota | server plan | storage add on | coupon              | country       |
+      | 1      | Silver        | 780            | yes         |     10         | 10PERCENTOFFOUTLINE | United States |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
     And New partner should be created
-    And the billing country alert is This customer might be an EU customer without a VAT number, the billing contact address doesn't match the account country. Please verify the customer's location manually offline
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
+      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
+      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
+    And Partner billing history should be:
+      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
+      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
+    And I search and delete partner account by newly created partner company name
 
-  @TC.41003 @bus @2.17 @add_new_partner @mozypro @signup_alert
-  Scenario: 41003 Add New MozyPro Partner - If no vat number, profile country&billing country all EU and profile country not match billing country, alert will pop up.
-    When I add a new MozyPro partner:
-      | period | base plan |   create under    |  country  | billing country | cc number        |
-      | 1      | 50 GB     |  MozyPro France   |   Germany |  Poland         | 5232037812229004 |
-    And New partner should be created
-    And the billing country alert is This customer might be an EU customer without a VAT number, the billing contact address doesn't match the account country. Please verify the customer's location manually offline
-
-  @TC.41004 @bus @2.17 @add_new_partner @mozypro @signup_alert
-  Scenario: 41004 Add New MozyPro Partner - If no vat number, profile country is EU, when select payment method as Net Terms, alert will pop up
-    When I add a new MozyPro partner:
-      | period | base plan |   create under    |  country  |  net terms |
-      | 1      | 50 GB     |  MozyPro Ireland  |   Finland |  yes       |
-    And New partner should be created
-    And the billing country alert is This is an EU customer without a VAT number and credit card info. Please verify the customer's location manually offline.
-
-  @TC.41005 @bus @2.17 @add_new_partner @mozypro @signup_alert
-  Scenario: 41005 Add New MozyPro Partner - If no vat number, profile country&billing country all not EU and profile country not match billing country, alert will not pop up
-    When I add a new MozyPro partner:
-      | period | base plan |  create under |  country   |  billing country | net terms  |
-      | 12     | 50 GB     |  MozyPro      |  Hong Kong |  United States   | yes        |
-    And New partner should be created
-    And there is no popup alert during partner creation
-
-  @TC.41006 @bus @2.17 @add_new_partner @mozypro @signup_alert
-  Scenario: 41006 Add New MozyPro Partner - If no vat number, profile country&billing country all not EU and profile country match billing country, alert will not pop up
-    When I add a new MozyPro partner:
-      | period | base plan |  create under | country       | net terms  |
-      | 12     | 50 GB     |  MozyPro      | United States | yes        |
-    And New partner should be created
-    And there is no popup alert during partner creation
-
-  @TC.41007 @bus @2.17 @add_new_partner @mozypro @signup_alert
-  Scenario: 41007 Add New MozyPro Partner - If no vat number, profile country&billing country all not EU and profile country not match billing country, alert will not pop up, sign up will succeed even BIN country not match.
-    When I add a new MozyPro partner:
-      | period | base plan |  create under |  country         | billing country |
-      | 12     | 50 GB     |  MozyPro      |  United States   | Japan           |
-    And New partner should be created
-    And there is no popup alert during partner creation
-
-  @TC.41008 @bus @2.17 @add_new_partner @mozypro @signup_alert
-  Scenario: 41008 Add New MozyPro Partner - If no vat number, profile country&billing country all not EU, alert will not pop up, sign up will succeed
-    When I add a new MozyPro partner:
-      | period | base plan |  create under |  country         |
-      | 12     | 50 GB     |  MozyPro      |  United States   |
-    And New partner should be created
-    And there is no popup alert during partner creation
-
-  @TC.41009 @bus @2.17 @add_new_partner @mozypro @signup_alert
-  Scenario: 41009 Add New MozyPro Partner - If no vat number, profile country is same as billing country (EU), sign up using nt, alert will pop up, sign up will secceed
-    When I add a new MozyPro partner:
-      | period | base plan |   create under    |  country  |  net terms |
-      | 12     | 50 GB     |  MozyPro Ireland  |  Ireland  |  yes       |
-    And New partner should be created
-    And the billing country alert is This is an EU customer without a VAT number and credit card info. Please verify the customer's location manually offline.
-
-  @TC.41010 @bus @2.17 @add_new_partner @mozypro @signup_alert
-  Scenario: 41010 Add New MozyPro Partner - If no vat number, profile country is same as billing country (EU), alert will not pop up, sign up use cc will secceed if BIN country match.
-    When I add a new MozyPro partner:
-      | period | base plan |   create under    |  country  |  cc number        |
-      | 12     | 50 GB     |  MozyPro Ireland  |  Ireland  |  4319402211111113 |
-    And New partner should be created
-    And there is no popup alert during partner creation
-
-  @TC.41011 @bus @2.17 @add_new_partner @mozypro @signup_alert @vat
-  Scenario: 41011 Add New MozyPro Partner - partner with valid vat number should sign up successfully, no alert pop up
-    When I add a new MozyPro partner:
-      | period | base plan |   create under    |  country  |  cc number        |  vat number |
-      | 12     | 50 GB     |  MozyPro Ireland  |  Ireland  |  4319402211111113 |  IE9691104A |
-    And New partner should be created
-    And there is no popup alert during partner creation
-
-  @TC.41012 @bus @2.17 @add_new_partner @mozypro @signup_alert @vat
-  Scenario: 41012 Add New MozyPro Partner - partner with valid vat number should sign up successfully, no alert pop up
-    When I add a new MozyPro partner:
-      | period | base plan |   create under    |  country  | billing country |  cc number        |  vat number |
-      | 12     | 50 GB     |  MozyPro Ireland  |  Ireland  |  France         |  4485393141463880 |  IE9691104A |
-    And New partner should be created
-    And there is no popup alert during partner creation
-
-  @TC.41013 @bus @2.17 @add_new_partner @mozypro @signup_alert @vat
-  Scenario: 41013 Add New MozyPro Partner - partner with valid vat number should sign up successfully, no alert pop up
-    When I add a new MozyPro partner:
-      | period | base plan |   create under    |  country  | billing country | net terms |  vat number |
-      | 12     | 50 GB     |  MozyPro Ireland  |  Ireland  | France          |  yes      |  IE9691104A |
-    And New partner should be created
-    And there is no popup alert during partner creation
-
-  @TC.41014 @bus @2.17 @add_new_partner @mozypro @signup_alert @vat
-  Scenario: 41014 Add New MozyPro Partner - partner with valid vat number should sign up successfully, no alert pop up
-    When I add a new MozyPro partner:
-      | period | base plan |   create under    |  country  | net terms |  vat number |
-      | 12     | 50 GB     |  MozyPro Ireland  |  Ireland  |  yes      |  IE9691104A |
-    And New partner should be created
-    And there is no popup alert during partner creation
-
-
-
-  #   Verified in busclient04 2.17.0.2
-  #  manual case: VAT validation service is currently not available
-  #  steps:
-  #  1. edit app/models/vat.rb,  change soap server address
-  #  2. run case TC.40005. test pass
-  #  3. create EU partner with the vat number blank
-  #  4. new partner should be created
-  #  5. change app/models/vat.rb back
-  # @TC.40005 @bus @2.17 @add_new_partner @mozypro
-  # Scenario: 40002 Add New MozyPro Partner - VAT number not match country
-  #  When I add a new MozyPro partner:
-  #    | period | country   |    vat number      |
-  #    | 1      |  France   |   FR08410091490    |
-  #  Then Create partner error message should be The VAT validation service is temporarily unavailable, please leave the field blank and update later.
-
-
-
-
-
-
-  #---------------------------------------------------------------------------------
-  #    Create MozyPro US partner:
-  #---------------------------------------------------------------------------------
-
-  @TC.40101 @bus @2.17 @add_new_partner @mozypro
-  Scenario: 40101 Add New MozyPro Partner  -- US -- Monthly -- 10 GB -- Server Plan -- Net Terms
-    When I add a new MozyPro partner:
-      | period |  base plan |  country       |   server plan |  net terms |   billing country  |  billing state abbrev |
-      |   1    |  10 GB     |  United States |       yes     |     yes    |      United States |         CA            |
+  @TC.70001 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70001 Add New Reseller Partner  -- Monthly -- Silver -- IE -- 1000 GB -- Server Plan -- Net Terms
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     |  reseller quota |  server plan |  net terms |
+      |   1    |  Silver          | Ireland         | MozyPro Ireland  | 1000            |      yes     |      yes   |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -197,11 +47,11 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
-  @TC.40102 @bus @2.17 @add_new_partner @mozypro
-  Scenario: 40102 Add New MozyPro Partner  -- US -- Yearly -- 24 TB -- Coupon -- HIPAA -- CC
-    When I add a new MozyPro partner:
-      | period |  base plan |  country       |  coupon               |  security |
-      |   12   |  24 TB     |  United States |  10PERCENTOFFOUTLINE  |    HIPAA  |
+  @TC.70002 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70002 Add New Reseller Partner  -- Monthly -- Gold -- IT -- 1000 GB -- CC -- 10 add on
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     |  reseller quota | storage add on | cc number        |
+      |   1    |  Gold            | Italy           | MozyPro Germany  | 1000            |     10         | 4916921703777575 |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -216,22 +66,11 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
-  #----------------------------------------------------------------------------------
-  #
-  #          Create under is not following  currency
-  #     (country EU, under us)
-  #     (country US, under EU)
-  #     (country JP, under us)
-  # #    (country uk, under de)
-  # #    (country EU, under us)
-  # #    (country fr, under uk)
-  #----------------------------------------------------------------------------------
-
-  @TC.40201 @bus @2.17 @add_new_partner @mozypro
-  Scenario: 40201 Add New MozyPro Partner  -- BE -- Yearly -- 500 GB -- HIPAA -- CC
-    When I add a new MozyPro partner:
-      | period |  base plan |  country | security |  cc number        |
-      |   12   |  500 GB    |  Belgium |  HIPAA   |  5413271111111222 |
+  @TC.70003 @bus @2.17 @add_new_partner @reseller @env_dependent @coupon
+  Scenario: 70003 Add New Reseller Partner  -- Monthly -- Platinum -- FR -- 2000 GB -- Server Plan -- Coupon -- CC -- 10 add on
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     |  reseller quota |  server plan |  coupon              | storage add on | cc number        |
+      |   1    |  Platinum        | France          | MozyPro France   | 2000            |      yes     |  10PERCENTOFFOUTLINE |     10         | 4485393141463880 |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -241,16 +80,16 @@
       | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
       | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
     And Partner billing history should be:
-      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
+      | Date  | Amount                                                                            | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
-  @TC.40202 @bus @2.17 @add_new_partner @mozypro
-  Scenario: 40202 Add New MozyPro Partner  -- US -- Yearly -- 50 GB -- Coupon -- Net Terms
-    When I add a new MozyPro partner:
-      | period |   base plan | country        | create under     |  coupon              |  net terms |
-      |   12   |       50 GB |  United States | MozyPro France   |  10PERCENTOFFOUTLINE |     yes    |
+  @TC.70004 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70004 Add New Reseller Partner  -- Monthly -- Silver -- SE -- 1000 GB -- Server Plan -- Net Terms
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     |  reseller quota |  server plan |  net terms |
+      |   1    |  Silver          | Sweden          | MozyPro Germany  | 1000            |      yes     |      yes   |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -265,12 +104,11 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
-
-  @TC.40203 @bus @2.17 @add_new_partner @mozypro
-  Scenario: 40203 Add New MozyPro Partner  -- JP -- Monthly -- 100 GB -- Server Plan -- CC
-    When I add a new MozyPro partner:
-      | period |  base plan |  country |  server plan  | cc number        |
-      |   1    |  100 GB    |   Japan  |     yes       | 4542465014608212 |
+  @TC.70005 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70005 Add New Reseller Partner  -- Monthly -- Gold -- DE -- 1024 GB -- CC -- 10 add on
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     |  reseller quota | storage add on | cc number        |
+      |   1    |  Gold            | Germany         | MozyPro Germany  | 1024            |     10         | 4188181111111112 |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -285,16 +123,87 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
+  @TC.70006 @bus @2.17 @add_new_partner @reseller @env_dependent @coupon
+  Scenario: 70006 Add New Reseller Partner  -- Monthly -- Platinum -- PL -- 3500 GB -- Server Plan -- Coupon -- CC -- 10 add on
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     |  reseller quota |  server plan |  coupon              | storage add on | cc number        |
+      |   1    |  Platinum        | Poland          | MozyPro France   | 3500            |      yes     |  10PERCENTOFFOUTLINE |     10         | 4023581211111111 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
+      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
+      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
+    And Partner billing history should be:
+      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
+      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
+    And I search and delete partner account by newly created partner company name
 
-  #---------------------------------------------------------------------------------
-  #    negative test cases:
-  #---------------------------------------------------------------------------------
+  @TC.70007 @bus @2.17 @add_new_partner @reseller @env_dependent @coupon
+  Scenario: 70007 Add New Reseller Partner  -- Monthly -- Silver -- ES -- 500 GB -- Server Plan -- Coupon -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     |  reseller quota |  server plan |  coupon              | cc number        |
+      |   1    |  Silver          | Spain           | MozyPro Ireland  | 500             |      yes     |  10PERCENTOFFOUTLINE | 4328191211111111 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
+      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
+      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
+    And Partner billing history should be:
+      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
+      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
+    And I search and delete partner account by newly created partner company name
 
-  @TC.50001 @bus @2.17 @add_new_partner @mozypro
-  Scenario: 50001 Add New MozyPro Partner  -- ES -- Monthly -- 10 GB -- Server Plan -- Net Terms
-    When I add a new MozyPro partner:
-      | period |   base plan | country       | create under     |  server plan |  net terms |
-      |   1    |       10 GB | Spain         | MozyPro Ireland  |      yes     |     yes    |
+  @TC.70008 @bus @2.17 @add_new_partner @reseller @vat @env_dependent @coupon
+  Scenario: 70008 Add New Reseller Partner  -- Monthly -- Gold -- FR -- 600 GB -- Server Plan -- Coupon -- CC -- VAT -- 10 add on
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     |  reseller quota |  server plan |  coupon              | vat number    | storage add on | cc number        |
+      |   1    |  Gold            | France          | MozyPro France   | 600             |      yes     |  10PERCENTOFFOUTLINE | FR08410091490 |     10         | 4485393141463880 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
+      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
+      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
+    And Partner billing history should be:
+      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
+      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
+    And I search and delete partner account by newly created partner company name
+
+  @TC.70009 @bus @2.17 @add_new_partner @reseller @vat @env_dependent @coupon
+  Scenario: 70009 Add New Reseller Partner  -- Monthly -- Platinum -- IT -- 400 GB -- Server Plan -- Coupon -- CC -- VAT
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     |  reseller quota |  server plan |  coupon              | vat number    | cc number        |
+      |   1    |  Platinum        | Italy           | MozyPro UK       | 400             |      yes     |  10PERCENTOFFOUTLINE | IT03018900245 | 4916921703777575 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
+      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
+      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
+    And Partner billing history should be:
+      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
+      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
+    And I search and delete partner account by newly created partner company name
+
+  @TC.70010 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70010 Add New Reseller Partner  -- Monthly -- Silver -- AT -- 400 GB -- Net Terms
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     |  reseller quota |  net terms |
+      |   1    |  Silver          | Austria         | MozyPro France   | 400             |      yes   |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -309,11 +218,11 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
-  @TC.50002 @bus @2.17 @add_new_partner @mozypro @coupon
-  Scenario: 50002 Add New MozyPro Partner  -- DK -- Monthly -- 250 GB -- Coupon -- Net Terms
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  coupon              |  net terms |
-      |   1    |      250 GB | Denmark         | MozyPro France   |  10PERCENTOFFOUTLINE |     yes    |
+  @TC.70011 @bus @2.17 @add_new_partner @reseller @vat @env_dependent @coupon
+  Scenario: 70011 Add New Reseller Partner  -- Monthly -- Gold -- BE -- 550 GB -- Server Plan -- Coupon -- Net Terms -- VAT
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     |  reseller quota |  server plan |  coupon              |  net terms | vat number   |
+      |   1    |  Gold            | Belgium         | MozyPro UK       | 550             |      yes     |  10PERCENTOFFOUTLINE |      yes   | BE0883236072 |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -328,11 +237,11 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
-  @TC.50003 @bus @2.17 @add_new_partner @mozypro
-  Scenario: 50003 Add New MozyPro Partner  -- EL -- Monthly -- 2 TB -- Server Plan -- billing country -- Net Terms
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  server plan | billing country |  net terms |
-      |   1    |        2 TB | Greece          | MozyPro France   |      yes     | Greece          |     yes    |
+  @TC.70012 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70012 Add New Reseller Partner  -- Monthly -- Platinum -- FI -- 2048 GB -- Net Terms
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     |  reseller quota |  net terms |
+      |   1    |  Platinum        | Finland         | MozyPro France   | 2048            |      yes   |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -347,11 +256,11 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
-  @TC.50004 @bus @2.17 @add_new_partner @mozypro @coupon
-  Scenario: 50004 Add New MozyPro Partner  -- CZ -- Monthly -- 12 TB -- Coupon -- HIPAA -- Net Terms
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  coupon              | security |  net terms |
-      |   1    |       12 TB | Czech Republic  | MozyPro Germany  |  10PERCENTOFFOUTLINE | HIPAA    |     yes    |
+  @TC.70013 @bus @2.17 @add_new_partner @reseller @env_dependent @coupon
+  Scenario: 70013 Add New Reseller Partner  -- Yearly -- Silver -- PT -- 2000 GB -- Server Plan -- Coupon -- Net Terms -- 10 add on
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     |  reseller quota |  server plan |  coupon              |  net terms | storage add on |
+      |   12   |  Silver          | Portugal        | MozyPro Ireland  | 2000            |      yes     |  10PERCENTOFFOUTLINE |      yes   |     10         |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -366,11 +275,11 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
-  @TC.50005 @bus @2.17 @add_new_partner @mozypro
-  Scenario: 50005 Add New MozyPro Partner  -- CY -- Monthly -- 24 TB -- Server Plan -- 15 add on -- Net Terms
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  server plan |  net terms | storage add on |
-      |   1    |       24 TB | Cyprus          | MozyPro Ireland  |      yes     |     yes    |     15         |
+  @TC.70014 @bus @2.17 @add_new_partner @reseller @vat @env_dependent @coupon
+  Scenario: 70014 Add New Reseller Partner  -- Yearly -- Gold -- IE -- 1000 GB -- Server Plan -- Coupon -- Net Terms -- VAT
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     |  reseller quota |  server plan |  coupon              |  net terms | vat number |
+      |   12   |  Gold            | Ireland         | MozyPro Ireland  | 1000            |      yes     |  10PERCENTOFFOUTLINE |      yes   | IE9691104A |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -385,11 +294,68 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
-  @TC.50006 @bus @2.17 @add_new_partner @mozypro @coupon
-  Scenario: 50006 Add New MozyPro Partner  -- BG -- Yearly -- 50 GB -- Coupon -- HIPAA -- Net Terms
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  coupon              | security |  net terms |
-      |   12   |       50 GB | Bulgaria        | MozyPro France   |  10PERCENTOFFOUTLINE | HIPAA    |     yes    |
+  @TC.70015 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70015 Add New Reseller Partner  -- Yearly -- Platinum -- SE -- 1200 GB -- CC -- 10 add on
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     |  reseller quota | storage add on | cc number        |
+      |   12   |  Platinum        | Sweden          | MozyPro Germany  | 1200            |     10         | 4581092111111122 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
+      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
+      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
+    And Partner billing history should be:
+      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
+      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
+    And I search and delete partner account by newly created partner company name
+
+  @TC.70016 @bus @2.17 @add_new_partner @reseller @vat @env_dependent @coupon
+  Scenario: 70016 Add New Reseller Partner  -- Yearly -- Silver -- UK -- 500 GB -- Server Plan -- Coupon -- CC -- VAT -- 10 add on
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under |  reseller quota |  server plan |  coupon              | vat number  | storage add on | cc number        |
+      |   12   |  Silver          | United Kingdom  | MozyPro UK   | 500             |      yes     |  10PERCENTOFFOUTLINE | GB117223643 |     10         | 4916783606275713 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
+      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
+      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
+    And Partner billing history should be:
+      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
+      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
+    And I search and delete partner account by newly created partner company name
+
+  @TC.70017 @bus @2.17 @add_new_partner @reseller @vat @env_dependent @coupon
+  Scenario: 70017 Add New Reseller Partner  -- Yearly -- Gold -- IT -- 800 GB -- Server Plan -- Coupon -- CC -- VAT
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     |  reseller quota |  server plan |  coupon              | vat number    | cc number        |
+      |   12   |  Gold            | Italy           | MozyPro UK       | 800             |      yes     |  10PERCENTOFFOUTLINE | IT03018900245 | 4916921703777575 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
+      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
+      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
+    And Partner billing history should be:
+      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
+      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
+    And I search and delete partner account by newly created partner company name
+
+@TC.70018 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70018 Add New Reseller Partner  -- Yearly -- Platinum -- BG -- 600 GB -- Net Terms -- 10 add on
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     |  reseller quota |  net terms | storage add on |
+      |   12   |  Platinum        | Bulgaria        | MozyPro Germany  | 600             |      yes   |     10         |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -404,68 +370,11 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
-  @TC.50007 @bus @2.17 @add_new_partner @mozypro @vat @coupon
-    Scenario: 50007 Add New MozyPro Partner  -- DE -- Yearly -- 500 GB -- Server Plan -- Coupon -- VAT -- Net Terms
-      When I add a new MozyPro partner:
-        | period |   base plan | country         | create under     |  server plan |  coupon              | vat number  |  net terms |
-        |   12   |      500 GB | Germany         | MozyPro Germany  |      yes     |  10PERCENTOFFOUTLINE | DE812321109 |     yes    |
-      And the sub-total before taxes or discounts should be correct
-      And the order summary table should be correct
-      And New partner should be created
-      And New Partner internal billing should be:
-        | Account Type:   | Net Terms 30                                | Current Period: | <%=@partner.subscription_period%> |
-        | Unpaid Balance: | <%=@partner.billing_info.billing[:total_str]%>  | Collect On:     | N/A                |
-        | Renewal Date:   | <%=@partner.subscription_period%>           | Renewal Period: | Use Current Period |
-        | Next Charge:    | <%=@partner.subscription_period%>           |                 |                    |
-      And Partner billing history should be:
-        | Date  | Amount                                      | Total Paid                                | Balance Due                                |
-        | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-        | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
-      And I search and delete partner account by newly created partner company name
-
-    @TC.50008 @bus @2.17 @add_new_partner @mozypro @vat
-    Scenario: 50008 Add New MozyPro Partner  -- IE -- Yearly -- 4 TB -- Server Plan -- VAT -- HIPAA -- Net Terms
-      When I add a new MozyPro partner:
-        | period |   base plan | country         | create under     |  server plan | vat number | security |  net terms |
-        |   12   |        4 TB | Ireland         | MozyPro Ireland  |      yes     | IE9691104A | HIPAA    |     yes    |
-      And the sub-total before taxes or discounts should be correct
-      And the order summary table should be correct
-      And New partner should be created
-      And New Partner internal billing should be:
-        | Account Type:   | Net Terms 30                                | Current Period: | <%=@partner.subscription_period%> |
-        | Unpaid Balance: | <%=@partner.billing_info.billing[:total_str]%>  | Collect On:     | N/A                |
-        | Renewal Date:   | <%=@partner.subscription_period%>           | Renewal Period: | Use Current Period |
-        | Next Charge:    | <%=@partner.subscription_period%>           |                 |                    |
-      And Partner billing history should be:
-        | Date  | Amount                                      | Total Paid                                | Balance Due                                |
-        | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-        | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
-      And I search and delete partner account by newly created partner company name
-
-    @TC.50009 @bus @2.17 @add_new_partner @mozypro @vat
-    Scenario: 50009 Add New MozyPro Partner  -- IT -- Yearly -- 16 TB -- Server Plan -- VAT -- 10 add on -- Net Terms
-      When I add a new MozyPro partner:
-        | period |   base plan | country         | create under     |  server plan | vat number    | storage add on |  net terms |
-        |   12   |       16 TB | Italy           | MozyPro Germany  |      yes     | IT03018900245 |     10         |     yes    |
-      And the sub-total before taxes or discounts should be correct
-      And the order summary table should be correct
-      And New partner should be created
-      And New Partner internal billing should be:
-        | Account Type:   | Net Terms 30                                | Current Period: | <%=@partner.subscription_period%> |
-        | Unpaid Balance: | <%=@partner.billing_info.billing[:total_str]%>  | Collect On:     | N/A                |
-        | Renewal Date:   | <%=@partner.subscription_period%>           | Renewal Period: | Use Current Period |
-        | Next Charge:    | <%=@partner.subscription_period%>           |                 |                    |
-      And Partner billing history should be:
-        | Date  | Amount                                      | Total Paid                                | Balance Due                                |
-        | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-        | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
-      And I search and delete partner account by newly created partner company name
-
-  @TC.50010 @BUG.132150 @bus @2.17 @add_new_partner @mozypro @coupon
-  Scenario: 50010 Add New MozyPro Partner  -- LV -- Yearly -- 28 TB -- Server Plan -- Coupon -- billing country -- Net Terms
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  server plan |  coupon              | billing country | billing state abbrev |  net terms |
-      |   12   |       28 TB | Latvia          | MozyPro Ireland  |      yes     |  10PERCENTOFFOUTLINE | United States   |      NY              |     yes    |
+  @TC.70019 @bus @2.17 @add_new_partner @reseller @env_dependent @coupon
+  Scenario: 70019 Add New Reseller Partner  -- Yearly -- Silver -- DE -- 2000 GB -- Server Plan -- Coupon -- Net Terms -- 10 add on
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     |  reseller quota |  server plan |  coupon              |  net terms | storage add on |
+      |   12   |  Silver          | Germany         | MozyPro Germany  | 2000            |      yes     |  10PERCENTOFFOUTLINE |      yes   |     10         |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -480,30 +389,11 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
-  @TC.50011 @bus @2.17 @add_new_partner @mozypro @vat
-    Scenario: 50011 Add New MozyPro Partner  -- FR -- Biennially -- 100 GB -- VAT -- billing country -- Net Terms
-      When I add a new MozyPro partner:
-        | period |   base plan | country         | create under     | vat number    | billing country | billing state |  net terms |
-        |   24   |      100 GB | France          | MozyPro France   | FR08410091490 | United Kingdom  |     Wales     |     yes    |
-      And the sub-total before taxes or discounts should be correct
-      And the order summary table should be correct
-      And New partner should be created
-      And New Partner internal billing should be:
-        | Account Type:   | Net Terms 30                                | Current Period: | <%=@partner.subscription_period%> |
-        | Unpaid Balance: | <%=@partner.billing_info.billing[:total_str]%>  | Collect On:     | N/A                |
-        | Renewal Date:   | <%=@partner.subscription_period%>           | Renewal Period: | Use Current Period |
-        | Next Charge:    | <%=@partner.subscription_period%>           |                 |                    |
-      And Partner billing history should be:
-        | Date  | Amount                                      | Total Paid                                | Balance Due                                |
-        | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-        | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
-      And I search and delete partner account by newly created partner company name
-
-    @TC.50012 @bus @2.17 @add_new_partner @mozypro @coupon
-  Scenario: 50012 Add New MozyPro Partner  -- EE -- Biennially -- 1 TB -- Coupon -- 12 add on -- HIPAA -- Net Terms
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  coupon              | storage add on | security |  net terms |
-      |   24   |        1 TB | Estonia         | MozyPro Germany  |  10PERCENTOFFOUTLINE |     12         | HIPAA    |     yes    |
+  @TC.70020 @bus @2.17 @add_new_partner @reseller @vat @env_dependent @coupon
+  Scenario: 70020 Add New Reseller Partner  -- Yearly -- Gold -- UK -- 600 GB -- Server Plan -- Coupon -- Net Terms -- VAT
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under |  reseller quota |  server plan |  coupon              |  net terms | vat number  |
+      |   12   |  Gold            | United Kingdom  | MozyPro UK   | 600             |      yes     |  10PERCENTOFFOUTLINE |      yes   | GB117223643 |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -518,30 +408,30 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
-  @TC.50013 @bus @2.17 @add_new_partner @mozypro @vat
-    Scenario: 50013 Add New MozyPro Partner  -- BE -- Biennially -- 8 TB -- Server Plan -- VAT -- Net Terms
-      When I add a new MozyPro partner:
-        | period |   base plan | country         | create under     |  server plan | vat number   |  net terms |
-        |   24   |        8 TB | Belgium         | MozyPro France   |      yes     | BE0883236072 |     yes    |
-      And the sub-total before taxes or discounts should be correct
-      And the order summary table should be correct
-      And New partner should be created
-      And New Partner internal billing should be:
-        | Account Type:   | Net Terms 30                                | Current Period: | <%=@partner.subscription_period%> |
-        | Unpaid Balance: | <%=@partner.billing_info.billing[:total_str]%>  | Collect On:     | N/A                |
-        | Renewal Date:   | <%=@partner.subscription_period%>           | Renewal Period: | Use Current Period |
-        | Next Charge:    | <%=@partner.subscription_period%>           |                 |                    |
-      And Partner billing history should be:
-        | Date  | Amount                                      | Total Paid                                | Balance Due                                |
-        | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-        | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
-      And I search and delete partner account by newly created partner company name
+  @TC.70021 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70021 Add New Reseller Partner  -- Yearly -- Platinum -- UK -- 3000 GB -- CC -- 10 add on
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under |  reseller quota | storage add on | billing country | cc number        |
+      |   12   |  Platinum        | United Kingdom  | MozyPro UK   | 3000            |     10         | United Kingdom  | 4916783606275713 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
+      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
+      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
+    And Partner billing history should be:
+      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
+      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
+    And I search and delete partner account by newly created partner company name
 
-    @TC.50014 @bus @2.17 @add_new_partner @mozypro
-  Scenario: 50014 Add New MozyPro Partner  -- IT -- Biennially -- 16 TB -- Server Plan -- Net Terms
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  server plan |  net terms |
-      |   24   |       16 TB | Italy           | MozyPro UK       |      yes     |     yes    |
+  @TC.70022 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70022 Add New Reseller Partner  -- Yearly -- Silver -- EL -- 600 GB -- Net Terms -- 10 add on
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     |  reseller quota |  net terms | storage add on |
+      |   12   |  Silver          | Greece          | MozyPro France   | 600             |      yes   |     10         |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -556,11 +446,11 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
-  @TC.50015 @bus @2.17 @add_new_partner @mozypro @coupon
-  Scenario: 50015 Add New MozyPro Partner  -- HR -- Biennially -- 20 TB -- Server Plan -- Coupon -- 10 add on -- Net Terms
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  server plan |  coupon              | storage add on |  net terms |
-      |   24   |       20 TB | Croatia         | MozyPro France   |      yes     |  10PERCENTOFFOUTLINE |     10         |     yes    |
+  @TC.70023 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70023 Add New Reseller Partner  -- Yearly -- Gold -- DK -- 850 GB -- Net Terms
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     |  reseller quota |  net terms |
+      |   12   |  Gold            | Denmark         | MozyPro UK       | 850             |      yes   |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -575,11 +465,258 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
-  @TC.50016 @bus @2.17 @add_new_partner @mozypro @coupon
-  Scenario: 50016 Add New MozyPro Partner  -- LU -- Biennially -- 32 TB -- Server Plan -- HIPAA -- Coupon -- Net Terms
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  server plan | security |  coupon              |  net terms |
-      |   24   |       32 TB | Luxembourg      | MozyPro France   |      yes     | HIPAA    |  10PERCENTOFFOUTLINE |     yes    |
+  @TC.70024 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70024 Add New Reseller Partner  -- Yearly -- Platinum -- LU -- 2600 GB -- CC -- 10 add on
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     |  reseller quota | storage add on | cc number        |
+      |   12   |  Platinum        | Luxembourg      | MozyPro Ireland  | 2600            |     10         | 4779531111111121 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
+      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
+      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
+    And Partner billing history should be:
+      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
+      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
+    And I search and delete partner account by newly created partner company name
+
+  @TC.70025 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70025 Add New Reseller Partner  -- BE -- Yearly -- Gold -- 800 GB -- Server Plan -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     | reseller quota |  server plan | cc number        |
+      |   12   |   Gold           | Belgium         | MozyPro France   |     800        |      yes     | 5413271111111222 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
+      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
+      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
+    And Partner billing history should be:
+      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
+      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
+    And I search and delete partner account by newly created partner company name
+
+  @TC.70026 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70026 Add New Reseller Partner  -- BG -- Yearly -- Gold -- 800 GB -- Server Plan -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     | reseller quota |  server plan | cc number        |
+      |   12   |   Gold           | Bulgaria        | MozyPro UK       |     800        |      yes     | 4169912111111121 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
+      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
+      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
+    And Partner billing history should be:
+      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
+      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
+    And I search and delete partner account by newly created partner company name
+
+  @TC.70027 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70027 Add New Reseller Partner  -- CZ -- Yearly -- Gold -- 800 GB -- Server Plan -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     | reseller quota |  server plan | cc number        |
+      |   12   |   Gold           | Czech Republic  | MozyPro France   |     800        |      yes     | 5101420111111222 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
+      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
+      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
+    And Partner billing history should be:
+      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
+      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
+    And I search and delete partner account by newly created partner company name
+
+  @TC.70028 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70028 Add New Reseller Partner  -- DK -- Yearly -- Gold -- 800 GB -- Server Plan -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     | reseller quota |  server plan | cc number        |
+      |   12   |   Gold           | Denmark         | MozyPro Ireland  |     800        |      yes     | 5578922111111122 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
+      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
+      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
+    And Partner billing history should be:
+      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
+      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
+    And I search and delete partner account by newly created partner company name
+
+  @TC.70029 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70029 Add New Reseller Partner  -- DE -- Yearly -- Gold -- 800 GB -- Server Plan -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     | reseller quota |  server plan | cc number        |
+      |   12   |   Gold           | Germany         | MozyPro Germany  |     800        |      yes     | 4188181111111112 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
+      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
+      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
+    And Partner billing history should be:
+      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
+      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
+    And I search and delete partner account by newly created partner company name
+
+  @TC.70030 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70030 Add New Reseller Partner  -- EE -- Yearly -- Gold -- 800 GB -- Server Plan -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     | reseller quota |  server plan | cc number        |
+      |   12   |   Gold           | Estonia         | MozyPro France   |     800        |      yes     | 4238370111111111 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
+      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
+      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
+    And Partner billing history should be:
+      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
+      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
+    And I search and delete partner account by newly created partner company name
+
+  @TC.70031 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70031 Add New Reseller Partner  -- EL -- Yearly -- Gold -- 800 GB -- Server Plan -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     | reseller quota |  server plan | cc number        |
+      |   12   |   Gold           | Greece          | MozyPro France   |     800        |      yes     | 4532121111111111 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
+      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
+      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
+    And Partner billing history should be:
+      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
+      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
+    And I search and delete partner account by newly created partner company name
+
+  @TC.70032 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70032 Add New Reseller Partner  -- ES -- Yearly -- Gold -- 800 GB -- Server Plan -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     | reseller quota |  server plan | cc number        |
+      |   12   |   Gold           | Spain           | MozyPro Ireland  |     800        |      yes     | 4328191211111111 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
+      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
+      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
+    And Partner billing history should be:
+      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
+      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
+    And I search and delete partner account by newly created partner company name
+
+  @TC.70033 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70033 Add New Reseller Partner  -- FR -- Yearly -- Gold -- 800 GB -- Server Plan -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under    | reseller quota |  server plan | cc number        |
+      |   12   |   Gold           | France          | MozyPro France  |     800        |      yes     | 4485393141463880 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
+      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
+      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
+    And Partner billing history should be:
+      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
+      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
+    And I search and delete partner account by newly created partner company name
+
+  @TC.70034 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70034 Add New Reseller Partner  -- HR -- Yearly -- Gold -- 800 GB -- Server Plan -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     | reseller quota |  server plan | cc number        |
+      |   12   |   Gold           | Croatia         | MozyPro Germany  |     800        |      yes     | 5437781111111222 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
+      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
+      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
+    And Partner billing history should be:
+      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
+      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
+    And I search and delete partner account by newly created partner company name
+
+  @TC.70035 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70035 Add New Reseller Partner  -- IE -- Yearly -- Gold -- 800 GB -- Server Plan -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     | reseller quota |  server plan | cc number        |
+      |   12   |   Gold           | Ireland         | MozyPro Ireland  |     800        |      yes     | 4319402211111113 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
+      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
+      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
+    And Partner billing history should be:
+      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
+      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
+    And I search and delete partner account by newly created partner company name
+
+  @TC.70036 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70036 Add New Reseller Partner  -- IT -- Yearly -- Gold -- 800 GB -- Server Plan -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     | reseller quota |  server plan | cc number        |
+      |   12   |   Gold           | Italy           | MozyPro France   |     800        |      yes     | 4916921703777575 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
+      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
+      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
+    And Partner billing history should be:
+      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
+      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
+    And I search and delete partner account by newly created partner company name
+
+  @TC.70037 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70037 Add New Reseller Partner  -- CY -- Yearly -- Gold -- 800 GB -- Server Plan -- Net Terms
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     | reseller quota |  server plan | net terms |
+      |   12   |   Gold           | Cyprus          | MozyPro Germany  |     800        |      yes     |   yes     |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -594,11 +731,11 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
-  @TC.60001 @bus @2.17 @add_new_partner @mozypro
-  Scenario: 60001 Add New MozyPro Partner  -- LT -- Monthly -- 100 GB -- Server Plan -- HIPAA -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country       | create under     |  server plan | security | cc number        |
-      |   1    |      100 GB |   Lithuania   | MozyPro Ireland  |      yes     | HIPAA    | 4797121111111111 |
+  @TC.70038 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70038 Add New Reseller Partner  -- LV -- Yearly -- Gold -- 800 GB -- Server Plan -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     | reseller quota |  server plan | cc number        |
+      |   12   |   Gold           | Latvia          | MozyPro Ireland  |     800        |      yes     | 4405211111111122 |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -613,11 +750,11 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
-  @TC.60002 @bus @2.17 @add_new_partner @mozypro
-  Scenario: 60002 Add New MozyPro Partner  -- PT -- Monthly -- 1 TB -- 10 add on -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     | storage add on | cc number        |
-      |   1    |        1 TB | Portugal        | MozyPro France   |     10         | 4556581910687747 |
+  @TC.70039 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70039 Add New Reseller Partner  -- LT -- Yearly -- Gold -- 800 GB -- Server Plan -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     | reseller quota |  server plan | cc number        |
+      |   12   |   Gold           | Lithuania       | MozyPro France   |     800        |      yes     | 4797121111111111 |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -632,11 +769,11 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
-  @TC.60003 @bus @2.17 @add_new_partner @mozypro
-  Scenario: 60003 Add New MozyPro Partner  -- SI -- Monthly -- 8 TB -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  cc number       |
-      |   1    |        8 TB | Slovenia        | MozyPro Ireland  | 4493690111111112 |
+  @TC.70040 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70040 Add New Reseller Partner  -- LU -- Yearly -- Gold -- 800 GB -- Server Plan -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     | reseller quota |  server plan | cc number        |
+      |   12   |   Gold           | Luxembourg      | MozyPro Ireland  |     800        |      yes     | 4779531111111121 |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -651,11 +788,11 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
-  @TC.60004 @bus @2.17 @add_new_partner @mozypro
-  Scenario: 60004 Add New MozyPro Partner  -- SE -- Monthly -- 20 TB -- Server Plan -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  server plan | cc number        |
-      |   1    |       20 TB | Sweden          | MozyPro Germany  |      yes     | 4581092111111122 |
+  @TC.70041 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70041 Add New Reseller Partner  -- HU -- Yearly -- Gold -- 800 GB -- Server Plan -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     | reseller quota |  server plan | cc number        |
+      |   12   |   Gold           | Hungary         | MozyPro Germany  |     800        |      yes     | 4333112111111111 |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -670,30 +807,11 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
-  @TC.60005 @bus @2.17 @add_new_partner @mozypro @vat
-    Scenario: 60005 Add New MozyPro Partner  -- DE -- Monthly -- 32 TB -- VAT -- 10 add on -- CC
-      When I add a new MozyPro partner:
-        | period |   base plan | country         | create under     | vat number   | storage add on | cc number        |
-        |   1    |       32 TB | Germany         | MozyPro Germany  | DE812321109  |     10         | 4188181111111112 |
-      And the sub-total before taxes or discounts should be correct
-      And the order summary table should be correct
-      And New partner should be created
-      And New Partner internal billing should be:
-        | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
-        | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
-        | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
-        | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
-      And Partner billing history should be:
-        | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
-        | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-        | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
-      And I search and delete partner account by newly created partner company name
-
-    @TC.60006 @bus @2.17 @add_new_partner @mozypro @coupon
-  Scenario: 60006 Add New MozyPro Partner  -- HU -- Yearly -- 10 GB -- Coupon -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  coupon              | cc number        |
-      |   12   |       10 GB | Hungary         | MozyPro France   |  10PERCENTOFFOUTLINE | 4333112111111111 |
+  @TC.70042 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70042 Add New Reseller Partner  -- MT -- Yearly -- Gold -- 800 GB -- Server Plan -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     | reseller quota |  server plan | cc number        |
+      |   12   |   Gold           | Malta           | MozyPro UK       |     800        |      yes     | 4313801111111121 |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -708,11 +826,11 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
-  @TC.60007 @bus @2.17 @add_new_partner @mozypro @coupon
-  Scenario: 60007 Add New MozyPro Partner  -- AT -- Yearly -- 250 GB -- Server Plan -- Coupon -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  server plan |  coupon              | cc number        |
-      |   12   |      250 GB | Austria         | MozyPro Ireland  |      yes     |  10PERCENTOFFOUTLINE | 4548181211111124 |
+  @TC.70043 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70043 Add New Reseller Partner  -- NL -- Yearly -- Gold -- 800 GB -- Server Plan -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     | reseller quota |  server plan | cc number        |
+      |   12   |   Gold           | Netherlands     | MozyPro Ireland  |     800        |      yes     | 5100291111111111 |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -727,11 +845,11 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
-  @TC.60008 @bus @2.17 @add_new_partner @mozypro @coupon
-  Scenario: 60008 Add New MozyPro Partner  -- IE -- Yearly -- 500 GB -- Coupon -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  coupon              | cc number        |
-      |   12   |      500 GB | Ireland         | MozyPro Ireland  |  10PERCENTOFFOUTLINE | 4319402211111113 |
+  @TC.70044 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70044 Add New Reseller Partner  -- AT -- Yearly -- Gold -- 800 GB -- Server Plan -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     | reseller quota |  server plan | cc number        |
+      |   12   |   Gold           | Austria         | MozyPro Ireland  |     800        |      yes     | 4548181211111124 |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -746,11 +864,11 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
-  @TC.60009 @bus @2.17 @add_new_partner @mozypro @coupon
-  Scenario: 60009 Add New MozyPro Partner  -- EL -- Yearly -- 2 TB -- Coupon -- HIPAA -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  coupon              | security | cc number        |
-      |   12   |        2 TB | Greece          | MozyPro Germany  |  10PERCENTOFFOUTLINE | HIPAA    | 4532121111111111 |
+  @TC.70045 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70045 Add New Reseller Partner  -- PL -- Yearly -- Gold -- 800 GB -- Server Plan -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     | reseller quota |  server plan | cc number        |
+      |   12   |   Gold           | Poland          | MozyPro Ireland  |     800        |      yes     | 4023581211111111 |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -765,11 +883,11 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
-  @TC.60010 @bus @2.17 @add_new_partner @mozypro
-  Scenario: 60010 Add New MozyPro Partner  -- SK -- Yearly -- 12 TB -- Server Plan -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  server plan | cc number        |
-      |   12   |       12 TB | Slovakia        | MozyPro Ireland  |      yes     | 4544170111111122 |
+  @TC.70046 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70046 Add New Reseller Partner  -- PT -- Yearly -- Gold -- 800 GB -- Server Plan -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     | reseller quota |  server plan | cc number        |
+      |   12   |   Gold           | Portugal        | MozyPro France   |     800        |      yes     | 4556581910687747 |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -784,11 +902,11 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
-  @TC.60011 @bus @2.17 @add_new_partner @mozypro @coupon
-  Scenario: 60011 Add New MozyPro Partner  -- DE -- Yearly -- 16 TB -- Coupon -- Server Plan -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  coupon              |  server plan | cc number        |
-      |   12   |       16 TB | Germany         | MozyPro Ireland  |  10PERCENTOFFOUTLINE |      yes     | 4188181111111112 |
+  @TC.70047 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70047 Add New Reseller Partner  -- RO -- Yearly -- Gold -- 800 GB -- Server Plan -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     | reseller quota |  server plan | cc number        |
+      |   12   |   Gold           | Romania         | MozyPro France   |     800        |      yes     | 4493590111111122 |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -803,11 +921,11 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
-  @TC.60012 @bus @2.17 @add_new_partner @mozypro @coupon
-  Scenario: 60012 Add New MozyPro Partner  -- UK -- Yearly -- 24 TB -- Coupon -- HIPAA -- 10 add on -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  coupon              | security | storage add on | cc number        |
-      |   12   |       24 TB | United Kingdom  | MozyPro UK       |  10PERCENTOFFOUTLINE | HIPAA    |     10         | 4916783606275713 |
+  @TC.70048 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70048 Add New Reseller Partner  -- SI -- Yearly -- Gold -- 800 GB -- Server Plan -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     | reseller quota |  server plan | cc number        |
+      |   12   |   Gold           | Slovenia        | MozyPro Germany  |     800        |      yes     | 4493690111111112 |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -822,11 +940,11 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
-  @TC.60013 @bus @2.17 @add_new_partner @mozypro @coupon
-  Scenario: 60013 Add New MozyPro Partner  -- MT -- Biennially -- 50 GB -- Server Plan -- Coupon -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  server plan |  coupon              | cc number        |
-      |   24   |       50 GB | Malta           | MozyPro Germany  |      yes     |  10PERCENTOFFOUTLINE | 4313801111111121 |
+  @TC.70049 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70049 Add New Reseller Partner  -- SK -- Yearly -- Gold -- 800 GB -- Server Plan -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     | reseller quota |  server plan | cc number        |
+      |   12   |   Gold           | Slovakia        | MozyPro Ireland  |     800        |      yes     | 4544170111111122 |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -841,11 +959,11 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
-  @TC.60014 @bus @2.17 @add_new_partner @mozypro
-  Scenario: 60014 Add New MozyPro Partner  -- PL -- Biennially -- 500 GB -- HIPAA -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     | security | cc number        |
-      |   24   |      500 GB | Poland          | MozyPro Germany  | HIPAA    | 4056702111111122 |
+  @TC.70050 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70050 Add New Reseller Partner  -- FI -- Yearly -- Gold -- 800 GB -- Server Plan -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     | reseller quota |  server plan | cc number        |
+      |   12   |   Gold           | Finland         | MozyPro Ireland  |     800        |      yes     | 4920111111111112 |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -860,11 +978,11 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
-  @TC.60015 @bus @2.17 @add_new_partner @mozypro
-  Scenario: 60015 Add New MozyPro Partner  -- RO -- Biennially -- 4 TB -- Server Plan -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  server plan | cc number        |
-      |   24   |        4 TB | Romania         | MozyPro UK       |      yes     | 4493590111111122 |
+  @TC.70051 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70051 Add New Reseller Partner  -- SE -- Yearly -- Gold -- 800 GB -- Server Plan -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under     | reseller quota |  server plan |   cc number      |
+      |   12   |   Gold           | Sweden          | MozyPro Germany  |     800        |      yes     | 4581092111111122 |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created
@@ -879,334 +997,11 @@
       | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
-  @TC.60016 @bus @2.17 @add_new_partner @mozypro
-  Scenario: 60016 Add New MozyPro Partner  -- FR -- Biennially -- 8 TB -- Server Plan -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  server plan | cc number        |
-      |   24   |        8 TB | France          | MozyPro France   |      yes     | 4485393141463880 |
-    And the sub-total before taxes or discounts should be correct
-    And the order summary table should be correct
-    And New partner should be created
-    And New Partner internal billing should be:
-      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
-      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
-      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
-      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
-    And Partner billing history should be:
-      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
-      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
-    And I search and delete partner account by newly created partner company name
-
-  @TC.60017 @bus @2.17 @add_new_partner @mozypro @coupon
-  Scenario: 60017 Add New MozyPro Partner  -- FI -- Biennially -- 16 TB -- Coupon -- 10 add on -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  coupon              | storage add on | cc number        |
-      |   24   |       16 TB | Finland         | MozyPro Ireland  |  10PERCENTOFFOUTLINE |     10         | 4920111111111112 |
-    And the sub-total before taxes or discounts should be correct
-    And the order summary table should be correct
-    And New partner should be created
-    And New Partner internal billing should be:
-      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
-      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
-      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
-      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
-    And Partner billing history should be:
-      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
-      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
-    And I search and delete partner account by newly created partner company name
-
-  @TC.60018 @bus @2.17 @add_new_partner @mozypro @vat
-    Scenario: 60018 Add New MozyPro Partner  -- FR -- Biennially -- 28 TB -- Server Plan -- VAT -- CC
-      When I add a new MozyPro partner:
-        | period |   base plan | country         | create under     |  server plan | vat number    | cc number        |
-        |   24   |       28 TB | France          | MozyPro France   |      yes     | FR08410091490 | 4485393141463880 |
-      And the sub-total before taxes or discounts should be correct
-      And the order summary table should be correct
-      And New partner should be created
-      And New Partner internal billing should be:
-        | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
-        | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
-        | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
-        | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
-      And Partner billing history should be:
-        | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
-        | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-        | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
-      And I search and delete partner account by newly created partner company name
-
-    @TC.60020 @bus @2.17 @add_new_partner @mozypro
-  Scenario: 60020 Add New MozyPro Partner  -- FI -- Monthly -- 50 GB -- Server Plan -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  server plan | cc number        |
-      |   1    |       50 GB | Finland         | MozyPro Ireland  |      yes     | 4920111111111112 |
-    And the sub-total before taxes or discounts should be correct
-    And the order summary table should be correct
-    And New partner should be created
-    And New Partner internal billing should be:
-      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
-      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
-      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
-      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
-    And Partner billing history should be:
-      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
-      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
-    And I search and delete partner account by newly created partner company name
-
-  @TC.60021 @bus @2.17 @add_new_partner @mozypro
-  Scenario: 60021 Add New MozyPro Partner  -- UK -- Monthly -- 500 GB -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under | cc number        |
-      |   1    |      500 GB | United Kingdom  | MozyPro UK   | 4916783606275713 |
-    And the sub-total before taxes or discounts should be correct
-    And the order summary table should be correct
-    And New partner should be created
-    And New Partner internal billing should be:
-      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
-      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
-      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
-      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
-    And Partner billing history should be:
-      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
-      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
-    And I search and delete partner account by newly created partner company name
-
-  @TC.60022 @bus @2.17 @add_new_partner @mozypro @coupon
-  Scenario: 60022 Add New MozyPro Partner  -- IE -- Monthly -- 4 TB -- Server Plan -- Coupon -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  server plan |  coupon              | cc number        |
-      |   1    |        4 TB | Ireland         | MozyPro Ireland  |      yes     |  10PERCENTOFFOUTLINE | 4319402211111113 |
-    And the sub-total before taxes or discounts should be correct
-    And the order summary table should be correct
-    And New partner should be created
-    And New Partner internal billing should be:
-      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
-      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
-      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
-      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
-    And Partner billing history should be:
-      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
-      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
-    And I search and delete partner account by newly created partner company name
-
-  @TC.60023 @bus @2.17 @add_new_partner @mozypro @coupon
-  Scenario: 60023 Add New MozyPro Partner  -- FR -- Monthly -- 16 TB -- Coupon -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under    |  coupon              | cc number        |
-      |   1    |       16 TB | France          | MozyPro France  |  10PERCENTOFFOUTLINE | 4485393141463880 |
-    And the sub-total before taxes or discounts should be correct
-    And the order summary table should be correct
-    And New partner should be created
-    And New Partner internal billing should be:
-      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
-      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
-      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
-      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
-    And Partner billing history should be:
-      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
-      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
-    And I search and delete partner account by newly created partner company name
-
-  @TC.60024 @bus @2.17 @add_new_partner @mozypro
-  Scenario: 60024 Add New MozyPro Partner  -- BE -- Monthly -- 28 TB -- 10 add on -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     | storage add on | cc number        |
-      |   1    |       28 TB | Belgium         | MozyPro Germany  |     10         | 5413271111111222 |
-    And the sub-total before taxes or discounts should be correct
-    And the order summary table should be correct
-    And New partner should be created
-    And New Partner internal billing should be:
-      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
-      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
-      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
-      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
-    And Partner billing history should be:
-      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
-      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
-    And I search and delete partner account by newly created partner company name
-
-  @TC.60025 @bus @2.17 @add_new_partner @mozypro
-  Scenario: 60025 Add New MozyPro Partner  -- EL -- Yearly -- 100 GB -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     | cc number        |
-      |   12   |      100 GB | Greece          | MozyPro Ireland  | 4532121111111111 |
-    And the sub-total before taxes or discounts should be correct
-    And the order summary table should be correct
-    And New partner should be created
-    And New Partner internal billing should be:
-      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
-      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
-      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
-      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
-    And Partner billing history should be:
-      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
-      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
-    And I search and delete partner account by newly created partner company name
-
-  @TC.60026 @bus @2.17 @add_new_partner @mozypro @coupon
-  Scenario: 60026 Add New MozyPro Partner  -- BE -- Yearly -- 1 TB -- Coupon -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  coupon              | cc number        |
-      |   12   |        1 TB | Belgium         | MozyPro Ireland  |  10PERCENTOFFOUTLINE | 5413271111111222 |
-    And the sub-total before taxes or discounts should be correct
-    And the order summary table should be correct
-    And New partner should be created
-    And New Partner internal billing should be:
-      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
-      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
-      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
-      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
-    And Partner billing history should be:
-      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
-      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
-    And I search and delete partner account by newly created partner company name
-
-  @TC.60027 @bus @2.17 @add_new_partner @mozypro
-  Scenario: 60027 Add New MozyPro Partner  -- NL -- Yearly -- 8 TB -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country      | create under     | cc number        |
-      |   12   |        8 TB | Netherlands  | MozyPro Germany  | 5100291111111111 |
-    And the sub-total before taxes or discounts should be correct
-    And the order summary table should be correct
-    And New partner should be created
-    And New Partner internal billing should be:
-      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
-      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
-      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
-      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
-    And Partner billing history should be:
-      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
-      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
-    And I search and delete partner account by newly created partner company name
-
-  @TC.60028 @bus @2.17 @add_new_partner @mozypro @coupon
-  Scenario: 60028 Add New MozyPro Partner  -- RO -- Yearly -- 20 TB -- Coupon -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  coupon              | cc number        |
-      |   12   |       20 TB | Romania         | MozyPro Ireland  |  10PERCENTOFFOUTLINE | 4493590111111122 |
-    And the sub-total before taxes or discounts should be correct
-    And the order summary table should be correct
-    And New partner should be created
-    And New Partner internal billing should be:
-      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
-      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
-      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
-      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
-    And Partner billing history should be:
-      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
-      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
-    And I search and delete partner account by newly created partner company name
-
-  @TC.60029 @bus @2.17 @add_new_partner @mozypro @coupon
-  Scenario: 60029 Add New MozyPro Partner  -- UK -- Yearly -- 32 TB -- Coupon -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under |  coupon              | cc number        |
-      |   12   |       32 TB | United Kingdom  | MozyPro UK   |  10PERCENTOFFOUTLINE | 4916783606275713 |
-    And the sub-total before taxes or discounts should be correct
-    And the order summary table should be correct
-    And New partner should be created
-    And New Partner internal billing should be:
-      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
-      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
-      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
-      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
-    And Partner billing history should be:
-      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
-      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
-    And I search and delete partner account by newly created partner company name
-
-  @TC.60030 @bus @2.17 @add_new_partner @mozypro
-  Scenario: 60030 Add New MozyPro Partner  -- IE -- Biennially -- 10 GB -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     | cc number        |
-      |   24   |       10 GB | Ireland         | MozyPro Ireland  | 4319402211111113 |
-    And the sub-total before taxes or discounts should be correct
-    And the order summary table should be correct
-    And New partner should be created
-    And New Partner internal billing should be:
-      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
-      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
-      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
-      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
-    And Partner billing history should be:
-      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
-      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
-    And I search and delete partner account by newly created partner company name
-
-  @TC.60031 @bus @2.17 @add_new_partner @mozypro
-  Scenario: 60031 Add New MozyPro Partner  -- DE -- Biennially -- 250 GB -- Server Plan -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  server plan | cc number        |
-      |   24   |      250 GB | Germany         | MozyPro Germany  |      yes     | 4188181111111112 |
-    And the sub-total before taxes or discounts should be correct
-    And the order summary table should be correct
-    And New partner should be created
-    And New Partner internal billing should be:
-      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
-      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
-      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
-      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
-    And Partner billing history should be:
-      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
-      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
-    And I search and delete partner account by newly created partner company name
-
-  @TC.60032 @bus @2.17 @add_new_partner @mozypro
-  Scenario: 60032 Add New MozyPro Partner  -- UK -- Biennially -- 2 TB -- Server Plan -- 10 add on -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under |  server plan | storage add on | cc number        |
-      |   24   |        2 TB | United Kingdom  | MozyPro UK   |      yes     |     10         | 4916783606275713 |
-    And the sub-total before taxes or discounts should be correct
-    And the order summary table should be correct
-    And New partner should be created
-    And New Partner internal billing should be:
-      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
-      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
-      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
-      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
-    And Partner billing history should be:
-      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
-      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
-    And I search and delete partner account by newly created partner company name
-
-  @TC.60033 @bus @2.17 @add_new_partner @mozypro @coupon
-  Scenario: 60033 Add New MozyPro Partner  -- IE -- Biennially -- 12 TB -- Coupon -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  coupon              | cc number        |
-      |   24   |       12 TB | Ireland         | MozyPro Germany  |  10PERCENTOFFOUTLINE | 4319402211111113 |
-    And the sub-total before taxes or discounts should be correct
-    And the order summary table should be correct
-    And New partner should be created
-    And New Partner internal billing should be:
-      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%>           |
-      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                |
-      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period |
-      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                    |
-    And Partner billing history should be:
-      | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
-      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
-    And I search and delete partner account by newly created partner company name
-
-  @TC.60034 @bus @2.17 @add_new_partner @mozypro
-  Scenario: 60034 Add New MozyPro Partner  -- SE -- Biennially -- 24 TB -- Server Plan -- CC
-    When I add a new MozyPro partner:
-      | period |   base plan | country         | create under     |  server plan | cc number        |
-      |   24   |       24 TB | Sweden          | MozyPro Germany  |      yes     | 4581092111111122 |
+  @TC.70052 @bus @2.17 @add_new_partner @reseller @env_dependent
+  Scenario: 70052 Add New Reseller Partner  -- UK -- Yearly -- Gold -- 800 GB -- Server Plan -- CC
+    When I add a new Reseller partner:
+      | period |   reseller type  | country         | create under | reseller quota |  server plan | cc number        |
+      |   12   |   Gold           | United Kingdom  | MozyPro UK   |     800        |      yes     | 4916783606275713 |
     And the sub-total before taxes or discounts should be correct
     And the order summary table should be correct
     And New partner should be created

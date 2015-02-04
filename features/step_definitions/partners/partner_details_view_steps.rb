@@ -182,6 +182,36 @@ Then /^Partner internal billing should be:$/ do |internal_billing_table|
   actual.flatten.should == expected.flatten.select { |item| item != '' }
 end
 
+Then /^New Partner internal billing should be:$/ do |internal_billing_table|
+  actual = @bus_site.admin_console_page.partner_details_section.internal_billing_table_rows
+  expected = internal_billing_table.raw
+  expected[1][1].replace ERB.new(expected[1][1]).result(binding)
+  case ERB.new(expected[0][3]).result(binding)
+    when "1"
+      expected[0][3].replace "Monthly"
+      expected[2][1].replace "after 1 month"
+      expected[3][1].replace "after 1 month"
+    when "12"
+      expected[0][3].replace "Yearly"
+      expected[2][1].replace "after 1 year"
+      expected[3][1].replace "after 1 year"
+    when "24"
+      expected[0][3].replace "Biennial"
+      expected[2][1].replace "after 2 years"
+      expected[3][1].replace "after 2 years"
+  end
+
+  with_timezone(ARIA_ENV['timezone']) do
+    expected[2][1].replace(Chronic.parse(expected[2][1]).strftime('%m/%d/%y'))
+    expected[3][1].replace(Chronic.parse(expected[3][1]).strftime('%m/%d/%y'))
+  end
+
+  actual.flatten.should == expected.flatten.select { |item| item != '' }
+
+  Log.debug(expected)
+end
+
+
 Then /^Partner sub admins should be empty$/ do
   @bus_site.admin_console_page.partner_details_section.sub_admins_text.should include("No sub-admins.")
 end
@@ -203,7 +233,7 @@ Then /^Partner billing history should be:$/ do |billing_history_table|
             Log.debug "Aria time is #{Chronic.now}"
           end
         else
-          # do nothing
+          v.replace ERB.new(v).result(binding)
       end
     end
   end

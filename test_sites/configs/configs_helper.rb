@@ -12,6 +12,10 @@ LANG = YAML.load_file("#{File.dirname(__FILE__)}/lang.yaml")
 TEST_ENV = ENV['BUS_ENV'] || 'qa12h'
 QA_ENV = ALL_ENV[TEST_ENV]
 
+# used for billing price info
+BILLING = YAML.load_file("#{File.dirname(__FILE__)}/billing.yaml")
+BILLING_ENV = (TEST_ENV == 'std')? BILLING[TEST_ENV] : BILLING['qa']
+
 # Active aria test environment, for example aria qa
 ARIA_ENV = ALL_ENV[ENV['ARIA_ENV'] || 'aria_qa']
 
