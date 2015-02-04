@@ -12,8 +12,8 @@ Feature: User Details
       | keywords             |
       | last_update@test.com |
     Then User search results should be:
-      | User                 | Name        | Sync    | Machines | Storage | Storage Used |
-      | last_update@test.com | last_update | Enabled | 3        | Shared  | 60 GB        |
+      | User                 | Name        | Sync    | Machines | Storage         | Storage Used |
+      | last_update@test.com | last_update | Enabled | 3        | Generic Shared  | 60 GB        |
     When I view user details by last_update@test.com
     Then device table in user details should be:
       | Device   | Used/Available | Device Storage Limit | Last Update      | Action |
@@ -306,6 +306,7 @@ Feature: User Details
       | Used | Available | storage_type |
       |  0   | 2         | Server       |
     And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
     When I click Connection Settings tab
     And I input server connection settings
       | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
@@ -469,6 +470,7 @@ Feature: User Details
       | Used | Available | storage_type |
       |  0   | 2         | Server       |
     And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
     When I click Connection Settings tab
     And I input server connection settings
       | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |

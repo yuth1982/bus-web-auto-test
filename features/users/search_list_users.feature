@@ -43,9 +43,9 @@ Feature: Search and list user
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     And User search results should be:
-      | Name        | Sync    | Storage        |
-      | TC.21012-1  | Enabled  | 10 GB (Limited)|
-      | TC.21012-2  | Disabled | Shared         |
+      | Name        | Sync     | Storage        |
+      | TC.21012-1  | Enabled  | Generic 10 GB (Limited)|
+      | TC.21012-2  | Disabled | Generic Shared         |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -95,13 +95,13 @@ Feature: Search and list user
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     Then User search results should be:
-      | Name        | Sync    | Storage        |
-      | TC.21014-1  | Disabled | 15 GB (Limited)|
-      | TC.21014-2  | Enabled  | Shared         |
-      | TC.21014-3  | Enabled  | 20 GB (Limited)|
-      | TC.21014-4  | Disabled | Shared         |
-      | TC.21014-5  | Disabled | 25 GB (Limited)|
-      | TC.21014-6  | Disabled | Shared         |
+      | Name        | Sync      | Storage                |
+      | TC.21014-1  | Disabled  | Generic 15 GB (Limited)|
+      | TC.21014-2  | Enabled   | Generic Shared         |
+      | TC.21014-3  | Enabled   | Generic 20 GB (Limited)|
+      | TC.21014-4  | Disabled  | Generic Shared         |
+      | TC.21014-5  | Disabled  | Generic 25 GB (Limited)|
+      | TC.21014-6  | Disabled  | Generic Shared         |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -146,13 +146,13 @@ Feature: Search and list user
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     Then User search results should be:
-      | Name        | User Group            | Sync    | Storage        |
-      | TC.21016-1  | (default user group)  | Enabled  | 15 GB (Limited)|
-      | TC.21016-2  | (default user group)  | Enabled  | Shared         |
-      | TC.21016-3  | (default user group)  | Disabled | 35 GB (Limited)|
-      | TC.21016-4  | (default user group)  | Disabled | Shared         |
-      | TC.21016-5  | (default user group)  | Disabled | 25 GB (Limited)|
-      | TC.21016-6  | (default user group)  | Disabled | Shared         |
+      | Name        | User Group            | Sync     | Storage        |
+      | TC.21016-1  | (default user group)  | Enabled  | Generic 15 GB (Limited)|
+      | TC.21016-2  | (default user group)  | Enabled  | Generic Shared         |
+      | TC.21016-3  | (default user group)  | Disabled | Generic 35 GB (Limited)|
+      | TC.21016-4  | (default user group)  | Disabled | Generic Shared         |
+      | TC.21016-5  | (default user group)  | Disabled | Generic 25 GB (Limited)|
+      | TC.21016-6  | (default user group)  | Disabled | Generic Shared         |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -197,13 +197,13 @@ Feature: Search and list user
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     Then User search results should be:
-      | Name        | User Group            | Sync    | Storage                 |
-      | TC.21015-1  | (default user group)  | Enabled  | Desktop: 10 GB (Limited) |
-      | TC.21015-2  | (default user group)  | Disabled | Desktop: Shared         |
-      | TC.21015-3  | (default user group)  | Enabled  | Desktop: Shared         |
-      | TC.21015-4  | (default user group)  | Disabled | Desktop: 18 GB (Limited) |
-      | TC.21015-5  | (default user group)  | Disabled | Server: Shared          |
-      | TC.21015-6  | (default user group)  | Disabled | Server: 22 GB (Limited)  |
+      | Name        | User Group            | Sync     | Storage                 |
+      | TC.21015-1  | (default user group)  | Enabled  | Desktop 10 GB (Limited) |
+      | TC.21015-2  | (default user group)  | Disabled | Desktop Shared          |
+      | TC.21015-3  | (default user group)  | Enabled  | Desktop Shared          |
+      | TC.21015-4  | (default user group)  | Disabled | Desktop 18 GB (Limited) |
+      | TC.21015-5  | (default user group)  | Disabled | Server Shared           |
+      | TC.21015-6  | (default user group)  | Disabled | Server 22 GB (Limited)  |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -252,8 +252,8 @@ Feature: Search and list user
     And I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     And Itemized user search results should be:
-      | Name     | Machines | Storage                         | Storage Used                |
-      | TC210131 | 0        | Desktop: Shared\nServer: Shared | Desktop: None\nServer: None |
+      | Name     | Machines | Storage                         | Storage Used       |
+      | TC210131 | 0        | Desktop: Shared\nServer: Shared | None\nServer: None |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -303,7 +303,7 @@ Feature: Search and list user
     And I sort user search results by Name
     And Itemized user search results should be:
       | Name     | Machines | Storage                         | Storage Used                |
-      | TC210171 | 0        | Desktop: Shared\nServer: Shared | Desktop: None\nServer: None |
+      | TC210171 | 0        | Desktop: Shared\nServer: Shared |  None\nServer: None |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -338,8 +338,8 @@ Feature: Search and list user
       When I navigate to Search / List Users section from bus admin console page
       And I sort user search results by Name
       Then User search results should be:
-        | Name        | Sync    | Storage        |
-        | TC.21012-1  | Enabled  | 10 GB (Limited)|
-        | TC.21012-2  | Disabled | Shared         |
+        | Name        | Sync     | Storage                |
+        | TC.21012-1  | Enabled  | Generic 10 GB (Limited)|
+        | TC.21012-2  | Enabled | Generic Shared         |
       And I stop masquerading
       And I search and delete partner account by newly created partner company name

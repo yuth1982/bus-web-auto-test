@@ -22,8 +22,8 @@ Feature: User Resources
       | keywords   |
       | @user_name |
     Then User search results should be:
-      | User        | Name         | Machines | Storage | Storage Used | Created  | Backed Up |
-      | @user_email | @user_name   | 0 	      | Shared  | None  	   | today    | never     |
+      | User        | Name         | Machines | Storage         | Storage Used | Created  | Backed Up |
+      | @user_email | @user_name   | 0 	      | Generic Shared  | None  	   | today    | never     |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                           |
@@ -51,8 +51,8 @@ Scenario: Mozy-19646:Access Partner as Bus Admin
     | keywords   |
     | @user_name |
   Then User search results should be:
-    | External ID | User        | Name       | User Group           | Machines | Storage | Storage Used | Created  | Backed Up |
-    |             | @user_email | @user_name | (default user group) | 0        | Shared  | None         | today    | never     |
+    | External ID | User        | Name       | User Group           | Machines | Storage         | Storage Used | Created  | Backed Up |
+    |             | @user_email | @user_name | (default user group) | 0        | Generic Shared  | None         | today    | never     |
   When I view user details by newly created user email
   Then user details should be:
     | ID:        | External ID: | Name:                           |
@@ -87,8 +87,8 @@ Scenario: Mozy-19646:Access Partner as Bus Admin
       | keywords   |
       | @user_name |
     Then User search results should be:
-      | User        | Name         | User Group           | Machines  | Storage          | Storage Used  | Created  | Backed Up |
-      | @user_email | @user_name   | (default user group) | 0         | Desktop: Shared  | Desktop: None | today    | never     |
+      | User        | Name         | User Group           | Machines  | Storage         | Storage Used  | Created  | Backed Up |
+      | @user_email | @user_name   | (default user group) | 0         | Desktop Shared  | None          | today    | never     |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                           |
@@ -123,7 +123,7 @@ Scenario: Mozy-19646:Access Partner as Bus Admin
       | @user_name |
     Then User search results should be:
       | External ID | User        | Name         | User Group           | Machines | Storage         | Storage Used  | Created  | Backed Up |
-      |             | @user_email | @user_name   | (default user group) | 0  	   | Desktop: Shared | Desktop: None | today    | never     |
+      |             | @user_email | @user_name   | (default user group) | 0  	   | Desktop Shared | None          | today    | never     |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                           |
@@ -153,7 +153,7 @@ Scenario: Mozy-19844: Access an Enterprise Partner's User's details as Partner A
     | @user_name |
   Then User search results should be:
     | User        | Name         | Machines | Storage        | Storage Used | Created  | Backed Up |
-    | @user_email | @user_name   | 0 	    | Server: Shared | Server: None | today    | never     |
+    | @user_email | @user_name   | 0 	    | Server Shared  | None         | today    | never     |
   When I view user details by newly created user email
   Then user details should be:
     | Name:                           |
@@ -169,8 +169,8 @@ Scenario: Mozy-19844: Access an Enterprise Partner's User's details as Partner A
 Scenario: Mozy-19850: Access an Irish Partner's User's details as Partner Admin
   Given I log in bus admin console as administrator
   When I add a new MozyPro partner:
-    | period | base plan | server plan | country | create under    |
-    | 1      | 50 GB     | yes         | Ireland | MozyPro Ireland |
+    | period | base plan | server plan | country | create under    | cc number        |
+    | 1      | 50 GB     | yes         | Ireland | MozyPro Ireland | 4319402211111113 |
   Then New partner should be created
   And I activate new partner admin with default password
   And I log out bus admin console
@@ -183,8 +183,8 @@ Scenario: Mozy-19850: Access an Irish Partner's User's details as Partner Admin
     | keywords   |
     | @user_name |
   Then User search results should be:
-    | User        | Name         | Machines | Storage  | Storage Used | Created  | Backed Up |
-    | @user_email | @user_name   | 0 	    | Shared   | None         | today    | never     |
+    | User        | Name         | Machines | Storage          | Storage Used | Created  | Backed Up |
+    | @user_email | @user_name   | 0 	    | Generic Shared   | None         | today    | never     |
   When I view user details by newly created user email
   Then user details should be:
     | Name:                           |
@@ -200,8 +200,8 @@ Scenario: Mozy-19850: Access an Irish Partner's User's details as Partner Admin
 Scenario: Mozy-19853: Access an United Kingdom Partner's User's details as Partner Admin
   Given I log in bus admin console as administrator
   When I add a new MozyEnterprise partner:
-    | period | users | country        |
-    | 12     | 2    | United Kingdom |
+    | period | users | country        | cc number        |
+    | 12     | 2     | United Kingdom | 4916783606275713 |
   Then New partner should be created
   And I enable stash for the partner
   And I activate new partner admin with default password
@@ -215,8 +215,8 @@ Scenario: Mozy-19853: Access an United Kingdom Partner's User's details as Partn
     | keywords   |
     | @user_name |
   Then User search results should be:
-    | User        | Name         | Machines | Storage         | Storage Used  | Created  | Backed Up |
-    | @user_email | @user_name   | 0 	      | Desktop: Shared | Desktop: None | today    | never     |
+    | User        | Name         | Machines   | Storage        | Storage Used  | Created  | Backed Up |
+    | @user_email | @user_name   | 0 	      | Desktop Shared | None          | today    | never     |
   When I view user details by newly created user email
   Then user details should be:
     | Name:                           |
@@ -232,8 +232,8 @@ Scenario: Mozy-19853: Access an United Kingdom Partner's User's details as Partn
   Scenario: Mozy-19856:Access French Reseller's User's details as Bus Admin
     Given I log in bus admin console as administrator
     When I add a new Reseller partner:
-      | period | reseller type | reseller quota | server plan |country | create under   |
-      | 1      | Silver        | 10             | yes         | France | MozyPro France |
+      | period | reseller type | reseller quota | server plan |country | create under   | cc number        |
+      | 1      | Silver        | 10             | yes         | France | MozyPro France | 4485393141463880 |
     Then New partner should be created
     And I enable stash for the partner
     When I act as newly created partner account
@@ -245,8 +245,8 @@ Scenario: Mozy-19853: Access an United Kingdom Partner's User's details as Partn
       | keywords   |
       | @user_name |
     Then User search results should be:
-      | User        | Name         | Machines | Storage | Storage Used | Created  | Backed Up |
-      | @user_email | @user_name   | 0 	      | Shared  | None  	   | today    | never     |
+      | User        | Name         | Machines | Storage         | Storage Used | Created  | Backed Up |
+      | @user_email | @user_name   | 0 	      | Generic Shared  | None  	   | today    | never     |
     When I view user details by newly created user email
     Then user details should be:
       | ID:        | External ID: | Name:                           |

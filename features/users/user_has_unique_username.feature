@@ -35,7 +35,7 @@ Feature: User Has Unique Username
     And the billing summary looks like:
       | Description                           | Price | Quantity | Amount |
       | MozyHome 50 GB (1 computer) - Monthly | $5.99 | 1        | $5.99  |
-      | Total Charge                          | $5.99 |          | $5.99  |
+      | Total Charge                          |       |          | $5.99  |
     And the user is successfully added.
     And I navigate to bus admin console login page
     And I log in bus admin console with user name redacted-4165@notarealdomain.mozy.com and password default password
@@ -69,7 +69,7 @@ Feature: User Has Unique Username
     And the billing summary looks like:
       | Description                           | Price | Quantity | Amount |
       | MozyHome 50 GB (1 computer) - Monthly | $5.99 | 1        | $5.99  |
-      | Total Charge                          | $5.99 |          | $5.99  |
+      | Total Charge                          |       |          | $5.99  |
     And the user is successfully added.
     And I navigate to bus admin console login page
     And I log in bus admin console with user name redacted-4165@notarealdomain.mozy.com and password default password
@@ -116,7 +116,7 @@ Feature: User Has Unique Username
     And the billing summary looks like:
       | Description                           | Price | Quantity | Amount |
       | MozyHome 50 GB (1 computer) - Monthly | $5.99 | 1        | $5.99  |
-      | Total Charge                          | $5.99 |          | $5.99  |
+      | Total Charge                          |       |          | $5.99  |
     And the user is successfully added.
     And I navigate to bus admin console login page
     And I log in bus admin console with user name redacted-4165@notarealdomain.mozy.com and password default password
@@ -140,7 +140,7 @@ Feature: User Has Unique Username
     And the billing summary looks like:
       | Description                           | Price | Quantity | Amount |
       | MozyHome 50 GB (1 computer) - Monthly | $5.99 | 1        | $5.99  |
-      | Total Charge                          | $5.99 |          | $5.99  |
+      | Total Charge                          |       |          | $5.99  |
     And the user is successfully added.
     And I navigate to bus admin console login page
     And I log in bus admin console with user name redacted-4165@notarealdomain.mozy.com and password default password
@@ -175,7 +175,7 @@ Feature: User Has Unique Username
     And the billing summary looks like:
       | Description                           | Price | Quantity | Amount |
       | MozyHome 50 GB (1 computer) - Monthly | $5.99 | 1        | $5.99  |
-      | Total Charge                          | $5.99 |          | $5.99  |
+      | Total Charge                          |       |          | $5.99  |
     And the user is successfully added.
     And I navigate to bus admin console login page
     And I log in bus admin console with user name redacted-4165@notarealdomain.mozy.com and password default password
@@ -223,8 +223,8 @@ Feature: User Has Unique Username
     When I get a MH user username from the database
     And I am at dom selection point:
     And I sign up a phoenix Home user:
-      | period | base plan | country        | admin email          |
-      | 1      | 50 GB     | United Kingdom | @existing_user_email |
+      | period | base plan | country        | admin email          | cc number        |
+      | 1      | 50 GB     | United Kingdom | @existing_user_email | 4916783606275713 |
     Then sign up page error message should be:
     """
      An account with this email address already exists
@@ -235,8 +235,8 @@ Feature: User Has Unique Username
     When I get a MP user username from the database
     And I am at dom selection point:
     And I sign up a phoenix Home user:
-      | period | base plan | country | admin email          |
-      | 1      | 50 GB     | Ireland | @existing_user_email |
+      | period | base plan | country | admin email          | cc number        |
+      | 1      | 50 GB     | Ireland | @existing_user_email | 4319402211111113 |
     Then sign up page error message should be:
     """
      An account with this email address already exists
@@ -247,8 +247,8 @@ Feature: User Has Unique Username
     When I get a ME user username from the database
     And I am at dom selection point:
     And I sign up a phoenix Home user:
-      | period | base plan | country | admin email          |
-      | 1      | 50 GB     | France  | @existing_user_email |
+      | period | base plan | country | admin email          | cc number        |
+      | 1      | 50 GB     | France  | @existing_user_email | 4485393141463880 |
     Then sign up page error message should be:
     """
      Un compte avec cette adresse électronique existe déjà.
@@ -259,8 +259,8 @@ Feature: User Has Unique Username
     When I get a MEO user username from the database
     And I am at dom selection point:
     And I sign up a phoenix Home user:
-      | period | base plan | country | admin email          |
-      | 1      | 50 GB     | Germany | @existing_user_email |
+      | period | base plan | country | admin email          | cc number        |
+      | 1      | 50 GB     | Germany | @existing_user_email | 4188181111111112 |
     Then sign up page error message should be:
     """
      Ein Konto mit dieser E-Mail-Adresse ist bereits vorhanden.

@@ -309,8 +309,8 @@ Feature: Add new user, user group device details
   Scenario: 19962 Change Plan after Add New User (Multiple UG) French Reseller
     Given I log in bus admin console as administrator
     When I add a new Reseller partner:
-        | period | reseller type | reseller quota | server plan | country | create under   |
-        | 1      | Silver        | 100            | yes         | France  | MozyPro France |
+        | period | reseller type | reseller quota | server plan | country | create under   | cc number        |
+        | 1      | Silver        | 100            | yes         | France  | MozyPro France | 4485393141463880 |
     Then New partner should be created
     When I act as newly created partner account
     And I navigate to Add New User section from bus admin console page
