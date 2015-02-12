@@ -1,5 +1,5 @@
 module Email
-  require 'gmail'
+  require 'mailgun'
 
   def create_user_email
     "#{CONFIGS['global']['email_prefix']}+#{Forgery(:basic).password(:at_least => 9, :at_most => 12)}@#{CONFIGS['global']['email_domain']}".downcase
@@ -11,18 +11,32 @@ module Email
 
   def find_emails(query,_=nil)
     found = nil
-    Gmail.new(CONFIGS['gmail']['username'],CONFIGS['gmail']['password']) do |gmail|
-      found = gmail.mailbox('[Gmail]/All Mail').emails(query)
-    end  #Returning after so the connection is closed properly
+    start = Time.now
+    mg_client = Mailgun::Client.new CONFIGS['mailgun']['api_key']
+    domain = CONFIGS['mailgun']['domain']
+    while Time.now - start > 90
+      begin
+        result = mg_client.get("#{domain}/events", :event => 'stored', :limit => 1).to_h
+        if result['items'][0]['message']['headers'][query[0].downcase].eql? query[1]
+          found = [result]
+          @mailUrl = result['items'][0]['storage']['url']
+          break
+        end
+      rescue Exception => ex
+      ensure
+        sleep 5
+      end
+    end
     found
   end
 
   def find_email_content(query,_=nil)
-    content = nil
-    Gmail.new(CONFIGS['gmail']['username'],CONFIGS['gmail']['password']) do |gmail|
-      content = gmail.mailbox('[Gmail]/All Mail').emails(query)[-1].body
-    end
-    content
+    find_emails query if @mailUrl.nil?
+
+    mg_client = Mailgun::Client.new CONFIGS['mailgun']['api_key']
+    domain = CONFIGS['mailgun']['domain']
+    result = mg_client.get("domains/#{domain}/messages/#{@mailUrl}").to_h
+    result['body-plain']
   end
 
   def count_licenses_from_email(email_body)
