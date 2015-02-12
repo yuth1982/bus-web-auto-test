@@ -10,8 +10,8 @@ global:
   # Fixed test password for hipaa password field
   test_hipaa_pwd:               test1234*
   # User email prefix, e.g qa1+reg+test@mozy.com
-  email_prefix:                 mozybus
-  email_domain:                 gmail.com
+  email_prefix:                 testing
+  email_domain:                 sandbox508171a1434d4b3aa0b8171cc1252689.mailgun.org
   # Files downloaded location
   download_folder:              downloads
   test_data_folder:             test_data
@@ -139,3 +139,7 @@ fedid:
 gmail:
   username:                     mozybus@gmail.com
   password:                     qapassword
+
+mailgun:
+  api_key:                      key-95d93308ef4988294f21b4a4a4a12550
+  domain:                       sandbox508171a1434d4b3aa0b8171cc1252689.mailgun.org
