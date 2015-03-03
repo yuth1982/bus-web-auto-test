@@ -47,3 +47,68 @@ Scenario: 22365 Add New MozyEnterprise DPS Partner - US - Yearly - 2 TB
     | today | $0.00     | $0.00      | $0.00       |
     | today | $0.00     | $0.00      | $0.00       |
   And I delete partner account
+
+
+@STT_vmbu  @STT_vmbu_ent_dps
+  Scenario: Add New MozyEnterprise Partner - US - 3 Years - 600 Users - 4 TB Server Plan - 10 Add on - Net Terms
+    When I add a new MozyEnterprise DPS partner:
+      | period | base plan | country       | address           | city      | state abbrev | zip   | phone          | sales channel | net terms|
+      | 36     | 5         | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 | Velocity      | yes |
+    And I change root role to FedID role
+    And I act as newly created partner
+    When I create a new client config:
+      | name    | type   |
+      | default | Server |
+    And I add a new Itemized user group:
+      | name              | desktop_storage_type | desktop_devices | server_storage_type | server_devices  | enable_stash|
+      | private_group     | Shared               | 20               | Shared              | 50             | yes         |
+    Then private_group user group should be created
+    When I create a new client config:
+      | name | user group | type   | private_key       |
+      | private | private_group | Server | private_key |
+    And I add a new Itemized user group:
+      | name              | desktop_storage_type | desktop_devices | server_storage_type | server_devices  | enable_stash|
+      | ckey_group        | Shared               | 20               | Shared              | 50             | yes         |
+    Then ckey_group user group should be created
+    When I create a new client config:
+      | name | user group | type   | ckey                         |
+      | ckey | ckey_group | Server | http://burgifam.com/Rich.ckey|
+    Then client configuration section message should be Your configuration was saved.
+
+    When I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          |
+      | newrole | Partner admin |
+    And I check all the capabilities for the new role
+    And I close the role details section
+    When I navigate to Add New Pro Plan section from bus admin console page
+    Then I add a new pro plan for MozyEnterprise partner:
+      | Name    | Company Type | Root Role | Enabled | Public | Currency                        | Periods | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
+      | newplan | business     | newrole   | Yes     | No     | $ — US Dollar (Partner Default) | yearly  | test     | false            | 1                          | 1                     |
+    And I add a new sub partner:
+      | Company Name |
+      | STT_subent    |
+    And New partner should be created
+    And I act as newly created partner
+    And I purchase resources:
+      | desktop license | desktop quota | server license | server quota |
+      | 20               | 100            | 20              | 100           |
+    Then Resources should be purchased
+    When I create a new client config:
+      | name    | type   |
+      | default | Server |
+    And I add a new Itemized user group:
+      | name              | desktop_storage_type | desktop_devices | server_storage_type | server_devices  | enable_stash|
+      | private_group     | Shared               | 20               | Shared              | 20             | yes         |
+    Then private_group user group should be created
+    When I create a new client config:
+      | name | user group | type   | private_key       |
+      | private | private_group | Server | private_key |
+    And I add a new Itemized user group:
+      | name              | desktop_storage_type | desktop_devices | server_storage_type | server_devices  | enable_stash|
+      | ckey_group        | Shared               | 20               | Shared              | 20             | yes         |
+    Then ckey_group user group should be created
+    When I create a new client config:
+      | name | user group | type   | ckey                         |
+      | ckey | ckey_group | Server | http://burgifam.com/Rich.ckey|
+    Then client configuration section message should be Your configuration was saved.

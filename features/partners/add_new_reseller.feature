@@ -473,3 +473,70 @@ Feature: Add a new partner
       | today | $0.00  | $0.00      | $0.00       |
       | today | $0.00  | $0.00      | $0.00       |
     And I delete partner account
+
+
+
+  @STT_vmbu  @STT_vmbu_reseller
+  Scenario:  Add New Reseller Partner - UK - Monthly - Gold 5000 GB - Server Plan -  100 Add on - VAT - Coupon - CC
+    When I add a new Reseller partner:
+      | period | reseller type | reseller quota | server plan | storage add on | create under | vat number  | coupon              | country        | address           | city      | state | zip   | phone          |
+      | 1      | Gold          | 5000            | yes         | 100             | MozyPro UK   | GB117223643 | 10PERCENTOFFOUTLINE | United Kingdom | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 |
+    And I change root role to FedID role
+    And I act as newly created partner
+    When I create a new client config:
+      | name    | type   |
+      | default | Server |
+    When I add a new Bundled user group:
+      | name| storage_type | enable_stash | server_support |
+      | private_group | Shared      | yes          | yes            |
+    Then private_group user group should be created
+    When I create a new client config:
+      | name | user group | type   | private_key       |
+      | private | private_group | Server | private_key |
+    When I add a new Bundled user group:
+      | name| storage_type | enable_stash | server_support |
+      | ckey_group | Shared      | yes          | yes            |
+    Then ckey_group user group should be created
+    When I create a new client config:
+      | name | user group | type   | ckey                         |
+      | ckey | ckey_group | Server | http://burgifam.com/Rich.ckey|
+    Then client configuration section message should be Your configuration was saved.
+
+    When I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          |
+      | newrole | Partner admin |
+    And I check all the capabilities for the new role
+    And I close the role details section
+    When I navigate to Add New Pro Plan section from bus admin console page
+    Then I add a new pro plan for MozyEnterprise partner:
+      | Name    | Company Type | Root Role | Enabled | Public | Currency                        | Periods | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
+      | newplan | business     | newrole   | Yes     | No     | $ — US Dollar (Partner Default) | yearly  | test     | false            | 1                          | 1                     |
+    And I add a new sub partner:
+      | Company Name |
+      | STT_subent    |
+    And New partner should be created
+    And I act as newly created partner
+    And I purchase resources:
+      | desktop license | desktop quota | server license | server quota |
+      | 20               | 100            | 20              | 100           |
+    Then Resources should be purchased
+
+    When I create a new client config:
+      | name    | type   |
+      | default | Server |
+    When I add a new Bundled user group:
+      | name| storage_type | enable_stash | server_support |
+      | private_group | Shared      | yes          | yes            |
+    Then private_group user group should be created
+    When I create a new client config:
+      | name | user group | type   | private_key       |
+      | private | private_group | Server | private_key |
+    When I add a new Bundled user group:
+      | name| storage_type | enable_stash | server_support |
+      | ckey_group | Shared      | yes          | yes            |
+    Then ckey_group user group should be created
+    When I create a new client config:
+      | name | user group | type   | ckey                         |
+      | ckey | ckey_group | Server | http://burgifam.com/Rich.ckey|
+    Then client configuration section message should be Your configuration was saved.
