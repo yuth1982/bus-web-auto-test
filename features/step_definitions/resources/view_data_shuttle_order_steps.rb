@@ -29,3 +29,15 @@ Then /^the data shuttle order details should contain valid inbound number$/ do
   @bus_site.admin_console_page.order_details_section.has_inbound_link?(@inbound_number).should == true
   Log.debug("ship status is #{@status}, inbound number is #{@inbound_number}")
 end
+
+When /^I view data shuttle order details$/ do
+  @bus_site.admin_console_page.view_data_shuttle_orders_section.view_latest_order
+end
+
+When /^I add drive to data shuttle order$/ do
+  @bus_site.admin_console_page.order_details_section.add_drive_to_order
+end
+
+Then /^Add drive to data shuttle order message should include (.+)$/ do |messages|
+  @bus_site.admin_console_page.order_details_section.messages.include?(messages).should be_true
+end

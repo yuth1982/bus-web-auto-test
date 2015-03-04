@@ -38,5 +38,9 @@ class BusSite
   def itemized_login
     Bus::ItemizedLoginPage.new
   end
+
+  def mysupport_page
+    Bus::MySupportPage.new
+  end
 end
 

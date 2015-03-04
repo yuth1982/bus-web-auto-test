@@ -167,3 +167,19 @@ end
 Given /^I verify Skeletor by visiting url$/ do
   @bus_site.admin_console_page.visit_skeletor_url
 end
+
+When /^the standard partner has activated the admin account$/ do
+  step %{I retrieve email content by keywords:}, table(%{
+    | to |
+    | @new_admin_email |
+  })
+  match = @mail_content.match(/https?:\/\/[\S]+.mozy[\S]+.[\S]+\/registration\/admin_confirm\/[\S]+/)
+  @activate_email_query = match[0] unless match.nil?
+
+  @bus_site.admin_console_page.open_admin_activate_page(@activate_email_query)
+  @bus_site.admin_console_page.set_admin_password(CONFIGS['global']['test_pwd'])
+end
+
+When /^I go to account$/ do
+  @bus_site.admin_console_page.go_to_account
+end

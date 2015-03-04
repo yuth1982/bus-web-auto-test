@@ -72,6 +72,9 @@ module Bus
     section(:scheduled_reports_section, ScheduledReportsSection, id: "jobs-index")
     section(:quick_reports_section, QuickReportsSection, id: "jobs-quick_reports")
 
+    # support section
+    section(:contact_section, ContactSection, xpath: "//a[text()='Contact']")
+
     # internal tools
     section(:manage_vatfx_rates_section, ManageVATTXRatesSection, id: "internal-add_vat_rate")
 
@@ -96,6 +99,7 @@ module Bus
     element(:password_set_text, id: 'admin_password')
     element(:password_set_again_text, id: 'admin_password_confirmation')
     element(:continue_activate_btn, xpath: "//input[@name='commit']")
+    element(:go_to_account_link, xpath: "//a[text()='Go To Account']")
 
     # partner name in the right top corner
     element(:partner_top_link, xpath: "//div[@id='identify-me']/a[1]")
@@ -242,5 +246,10 @@ module Bus
       sleep 3
       continue_activate_btn.click
     end
+
+    def go_to_account
+      go_to_account_link.click
+    end
+
   end
 end

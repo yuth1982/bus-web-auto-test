@@ -342,18 +342,6 @@ Then /^I delete partner and verify pending delete$/ do
   })
 end
 
-And /^the standard partner has activated the admin account$/ do
-  step %{I retrieve email content by keywords:}, table(%{
-    | to |
-    | @new_admin_email |
-  })
-  match = @mail_content.match(/https?:\/\/[\S]+.mozy[\S]+.[\S]+\/registration\/admin_confirm\/[\S]+/)
-  @activate_email_query = match[0] unless match.nil?
-
-  @bus_site.admin_console_page.open_admin_activate_page(@activate_email_query)
-  @bus_site.admin_console_page.set_admin_password(CONFIGS['global']['test_pwd'])
-end
-
 Then /^I open partner details by partner name in header$/ do
   @bus_site.admin_console_page.open_partner_details_from_header(@partner)
   @bus_site.admin_console_page.partner_details_section.expand_contact_info
