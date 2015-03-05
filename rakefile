@@ -105,9 +105,11 @@ Cucumber::Rake::Task.new(:verify_table ) do |t|
   t.cucumber_opts = "--tags @TC.17955,@TC.15385,@TC.17881,@TC.16184"
 end
 
-desc 'Run BUS deployment test'
-Cucumber::Rake::Task.new(:bus_deployment_test ) do |t|
-  t.cucumber_opts = 'features/deploy_tests.feature --format json --out report.json --format html --out html-report/report.html --format rerun --out rerun.txt --format pretty'
+task :bus_deployment_test, :arg do |t, args|
+  Cucumber::Rake::Task.new(:run) do |t|
+    t.cucumber_opts = "features/bus_smoke_test.feature #{args[:arg]} --format json --out report.json --format html --out html-report/report.html --format rerun --out rerun.txt --format pretty"
+  end
+  Rake::Task[:run].invoke()
 end
 
 desc 'rerun failed tests'
