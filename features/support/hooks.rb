@@ -6,7 +6,7 @@ end
 
 Before do |scenario|
   log = scenario.location.file.gsub(/\\|\//,'.')
-  file = File.new("logs/#{log}.#{scenario.location.line.to_s}", 'w')
+  file = File.new("logs/#{log}.line#{scenario.location.line.to_s}", 'w')
   file.puts "Scenario: #{scenario.name}"
   CapybaraHelper::Extension::Context.instance.log.dest = file
   @logFile = file
