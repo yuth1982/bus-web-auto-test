@@ -117,9 +117,14 @@ Cucumber::Rake::Task.new(:rerun ) do |t|
   t.cucumber_opts = '@rerun.txt --format json --out report_rerun.json --format html --out html-report/report_rerun.html --format pretty'
 end
 
-def run_rake_task(name)
+def run_rake_task(name, arg)
   begin
-    Rake::Task[name].invoke
+    if arg.nil?
+      Rake::Task[name].invoke
+    else
+      Rake::Task[name].invoke(arg)
+    end
+
   rescue Exception => e
     return false
   end
@@ -127,11 +132,11 @@ def run_rake_task(name)
 end
 
 desc 'Run BUS deployment test and rerun failed tests'
-task :bus_deployment_test_with_retry do
-  first_run = run_rake_task 'bus_deployment_test'
+task :bus_deployment_test_with_retry, :arg do |t, args|
+  first_run = run_rake_task('bus_deployment_test', args[:arg])
   rerun_success = true
   unless first_run
-    rerun_success = run_rake_task 'rerun'
+    rerun_success = run_rake_task('rerun', nil)
   end
   #merge the results
   merge('report_rerun.json', 'report.json', 'report_merged.json')
