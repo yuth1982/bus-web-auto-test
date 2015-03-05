@@ -1,6 +1,7 @@
 require 'cucumber'
 require 'cucumber/rake/task'
 require './lib/testlink_helper'
+require './ci/json_result_merge'
 
 namespace :testlink do
 
@@ -102,4 +103,75 @@ end
 
 Cucumber::Rake::Task.new(:verify_table ) do |t|
   t.cucumber_opts = "--tags @TC.17955,@TC.15385,@TC.17881,@TC.16184"
+end
+
+desc 'Run BUS deployment test'
+Cucumber::Rake::Task.new(:bus_deployment_test ) do |t|
+  t.cucumber_opts = 'features/deploy_tests.feature --format json --out report.json --format html --out html-report/report.html --format rerun --out rerun.txt --format pretty'
+end
+
+desc 'rerun failed tests'
+Cucumber::Rake::Task.new(:rerun ) do |t|
+  t.cucumber_opts = '@rerun.txt --format json --out report_rerun.json --format html --out html-report/report_rerun.html --format pretty'
+end
+
+def run_rake_task(name)
+  begin
+    Rake::Task[name].invoke
+  rescue Exception => e
+    return false
+  end
+  true
+end
+
+desc 'Run BUS deployment test and rerun failed tests'
+task :bus_deployment_test_with_retry do
+  first_run = run_rake_task 'bus_deployment_test'
+  rerun_success = true
+  unless first_run
+    rerun_success = run_rake_task 'rerun'
+  end
+  #merge the results
+  merge('report_rerun.json', 'report.json', 'report_merged.json')
+  unless first_run || rerun_success
+    raise 'Cucumber tests failed'
+  end
+end
+
+desc 'update windows hosts file according to the environment variable settings. This task must be run as administrator'
+task :win_hosts do
+  QA6_HOSTS = 'ci/qa6.hosts'
+  QA12_HOSTS = 'ci/qa12.hosts'
+  STG_HOSTS = 'ci/stg.hosts'
+  PANTHEON_HOSTS = 'ci/pantheon.hosts'
+  PRD_HOSTS = 'ci/prd.hosts'
+
+  hostsFile = 'C:/Windows/System32/Drivers/etc/hosts'
+  srcHostName = nil
+  env = ENV['BUS_ENV']
+
+  case env
+    when 'qa6'
+      srcHostName = QA6_HOSTS
+    when 'qa12h'
+      srcHostName = QA12_HOSTS
+    when 'std'
+      srcHostName = STG_HOSTS
+    when 'pantheon'
+      srcHostName = PANTHEON_HOSTS
+    when 'prod'
+      srcHostName = PRD_HOSTS
+  end
+
+  begin
+    destHost = File.new(hostsFile, 'w')
+    srcHost = File.new(srcHostName, 'r')
+    srcHost.each_line { |line| destHost.puts line}
+  rescue Exception => ex
+      raise ex
+  ensure
+    srcHost.close if !srcHost.nil?
+    destHost.close if !destHost.nil?
+  end
+
 end

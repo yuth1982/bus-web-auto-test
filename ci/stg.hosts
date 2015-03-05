@@ -1,0 +1,15 @@
+#std1
+173.243.54.84  secure.mozy.com secure.mozy.ie secure.mozy.fr secure.mozy.co.uk secure.mozy.de
+173.243.54.85  www.mozypro.com secure.mozypro.com mozypro.com www.mozyenterprise.com mozyenterprise.com platinum.mozyenterprise.com platinum.mozypro.com
+ 
+173.243.54.85  client.mozy.com
+173.243.54.131 triton.mozy.com
+ 
+173.243.54.85 long1.mozypro.com stagingfedid.mozypro.com encodingfedid.mozypro.com
+173.243.54.82 auth.mozy.com auth2.mozy.com
+ 
+173.243.54.116 rainbow.mozy.com
+
+#google
+127.0.0.1 ssl.google-analytics.com
+127.0.0.1 ajax.googleapis.com

@@ -4,9 +4,20 @@ Before do
   @start_time = Time.now
 end
 
-After do |scenario|
+Before do |scenario|
+  log = scenario.location.file.gsub(/\\|\//,'.')
+  file = File.new("logs/#{log}.#{scenario.location.line.to_s}", 'w')
+  file.puts "Scenario: #{scenario.name}"
+  CapybaraHelper::Extension::Context.instance.log.dest = file
+  @logFile = file
 end
 
+After do |scenario|
+  @logFile.close
+  CapybaraHelper::Extension::Context.instance.log.dest = nil
+end
+
+=begin
 Before('@chrome') do
   Capybara.current_driver = :chrome
 end
@@ -26,6 +37,7 @@ end
 Before('@firefox_profile') do
   Capybara.current_driver = :firefox_profile
 end
+=end
 
 After do |scenario|
   if scenario.failed?

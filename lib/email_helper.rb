@@ -1,5 +1,5 @@
 module Email
-  require 'gmail'
+  require 'mailgun'
 
   def create_user_email
     "#{CONFIGS['global']['email_prefix']}+#{Forgery(:basic).password(:at_least => 9, :at_most => 12)}@#{CONFIGS['global']['email_domain']}".downcase
@@ -11,18 +11,51 @@ module Email
 
   def find_emails(query,_=nil)
     found = nil
-    Gmail.new(CONFIGS['gmail']['username'],CONFIGS['gmail']['password']) do |gmail|
-      found = gmail.mailbox('[Gmail]/All Mail').emails(query)
-    end  #Returning after so the connection is closed properly
+    start = Time.now
+    mg_client = Mailgun::Client.new CONFIGS['mailgun']['api_key']
+    domain = CONFIGS['mailgun']['domain']
+    while Time.now - start < 90
+      begin
+        results = mg_client.get("#{domain}/events", :event => 'stored', :limit => 10).to_h
+        results['items'].each do |item|
+          case query[0].downcase
+            when 'to'
+              if item['message']['headers'][query[0].downcase].eql? query[1]
+                found = Array.[](item)
+                @mailKey = item['storage']['key']
+                break
+              end
+            when 'body'
+              matched = true
+              @mailKey = item['storage']['key']
+              content = find_email_content nil
+              strArr = eval query[1]
+              strArr.each do |q|
+                matched &&= !content.match(q).nil?
+              end
+              if matched
+                found = Array.[](item)
+                break
+              end
+          end
+        end
+      rescue Exception => ex
+          Log.debug ex
+      ensure
+        sleep 5
+      end
+      break if !found.nil?
+    end
     found
   end
 
   def find_email_content(query,_=nil)
-    content = nil
-    Gmail.new(CONFIGS['gmail']['username'],CONFIGS['gmail']['password']) do |gmail|
-      content = gmail.mailbox('[Gmail]/All Mail').emails(query)[-1].body
-    end
-    content
+    find_emails query if @mailKey.nil?
+
+    mg_client = Mailgun::Client.new CONFIGS['mailgun']['api_key']
+    domain = CONFIGS['mailgun']['domain']
+    result = mg_client.get("domains/#{domain}/messages/#{@mailKey}").to_h
+    result['body-plain']
   end
 
   def count_licenses_from_email(email_body)

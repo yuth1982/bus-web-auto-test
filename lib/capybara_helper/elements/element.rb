@@ -105,5 +105,50 @@ class Capybara::Node::Element
   def enabled?
     self['disabled'].nil?
   end
+
+  alias_method :old_click, :click
+  def click
+    msg = 'Clicking on'
+    txt = self.text
+    val = self.value
+    msg += ' text:\'' + txt + '\'' if !txt.nil? && txt.length > 0
+    msg += ' value:\'' + val + '\'' if !val.nil? && val.length > 0
+    msg += ' ' + @selector.selector.name.to_s + ':' + '\'' + @selector.locator.to_s + '\''
+    #puts msg
+    CapybaraHelper::Extension::Context.instance.log.puts msg if !CapybaraHelper::Extension::Context.instance.log.nil?
+    old_click
+  end
+
+  alias_method :old_set, :set
+  def set(value)
+    if !value.nil? && value.to_s.length > 0
+      msg = 'Typing \'' + value.to_s + '\' in'
+      txt = self.text
+      val = self.value
+      msg += ' text:\'' + txt + '\'' if !txt.nil? && txt.length > 0
+      msg += ' value:\'' + val + '\'' if !val.nil? && val.length > 0
+      msg += ' ' + @selector.selector.name.to_s + ':' + '\'' + @selector.locator.to_s + '\''
+      #puts msg
+      CapybaraHelper::Extension::Context.instance.log.puts msg if !CapybaraHelper::Extension::Context.instance.log.nil?
+    end
+    old_set value
+  end
+
+  alias_method :old_select, :select
+  def select(value, options={})
+    if !value.nil? && value.to_s.length > 0
+      msg = 'Selecting \'' + value.to_s + '\' in'
+      val = self.value
+      msg += ' value:\'' + val + '\'' if !val.nil? && val.length > 0
+      if options.has_key?(:from)
+        msg += ' ' + options[:from] + '\''
+      else
+        msg += ' ' + @selector.selector.name.to_s + ':' + '\'' + @selector.locator.to_s + '\''
+      end
+      #puts msg
+      CapybaraHelper::Extension::Context.instance.log.puts msg if !CapybaraHelper::Extension::Context.instance.log.nil?
+    end
+    old_select value, options
+  end
 end
 
