@@ -20,7 +20,7 @@ Feature: BUS smoke test
     Then New partner should be created
 
   @bus_us @TC.125936
-  Scenario: Test Case Mozy-125936: BUS US -- Partner Details - License Keys
+  Scenario: Test Case Mozy-125936: BUS US -- Partner Details - License Keys - Precondition:@TC.125935
     When I search partner by MozyPro BUS Smoke Test
     And I view partner details by MozyPro BUS Smoke Test
     And Partner pooled storage information should be:
@@ -28,7 +28,7 @@ Feature: BUS smoke test
       | 0    | 10        | 10       | 0    | Unlimited | Unlimited |
 
   @bus_us @TC.125937
-  Scenario: Test Case Mozy-125937: BUS US -- Verify partner creation in Aria
+  Scenario: Test Case Mozy-125937: BUS US -- Verify partner creation in Aria - Precondition:@TC.125935
     When I search partner by MozyPro BUS Smoke Test
     And I view partner details by MozyPro BUS Smoke Test
     And I get partner aria id
@@ -37,13 +37,13 @@ Feature: BUS smoke test
       | ACTIVE       |
 
   @bus_us @TC.125939
-  Scenario: Test Case Mozy-125939: BUS US -- Masquerade into the partner
+  Scenario: Test Case Mozy-125939: BUS US -- Masquerade into the partner - Precondition:@TC.125935
     When I act as partner by:
       | name                   |
       | MozyPro BUS Smoke Test |
 
   @bus_us @TC.125940
-  Scenario: Test Case Mozy-125940: BUS US -- Create a user group
+  Scenario: Test Case Mozy-125940: BUS US -- Create a user group - Precondition:@TC.125935
     When I act as partner by:
       | name                   |
       | MozyPro BUS Smoke Test |
@@ -57,7 +57,7 @@ Feature: BUS smoke test
     Then omega user group should be created
 
   @bus_us @TC.125941
-  Scenario: Test Case Mozy-125941: BUS US -- Create a user
+  Scenario: Test Case Mozy-125941: BUS US -- Create a user - Precondition:@TC.125940
     When I act as partner by:
       | name                   |
       | MozyPro BUS Smoke Test |
@@ -72,7 +72,7 @@ Feature: BUS smoke test
       | user without stash (change) |
 
   @bus_us @TC.125942
-  Scenario: Test Case Mozy-125942: BUS US -- Update a username & password
+  Scenario: Test Case Mozy-125942: BUS US -- Update a username & password - Precondition:@TC.125941
     When I act as partner by:
       | name                   |
       | MozyPro BUS Smoke Test |
@@ -84,7 +84,7 @@ Feature: BUS smoke test
     Then I update the user password to Test1234
 
   @bus_us @TC.125943
-  Scenario: Test Case Mozy-125943: BUS US -- Move the user from one user group to a different user group
+  Scenario: Test Case Mozy-125943: BUS US -- Move the user from one user group to a different user group - Precondition:@TC.125941
     When I act as partner by:
       | name                   |
       | MozyPro BUS Smoke Test |
@@ -95,7 +95,7 @@ Feature: BUS smoke test
     When I close user details section
 
   @bus_us @TC.125944
-  Scenario: Test Case Mozy-125944: BUS US -- User Details - Send Keys
+  Scenario: Test Case Mozy-125944: BUS US -- User Details - Send Keys - Precondition:@TC.125941
     When I act as partner by:
       | name                   |
       | MozyPro BUS Smoke Test |
@@ -118,7 +118,7 @@ Feature: BUS smoke test
     Then I should see 1 email(s)
 
   @bus_us @TC.125946
-  Scenario: Test Case Mozy-125946: BUS US -- Create a machine, search list machine and view machine details
+  Scenario: Test Case Mozy-125946: BUS US -- Create a machine, search list machine and view machine details - Precondition:@TC.125935
     When I act as partner by:
       | name                   |
       | MozyPro BUS Smoke Test |
@@ -126,7 +126,7 @@ Feature: BUS smoke test
     Then Search list machines section is opened
 
   @bus_us @TC.125947
-  Scenario: Test Case Mozy-125947: BUS US -- Create an admin
+  Scenario: Test Case Mozy-125947: BUS US -- Create an admin - Precondition:@TC.125935
     When I act as partner by:
       | name                   |
       | MozyPro BUS Smoke Test |
@@ -137,7 +137,7 @@ Feature: BUS smoke test
     Then Add New Admin success message should be displayed
 
   @bus_us @TC.125948
-  Scenario: Test Case Mozy-125948: BUS US -- Create a role
+  Scenario: Test Case Mozy-125948: BUS US -- Create a role - Precondition:@TC.125935
     When I act as partner by:
       | name                   |
       | MozyPro BUS Smoke Test |
@@ -154,7 +154,7 @@ Feature: BUS smoke test
     Then Add New Admin success message should be displayed
 
   @bus_us @TC.125949
-  Scenario: Test Case Mozy-125949: BUS US -- Create a client config
+  Scenario: Test Case Mozy-125949: BUS US -- Create a client config - Precondition:@TC.125935
     When I act as partner by:
       | name                   |
       | MozyPro BUS Smoke Test |
@@ -164,7 +164,7 @@ Feature: BUS smoke test
     Then client configuration section message should be Your configuration was saved.
 
   @bus_us @TC.125950
-  Scenario: Test Case Mozy-125950: BUS US -- Open all of the Resources header to open all of the modules
+  Scenario: Test Case Mozy-125950: BUS US -- Open all of the Resources header to open all of the modules - Precondition:@TC.125935
     When I act as partner by:
       | name                   |
       | MozyPro BUS Smoke Test |
@@ -177,7 +177,7 @@ Feature: BUS smoke test
     When I navigate to Download * Client section from bus admin console page
 
   @bus_us @TC.125951
-  Scenario: Test Case Mozy-125951: BUS US -- Change plan for the partner
+  Scenario: Test Case Mozy-125951: BUS US -- Change plan for the partner - Precondition:@TC.125935
     When I search partner by MozyPro BUS Smoke Test
     And I view partner details by MozyPro BUS Smoke Test
     When I act as partner by:
@@ -204,7 +204,7 @@ Feature: BUS smoke test
       | 0    | 50        | 50       | 0    | Unlimited | Unlimited |
 
   @bus_us @TC.125953 @support @prod
-  Scenario: Test Case Mozy-125953: BUS US -- Check the support link
+  Scenario: Test Case Mozy-125953: BUS US -- Check the support link - Precondition:@TC.125935
     When I act as partner by:
       | name                   |
       | MozyPro BUS Smoke Test |
@@ -213,7 +213,7 @@ Feature: BUS smoke test
     Then I login my support successfully
 
   @bus_us @TC.125956
-  Scenario: Test Case Mozy-125956: BUS US -- Delete test user
+  Scenario: Test Case Mozy-125956: BUS US -- Delete test user  - Precondition:@TC.125940
     When I act as partner by:
       | name                   |
       | MozyPro BUS Smoke Test |
@@ -229,7 +229,7 @@ Feature: BUS smoke test
     And I delete user
 
   @bus_us @TC.125957
-  Scenario: Test Case Mozy-125957: BUS US -- Delete test user group
+  Scenario: Test Case Mozy-125957: BUS US -- Delete test user group - Precondition:@TC.125935
     When I act as partner by:
       | name                   |
       | MozyPro BUS Smoke Test |
@@ -370,7 +370,7 @@ Feature: BUS smoke test
     Then Data shuttle order should be created
 
   @bus_us @TC.125955 @qa
-  Scenario: Test Case Mozy-125955: BUS US -- Update Data Shuttle
+  Scenario: Test Case Mozy-125955: BUS US -- Update Data Shuttle - Precondition:@TC.125954
     When I search order in view data shuttle orders section by MozyPro BUS Smoke Test Data Shuttle
     And I view data shuttle order details
     And I add drive to data shuttle order
@@ -414,7 +414,7 @@ Feature: BUS smoke test
     But I activate the partner
 
   @bus_us @TC.125983
-  Scenario: Test Case Mozy-125983: LDAP Pull
+  Scenario: Test Case Mozy-125983: LDAP Pull - Precondition:@TC.125954
     When I search partner by:
       | name                          |
       | MozyEnterprise BUS Smoke Test |
@@ -499,7 +499,7 @@ Feature: BUS smoke test
     And I change root role to Business Root
 
   @bus_emea @TC.125965
-  Scenario: Test Case Mozy-125965: BUS EMEA -- Verify partner creation in Aria
+  Scenario: Test Case Mozy-125965: BUS EMEA -- Verify partner creation in Aria - Precondition:@TC.125964
     When I search partner by MozyPro France BUS Smoke Test
     And I view partner details by MozyPro France BUS Smoke Test
     And I get partner aria id
@@ -508,13 +508,13 @@ Feature: BUS smoke test
       | ACTIVE       |
 
   @bus_emea @TC.125967
-  Scenario: Test Case Mozy-125967: BUS EMEA -- Masquerade into the partner
+  Scenario: Test Case Mozy-125967: BUS EMEA -- Masquerade into the partner - Precondition:@TC.125964
     When I act as partner by:
       | name                          |
       | MozyPro France BUS Smoke Test |
 
   @bus_emea @TC.125968
-  Scenario: Test Case Mozy-125968: BUS EMEA -- Create a user group
+  Scenario: Test Case Mozy-125968: BUS EMEA -- Create a user group - Precondition:@TC.125964
     When I act as partner by:
       | name                          |
       | MozyPro France BUS Smoke Test |
@@ -524,7 +524,7 @@ Feature: BUS smoke test
     Then test-group-1 user group should be created
 
   @bus_emea @TC.125969
-  Scenario: Test Case Mozy-125969: BUS EMEA -- Create a user
+  Scenario: Test Case Mozy-125969: BUS EMEA -- Create a user - Precondition:@TC.125968 - Precondition:@TC.125968
     When I act as partner by:
       | name                          |
       | MozyPro France BUS Smoke Test |
@@ -533,8 +533,17 @@ Feature: BUS smoke test
       | EMEA-user-1 | test-group-1 | Desktop       | 10            | 1       |
     Then 1 new user should be created
 
+  @bus_emea @TC.125977
+  Scenario: Test Case Mozy-125977: BUS EMEA -- Delete test user - Precondition:@TC.125969
+    When I act as partner by:
+      | name                            |
+      | MozyPro France BUS Smoke Test   |
+    And  I navigate to Search / List Users section from bus admin console page
+    And I view user details by EMEA-user-1
+    And I delete user
+
   @bus_emea @TC.125970
-  Scenario: Test Case Mozy-125970: BUS EMEA -- Move the user from one user group to a different user group
+  Scenario: Test Case Mozy-125970: BUS EMEA -- Move the user from one user group to a different user group - Precondition:@TC.125969
     When I act as partner by:
       | name                          |
       | MozyPro France BUS Smoke Test |
@@ -544,7 +553,7 @@ Feature: BUS smoke test
     Then the user's user group should be (default user group)
 
   @bus_emea @TC.125971
-  Scenario: Test Case Mozy-125971: BUS EMEA -- Create a client config
+  Scenario: Test Case Mozy-125971: BUS EMEA -- Create a client config - Precondition:@TC.125964
     When I act as partner by:
       | name                          |
       | MozyPro France BUS Smoke Test |
@@ -554,7 +563,7 @@ Feature: BUS smoke test
     Then client configuration section message should be Your configuration was saved.
 
   @bus_emea @TC.125972
-  Scenario: Test Case Mozy-125972: BUS EMEA -- Open all of the Resources header to open all of the modules
+  Scenario: Test Case Mozy-125972: BUS EMEA -- Open all of the Resources header to open all of the modules - Precondition:@TC.125964
     When I act as partner by:
       | name                          |
       | MozyPro France BUS Smoke Test |
@@ -594,7 +603,7 @@ Feature: BUS smoke test
       | Date     | Amount   | Card #   | Card Type |
 
   @bus_us @TC.125974 @support @prod
-  Scenario: Test Case Mozy-125974: BUS EMEA -- Check the support link
+  Scenario: Test Case Mozy-125974: BUS EMEA -- Check the support link - Precondition:@TC.125973
     When I act as partner by:
       | name                            |
       | MozyPro France BUS Smoke Test 2 |
@@ -602,17 +611,8 @@ Feature: BUS smoke test
     And I click my support
     Then I login my support successfully
 
-  @bus_emea @TC.125977
-  Scenario: Test Case Mozy-125977: BUS EMEA -- Delete test user
-    When I act as partner by:
-      | name                            |
-      | MozyPro France BUS Smoke Test 2 |
-    And  I navigate to Search / List Users section from bus admin console page
-    And I view user details by EMEA-user-1
-    And I delete user
-
   @bus_emea @TC.125978
-  Scenario: Test Case Mozy-125978: BUS EMEA -- Delete test user group
+  Scenario: Test Case Mozy-125978: BUS EMEA -- Delete test user group - Precondition:@TC.125973
     When I act as partner by:
       | name                            |
       | MozyPro France BUS Smoke Test 2 |
@@ -647,7 +647,7 @@ Feature: BUS smoke test
     Then Data shuttle order should be created
 
   @bus_emea @TC.125976 @qa
-  Scenario: Test Case Mozy-125976: BUS EMEA -- Update Data Shuttle
+  Scenario: Test Case Mozy-125976: BUS EMEA -- Update Data Shuttle - Precondition:@TC.125975
     When I search order in view data shuttle orders section by MozyPro France BUS Smoke Test Data Shuttle
     And I view data shuttle order details
     And I add drive to data shuttle order
