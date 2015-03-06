@@ -16,7 +16,17 @@ QA_ENV = ALL_ENV[TEST_ENV]
 ARIA_ENV = ALL_ENV[ENV['ARIA_ENV'] || 'aria_qa']
 
 # Active aria api test environment, for example aria api qa
-ARIA_API_ENV = ALL_ENV[ENV['ARIA_API_ENV'] || 'aria_api_qa']
+case TEST_ENV
+  when /qa*/
+    ARIA_API_ENV = ALL_ENV[ENV['ARIA_API_ENV'] || 'aria_api_qa']
+  when /std*/
+    ARIA_API_ENV = ALL_ENV[ENV['ARIA_API_ENV'] || 'aria_api_std']
+  when /pantheon*/
+    ARIA_API_ENV = ALL_ENV[ENV['ARIA_API_ENV'] || 'aria_api_pantheon']
+  when /prod*/
+    ARIA_API_ENV = ALL_ENV[ENV['ARIA_API_ENV'] || 'aria_api_production']
+end
+
 
 # ATF uses br env variable to decide which browser will launch
 # available browser: firefox, chrome, ie, webkit

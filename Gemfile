@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 gem 'rake','~>0.9.2.2'
 gem 'rspec','~>2.11.0'
@@ -16,6 +16,7 @@ gem 'net-ssh', '~>2.6.2'
 gem 'net-scp', '~>1.0.4'
 gem 'diffy', '~>2.1.0'
 gem 'httparty', '~>0.10.0'              # Aria API
-gem 'json', '~>1.7.5'                   # Aria API
+gem 'json', '~>1.8.0'                   # Aria API
 gem 'savon', '~>1.1.0'                  # Aria API
-gem 'ruby-gmail', '~> 0.3.0'
+#gem 'ruby-gmail', '~> 0.3.0'
+gem 'mailgun-ruby', '~>1.0.3'

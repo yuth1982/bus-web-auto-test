@@ -8,3 +8,5 @@ lor
 .rvmrc
 chromedriver.log
 .tags
+logs/
+html-report/

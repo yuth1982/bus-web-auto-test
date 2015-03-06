@@ -372,21 +372,24 @@ Feature: BUS smoke test
 
   @bus_us @TC.125958
   Scenario: Test Case Mozy-125958: BUS US -- Delete test partner and validate they are in Pending Delete state
-    And I search partner by MozyPro BUS Smoke Test
-    And I view partner details by MozyPro BUS Smoke Test
+    When I add a new MozyPro partner:
+      | period | coupon                | net terms | server plan | root role               |
+      | 24     | <%=QA_ENV['coupon']%> | yes       | yes         | Bundle Pro Partner Root |
+    Then New partner should be created
     And I delete partner account
 
   @bus_us @TC.125959
   Scenario: Test Case Mozy-125959: BUS US -- Create a Pro partner and verify Partner creation in BUS and Aria
     When I add a new Reseller partner:
-      | company name            | period | base plan | coupon                | net terms | server plan |
-      | Reseller BUS Smoke Test | 1      | 50 GB     | <%=QA_ENV['coupon']%> | yes       | yes         |
+      | period | base plan | coupon                | net terms | server plan |
+      | 1      | 50 GB     | <%=QA_ENV['coupon']%> | yes       | yes         |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account should be:
       | status_label |
       | ACTIVE       |
     But I activate the partner
+    And I delete partner account
 
   @bus_us @TC.125960
   Scenario: Test Case Mozy-125960: BUS US -- Create a Enterprise partner and verify Partner creation in BUS and Aria
@@ -506,8 +509,8 @@ Feature: BUS smoke test
   @bus_emea @TC.125973
   Scenario: Test Case Mozy-125973: BUS EMEA -- Run a report
     When I add a new MozyPro partner:
-      | company name                  | period  | base plan | create under   | net terms | country | coupon                |
-      | MozyPro France BUS Smoke Test | 12      | 50 GB     | MozyPro France | yes       | France  | <%=QA_ENV['coupon']%> |
+      | company name                    | period  | base plan | create under   | net terms | country | coupon                |
+      | MozyPro France BUS Smoke Test 2 | 12      | 50 GB     | MozyPro France | yes       | France  | <%=QA_ENV['coupon']%> |
     Then New partner should be created
     When I act as newly created partner account
     When I build a new report:
@@ -528,8 +531,6 @@ Feature: BUS smoke test
     Then Quick report Credit Card Transactions csv file details should be:
       | Column A | Column B | Column C | Column D  |
       | Date     | Amount   | Card #   | Card Type |
-    When I stop masquerading
-    Then I delete partner and verify pending delete
 
   @bus_us @TC.125974 @support @qa6
   Scenario: Test Case Mozy-125974: BUS EMEA -- Check the support link
@@ -543,8 +544,8 @@ Feature: BUS smoke test
   @bus_us @TC.125974 @support @prod
   Scenario: Test Case Mozy-125974: BUS EMEA -- Check the support link
     When I act as partner by:
-      | name                          |
-      | MozyPro France BUS Smoke Test |
+      | name                            |
+      | MozyPro France BUS Smoke Test 2 |
     When I navigate to Contact section from bus admin console page
     And I click my support
     Then I login my support successfully
@@ -578,15 +579,12 @@ Feature: BUS smoke test
     And I view data shuttle order details
     And I add drive to data shuttle order
     Then Add drive to data shuttle order message should include Successfully added drive to order
-    And I search partner by MozyPro BUS Smoke Test
-    And I view partner details by MozyPro BUS Smoke Test
-    And I delete partner account
 
   @bus_emea @TC.125977
   Scenario: Test Case Mozy-125977: BUS EMEA -- Delete test user
     When I act as partner by:
-      | name                          |
-      | MozyPro France BUS Smoke Test |
+      | name                            |
+      | MozyPro France BUS Smoke Test 2 |
     And  I navigate to Search / List Users section from bus admin console page
     And I view user details by EMEA-user-1
     And I delete user
@@ -594,8 +592,8 @@ Feature: BUS smoke test
   @bus_emea @TC.125978
   Scenario: Test Case Mozy-125978: BUS EMEA -- Delete test user group
     When I act as partner by:
-      | name                          |
-      | MozyPro France BUS Smoke Test |
+      | name                            |
+      | MozyPro France BUS Smoke Test 2 |
     When I add a new Bundled user group:
       | name         | storage_type |
       | test-group-2 | Shared       |
@@ -604,8 +602,9 @@ Feature: BUS smoke test
 
   @bus_emea @TC.125979
   Scenario: Test Case Mozy-125979: BUS EMEA -- Delete test partner and validate they are in Pending Delete state
-    And I search partner by MozyPro France BUS Smoke Test
-    And I view partner details by MozyPro France BUS Smoke Test
+    When I add a new MozyPro partner:
+      | period  |  create under   | server plan | net terms | country | coupon                |
+      | 12      |  MozyPro France | yes         | yes       | France  | <%=QA_ENV['coupon']%> |
     And I delete partner account
 
   @bus_emea @TC.125980
@@ -674,7 +673,12 @@ Feature: BUS smoke test
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 3 succeeded, 0 failed |
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
-    When I stop masquerading
-    And I search partner by MozyEnterprise BUS Smoke Test
-    And I view partner details by MozyEnterprise BUS Smoke Test
-    And I delete partner account
+
+  @cleanup
+  Scenario: Delete all the created partners
+    Then I search and delete partner account by MozyPro BUS Smoke Test
+    And I search and delete partner account by Reseller BUS Smoke Test
+    And I search and delete partner account by MozyPro BUS Smoke Test Data Shuttle
+    And I search and delete partner account by MozyPro France BUS Smoke Test
+    And I search and delete partner account by MozyPro France BUS Smoke Test 2
+    And I search and delete partner account by MozyPro France BUS Smoke Test Data Shuttle
