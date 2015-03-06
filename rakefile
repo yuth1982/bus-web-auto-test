@@ -107,9 +107,13 @@ end
 
 task :bus_deployment_test, :arg do |t, args|
   Cucumber::Rake::Task.new(:run) do |t|
-    t.cucumber_opts = "features/bus_smoke_test.feature #{args[:arg]} --format json --out report.json --format html --out html-report/report.html --format rerun --out rerun.txt --format pretty"
+    t.cucumber_opts = "features/bus_smoke_test.feature #{args[:arg]} --tags ~@cleanup --format json --out report.json --format html --out html-report/report.html --format rerun --out rerun.txt --format pretty"
   end
   Rake::Task[:run].invoke()
+end
+
+Cucumber::Rake::Task.new(:bus_deployment_test_cleanup ) do |t|
+  t.cucumber_opts = 'features/bus_smoke_test.feature --tags @cleanup --format pretty'
 end
 
 desc 'rerun failed tests'
@@ -138,6 +142,9 @@ task :bus_deployment_test_with_retry, :arg do |t, args|
   unless first_run
     rerun_success = run_rake_task('rerun', nil)
   end
+
+  run_rake_task('bus_deployment_test_cleanup', nil)
+
   #merge the results
   merge('report_rerun.json', 'report.json', 'report_merged.json')
   unless first_run || rerun_success

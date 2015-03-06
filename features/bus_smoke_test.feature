@@ -442,7 +442,6 @@ Feature: These are the test we run for every deploy
     And I delete partner account
     And I search partner by Internal Mozy OEM BUS Smoke Test
     And I view partner details by Internal Mozy OEM BUS Smoke Test
-    And I delete partner account
 
   @bus_smoke @TC.178 @qa
   Scenario: 178 BUS - US MozyPro smoke test data shuttle
@@ -490,8 +489,10 @@ Feature: These are the test we run for every deploy
   @bus_smoke @TC.49
   Scenario: 49 BUS - US MozyPro smoke test data shuttle
     #Prod 49 - Delete partner
-    And I search partner by MozyPro BUS Smoke Test
-    And I view partner details by MozyPro BUS Smoke Test
+    When I add a new MozyPro partner:
+      | period | coupon                | net terms | server plan | root role               |
+      | 24     | <%=QA_ENV['coupon']%> | yes       | yes         | Bundle Pro Partner Root |
+    Then New partner should be created
     And I delete partner account
 
   @bus_smoke @TC.74
@@ -682,8 +683,9 @@ Feature: These are the test we run for every deploy
   @emea_smoke @TC.87
   Scenario: 87 BUS - EMEA smoke test
     #Prod 87 - Delete partner
-    And I search partner by MozyPro France BUS Smoke Test
-    And I view partner details by MozyPro France BUS Smoke Test
+    When I add a new MozyPro partner:
+      | period  |  create under   | server plan | net terms | country | coupon                |
+      | 12      |  MozyPro France | yes         | yes       | France  | <%=QA_ENV['coupon']%> |
     And I delete partner account
 
   @emea_smoke @TC.365
@@ -693,3 +695,10 @@ Feature: These are the test we run for every deploy
       | 1      | 10 GB     | MozyPro UK   | yes         | yes       | United Kingdom | <%=QA_ENV['coupon']%> | GB117223643 |
     And New partner should be created
     Then I delete partner and verify pending delete
+
+  @cleanup
+  Scenario: Delete all the created partners
+    Then I search and delete partner account by MozyPro BUS Smoke Test
+    And I search and delete partner account by Reseller BUS Smoke Test
+    And I search and delete partner account by Internal Mozy OEM BUS Smoke Test
+    And I search and delete partner account by MozyPro France BUS Smoke Test
