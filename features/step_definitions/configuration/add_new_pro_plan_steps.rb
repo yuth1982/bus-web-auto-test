@@ -1,4 +1,4 @@
-When /^I add a new pro plan for (MozyEnterprise|Mozypro|Reseller|OEM) partner:$/ do |partner_type, table|
+When /^I add a new pro plan for (MozyEnterprise|Mozypro|Reseller|OEM|MozyEnterprise DPS) partner:$/ do |partner_type, table|
   pro_plan = friendly_hash(table.hashes.first)
   plan = {}
   pro_plan.each do |k, v|
