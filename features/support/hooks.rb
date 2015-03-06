@@ -4,9 +4,23 @@ Before do
   @start_time = Time.now
 end
 
+#create log file based on scenario name, code location and case id
 Before do |scenario|
-  log = scenario.location.file.gsub(/\\|\//,'.')
-  file = File.new("logs/#{log}.line#{scenario.location.line.to_s}", 'w')
+  lIndex = scenario.location.file.rindex '\\'
+  lIndex = scenario.location.file.rindex '/' if lIndex.nil?
+  lIndex = -1 if lIndex.nil?
+  rIndex = scenario.location.file.index '.'
+  sName = scenario.location.file[lIndex+1 .. rIndex-1]
+
+  caseId = ''
+  scenario.source_tag_names.each { |name|
+    if name.length > 2 && name[1..2].downcase.eql?('tc')
+      caseId = name[1..name.length]
+      break
+    end
+  }
+
+  file = File.new("logs/#{sName}.#{caseId}.line#{scenario.location.line.to_s}.log", 'w')
   file.puts "Scenario: #{scenario.name}"
   CapybaraHelper::Extension::Context.instance.log.dest = file
   @logFile = file
