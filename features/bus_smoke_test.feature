@@ -11,6 +11,7 @@ Feature: BUS smoke test
   Scenario: Test Case Mozy-125934: BUS US -- Log into BUS
     Given I log in bus admin console as administrator
 
+  #================== partner 'MozyPro BUS Smoke Test' related scenarios ===================
   @bus_us @TC.125935
   Scenario: Test Case Mozy-125935: BUS US -- Create a new partner
     When I add a new MozyPro partner:
@@ -34,16 +35,6 @@ Feature: BUS smoke test
     Then API* Aria account should be:
       | status_label |
       | ACTIVE       |
-
-  @bus_us @TC.125938
-  Scenario: Test Case Mozy-125938: BUS US -- Activate partner in email
-    When I add a new Reseller partner:
-      | company name            | period | base plan | coupon                | net terms | server plan |
-      | Reseller BUS Smoke Test | 1      | 50 GB     | <%=QA_ENV['coupon']%> | yes       | yes         |
-    And New partner should be created
-    And the standard partner has activated the admin account
-    And I go to account
-    Then I login as mozypro admin successfully
 
   @bus_us @TC.125939
   Scenario: Test Case Mozy-125939: BUS US -- Masquerade into the partner
@@ -125,59 +116,6 @@ Feature: BUS smoke test
       | content                |
       | <%=@unactivated_keys%> |
     Then I should see 1 email(s)
-
-  @bus_us @TC.125945
-  Scenario: Test Case Mozy-125945: BUS US -- User Details - Change Partners
-    When I add a new OEM partner:
-      | Company Name                     | Root role         | Security | Company Type     |
-      | Internal Mozy OEM BUS Smoke Test | OEM Partner Admin | HIPAA    | Service Provider |
-    Then New partner should be created
-    When I act as newly created partner account
-    And I navigate to Add New Role section from bus admin console page
-    And I add a new role:
-      | Name         | Type          | Parent            |
-      | new OEM role | Partner admin | OEM Partner Admin |
-    And I check all the capabilities for the new role
-    When I navigate to Add New Pro Plan section from bus admin console page
-    And I add a new pro plan for OEM partner:
-      | Name    | Company Type | Root Role    | Enabled | Public | Currency | Periods | Tax Percentage | Tax Name | Auto-include tax | Server Price per key | Server Min keys | Server Price per gigabyte | Server Min gigabytes | Desktop Price per key | Desktop Min keys | Desktop Price per gigabyte | Desktop Min gigabytes | Grandfathered Price per key | Grandfathered Min keys | Grandfathered Price per gigabyte | Grandfathered Min gigabytes |
-      | subplan | business     | new OEM role | Yes     | No     |          | yearly  | 10             | test     | false            | 1                    | 1               | 1                         | 1                    | 1                     | 1                | 1                          | 1                     | 1                           | 1                      | 1                                | 1                           |
-    And I add a new sub partner:
-      | Company Name  | Pricing Plan | Admin Name |
-      | subpartner1   | subplan      | subadmin1  |
-    Then New partner should be created
-    When I act as newly created subpartner account
-    And I navigate to Purchase Resources section from bus admin console page
-    And I save current purchased resources
-    And I purchase resources:
-      | desktop license | desktop quota | server license | server quota |
-      | 2               | 20            | 2              | 20           |
-    Then Resources should be purchased
-    And Current purchased resources should increase:
-      | desktop license | desktop quota | server license | server quota |
-      | 2               | 20            | 2              | 20           |
-    And I add new itemized user(s):
-      | name     | devices_server | quota_server | devices_desktop | quota_desktop |
-      | oem user | 1              | 10           | 1               | 10            |
-    And new itemized user should be created
-    When I stop masquerading from subpartner
-    And I add a new sub partner:
-      | Company Name  | Pricing Plan | Admin Name |
-      | subpartner2   | subplan      | subadmin2  |
-    Then New partner should be created
-    And I navigate to Search / List Users section from bus admin console page
-    And I view user details by oem user
-    When I reassign the user to partner subpartner2
-    Then I stop masquerading as sub partner
-    And I search partner by subpartner1
-    And I view partner details by subpartner1
-    And I delete partner account
-    And I search partner by subpartner2
-    And I view partner details by subpartner2
-    And I delete partner account
-    And I search partner by Internal Mozy OEM BUS Smoke Test
-    And I view partner details by Internal Mozy OEM BUS Smoke Test
-    And I delete partner account
 
   @bus_us @TC.125946
   Scenario: Test Case Mozy-125946: BUS US -- Create a machine, search list machine and view machine details
@@ -265,6 +203,110 @@ Feature: BUS smoke test
       | Used | Available | Assigned | Used | Available | Assigned  |
       | 0    | 50        | 50       | 0    | Unlimited | Unlimited |
 
+  @bus_us @TC.125953 @support @prod
+  Scenario: Test Case Mozy-125953: BUS US -- Check the support link
+    When I act as partner by:
+      | name                   |
+      | MozyPro BUS Smoke Test |
+    When I navigate to Contact section from bus admin console page
+    And I click my support
+    Then I login my support successfully
+
+  @bus_us @TC.125956
+  Scenario: Test Case Mozy-125956: BUS US -- Delete test user
+    When I act as partner by:
+      | name                   |
+      | MozyPro BUS Smoke Test |
+    When I add new user(s):
+      | name           | user_group | storage_type |  devices |
+      | user to delete | omega      | Server       |  1       |
+    Then 1 new user should be created
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by user to delete
+    Then user details should be:
+      | Name:                   |
+      | user to delete (change) |
+    And I delete user
+
+  @bus_us @TC.125957
+  Scenario: Test Case Mozy-125957: BUS US -- Delete test user group
+    When I act as partner by:
+      | name                   |
+      | MozyPro BUS Smoke Test |
+    When I add a new Bundled user group:
+      | name  | storage_type | assigned_quota | enable_stash | server_support |
+      | gamma | Assigned     | 3              | yes          | yes            |
+    Then gamma user group should be created
+    When I navigate to User Group List section from bus admin console page
+    And I delete user group details by name: gamma
+    Then gamma user group should be deleted
+
+  #================== partner 'Reseller BUS Smoke Test' related scenarios ===================
+  @bus_us @TC.125938
+  Scenario: Test Case Mozy-125938: BUS US -- Activate partner in email
+    When I add a new Reseller partner:
+      | company name            | period | base plan | coupon                | net terms | server plan |
+      | Reseller BUS Smoke Test | 1      | 50 GB     | <%=QA_ENV['coupon']%> | yes       | yes         |
+    And New partner should be created
+    And the standard partner has activated the admin account
+    And I go to account
+    Then I login as mozypro admin successfully
+
+  #================== partner 'Internal Mozy OEM BUS Smoke Test' related scenarios ===================
+  @bus_us @TC.125945
+  Scenario: Test Case Mozy-125945: BUS US -- User Details - Change Partners
+    When I add a new OEM partner:
+      | Company Name                     | Root role         | Security | Company Type     |
+      | Internal Mozy OEM BUS Smoke Test | OEM Partner Admin | HIPAA    | Service Provider |
+    Then New partner should be created
+    When I act as newly created partner account
+    And I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name         | Type          | Parent            |
+      | new OEM role | Partner admin | OEM Partner Admin |
+    And I check all the capabilities for the new role
+    When I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for OEM partner:
+      | Name    | Company Type | Root Role    | Enabled | Public | Currency | Periods | Tax Percentage | Tax Name | Auto-include tax | Server Price per key | Server Min keys | Server Price per gigabyte | Server Min gigabytes | Desktop Price per key | Desktop Min keys | Desktop Price per gigabyte | Desktop Min gigabytes | Grandfathered Price per key | Grandfathered Min keys | Grandfathered Price per gigabyte | Grandfathered Min gigabytes |
+      | subplan | business     | new OEM role | Yes     | No     |          | yearly  | 10             | test     | false            | 1                    | 1               | 1                         | 1                    | 1                     | 1                | 1                          | 1                     | 1                           | 1                      | 1                                | 1                           |
+    And I add a new sub partner:
+      | Company Name  | Pricing Plan | Admin Name |
+      | subpartner1   | subplan      | subadmin1  |
+    Then New partner should be created
+    When I act as newly created subpartner account
+    And I navigate to Purchase Resources section from bus admin console page
+    And I save current purchased resources
+    And I purchase resources:
+      | desktop license | desktop quota | server license | server quota |
+      | 2               | 20            | 2              | 20           |
+    Then Resources should be purchased
+    And Current purchased resources should increase:
+      | desktop license | desktop quota | server license | server quota |
+      | 2               | 20            | 2              | 20           |
+    And I add new itemized user(s):
+      | name     | devices_server | quota_server | devices_desktop | quota_desktop |
+      | oem user | 1              | 10           | 1               | 10            |
+    And new itemized user should be created
+    When I stop masquerading from subpartner
+    And I add a new sub partner:
+      | Company Name  | Pricing Plan | Admin Name |
+      | subpartner2   | subplan      | subadmin2  |
+    Then New partner should be created
+    And I navigate to Search / List Users section from bus admin console page
+    And I view user details by oem user
+    When I reassign the user to partner subpartner2
+    Then I stop masquerading as sub partner
+    And I search partner by subpartner1
+    And I view partner details by subpartner1
+    And I delete partner account
+    And I search partner by subpartner2
+    And I view partner details by subpartner2
+    And I delete partner account
+    And I search partner by Internal Mozy OEM BUS Smoke Test
+    And I view partner details by Internal Mozy OEM BUS Smoke Test
+    And I delete partner account
+
+  #================== partner 'MozyPro BUS Smoke Test Report' related scenarios ===================
   @bus_us @TC.125952
   Scenario: Test Case Mozy-125952: BUS US -- Run a report
     When I add a new MozyPro partner:
@@ -296,6 +338,7 @@ Feature: BUS smoke test
     When I stop masquerading
     Then I delete partner and verify pending delete
 
+  #================== partner 'Rainbow MozyPro US' related scenarios ===================
   @bus_us @TC.125953 @support @qa6
   Scenario: Test Case Mozy-125953: BUS US -- Check the support link
     When I act as partner by:
@@ -305,15 +348,7 @@ Feature: BUS smoke test
     And I click my support
     Then I login my support successfully
 
-  @bus_us @TC.125953 @support @prod
-  Scenario: Test Case Mozy-125953: BUS US -- Check the support link
-    When I act as partner by:
-      | name                   |
-      | MozyPro BUS Smoke Test |
-    When I navigate to Contact section from bus admin console page
-    And I click my support
-    Then I login my support successfully
-
+  #================== partner 'MozyPro BUS Smoke Test Data Shuttle' related scenarios ===================
   @bus_us @TC.125954 @qa
   Scenario: Test Case Mozy-125954: BUS US -- Order Data Shuttle
     When I add a new MozyPro partner:
@@ -341,35 +376,8 @@ Feature: BUS smoke test
     And I add drive to data shuttle order
     Then Add drive to data shuttle order message should include Successfully added drive to order
 
-  @bus_us @TC.125956
-  Scenario: Test Case Mozy-125956: BUS US -- Delete test user
-    When I act as partner by:
-      | name                   |
-      | MozyPro BUS Smoke Test |
-    When I add new user(s):
-      | name           | user_group | storage_type |  devices |
-      | user to delete | omega      | Server       |  1       |
-    Then 1 new user should be created
-    When I navigate to Search / List Users section from bus admin console page
-    And I view user details by user to delete
-    Then user details should be:
-      | Name:                   |
-      | user to delete (change) |
-    And I delete user
 
-  @bus_us @TC.125957
-  Scenario: Test Case Mozy-125957: BUS US -- Delete test user group
-    When I act as partner by:
-      | name                   |
-      | MozyPro BUS Smoke Test |
-    When I add a new Bundled user group:
-      | name  | storage_type | assigned_quota | enable_stash | server_support |
-      | gamma | Assigned     | 3              | yes          | yes            |
-    Then gamma user group should be created
-    When I navigate to User Group List section from bus admin console page
-    And I delete user group details by name: gamma
-    Then gamma user group should be deleted
-
+  #=====================================
   @bus_us @TC.125958
   Scenario: Test Case Mozy-125958: BUS US -- Delete test partner and validate they are in Pending Delete state
     When I add a new MozyPro partner:
@@ -378,6 +386,7 @@ Feature: BUS smoke test
     Then New partner should be created
     And I delete partner account
 
+  #=====================================
   @bus_us @TC.125959
   Scenario: Test Case Mozy-125959: BUS US -- Create a Pro partner and verify Partner creation in BUS and Aria
     When I add a new Reseller partner:
@@ -391,6 +400,7 @@ Feature: BUS smoke test
     But I activate the partner
     And I delete partner account
 
+  #================== partner 'MozyEnterprise BUS Smoke Test' related scenarios ===================
   @bus_us @TC.125960
   Scenario: Test Case Mozy-125960: BUS US -- Create a Enterprise partner and verify Partner creation in BUS and Aria
     When I add a new MozyEnterprise partner:
@@ -403,6 +413,66 @@ Feature: BUS smoke test
       | ACTIVE       |
     But I activate the partner
 
+  @bus_us @TC.125983
+  Scenario: Test Case Mozy-125983: LDAP Pull
+    When I search partner by:
+      | name                          |
+      | MozyEnterprise BUS Smoke Test |
+    And I view partner details by MozyEnterprise BUS Smoke Test
+    When I add partner settings
+      | Name                    | Value | Locked |
+      | allow_ad_authentication | t     | true   |
+    And I act as newly created partner account
+    And I add a new Itemized user group:
+      | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
+      | dev  | Shared               | 5               | Shared              | 10             |
+    Then dev user group should be created
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
+    And I input server connection settings
+      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I Test Connection for AD
+    Then test connection message should be Test passed
+    And I click Sync Rules tab
+    And I add 1 new provision rules:
+      | rule               | group |
+      | cn=dev-17538-test* | dev   |
+    And I click the sync now button
+    And I wait for 90 seconds
+    And I delete 1 provision rules
+    And I save the changes
+    And I click Connection Settings tab
+    Then The sync status result should like:
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
+      | Sync Result | Users Provisioned: 3 succeeded, 0 failed \| Users Deprovisioned: 0 |
+    When I navigate to Search / List Users section from bus admin console page
+    And I sort user search results by User desc
+#    Then User search results should be:
+#      | User                     | Name            | User Group |
+#      | dev-17538-test3@test.com | dev-17538-test3 | dev        |
+#      | dev-17538-test2@test.com | dev-17538-test2 | dev        |
+#      | dev-17538-test1@test.com | dev-17538-test1 | dev        |
+    When I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
+    And I click Sync Rules tab
+    And I add 1 new deprovision rules:
+      | rule               | action |
+      | cn=dev-17538-test* | Delete |
+    And I click the sync now button
+    And I wait for 90 seconds
+    And I delete 1 deprovision rules
+    And I save the changes
+    And I click Connection Settings tab
+    Then The sync status result should like:
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
+      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 3 succeeded, 0 failed |
+    When I navigate to Search / List Users section from bus admin console page
+    Then The users table should be empty
+
+  #================== partner 'Fortress' related scenarios ===================
   @bus_us @TC.125961
   Scenario: Test Case Mozy-125961: BUS US -- Create a new Fortress partner and verify Partner creation in BUS and Aria
     When I act as partner by:
@@ -414,10 +484,12 @@ Feature: BUS smoke test
     Then New partner should be created
     When I stop masquerading
 
+  #=====================================
   @bus_emea @TC.125963
   Scenario: Test Case Mozy-125963: BUS EMEA -- Log into BUS
     Given I log in bus admin console as administrator
 
+  #================== partner 'MozyPro France BUS Smoke Test' related scenarios ===================
   @bus_emea @TC.125964
   Scenario: Test Case Mozy-125964: BUS EMEA -- Create a new partner (No VAT Number)
     When I add a new MozyPro partner:
@@ -434,18 +506,6 @@ Feature: BUS smoke test
     Then API* Aria account should be:
       | status_label |
       | ACTIVE       |
-
-  @bus_emea @TC.125966
-  Scenario: Test Case Mozy-125966: BUS EMEA -- Activate partner in email
-    When I add a new Reseller partner:
-      | company name                    | period | base plan | create under    | server plan | net terms | country | coupon                |
-      | Reseller Ireland BUS Smoke Test | 12     | 10 GB     | MozyPro Ireland | yes         | yes       | Ireland | <%=QA_ENV['coupon']%> |
-    And New partner should be created
-    And the standard partner has activated the admin account
-    And I go to account
-    Then I login as mozypro admin successfully
-    When I log in bus admin console as administrator
-    Then I delete partner and verify pending delete
 
   @bus_emea @TC.125967
   Scenario: Test Case Mozy-125967: BUS EMEA -- Masquerade into the partner
@@ -506,6 +566,7 @@ Feature: BUS smoke test
     Then I navigate to Change Payment Information section from bus admin console page
     When I navigate to Download * Client section from bus admin console page
 
+  #================== partner 'MozyPro France BUS Smoke Test 2' related scenarios ===================
   @bus_emea @TC.125973
   Scenario: Test Case Mozy-125973: BUS EMEA -- Run a report
     When I add a new MozyPro partner:
@@ -532,15 +593,6 @@ Feature: BUS smoke test
       | Column A | Column B | Column C | Column D  |
       | Date     | Amount   | Card #   | Card Type |
 
-  @bus_us @TC.125974 @support @qa6
-  Scenario: Test Case Mozy-125974: BUS EMEA -- Check the support link
-    When I act as partner by:
-      | name                 |
-      | Rainbow MozyPro EMEA |
-    When I navigate to Contact section from bus admin console page
-    And I click my support
-    Then I login my support successfully
-
   @bus_us @TC.125974 @support @prod
   Scenario: Test Case Mozy-125974: BUS EMEA -- Check the support link
     When I act as partner by:
@@ -550,6 +602,27 @@ Feature: BUS smoke test
     And I click my support
     Then I login my support successfully
 
+  @bus_emea @TC.125977
+  Scenario: Test Case Mozy-125977: BUS EMEA -- Delete test user
+    When I act as partner by:
+      | name                            |
+      | MozyPro France BUS Smoke Test 2 |
+    And  I navigate to Search / List Users section from bus admin console page
+    And I view user details by EMEA-user-1
+    And I delete user
+
+  @bus_emea @TC.125978
+  Scenario: Test Case Mozy-125978: BUS EMEA -- Delete test user group
+    When I act as partner by:
+      | name                            |
+      | MozyPro France BUS Smoke Test 2 |
+    When I add a new Bundled user group:
+      | name         | storage_type |
+      | test-group-2 | Shared       |
+    Then test-group-2 user group should be created
+    When I delete user group details by name: test-group-2
+
+  #================== partner 'MozyPro France BUS Smoke Test Data Shuttle' related scenarios ===================
   @bus_emea @TC.125975 @qa
   Scenario: Test Case Mozy-125975: BUS EMEA -- Order Data Shuttle
     When I add a new MozyPro partner:
@@ -580,26 +653,7 @@ Feature: BUS smoke test
     And I add drive to data shuttle order
     Then Add drive to data shuttle order message should include Successfully added drive to order
 
-  @bus_emea @TC.125977
-  Scenario: Test Case Mozy-125977: BUS EMEA -- Delete test user
-    When I act as partner by:
-      | name                            |
-      | MozyPro France BUS Smoke Test 2 |
-    And  I navigate to Search / List Users section from bus admin console page
-    And I view user details by EMEA-user-1
-    And I delete user
-
-  @bus_emea @TC.125978
-  Scenario: Test Case Mozy-125978: BUS EMEA -- Delete test user group
-    When I act as partner by:
-      | name                            |
-      | MozyPro France BUS Smoke Test 2 |
-    When I add a new Bundled user group:
-      | name         | storage_type |
-      | test-group-2 | Shared       |
-    Then test-group-2 user group should be created
-    When I delete user group details by name: test-group-2
-
+  #=====================================
   @bus_emea @TC.125979
   Scenario: Test Case Mozy-125979: BUS EMEA -- Delete test partner and validate they are in Pending Delete state
     When I add a new MozyPro partner:
@@ -615,64 +669,29 @@ Feature: BUS smoke test
     And New partner should be created
     Then I delete partner and verify pending delete
 
-  @bus_us @TC.125983
-  Scenario: Test Case Mozy-125983: LDAP Pull
-    When I search partner by:
-      | name                          |
-      | MozyEnterprise BUS Smoke Test |
-    And I view partner details by MozyEnterprise BUS Smoke Test
-    When I add partner settings
-      | Name                    | Value | Locked |
-      | allow_ad_authentication | t     | true   |
-    And I act as newly created partner account
-    And I add a new Itemized user group:
-      | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
-      | dev  | Shared               | 5               | Shared              | 10             |
-    Then dev user group should be created
-    And I navigate to Authentication Policy section from bus admin console page
-    And I use Directory Service as authentication provider
-    And I input server connection settings
-      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
-      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
-    And I save the changes
-    Then Authentication Policy has been updated successfully
-    When I Test Connection for AD
-    Then test connection message should be Test passed
-    And I click Sync Rules tab
-    And I add 1 new provision rules:
-      | rule               | group |
-      | cn=dev-17538-test* | dev   |
-    And I click the sync now button
-    And I wait for 90 seconds
-    And I delete 1 provision rules
-    And I save the changes
-    And I click Connection Settings tab
-    Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 3 succeeded, 0 failed \| Users Deprovisioned: 0 |
-    When I navigate to Search / List Users section from bus admin console page
-    And I sort user search results by User desc
-#    Then User search results should be:
-#      | User                     | Name            | User Group |
-#      | dev-17538-test3@test.com | dev-17538-test3 | dev        |
-#      | dev-17538-test2@test.com | dev-17538-test2 | dev        |
-#      | dev-17538-test1@test.com | dev-17538-test1 | dev        |
-    When I navigate to Authentication Policy section from bus admin console page
-    And I use Directory Service as authentication provider
-    And I click Sync Rules tab
-    And I add 1 new deprovision rules:
-      | rule               | action |
-      | cn=dev-17538-test* | Delete |
-    And I click the sync now button
-    And I wait for 90 seconds
-    And I delete 1 deprovision rules
-    And I save the changes
-    And I click Connection Settings tab
-    Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 3 succeeded, 0 failed |
-    When I navigate to Search / List Users section from bus admin console page
-    Then The users table should be empty
+  #================== partner 'Rainbow MozyPro EMEA' related scenarios ===================
+  @bus_us @TC.125974 @support @qa6
+  Scenario: Test Case Mozy-125974: BUS EMEA -- Check the support link
+    When I act as partner by:
+      | name                 |
+      | Rainbow MozyPro EMEA |
+    When I navigate to Contact section from bus admin console page
+    And I click my support
+    Then I login my support successfully
+
+  #================== partner 'Reseller Ireland BUS Smoke Test' related scenarios ===================
+  @bus_emea @TC.125966
+  Scenario: Test Case Mozy-125966: BUS EMEA -- Activate partner in email
+    When I add a new Reseller partner:
+      | company name                    | period | base plan | create under    | server plan | net terms | country | coupon                |
+      | Reseller Ireland BUS Smoke Test | 12     | 10 GB     | MozyPro Ireland | yes         | yes       | Ireland | <%=QA_ENV['coupon']%> |
+    And New partner should be created
+    And the standard partner has activated the admin account
+    And I go to account
+    Then I login as mozypro admin successfully
+    When I log in bus admin console as administrator
+    Then I delete partner and verify pending delete
+
 
   @cleanup
   Scenario: Delete all the created partners
