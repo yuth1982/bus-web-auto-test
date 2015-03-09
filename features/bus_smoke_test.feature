@@ -575,6 +575,26 @@ Feature: BUS smoke test
     Then I navigate to Change Payment Information section from bus admin console page
     When I navigate to Download * Client section from bus admin console page
 
+  @bus_us @TC.125974 @support @prod
+  Scenario: Test Case Mozy-125974: BUS EMEA -- Check the support link - Precondition:@TC.125964
+    When I act as partner by:
+      | name                            |
+      | MozyPro France BUS Smoke Test   |
+    When I navigate to Contact section from bus admin console page
+    And I click my support
+    Then I login my support successfully
+
+  @bus_emea @TC.125978
+  Scenario: Test Case Mozy-125978: BUS EMEA -- Delete test user group - Precondition:@TC.125964
+    When I act as partner by:
+      | name                            |
+      | MozyPro France BUS Smoke Test   |
+    When I add a new Bundled user group:
+      | name         | storage_type |
+      | test-group-2 | Shared       |
+    Then test-group-2 user group should be created
+    When I delete user group details by name: test-group-2
+
   #================== partner 'MozyPro France BUS Smoke Test 2' related scenarios ===================
   @bus_emea @TC.125973
   Scenario: Test Case Mozy-125973: BUS EMEA -- Run a report
@@ -601,26 +621,6 @@ Feature: BUS smoke test
     Then Quick report Credit Card Transactions csv file details should be:
       | Column A | Column B | Column C | Column D  |
       | Date     | Amount   | Card #   | Card Type |
-
-  @bus_us @TC.125974 @support @prod
-  Scenario: Test Case Mozy-125974: BUS EMEA -- Check the support link - Precondition:@TC.125973
-    When I act as partner by:
-      | name                            |
-      | MozyPro France BUS Smoke Test 2 |
-    When I navigate to Contact section from bus admin console page
-    And I click my support
-    Then I login my support successfully
-
-  @bus_emea @TC.125978
-  Scenario: Test Case Mozy-125978: BUS EMEA -- Delete test user group - Precondition:@TC.125973
-    When I act as partner by:
-      | name                            |
-      | MozyPro France BUS Smoke Test 2 |
-    When I add a new Bundled user group:
-      | name         | storage_type |
-      | test-group-2 | Shared       |
-    Then test-group-2 user group should be created
-    When I delete user group details by name: test-group-2
 
   #================== partner 'MozyPro France BUS Smoke Test Data Shuttle' related scenarios ===================
   @bus_emea @TC.125975 @qa
