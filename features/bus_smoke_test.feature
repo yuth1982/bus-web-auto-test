@@ -414,7 +414,7 @@ Feature: BUS smoke test
     But I activate the partner
 
   @bus_us @TC.125983
-  Scenario: Test Case Mozy-125983: LDAP Pull - Precondition:@TC.125954
+  Scenario: Test Case Mozy-125983: LDAP Pull - Precondition:@TC.125960
     When I search partner by:
       | name                          |
       | MozyEnterprise BUS Smoke Test |
