@@ -483,6 +483,7 @@ Feature: Add a new partner
       | period | reseller type | reseller quota | server plan | coupon              | country       | address           | city      | state abbrev | zip   | phone          |
       | 1      | Silver        | 5000            | yes         | 10PERCENTOFFOUTLINE | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
     And I change root role to Fedid
+    And I enabled server in partner account details
     And I act as newly created partner
     When I create a new client config:
       | name    | type   |
@@ -544,8 +545,8 @@ Feature: Add a new partner
     And New partner should be created
     And I act as newly created partner
     And I purchase resources:
-      | desktop license | desktop quota | server license | server quota |
-      | 20               | 1000            | 20              | 22000           |
+      | generic quota |
+      | 22000           |
     Then Resources should be purchased
 
     When I create a new client config:

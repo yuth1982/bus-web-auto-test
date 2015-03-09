@@ -51,13 +51,11 @@ Scenario: 22365 Add New MozyEnterprise DPS Partner - US - Yearly - 2 TB
 
 @STT_vmbu  @STT_vmbu_ent_dps
   Scenario: Add New MozyEnterprise DPS Partner - US - 3 Years - 6 TB
-    #When I navigate to bus admin console login page
-    #When I log in bus admin console with user name mozybus+1sqabjb80@gmail.com and password test1234
-
-    When I add a new MozyEnterprise DPS partner:
+   When I add a new MozyEnterprise DPS partner:
       | period | base plan | country       | address           | city      | state abbrev | zip   | phone          | sales channel |
       | 36     | 6         | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 | Velocity      |
     And I change root role to FedID role
+    And I enabled server in partner account details
     And I act as newly created partner
   ##create user groups and client configurations
     When I create a new client config:
@@ -120,8 +118,8 @@ Scenario: 22365 Add New MozyEnterprise DPS Partner - US - Yearly - 2 TB
     And New partner should be created
     And I act as newly created partner
     And I purchase resources:
-      | desktop license | desktop quota | server license | server quota |
-      | 80              | 1000            | 80           | 2200           |
+      | generic quota |
+      | 2200             |
     Then Resources should be purchased
 
   ##create sub-partner user groups and client configuration

@@ -561,6 +561,7 @@ Feature: Add a new partner
       | period | base plan | server plan | storage add on | country       | address           | city      | state abbrev | zip   | phone          |  security |
       | 12     | 16 TB     | yes         | 10             | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |   HIPAA   |
     And I change root role to Fedid
+    And I enabled server in partner account details
     And I act as newly created partner
   ##create user groups and client configurations
     When I create a new client config:
@@ -622,8 +623,8 @@ Feature: Add a new partner
     And New partner should be created
     And I act as newly created partner
     And I purchase resources:
-      | desktop license | desktop quota | server license | server quota |
-      | 20               | 100            | 20              | 2200           |
+      | generic quota |
+      | 2200          |
     Then Resources should be purchased
   ##create sub-partner user groups and client configuration
     When I create a new client config:

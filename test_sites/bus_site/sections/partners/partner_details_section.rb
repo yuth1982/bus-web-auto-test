@@ -47,6 +47,10 @@ module Bus
     # Contact information
     element(:partner_details_div, css: 'div[id$=account_details] div:first-child')
     element(:account_details_icon, css: 'i[id$=account-dtl-icon]')
+    element(:account_details_attribute_edit, xpath: "//a[contains(@id, 'toggle_partner_attribute_management_edit')]/span")
+    element(:account_details_attribute_server, xpath: "//form[contains(@id, 'account_attributes_form')]/table/tbody/tr[6]/td[3]/input")
+    element(:account_details_attribute_save, css: "div.partner_attribute_management_shown > input[type=\"submit\"]")
+
     elements(:contact_info_dls, css: 'div>form>dl')
     element(:contact_address_tb, id: 'contact_address')
     element(:contact_city_tb, id: 'contact_city')
@@ -178,6 +182,15 @@ module Bus
       Hash[*output.flatten]
     end
 
+    def account_details_enable_server
+      wait_until_bus_section_load
+      expand(account_details_icon)
+      wait_until_ajax_finished(partner_details_div)
+      wait_until { !(contact_info_dls.first.dt_dd_elements_text.first.first == '') }
+      account_details_attribute_edit.click
+      account_details_attribute_server.click
+      account_details_attribute_save.click
+    end
 
     # Public: Partner contact information hash
     #
