@@ -533,15 +533,6 @@ Feature: BUS smoke test
       | EMEA-user-1 | test-group-1 | Desktop       | 10            | 1       |
     Then 1 new user should be created
 
-  @bus_emea @TC.125977
-  Scenario: Test Case Mozy-125977: BUS EMEA -- Delete test user - Precondition:@TC.125969
-    When I act as partner by:
-      | name                            |
-      | MozyPro France BUS Smoke Test   |
-    And  I navigate to Search / List Users section from bus admin console page
-    And I view user details by EMEA-user-1
-    And I delete user
-
   @bus_emea @TC.125970
   Scenario: Test Case Mozy-125970: BUS EMEA -- Move the user from one user group to a different user group - Precondition:@TC.125969
     When I act as partner by:
@@ -551,6 +542,15 @@ Feature: BUS smoke test
     And I view user details by EMEA-user-1
     And I reassign the user to user group (default user group)
     Then the user's user group should be (default user group)
+
+  @bus_emea @TC.125977
+  Scenario: Test Case Mozy-125977: BUS EMEA -- Delete test user - Precondition:@TC.125969
+    When I act as partner by:
+      | name                            |
+      | MozyPro France BUS Smoke Test   |
+    And  I navigate to Search / List Users section from bus admin console page
+    And I view user details by EMEA-user-1
+    And I delete user
 
   @bus_emea @TC.125971
   Scenario: Test Case Mozy-125971: BUS EMEA -- Create a client config - Precondition:@TC.125964
