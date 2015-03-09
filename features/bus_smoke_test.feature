@@ -306,16 +306,12 @@ Feature: BUS smoke test
     And I view partner details by Internal Mozy OEM BUS Smoke Test
     And I delete partner account
 
-  #================== partner 'MozyPro BUS Smoke Test Report' related scenarios ===================
+  #================== partner 'MozyEnterprise BUS Smoke Test Report' related scenarios ===================
   @bus_us @TC.125952
   Scenario: Test Case Mozy-125952: BUS US -- Run a report
-    When I add a new MozyPro partner:
-      | company name                  | period | base plan | coupon                | net terms |
-      | MozyPro BUS Smoke Test Report | 12     | 10 GB     | <%=QA_ENV['coupon']%> | yes       |
-    Then New partner should be created
-    And Partner pooled storage information should be:
-      | Used | Available | Assigned | Used | Available | Assigned  |
-      | 0    | 10        | 10       | 0    | Unlimited | Unlimited |
+    When I add a new MozyEnterprise partner:
+      | company name                         | period | users  | coupon                |  server plan | net terms |
+      | MozyEnterprise BUS Smoke Test Report | 12     | 10     | <%=QA_ENV['coupon']%> |  100 GB      | yes       |
     When I act as newly created partner account
     When I build a new report:
       | type            | name                |
@@ -328,7 +324,7 @@ Feature: BUS smoke test
     Then Scheduled Billing Detail report csv file details should be:
       | Column A | Column B              | Column C     | Column D           | Column E                    | Column F                    | Column G               | Column H              | Column I              | Column J                               | Column K                     | Column L                     | Column M                | Column N               | Column O               | Column P                                | Column Q                           | Column R                            | Column S               |
       | Partner  | User Group            | Billing Code | Total GB Purchased | Server GB Purchased         | Server Quota Allocated (GB) | Server Quota Used (GB) | Server Keys Purchased | Server Keys Activated | Server Keys Assigned But Not Activated | Desktop GB Purchased         | Desktop Quota Allocated (GB) | Desktop Quota Used (GB) | Desktop Keys Purchased | Desktop Keys Activated | Desktop Keys Assigned But Not Activated | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
-      | @name    | (default user group)  |              | Shared             | N/A                         | N/A                         | 0                      | 0                     | 0                     | 0                                      | N/A                          | N/A                          | 0                       | 0                      | 0                      | 0                                       |                                    |                                     | $1                  |
+      | @name    | (default user group)  |              | N/A                | Shared                      | N/A                         | 0                      | 200                   | 0                     | 0                                      | Shared                       | N/A                          | 0                       | 10                     | 0                      | 0                                       |                                    |                                     | $0.36                  |
     When I delete billing detail test scheduled report
     Then I should see No results found in scheduled reports list
     When I download Credit Card Transactions (CSV) quick report
@@ -602,6 +598,7 @@ Feature: BUS smoke test
       | company name                    | period  | base plan | create under   | net terms | country | coupon                |
       | MozyPro France BUS Smoke Test 2 | 12      | 50 GB     | MozyPro France | yes       | France  | <%=QA_ENV['coupon']%> |
     Then New partner should be created
+    Then I change root role to Business Root
     When I act as newly created partner account
     When I build a new report:
       | type            | name                |
@@ -612,9 +609,9 @@ Feature: BUS smoke test
       | billing detail test | Billing Detail  | Daily    | Run     |
     When I download billing detail test scheduled report
     Then Scheduled Billing Detail report csv file details should be:
-      | Column A | Column B              | Column C     | Column D           | Column E                    | Column F                    | Column G               | Column H              | Column I              | Column J                               | Column K                     | Column L                     | Column M                | Column N               | Column O               | Column P                                | Column Q                           | Column R                            | Column S               |
-      | Partner  | User Group            | Billing Code | Total GB Purchased | Server GB Purchased         | Server Quota Allocated (GB) | Server Quota Used (GB) | Server Keys Purchased | Server Keys Activated | Server Keys Assigned But Not Activated | Desktop GB Purchased         | Desktop Quota Allocated (GB) | Desktop Quota Used (GB) | Desktop Keys Purchased | Desktop Keys Activated | Desktop Keys Assigned But Not Activated | Effective price per Server license | Effective price per Desktop license | Effective price per GB |
-      | @name    | (default user group)  |              | Shared             | N/A                         | N/A                         | 0                      | 0                     | 0                     | 0                                      | N/A                          | N/A                          | 0                       | 0                      | 0                      | 0                                       |                                    |                                     | ?0.80                  |
+      | Column A | Column B              | Column C     | Column D           | Column E             | Column F             | Column G        | Column H       | Column I       | Column J                        | Column Q                     | Column S               |
+      | Partner  | User Group            | Billing Code | Total GB Purchased | GB Purchased         | Quota Allocated (GB) | Quota Used (GB) | Keys Purchased | Keys Activated | Keys Assigned But Not Activated | Effective price per  license | Effective price per GB |
+      | @name    | (default user group)  |              | Shared             | N/A                  | N/A                  | 0               | 0              | 0              | 0                               |                              | €0.32                  |
     When I delete billing detail test scheduled report
     Then I should see No results found in scheduled reports list
     When I download Credit Card Transactions (CSV) quick report

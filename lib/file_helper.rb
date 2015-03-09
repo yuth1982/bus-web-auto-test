@@ -40,7 +40,7 @@ module FileHelper
     rows = []
     CSV.foreach(report_file) do |row|
       if row.size > 1  #data header and data
-        rows << row.map{ |x| x == nil ? "" : x}
+        rows << row.map{ |x| x == nil ? "" : x.strip}
       end
     end
     rows
