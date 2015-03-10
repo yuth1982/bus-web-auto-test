@@ -426,8 +426,8 @@ Feature: BUS smoke test
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I input server connection settings
-      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
-      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+      | Server Host  | Protocol   | SSL Cert | Port   | Base DN  | Bind Username   | Bind Password   |
+      | @server_host | @protocol  |          | @port  | @base_dn | @bind_user      | @bind_password  |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD

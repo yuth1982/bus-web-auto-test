@@ -156,10 +156,12 @@ module Bus
     end
 
     def has_navigation?(link)
+      alert_accept if alert_present?
       !all('a', :text => link).empty?
     end
 
     def has_content?(content)
+      alert_accept if alert_present?
       page.has_content?(content)
     end
 

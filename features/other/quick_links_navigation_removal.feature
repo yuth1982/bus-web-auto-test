@@ -61,51 +61,21 @@ Feature: Quick Links section & Link removal from left navigation
     #
     @TC.21182 @itemized @bus @2.5 @nav_link_removal @mozypro @env_dependent
     Scenario: 21182 Pooled Storage - MozyPro Itemized - BUS Admin UI -  Nav link removal
-      When I log in to legacy bus01 as administrator
-      And I successfully add an itemized MozyPro partner:
-        | period | server licenses | server quota | desktop licenses | desktop quota |
-        | 12     | 5               | 50           | 5                | 50            |
-      And I log in bus admin console as administrator
-      And I search partner by:
-        | name          | filter |
-        | @company_name | None   |
-      And I view partner details by newly created partner company name
-      And I get the partner_id
-      And I migrate the partner to aria
-      And I migrate the partner to pooled storage
-      And I log in bus admin console as administrator
-      And I search partner by:
-        | name          | filter |
-        | @company_name | None   |
-      And I view partner details by newly created partner company name
-      And I act as newly created partner
+      When I log in bus admin console as administrator
+      When I act as partner by:
+        | email                                 |
+        | redacted-608@notarealdomain.mozy.com  |
       And navigation items should be removed
       And I stop masquerading
-      And I search and delete partner account by newly created partner company name
 
     @TC.21183 @itemized @bus @2.5 @nav_link_removal @reseller @env_dependent
     Scenario: 21183 Pooled Storage - Reseller Itemized - BUS Admin UI -  Nav link removal
-      When I log in to legacy bus01 as administrator
-      And I successfully add an itemized Reseller partner:
-        | period | server licenses | server quota | desktop licenses | desktop quota |
-        | 12     | 5               | 50           | 5                | 50            |
-      And I log in bus admin console as administrator
-      And I search partner by:
-        | name          | filter |
-        | @company_name | None   |
-      And I view partner details by newly created partner company name
-      And I get the partner_id
-      And I migrate the partner to aria
-      And I migrate the partner to pooled storage
-      And I log in bus admin console as administrator
-      And I search partner by:
-        | name          | filter |
-        | @company_name | None   |
-      And I view partner details by newly created partner company name
-      And I act as newly created partner
+      When I log in bus admin console as administrator
+      When I act as partner by:
+        | email                                 |
+        | redacted-303@notarealdomain.mozy.com  |
       And navigation items should be removed
       And I stop masquerading
-      And I search and delete partner account by newly created partner company name
 
     #
     # nav removal - for acct through phoenix
@@ -189,51 +159,21 @@ Feature: Quick Links section & Link removal from left navigation
     #
     @TC.21300 @itemized  @bus @2.5 @quick_link @mozypro @env_dependent
     Scenario: 21300 Pooled Storage - MozyPro Itemized - BUS Admin UI - New Quick Links Section
-      When I log in to legacy bus01 as administrator
-      And I successfully add an itemized MozyPro partner:
-        | period | server licenses | server quota | desktop licenses | desktop quota |
-        | 12     | 5               | 50           | 5                | 50            |
-      And I log in bus admin console as administrator
-      And I search partner by:
-        | name          | filter |
-        | @company_name | None   |
-      And I view partner details by newly created partner company name
-      And I get the partner_id
-      And I migrate the partner to aria
-      And I migrate the partner to pooled storage
-      And I log in bus admin console as administrator
-      And I search partner by:
-        | name          | filter |
-        | @company_name | None   |
-      And I view partner details by newly created partner company name
-      And I act as newly created partner
+      When I log in bus admin console as administrator
+      When I act as partner by:
+        | email                                 |
+        | redacted-608@notarealdomain.mozy.com  |
       And new section & navigation items are present for Itemized partner
       And I stop masquerading
-      And I search and delete partner account by newly created partner company name
 
     @TC.21301 @itemized  @bus @2.5 @quick_link @reseller @env_dependent
     Scenario: 21301 Pooled Storage - Reseller - BUS Admin UI - New Quick Links Section
-      When I log in to legacy bus01 as administrator
-      And I successfully add an itemized Reseller partner:
-        | period | server licenses | server quota | desktop licenses | desktop quota |
-        | 12     | 5               | 50           | 5                | 50            |
-      And I log in bus admin console as administrator
-      And I search partner by:
-        | name          | filter |
-        | @company_name | None   |
-      And I view partner details by newly created partner company name
-      And I get the partner_id
-      And I migrate the partner to aria
-      And I migrate the partner to pooled storage
-      And I log in bus admin console as administrator
-      And I search partner by:
-        | name          | filter |
-        | @company_name | None   |
-      And I view partner details by newly created partner company name
-      And I act as newly created partner
+      When I log in bus admin console as administrator
+      When I act as partner by:
+        | email                                 |
+        | redacted-303@notarealdomain.mozy.com  |
       And new section & navigation items are present for Itemized partner
       And I stop masquerading
-      And I search and delete partner account by newly created partner company name
 
       #
       # quick link section - through phoenix

@@ -9,7 +9,7 @@ CONFIGS = YAML.load_file("#{File.dirname(__FILE__)}/configs.yaml")
 LANG = YAML.load_file("#{File.dirname(__FILE__)}/lang.yaml")
 
 # Active QA test environment, for example qa5, qa6
-TEST_ENV = ENV['BUS_ENV'] || 'qa6'
+TEST_ENV = ENV['BUS_ENV'] || 'qa12h'
 QA_ENV = ALL_ENV[TEST_ENV]
 
 # Active aria test environment, for example aria qa
@@ -27,6 +27,9 @@ case TEST_ENV
     ARIA_API_ENV = ALL_ENV[ENV['ARIA_API_ENV'] || 'aria_api_production']
 end
 
+
+# Active AD connection test environment, for example ad_connection_qa
+AD_CONNECTION_ENV = ALL_ENV[ENV['AD_CONNECTION_ENV'] || 'ad_connection_qa']
 
 # ATF uses br env variable to decide which browser will launch
 # available browser: firefox, chrome, ie, webkit
