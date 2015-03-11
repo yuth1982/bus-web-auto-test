@@ -19,17 +19,18 @@ ARIA_ENV = ALL_ENV[ENV['ARIA_ENV'] || 'aria_qa']
 case TEST_ENV
   when /qa*/
     ARIA_API_ENV = ALL_ENV[ENV['ARIA_API_ENV'] || 'aria_api_qa']
+    # Active AD connection test environment, for example ad_connection_qa
+    AD_CONNECTION_ENV = ALL_ENV[ENV['AD_CONNECTION_ENV'] || 'ad_connection_qa']
   when /std*/
     ARIA_API_ENV = ALL_ENV[ENV['ARIA_API_ENV'] || 'aria_api_std']
+    AD_CONNECTION_ENV = ALL_ENV[ENV['AD_CONNECTION_ENV'] || 'ad_connection_prod']
   when /pantheon*/
     ARIA_API_ENV = ALL_ENV[ENV['ARIA_API_ENV'] || 'aria_api_pantheon']
+    AD_CONNECTION_ENV = ALL_ENV[ENV['AD_CONNECTION_ENV'] || 'ad_connection_prod']
   when /prod*/
     ARIA_API_ENV = ALL_ENV[ENV['ARIA_API_ENV'] || 'aria_api_production']
+    AD_CONNECTION_ENV = ALL_ENV[ENV['AD_CONNECTION_ENV'] || 'ad_connection_prod']
 end
-
-
-# Active AD connection test environment, for example ad_connection_qa
-AD_CONNECTION_ENV = ALL_ENV[ENV['AD_CONNECTION_ENV'] || 'ad_connection_qa']
 
 # ATF uses br env variable to decide which browser will launch
 # available browser: firefox, chrome, ie, webkit
