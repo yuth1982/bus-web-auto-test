@@ -347,4 +347,20 @@ end
 
 
 
+Then /^the user activate account by update db$/ do
+  DBHelper.change_email_verified_at(@partner.admin_info.email)
+end
 
+
+And /^I save the partner info$/ do
+  Bus::DataObj::PreviousPartner.new(@partner)
+end
+
+And /^I get previous partner info$/ do
+  @partner=Bus::DataObj::PreviousPartner.new(nil).get_partner_info
+  Log.debug(@partner)
+end
+
+When /^user log in failed, error message is:$/ do  |message|
+  @phoenix_site.user_account.login_error_message.should == message.to_s
+end

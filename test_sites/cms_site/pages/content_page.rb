@@ -6,6 +6,7 @@ module CMS
     # late breaking issues with production pushes
     # said contents are evolutionary/always changing - will update pages as the change
 
+    set_url("http://mozy.com")
 
     #---DOWNLOADS PAGE SECTION---
     def download_check_verification

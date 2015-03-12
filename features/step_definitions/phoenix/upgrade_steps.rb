@@ -2,6 +2,12 @@ And /^I (upgrade|change) my (partner|user|free) account to:$/ do |change_type,ac
   # There were two Home signups, (When I add ...)(When I sign up...) The string combines them
   #(partner | user) is keep all tests cases working from when Home and Pro where separate
   attributes = upgrade_table.hashes.first
+
+  attributes.each do |header,attribute| #can use variable inside <%= %>
+    attribute.replace ERB.new(attribute).result(binding)
+    attributes[header] = nil  if (attribute == '' && !attributes.has_key?("security") )
+  end
+
   case change_type
     # for upgrading an account - ie .. going from free to paid
     when "upgrade"
@@ -14,6 +20,7 @@ And /^I (upgrade|change) my (partner|user|free) account to:$/ do |change_type,ac
         @partner.additional_storage = attributes['addl storage'] unless attributes['addl storage'].nil?
         # Partner info attributes
         @partner.partner_info.coupon_code = attributes["coupon"] unless attributes["coupon"].nil?
+        @partner.admin_info.full_name = attributes["admin name"] unless attributes["admin name"].nil?
         # subscription period
 
         @partner.subscription_period = attributes["period"]
@@ -109,9 +116,9 @@ And /^I change my profile attributes to:$/ do |change_info_table|
   # for changing PWD am going to pull a PWD value from the ENV file & use it
   # specific info that can be repopulated to the data_obj's
 
-    @partner.credit_card.number = attributes["new_cc_num"]
-    @partner.credit_card.type = attributes["new_cc_type"]
-    @partner.credit_card.last_four_digits = attributes["last_four_digs"]
+    @partner.credit_card.number = attributes["new_cc_num"] unless attributes["new_cc_num"].nil?
+    @partner.credit_card.type = attributes["new_cc_type"] unless attributes["new_cc_type"].nil?
+    @partner.credit_card.last_four_digits = attributes["last_four_digs"] unless attributes["last_four_digs"].nil?
     @partner.admin_info.first_name = attributes["new_username_first"] unless attributes["new_username_first"].nil?
     @partner.admin_info.last_name = attributes["new_username_last"] unless attributes["new_username_last"].nil?
     @partner.admin_info.full_name = attributes["new_username_full"] unless attributes["new_username_full"].nil?
@@ -122,12 +129,20 @@ And /^I change my profile attributes to:$/ do |change_info_table|
   # change cc - default is Visa, setting to MasterCard
   # change user name - default is system generated, new one is tester created
 
-  @phoenix_site.user_account.localized_click(@partner, 'profile_link')
-  @phoenix_site.update_profile.change_password #(attributes["new_password"])
-  @phoenix_site.user_account.localized_click(@partner, 'profile_link')
-  @phoenix_site.update_profile.change_cc(@partner)
-  @phoenix_site.user_account.localized_click(@partner, 'profile_link')
-  @phoenix_site.update_profile.change_user_name(@partner)
+  unless (attributes["new_password"]).nil?
+    @phoenix_site.user_account.localized_click(@partner, 'profile_link')
+    @phoenix_site.update_profile.change_password #(attributes["new_password"])
+  end
+
+  unless attributes["new_cc_num"].nil?
+    @phoenix_site.user_account.localized_click(@partner, 'profile_link')
+    @phoenix_site.update_profile.change_cc(@partner)
+  end
+
+  unless attributes["new_username_first"].nil?
+    @phoenix_site.user_account.localized_click(@partner, 'profile_link')
+    @phoenix_site.update_profile.change_user_name(@partner)
+  end
 end
 
 And /^I logout of my (user|partner) account$/ do |account|
@@ -194,5 +209,15 @@ And /^I update profile country from link in billing page and upgrade again$/ do 
   @partner.billing_info.country = attributes["billing country"] unless attributes['billing country'].nil?
   @phoenix_site.update_profile.update_profile_country_upgrade(profile_country)
   @phoenix_site.billing_fill_out.billing_info_fill_out(@partner)
+end
+
+And /^I delete the user account with (changed password|original password)$/ do |password|
+  @phoenix_site.user_account.localized_click(@partner, 'profile_link')
+  case password
+    when "changed password"
+      @phoenix_site.update_profile.delete_account(QA_ENV['bus_password'])
+    when "original password"
+      @phoenix_site.update_profile.delete_account(CONFIGS['global']['test_pwd'])
+  end
 end
 

@@ -2,10 +2,19 @@
 10.135.14.124 auth.mozy.com auth2.mozy.com
 10.135.14.105 secure.mozy.com secure.mozy.ie secure.mozy.fr secure.mozy.co.uk secure.mozy.de
 10.135.14.40 www.mozypro.com mozypro.com secure.mozypro.com www.mozyenterprise.com mozyenterprise.com
-
+10.135.14.106 mozy.com mozy.ie mozy.de mozy.fr mozy.co.uk
 10.135.14.40 client.mozy.com
 10.135.14.149 triton.mozy.com
 
 #google
-127.0.0.1 ssl.google-analytics.com
+127.0.0.1 ssl.google-analytics.com www.google-analytics.com
 127.0.0.1 ajax.googleapis.com
+127.0.0.1 apis.google.com
+
+#cms other
+127.0.0.1 connect.facebook.net static.ak.facebook.com s-static.ak.facebook.com www.facebook.com facebook.com
+127.0.0.1 platform.linkedin.com
+127.0.0.1 platform.twitter.com analytics.twitter.com
+127.0.0.1 ads.yahoo.com
+127.0.0.1 d.adroll.com match.adsrvr.org ib.adnxs.com googleads.g.doubleclick.net
+127.0.0.1 idsync.rlcdn.com

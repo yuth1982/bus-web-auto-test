@@ -10,6 +10,7 @@ module Phoenix
     element(:username_tb, id: "username")
     element(:password_tb, id: "password")
     element(:submit_btn, css: "input.img-button")
+    element(:login_error, css: "p.error")
     # user acct page elements
     element(:user_banner, id: "user-email")
     element(:main_section_head, css: "h2")
@@ -208,6 +209,10 @@ module Phoenix
 
     def click_change_plan_account_page
       change_plan_account_link.click
+    end
+
+    def login_error_message
+      login_error.text
     end
   end
 end

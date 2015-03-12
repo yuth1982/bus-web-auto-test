@@ -1,4 +1,5 @@
 $:.unshift(File.dirname(__FILE__))
+require 'bus/partner/previous_partner'
 require 'bus/partner/partner_account'
 require 'bus/partner/mozypro'
 require 'bus/partner/mozyenterprise'

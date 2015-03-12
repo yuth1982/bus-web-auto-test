@@ -7,6 +7,9 @@ module Phoenix
   element(:message_profile, xpath: "//div[@id='maincontent']/p")
   # change user name
   element(:user_name_tb, id: "user_name")
+  # delete account section
+  element(:password_tb, id: "password")
+  element(:delete_account_btn, xpath: "//input[@id='delete_account']")
   # change password section
   element(:old_pw, id: "old_password")
   element(:new_pw, id: "new_password")
@@ -62,6 +65,19 @@ module Phoenix
   element(:free2paid_continue_btn, xpath: "//input[@id='conti_button']")
   element(:update_profile_country_upgrade_link, xpath: "//div[@id='cybersourceErrors']//a")
   element(:continue_btn, css: "input.img-button")
+
+
+  #--delete user section--
+  # calls the whole process
+  def delete_account(password)
+    delete_account_link
+    password_tb.type_text(password)
+    delete_account_btn.click
+  end
+
+  def delete_account_link()
+    find(:xpath, "//a[contains(@href,'/account/cancel_verify')]").click
+  end
 
   #--change credit card information section--
   # calls the whole process
