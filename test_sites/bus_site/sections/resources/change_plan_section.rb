@@ -11,7 +11,7 @@ module Bus
     
     element(:storage_add_on_tb, css: "input[id^=products_addon_]")
     element(:server_plan_select, css: "select[id^=products_addon_]")
-    element(:server_plan_change_link, css: "span#clickable-change-link a")
+    element(:server_plan_change_link, xpath: "//a[text()='(change)']")
     element(:coupon_code_tb, id: "coupon_code")
     element(:server_plan_status_span, id: "server-pass-status")
     element(:charge_plan_div, xpath: "//div[@id='change_plan_confirmation']//p")

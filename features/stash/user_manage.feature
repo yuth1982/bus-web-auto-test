@@ -353,8 +353,8 @@ Feature: User stash setting management
       | email                |
       | test_120694@auto.com |
     And I add new user(s):
-      | name           | storage_type | storage_limit | devices | enable_stash |
-      | TC.120695 user | Desktop      | 10            | 1       | yes          |
+      | name           | user_group           |storage_type | storage_limit | devices | enable_stash |
+      | TC.120695 user | (default user group) |Desktop      | 10            | 1       | yes          |
     Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by newly created user email
@@ -366,8 +366,8 @@ Feature: User stash setting management
       | Sync           |  Set                 |        |
     Then I view Sync details
     And machine details should be:
-      | External ID: | Owner:       | Encryption: | Data Center: |
-      |  (change)    | @user_email  |  Default    |    qa6       |
+      | External ID: | Owner:       | Encryption: | Data Center:               |
+      |  (change)    | @user_email  |  Default    | <%=QA_ENV['data_center']%> |
     And I delete user
     And I close machine details section
 
@@ -380,8 +380,8 @@ Feature: User stash setting management
       | Sync           |  Set                 |        |
     And I view Sync details
     And machine details should be:
-      | External ID: | Owner:                  | Encryption: | Data Center: |
-      |  (change)    | tc120694user1@auto.com  |  Custom     |    qa6       |
+      | External ID: | Owner:                  | Encryption: | Data Center:               |
+      |  (change)    | tc120694user1@auto.com  |  Custom     | <%=QA_ENV['data_center']%> |
     And I close user details section
     And I close machine details section
 
@@ -394,8 +394,8 @@ Feature: User stash setting management
       | Sync           |  Set                 |        |
     And I view Sync details
     And machine details should be:
-      | External ID: | Owner:                  | Encryption: | Data Center: |
-      |  (change)    | tc120694user2@auto.com  |  Default    |    qa6       |
+      | External ID: | Owner:                  | Encryption: | Data Center:               |
+      |  (change)    | tc120694user2@auto.com  |  Default    | <%=QA_ENV['data_center']%> |
     And I close user details section
     And I close machine details section
 

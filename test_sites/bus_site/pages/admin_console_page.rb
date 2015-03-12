@@ -121,6 +121,7 @@ module Bus
     # @return [nothing]
     def navigate_to_menu(link_name, use_quick_link = false)
       start_using_mozy_btn.click if has_start_using_mozy_btn?
+      alert_accept if alert_present?
       # Looking for link in navigation menu
       find(:xpath, "//ul//a[text()='#{link_name}']")
       # calling all method does not require to wait
@@ -128,6 +129,7 @@ module Bus
       el = use_quick_link ? links.first : links.last
       if links.first.element_parent[:class].match(/active/).nil? && links.last.element_parent[:class].match(/active/).nil?
         el.click
+        alert_accept if alert_present?
       end
       # Make sure the destination section loaded correctly for further use in following steps
       find(:css, 'h2 a[onclick^=toggle_module]')

@@ -128,7 +128,7 @@ Scenario: 19945 EMEA (1UG) France Metallic Reseller Verify Buy More Link in Add 
   Scenario: Mozy-19952:EMEA(1UG), Germany, MozyPro Itemized, Verify Add More Link in Add New User
     When I act as partner by:
       | name                                    |
-      | qa1+testDEMozyProItemized90211@mozy.com |
+      | redacted-608@notarealdomain.mozy.com |
     And I navigate to Add New User section from bus admin console page
     And I choose (default user group) from Choose a Group
     Then the Buy More link should be visible

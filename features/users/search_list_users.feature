@@ -212,100 +212,100 @@ Feature: Search and list user
   #   all as setup steps for verification of migration of itemized partners to pooled storage
   @TC.21013 @itemized @bus @2.5 @pooled_storage @env_dependent
   Scenario: 21013 Pooled Storage - Pro Itemized - User List View - removal of assigned/used quota
-    When I log in to legacy bus01 as administrator
-    And I successfully add an itemized MozyPro partner:
-      | period | server licenses | server quota | desktop licenses | desktop quota |
-      | 12     | 5               | 50           | 5                | 50            |
-    And I log in bus admin console as administrator
-    And I search partner by:
-      | name          | filter |
-      | @company_name | None   |
-    And I view partner details by newly created partner company name
-    And I get the partner_id
-    And I migrate the partner to aria
-    And I log in bus admin console as administrator
-    And I search partner by:
-      | name          | filter |
-      | @company_name | None   |
-    And Partner search results should be:
-      | Partner       | Type             |
-      | @company_name | MozyPro Itemized |
-    And I view partner details by newly created partner company name
-    And I act as newly created partner
-    And I add new itemized user(s):
-      | name     | devices_server | quota_server | devices_desktop | quota_desktop |
-      | TC210131 | 1              | 10           | 1               | 10            |
-    And new itemized user should be created
-    And I navigate to Search / List Users section from bus admin console page
-    And I sort user search results by Name
+#    When I log in to legacy bus01 as administrator
+#    And I successfully add an itemized MozyPro partner:
+#      | period | server licenses | server quota | desktop licenses | desktop quota |
+#      | 12     | 5               | 50           | 5                | 50            |
+#    And I log in bus admin console as administrator
+#    And I search partner by:
+#      | name          | filter |
+#      | @company_name | None   |
+#    And I view partner details by newly created partner company name
+#    And I get the partner_id
+#    And I migrate the partner to aria
+#    And I log in bus admin console as administrator
+#    And I search partner by:
+#      | name          | filter |
+#      | @company_name | None   |
+#    And Partner search results should be:
+#      | Partner       | Type             |
+#      | @company_name | MozyPro Itemized |
+#    And I view partner details by newly created partner company name
+#    And I act as newly created partner
+#    And I add new itemized user(s):
+#      | name     | devices_server | quota_server | devices_desktop | quota_desktop |
+#      | TC210131 | 1              | 10           | 1               | 10            |
+#    And new itemized user should be created
+#    And I navigate to Search / List Users section from bus admin console page
+#    And I sort user search results by Name
+#    And Itemized user search results should be:
+#      | Name     | Machines | Storage | Storage Used |
+#      | TC210131 | 0        | 0       | None         |
+#    And I stop masquerading
+#    And I migrate the partner to pooled storage
+#    And I log in bus admin console as administrator
+#    And I search partner by:
+#      | name          | filter |
+#      | @company_name | None   |
+#    And I view partner details by newly created partner company name
+#    And I act as newly created partner
+    When I log in bus admin console as administrator
+    When I act as partner by:
+      | email                                 |
+      | redacted-608@notarealdomain.mozy.com  |
+    When I search user by:
+      | keywords                                |
+      | redacted-284778@notarealdomain.mozy.com |
     And Itemized user search results should be:
-      | Name     | Machines | Storage | Storage Used |
-      | TC210131 | 0        | 0       | None         |
-    And I stop masquerading
-    And I migrate the partner to pooled storage
-    And I log in bus admin console as administrator
-    And I search partner by:
-      | name          | filter |
-      | @company_name | None   |
-    And I view partner details by newly created partner company name
-    And I act as newly created partner
-    And I navigate to Search / List Users section from bus admin console page
-    And I sort user search results by Name
-    And Itemized user search results should be:
-      | Name     | Machines | Storage                         | Storage Used       |
-      | TC210131 | 0        | Desktop: Shared\nServer: Shared | None\nServer: None |
-    And I stop masquerading
-    And I search and delete partner account by newly created partner company name
+      | Name     | Machines | Storage                         | Storage Used        |
+      | TC210131 | 0        | Desktop: Shared\nServer: Shared |  None\nServer: None |
 
   # creation itemized (reseller) partner to pooled storage w/ user
   #   & adding machine, quota to accts will be in future commits
   #   all as setup steps for verification of migration of itemized partners to pooled storage
   @TC.21017 @itemized @bus @2.5 @pooled_storage @env_dependent
   Scenario: 21017 Pooled Storage - Reseller Itemized - User List View - removal of assigned/used quota
-    When I log in to legacy bus01 as administrator
-    And I successfully add an itemized Reseller partner:
-      | period | server licenses | server quota | desktop licenses | desktop quota |
-      | 12     | 10              | 250          | 10               | 250           |
-    And I log in bus admin console as administrator
-    And I search partner by:
-      | name          | filter |
-      | @company_name | None   |
-    And I view partner details by newly created partner company name
-    And I get the partner_id
-    And I migrate the partner to aria
-    And I log in bus admin console as administrator
-    And I search partner by:
-      | name          | filter |
-      | @company_name | None   |
-    And Partner search results should be:
-      | Partner       | Type              |
-      | @company_name | Reseller Itemized |
-    And I view partner details by newly created partner company name
-    And I act as newly created partner
-    And I add new itemized user(s):
-      | name     | devices_server | quota_server | devices_desktop | quota_desktop |
-      | TC210171 | 1              | 10           | 1               | 10            |
-    And new itemized user should be created
-    And I navigate to Search / List Users section from bus admin console page
-    And I sort user search results by Name
+#    When I log in to legacy bus01 as administrator
+#    And I successfully add an itemized Reseller partner:
+#      | period | server licenses | server quota | desktop licenses | desktop quota |
+#      | 12     | 10              | 250          | 10               | 250           |
+#    And I log in bus admin console as administrator
+#    And I search partner by:
+#      | name          | filter |
+#      | @company_name | None   |
+#    And I view partner details by newly created partner company name
+#    And I get the partner_id
+#    And I migrate the partner to aria
+#    And I log in bus admin console as administrator
+#    And I search partner by:
+#      | name          | filter |
+#      | @company_name | None   |
+#    And Partner search results should be:
+#      | Partner       | Type              |
+#      | @company_name | Reseller Itemized |
+#    And I view partner details by newly created partner company name
+#    And I act as newly created partner
+#    And I add new itemized user(s):
+#      | name     | devices_server | quota_server | devices_desktop | quota_desktop |
+#      | TC210171 | 1              | 10           | 1               | 10            |
+#    And new itemized user should be created
+#    And I navigate to Search / List Users section from bus admin console page
+#    And I sort user search results by Name
+#    And Itemized user search results should be:
+#      | Name     | Machines | Storage | Storage Used |
+#      | TC210171 | 0        | 0       | None         |
+#    And I stop masquerading
+#    And I migrate the partner to pooled storage
+    When I log in bus admin console as administrator
+    When I act as partner by:
+      | email                                 |
+      | redacted-303@notarealdomain.mozy.com  |
+    When I search user by:
+      | keywords                                |
+      | redacted-899929@notarealdomain.mozy.com |
     And Itemized user search results should be:
-      | Name     | Machines | Storage | Storage Used |
-      | TC210171 | 0        | 0       | None         |
-    And I stop masquerading
-    And I migrate the partner to pooled storage
-    And I log in bus admin console as administrator
-    And I search partner by:
-      | name          | filter |
-      | @company_name | None   |
-    And I view partner details by newly created partner company name
-    And I act as newly created partner
-    And I navigate to Search / List Users section from bus admin console page
-    And I sort user search results by Name
-    And Itemized user search results should be:
-      | Name     | Machines | Storage                         | Storage Used                |
+      | Name     | Machines | Storage                         | Storage Used        |
       | TC210171 | 0        | Desktop: Shared\nServer: Shared |  None\nServer: None |
-    And I stop masquerading
-    And I search and delete partner account by newly created partner company name
 
     #
     # user list view updates - via partner created through phoenix
@@ -340,6 +340,6 @@ Feature: Search and list user
       Then User search results should be:
         | Name        | Sync     | Storage                |
         | TC.21012-1  | Enabled  | Generic 10 GB (Limited)|
-        | TC.21012-2  | Enabled | Generic Shared         |
+        | TC.21012-2  | Disabled | Generic Shared         |
       And I stop masquerading
       And I search and delete partner account by newly created partner company name

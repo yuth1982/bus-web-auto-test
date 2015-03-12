@@ -91,22 +91,24 @@ Feature: Add new user, user group device details
 
     @TC.19935 @bus @env_dependent
     Scenario: Mozy-19935:Devices Add New User (Single UG) Reseller Itemized
-      When I log in to legacy bus01 as administrator
-      And I successfully add an itemized Reseller partner:
-        | period | desktop licenses | desktop quota | server licenses | server quota |
-        | 12     | 5                | 5             | 5               | 5            |
-      And I log in bus admin console as administrator
-      And I search partner by:
-        | name          | filter |
-        | @company_name | None   |
-      And I view partner details by newly created partner company name
-      And I get the partner_id
-      And I migrate the partner to aria
-      And I migrate the partner to pooled storage
-      When I enable stash for the partner
-      And I act as newly created partner account
+#      When I log in to legacy bus01 as administrator
+#      And I successfully add an itemized Reseller partner:
+#        | period | desktop licenses | desktop quota | server licenses | server quota |
+#        | 12     | 5                | 5             | 5               | 5            |
+#      And I log in bus admin console as administrator
+#      And I search partner by:
+#        | name          | filter |
+#        | @company_name | None   |
+#      And I view partner details by newly created partner company name
+#      And I get the partner_id
+#      And I migrate the partner to aria
+#      And I migrate the partner to pooled storage
+#      When I enable stash for the partner
+#      And I act as newly created partner account
+      When I act as partner by:
+        | email                                 |
+        | redacted-303@notarealdomain.mozy.com  |
       And I navigate to Add New User section from bus admin console page
-      #
       Then I note the desktop and server amounts in Add New User module for user group (default user group)
 
 # Non storage pooled partner, move to 2.4
