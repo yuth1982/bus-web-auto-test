@@ -10,3 +10,4 @@ chromedriver.log
 .tags
 logs/
 html-report/
+appsqa.privatekey
