@@ -122,7 +122,15 @@ class Capybara::Node::Element
   alias_method :old_set, :set
   def set(value)
     if !value.nil? && value.to_s.length > 0
-      msg = 'Typing \'' + value.to_s + '\' in'
+      is_password = (!self.text.nil? && self.text.downcase.match(/.*password.*/)) ||
+          (!self.value.nil? && self.value.downcase.match(/.*password.*/)) ||
+          (!@selector.locator.nil? && @selector.locator.to_s.downcase.match(/.*password.*/))
+      if is_password
+        msg = 'Typing \'******\' in'
+      else
+        msg = 'Typing \'' + value.to_s + '\' in'
+      end
+
       txt = self.text
       val = self.value
       msg += ' text:\'' + txt + '\'' if !txt.nil? && txt.length > 0
