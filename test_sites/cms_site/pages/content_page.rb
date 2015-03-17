@@ -2,66 +2,70 @@ module CMS
   # This class provides actions for cms pages
   class ContentPages < SiteHelper::Page
 
-    # creating to verify contents of certain cms pages w/ automation to avoid
-    # late breaking issues with production pushes
-    # said contents are evolutionary/always changing - will update pages as the change
-
     set_url("http://mozy.com")
 
-    #---DOWNLOADS PAGE SECTION---
-    def download_check_verification
-      download_link
-      dl_links_verify
-      go_to_home_verify
-      find(:xpath, "//a[contains(@href,'/')]").click
-      download_link
-      go_to_pro_verify
-      find(:xpath, "//a[contains(@href,'/')]").click
-      Log.debug("Prod-188: Verification Complete")
+    # download links of tenjin home page
+    element(:backup_download_link, css: "a[href='/product/download/backup']")
+    element(:sync_download_link, css: "a[href='/product/download/sync']")
+    element(:mobile_download_link, css: "a[href='/product/download/mobile-apps']")
+
+    #sync client download page
+    element(:sync_win_download_link, css: "a[href$='/mozy-sync.exe']")
+    element(:sync_mac_download_link, css: "a[href$='/mozy-sync.dmg']")
+
+    #backup client download page
+    element(:mozyhome_download_link, css: "a[href='/product/download/backup/mozyhome']")
+    element(:mozypro_download_link, css: "a[href='/product/download/backup/mozypro']")
+
+    #home backup client download page
+    element(:mozyhome_win_download_link, css: "a[href$='/downloads/mozysetup.exe']")
+    element(:mozyhome_mac_download_link, css: "a[href$='/downloads/mozysetup.dmg']")
+    #pro backup client download page
+    element(:mozypro_win_download_link, css: "a[href$='/downloads/mozyprosetup.exe']")
+    element(:mozypro_mac_download_link, css: "a[href$='/downloads/mozyprosetup.dmg']")
+    element(:mozypro_deb32_download_link, css: "a[href$='/downloads/mozypro-deb-32setup.deb']")
+    element(:mozypro_deb64_download_link, css: "a[href$='/downloads/mozypro-deb-64setup.deb']")
+    element(:mozypro_rpm32_download_link, css: "a[href$='/downloads/mozypro-rpm-32setup.rpm']")
+    element(:mozypro_rpm64_download_link, css: "a[href$='/downloads/mozypro-rpm-64setup.rpm']")
+
+
+    #---Steps to download home client
+    def download_home_client()
+      backup_download_link.click
+      mozyhome_download_link.click
+      client_downloaded?(mozyhome_win_download_link,'mozysetup.exe') &&
+          client_downloaded?(mozyhome_mac_download_link,'mozysetup.dmg')
     end
 
-    # check for dl link
-    def download_link
-      find(:xpath, "//a[contains(@href,'/download')]").click
+    #---Steps to download sync client
+    def download_sync_client()
+      sync_download_link.click
+      client_downloaded?(sync_win_download_link,'mozy-sync.exe') &&
+          client_downloaded?(sync_mac_download_link,'mozy-sync.dmg')
     end
 
-    # verification of links provided
-    def dl_links_verify
-      # home & pro
-      find(:xpath, "//a[contains(@href,'/home/download')]").present?
-      find(:xpath, "//a[contains(@href,'/pro/download')]").present?
-      # stash
-      find(:xpath, "//a[contains(@href,'/stash/activate')]").present?
-      # apple, google, amazon links
-      find(:xpath, "//a[contains(@href,'/us/app/mozy')]").present? #IOS
-      find(:xpath, "//a[contains(@href,'store/apps')]").present?  #android-google apps
-      find(:xpath, "//a[contains(@href,'/Mozy')]").present? #android-amazon
+    #---Steps to download pro client
+    def download_pro_client()
+      backup_download_link.click
+      mozypro_download_link.click
+      client_downloaded?(mozypro_win_download_link,'mozyprosetup.exe') &&
+          client_downloaded?(mozypro_mac_download_link,'mozyprosetup.dmg') &&
+          client_downloaded?(mozypro_deb32_download_link,'mozypro-deb-32setup.deb') &&
+          client_downloaded?(mozypro_deb64_download_link,'mozypro-deb-64setup.deb') &&
+          client_downloaded?(mozypro_rpm32_download_link,'mozypro-rpm-32setup.rpm') &&
+          client_downloaded?(mozypro_rpm64_download_link,'mozypro-rpm-64setup.rpm')
     end
 
-    # pro verification section
-    # presently, the following versions are available (this WILL change):
-    # win: mozypro-2_22_0_313-49524
-    # mac: mozypro-2_11_1_686-49541, 2_9_2_632-47222, 1_7_3_0-12331
-    def go_to_pro_verify
-      find(:xpath, "//a[contains(@href,'/pro/download')]").click
-      sleep 1 # pause just a sec & verify content
-      find(:xpath, "//a[contains(@href,'/downloads/mozypro-2_22_0_313-49524.exe')]").present?
-      find(:xpath, "//a[contains(@href,'/downloads/mozypro-2_11_1_686-49541.dmg')]").present?
-      find(:xpath, "//a[contains(@href,'/downloads/mozypro-2_9_2_632-47222.dmg')]").present?
-      find(:xpath, "//a[contains(@href,'/downloads/mozypro-1_7_3_0-12331.dmg')]").present?
-    end
-
-    # home verification section
-    # presently, the following versions are available (this WILL change):
-    # win: mozy-2_22_0_313-49521
-    # mac: 2_11_1_686-49538, 2_9_2_632-47219, 1_7_3_0-12328
-    def go_to_home_verify
-      find(:xpath, "//a[contains(@href,'/home/download')]").click
-      sleep 1 # pause just a sec & verify content
-      find(:xpath, "//a[contains(@href,'/downloads/mozy-2_22_0_313-49521.exe')]").present?
-      find(:xpath, "//a[contains(@href,'/downloads/mozy-2_11_1_686-49538.dmg')]").present?
-      find(:xpath, "//a[contains(@href,'/downloads/mozy-2_9_2_632-47219.dmg')]").present?
-      find(:xpath, "//a[contains(@href,'/downloads/mozy-1_7_3_0-12328.dmg')]").present?
+    # check if client downloaded successfully
+    def client_downloaded?(client_download_link, client_name)
+      file_name =  "#{default_download_path}/#{client_name}"
+      client_download_link.click
+      i = 0
+      30.times do
+        break if ( File.size?(file_name).to_i + File.size?(file_name+'.part').to_i ) > 0
+        sleep(1)
+      end
+      return (File.size?(file_name).to_i+File.size?(file_name+'.part').to_i) > 0
     end
 
   end

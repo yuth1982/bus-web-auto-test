@@ -21,12 +21,16 @@ Feature: Phoenix smoke test
       | Total Charge                          |       |          | $5.99  |
     Then the user is successfully added.
     And I save the partner info
+    And the user has activated their account
 
-    # work around to activate user account since mail service in not available now
-    And the user activate account by update db
+  @TC.126132 @bus @regression_test @phoenix @mozyhome
+  Scenario: 126132 Log into the MozyHome paid user
+    When I get previous partner info
+    And I login as the user on the account.
+    And I verify the user account.
 
   @TC.126139 @bus @regression_test @phoenix @mozyhome
-  Scenario: 126139 Log into the MozyHome paid user
+  Scenario: 126139 update a profile info of home user
     When I get previous partner info
     And I login as the user on the account.
     And I change my profile attributes to:
@@ -35,49 +39,72 @@ Feature: Phoenix smoke test
     # Add change country, address, Add check point
     And I save the partner info
 
-  @TC.126124 @bus @regression_test @phoenix @mozyhome
+  @TC.126124 @bus @regression_test @phoenix @mozyhome @qa
   Scenario: 126124 Update Billing address of MozyHome user
     When I get previous partner info
     When I login as the user on the account.
     And I change my profile attributes to:
       | new_cc_num       | new_cc_type | last_four_digs |
       | 5111991111111121 | MasterCard  | 1121           |
-    # Add check point, log in bus and see cc update
     And I save the partner info
 
-  @TC.126134 @bus @regression_test @phoenix @mozyhome
-  Scenario: 126134 home user delete account by self
+  @TC.126128 @bus @regression_test @phoenix @mozyhome
+  Scenario: 126128 update a user name
     When I get previous partner info
     And I login as the user on the account.
-    And I delete the user account with original password
-    And I login as the user on the account.
-    And user log in failed, error message is:
+    And I change email address to:
+      | new email        | password |
+      | @new_admin_email | test1234 |
+    And I change email address successfully
     """
-     Incorrect email or password.
-    """
+      Your email change request requires verification. We sent an email to @new_admin_email. Please open the email and click the verification link to confirm this change.
+     """
+    When I search emails by keywords:
+      | subject                   | content                        |
+      | Email Change Notification | <%=@partner.admin_info.email%> |
+    Then I should see 1 email(s)
+    And I retrieve email content by keywords:
+      | to                | subject                    |
+      | @new_admin_email  | Email Address Verification |
+    And I get verify email address from email content for mozyhome change email address
+    Then verify email address link should show success message
+    And I log into phoenix with username @new_admin_email and password test1234
+    And I save the partner info
 
-  #@TC.126128 @bus @regression_test @phoenix @mozyhome
-  #Scenario: 126128 update a user name
-  #  When I get previous partner info
-  #  And I login as the user on the account.
-  #  And I change email address to:
-  #    | new email        | password |
-  #    | @new_admin_email | test1234 |
-  #  And I change email address successfully
-  #  """
-  #    Your email change request requires verification. We sent an email to @new_admin_email. Please open the email and click the verification link to confirm this change.
-  #   """
-    #When I search emails by keywords:
-    #  | subject                   | content                        |
-    #  | Email Change Notification | <%=@partner.admin_info.email%> |
-    #Then I should see 1 email(s)
-    #And I retrieve email content by keywords:
-    #  | to                | subject                    |
-    #  | @new_admin_email  | Email Address Verification |
-    #And I get verify email address from email content for mozyhome change email address
-    #Then verify email address link should show success message
-    #And I log into phoenix with username @new_admin_email and password test1234
-    #And I save the partner info
+  @TC.126133 @bus @regression_test @phoenix @mozyhome
+  Scenario: 126133 Mozyhome user change password
+    When I get previous partner info
+    When I login as the user on the account.
+    And I change my profile attributes to:
+      | new_password |
+      | Naich4yei8   |
+    And I logout of my user account
+    And I login under changed password on the account.
+
+  @TC.126137 @bus @regression_test @phoenix @mozyhome
+  Scenario: 126137 view home user detail in BUS
+    When I get previous partner info
+    And I log in bus admin console as administrator
+    And I search user by:
+      | keywords       |
+      | @mh_user_email |
+    And I view user details by newly created MozyHome username
+    And MozyHome user details should be:
+      | Partner:          | Country: | Name:               |
+      | MozyHome (change) | @country | @user_name (change) |
+    And MozyHome subscription details should be:
+      | Subscription                                |
+      | MozyHome 50 GB, + 0 GB, 1 machines, monthly |
+
+  @TC.126138 @bus @regression_test @phoenix @mozyhome
+  Scenario: 126138 delete home user in BUS
+    When I get previous partner info
+    And I log in bus admin console as administrator
+    And I search user by:
+      | keywords       |
+      | @mh_user_email |
+    And I view user details by newly created MozyHome username
+    And I delete user
 
 
   @TC.126122 @bus @regression_test @phoenix @mozyhome @free @email
@@ -88,16 +115,7 @@ Feature: Phoenix smoke test
       | free      | United States |
     Then the user is successfully added.
     And I save the partner info
-
-    # work around to activate user account since mail service in not available now
-    When I log in bus admin console as administrator
-    And I search user by:
-      | keywords       |
-      | @mh_user_email |
-    And I view MozyHome user details by @user_name
-    And I verify the user
-    Then The user is verified
-    And the user activate account by update db
+    And the user has activated their account
 
 
   @TC.126123 @bus @regression_test @phoenix @mozyhome
@@ -151,44 +169,17 @@ Feature: Phoenix smoke test
     When I get previous partner info
     And I login as the user on the account.
     Then I check download links in download backup software and download mozy sync software page
-    #verify client can be downloaded
 
-  @TC.126133 @bus @regression_test @phoenix @mozyhome
-  Scenario: 126133 Mozyhome user change password
+  @TC.126134 @bus @regression_test @phoenix @mozyhome
+  Scenario: 126134 home user delete account by self
     When I get previous partner info
-    When I login as the user on the account.
-    And I change my profile attributes to:
-      | new_password |
-      | Naich4yei8   |
-    And I logout of my user account
-    And I login under changed password on the account.
-
-
-  @TC.126137 @bus @regression_test @phoenix @mozyhome
-  Scenario: 126137 view home user detail in BUS
-    When I get previous partner info
-    And I log in bus admin console as administrator
-    And I search user by:
-      | keywords       |
-      | @mh_user_email |
-    And I view user details by newly created MozyHome username
-    And MozyHome user details should be:
-      | Partner:          | Country: | Name:               |
-      | MozyHome (change) | @country | @user_name (change) |
-    And MozyHome subscription details should be:
-      | Subscription                                 |
-      | MozyHome 125 GB, + 40 GB, 3 machines, yearly |
-      | MozyHome 125 GB, + 40 GB, 3 machines, monthly  |
-
-  @TC.126138 @bus @regression_test @phoenix @mozyhome
-  Scenario: 126138 delete home user in BUS
-    When I get previous partner info
-    And I log in bus admin console as administrator
-    And I search user by:
-      | keywords       |
-      | @mh_user_email |
-    And I view user details by newly created MozyHome username
-    And I delete user
+    And I login as the user on the account.
+    And I delete the user account with original password
+    And I login as the user on the account.
+    And user log in failed, error message is:
+    """
+     Incorrect email or password.
+    """
 
   @TC.126121 @bus @mozypro @phoenix @regression_test @us
     Scenario: 126121 Create a MozyPro partner
@@ -211,3 +202,13 @@ Feature: Phoenix smoke test
       And I login as mozypro admin successfully
       And I log in bus admin console as administrator
       And I search and delete partner account by newly created partner company name
+
+
+    @TC.126129 @mozy @phoenix @regression_test
+    Scenario: 126129 Verify DL links within CMS content pages
+      When I go to cms page
+      And I download home client
+      And I go to cms page
+      And I download sync client
+      And I go to cms page
+      And I download pro client

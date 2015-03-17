@@ -73,6 +73,13 @@ module FileHelper
     File.rename(old_file, new_file)
   end
 
+  # Public: delete *.part/ mozy* files of mozyclient in download folder
+  #
+  # Returns nothing
+  def clean_up_client
+    Dir.glob("#{default_download_path}/mozy*").each{ |path| File.delete(path) }
+  end
+
   # Public: delete *.csv files in download folder
   #
   # Returns nothing
