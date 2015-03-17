@@ -63,29 +63,33 @@ Scenario: Mozy-19646:Access Partner as Bus Admin
   When I stop masquerading
   Then I search and delete partner account by newly created partner company name
 
-@TC.19839 @bus @user_storage_details @itemized @reseller @desktop @env_dependent
+  @TC.19839 @bus @user_storage_details @itemized @reseller @desktop @env_dependent
   Scenario: Mozy-19839:Access Reseller Itemized Partner as Partner Admin
-    Given I navigate to bus admin console login page
-    When I log in to legacy bus01 as administrator
-    And I successfully add an itemized Reseller partner:
-      | period | desktop licenses | desktop quota |
-      | 12     | 2                | 2             |
-    And I log in bus admin console as administrator
-    And I search partner by:
-      | name          | filter |
-      | @company_name | None   |
-    And I view partner details by newly created partner company name
-    And I get the partner_id
-    And I migrate the partner to aria
-    And I migrate the partner to pooled storage
-    And I act as newly created partner
+  #    Given I navigate to bus admin console login page
+  #    When I log in to legacy bus01 as administrator
+  #    And I successfully add an itemized Reseller partner:
+  #      | period | desktop licenses | desktop quota |
+  #      | 12     | 2                | 2             |
+  #    And I log in bus admin console as administrator
+  #    And I search partner by:
+  #      | name          | filter |
+  #      | @company_name | None   |
+  #    And I view partner details by newly created partner company name
+  #    And I get the partner_id
+  #    And I migrate the partner to aria
+  #    And I migrate the partner to pooled storage
+  #    And I act as newly created partner
+    When I log in bus admin console as administrator
+    When I act as partner by:
+      | email                    |
+      | qa1+sam_evans@decho.com  |
     And I add new user(s):
       | user_group           | storage_type | devices |
       | (default user group) | Desktop      | 1       |
     Then 1 new user should be created
     When I search user by:
-      | keywords   |
-      | @user_name |
+      | keywords   |   user type |
+      | @user_name |  Itemized Reseller 750GB BS (Migrate)DONOT_delete_TC19839 Users|
     Then User search results should be:
       | User        | Name         | User Group           | Machines  | Storage         | Storage Used  | Created  | Backed Up |
       | @user_email | @user_name   | (default user group) | 0         | Desktop Shared  | None          | today    | never     |
@@ -96,24 +100,27 @@ Scenario: Mozy-19646:Access Partner as Bus Admin
     And user resources details rows should be:
       | Storage                          | Devices                            |
       | Desktop: 0 Used / 2 GB Available | Desktop: 0 Used / 1 Available Edit |
-    When I stop masquerading
-    Then I search and delete partner account by newly created partner company name
+    When I delete user
 
   @TC.19841 @bus @user_storage_details @mozypro @itemized @desktop @env_dependent
   Scenario: Mozy-19841: Access an MozyPro Itemized Partner's User's details as Bus Admin
-    When I log in to legacy bus01 as administrator
-    And I successfully add an itemized MozyPro partner:
-      | period | desktop licenses | desktop quota |
-      | 12     | 2                | 2             |
-    And I log in bus admin console as administrator
-    And I search partner by:
-      | name          | filter |
-      | @company_name | None   |
-    And I view partner details by newly created partner company name
-    And I get the partner_id
-    And I migrate the partner to aria
-    And I migrate the partner to pooled storage
-    And I act as newly created partner
+#    When I log in to legacy bus01 as administrator
+#    And I successfully add an itemized MozyPro partner:
+#      | period | desktop licenses | desktop quota |
+#      | 12     | 2                | 2             |
+#    And I log in bus admin console as administrator
+#    And I search partner by:
+#      | name          | filter |
+#      | @company_name | None   |
+#    And I view partner details by newly created partner company name
+#    And I get the partner_id
+#    And I migrate the partner to aria
+#    And I migrate the partner to pooled storage
+#    And I act as newly created partner
+    When I log in bus admin console as administrator
+    When I act as partner by:
+      | email                           |
+      | qa1+itmadm0106141255@decho.com  |
     And I add new user(s):
       | user_group           | storage_type | devices |
       | (default user group) | Desktop      | 1       |
@@ -122,17 +129,16 @@ Scenario: Mozy-19646:Access Partner as Bus Admin
       | keywords   |
       | @user_name |
     Then User search results should be:
-      | External ID | User        | Name         | User Group           | Machines | Storage         | Storage Used  | Created  | Backed Up |
-      |             | @user_email | @user_name   | (default user group) | 0  	   | Desktop Shared | None          | today    | never     |
+      | External ID | User        | Name         | User Group           | Machines | Storage        | Storage Used | Created  | Backed Up |
+      |             | @user_email | @user_name   | (default user group) | 0  	   | Desktop Shared | None         | today    | never     |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                           |
       | <%=@users.first.name%> (change) |
     And user resources details rows should be:
-      | Storage                          | Devices                            |
-      | Desktop: 0 Used / 2 GB Available | Desktop: 0 Used / 1 Available Edit |
-    When I stop masquerading
-    Then I search and delete partner account by newly created partner company name
+      | Storage                            | Devices                            |
+      | Desktop: 0 Used / 100 GB Available | Desktop: 0 Used / 1 Available Edit |
+    When I delete user
 
   @TC.19844 @bus @user_storage_details @enterprise @server
 Scenario: Mozy-19844: Access an Enterprise Partner's User's details as Partner Admin
@@ -259,35 +265,38 @@ Scenario: Mozy-19853: Access an United Kingdom Partner's User's details as Partn
 
   @TC.19859 @bus @user_storage_details @emea @DE @mozypro @itemized @server @env_dependent
 Scenario: Mozy-19859:Access German Partner's User's details as Bus Admin
-  When I log in to legacy bus01 as administrator
-  And I successfully add an itemized MozyPro partner:
-    | period | server licenses | server quota |
-    | 12     | 2               | 2            |
-  And I log in bus admin console as administrator
-  And I search partner by:
-    | name          | filter |
-    | @company_name | None   |
-  And I view partner details by newly created partner company name
-  And I get the partner_id
-  And I migrate the partner to aria
-  And I migrate the partner to pooled storage
-  And I act as newly created partner
-  And I add new user(s):
-    | user_group          | storage_type | devices |
-    | (default user group)| Server       | 1       |
-  Then 1 new user should be created
-  When I search user by:
-    | keywords   |
-    | @user_name |
-  Then User search results should be:
-    | External ID | User        | Name         | User Group           | Machines | Storage        | Storage Used | Created  | Backed Up |
-    |             | @user_email | @user_name   | (default user group) | 0 	     | Server: Shared | Server: None | today    | never     |
-  When I view user details by newly created user email
-  Then user details should be:
-    | ID:        | External ID: | Name:                           |
-    | @xxxxxxxxx | (change)     | <%=@users.first.name%> (change) |
-  And user resources details rows should be:
-    | Storage                         | Devices                           |
-    | Server: 0 Used / 2 GB Available | Server: 0 Used / 1 Available Edit |
-  When I stop masquerading
-  Then I search and delete partner account by newly created partner company name
+#  When I log in to legacy bus01 as administrator
+#  And I successfully add an itemized MozyPro partner:
+#    | period | server licenses | server quota |
+#    | 12     | 2               | 2            |
+#  And I log in bus admin console as administrator
+#  And I search partner by:
+#    | name          | filter |
+#    | @company_name | None   |
+#  And I view partner details by newly created partner company name
+#  And I get the partner_id
+#  And I migrate the partner to aria
+#  And I migrate the partner to pooled storage
+#  And I act as newly created partner
+    When I log in bus admin console as administrator
+    When I act as partner by:
+      | email                           |
+      | qa1+itmadm0106141255@decho.com  |
+    And I add new user(s):
+      | user_group           | storage_type | devices |
+      | (default user group) | Desktop      | 1       |
+    Then 1 new user should be created
+    When I search user by:
+      | keywords   |
+      | @user_name |
+    Then User search results should be:
+      | External ID | User        | Name         | User Group           | Machines | Storage        | Storage Used | Created  | Backed Up |
+      |             | @user_email | @user_name   | (default user group) | 0  	   | Desktop Shared | None         | today    | never     |
+    When I view user details by newly created user email
+    Then user details should be:
+      | Name:                           |
+      | <%=@users.first.name%> (change) |
+    And user resources details rows should be:
+      | Storage                            | Devices                            |
+      | Desktop: 0 Used / 100 GB Available | Desktop: 0 Used / 1 Available Edit |
+    When I delete user
