@@ -161,7 +161,7 @@ Feature: Change VAT Number
       | France  | DE812321109   |
     Then Change contact country and VAT number shouldn't succeed and the message should be:
     """
-     Vat number is not valid
+     VAT number is not valid
     """
     Then I log in bus admin console as administrator
     And I view partner details by newly created partner company name
@@ -182,7 +182,7 @@ Feature: Change VAT Number
       | France  | invalid11     |
     Then Change contact country and VAT number shouldn't succeed and the message should be:
     """
-     Vat number is not valid
+     VAT number is not valid
     """
     Then I log in bus admin console as administrator
     And I view partner details by newly created partner company name
