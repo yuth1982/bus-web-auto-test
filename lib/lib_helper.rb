@@ -24,7 +24,6 @@ require 'capybara/cucumber'
 require 'aria_api/lib/aria_api'
 require 'file_helper'
 require 'bill_helper'
-require 'email_helper'
 require 'db_helper'
 require 'ldap_helper'
 require 'ssh_helper'
@@ -38,6 +37,7 @@ require 'common_helper'
 require 'site_helper/site_helper'
 require 'capybara_helper/capybara_helper'
 require 'bifrost_helper/bifrost_helper'
+require 'email_helper/email_helper'
 
 include FileHelper
 include DBHelper

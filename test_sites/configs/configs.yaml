@@ -10,8 +10,10 @@ global:
   # Fixed test password for hipaa password field
   test_hipaa_pwd:               test1234*
   # User email prefix, e.g qa1+reg+test@mozy.com
-  email_prefix:                 testing
-  email_domain:                 sandbox508171a1434d4b3aa0b8171cc1252689.mailgun.org
+  email_prefix_gmail:                 mozybus
+  email_domain_gmail:                 gmail.com
+  email_prefix_outlook:               mozyautotest
+  email_domain_outlook:               emc.com
   # Files downloaded location
   download_folder:              downloads
   test_data_folder:             test_data
@@ -141,6 +143,12 @@ gmail:
   username:                     mozybus@gmail.com
   password:                     qapassword
 
-mailgun:
-  api_key:                      key-95d93308ef4988294f21b4a4a4a12550
-  domain:                       sandbox508171a1434d4b3aa0b8171cc1252689.mailgun.org
+outlook:
+  username:                     svc_mozybusauto
+  password:                     lib/email_helper/svc_mozybusauto.pwd
+  endpoint:                     https://legacyemail.emc.com/ews/Exchange.asmx
+  mailbox:                      mozyautotest@emc.com
+
+rsa:
+  public_key:                   lib/rsa/appsqa.publickey
+  private_key:                  C:/rsa/appsqa.privatekey

@@ -41,3 +41,14 @@ end
 BROWSER = (ENV['br'] || 'firefox').downcase
 
 SCREEN_SHOT = (ENV["SCREEN_SHOT"] || "no").eql?("yes")
+
+#BUS_MAILBOX = gmail | outlook
+MAILBOX = ENV['BUS_MAILBOX'] || 'outlook'
+if MAILBOX.eql? 'outlook'
+  CONFIGS['global']['email_prefix'] = CONFIGS['global']['email_prefix_outlook']
+  CONFIGS['global']['email_domain'] = CONFIGS['global']['email_domain_outlook']
+else
+  CONFIGS['global']['email_prefix'] = CONFIGS['global']['email_prefix_gmail']
+  CONFIGS['global']['email_domain'] = CONFIGS['global']['email_domain_gmail']
+end
+
