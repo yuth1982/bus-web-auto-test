@@ -37,6 +37,14 @@ When /^I search and delete partner account by (.+)/ do |account_name|
   end
 end
 
+When /^I search and delete partner account if it exists by (.+)/ do |account_name|
+  begin
+    step %{I search and delete partner account by #{account_name}}
+  rescue Exception => ex
+    Log.debug ex.to_s
+  end
+end
+
 # When you are on partner details section, you are able to execute this steps
 When /^I delete (partner|subpartner) account$/ do |status|
   case status
