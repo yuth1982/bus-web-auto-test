@@ -62,7 +62,8 @@ module Email
       start = Time.now
       while Time.now - start < 90
         begin
-          items = @inbox.todays_items
+          ten_minutes_ago = Time.now - 10*60
+          items = @inbox.items_since(DateTime.parse(ten_minutes_ago.to_s))
           items.find do |item|
             email = @client.get_item item.id
             case query[0].downcase
