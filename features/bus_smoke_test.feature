@@ -692,7 +692,6 @@ Feature: BUS smoke test
 
   @cleanup
   Scenario: Delete all the created partners
-    Then I search and delete partner account if it exists by testxxx
     Then I search and delete partner account if it exists by MozyPro BUS Smoke Test
     And I search and delete partner account if it exists by Reseller BUS Smoke Test
     And I search and delete partner account if it exists by MozyPro BUS Smoke Test Data Shuttle
