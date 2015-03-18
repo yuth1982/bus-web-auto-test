@@ -276,6 +276,13 @@ module Bus
         add_on.clear_value
         add_on.type_text(partner.storage_add_on)
       end
+
+      # 50 GB storage add on option for base plan between 100 GB and 500 GB
+      if partner.storage_add_on_50_gb.to_i != 0
+        add_on = find_with_highlight(:xpath, "//input[starts-with(@id,'#{base_plan_id}')][3]")
+        add_on.clear_value
+        add_on.type_text(partner.storage_add_on_50_gb)
+      end
     end
 
     def fill_mozyenterprise_purchase(partner)

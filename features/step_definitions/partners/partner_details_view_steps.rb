@@ -367,12 +367,6 @@ When /^I refresh the partner details section$/ do
 end
 
 Then /^I delete partner and verify pending delete$/ do
-
-  if  TEST_ENV == 'prod'
-    #TODO email the partner details
-    next #Because we don't have partner deletion rights in prod
-  end
-
   step "I search and delete partner account by newly created partner company name"
   step %{I search partner by:}, table(%{
     | name          | filter         |

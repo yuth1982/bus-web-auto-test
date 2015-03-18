@@ -49,7 +49,8 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller|MozyEnterprise DPS|OEM) part
       @partner.base_plan = attributes["base plan"] || ""
       @partner.has_server_plan = (attributes["server plan"] || "no").eql?("yes")
       @partner.has_stash_grant_plan = (attributes["stash grant plan"] || "no").eql?("yes")
-      @partner.storage_add_on =  attributes["storage add on"] || 0
+      @partner.storage_add_on = attributes["storage add on"] || 0
+      @partner.storage_add_on_50_gb = attributes["storage add on 50 gb"] || 0
       @partner.admin_info.root_role = attributes["root role"] || CONFIGS['bus']['root_role']['mozypro']
     when CONFIGS['bus']['company_type']['mozyenterprise']
       @partner = Bus::DataObj::MozyEnterprise.new
@@ -136,7 +137,7 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller|MozyEnterprise DPS|OEM) part
     @partner.subscription_period = attributes['period']
     @partner.net_term_payment = (attributes['net terms'] || 'no').eql?('yes')
 
-    @partner.company_info.name = "Internal Mozy - #{@partner.company_info.name}" if  TEST_ENV == 'prod'
+    @partner.company_info.name = "Internal Mozy - #{@partner.company_info.name}"
 
     Log.debug(@partner.to_s)
     @bus_site.admin_console_page.add_new_partner_section.add_new_account(@partner)

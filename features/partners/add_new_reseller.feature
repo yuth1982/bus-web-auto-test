@@ -143,8 +143,8 @@ Feature: Add a new partner
       | 20 GB add-on         | 10       | €72.60     | €726.00     |
       | Discounts Applied    |          |            | -€276.10    |
       | Pre-tax Subtotal     |          |            | €2,484.90   |
-      | Taxes                |          |            | €635.03     |
-      | Total Charges        |          |            | €3,119.93   |
+      | Taxes                |          |            | €571.53     |
+      | Total Charges        |          |            | €3,056.43   |
     And New partner should be created
     And Partner general information should be:
       | Status:         | Root Admin:          | Root Role:             | Parent:                   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |

@@ -138,8 +138,8 @@ Feature: Add a new partner
       | 250 GB            | 1        | €74.99     | €74.99      |
       | Discounts Applied |          |            | -€7.50      |
       | Pre-tax Subtotal  |          |            | €67.49      |
-      | Taxes             |          |            | €17.25      |
-      | Total Charges     |          |            | €84.74      |
+      | Taxes             |          |            | €15.52      |
+      | Total Charges     |          |            | €83.01      |
     And New partner should be created
     And Partner general information should be:
       | Status:         | Root Admin:          | Root Role:                  | Parent:                   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
