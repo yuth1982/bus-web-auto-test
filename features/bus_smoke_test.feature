@@ -335,7 +335,7 @@ Feature: BUS smoke test
     Then I delete partner and verify pending delete
 
   #================== partner 'Rainbow MozyPro US' related scenarios ===================
-  @bus_us @TC.125953 @support @qa @std
+  @bus_us @TC.125953 @support @qa_std
   Scenario: Test Case Mozy-125953: BUS US -- Check the support link
     When I act as partner by:
       | name               |
@@ -667,7 +667,7 @@ Feature: BUS smoke test
     Then I delete partner and verify pending delete
 
   #================== partner 'Rainbow MozyPro EMEA' related scenarios ===================
-  @bus_us @TC.125974 @support @qa @std
+  @bus_us @TC.125974 @support @qa_std
   Scenario: Test Case Mozy-125974: BUS EMEA -- Check the support link
     When I act as partner by:
       | name                 |
