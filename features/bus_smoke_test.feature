@@ -176,33 +176,6 @@ Feature: BUS smoke test
     Then I navigate to Change Payment Information section from bus admin console page
     When I navigate to Download * Client section from bus admin console page
 
-  @bus_us @TC.125951
-  Scenario: Test Case Mozy-125951: BUS US -- Change plan for the partner - Precondition:@TC.125935
-    When I search partner by Internal Mozy - MozyPro BUS Smoke Test
-    And I view partner details by Internal Mozy - MozyPro BUS Smoke Test
-    When I act as partner by:
-      | name                                   |
-      | Internal Mozy - MozyPro BUS Smoke Test |
-    And I change MozyPro account plan to:
-      | base plan |
-      | 50 GB     |
-#    Then Change plan charge summary should be:
-#      | Description                   | Amount   |
-#      | Credit for remainder of plans | -$293.58 |
-#      | Charge for upgraded plans     | $566.58  |
-#      |                               |          |
-#      | Total amount to be charged    | $273.00  |
-    And the MozyPro account plan should be changed
-    Then MozyPro new plan should be:
-      | base plan | server plan |
-      | 50 GB     | yes         |
-    Then I stop masquerading
-    And I search partner by Internal Mozy - MozyPro BUS Smoke Test
-    And I view partner details by Internal Mozy - MozyPro BUS Smoke Test
-    And Partner pooled storage information should be:
-      | Used | Available | Assigned | Used | Available | Assigned  |
-      | 0    | 50        | 50       | 0    | Unlimited | Unlimited |
-
   @bus_us @TC.125953 @support @prod
   Scenario: Test Case Mozy-125953: BUS US -- Check the support link - Precondition:@TC.125935
     When I act as partner by:
@@ -240,6 +213,34 @@ Feature: BUS smoke test
     When I navigate to User Group List section from bus admin console page
     And I delete user group details by name: gamma
     Then gamma user group should be deleted
+
+  #================== partner 'Internal Mozy - MozyPro BUS Smoke Test - Storage' related scenarios ===================
+  @bus_us @TC.125951
+  Scenario: Test Case Mozy-125951: BUS US -- Change plan for the partner - Precondition:@TC.125935
+    When I add a new MozyPro partner:
+      | company name                     | period | base plan | coupon                | net terms | server plan | root role               |
+      | MozyPro BUS Smoke Test - Storage | 24     | 10 GB     | <%=QA_ENV['coupon']%> | yes       | yes         | Bundle Pro Partner Root |
+    Then I act as newly created partner account
+    And I change MozyPro account plan to:
+      | base plan |
+      | 50 GB     |
+#    Then Change plan charge summary should be:
+#      | Description                   | Amount   |
+#      | Credit for remainder of plans | -$293.58 |
+#      | Charge for upgraded plans     | $566.58  |
+#      |                               |          |
+#      | Total amount to be charged    | $273.00  |
+    And the MozyPro account plan should be changed
+    Then MozyPro new plan should be:
+      | base plan | server plan |
+      | 50 GB     | yes         |
+    Then I stop masquerading
+    And I search partner by Internal Mozy - MozyPro BUS Smoke Test - Storage
+    And I view partner details by Internal Mozy - MozyPro BUS Smoke Test - Storage
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 50        | 50       | 0    | Unlimited | Unlimited |
+    Then I delete partner account
 
   #================== partner 'Internal Mozy - Reseller BUS Smoke Test' related scenarios ===================
   @bus_us @TC.125938
