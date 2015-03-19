@@ -1,19 +1,32 @@
-Given /^I log in (bus admin console|to legacy bus01) as administrator$/ do |environment|
+def login(environment)
   @bus_site = BusSite.new
   case environment
-    when "bus admin console"
+    when 'bus admin console'
       @bus_site.login_page.load
       @bus_site.login_page.choose_english
       @admin_username = QA_ENV['bus_username']
       @admin_password = QA_ENV['bus_password']
       @bus_site.login_page.login(@admin_username, @admin_password)
-    when "to legacy bus01"
+    when 'to legacy bus01'
       @bus_site.itemized_login.load
       @admin_username = QA_ENV['bus01_admin']
       @admin_password = QA_ENV['bus01_pass']
       @bus_site.itemized_login.login(@admin_username, @admin_password)
   end
-  # there was redundant code here - removed.
+end
+
+#Give the login steps more chances to retry since it is a key path to all following steps
+Given /^I log in (bus admin console|to legacy bus01) as administrator$/ do |environment|
+  for i in 1..3
+    begin
+      login(environment)
+    rescue Exception => ex
+      Log.debug(ex.to_s)
+    ensure
+      sleep 60
+    end
+  end
+
 end
 
 And /^I login as mozypro admin successfully$/ do
