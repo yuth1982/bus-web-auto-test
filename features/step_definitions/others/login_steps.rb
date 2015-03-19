@@ -22,11 +22,13 @@ Given /^I log in (bus admin console|to legacy bus01) as administrator$/ do |envi
       login(environment)
     rescue Exception => ex
       Log.debug(ex.to_s)
-    ensure
-      sleep 60
+      if i == 3
+        raise ex
+      else
+        sleep 60
+      end
     end
   end
-
 end
 
 And /^I login as mozypro admin successfully$/ do
