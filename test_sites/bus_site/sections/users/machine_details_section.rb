@@ -2,7 +2,7 @@ module Bus
 
   class MachineDetailsSection < SiteHelper::Section
 
-    element(:dso_table, xpath: "//div[starts-with(@id, 'machine-show-')]//table[@class='table-view']//thead//th[text()='Order ID']//..//..//..//..//table")
+    element(:dso_table, xpath: "//th[text()='Order ID']/../../../../table")
     element(:machine_info_dls, css: 'div[id^=machine-show-] dl')
     # Public: General information hash
     #
