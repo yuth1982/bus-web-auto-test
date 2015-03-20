@@ -400,8 +400,6 @@ Feature: BUS smoke test
       | ACTIVE       |
     But I activate the partner
     And I delete partner account
-    Given I log in bus admin console as administrator
-    And I search and delete partner account by newly created partner company name
 
   #================== partner 'Internal Mozy - MozyEnterprise BUS Smoke Test' related scenarios ===================
   @bus_us @TC.125960
@@ -488,7 +486,7 @@ Feature: BUS smoke test
     When I stop masquerading
     And I search partner by Internal Mozy - Fortress BUS Smoke Test
     And I view partner details by Internal Mozy - Fortress BUS Smoke Test
-    Then I delete partner and verify pending delete
+    And I delete partner account
 
   #=====================================
   @bus_emea @TC.125963
