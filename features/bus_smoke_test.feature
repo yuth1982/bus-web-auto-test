@@ -336,8 +336,6 @@ Feature: BUS smoke test
     Then Quick report Credit Card Transactions csv file details should be:
       | Column A | Column B | Column C | Column D  |
       | Date     | Amount   | Card #   | Card Type |
-    When I stop masquerading
-    Then I delete partner and verify pending delete
 
   #================== partner 'Rainbow MozyPro US' related scenarios ===================
   @bus_us @TC.125953 @support @qa_std
@@ -385,7 +383,7 @@ Feature: BUS smoke test
       | period | coupon                | net terms | server plan | root role               |
       | 24     | <%=QA_ENV['coupon']%> | yes       | yes         | Bundle Pro Partner Root |
     Then New partner should be created
-    And I delete partner account
+    And I delete partner and verify pending delete
 
   #=====================================
   @bus_us @TC.125959
@@ -665,7 +663,7 @@ Feature: BUS smoke test
       | period  |  create under   | server plan | net terms | country | coupon                |
       | 12      |  MozyPro France | yes         | yes       | France  | <%=QA_ENV['coupon']%> |
     And New partner should be created
-    And I delete partner account
+    And I delete partner and verify pending delete
 
   @bus_emea @TC.125980
   Scenario: Test Case Mozy-125980: BUS EMEA -- Create a new partner (With VAT Number)
@@ -673,7 +671,7 @@ Feature: BUS smoke test
       | period | base plan | create under | server plan | net terms | country        | coupon                | vat number  |
       | 1      | 10 GB     | MozyPro UK   | yes         | yes       | United Kingdom | <%=QA_ENV['coupon']%> | GB117223643 |
     And New partner should be created
-    Then I delete partner and verify pending delete
+    Then I delete partner account
 
   #================== partner 'Rainbow MozyPro EMEA' related scenarios ===================
   @bus_us @TC.125974 @support @qa_std
@@ -695,14 +693,14 @@ Feature: BUS smoke test
     And the standard partner has activated the admin account
     And I go to account
     Then I login as mozypro admin successfully
-    When I log in bus admin console as administrator
-    Then I delete partner and verify pending delete
 
   @cleanup
   Scenario: Delete all the created partners
-    Then I search and delete partner account by Internal Mozy - MozyPro BUS Smoke Test
-    And I search and delete partner account by Internal Mozy - MozyPro BUS Smoke Test Data Shuttle
-    And I search and delete partner account by Internal Mozy - MozyEnterprise BUS Smoke Test
-    And I search and delete partner account by Internal Mozy - MozyPro France BUS Smoke Test
-    And I search and delete partner account by Internal Mozy - MozyPro France BUS Smoke Test Report
-    And I search and delete partner account by Internal Mozy - MozyPro France BUS Smoke Test Data Shuttle
+    Then I search and delete partner account if it exists by Internal Mozy - MozyPro BUS Smoke Test
+    And I search and delete partner account if it exists by Internal Mozy - MozyPro BUS Smoke Test Data Shuttle
+    And I search and delete partner account if it exists by Internal Mozy - MozyEnterprise BUS Smoke Test
+    And I search and delete partner account if it exists by Internal Mozy - MozyPro France BUS Smoke Test
+    And I search and delete partner account if it exists by Internal Mozy - MozyPro France BUS Smoke Test Report
+    And I search and delete partner account if it exists by Internal Mozy - MozyPro France BUS Smoke Test Data Shuttle
+    And I search and delete partner account if it exists by Internal Mozy - MozyEnterprise BUS Smoke Test Report
+    And I search and delete partner account if it exists by Internal Mozy - Reseller Ireland BUS Smoke Test
