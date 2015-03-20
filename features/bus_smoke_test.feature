@@ -621,7 +621,7 @@ Feature: BUS smoke test
     Then Scheduled Billing Detail report csv file details should be:
       | Column A | Column B              | Column C     | Column D           | Column E             | Column F             | Column G        | Column H       | Column I       | Column J                        | Column Q                     | Column S               |
       | Partner  | User Group            | Billing Code | Total GB Purchased | GB Purchased         | Quota Allocated (GB) | Quota Used (GB) | Keys Purchased | Keys Activated | Keys Assigned But Not Activated | Effective price per  license | Effective price per GB |
-      | @name    | (default user group)  |              | Shared             | N/A                  | N/A                  | 0               | 0              | 0              | 0                               |                              | ?0.32                  |
+      | @name    | (default user group)  |              | Shared             | N/A                  | N/A                  | 0               | 0              | 0              | 0                               |                              | €0.32                  |
     When I delete billing detail test scheduled report
     Then I should see No results found in scheduled reports list
     When I download Credit Card Transactions (CSV) quick report
