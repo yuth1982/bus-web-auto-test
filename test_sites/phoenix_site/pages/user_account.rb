@@ -93,6 +93,40 @@ module Phoenix
        download_links_href
     end
 
+    def download_home_client
+      download_status = true
+      download_links = all(:xpath, "//div[@id='maincontent']/table/tbody/tr/td/a")
+      download_links.each do |link|
+         client_name = link['href'][/mozy-(.+)/]
+         download_status = download_status && client_downloaded?(link,client_name)
+         break unless download_status
+      end
+      download_status
+    end
+
+    def download_sync_client
+      download_status = true
+      download_links = all(:xpath, "//div[@id='stash_left_col']/div/ul/li/div/a")
+      download_links.each do |link|
+        client_name = link['href'][/mozy-(.+)/]
+        download_status = download_status && client_downloaded?(link,client_name)
+        break unless download_status
+      end
+      download_status
+    end
+
+    # check if client downloaded successfully
+    def client_downloaded?(client_download_link, client_name)
+      file_name =  "#{default_download_path}/#{client_name}"
+      client_download_link.click
+      i = 0
+      10.times do
+        break if ( File.size?(file_name).to_i + File.size?(file_name+'.part').to_i ) > 0
+        sleep(1)
+      end
+      return (File.size?(file_name).to_i+File.size?(file_name+'.part').to_i) > 0
+    end
+
     # go to dl link
     def go_to_downloads(partner)
       localized_click(partner, 'dl_link')

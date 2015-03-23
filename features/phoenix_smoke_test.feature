@@ -169,6 +169,9 @@ Feature: Phoenix smoke test
     When I get previous partner info
     And I login as the user on the account.
     Then I check download links in download backup software and download mozy sync software page
+    And I clear downloads folder
+    And I download home client through phoenix
+    And I download sync client through phoenix
 
   @TC.126134 @bus @regression_test @phoenix @mozyhome
   Scenario: 126134 home user delete account by self
@@ -206,6 +209,7 @@ Feature: Phoenix smoke test
 
     @TC.126129 @mozy @phoenix @regression_test
     Scenario: 126129 Verify DL links within CMS content pages
+      When I clear downloads folder
       When I go to cms page
       And I download home client
       And I go to cms page

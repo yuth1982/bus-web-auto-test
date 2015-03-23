@@ -83,6 +83,17 @@ Then /^The credit card is updated/ do
   @phoenix_site.account_page.credit_card_updated.start_with?(' Your card has been successfully filed.').should be_true
 end
 
+Then /^I download (home|sync) client through phoenix$/ do |type|
+  case type
+    when 'home'
+      @phoenix_site.user_account.go_to_downloads(@partner)
+      @phoenix_site.user_account.download_home_client.should be_true
+    when 'sync'
+      @phoenix_site.user_account.go_to_stash(@partner)
+      @phoenix_site.user_account.download_sync_client.should be_true
+  end
+end
+
 Then /^I check download links in download backup software and download mozy sync software page$/ do
   @phoenix_site.user_account.go_to_downloads(@partner)
   download_backup_href = @phoenix_site.user_account.get_download_backup_links
@@ -112,5 +123,9 @@ end
 And /^I change email address successfully$/ do |message|
   message = message.sub(/@new_admin_email/,@partner.admin_info.email)
   @phoenix_site.user_account.change_email_success_message.strip.should eq(message.strip)
+end
+
+When /^I clear downloads folder$/ do
+  FileHelper.clean_up_client
 end
 
