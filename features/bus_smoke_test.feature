@@ -15,8 +15,8 @@ Feature: BUS smoke test
   @bus_us @TC.125935
   Scenario: Test Case Mozy-125935: BUS US -- Create a new partner
     When I add a new MozyPro partner:
-      | company name           | period | base plan | coupon                | net terms | server plan | root role               |
-      | MozyPro BUS Smoke Test | 24     | 10 GB     | <%=QA_ENV['coupon']%> | yes       | yes         | Bundle Pro Partner Root |
+      | company name                           | period | base plan | coupon                | net terms | server plan | root role               |
+      | Internal Mozy - MozyPro BUS Smoke Test | 24     | 10 GB     | <%=QA_ENV['coupon']%> | yes       | yes         | Bundle Pro Partner Root |
     Then New partner should be created
 
   @bus_us @TC.125936
@@ -218,8 +218,8 @@ Feature: BUS smoke test
   @bus_us @TC.125951
   Scenario: Test Case Mozy-125951: BUS US -- Change plan for the partner - Precondition:@TC.125935
     When I add a new MozyPro partner:
-      | company name                     | period | base plan | coupon                | net terms | server plan | root role               |
-      | MozyPro BUS Smoke Test - Storage | 24     | 10 GB     | <%=QA_ENV['coupon']%> | yes       | yes         | Bundle Pro Partner Root |
+      | company name                                     | period | base plan | coupon                | net terms | server plan | root role               |
+      | Internal Mozy - MozyPro BUS Smoke Test - Storage | 24     | 10 GB     | <%=QA_ENV['coupon']%> | yes       | yes         | Bundle Pro Partner Root |
     Then I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan |
@@ -246,8 +246,8 @@ Feature: BUS smoke test
   @bus_us @TC.125938
   Scenario: Test Case Mozy-125938: BUS US -- Activate partner in email
     When I add a new Reseller partner:
-      | company name            | period | base plan | coupon                | net terms | server plan |
-      | Reseller BUS Smoke Test | 1      | 50 GB     | <%=QA_ENV['coupon']%> | yes       | yes         |
+      | company name                            | period | base plan | coupon                | net terms | server plan |
+      | Internal Mozy - Reseller BUS Smoke Test | 1      | 50 GB     | <%=QA_ENV['coupon']%> | yes       | yes         |
     And New partner should be created
     And the standard partner has activated the admin account
     And I go to account
@@ -275,8 +275,8 @@ Feature: BUS smoke test
       | Name    | Company Type | Root Role    | Enabled | Public | Currency | Periods | Tax Percentage | Tax Name | Auto-include tax | Server Price per key | Server Min keys | Server Price per gigabyte | Server Min gigabytes | Desktop Price per key | Desktop Min keys | Desktop Price per gigabyte | Desktop Min gigabytes | Grandfathered Price per key | Grandfathered Min keys | Grandfathered Price per gigabyte | Grandfathered Min gigabytes |
       | subplan | business     | new OEM role | Yes     | No     |          | yearly  | 10             | test     | false            | 1                    | 1               | 1                         | 1                    | 1                     | 1                | 1                          | 1                     | 1                           | 1                      | 1                                | 1                           |
     And I add a new sub partner:
-      | Company Name  | Pricing Plan | Admin Name |
-      | subpartner1   | subplan      | subadmin1  |
+      | Company Name                  | Pricing Plan | Admin Name |
+      | Internal Mozy - subpartner1   | subplan      | subadmin1  |
     Then New partner should be created
     When I act as newly created subpartner account
     And I navigate to Purchase Resources section from bus admin console page
@@ -294,18 +294,18 @@ Feature: BUS smoke test
     And new itemized user should be created
     When I stop masquerading from subpartner
     And I add a new sub partner:
-      | Company Name  | Pricing Plan | Admin Name |
-      | subpartner2   | subplan      | subadmin2  |
+      | Company Name                  | Pricing Plan | Admin Name |
+      | Internal Mozy - subpartner2   | subplan      | subadmin2  |
     Then New partner should be created
     And I navigate to Search / List Users section from bus admin console page
     And I view user details by oem user
-    When I reassign the user to partner subpartner2
+    When I reassign the user to partner Internal Mozy - subpartner2
     Then I stop masquerading as sub partner
-    And I search partner by subpartner1
-    And I view partner details by subpartner1
+    And I search partner by Internal Mozy - subpartner1
+    And I view partner details by Internal Mozy - subpartner1
     And I delete partner account
-    And I search partner by subpartner2
-    And I view partner details by subpartner2
+    And I search partner by Internal Mozy - subpartner2
+    And I view partner details by Internal Mozy - subpartner2
     And I delete partner account
     And I search partner by Internal Mozy - OEM BUS Smoke Test
     And I view partner details by Internal Mozy - OEM BUS Smoke Test
@@ -315,8 +315,8 @@ Feature: BUS smoke test
   @bus_us @TC.125952
   Scenario: Test Case Mozy-125952: BUS US -- Run a report
     When I add a new MozyEnterprise partner:
-      | company name                         | period | users  | coupon                |  server plan | net terms |
-      | MozyEnterprise BUS Smoke Test Report | 12     | 10     | <%=QA_ENV['coupon']%> |  100 GB      | yes       |
+      | company name                                         | period | users  | coupon                |  server plan | net terms |
+      | Internal Mozy - MozyEnterprise BUS Smoke Test Report | 12     | 10     | <%=QA_ENV['coupon']%> |  100 GB      | yes       |
     When I act as newly created partner account
     When I build a new report:
       | type            | name                |
@@ -351,8 +351,8 @@ Feature: BUS smoke test
   @bus_us @TC.125954 @qa
   Scenario: Test Case Mozy-125954: BUS US -- Order Data Shuttle
     When I add a new MozyPro partner:
-      | company name                        | period | base plan | coupon                | net terms | server plan | root role               |
-      | MozyPro BUS Smoke Test Data Shuttle | 24     | 10 GB     | <%=QA_ENV['coupon']%> | yes       | yes         | Bundle Pro Partner Root |
+      | company name                                        | period | base plan | coupon                | net terms | server plan | root role               |
+      | Internal Mozy - MozyPro BUS Smoke Test Data Shuttle | 24     | 10 GB     | <%=QA_ENV['coupon']%> | yes       | yes         | Bundle Pro Partner Root |
     Then New partner should be created
     When I act as newly created partner account
     And I add new user(s):
@@ -403,8 +403,8 @@ Feature: BUS smoke test
   @bus_us @TC.125960
   Scenario: Test Case Mozy-125960: BUS US -- Create a Enterprise partner and verify Partner creation in BUS and Aria
     When I add a new MozyEnterprise partner:
-      | company name                  | period | users  | coupon                |  server plan | net terms |
-      | MozyEnterprise BUS Smoke Test | 36     | 10     | <%=QA_ENV['coupon']%> |  100 GB      | yes       |
+      | company name                                  | period | users  | coupon                |  server plan | net terms |
+      | Internal Mozy - MozyEnterprise BUS Smoke Test | 36     | 10     | <%=QA_ENV['coupon']%> |  100 GB      | yes       |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account should be:
@@ -495,8 +495,8 @@ Feature: BUS smoke test
   @bus_emea @TC.125964
   Scenario: Test Case Mozy-125964: BUS EMEA -- Create a new partner (No VAT Number)
     When I add a new MozyPro partner:
-      | company name                  | period  | base plan | create under   | server plan | net terms | country | coupon                |
-      | MozyPro France BUS Smoke Test | 12      | 50 GB     | MozyPro France | yes         | yes       | France  | <%=QA_ENV['coupon']%> |
+      | company name                                  | period  | base plan | create under   | server plan | net terms | country | coupon                |
+      | Internal Mozy - MozyPro France BUS Smoke Test | 12      | 50 GB     | MozyPro France | yes         | yes       | France  | <%=QA_ENV['coupon']%> |
     And New partner should be created
     And I change root role to Business Root
 
@@ -601,8 +601,8 @@ Feature: BUS smoke test
   @bus_emea @TC.125973
   Scenario: Test Case Mozy-125973: BUS EMEA -- Run a report
     When I add a new MozyPro partner:
-      | company name                         | period  | base plan | create under   | net terms | country | coupon                |
-      | MozyPro France BUS Smoke Test Report | 12      | 50 GB     | MozyPro France | yes       | France  | <%=QA_ENV['coupon']%> |
+      | company name                                         | period  | base plan | create under   | net terms | country | coupon                |
+      | Internal Mozy - MozyPro France BUS Smoke Test Report | 12      | 50 GB     | MozyPro France | yes       | France  | <%=QA_ENV['coupon']%> |
     Then New partner should be created
     Then I change root role to Business Root
     When I act as newly created partner account
@@ -629,8 +629,8 @@ Feature: BUS smoke test
   @bus_emea @TC.125975 @qa
   Scenario: Test Case Mozy-125975: BUS EMEA -- Order Data Shuttle
     When I add a new MozyPro partner:
-      | company name                               | period  | base plan | create under   | server plan | net terms | country | coupon                |
-      | MozyPro France BUS Smoke Test Data Shuttle | 12      | 50 GB     | MozyPro France | yes         | yes       | France  | <%=QA_ENV['coupon']%> |
+      | company name                                               | period  | base plan | create under   | server plan | net terms | country | coupon                |
+      | Internal Mozy - MozyPro France BUS Smoke Test Data Shuttle | 12      | 50 GB     | MozyPro France | yes         | yes       | France  | <%=QA_ENV['coupon']%> |
     And New partner should be created
     And I change root role to Business Root
     When I act as newly created partner account
@@ -687,8 +687,8 @@ Feature: BUS smoke test
   @bus_emea @TC.125966
   Scenario: Test Case Mozy-125966: BUS EMEA -- Activate partner in email
     When I add a new Reseller partner:
-      | company name                    | period | base plan | create under    | server plan | net terms | country | coupon                |
-      | Reseller Ireland BUS Smoke Test | 12     | 10 GB     | MozyPro Ireland | yes         | yes       | Ireland | <%=QA_ENV['coupon']%> |
+      | company name                                    | period | base plan | create under    | server plan | net terms | country | coupon                |
+      | Internal Mozy - Reseller Ireland BUS Smoke Test | 12     | 10 GB     | MozyPro Ireland | yes         | yes       | Ireland | <%=QA_ENV['coupon']%> |
     And New partner should be created
     And the standard partner has activated the admin account
     And I go to account
