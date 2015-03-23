@@ -3,7 +3,7 @@ module Email
   require 'viewpoint'
   require 'gibberish'
 
-  class Gmail
+  class GmailBox
     include Singleton
 
     def find_emails(query,_=nil)
@@ -103,9 +103,6 @@ module Email
     end
   end
 
-  #@email = Gmail.new
-  #@emailxxx = Outlook.new #if MAILBOX.eql? 'outlook'
-
   def create_user_email
     "#{CONFIGS['global']['email_prefix']}+#{Forgery(:basic).password(:at_least => 9, :at_most => 12)}@#{CONFIGS['global']['email_domain']}".downcase
   end
@@ -115,13 +112,13 @@ module Email
   end
 
   def find_emails(query, _=nil)
-    email = Gmail.instance
+    email = GmailBox.instance
     email = Outlook.instance if MAILBOX.eql? 'outlook'
     email.find_emails(query)
   end
 
   def find_email_content(query, _=nil)
-    email = Gmail.instance
+    email = GmailBox.instance
     email = Outlook.instance if MAILBOX.eql? 'outlook'
     email.find_email_content(query)
   end
