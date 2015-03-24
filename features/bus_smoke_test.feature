@@ -11,26 +11,26 @@ Feature: BUS smoke test
   Scenario: Test Case Mozy-125934: BUS US -- Log into BUS
     Given I log in bus admin console as administrator
 
-  #================== partner 'Internal Mozy - MozyPro BUS Smoke Test' related scenarios ===================
+  #================== partner 'Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32 ' related scenarios ===================
   @bus_us @TC.125935
   Scenario: Test Case Mozy-125935: BUS US -- Create a new partner
     When I add a new MozyPro partner:
-      | company name                           | period | base plan | coupon                | net terms | server plan | root role               |
-      | Internal Mozy - MozyPro BUS Smoke Test | 24     | 10 GB     | <%=QA_ENV['coupon']%> | yes       | yes         | Bundle Pro Partner Root |
+      | company name                                        | period | base plan | coupon                | net terms | server plan | root role               |
+      | Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32 | 24     | 10 GB     | <%=QA_ENV['coupon']%> | yes       | yes         | Bundle Pro Partner Root |
     Then New partner should be created
 
   @bus_us @TC.125936
   Scenario: Test Case Mozy-125936: BUS US -- Partner Details - License Keys - Precondition:@TC.125935
-    When I search partner by Internal Mozy - MozyPro BUS Smoke Test
-    And I view partner details by Internal Mozy - MozyPro BUS Smoke Test
+    When I search partner by Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32
+    And I view partner details by Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32
     And Partner pooled storage information should be:
       | Used | Available | Assigned | Used | Available | Assigned  |
       | 0    | 10        | 10       | 0    | Unlimited | Unlimited |
 
   @bus_us @TC.125937
   Scenario: Test Case Mozy-125937: BUS US -- Verify partner creation in Aria - Precondition:@TC.125935
-    When I search partner by Internal Mozy - MozyPro BUS Smoke Test
-    And I view partner details by Internal Mozy - MozyPro BUS Smoke Test
+    When I search partner by Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32
+    And I view partner details by Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32
     And I get partner aria id
     Then API* Aria account should be:
       | status_label |
@@ -39,14 +39,14 @@ Feature: BUS smoke test
   @bus_us @TC.125939
   Scenario: Test Case Mozy-125939: BUS US -- Masquerade into the partner - Precondition:@TC.125935
     When I act as partner by:
-      | name                                   |
-      | Internal Mozy - MozyPro BUS Smoke Test |
+      | name                                                |
+      | Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32 |
 
   @bus_us @TC.125940
   Scenario: Test Case Mozy-125940: BUS US -- Create a user group - Precondition:@TC.125935
     When I act as partner by:
-      | name                                   |
-      | Internal Mozy - MozyPro BUS Smoke Test |
+      | name                                                |
+      | Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32 |
     And I add a new Bundled user group:
       | name  | storage_type |
       | alpha | Shared       |
@@ -59,8 +59,8 @@ Feature: BUS smoke test
   @bus_us @TC.125941
   Scenario: Test Case Mozy-125941: BUS US -- Create a user - Precondition:@TC.125940
     When I act as partner by:
-      | name                                   |
-      | Internal Mozy - MozyPro BUS Smoke Test |
+      | name                                                |
+      | Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32 |
     When I add new user(s):
       | name               | user_group | storage_type |  devices |
       | user without stash | alpha      | Desktop      |  1       |
@@ -74,8 +74,8 @@ Feature: BUS smoke test
   @bus_us @TC.125942
   Scenario: Test Case Mozy-125942: BUS US -- Update a username & password - Precondition:@TC.125941
     When I act as partner by:
-      | name                                   |
-      | Internal Mozy - MozyPro BUS Smoke Test |
+      | name                                                |
+      | Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32 |
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by user without stash
     When edit user details:
@@ -86,8 +86,8 @@ Feature: BUS smoke test
   @bus_us @TC.125943
   Scenario: Test Case Mozy-125943: BUS US -- Move the user from one user group to a different user group - Precondition:@TC.125941
     When I act as partner by:
-      | name                                   |
-      | Internal Mozy - MozyPro BUS Smoke Test |
+      | name                                                |
+      | Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32 |
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by user without stash
     But I reassign the user to user group omega
@@ -97,8 +97,8 @@ Feature: BUS smoke test
   @bus_us @TC.125944
   Scenario: Test Case Mozy-125944: BUS US -- User Details - Send Keys - Precondition:@TC.125941
     When I act as partner by:
-      | name                                   |
-      | Internal Mozy - MozyPro BUS Smoke Test |
+      | name                                                |
+      | Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32 |
     And I add new user(s):
       | name            | user_group | storage_type | storage_limit | devices | enable_stash |
       | user with stash | omega      | Desktop      | 2             | 3       | yes          |
@@ -120,16 +120,16 @@ Feature: BUS smoke test
   @bus_us @TC.125946
   Scenario: Test Case Mozy-125946: BUS US -- Create a machine, search list machine and view machine details - Precondition:@TC.125935
     When I act as partner by:
-      | name                                   |
-      | Internal Mozy - MozyPro BUS Smoke Test |
+      | name                                                |
+      | Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32 |
     When I navigate to Search / List Machines section from bus admin console page
     Then Search list machines section is opened
 
   @bus_us @TC.125947
   Scenario: Test Case Mozy-125947: BUS US -- Create an admin - Precondition:@TC.125935
     When I act as partner by:
-      | name                                   |
-      | Internal Mozy - MozyPro BUS Smoke Test |
+      | name                                                |
+      | Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32 |
     When I navigate to Add New Admin section from bus admin console page
     And I add a new admin:
       | Name      | User Group           | Roles                   |
@@ -139,8 +139,8 @@ Feature: BUS smoke test
   @bus_us @TC.125948
   Scenario: Test Case Mozy-125948: BUS US -- Create a role - Precondition:@TC.125935
     When I act as partner by:
-      | name                                   |
-      | Internal Mozy - MozyPro BUS Smoke Test |
+      | name                                                |
+      | Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32 |
     When I navigate to Add New Role section from bus admin console page
     And I add a new role:
       | Name     |
@@ -156,8 +156,8 @@ Feature: BUS smoke test
   @bus_us @TC.125949
   Scenario: Test Case Mozy-125949: BUS US -- Create a client config - Precondition:@TC.125935
     When I act as partner by:
-      | name                                   |
-      | Internal Mozy - MozyPro BUS Smoke Test |
+      | name                                                |
+      | Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32 |
     When I create a new client config:
       | name                 | type   |
       | deploy_client_config | Server |
@@ -166,8 +166,8 @@ Feature: BUS smoke test
   @bus_us @TC.125950
   Scenario: Test Case Mozy-125950: BUS US -- Open all of the Resources header to open all of the modules - Precondition:@TC.125935
     When I act as partner by:
-      | name                                   |
-      | Internal Mozy - MozyPro BUS Smoke Test |
+      | name                                                |
+      | Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32 |
     Given I navigate to Resource Summary section from bus admin console page
     When I navigate to User Group List section from bus admin console page
     Then I navigate to Change Plan section from bus admin console page
@@ -179,8 +179,8 @@ Feature: BUS smoke test
   @bus_us @TC.125953 @support @prod
   Scenario: Test Case Mozy-125953: BUS US -- Check the support link - Precondition:@TC.125935
     When I act as partner by:
-      | name                                   |
-      | Internal Mozy - MozyPro BUS Smoke Test |
+      | name                                                |
+      | Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32 |
     When I navigate to Contact section from bus admin console page
     And I click my support
     Then I login my support successfully
@@ -188,8 +188,8 @@ Feature: BUS smoke test
   @bus_us @TC.125956
   Scenario: Test Case Mozy-125956: BUS US -- Delete test user  - Precondition:@TC.125940
     When I act as partner by:
-      | name                                   |
-      | Internal Mozy - MozyPro BUS Smoke Test |
+      | name                                                |
+      | Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32 |
     When I add new user(s):
       | name           | user_group | storage_type |  devices |
       | user to delete | omega      | Server       |  1       |
@@ -204,8 +204,8 @@ Feature: BUS smoke test
   @bus_us @TC.125957
   Scenario: Test Case Mozy-125957: BUS US -- Delete test user group - Precondition:@TC.125935
     When I act as partner by:
-      | name                                   |
-      | Internal Mozy - MozyPro BUS Smoke Test |
+      | name                                                |
+      | Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32 |
     When I add a new Bundled user group:
       | name  | storage_type | assigned_quota | enable_stash | server_support |
       | gamma | Assigned     | 3              | yes          | yes            |
@@ -214,12 +214,12 @@ Feature: BUS smoke test
     And I delete user group details by name: gamma
     Then gamma user group should be deleted
 
-  #================== partner 'Internal Mozy - MozyPro BUS Smoke Test - Storage' related scenarios ===================
+  #================== partner 'Internal Mozy - MozyPro BUS Smoke Storage Test 1543-8769-22' related scenarios ===================
   @bus_us @TC.125951
   Scenario: Test Case Mozy-125951: BUS US -- Change plan for the partner - Precondition:@TC.125935
     When I add a new MozyPro partner:
-      | company name                                     | period | base plan | coupon                | net terms | server plan | root role               |
-      | Internal Mozy - MozyPro BUS Smoke Test - Storage | 24     | 10 GB     | <%=QA_ENV['coupon']%> | yes       | yes         | Bundle Pro Partner Root |
+      | company name                                                | period | base plan | coupon                | net terms | server plan | root role               |
+      | Internal Mozy - MozyPro BUS Smoke Storage Test 1543-8769-22 | 24     | 10 GB     | <%=QA_ENV['coupon']%> | yes       | yes         | Bundle Pro Partner Root |
     Then I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan |
@@ -235,34 +235,34 @@ Feature: BUS smoke test
       | base plan | server plan |
       | 50 GB     | yes         |
     Then I stop masquerading
-    And I search partner by Internal Mozy - MozyPro BUS Smoke Test - Storage
-    And I view partner details by Internal Mozy - MozyPro BUS Smoke Test - Storage
+    And I search partner by Internal Mozy - MozyPro BUS Smoke Storage Test 1543-8769-22
+    And I view partner details by Internal Mozy - MozyPro BUS Smoke Storage Test 1543-8769-22
     And Partner pooled storage information should be:
       | Used | Available | Assigned | Used | Available | Assigned  |
       | 0    | 50        | 50       | 0    | Unlimited | Unlimited |
     Then I delete partner account
 
-  #================== partner 'Internal Mozy - Reseller BUS Smoke Test' related scenarios ===================
+  #================== partner 'Internal Mozy - Reseller BUS Smoke Test 3849-7653-73' related scenarios ===================
   @bus_us @TC.125938
   Scenario: Test Case Mozy-125938: BUS US -- Activate partner in email
     When I add a new Reseller partner:
-      | company name                            | period | base plan | coupon                | net terms | server plan |
-      | Internal Mozy - Reseller BUS Smoke Test | 1      | 50 GB     | <%=QA_ENV['coupon']%> | yes       | yes         |
+      | company name                                         | period | base plan | coupon                | net terms | server plan |
+      | Internal Mozy - Reseller BUS Smoke Test 3849-7653-73 | 1      | 50 GB     | <%=QA_ENV['coupon']%> | yes       | yes         |
     And New partner should be created
     And the standard partner has activated the admin account
     And I go to account
     Then I login as mozypro admin successfully
     Given I log in bus admin console as administrator
-    And I search partner by Internal Mozy - MozyPro BUS Smoke Test
-    And I view partner details by Internal Mozy - MozyPro BUS Smoke Test
+    And I search partner by Internal Mozy - MozyPro BUS Smoke Test 3849-7653-73
+    And I view partner details by Internal Mozy - MozyPro BUS Smoke Test 3849-7653-73
     And I delete partner account
 
-  #================== partner 'Internal Mozy - OEM BUS Smoke Test' related scenarios ===================
+  #================== partner 'Internal Mozy - OEM BUS Smoke Test 4863-2704-60' related scenarios ===================
   @bus_us @TC.125945
   Scenario: Test Case Mozy-125945: BUS US -- User Details - Change Partners
     When I add a new OEM partner:
-      | Company Name                       | Root role         | Security | Company Type     |
-      | Internal Mozy - OEM BUS Smoke Test | OEM Partner Admin | HIPAA    | Service Provider |
+      | Company Name                                    | Root role         | Security | Company Type     |
+      | Internal Mozy - OEM BUS Smoke Test 4863-2704-60 | OEM Partner Admin | HIPAA    | Service Provider |
     Then New partner should be created
     When I act as newly created partner account
     And I navigate to Add New Role section from bus admin console page
@@ -275,8 +275,8 @@ Feature: BUS smoke test
       | Name    | Company Type | Root Role    | Enabled | Public | Currency | Periods | Tax Percentage | Tax Name | Auto-include tax | Server Price per key | Server Min keys | Server Price per gigabyte | Server Min gigabytes | Desktop Price per key | Desktop Min keys | Desktop Price per gigabyte | Desktop Min gigabytes | Grandfathered Price per key | Grandfathered Min keys | Grandfathered Price per gigabyte | Grandfathered Min gigabytes |
       | subplan | business     | new OEM role | Yes     | No     |          | yearly  | 10             | test     | false            | 1                    | 1               | 1                         | 1                    | 1                     | 1                | 1                          | 1                     | 1                           | 1                      | 1                                | 1                           |
     And I add a new sub partner:
-      | Company Name                  | Pricing Plan | Admin Name |
-      | Internal Mozy - subpartner1   | subplan      | subadmin1  |
+      | Company Name                               | Pricing Plan | Admin Name |
+      | Internal Mozy - subpartner1 8376-3615-73   | subplan      | subadmin1  |
     Then New partner should be created
     When I act as newly created subpartner account
     And I navigate to Purchase Resources section from bus admin console page
@@ -294,29 +294,29 @@ Feature: BUS smoke test
     And new itemized user should be created
     When I stop masquerading from subpartner
     And I add a new sub partner:
-      | Company Name                  | Pricing Plan | Admin Name |
-      | Internal Mozy - subpartner2   | subplan      | subadmin2  |
+      | Company Name                               | Pricing Plan | Admin Name |
+      | Internal Mozy - subpartner2 4974-9147-43   | subplan      | subadmin2  |
     Then New partner should be created
     And I navigate to Search / List Users section from bus admin console page
     And I view user details by oem user
-    When I reassign the user to partner Internal Mozy - subpartner2
+    When I reassign the user to partner Internal Mozy - subpartner2 4974-9147-43
     Then I stop masquerading as sub partner
-    And I search partner by Internal Mozy - subpartner1
-    And I view partner details by Internal Mozy - subpartner1
+    And I search partner by Internal Mozy - subpartner1 8376-3615-73
+    And I view partner details by Internal Mozy - subpartner1 8376-3615-73
     And I delete partner account
-    And I search partner by Internal Mozy - subpartner2
-    And I view partner details by Internal Mozy - subpartner2
+    And I search partner by Internal Mozy - subpartner2 4974-9147-43
+    And I view partner details by Internal Mozy - subpartner2 4974-9147-43
     And I delete partner account
-    And I search partner by Internal Mozy - OEM BUS Smoke Test
-    And I view partner details by Internal Mozy - OEM BUS Smoke Test
+    And I search partner by Internal Mozy - OEM BUS Smoke Test 4863-2704-60
+    And I view partner details by Internal Mozy - OEM BUS Smoke Test 4863-2704-60
     And I delete partner account
 
-  #================== partner 'Internal Mozy - MozyEnterprise BUS Smoke Test Report' related scenarios ===================
+  #================== partner 'Internal Mozy - MozyEnterprise BUS Smoke Test Report 5062-7291-02' related scenarios ===================
   @bus_us @TC.125952
   Scenario: Test Case Mozy-125952: BUS US -- Run a report
     When I add a new MozyEnterprise partner:
-      | company name                                         | period | users  | coupon                |  server plan | net terms |
-      | Internal Mozy - MozyEnterprise BUS Smoke Test Report | 12     | 10     | <%=QA_ENV['coupon']%> |  100 GB      | yes       |
+      | company name                                                      | period | users  | coupon                |  server plan | net terms |
+      | Internal Mozy - MozyEnterprise BUS Smoke Test Report 5062-7291-02 | 12     | 10     | <%=QA_ENV['coupon']%> |  100 GB      | yes       |
     When I act as newly created partner account
     When I build a new report:
       | type            | name                |
@@ -347,12 +347,12 @@ Feature: BUS smoke test
     And I click my support
     Then I login my support successfully
 
-  #================== partner 'Internal Mozy - MozyPro BUS Smoke Test Data Shuttle' related scenarios ===================
+  #================== partner 'Internal Mozy - MozyPro BUS Smoke Test Data Shuttle 6201-2851-04' related scenarios ===================
   @bus_us @TC.125954 @qa
   Scenario: Test Case Mozy-125954: BUS US -- Order Data Shuttle
     When I add a new MozyPro partner:
-      | company name                                        | period | base plan | coupon                | net terms | server plan | root role               |
-      | Internal Mozy - MozyPro BUS Smoke Test Data Shuttle | 24     | 10 GB     | <%=QA_ENV['coupon']%> | yes       | yes         | Bundle Pro Partner Root |
+      | company name                                                     | period | base plan | coupon                | net terms | server plan | root role               |
+      | Internal Mozy - MozyPro BUS Smoke Test Data Shuttle 6201-2851-04 | 24     | 10 GB     | <%=QA_ENV['coupon']%> | yes       | yes         | Bundle Pro Partner Root |
     Then New partner should be created
     When I act as newly created partner account
     And I add new user(s):
@@ -363,14 +363,14 @@ Feature: BUS smoke test
     And I update the user password to default password
     And activate the user's Desktop device without a key and with the default password
     Then I stop masquerading
-    When I order data shuttle for Internal Mozy - MozyPro BUS Smoke Test Data Shuttle
+    When I order data shuttle for Internal Mozy - MozyPro BUS Smoke Test Data Shuttle 6201-2851-04
       | power adapter   | key from  | quota |
       | Data Shuttle US | available | 5     |
     Then Data shuttle order should be created
 
   @bus_us @TC.125955 @qa
   Scenario: Test Case Mozy-125955: BUS US -- Update Data Shuttle - Precondition:@TC.125954
-    When I search order in view data shuttle orders section by Internal Mozy - MozyPro BUS Smoke Test Data Shuttle
+    When I search order in view data shuttle orders section by Internal Mozy - MozyPro BUS Smoke Test Data Shuttle 6201-2851-04
     And I view data shuttle order details
     And I add drive to data shuttle order
     Then Add drive to data shuttle order message should include Successfully added drive to order
@@ -399,12 +399,12 @@ Feature: BUS smoke test
     But I activate the partner
     And I delete partner account
 
-  #================== partner 'Internal Mozy - MozyEnterprise BUS Smoke Test' related scenarios ===================
+  #================== partner 'Internal Mozy - MozyEnterprise BUS Smoke Test 1704-3692-83' related scenarios ===================
   @bus_us @TC.125960
   Scenario: Test Case Mozy-125960: BUS US -- Create a Enterprise partner and verify Partner creation in BUS and Aria
     When I add a new MozyEnterprise partner:
-      | company name                                  | period | users  | coupon                |  server plan | net terms |
-      | Internal Mozy - MozyEnterprise BUS Smoke Test | 36     | 10     | <%=QA_ENV['coupon']%> |  100 GB      | yes       |
+      | company name                                               | period | users  | coupon                |  server plan | net terms |
+      | Internal Mozy - MozyEnterprise BUS Smoke Test 1704-3692-83 | 36     | 10     | <%=QA_ENV['coupon']%> |  100 GB      | yes       |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account should be:
@@ -415,9 +415,9 @@ Feature: BUS smoke test
   @bus_us @TC.125983
   Scenario: Test Case Mozy-125983: LDAP Pull - Precondition:@TC.125960
     When I search partner by:
-      | name                                          |
-      | Internal Mozy - MozyEnterprise BUS Smoke Test |
-    And I view partner details by Internal Mozy - MozyEnterprise BUS Smoke Test
+      | name                                                       |
+      | Internal Mozy - MozyEnterprise BUS Smoke Test 1704-3692-83 |
+    And I view partner details by Internal Mozy - MozyEnterprise BUS Smoke Test 1704-3692-83
     When I add partner settings
       | Name                    | Value | Locked |
       | allow_ad_authentication | t     | true   |
@@ -471,19 +471,19 @@ Feature: BUS smoke test
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
 
-  #================== partner 'Internal Mozy - Fortress BUS Smoke Test' related scenarios ===================
+  #================== partner 'Internal Mozy - Fortress BUS Smoke Test 2940-4826-39' related scenarios ===================
   @bus_us @TC.125961
   Scenario: Test Case Mozy-125961: BUS US -- Create a new Fortress partner and verify Partner creation in BUS and Aria
     When I act as partner by:
       | name     | including sub-partners |
       | Fortress | no                     |
     And I add a new sub partner:
-      | Company Name                            |
-      | Internal Mozy - Fortress BUS Smoke Test |
+      | Company Name                                         |
+      | Internal Mozy - Fortress BUS Smoke Test 2940-4826-39 |
     Then New partner should be created
     When I stop masquerading
-    And I search partner by Internal Mozy - Fortress BUS Smoke Test
-    And I view partner details by Internal Mozy - Fortress BUS Smoke Test
+    And I search partner by Internal Mozy - Fortress BUS Smoke Test 2940-4826-39
+    And I view partner details by Internal Mozy - Fortress BUS Smoke Test 2940-4826-39
     And I delete partner account
 
   #=====================================
@@ -491,19 +491,19 @@ Feature: BUS smoke test
   Scenario: Test Case Mozy-125963: BUS EMEA -- Log into BUS
     Given I log in bus admin console as administrator
 
-  #================== partner 'Internal Mozy - MozyPro France BUS Smoke Test' related scenarios ===================
+  #================== partner 'Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27' related scenarios ===================
   @bus_emea @TC.125964
   Scenario: Test Case Mozy-125964: BUS EMEA -- Create a new partner (No VAT Number)
     When I add a new MozyPro partner:
-      | company name                                  | period  | base plan | create under   | server plan | net terms | country | coupon                |
-      | Internal Mozy - MozyPro France BUS Smoke Test | 12      | 50 GB     | MozyPro France | yes         | yes       | France  | <%=QA_ENV['coupon']%> |
+      | company name                                               | period  | base plan | create under   | server plan | net terms | country | coupon                |
+      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 | 12      | 50 GB     | MozyPro France | yes         | yes       | France  | <%=QA_ENV['coupon']%> |
     And New partner should be created
     And I change root role to Business Root
 
   @bus_emea @TC.125965
   Scenario: Test Case Mozy-125965: BUS EMEA -- Verify partner creation in Aria - Precondition:@TC.125964
-    When I search partner by Internal Mozy - MozyPro France BUS Smoke Test
-    And I view partner details by Internal Mozy - MozyPro France BUS Smoke Test
+    When I search partner by Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27
+    And I view partner details by Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27
     And I get partner aria id
     Then API* Aria account should be:
       | status_label |
@@ -512,14 +512,14 @@ Feature: BUS smoke test
   @bus_emea @TC.125967
   Scenario: Test Case Mozy-125967: BUS EMEA -- Masquerade into the partner - Precondition:@TC.125964
     When I act as partner by:
-      | name                                          |
-      | Internal Mozy - MozyPro France BUS Smoke Test |
+      | name                                                       |
+      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 |
 
   @bus_emea @TC.125968
   Scenario: Test Case Mozy-125968: BUS EMEA -- Create a user group - Precondition:@TC.125964
     When I act as partner by:
-      | name                                          |
-      | Internal Mozy - MozyPro France BUS Smoke Test |
+      | name                                                       |
+      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 |
     When I add a new Bundled user group:
       | name         | storage_type |
       | test-group-1 | Shared       |
@@ -528,8 +528,8 @@ Feature: BUS smoke test
   @bus_emea @TC.125969
   Scenario: Test Case Mozy-125969: BUS EMEA -- Create a user - Precondition:@TC.125968 - Precondition:@TC.125968
     When I act as partner by:
-      | name                                          |
-      | Internal Mozy - MozyPro France BUS Smoke Test |
+      | name                                                       |
+      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 |
     And I add new user(s):
       | name        | user_group   | storage_type  | storage_limit | devices |
       | EMEA-user-1 | test-group-1 | Desktop       | 10            | 1       |
@@ -538,8 +538,8 @@ Feature: BUS smoke test
   @bus_emea @TC.125970
   Scenario: Test Case Mozy-125970: BUS EMEA -- Move the user from one user group to a different user group - Precondition:@TC.125969
     When I act as partner by:
-      | name                                          |
-      | Internal Mozy - MozyPro France BUS Smoke Test |
+      | name                                                       |
+      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 |
     And  I navigate to Search / List Users section from bus admin console page
     And I view user details by EMEA-user-1
     And I reassign the user to user group (default user group)
@@ -548,8 +548,8 @@ Feature: BUS smoke test
   @bus_emea @TC.125977
   Scenario: Test Case Mozy-125977: BUS EMEA -- Delete test user - Precondition:@TC.125969
     When I act as partner by:
-      | name                                            |
-      | Internal Mozy - MozyPro France BUS Smoke Test   |
+      | name                                                        |
+      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27  |
     And  I navigate to Search / List Users section from bus admin console page
     And I view user details by EMEA-user-1
     And I delete user
@@ -557,8 +557,8 @@ Feature: BUS smoke test
   @bus_emea @TC.125971
   Scenario: Test Case Mozy-125971: BUS EMEA -- Create a client config - Precondition:@TC.125964
     When I act as partner by:
-      | name                                          |
-      | Internal Mozy - MozyPro France BUS Smoke Test |
+      | name                                                       |
+      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 |
     When I create a new client config:
       | name                | user group   | type   |
       | smoke_client_config | group-test-1 | Server |
@@ -567,8 +567,8 @@ Feature: BUS smoke test
   @bus_emea @TC.125972
   Scenario: Test Case Mozy-125972: BUS EMEA -- Open all of the Resources header to open all of the modules - Precondition:@TC.125964
     When I act as partner by:
-      | name                                          |
-      | Internal Mozy - MozyPro France BUS Smoke Test |
+      | name                                                       |
+      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 |
     Given I navigate to Resource Summary section from bus admin console page
     When I navigate to User Group List section from bus admin console page
     Then I navigate to Change Plan section from bus admin console page
@@ -580,8 +580,8 @@ Feature: BUS smoke test
   @bus_us @TC.125974 @support @prod
   Scenario: Test Case Mozy-125974: BUS EMEA -- Check the support link - Precondition:@TC.125964
     When I act as partner by:
-      | name                                          |
-      | Internal Mozy - MozyPro France BUS Smoke Test |
+      | name                                                       |
+      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 |
     When I navigate to Contact section from bus admin console page
     And I click my support
     Then I login my support successfully
@@ -589,20 +589,20 @@ Feature: BUS smoke test
   @bus_emea @TC.125978
   Scenario: Test Case Mozy-125978: BUS EMEA -- Delete test user group - Precondition:@TC.125964
     When I act as partner by:
-      | name                                          |
-      | Internal Mozy - MozyPro France BUS Smoke Test |
+      | name                                                       |
+      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 |
     When I add a new Bundled user group:
       | name         | storage_type |
       | test-group-2 | Shared       |
     Then test-group-2 user group should be created
     When I delete user group details by name: test-group-2
 
-  #================== partner 'Internal Mozy - MozyPro France BUS Smoke Test Report' related scenarios ===================
+  #================== partner 'Internal Mozy - MozyPro France BUS Smoke Test Report 4170-3928-56' related scenarios ===================
   @bus_emea @TC.125973
   Scenario: Test Case Mozy-125973: BUS EMEA -- Run a report
     When I add a new MozyPro partner:
-      | company name                                         | period  | base plan | create under   | net terms | country | coupon                |
-      | Internal Mozy - MozyPro France BUS Smoke Test Report | 12      | 50 GB     | MozyPro France | yes       | France  | <%=QA_ENV['coupon']%> |
+      | company name                                                      | period  | base plan | create under   | net terms | country | coupon                |
+      | Internal Mozy - MozyPro France BUS Smoke Test Report 4170-3928-56 | 12      | 50 GB     | MozyPro France | yes       | France  | <%=QA_ENV['coupon']%> |
     Then New partner should be created
     Then I change root role to Business Root
     When I act as newly created partner account
@@ -625,12 +625,12 @@ Feature: BUS smoke test
       | Column A | Column B | Column C | Column D  |
       | Date     | Amount   | Card #   | Card Type |
 
-  #================== partner 'Internal Mozy - MozyPro France BUS Smoke Test Data Shuttle' related scenarios ===================
+  #================== partner 'Internal Mozy - MozyPro France BUS Smoke Test Data Shuttle 2468-1359-07' related scenarios ===================
   @bus_emea @TC.125975 @qa
   Scenario: Test Case Mozy-125975: BUS EMEA -- Order Data Shuttle
     When I add a new MozyPro partner:
-      | company name                                               | period  | base plan | create under   | server plan | net terms | country | coupon                |
-      | Internal Mozy - MozyPro France BUS Smoke Test Data Shuttle | 12      | 50 GB     | MozyPro France | yes         | yes       | France  | <%=QA_ENV['coupon']%> |
+      | company name                                                            | period  | base plan | create under   | server plan | net terms | country | coupon                |
+      | Internal Mozy - MozyPro France BUS Smoke Test Data Shuttle 2468-1359-07 | 12      | 50 GB     | MozyPro France | yes         | yes       | France  | <%=QA_ENV['coupon']%> |
     And New partner should be created
     And I change root role to Business Root
     When I act as newly created partner account
@@ -644,14 +644,14 @@ Feature: BUS smoke test
     And I update the user password to default password
     And activate the user's Desktop device without a key and with the default password
     Then I stop masquerading
-    When I order data shuttle for Internal Mozy - MozyPro France BUS Smoke Test Data Shuttle
+    When I order data shuttle for Internal Mozy - MozyPro France BUS Smoke Test Data Shuttle 2468-1359-07
       | power adapter     | key from  | quota |
       | Data Shuttle EMEA | available | 10    |
     Then Data shuttle order should be created
 
   @bus_emea @TC.125976 @qa
   Scenario: Test Case Mozy-125976: BUS EMEA -- Update Data Shuttle - Precondition:@TC.125975
-    When I search order in view data shuttle orders section by Internal Mozy - MozyPro France BUS Smoke Test Data Shuttle
+    When I search order in view data shuttle orders section by Internal Mozy - MozyPro France BUS Smoke Test Data Shuttle 2468-1359-07
     And I view data shuttle order details
     And I add drive to data shuttle order
     Then Add drive to data shuttle order message should include Successfully added drive to order
@@ -683,12 +683,12 @@ Feature: BUS smoke test
     And I click my support
     Then I login my support successfully
 
-  #================== partner 'Internal Mozy - Reseller Ireland BUS Smoke Test' related scenarios ===================
+  #================== partner 'Internal Mozy - Reseller Ireland BUS Smoke Test 7531-8642-90' related scenarios ===================
   @bus_emea @TC.125966
   Scenario: Test Case Mozy-125966: BUS EMEA -- Activate partner in email
     When I add a new Reseller partner:
-      | company name                                    | period | base plan | create under    | server plan | net terms | country | coupon                |
-      | Internal Mozy - Reseller Ireland BUS Smoke Test | 12     | 10 GB     | MozyPro Ireland | yes         | yes       | Ireland | <%=QA_ENV['coupon']%> |
+      | company name                                                 | period | base plan | create under    | server plan | net terms | country | coupon                |
+      | Internal Mozy - Reseller Ireland BUS Smoke Test 7531-8642-90 | 12     | 10 GB     | MozyPro Ireland | yes         | yes       | Ireland | <%=QA_ENV['coupon']%> |
     And New partner should be created
     And the standard partner has activated the admin account
     And I go to account
@@ -696,11 +696,11 @@ Feature: BUS smoke test
 
   @cleanup
   Scenario: Delete all the created partners
-    Then I search and delete partner account if it exists by Internal Mozy - MozyPro BUS Smoke Test
-    And I search and delete partner account if it exists by Internal Mozy - MozyPro BUS Smoke Test Data Shuttle
-    And I search and delete partner account if it exists by Internal Mozy - MozyEnterprise BUS Smoke Test
-    And I search and delete partner account if it exists by Internal Mozy - MozyPro France BUS Smoke Test
-    And I search and delete partner account if it exists by Internal Mozy - MozyPro France BUS Smoke Test Report
-    And I search and delete partner account if it exists by Internal Mozy - MozyPro France BUS Smoke Test Data Shuttle
-    And I search and delete partner account if it exists by Internal Mozy - MozyEnterprise BUS Smoke Test Report
-    And I search and delete partner account if it exists by Internal Mozy - Reseller Ireland BUS Smoke Test
+    Then I search and delete partner account if it exists by Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32
+    And I search and delete partner account if it exists by Internal Mozy - MozyPro BUS Smoke Test Data Shuttle 6201-2851-04
+    And I search and delete partner account if it exists by Internal Mozy - MozyEnterprise BUS Smoke Test 1704-3692-83
+    And I search and delete partner account if it exists by Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27
+    And I search and delete partner account if it exists by Internal Mozy - MozyPro France BUS Smoke Test Report 4170-3928-56
+    And I search and delete partner account if it exists by Internal Mozy - MozyPro France BUS Smoke Test Data Shuttle 2468-1359-07
+    And I search and delete partner account if it exists by Internal Mozy - MozyEnterprise BUS Smoke Test Report 5062-7291-02
+    And I search and delete partner account if it exists by Internal Mozy - Reseller Ireland BUS Smoke Test 7531-8642-90
