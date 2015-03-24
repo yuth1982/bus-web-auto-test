@@ -253,8 +253,8 @@ Feature: BUS smoke test
     And I go to account
     Then I login as mozypro admin successfully
     Given I log in bus admin console as administrator
-    And I search partner by Internal Mozy - MozyPro BUS Smoke Test 3849-7653-73
-    And I view partner details by Internal Mozy - MozyPro BUS Smoke Test 3849-7653-73
+    And I search partner by Internal Mozy - Reseller BUS Smoke Test 3849-7653-73
+    And I view partner details by Internal Mozy - Reseller BUS Smoke Test 3849-7653-73
     And I delete partner account
 
   #================== partner 'Internal Mozy - OEM BUS Smoke Test 4863-2704-60' related scenarios ===================
