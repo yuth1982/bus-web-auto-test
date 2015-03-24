@@ -1,7 +1,6 @@
 Before do
   # Do things before each scenario.
   FileHelper.clean_up_csv
-  FileHelper.clean_up_client
   @start_time = Time.now
 end
 
