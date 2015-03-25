@@ -116,6 +116,7 @@ class Capybara::Node::Element
     msg += ' ' + @selector.selector.name.to_s + ':' + '\'' + @selector.locator.to_s + '\''
     #puts msg
     CapybaraHelper::Extension::Context.instance.log.puts msg if !CapybaraHelper::Extension::Context.instance.log.nil?
+    sleep 1 #pause 1 second before each click to reduce race condition
     old_click
   end
 
