@@ -26,6 +26,8 @@ module Bus
     element(:recipients_tb, id: "job_subscribers")
     element(:report_created_txt, xpath: "//div[@id='jobs-new-errors']/ul[@class='flash successes']")
 
+    element(:report_search_result, xpath: "//td[text()='No results found.']")
+
     # Public: Messages for reports builder actions
     #
     # Example
@@ -46,9 +48,12 @@ module Bus
     # Returns nothing
     def delete_report(report_name)
       find_link(report_name).click
-      page.suppress_alert
+      #page.suppress_alert
       delete_btn.click
-      sleep 10
+      sleep 3
+      alert_accept
+      #wait until the deletion is accepted
+      report_search_result
     end
 
     # Public: Build a report

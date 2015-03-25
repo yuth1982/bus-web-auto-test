@@ -36,7 +36,12 @@ module FileHelper
   #
   # Returns cvs rows array
   def read_csv_file(file_name, file_path = default_download_path)
-    report_file = Dir.glob(File.join(file_path, "#{file_name}.csv")).first
+    report_file = nil
+    now = Time.now
+    while report_file.nil? && Time.now < (now + 60)
+      report_file = Dir.glob(File.join(file_path, "#{file_name}.csv")).first
+      sleep 1
+    end
     rows = []
     CSV.foreach(report_file) do |row|
       if row.size > 1  #data header and data
