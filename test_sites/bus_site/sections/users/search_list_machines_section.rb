@@ -8,7 +8,7 @@ module Bus
     element(:machine_filter_select, id: "machine_filter")
     element(:search_results_table, xpath: "//div[@id='machine-list-content']/div/table")
     element(:clear_search_link, xpath: "//table[@id=('search_box')]//tr/td[1]/a")
-    element(:machine_mapping_link, xpath: "//p[2]/a")
+    element(:machine_mapping_link, xpath: "//div[@id='machine-list-content']/p[2]/a")
     element(:export_csv_link, css: "p.table-export-links a")
 
     def navigate_to_machine_mapping
