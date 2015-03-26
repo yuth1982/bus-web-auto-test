@@ -291,9 +291,9 @@ Feature: User stash setting management
       | keywords   |
       | TC.19115   |
     Then User search results should be:
-      | User                 | Name                 | Sync     | Machines | Storage        | Storage Used   | Created | Backed Up      |
-      | <%=@users[1].email%> | TC.19115.stash-user  | Enabled  | 0        | Desktop Shared |  20 GB         | today   | @1 minute ago  |
-      | <%=@users[0].email%> | TC.19115.backup-user | Disabled | 1        | Desktop Shared |  10 GB         | today   | @2 minutes ago |
+      | User                 | Name                 | Sync     | Machines | Storage        | Storage Used   | Created | Backed Up     |
+      | <%=@users[1].email%> | TC.19115.stash-user  | Enabled  | 0        | Desktop Shared |  20 GB         | today   | 1 minute ago  |
+      | <%=@users[0].email%> | TC.19115.backup-user | Disabled | 1        | Desktop Shared |  10 GB         | today   | 2 minutes ago |
 
   @TC.19116  @BSA.3040 @bus @2.5 @user_stories @US @mozypro @partner @stash
   Scenario: 19116 19117 Mozypro Partner View Sync status
@@ -353,10 +353,13 @@ Feature: User stash setting management
       | email                |
       | test_120694@auto.com |
     And I add new user(s):
-      | name           | user_group           |storage_type | storage_limit | devices | enable_stash |
-      | TC.120695 user | (default user group) |Desktop      | 10            | 1       | yes          |
+      | name           |storage_type | storage_limit | devices | enable_stash |
+      | TC.120695 user |Desktop      | 10            | 1       | yes          |
     Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
+    And I search user by:
+      | keywords   |
+      | @user_name |
     And I view user details by newly created user email
     Then user details should be:
       | Name:                   | Enable Sync:                |

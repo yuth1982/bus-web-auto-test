@@ -206,7 +206,16 @@ end
 Then /^device table in user details should be:$/ do |table|
   actual = @bus_site.admin_console_page.user_details_section.device_table_hashes
   expected = table.hashes
-  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
+  expected.each_index { |index|
+    expected[index].keys.each { |key|
+      #depending on the performance of the testing env, the "Last Update" time could be different
+      if !(expected[index][key].match(/^(1|< a|2) minute(s)* ago$/).nil?)
+        actual[index][key].match(/^(1|< a|2) minute(s)* ago$/).nil?.should be_false
+      else
+        actual[index][key].should == expected[index][key]
+      end
+    }
+  }
 end
 
 Then /^stash device table in user details should be:$/ do |table|

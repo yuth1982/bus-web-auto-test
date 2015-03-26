@@ -169,7 +169,7 @@ Feature: Add a new partner
       | Next Charge:    | after 1 year          |                 |                    |
   And Partner billing history should be:
       | Date  | Amount    | Total Paid | Balance Due |
-      | today | €3,119.93 | €3,119.93  | €0.00       |
+      | today | €3,056.43 | €3,056.43  | €0.00       |
       | today | €0.00     | €0.00      | €0.00       |
     And I delete partner account
 

@@ -231,7 +231,7 @@ module Bus
       output['Industry:'] = contact_industry_select.first_selected_option.text
       output['# of employees:'] = contact_employees_select.first_selected_option.text
       output['Contact Email:'] = contact_email_tb.value
-      output['VAT Number:'] = contact_vat_tb.value
+      output['VAT Number:'] = contact_vat_tb.value if contact_vat_tb.visible?
       output
     end
 
