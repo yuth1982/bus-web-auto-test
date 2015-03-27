@@ -412,7 +412,7 @@ Feature: BUS smoke test
       | ACTIVE       |
     But I activate the partner
 
-  @bus_us @TC.125983
+  @bus_us @TC.125983 @qa_std
   Scenario: Test Case Mozy-125983: LDAP Pull - Precondition:@TC.125960
     When I search partner by:
       | name                                                       |
@@ -469,6 +469,59 @@ Feature: BUS smoke test
       | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 3 succeeded, 0 failed |
     When I navigate to Search / List Users section from bus admin console page
+    Then The users table should be empty
+
+  @bus_us @TC.125983 @prod
+  Scenario: Test Case Mozy-125983: LDAP Pull
+    When I act as partner by:
+      | name                 |
+      | SSO longevity Test 1 |
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
+    And I input server connection settings
+      | Server Host  | Protocol   | SSL Cert | Port   | Base DN  | Bind Username   | Bind Password   |
+      | @server_host | @protocol  |          | @port  | @base_dn | @bind_user      | @bind_password  |
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I Test Connection for AD
+    Then test connection message should be Test passed
+    And I click Sync Rules tab
+    And I add 1 new provision rules:
+      | rule        | group |
+      | mail=gaobo* | qa    |
+    And I click the sync now button
+    And I wait for 120 seconds
+    And I delete 1 provision rules
+    And I save the changes
+    And I click Connection Settings tab
+    Then The sync status result should like:
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
+      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
+    When I navigate to Search / List Users section from bus admin console page
+    And I search user by:
+      | keywords        |
+      | gaobo@fedid.biz |
+    Then User search results should be:
+      | User            | Name  | User Group |
+      | gaobo@fedid.biz | gaobo | qa         |
+    When I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
+    And I click Sync Rules tab
+    And I add 1 new deprovision rules:
+      | rule        | action |
+      | mail=gaobo* | Delete |
+    And I click the sync now button
+    And I wait for 90 seconds
+    And I delete 1 deprovision rules
+    And I save the changes
+    And I click Connection Settings tab
+    Then The sync status result should like:
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
+      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 1 succeeded, 0 failed |
+    When I navigate to Search / List Users section from bus admin console page
+    And I search user by:
+      | keywords        |
+      | gaobo@fedid.biz |
     Then The users table should be empty
 
   #================== partner 'Internal Mozy - Fortress BUS Smoke Test 2940-4826-39' related scenarios ===================
