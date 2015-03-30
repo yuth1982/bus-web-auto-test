@@ -9,7 +9,7 @@ Capybara.register_driver :firefox do |app|
   profile['browser.download.manager.showWhenStarting'] = false
   profile['browser.download.manager.closeWhenDone'] = true
   profile['browser.helperApps.neverAsk.saveToDisk'] = "application/csv;text/csv;application/vnd.ms-excel;
-application/x-msdos-program;application/x-apple-diskimage;application/x-debian-, :profile => profilepackage;application/x-redhat-package-manager"
+application/x-msdos-program;application/x-apple-diskimage;application/x-debian-package;application/x-redhat-package-manager"
   profile.assume_untrusted_certificate_issuer = false
   #profile.native_events = true
   Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => profile)
