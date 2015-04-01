@@ -25,4 +25,4 @@ Feature: Instant Download
     And I select event history
     Then this restore is Completed
     When I select options menu
-    And I logout
+#    And I logout

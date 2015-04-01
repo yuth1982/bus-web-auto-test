@@ -3,7 +3,7 @@ module Freyja
   class EventHistoryPanel < SiteHelper::Page
 
     # restore status
-    element(:restore_status_div, xpath: "//*[@id='dt_all_restores']/tbody/tr[1]/td[5]/div")
+    element(:restore_status_div, xpath: "//table[@id='dt_all_restores']/tbody/tr[1]/td[5]/div")
     element(:restore_status_div2, xpath: "//*[@id='dt_all_restores']/tbody/tr[2]/td[5]/div")
     element(:sort_by_type_column, xpath: "//div[@id='dt_all_restores_wrapper']/div[2]/div/div/div/div/table/thead/tr/th[3]/div")
     element(:archive_download,xpath: "//div[@id='restore_downloads']/div[3]/a")

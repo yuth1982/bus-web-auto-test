@@ -71,6 +71,8 @@ module Freyja
       end
       #puts "**********"
       #puts page.response_headers()
+      #puts `pwd`
+      Dir.glob("downloads/*").each{ |path| File.delete(path) }
     end
 
     def login_verify

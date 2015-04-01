@@ -15,7 +15,7 @@ Background:
     When I select options menu
     And I select event history
     Then this restore is Processing
-    And I download the previous archive result
+    #And I download the previous archive result
     When I select options menu
     And I logout
 
@@ -33,7 +33,7 @@ Background:
     And I select event history
     Then this restore is Processing
     And I download the previous archive result
-    When I select options menu
-    And I logout
+#    When I select options menu
+#    And I logout
 
 

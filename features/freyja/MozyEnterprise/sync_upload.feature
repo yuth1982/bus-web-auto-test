@@ -9,9 +9,6 @@ Feature: Upload and delete files in Sync
     And I click Upload Files
     And I upload one file
     Then one file is uploaded successfully
-    And I choose the uploaded file
-    And I click Delete and confirm
-    Then deleted files isn't shown
 #    When I select options menu
 #    And I logout
 

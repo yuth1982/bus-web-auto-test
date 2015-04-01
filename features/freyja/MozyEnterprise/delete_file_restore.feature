@@ -17,5 +17,5 @@ Scenario: MozyEnterprise user restore deleted files in Sync container through Fr
   And I open Actions panel
   And I click Exclude Deleted Files
   Then deleted files isn't shown
-  When I select options menu
-  And I logout
+#  When I select options menu
+#  And I logout

@@ -5,8 +5,8 @@ gem 'rspec','~>2.11.0'
 gem 'cucumber','~>1.2.1'
 gem 'selenium-webdriver','>=2.34.0'
 gem 'capybara', '~>1.1.2'
-gem 'capybara-webkit','~>0.12.1'
-gem 'nokogiri','~>1.5.5'
+#gem 'capybara-webkit','~>0.12.1'
+#gem 'nokogiri','~>1.5.5'
 gem 'forgery','~>0.5.0'                 # Create Random Values
 gem 'chronic', '~>0.8.0'                # Date Time Parser
 gem 'rest-client','~>1.6.7'             # Email API

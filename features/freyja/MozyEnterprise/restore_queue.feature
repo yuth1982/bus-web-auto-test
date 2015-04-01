@@ -23,8 +23,8 @@ Feature: Restore files in Restore Queue
     And I select all files in Restore Queue
     And I click Remove from Restore Queue
     Then Restore Queue is empty
-    When I select options menu
-    And I logout
+#    When I select options menu
+#    And I logout
 
 @TC.121715 @freyja @freyja_smoke @ent  @ent_instant_restore_files_restore_queue  @ent_smoke  @ent_restore_queue
 Scenario: MozyEnterprise user instant download files in Restore Queue from Freyja
@@ -47,7 +47,7 @@ Scenario: MozyEnterprise user instant download files in Restore Queue from Freyj
   When I select options menu
   And I logout
 
-@TC.121715 @freyja @freyja_smoke @ent  @ent_Fryr_restore_files_restore_queue @ent_smoke  @ent_restore_queue
+@TC.121715 @freyja @freyja_smoke  @ent @ent_Fryr_restore_files_restore_queue @ent_smoke  @ent_restore_queue
 Scenario: MozyEnterprise user Fryr download files in Restore Queue from Freyja
   When I select options menu
   And I select Preferences
@@ -129,5 +129,5 @@ Scenario: MozyEnterprise user media download files in Restore Queue from Freyja
   When I select options menu
   And I select event history
   Then this restore is In Progress
-  When I select options menu
-  And I logout
+#  When I select options menu
+#  And I logout

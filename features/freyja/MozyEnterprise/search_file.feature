@@ -14,14 +14,4 @@ Scenario: MozyEnterprise user search files through Freyja
   And I click search
   Then search results is displayed
 
-  When I select the Synced tab
-  When I enter search folder keyword in search box
-  And I click search
-  Then search results is displayed
-  When I select the Devices tab
-  When I enter search folder keyword in search box
-  And I click search
-  Then search results is displayed
-  When I select options menu
-  And I logout
 

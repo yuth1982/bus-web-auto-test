@@ -10,5 +10,5 @@ Scenario: MozyEnterprise user change date through Freyja
   And I open Actions panel
   And I click Change Date
   And I click Go
-  When I select options menu
-  And I logout
+#  When I select options menu
+#  And I logout

@@ -30,5 +30,5 @@ Scenario: MozyEnterprise user restore one file through restore manager in Freyja
     When I select options menu
     And I select event history
     Then this restore is Ready for Download
-    When I select options menu
-    And I logout
+#    When I select options menu
+#    And I logout

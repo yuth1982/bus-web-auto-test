@@ -20,5 +20,5 @@ Scenario: MozyEnterprise user change preference settings through Freyja
   And I re-login
   Then freyja page should be Synced start
   Then freyja page should be enable restore queue
-  When I select options menu
-  And I logout
+#  When I select options menu
+#  And I logout

@@ -3,7 +3,7 @@ Feature: Restore All Files
   Background:
     Given I have login freyja as ent user
 
-  @TC.121719 @freyja @freyja_smoke  @ent  @ent_restore_all_fryr @ent_restore_all @ent_smoke
+  @TC.121719 @freyja @freyja_smoke  @ent_restore_all_fryr @ent_restore_all @ent_smoke
   Scenario: MozyEnterprise user restore all file through restore manager in Freyja
     When I select the Devices tab
     And I choose one device
@@ -42,5 +42,5 @@ Scenario: MozyEnterprise user restore all file through media in Freyja
   When I select options menu
   And I select event history
   Then this restore is In Progress
-  When I select options menu
-  And I logout
+#  When I select options menu
+#  And I logout

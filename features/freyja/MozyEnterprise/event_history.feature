@@ -10,5 +10,5 @@ Scenario: MozyEnterprise user view event history through Freyja
   And I choose the latest event
   Then detail panel slide in
   And I choose the latest event
-  When I select options menu
-  And I logout
+#  When I select options menu
+#  And I logout

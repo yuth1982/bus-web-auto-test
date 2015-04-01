@@ -17,5 +17,5 @@ Scenario: MozyEnterprise user view Notification through Freyja
   And I change password successfully
   And I click notification
   Then notification detail slide in
-  When I select options menu
-  And I logout
+#  When I select options menu
+#  And I logout

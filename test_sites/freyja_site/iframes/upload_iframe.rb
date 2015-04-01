@@ -1,3 +1,4 @@
+require 'pathname'
 module Freyja
   # This class provides actions for upload
   class UploadIframe < SiteHelper::Iframe
@@ -9,7 +10,11 @@ module Freyja
     #
     # Returns nothing
     def attach_one_file
-      attach_file('filename', "#{QA_ENV['local_file_upload']}")
+      file_name = File.dirname(__FILE__)
+      parentPath = File.dirname(Pathname.new(file_name).parent.parent)
+      parentPath = parentPath + "/test_data/run.txt"
+      #attach_file('filename', "#{QA_ENV['local_file_upload']}")
+      attach_file('filename', parentPath)
     end
 
   end

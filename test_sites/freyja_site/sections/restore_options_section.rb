@@ -1,3 +1,4 @@
+#encoding:utf-8
 module Freyja
   # This class provides actions for add new admin section
   class RestoreOptionsSection < SiteHelper::Section
@@ -72,8 +73,8 @@ module Freyja
     def non_default_key_sync_Fryr_restore(restore)
       fill_restore_name(restore.restore_name)
       click_next
-      stop.click
-      #restore_manager_restore_sync
+      #stop.click
+      restore_manager_restore_sync
     end
 
     def fill_restore_name(restore_name)
@@ -111,15 +112,15 @@ module Freyja
     end
 
     def restore_manager_restore_sync
-      if page.has_xpath?("//span[@id='choose_delivery_method_download_manager']") then
-        fryr_restore_option.click
-      end
-      sleep 5
-      click_next
-      sleep 15
-      if fryr_download_link.visible? then
-        fryr_download_link.click
-      end
+      #if page.has_xpath?("//span[@id='choose_delivery_method_download_manager']") then
+      #  fryr_restore_option.click
+      #end
+      #sleep 5
+      #click_next
+      #sleep 15
+      #if fryr_download_link.visible? then
+      #  fryr_download_link.click
+      #end
       sleep 10
       begin_download_btn.click
       click_close

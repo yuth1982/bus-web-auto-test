@@ -32,6 +32,6 @@ Feature: Media Restore
     And I select event history
     Then this restore is In Progress
     When I select options menu
-    And I logout
+#    And I logout
 
 

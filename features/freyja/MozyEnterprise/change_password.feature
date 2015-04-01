@@ -15,5 +15,5 @@ Scenario: MozyEnterprise user change password through Freyja
   And I change the old password to the new password again
   Then Password changed message should be Your password has been changed.
   And I change password successfully
-  When I select options menu
-  And I logout
+#  When I select options menu
+#  And I logout

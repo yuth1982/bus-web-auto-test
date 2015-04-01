@@ -5,7 +5,7 @@ require 'bundler'
 Bundler.setup
 require "selenium-webdriver"
 require 'rspec'
-require 'nokogiri'
+#require 'nokogiri'
 require 'forgery'
 require 'csv'
 require 'rest_client'
@@ -21,7 +21,7 @@ require 'erb'
 require 'ostruct'
 
 require 'capybara/cucumber'
-require 'capybara-webkit'
+#require 'capybara-webkit'
 
 require 'aria_api/lib/aria_api'
 require 'file_helper'

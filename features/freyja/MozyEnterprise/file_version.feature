@@ -16,5 +16,5 @@ Feature: File Versions
     When I select options menu
     And I select event history
     Then this restore is Completed
-    When I select options menu
-    And I logout
+#    When I select options menu
+#    And I logout
