@@ -24,13 +24,13 @@ Feature: Phoenix smoke test
     And the user has activated their account
 
   @TC.126132 @bus @regression_test @phoenix @mozyhome
-  Scenario: 126132 Log into the MozyHome paid user
+  Scenario: 126132 Log into the MozyHome paid user - Precondition:@TC.126120
     When I get previous partner info
     And I login as the user on the account.
     And I verify the user account.
 
   @TC.126139 @bus @regression_test @phoenix @mozyhome
-  Scenario: 126139 update a profile info of home user
+  Scenario: 126139 update a profile info of home user - Precondition:@TC.126120
     When I get previous partner info
     And I login as the user on the account.
     And I change my profile attributes to:
@@ -40,7 +40,7 @@ Feature: Phoenix smoke test
     And I save the partner info
 
   @TC.126124 @bus @regression_test @phoenix @mozyhome @qa
-  Scenario: 126124 Update Billing address of MozyHome user
+  Scenario: 126124 Update Billing address of MozyHome user - Precondition:@TC.126120
     When I get previous partner info
     When I login as the user on the account.
     And I change my profile attributes to:
@@ -49,7 +49,7 @@ Feature: Phoenix smoke test
     And I save the partner info
 
   @TC.126128 @bus @regression_test @phoenix @mozyhome
-  Scenario: 126128 update a user name
+  Scenario: 126128 update a user name - Precondition:@TC.126120
     When I get previous partner info
     And I login as the user on the account.
     And I change email address to:
@@ -72,7 +72,7 @@ Feature: Phoenix smoke test
     And I save the partner info
 
   @TC.126133 @bus @regression_test @phoenix @mozyhome
-  Scenario: 126133 Mozyhome user change password
+  Scenario: 126133 Mozyhome user change password - Precondition:@TC.126120
     When I get previous partner info
     When I login as the user on the account.
     And I change my profile attributes to:
@@ -82,7 +82,7 @@ Feature: Phoenix smoke test
     And I login under changed password on the account.
 
   @TC.126137 @bus @regression_test @phoenix @mozyhome
-  Scenario: 126137 view home user detail in BUS
+  Scenario: 126137 view home user detail in BUS - Precondition:@TC.126120
     When I get previous partner info
     And I log in bus admin console as administrator
     And I search user by:
@@ -97,7 +97,7 @@ Feature: Phoenix smoke test
       | MozyHome 50 GB, + 0 GB, 1 machines, monthly |
 
   @TC.126138 @bus @regression_test @phoenix @mozyhome
-  Scenario: 126138 delete home user in BUS
+  Scenario: 126138 delete home user in BUS - Precondition:@TC.126120
     When I get previous partner info
     And I log in bus admin console as administrator
     And I search user by:
@@ -119,13 +119,13 @@ Feature: Phoenix smoke test
 
 
   @TC.126123 @bus @regression_test @phoenix @mozyhome
-  Scenario: 126123 Log into the MozyHome free user
+  Scenario: 126123 Log into the MozyHome free user - Precondition:@TC.126122
     When I get previous partner info
     And I login as the user on the account.
     And I verify the user account.
 
   @TC.126127 @bus @regression_test @phoenix @mozyhome
-  Scenario: 126127 Verify that home user can upgrade to a paid home user
+  Scenario: 126127 Verify that home user can upgrade to a paid home user - Precondition:@TC.126122
     When I get previous partner info
     And I login as the user on the account.
     And I upgrade my free account to:
@@ -134,7 +134,7 @@ Feature: Phoenix smoke test
     Then upgrade from free to paid will be successful
 
   @TC.126135 @bus @regression_test @phoenix @mozyhome @qa
-  Scenario: 126135 home user can upgrade current plan
+  Scenario: 126135 home user can upgrade current plan - Precondition:@TC.126122,@TC.126127
     When I get previous partner info
     And I login as the user on the account.
     And I upgrade my user account to:
@@ -142,7 +142,7 @@ Feature: Phoenix smoke test
       | 125 GB    | 2            |
 
   @TC.126136 @bus @regression_test @phoenix @mozyhome @qa
-  Scenario: 126136 home user can upgrade next renewal plan
+  Scenario: 126136 home user can upgrade next renewal plan - Precondition:@TC.126122,@TC.126127
     When I get previous partner info
     And I login as the user on the account.
     And I change my user account to:
@@ -165,7 +165,7 @@ Feature: Phoenix smoke test
       | Total:              | $153.89         |
 
   @TC.126126 @bus @regression_test @phoenix @mozyhome
-  Scenario: 126126 client can be downloaded when home user log in phoenix
+  Scenario: 126126 client can be downloaded when home user log in phoenix - Precondition:@TC.126122
     When I get previous partner info
     And I login as the user on the account.
     Then I check download links in download backup software and download mozy sync software page
@@ -174,7 +174,7 @@ Feature: Phoenix smoke test
     And I download sync client through phoenix
 
   @TC.126134 @bus @regression_test @phoenix @mozyhome
-  Scenario: 126134 home user delete account by self
+  Scenario: 126134 home user delete account by self - Precondition:@TC.126122
     When I get previous partner info
     And I login as the user on the account.
     And I delete the user account with original password
@@ -197,22 +197,31 @@ Feature: Phoenix smoke test
       And the partner is successfully added.
       And I save the partner info
 
-    @TC.126125 @bus @mozypro @phoenix @regression_test @us
-    Scenario: 126125 log in as a pro admin
-      When I get previous partner info
-      And I navigate to bus admin console login page
-      And I log in bus admin console as new partner admin
-      And I login as mozypro admin successfully
-      And I log in bus admin console as administrator
-      And I search and delete partner account by newly created partner company name
+  @TC.126125 @bus @mozypro @phoenix @regression_test @us
+  Scenario: 126125 log in as a pro admin - Precondition:@TC.126121
+    When I get previous partner info
+    And I navigate to bus admin console login page
+    And I log in bus admin console as new partner admin
+    And I login as mozypro admin successfully
+    And I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
 
 
-    @TC.126129 @mozy @phoenix @regression_test
-    Scenario: 126129 Verify DL links within CMS content pages
-      When I clear downloads folder
-      When I go to cms page
-      And I download home client
-      And I go to cms page
-      And I download sync client
-      And I go to cms page
-      And I download pro client
+  @TC.126129 @mozy @phoenix @regression_test
+  Scenario: 126129 Verify DL links within CMS content pages
+    When I clear downloads folder
+    When I go to cms page
+    And I download home client
+    And I go to cms page
+    And I download sync client
+    And I go to cms page
+    And I download pro client
+
+  @phoenix_cleanup
+  Scenario: Delete all the created users and partners
+    When I log in bus admin console as administrator
+    And I search and delete user account if it exists by Phoenix smoke test - home name changed
+    And I search and delete user account if it exists by Phoenix smoke test - home
+    And I search and delete user account if it exists by Phoenix smoke test - free2paid
+    And I search and delete user account if it exists by Phoenix smoke test - free
+    And I search and delete partner account if it exists by Phoenix smoke test - mozypro
