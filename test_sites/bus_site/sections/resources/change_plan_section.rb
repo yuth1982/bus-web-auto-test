@@ -11,9 +11,10 @@ module Bus
     
     element(:storage_add_on_tb, css: "input[id^=products_addon_]")
     element(:server_plan_select, css: "select[id^=products_addon_]")
-    element(:server_plan_change_link, css: "span#clickable-change-link a")
+    element(:server_plan_change_link, xpath: "//a[text()='(change)']")
     element(:coupon_code_tb, id: "coupon_code")
     element(:server_plan_status_span, id: "server-pass-status")
+    element(:charge_plan_div, xpath: "//div[@id='change_plan_confirmation']//p")
 
     # Itemized
     elements(:itemized_plans_tbs, css: "div#base_plans_group input")
@@ -70,6 +71,7 @@ module Bus
       end
 
       unless storage_add_on.nil?
+        wait_until{ storage_add_on_tb.visible? }
         storage_add_on_tb.type_text(storage_add_on)
       end
 
@@ -92,7 +94,10 @@ module Bus
       wait_for_all_elements_loaded
       enterprise_users_tb.type_text(users) unless users.nil?
       server_plan_select.select(server_plan) unless server_plan.nil?
-      storage_add_on_tb.type_text(server_add_on) unless server_add_on.nil?
+      unless server_add_on.nil?
+        wait_until{ storage_add_on_tb.visible? }
+        storage_add_on_tb.type_text(server_add_on)
+      end
       coupon_code_tb.type_text(coupon) unless coupon.nil?
       confirm_change
     end
@@ -203,6 +208,10 @@ module Bus
     # Returns order summary table rows text
     def charge_summary_table_rows
       charge_summary_table.rows_text
+    end
+
+    def charge_message
+      charge_plan_div.text
     end
 
     # Public: Return change plan charge summary table headers text

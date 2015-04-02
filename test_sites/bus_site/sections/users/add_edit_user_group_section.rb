@@ -26,6 +26,7 @@ module Bus
     element(:enable_stash_cb, id: 'stash')
     element(:save_ug_btn, css: 'button[onclick*=user_groups]')
 
+
     # Public: Add a new or edit bundled user group
     #
     # @ug [Object] user group object

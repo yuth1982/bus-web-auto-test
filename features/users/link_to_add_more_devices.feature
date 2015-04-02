@@ -86,8 +86,8 @@ Scenario: 19948 Enterprise (2UG) Verify Buy More Link in Add New User
   @TC.19947 @bus @2.5 @user_centric_storage @1UG @emea @IE @bundled
 Scenario: 19947 EMEA (1UG) Ireland Bundled Verify Buy More Link in Add New User
     When I add a new MozyPro partner:
-      | period | base plan | server plan | country | create under    |
-      | 1      | 50 GB     | yes         | Ireland | MozyPro Ireland |
+      | period | base plan | server plan | country | create under    | cc number        |
+      | 1      | 50 GB     | yes         | Ireland | MozyPro Ireland | 4319402211111113 |
     Then New partner should be created
     When I act as newly created partner account
     And I navigate to Add New User section from bus admin console page
@@ -99,8 +99,8 @@ Scenario: 19947 EMEA (1UG) Ireland Bundled Verify Buy More Link in Add New User
   @TC.19946 @bus @2.5 @user_centric_storage @1UG @emea @UK @enterprise
 Scenario: 19946 EMEA (1UG) UK Enterprise Verify Buy More Link in Add New User
     When I add a new MozyEnterprise partner:
-      | period | users | server plan | country        |
-      | 12     | 10    | 250 GB      | United Kingdom |
+      | period | users | server plan | country        | cc number        |
+      | 12     | 10    | 250 GB      | United Kingdom | 4916783606275713 |
     Then New partner should be created
     When I act as newly created partner account
     And I navigate to Add New User section from bus admin console page
@@ -113,8 +113,8 @@ Scenario: 19946 EMEA (1UG) UK Enterprise Verify Buy More Link in Add New User
   @TC.19945 @bus @2.5 @user_centric_storage @1UG @emea @FR @metallic_reseller
 Scenario: 19945 EMEA (1UG) France Metallic Reseller Verify Buy More Link in Add New User
     When I add a new Reseller partner:
-      | period | reseller type | reseller quota | country | create under   |
-      | 1      | Gold          | 10             | France  | MozyPro France |
+      | period | reseller type | reseller quota | country | create under   | cc number        |
+      | 1      | Gold          | 10             | France  | MozyPro France | 4485393141463880|
     Then New partner should be created
     When I act as newly created partner account
     And I navigate to Add New User section from bus admin console page
@@ -127,8 +127,8 @@ Scenario: 19945 EMEA (1UG) France Metallic Reseller Verify Buy More Link in Add 
   @TC.19952 @bus @2.5 @user_centric_storage @1UG @emea @DE @mozypro @itemzied @need_test_account @env_dependent
   Scenario: Mozy-19952:EMEA(1UG), Germany, MozyPro Itemized, Verify Add More Link in Add New User
     When I act as partner by:
-      | name                                    |
-      | qa1+testDEMozyProItemized90211@mozy.com |
+      | email                                |
+      | redacted-608@notarealdomain.mozy.com |
     And I navigate to Add New User section from bus admin console page
     And I choose (default user group) from Choose a Group
     Then the Buy More link should be visible

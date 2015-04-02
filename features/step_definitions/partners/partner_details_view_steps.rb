@@ -37,6 +37,14 @@ When /^I search and delete partner account by (.+)/ do |account_name|
   end
 end
 
+When /^I search and delete partner account if it exists by (.+)/ do |account_name|
+  begin
+    step %{I search and delete partner account by #{account_name}}
+  rescue Exception => ex
+    Log.debug ex.to_s
+  end
+end
+
 # When you are on partner details section, you are able to execute this steps
 When /^I delete (partner|subpartner) account$/ do |status|
   case status
@@ -84,6 +92,10 @@ Then /^(Partner|SubPartner) general information should be:$/ do |status,details_
   end
   #(BDS Online Backup) in parent string for some env but not others
   expected.keys.each{ |key| actual[key].should include(expected[key]) }
+end
+
+And /^I enabled server in partner account details$/ do
+  @bus_site.admin_console_page.partner_details_section.account_details_enable_server
 end
 
 Then /^partner account details should be:$/ do |account_details_table|
@@ -178,6 +190,36 @@ Then /^Partner internal billing should be:$/ do |internal_billing_table|
   actual.flatten.should == expected.flatten.select { |item| item != '' }
 end
 
+Then /^New Partner internal billing should be:$/ do |internal_billing_table|
+  actual = @bus_site.admin_console_page.partner_details_section.internal_billing_table_rows
+  expected = internal_billing_table.raw
+  expected[1][1].replace ERB.new(expected[1][1]).result(binding)
+  case ERB.new(expected[0][3]).result(binding)
+    when "1"
+      expected[0][3].replace "Monthly"
+      expected[2][1].replace "after 1 month"
+      expected[3][1].replace "after 1 month"
+    when "12"
+      expected[0][3].replace "Yearly"
+      expected[2][1].replace "after 1 year"
+      expected[3][1].replace "after 1 year"
+    when "24"
+      expected[0][3].replace "Biennial"
+      expected[2][1].replace "after 2 years"
+      expected[3][1].replace "after 2 years"
+  end
+
+  with_timezone(ARIA_ENV['timezone']) do
+    expected[2][1].replace(Chronic.parse(expected[2][1]).strftime('%m/%d/%y'))
+    expected[3][1].replace(Chronic.parse(expected[3][1]).strftime('%m/%d/%y'))
+  end
+
+  actual.flatten.should == expected.flatten.select { |item| item != '' }
+
+  Log.debug(expected)
+end
+
+
 Then /^Partner sub admins should be empty$/ do
   @bus_site.admin_console_page.partner_details_section.sub_admins_text.should include("No sub-admins.")
 end
@@ -199,7 +241,7 @@ Then /^Partner billing history should be:$/ do |billing_history_table|
             Log.debug "Aria time is #{Chronic.now}"
           end
         else
-          # do nothing
+          v.replace ERB.new(v).result(binding)
       end
     end
   end
@@ -289,6 +331,8 @@ When /^I change the partner contact information to:$/ do |info_table|
         @bus_site.admin_console_page.partner_details_section.set_contact_state(new_info[header])
       when 'Contact ZIP/Postal Code:'
         @bus_site.admin_console_page.partner_details_section.set_contact_zip(new_info[header])
+      when 'VAT Number:'
+        @bus_site.admin_console_page.partner_details_section.set_vat_number(new_info[header])
       else
         raise "Unexpected #{new_info[header]}"
     end
@@ -323,12 +367,6 @@ When /^I refresh the partner details section$/ do
 end
 
 Then /^I delete partner and verify pending delete$/ do
-
-  if  ENV['BUS_ENV'] == 'prod'
-    #TODO email the partner details
-    next #Because we don't have partner deletion rights in prod
-  end
-
   step "I search and delete partner account by newly created partner company name"
   step %{I search partner by:}, table(%{
     | name          | filter         |
@@ -338,4 +376,80 @@ Then /^I delete partner and verify pending delete$/ do
     | Partner       |
     | @company_name |
   })
+end
+
+Then /^I open partner details by partner name in header$/ do
+  @bus_site.admin_console_page.open_partner_details_from_header(@partner)
+  @bus_site.admin_console_page.partner_details_section.expand_contact_info
+end
+
+Then /^VAT number shouldn't be changed and the error message should be:$/ do  |message|
+  @bus_site.admin_console_page.partner_details_section.error_message.should eq(message)
+end
+
+And /^I change contact country and VAT number to:$/ do |country_vat_table|
+  attributes = country_vat_table.hashes.first
+  attributes.each do |header,attribute| #can use variable inside <%= %>
+    attribute.replace ERB.new(attribute).result(binding)
+    attributes[header] = nil if attribute == ''
+  end
+  vat = attributes['VAT Number']
+  country = attributes['Country']
+  @bus_site.admin_console_page.partner_details_section.click_change_country_lnk
+  @bus_site.admin_console_page.partner_details_section.set_country_for_partner_admin(country)
+  if(vat == "@blank_space")
+    @bus_site.admin_console_page.partner_details_section.set_vat_for_partner_admin("")
+  else
+    @bus_site.admin_console_page.partner_details_section.set_vat_for_partner_admin(vat) unless vat.nil?
+  end
+  @bus_site.admin_console_page.partner_details_section.submit_change
+end
+
+Then /^I am (.+) and I change contact country to (.+)$/ do |admin_type, country_type|
+  @bus_site.admin_console_page.partner_details_section.click_change_country_lnk if admin_type == "partner admin"
+  country = ""
+  case country_type
+    when "EU country"
+      country = "France"
+    else
+      country = "United States"
+  end
+  if admin_type == "partner admin"
+    @bus_site.admin_console_page.partner_details_section.set_country_for_partner_admin(country)
+  else
+    @bus_site.admin_console_page.partner_details_section.expand_contact_info
+    @bus_site.admin_console_page.partner_details_section.set_contact_country(country)
+  end
+end
+
+Then /^VAT number field of Change Contact Country section should (.+)$/ do |behavior|
+  case behavior
+    when "appear"
+      @bus_site.admin_console_page.partner_details_section.vat_of_chg_contact_country_visible?.should be_true
+    else
+      @bus_site.admin_console_page.partner_details_section.vat_of_chg_contact_country_visible?.should be_false
+  end
+end
+
+Then /^Change contact country and VAT number (.+) succeed and the message should be:$/ do |status,message|
+  case status
+    when 'should'
+      @bus_site.admin_console_page.partner_details_section.success_messages.should eq(message)
+    else
+      @bus_site.admin_console_page.partner_details_section.error_message.should eq(message)
+  end
+end
+
+
+Then /^VAT number field of Partner Details section should (.+)$/ do |behavior|
+  case behavior
+    when "appear"
+      @bus_site.admin_console_page.partner_details_section.vat_number_visible?.should be_true
+    else
+      @bus_site.admin_console_page.partner_details_section.vat_number_visible?.should be_false
+  end
+end
+
+Then /^I expand contact info from partner details section$/ do
+  @bus_site.admin_console_page.partner_details_section.expand_contact_info
 end

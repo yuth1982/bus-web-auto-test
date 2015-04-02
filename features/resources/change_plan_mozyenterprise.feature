@@ -12,7 +12,7 @@ Feature: Change Plan for MozyEnterprise Partners
     When I act as newly created partner account
     When I change MozyEnterprise account plan to:
       | users | server plan | storage add-on |
-      | 15    | 500 GB      | 5             |
+      | 15    | 500 GB      | 5              |
     Then Change plan charge summary should be:
       | Description                                | Amount     |
       | Credit for remainder of 250 GB Server Plan | -$1,220.78 |
@@ -22,7 +22,7 @@ Feature: Change Plan for MozyEnterprise Partners
     And the MozyEnterprise account plan should be changed
     And MozyEnterprise new plan should be:
       | users | server plan | storage add-on |
-      | 15    | 500 GB      | 5             |
+      | 15    | 500 GB      | 5              |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
@@ -35,7 +35,7 @@ Feature: Change Plan for MozyEnterprise Partners
     When I act as newly created partner account
     When I change MozyEnterprise account plan to:
       | users | server plan | storage add-on |
-      | 15    | 1 TB        | 5             |
+      | 15    | 1 TB        | 5              |
     Then Change plan charge summary should be:
       | Description                                | Amount     |
       | Credit for remainder of 500 GB Server Plan | -$4,409.58 |
@@ -58,7 +58,7 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
   When I act as newly created partner account
   When I change MozyEnterprise account plan to:
     | uers | server plan | storage add-on |
-    | 15   | 2 TB        | 5             |
+    | 15   | 2 TB        | 5              |
   Then Change plan charge summary should be:
     | Description                                | Amount      |
     | Credit for remainder of 1 TB Server Plan   | -$12,299.40 |
@@ -68,24 +68,24 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
   And the MozyEnterprise account plan should be changed
   And MozyEnterprise new plan should be:
     | users | server plan | storage add-on |
-    | 10    | 2 TB        | 5             |
+    | 10    | 2 TB        | 5              |
   When I stop masquerading
   Then I search and delete partner account by newly created partner company name
 
 @TC.19265 @bus @2.5 @change_plan @mozyenterprise
   Scenario: 19265 MozyEnterprise 16 TB storage add-on yearly to 8 TB add-on
     When I add a new MozyEnterprise partner:
-      | period | users | server plan | server add on|
-      | 12     | 15    | 16 TB       | 5            |
+      | period | users | server plan | server add on |
+      | 12     | 15    | 16 TB       | 5             |
     Then New partner should be created
     When I act as newly created partner account
     When I change MozyEnterprise account plan to:
       | users | server plan | storage add-on |
-      | 10    | 8 TB        | 0             |
+      | 10    | 8 TB        | 0              |
     Then the MozyEnterprise account plan should be changed
     And MozyEnterprise new plan should be:
       | users | server plan | storage add-on |
-      | 10    | 8 TB        | 0             |
+      | 10    | 8 TB        | 0              |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
@@ -98,11 +98,11 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
     When I act as newly created partner account
     When I change MozyEnterprise account plan to:
       | users | server plan | storage add-on |
-      | 10    | 28 TB       | 0             |
+      | 10    | 28 TB       | 0              |
     Then the MozyEnterprise account plan should be changed
     And MozyEnterprise new plan should be:
       | users | server plan | storage add-on |
-      | 10    | 28 TB       | 0             |
+      | 10    | 28 TB       | 0              |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
@@ -115,27 +115,27 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
     When I act as newly created partner account
     When I change MozyEnterprise account plan to:
       | users | server plan | storage add-on |
-      | 10    | 24 TB       | 0             |
+      | 10    | 24 TB       | 0              |
     Then the MozyEnterprise account plan should be changed
     And MozyEnterprise new plan should be:
       | users | server plan | storage add-on |
-      | 10    | 24 TB       | 0             |
+      | 10    | 24 TB       | 0              |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
   @TC.19268 @bus @2.5 @change_plan @mozyenterprise
   Scenario: 19268 MozyEnterprise VAT no storage add-on yearly to 10 GB add-on
     When I add a new MozyEnterprise partner:
-      | period | users |  vat number    | country | net terms |
-      | 12     | 10    | FR08410091490  | France  | yes       |
+      | period | users | vat number    | country | net terms |
+      | 12     | 10    | FR08410091490 | France  | yes       |
     Then New partner should be created
     When I act as newly created partner account
     When I change MozyEnterprise account plan to:
       | users | server plan |
       | 15    | 10 GB       |
     Then Change plan charge summary should be:
-      | Description                                | Amount      |
-      | Charge for upgraded plans                  | $628.78     |
+      | Description               | Amount  |
+      | Charge for upgraded plans | $628.78 |
     And the MozyEnterprise account plan should be changed
     And MozyEnterprise new plan should be:
       | users | server plan |
@@ -146,19 +146,19 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
   @TC.19269 @bus @2.5 @change_plan @mozyenterprise
   Scenario: 19269 MozyEnterprise no VAT 10gb storage add-on biennially to 50 GB add-on
     When I add a new MozyEnterprise partner:
-      | period | users | server plan | country  |
-      | 24     | 10    | 10 GB       | Germany  |
+      | period | users | server plan | country | cc number        |
+      | 24     | 10    | 10 GB       | Germany | 4188181111111112 |
     Then New partner should be created
     When I act as newly created partner account
     When I change MozyEnterprise account plan to:
       | users | server plan |
       | 15    | 50 GB       |
     Then Change plan charge summary should be:
-      | Description                                | Amount      |
-      | Credit for remainder of 10 GB Server Plan  | -$361.10    |
-      | Charge for upgraded plans                  | $1,810.04   |
-      |                                            |             |
-      | Total amount to be charged                 | $1,448.94   |
+      | Description                               | Amount    |
+      | Credit for remainder of 10 GB Server Plan | -$349.36  |
+      | Charge for upgraded plans                 | $1,751.18 |
+      |                                           |           |
+      | Total amount to be charged                | $1,401.82 |
     And the MozyEnterprise account plan should be changed
     And MozyEnterprise new plan should be:
       | users | server plan |
@@ -169,19 +169,19 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
   @TC.19270 @bus @2.5 @change_plan @mozyenterprise
   Scenario: 19270 MozyEnterprise VAT IE 50 gbs storage add-on triennially to 100 GB add-on
     When I add a new MozyEnterprise partner:
-      | period | users | server plan | vat number | country  |
-      | 36     | 10    | 50 GB       | IE9691104A | Ireland  |
+      | period | users | server plan | vat number | country | cc number        |
+      | 36     | 10    | 50 GB       | IE9691104A | Ireland | 4319402211111113 |
     Then New partner should be created
     When I act as newly created partner account
     When I change MozyEnterprise account plan to:
-      | users | server plan  |
-      | 15    | 100 GB       |
+      | users | server plan |
+      | 15    | 100 GB      |
     Then Change plan charge summary should be:
-      | Description                                | Amount      |
-      | Credit for remainder of 50 GB Server Plan  | -$995.56    |
-      | Charge for upgraded plans                  | $3,547.81   |
-      |                                            |             |
-      | Total amount to be charged                 | $2,552.25   |
+      | Description                               | Amount    |
+      | Credit for remainder of 50 GB Server Plan | -$995.56  |
+      | Charge for upgraded plans                 | $3,547.81 |
+      |                                           |           |
+      | Total amount to be charged                | $2,552.25 |
     And the MozyEnterprise account plan should be changed
     And MozyEnterprise new plan should be:
       | users | server plan |
@@ -197,14 +197,14 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
     Then New partner should be created
     When I act as newly created partner account
     When I change MozyEnterprise account plan to:
-      | users | server plan  |
-      | 15    | 250 GB       |
+      | users | server plan |
+      | 15    | 250 GB      |
     Then Change plan charge summary should be:
-      | Description                                | Amount      |
-      | Credit for remainder of 100 GB Server Plan | -$524.50    |
-      | Charge for upgraded plans                  | $1,526.20   |
-      |                                            |             |
-      | Total amount to be charged                 | $1,001.70     |
+      | Description                                | Amount    |
+      | Credit for remainder of 100 GB Server Plan | -$524.50  |
+      | Charge for upgraded plans                  | $1,526.20 |
+      |                                            |           |
+      | Total amount to be charged                 | $1,001.70 |
     And the MozyEnterprise account plan should be changed
     And MozyEnterprise new plan should be:
       | users | server plan |
@@ -215,42 +215,42 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
   @TC.19272 @bus @2.5 @change_plan @mozyenterprise
   Scenario: 19272 MozyEnterprise VAT yearly to 20 TB add-on
     When I add a new MozyEnterprise partner:
-      | period | users | server plan | server add on |  vat number    | country |
-      | 12     | 15    | 24 TB       | 5             | FR08410091490  | France  |
+      | period | users | server plan | server add on | vat number    | country | cc number        |
+      | 12     | 15    | 24 TB       | 5             | FR08410091490 | France  | 4485393141463880 |
     Then New partner should be created
     When I act as newly created partner account
     When I change MozyEnterprise account plan to:
       | users | server plan | storage add-on |
-      | 10    | 20 TB       | 0             |
+      | 10    | 20 TB       | 0              |
     And the MozyEnterprise account plan should be changed
     And MozyEnterprise new plan should be:
       | users | server plan | storage add-on |
-      | 10    | 20 TB       | 0             |
+      | 10    | 20 TB       | 0              |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
   @TC.19273 @bus @2.5 @change_plan @mozyenterprise
   Scenario: 19273 MozyEnterprise no VAT biennially to 16 TB add-on
     When I add a new MozyEnterprise partner:
-      | period | users | server plan | country  |
-      | 24     | 15    | 20 TB       | Germany  |
+      | period | users | server plan | country | cc number        |
+      | 24     | 15    | 20 TB       | Germany | 4188181111111112 |
     Then New partner should be created
     When I act as newly created partner account
     When I change MozyEnterprise account plan to:
       | users | server plan | storage add-on |
-      | 10    | 16 TB       | 0             |
+      | 10    | 16 TB       | 0              |
     And the MozyEnterprise account plan should be changed
     And MozyEnterprise new plan should be:
       | users | server plan | storage add-on |
-      | 10    | 16 TB       | 0             |
+      | 10    | 16 TB       | 0              |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
   @TC.19274 @bus @2.5 @change_plan @mozyenterprise
   Scenario: 19274 MozyEnterprise VAT IE triennially to 12 TB add-on
     When I add a new MozyEnterprise partner:
-      | period | users | server plan | vat number | country  |
-      | 36     | 15    | 12 TB       | IE9691104A | Ireland  |
+      | period | users | server plan | vat number | country | cc number        |
+      | 36     | 15    | 12 TB       | IE9691104A | Ireland | 4319402211111113 |
     Then New partner should be created
     When I act as newly created partner account
     When I change MozyEnterprise account plan to:
@@ -283,16 +283,16 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
   @TC.19392 @bus @2.5 @change_plan @mozyenterprise @env_dependent
   Scenario: 19392 MozyEnterprise initial purchase coupon no server add on to 10gb server add on
     When I add a new MozyEnterprise partner:
-      | period | users | coupon              | country       | address           | city      | state abbrev | zip   | phone          |
-      | 12     | 100   | 20PERCENTOFFOUTLINE | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
+      | period | users | coupon              | country       | address           | city      | state abbrev | zip   | phone          | cc number        |
+      | 12     | 100   | 20PERCENTOFFOUTLINE | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 | 4018121111111122 |
     Then New partner should be created
     When I act as newly created partner account
     When I change MozyEnterprise account plan to:
       | users | server plan |
       | 105   | 10 GB       |
     Then Change plan charge summary should be:
-      | Description                                | Amount      |
-      | Charge for upgraded plans                  | $503.02    |
+      | Description               | Amount  |
+      | Charge for upgraded plans | $503.02 |
     And the MozyEnterprise account plan should be changed
     And MozyEnterprise new plan should be:
       | users | server plan |
@@ -303,63 +303,63 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
   @TC.19393 @bus @2.5 @change_plan @mozyenterprise
   Scenario: 19393 MozyEnterprise initial purchase coupon 250gb server add on to 250gb server add on
     When I add a new MozyEnterprise partner:
-      | period | users | server plan | server add on | country       | address           | city      | state abbrev | zip   | phone          |
-      | 24     | 200   | 250 GB      | 10             | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
+      | period | users | server plan | server add on | country       | address           | city      | state abbrev | zip   | phone          | cc number        |
+      | 24     | 200   | 250 GB      | 10            | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 | 4018121111111122 |
     Then New partner should be created
     When I act as newly created partner account
     When I change MozyEnterprise account plan to:
       | users | server plan  |
       | 205   | 500 GB       |
     Then Change plan charge summary should be:
-      | Description                                 | Amount      |
-      | Credit for remainder of 250 GB Server Plan  | -$2,330.58  |
-      | Charge for upgraded plans                   | $5,314.58   |
-      |                                             |             |
-      | Total amount to be charged                  | $2,984.00   |
+      | Description                                | Amount     |
+      | Credit for remainder of 250 GB Server Plan | -$2,330.58 |
+      | Charge for upgraded plans                  | $5,314.58  |
+      |                                            |            |
+      | Total amount to be charged                 | $2,984.00  |
     And the MozyEnterprise account plan should be changed
     And MozyEnterprise new plan should be:
-      | users | server plan  |
-      | 205   | 500 GB       |
+      | users | server plan |
+      | 205   | 500 GB      |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
   @TC.19394 @bus @2.5 @change_plan @mozyenterprise @env_dependent
   Scenario: 19394 MozyEnterprise initial purchase coupon 500gb server add on to 1tb server add on
     When I add a new MozyEnterprise partner:
-      | period | users | server plan | server add on | coupon              | country       | address           | city      | state abbrev | zip   | phone          |
-      | 36     | 300   | 500 GB      | 10            | 20PERCENTOFFOUTLINE | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
+      | period | users | server plan | server add on | coupon              | country       | address           | city      | state abbrev | zip   | phone          | cc number        |
+      | 36     | 300   | 500 GB      | 10            | 20PERCENTOFFOUTLINE | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 | 4018121111111122 |
     Then New partner should be created
     When I act as newly created partner account
     When I change MozyEnterprise account plan to:
       | users | server plan | storage add-on |
       | 305   | 1 TB        | 11            |
     Then Change plan charge summary should be:
-      | Description                                 | Amount      |
-      | Credit for remainder of 500 GB Server Plan  | -$5,039.52  |
-      | Charge for upgraded plans                   | $13,155.28   |
-      |                                             |             |
-      | Total amount to be charged                  | $8,115.76  |
+      | Description                                | Amount     |
+      | Credit for remainder of 500 GB Server Plan | -$5,039.52 |
+      | Charge for upgraded plans                  | $13,155.28 |
+      |                                            |            |
+      | Total amount to be charged                 | $8,115.76  |
     And the MozyEnterprise account plan should be changed
     And MozyEnterprise new plan should be:
       | users | server plan | storage add-on |
-      | 305   | 1 TB        | 11            |
+      | 305   | 1 TB        | 11             |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
   @TC.19396 @bus @2.5 @change_plan @mozyenterprise
   Scenario: 19396 MozyEnterprise 1 TB server add on to 100gbs server add on
     When I add a new MozyEnterprise partner:
-      | period | users | server plan | server add on | country       | address           | city      | state abbrev | zip   | phone          |
-      | 12     | 400   | 1 TB        | 10            | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
+      | period | users | server plan | server add on | country       | address           | city      | state abbrev | zip   | phone          | cc number        |
+      | 12     | 400   | 1 TB        | 10            | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 | 4018121111111122 |
     Then New partner should be created
     When I act as newly created partner account
     When I change MozyEnterprise account plan to:
-      | users | server plan   |
-      | 300   | 100 GB        |
+      | users | server plan |
+      | 300   | 100 GB      |
     And the MozyEnterprise account plan should be changed
     And MozyEnterprise new plan should be:
-      | users | server plan   |
-      | 300   | 100 GB        |
+      | users | server plan |
+      | 300   | 100 GB      |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 

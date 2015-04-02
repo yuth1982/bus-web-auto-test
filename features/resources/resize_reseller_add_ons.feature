@@ -331,8 +331,8 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
   @TC.20196 @bus @resizing_reseller_add-ons_plan
   Scenario: 20196 Change Subscription Period of Gold Reseller - UK - 20 GB Add on - Yearly to Monthly
     When I add a new Reseller partner:
-      | period  | reseller type | reseller quota | storage add on | country        | create under |
-      | 12      | Gold          | 200            | 2              | United Kingdom | MozyPro UK   |
+      | period  | reseller type | reseller quota | storage add on | country        | create under | cc number        |
+      | 12      | Gold          | 200            | 2              | United Kingdom | MozyPro UK   | 4916783606275713 |
     And Order summary table should be:
       | Description             | Quantity |
       | GB - Gold Reseller      | 200      |
@@ -352,8 +352,8 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
   @TC.20197 @bus @resizing_reseller_add-ons_plan
   Scenario: 20197 Change Subscription Period of Platinum Reseller - US - 20 GB Add on - Yearly to Monthly
     When I add a new Reseller partner:
-      | period  | reseller type | reseller quota | storage add on | country        | create under |
-      | 12      | Platinum      | 200            | 2              | United Kingdom | MozyPro UK   |
+      | period  | reseller type | reseller quota | storage add on | country        | create under | cc number        |
+      | 12      | Platinum      | 200            | 2              | United Kingdom | MozyPro UK   | 4916783606275713 |
     And Order summary table should be:
       | Description             | Quantity |
       | GB - Platinum Reseller  | 200      |
@@ -373,8 +373,8 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
   @TC.20198 @bus @resizing_reseller_add-ons_plan
   Scenario: 20198 Change Subscription Period of Gold Reseller - FR - 20 GB Add on - Yearly to Monthly
     When I add a new Reseller partner:
-      | period  | reseller type | reseller quota | storage add on | country | create under   |
-      | 12      | Gold          | 200            | 2              | France  | MozyPro France |
+      | period  | reseller type | reseller quota | storage add on | country | create under   | cc number        |
+      | 12      | Gold          | 200            | 2              | France  | MozyPro France | 4485393141463880 |
     And Order summary table should be:
       | Description             | Quantity |
       | GB - Gold Reseller      | 200      |
@@ -394,8 +394,8 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
   @TC.20199 @bus @resizing_reseller_add-ons_plan
   Scenario: 20199 Change Subscription Period of Platinum Reseller - FR - 20 GB Add on - Monthly to Yearly
     When I add a new Reseller partner:
-      | period  | reseller type | reseller quota | storage add on | country | create under   |
-      | 12      | Platinum      | 200            | 2              | France  | MozyPro France |
+      | period  | reseller type | reseller quota | storage add on | country | create under   | cc number        |
+      | 12      | Platinum      | 200            | 2              | France  | MozyPro France | 4485393141463880 |
     And Order summary table should be:
       | Description             | Quantity |
       | GB - Platinum Reseller  | 200      |
@@ -471,8 +471,8 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
   @TC.20202 @bus @resizing_reseller_add-ons_plan
   Scenario: 20202 Order plan in Change Plan - Gold Reseller - UK - Yearly - 20 GB add on
     When I add a new Reseller partner:
-      | period  | reseller type | reseller quota | storage add on | country        | create under |
-      | 1       | Gold          | 200            | 2              | United Kingdom | MozyPro UK   |
+      | period  | reseller type | reseller quota | storage add on | country        | create under | cc number        |
+      | 1       | Gold          | 200            | 2              | United Kingdom | MozyPro UK   | 4916783606275713 |
     And Order summary table should be:
       | Description             | Quantity |
       | GB - Gold Reseller      | 200      |
@@ -499,8 +499,8 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
   @TC.20203 @bus @resizing_reseller_add-ons_plan
   Scenario: 20203 Order plan in Change Plan - Platinum Reseller - UK - Yearly - 20 GB add on
     When I add a new Reseller partner:
-      | period  | reseller type | reseller quota | storage add on | country        | create under |
-      | 1       | Platinum      | 200            | 2              | United Kingdom | MozyPro UK   |
+      | period  | reseller type | reseller quota | storage add on | country        | create under | cc number        |
+      | 1       | Platinum      | 200            | 2              | United Kingdom | MozyPro UK   | 4916783606275713 |
     And Order summary table should be:
       | Description             | Quantity |
       | GB - Platinum Reseller  | 200      |
@@ -527,8 +527,8 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
   @TC.20204 @bus @resizing_reseller_add-ons_plan
   Scenario: 20204 Order plan in Change Plan - Gold Reseller - FR - Yearly - 20 GB add on
     When I add a new Reseller partner:
-      | period  | reseller type | reseller quota | storage add on | country | create under   |
-      | 1       | Gold          | 200            | 2              | France  | MozyPro France |
+      | period  | reseller type | reseller quota | storage add on | country | create under   | cc number        |
+      | 1       | Gold          | 200            | 2              | France  | MozyPro France | 4485393141463880 |
     And Order summary table should be:
       | Description             | Quantity |
       | GB - Gold Reseller      | 200      |
@@ -555,8 +555,8 @@ Feature: Resize Reseller Gold & Platinum Partners add-ons to 20 GB add-on
   @TC.20205 @bus @resizing_reseller_add-ons_plan
   Scenario: 20205 Order plan in Change Plan - Platinum Reseller - FR - Yearly - 20 GB add on
     When I add a new Reseller partner:
-      | period  | reseller type | reseller quota | storage add on | country | create under   |
-      | 1       | Platinum      | 200            | 2              | France  | MozyPro France |
+      | period  | reseller type | reseller quota | storage add on | country | create under   | cc number        |
+      | 1       | Platinum      | 200            | 2              | France  | MozyPro France | 4485393141463880 |
     And Order summary table should be:
       | Description             | Quantity |
       | GB - Platinum Reseller  | 200      |

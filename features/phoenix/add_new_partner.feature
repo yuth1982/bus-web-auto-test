@@ -28,10 +28,6 @@ Background:
     And I add a phoenix Pro partner:
     | period | base plan | country       |
     | 1      | 1 TB      | United States |
-    Then the order summary looks like:
-    | Description    | Price   | Quantity | Amount  |
-    | 1 TB - Monthly | $379.99 | 1        | $379.99 |
-    | Total Charge   | $379.99 |          | $379.99 |
     And the partner is successfully added.
     And they have logged in and verified their account.
     And I log in bus admin console as administrator
@@ -41,25 +37,25 @@ Background:
     And I view partner details by newly created partner company name
     And Partner general information should be:
     | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change) |
     And Partner contact information should be:
-    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | <%=@partner.partner_info.type%>| 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
     | Server                 | Disabled |
     | Cloud Storage (GB)     |          |
-    | Sync Users:            |    -1    |
+    | Sync Users:            | -1       |
     | Default Sync Storage:  |          |
     And Partner pooled storage information should be:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 1024      | 1024     | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
-    | Account Type:   | Credit Card            | Current Period: | Monthly             |
-    | Unpaid Balance: | $0.00                  | Collect On:     | N/A                 |
-    | Renewal Date:   | after 1 month          | Renewal Period: | Use Current Period  |
-    | Next Charge:    | after 1 month          |                 |                     |
+    | Account Type:   | Credit Card   | Current Period: | Monthly            |
+    | Unpaid Balance: | $0.00         | Collect On:     | N/A                |
+    | Renewal Date:   | after 1 month | Renewal Period: | Use Current Period |
+    | Next Charge:    | after 1 month |                 |                    |
     And I delete partner account
 
   @TC.20966  @2.9 @regression_test @phoenix @mozypro
@@ -67,7 +63,7 @@ Background:
     When I am at dom selection point:
     And I add a phoenix Pro partner:
     | period | base plan | country       | security |
-    | 24     | 10 GB     | United States |   HIPAA  |
+    | 24     | 10 GB     | United States | HIPAA    |
     Then the order summary looks like:
     | Description      | Price   | Quantity | Amount  |
     | 10 GB - Biennial | $209.79 | 1        | $209.79 |

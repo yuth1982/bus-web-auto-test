@@ -5,6 +5,24 @@ module DBHelper
   @db_user = QA_ENV['db_user']
   @db_name = QA_ENV['db_name']
 
+  # Public: verify home user by user_name
+  #
+  def change_email_verified_at(username)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      t = (Time.now)
+      Log.debug "########Time.now is #{Time.now}"
+      Log.debug "########t is #{t}"
+      Log.debug "########username is #{username}"
+      sql = "update users set email_verified_at='#{t}' where username='#{username}';"
+      c = conn.exec(sql)
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
   # Public: change user's last sync at time to days's before by user_id
   #
   def change_last_sync_at(user_id, days)

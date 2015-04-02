@@ -62,15 +62,11 @@ module Bus
     #
     # Returns nothing
     def download_report(report_name)
-      wait = 0
-      report_row = ""
       wait_until do 
         !find(:xpath, "//a[text()='#{report_name}']/../../*[7]").text.match(/.*Download.*/).nil?
       end
       report_row = find_report(report_name)
       report_row[6].find(:css, "a:contains('Download')").click
-      puts "Wait 10 seconds to download csv reports file"
-      sleep 10
     end
 
     # Public: Read downloaded scheduled reports

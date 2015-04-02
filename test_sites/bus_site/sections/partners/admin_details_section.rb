@@ -47,6 +47,7 @@ module Bus
     # Returns nothing
     def act_as_admin
       act_as_link.click
+      alert_accept if alert_present?
     end
 
     def partner

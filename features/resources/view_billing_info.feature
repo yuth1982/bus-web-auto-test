@@ -59,7 +59,7 @@ Feature: View billing information
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15359 @bus @2.0 @billing_information
+  @TC.15359 @bus @2.0 @billing_information @env_dependent
   Scenario: 15359 Verify MozyEnterprise Autogrow status is set to disabled by default
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -118,8 +118,8 @@ Feature: View billing information
   @TC.17517 @bus @2.0 @billing_information
   Scenario: 17517 Verify MozyPro VAT information in the billing information view
     When I add a new MozyPro partner:
-      | period | base plan | server plan | country | vat number    |
-      | 12     | 500 GB    | yes         | Italy   | IT03018900245 |
+      | period | base plan | server plan | country | vat number    | cc number        |
+      | 12     | 500 GB    | yes         | Italy   | IT03018900245 | 4916921703777575 |
     Then New partner should be created
     When I act as newly created partner account
     And I navigate to Billing Information section from bus admin console page

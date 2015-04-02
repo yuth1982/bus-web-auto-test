@@ -103,16 +103,18 @@ When /^I de-select Horizon Manager$/ do
 end
 
 When /^I input server connection settings$/ do |table|
-  # table is a | ad01.qa5.mozyops.com | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com| QAP@SSw0rd    |
+  # | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+  # or | @server_host | @protocol  |          | @port  | @base_dn | @bind_user      | @bind_password  |
   server = table.hashes.first
   @connection_info = Bus::DataObj::ConnectionInfo.new
-  @connection_info.server_host = server['Server Host'] == '@host_address' ? Forgery::Internet.ip_v4 : server['Server Host']
+  @connection_info.server_host = server['Server Host'] == '@server_host' ? AD_CONNECTION_ENV['server_host'] : server['Server Host']
   @connection_info.ssl_cert = server['SSL Cert']
-  @connection_info.protocol = (server['Protocol'] == 'No SSL' ? 'false' : server['Protocol'].downcase)
-  @connection_info.port = server['Port'] == '@port' ? Random.new.rand(1..65535) : server['Port']
-  @connection_info.base_dn = server['Base DN']
-  @connection_info.bind_user = server['Bind Username']
-  @connection_info.bind_password = server['Bind Password']
+  protocol_value = server['Protocol'] == '@protocol' ? AD_CONNECTION_ENV['protocol'] : server['Protocol']
+  @connection_info.protocol = protocol_value == 'No SSL' ? 'false' : server['Protocol'].downcase
+  @connection_info.port = server['Port'] == '@port' ? AD_CONNECTION_ENV['port'] : server['Port']
+  @connection_info.base_dn = server['Base DN'] == '@base_dn' ? AD_CONNECTION_ENV['base_dn'] : server['Base DN']
+  @connection_info.bind_user = server['Bind Username'] == '@bind_user' ? AD_CONNECTION_ENV['bind_username'] : server['Bind Username']
+  @connection_info.bind_password = server['Bind Password'] == '@bind_password' ?  AD_CONNECTION_ENV['bind_password'] : server['Bind Password']
   @bus_site.admin_console_page.authentication_policy_section.fillin_connection_settings(@connection_info)
 end
 
@@ -249,13 +251,17 @@ Then /^The sync status result should like:$/ do |table|
   time_re = '\d+/\d+/\d+ \d+:\d+ (\+|-)\d+:\d+'
   time_re_sub = '\d+/\d+/\d+ \d+:\d+ (\\\+|-)\d+:\d+'
   last_sync_time = actual[0].match(time_re)[0]
-  costed_time = actual[0].match('about (.+) sec')[1].to_f
+  costed_time = actual[0].match('about (.+) (sec|minute|minutes)')[1].to_f
   Log.debug("last sync time is #{last_sync_time}")
   Log.debug("costed_time is #{costed_time}")
 
   # verfiy Sync Status
   actual[0].match(expected[0].gsub('%m/%d/%y %H:%M %:z', time_re_sub)).should_not be_nil
-  costed_time.should be < 120
+  if actual[0].include? "second"
+    costed_time.should be < 120
+  else
+    costed_time.should be <= 2
+  end
   expected_next_sync = expected[2]
   # verify Sync Result
   actual[1].should == expected[1]

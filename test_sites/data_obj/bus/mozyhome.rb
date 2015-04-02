@@ -5,7 +5,7 @@ module Bus
     #	reusing partner objects, which alos will give us latitude in conversions, etc.
     class MozyHome < PartnerAccount
       attr_accessor :base_plan, :has_server_plan, :has_stash, :additional_computers, :additional_storage,
-                    :plan_summary, :billing_summary
+                    :plan_summary, :billing_summary, :curplan_payment_summary
 
       # Public: Initialize a MozyHome Object
       #
@@ -18,6 +18,7 @@ module Bus
         @additional_storage = ""
         @plan_summary = {}
         @billing_summary = []
+        @curplan_payment_summary = ""
       end
 
       # Public: output mozy home attributes
@@ -29,7 +30,8 @@ module Bus
         has_server_plan: #@has_server_plan
         has_stash: #@has_stash
         additional_computers: #@additional_computers
-        additional_storage:#@additional_storage}
+        additional_storage:#@additional_storage
+        curplan_payment_summary:#@curplan_payment_summary}
       end
     end
   end

@@ -8,7 +8,8 @@ Capybara.register_driver :firefox do |app|
   profile['browser.download.lastDir'] = FileHelper.ff_download_path
   profile['browser.download.manager.showWhenStarting'] = false
   profile['browser.download.manager.closeWhenDone'] = true
-  profile['browser.helperApps.neverAsk.saveToDisk'] = "application/csv;text/csv;application/vnd.ms-excel;"
+  profile['browser.helperApps.neverAsk.saveToDisk'] = "application/csv;text/csv;application/vnd.ms-excel;
+application/x-msdos-program;application/x-apple-diskimage;application/x-debian-package;application/x-redhat-package-manager"
   profile.assume_untrusted_certificate_issuer = false
   #profile.native_events = true
   Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => profile)
@@ -28,7 +29,13 @@ Capybara.register_driver :firefox_debug do |app|
 end
 
 Capybara.register_driver :chrome do |app|
-  Capybara::Selenium::Driver.new(app, :browser => :chrome)
+  prefs = {
+      :download => {
+          :prompt_for_download => false,
+          :default_directory => FileHelper.ff_download_path
+      }
+  }
+  Capybara::Selenium::Driver.new(app, :browser => :chrome, :prefs => prefs)
 end
 
 Capybara.register_driver :ie do |app|

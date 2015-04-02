@@ -49,7 +49,8 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller|MozyEnterprise DPS|OEM) part
       @partner.base_plan = attributes["base plan"] || ""
       @partner.has_server_plan = (attributes["server plan"] || "no").eql?("yes")
       @partner.has_stash_grant_plan = (attributes["stash grant plan"] || "no").eql?("yes")
-      @partner.storage_add_on =  attributes["storage add on"] || 0
+      @partner.storage_add_on = attributes["storage add on"] || 0
+      @partner.storage_add_on_50_gb = attributes["storage add on 50 gb"] || 0
       @partner.admin_info.root_role = attributes["root role"] || CONFIGS['bus']['root_role']['mozypro']
     when CONFIGS['bus']['company_type']['mozyenterprise']
       @partner = Bus::DataObj::MozyEnterprise.new
@@ -111,12 +112,23 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller|MozyEnterprise DPS|OEM) part
     @partner.account_detail.sales_channel = attributes['sales channel'] unless attributes['sales channel'].nil?
 
     # Billing info attributes
-    # Not implemented, always use company info
+    @partner.use_company_info = attributes['billing country'].nil?
+    unless @partner.use_company_info
+      @partner.billing_info.country = attributes["billing country"] unless attributes['billing country'].nil?
+      @partner.billing_info.state = attributes["billing state"] unless attributes['billing state'].nil?
+      @partner.billing_info.state_abbrev = attributes['billing state abbrev'] unless attributes['billing state abbrev'].nil?
+      @partner.billing_info.address = attributes['billing address'] unless attributes['billing address'].nil?
+      @partner.billing_info.city = attributes['billing city'] unless attributes['billing city'].nil?
+      @partner.billing_info.zip = attributes['billing zip'] unless attributes['billing zip'].nil?
+      @partner.billing_info.phone = attributes['billing phone'] unless attributes['billing phone'].nil?
+      @partner.billing_info.email = attributes["billing email"] unless attributes['billing email'].nil?
+    end
 
     # Credit card info attributes
     @partner.credit_card.first_name = attributes['cc first name'] unless attributes['cc first name'].nil?
     @partner.credit_card.last_name = attributes['cc last name'] unless attributes['cc last name'].nil?
     @partner.credit_card.number = attributes['cc number'] unless attributes['cc number'].nil?
+    @partner.credit_card.last_four_digits = @partner.credit_card.number[12..-1]  unless attributes['cc number'].nil?
     @partner.credit_card.expire_month = attributes['expire month'] unless attributes['expire month'].nil?
     @partner.credit_card.expire_year = attributes['expire year'] unless attributes['expire year'].nil?
     @partner.credit_card.cvv = attributes['cvv'] unless attributes['cvv'].nil?
@@ -124,8 +136,6 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller|MozyEnterprise DPS|OEM) part
     # Common attributes
     @partner.subscription_period = attributes['period']
     @partner.net_term_payment = (attributes['net terms'] || 'no').eql?('yes')
-
-    @partner.company_info.name = "Internal Mozy - #{@partner.company_info.name}" if  ENV['BUS_ENV'] == 'prod'
 
     Log.debug(@partner.to_s)
     @bus_site.admin_console_page.add_new_partner_section.add_new_account(@partner)
@@ -158,8 +168,47 @@ Then /^New partner should be created$/ do
   @bus_site.admin_console_page.add_new_partner_section.messages.should == "New partner created."
 end
 
+Then /^Aria payment error message should be (.+)$/ do |message|
+  @bus_site.admin_console_page.add_new_partner_section.aria_errors.should == message
+end
+
+Then /^the billing country alert is (.+)$/ do |alert|
+  @partner.billing_info.alert.should == alert
+end
+
+Then /^there is no popup alert during partner creation$/ do
+  @partner.billing_info.alert.should == ""
+end
+
+Then /^Create partner error message should be (.+)$/ do |message|
+  @bus_site.admin_console_page.add_new_partner_section.messages.should == message
+end
+
 Then /^Sub-total before taxes or discounts should be (.+)$/ do |amount|
   @partner.pre_sub_total.should == amount
+end
+
+Then /^the sub-total before taxes or discounts should be correct$/ do
+  case @partner.partner_info.type
+    when CONFIGS['bus']['company_type']['mozypro']
+      get_mozypro_signup_order(@partner)
+    when CONFIGS['bus']['company_type']['reseller']
+      get_reseller_signup_order(@partner)
+  end
+  @partner.pre_sub_total.should == format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:pre_all_subtotal])
+  Log.debug(format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:pre_all_subtotal]))
+end
+
+Then /^the order summary table should be correct$/ do
+  actual = @partner.order_summary
+  case @partner.partner_info.type
+    when CONFIGS['bus']['company_type']['mozypro']
+      expected = get_bus_mozypro_order_summery(@partner)
+    when CONFIGS['bus']['company_type']['reseller']
+      expected = get_bus_reseller_order_summery(@partner)
+  end
+  actual.should == expected
+  Log.debug(expected)
 end
 
 Then /^Order summary table should be:$/ do |order_summary_table|

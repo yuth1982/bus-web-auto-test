@@ -26,3 +26,7 @@ end
 Then /^(.+) and (.+) are downloaded$/ do |user, machine|
   @bus_site.admin_console_page.search_list_machines_section.machine_user_csv_files(user, machine).should == [user, machine]
 end
+
+Then /^Search list machines section is opened$/ do
+  @bus_site.admin_console_page.search_list_machines_section.search_list_machines_opened.should be_true
+end

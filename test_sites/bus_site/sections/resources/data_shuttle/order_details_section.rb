@@ -7,6 +7,9 @@ module Bus
     elements(:cancel_order_links, xpath: "//a[text()='cancel']")
     element(:order_detail_table, css: "div[id^=resource-show_data_shuttle_order-] table.table-view")
     element(:shipping_tracking_table, css: "div[id^=resource-show_data_shuttle_order-] table.mini-table")
+    element(:add_drive_to_order_links, xpath: "//a[text()='Add Drive To Order']")
+    element(:add_drive_btn, xpath: "//input[@type='submit' and @value='Add Drive']")
+    element(:message_div, xpath: "//ul[@class='flash successes' or @class='flash errors']/li")
 
     # Public: Click cancel button of first order in list
     #
@@ -43,6 +46,29 @@ module Bus
 
     def has_inbound_link?(inbound)
       find_link(inbound).present?
+    end
+
+    # Public: Click Add Drive To Order to add drive to data shuttle order
+    #
+    # Example
+    #   @bus_admin_console_page.order_details_section.add_drive_to_order
+    #
+    # Returns nothing
+    def add_drive_to_order
+      wait_until_bus_section_load
+      add_drive_to_order_links.click
+      add_drive_btn.click
+    end
+
+    # Public: Messages for add drive to order
+    #
+    # Example
+    #  @bus_admin_console_page.order_details_section.messages
+    #  # => "Successfully added drive to order 5277"
+    #
+    # Returns success or error message text
+    def messages
+      message_div.text
     end
   end
 end

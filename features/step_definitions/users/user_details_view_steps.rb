@@ -206,7 +206,16 @@ end
 Then /^device table in user details should be:$/ do |table|
   actual = @bus_site.admin_console_page.user_details_section.device_table_hashes
   expected = table.hashes
-  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
+  expected.each_index { |index|
+    expected[index].keys.each { |key|
+      #depending on the performance of the testing env, the "Last Update" time could be different
+      if !(expected[index][key].match(/^(1|< a|2) minute(s)* ago$/).nil?)
+        actual[index][key].match(/^(1|< a|2) minute(s)* ago$/).nil?.should be_false
+      else
+        actual[index][key].should == expected[index][key]
+      end
+    }
+  }
 end
 
 Then /^stash device table in user details should be:$/ do |table|
@@ -369,5 +378,16 @@ Then /^I display login information$/ do
     Log.info("un: #{@partner.admin_info.email}, pw: #{CONFIGS['global']['test_pwd']}")
   else
     Log.info("pn: #{@partner.admin_info.email}, un: #{@new_users.last.email}, pw: #{CONFIGS['global']['test_pwd']}")
+  end
+end
+
+When /^I search and delete user account if it exists by (.+)/ do |account_name|
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_users'])
+  @bus_site.admin_console_page.search_list_users_section.search_user(account_name)
+  @bus_site.admin_console_page.search_list_users_section.wait_until_bus_section_load
+  rows = @bus_site.admin_console_page.search_list_users_section.search_results_table_rows
+  unless rows.to_s.include?('No results found.')
+    @bus_site.admin_console_page.search_list_users_section.view_user_details(account_name)
+    @bus_site.admin_console_page.user_details_section.delete_user
   end
 end

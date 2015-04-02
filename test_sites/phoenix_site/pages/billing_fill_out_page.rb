@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Phoenix
   class NewPartnerBillingFillout < SiteHelper::Page
 
@@ -25,6 +26,7 @@ module Phoenix
     # Billing Info
     # pro flow
     element(:same_as_company_info_link, id: "insert_partner_contact")
+    element(:home_cc_acc_type_select, id: "card_type")
     element(:cc_address_tb, id: "cc_address")
     element(:cc_country_select, id: "cc_country")
     element(:cc_state_tb, id: "cc_state")
@@ -34,7 +36,7 @@ module Phoenix
     element(:cc_email_tb, id: "cc_email")
     element(:cc_phone_tb, id: "cc_phone")
     element(:cc_zip_tb, id: "cc_zip")
-    element(:billing_summary_table, css: "table.order-summary")
+    element(:billing_summary_table, xpath: "//table[@class='order-summary']")
     # home flow
     element(:home_country_select, id: "bill_to_address_country")
     element(:home_bill_fname_tb, id: "bill_to_forename")
@@ -55,6 +57,8 @@ module Phoenix
     element(:continue_btn, css: "input.img-button")
     element(:back_btn, id: "back_button")
     element(:submit_btn, id: "submit_button")
+    element(:error_message, xpath: "//div[@id='cybersourceErrors']//ul//li")
+    element(:pro_error_message, xpath: "//*[@id='ariaErrors']/ul/li")
 
     # Public elements & methods
     #
@@ -83,11 +87,28 @@ module Phoenix
       # payee info
       cc_first_name_tb.type_text(partner.credit_card.first_name)
       cc_last_name_tb.type_text(partner.credit_card.last_name)
-      cc_company_tb.type_text(partner.company_info.name )
+      if partner.use_company_info
+        cc_company_tb.type_text(partner.company_info.name)
+        same_as_company_info_link.check
+      else
+        cc_company_tb.type_text(partner.billing_info.company_name)
+        cc_country_select.select(partner.billing_info.country)
+        cc_address_tb.type_text(partner.billing_info.address)
+        cc_city_tb.type_text(partner.billing_info.city)
+        case partner.billing_info.country
+          when 'United States', 'États-Unis', 'Vereinigte Staaten'
+            cc_state_us_select.select(partner.billing_info.state_abbrev)
+          when 'Canada'
+            cc_state_ca_select.select(partner.billing_info.state_abbrev)
+          else
+            cc_state_tb.type_text(partner.billing_info.state)
+        end
+        cc_zip_tb.type_text(partner.billing_info.zip)
+        cc_phone_tb.type_text(partner.billing_info.phone)
+      end
+      cc_email_tb.eql?(partner.admin_info.email)
       #captch
       captcha.type_text(CONFIGS['phoenix']['captcha'])
-      # billing company info
-      same_as_company_info_link.click
     end
 
     #   home : filling all available fields
@@ -95,23 +116,39 @@ module Phoenix
     #
     def home_fill_out(partner)
       # for mozy home, we have to fill the entire form out
+      home_cc_acc_type_select.select(partner.credit_card.type)
       home_cc_acct_num_tb.type_text(partner.credit_card.number)
       home_cc_cvv_tb.type_text(partner.credit_card.cvv)
       home_cc_exp_mm_select.select(partner.credit_card.expire_month)
       home_cc_exp_yy_select.select(partner.credit_card.expire_year)
-      localized_country(home_country_select, partner)
       home_bill_fname_tb.type_text(partner.credit_card.first_name)
       home_bill_lname_tb.type_text(partner.credit_card.last_name)
-      home_bill_company_tb.type_text(partner.company_info.name)
-      home_bill_addr1_tb.type_text(partner.company_info.address)
-      home_bill_city_tb.type_text(partner.company_info.city)
-      if partner.company_info.country.eql?("United States")
-        home_bill_state_select.select(partner.company_info.state_abbrev)
+      if partner.use_company_info
+        home_bill_company_tb.type_text(partner.company_info.name)
+        home_country_select.select(partner.company_info.country)
+        home_bill_addr1_tb.type_text(partner.company_info.address)
+        home_bill_city_tb.type_text(partner.company_info.city)
+        if partner.company_info.country.eql?("United States")
+          home_bill_state_select.select(partner.company_info.state_abbrev)
+        else
+          home_bill_state_tb.type_text(partner.company_info.state)
+        end
+        home_bill_post_tb.type_text(partner.company_info.zip)
+        home_bill_phone_tb.type_text(partner.company_info.phone)
       else
-        home_bill_state_tb.type_text(partner.company_info.state)
+        home_bill_company_tb.type_text(partner.billing_info.company_name)
+        home_country_select.select(partner.billing_info.country)
+        home_bill_addr1_tb.type_text(partner.billing_info.address)
+        home_bill_city_tb.type_text(partner.billing_info.city)
+        case partner.billing_info.country
+          when 'United States', 'États-Unis', 'Vereinigte Staaten'
+            home_bill_state_select.select(partner.billing_info.state_abbrev)
+          else
+            home_bill_state_tb.type_text(partner.billing_info.state)
+        end
+        home_bill_post_tb.type_text(partner.billing_info.zip)
+        home_bill_phone_tb.type_text(partner.billing_info.phone)
       end
-      home_bill_post_tb.type_text(partner.company_info.zip)
-      home_bill_phone_tb.type_text(partner.company_info.phone)
       home_bill_email_tb.eql?(partner.admin_info.email)
       #captch
       captcha.type_text(CONFIGS['phoenix']['captcha'])
@@ -150,6 +187,28 @@ module Phoenix
 
     def home_billing_country
       home_country_select.value
+    end
+
+    # Public: Error Messages when profile, ip, billing, credit card country not match
+    #
+    # Example
+    #  @phoenix_site.billing_info_fill_out.home_error_messages
+    #  # => ""
+    #
+    # Returns success or error message text
+    def home_error_messages
+      error_message.text
+    end
+
+    # Public: Error Messages when profile, ip, billing, credit card country not match
+    #
+    # Example
+    #  @phoenix_site.billing_info_fill_out.pro_error_messages
+    #  # => ""
+    #
+    # Returns success or error message text
+    def pro_error_messages
+      pro_error_message.text
     end
   end
 end

@@ -11,8 +11,8 @@
   @TC.17533 @firefox  @bus @2.0 @enter_tax-exempt_status
   Scenario: 17533 Set both Exempt from State and Federal taxes to false for a new Biennially Mozypro partner
     When I add a new MozyPro partner:
-      | period | base plan | server plan | country | vat number   |
-      | 24     | 50 GB     | yes         | Belgium | BE0883236072 |
+      | period | base plan | server plan | country | vat number   | cc number         |
+      | 24     | 50 GB     | yes         | Belgium | BE0883236072 | 5413271111111222  |
     Then New partner should be created
     And I wait for 10 seconds
     And I get partner aria id
@@ -26,8 +26,8 @@
   @TC.17537 @firefox @bus @2.0 @enter_tax-exempt_status
   Scenario: 17537 Set Exempt from State taxes to false for a new 3-years MozyEnterprise partner
     When I add a new MozyEnterprise partner:
-      | period | users | country | vat number   |
-      | 36     | 1     | Belgium | BE0883236072 |
+      | period | users | country | vat number   | cc number         |
+      | 36     | 1     | Belgium | BE0883236072 | 5413271111111222  |
     Then New partner should be created
     And I wait for 10 seconds
     And I get partner aria id
@@ -41,8 +41,8 @@
   @TC.17539 @firefox  @bus @2.0 @enter_tax-exempt_status
   Scenario: 17539 Set Exempt from Federal taxes to false for a new Yearly Reseller partner
     When I add a new Reseller partner:
-      | period | reseller type | reseller quota | country | vat number    |
-      | 1      | Silver        | 100            | Italy   | IT03018900245 |
+      | period | reseller type | reseller quota | country | vat number    | cc number         |
+      | 1      | Silver        | 100            | Italy   | IT03018900245 | 4916921703777575  |
     Then New partner should be created
     And I wait for 10 seconds
     And I get partner aria id

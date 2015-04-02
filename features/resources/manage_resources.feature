@@ -135,3 +135,13 @@ Feature: Manage resources
 
     # Restore partner status
     And I allocate 0 GB Desktop quota to MozyPro partner
+
+  @TC.19165 @BSA.3010 @bus @2.5 @user_stories @stash @need_test_account @env_dependent
+  Scenario: 19165 US Pro admin can see stash details in manage resources
+    When I act as partner by:
+      | email                 |
+      | test_bsa3040@auto.com |
+    When I navigate to Manage Resources section from bus admin console page
+    Then Partner resources general information should be:
+      | Users: | Storage Usage: |
+      | 1      | 5 MB / 2 GB    |

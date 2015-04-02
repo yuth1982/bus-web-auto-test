@@ -31,7 +31,7 @@ Feature: Modify credit card information and billing contact information
       | This is a new address | 12345678  |
     And I update credit card information to:
       | cc name      | cc number        | expire month | expire year | cvv |
-      | newcard name | 4111111111111111 | 12           | 18          | 123 |
+      | newcard name | 4018121111111122 | 12           | 18          | 123 |
     And I save payment information changes
     Then Payment information should be updated
     When API* I get Aria account details by newly created partner aria id
@@ -40,7 +40,7 @@ Feature: Modify credit card information and billing contact information
       | This is a new address | 12345678 | newcard name |
     And API* Aria account credit card info should be:
       | payment type | last four digits   | expire month | expire year |
-      | Credit Card  | 1111               | 12           | 2018        |
+      | Credit Card  | 1122               | 12           | 2018        |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -90,7 +90,7 @@ Feature: Modify credit card information and billing contact information
     And I navigate to Change Payment Information section from bus admin console page
     And I update credit card information to:
       | cc name     | cc number        | expire month | expire year | cvv |
-      |             | 4111111111111111 | 12           | 19          | 123 |
+      |             | 4018121111111122 | 12           | 19          | 123 |
     And I save payment information changes
     Then Modify credit card error messages should be Please enter the name on your credit card.
     When I update credit card information to:
@@ -123,22 +123,22 @@ Feature: Modify credit card information and billing contact information
   Scenario: 15458 Verify Only the Last Four Digits of Credit Card Number Visible
     When I add a new MozyPro partner:
       | period | base plan | cc number        |
-      | 12     | 10 GB     | 4111111111111111 |
+      | 12     | 10 GB     | 4018121111111122 |
     Then New partner should be created
     When I act as newly created partner account
     And I navigate to Change Payment Information section from bus admin console page
-    Then Credit card number should be XXXX XXXX XXXX 1111
+    Then Credit card number should be XXXX XXXX XXXX 1122
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15376 @bus @2.5 @modify @cc @billing_contact_info
+  @TC.15376 @bus @2.5 @modify @cc @billing_contact_info @need_test_account
   Scenario: 15376 Verify OEM Do Not Keep Credit Card
     When I act as partner by:
       | name            | filter  |
       | Muskadel Backup | OEMs    |
     Then I should not see Change Payment Information link
 
-  @TC.19276 @bus @2.5 @modify @cc @billing_contact_info
+  @TC.19276 @bus @2.5 @modify @cc @billing_contact_info @need_test_account
   Scenario: 19276 Velocity Partner Do Not Keep Credit Card
     When I act as partner by:
       | name                |

@@ -31,7 +31,6 @@ When /^I (.+) a phoenix (Home|Pro|Direct|Free) (partner|user):$/ do |string,type
 
   # Company info attributes
   @partner.company_info.name = attributes['company name'] unless attributes['company name'].nil?
-  @partner.company_info.name = "Internal Mozy - #{@partner.company_info.name}" if  ENV['BUS_ENV'] == 'prod'
   @partner.company_info.address = attributes['address'] unless attributes['address'].nil?
   @partner.company_info.city = attributes['city'] unless attributes['city'].nil?
   @partner.company_info.state = attributes['state'] unless attributes['state'].nil?
@@ -102,9 +101,6 @@ When /^I (.+) a phoenix (Home|Pro|Direct|Free) (partner|user):$/ do |string,type
   @partner.account_detail.account_type = "Live"
   @partner.account_detail.sales_origin = "Web"
 
-  # Billing info attributes
-  # Not implemented, always use company info
-
   # Credit card info attributes
   @partner.credit_card.first_name = attributes["cc first name"] unless attributes["cc first name"].nil?
   @partner.credit_card.last_name = attributes["cc last name"] unless attributes["cc last name"].nil?
@@ -112,6 +108,20 @@ When /^I (.+) a phoenix (Home|Pro|Direct|Free) (partner|user):$/ do |string,type
   @partner.credit_card.expire_month = attributes["expire month"] unless attributes["expire month"].nil?
   @partner.credit_card.expire_year = attributes["expire year"] unless attributes["expire year"].nil?
   @partner.credit_card.cvv = attributes["cvv"] unless attributes["cvv"].nil?
+  @partner.credit_card.type = attributes["type"] unless attributes["type"].nil?
+
+  # Billing info attributes
+  @partner.use_company_info = attributes['billing country'].nil?
+  unless @partner.use_company_info
+    @partner.billing_info.country = attributes["billing country"] unless attributes['billing country'].nil?
+    @partner.billing_info.state = attributes["billing state"] unless attributes['billing state'].nil?
+    @partner.billing_info.state_abbrev = attributes['billing state abbrev'] unless attributes['billing state abbrev'].nil?
+    @partner.billing_info.company_name = attributes["billing company name"] unless attributes['billing company name'].nil?
+    @partner.billing_info.address = attributes['billing address'] unless attributes['billing address'].nil?
+    @partner.billing_info.city = attributes['billing city'] unless attributes['billing city'].nil?
+    @partner.billing_info.zip = attributes['billing zip'] unless attributes['billing zip'].nil?
+    @partner.billing_info.phone = attributes['billing phone'] unless attributes['billing phone'].nil?
+  end
 
   # Common attributes
   @partner.subscription_period = attributes["period"]
@@ -148,10 +158,12 @@ When /^I (.+) a phoenix (Home|Pro|Direct|Free) (partner|user):$/ do |string,type
   end
 
   #If catches an error of already used email
+
   unless @phoenix_site.phoenix_acct_fill_out.stuck_on_sign_up? || type == "Free"
     @phoenix_site.licensing_fill_out.licensing_billing_fillout(@partner)
-    @phoenix_site.licensing_fill_out.has_vat_error?.should_not be_true
-    @phoenix_site.billing_fill_out.billing_info_fill_out(@partner)
+    unless @phoenix_site.licensing_fill_out.stuck_on_mozy_plan?
+      @phoenix_site.billing_fill_out.billing_info_fill_out(@partner)
+    end
   end
 
 end
@@ -160,7 +172,7 @@ end
 Then /^the (order|billing) summary looks like:$/ do |type, billing_table|
   actual = @partner.order_summary
   expected = billing_table.hashes
-  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
+  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key] unless actual[index][key].nil?} }
 end
 
 ## Changed to more useful or the different account types
@@ -239,10 +251,11 @@ When /^I login (as the user|under changed password) on the account.$/ do |login_
 end
 
 When /^I log into phoenix with username (.+) and password (.+)$/ do |username,password|
-  @bus_site = BusSite.new #In case you log into bus through the phoenix page
-  @phoenix_site = PhoenixSite.new
+  @bus_site ||= BusSite.new #In case you log into bus through the phoenix page
+  @phoenix_site ||= PhoenixSite.new
   @phoenix_site.user_account.load
-  @phoenix_site.user_account.phoenix_login(username,password)
+  username = @partner.admin_info.email if username == '@new_admin_email'
+  @phoenix_site.user_account.phoenix_login(username, password)
 end
 
 Given /^I log into phoenix with capitalized username$/ do
@@ -278,16 +291,75 @@ end
 # added "( |partner)" for future flexibility
 Then /^the (user|partner) has activated their account$/ do |_|
   if @partner.base_plan.eql?("free")
+    subject = "free_mail_subject"
+  else
+    subject = "verify_mail_subject"
+  end
+  if (@partner.company_info.country.eql?("France")||@partner.company_info.country.eql?("Germany"))
     step %{I retrieve email content by keywords:}, table(%{
-      | to | subject |
-      | @new_admin_email | #{LANG[@partner.company_info.country][@partner.partner_info.type]["free_mail_subject"]} |
+      | to |
+      | @new_admin_email |
       })
   else
     step %{I retrieve email content by keywords:}, table(%{
-      | to | subject |
-      | @new_admin_email | #{LANG[@partner.company_info.country][@partner.partner_info.type]["verify_mail_subject"]} |
-      })
+        | to | subject |
+        | @new_admin_email | #{LANG[@partner.company_info.country][@partner.partner_info.type]['#{subject}']} |
+        })
   end
   step %{I get verify email address from email content}
   step %{verify email address link should show success message}
+end
+
+Then /^mozy plan page error message should be:$/ do |message|
+  @phoenix_site.licensing_fill_out.pc_error_messages.should eq(message)
+end
+
+Then /^vat error message should be:$/ do |message|
+  @phoenix_site.licensing_fill_out.vat_error_messages.should eq(message)
+end
+
+Then /^billing details page error message should be:$/ do |message|
+  @phoenix_site.billing_fill_out.home_error_messages.strip.should eq(message.strip)
+end
+
+Then /^payment information page error message should be:$/ do |message|
+  @phoenix_site.billing_fill_out.pro_error_messages.should eq(message)
+end
+
+Then /^the quota in account home page looks like:$/ do |quota_info|
+  @phoenix_site.user_account.get_quota_account_page(@partner).should eq(quota_info)
+end
+
+Then /^the plan details in account home page looks like:$/ do |plan_table|
+  actual = @phoenix_site.user_account.get_plan_details_account_page
+  expected = plan_table.raw
+  actual.each_with_index{ |item, index|
+    # for the last 2 lines, Last charge, Next charge, there are contains date information, will not check date here
+    item[0].strip.should==expected[index][0]
+      if index >= actual.size - 2
+         item[1].strip.should include expected[index][1]
+      else
+         item[1].strip.should==expected[index][1]
+      end
+  }
+end
+
+
+
+Then /^the user activate account by update db$/ do
+  DBHelper.change_email_verified_at(@partner.admin_info.email)
+end
+
+
+And /^I save the partner info$/ do
+  Bus::DataObj::PreviousPartner.new(@partner)
+end
+
+And /^I get previous partner info$/ do
+  @partner=Bus::DataObj::PreviousPartner.new(nil).get_partner_info
+  Log.debug(@partner)
+end
+
+When /^user log in failed, error message is:$/ do  |message|
+  @phoenix_site.user_account.login_error_message.should == message.to_s
 end

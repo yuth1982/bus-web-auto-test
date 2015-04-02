@@ -1197,12 +1197,12 @@ Feature: User sync
     Then Authentication Policy has been updated successfully
     And I click Sync Rules tab
     And I click the sync now button
-    And I wait for 90 seconds
+    And I wait for 110 seconds
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Failed at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
-      | Sync Result | Cannot connect to the LDAP server.                                |
-      | Next Sync   | Not Scheduled(Set)                                                |
+      | Sync Status | Failed at %m/%d/%y %H:%M %:z \(duration about (\d+\.\d+ seconds*\|\d+ minutes*)\) |
+      | Sync Result | Cannot connect to the LDAP server.                                                |
+      | Next Sync   | Not Scheduled(Set)                                                                |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -1220,7 +1220,7 @@ Feature: User sync
       | rule                 | group                |
       | mail=fedid_encoding* | (default user group) |
     And I click the sync now button
-    And I wait for 60 seconds
+    And I wait for 90 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab

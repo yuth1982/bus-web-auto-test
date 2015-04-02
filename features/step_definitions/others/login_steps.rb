@@ -1,19 +1,38 @@
-Given /^I log in (bus admin console|to legacy bus01) as administrator$/ do |environment|
-  @bus_site = BusSite.new
-  case environment
-    when "bus admin console"
-      @bus_site.login_page.load
-      @bus_site.login_page.choose_english
-      @admin_username = QA_ENV['bus_username']
-      @admin_password = QA_ENV['bus_password']
-      @bus_site.login_page.login(@admin_username, @admin_password)
-    when "to legacy bus01"
-      @bus_site.itemized_login.load
-      @admin_username = QA_ENV['bus01_admin']
-      @admin_password = QA_ENV['bus01_pass']
-      @bus_site.itemized_login.login(@admin_username, @admin_password)
+def login(environment)
+  success = true
+  begin
+    @bus_site = BusSite.new
+    case environment
+      when 'bus admin console'
+        @bus_site.login_page.load
+        @bus_site.login_page.choose_english
+        @admin_username = QA_ENV['bus_username']
+        @admin_password = QA_ENV['bus_password']
+        @bus_site.login_page.login(@admin_username, @admin_password)
+      when 'to legacy bus01'
+        @bus_site.itemized_login.load
+        @admin_username = QA_ENV['bus01_admin']
+        @admin_password = QA_ENV['bus01_pass']
+        @bus_site.itemized_login.login(@admin_username, @admin_password)
+    end
+  rescue Exception => ex
+    Log.debug(ex.to_s)
+    success = false
   end
-  # there was redundant code here - removed.
+  success
+end
+
+#Give the login steps more chances to retry since it is a key path to all following steps
+Given /^I log in (bus admin console|to legacy bus01) as administrator$/ do |environment|
+  i = 0
+  while !login(environment) && i < 3
+    sleep 60
+    i += 1
+  end
+end
+
+And /^I login as mozypro admin successfully$/ do
+  @bus_site.admin_console_page.get_partner_name_topcorner.should eq(@partner.company_info.name)
 end
 
 When /^I navigate to bus admin console login page$/ do

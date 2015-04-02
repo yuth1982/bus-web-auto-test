@@ -43,7 +43,7 @@ module Phoenix
     # @partner - partner specific info, namely country/partner type
     # localize item to click - label localized for language to be specifically selected.
     def localized_click(partner, loc_click)
-      navigate_to_link("#{LANG[partner.company_info.country][partner.partner_info.type][loc_click]}")
+      navigate_to_link("#{LANG[partner.partner_info.parent][partner.partner_info.type][loc_click]}")
     end
 
     def logout(partner)
@@ -136,7 +136,8 @@ module Phoenix
       reg_comp_banner_present
       reg_comp_text
       reg_get_started
-      find(:xpath, "//a[text()='#{LANG[partner.company_info.country][partner.partner_info.type]['acct_page_link']}']").click
+      #find(:xpath, "//a[text()='#{LANG[partner.company_info.country][partner.partner_info.type]['acct_page_link']}']").click
+      find(:xpath,"//div[@class='center']//a").click
     end
   end
 end

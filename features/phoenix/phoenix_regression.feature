@@ -79,10 +79,13 @@ Feature: Phoenix regression Test
     Then the billing summary looks like:
       | Description                           | Price | Quantity | Amount |
       | MozyHome 50 GB (1 computer) - Monthly | $5.99 | 1        | $5.99  |
-      | Total Charge                          | $5.99 |          | $5.99  |
+      | Total Charge                          |       |          | $5.99  |
     Then the user is successfully added
     When I log in bus admin console as administrator
-    And I view MozyHome user details by @user_name
+    And I search user by:
+      | keywords       |
+      | @mh_user_email |
+    And I view user details by newly created MozyHome username
     Then MozyHome user details should be:
       | Country: |
       | @country |
@@ -99,6 +102,7 @@ Feature: Phoenix regression Test
       | Total Charge          | $1,112.58 |          | $1,112.58 |
     And the partner is successfully added.
     When I log in bus admin console as administrator
+    And I search partner by newly created partner company name
     And I view partner details by newly created partner company name
     Then Partner contact information should be:
       | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   |
@@ -119,10 +123,13 @@ Feature: Phoenix regression Test
     Then the billing summary looks like:
       | Description                           | Price | Quantity | Amount |
       | MozyHome 50 GB (1 computer) - Monthly | $5.99 | 1        | $5.99  |
-      | Total Charge                          | $5.99 |          | $5.99  |
+      | Total Charge                          |       |          | $5.99  |
     Then the user is successfully added
     When I log in bus admin console as administrator
-    And I view MozyHome user details by @user_name
+    And I search user by:
+      | keywords       |
+      | @mh_user_email |
+    And I view user details by newly created MozyHome username
     Then MozyHome user details should be:
       | Country: |
       | @country |
@@ -135,10 +142,13 @@ Feature: Phoenix regression Test
     Then the billing summary looks like:
       | Description                           | Price | Quantity | Amount |
       | MozyHome 50 GB (1 computer) - Monthly | $5.99 | 1        | $5.99  |
-      | Total Charge                          | $5.99 |          | $5.99  |
+      | Total Charge                          |       |          | $5.99  |
     Then the user is successfully added
     When I log in bus admin console as administrator
-    And I view MozyHome user details by @user_name
+    And I search user by:
+      | keywords       |
+      | @mh_user_email |
+    And I view user details by newly created MozyHome username
     When I verify the user
     Then The user is verified
     When I Log in as the user
@@ -183,10 +193,13 @@ Feature: Phoenix regression Test
     Then the billing summary looks like:
       | Description                           | Price | Quantity | Amount |
       | MozyHome 50 GB (1 computer) - Monthly | $5.99 | 1        | $5.99  |
-      | Total Charge                          | $5.99 |          | $5.99  |
+      | Total Charge                          |       |          | $5.99  |
     Then the user is successfully added
     When I log in bus admin console as administrator
-    And I view MozyHome user details by @user_name
+    And I search user by:
+      | keywords       |
+      | @mh_user_email |
+    And I view user details by newly created MozyHome username
     When I verify the user
     Then The user is verified
     When I Log in as the user

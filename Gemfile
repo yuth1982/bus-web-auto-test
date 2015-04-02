@@ -18,5 +18,6 @@ gem 'diffy', '~>2.1.0'
 gem 'httparty', '~>0.10.0'              # Aria API
 gem 'json', '~>1.8.0'                   # Aria API
 gem 'savon', '~>1.1.0'                  # Aria API
-#gem 'ruby-gmail', '~> 0.3.0'
-gem 'mailgun-ruby', '~>1.0.3'
+gem 'ruby-gmail', '~> 0.3.0'
+gem 'viewpoint', '1.0.0'                # Exchange Web Service wrapper
+gem 'gibberish', '1.4.0'                # RSA encrypt/decrypt wrapper

@@ -77,3 +77,26 @@ end
 Then /^Credit card number should be (.+)$/ do |cc_num|
   @bus_site.admin_console_page.change_payment_info_section.credit_card_number.should == cc_num
 end
+
+Then /^I change VAT number from change payment information section:$/ do |vat_table|
+  attributes = vat_table.hashes.first
+  attributes.each do |header,attribute| #can use variable inside <%= %>
+    attribute.replace ERB.new(attribute).result(binding)
+    attributes[header] = nil if attribute == ''
+  end
+  vat = attributes['VAT Number']
+  if(vat == "@blank_space")
+    @bus_site.admin_console_page.change_payment_info_section.set_vat("")
+  else
+    @bus_site.admin_console_page.change_payment_info_section.set_vat(vat) unless vat.nil?
+  end
+end
+
+Then /^Contact country and billing information (.+) be updated:$/ do |type,message|
+  case type
+    when "should"
+      @bus_site.admin_console_page.change_payment_info_section.messages.should eq(message)
+    else
+      @bus_site.admin_console_page.change_payment_info_section.modify_cc_error_message.should eq(message)
+  end
+end

@@ -36,11 +36,16 @@ module FileHelper
   #
   # Returns cvs rows array
   def read_csv_file(file_name, file_path = default_download_path)
-    report_file = Dir.glob(File.join(file_path, "#{file_name}.csv")).first
+    report_file = nil
+    now = Time.now
+    while report_file.nil? && Time.now < (now + 60)
+      report_file = Dir.glob(File.join(file_path, "#{file_name}.csv")).first
+      sleep 1
+    end
     rows = []
     CSV.foreach(report_file) do |row|
       if row.size > 1  #data header and data
-        rows << row.map{ |x| x == nil ? "" : x}
+        rows << row.map{ |x| x == nil ? "" : x.strip}
       end
     end
     rows
@@ -71,6 +76,13 @@ module FileHelper
     old_file = File.join(file_path, old_name)
     new_file = File.join(file_path, new_name)
     File.rename(old_file, new_file)
+  end
+
+  # Public: delete *.part/ mozy* files of mozyclient in download folder
+  #
+  # Returns nothing
+  def clean_up_client
+    Dir.glob("#{default_download_path}/mozy*").each{ |path| File.delete(path) }
   end
 
   # Public: delete *.csv files in download folder

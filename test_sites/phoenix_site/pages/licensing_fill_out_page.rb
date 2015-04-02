@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Phoenix
   class NewPartnerLicensingFillout < SiteHelper::Page
 
@@ -15,7 +16,8 @@ module Phoenix
     element(:server_add_on_cb, id: :"add_id_")
     element(:vat_number_tb, id: "vat_num")
     element(:coupon_code_tb, id: "coupon_code")
-    element(:vat_error, css: ".error")
+    element(:error_message, css: "p.error")
+    element(:vat_error_message, xpath: "//dd[@class='error left']")
     # home specific items
     element(:add_storage_tb, id: "additional_storage")
     element(:add_machine_select, id: "extra_machine_count")
@@ -29,6 +31,7 @@ module Phoenix
     element(:continue_btn, css: "input.img-button")
     element(:back_btn, id: "back_button")
     element(:submit_btn, id: "submit_button")
+    element(:page_banner, css: "div.center-form-box > h2")
 
     # Public
     #
@@ -44,7 +47,7 @@ module Phoenix
     #
     def vat_fill_out(partner)
       if partner.partner_info.type.eql?("MozyPro")
-        unless partner.company_info.country.eql?("United States")
+        unless partner.partner_info.parent == 'MozyPro' || partner.partner_info.parent == 'MozyPro Ireland'
           vat_number_tb.type_text(partner.company_info.vat_num)
         end
       end
@@ -166,6 +169,46 @@ module Phoenix
       # home-get plan summary
       get_plan_summary(partner)
       continue_btn.click
+    end
+
+    # Public: This is for cases when MozyHome Plan error
+    #
+    # Example
+    #  @phoenix_site.licensing_fill_out.stuck_on_mozyhome_plan?
+    #
+    # Returns true or false
+    def stuck_on_mozy_plan?
+      sleep 2
+      msg1 = "MozyHome Plan"
+      msg2 = "Choose a Plan"
+      msg3 = "MozyHome Tarif"
+      msg4 = "Plan MozyHome"
+      msg5 = "Choisir un plan"
+      msg6 = "Plan auswählen"
+
+      page_banner.text == msg1 || page_banner.text == msg2 || page_banner.text == msg3 || page_banner.text == msg4 || page_banner.text == msg5 || page_banner.text == msg6
+    end
+
+    # Public: Error Messages for apply Promotional Code
+    #
+    # Example
+    #  @phoenix_site.licensing_fill_out.pc_error_messages
+    #  # => "The promotion code 5percentoff is invalid or has expired."
+    #
+    # Returns success or error message text
+    def pc_error_messages
+      error_message.text
+    end
+
+    # Public: Error Messages for apply Promotional Code
+    #
+    # Example
+    #  @phoenix_site.licensing_fill_out.pro_pc_error_messages
+    #  # => "The promotion code 5percentoff is invalid or has expired."
+    #
+    # Returns success or error message text
+    def vat_error_messages
+      vat_error_message.text
     end
   end
 end

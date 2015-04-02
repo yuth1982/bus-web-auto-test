@@ -53,7 +53,7 @@ module SSHRecordOverdraft
     Net::SSH.start(HOST, USER, :password => PASSWORD) do |session|
       script = "script/record_overdrafts -e production -p #{partner_id}"
       output = session.exec!("cd /var/www/bus && #{script}")
-      output = output.scan(/Partner (\d{6}) is using autogrow and is overdrafted on its Generic license by (\d+) GB/)
+      output = output.scan(/Partner (\d+) is using autogrow and is overdrafted on its Generic license by (\d+) GB/)
       output = "Partner #{output[0][0].to_s} is using autogrow and is overdrafted on its Generic license by #{output[0][1].to_s} GB"
     end
   end

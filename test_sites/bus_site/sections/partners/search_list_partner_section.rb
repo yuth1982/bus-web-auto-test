@@ -50,6 +50,7 @@ module Bus
     #
     # Returns hash array
     def search_results_hashes
+      sleep 3 #sometimes automation is still too fast which causes StaledElementError
       search_results_table.rows_text.map{ |row| Hash[*search_results_table.headers_text.zip(row).flatten] }
     end
 

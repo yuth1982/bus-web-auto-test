@@ -291,9 +291,9 @@ Feature: User stash setting management
       | keywords   |
       | TC.19115   |
     Then User search results should be:
-      | User                 | Name                 | Sync     | Machines | Storage         | Storage Used   | Created | Backed Up      |
-      | <%=@users[1].email%> | TC.19115.stash-user  | Enabled  | 0        | Desktop: Shared | Desktop: 20 GB | today   | @1 minute ago  |
-      | <%=@users[0].email%> | TC.19115.backup-user | Disabled | 1        | Desktop: Shared | Desktop: 10 GB | today   | @2 minutes ago |
+      | User                 | Name                 | Sync     | Machines | Storage        | Storage Used   | Created | Backed Up     |
+      | <%=@users[1].email%> | TC.19115.stash-user  | Enabled  | 0        | Desktop Shared |  20 GB         | today   | 1 minute ago  |
+      | <%=@users[0].email%> | TC.19115.backup-user | Disabled | 1        | Desktop Shared |  10 GB         | today   | 2 minutes ago |
 
   @TC.19116  @BSA.3040 @bus @2.5 @user_stories @US @mozypro @partner @stash
   Scenario: 19116 19117 Mozypro Partner View Sync status
@@ -343,9 +343,9 @@ Feature: User stash setting management
       | keywords   |
       | TC.19116   |
     Then User search results should be:
-      | User                 | Name                 | Sync    | Machines | Storage | Storage Used | Created |
-      | <%=@users[1].email%> | TC.19116.stash-user  | Enabled  | 0       | Shared  | 20 GB        | today   |
-      | <%=@users[0].email%> | TC.19116.backup-user | Disabled | 1       | Shared  | 10 GB        | today   |
+      | User                 | Name                 | Sync     | Machines | Storage         | Storage Used | Created |
+      | <%=@users[1].email%> | TC.19116.stash-user  | Enabled  | 0        | Generic Shared  | 20 GB        | today   |
+      | <%=@users[0].email%> | TC.19116.backup-user | Disabled | 1        | Generic Shared  | 10 GB        | today   |
 
   @TC.120694 @TC.120695 @2.10 @bus @stash
   Scenario: 120694 120695 Check existing/new sync container's encryption type
@@ -353,10 +353,13 @@ Feature: User stash setting management
       | email                |
       | test_120694@auto.com |
     And I add new user(s):
-      | name           | storage_type | storage_limit | devices | enable_stash |
-      | TC.120695 user | Desktop      | 10            | 1       | yes          |
+      | name           |storage_type | storage_limit | devices | enable_stash |
+      | TC.120695 user |Desktop      | 10            | 1       | yes          |
     Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
+    And I search user by:
+      | keywords   |
+      | @user_name |
     And I view user details by newly created user email
     Then user details should be:
       | Name:                   | Enable Sync:                |
@@ -366,8 +369,8 @@ Feature: User stash setting management
       | Sync           |  Set                 |        |
     Then I view Sync details
     And machine details should be:
-      | External ID: | Owner:       | Encryption: | Data Center: |
-      |  (change)    | @user_email  |  Default    |    qa6       |
+      | External ID: | Owner:       | Encryption: | Data Center:               |
+      |  (change)    | @user_email  |  Default    | <%=QA_ENV['data_center']%> |
     And I delete user
     And I close machine details section
 
@@ -380,8 +383,8 @@ Feature: User stash setting management
       | Sync           |  Set                 |        |
     And I view Sync details
     And machine details should be:
-      | External ID: | Owner:                  | Encryption: | Data Center: |
-      |  (change)    | tc120694user1@auto.com  |  Custom     |    qa6       |
+      | External ID: | Owner:                  | Encryption: | Data Center:               |
+      |  (change)    | tc120694user1@auto.com  |  Custom     | <%=QA_ENV['data_center']%> |
     And I close user details section
     And I close machine details section
 
@@ -394,8 +397,8 @@ Feature: User stash setting management
       | Sync           |  Set                 |        |
     And I view Sync details
     And machine details should be:
-      | External ID: | Owner:                  | Encryption: | Data Center: |
-      |  (change)    | tc120694user2@auto.com  |  Default    |    qa6       |
+      | External ID: | Owner:                  | Encryption: | Data Center:               |
+      |  (change)    | tc120694user2@auto.com  |  Default    | <%=QA_ENV['data_center']%> |
     And I close user details section
     And I close machine details section
 
@@ -444,8 +447,8 @@ Feature: User stash setting management
     And I save machine max for Machine1
     Then set max message should be:
     """
-      Machine storage limit was set to 10 GB successfully
-      """
+    Machine storage limit was set to 10 GB successfully
+    """
     And device table in user details should be:
       | Device          | Storage Type | Used/Available | Device Storage Limit | Last Update  | Action |
       | Machine1        | Desktop      | 0 / 10 GB      | 10 GB Edit Remove    | N/A          |        |
@@ -460,16 +463,16 @@ Feature: User stash setting management
     And I save machine max for Machine1
     Then set max message should be:
     """
-      Machine storage limit was set to 20 GB successfully
-      """
+    Machine storage limit was set to 20 GB successfully
+    """
     And device table in user details should be:
       | Device          | Storage Type | Used/Available | Device Storage Limit | Last Update  | Action |
       | Machine1        | Desktop      | 0 / 20 GB      | 20 GB Edit Remove    | N/A          |        |
     When I remove machine max for Machine1
     Then set max message should be:
     """
-      Machine will share this user's storage
-      """
+    Machine will share this user's storage
+    """
     And device table in user details should be:
       | Device          | Storage Type | Used/Available | Device Storage Limit | Last Update  | Action |
       | Machine1        | Desktop      | 0 / 50 GB      | Set                  | N/A          |        |
