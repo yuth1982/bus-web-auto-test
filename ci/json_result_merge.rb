@@ -16,7 +16,20 @@ def merge (from, to, out)
           counter = 0
           destFeature['elements'].each do |destScenario|
             if scenario['line'] == destScenario['line']
-              destFeature['elements'][counter] = scenario
+
+              # copy rerun result to result_merge only if rerun pass
+              rerun_pass = true
+              if scenario.has_key?('steps')
+                scenario['steps'].each do |step|
+                  if step['result']['status'] == 'failed'
+                    rerun_pass = false
+                    break
+                  end
+                end
+              end
+
+              destFeature['elements'][counter] = scenario if rerun_pass
+
             end
             counter += 1
           end
@@ -26,6 +39,7 @@ def merge (from, to, out)
   end
 
   outFile.puts JSON.dump destJson
+
 
   srcFile.close
   destFile.close
