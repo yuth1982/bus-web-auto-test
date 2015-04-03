@@ -194,11 +194,11 @@ end
 
 desc 'update windows hosts file according to the environment variable settings. This task must be run as administrator'
 task :win_hosts do
-  QA6_HOSTS = 'ci/qa6.hosts'
-  QA12_HOSTS = 'ci/qa12.hosts'
-  STG_HOSTS = 'ci/stg.hosts'
-  PANTHEON_HOSTS = 'ci/pantheon.hosts'
-  PRD_HOSTS = 'ci/prd.hosts'
+  QA6_HOSTS = 'scripts/ci/qa6.hosts'
+  QA12_HOSTS = 'scripts/ci/qa12.hosts'
+  STG_HOSTS = 'scripts/ci/stg.hosts'
+  PANTHEON_HOSTS = 'scripts/ci/pantheon.hosts'
+  PRD_HOSTS = 'scripts/ci/prd.hosts'
 
   hostsFile = 'C:/Windows/System32/Drivers/etc/hosts'
   srcHostName = nil
