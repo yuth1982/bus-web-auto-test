@@ -143,7 +143,8 @@ module SiteHelper
       end
       # I found automation is still too faster, I need force to wait until table is loaded
       # Possible refactor here
-      sleep 2
+      # 2 seconds is still not enough: "search partner -> click on partner name", then no response to the click event
+      sleep 5
     end
 
     def wait_until_ajax_finished(elements)
