@@ -25,17 +25,19 @@ class Capybara::Node::Element
   #
   # Returns nothing
   def highlight
-    begin
-      driver.execute_script("#{self[:style]}; document.activeElement.style.border='2px solid red'")
-    rescue
+    #begin
+      #driver.execute_script("#{self[:style]}; document.activeElement.style.border='2px solid red'")
+    #rescue
       # Skipped
-    end
+    #end
   end
   # Public: clear value of an element
   # This might not work with webkit
   #
   def clear_value
-    driver.execute_script("document.getElementById('#{self[:id]}').value=''")
+    #On Chrome, execute_script sometimes works sometimes not
+    #driver.execute_script("document.getElementById('#{self[:id]}').value=''")
+    set('')
   end
 
   # Public: Get parent element of current element
