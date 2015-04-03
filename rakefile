@@ -1,9 +1,9 @@
 require 'cucumber'
 require 'cucumber/rake/task'
 require './lib/testlink_helper'
-require './ci/json_result_merge'
-require './ci/version'
-require './ci/get_phoenix_rerun_cases'
+require './scripts/ci/json_result_merge'
+require './scripts/ci/version'
+require './scripts/ci/get_phoenix_rerun_cases'
 
 namespace :testlink do
 
@@ -149,7 +149,8 @@ task :bus_deployment_test_with_retry, :arg do |t, args|
 
   #merge the results
   merge('report_rerun.json', 'report.json', 'report_merged.json')
-  Version::get_version
+  include Version
+  get_version
   unless first_run || rerun_success
     raise 'Cucumber tests failed'
   end
