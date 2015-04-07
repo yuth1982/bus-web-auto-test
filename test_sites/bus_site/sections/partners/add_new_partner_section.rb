@@ -112,6 +112,9 @@ module Bus
           fill_credit_card_info(partner.credit_card)
         end
         set_order_summary(partner)
+        #Sometimes automation is too fast that the page doest not response to the click event on the button "Create Partner"
+        #Pause for 3 seconds as a workaround
+        sleep 3
         create_partner_btn.click
       else
         include_initial_purchase_cb.uncheck
