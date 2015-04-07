@@ -1,7 +1,7 @@
 
 
-RERUN_FILE = File.expand_path('../../rerun.txt', __FILE__)
-PHOENIX_FILE =  File.expand_path('../../features/phoenix_smoke_test.feature', __FILE__)
+RERUN_FILE = File.expand_path('../../../rerun.txt', __FILE__)
+PHOENIX_FILE =  File.expand_path('../../../features/phoenix_smoke_test.feature', __FILE__)
 
 def get_rerun_cases()
   result_file = File.open(RERUN_FILE,'r')
