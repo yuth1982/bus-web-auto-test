@@ -87,7 +87,7 @@ Feature: Manage resources
     And I create 10 new Server keys for MozyPro partner
     And I create 10 new Desktop keys for MozyPro partner
 
-  @mozyenterprise_manage_resources_example
+  @mozyenterprise_manage_resources_example @env_dependent
   Scenario: MozyEnterprise partner manage resources example
     When I act as partner by:
       | email                                     |
@@ -118,7 +118,7 @@ Feature: Manage resources
       | qa1+mozyenterprise+assign+key+test2@mozy.com |
       | qa1+mozyenterprise+assign+key+test3@mozy.com |
 
-  @TC.18735 @Bug.84691 @regression @bus @2.0 @manage_resources
+  @TC.18735 @Bug.84691 @regression @bus @2.0 @manage_resources @need_test_account
   Scenario: 18735 Verify unallocated storage auto refreshed when allocated storage changed
     When I act as partner by:
       | email                                     |
@@ -135,3 +135,13 @@ Feature: Manage resources
 
     # Restore partner status
     And I allocate 0 GB Desktop quota to MozyPro partner
+
+  @TC.19165 @BSA.3010 @bus @2.5 @user_stories @stash @need_test_account @env_dependent
+  Scenario: 19165 US Pro admin can see stash details in manage resources
+    When I act as partner by:
+      | email                 |
+      | test_bsa3040@auto.com |
+    When I navigate to Manage Resources section from bus admin console page
+    Then Partner resources general information should be:
+      | Users: | Storage Usage: |
+      | 1      | 5 MB / 2 GB    |

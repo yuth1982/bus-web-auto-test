@@ -3,7 +3,7 @@ Feature: Send activated / unactivated license keys
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.20947 @bus @2.5 @user_view @server_license
+  @TC.20947 @bus @2.5 @user_view @server_license @email
   Scenario: 20947 [Itemized][Server License]Admin can send activated/unactived license keys
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -70,7 +70,7 @@ Feature: Send activated / unactivated license keys
     And I can find 3 Activated Server license key(s) from the mail
     And I cannot find any Unactivated license key(s) from the mail
 
-  @TC.21006
+  @TC.21006 @bus @email
   Scenario: 21006 [BundleReseller][Desktop License]Admin can send activated/unactivated license keys
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan |

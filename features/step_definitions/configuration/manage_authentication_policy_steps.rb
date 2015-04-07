@@ -2,6 +2,11 @@ When /^I use (Directory Service|Mozy) as authentication provider$/ do |provider|
   @bus_site.admin_console_page.authentication_policy_section.select_auth(provider)
 end
 
+When /^I choose (LDAP Pull|LDAP Push|horizon) as Directory Service provider$/ do |provider|
+  @bus_site.admin_console_page.authentication_policy_section.select_ds_provider(provider)
+  @provider = provider
+end
+
 When /^I select Horizon Manager with organization name (.*)$/ do |org_name|
   @bus_site.admin_console_page.authentication_policy_section.check_horizon(true)
   case org_name
@@ -98,16 +103,18 @@ When /^I de-select Horizon Manager$/ do
 end
 
 When /^I input server connection settings$/ do |table|
-  # table is a | ad01.qa5.mozyops.com | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com| QAP@SSw0rd    |
+  # | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+  # or | @server_host | @protocol  |          | @port  | @base_dn | @bind_user      | @bind_password  |
   server = table.hashes.first
   @connection_info = Bus::DataObj::ConnectionInfo.new
-  @connection_info.server_host = server['Server Host'] == '@host_address' ? Forgery::Internet.ip_v4 : server['Server Host']
+  @connection_info.server_host = server['Server Host'] == '@server_host' ? AD_CONNECTION_ENV['server_host'] : server['Server Host']
   @connection_info.ssl_cert = server['SSL Cert']
-  @connection_info.protocol = (server['Protocol'] == 'No SSL' ? 'false' : server['Protocol'].downcase)
-  @connection_info.port = server['Port'] == '@port' ? Random.new.rand(1..65535) : server['Port']
-  @connection_info.base_dn = server['Base DN']
-  @connection_info.bind_user = server['Bind Username']
-  @connection_info.bind_password = server['Bind Password']
+  protocol_value = server['Protocol'] == '@protocol' ? AD_CONNECTION_ENV['protocol'] : server['Protocol']
+  @connection_info.protocol = protocol_value == 'No SSL' ? 'false' : server['Protocol'].downcase
+  @connection_info.port = server['Port'] == '@port' ? AD_CONNECTION_ENV['port'] : server['Port']
+  @connection_info.base_dn = server['Base DN'] == '@base_dn' ? AD_CONNECTION_ENV['base_dn'] : server['Base DN']
+  @connection_info.bind_user = server['Bind Username'] == '@bind_user' ? AD_CONNECTION_ENV['bind_username'] : server['Bind Username']
+  @connection_info.bind_password = server['Bind Password'] == '@bind_password' ?  AD_CONNECTION_ENV['bind_password'] : server['Bind Password']
   @bus_site.admin_console_page.authentication_policy_section.fillin_connection_settings(@connection_info)
 end
 
@@ -120,7 +127,7 @@ Then /^server connection settings information should include$/ do |table|
   #data['SSL Cert'].should include(connection_info.ssl_cert)
   data['Port'].should include(connection_info.port)
   data['Base DN'].should include(connection_info.base_dn)
-  data['Bind Username'].should include(connection_info.bind_user)
+  data['Bind Username'].should include(connection_info.bind_user) if data.has_key? 'Bind Username'
   #data['Bind Password'].should include(connection_info.bind_password)
 end
 
@@ -170,6 +177,9 @@ Then /^The layout of attribute should:$/ do |table|
 end
 
 When /^I add (\d+) new (.+) rules:$/ do |num, type, table|
+  table.hashes.first.each do |k,v|
+    v.replace ERB.new(v).result(binding)
+  end
   @bus_site.admin_console_page.authentication_policy_section.add_rules(type, num.to_i, table.transpose.raw[0], table.transpose.raw[1])
 end
 
@@ -180,6 +190,7 @@ end
 
 When /^I save the changes$/ do
   @bus_site.admin_console_page.authentication_policy_section.save_changes
+  @bus_site.admin_console_page.authentication_policy_section.confirm_change_auth
   @bus_site.admin_console_page.authentication_policy_section.wait_until_bus_section_load
 end
 
@@ -240,13 +251,17 @@ Then /^The sync status result should like:$/ do |table|
   time_re = '\d+/\d+/\d+ \d+:\d+ (\+|-)\d+:\d+'
   time_re_sub = '\d+/\d+/\d+ \d+:\d+ (\\\+|-)\d+:\d+'
   last_sync_time = actual[0].match(time_re)[0]
-  costed_time = actual[0].match('about (.+) sec')[1].to_f
+  costed_time = actual[0].match('about (.+) (sec|minute|minutes)')[1].to_f
   Log.debug("last sync time is #{last_sync_time}")
   Log.debug("costed_time is #{costed_time}")
 
   # verfiy Sync Status
   actual[0].match(expected[0].gsub('%m/%d/%y %H:%M %:z', time_re_sub)).should_not be_nil
-  costed_time.should be < 120
+  if actual[0].include? "second"
+    costed_time.should be < 120
+  else
+    costed_time.should be <= 2
+  end
   expected_next_sync = expected[2]
   # verify Sync Result
   actual[1].should == expected[1]
@@ -276,6 +291,10 @@ When /^I Choose to (.+) users if missing from LDAP for (\d+) days$/ do |method, 
   @bus_site.admin_console_page.authentication_policy_section.handle_user(method, days.to_i)
 end
 
+When /^The chosen rule should be (.+) users if missing from LDAP for (\d+) days$/ do |method, days|
+  @bus_site.admin_console_page.authentication_policy_section.check_rules(method, days.to_i)
+end
+
 When /^I change the user last sync field in the db to be (\d+) days earlier$/ do |days|
   DBHelper.change_last_sync_at(@user_id, days.to_i)
 end
@@ -302,6 +321,12 @@ end
 When /^I add a user (.+) to the AD$/ do |username|
   LDAPHelper.add_user(username)
 end
+
+When /^I add a user to the AD$/ do |table|
+  data = table.rows.first
+  LDAPHelper.add_user(data[0], data[1], data[2], data[3], data[4], data[5], data[6])
+end
+
 When /^I delete a user (.+) in the AD$/ do |username|
   LDAPHelper.delete_user(username)
 end
@@ -323,8 +348,19 @@ When /^I choose to daily sync at (\d+) GMT$/ do |hour|
   @bus_site.admin_console_page.authentication_policy_section.sync_daily_at(hour)
 end
 
-When /^I set the fixed attribute to (.+)$/ do |attr|
-  @bus_site.admin_console_page.authentication_policy_section.set_fixed_attribute(attr)
+When /^I set the (fixed attribute|user name|name) to (.+)$/ do |attr, value|
+  case attr
+    when 'fixed attribute'
+      @bus_site.admin_console_page.authentication_policy_section.set_fixed_attribute(value)
+    when 'user name'
+      @bus_site.admin_console_page.authentication_policy_section.set_user_name(value)
+    when 'name'
+      @bus_site.admin_console_page.authentication_policy_section.set_name(value)
+  end
+end
+
+When /^(Bind Username|Bind Password|Test Connection|Scheduled Sync|Sync Now|Next Sync) should be invisible$/ do |element|
+  @bus_site.admin_console_page.authentication_policy_section.is_element_invisible(element).should == true
 end
 
 Then /^The daily sync time should be (\d+) GMT$/ do |hour|
@@ -339,8 +375,15 @@ Then /^The daily sync time should be empty$/ do
   @bus_site.admin_console_page.authentication_policy_section.sync_daily_time.should == ''
 end
 
-When /^I clear the fixed attribute$/ do
-  @bus_site.admin_console_page.authentication_policy_section.set_fixed_attribute('')
+When /^I clear the (fixed attribute|user name|name)$/ do |attr|
+  case attr
+    when 'fixed attribute'
+      @bus_site.admin_console_page.authentication_policy_section.set_fixed_attribute('')
+    when 'user name'
+      @bus_site.admin_console_page.authentication_policy_section.set_user_name('')
+    when 'name'
+      @bus_site.admin_console_page.authentication_policy_section.set_name('')
+  end
 end
 
 Then /^I change root role to (.+)$/ do | role |
@@ -372,4 +415,9 @@ end
 
 When /^The new Server Host and Port should be the same as input according to (.+) and (.+)$/ do |old_file, new_file|
   @bus_site.admin_console_page.authentication_policy_section.host_port_changed(old_file, new_file)[0].should == [@connection_info.server_host, @connection_info.port.to_s]
+end
+
+When /^I refresh the authentication policy section$/ do
+  @bus_site.admin_console_page.authentication_policy_section.refresh_bus_section
+  @bus_site.admin_console_page.authentication_policy_section.wait_until_bus_section_load
 end

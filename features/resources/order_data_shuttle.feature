@@ -54,8 +54,8 @@ Feature:
   @TC.12661 @bus @data_shuttle @order
   Scenario: 12661 Verify EMEA Pro Partners Appear - Search
     When I add a new MozyPro partner:
-      | period | base plan | create under    | country  |
-      | 1      | 250 GB    | MozyPro Ireland | Ireland  |
+      | period | base plan | create under    | country  | cc number        |
+      | 1      | 250 GB    | MozyPro Ireland | Ireland  | 4319402211111113 |
     Then New partner should be created
     When I navigate to Order Data Shuttle section from bus admin console page
     And I search partner in order data shuttle section by newly created partner company name
@@ -247,7 +247,7 @@ Feature:
     And I act as newly created partner account
     And I add new user(s):
       | user_group           | storage_type | storage_limit | devices |
-      | (default user group) | Desktop      | 10          | 1       |
+      | (default user group) | Desktop      | 10            | 1       |
     And I search user by:
       | keywords   |
       | @user_name |
@@ -264,7 +264,7 @@ Feature:
     """
     And I search and delete partner account by newly created partner company name
 
-  @TC.21985 @slow
+  @TC.21985 @bus @slow
   Scenario: 21985 Ordering data shuttle for MozyPro
     When I add a new MozyPro partner:
       | period | base plan |
@@ -274,7 +274,7 @@ Feature:
     And I act as newly created partner account
     And I add new user(s):
       | storage_type | storage_limit | devices |
-      | Desktop      | 30          | 1       |
+      | Desktop      | 30            | 1       |
     And I search user by:
       | keywords   |
       | @user_name |
@@ -298,7 +298,7 @@ Feature:
     And I act as newly created partner account
     And I add new user(s):
       | user_group           | storage_type | storage_limit | devices |
-      | (default user group) | Desktop      | 10          | 1       |
+      | (default user group) | Desktop      | 10            | 1       |
     And I search user by:
       | keywords   |
       | @user_name |
@@ -326,7 +326,7 @@ Feature:
     And I act as newly created partner account
     And I add new user(s):
       | user_group           | storage_type | storage_limit | devices |
-      | (default user group) | Desktop      | 10          | 1       |
+      | (default user group) | Desktop      | 10            | 1       |
     And I search user by:
       | keywords   |
       | @user_name |
@@ -354,7 +354,7 @@ Feature:
     And I act as newly created partner account
     And I add new user(s):
       | user_group           | storage_type | storage_limit | devices |
-      | (default user group) | Desktop      | 20          | 1       |
+      | (default user group) | Desktop      | 20            | 1       |
     And I search user by:
       | keywords   |
       | @user_name |
@@ -380,7 +380,7 @@ Feature:
     And I act as newly created partner account
     And I add new user(s):
       | user_group           | storage_type | storage_limit | devices |
-      | (default user group) | Desktop      | 2000        | 1       |
+      | (default user group) | Desktop      | 2000          | 1       |
     And I search user by:
       | keywords   |
       | @user_name |
@@ -409,7 +409,7 @@ Feature:
     And I act as newly created partner account
     And I add new user(s):
       | storage_type | storage_limit | devices |
-      | Desktop      | 3800        | 1       |
+      | Desktop      | 3800          | 1       |
     And I search user by:
       | keywords   |
       | @user_name |
@@ -463,7 +463,7 @@ Feature:
     And I act as newly created partner account
     And I add new user(s):
       | storage_type | storage_limit | devices |
-      | Desktop      | 500         | 1       |
+      | Desktop      | 500           | 1       |
     And I search user by:
       | keywords   |
       | @user_name |
@@ -517,16 +517,16 @@ Feature:
   Scenario: 21978 Data shuttle backed up til load complete, then second data shuttle seeded for same user/key/machine
     When I add a new MozyEnterprise partner:
       | period | users |
-      | 12 | 2 |
+      | 12     | 2     |
     Then New partner should be created
     When I get the partner_id
     And I get the admin id from partner details
     And I act as newly created partner account
     And I add new user(s):
-      | user_group | storage_type | storage_limit | devices |
-      | (default user group) |  Desktop |  20 |  1 |
+      | user_group           | storage_type | storage_limit | devices |
+      | (default user group) |  Desktop     |  20           | 1       |
     And I search user by:
-      | keywords |
+      | keywords   |
       | @user_name |
     And I view user details by newly created user email
     And I update the user password to default password
@@ -541,40 +541,40 @@ Feature:
     And I view partner details by newly created partner company name
     And I act as newly created partner account
     And I set the data shuttle seed status:
-      | status |
+      | status  |
       | seeding |
     Then I navigate to Search / List Machines section from bus admin console page
     Then I view machine details for the newly created device name
     Then the data shuttle machine details should be:
-      | Order ID | Data Shuttle Device ID | Phase |
-      | <%=@seed_id%> | <%=@seed_id%> | Seeding |
+      | Order ID      | Data Shuttle Device ID | Phase   |
+      | <%=@seed_id%> | <%=@seed_id%>          | Seeding |
     Then I close machine details section
     And I set the data shuttle seed status:
-      | status | total files | total bytes |
-      | seed_complete | 1000 | 2097152 |
+      | status        | total files | total bytes |
+      | seed_complete | 1000        | 2097152     |
     Then I navigate to Search / List Machines section from bus admin console page
     Then I view machine details for the newly created device name
     Then the data shuttle machine details should be:
-      | Order ID | Data Shuttle Device ID | Phase |
-      | <%=@seed_id%> | <%=@seed_id%> | Seed Complete |
+      | Order ID      | Data Shuttle Device ID | Phase         |
+      | <%=@seed_id%> | <%=@seed_id%>          | Seed Complete |
     Then I close machine details section
     And I set the data shuttle seed status:
-      | status | total files seeded | total bytes seeded |
-      | loading | 100 | 2000000 |
+      | status  | total files seeded | total bytes seeded |
+      | loading | 100                | 2000000            |
     Then I navigate to Search / List Machines section from bus admin console page
     Then I view machine details for the newly created device name
     Then the data shuttle machine details should be:
-      | Order ID | Data Shuttle Device ID | Phase |
-      | <%=@seed_id%> | <%=@seed_id%> | Loading |
+      | Order ID      | Data Shuttle Device ID | Phase   |
+      | <%=@seed_id%> | <%=@seed_id%>          | Loading |
     Then I close machine details section
     And I set the data shuttle seed status:
-      | status | total files | total bytes | total files seeded | total bytes seeded |
-      | load_complete | 1000 | 2097152 | 1000 | 2097152 |
+      | status        | total files | total bytes | total files seeded | total bytes seeded |
+      | load_complete | 1000        | 2097152     | 1000               | 2097152            |
     Then I navigate to Search / List Machines section from bus admin console page
     Then I view machine details for the newly created device name
     Then the data shuttle machine details should be:
-      | Order ID | Data Shuttle Device ID | Phase |
-      | <%=@seed_id%> | <%=@seed_id%> | Load Complete |
+      | Order ID      | Data Shuttle Device ID | Phase         |
+      | <%=@seed_id%> | <%=@seed_id%>          | Load Complete |
     Then I stop masquerading
     When I order data shuttle for newly created partner company name
       | power adapter   | key from  | quota | drive type     |
@@ -590,8 +590,8 @@ Feature:
     Then I navigate to Search / List Machines section from bus admin console page
     Then I view machine details for the newly created device name
     Then the data shuttle machine details should be:
-      | Order ID | Data Shuttle Device ID | Phase |
-      | <%=@seed_id%> | <%=@seed_id%> | Seeding |
+      | Order ID      | Data Shuttle Device ID | Phase   |
+      | <%=@seed_id%> | <%=@seed_id%>          | Seeding |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -712,10 +712,10 @@ Feature:
     And I search and delete partner account by newly created partner company name
 
 
-  @TC.120693 @bus @data_shuttle @Bug.116986
+  @TC.120693 @bus @data_shuttle @Bug.116986 @need_test_account
   Scenario: 120693 Verify shipped drive has inbound number
     When I search order in view data shuttle orders section by Jabberstorm Company 0311-1822-21
     Then order search results in data shuttle orders section should be:
-      | # of Drives    | Drives Ordered  |
-      |        1       |       Yes       |
+      | # of Drives | Drives Ordered |
+      | 1           | Yes            |
     Then the data shuttle order details should contain valid inbound number

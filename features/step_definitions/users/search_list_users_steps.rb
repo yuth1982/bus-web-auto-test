@@ -37,16 +37,36 @@ Then /^User search results should be:$/ do |results_table|
         when 'Created'
           v.replace(Chronic.parse(v).strftime('%m/%d/%y'))
         when 'Name'
-          v.gsub!(/@user_name/, @new_users.first.name.slice(0,27)) unless @new_users.nil?
+          v.gsub!(/@user_name/, @new_users.first.name) unless @new_users.nil?
         when 'User'
-          v.gsub!(/@user_email/, @new_users.first.email.slice(0,27)) unless @new_users.nil?
+          v.gsub!(/@user_email/, @new_users.first.email) unless @new_users.nil?
         else
           # do nothing
       end
+
       v.replace ERB.new(v).result(binding)
+
+      if k == 'User'
+        if v.length <= 30
+          v.replace ERB.new(v).result(binding).downcase
+        else
+          v.replace ERB.new(v).result(binding).slice(0,27).downcase
+          v << '...'
+        end
+      end
+
     end
   end
-  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
+  expected.each_index { |index|
+    expected[index].keys.each { |key|
+      #depending on the performance of the testing env, the "Backed Up" time could be different
+      if !(expected[index][key].match(/^(1|< a|2|\d) minute(s)* ago$/).nil?)
+        actual[index][key].match(/^(1|< a|2|\d) minute(s)* ago$/).nil?.should be_false
+      else
+        actual[index][key].should == expected[index][key]
+      end
+    }
+  }
 end
 
 Then /^Itemized user search results should be:$/ do |results_table|

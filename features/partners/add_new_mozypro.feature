@@ -7,10 +7,10 @@ Feature: Add a new partner
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.17942 @create_partner_sample @bus @2.5 @add_new_partner @mozypro
+  @TC.17942 @create_partner_sample @bus @2.5 @add_new_partner @mozypro @env_dependent
   Scenario: 17942 Add New MozyPro Partner - US - Monthly - 10 GB - Coupon - CC
     When I add a new MozyPro partner:
-      | period | base plan | coupon                | country       | address           | city      | state abbrev | zip   | phone          |
+      | period | base plan | coupon              | country       | address           | city      | state abbrev | zip   | phone          |
       | 1      | 10 GB     | 10PERCENTOFFOUTLINE | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
     Then Sub-total before taxes or discounts should be $9.99
     And Order summary table should be:
@@ -47,11 +47,11 @@ Feature: Add a new partner
       | today | $0.00  | $0.00      | $0.00       |
     And I delete partner account
 
-  @TC.17955 @bus @2.5 @add_new_partner @mozypro
+  @TC.17955 @bus @2.5 @add_new_partner @mozypro @env_dependent @vat
   Scenario: 17955 Add New MozyPro Partner - FR - Yearly - 50 GB - VAT - Coupon - CC
     When I add a new MozyPro partner:
-      | period | base plan | create under   | vat number    | coupon              | country | address           | city      | state | zip   | phone          |
-      | 12     | 50 GB     | MozyPro France | FR08410091490 | 10PERCENTOFFOUTLINE | France  | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 |
+      | period | base plan | create under   | vat number    | coupon              | country | address           | city      | state | zip   | phone          | cc number        |
+      | 12     | 50 GB     | MozyPro France | FR08410091490 | 10PERCENTOFFOUTLINE | France  | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 | 4485393141463880 |
     Then Sub-total before taxes or discounts should be €175.89
     And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
@@ -87,11 +87,11 @@ Feature: Add a new partner
       | today | €0.00   | €0.00      | €0.00       |
     And I delete partner account
 
-  @TC.18142 @bus @2.5 @add_new_partner @mozypro
+  @TC.18142 @bus @2.5 @add_new_partner @mozypro @env_dependent @vat
   Scenario: 18142 Add New MozyPro Partner - DE - Biennially - 100 GB - VAT - Coupon CC
     When I add a new MozyPro partner:
-      | period | base plan | create under    | vat number  | coupon              | country | address           | city      | state | zip   | phone          |
-      | 24     | 100 GB    | MozyPro Germany | DE812321109 | 10PERCENTOFFOUTLINE | Germany | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 |
+      | period | base plan | create under    | vat number  | coupon              | country | address           | city      | state | zip   | phone          | cc number        |
+      | 24     | 100 GB    | MozyPro Germany | DE812321109 | 10PERCENTOFFOUTLINE | Germany | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 | 4188181111111112 |
     Then Sub-total before taxes or discounts should be €650.79
     And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
@@ -127,19 +127,19 @@ Feature: Add a new partner
       | today | €0.00   | €0.00      | €0.00       |
     And I delete partner account
 
-  @TC.18145 @bus @2.5 @add_new_partner @mozypro
+  @TC.18145 @bus @2.5 @add_new_partner @mozypro @env_dependent @vat
   Scenario: 18145 Add New MozyPro Partner - IE - Monthly - 250 GB - VAT - Coupon - CC
     When I add a new MozyPro partner:
-      | period | base plan | create under    | vat number | coupon              | country | address           | city      | state | zip   | phone          |
-      | 1      | 250 GB    | MozyPro Ireland | IE9691104A | 10PERCENTOFFOUTLINE | Ireland | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 |
+      | period | base plan | create under    | vat number | coupon              | country | address           | city      | state | zip   | phone          | cc number        |
+      | 1      | 250 GB    | MozyPro Ireland | IE9691104A | 10PERCENTOFFOUTLINE | Ireland | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 | 4319402211111113 |
     Then Sub-total before taxes or discounts should be €74.99
     And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
       | 250 GB            | 1        | €74.99     | €74.99      |
       | Discounts Applied |          |            | -€7.50      |
       | Pre-tax Subtotal  |          |            | €67.49      |
-      | Taxes             |          |            | €17.25      |
-      | Total Charges     |          |            | €84.74      |
+      | Taxes             |          |            | €15.52      |
+      | Total Charges     |          |            | €83.01      |
     And New partner should be created
     And Partner general information should be:
       | Status:         | Root Admin:          | Root Role:                  | Parent:                   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
@@ -164,15 +164,15 @@ Feature: Add a new partner
       | Next Charge:    | after 1 month          |                 |                    |
     And Partner billing history should be:
       | Date  | Amount | Total Paid | Balance Due |
-      | today | €84.74 | €84.74     | €0.00       |
+      | today | €83.01 | €83.01     | €0.00       |
       | today | €0.00  | €0.00      | €0.00       |
     And I delete partner account
 
-  @TC.18148 @bus @2.5 @add_new_partner @mozypro
+  @TC.18148 @bus @2.5 @add_new_partner @mozypro @env_dependent @vat
   Scenario: 18148 Add New MozyPro Partner - UK - Yearly - 500 GB - VAT - Coupon - CC
     When I add a new MozyPro partner:
-      | period | base plan | create under | vat number  | coupon              | country        | address           | city      | state | zip   | phone          |
-      | 12     | 500 GB    | MozyPro UK   | GB117223643 | 10PERCENTOFFOUTLINE | United Kingdom | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 |
+      | period | base plan | create under | vat number  | coupon              | country        | address           | city      | state | zip   | phone          | cc number        |
+      | 12     | 500 GB    | MozyPro UK   | GB117223643 | 10PERCENTOFFOUTLINE | United Kingdom | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 | 4916783606275713 |
     Then Sub-total before taxes or discounts should be £1,374.89
     And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
@@ -260,8 +260,8 @@ Feature: Add a new partner
       | 2 TB             | 1        | €579.99    | €579.99     |
       | Server Plan      | 1        | €29.99     | €29.99      |
       | Pre-tax Subtotal |          |            | €609.98     |
-      | Taxes            |          |            | €140.30     |
-      | Total Charges    |          |            | €750.28     |
+      | Taxes            |          |            | €122.00     |
+      | Total Charges    |          |            | €731.98     |
     And New partner should be created
     And Partner general information should be:
       | Status:         | Root Admin:          | Root Role:                  | Parent:                  | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
@@ -281,12 +281,12 @@ Feature: Add a new partner
       | 0    | 2048      | 2048     | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Net Terms 30           | Current Period: | Monthly            |
-      | Unpaid Balance: | €750.28                | Collect On:     | N/A                |
+      | Unpaid Balance: | €731.98                | Collect On:     | N/A                |
       | Renewal Date:   | after 1 month          | Renewal Period: | Use Current Period |
       | Next Charge:    | after 1 month          |                 |                    |
     And Partner billing history should be:
       | Date  | Amount  | Total Paid | Balance Due |
-      | today | €750.28 | €0.00      | €750.28     |
+      | today | €731.98 | €0.00      | €731.98     |
       | today | €0.00   | €0.00      | €0.00       |
     And I delete partner account
 
@@ -301,8 +301,8 @@ Feature: Add a new partner
       | 4 TB             | 1        | €12,209.89 | €12,209.89  |
       | Server Plan      | 1        | €439.89    | €439.89     |
       | Pre-tax Subtotal |          |            | €12,649.78  |
-      | Taxes            |          |            | €2,909.44   |
-      | Total Charges    |          |            | €15,559.22  |
+      | Taxes            |          |            | €2,403.46   |
+      | Total Charges    |          |            | €15,053.24  |
     And New partner should be created
     And Partner general information should be:
       | Status:         | Root Admin:          | Root Role:                  | Parent:                   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
@@ -322,12 +322,12 @@ Feature: Add a new partner
       | 0    | 4096      | 4096     | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Net Terms 30          | Current Period: | Yearly             |
-      | Unpaid Balance: | €15,559.22            | Collect On:     | N/A                |
+      | Unpaid Balance: | €15,053.24            | Collect On:     | N/A                |
       | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period |
       | Next Charge:    | after 1 year          |                 |                    |
     And Partner billing history should be:
       | Date  | Amount     | Total Paid | Balance Due |
-      | today | €15,559.22 | €0.00      | €15,559.22  |
+      | today | €15,053.24 | €0.00      | €15,053.24  |
       | today | €0.00      | €0.00      | €0.00       |
     And I delete partner account
 
@@ -383,8 +383,8 @@ Feature: Add a new partner
       | 12 TB            | 1        | £2,732.97  | £2,732.97   |
       | Server Plan      | 1        | £104.97    | £104.97     |
       | Pre-tax Subtotal |          |            | £2,837.94   |
-      | Taxes            |          |            | £652.72     |
-      | Total Charges    |          |            | £3,490.66   |
+      | Taxes            |          |            | £567.58     |
+      | Total Charges    |          |            | £3,405.52   |
     And New partner should be created
     And Partner general information should be:
       | Status:         | Root Admin:          | Root Role:                  | Parent:              | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
@@ -404,20 +404,20 @@ Feature: Add a new partner
       | 0    | 12288     | 12288    | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Net Terms 30           | Current Period: | Monthly            |
-      | Unpaid Balance: | £3,490.66              | Collect On:     | N/A                |
+      | Unpaid Balance: | £3,405.52              | Collect On:     | N/A                |
       | Renewal Date:   | after 1 month          | Renewal Period: | Use Current Period |
       | Next Charge:    | after 1 month          |                 |                    |
     And Partner billing history should be:
       | Date  | Amount    | Total Paid | Balance Due |
-      | today | £3,490.66 | £0.00      | £3,490.66   |
+      | today | £3,405.52 | £0.00      | £3,405.52   |
       | today | £0.00     | £0.00      | £0.00       |
     And I delete partner account
 
   @TC.17956 @bus @2.5 @add_new_partner @mozypro
   Scenario: 17956 Add New MozyPro Partner - US - Yearly - 16 TB - Server Plan - 10 Storage Add on - CC
     When I add a new MozyPro partner:
-      | period | base plan | server plan | storage add on | country       | address           | city      | state abbrev | zip   | phone          |
-      | 12     | 16 TB     | yes         | 10             | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
+      | period | base plan | server plan | storage add on | country       | address           | city      | state abbrev | zip   | phone          | cc number        |
+      | 12     | 16 TB     | yes         | 10             | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 | 4640603114144552 |
     Then Sub-total before taxes or discounts should be $76,008.02
     And Order summary table should be:
       | Description      | Quantity | Price Each | Total Price |
@@ -454,7 +454,7 @@ Feature: Add a new partner
       | today | $0.00      | $0.00      | $0.00       |
     And I delete partner account
 
-  @TC.17957 @bus @2.5 @add_new_partner @mozypro
+  @TC.17957 @bus @2.5 @add_new_partner @mozypro @env_dependent @vat
   Scenario: 17957 Add New MozyPro Partner - FR - Biennially - 20 TB - Server Plan - 10 Storage Add on - VAT - Coupon - Net Terms
     When I add a new MozyPro partner:
       | period | base plan | create under   | server plan | storage add on | net terms | vat number    | coupon              | country | address           | city      | state | zip   | phone          |
@@ -535,7 +535,7 @@ Feature: Add a new partner
     Then MozyPro partner subscription period options should be:
       | Monthly | Yearly | Biennially |
 
-  @TC.20377 @bus @2.5 @add_new_partner @mozypro
+  @TC.20377 @bus @2.5 @add_new_partner @mozypro @env_dependent
   Scenario: 20377 Add New MozyPro Partner - US - Monthly - 50 GB - Server Plan - 100PercentDiscountCoupon - CC
     When I add a new MozyPro partner:
       | period | base plan | server plan | coupon               |
@@ -553,3 +553,122 @@ Feature: Add a new partner
       | today | $0.00  | $0.00      | $0.00       |
       | today | $0.00  | $0.00      | $0.00       |
     And I delete partner account
+
+  @STT_vmbu  @STT_vmbu_pro
+  Scenario:  Add New MozyPro Partner - FR - Biennially - 20 TB - Server Plan - 10 Storage Add on - VAT - Coupon - Net Terms
+
+    When I add a new MozyPro partner:
+      | period | base plan | server plan | storage add on | country       | address           | city      | state abbrev | zip   | phone          |  security |
+      | 12     | 16 TB     | yes         | 10             | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |   HIPAA   |
+    And I change root role to Fedid
+    And I enabled server in partner account details
+    And I act as newly created partner
+  ##create user groups and client configurations
+    When I create a new client config:
+      | name    | type   |
+      | default | Server |
+    When I add a new Bundled user group:
+      | name| storage_type | enable_stash | server_support |
+      | private_group | Shared      | yes          | yes            |
+    Then private_group user group should be created
+    When I create a new client config:
+      | name | user group | type   |
+      | private | private_group | Server |
+    When I add a new Bundled user group:
+      | name| storage_type | enable_stash | server_support |
+      | ckey_group | Shared      | yes          | yes            |
+    Then ckey_group user group should be created
+    When I create a new client config:
+      | name | user group | type   | ckey                         |
+      | ckey | ckey_group | Server | http://burgifam.com/Rich.ckey|
+    Then client configuration section message should be Your configuration was saved.
+  ##create users
+    When I add new user(s):
+      | name            | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | default_desktop | (default user group) | Desktop      |               | 2       | yes          |
+    Then 1 new user should be created
+    When I add new user(s):
+      | name            | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | ckey_desktop    | ckey_group           | Desktop      |               | 2       | yes          |
+    Then 1 new user should be created
+    When I add new user(s):
+      | name            | user_group           | storage_type | storage_limit | devices |
+      | default_server1 | (default user group) | Server       |               | 2       |
+      | default_server2 | (default user group) | Server       |               | 2       |
+    Then 2 new user should be created
+    When I add new user(s):
+      | name            | user_group           | storage_type | storage_limit | devices |
+      | private_server1 | private_group        | Server       |               | 2       |
+      | private_server2 | private_group        | Server       |               | 2       |
+    Then 2 new user should be created
+    When I add new user(s):
+      | name            | user_group           | storage_type | storage_limit | devices |
+      | ckey_server1    | ckey_group           | Server       |               | 2       |
+      | ckey_server2    | ckey_group           | Server       |               | 2       |
+    Then 2 new user should be created
+  ## create sub-partner
+    When I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          |
+      | newrole | Partner admin |
+    And I check all the capabilities for the new role
+    And I close the role details section
+    When I navigate to Add New Pro Plan section from bus admin console page
+    Then I add a new pro plan for Mozypro partner:
+      | Name    | Company Type | Root Role | Enabled | Public | Currency                        | Periods | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
+      | newplan | business     | newrole   | Yes     | No     | $ — US Dollar (Partner Default) | yearly  | test     | false            | 1                          | 1                     |
+    And I add a new sub partner:
+      | Company Name |
+      | STT_subpro    |
+    And New partner should be created
+    And I act as newly created partner
+    And I purchase resources:
+      | generic quota |
+      | 2200          |
+    Then Resources should be purchased
+  ##create sub-partner user groups and client configuration
+    When I create a new client config:
+      | name    | type   |
+      | default | Server |
+    When I add a new Bundled user group:
+      | name| storage_type | enable_stash | server_support |
+      | private_group | Shared      | yes          | yes            |
+    Then private_group user group should be created
+    When I create a new client config:
+      | name | user group | type   |
+      | private | private_group | Server |
+    When I add a new Bundled user group:
+      | name| storage_type | enable_stash | server_support |
+      | ckey_group | Shared      | yes          | yes            |
+    Then ckey_group user group should be created
+    When I create a new client config:
+      | name | user group | type   | ckey                         |
+      | ckey | ckey_group | Server | http://burgifam.com/Rich.ckey|
+    Then client configuration section message should be Your configuration was saved.
+  ##create sub-partner users
+    When I add new user(s):
+      | name            | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | default_desktop | (default user group) | Desktop      |               | 2       | yes          |
+    Then 1 new user should be created
+    When I add new user(s):
+      | name            | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | ckey_desktop    | ckey_group           | Desktop      |               | 2       | yes          |
+    Then 1 new user should be created
+    When I add new user(s):
+      | name            | user_group           | storage_type | storage_limit | devices |
+      | default_server1 | (default user group) | Server       |               | 2       |
+      | default_server2 | (default user group) | Server       |               | 2       |
+    Then 2 new user should be created
+    When I add new user(s):
+      | name            | user_group           | storage_type | storage_limit | devices |
+      | private_server1 | private_group        | Server       |               | 2       |
+      | private_server2 | private_group        | Server       |               | 2       |
+    Then 2 new user should be created
+    When I add new user(s):
+      | name            | user_group           | storage_type | storage_limit | devices |
+      | ckey_server1    | ckey_group           | Server       |               | 2       |
+      | ckey_server2    | ckey_group           | Server       |               | 2       |
+    Then 2 new user should be created
+
+
+

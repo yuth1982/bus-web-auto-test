@@ -6,6 +6,9 @@ Then /^I create a new client config:$/ do |table|
   attributes = table.hashes.first
   @client_config.name = attributes['name']
   @client_config.type = attributes['type']
+  @client_config.ckey = attributes['ckey']
+  @client_config.user_group = attributes['user group']
+  @client_config.private_key = attributes['private_key']
   @client_config.throttle = (attributes['throttle'] || "no").eql?("yes")
   @client_config.throttle_amount = attributes['throttle amount']
 

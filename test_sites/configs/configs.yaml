@@ -1,6 +1,6 @@
 global:
   # Browser wait time in seconds, e.g. locating a UI element
-  default_wait_time:            1800
+  default_wait_time:            180
   # Max wait time in seconds, e.g downloading a big file
   max_wait_time:                1800
   # Aria wait time in seconds, it usually need more time
@@ -10,7 +10,10 @@ global:
   # Fixed test password for hipaa password field
   test_hipaa_pwd:               test1234*
   # User email prefix, e.g qa1+reg+test@mozy.com
-  email_prefix:                 qa1
+  email_prefix_gmail:                 mozybus
+  email_domain_gmail:                 gmail.com
+  email_prefix_outlook:               mozyautotest
+  email_domain_outlook:               emc.com
   # Files downloaded location
   download_folder:              downloads
   test_data_folder:             test_data
@@ -53,6 +56,7 @@ bus:
     change_plan:                Change Plan
     download_enterprise:        Download MozyEnterprise Client
     download_client:            Download MozyPro Client
+    manage_vatfx_rates:         Manage VAT/FX Rates
 
     # Partners
     add_new_partner:            Add New Partner
@@ -133,4 +137,19 @@ phoenix:
 fedid:
   user_email:                   auto@mtdev.mozypro.local
   user_name:                    auto
-  subdomain:                    fedid01
+  subdomain:                    qa8saml
+
+gmail:
+  username:                     mozybus@gmail.com
+  password:                     qapassword
+
+outlook:
+  username:                     svc_mozybusauto
+  password:                     lib/email_helper/svc_mozybusauto.pwd
+  endpoint:                     https://legacyemail.emc.com/ews/Exchange.asmx
+  mailbox:                      mozyautotest@emc.com
+
+rsa:
+  public_key:                   lib/rsa/appsqa.publickey
+  private_key:                  appsqa.privatekey
+

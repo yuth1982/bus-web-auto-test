@@ -12,7 +12,7 @@ Feature: Assign User To A New Partner
   Background:
     Given I log in bus admin console as administrator
 
-  @change_partner @BUG.74566
+  @change_partner @BUG.74566 @env_dependent
   Scenario: Change Partner
     When I act as partner by:
       | name          |

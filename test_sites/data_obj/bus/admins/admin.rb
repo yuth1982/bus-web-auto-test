@@ -8,7 +8,7 @@ module Bus
         first_name = Forgery::Name.first_name
         last_name = Forgery::Name.last_name
         @name = name || "#{first_name} #{last_name}"
-        @email = email || "#{CONFIGS['global']['email_prefix']}+#{first_name}+#{last_name}+#{Time.now.strftime("%H%M")}@decho.com".downcase
+        @email = email || create_admin_email(first_name,last_name)
         @parent = parent || 0
         @user_groups = user_groups || []
         @roles = roles || []

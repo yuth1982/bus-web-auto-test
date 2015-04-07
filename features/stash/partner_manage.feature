@@ -24,9 +24,9 @@ Feature:
     Then 2 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                     | Name           | Sync   | Machines | Storage         | Storage Used  | Created | Backed Up |
-      | <%=@new_users[1].email%> | TC.19045 user2 | Enabled | 0        | Desktop: Shared | Desktop: None | today   | never     |
-      | <%=@new_users[0].email%> | TC.19045 user1 | Enabled | 0        | Desktop: Shared | Desktop: None | today   | never     |
+      | User                     | Name           | Sync    | Machines | Storage        | Storage Used  | Created | Backed Up |
+      | <%=@new_users[1].email%> | TC.19045 user2 | Enabled | 0        | Desktop Shared | None          | today   | never     |
+      | <%=@new_users[0].email%> | TC.19045 user1 | Enabled | 0        | Desktop Shared | None          | today   | never     |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -47,9 +47,9 @@ Feature:
     Then 2 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                     | Name            | Sync   | Machines | Storage | Storage Used | Created | Backed Up |
-      | <%=@new_users[1].email%> | TC.19057.2-user | Enabled | 0        | Shared  | None         | today   | never     |
-      | <%=@new_users[0].email%> | TC.19057.1-user | Enabled | 0        | Shared  | None         | today   | never     |
+      | User                     | Name            | Sync    | Machines | Storage         | Storage Used | Created | Backed Up |
+      | <%=@new_users[1].email%> | TC.19057.2-user | Enabled | 0        | Generic Shared  | None         | today   | never     |
+      | <%=@new_users[0].email%> | TC.19057.1-user | Enabled | 0        | Generic Shared  | None         | today   | never     |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -166,7 +166,7 @@ Feature:
       | Yes (change)  |
     When I act as newly created partner account
     And I add new user(s):
-      | name            | user_group           | storage_type | devices |
+      | name          | user_group           | storage_type | devices |
       | TC.19056-user | (default user group) | Desktop      | 1       |
     Then 1 new user should be created
     And I add a new Itemized user group:
@@ -222,7 +222,7 @@ Feature:
       | No (change)   |
     When I delete partner account
 
-  @TC.22080 @2.7 @bus @stash @partner_manage
+  @TC.22080 @2.7 @bus @stash @partner_manage @need_test_account @env_dependent
   Scenario: 22080 MozyEnterprise(Fortress tree) admin view stash details in partner detail section
     When I act as partner by:
       | email                                   | including sub-partners |

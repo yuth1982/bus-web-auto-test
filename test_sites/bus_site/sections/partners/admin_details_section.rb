@@ -10,8 +10,8 @@ module Bus
     element(:pwd_confirm_txt, id: "new_password_confirmation")
     element(:submit, xpath: "//div[starts-with(@id, 'admin-pass-change-')]/form//input[@value='Save Changes']")
     element(:delete_admin_btn, xpath: "//a[text() = 'Delete Admin']")
-    element(:pw_tb, id: "password")
-    element(:submit_btn, xpath: "//div[contains(@id, 'delete_form')]//input[@Value='Submit']")
+    element(:pw_tb, xpath: "//input[@name='password']")
+    element(:submit_btn, xpath: "//div[@class='popup-window-footer']//input[@Value='Submit']")
     element(:admin_name_tb, id: "target_admin_display_name")
     element(:admin_email_tb, id: "target_admin_username")
     element(:admin_parent_select, xpath: "//select[@name='target_admin[parent_admin_id]']")
@@ -47,6 +47,7 @@ module Bus
     # Returns nothing
     def act_as_admin
       act_as_link.click
+      alert_accept if alert_present?
     end
 
     def partner

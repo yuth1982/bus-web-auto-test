@@ -10,6 +10,7 @@ module Phoenix
     element(:username_tb, id: "username")
     element(:password_tb, id: "password")
     element(:submit_btn, css: "input.img-button")
+    element(:login_error, css: "p.error")
     # user acct page elements
     element(:user_banner, id: "user-email")
     element(:main_section_head, css: "h2")
@@ -18,6 +19,18 @@ module Phoenix
     element(:current_pln_tbl, css: "td.subscription_viewpane_top") #current plan table on plan page
     element(:chg_plan_header, css: "div.center-form-box > h2") # change plan page head
     element(:chg_plan_content_txt, css: "div.inner-center-form-box > p")  # text of paragraph for change plan
+    # elements in Account Home page
+    # Computers section, e.g. '0 of 250 GB used'
+    element(:quota_account_span, xpath: "//div[@id='quota-box']/span")
+    # Plan Details table
+    element(:plan_details_account_tbl, xpath: "//table[@class='key_value_table fixed']")
+    # change plan link: To chagne your plan, click here
+    element(:change_plan_account_link, xpath: "//div[@id='maincontent']//a[@href='/plan']")
+
+    # elements on the change email address page
+    element(:new_email_input, id: "user_email_address")
+    element(:new_email_pwd_input, id: "password")
+    element(:change_email_submit_btn, xpath: "//div[@id='account-form']/table//td[2]/input")
 
     # this method verifies that the acct logged into belongs to this specific user
     # the banner should match the users email address
@@ -71,6 +84,49 @@ module Phoenix
       main_section_head.eql?("#{LANG[partner.company_info.country][partner.partner_info.type]['devices_link']}")
     end
 
+    def get_download_backup_links
+       download_links_href = Array.new
+       download_links = all(:xpath, "//div[@id='maincontent']/table/tbody/tr/td/a")
+       download_links.each do |link|
+         download_links_href << link['href']
+       end
+       download_links_href
+    end
+
+    def download_home_client
+      download_status = true
+      download_links = all(:xpath, "//div[@id='maincontent']/table/tbody/tr/td/a")
+      download_links.each do |link|
+         client_name = link['href'][/mozy-(.+)/]
+         download_status = download_status && client_downloaded?(link,client_name)
+         break unless download_status
+      end
+      download_status
+    end
+
+    def download_sync_client
+      download_status = true
+      download_links = all(:xpath, "//div[@id='stash_left_col']/div/ul/li/div/a")
+      download_links.each do |link|
+        client_name = link['href'][/mozy-(.+)/]
+        download_status = download_status && client_downloaded?(link,client_name)
+        break unless download_status
+      end
+      download_status
+    end
+
+    # check if client downloaded successfully
+    def client_downloaded?(client_download_link, client_name)
+      file_name =  "#{default_download_path}/#{client_name}"
+      client_download_link.click
+      i = 0
+      10.times do
+        break if ( File.size?(file_name).to_i + File.size?(file_name+'.part').to_i ) > 0
+        sleep(1)
+      end
+      return (File.size?(file_name).to_i+File.size?(file_name+'.part').to_i) > 0
+    end
+
     # go to dl link
     def go_to_downloads(partner)
       localized_click(partner, 'dl_link')
@@ -81,6 +137,20 @@ module Phoenix
     def go_to_profile(partner)
       localized_click(partner, 'profile_link')
       main_section_head.eql?("#{LANG[partner.company_info.country][partner.partner_info.type]['profile_link']}")
+    end
+
+    # change email address
+    def change_email_address(partner, new_email, password)
+      go_to_profile(partner)
+      find(:xpath,"//a[contains(@href,'email')]").click
+      new_email_input.clear_value
+      new_email_input.type_text(new_email)
+      new_email_pwd_input.type_text(password)
+      change_email_submit_btn.click
+    end
+
+    def change_email_success_message
+      find(:xpath, "//div[@id='maincontent']/p").text
     end
 
     # go to stash
@@ -94,10 +164,18 @@ module Phoenix
           #skip stash
         else
             localized_click(partner, 'stash_link')
-            main_section_head.eql?("#{LANG[partner.company_info.country][partner.partner_info.type]['stash_link']}")
+            main_section_head.text.match("#{LANG[partner.company_info.country][partner.partner_info.type]['stash_link']}")
       end
     end
 
+    def get_download_sync_links
+      download_links_href = Array.new
+      download_links = all(:xpath, "//div[@id='stash_left_col']/div/ul/li/div/a")
+      download_links.each do |link|
+        download_links_href << link['href']
+      end
+      download_links_href
+    end
     # go to referrals
     def go_to_referrals(partner)
       localized_click(partner, 'refer_link')
@@ -151,6 +229,24 @@ module Phoenix
 
     def logout(partner)
       localized_click(partner, 'logout_link')
+    end
+
+    def get_quota_account_page(partner)
+      localized_click(partner, 'acct_link')
+      quota_account_span.text
+    end
+
+    def get_plan_details_account_page
+      wait_until{plan_details_account_tbl.visible?}
+      plan_details_account_tbl.rows_text
+    end
+
+    def click_change_plan_account_page
+      change_plan_account_link.click
+    end
+
+    def login_error_message
+      login_error.text
     end
   end
 end

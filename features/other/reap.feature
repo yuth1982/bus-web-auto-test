@@ -1,7 +1,7 @@
 Feature: Reap Script Verification
   As a Mozy employee, I verify the reap script is working
 
-  @TC.10491 @bus @reap
+  @TC.10491 @bus @reap @email @env_dependent
   Scenario: 10491:MozyHome delinquent payment.
     Given I am at dom selection point:
     And I add a phoenix Home user:
@@ -30,7 +30,7 @@ Feature: Reap Script Verification
       | @mh_user_email   | Deleted Users   |
     And I view user details by newly created MozyHome username
 
-  @TC.22019 @bus @reap @z-date
+  @TC.22019 @bus @reap @z-date @email @env_dependent
   Scenario: Mozy-22019:Long delinquent account z date set
     Given I am at dom selection point:
     And I add a phoenix Home user:

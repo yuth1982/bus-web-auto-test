@@ -67,6 +67,9 @@ module Bus
 
     element(:device_table, css: 'table.mini-table')
 
+    #Sync details link
+    element(:sync_details_link, xpath: "//table[@class='mini-table']//a[text()='Sync']")
+
     # Change User Password
     element(:new_password_tb, id: 'new_password')
     element(:new_password_confirm_tb, id: 'new_password_confirmation')
@@ -344,14 +347,12 @@ module Bus
     # @return [nothing]
     def update_user_group(user, new_user_group)
       change_user_group_link.click
-      unless user.user_group.nil?
-        user_group_search_img.click
-        sleep 2
-        find(:xpath, "//li[text()='#{new_user_group}']").click
-        change_user_group_submit_button.click
-        wait_until{ !change_user_group_submit_button.visible? }
-        user.user_group = new_user_group
-      end
+      user_group_search_img.click
+      sleep 2
+      find(:xpath, "//li[text()='#{new_user_group}']").click
+      change_user_group_submit_button.click
+      wait_until{ !change_user_group_submit_button.visible? }
+      user.user_group = new_user_group unless user.user_group.nil? unless user.nil?
     end
 
     # Public: Returns user's user group
@@ -519,6 +520,10 @@ module Bus
       a[/\/admin\/view_restores\/(\d+)$/, 1].to_i
     end
 
+    def view_sync_details
+      sync_details_link.click
+    end
+
     # Public: Click send user keys
     #
     # @param [none]
@@ -599,7 +604,7 @@ module Bus
     end
 
     # jm: code for hashing user subscription info
-    element(:bar_information, css: "div.show-details > table.mini-table[2]")
+    element(:bar_information, xpath: "//div[@class='show-details']/table[@class='mini-table'][2]")
 
     # returns a hash of user subscription data
     def mozyhome_user_details_hash

@@ -13,7 +13,8 @@ module Bus
     element(:setting_save_btn, css: 'input[name=create_setting]')
     element(:setting_cancel_link, css: 'input[name=create_setting]+a')
     element(:close_settings_link, css: 'a[id^=close_settings]')
-    element(:msg_div, css: 'ul.flash.successes')
+    element(:msg_div, xpath: "//div[contains(@id,'partner-show')]/ul[@class='flash successes']")
+    element(:error_msg_div, xpath: "//ul[@class='flash errors']")
     element(:billing_info_link, xpath: "//a[text()='Billing Info']")
     element(:act_as_link, xpath: "//a[text()='act as']")
     element(:change_name_link, xpath: "//a[text()='Change Name']")
@@ -46,6 +47,10 @@ module Bus
     # Contact information
     element(:partner_details_div, css: 'div[id$=account_details] div:first-child')
     element(:account_details_icon, css: 'i[id$=account-dtl-icon]')
+    element(:account_details_attribute_edit, xpath: "//a[contains(@id, 'toggle_partner_attribute_management_edit')]/span")
+    element(:account_details_attribute_server, xpath: "//form[contains(@id, 'account_attributes_form')]/table/tbody/tr[6]/td[3]/input")
+    element(:account_details_attribute_save, css: "div.partner_attribute_management_shown > input[type=\"submit\"]")
+
     elements(:contact_info_dls, css: 'div>form>dl')
     element(:contact_address_tb, id: 'contact_address')
     element(:contact_city_tb, id: 'contact_city')
@@ -54,12 +59,19 @@ module Bus
     element(:contact_state_ca_select, id: 'contact_state_ca')
     element(:contact_zip_tb, id: 'contact_zip')
     element(:contact_country_select, id: 'contact_country')
+    element(:contact_country_text, xpath: '//div/form/dl[2]/dd[5]')
     element(:contact_phone_tb, id: 'partner_contact_phone')
     element(:contact_industry_select, id: 'partner_industry')
     element(:contact_employees_select, id: 'partner_num_employees')
     element(:contact_email_tb, id: 'contact_email')
     element(:contact_vat_tb, id: 'vat_info_vat_number')
     element(:save_changes_btn, css: 'input.button')
+
+    #change contact country section
+    element(:chg_country_link_a, xpath: "//a[text()='Change Contact Country']")
+    element(:contact_vat_number, xpath: "//input[@id='vat_num']")
+    element(:contact_chg_country_select, xpath: "//select[@id='country_and_vat_contact_country']")
+    element(:submit_btn, xpath: "//input[@id='submit_button']")
 
     # API Key
     element(:api_key_div, css: 'div[id^=api-key-box-] fieldset div:nth-child(1)')
@@ -114,7 +126,6 @@ module Bus
 
     # Subdomain
     element(:change_subdomain_link, css: "a[onclick*='/partner/subdomain']")
-
     element(:h3_section, css: "h3")
 
     # Public: Partner Id
@@ -171,6 +182,15 @@ module Bus
       Hash[*output.flatten]
     end
 
+    def account_details_enable_server
+      wait_until_bus_section_load
+      expand(account_details_icon)
+      wait_until_ajax_finished(partner_details_div)
+      wait_until { !(contact_info_dls.first.dt_dd_elements_text.first.first == '') }
+      account_details_attribute_edit.click
+      account_details_attribute_server.click
+      account_details_attribute_save.click
+    end
 
     # Public: Partner contact information hash
     #
@@ -202,12 +222,16 @@ module Bus
       output['Contact State:'] = @state
 
       output['Contact ZIP/Postal Code:'] = contact_zip_tb.value
-      output['Contact Country:'] = contact_country_select.first_selected_option.text
+      if contact_country_select.visible?
+        output['Contact Country:'] = contact_country_select.first_selected_option.text
+      else
+        output['Contact Country:'] = contact_country_text.text.gsub(' Change Contact Country','')
+      end
       output['Phone:'] = contact_phone_tb.value
       output['Industry:'] = contact_industry_select.first_selected_option.text
       output['# of employees:'] = contact_employees_select.first_selected_option.text
       output['Contact Email:'] = contact_email_tb.value
-      output['VAT Number:'] = contact_vat_tb.value unless output['VAT Number:'].nil?
+      output['VAT Number:'] = contact_vat_tb.value if contact_vat_tb.visible?
       output
     end
 
@@ -364,11 +388,9 @@ module Bus
       wait_until_bus_section_load
       delete_partner_link.click
 
-      submit_btn = find(:css, 'div[id^=cancellation_reasons_] input[value=Submit]')
-      password_tb = find(:css, 'div[id$=-delete_form] input[name=password]')
-      submit_delete_btn = find(:css, 'div[id$=-delete_form] input[name=commit]')
+      password_tb = find(:css, 'form[id$=-delete_form] input[name=password]')
+      submit_delete_btn = find(:css, 'div[class=popup-window-footer] input[value=Submit]')
 
-      submit_btn.click
       wait_until{ password_tb.visible? } # wait for load delete password div
       password_tb.type_text(password)
       submit_delete_btn.click
@@ -377,8 +399,6 @@ module Bus
       else
         return_text = alert_text
         alert_accept
-        cancel_btn = find(:xpath, "//a[text() = 'Cancel']")
-        cancel_btn.click
         return_text
       end
     end
@@ -612,6 +632,48 @@ module Bus
 
     def set_contact_country country
       contact_country_select.select country
+      alert_accept
+    end
+
+    def set_vat_number vat
+      contact_vat_tb.type_text vat
+    end
+
+    def vat_number_visible?
+      find(:xpath, "//input[@id='vat_info_vat_number']").visible?
+    end
+
+    def click_change_country_lnk
+      chg_country_link_a.click
+      wait_until_bus_section_load
+    end
+
+    # Public: set country in change country section
+    #
+    # Example
+    #   @bus_site.admin_console_page.partner_details_section.set_country_for_partner_admin
+    #
+    # Returns nothing
+    def set_country_for_partner_admin country
+      contact_chg_country_select.select country
+    end
+
+    # Public: set vat number in change country section
+    #
+    # Example
+    #   @bus_site.admin_console_page.partner_details_section.set_vat_for_partner_admin
+    #
+    # Returns nothing
+    def set_vat_for_partner_admin vat
+      contact_vat_number.type_text vat
+    end
+
+    def vat_of_chg_contact_country_visible?
+      find(:xpath, "//input[@id='vat_num']").visible?
+    end
+
+    def submit_change
+      submit_btn.click
     end
 
     def save_changes
@@ -627,6 +689,11 @@ module Bus
     # @return [String]
     def success_messages
       msg_div.text
+    end
+
+    def error_message
+      wait_until{ error_msg_div.visible? }
+      error_msg_div.text
     end
 
     # partner info verification - if specific values are present, section should be good
@@ -650,6 +717,7 @@ module Bus
           else
             add_setting(setting)
           end
+          alert_accept if alert_present?
         end
       end
     end
@@ -679,6 +747,17 @@ module Bus
       setting_value_input.set(setting['Value'])
       setting_locked_checkbox.check if setting['Locked'] == 'true'
       setting_save_btn.click
+    end
+
+    def delete_settings(settings)
+      settings_link.click
+      settings.each do |setting|
+         row_el = find(:xpath, "//td[text()='#{setting['Name']}']/..")
+         capability_id = /[\d]+/.match(row_el[:id]).to_s.to_i
+         page.driver.execute_script("document.querySelector('span[id^=settings_editor_for_#{capability_id}]').style.display=''")
+         row_el.find(:css, 'span.delete_setting>a').click
+         alert_accept
+      end
     end
 
     def has_setting?(setting)

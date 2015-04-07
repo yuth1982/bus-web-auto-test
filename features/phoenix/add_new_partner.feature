@@ -22,16 +22,12 @@ Background:
 #     base smoke test = us yearly, 100gb, server
 #---------------------------------------------------------------------------------
 
-  @TC.20965 @bus @2.9 @regression_test @phoenix @mozypro
+  @TC.20965  @2.9 @regression_test @phoenix @mozypro
   Scenario: 20965 Add a new US yearly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
     | period | base plan | country       |
     | 1      | 1 TB      | United States |
-    Then the order summary looks like:
-    | Description    | Price   | Quantity | Amount  |
-    | 1 TB - Monthly | $379.99 | 1        | $379.99 |
-    | Total Charge   | $379.99 |          | $379.99 |
     And the partner is successfully added.
     And they have logged in and verified their account.
     And I log in bus admin console as administrator
@@ -41,33 +37,33 @@ Background:
     And I view partner details by newly created partner company name
     And Partner general information should be:
     | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change) |
     And Partner contact information should be:
-    | Company Type:                  | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
-    | <%=@partner.partner_info.type%>| 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
+    | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
+    | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
     And Partner account attributes should be:
     | Backup Devices         |          |
     | Backup Device Soft Cap | Disabled |
     | Server                 | Disabled |
     | Cloud Storage (GB)     |          |
-    | Sync Users:            |    -1    |
+    | Sync Users:            | -1       |
     | Default Sync Storage:  |          |
     And Partner pooled storage information should be:
     | Used | Available | Assigned | Used | Available | Assigned  |
     | 0    | 1024      | 1024     | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
-    | Account Type:   | Credit Card            | Current Period: | Monthly             |
-    | Unpaid Balance: | $0.00                  | Collect On:     | N/A                 |
-    | Renewal Date:   | after 1 month          | Renewal Period: | Use Current Period  |
-    | Next Charge:    | after 1 month          |                 |                     |
+    | Account Type:   | Credit Card   | Current Period: | Monthly            |
+    | Unpaid Balance: | $0.00         | Collect On:     | N/A                |
+    | Renewal Date:   | after 1 month | Renewal Period: | Use Current Period |
+    | Next Charge:    | after 1 month |                 |                    |
     And I delete partner account
 
-  @TC.20966 @bus @2.9 @regression_test @phoenix @mozypro
+  @TC.20966  @2.9 @regression_test @phoenix @mozypro
   Scenario: 20966 Add a new US biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
     | period | base plan | country       | security |
-    | 24     | 10 GB     | United States |   HIPAA  |
+    | 24     | 10 GB     | United States | HIPAA    |
     Then the order summary looks like:
     | Description      | Price   | Quantity | Amount  |
     | 10 GB - Biennial | $209.79 | 1        | $209.79 |
@@ -102,7 +98,7 @@ Background:
     | Next Charge:    | after 2 years          |                 |                     |
     And I delete partner account
 
-  @TC.20967 @bus @2.9 @regression_test @phoenix @mozypro
+  @TC.20967  @2.9 @regression_test @phoenix @mozypro
   Scenario: 20967 Add a new IE monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -122,8 +118,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -144,7 +140,7 @@ Background:
     | Next Charge:    | after 1 month          |                 |                     |
     And I delete partner account
 
-  @TC.20968 @bus @2.9 @regression_test @phoenix @mozypro
+  @TC.20968  @2.9 @regression_test @phoenix @mozypro
   Scenario: 20968 Add a new IE yearly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -164,8 +160,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -186,7 +182,7 @@ Background:
     | Next Charge:    | after 1 year          |                 |                     |
     And I delete partner account
 
-  @TC.20969 @bus @2.9 @regression_test @phoenix @mozypro
+  @TC.20969  @2.9 @regression_test @phoenix @mozypro
   Scenario: 20969 Add a new IE biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -207,8 +203,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -229,7 +225,7 @@ Background:
     | Next Charge:    | after 2 years          |                 |                     |
     And I delete partner account
 
-  @TC.20970 @bus @2.9 @regression_test @phoenix @mozypro
+  @TC.20970  @2.9 @regression_test @phoenix @mozypro
   Scenario: 20970 Add a new UK monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -248,8 +244,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -270,7 +266,7 @@ Background:
     | Next Charge:    | after 1 month          |                 |                     |
     And I delete partner account
 
-  @TC.20971 @bus @2.9 @regression_test @phoenix @mozypro
+  @TC.20971  @2.9 @regression_test @phoenix @mozypro
   Scenario: 20971 Add a new UK yearly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -290,8 +286,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -312,7 +308,7 @@ Background:
     | Next Charge:    | after 1 year          |                 |                     |
     And I delete partner account
 
-  @TC.20972 @bus @2.9 @regression_test @phoenix @mozypro
+  @TC.20972  @2.9 @regression_test @phoenix @mozypro
   Scenario: 20972 Add a new UK biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -332,8 +328,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                    | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -354,7 +350,7 @@ Background:
     | Next Charge:    | after 2 years          |                 |                     |
     And I delete partner account
 
-  @TC.20973 @bus @2.9 @regression_test @phoenix @mozypro
+  @TC.20973  @2.9 @regression_test @phoenix @mozypro
   Scenario: 20973 Add a new DE monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -374,8 +370,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                   | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -396,7 +392,7 @@ Background:
     | Next Charge:    | after 1 month          |                 |                     |
     And I delete partner account
 
-  @TC.20974 @bus @2.9 @regression_test @phoenix @mozypro
+  @TC.20974  @2.9 @regression_test @phoenix @mozypro
   Scenario: 20974 Add a new DE biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -416,8 +412,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -438,7 +434,7 @@ Background:
     | Next Charge:    | after 2 years          |                 |                     |
     And I delete partner account
 
-  @TC.20975 @bus @2.9 @regression_test @phoenix @mozypro
+  @TC.20975  @2.9 @regression_test @phoenix @mozypro
   Scenario: 20975 Add a new DE biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -457,8 +453,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -479,7 +475,7 @@ Background:
     | Next Charge:    | after 2 years          |                 |                     |
     And I delete partner account
 
-  @TC.20976 @bus @2.9 @regression_test @phoenix @mozypro
+  @TC.20976  @2.9 @regression_test @phoenix @mozypro
   Scenario: 20976 Add a new FR monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -499,8 +495,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -521,7 +517,7 @@ Background:
     | Next Charge:    | after 1 month          |                 |                     |
     And I delete partner account
 
-  @TC.20977 @bus @2.9 @regression_test @phoenix @mozypro
+  @TC.20977  @2.9 @regression_test @phoenix @mozypro
   Scenario: 20977 Add a new FR yearly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -540,8 +536,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -562,7 +558,7 @@ Background:
     | Next Charge:    | after 1 year          |                 |                     |
     And I delete partner account
 
-  @TC.20978 @bus @2.9 @regression_test @phoenix @mozypro
+  @TC.20978  @2.9 @regression_test @phoenix @mozypro
   Scenario: 20978 Add a new FR biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -582,8 +578,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -607,7 +603,7 @@ Background:
 #---------------------------------------------------------------------------------
 # coupons : new section
 #---------------------------------------------------------------------------------
-  @TC.20979 @bus @2.9 @regression_test @phoenix @mozypro
+  @TC.20979  @2.9 @regression_test @phoenix @mozypro @env_dependent
   Scenario: 20979 Add a new IE monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -630,8 +626,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -652,7 +648,7 @@ Background:
     | Next Charge:    | after 1 month          |                 |                     |
     And I delete partner account
 
-  @TC.20980 @bus @2.9 @regression_test @phoenix @mozypro
+  @TC.20980  @2.9 @regression_test @phoenix @mozypro @env_dependent
   Scenario: 20980 Add a new DE biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -675,8 +671,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -697,7 +693,7 @@ Background:
     | Next Charge:    | after 1 year          |                 |                     |
     And I delete partner account
 
-  @TC.20982 @bus @2.9 @regression_test @phoenix @mozypro
+  @TC.20982  @2.9 @regression_test @phoenix @mozypro @env_dependent
   Scenario: 20982 Add a new FR yearly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -718,8 +714,8 @@ Background:
     | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner general information should be:
-    | Status:         | Root Admin:          | Root Role:                  | Parent:                                     | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> (MozyPro) | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
+    | Status:         | Root Admin:          | Root Role:                  | Parent:                           | Marketing Referrals: | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+    | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | <%=@partner.partner_info.parent%> | (add referral)       | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change)   |
     And Partner contact information should be:
     | Company Type:                   | Users: | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   | Phone:                           | Contact Email:                 |
     | <%=@partner.partner_info.type%> | 0      | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> | <%=@partner.company_info.phone%> | <%=@partner.admin_info.email%> |
@@ -752,7 +748,7 @@ Background:
 #   Name: Phoenix generated pro acct missing internal values
 #---------------------------------------------------------------------------------
 
-  @TC.20985 @bus @2.9 @regression_test @phoenix @mozypro @BUG.97647
+  @TC.20985  @2.9 @regression_test @phoenix @mozypro @BUG.97647
   Scenario: 20985 Verification of new internal acct attributes for phoenix generated MozyPro partner
   When I am at dom selection point:
   And I add a phoenix Pro partner:

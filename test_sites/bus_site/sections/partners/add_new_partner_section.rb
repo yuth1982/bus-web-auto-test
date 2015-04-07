@@ -72,6 +72,7 @@ module Bus
     element(:net_term_payment_input, id: 'formOfPaymentNT')
 
     element(:message_div, css: 'div#partner-new-errors ul')
+    element(:aria_errors_div, css: 'ul.errorExplanation')
     # element(:create_partner_btn, css: 'div#cc-details input#submit_button')
     element(:create_partner_btn, css: "input[value='Create Partner']")
     element(:back_btn, id: 'back_button')
@@ -102,11 +103,18 @@ module Bus
         wait_until{ back_btn.visible? } # wait for fill credit card info
         if partner.net_term_payment
           net_term_payment_input.click
+          if alert_present?
+            partner.billing_info.alert = alert_text
+            alert_accept
+          end
         else
           cc_payment_input.click
           fill_credit_card_info(partner.credit_card)
         end
         set_order_summary(partner)
+        #Sometimes automation is too fast that the page doest not response to the click event on the button "Create Partner"
+        #Pause for 3 seconds as a workaround
+        sleep 3
         create_partner_btn.click
       else
         include_initial_purchase_cb.uncheck
@@ -124,6 +132,17 @@ module Bus
     # Returns success or error message text
     def messages
       message_div.text
+    end
+
+    # Public: Messages for credit card payment errors
+    #
+    # Example
+    #   add_new_partner_section.aria_errors
+    #   # => "Could not validate payment information"
+    #
+    # Returns error message text
+    def aria_errors
+      aria_errors_div.text
     end
 
     # Public: Order Summary Hashes
@@ -160,12 +179,12 @@ module Bus
       else
         contact_country_select.select(company_info.country)
         contact_state_tb.type_text(company_info.state)
-        vat_number_tb.type_text(company_info.vat_num)
+	vat_number_tb.type_text(company_info.vat_num) if company_info.vat_num != ""
       end
       contact_address_tb.type_text(company_info.address)
       contact_city_tb.type_text(company_info.city)
       contact_zip_tb.type_text(company_info.zip)
-      security_select.select(company_info.security)
+      security_select.select(company_info.security) if company_info.security != ""
       contact_phone_tb.type_text(company_info.phone)
     end
 
@@ -192,7 +211,26 @@ module Bus
     def fill_billing_info(partner)
       if partner.use_company_info
         use_company_info_cb.check
+      else
+        cc_address_tb.type_text(partner.billing_info.address)
+        cc_city_tb.type_text(partner.billing_info.city)
+        cc_country_select.select(partner.billing_info.country)
+        if alert_present?
+          partner.billing_info.alert = alert_text
+          alert_accept
+        end
+        if partner.billing_info.country.eql?('United States')
+          cc_state_us_select.select(partner.billing_info.state_abbrev)
+        elsif partner.billing_info.country.eql?('Canada')
+          cc_state_ca_select.select(partner.billing_info.state_abbrev)
+        else
+          cc_state_tb.type_text(partner.billing_info.state)
+        end
+        cc_zip_tb.type_text(partner.billing_info.zip)
+        cc_email_tb.type_text(partner.billing_info.email)
+        cc_phone_tb.type_text(partner.billing_info.phone)
       end
+
     end
 
     def fill_subscription_period(period)
@@ -237,9 +275,16 @@ module Bus
 
       # storage add on option for base plan >= 1 TB
       if partner.storage_add_on.to_i != 0
-        add_on = find_with_highlight(:xpath, "//input[starts-with(@id,'#{base_plan_id}')][3]")
+        add_on = find_with_highlight(:xpath, "//input[starts-with(@id,'#{base_plan_id}')][contains(@id,'add_on_plan_1035')]")
         add_on.clear_value
         add_on.type_text(partner.storage_add_on)
+      end
+
+      # 50 GB storage add on option for base plan between 100 GB and 500 GB
+      if partner.storage_add_on_50_gb.to_i != 0
+        add_on = find_with_highlight(:xpath, "//input[starts-with(@id,'#{base_plan_id}')][contains(@id,'add_on_plan_11')]")
+        add_on.clear_value
+        add_on.type_text(partner.storage_add_on_50_gb)
       end
     end
 

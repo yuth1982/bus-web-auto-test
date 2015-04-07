@@ -1,32 +1,38 @@
 require 'net-ldap'
 module LDAPHelper
-  USER = 'congshanliu@qa5.mozyops.com'
-  PASSWORD = 'QAP@SSw0rd'
-  HOST = 'ad01.qa5.mozyops.com'
+  USER = 'admin@mtdev.mozypro.local'
+  PASSWORD = 'abc!@#123'
+  HOST = '10.29.99.120'
   PORT = 389
-  TREEBASE = 'dc=qa5, dc=mozyops, dc=com'
+  TREEBASE = 'dc=mtdev,dc=mozypro,dc=local'
   EMAIL_POSTFIX = '@test.com'
+  @ldap_user_mail = ''
 
   # Public: Add user to the AD server with username (cn) and email
   #
-  def add_user(user_name, mail = nil)
-    dn = "cn=#{user_name}, #{TREEBASE}"
+  def add_user(user_name, mail = nil, host=nil, user=nil, password=nil, treebase=nil, email_postfix=nil)
+    user_name = check_for_random(user_name)
+    @ldap_user_mail = check_for_random_mail(mail, user_name, email_postfix)
+    dn = "CN=#{user_name}, #{treebase || TREEBASE}"
     attr = {
         :cn => "#{user_name}",
         :objectclass => ['top', 'person', 'user', 'organizationalPerson'],
         :sn => "#{user_name}",
         :name => "#{user_name}",
         :givenname => "#{user_name}",
-        :mail => mail || "#{user_name}#{EMAIL_POSTFIX}",
-        :uid => '123'
+        :mail => @ldap_user_mail || "#{user_name}#{email_postfix || EMAIL_POSTFIX}",
+        :uid => '123',
+        :userprincipalname => @ldap_user_mail || "#{user_name}#{email_postfix || EMAIL_POSTFIX}",
+        :useraccountcontrol => '66080'
     }
-    ldap = Net::LDAP.new :host => HOST,
+    ldap = Net::LDAP.new :host => host || HOST,
                          :port => PORT,
                          :auth => {
                              :method => :simple,
-                             :username => USER,
-                             :password => PASSWORD
+                             :username => user || USER,
+                             :password => password || PASSWORD
                          }
+
     ldap.open do |ldap|
       ldap.add(:dn => dn, :attributes => attr)
     end
@@ -113,4 +119,26 @@ module LDAPHelper
     end
     Log.debug("rename user #{user} from #{user_name} to #{new_name} in AD")
   end
+
+  def check_for_random(username)
+    if username.match("First Last")
+      username = "#{Forgery::Name.first_name} #{Forgery(:basic).password(:at_least => 9, :at_most => 12)}"
+      return username
+    end
+    return username
+  end
+
+  def check_for_random_mail(mail, username, emailpostfix)
+    unless mail.nil?
+      if mail.match("email@mozy.com")
+        mail = "#{username.gsub(/\s+/, "")}#{emailpostfix}"
+      end
+      return mail
+    end
+  end
+
+  def ldap_user_mail
+    @ldap_user_mail
+  end
+
 end

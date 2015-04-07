@@ -1,4 +1,7 @@
 When /^I navigate to (.+) section from bus admin console page$/ do |link_name|
+  if link_name == 'Download * Client'
+    link_name.replace find(:xpath, '//a[contains(text(),"Download")][contains(text(),"Client")]').text
+  end
   @bus_site.admin_console_page.navigate_to_menu(link_name)
 end
 
@@ -92,32 +95,38 @@ end
 
 # has_navigation returns a value if items are present, otherwise it will return empty
 # in the case, am verifying that items are present by ensuring a value is present
-Then /^new section & navigation items are present for (MozyPro|MozyEnterprise|Reseller|Itemized) partner$/ do |type|
+Then /^new section & navigation items are present for (MozyPro|MozyEnterprise|MozyEnterprise DPS|Reseller|Itemized) partner$/ do |type|
   @bus_site.admin_console_page.has_content?('Quick Links').should be_true
   case type
     when CONFIGS['bus']['company_type']['mozypro']
       @bus_site.admin_console_page.has_navigation?("Resource Summary").should be_true
       @bus_site.admin_console_page.has_navigation?("Change Plan").should be_true
       @bus_site.admin_console_page.has_navigation?("Add New User").should be_true
-      @bus_site.admin_console_page.has_navigation?("Download MozyPro Client").should be_true
+      @bus_site.admin_console_page.has_navigation?(/^Download .* Client$/).should be_true
     when CONFIGS['bus']['company_type']['mozyenterprise']
       @bus_site.admin_console_page.has_navigation?("Resource Summary").should be_true
       @bus_site.admin_console_page.has_navigation?("User Group List").should be_true
       @bus_site.admin_console_page.has_navigation?("Add New User").should be_true
       @bus_site.admin_console_page.has_navigation?("Change Plan").should be_true
-      @bus_site.admin_console_page.has_navigation?("Download MozyEnterprise Client").should be_true
+      @bus_site.admin_console_page.has_navigation?(/^Download .* Client$/).should be_true
+    when CONFIGS['bus']['company_type']['mozyenterprise_dps']
+      @bus_site.admin_console_page.has_navigation?("Resource Summary").should be_true
+      @bus_site.admin_console_page.has_navigation?("User Group List").should be_true
+      @bus_site.admin_console_page.has_navigation?("Add New User").should be_true
+      @bus_site.admin_console_page.has_navigation?("Change Plan").should be_true
+      @bus_site.admin_console_page.has_navigation?(/^Download .* Client$/).should be_true
     when CONFIGS['bus']['company_type']['reseller']
       @bus_site.admin_console_page.has_navigation?("Resource Summary").should be_true
       @bus_site.admin_console_page.has_navigation?("User Group List").should be_true
       @bus_site.admin_console_page.has_navigation?("Add New User").should be_true
       @bus_site.admin_console_page.has_navigation?("Change Plan").should be_true
-      @bus_site.admin_console_page.has_navigation?("Download MozyPro Client").should be_true
+      @bus_site.admin_console_page.has_navigation?(/^Download .* Client$/).should be_true
     when "Itemized"
       @bus_site.admin_console_page.has_navigation?("Resource Summary").should be_true
       @bus_site.admin_console_page.has_navigation?("User Group List").should be_true
       @bus_site.admin_console_page.has_navigation?("Add New User").should be_true
       @bus_site.admin_console_page.has_navigation?("Change Plan").should be_true
-      @bus_site.admin_console_page.has_navigation?("Download MozyPro Client").should be_true
+      @bus_site.admin_console_page.has_navigation?(/^Download .* Client$/).should be_true
     else
       raise "Error: Company type #{type} does not exist."
   end
@@ -198,3 +207,24 @@ And /^I upload the logo$/ do
   @bus_site.admin_console_page.branding_section.cb_iframe.attach_image_file
   @bus_site.admin_console_page.branding_section.cb_iframe.click_upload_files
 end
+
+Given /^I verify Skeletor by visiting url$/ do
+  @bus_site.admin_console_page.visit_skeletor_url
+end
+
+When /^the standard partner has activated the admin account$/ do
+  step %{I retrieve email content by keywords:}, table(%{
+    | to |
+    | @new_admin_email |
+  })
+  match = @mail_content.match(/https?:\/\/[\S]+.mozy[\S]+.[\S]+\/registration\/admin_confirm\/[\S]+/)
+  @activate_email_query = match[0] unless match.nil?
+
+  @bus_site.admin_console_page.open_admin_activate_page(@activate_email_query)
+  @bus_site.admin_console_page.set_admin_password(CONFIGS['global']['test_pwd'])
+end
+
+When /^I go to account$/ do
+  @bus_site.admin_console_page.go_to_account
+end
+

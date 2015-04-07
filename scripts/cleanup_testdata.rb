@@ -43,9 +43,25 @@ def delete_users_by_email(email)
   end
 end
 
-%w(test110836@test.com fediduser1@test.com dev-17538-test1@test.com dev-17538-test2@test.com dev-17538-test3@test.com).each do |email|
+%w(test110836@test.com).each do |email|
   delete_user_by_email(email)
 end
 
-delete_users_by_email('%17544-test%@test.com')
+delete_users_by_email('%fediduser%@test.com')
+
+delete_users_by_email('%17538-test%@test.com')
+
+delete_users_by_email('%17540-test%@test.com')
 delete_users_by_email('%17542-test%@test.com')
+delete_users_by_email('%17543-test%@test.com')
+delete_users_by_email('%17544-test%@test.com')
+
+delete_users_by_email('%17546-test%@test.com')
+
+delete_users_by_email('%auto%@mtdev.mozypro.local')
+
+delete_users_by_email('%fedid_encoding%@mtdev.mozypro.local')
+
+delete_users_by_email('%120019-test%@test.com')
+
+delete_users_by_email('%120021-test%@test.com')

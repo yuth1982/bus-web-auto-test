@@ -23,8 +23,7 @@ Then /^user details should be:$/ do |user_table|
     case header
       when 'ID:'
         if expected[header].start_with?('@')
-          actual[header].length.should == expected[header].length - 1
-          actual[header].match(/\d{8}/).nil?.should be_false
+          actual[header].match(/\d+/).nil?.should be_false
         else
           actual[header].should == expected[header]
         end
@@ -96,7 +95,7 @@ end
 
 When /^I delete stash container for the user$/ do
   @bus_site.admin_console_page.user_details_section.click_delete_stash
-  @bus_site.admin_console_page.click_continue
+  @bus_site.admin_console_page.click_yes
 end
 
 When /^I click change stash quota text box$/ do
@@ -179,10 +178,12 @@ When /^I Log in as the user$/ do
 end
 
 Then /^I delete user$/ do
+  next if ENV['BUS_ENV'] == 'qa3'
   @bus_site.admin_console_page.user_details_section.delete_user
 end
 
 Then /^I reassign the user to user group (.+)$/ do |new_user_group|
+  next if ENV['BUS_ENV'] == 'qa3'
   @bus_site.admin_console_page.user_details_section.update_user_group(@user, new_user_group)
 end
 
@@ -198,13 +199,23 @@ Then /^the user's partner should be (.+)$/ do |partner|
 end
 
 Then /^the user's user group should be (.+)$/ do |user_group|
+  next if ENV['BUS_ENV'] == 'qa3'
   @bus_site.admin_console_page.user_details_section.users_user_group(user_group).should be_true
 end
 
 Then /^device table in user details should be:$/ do |table|
   actual = @bus_site.admin_console_page.user_details_section.device_table_hashes
   expected = table.hashes
-  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
+  expected.each_index { |index|
+    expected[index].keys.each { |key|
+      #depending on the performance of the testing env, the "Last Update" time could be different
+      if !(expected[index][key].match(/^(1|< a|2) minute(s)* ago$/).nil?)
+        actual[index][key].match(/^(1|< a|2) minute(s)* ago$/).nil?.should be_false
+      else
+        actual[index][key].should == expected[index][key]
+      end
+    }
+  }
 end
 
 Then /^stash device table in user details should be:$/ do |table|
@@ -223,6 +234,7 @@ Then /^I view the user's product keys$/ do
 end
 
 Then /^I update the user password to (.+)$/ do |password|
+  next if ENV['BUS_ENV'] == 'qa3'
   password = rand.to_s if password == '@user_password'
   @user_password = password
   @bus_site.admin_console_page.user_details_section.edit_password(password)
@@ -252,8 +264,15 @@ When(/^I close user details section$/) do
 end
 
 When /^edit user details:$/ do |info_table|
+  next if ENV['BUS_ENV'] == 'qa3'
   # table is a | email          | name          | status     |
   new_info = info_table.hashes.first
+
+  new_info.each do |header,attribute| #can use variable inside <%= %>
+    attribute.replace ERB.new(attribute).result(binding)
+    new_info[header] = nil if attribute == ''
+  end
+
   new_info.keys.each do |header|
     case header
       when 'email'
@@ -352,4 +371,23 @@ end
 
 When /^I close the user detail page$/ do
   @bus_site.admin_console_page.user_details_section.close_bus_section
+end
+
+Then /^I display login information$/ do
+  if @partner.partner_info.type == 'MozyHome'
+    Log.info("un: #{@partner.admin_info.email}, pw: #{CONFIGS['global']['test_pwd']}")
+  else
+    Log.info("pn: #{@partner.admin_info.email}, un: #{@new_users.last.email}, pw: #{CONFIGS['global']['test_pwd']}")
+  end
+end
+
+When /^I search and delete user account if it exists by (.+)/ do |account_name|
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_users'])
+  @bus_site.admin_console_page.search_list_users_section.search_user(account_name)
+  @bus_site.admin_console_page.search_list_users_section.wait_until_bus_section_load
+  rows = @bus_site.admin_console_page.search_list_users_section.search_results_table_rows
+  unless rows.to_s.include?('No results found.')
+    @bus_site.admin_console_page.search_list_users_section.view_user_details(account_name)
+    @bus_site.admin_console_page.user_details_section.delete_user
+  end
 end

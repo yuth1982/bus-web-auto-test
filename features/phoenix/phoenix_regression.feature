@@ -39,7 +39,7 @@ Feature: Phoenix regression Test
       | <%=@partner.company_info.address%> | <%=@partner.company_info.city%> | <%=@partner.company_info.state_abbrev%> | <%=@partner.company_info.zip%> | <%=@partner.company_info.country%> |
     Then I delete partner account
 
-  @TC.2356 @bus @capture @city @state @zip
+  @TC.2356 @bus @capture @city @state @zip @phoenix
   Scenario: 2356 Create a new MozyPro partner part3 (BUS)
     When I log in bus admin console as administrator
     When I add a new MozyPro partner:
@@ -79,10 +79,13 @@ Feature: Phoenix regression Test
     Then the billing summary looks like:
       | Description                           | Price | Quantity | Amount |
       | MozyHome 50 GB (1 computer) - Monthly | $5.99 | 1        | $5.99  |
-      | Total Charge                          | $5.99 |          | $5.99  |
+      | Total Charge                          |       |          | $5.99  |
     Then the user is successfully added
     When I log in bus admin console as administrator
-    And I view MozyHome user details by @user_name
+    And I search user by:
+      | keywords       |
+      | @mh_user_email |
+    And I view user details by newly created MozyHome username
     Then MozyHome user details should be:
       | Country: |
       | @country |
@@ -99,6 +102,7 @@ Feature: Phoenix regression Test
       | Total Charge          | $1,112.58 |          | $1,112.58 |
     And the partner is successfully added.
     When I log in bus admin console as administrator
+    And I search partner by newly created partner company name
     And I view partner details by newly created partner company name
     Then Partner contact information should be:
       | Contact Address:                   | Contact City:                   | Contact State:                          | Contact ZIP/Postal Code:       | Contact Country:                   |
@@ -119,10 +123,13 @@ Feature: Phoenix regression Test
     Then the billing summary looks like:
       | Description                           | Price | Quantity | Amount |
       | MozyHome 50 GB (1 computer) - Monthly | $5.99 | 1        | $5.99  |
-      | Total Charge                          | $5.99 |          | $5.99  |
+      | Total Charge                          |       |          | $5.99  |
     Then the user is successfully added
     When I log in bus admin console as administrator
-    And I view MozyHome user details by @user_name
+    And I search user by:
+      | keywords       |
+      | @mh_user_email |
+    And I view user details by newly created MozyHome username
     Then MozyHome user details should be:
       | Country: |
       | @country |
@@ -135,10 +142,13 @@ Feature: Phoenix regression Test
     Then the billing summary looks like:
       | Description                           | Price | Quantity | Amount |
       | MozyHome 50 GB (1 computer) - Monthly | $5.99 | 1        | $5.99  |
-      | Total Charge                          | $5.99 |          | $5.99  |
+      | Total Charge                          |       |          | $5.99  |
     Then the user is successfully added
     When I log in bus admin console as administrator
-    And I view MozyHome user details by @user_name
+    And I search user by:
+      | keywords       |
+      | @mh_user_email |
+    And I view user details by newly created MozyHome username
     When I verify the user
     Then The user is verified
     When I Log in as the user
@@ -157,7 +167,7 @@ Feature: Phoenix regression Test
       | Country: |
       | Thailand |
 
-  @TC.2361 @bus @capture @city @state @zip
+  @TC.2361 @bus @capture @city @state @zip @phoenix
   Scenario: 2361 Change credit card information for a MozyPro partner
     When I log in bus admin console as administrator
     And I add a new MozyPro partner:
@@ -176,23 +186,27 @@ Feature: Phoenix regression Test
       | address                 | 12345678       | city          | Canada           | AB                      | 123456                   | email@email.com |
 
   @TC.2362 @firefox @bus @phoenix @capture @city @state @zip
-  Scenario: 2362 Edit an existing MozyHome user as a user
+  Scenario: 2362 Change credit card information for a MozyHome user
     When I add a phoenix Home user:
       | period | base plan | country       |
       | 1      | 50 GB     | United States |
     Then the billing summary looks like:
       | Description                           | Price | Quantity | Amount |
       | MozyHome 50 GB (1 computer) - Monthly | $5.99 | 1        | $5.99  |
-      | Total Charge                          | $5.99 |          | $5.99  |
+      | Total Charge                          |       |          | $5.99  |
     Then the user is successfully added
     When I log in bus admin console as administrator
-    And I view MozyHome user details by @user_name
+    And I search user by:
+      | keywords       |
+      | @mh_user_email |
+    And I view user details by newly created MozyHome username
     When I verify the user
     Then The user is verified
     When I Log in as the user
     Then I will see the account page
-    When I navigate to Upgrade section in Phoenix
+    When I navigate to My Profile section in Phoenix
+    When I navigate to Change Credit Card section in Phoenix
     And I change credit card info to:
-      | Name: | Street Address: | City: | Zip/Postal Code: | Country: |
-      | Name  | Street Address  | City  | 123456           | Canada   |
-    Then the user is successfully added
+      | Name: | Street Address: | City: | State/Province: | Zip/Postal Code: | Country: |
+      | Name  | Street Address  | City  | AB              | A0A0A0           | Canada   |
+    Then The credit card is updated

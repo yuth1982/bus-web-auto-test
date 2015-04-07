@@ -15,7 +15,7 @@ module Bus
 
       admin_obj.user_groups.each do | ug |
         Log.debug("Processing grant user group #{ug} to admin")
-        e = find(:xpath, "//label[text() = ' #{ug}'")
+        e = find(:xpath, "//label[text() = ' #{ug}']")
         e.child[0].check
       end
 

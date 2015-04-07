@@ -64,7 +64,7 @@ Feature: Notify about and collect past-due balances
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.16147 @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers
+  @TC.16147 @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers @email
   Scenario: 16147 Verify aria sends email when change MozyEnterprise account status to Active Dunning 1
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -79,12 +79,12 @@ Feature: Notify about and collect past-due balances
       | status_label     |
       | ACTIVE DUNNING 1 |
     When I search emails by keywords:
-      | from                    | subject                               | after    | content                             |
-      | AccountManager@mozy.com | [Mozy] Mozy invoice, due upon receipt | -5minute |<%=@partner.credit_card.first_name%> |
+      | from                    | subject                               | after | content                             |
+      | AccountManager@mozy.com | [Mozy] Mozy invoice, due upon receipt | today |<%=@partner.credit_card.first_name%> |
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 
-  @TC.16148 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers
+  @TC.16148 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers @email
   Scenario: 16148 Verify aria sends email when change Reseller account status to Active Dunning 2
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -99,12 +99,12 @@ Feature: Notify about and collect past-due balances
       | status_label     |
       | ACTIVE DUNNING 2 |
     When I search emails by keywords:
-      | from                    | subject                                  | after    | content                             |
-      | AccountManager@mozy.com | [Mozy] Mozy subscription invoice overdue | -5minute |<%=@partner.credit_card.first_name%> |
+      | from                    | subject                                  | after | content                             |
+      | AccountManager@mozy.com | [Mozy] Mozy subscription invoice overdue | today |<%=@partner.credit_card.first_name%> |
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 
-  @TC.16149 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers
+  @TC.16149 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers @email
   Scenario: 16149 Verify aria sends email when change MozyPro account status to Active Dunning 3
     When I add a new MozyPro partner:
       | period | base plan |
@@ -119,12 +119,12 @@ Feature: Notify about and collect past-due balances
       | status_label     |
       | ACTIVE DUNNING 3 |
     When I search emails by keywords:
-      | from                    | after    | content                              |
-      | AccountManager@mozy.com | -5minute | <%=@partner.credit_card.first_name%> |
+      | from                    | subject                                                        | after | content                              |
+      | AccountManager@mozy.com | [Mozy] Your account is suspended - all users unable to back up | today | <%=@partner.credit_card.first_name%> |
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 
-  @TC.16243 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers
+  @TC.16243 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers @email
   Scenario: 16243 Verify aria sends email when MozyPro account status sets to suspended
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -139,12 +139,12 @@ Feature: Notify about and collect past-due balances
       | status_label |
       | SUSPENDED    |
     When I search emails by keywords:
-      | from        | subject                   | after    | content                             |
-      | ar@mozy.com | Account Suspension Notice | -5minute |<%=@partner.credit_card.first_name%> |
+      | from        | subject                   | after | content                             |
+      | ar@mozy.com | Account Suspension Notice | today |<%=@partner.credit_card.first_name%> |
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 
-  @TC.16165 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @net_terms_customers
+  @TC.16165 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @net_terms_customers @email
   Scenario: 16165 Verify aria sends email when change MozyPro account status to Active Dunning 1 net terms
     When I add a new MozyPro partner:
     | period | base plan | net terms |
@@ -159,12 +159,12 @@ Feature: Notify about and collect past-due balances
       | status_label     |
       | ACTIVE DUNNING 1 |
     When I search emails by keywords:
-      | from                    | subject                               | after    | content                             |
-      | AccountManager@mozy.com | [Mozy] Mozy invoice, due upon receipt | -5minute | <%=@partner.admin_info.first_name%> |
+      | from                    | subject                               | after | content                             |
+      | AccountManager@mozy.com | [Mozy] Mozy invoice, due upon receipt | today | <%=@partner.admin_info.first_name%> |
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 
-  @TC.16166 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @net_terms_customers
+  @TC.16166 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @net_terms_customers @email
   Scenario: 16166 Verify aria sends email when change MozyEnterprise account status to Active Dunning 2 net terms
     When I add a new MozyEnterprise partner:
       | period | users    | net terms |
@@ -179,13 +179,12 @@ Feature: Notify about and collect past-due balances
       | status_label     |
       | ACTIVE DUNNING 2 |
     When I search emails by keywords:
-      | from                    | subject                                  | after    | content                             |
-      | AccountManager@mozy.com | [Mozy] Mozy subscription invoice overdue | -5minute | <%=@partner.admin_info.first_name%> |
+      | from                    | subject                                  | after | content                             |
+      | AccountManager@mozy.com | [Mozy] Mozy subscription invoice overdue | today | <%=@partner.admin_info.first_name%> |
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 
-  # need update subject information
-  @TC.16244 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @net_terms_customers
+  @TC.16244 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @net_terms_customers @email
   Scenario: 16244 Verify aria sends email when change Reseller account status to Active Dunning 3 net terms
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -200,12 +199,12 @@ Feature: Notify about and collect past-due balances
       | status_label     |
       | ACTIVE DUNNING 3 |
     When I search emails by keywords:
-      | from                    | after    | content                             |
-      | AccountManager@mozy.com | -5minute | <%=@partner.admin_info.first_name%> |
+      | from                    | subject                                                        | after | content                             |
+      | AccountManager@mozy.com | [Mozy] Your account is suspended - all users unable to back up | today | <%=@partner.admin_info.first_name%> |
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 
-  @TC.17978 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @net_terms_customers
+  @TC.17978 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @net_terms_customers @email
   Scenario: 17978 Verify aria sends email when MozyPro account status sets to suspended net terms
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -220,8 +219,8 @@ Feature: Notify about and collect past-due balances
       | status_label |
       | SUSPENDED    |
     When I search emails by keywords:
-      | from        | subject                   | after    | content                            |
-      | ar@mozy.com | Account Suspension Notice | -5minute | <%=@partner.admin_info.full_name%> |
+      | from        | subject                   | after | content                            |
+      | ar@mozy.com | Account Suspension Notice | today | <%=@partner.admin_info.full_name%> |
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 
@@ -378,6 +377,7 @@ Feature: Notify about and collect past-due balances
       | email        |
       | @admin_email |
     And I wait for 10 seconds
+    And I navigate to Change Payment Information section from bus admin console page
     And I update credit card information to:
       | cc name       | cc number        | expire month | expire year | cvv |
       | new card name | 4111111111111111 | 12           | 18          | 123 |

@@ -14,8 +14,13 @@ module Bus
     element(:throttle_amount_tb, id: 'throttle_kbps')
     element(:windows_backup_sets, xpath: "//div[@id='setting-edit_client_config-tabs']/ul/li[4]")
     element(:mac_backup_sets, xpath: "//div[@id='setting-edit_client_config-tabs']/ul/li[5]")
-    element(:user_groups, xpath: "//div[@id='setting-edit_client_config-tabs']/ul/li[6]")
+    element(:user_groups, xpath: "//div[@id='setting-edit_client_config-tabs']/ul/li[7]")
+    element(:add_user_groups, xpath: "//div[@id='config-user-groups']/p[2]/a")
+    element(:choose_user_groups, xpath: "//div[@id='config-user-groups']/table/tbody/tr[3]/td/label/input")
 
+    element(:ckey_radio, xpath: "//input[@id='userinfo.allowed_encryption_key_sources.adminurl']")
+    element(:ckey_input, xpath: "//input[@id='userinfo.encryption_key_url']")
+    element(:default_key_check, id: "userinfo.allowed_encryption_key_sources.default")
 
     element(:client_config_save_changes_btn, css: "input[value='Save Changes']")
 
@@ -38,12 +43,37 @@ module Bus
       config_license_type_id_select.select(client_config.type) unless client_config.type.nil?
       next_btn.click
 
+      preferences_tab.click
+      if !client_config.private_key.nil?
+        default_key_check.click
+        if !client_config.user_group.nil?
+          user_groups.click
+          sleep 1
+          add_user_groups.click
+          choose_user_groups.click
+        end
+      end
+
+      if !client_config.ckey.nil?
+        ckey_radio.click
+        ckey_input.type_text(client_config.ckey)
+        if !client_config.user_group.nil?
+          user_groups.click
+          sleep 1
+          add_user_groups.click
+          choose_user_groups.click
+        end
+      end
+
       bandwidth_throttling_tab.click
       if client_config.throttle
+        throttle_amount_tb.click unless throttle_cb.checked?
         throttle_amount_tb.type_text(client_config.throttle_amount)
       else
-        throttle_cb.click
+        throttle_cb.click if throttle_cb.checked?
       end
+
+
 
       client_config_save_changes_btn.click
     end

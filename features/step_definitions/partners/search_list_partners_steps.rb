@@ -35,13 +35,16 @@ When /^I act as partner by:$/ do |search_key_table|
       |#{search_key_table.headers.join('|')}|
       |#{search_key_table.rows.first.join('|')}|
     })
+
   sleep 10
+  keywords = (attributes['name'] || attributes['email'])
+  keywords = keywords.gsub(/@company_name/,@partner.company_info.name).gsub(/@admin_email/,@partner.admin_info.email) unless @partner.nil?
   if attributes['name'].nil? == false
-    page.find(:xpath, "//div[@id='partner-list-content']//table[@class='table-view']//tr[1]//td[2]/a").click
+    find(:xpath, "//a[text()='#{keywords}']").click
     @current_partner = @bus_site.admin_console_page.partner_details_section.partner
     @bus_site.admin_console_page.partner_details_section.act_as_partner
   elsif attributes['email'].nil? == false
-    page.find(:xpath, "//div[@id='partner-list-content']//table[@class='table-view']//tr[1]//td[4]/a").click
+    find(:xpath, "//a[text()='#{keywords}']").click
     @current_partner = @bus_site.admin_console_page.admin_details_section.partner
     @bus_site.admin_console_page.admin_details_section.act_as_admin
   else

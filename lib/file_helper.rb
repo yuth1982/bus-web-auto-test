@@ -1,4 +1,3 @@
-
 module FileHelper
 
   # Public: Default download folder for files
@@ -102,3 +101,4 @@ module FileHelper
   end
 
 end
+

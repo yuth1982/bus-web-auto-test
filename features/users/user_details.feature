@@ -1,8 +1,10 @@
 Feature: User Details
 
-  @TC.20986 @bus @2.5 @user_view @last_update
-  Scenario: 20986 "Last Update" shows the time for the 3 device whose last backup time is 5 days ago
+  Background:
     Given I log in bus admin console as administrator
+
+  @TC.20986 @bus @2.5 @user_view @last_update @need_test_account @env_dependent
+  Scenario: 20986 "Last Update" shows the time for the 3 device whose last backup time is 5 days ago
     When I act as partner by:
       | email                |
       | last_update@auto.com |
@@ -10,21 +12,20 @@ Feature: User Details
       | keywords             |
       | last_update@test.com |
     Then User search results should be:
-      | User                 | Name        | Machines |Sync    | Machines | Storage | Storage Used |
-      | last_update@test.com | last_update | 0        | Enabled | 3        | Shared  | 60 GB        |
+      | User                 | Name        | Sync    | Machines | Storage         | Storage Used |
+      | last_update@test.com | last_update | Enabled | 3        | Generic Shared  | 60 GB        |
     When I view user details by last_update@test.com
     Then device table in user details should be:
-      | Device          | Used/Available     | Device Storage Limit | Last Update      | Action |
-      | machine1        | 0 / 40 GB          | Set                  | N/A              |        |
-      | machine2        | 30 GB / 40 GB      | Set                  | 04/08/2013 03:51 |        |
-      | machine3        | 30 GB / 40 GB      | Set                  | 03/01/2013 15:51 |        |
+      | Device   | Used/Available | Device Storage Limit | Last Update      | Action |
+      | machine1 | 0 / 40 GB      | Set                  | N/A              |        |
+      | machine2 | 30 GB / 40 GB  | Set                  | 04/08/2013 03:51 |        |
+      | machine3 | 30 GB / 40 GB  | Set                  | 03/01/2013 15:51 |        |
     And stash device table in user details should be:
-      | Sync Container | Used/Available     | Device Storage Limit | Last Update      | Action |
-      | Sync           | 0 / 40 GB          | Set                  | N/A              |        |
+      | Sync Container | Used/Available | Device Storage Limit | Last Update | Action |
+      | Sync           | 0 / 40 GB      | Set                  | N/A         |        |
 
-  @TC.20986__   @bus @2.5 @user_view @last_update @dynamic_create
-  Scenario: 20986 (create machine dynamically) "Last Update" shows the time for the 3 device whose last backup time is 5 days ago
-    Given I log in bus admin console as administrator
+  @TC.20987 @bus @2.5 @user_view @last_update @dynamic_create
+  Scenario: 20987 "Last Update" shows "N/A" if never backup
     When I add a new MozyEnterprise partner:
       | period | users |
       | 12     | 2     |
@@ -33,7 +34,7 @@ Feature: User Details
     And I act as newly created partner account
     And I add new user(s):
       | name          | user_group           | storage_type | storage_limit | devices |
-      | TC.20986.User | (default user group) | Desktop      |               | 1       |
+      | TC.20987.User | (default user group) | Desktop      |               | 1       |
     Then 1 new user should be created
     And I search user by:
       | keywords   |
@@ -43,60 +44,24 @@ Feature: User Details
     And I use keyless activation to activate devices
       | machine_name | machine_type |
       | Machine1     | Desktop      |
-    And I get the machine_id by license_key
-    And I update the newly created machine used quota to 10 GB
     And I refresh User Details section
     Then device table in user details should be:
-      | Device          | Storage Type |Used/Available     | Device Storage Limit | Last Update      | Action |
-      | Machine1        | Desktop      |10 GB / 40 GB      | Set                  | < a minute ago   |        |
+      | Device          | Storage Type | Used/Available | Device Storage Limit | Last Update | Action |
+      | Machine1        | Desktop      | 0 / 50 GB      | Set                  | N/A         |        |
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.20986_  @bus @2.5 @user_view @last_update
-  Scenario: 20986 (Create machine for an existed partner)20986 "Last Update" shows the time for the 3 device whose last backup time is 5 days ago
-    Given I log in bus admin console as administrator
-    And I search partner by last_update@auto.com
-    When I view partner details by Test Last Update
-    And I get the partner_id
-    And I act as partner by:
-      | email                |
-      | last_update@auto.com |
-    And I search user by:
-      | keywords             |
-      | last_update@test.com |
-    Then User search results should be:
-      | User                 | Name        | Machines |Sync    | Machines | Storage | Storage Used |
-      | last_update@test.com | last_update | 0        | Enabled | 3        | Shared  | 60 GB        |
-    When I view user details by last_update@test.com
-    And I update the user password to @user_password
-    And I use keyless activation to activate devices
-      | machine_name | machine_type |
-      | machine4     | Desktop      |
-    And I get the machine_id by license_key
-    And I update the newly created machine used quota to 10 GB
-    And I refresh User Details section
-    Then device table in user details should be:
-      | Device          | Used/Available     | Device Storage Limit | Last Update      | Action |
-      | machine1        | 0 / 30 GB          | Set                  | N/A              |        |
-      | machine2        | 30 GB / 30 GB      | Set                  | 04/08/2013 03:51 |        |
-      | machine3        | 30 GB / 30 GB      | Set                  | 03/01/2013 15:51 |        |
-      | machine4        | 10 GB / 30 GB      | Set                  | < a minute ago   |        |
-    And stash device table in user details should be:
-      | Sync Container | Used/Available     | Device Storage Limit | Last Update      | Action |
-      | Sync           | 0 / 30 GB          | Set                  | N/A              |        |
-    When I delete device by name: machine4
-    Then device table in user details should be:
-      | Device          | Used/Available     | Device Storage Limit | Last Update      | Action |
-      | machine1        | 0 / 40 GB          | Set                  | N/A              |        |
-      | machine2        | 30 GB / 40 GB      | Set                  | 04/08/2013 03:51 |        |
-      | machine3        | 30 GB / 40 GB      | Set                  | 03/01/2013 15:51 |        |
-    And stash device table in user details should be:
-      | Sync Container | Used/Available     | Device Storage Limit | Last Update      | Action |
-      | Sync           | 0 / 40 GB          | Set                  | N/A              |        |
-    And I close user details section
-    When I add new user(s):
+  @TC.20988 @bus @2.5 @user_view @last_update @dynamic_create
+  Scenario: 20988 "Last Update" shows "< a minute ago" if last backup time is less than 1minutes
+    When I add a new MozyEnterprise partner:
+      | period | users |
+      | 12     | 2     |
+    Then New partner should be created
+    When I get the partner_id
+    And I act as newly created partner account
+    And I add new user(s):
       | name          | user_group           | storage_type | storage_limit | devices |
-      | TC.20986.User | (default user group) | Desktop      |               | 1       |
+      | TC.20988.User | (default user group) | Desktop      |               | 1       |
     Then 1 new user should be created
     And I search user by:
       | keywords   |
@@ -110,13 +75,13 @@ Feature: User Details
     And I update the newly created machine used quota to 10 GB
     And I refresh User Details section
     Then device table in user details should be:
-      | Device    | Used/Available     | Device Storage Limit | Last Update      | Action |
-      | Machine1  | 10 GB / 30 GB      | Set                  | < a minute ago   |        |
-    Then I delete device by name: Machine1
+      | Device   | Storage Type | Used/Available | Device Storage Limit | Last Update    | Action |
+      | Machine1 | Desktop      | 10 GB / 40 GB  | Set                  | < a minute ago |        |
+    Then I stop masquerading
+    And I search and delete partner account by newly created partner company name
 
   @TC.21020 @bus @2.5 @user_view @itemized @list_active_devices
   Scenario: 21020 [Itemized]List all the active devices including stash
-    Given I log in bus admin console as administrator
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | company name             |
       | 12     | 8     | 100 GB      | yes       | [Itemized] User Detail   |
@@ -150,7 +115,6 @@ Feature: User Details
 
   @TC.21096 @bus @2.5 @user_view @itemized
   Scenario: 21096 [Itemized]Edit the number of Desktop Device
-    Given I log in bus admin console as administrator
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | company name             |
       | 12     | 8     | 100 GB      | yes       | [Itemized]Edit Device    |
@@ -193,7 +157,6 @@ Feature: User Details
 
   @TC.21097 @bus @2.5 @itemized @user_view @list_active_devices
   Scenario: 21097 [Itemized]Error shows when I add more Server devices than available in UG
-    Given I log in bus admin console as administrator
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | company name             |
       | 12     | 8     | 100 GB      | yes       | [Itemized]No More Device |
@@ -221,7 +184,6 @@ Feature: User Details
 
   @TC.21102 @bus @2.5 @user_view @list_active_devices @itemized
   Scenario: 21102 [Bundled]Removed Device is returned to UG
-    Given I log in bus admin console as administrator
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | company name             |
       | 12     | 8     | 100 GB      | yes       | [Itemized]Removed Device |
@@ -275,7 +237,6 @@ Feature: User Details
 
   @TC.21103 @bus @2.5 @user_view @list_active_devices @itemized
   Scenario: 21103 [Bundled]Error shows when I remove more Desktop devices than not activated
-    Given I log in bus admin console as administrator
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan |
       | 12     | Silver        | 200            | yes         |
@@ -303,9 +264,8 @@ Feature: User Details
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120019
+  @TC.120019 @bus @edit_device_limit
   Scenario: 120019:[Bundled]newly synced FedID users can edit device limit
-    Given I log in bus admin console as administrator
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms | server plan |
       | 12     | Silver        | 100            | yes       | yes         |
@@ -346,18 +306,19 @@ Feature: User Details
       | Used | Available | storage_type |
       |  0   | 2         | Server       |
     And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
     When I click Connection Settings tab
     And I input server connection settings
-      | Server Host   | Protocol | SSL Cert | Port | Base DN                    | Bind Username          | Bind Password |
-      | 10.135.16.154 | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com | leongh@qa5.mozyops.com | QAP@SSw0rd    |
+      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
     Then test connection message should be Test passed
     When I click Sync Rules tab
     And I add 1 new provision rules:
-      | rule          | group |
-      | cn=test110836 | Test  | 
+      | rule            | group |
+      | cn=120019-test1 | Test  |
     And I click the sync now button
     And I wait for 70 seconds
     And I click Connection Settings tab
@@ -368,10 +329,10 @@ Feature: User Details
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     Then User search results should be:
-      | User                 | Name       | User Group |
-      | <%=@users[0].email%> | User1      | Test       |
-      | test110836@test.com  | test110836 | Test       |
-    And I view user details by test110836
+      | User                   | Name         | User Group |
+      | 120019-test1@test.com  | 120019-test1 | Test       |
+      | <%=@users[0].email%>   | User1        | Test       |
+    And I view user details by 120019-test1
     And users' device status should be:
       | Used | Available | storage_type |
       |  0   | Unlimited | Server       |
@@ -398,8 +359,8 @@ Feature: User Details
     When I click Sync Rules tab
     And I delete all the rules
     And I add 1 new deprovision rules:
-      | rule          | action |
-      | cn=test110836 | Delete |
+      | rule            | action |
+      | cn=120019-test1 | Delete |
     And I click the sync now button
     And I wait for 70 seconds
     And I click Connection Settings tab
@@ -410,9 +371,8 @@ Feature: User Details
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120020
+  @TC.120020 @bus @edit_device_limit
   Scenario: 120020 [Bundled]user moved from subpartner to partner can edit device limit
-    Given I log in bus admin console as administrator
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
       | 12     | Silver        | 100            | yes       |
@@ -468,9 +428,8 @@ Feature: User Details
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120021
+  @TC.120021 @bus @edit_device_limit
   Scenario: 120021 [Enterprise]newly synced FedID users can edit device limit
-    Given I log in bus admin console as administrator
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
       | 12     | 18    | 100 GB      | yes       |
@@ -511,18 +470,19 @@ Feature: User Details
       | Used | Available | storage_type |
       |  0   | 2         | Server       |
     And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
     When I click Connection Settings tab
     And I input server connection settings
-      | Server Host   | Protocol | SSL Cert | Port | Base DN                    | Bind Username          | Bind Password |
-      | 10.135.16.154 | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com | leongh@qa5.mozyops.com | QAP@SSw0rd    |
+      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
     Then test connection message should be Test passed
     When I click Sync Rules tab
     And I add 1 new provision rules:
-      | rule          | group |
-      | cn=test110836 | Test  |
+      | rule            | group |
+      | cn=120021-test1 | Test  |
     And I click the sync now button
     And I wait for 70 seconds
     And I click Connection Settings tab
@@ -533,10 +493,10 @@ Feature: User Details
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     Then User search results should be:
-      | User                 | Name       | User Group |
-      | <%=@users[0].email%> | User1      | Test       |
-      | test110836@test.com  | test110836 | Test       |
-    And I view user details by test110836
+      | User                   | Name         | User Group |
+      | 120021-test1@test.com  | 120021-test1 | Test       |
+      | <%=@users[0].email%>   | User1        | Test       |
+    And I view user details by 120021-test1
     And users' device status should be:
       | Used | Available | storage_type |
       | 0    | 8         | Server       |
@@ -565,7 +525,7 @@ Feature: User Details
     When  I edit user device quota to 1
     Then The range of device by tooltips should be:
       | Min | Max |
-      | 0   | 5   |
+      | 0   | 7   |
     And users' device status should be:
       | Used | Available | storage_type |
       |  0   | 1         | Server       |
@@ -573,8 +533,8 @@ Feature: User Details
     When I click Sync Rules tab
     And I delete all the rules
     And I add 1 new deprovision rules:
-      | rule          | action |
-      | cn=test110836 | Delete |
+      | rule            | action |
+      | cn=120021-test1 | Delete |
     And I click the sync now button
     And I wait for 70 seconds
     And I click Connection Settings tab
@@ -585,9 +545,8 @@ Feature: User Details
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120022
+  @TC.120022 @bus @edit_device_limit @env_dependent
   Scenario: 120022 [Enterprisde]user moved from subpartner to partner can edit device limit
-    Given I log in bus admin console as administrator
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | root role  |
       | 12     | 18    | 100 GB      | yes       | FedID role |

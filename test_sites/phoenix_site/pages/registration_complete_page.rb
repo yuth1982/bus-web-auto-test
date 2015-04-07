@@ -43,11 +43,13 @@ module Phoenix
     # @partner - partner specific info, namely country/partner type
     # localize item to click - label localized for language to be specifically selected.
     def localized_click(partner, loc_click)
-      navigate_to_link("#{LANG[partner.company_info.country][partner.partner_info.type][loc_click]}")
+      navigate_to_link("#{LANG[partner.partner_info.parent][partner.partner_info.type][loc_click]}")
     end
 
     def logout(partner)
       localized_click(partner, 'logout')
+      page.execute_script "window.close();"
+      page.driver.browser.switch_to().window(page.driver.browser.window_handles.last)
     end
 
     # clears pertinent cookies for phoenix
@@ -105,7 +107,7 @@ module Phoenix
       reg_comp_banner_present
       reg_comp_text
       reg_get_started
-      reg_referral_banner
+      #reg_referral_banner
       localized_click(partner, 'acct_page_link')
       reg_comp_banner_present
       localized_click(partner, 'resend_verify_email_link')
@@ -119,7 +121,7 @@ module Phoenix
       reg_comp_banner_present
       reg_comp_text
       reg_get_started
-      reg_referral_banner
+      #reg_referral_banner
       clear_phoenix_cookies
     end
 
@@ -134,7 +136,8 @@ module Phoenix
       reg_comp_banner_present
       reg_comp_text
       reg_get_started
-      find(:xpath, "//a[text()='#{LANG[partner.company_info.country][partner.partner_info.type]['acct_page_link']}']").click
+      #find(:xpath, "//a[text()='#{LANG[partner.company_info.country][partner.partner_info.type]['acct_page_link']}']").click
+      find(:xpath,"//div[@class='center']//a").click
     end
   end
 end

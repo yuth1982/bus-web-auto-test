@@ -73,6 +73,19 @@ module SiteHelper
       end
     end
 
+    def alert_present?
+      begin
+        page.driver.browser.switch_to.alert
+        $alert_text = alert_text
+        #puts $alert_text
+        #puts "Alert present!"
+        return true
+      rescue
+        #puts "No alert present."
+        return false
+      end
+    end
+
     # Public: Refresh bus admin console section
     #
     # Example:
@@ -121,7 +134,13 @@ module SiteHelper
     def wait_until_bus_section_load(element_hash = {})
       loading = root_element.find(:css, 'h2 a[onclick^=toggle_module]')
       unless loading[:class].nil?
-        wait_until{ loading[:class].match(/loading/).nil? }
+        begin
+          wait_until{ loading[:class].match(/loading/).nil? }
+        #Give the following step a chance to try even though the section does not finish loading.
+        #Sometimes, timeout just means the "loading" css is not removed, but the content is actually loaded
+        rescue Capybara::TimeoutError => ex
+          Log.debug ex.to_s
+        end
       end
       unless element_hash.empty?
         element_hash.each do | key, value |
@@ -130,7 +149,8 @@ module SiteHelper
       end
       # I found automation is still too faster, I need force to wait until table is loaded
       # Possible refactor here
-      sleep 2
+      # 2 seconds is still not enough: "search partner -> click on partner name", then no response to the click event
+      sleep 5
     end
 
     def wait_until_ajax_finished(elements)

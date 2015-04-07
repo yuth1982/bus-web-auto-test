@@ -77,13 +77,20 @@ module Bus
     #section(:footer_branding_section, BrandingSection, xpath: "//*[@id='site_branding-webrestore_site-tabs']/ul[1]/li[3]")
     #iframe(:css_iframe, CSSIframe, :id, 'site_branding-webrestore_site-content')
 
+    # support section
+    section(:contact_section, ContactSection, xpath: "//a[text()='Contact']")
+
+    # internal tools
+    section(:manage_vatfx_rates_section, ManageVATTXRatesSection, id: "internal-add_vat_rate")
+
+
     # Private element
     element(:current_admin_div, id: 'identify-me')
     element(:stop_masquerading_link, xpath: "//a[text()='stop masquerading']")
     element(:quick_link_item, id: "nav-cat-quick")
 
     # Popup window
-    element(:start_using_mozy_btn, id: "btn_start_using")
+    element(:start_using_mozy_btn, id: "start_using_mozy")
     element(:popup_content_div, css: "div.popup-window-content")
     element(:close_popup_link, css: "div.close_bar a")
     element(:close_btn, css: "div.popup-window-footer input[value=Close]")
@@ -94,6 +101,18 @@ module Bus
     element(:allocate_resources_btn, css: "div.popup-window-footer input[value=Allocate]")
     element(:ok_btn, css: "div.popup-window-footer input[value=Ok]")
     element(:yes_btn, css: "div.popup-window-footer input[value=Yes]")
+    # Activate element
+    element(:password_set_text, id: 'admin_password')
+    element(:password_set_again_text, id: 'admin_password_confirmation')
+    element(:continue_activate_btn, xpath: "//input[@name='commit']")
+    element(:go_to_account_link, xpath: "//a[text()='Go To Account']")
+
+    # partner name in the right top corner
+    element(:partner_top_link, xpath: "//div[@id='identify-me']/a[1]")
+
+    def get_partner_name_topcorner
+      find(:xpath, "//div[@id='identify-me']/a[1]").text
+    end
 
     def partner_id
       find(:xpath, "//div[@id='identify-me']/a[1]")[:href][/partner-show-(\d+)/, 1]
@@ -108,6 +127,7 @@ module Bus
     # @return [nothing]
     def navigate_to_menu(link_name, use_quick_link = false)
       start_using_mozy_btn.click if has_start_using_mozy_btn?
+      alert_accept if alert_present?
       # Looking for link in navigation menu
       find(:xpath, "//ul//a[text()='#{link_name}']")
       # calling all method does not require to wait
@@ -115,6 +135,7 @@ module Bus
       el = use_quick_link ? links.first : links.last
       if links.first.element_parent[:class].match(/active/).nil? && links.last.element_parent[:class].match(/active/).nil?
         el.click
+        alert_accept if alert_present?
       end
       # Make sure the destination section loaded correctly for further use in following steps
       find(:css, 'h2 a[onclick^=toggle_module]')
@@ -143,10 +164,12 @@ module Bus
     end
 
     def has_navigation?(link)
-      !all(:xpath, "//a[text() = '#{link}']").empty?
+      alert_accept if alert_present?
+      !all('a', :text => link).empty?
     end
 
     def has_content?(content)
+      alert_accept if alert_present?
       page.has_content?(content)
     end
 
@@ -206,11 +229,37 @@ module Bus
     # code here relates
     # to mozypro related items
     def partner_created(partner)
+      page.driver.browser.switch_to().window(page.driver.browser.window_handles.last)
+      start_using_mozy_btn.click if has_start_using_mozy_btn?
       find_link(partner.company_info.name).present?
     end
 
     def go_to_partner_info(partner)
       find_link(partner.company_info.name).click
     end
+
+    def visit_skeletor_url
+      url = find('div.dashboard-graphs img')[:src]
+      visit url
+      using_wait_time 2 do
+        fail('Skeletor not working') if page.has_css?('div#dashboard-e-content')
+      end
+    end
+
+    def open_admin_activate_page(admin_link)
+      visit admin_link
+    end
+
+    def set_admin_password (password)
+      password_set_text.type_text(password)
+      password_set_again_text.type_text(password)
+      sleep 3
+      continue_activate_btn.click
+    end
+
+    def go_to_account
+      go_to_account_link.click
+    end
+
   end
 end

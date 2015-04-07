@@ -65,26 +65,53 @@ module Phoenix
     def verify_domain(partner)
       case partner.company_info.country
         # german - lang specific
-        when ('Schweiz' || 'Austria' || 'Switzerland' || 'Deutschland' || 'Germany' || 'Österrreich');
-          url.eql?(/https?:\/\/secure.mozy.de\/registration\/[\S]+location\/[\S]+/);
+        when 'Switzerland', 'Schweiz', 'Austria', 'Österrreich', 'Germany', 'Deutschland', 'Liechtenstein'
+          url.eql?(/https?:\/\/secure.mozy.de\/registration\/[\S]+location\/[\S]+/)
+          if partner.partner_info.type == 'MozyPro'
+            partner.partner_info.parent = 'MozyPro Germany'
+          elsif partner.partner_info.type == 'MozyHome'
+            partner.partner_info.parent = 'MozyHome Germany'
+          end
         # french - lang specific
-        when ('France' || 'Suisse' || 'Canada' || 'Burkina Faso' || 'Niger' || 'Senegal' || 'Gabun' || 'Mayotte' ||
-            'Mali' || 'Rwanda' || 'Belgique' || 'Ivory Coast' || 'Haiti' || 'Burundi' || 'Togo' || 'Congo' || 'Gabon' || 'Comoros' || 'Equatorial Guinea' || 'Guadeloupe' ||
-            'Djibouti' || 'Luxembourg' || 'Seychelles' || 'Monaco' || 'Reunion' || 'New Caledonia' || 'Wallis and Futuna' ||
-            'French Polynesia' || 'French Southern Territories' || 'French Guiana' || 'Martinique' || 'Saint Pierre and Miquelon' || 'Bénin' || 'Guinée' || 'Côte d’Ivoire') ;
-          url.eql?(/https?:\/\/secure.mozy.fr\/registration\/[\S]+location\/[\S]+/);
+        when 'France', 'Suisse', 'Canada', 'Burkina Faso', 'Niger', 'Senegal', 'Mali', 'Rwanda', 'Belgique', 'Ivory Coast',
+            'Haiti', 'Burundi', 'Bénin', 'Togo', 'Congo', 'Gabon', 'Comoros', 'Equatorial Guinea', 'Djibouti', 'Luxembourg',
+            'Seychelles', 'Monaco', 'Guadeloupe', 'Reunion', 'New Caledonia', 'Wallis and Futuna', 'French Polynesia', 'Belgium',
+            'French Southern Territories', 'French Guiana', 'Martinique', 'Saint Pierre and Miquelon', 'Guinée',
+            'Côte d’Ivoire''Gabun', 'Mayotte'
+            url.eql?(/https?:\/\/secure.mozy.fr\/registration\/[\S]+location\/[\S]+/)
+          if partner.partner_info.type == 'MozyPro'
+            partner.partner_info.parent = 'MozyPro France'
+          elsif partner.partner_info.type == 'MozyHome'
+            partner.partner_info.parent = 'MozyHome France'
+          end
         # ireland - mainstream EU
-        when ('Andorra' || 'Albania' || 'Netherlands Antilles' || 'Bosnia and Herzegovina' || 'Belgium' || 'Bulgaria' ||
-            'Estonia' || 'Spain' || 'Europe' || 'Finland' || 'Greece' || 'Croatia' || 'Greenland' || 'Faroe Island' ||
-            'Ireland' || 'Iceland' || 'Italy' || 'Lithuania' || 'Luxembourg' || 'Monaco' || 'Montenegro' || 'Czech Republic' ||
-            'Martinique' || 'Netherlands' || 'Poland' || 'Portugal' || 'Slovenia' || 'San Marino' || 'Holy See') ;
-          url.eql?(/https?:\/\/secure.mozy.ie\/registration\/[\S]+location\/[\S]+/);
+        when 'Andorra', 'Albania', 'Netherlands Antilles', 'Bosnia and Herzegovina', 'Bulgaria', 'Cyprus', 'Slovakia',
+            'Estonia', 'Spain', 'Europe', 'Finland', 'Greece', 'Croatia', 'Greenland', 'Faroe Island', 'Latvia',
+            'Ireland', 'Iceland', 'Italy', 'Lithuania', 'Montenegro', 'Czech Republic', 'Malta', 'Romania',
+            'Netherlands', 'Poland', 'Portugal', 'Slovenia', 'San Marino', 'Holy See', 'Denmark', 'Hungary', 'Sweden'
+          url.eql?(/https?:\/\/secure.mozy.ie\/registration\/[\S]+location\/[\S]+/)
+          if partner.partner_info.type == 'MozyPro'
+            partner.partner_info.parent = 'MozyPro Ireland'
+          elsif partner.partner_info.type == 'MozyHome'
+            partner.partner_info.parent = 'MozyHome Ireland'
+          end
         # united kingdom
-        when ('United Kingdom' || 'Isle of Man' || 'Falkland Islands' || 'Jersey' || 'British Ind Ocean Terr.' || 'South Georgia' || 'Saint Helena' || 'Pitcairn');
+        when 'United Kingdom', 'Falkland Islands (Malvinas)', 'Gibraltar', 'South Georgia and the South Sandwich Islands', 'Isle of Man',
+            'British Indian Ocean Territory', 'Falkland Islands', 'Jersey',  'Pitcairn', 'Saint Helena', 'Virgin Islands, British'
           url.eql?(/https?:\/\/secure.mozy.co.uk\/registration\/[\S]+location\/[\S]+/)
+          if partner.partner_info.type == 'MozyPro'
+            partner.partner_info.parent = 'MozyPro UK'
+          elsif partner.partner_info.type == 'MozyHome'
+            partner.partner_info.parent = 'MozyHome UK'
+          end
         else
         # us dom - encompasses all those not mentioned here
-          url.eql?(/https?:\/\/secure.mozy.com\/registration\/[\S]+location\/[\S]+/);
+          url.eql?(/https?:\/\/secure.mozy.com\/registration\/[\S]+location\/[\S]+/)
+          if partner.partner_info.type == 'MozyPro'
+            partner.partner_info.parent = 'MozyPro'
+          elsif partner.partner_info.type == 'MozyHome'
+            partner.partner_info.parent = 'MozyHome'
+          end
       end
     end
   end

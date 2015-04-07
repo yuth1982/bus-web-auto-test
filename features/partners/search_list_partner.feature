@@ -7,7 +7,7 @@ Feature: Search and list partner
   # Test account Barclays Root - Reserved is in QA6 only
   #
   # Todo: this case need to check create ip white list successful message
-  @TC.643 @need_test_account @bus @2.5 @partner @ip_white_list_visibility
+  @TC.643 @need_test_account @bus @2.5 @partner @ip_white_list_visibility @env_dependents
   Scenario: 643 Verify White List visibility for an OEM partner with an API Key
     When I search partner by:
       | name                     | filter |
@@ -31,7 +31,7 @@ Feature: Search and list partner
   # This test cases requires an OEM partner without API Key
   # Test account Charter Business Trial - Reserved is in QA6 only
   #
-  @TC.645 @need_test_account @bus @2.5 @partner @ip_white_list_visibility
+  @TC.645 @need_test_account @bus @2.5 @partner @ip_white_list_visibility @env_dependent
   Scenario: 645 Verify White List visibility for an OEM partner without an API Key
     When I search partner by:
       | name                              | filter |
@@ -65,7 +65,7 @@ Feature: Search and list partner
   # This test cases requires an OEM partner
   # Test account Charter Business Trial - Reserved is in QA6 only
   #
-  @TC.790 @need_test_account @bus @2.5 @partner @partner_search
+  @TC.790 @need_test_account @bus @2.5 @partner @partner_search @env_dependent
   Scenario: 790 Do a search for all partners
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -136,7 +136,7 @@ Feature: Search and list partner
   # This test cases requires an incompleted partner
   # Test account Quigley-Effertz - Reserved is in QA6 only
   #
-  @TC.794 @need_test_account @bus @2.5 @partner @partner_search
+  @TC.794 @need_test_account @bus @2.5 @partner @partner_search @env_dependent
   Scenario: 794 Search incomplete all partners
     When I search partner by:
       | name                       | filter           |
@@ -162,7 +162,7 @@ Feature: Search and list partner
   # This test cases requires an OEM partner
   # Test account Charter Business Trial - Reserved is in QA6 only
   #
-  @TC.797 @need_test_account @bus @2.5 @partner @partner_search
+  @TC.797 @need_test_account @bus @2.5 @partner @partner_search @env_dependent
   Scenario: 797 Search for partners with the OEMs type
     When I search partner by:
       | name                              | filter |
@@ -174,7 +174,7 @@ Feature: Search and list partner
   # This test cases requires any existing partner
   # Test account Charter Business Trial - Reserved is in QA6 only
   #
-  @TC.799 @need_test_account @bus @2.5 @partner @partner_search
+  @TC.799 @need_test_account @bus @2.5 @partner @partner_search @env_dependent
   Scenario: 799 Uncheck the include sub-partners
     When I search partner by:
       | name                              | including sub-partners |
@@ -184,7 +184,7 @@ Feature: Search and list partner
   # This test cases requires any existing partner
   # Test account Charter Business Trial - Reserved is in QA6 only
   #
-  @TC.800 @need_test_account @bus @2.5 @partner @partner_search
+  @TC.800 @need_test_account @bus @2.5 @partner @partner_search @env_dependents
   Scenario: 800 Clear the search results for a partner
     When I search partner by:
       | name                              | filter |
@@ -210,8 +210,8 @@ Feature: Search and list partner
       | Total Charges    |          |            | $9.99       |
     And New partner should be created
     And Partner general information should be:
-      | Status:         | Root Admin:          | Root Role:                  | Parent: | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
-      | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro | @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change) |
+      | Status:         | Root Admin:          | Root Role:                  | Parent:| Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
+      | Active (change) | @root_admin (act as) | SMB Bundle Limited (change) | MozyPro| @login_admin_email [X] (add referral) | (learn more and set up) | Yes (change)          | No (change)         | No (change)         | Yes (change) |
     And Partner contact information should be:
       | Company Type: | Users: | Contact Address:  | Contact City: | Contact State: | Contact ZIP/Postal Code: | Contact Country: | Phone:         | Contact Email:                 |
       | MozyPro       | 0      | 3401 Hillview Ave | Palo Alto     | CA             | 94304                    | United States    | 1-877-486-9273 | <%=@partner.admin_info.email%> |

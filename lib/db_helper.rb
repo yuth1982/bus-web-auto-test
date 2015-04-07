@@ -5,16 +5,37 @@ module DBHelper
   @db_user = QA_ENV['db_user']
   @db_name = QA_ENV['db_name']
 
+  # Public: verify home user by user_name
+  #
+  def change_email_verified_at(username)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      t = (Time.now)
+      Log.debug "########Time.now is #{Time.now}"
+      Log.debug "########t is #{t}"
+      Log.debug "########username is #{username}"
+      sql = "update users set email_verified_at='#{t}' where username='#{username}';"
+      c = conn.exec(sql)
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
   # Public: change user's last sync at time to days's before by user_id
   #
   def change_last_sync_at(user_id, days)
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      t = (Time.now - (days + 1) * 24 * 3600)
-      sql = "update user_sync_details set last_sync_at='#{t}' where user_id=#{user_id};"
+      t = (Time.now - (days + 10) * 24 * 3600)
+      Log.debug "########Time.now is #{Time.now}"
+      Log.debug "########t is #{t}"
+      Log.debug "########user_id is #{user_id}"
+      sql = "update user_sync_details set last_sync_at='#{t}' where user_id='#{user_id}';"
       c = conn.exec(sql)
-    rescue PGError => e
-      puts 'postgres error'
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
     ensure
       conn.close unless conn.nil?
     end
@@ -26,8 +47,8 @@ module DBHelper
       sql = "select machine_id from mozy_pro_keys where keystring ='#{license_key}';"
       c = conn.exec(sql)
       c.values[0][0].to_i
-    rescue PGError => e
-      puts 'postgres error'
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
     ensure
       conn.close unless conn.nil?
     end
@@ -38,8 +59,8 @@ module DBHelper
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
       sql = "UPDATE machines SET space_used = #{quota}::bigint*1024*1024*1024 , pending_space_used = 0, patches = 0, files = 1, last_client_version = null,last_backup_at = #{time}, last_successful_backup_at = #{time} WHERE id = #{machine_id};;"
       c = conn.exec(sql)
-    rescue PGError => e
-      puts 'postgres error'
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
     ensure
       conn.close unless conn.nil?
     end
@@ -51,8 +72,8 @@ module DBHelper
       sql = "select machine_available_quota(#{machine_id});"
       c = conn.exec(sql)
       c.values[0][0].to_i/(1024 ** 3)
-    rescue PGError => e
-      puts 'postgres error'
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
     ensure
       conn.close unless conn.nil?
     end
@@ -61,11 +82,11 @@ module DBHelper
   def get_user_email
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "select username from public.users where username like '%@decho.com%' and deleted = false and creation_time IS NOT NULL order by id DESC limit 1;"
+      sql = "select username from public.users where username like '%@decho.com%' and deleted = false and creation_time IS NOT NULL and username not in (select username from public.admins where username like '%@decho.com%' and deleted_at IS NULL) order by id DESC limit 1;"
       c = conn.exec(sql)
       c.values[0][0]
-    rescue PGError => e
-      puts 'postgres error'
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
     ensure
       conn.close unless conn.nil?
     end
@@ -98,8 +119,8 @@ module DBHelper
       c = conn.exec(sql)
       Log.debug("Email from tree #{parent} = #{c.values[0][0]}")
       c.values[0][0]
-    rescue PGError => e
-      puts 'postgres error'
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
     ensure
       conn.close unless conn.nil?
     end
@@ -109,11 +130,11 @@ module DBHelper
   def get_admin_email
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "select username from public.admins where username like '%@decho.com%' and deleted_at IS NULL and passwordhash IS NOT NULL and username not in (select username from users where username like '%@decho.com%' and deleted = false) order by id DESC limit 1;"
+      sql = "select username from public.admins where username like '%@gmail.com%' and deleted_at IS NULL and passwordhash IS NOT NULL and username not in (select username from users where username like '%@gmail.com%' and deleted = false) order by id DESC limit 1;"
       c = conn.exec(sql)
       c.values[0][0]
-    rescue PGError => e
-      puts 'postgres error'
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
     ensure
       conn.close unless conn.nil?
     end
@@ -122,11 +143,11 @@ module DBHelper
   def get_mh_user_email
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "select username from public.users where username like '%@decho.com%' and deleted = false and user_group_id = 4151 and username not in (select username from users where username like '%@decho.com%' and deleted = false) order by id DESC limit 1;"
+      sql = "select username from users where username like '%@decho.com%' and deleted = false and user_group_id = 4151 order by id DESC limit 1;"
       c = conn.exec(sql)
       c.values[0][0]
-    rescue PGError => e
-      puts 'postgres error'
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
     ensure
       conn.close unless conn.nil?
     end
@@ -138,8 +159,8 @@ module DBHelper
       sql = "select username from public.users where (username like '%@decho.com%' or username like '%redacted-%') and deleted = false and suspended_at NOTNULL and username not in (select username from users where username like '%@decho.com%' and deleted = false) order by id DESC limit 1;"
       c = conn.exec(sql)
       c.values[0][0]
-    rescue PGError => e
-      puts 'postgres error'
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
     ensure
       conn.close unless conn.nil?
     end
@@ -148,11 +169,11 @@ module DBHelper
   def get_deleted_user_email
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "select username from public.users where username like '%@decho.com%' and deleted = true and username not in (select username from users where username like '%@decho.com%' and deleted = false) order by id DESC limit 1;"
+      sql = "select username from users where username like '%@gmail.com%' and deleted = true order by id DESC limit 1;"
       c = conn.exec(sql)
       c.values[0][0]
-    rescue PGError => e
-      puts 'postgres error'
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
     ensure
       conn.close unless conn.nil?
     end
@@ -183,7 +204,7 @@ module DBHelper
       Log.debug sql
       mozy_pro_key_ids.each_with_index do |mozy_pro_key_id, index|
         Log.debug "#{index} / #{mozy_pro_key_ids.size}"
-        sql = "insert into machines(alias, machine, user_id, site, sync, created_at, updated_at) values ('AUTOTEST', 'machinehash#{Time.now.to_i}', #{user_id}, 'qa6', false, now(), now());"
+        sql = "insert into machines(alias, machine, user_id, site, sync, created_at, updated_at) values ('AUTOTEST', 'machinehash#{Time.now.to_i+index}', #{user_id}, '#{QA_ENV['data_center']}', false, now(), now());"
         conn.exec sql
         Log.debug sql
 
@@ -204,8 +225,8 @@ module DBHelper
         conn.exec sql
         Log.debug sql
       end
-    rescue PGError
-      puts 'postgres error'
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
       puts "#{$!}\n#{$@.join("\n")}"
     ensure
       conn.close unless conn.nil?
@@ -218,8 +239,8 @@ module DBHelper
       sql = "select id from users where username = '#{email}' limit 1;"
       c = conn.exec sql
       c.values[0][0].to_i
-    rescue PGError => e
-      puts 'postgres error'
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
     ensure
       conn.close unless conn.nil?
     end
@@ -232,8 +253,8 @@ module DBHelper
       puts sql
       c = conn.exec sql
       c[0]
-    rescue PGError => e
-      puts 'postgres error'
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
     ensure
       conn.close unless conn.nil?
     end
@@ -245,8 +266,8 @@ module DBHelper
       sql = "select character_class from password_policies_character_classes where password_policy_id = #{password_policy_id};"
       c = conn.exec sql
       c.field_values('character_class')
-    rescue PGError => e
-      puts 'postgres error'
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
     ensure
       conn.close unless conn.nil?
     end
@@ -258,8 +279,8 @@ module DBHelper
       sql = "UPDATE subscriptions SET expiration_time='#{Date.today - days_ago.to_i} 12:12:12' WHERE user_id = #{user_id};"
       puts sql
       conn.exec sql
-    rescue PGError => e
-      puts 'postgres error'
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
       fail e
     ensure
       conn.close unless conn.nil?
@@ -272,8 +293,8 @@ module DBHelper
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
       sql = "UPDATE users SET backup_suspended_at = '#{Date.today - (weeks_ago * 7)}' WHERE id = #{user_id};"
       conn.exec sql
-    rescue PGError => e
-      puts 'postgres error'
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
       fail e
     ensure
       conn.close unless conn.nil?
@@ -285,8 +306,8 @@ module DBHelper
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
       sql = "UPDATE users SET gc_notify_at = '#{Date.today - (weeks_ago * 7)}' WHERE id = #{user_id};"
       conn.exec sql
-    rescue PGError => e
-      puts 'postgres error'
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
       fail e
     ensure
       conn.close unless conn.nil?
@@ -300,8 +321,8 @@ module DBHelper
       sql = "select gc_notify_at from users where id = #{user_id};"
       conn.exec sql
       c.values[0][0].to_i
-    rescue PGError => e
-      puts 'postgres error'
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
       fail e
     ensure
       conn.close unless conn.nil?
@@ -314,8 +335,36 @@ module DBHelper
       sql = "select * from users where id = #{user_id};"
       conn.exec sql
       c.values[0][0].to_i
-    rescue PGError => e
-      puts 'postgres error'
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+      fail e
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_partner_setting_value(partner_id,setting_name)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select value from pro_partner_settings where key='#{setting_name}' and pro_partner_id = #{partner_id};"
+      c = conn.exec sql
+      c.values[0][0].to_i
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+      fail e
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_global_setting_value(setting_name)
+    begin
+      sql = "select value from global_settings where key='#{setting_name}';"
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      c = conn.exec sql
+      c.values[0][0].to_i
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
       fail e
     ensure
       conn.close unless conn.nil?

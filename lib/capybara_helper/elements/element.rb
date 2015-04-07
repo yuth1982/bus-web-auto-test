@@ -25,17 +25,19 @@ class Capybara::Node::Element
   #
   # Returns nothing
   def highlight
-    begin
-      driver.execute_script("#{self[:style]}; document.activeElement.style.border='2px solid red'")
-    rescue
+    #begin
+      #driver.execute_script("#{self[:style]}; document.activeElement.style.border='2px solid red'")
+    #rescue
       # Skipped
-    end
+    #end
   end
   # Public: clear value of an element
   # This might not work with webkit
   #
   def clear_value
-    driver.execute_script("document.getElementById('#{self[:id]}').value=''")
+    #On Chrome, execute_script sometimes works sometimes not
+    #driver.execute_script("document.getElementById('#{self[:id]}').value=''")
+    set('')
   end
 
   # Public: Get parent element of current element
@@ -104,6 +106,60 @@ class Capybara::Node::Element
 
   def enabled?
     self['disabled'].nil?
+  end
+
+  alias_method :old_click, :click
+  def click
+    msg = 'Clicking on'
+    txt = self.text
+    val = self.value
+    msg += ' text:\'' + txt + '\'' if !txt.nil? && txt.length > 0
+    msg += ' value:\'' + val + '\'' if !val.nil? && val.length > 0
+    msg += ' ' + @selector.selector.name.to_s + ':' + '\'' + @selector.locator.to_s + '\''
+    #puts msg
+    CapybaraHelper::Extension::Context.instance.log.puts msg if !CapybaraHelper::Extension::Context.instance.log.nil?
+    sleep 1 #pause 1 second before each click to reduce race condition
+    old_click
+  end
+
+  alias_method :old_set, :set
+  def set(value)
+    if !value.nil? && value.to_s.length > 0
+      is_password = (!self.text.nil? && self.text.downcase.match(/.*password.*/)) ||
+          (!self.value.nil? && self.value.downcase.match(/.*password.*/)) ||
+          (!@selector.locator.nil? && @selector.locator.to_s.downcase.match(/.*password.*/))
+      if is_password
+        msg = 'Typing \'******\' in'
+      else
+        msg = 'Typing \'' + value.to_s + '\' in'
+      end
+
+      txt = self.text
+      val = self.value
+      msg += ' text:\'' + txt + '\'' if !txt.nil? && txt.length > 0
+      msg += ' value:\'' + val + '\'' if !val.nil? && val.length > 0
+      msg += ' ' + @selector.selector.name.to_s + ':' + '\'' + @selector.locator.to_s + '\''
+      #puts msg
+      CapybaraHelper::Extension::Context.instance.log.puts msg if !CapybaraHelper::Extension::Context.instance.log.nil?
+    end
+    old_set value
+  end
+
+  alias_method :old_select, :select
+  def select(value, options={})
+    if !value.nil? && value.to_s.length > 0
+      msg = 'Selecting \'' + value.to_s + '\' in'
+      val = self.value
+      msg += ' value:\'' + val + '\'' if !val.nil? && val.length > 0
+      if options.has_key?(:from)
+        msg += ' ' + options[:from] + '\''
+      else
+        msg += ' ' + @selector.selector.name.to_s + ':' + '\'' + @selector.locator.to_s + '\''
+      end
+      #puts msg
+      CapybaraHelper::Extension::Context.instance.log.puts msg if !CapybaraHelper::Extension::Context.instance.log.nil?
+    end
+    old_select value, options
   end
 end
 

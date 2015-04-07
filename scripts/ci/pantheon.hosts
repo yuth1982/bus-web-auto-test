@@ -1,0 +1,10 @@
+#pantheon
+173.243.55.16 mozypro.com www.mozypro.com st2.mozypro.com www.st2.mozypro.com europe.mozypro.com platinum.mozypro.com secure.mozypro.com #BUS
+173.243.55.25 secure.mozy.com phoenix.mozy.com phoenix.std2.mozy.com secure.mozy.co.uk secure.mozy.ie secure.mozy.fr secure.mozy.de #Phoenix US and EMEA
+173.243.55.30 mozy.com www.mozy.com st2.mozy.com www.mozy-uk.com mozy.co.uk st2.mozy.co.uk mozy-fr.com www.mozy-fr.com mozy.fr st2.mozy-fr.com mozy-de.com www.mozy-de.com mozy.de st2.mozy-de.com mozy-ie.com www.mozy-ie.com mozy.ie st2.mozy-ie.com #CMS US and EMEA
+173.243.55.20 webrestore.mozy.com webrestore.st2.mozy.com #Freyja
+173.243.54.99 resellers.mozy.com
+
+#google
+127.0.0.1 ssl.google-analytics.com
+127.0.0.1 ajax.googleapis.com

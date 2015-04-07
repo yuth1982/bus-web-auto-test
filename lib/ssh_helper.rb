@@ -53,7 +53,7 @@ module SSHRecordOverdraft
     Net::SSH.start(HOST, USER, :password => PASSWORD) do |session|
       script = "script/record_overdrafts -e production -p #{partner_id}"
       output = session.exec!("cd /var/www/bus && #{script}")
-      output = output.scan(/Partner (\d{6}) is using autogrow and is overdrafted on its Generic license by (\d+) GB/)
+      output = output.scan(/Partner (\d+) is using autogrow and is overdrafted on its Generic license by (\d+) GB/)
       output = "Partner #{output[0][0].to_s} is using autogrow and is overdrafted on its Generic license by #{output[0][1].to_s} GB"
     end
   end
@@ -118,3 +118,31 @@ module SSHReap
 
 end
 
+
+module SSHPushConnector
+  HOST = "10.135.10.85"
+  USER = "Administrator"
+  PASSWORD = "QAP@SSw0rd"
+
+  def push_users(partner_id)
+
+    Net::SSH.start(HOST, USER, :password => PASSWORD) do |session|
+      script = "./MozyLDAPConnector.exe -partner_id #{partner_id} -ignore_certificates true -test_mode false -bifrost_url '#{QA_ENV['bifrost_host']}'"
+      output = session.exec!("cd /cygdrive/c/PROGRA~2/MozyLDAPConnector/ && #{script}")
+    end
+  end
+end
+
+module SSHKalypsoE2E
+  HOST = "10.135.10.214"
+  USER = "MozyQA"
+  PASSWORD = "Password1!"
+
+  def run_adfs_activation_and_backup(client, env, subdomain, user)
+
+    Net::SSH.start(HOST, USER, :password => PASSWORD) do |session|
+      script = "ruby adfsactivationandbackup.rb -c #{client} -e #{env} -s #{subdomain} -u #{user} -p '' -l"
+      output = session.exec!("cd /cygdrive/c/kalypso-automation/endtoend/ && #{script}")
+    end
+  end
+end

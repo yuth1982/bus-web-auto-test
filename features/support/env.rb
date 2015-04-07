@@ -63,3 +63,4 @@ Capybara.default_wait_time = CONFIGS['global']['default_wait_time']
 AriaApi::Configuration.auth_key = ARIA_API_ENV['auth_key']
 AriaApi::Configuration.client_no = ARIA_API_ENV['client_no']
 AriaApi::Configuration.url = ARIA_API_ENV['url']
+
