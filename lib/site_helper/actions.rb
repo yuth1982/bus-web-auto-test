@@ -134,7 +134,13 @@ module SiteHelper
     def wait_until_bus_section_load(element_hash = {})
       loading = root_element.find(:css, 'h2 a[onclick^=toggle_module]')
       unless loading[:class].nil?
-        wait_until{ loading[:class].match(/loading/).nil? }
+        begin
+          wait_until{ loading[:class].match(/loading/).nil? }
+        #Give the following step a chance to try even though the section does not finish loading.
+        #Sometimes, timeout just means the "loading" css is not removed, but the content is actually loaded
+        rescue Capybara::TimeoutError => ex
+          Log.debug ex.to_s
+        end
       end
       unless element_hash.empty?
         element_hash.each do | key, value |
