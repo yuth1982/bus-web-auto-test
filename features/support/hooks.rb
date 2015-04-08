@@ -1,3 +1,7 @@
+require 'win32/screenshot'
+require 'os'
+require 'base64'
+
 Before do
   # Do things before each scenario.
   FileHelper.clean_up_csv
@@ -64,8 +68,16 @@ After do |scenario|
     id = testcase_id scenario
     id = scenario.__id__ if id.nil? || id.length == 0
     name = "screenshot_#{id}_line#{scenario.location.line.to_s}.png"
-    page.driver.browser.save_screenshot("html-report/#{name}")
-    encoded_img =  page.driver.browser.screenshot_as(:base64)
+    if OS.windows?
+      Win32::Screenshot::Take.of(:foreground).write(name)
+      file = File.open(name, 'rb')
+      encoded_img = Base64.encode64(file.read)
+      file.close
+      File.delete(name)
+    else
+      #page.driver.browser.save_screenshot("html-report/#{name}")
+      encoded_img =  page.driver.browser.screenshot_as(:base64)
+    end
     embed("#{encoded_img}", "image/png", "#{name}")
   end
 end
