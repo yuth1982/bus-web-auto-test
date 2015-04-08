@@ -53,6 +53,8 @@ end
 case BROWSER
   when "firefox"
     Capybara.default_driver = :firefox
+  when "firefox_profile"
+    Capybara.default_driver = :firefox_profile
   when "chrome"
     Capybara.default_driver = :chrome
   when "ie"
