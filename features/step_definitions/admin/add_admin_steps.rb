@@ -1,6 +1,7 @@
 When /^I add a new admin:$/ do |table|
   # table is a | ATC695 | leongh+atc695@mozy.com | ATC695 |pending
   admin_hash = table.hashes.first
+  admin_hash['Roles'] = @role.name if admin_hash['Roles'] =='@role_name'
   roles = admin_hash['Roles'].split(',')
 
   admin_hash['Email'] = @existing_user_email if admin_hash['Email'] == '@existing_user_email'
