@@ -453,3 +453,10 @@ end
 Then /^I expand contact info from partner details section$/ do
   @bus_site.admin_console_page.partner_details_section.expand_contact_info
 end
+
+#this is only used for TC.14115
+When /^I get the partners name (.+) and type (.+)$/ do |name, type|
+  @partner = Bus::DataObj::MozyPro.new
+  @partner.company_info.name = name
+  @partner.partner_info.type = type
+end
