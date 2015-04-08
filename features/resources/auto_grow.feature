@@ -107,10 +107,10 @@ Feature: Auto Grow
     And I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     Then User search results should be:
-      | User                    | Name          | User Group  | Machines | Storage         | Storage Used |
-      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 0        | Generic Shared  | None         |
-      | <%=@users[2].email%>    | Jane Limited  | Limited UG  | 0        | Generic Shared  | None         |
-      | <%=@users[1].email%>    | John Shared   | Shared UG   | 0        | Generic Shared  | None         |
+      | User                    | Name          | User Group  | Machines | Storage | Storage Used |
+      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 0        | Shared  | None         |
+      | <%=@users[2].email%>    | Jane Limited  | Limited UG  | 0        | Shared  | None         |
+      | <%=@users[1].email%>    | John Shared   | Shared UG   | 0        | Shared  | None         |
     And I view details of <%=@users[1].email%>'s user group
     Then User group details should be:
       | Available Quota: |
@@ -149,10 +149,10 @@ Feature: Auto Grow
     And I navigate to Search / List Users section from bus admin console page
     And I clear user search results
     Then User search results should be:
-      | User                    | Name          | User Group  | Machines | Storage        | Storage Used |
-      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 1        | Generic Shared | 4.7 GB       |
-      | <%=@users[2].email%>    | Jane Limited  | Limited UG  | 0        | Generic Shared | None         |
-      | <%=@users[1].email%>    | John Shared   | Shared UG   | 0        | Generic Shared | None         |
+      | User                    | Name          | User Group  | Machines | Storage | Storage Used |
+      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 1        | Shared  | 4.7 GB       |
+      | <%=@users[2].email%>    | Jane Limited  | Limited UG  | 0        | Shared  | None         |
+      | <%=@users[1].email%>    | John Shared   | Shared UG   | 0        | Shared  | None         |
     And I view details of <%=@users[1].email%>'s user group
     Then User group details should be:
       | Available Quota: |
@@ -192,10 +192,10 @@ Feature: Auto Grow
     And I navigate to Search / List Users section from bus admin console page
     And I clear user search results
     Then User search results should be:
-      | User                    | Name          | User Group  | Machines | Storage        | Storage Used |
-      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 1        | Generic Shared | 4.7 GB       |
-      | <%=@users[2].email%>    | Jane Limited  | Limited UG  | 1        | Generic Shared | 2.8 GB       |
-      | <%=@users[1].email%>    | John Shared   | Shared UG   | 0        | Generic Shared | None         |
+      | User                    | Name          | User Group  | Machines | Storage | Storage Used |
+      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 1        | Shared  | 4.7 GB       |
+      | <%=@users[2].email%>    | Jane Limited  | Limited UG  | 1        | Shared  | 2.8 GB       |
+      | <%=@users[1].email%>    | John Shared   | Shared UG   | 0        | Shared  | None         |
     And I view details of <%=@users[1].email%>'s user group
     Then User group details should be:
       | Available Quota: |
@@ -232,10 +232,10 @@ Feature: Auto Grow
     And I navigate to Search / List Users section from bus admin console page
     And I clear user search results
     Then User search results should be:
-      | User                    | Name          | User Group  | Machines | Storage        | Storage Used |
-      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 1        | Generic Shared | 4.7 GB       |
-      | <%=@users[2].email%>    | Jane Limited  | Limited UG  | 1        | Generic Shared | 2.8 GB       |
-      | <%=@users[1].email%>    | John Shared   | Shared UG   | 1        | Generic Shared | 16.8 GB      |
+      | User                    | Name          | User Group  | Machines | Storage | Storage Used |
+      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 1        | Shared  | 4.7 GB       |
+      | <%=@users[2].email%>    | Jane Limited  | Limited UG  | 1        | Shared  | 2.8 GB       |
+      | <%=@users[1].email%>    | John Shared   | Shared UG   | 1        | Shared  | 16.8 GB      |
     And I view details of <%=@users[1].email%>'s user group
     Then User group details should be:
       | Available Quota: |

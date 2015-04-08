@@ -291,9 +291,9 @@ Feature: User stash setting management
       | keywords   |
       | TC.19115   |
     Then User search results should be:
-      | User                 | Name                 | Sync     | Machines | Storage        | Storage Used   | Created | Backed Up     |
-      | <%=@users[1].email%> | TC.19115.stash-user  | Enabled  | 0        | Desktop Shared |  20 GB         | today   | 1 minute ago  |
-      | <%=@users[0].email%> | TC.19115.backup-user | Disabled | 1        | Desktop Shared |  10 GB         | today   | 2 minutes ago |
+      | User                 | Name                 | Sync     | Machines | Storage         | Storage Used           | Created | Backed Up     |
+      | <%=@users[1].email%> | TC.19115.stash-user  | Enabled  | 0        | Desktop: Shared | Desktop: 20 GB         | today   | 1 minute ago  |
+      | <%=@users[0].email%> | TC.19115.backup-user | Disabled | 1        | Desktop: Shared | Desktop: 10 GB         | today   | 2 minutes ago |
 
   @TC.19116  @BSA.3040 @bus @2.5 @user_stories @US @mozypro @partner @stash
   Scenario: 19116 19117 Mozypro Partner View Sync status
@@ -343,9 +343,9 @@ Feature: User stash setting management
       | keywords   |
       | TC.19116   |
     Then User search results should be:
-      | User                 | Name                 | Sync     | Machines | Storage         | Storage Used | Created |
-      | <%=@users[1].email%> | TC.19116.stash-user  | Enabled  | 0        | Generic Shared  | 20 GB        | today   |
-      | <%=@users[0].email%> | TC.19116.backup-user | Disabled | 1        | Generic Shared  | 10 GB        | today   |
+      | User                 | Name                 | Sync     | Machines | Storage  | Storage Used | Created |
+      | <%=@users[1].email%> | TC.19116.stash-user  | Enabled  | 0        |  Shared  | 20 GB        | today   |
+      | <%=@users[0].email%> | TC.19116.backup-user | Disabled | 1        |  Shared  | 10 GB        | today   |
 
   @TC.120694 @TC.120695 @2.10 @bus @stash
   Scenario: 120694 120695 Check existing/new sync container's encryption type
