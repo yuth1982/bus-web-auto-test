@@ -1,4 +1,3 @@
-require 'win32/screenshot'
 require 'os'
 require 'base64'
 
@@ -69,6 +68,7 @@ After do |scenario|
     id = scenario.__id__ if id.nil? || id.length == 0
     name = "screenshot_#{id}_line#{scenario.location.line.to_s}.png"
     if OS.windows?
+      require 'win32/screenshot'
       Win32::Screenshot::Take.of(:foreground).write(name)
       file = File.open(name, 'rb')
       encoded_img = Base64.encode64(file.read)
