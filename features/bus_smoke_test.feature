@@ -380,8 +380,8 @@ Feature: BUS smoke test
   @bus_us @TC.125958
   Scenario: Test Case Mozy-125958: BUS US -- Delete test partner and validate they are in Pending Delete state
     When I add a new MozyPro partner:
-      | period | coupon                | net terms | server plan | root role               |
-      | 24     | <%=QA_ENV['coupon']%> | yes       | yes         | Bundle Pro Partner Root |
+      | company name                                        | period | coupon                | net terms | server plan | root role               |
+      | Internal Mozy - MozyPro BUS Smoke Test 5958-2015-10 | 24     | <%=QA_ENV['coupon']%> | yes       | yes         | Bundle Pro Partner Root |
     Then New partner should be created
     And I delete partner and verify pending delete
 
@@ -389,8 +389,8 @@ Feature: BUS smoke test
   @bus_us @TC.125959
   Scenario: Test Case Mozy-125959: BUS US -- Create a Pro partner and verify Partner creation in BUS and Aria
     When I add a new Reseller partner:
-      | period | base plan | coupon                | net terms | server plan |
-      | 1      | 50 GB     | <%=QA_ENV['coupon']%> | yes       | yes         |
+      | company name                                         | period | base plan | coupon                | net terms | server plan |
+      | Internal Mozy - Reseller BUS Smoke Test 5959-3026-41 | 1      | 50 GB     | <%=QA_ENV['coupon']%> | yes       | yes         |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account should be:
@@ -713,16 +713,16 @@ Feature: BUS smoke test
   @bus_emea @TC.125979
   Scenario: Test Case Mozy-125979: BUS EMEA -- Delete test partner and validate they are in Pending Delete state
     When I add a new MozyPro partner:
-      | period  |  create under   | server plan | net terms | country | coupon                |
-      | 12      |  MozyPro France | yes         | yes       | France  | <%=QA_ENV['coupon']%> |
+      | company name                                        | period  |  create under   | server plan | net terms | country | coupon                |
+      | Internal Mozy - MozyPro BUS Smoke Test 5979-5120-35 | 12      |  MozyPro France | yes         | yes       | France  | <%=QA_ENV['coupon']%> |
     And New partner should be created
     And I delete partner and verify pending delete
 
   @bus_emea @TC.125980
   Scenario: Test Case Mozy-125980: BUS EMEA -- Create a new partner (With VAT Number)
     When I add a new MozyPro partner:
-      | period | base plan | create under | server plan | net terms | country        | coupon                | vat number  |
-      | 1      | 10 GB     | MozyPro UK   | yes         | yes       | United Kingdom | <%=QA_ENV['coupon']%> | GB117223643 |
+      | company name                                        | period | base plan | create under | server plan | net terms | country        | coupon                | vat number  |
+      | Internal Mozy - MozyPro BUS Smoke Test 5980-4326-85 | 1      | 10 GB     | MozyPro UK   | yes         | yes       | United Kingdom | <%=QA_ENV['coupon']%> | GB117223643 |
     And New partner should be created
     Then I delete partner account
 
@@ -757,3 +757,4 @@ Feature: BUS smoke test
     And I search and delete partner account if it exists by Internal Mozy - MozyPro France BUS Smoke Test Data Shuttle 2468-1359-07
     And I search and delete partner account if it exists by Internal Mozy - MozyEnterprise BUS Smoke Test Report 5062-7291-02
     And I search and delete partner account if it exists by Internal Mozy - Reseller Ireland BUS Smoke Test 7531-8642-90
+
