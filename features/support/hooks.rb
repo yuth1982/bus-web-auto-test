@@ -71,7 +71,7 @@ After do |scenario|
       require 'win32/screenshot'
       require 'win32/api'
       include Win32
-      hWnd = API.new('GetForegroundWindow', 'V', 'L', 'user32').call
+      hWnd = Win32::API.new('GetForegroundWindow', 'V', 'L', 'user32').call(0,0)
       Win32::Screenshot::Take.of(:window, :hwnd => hWnd).write(name)
       file = File.open(name, 'rb')
       encoded_img = Base64.encode64(file.read)
