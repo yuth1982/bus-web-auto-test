@@ -68,11 +68,7 @@ After do |scenario|
     id = scenario.__id__ if id.nil? || id.length == 0
     name = "screenshot_#{id}_line#{scenario.location.line.to_s}.png"
     if OS.windows?
-      require 'win32/screenshot'
-      require 'win32/api'
-      include Win32
-      hWnd = Win32::API.new('GetForegroundWindow', 'V', 'L', 'user32').call(0,0)
-      Win32::Screenshot::Take.of(:window, :hwnd => hWnd).write(name)
+      system("start /wait tools/boxcutter-1.5/boxcutter.exe -f #{name}")
       file = File.open(name, 'rb')
       encoded_img = Base64.encode64(file.read)
       file.close
