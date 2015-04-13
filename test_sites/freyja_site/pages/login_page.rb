@@ -72,7 +72,7 @@ module Freyja
       #puts "**********"
       #puts page.response_headers()
       #puts `pwd`
-      Dir.glob("downloads/*").each{ |path| File.delete(path) }
+      Dir.glob("downloads/*").each{ |path| File.delete(path) unless path.include?("run.txt")}
     end
 
     def login_verify

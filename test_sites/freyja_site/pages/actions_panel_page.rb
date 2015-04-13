@@ -112,15 +112,15 @@ module Freyja
     #
     # Returns nothing
     def check_one_file_uploaded (machine_id, file_name)
-      wait_until do
-        upload_progress_bar.visible?
-      end
-      wait_until do
-        upload_success_msg.visible?
-      end
-      wait_until do
-        notification_badge.visible?
-      end
+      #wait_until do
+      #  upload_progress_bar.visible?
+      #end
+      #wait_until do
+      #  upload_success_msg.visible?
+      #end
+      #wait_until do
+      #  notification_badge.visible?
+      #end
       wait_until do
         find(:xpath, "//tr[@id='#{machine_id}:File:/sync/1/#{file_name}']/td/div/span").visible?
       end

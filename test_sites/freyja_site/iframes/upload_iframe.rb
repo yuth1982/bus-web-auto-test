@@ -12,7 +12,7 @@ module Freyja
     def attach_one_file
       file_name = File.dirname(__FILE__)
       parentPath = File.dirname(Pathname.new(file_name).parent.parent)
-      parentPath = parentPath + "/test_data/run.txt"
+      parentPath = parentPath + "/downloads/run.txt"
       #attach_file('filename', "#{QA_ENV['local_file_upload']}")
       attach_file('filename', parentPath)
     end
