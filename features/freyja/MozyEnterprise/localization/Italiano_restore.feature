@@ -3,7 +3,7 @@ Feature: Localization login and restore
   Background:
     Given I have login freyja as ent user using language Italiano
 
-  @TC. @freyja @freyja_smoke @ent1 @ent_localization @ent_localization_Italiano @ent_localization_Italiano_instant_restore
+  @TC. @freyja @freyja_smoke @ent1 @ent_localization @ent_localization_Italiano @ent_localization_Italiano_instant_restore @QA12 @QA6
   Scenario: MozyEnterprise user Italiano localization login and instant restore
     When I select the Synced tab
     And I choose one folder
@@ -16,7 +16,7 @@ Feature: Localization login and restore
 #    And I logout
 
 
-  @TC. @freyja @freyja_smoke @ent1  @ent_localization @ent_localization_Italiano @ent_localization_Italiano_restore_manager_restore
+  @TC. @freyja @freyja_smoke @ent1  @ent_localization @ent_localization_Italiano @ent_localization_Italiano_restore_manager_restore @QA12 @QA6
   Scenario: MozyEnterprise user Italiano localization login and restore manager restore
     When I select the Devices tab
     And I choose one file
@@ -31,7 +31,7 @@ Feature: Localization login and restore
 #    When I select options menu
 #    And I logout
 
-  @TC. @freyja @freyja_smoke @ent1 @ent_localization @ent_localization_Italiano @ent_localization_Italiano_archive_restore
+  @TC. @freyja @freyja_smoke @ent1 @ent_localization @ent_localization_Italiano @ent_localization_Italiano_archive_restore @QA12 @QA6
   Scenario: MozyEnterprise user Italiano localization login and archive restore
     When I select the Devices tab
     And I choose one folder
@@ -47,7 +47,7 @@ Feature: Localization login and restore
 #    When I select options menu
 #    And I logout
 
-  @TC. @freyja @freyja_smoke @ent1 @ent_localization @ent_localization_Italiano @ent_localization_Italiano_media_restore
+  @TC. @freyja @freyja_smoke @ent1 @ent_localization @ent_localization_Italiano @ent_localization_Italiano_media_restore @QA12 @QA6
   Scenario: MozyEnterprise user Italiano localization login and media restore
     When I select the Devices tab
     And I choose one folder

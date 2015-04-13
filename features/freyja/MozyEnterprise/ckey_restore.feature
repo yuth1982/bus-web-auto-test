@@ -3,7 +3,7 @@ Feature: Corporate Key user Restore Files
   Background:
     Given I have login freyja as ent and ckey user
 
-  @TC.121721 @freyja @freyja_smoke  @ent @ent_restore_all_fryr_ckey @ent_restore_ckey
+  @TC.121721 @freyja @freyja_smoke  @ent @ent_restore_all_fryr_ckey @ent_restore_ckey @QA12  @QA6
   Scenario: ent user restore all file through restore manager in Freyja
     When I select the Devices tab
     And I choose one device
@@ -17,7 +17,7 @@ Feature: Corporate Key user Restore Files
     When I select options menu
     And I logout
 
-  @TC.121721 @freyja @freyja_smoke @ent  @ent_restore_one_file_archive_ckey @ent_restore_ckey
+  @TC.121721 @freyja @freyja_smoke @ent  @ent_restore_one_file_archive_ckey @ent_restore_ckey @QA12 @QA6
   Scenario: ent user restore one_file through archive in Freyja
     When I select the Devices tab
     And I choose one file
@@ -32,7 +32,7 @@ Feature: Corporate Key user Restore Files
     When I select options menu
     And I logout
 
- @TC.121721 @freyja @freyja_smoke @ent @ent_restore_all_media_ckey @ent_restore_ckey
+ @TC.121721 @freyja @freyja_smoke @ent @ent_restore_all_media_ckey @ent_restore_ckey @QA12  @QA6
 Scenario: ent user restore all file through media in Freyja
   When I select the Devices tab
   And I choose one device
@@ -47,7 +47,7 @@ Scenario: ent user restore all file through media in Freyja
 #  And I logout
 
 
-@TC.121721 @freyja  @freyja_smoke  @ent  @ent_instant_download_Sync_file_ckey  @ent_restore_ckey
+@TC.121721 @freyja  @freyja_smoke  @ent  @ent_instant_download_Sync_file_ckey  @ent_restore_ckey @QA12  @QA6
   Scenario: ent user instant download one file in Freyja
     When I select the Synced tab
     And I choose one file

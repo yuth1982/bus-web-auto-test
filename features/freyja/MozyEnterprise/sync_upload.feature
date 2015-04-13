@@ -2,7 +2,7 @@ Feature: Upload and delete files in Sync
   Background:
     Given I have login freyja as ent user
 
-  @TC.121718 @TC.121720 @freyja @freyja_smoke  @ent  @ent_upload_delete_one_file_Sync @ent_smoke
+  @TC.121718 @TC.121720 @freyja @freyja_smoke  @ent  @ent_upload_delete_one_file_Sync @ent_smoke @QA12 @QA6
   Scenario: MozyEnterprise user upload and delete one file in Sync
     When I select the Synced tab
     And I open Actions panel

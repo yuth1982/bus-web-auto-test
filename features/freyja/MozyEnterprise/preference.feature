@@ -3,7 +3,7 @@ Feature: Change Preference Settings
   Background:
     Given I have login freyja as ent user
 
-  @TC.121712 @freyja @freyja_smoke  @ent  @ent_preference  @ent_smoke
+  @TC.121712 @freyja @freyja_smoke  @ent  @ent_preference  @ent_smoke @QA12 @QA6
 Scenario: MozyEnterprise user change preference settings through Freyja
   When I select options menu
   And I select Preferences
