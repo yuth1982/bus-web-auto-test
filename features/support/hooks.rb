@@ -67,16 +67,8 @@ After do |scenario|
     id = testcase_id scenario
     id = scenario.__id__ if id.nil? || id.length == 0
     name = "screenshot_#{id}_line#{scenario.location.line.to_s}.png"
-    if OS.windows?
-      system("start /wait tools/boxcutter-1.5/boxcutter.exe -f #{name}")
-      file = File.open(name, 'rb')
-      encoded_img = Base64.encode64(file.read)
-      file.close
-      File.delete(name)
-    else
-      #page.driver.browser.save_screenshot("html-report/#{name}")
-      encoded_img =  page.driver.browser.screenshot_as(:base64)
-    end
+    #page.driver.browser.save_screenshot("html-report/#{name}")
+    encoded_img =  page.driver.browser.screenshot_as(:base64)
     embed("#{encoded_img}", "image/png", "#{name}")
   end
 end
