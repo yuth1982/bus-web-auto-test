@@ -53,6 +53,7 @@ module Freyja
     #
     # Returns nothing
     def UserLogin(user)
+      choose_language(user.language)
       username_tb.type_text(user.username)
       password_tb.type_text(user.password)
       partnerType = user.partnerType
