@@ -257,6 +257,7 @@ module Bus
     end
 
     def pooled_resource_table_rows
+      wait_until_bus_section_load
       expand(account_details_icon)
       pooled_resources_table.rows_text
     end
@@ -805,6 +806,7 @@ module Bus
 
     def expand(element)
       element.click if collapsed?(element)
+      wait_until_bus_section_load
     end
 
     def collapse(element)

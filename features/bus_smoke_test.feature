@@ -317,6 +317,7 @@ Feature: BUS smoke test
     When I add a new MozyEnterprise partner:
       | company name                                                      | period | users  | coupon                |  server plan | net terms |
       | Internal Mozy - MozyEnterprise BUS Smoke Test Report 5062-7291-02 | 12     | 10     | <%=QA_ENV['coupon']%> |  100 GB      | yes       |
+    Then New partner should be created
     When I act as newly created partner account
     When I build a new report:
       | type            | name                |
@@ -387,7 +388,7 @@ Feature: BUS smoke test
 
   #=====================================
   @bus_us @TC.125959
-  Scenario: Test Case Mozy-125959: BUS US -- Create a Pro partner and verify Partner creation in BUS and Aria
+  Scenario: Test Case Mozy-125959: BUS US -- Create a Pro partner (reseller) and verify Partner creation in BUS and Aria
     When I add a new Reseller partner:
       | period | base plan | coupon                | net terms | server plan |
       | 1      | 50 GB     | <%=QA_ENV['coupon']%> | yes       | yes         |
