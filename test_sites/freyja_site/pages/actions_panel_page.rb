@@ -122,7 +122,7 @@ module Freyja
       #  notification_badge.visible?
       #end
       wait_until do
-        find(:xpath, "//tr[@id='#{machine_id}:File:/sync/1/#{file_name}']/td/div/span").visible?
+        find(:xpath, "//tr[@id='#{machine_id}:File:/sync/1/#{file_name}']/td[2]/div").visible?
       end
       sleep 1
     end
