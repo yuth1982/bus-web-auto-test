@@ -24,4 +24,5 @@ gem 'savon', '~>1.1.0'                  # Aria API
 gem 'ruby-gmail', '~> 0.3.0'
 gem 'viewpoint', '1.0.0'                # Exchange Web Service wrapper
 gem 'gibberish', '1.4.0'                # RSA encrypt/decrypt wrapper
+gem 'os', '0.9.6'                       # Detect OS
 

@@ -1,4 +1,5 @@
 require 'pathname'
+require 'os'
 module Freyja
   # This class provides actions for upload
   class UploadIframe < SiteHelper::Iframe
@@ -13,6 +14,7 @@ module Freyja
       file_name = File.dirname(__FILE__)
       parentPath = File.dirname(Pathname.new(file_name).parent.parent)
       parentPath = parentPath + "/downloads/run.txt"
+      parentPath.gsub!('/', '\\') if OS.windows?
       #attach_file('filename', "#{QA_ENV['local_file_upload']}")
       attach_file('filename', parentPath)
     end
