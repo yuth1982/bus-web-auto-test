@@ -30,6 +30,10 @@ module SiteHelper
       visit(url)
     end
 
+    def refresh
+      visit(page.driver.current_url)
+    end
+
     # Public: Get all cookies from current page
     #
     # Example:

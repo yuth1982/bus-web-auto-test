@@ -14,7 +14,7 @@ Background:
       | archive_restore_file | archive     |
     When I select options menu
     And I select event history
-    Then this restore is Processing
+    Then this restore is Ready for Download
     #And I download the previous archive result
     When I select options menu
     And I logout
@@ -31,7 +31,7 @@ Background:
       | archive_restore_file | archive     |
     When I select options menu
     And I select event history
-    Then this restore is Processing
+    Then this restore is Ready for Download
     And I download the previous archive result
 #    When I select options menu
 #    And I logout

@@ -7,7 +7,8 @@ module Freyja
     element(:restore_status_div2, xpath: "//*[@id='dt_all_restores']/tbody/tr[2]/td[5]/div")
     element(:sort_by_type_column, xpath: "//div[@id='dt_all_restores_wrapper']/div[2]/div/div/div/div/table/thead/tr/th[3]/div")
     element(:archive_download,xpath: "//div[@id='restore_downloads']/div[3]/a")
-
+    element(:options_menu, css: 'span.text.username')
+    element(:event_history, css: "#panel-action-event-history")
     # Public: get restore status
     #
     # Example
@@ -18,6 +19,25 @@ module Freyja
       sleep 5
       puts  "//tr[@id='#{restore_id}']/td[5]/div"
       return find(:xpath, "//tr[@id='#{restore_id}']/td[5]/div").text.to_s
+    end
+
+    def verify_restore_status(restore_id, restore_status)
+      current = Time.now
+      found = false
+      while Time.now < current + CONFIGS['global']['default_wait_time']
+        got = find(:xpath, "//tr[@id='#{restore_id}']/td[5]/div").text.to_s
+        if got.eql? restore_status
+          found = true
+          break
+        end
+        sleep 3
+        options_menu.click
+        event_history.click
+        #refresh
+      end
+      if !found
+        raise "Expectation not match: expected: #{restore_status}, got: #{got}"
+      end
     end
 
     def get_download_restore_status
