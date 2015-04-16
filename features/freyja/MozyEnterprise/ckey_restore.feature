@@ -28,7 +28,7 @@ Feature: Corporate Key user Restore Files
       | archive_restore_file_ckey | archive         |
     When I select options menu
     And I select event history
-    Then this restore is Processing
+    Then this restore is Ready for Download
     When I select options menu
     And I logout
 
