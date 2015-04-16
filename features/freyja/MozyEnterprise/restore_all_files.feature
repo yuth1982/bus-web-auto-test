@@ -27,7 +27,7 @@ Scenario: MozyEnterprise user restore all file through archive in Freyja
     | archive_all_file | archive         |
   When I select options menu
   And I select event history
-  Then this restore is Processing
+  Then this restore is Ready for Download
   When I select options menu
   And I logout
 
