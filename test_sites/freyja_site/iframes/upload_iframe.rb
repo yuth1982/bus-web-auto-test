@@ -11,6 +11,7 @@ module Freyja
     #
     # Returns nothing
     def attach_one_file
+      Dir.glob("downloads/*").each{ |path| File.delete(path) unless path.include?("run.txt")}
       file_name = File.dirname(__FILE__)
       parentPath = File.dirname(Pathname.new(file_name).parent.parent)
       parentPath = parentPath + "/downloads/run.txt"
