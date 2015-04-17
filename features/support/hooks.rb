@@ -67,5 +67,6 @@ After do |scenario|
     page.driver.browser.save_screenshot("html-report/#{name}")
     encoded_img =  page.driver.browser.screenshot_as(:base64)
     embed("#{encoded_img}", "image/png", "#{name}")
+    page.execute_script "window.onbeforeunload = function() {};"
   end
 end
