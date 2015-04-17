@@ -4,7 +4,7 @@
 173.243.54.115 mozy.com mozy.ie mozy.de mozy.fr mozy.co.uk #test.mozy.com
 173.243.54.85  client.mozy.com
 173.243.54.131 triton.mozy.com
- 
+173.243.54.88 std1.mozypro.com std1.mozyenterprise.com std1testentacct.mozyenterprise.com
 173.243.54.85 long1.mozypro.com stagingfedid.mozypro.com encodingfedid.mozypro.com
 173.243.54.82 auth.mozy.com auth2.mozy.com
  
@@ -14,6 +14,7 @@
 127.0.0.1 ssl.google-analytics.com www.google-analytics.com
 127.0.0.1 ajax.googleapis.com
 127.0.0.1 apis.google.com
+127.0.0.1 ads.revsci.net
 
 #cms other
 127.0.0.1 connect.facebook.net static.ak.facebook.com s-static.ak.facebook.com www.facebook.com facebook.com

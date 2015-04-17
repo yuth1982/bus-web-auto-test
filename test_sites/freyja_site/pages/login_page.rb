@@ -8,7 +8,9 @@ module Freyja
     element(:login_btn, css: "span.login_button")
     element(:restore_link, xpath: "//a[contains(text(),'Restore Files')]")
     element(:ent_restore_link, css: "i.icon-folder-open-alt.icon-2x")
-    #element(:ent_restore_link, xpath: "//*[@id='account-index-content']/table/tbody/tr[1]/td[6]/a")
+    element(:ent_restore_link_stag, xpath: "//*[@id='account-index-content']/table/tbody/tr[1]/td[6]/a")
+    element(:ent_restore_link_ckey, xpath:"//*[@id='account-index-content']/table/tbody/tr[1]/td[5]/a/i")#css: "i.icon-folder-open-alt.icon-2x")
+    element(:ent_restore_link_ckey1, xpath:"//*[@id='account-index-content']/table/tbody/tr[1]/td[6]/a/i")
     element(:username_freyja, css: "span.text.username")
     element(:set_dialect_select, id: "set_dialect")
 
@@ -65,7 +67,20 @@ module Freyja
           ent_restore_link.click
         when 'ent'
           login_btn.click
-          ent_restore_link.click
+          if (user.keyType == 'ckey')
+            if ("#{QA_ENV['environment']}" == "staging")
+              ent_restore_link_ckey.click
+            else  if ("#{QA_ENV['environment']}" == "production")
+                    ent_restore_link_ckey1.click
+                  end
+            end
+          end
+
+          if ("#{QA_ENV['environment']}" == "staging")
+            ent_restore_link_stag.click
+          else
+            ent_restore_link.click
+          end
         when 'oem'
           login_btn.click
           ent_restore_link.click
