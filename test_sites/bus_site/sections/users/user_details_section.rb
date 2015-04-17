@@ -383,7 +383,13 @@ module Bus
       change_partner_link.click
       user_group_search_img.click
       sleep 2
-      find(:xpath, "//li[text()='#{new_partner}']").click
+      if new_partner.size > 31
+        display_end = new_partner[-9,9]
+        new_partner_xpath = "//li[contains(text(),'#{display_end}')]"
+      else
+        new_partner_xpath = "//li[text()='#{new_partner}']"
+      end
+      find(:xpath, new_partner_xpath).click
       change_partner_submit_button.click
       wait_until{ !change_partner_submit_button.visible? }
     end

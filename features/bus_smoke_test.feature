@@ -275,8 +275,8 @@ Feature: BUS smoke test
       | Name    | Company Type | Root Role    | Enabled | Public | Currency | Periods | Tax Percentage | Tax Name | Auto-include tax | Server Price per key | Server Min keys | Server Price per gigabyte | Server Min gigabytes | Desktop Price per key | Desktop Min keys | Desktop Price per gigabyte | Desktop Min gigabytes | Grandfathered Price per key | Grandfathered Min keys | Grandfathered Price per gigabyte | Grandfathered Min gigabytes |
       | subplan | business     | new OEM role | Yes     | No     |          | yearly  | 10             | test     | false            | 1                    | 1               | 1                         | 1                    | 1                     | 1                | 1                          | 1                     | 1                           | 1                      | 1                                | 1                           |
     And I add a new sub partner:
-      | Company Name               | Pricing Plan | Admin Name |
-      | subpartner1 8376-3615-73   | subplan      | subadmin1  |
+      | Company Name                               | Pricing Plan | Admin Name |
+      | Internal Mozy - subpartner1 8376-3615-73   | subplan      | subadmin1  |
     Then New partner should be created
     When I act as newly created subpartner account
     And I navigate to Purchase Resources section from bus admin console page
@@ -294,18 +294,18 @@ Feature: BUS smoke test
     And new itemized user should be created
     When I stop masquerading from subpartner
     And I add a new sub partner:
-      | Company Name               | Pricing Plan | Admin Name |
-      | subpartner2 4974-9147-43   | subplan      | subadmin2  |
+      | Company Name                               | Pricing Plan | Admin Name |
+      | Internal Mozy - subpartner2 4974-9147-43   | subplan      | subadmin2  |
     Then New partner should be created
     And I navigate to Search / List Users section from bus admin console page
     And I view user details by oem user
-    When I reassign the user to partner subpartner2 4974-9147-43
+    When I reassign the user to partner Internal Mozy - subpartner2 4974-9147-43
     Then I stop masquerading as sub partner
-    And I search partner by subpartner1 8376-3615-73
-    And I view partner details by subpartner1 8376-3615-73
+    And I search partner by Internal Mozy - subpartner1 8376-3615-73
+    And I view partner details by Internal Mozy - subpartner1 8376-3615-73
     And I delete partner account
-    And I search partner by subpartner2 4974-9147-43
-    And I view partner details by subpartner2 4974-9147-43
+    And I search partner by Internal Mozy - subpartner2 4974-9147-43
+    And I view partner details by Internal Mozy - subpartner2 4974-9147-43
     And I delete partner account
     And I search partner by Internal Mozy - OEM BUS Smoke Test 4863-2704-60
     And I view partner details by Internal Mozy - OEM BUS Smoke Test 4863-2704-60
