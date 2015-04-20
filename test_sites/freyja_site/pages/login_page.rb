@@ -67,20 +67,33 @@ module Freyja
           ent_restore_link.click
         when 'ent'
           login_btn.click
-          if (user.keyType == 'ckey')
-            if ("#{QA_ENV['environment']}" == "staging")
-              ent_restore_link_ckey.click
-            else  if ("#{QA_ENV['environment']}" == "production")
-                    ent_restore_link_ckey1.click
-                  end
-            end
-          end
+          #if (user.keyType == 'ckey')
+          #  if ("#{QA_ENV['environment']}" == "staging")
+          #    ent_restore_link_ckey.click
+          #  else  if ("#{QA_ENV['environment']}" == "production")
+          #          ent_restore_link_ckey1.click
+          #        end
+          #  end
+          #end
 
           if ("#{QA_ENV['environment']}" == "staging")
+            if (user.keyType == 'ckey')
+              ent_restore_link_ckey.click
+            else
             ent_restore_link_stag.click
+            end
+          else  if ("#{QA_ENV['environment']}" == "production")
+                  if (user.keyType == 'ckey')
+                    ent_restore_link_ckey1.click
+                  else
+                    ent_restore_link.click
+                  end
+
           else
             ent_restore_link.click
           end
+          end
+
         when 'oem'
           login_btn.click
           ent_restore_link.click
