@@ -1,3 +1,4 @@
 common: -color --format pretty -r features
 default: -p common
 exclude_qa5: -e "configuration|users/machine" -p common
+parallel: --format json --out html-report/report<%= ENV['TEST_ENV_NUMBER'] %>.json --format html --out html-report/report<%= ENV['TEST_ENV_NUMBER'] %>.html --format progress --format ParallelTests::Cucumber::FailuresLogger --out cucumber_failures.txt -p common
