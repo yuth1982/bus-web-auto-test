@@ -1,6 +1,3 @@
-#gem 'capybara-webkit','~>0.12.1'
-#gem 'nokogiri','~>1.5.5'
-
 source 'http://rubygems.org'
 
 gem 'rake','~>0.9.2.2'
@@ -24,5 +21,5 @@ gem 'savon', '~>1.1.0'                  # Aria API
 gem 'ruby-gmail', '~> 0.3.0'
 gem 'viewpoint', '1.0.0'                # Exchange Web Service wrapper
 gem 'gibberish', '1.4.0'                # RSA encrypt/decrypt wrapper
+gem 'win32screenshot', '1.0.10'         # Take desktop screenshot
 gem 'os', '0.9.6'                       # Detect OS
-

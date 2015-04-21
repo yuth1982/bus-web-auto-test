@@ -34,7 +34,6 @@ module Phoenix
     #
     # Returns nothing
     def navigate_to_link(link)
-      wait_until { find_link(link) }
       find_link(link).click
     end
 

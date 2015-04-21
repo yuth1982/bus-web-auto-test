@@ -24,7 +24,13 @@ end
 
 Capybara.register_driver :firefox_debug do |app|
   profile = Selenium::WebDriver::Firefox::Profile.new
-  profile.add_extension("#{FileHelper.default_test_data_path}/firebug-1.11.4-fx.xpi")
+  profile.add_extension("#{FileHelper.default_test_data_path}/firebug-2.0.9-fx.xpi")
+  profile["extensions.firebug.console.enableSites"] = true
+  profile["extensions.firebug.net.enableSites"]     = true
+  profile["extensions.firebug.script.enableSites"]  = true
+  profile["extensions.firebug.cookies.enableSites"]  = true
+  profile["extensions.firebug.allPagesActivation"]  = "on"
+  profile["extensions.firebug.currentVersion"]      = "2.0.9"
   Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => profile)
 end
 
@@ -47,12 +53,16 @@ end
 case BROWSER
   when "firefox"
     Capybara.default_driver = :firefox
+  when "firefox_profile"
+    Capybara.default_driver = :firefox_profile
   when "chrome"
     Capybara.default_driver = :chrome
   when "ie"
     Capybara.default_driver = :ie
   when "webkit"
     Capybara.default_driver = :webkit
+  when 'firefox_debug'
+    Capybara.default_driver = :firefox_debug
   else
     raise "Unknown browser, please check env variable br"
 end
