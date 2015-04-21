@@ -7,136 +7,87 @@ Feature: BUS smoke test
   Background:
     Given I log in bus admin console as administrator
 
-  #================== partner 'Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27' related scenarios ===================
-  @bus_emea @TC.125964
-  Scenario: Test Case Mozy-125964: BUS EMEA -- Create a new partner (No VAT Number)
+  #================== partner 'Internal Mozy - MozyPro France BUS Smoke Test Data Shuttle 2468-1359-07' related scenarios ===================
+  @bus_emea @TC.125975 @qa
+  Scenario: Test Case Mozy-125975: BUS EMEA -- Order Data Shuttle
     When I add a new MozyPro partner:
-      | company name                                               | period  | base plan | create under   | server plan | net terms | country | coupon                |
-      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 | 12      | 50 GB     | MozyPro France | yes         | yes       | France  | <%=QA_ENV['coupon']%> |
+      | company name                                                            | period  | base plan | create under   | server plan | net terms | country | coupon                |
+      | Internal Mozy - MozyPro France BUS Smoke Test Data Shuttle 2468-1359-07 | 12      | 50 GB     | MozyPro France | yes         | yes       | France  | <%=QA_ENV['coupon']%> |
     And New partner should be created
     And I change root role to Business Root
-
-  @bus_emea @TC.125965
-  Scenario: Test Case Mozy-125965: BUS EMEA -- Verify partner creation in Aria - Precondition:@TC.125964
-    When I search partner by Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27
-    And I view partner details by Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27
-    And I get partner aria id
-    Then API* Aria account should be:
-      | status_label |
-      | ACTIVE       |
-
-  @bus_emea @TC.125967
-  Scenario: Test Case Mozy-125967: BUS EMEA -- Masquerade into the partner - Precondition:@TC.125964
-    When I act as partner by:
-      | name                                                       |
-      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 |
-
-  @bus_emea @TC.125968
-  Scenario: Test Case Mozy-125968: BUS EMEA -- Create a user group - Precondition:@TC.125964
-    When I act as partner by:
-      | name                                                       |
-      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 |
-    When I add a new Bundled user group:
-      | name         | storage_type |
-      | test-group-1 | Shared       |
-    Then test-group-1 user group should be created
-
-  @bus_emea @TC.125969
-  Scenario: Test Case Mozy-125969: BUS EMEA -- Create a user - Precondition:@TC.125968 - Precondition:@TC.125968
-    When I act as partner by:
-      | name                                                       |
-      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 |
+    When I act as newly created partner account
     And I add new user(s):
-      | name        | user_group   | storage_type  | storage_limit | devices |
-      | EMEA-user-1 | test-group-1 | Desktop       | 10            | 1       |
-    Then 1 new user should be created
+      | user_group           | storage_type  | storage_limit | devices |
+      | (default user group) | Desktop       | 10            | 1       |
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    Then I stop masquerading
+    When I order data shuttle for Internal Mozy - MozyPro France BUS Smoke Test Data Shuttle 2468-1359-07
+      | power adapter     | key from  | quota |
+      | Data Shuttle EMEA | available | 10    |
+    Then Data shuttle order should be created
 
-  @bus_emea @TC.125970
-  Scenario: Test Case Mozy-125970: BUS EMEA -- Move the user from one user group to a different user group - Precondition:@TC.125969
-    When I act as partner by:
-      | name                                                       |
-      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 |
-    And  I navigate to Search / List Users section from bus admin console page
-    And I view user details by EMEA-user-1
-    And I reassign the user to user group (default user group)
-    Then the user's user group should be (default user group)
+  @bus_emea @TC.125976 @qa
+  Scenario: Test Case Mozy-125976: BUS EMEA -- Update Data Shuttle - Precondition:@TC.125975
+    When I search order in view data shuttle orders section by Internal Mozy - MozyPro France BUS Smoke Test Data Shuttle 2468-1359-07
+    And I view data shuttle order details
+    And I add drive to data shuttle order
+    Then Add drive to data shuttle order message should include Successfully added drive to order
 
-  @bus_emea @TC.125977
-  Scenario: Test Case Mozy-125977: BUS EMEA -- Delete test user - Precondition:@TC.125969
-    When I act as partner by:
-      | name                                                        |
-      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27  |
-    And  I navigate to Search / List Users section from bus admin console page
-    And I view user details by EMEA-user-1
-    And I delete user
+  @bus_emea @TC.125975 @std
+  Scenario: Test Case Mozy-125975: BUS EMEA -- Order Data Shuttle
+    When I order data shuttle for Internal Mozy - MozyPro France for EMEA Data Shuttle(Don't Edit)
+      | power adapter     | key from  |
+      | Data Shuttle EMEA | available |
+    Then Data shuttle order should be created
 
-  @bus_emea @TC.125971
-  Scenario: Test Case Mozy-125971: BUS EMEA -- Create a client config - Precondition:@TC.125964
-    When I act as partner by:
-      | name                                                       |
-      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 |
-    When I create a new client config:
-      | name                | user group   | type   |
-      | smoke_client_config | group-test-1 | Server |
-    Then client configuration section message should be Your configuration was saved.
+  @bus_emea @TC.125976 @std
+  Scenario: Test Case Mozy-125976: BUS EMEA -- Update Data Shuttle - Precondition:@TC.125975
+    When I search order in view data shuttle orders section by Internal Mozy - MozyPro France for EMEA Data Shuttle(Don't Edit)
+    And I view data shuttle order details
+    And I add drive to data shuttle order
+    Then Add drive to data shuttle order message should include Successfully added drive to order
+    When I cancel the latest data shuttle order for Internal Mozy - MozyPro France for EMEA Data Shuttle(Don't Edit)
+    Then The order should be Cancelled
 
-  @bus_emea @TC.125972
-  Scenario: Test Case Mozy-125972: BUS EMEA -- Open all of the Resources header to open all of the modules - Precondition:@TC.125964
-    When I act as partner by:
-      | name                                                       |
-      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 |
-    Given I navigate to Resource Summary section from bus admin console page
-    When I navigate to User Group List section from bus admin console page
-    Then I navigate to Change Plan section from bus admin console page
-    And  I navigate to Billing Information section from bus admin console page
-    But  I navigate to Billing History section from bus admin console page
-    Then I navigate to Change Payment Information section from bus admin console page
-    When I navigate to Download * Client section from bus admin console page
+  #=====================================
+  @bus_emea @TC.125979
+  Scenario: Test Case Mozy-125979: BUS EMEA -- Delete test partner and validate they are in Pending Delete state
+    When I add a new MozyPro partner:
+      | period  |  create under   | server plan | net terms | country | coupon                |
+      | 12      |  MozyPro France | yes         | yes       | France  | <%=QA_ENV['coupon']%> |
+    And New partner should be created
+    And I delete partner and verify pending delete
 
-  @bus_us @TC.125974 @support @prod
-  Scenario: Test Case Mozy-125974: BUS EMEA -- Check the support link - Precondition:@TC.125964
+  @bus_emea @TC.125980
+  Scenario: Test Case Mozy-125980: BUS EMEA -- Create a new partner (With VAT Number)
+    When I add a new MozyPro partner:
+      | period | base plan | create under | server plan | net terms | country        | coupon                | vat number  |
+      | 1      | 10 GB     | MozyPro UK   | yes         | yes       | United Kingdom | <%=QA_ENV['coupon']%> | GB117223643 |
+    And New partner should be created
+    Then I delete partner account
+
+  #================== partner 'Rainbow MozyPro EMEA' related scenarios ===================
+  @bus_us @TC.125974 @support @qa_std
+  Scenario: Test Case Mozy-125974: BUS EMEA -- Check the support link
     When I act as partner by:
-      | name                                                       |
-      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 |
+      | name                 |
+      | Rainbow MozyPro EMEA |
     When I navigate to Contact section from bus admin console page
     And I click my support
     Then I login my support successfully
 
-  @bus_emea @TC.125978
-  Scenario: Test Case Mozy-125978: BUS EMEA -- Delete test user group - Precondition:@TC.125964
-    When I act as partner by:
-      | name                                                       |
-      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 |
-    When I add a new Bundled user group:
-      | name         | storage_type |
-      | test-group-2 | Shared       |
-    Then test-group-2 user group should be created
-    When I delete user group details by name: test-group-2
-
-  #================== partner 'Internal Mozy - MozyPro France BUS Smoke Test Report 4170-3928-56' related scenarios ===================
-  @bus_emea @TC.125973
-  Scenario: Test Case Mozy-125973: BUS EMEA -- Run a report
-    When I add a new MozyPro partner:
-      | company name                                                      | period  | base plan | create under   | net terms | country | coupon                |
-      | Internal Mozy - MozyPro France BUS Smoke Test Report 4170-3928-56 | 12      | 50 GB     | MozyPro France | yes       | France  | <%=QA_ENV['coupon']%> |
-    Then New partner should be created
-    Then I change root role to Business Root
-    When I act as newly created partner account
-    When I build a new report:
-      | type            | name                |
-      | Billing Detail  | billing detail test |
-    Then Billing detail report should be created
-    And Scheduled report list should be:
-      | Name                | Type            | Schedule | Actions |
-      | billing detail test | Billing Detail  | Daily    | Run     |
-    When I download billing detail test scheduled report
-    Then Scheduled Billing Detail report csv file details should be:
-      | Column A | Column B              | Column C     | Column D           | Column E             | Column F             | Column G        | Column H       | Column I       | Column J                        | Column Q                     | Column S               |
-      | Partner  | User Group            | Billing Code | Total GB Purchased | GB Purchased         | Quota Allocated (GB) | Quota Used (GB) | Keys Purchased | Keys Activated | Keys Assigned But Not Activated | Effective price per  license | Effective price per GB |
-      | @name    | (default user group)  |              | Shared             | N/A                  | N/A                  | 0               | 0              | 0              | 0                               |                              | €0.32                  |
-    When I delete billing detail test scheduled report
-    Then I should see No results found in scheduled reports list
-    When I download Credit Card Transactions (CSV) quick report
-    Then Quick report Credit Card Transactions csv file details should be:
-      | Column A | Column B | Column C | Column D  |
-      | Date     | Amount   | Card #   | Card Type |
+  #================== partner 'Internal Mozy - Reseller Ireland BUS Smoke Test 7531-8642-90' related scenarios ===================
+  @bus_emea @TC.125966
+  Scenario: Test Case Mozy-125966: BUS EMEA -- Activate partner in email
+    When I add a new Reseller partner:
+      | company name                                                 | period | base plan | create under    | server plan | net terms | country | coupon                |
+      | Internal Mozy - Reseller Ireland BUS Smoke Test 7531-8642-90 | 12     | 10 GB     | MozyPro Ireland | yes         | yes       | Ireland | <%=QA_ENV['coupon']%> |
+    And New partner should be created
+    And the standard partner has activated the admin account
+    And I go to account
+    Then I login as mozypro admin successfully
