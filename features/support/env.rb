@@ -56,6 +56,21 @@ Capybara.register_driver :webkit do |app|
   Capybara::Driver::Webkit.new(app, options)
 end
 
+Capybara.register_driver :remote_browser  do |app|
+  url = 'http://127.0.0.1:4444/wd/hub'
+  case BROWSER
+    when "remote_firefox"
+      capabilities = Selenium::WebDriver::Remote::Capabilities.firefox
+    when "remote_chrome"
+          capabilities = Selenium::WebDriver::Remote::Capabilities.chrome
+    when "remote_ie"
+      capabilities = Selenium::WebDriver::Remote::Capabilities.internet_explorer
+  end
+
+  Capybara::Selenium::Driver.new(app, :browser => :remote, :url => url,
+                                 :desired_capabilities => capabilities)
+end
+
 case BROWSER
   when "firefox"
     Capybara.default_driver = :firefox
@@ -67,8 +82,14 @@ case BROWSER
     Capybara.default_driver = :ie
   when "webkit"
     Capybara.default_driver = :webkit
-  when 'firefox_debug'
+  when "firefox_debug"
     Capybara.default_driver = :firefox_debug
+  when "remote_firefox"
+    Capybara.default_driver = :remote_browser
+  when "remote_chrome"
+    Capybara.default_driver = :remote_browser
+  when "remote_ie"
+    Capybara.default_driver = :remote_browser
   else
     raise "Unknown browser, please check env variable br"
 end
