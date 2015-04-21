@@ -195,7 +195,7 @@ end
 
 task :freyja_deployment_test, :arg do |t, args|
   Cucumber::Rake::Task.new(:run) do |t|
-    t.cucumber_opts = "#{args[:arg]} --format json --out report.json --format html --out html-report/report.html --format rerun --out rerun.txt --format pretty"
+    t.cucumber_opts = "features/freyja/ #{args[:arg]} --format json --out report.json --format html --out html-report/report.html --format rerun --out rerun.txt --format pretty"
   end
   Rake::Task[:run].invoke()
 end
