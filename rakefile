@@ -194,7 +194,8 @@ end
 
 desc 'update windows hosts file according to the environment variable settings. This task must be run as administrator'
 task :win_hosts do
-  QA6_HOSTS = 'scripts/ci/qa6.hosts'
+  QA6_BUSCLIENT04_HOSTS = 'scripts/ci/qa6_busclient04.hosts'
+  QA6_BUSCLIENT01_HOSTS = 'scripts/ci/qa6_busclient01.hosts'
   QA12_HOSTS = 'scripts/ci/qa12.hosts'
   STG_HOSTS = 'scripts/ci/stg.hosts'
   PANTHEON_HOSTS = 'scripts/ci/pantheon.hosts'
@@ -205,8 +206,10 @@ task :win_hosts do
   env = ENV['BUS_ENV']
 
   case env
-    when 'qa6'
-      srcHostName = QA6_HOSTS
+    when 'qa6_busclient04'
+      srcHostName = QA6_BUSCLIENT04_HOSTS
+    when 'qa6_busclient01'
+      srcHostName = QA6_BUSCLIENT01_HOSTS
     when 'qa12h'
       srcHostName = QA12_HOSTS
     when 'std'
