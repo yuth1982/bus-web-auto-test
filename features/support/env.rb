@@ -1,6 +1,6 @@
 require "#{File.dirname(__FILE__)}/../../test_sites/test_sites"
 
-Capybara.register_driver :firefox do |app|
+def firefox_profile
   profile = Selenium::WebDriver::Firefox::Profile.new
   profile['browser.download.folderList'] = 2
   profile['browser.download.dir'] = FileHelper.ff_download_path
@@ -12,7 +12,11 @@ Capybara.register_driver :firefox do |app|
 application/x-msdos-program;application/x-apple-diskimage;application/x-debian-package;application/x-redhat-package-manager"
   profile.assume_untrusted_certificate_issuer = false
   #profile.native_events = true
-  Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => profile)
+  profile
+end
+
+Capybara.register_driver :firefox do |app|
+  Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => firefox_profile)
 end
 
 Capybara.register_driver :firefox_profile do |app|
@@ -64,7 +68,7 @@ Capybara.register_driver :remote_browser  do |app|
   url = 'http://127.0.0.1:4444/wd/hub'
   case BROWSER
     when "remote_firefox"
-      capabilities = Selenium::WebDriver::Remote::Capabilities.firefox
+      capabilities = Selenium::WebDriver::Remote::Capabilities.firefox(:firefox_profile => firefox_profile)
     when "remote_chrome"
           capabilities = Selenium::WebDriver::Remote::Capabilities.chrome('chromeOptions' => {:prefs => chrome_prefs})
     when "remote_ie"
