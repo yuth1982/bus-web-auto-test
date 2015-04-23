@@ -34,14 +34,18 @@ Capybara.register_driver :firefox_debug do |app|
   Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => profile)
 end
 
-Capybara.register_driver :chrome do |app|
+def chrome_prefs
   prefs = {
       :download => {
           :prompt_for_download => false,
           :default_directory => FileHelper.ff_download_path
       }
   }
-  Capybara::Selenium::Driver.new(app, :browser => :chrome, :prefs => prefs)
+  prefs
+end
+
+Capybara.register_driver :chrome do |app|
+  Capybara::Selenium::Driver.new(app, :browser => :chrome, :prefs => chrome_prefs)
 end
 
 Capybara.register_driver :ie do |app|
@@ -62,7 +66,7 @@ Capybara.register_driver :remote_browser  do |app|
     when "remote_firefox"
       capabilities = Selenium::WebDriver::Remote::Capabilities.firefox
     when "remote_chrome"
-          capabilities = Selenium::WebDriver::Remote::Capabilities.chrome
+          capabilities = Selenium::WebDriver::Remote::Capabilities.chrome('chromeOptions' => {:prefs => chrome_prefs})
     when "remote_ie"
       capabilities = Selenium::WebDriver::Remote::Capabilities.internet_explorer
   end
