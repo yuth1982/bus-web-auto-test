@@ -59,6 +59,7 @@ module Email
     end
 
     def find_emails(query,_=nil)
+      @found = nil
       start = Time.now
       while Time.now - start < 90
         begin
@@ -66,24 +67,35 @@ module Email
           items = @inbox.items_since(DateTime.parse(ten_minutes_ago.to_s))
           items.find do |item|
             email = @client.get_item item.id
-            case query[0].downcase
-              when 'to'
-                if email.to_recipients[0].email_address.eql? query[1]
-                  @found = Array.[](email)
-                  break
-                end
-              when 'body'
-                matched = true
-                content = email.body
-                query_arr = eval query[1]
+            query.each_index {|index| query[index]=query[index].downcase if index%2 == 0}
+
+            to_match = from_match = content_match = subject_match = true
+
+            to_match = false if query.include?('to') && !(email.to_recipients[0].email_address.eql? query[query.index('to')+1])
+            next if !to_match
+
+            from_match = false if query.include?('from') && !(email.from.email_address.eql? query[query.index('from')+1])
+            next if !from_match
+
+            subject_match = false if query.include?('subject') && !(email.subject.eql? query[query.index('subject')+1])
+            next if !subject_match
+
+            if query.include?('body')
+              content = email.body
+              body_pattern = query[query.index('body')+1]
+              if body_pattern.include?('@') || body_pattern.include?(' ') # if the search pattern is email address or full name
+                content_match &&= !content.match(body_pattern.gsub('+','\\\+')).nil?
+              else                           # else the search patter should be license key array
+                query_arr = eval body_pattern
                 query_arr.each do |q|
-                  matched &&= !content.match(q).nil?
+                  content_match &&= !content.match(q).nil?
                 end
-                if matched
-                  @found = Array.[](email)
-                  break
-                end
+              end
             end
+            next if !content_match
+
+            @found = Array.[](email)
+
           end
         rescue Exception => ex
           Log.debug ex

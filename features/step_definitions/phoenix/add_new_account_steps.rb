@@ -303,7 +303,7 @@ Then /^the (user|partner) has activated their account$/ do |_|
   else
     step %{I retrieve email content by keywords:}, table(%{
         | to | subject |
-        | @new_admin_email | #{LANG[@partner.company_info.country][@partner.partner_info.type]['#{subject}']} |
+        | @new_admin_email | #{LANG[@partner.company_info.country][@partner.partner_info.type]["#{subject}"]} |
         })
   end
   step %{I get verify email address from email content}
