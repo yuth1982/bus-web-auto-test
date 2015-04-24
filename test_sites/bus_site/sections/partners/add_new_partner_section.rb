@@ -100,7 +100,10 @@ module Bus
         fill_initial_purchase(partner)
         set_pre_sub_total(partner)
         next_btn.click
-        wait_until{ back_btn.visible? } # wait for fill credit card info
+        wait_time = CONFIGS['global']['default_wait_time']*1.5
+        wait_until(wait_time) do
+          back_btn.visible?  # wait for fill credit card info
+        end
         if partner.net_term_payment
           net_term_payment_input.click
           if alert_present?
@@ -131,6 +134,7 @@ module Bus
     #
     # Returns success or error message text
     def messages
+      wait_until { message_div.visible? }
       message_div.text
     end
 
