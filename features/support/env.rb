@@ -98,6 +98,15 @@ case BROWSER
     Capybara.default_driver = :remote_browser
   when "remote_ie"
     Capybara.default_driver = :remote_browser
+  when "parallel_firefox"
+    Capybara.server_port = 9515 + ENV['TEST_ENV_NUMBER'].to_i
+    Capybara.default_driver = :firefox
+  when "parallel_chrome"
+    Capybara.server_port = 9515 + ENV['TEST_ENV_NUMBER'].to_i
+    Capybara.default_driver = :chrome
+  when "parallel_ie"
+    Capybara.server_port = 9515 + ENV['TEST_ENV_NUMBER'].to_i
+    Capybara.default_driver = :ie
   else
     raise "Unknown browser, please check env variable br"
 end
