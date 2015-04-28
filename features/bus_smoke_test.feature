@@ -220,6 +220,7 @@ Feature: BUS smoke test
     When I add a new MozyPro partner:
       | company name                                                | period | base plan | coupon                | net terms | server plan | root role               |
       | Internal Mozy - MozyPro BUS Smoke Storage Test 1543-8769-22 | 24     | 10 GB     | <%=QA_ENV['coupon']%> | yes       | yes         | Bundle Pro Partner Root |
+    Then New partner should be created
     Then I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan |
