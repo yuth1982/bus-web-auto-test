@@ -38,6 +38,7 @@ require 'site_helper/site_helper'
 require 'capybara_helper/capybara_helper'
 require 'bifrost_helper/bifrost_helper'
 require 'email_helper/email_helper'
+require 'system_extension/protocol'
 
 include FileHelper
 include DBHelper
