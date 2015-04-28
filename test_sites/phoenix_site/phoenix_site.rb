@@ -37,4 +37,9 @@ class PhoenixSite
   def update_profile
     Phoenix::ChangeProfilePage.new
   end
+
+  def invoice_page
+    Phoenix::HomeInvoice.new
+  end
+
 end
