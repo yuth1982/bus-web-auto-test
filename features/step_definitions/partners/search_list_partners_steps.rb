@@ -15,7 +15,7 @@ end
 
 When /^I search partner by (.+)$/ do |keywords|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_partner'])
-  @bus_site.admin_console_page.search_list_partner_section.search_partner(keywords)
+  @bus_site.admin_console_page.search_list_partner_section.search_partner(keywords, 'None', true, true)
 end
 
 

@@ -22,7 +22,7 @@ module Bus
     #  @bus_admin_console_page.search_list_partner_section.search_partner("qa1+test@mozy.com")
     #
     # Returns nothing
-    def search_partner(search_key, filter = 'None', include_sub_partners = true, full_search =true)
+    def search_partner(search_key, filter = 'None', include_sub_partners = true, full_search = false)
       # By default, include sub partners is checked
       if include_sub_partners
         include_sub_partners_cb.check
