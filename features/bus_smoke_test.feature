@@ -51,10 +51,6 @@ Feature: BUS smoke test
       | name  | storage_type |
       | alpha | Shared       |
     Then alpha user group should be created
-    When I add a new Bundled user group:
-      | name  | storage_type | limited_quota | enable_stash | server_support |
-      | omega | Limited      | 5             | yes          | yes            |
-    Then omega user group should be created
 
   @bus_us @TC.125941
   Scenario: Test Case Mozy-125941: BUS US -- Create a user - Precondition:@TC.125940
@@ -88,6 +84,10 @@ Feature: BUS smoke test
     When I act as partner by:
       | name                                                |
       | Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32 |
+    When I add a new Bundled user group:
+      | name  | storage_type | limited_quota | enable_stash | server_support |
+      | omega | Limited      | 5             | yes          | yes            |
+    Then omega user group should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by user without stash
     But I reassign the user to user group omega
@@ -100,8 +100,8 @@ Feature: BUS smoke test
       | name                                                |
       | Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32 |
     And I add new user(s):
-      | name            | user_group | storage_type | storage_limit | devices | enable_stash |
-      | user with stash | omega      | Desktop      | 2             | 3       | yes          |
+      | name            | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | user with stash | (default user group) | Desktop      | 2             | 3       | yes          |
     Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by user with stash
