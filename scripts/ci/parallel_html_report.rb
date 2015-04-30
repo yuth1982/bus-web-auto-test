@@ -24,6 +24,8 @@ end
 def render_parallel_report
   find_reports if @default_report.nil?
 
+  render_nav_html
+
   parallelTpl = File.open('scripts/ci/report_merged.html.tpl')
   renderer = ERB.new(parallelTpl.read)
   parallelTpl.close
