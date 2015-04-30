@@ -23,5 +23,5 @@ gem 'viewpoint', '1.0.0'                # Exchange Web Service wrapper
 gem 'gibberish', '1.4.0'                # RSA encrypt/decrypt wrapper
 gem 'win32screenshot', '1.0.10'         # Take desktop screenshot
 gem 'os', '0.9.6'                       # Detect OS
-gem 'parallel_tests'
+gem 'parallel_tests', '1.3.7'
 gem 'parallel_tests_extension', :path => 'lib/parallel_tests_extension-1.3.7'
