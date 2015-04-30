@@ -100,7 +100,7 @@ module Bus
         fill_initial_purchase(partner)
         set_pre_sub_total(partner)
         next_btn.click
-        wait_time = CONFIGS['global']['default_wait_time']*1.5
+        wait_time = CONFIGS['global']['max_wait_time']
         wait_until(wait_time) do
           back_btn.visible?  # wait for fill credit card info
         end
