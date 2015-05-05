@@ -56,19 +56,17 @@ def merge_parallel_json(json_folder)
   reports = Dir.glob("#{json_folder}/report_parallel*.json")
   reports_rerun = Dir.glob("#{json_folder}/report_rerun*.json")
 
-  reports_rerun.each do |rerun_json|
-    reports.each do |json|
-      nameBegin = json.rindex '/'
-      nameBegin = 0 if nameBegin < 0
-      nameEnd = json.rindex '.'
-      name = json[nameBegin+1..nameEnd-1]
+  reports.each do |json|
+    nameBegin = json.rindex '/'
+    nameBegin = 0 if nameBegin < 0
+    nameEnd = json.rindex '.'
+    name = json[nameBegin+1..nameEnd-1]
+    reports_rerun.each do |rerun_json|
       merge(rerun_json, json, "#{name}_merged.json")
+      File.rename("#{name}_merged.json", "#{name}.json")
     end
   end
 
-  reports.each do |json|
-    File.delete json
-  end
   reports_rerun.each do |json|
     File.delete json
   end
