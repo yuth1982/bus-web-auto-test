@@ -55,8 +55,8 @@ Feature: BUS smoke test
   @bus_us @TC.125958
   Scenario: Test Case Mozy-125958: BUS US -- Delete test partner and validate they are in Pending Delete state
     When I add a new MozyPro partner:
-      | period | coupon                | net terms | server plan | root role               |
-      | 24     | <%=QA_ENV['coupon']%> | yes       | yes         | Bundle Pro Partner Root |
+      | company name                                        | period | coupon                | net terms | server plan | root role               |
+      | Internal Mozy - MozyPro BUS Smoke Test 5958-2015-10 | 24     | <%=QA_ENV['coupon']%> | yes       | yes         | Bundle Pro Partner Root |
     Then New partner should be created
     And I delete partner and verify pending delete
 
@@ -64,8 +64,8 @@ Feature: BUS smoke test
   @bus_us @TC.125959
   Scenario: Test Case Mozy-125959: BUS US -- Create a Pro partner (reseller) and verify Partner creation in BUS and Aria
     When I add a new Reseller partner:
-      | period | base plan | coupon                | net terms | server plan |
-      | 1      | 50 GB     | <%=QA_ENV['coupon']%> | yes       | yes         |
+      | company name                                         | period | base plan | coupon                | net terms | server plan |
+      | Internal Mozy - Reseller BUS Smoke Test 5959-3026-41 | 1      | 50 GB     | <%=QA_ENV['coupon']%> | yes       | yes         |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account should be:
