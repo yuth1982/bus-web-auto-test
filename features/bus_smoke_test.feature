@@ -176,7 +176,7 @@ Feature: BUS smoke test
     Then I navigate to Change Payment Information section from bus admin console page
     When I navigate to Download * Client section from bus admin console page
 
-  @bus_us @TC.125953 @support @prod
+  @bus_us @TC.125953 @support
   Scenario: Test Case Mozy-125953: BUS US -- Check the support link - Precondition:@TC.125935
     When I act as partner by:
       | name                                                |
@@ -338,16 +338,6 @@ Feature: BUS smoke test
     Then Quick report Credit Card Transactions csv file details should be:
       | Column A | Column B | Column C | Column D  |
       | Date     | Amount   | Card #   | Card Type |
-
-  #================== partner 'Rainbow MozyPro US' related scenarios ===================
-  @bus_us @TC.125953 @support @qa_std
-  Scenario: Test Case Mozy-125953: BUS US -- Check the support link
-    When I act as partner by:
-      | name               |
-      | Rainbow MozyPro US |
-    When I navigate to Contact section from bus admin console page
-    And I click my support
-    Then I login my support successfully
 
   #================== partner 'Internal Mozy - MozyPro BUS Smoke Test Data Shuttle 6201-2851-04' related scenarios ===================
   @bus_us @TC.125954 @qa
@@ -647,7 +637,7 @@ Feature: BUS smoke test
     Then I navigate to Change Payment Information section from bus admin console page
     When I navigate to Download * Client section from bus admin console page
 
-  @bus_us @TC.125974 @support @prod
+  @bus_us @TC.125974 @support
   Scenario: Test Case Mozy-125974: BUS EMEA -- Check the support link - Precondition:@TC.125964
     When I act as partner by:
       | name                                                       |
@@ -758,16 +748,6 @@ Feature: BUS smoke test
       | Internal Mozy - MozyPro BUS Smoke Test 5980-4326-85 | 1      | 10 GB     | MozyPro UK   | yes         | yes       | United Kingdom | <%=QA_ENV['coupon']%> | GB117223643 |
     And New partner should be created
     Then I delete partner account
-
-  #================== partner 'Rainbow MozyPro EMEA' related scenarios ===================
-  @bus_us @TC.125974 @support @qa_std
-  Scenario: Test Case Mozy-125974: BUS EMEA -- Check the support link
-    When I act as partner by:
-      | name                 |
-      | Rainbow MozyPro EMEA |
-    When I navigate to Contact section from bus admin console page
-    And I click my support
-    Then I login my support successfully
 
   #================== partner 'Internal Mozy - Reseller Ireland BUS Smoke Test 7531-8642-90' related scenarios ===================
   @bus_emea @TC.125966
