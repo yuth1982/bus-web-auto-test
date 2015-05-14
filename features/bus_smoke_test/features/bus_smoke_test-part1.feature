@@ -84,6 +84,10 @@ Feature: BUS smoke test
     When I act as partner by:
       | name                                                |
       | Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32 |
+    When I add a new Bundled user group:
+      | name  | storage_type | limited_quota | enable_stash | server_support |
+      | omega | Limited      | 5             | yes          | yes            |
+    Then omega user group should be created
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by user without stash
     But I reassign the user to user group omega
