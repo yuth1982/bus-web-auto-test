@@ -93,7 +93,7 @@ Feature: BUS smoke test
     Then I navigate to Change Payment Information section from bus admin console page
     When I navigate to Download * Client section from bus admin console page
 
-  @bus_us @TC.125974 @support @prod
+  @bus_us @TC.125974 @support
   Scenario: Test Case Mozy-125974: BUS EMEA -- Check the support link - Precondition:@TC.125964
     When I act as partner by:
       | name                                                       |

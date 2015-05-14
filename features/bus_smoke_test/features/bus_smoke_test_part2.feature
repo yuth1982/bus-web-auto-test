@@ -130,13 +130,3 @@ Feature: BUS smoke test
     Then Quick report Credit Card Transactions csv file details should be:
       | Column A | Column B | Column C | Column D  |
       | Date     | Amount   | Card #   | Card Type |
-
-  #================== partner 'Rainbow MozyPro US' related scenarios ===================
-  @bus_us @TC.125953 @support @qa_std
-  Scenario: Test Case Mozy-125953: BUS US -- Check the support link
-    When I act as partner by:
-      | name               |
-      | Rainbow MozyPro US |
-    When I navigate to Contact section from bus admin console page
-    And I click my support
-    Then I login my support successfully

@@ -71,16 +71,6 @@ Feature: BUS smoke test
     And New partner should be created
     Then I delete partner account
 
-  #================== partner 'Rainbow MozyPro EMEA' related scenarios ===================
-  @bus_us @TC.125974 @support @qa_std
-  Scenario: Test Case Mozy-125974: BUS EMEA -- Check the support link
-    When I act as partner by:
-      | name                 |
-      | Rainbow MozyPro EMEA |
-    When I navigate to Contact section from bus admin console page
-    And I click my support
-    Then I login my support successfully
-
   #================== partner 'Internal Mozy - Reseller Ireland BUS Smoke Test 7531-8642-90' related scenarios ===================
   @bus_emea @TC.125966
   Scenario: Test Case Mozy-125966: BUS EMEA -- Activate partner in email
