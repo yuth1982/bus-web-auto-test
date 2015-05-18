@@ -4,6 +4,7 @@ require './lib/testlink_helper'
 require './scripts/ci/json_result_merge'
 require './scripts/ci/version'
 require './scripts/ci/get_phoenix_rerun_cases'
+require './scripts/ci/parallel_html_report'
 
 namespace :testlink do
 
@@ -123,6 +124,10 @@ Cucumber::Rake::Task.new(:rerun ) do |t|
   t.cucumber_opts = '@rerun.txt --format json --out report_rerun.json --format html --out html-report/report_rerun.html --format pretty'
 end
 
+Cucumber::Rake::Task.new(:parallel_rerun ) do |t|
+  t.cucumber_opts = 'features/bus_smoke_test/features/bus_smoke_test_part5.feature:42:67,features/bus_smoke_test/features/bus_smoke_test_part4.feature:39:91'
+end
+
 def run_rake_task(name, arg)
   begin
     if arg.nil?
@@ -149,6 +154,27 @@ task :bus_deployment_test_with_retry, :arg do |t, args|
 
   #merge the results
   merge('report_rerun.json', 'report.json', 'report_merged.json')
+  include Version
+  get_version
+  unless first_run || rerun_success
+    raise 'Cucumber tests failed'
+  end
+end
+
+desc 'Run parallel test and rerun failed tests'
+task :parallel_test_with_retry, :arg do |t, args|
+  first_run = system("bundle exec parallel_cucumber #{args[:arg]}")
+  rerun_success = true
+  unless first_run
+    rerun_success = system("bundle exec parallel_cucumber_ext @rerun.txt -o '-p parallel_rerun'")
+  end
+
+  #merge html reports
+  render_parallel_report
+
+  #merge parallel results
+  merge_parallel_json('.')
+
   include Version
   get_version
   unless first_run || rerun_success
@@ -194,7 +220,8 @@ end
 
 desc 'update windows hosts file according to the environment variable settings. This task must be run as administrator'
 task :win_hosts do
-  QA6_HOSTS = 'scripts/ci/qa6.hosts'
+  QA6_BUSCLIENT04_HOSTS = 'scripts/ci/qa6_busclient04.hosts'
+  QA6_BUSCLIENT01_HOSTS = 'scripts/ci/qa6_busclient01.hosts'
   QA12_HOSTS = 'scripts/ci/qa12.hosts'
   STG_HOSTS = 'scripts/ci/stg.hosts'
   PANTHEON_HOSTS = 'scripts/ci/pantheon.hosts'
@@ -205,8 +232,10 @@ task :win_hosts do
   env = ENV['BUS_ENV']
 
   case env
-    when 'qa6'
-      srcHostName = QA6_HOSTS
+    when 'qa6_busclient04'
+      srcHostName = QA6_BUSCLIENT04_HOSTS
+    when 'qa6_busclient01'
+      srcHostName = QA6_BUSCLIENT01_HOSTS
     when 'qa12h'
       srcHostName = QA12_HOSTS
     when 'std'

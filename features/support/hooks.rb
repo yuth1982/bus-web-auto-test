@@ -1,3 +1,6 @@
+require 'os'
+require 'base64'
+
 Before do
   # Do things before each scenario.
   FileHelper.clean_up_csv
@@ -61,10 +64,18 @@ end
 
 After do |scenario|
   if scenario.failed?
+    #Dismiss alert dialog if it exists to prevent Selenium::WebDriver::Error::UnhandledAlertError from happening in all the following scenarios
+    begin
+      Log.debug page.driver.browser.switch_to.alert.text
+      page.driver.browser.switch_to.alert.dismiss
+    rescue
+      Log.debug 'No alert needs to be dismissed'
+    end
+
     id = testcase_id scenario
     id = scenario.__id__ if id.nil? || id.length == 0
     name = "screenshot_#{id}_line#{scenario.location.line.to_s}.png"
-    page.driver.browser.save_screenshot("html-report/#{name}")
+    #page.driver.browser.save_screenshot("html-report/#{name}")
     encoded_img =  page.driver.browser.screenshot_as(:base64)
     embed("#{encoded_img}", "image/png", "#{name}")
   end

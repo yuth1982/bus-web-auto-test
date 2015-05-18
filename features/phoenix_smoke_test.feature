@@ -15,12 +15,12 @@ Feature: Phoenix smoke test
     And I add a phoenix Home user:
       | period | base plan | country       | admin name                | billing country | cc number        | coupon                |
       | 1      | 50 GB     | United States | Phoenix smoke test - home | United States   | 4018121111111122 | <%=QA_ENV['coupon']%> |
+    And I save the partner info
     Then the billing summary looks like:
       | Description                           | Price | Quantity | Amount |
       | MozyHome 50 GB (1 computer) - Monthly | $5.99 | 1        | $5.99  |
       | Total Charge                          |       |          | $5.99  |
     Then the user is successfully added.
-    And I save the partner info
     And the user has activated their account
 
   @TC.126132 @bus @regression_test @phoenix @mozyhome
@@ -78,7 +78,7 @@ Feature: Phoenix smoke test
     And I change my profile attributes to:
       | new_password |
       | Naich4yei8   |
-    And I logout of my user account
+    #And I logout of my user account
     And I login under changed password on the account.
 
   @TC.126137 @bus @regression_test @phoenix @mozyhome
@@ -113,8 +113,8 @@ Feature: Phoenix smoke test
     And I add a phoenix Free user:
       | base plan | country       |
       | free      | United States |
-    Then the user is successfully added.
     And I save the partner info
+    Then the user is successfully added.
     And the user has activated their account
 
 

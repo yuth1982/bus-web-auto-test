@@ -100,7 +100,10 @@ module Bus
         fill_initial_purchase(partner)
         set_pre_sub_total(partner)
         next_btn.click
-        wait_until{ back_btn.visible? } # wait for fill credit card info
+        wait_time = CONFIGS['global']['max_wait_time']
+        wait_until(wait_time) do
+          back_btn.visible?  # wait for fill credit card info
+        end
         if partner.net_term_payment
           net_term_payment_input.click
           if alert_present?
@@ -112,6 +115,9 @@ module Bus
           fill_credit_card_info(partner.credit_card)
         end
         set_order_summary(partner)
+        #Sometimes automation is too fast that the page doest not response to the click event on the button "Create Partner"
+        #Pause for 3 seconds as a workaround
+        sleep 3
         create_partner_btn.click
       else
         include_initial_purchase_cb.uncheck
@@ -128,6 +134,7 @@ module Bus
     #
     # Returns success or error message text
     def messages
+      wait_until { message_div.visible? }
       message_div.text
     end
 
