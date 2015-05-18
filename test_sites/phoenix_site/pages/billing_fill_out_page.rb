@@ -174,11 +174,14 @@ module Phoenix
       #
       if partner.partner_info.type.eql?("MozyPro")
         pro_fill_out(partner)
+        submit_btn.click
       else
-        home_fill_out(partner)
+        submit_btn.click
+
+        # code for filling in payment info in cybersource page
+        @orther_site = OtherSites.new
+        @orther_site.cybersource_page.fill_billing_info(partner)
       end
-      # submission
-      submit_btn.click
     end
 
     def pro_billing_country
