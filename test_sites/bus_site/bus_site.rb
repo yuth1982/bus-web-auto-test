@@ -42,5 +42,9 @@ class BusSite
   def mysupport_page
     Bus::MySupportPage.new
   end
+
+  def manifest_view_page
+    Bus::ManifestViewPage.new
+  end
 end
 

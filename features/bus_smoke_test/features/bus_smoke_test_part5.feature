@@ -81,3 +81,98 @@ Feature: BUS smoke test
     And the standard partner has activated the admin account
     And I go to account
     Then I login as mozypro admin successfully
+
+
+  @bus_us @TC.125981 @prod
+  Scenario: Test Case Mozy-125981: BUS US -- Download manifests for US user machine
+  # data center: UT3
+    When I navigate to Search / List Users section from bus admin console page
+    And I search user by:
+      | keywords                      |
+      | ut3dc@mozy.com  |
+    And I view user details by ut3dc@mozy.com
+    And I view machine DCEXEC02UT3 details from user details section
+    And I click manifest view link
+    And view manifest window of machine DCEXEC02UT3 is opened
+    And I click manifest raw link to download the manifest file
+    Then the manifest file is downloaded
+      | file name                                |
+      | manifest-ut3dc@mozy.com-DCEXEC02UT3.txt  |
+    Then I delete the newly downloaded file
+  # data center: UT4
+    And I close machine details section
+    And I close user details section
+    And I search user by:
+      | keywords                      |
+      | ut4dc@mozy.com  |
+    And I view user details by ut4dc@mozy.com
+    And I view machine DCEXEC03UT4 details from user details section
+    And I click manifest view link
+    And view manifest window of machine DCEXEC03UT4 is opened
+    And I click manifest raw link to download the manifest file
+    Then the manifest file is downloaded
+      | file name                                |
+      | manifest-ut4dc@mozy.com-DCEXEC03UT4.txt  |
+    Then I delete the newly downloaded file
+  # data center: UT5
+    And I close machine details section
+    And I close user details section
+    And I search user by:
+      | keywords                      |
+      | ut5dc@mozy.com  |
+    And I view user details by ut5dc@mozy.com
+    And I view machine DCEXEC04UT5 details from user details section
+    And I click manifest view link
+    And view manifest window of machine DCEXEC04UT5 is opened
+    And I click manifest raw link to download the manifest file
+    Then the manifest file is downloaded
+      | file name                                |
+      | manifest-ut5dc@mozy.com-DCEXEC04UT5.txt  |
+    Then I delete the newly downloaded file
+  # data center: UT7
+    And I close machine details section
+    And I close user details section
+    And I search user by:
+      | keywords                      |
+      | ut7dc@mozy.com  |
+    And I view user details by ut7dc@mozy.com
+    And I view machine DCEXEC05UT7 details from user details section
+    And I click manifest view link
+    And view manifest window of machine DCEXEC05UT7 is opened
+    And I click manifest raw link to download the manifest file
+    Then the manifest file is downloaded
+      | file name                                |
+      | manifest-ut7dc@mozy.com-DCEXEC05UT7.txt  |
+    Then I delete the newly downloaded file
+
+  @bus_emea @TC.125982 @prod
+  Scenario: Test Case Mozy-125982: BUS EMEA -- Download manifests for EMEA user machine
+  # data center: IRL2
+    When I navigate to Search / List Users section from bus admin console page
+    And I search user by:
+      | keywords         |
+      | irl2dc@mozy.com  |
+    And I view user details by irl2dc@mozy.com
+    And I view machine DCEXEC06IRL2 details from user details section
+    And I click manifest view link
+    And view manifest window of machine DCEXEC06IRL2 is opened
+    And I click manifest raw link to download the manifest file
+    Then the manifest file is downloaded
+      | file name                                  |
+      | manifest-irl2dc@mozy.com-DCEXEC06IRL2.txt  |
+    Then I delete the newly downloaded file
+  # data center: DUB1
+    And I close machine details section
+    And I close user details section
+    And I search user by:
+      | keywords         |
+      | dub1dc@mozy.com  |
+    And I view user details by dub1dc@mozy.com
+    And I view machine DCEXECDUB1 details from user details section
+    And I click manifest view link
+    And view manifest window of machine DCEXECDUB1 is opened
+    And I click manifest raw link to download the manifest file
+    Then the manifest file is downloaded
+      | file name                               |
+      | manifest-dub1dc@mozy.com-DCEXECDUB1.txt |
+    Then I delete the newly downloaded file

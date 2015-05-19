@@ -463,6 +463,16 @@ module Bus
       end
     end
 
+    def view_device_details(device_name)
+      device_table.rows.each do |row|
+        if row[0].text == device_name
+          row[0].find(:xpath, "//a[text()='#{device_name}']").click
+          wait_until{ find(:xpath, "//a[text()='Delete Machine']").visible? }
+          break
+        end
+      end
+    end
+
     def click_view_product_keys_link
       view_product_keys_link.click
       wait_until{ send_keys_btn.visible? }
