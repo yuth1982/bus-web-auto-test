@@ -49,7 +49,16 @@ module CyberSource
       phone_tb.type_text(partner.company_info.phone)
       email_tb.type_text(partner.admin_info.email) unless email_tb.value.eql?(partner.admin_info.email)
 
-      visa_radio.click
+      case partner.credit_card.type
+        when 'MasterCard'
+          mastercard_radio.click
+        when 'AmericanExpress'
+          amex_radio.click
+        when 'Discover'
+          discover_radio.click
+        else
+          visa_radio.click
+      end
 
       cc_number_tb.type_text(partner.credit_card.number)
       cc_cvn.type_text(partner.credit_card.cvv)
