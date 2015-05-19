@@ -212,6 +212,8 @@ Feature: BUS smoke test
     When I stop masquerading
     And I search partner by Internal Mozy - Fortress BUS Smoke Test 2940-4826-39
     And I view partner details by Internal Mozy - Fortress BUS Smoke Test 2940-4826-39
+    And I change account type to Internal Test
+    Then account type should be changed to Internal Test successfully
     And I delete partner account
 
   #=====================================

@@ -40,6 +40,12 @@ module Bus
     element(:partner_root_role_submit_btn, css: 'span[id^=partner-change-root-role] input')
     element(:partner_root_role_cancel_btn, css: 'span[id^=partner-change-root-role] a')
 
+    # Change partner account type
+    element(:account_type_change_link, xpath: "//a[contains(@onclick,'-acct-type-')][contains(text(),'change')]")
+    element(:account_type_select, xpath: "//select[@name='acct_type']")
+    element(:account_type_submit_btn , xpath: "//select[@name='acct_type']/../input[@type='submit'] ")
+    element(:account_type_span, xpath: "//span[contains(@id,'partner-display-acct-type-')]")
+
     # General information
     elements(:general_info_dls, css: 'div>dl')
     element(:stash_info_dl, css: 'div>dl>form')
@@ -594,6 +600,18 @@ module Bus
 
     def subdomain
       change_subdomain_link.text
+    end
+
+    def set_account_type type
+      account_type_change_link.click
+      wait_until{ account_type_select.visible? }
+      account_type_select.select type
+      account_type_submit_btn.click
+      wait_until_bus_section_load
+    end
+
+    def account_type
+      account_type_span.text
     end
 
     # Public: Change the contact email

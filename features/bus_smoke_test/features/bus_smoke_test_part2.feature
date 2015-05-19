@@ -57,6 +57,12 @@ Feature: BUS smoke test
       | Company Name                                    | Root role         | Security | Company Type     |
       | Internal Mozy - OEM BUS Smoke Test 4863-2704-60 | OEM Partner Admin | HIPAA    | Service Provider |
     Then New partner should be created
+    Then I stop masquerading as sub partner
+    And I stop masquerading
+    And I search partner by Internal Mozy - OEM BUS Smoke Test 4863-2704-60
+    And I view partner details by Internal Mozy - OEM BUS Smoke Test 4863-2704-60
+    And I change account type to Internal Test
+    Then account type should be changed to Internal Test successfully
     When I act as newly created partner account
     And I navigate to Add New Role section from bus admin console page
     And I add a new role:
@@ -71,6 +77,11 @@ Feature: BUS smoke test
       | Company Name                               | Pricing Plan | Admin Name |
       | Internal Mozy - subpartner1 8376-3615-73   | subplan      | subadmin1  |
     Then New partner should be created
+    And I stop masquerading
+    And I search partner by Internal Mozy - subpartner1 8376-3615-73
+    And I view partner details by Internal Mozy - subpartner1 8376-3615-73
+    And I change account type to Internal Test
+    Then account type should be changed to Internal Test successfully
     When I act as newly created subpartner account
     And I navigate to Purchase Resources section from bus admin console page
     And I save current purchased resources
@@ -86,10 +97,21 @@ Feature: BUS smoke test
       | oem user | 1              | 10           | 1               | 10            |
     And new itemized user should be created
     When I stop masquerading from subpartner
+    When I act as partner by:
+      | name                                            |
+      | Internal Mozy - OEM BUS Smoke Test 4863-2704-60 |
     And I add a new sub partner:
       | Company Name                               | Pricing Plan | Admin Name |
       | Internal Mozy - subpartner2 4974-9147-43   | subplan      | subadmin2  |
     Then New partner should be created
+    And I stop masquerading
+    And I search partner by Internal Mozy - subpartner2 4974-9147-43
+    And I view partner details by Internal Mozy - subpartner2 4974-9147-43
+    And I change account type to Internal Test
+    Then account type should be changed to Internal Test successfully
+    When I act as partner by:
+      | name                                            |
+      | Internal Mozy - OEM BUS Smoke Test 4863-2704-60 |
     And I navigate to Search / List Users section from bus admin console page
     And I view user details by oem user
     When I reassign the user to partner Internal Mozy - subpartner2 4974-9147-43
