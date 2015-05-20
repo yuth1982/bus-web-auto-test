@@ -7,14 +7,24 @@ Feature: Phoenix smoke test
 
   Background:
 
+  @TC.126129 @mozy @phoenix @regression_test
+  Scenario: 126129 Verify DL links within CMS content pages
+    When I clear downloads folder
+    When I go to cms page
+    And I download home client
+    And I go to cms page
+    And I download sync client
+    And I go to cms page
+    And I download pro client
+
 
 
   @TC.126120 @bus @regression_test @phoenix @mozyhome
   Scenario: 126120 Create a MozyHome paid user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country       | admin name                | billing country | cc number        | coupon                |
-      | 1      | 50 GB     | United States | Phoenix smoke test - home | United States   | 4018121111111122 | <%=QA_ENV['coupon']%> |
+      | period | base plan | country       | admin name                                | billing country | cc number        | coupon                |
+      | 1      | 50 GB     | United States | Internal Mozy - Phoenix smoke test - home | United States   | 4018121111111122 | <%=QA_ENV['coupon']%> |
     And I save the partner info
     Then the billing summary looks like:
       | Description                           | Price | Quantity | Amount |
@@ -34,8 +44,8 @@ Feature: Phoenix smoke test
     When I get previous partner info
     And I login as the user on the account.
     And I change my profile attributes to:
-      | new_username_first        | new_username_last | new_username_full                      |
-      | Phoenix smoke test - home | name changed      | Phoenix smoke test - home name changed |
+      | new_username_first                        | new_username_last | new_username_full                                      |
+      | Internal Mozy - Phoenix smoke test - home | name changed      | Internal Mozy - Phoenix smoke test - home name changed |
     # Add change country, address, Add check point
     And I save the partner info
 
@@ -129,8 +139,8 @@ Feature: Phoenix smoke test
     When I get previous partner info
     And I login as the user on the account.
     And I upgrade my free account to:
-      | base plan | period | admin name                     | coupon                |
-      | 50 GB     | 1      | Phoenix smoke test - free2paid | <%=QA_ENV['coupon']%> |
+      | base plan | period | admin name                                     | coupon                |
+      | 50 GB     | 1      | Internal Mozy - Phoenix smoke test - free2paid | <%=QA_ENV['coupon']%> |
     Then upgrade from free to paid will be successful
 
   @TC.126135 @bus @regression_test @phoenix @mozyhome @qa
@@ -188,8 +198,8 @@ Feature: Phoenix smoke test
     Scenario: 126121 Create a MozyPro partner
       When I am at dom selection point:
       And I add a phoenix Pro partner:
-        | period | base plan | company name                 | country       | billing country |  coupon                |
-        | 1      | 50 GB     | Phoenix smoke test - mozypro |United States | United States   |  <%=QA_ENV['coupon']%> |
+        | period | base plan | company name                                 | country       | billing country |  coupon                |
+        | 1      | 50 GB     | Internal Mozy - Phoenix smoke test - mozypro |United States | United States   |  <%=QA_ENV['coupon']%> |
       Then the order summary looks like:
         | Description     | Price  | Quantity | Amount |
         | 50 GB - Monthly | $19.99 | 1        | $19.99 |
@@ -207,21 +217,11 @@ Feature: Phoenix smoke test
     And I search and delete partner account by newly created partner company name
 
 
-  @TC.126129 @mozy @phoenix @regression_test
-  Scenario: 126129 Verify DL links within CMS content pages
-    When I clear downloads folder
-    When I go to cms page
-    And I download home client
-    And I go to cms page
-    And I download sync client
-    And I go to cms page
-    And I download pro client
-
   @phoenix_cleanup
   Scenario: Delete all the created users and partners
     When I log in bus admin console as administrator
-    And I search and delete user account if it exists by Phoenix smoke test - home name changed
-    And I search and delete user account if it exists by Phoenix smoke test - home
-    And I search and delete user account if it exists by Phoenix smoke test - free2paid
-    And I search and delete user account if it exists by Phoenix smoke test - free
-    And I search and delete partner account if it exists by Phoenix smoke test - mozypro
+    And I search and delete user account if it exists by Internal Mozy - Phoenix smoke test - home name changed
+    And I search and delete user account if it exists by Internal Mozy - Phoenix smoke test - home
+    And I search and delete user account if it exists by Internal Mozy - Phoenix smoke test - home
+    And I search and delete user account if it exists by Internal Mozy - Phoenix smoke test - free2paid
+    And I search and delete partner account if it exists by Internal Mozy - Phoenix smoke test - mozypro
