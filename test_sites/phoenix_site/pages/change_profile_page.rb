@@ -15,25 +15,8 @@ module Phoenix
   element(:new_pw, id: "new_password")
   element(:new_pw2, id: "new_password2")
   element(:change_btn, css: "input.ui-button")
-  # change cc info
-  element(:change_cc_type_select, id: "card_type")
-  element(:change_cc_number_tb, id: "card_number")
-  element(:change_card_cvv_tb, id: "card_cvn")
-  element(:change_exp_mm_select, id: "card_expiry_month")
-  element(:change_exp_yy_select, id: "card_expiry_year")
-  # cc addressing info
-  element(:change_billing_country_select, id: "bill_to_address_country")
-  element(:change_bill_fname_tb, id: "bill_to_forename")
-  element(:change_bill_lname_tb, id: "bill_to_surname")
-  element(:change_bill_co_tb, id: "bill_to_company_name")
-  element(:change_bill_addr1_tb, id: "bill_to_address_line1")
-  element(:change_bill_addr2_tb, id: "bill_to_address_line2")
-  element(:change_bill_city_tb, id: "bill_to_address_city")
-  element(:change_bill_state_tb, id: "bill_to_address_state")
-  element(:change_bill_state_select, id: "bill_to_address_state_us")
-  element(:change_bill_zip_tb, id: "bill_to_address_postal_code")
+  # cc change submit button
   element(:change_submit_btn, id: "submit_button")
-  element(:captcha, id: "captcha")
 
   # items relating to changing the account
   element(:change_plan_select, id: "consumer_plan_id")
@@ -93,35 +76,15 @@ module Phoenix
 
   # change cc info script
   def change_cc_entry(partner)
-    # card info entry
-    change_cc_type_select.select(partner.credit_card.type)
-    change_cc_number_tb.type_text(partner.credit_card.number)
-    change_card_cvv_tb.type_text(partner.credit_card.cvv)
-    change_exp_mm_select.select(partner.credit_card.expire_month)
-    change_exp_yy_select.select(partner.credit_card.expire_year)
-
-    # biller info entry
-    change_billing_country_select.select(partner.company_info.country)
-    change_bill_fname_tb.type_text(partner.admin_info.first_name)
-    change_bill_lname_tb.type_text(partner.admin_info.last_name)
-    change_bill_addr1_tb.type_text(partner.company_info.address)
-    change_bill_city_tb.type_text(partner.company_info.city)
-    state_entry(partner)
-    change_bill_zip_tb.type_text(partner.company_info.zip)
-
-    # submission
-    captcha.type_text(CONFIGS['phoenix']['captcha'])
     change_submit_btn.click
+
+    # code for filling in payment info in cybersource page
+    @orther_site = OtherSites.new
+    @orther_site.cybersource_page.fill_billing_info(partner)
+
     message_text.eql?("Your card has been successfully filed. All future payments will be charged to your #{partner.credit_card.type} ending in #{partner.credit_card.last_four_digits}.")
   end
 
-  def state_entry(partner)
-    if partner.company_info.country == "United States"
-      change_bill_state_select.type_text(partner.company_info.state_abbrev)
-    else
-      change_bill_state_tb.type_text(partner.company_info.state)
-    end
-  end
 
 
 
