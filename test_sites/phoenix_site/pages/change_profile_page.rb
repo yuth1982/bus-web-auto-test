@@ -46,7 +46,7 @@ module Phoenix
   element(:free2paid_country_name, xpath: "//input[@id='user_name']")
   element(:free2paid_country_select, xpath: "//select[@name='user[country]']")
   element(:free2paid_continue_btn, xpath: "//input[@id='conti_button']")
-  element(:update_profile_country_upgrade_link, xpath: "//div[@id='cybersourceErrors']//a")
+  element(:update_profile_country_upgrade_link, css: "p.error a")
   element(:continue_btn, css: "input.img-button")
 
 

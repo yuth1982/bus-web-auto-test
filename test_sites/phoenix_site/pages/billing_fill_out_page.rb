@@ -57,7 +57,7 @@ module Phoenix
     element(:continue_btn, css: "input.img-button")
     element(:back_btn, id: "back_button")
     element(:submit_btn, id: "submit_button")
-    element(:error_message, xpath: "//div[@id='cybersourceErrors']//ul//li")
+    element(:error_message, css: "p.error")
     element(:pro_error_message, xpath: "//*[@id='ariaErrors']/ul/li")
 
     # Public elements & methods
