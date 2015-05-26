@@ -36,17 +36,31 @@ module CyberSource
       address_line1_tb.type_text(partner.company_info.address)
       city_tb.type_text(partner.company_info.city)
 
-      partner.company_info.country == 'United States' ? country_select.select("United States of America") : country_select.select(partner.company_info.country)
 
-      if partner.company_info.country.eql?("United States") || partner.company_info.country.eql?("Canada")
-        find('select#bill_to_address_state_us_ca').find("option[value='#{partner.company_info.state_abbrev}']").select_option
-        #state_select.select(partner.company_info.state_abbrev)
+      if partner.use_company_info
+        partner.company_info.country == 'United States' ? country_select.select("United States of America") : country_select.select(partner.company_info.country)
+        if partner.company_info.country.eql?("United States") || partner.company_info.country.eql?("Canada")
+          find('select#bill_to_address_state_us_ca').find("option[value='#{partner.company_info.state_abbrev}']").select_option
+        else
+          state_tb.type_text(partner.company_info.state)
+        end
+
+        zip_tb.type_text(partner.company_info.zip)
+        phone_tb.type_text(partner.company_info.phone)
+
       else
-        state_tb.type_text(partner.company_info.state)
+        partner.billing_info.country == 'United States' ? country_select.select("United States of America") : country_select.select(partner.billing_info.country)
+        if partner.billing_info.country.eql?("United States") || partner.billing_info.country.eql?("Canada")
+          find('select#bill_to_address_state_us_ca').find("option[value='#{partner.billing_info.state_abbrev}']").select_option
+        else
+          state_tb.type_text(partner.billing_info.state)
+        end
+
+        zip_tb.type_text(partner.billing_info.zip)
+        phone_tb.type_text(partner.billing_info.phone)
+
       end
 
-      zip_tb.type_text(partner.company_info.zip)
-      phone_tb.type_text(partner.company_info.phone)
       email_tb.type_text(partner.admin_info.email) unless email_tb.value.eql?(partner.admin_info.email)
 
       case partner.credit_card.type
