@@ -177,7 +177,7 @@ module Phoenix
         pro_fill_out(partner)
         submit_btn.click
       else
-        submit_btn.click
+        continue_btn.click
 
         # code for filling in payment info in cybersource page
         @orther_site = OtherSites.new

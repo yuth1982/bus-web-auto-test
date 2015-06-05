@@ -76,7 +76,7 @@ module Phoenix
 
   # change cc info script
   def change_cc_entry(partner)
-    change_submit_btn.click
+    continue_btn.click
 
     # code for filling in payment info in cybersource page
     @orther_site = OtherSites.new
