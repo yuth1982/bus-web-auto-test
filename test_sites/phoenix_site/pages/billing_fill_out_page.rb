@@ -80,6 +80,7 @@ module Phoenix
     def pro_fill_out(partner)
       # for pro, mainly the cc info - then click 'same as' link
       # card info
+      cc_type_select.select(partner.credit_card.type) unless partner.credit_card.type["type"].nil?
       cc_no_tb.type_text(partner.credit_card.number)
       cvv_tb.type_text(partner.credit_card.cvv)
       cc_exp_mm_select.select(partner.credit_card.expire_month)
