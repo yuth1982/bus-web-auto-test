@@ -15,7 +15,11 @@ And /^I fill out the restore all files wizard$/ do |restore_table|
   @restore.restore_type = attributes["restore_type"] unless attributes["restore_type"].nil?
 
   @freyja_site.detail_panel_page.restore_all_files_section.restore_all_files(@restore)
-  @freyja_site.cybersource_page.fill_media_billing_info(@restore)
+
+  if @restore.restore_type == 'media'
+    @freyja_site.cybersource_page.fill_media_billing_info(@restore)
+  end
+
 end
 
 # launch download
