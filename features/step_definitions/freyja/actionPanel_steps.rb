@@ -30,7 +30,7 @@ And /^I fill out the restore wizard$/ do |restore_table|
   @restore.restore_type = attributes["restore_type"] unless attributes["restore_type"].nil?
 
   @freyja_site.action_panel_page.large_download_options_section.large_download_options_restore(@restore, @user.language)
-
+  @freyja_site.cybersource_page.fill_media_billing_info(@restore, @user.language)
 end
 
 # launch upload files wizard in Sync device

@@ -143,10 +143,11 @@ module Freyja
       sleep 1
       fill_media_address(restore.address_info, language)
       click_next
-      fill_media_payment(restore.credit_card)
       click_next
-      click_close
-      sleep 1
+      #fill_media_payment(restore.credit_card)
+      #click_next
+      #click_close
+      #sleep 1
     end
 
     def fill_media_address(address_info, language)

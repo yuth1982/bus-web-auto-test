@@ -55,4 +55,7 @@ class FreyjaSite
     Freyja::ProductDownloadPage.new
   end
 
+  def cybersource_page
+    Freyja::CybersourceManinPage.new
+  end
 end

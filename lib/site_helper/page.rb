@@ -34,6 +34,19 @@ module SiteHelper
       visit(page.driver.current_url)
     end
 
+    def switch_to_newWindow
+      #Get the popup window handle
+      popup = page.driver.browser.window_handles.last
+      #Then switch control between the windows
+      page.driver.browser.switch_to.window(popup)
+    end
+
+    def switch_to_lastWindow
+      #Get the main window handle
+      main = page.driver.browser.window_handles.first
+      #Then switch control between the windows
+      page.driver.browser.switch_to.window(main)
+    end
     # Public: Get all cookies from current page
     #
     # Example:
