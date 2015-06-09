@@ -50,7 +50,7 @@ module CyberSource
 
       else
         partner.billing_info.country == 'United States' ? country_select.select("United States of America") : country_select.select(partner.billing_info.country)
-        if partner.billing_info.country.eql?("United States") || partner.billing_info.country.eql?("Canada")
+        if partner.billing_info.country.eql?("United States") || partner.billing_info.country.eql?("États-Unis") || partner.billing_info.country.eql?("Canada")
           find('select#bill_to_address_state_us_ca').find("option[value='#{partner.billing_info.state_abbrev}']").select_option
         else
           state_tb.type_text(partner.billing_info.state)
@@ -82,7 +82,6 @@ module CyberSource
 
 
       finish_btn.click
-
 
     end
 
