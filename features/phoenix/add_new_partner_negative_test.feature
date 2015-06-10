@@ -165,12 +165,13 @@ Feature: Add a new partner through phoenix
     Impossible de valider les informations de paiement. Veuillez s'il vous plait vous assurer que votre pays de résidence corresponde au pays de la banque qui a produit votre carte de crédit.
     """
 
+  #known issue. Actually got: "Could not validate payment information.", which is not same as expected message.
   @TC.125285 @phoenix @mozypro @profile_country=us @ip_country=us @billing_country=fr
   Scenario: 125285 Add a new US monthly basic MozyPro partner credit card not match us_us_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country       | billing country | cc number        |
-      | 1      | 1 TB      | United States | France          | 4018121111111122 |
+      | 1      | 1 TB      | United States | France          | 4485393141463880 |
     Then payment information page error message should be:
     """
     Could not validate payment information. Please make sure your country of residence matches the country of the bank which issued your credit card.
