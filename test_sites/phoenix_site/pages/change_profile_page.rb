@@ -82,11 +82,13 @@ module Phoenix
     @orther_site = OtherSites.new
     @orther_site.cybersource_page.fill_billing_info(partner)
 
-    message_text.eql?("Your card has been successfully filed. All future payments will be charged to your #{partner.credit_card.type} ending in #{partner.credit_card.last_four_digits}.")
   end
 
-
-
+  # cc changed successfully
+  def cc_changed?(partner)
+    cc_type = (partner.credit_card.type == 'Maestro UK')? 'credit card' : partner.credit_card.type
+    message_text.text.should == " Your card has been successfully filed. All future payments will be charged to your #{cc_type} ending in #{partner.credit_card.last_four_digits}."
+  end
 
   #--change password section--
   # calls the whole process

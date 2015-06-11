@@ -21,6 +21,7 @@ module CyberSource
     element(:mastercard_radio, id: "card_type_002")
     element(:amex_radio, id: "card_type_003")
     element(:discover_radio, id: "card_type_004")
+    element(:maestro_uk_radio, id: "card_type_024")
     # card info
     element(:cc_number_tb, id: "card_number")
     element(:cc_cvn, id: "card_cvn")
@@ -66,10 +67,12 @@ module CyberSource
       case partner.credit_card.type
         when 'MasterCard'
           mastercard_radio.click
-        when 'AmericanExpress'
+        when 'American Express'
           amex_radio.click
         when 'Discover'
           discover_radio.click
+        when 'Maestro UK'
+          maestro_uk_radio.click
         else
           visa_radio.click
       end

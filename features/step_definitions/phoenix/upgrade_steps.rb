@@ -118,10 +118,12 @@ And /^I change my profile attributes to:$/ do |change_info_table|
 
     @partner.credit_card.number = attributes["new_cc_num"] unless attributes["new_cc_num"].nil?
     @partner.credit_card.type = attributes["new_cc_type"] unless attributes["new_cc_type"].nil?
-    @partner.credit_card.last_four_digits = attributes["last_four_digs"] unless attributes["last_four_digs"].nil?
+    @partner.credit_card.last_four_digits = @partner.credit_card.number[-4..-1] unless attributes["new_cc_num"].nil?
     @partner.admin_info.first_name = attributes["new_username_first"] unless attributes["new_username_first"].nil?
     @partner.admin_info.last_name = attributes["new_username_last"] unless attributes["new_username_last"].nil?
     @partner.admin_info.full_name = attributes["new_username_full"] unless attributes["new_username_full"].nil?
+    @partner.use_company_info = attributes['billing country'].nil?
+    @partner.billing_info.country = attributes["billing country"] unless attributes["billing country"].nil?
 
   # section: changing password, cc, username in my_profile
   # change password - changing to default bus_password - hard coded into method (temporarily)
@@ -143,6 +145,10 @@ And /^I change my profile attributes to:$/ do |change_info_table|
     @phoenix_site.user_account.localized_click(@partner, 'profile_link')
     @phoenix_site.update_profile.change_user_name(@partner)
   end
+end
+
+And /^user credit card updated successfully$/ do
+  @phoenix_site.update_profile.cc_changed?(@partner).should be_true
 end
 
 And /^I logout of my (user|partner) account$/ do |account|
