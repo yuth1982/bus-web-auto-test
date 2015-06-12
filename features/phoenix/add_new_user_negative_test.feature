@@ -123,8 +123,8 @@ Feature: Add a new user through phoenix
   Scenario: 125268 Add a new DE yearly basic MozyHome user invalid location de_fr_us
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country | billing country    | cc number        |
-      | 12     | 125 GB    | Germany | Vereinigte Staaten | 4018121111111122 |
+      | period | base plan | country | billing country | billing state abbrev | cc number        |
+      | 12     | 125 GB    | Germany | USA             | CA                   | 4018121111111122 |
     Then billing details page error message should be:
     """
     Das Land des Firmensitzes, das Sie angegeben haben, stimmt nicht mit dem Land der Bank, die Ihre Kreditkarte verwaltet, überein. Bitte prüfen Sie das Land noch einmal, das Sie als Land Ihres Firmensitzes angegeben haben, oder geben Sie eine Kreditkarte an, die mit dem Land Ihres Firmensitzes übereinstimmt.
