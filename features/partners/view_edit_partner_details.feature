@@ -3,8 +3,8 @@ Feature: BUS Regression partner test
   Background:
     Given I log in bus admin console as administrator
 
-    @TC.1649 @selenium @bus @others
-    Scenario: 1649 Set a partners subdomain
+  @TC.1649 @selenium @bus @others
+  Scenario: 1649 Set a partners subdomain
     When I add a new MozyPro partner:
     | period | base plan |
     | 1      | 50 GB     |
@@ -52,3 +52,50 @@ Feature: BUS Regression partner test
       | today | $9.99  | $9.99      | $0.00       |
       | today | $0.00  | $0.00      | $0.00       |
     And I delete partner account
+
+  # This test cases requires an OEM partner with API Key
+  # Test account Barclays Root - Reserved is in QA6 only
+  #
+  # Todo: this case need to check create ip white list successful message
+  @TC.643 @need_test_account @bus @2.5 @partner @ip_white_list_visibility @env_dependents
+  Scenario: 643 Verify White List visibility for an OEM partner with an API Key
+    When I search partner by:
+      | name                     | filter |
+      | Barclays Root - Reserved | OEMs   |
+    Then I view partner details by Barclays Root - Reserved
+    And Partner ip whitelist should be 250.250.250.250
+
+  # Todo: this case need to check create ip white list successful message
+  # Todo: This test cases could be failed because no ui for api creating if partner uses pooled storage
+  @TC.644 @bus @2.5 @partner @ip_white_list_visibility
+  Scenario: 644 Verify White List visibility for a Corp partner with an API Key
+    When I add a new MozyPro partner:
+      | period | base plan | net terms |
+      | 1      | 10 GB     | yes       |
+    Then New partner should be created
+    And I Create an API key for current partner
+    When I add a new ip whitelist 250.250.250.250
+    Then Partner ip whitelist should be 250.250.250.250
+    And I delete partner account
+
+  # This test cases requires an OEM partner without API Key
+  # Test account Charter Business Trial - Reserved is in QA6 only
+  #
+  @TC.645 @need_test_account @bus @2.5 @partner @ip_white_list_visibility @env_dependent
+  Scenario: 645 Verify White List visibility for an OEM partner without an API Key
+    When I search partner by:
+      | name                              | filter |
+      | Charter Business Trial - Reserved | OEMs   |
+    Then I view partner details by Charter Business Trial - Reserved
+    And Partner API key should be empty
+    And Partner ip whitelist should be There is no current API key.
+
+  # Todo: This test cases could be failed because no ui for api creating if partner uses pooled storage
+  @TC.646 @bus @2.5 @partner @ip_white_list_visibility
+  Scenario: 646 Verify White List visibility for a Corp partner without an API Key
+    When I add a new MozyPro partner:
+      | period | base plan | net terms |
+      | 1      | 10 GB     | yes       |
+    Then New partner should be created
+    And Partner API key should be empty
+    And Partner ip whitelist should be There is no current API key.
