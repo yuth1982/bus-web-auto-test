@@ -17,6 +17,14 @@ module Phoenix
   element(:change_btn, css: "input.ui-button")
   # cc change submit button
   element(:change_submit_btn, id: "submit_button")
+  # change credit card and country
+  element(:profile_country_ccc, id: "user_country")
+  element(:change_cc_country_submit_btn, css: "input.img-button")
+  element(:change_cc_and_country_link, css: "p.error a")
+
+  # change profile country
+  element(:profile_country, xpath: "//select[@name='user[country]']")
+  element(:profile_country_error_text, css: "p.error")
 
   # items relating to changing the account
   element(:change_plan_select, id: "consumer_plan_id")
@@ -50,6 +58,7 @@ module Phoenix
   element(:continue_btn, css: "input.img-button")
 
 
+
   #--delete user section--
   # calls the whole process
   def delete_account(password)
@@ -60,6 +69,16 @@ module Phoenix
 
   def delete_account_link()
     find(:xpath, "//a[contains(@href,'/account/cancel_verify')]").click
+  end
+
+  #--change credit card and country section--
+  def change_cc_and_country(partner)
+    change_cc_and_country_link.click
+    profile_country_ccc.select(partner.company_info.country)
+    change_cc_country_submit_btn.click
+    # code for filling in payment info in cybersource page
+    @orther_site = OtherSites.new
+    @orther_site.cybersource_page.fill_billing_info(partner)
   end
 
   #--change credit card information section--
@@ -88,6 +107,20 @@ module Phoenix
   def cc_changed?(partner)
     cc_type = (partner.credit_card.type == 'Maestro UK')? 'credit card' : partner.credit_card.type
     message_text.text.should == " Your card has been successfully filed. All future payments will be charged to your #{cc_type} ending in #{partner.credit_card.last_four_digits}."
+  end
+
+  # change profile country in account/profile page
+  def change_profile_country(partner)
+    profile_country.select(partner.company_info.country)
+    change_btn.click
+  end
+
+  def profile_changed?
+    message_profile.eql?("Profile saved.")
+  end
+
+  def profile_error_message
+    profile_country_error_text.text
   end
 
   #--change password section--

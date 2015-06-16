@@ -110,6 +110,20 @@ And /^I (upgrade|change) my (partner|user|free) account to:$/ do |change_type,ac
    end
 end
 
+And /^I change credit card and country from bin country not match error link:$/ do |change_cc_and_country_table|
+  attributes = change_cc_and_country_table.hashes.first
+
+  @partner.credit_card.number = attributes["new_cc_num"] unless attributes["new_cc_num"].nil?
+  @partner.credit_card.type = attributes["new_cc_type"] unless attributes["new_cc_type"].nil?
+  @partner.credit_card.last_four_digits = @partner.credit_card.number[-4..-1] unless attributes["new_cc_num"].nil?
+  @partner.company_info.country = attributes["profile country"] unless attributes["profile country"].nil?
+  @partner.use_company_info = attributes['billing country'].nil?
+  @partner.billing_info.country = attributes["billing country"] unless attributes["billing country"].nil?
+
+  @phoenix_site.update_profile.change_cc_and_country(@partner)
+
+end
+
 And /^I change my profile attributes to:$/ do |change_info_table|
   attributes = change_info_table.hashes.first
 
@@ -125,11 +139,19 @@ And /^I change my profile attributes to:$/ do |change_info_table|
     @partner.use_company_info = attributes['billing country'].nil?
     @partner.billing_info.country = attributes["billing country"] unless attributes["billing country"].nil?
 
+
   # section: changing password, cc, username in my_profile
   # change password - changing to default bus_password - hard coded into method (temporarily)
   #   consideration: may be better to create a variable in the admin_info obj for password
   # change cc - default is Visa, setting to MasterCard
   # change user name - default is system generated, new one is tester created
+  # change profile country - if profile country changed to not meet bin country rule, error message will show up
+
+  unless (attributes["new_profile_country"]).nil?
+    @phoenix_site.user_account.localized_click(@partner, 'profile_link')
+    @partner.company_info.country = attributes["new_profile_country"] unless attributes["new_profile_country"].nil?
+    @phoenix_site.update_profile.change_profile_country(@partner)
+  end
 
   unless (attributes["new_password"]).nil?
     @phoenix_site.user_account.localized_click(@partner, 'profile_link')
@@ -145,6 +167,14 @@ And /^I change my profile attributes to:$/ do |change_info_table|
     @phoenix_site.user_account.localized_click(@partner, 'profile_link')
     @phoenix_site.update_profile.change_user_name(@partner)
   end
+end
+
+And /^user profile page error message should be:$/ do |message|
+  @phoenix_site.update_profile.profile_error_message.strip.should eq(message.strip)
+end
+
+And /^user profile country updated successfully$/ do
+  @phoenix_site.update_profile.profile_country_changed?.should be_true
 end
 
 And /^user credit card updated successfully$/ do

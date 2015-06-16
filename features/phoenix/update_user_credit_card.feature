@@ -5,7 +5,7 @@ Feature: MozyHome user update credit card in phoenix
 
 
   @TC.131678 @regression_test @phoenix
-  Scenario: update credit card - us to us
+  Scenario: 131678 update credit card - us to us in change_credit_card page
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country       | billing country | cc number        |
@@ -38,8 +38,73 @@ Feature: MozyHome user update credit card in phoenix
       | 4018121111111122 | Visa        |
     And user credit card updated successfully
 
+  @TC.131705 @TC.131758 @regression_test @phoenix
+  Scenario: 131705 update credit card - us to uk to fr in change_credit_card_and_country page
+  When I am at dom selection point:
+  And I add a phoenix Home user:
+    | period | base plan | country       | billing country | cc number        |
+    | 1      | 50 GB     | United States | United States   | 4018121111111122 |
+  Then the billing summary looks like:
+    | Description                           | Price | Quantity | Amount |
+    | MozyHome 50 GB (1 computer) - Monthly | $5.99 | 1        | $5.99  |
+    | Total Charge                          |       |          | $5.99  |
+  Then the user is successfully added.
+  And the user has activated their account
+  When I login as the user on the account.
+
+  And I change my profile attributes to:
+    | new_cc_num       |
+    | 4916783606275713 |
+  Then billing details page error message should be:
+  """
+   The billing country you provided does not match the country of the bank which issued your credit card.
+  """
+
+  And I change my profile attributes to:
+    | new_cc_num       | billing country |
+    | 4916783606275713 | United Kingdom  |
+  Then billing details page error message should be:
+  """
+   The country of residence you provided does not match the country of the bank which issued your credit card. Please review the country you chose as your country of residence, or enter a credit card which matches your country of residence. Click here to update your country of residence
+  """
+
+  And I change credit card and country from bin country not match error link:
+    | profile country | billing country | cc number        | new_cc_type |
+    | United Kingdom  | United Kingdom  | 4916783606275713 | Visa        |
+  And user credit card updated successfully
+
+  And I change my profile attributes to:
+    | new_cc_num       |
+    | 4485393141463880 |
+  Then billing details page error message should be:
+  """
+   The billing country you provided does not match the country of the bank which issued your credit card.
+  """
+
+  And I change my profile attributes to:
+    | new_cc_num       | billing country |
+    | 4485393141463880 | France          |
+  Then billing details page error message should be:
+  """
+   The country of residence you provided does not match the country of the bank which issued your credit card. Please review the country you chose as your country of residence, or enter a credit card which matches your country of residence. Click here to update your country of residence
+  """
+
+  And I change my profile attributes to:
+    | new_profile_country |
+    | France              |
+
+  And user profile page error message should be:
+  """
+   The country of residence you provided does not match the country of the bank which issued your credit card. Please review the country you chose as your country of residence, or enter a credit card which matches your country of residence. Click here to update your country of residence
+  """
+
+  And I change credit card and country from bin country not match error link:
+    | profile country | billing country | cc number        | new_cc_type |
+    | France          | France          | 4485393141463880 | Visa        |
+  And user credit card updated successfully
+
   @TC.131771 @regression_test @phoenix
-  Scenario: update credit card - uk to uk
+  Scenario: 131771 update credit card - uk to uk in change_credit_card page
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country        | billing country | cc number        | type       |
