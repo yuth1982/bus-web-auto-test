@@ -13,7 +13,7 @@ module Freyja
     element(:address_line2, xpath: "//*[@id='bill_to_address_line2']")
     element(:address_city, xpath: "//*[@id='bill_to_address_city']")
     element(:address_country, xpath: "//*[@id='bill_to_address_country']")
-    element(:address_state, xpath: "//*[@id='bill_to_address_state_other']")
+    element(:address_state, xpath: "//*[@id='bill_to_address_state']")
     element(:address_postal_code, xpath: "//*[@id='bill_to_address_postal_code']")
     # Media restore credit card info
     element(:visa_card_type, xpath: "//*[@id='card_type_001']")
