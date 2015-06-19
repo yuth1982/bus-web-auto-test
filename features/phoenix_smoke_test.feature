@@ -152,7 +152,7 @@ Feature: Phoenix smoke test
       | 125 GB    | 2            |
 
   @TC.126136 @bus @regression_test @phoenix @mozyhome @qa
-  Scenario: 126136 home user can upgrade next renewal plan - Precondition:@TC.126122,@TC.126127
+  Scenario: 126136 home user can upgrade next renewal plan - Precondition:@TC.126122,@TC.126127,@TC.126135
     When I get previous partner info
     And I login as the user on the account.
     And I change my user account to:
