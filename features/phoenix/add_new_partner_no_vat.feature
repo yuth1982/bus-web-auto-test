@@ -87,7 +87,7 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.125296 @phoenix @mozypro @profile_country=us @ip_country=us @billing_country=fr
+  @TC.125296 @phoenix @mozypro @profile_country=us @ip_country=us @billing_country=fr @bin_country=us
   Scenario: 125296 Add a new US 50 GB biennial basic MozyPro partner us_us_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -101,7 +101,7 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.125297 @phoenix @mozypro @profile_country=us @ip_country=us @billing_country=fr
+  @TC.125297 @phoenix @mozypro @profile_country=us @ip_country=us @billing_country=fr @bin_country=us
   Scenario: 125297 Add a new US 250 GB biennial basic MozyPro partner us_us_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -116,7 +116,7 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.125298 @phoenix @mozypro @profile_country=us @ip_country=us @billing_country=fr
+  @TC.125298 @phoenix @mozypro @profile_country=us @ip_country=us @billing_country=fr @bin_country=us
   Scenario: 125298 Add a new US 500 GB monthly basic MozyPro partner us_us_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -132,7 +132,7 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.125299 @phoenix @mozypro @profile_country=us @ip_country=us @billing_country=fr
+  @TC.125299 @phoenix @mozypro @profile_country=us @ip_country=us @billing_country=fr @bin_country=us
   Scenario: 125299 Add a new US 500 GB yearly basic MozyPro partner us_us_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -149,7 +149,7 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.125300 @phoenix @mozypro @profile_country=us @ip_country=jp @billing_country=cn
+  @TC.125300 @phoenix @mozypro @profile_country=us @ip_country=jp @billing_country=cn @bin_country=us
   Scenario: 125300 Add a new US 100 GB monthly basic MozyPro partner us_jp_cn
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -163,7 +163,7 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.125301 @phoenix @mozypro @profile_country=us @ip_country=jp @billing_country=cn
+  @TC.125301 @phoenix @mozypro @profile_country=us @ip_country=jp @billing_country=cn @bin_country=us
   Scenario: 125301 Add a new US 250 GB biennial basic MozyPro partner us_jp_cn
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -177,7 +177,7 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.125302 @phoenix @mozypro @profile_country=us @ip_country=fr @billing_country=cn
+  @TC.125302 @phoenix @mozypro @profile_country=us @ip_country=fr @billing_country=cn @bin_country=us
   Scenario: 125302 Add a new US 100 GB yearly basic MozyPro partner us_fr_cn
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -191,7 +191,7 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.125303 @phoenix @mozypro @profile_country=us @ip_country=fr @billing_country=cn
+  @TC.125303 @phoenix @mozypro @profile_country=us @ip_country=fr @billing_country=cn @bin_country=us
   Scenario: 125303 Add a new US 250 GB yearly basic MozyPro partner us_fr_cn
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -205,7 +205,7 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.125304 @phoenix @mozypro @profile_country=us @ip_country=jp @billing_country=fr
+  @TC.125304 @phoenix @mozypro @profile_country=us @ip_country=jp @billing_country=fr @bin_country=us
   Scenario: 125304 Add a new US 100 GB biennial basic MozyPro partner us_jp_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -219,7 +219,7 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.125305 @phoenix @mozypro @profile_country=us @ip_country=jp @billing_country=fr
+  @TC.125305 @phoenix @mozypro @profile_country=us @ip_country=jp @billing_country=fr @bin_country=us
   Scenario: 125305 Add a new US 250 GB monthly basic MozyPro partner us_jp_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:

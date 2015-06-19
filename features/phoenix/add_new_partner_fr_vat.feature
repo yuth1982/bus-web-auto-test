@@ -319,37 +319,20 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.125326 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=uk
-  Scenario: 125326 Add a new FR 10 GB monthly basic MozyPro partner fr_fr_uk
-    When I am at dom selection point:
-    And I add a phoenix Pro partner:
-      | period | base plan | country | billing country | server plan | cc number        |
-      | 1      | 10 Go     | France  | Royaume-Uni     | yes         | 4485393141463880 |
-    Then the order summary looks like:
-      | Description             | Prix   | Quantité | Montant |
-      | 10 Go - Mensuel         | 7,99€  | 1        | 7,99€   |
-      | Plan serveur - Mensuel  | 2,99€  | 1        | 2,99€   |
-      | Prix d'abonnement       | 10,98€ |          | 10,98€  |
-      | TVA                     | 2,20€  |          | 2,20€   |
-      | Montant total des frais | 13,18€ |          | 13,18€  |
-    And the partner is successfully added.
-    And I log in bus admin console as administrator
-    And I search and delete partner account by newly created partner company name
-
-  @TC.125327 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=uk
-  Scenario: 125327 Add a new FR 10 GB coupon yearly basic MozyPro partner fr_fr_uk
+  @TC.125327 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr 
+  Scenario: 125327 Add a new FR 10 GB coupon yearly basic MozyPro partner fr_fr_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | coupon              | cc number        |
-      | 12     | 10 Go     | France  | Royaume-Uni     | 10PERCENTOFFOUTLINE | 4485393141463880 |
+      | 12     | 10 Go     | France  | France          | 10PERCENTOFFOUTLINE | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix    | Quantité | Montant |
       | 10 Go - Annuel          | 87,89€  | 1        | 87,89€  |
       | Prix d'abonnement       | 87,89€  |          | 87,89€  |
       | Réductions              | - 8,79€ |          | - 8,79€ |
       | Sous-total              | 79,10€  |          | 79,10€  |
-      | TVA                     | 17,58€  |          | 17,58€  |
-      | Montant total des frais | 96,68€  |          | 96,68€  |
+      | TVA                     | 15,82€  |          | 15,82€  |
+      | Montant total des frais | 94,92€  |          | 94,92€  |
     And the partner is successfully added.
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
@@ -369,12 +352,12 @@ Feature: Add a new partner through phoenix
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.125329 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=uk
-  Scenario: 125329 Add a new FR 50 GB coupon monthly basic MozyPro partner fr_fr_uk
+  @TC.125329 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=fr
+  Scenario: 125329 Add a new FR 50 GB coupon monthly basic MozyPro partner fr_fr_fr
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | server plan | coupon              | cc number        |
-      | 1      | 50 Go     | France  | Royaume-Uni     | yes         | 10PERCENTOFFOUTLINE | 4485393141463880 |
+      | 1      | 50 Go     | France  | France          | yes         | 10PERCENTOFFOUTLINE | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix    | Quantité | Montant |
       | 50 Go - Mensuel         | 15,99€  | 1        | 15,99€  |
@@ -382,8 +365,8 @@ Feature: Add a new partner through phoenix
       | Prix d'abonnement       | 21,48€  |          | 21,48€  |
       | Réductions              | - 2,15€ |          | - 2,15€ |
       | Sous-total              | 19,33€  |          | 19,33€  |
-      | TVA                     | 4,30€   |          | 4,30€   |
-      | Montant total des frais | 23,63€  |          | 23,63€  |
+      | TVA                     | 3,87€   |          | 3,87€   |
+      | Montant total des frais | 23,20€  |          | 23,20€  |
     And the partner is successfully added.
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
@@ -435,22 +418,6 @@ Feature: Add a new partner through phoenix
       | Réductions              | - 4,10€   |          | - 4,10€   |
       | TVA                     | Exemption |          | Exemption |
       | Montant total des frais | 36,88€    |          | 36,88€    |
-    And the partner is successfully added.
-    And I log in bus admin console as administrator
-    And I search and delete partner account by newly created partner company name
-
-  @TC.125333 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=uk
-  Scenario: 125333 Add a new FR 1 TB yearly basic MozyPro partner fr_fr_uk
-    When I am at dom selection point:
-    And I add a phoenix Pro partner:
-      | period | base plan | country | billing country | cc number        |
-      | 12     | 1 To      | France  | Royaume-Uni     | 4485393141463880 |
-    Then the order summary looks like:
-      | Description             | Prix      | Quantité | Montant   |
-      | 1 To - Annuel           | 3 299,89€ | 1        | 3 299,89€ |
-      | Prix d'abonnement       | 3 299,89€ |          | 3 299,89€ |
-      | TVA                     | 659,98€   |          | 659,98€   |
-      | Montant total des frais | 3 959,87€ |          | 3 959,87€ |
     And the partner is successfully added.
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
