@@ -3,7 +3,7 @@ Feature: Media Restore
   Background:
     Given I have login freyja as ent user
 
-  @TC.121726  @freyja @freyja_smoke  @ent  @ent_media_restore_one_file   @ent_media_restore   @ent_smoke @QA12 @QA6
+  @TC.121726  @freyja @freyja_smoke  @ent  @ent_media_restore_one_file   @ent_media_restore   @ent_smoke
   Scenario: MozyEnterprise user media restore one file in Freyja
     When I select the Devices tab
     And I choose one file
@@ -19,7 +19,7 @@ Feature: Media Restore
     And I logout
 
 
-  @TC.121726  @freyja @freyja_smoke  @ent  @ent_media_restore_one_folder  @ent_media_restore  @ent_smoke  @QA12 @QA6
+  @TC.121726  @freyja @freyja_smoke  @ent  @ent_media_restore_one_folder  @ent_media_restore  @ent_smoke
   Scenario: MozyEnterprise user media restore one folder in Freyja
     When I select the Devices tab
     And I choose one folder

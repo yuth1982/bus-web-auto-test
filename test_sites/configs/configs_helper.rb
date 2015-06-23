@@ -10,7 +10,7 @@ LANG = YAML.load_file("#{File.dirname(__FILE__)}/lang.yaml")
 
 # Active QA test environment, for example qa5, qa6
 
-TEST_ENV = ENV['BUS_ENV'] || 'std'
+TEST_ENV = ENV['BUS_ENV'] || 'qa12h'
 QA_ENV = ALL_ENV[TEST_ENV]
 
 # used for billing price info

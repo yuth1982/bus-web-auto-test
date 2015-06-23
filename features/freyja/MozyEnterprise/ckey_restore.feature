@@ -32,7 +32,7 @@ Feature: Corporate Key user Restore Files
     When I select options menu
     And I logout
 
- @TC.121721 @freyja @freyja_smoke @ent @ent_restore_all_media_ckey @ent_restore_ckey @QA12  @QA6
+ @TC.121721 @freyja @freyja_smoke @ent @ent_restore_all_media_ckey @ent_restore_ckey
 Scenario: ent user restore all file through media in Freyja
   When I select the Devices tab
   And I choose one device
