@@ -15,7 +15,7 @@ module Phoenix
     element(:change_credit_card_link, css: "a[href='/account/change_credit_card']")
     element(:message_text, css: "p.notice")
     element(:confirm_btn, id: "submit_button")
-
+    element(:log_out, xpath: "//*[@id='mainleftnav']/ul[1]/li[9]/a")
     def account_pages
       if page.driver.is_a?(Capybara::Selenium::Driver)
         page.driver.browser.switch_to().window(page.driver.browser.window_handles.last)
@@ -92,6 +92,10 @@ module Phoenix
 
     def confirm
       confirm_btn.click
+    end
+
+    def check_account
+      log_out.click
     end
   end
 end

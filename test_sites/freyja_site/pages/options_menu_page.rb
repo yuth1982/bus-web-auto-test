@@ -11,7 +11,7 @@ module Freyja
     #element(:log_out_yes_btn, xpath: "//*[@id='logout_confirm_dialog']//a//*[text()='Yes']")
     element(:log_out_yes_btn, xpath: "//div[@id='logout_confirm_dialog']/div[3]/div/a[2]/span")
     section(:change_password_section, ChangePasswordSection, xpath: "//li[@id='panel-action-change-password']")
-
+    element(:manage_account_option, xpath: "//*[@id='panel-action-account-summary']")
     # Public: launch change password wizard
     #
     # Example
@@ -58,5 +58,8 @@ module Freyja
       sleep 1
     end
 
+    def manage_account
+      manage_account_option.click
+    end
   end
 end

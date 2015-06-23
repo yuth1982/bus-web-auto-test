@@ -20,6 +20,17 @@ And /^I logout$/ do
   @freyja_site.options_menu_page.logout
 end
 
+And /^I click manage account$/ do
+
+  @freyja_site.options_menu_page.manage_account
+end
+
+Then /^Phoenix account page login successfully$/ do
+  @phoenix_site = PhoenixSite.new
+  #@phoenix_site.account_page.load
+  @phoenix_site.account_page.check_account
+end
+
 # select notification panel
 And /^I click notification$/ do
   @freyja_site.options_menu_page.open_notifications

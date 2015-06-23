@@ -248,5 +248,6 @@ module Phoenix
     def login_error_message
       login_error.text
     end
+
   end
 end
