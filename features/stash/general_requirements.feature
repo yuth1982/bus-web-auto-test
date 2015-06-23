@@ -449,8 +449,8 @@ Feature:
     Then I act as newly created partner account
     And I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | Sync   | Machines | Storage                 | Storage Used  |
-      | <%=@new_users.first.email%> | TC.22189 User | Enabled| 0        | Desktop 10 GB (Limited) | None          |
+      | User                        | Name          | Sync   | Machines | Storage                  | Storage Used  |
+      | <%=@new_users.first.email%> | TC.22189 User | Enabled| 0        | Desktop: 10 GB (Limited) | Desktop: None |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                  | Enable Sync:                |

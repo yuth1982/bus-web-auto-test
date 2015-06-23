@@ -814,3 +814,48 @@ Feature: MozyHome user change renewal plan through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And I delete user
+
+  @TC.126163 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr
+  Scenario: 126163 Update FR 50 GB + 60 GB 1 PC yearly MozyHome user to 125 GB +20 GB,3 PC
+    When I am at dom selection point:
+    And I add a phoenix Home user:
+      | period | base plan | country | billing country | addl storage | cc number        |
+      | 12     | 50 Go     | France  | France          | 3            | 4485393141463880 |
+    Then the billing summary looks like:
+      | Description                            | PriX               | Quantité | Montant |
+      | MozyHome 50 Go (1 ordinateur) - Annuel | 54,89€\n(inc. VAT) | 1        | 54,89€  |
+      | 20 Stockage supplémentaire - Annuel    | 22,00€\n(inc. VAT) | 3        | 66,00€  |
+      | Prix d'abonnement                      |                    |          | 100,74€ |
+      | Taux de TVA (20%)                      |                    |          | 20,15€  |
+      | Montant total des frais                |                    |          | 120,89€ |
+    Then the user is successfully added.
+    And the user has activated their account
+    And I login as the user on the account.
+    And I change my user account to:
+      | base plan | addl storage |
+      | 125 Go    | 1            |
+    And the renewal plan subscription looks like:
+      | Plan de base :                     | MozyHome 125 Go   |
+      | Espace de stockage supplémentaire :| 1 x 20 Go = 20 Go |
+      | Espace total de stockage :         | 145 Go            |
+      | Ordinateurs :                      | 3                 |
+      | Abonnement :                       | Annuel            |
+      | Remise :                           | 1 mois gratuit    |
+      | Montant:                           | 100,74€           |
+      | Taux de TVA (20%):                 | 20,15€            |
+      | Total :                            | 120,89€           |
+    And the renewal plan summary looks like:
+      | Plan de base :                      | MozyHome 125 Go |
+      | Espace de stockage supplémentaire : | 20 Go           |
+      | Ordinateurs :                       | 3               |
+      | Abonnement :                        | Annuel          |
+      | Remise :                            | 1 mois gratuit  |
+      | Montant:                            | 100,74€         |
+      | Taux de TVA (20%):                  | 20,15€          |
+      | Total :                             | 120,89€         |
+    And I log in bus admin console as administrator
+    And I search user by:
+      | keywords       |
+      | @mh_user_email |
+    And I view user details by newly created MozyHome username
+    And I delete user

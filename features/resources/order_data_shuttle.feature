@@ -635,7 +635,6 @@ Feature:
       | Date  | Amount  | Total Paid | Balance Due |
       | today | $275.00 | $275.00    | $0.00       |
       | today | $0.00   | $0.00      | $0.00       |
-      | today | $0.00   | $0.00      | $0.00       |
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -678,7 +677,6 @@ Feature:
     Then Billing history table should be:
       | Date  | Amount  | Total Paid | Balance Due |
       | today | $375.00 | $375.00    | $0.00       |
-      | today | $0.00   | $0.00      | $0.00       |
       | today | $0.00   | $0.00      | $0.00       |
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name

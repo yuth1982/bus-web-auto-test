@@ -1536,3 +1536,81 @@ Feature: MozyHome user changes current plan in phoenix
      | @mh_user_email |
    And I view user details by newly created MozyHome username
    And I delete user
+
+  @TC.126161 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=us
+  Scenario: 126161 Update US 50 GB + 60 GB 1 PC yearly MozyHome user to 125 GB +20 GB,3 PC
+    When I am at dom selection point:
+    And I add a phoenix Home user:
+      | period | base plan | country       | billing country | addl storage |
+      | 12     | 50 GB     | United States | United States   | 3            |
+    Then the billing summary looks like:
+      | Description                          | Price  | Quantity | Amount  |
+      | MozyHome 50 GB (1 computer) - Annual | $65.89 | 1        | $65.89  |
+      | 20 Additional Storage - Annual       | $22.00 | 3        | $66.00  |
+      | Total Charge                         |        |          | $131.89 |
+    Then the user is successfully added.
+    And the user has activated their account
+    And I login as the user on the account.
+    And I upgrade my user account to:
+      | base plan | addl storage |
+      | 125 GB    | 1            |
+    And the payment details summary looks like:
+      | Base Plan:          | 125 GB           |
+      | Additional Storage: | 1 x 20 GB        |
+      | Total Storage:      | 145 GB           |
+      | Computers:          | 3                |
+      | Subscription:       | Yearly           |
+      | Next Billing:       | @1 year from now |
+      | Total:              | $131.89          |
+    And the current plan summary looks like:
+      | Base Plan:          | MozyHome 125 GB  |
+      | Additional Storage: | 20 GB            |
+      | Computers:          | 3                |
+      | Subscription:       | Yearly           |
+      | Term Discount:      | 1 month free     |
+      | Next Billing:       | @1 year from now |
+      | Total:              | $131.89          |
+    And the renewal plan summary is Same as current plan
+    And I log in bus admin console as administrator
+    And I search user by:
+      | keywords       |
+      | @mh_user_email |
+    And I view user details by newly created MozyHome username
+    And I delete user
+
+  @TC.126164 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=us
+  Scenario: 126164 [Negative]Down grade MozyHome US user
+    When I am at dom selection point:
+    And I add a phoenix Home user:
+      | period | base plan | country       | billing country | addl storage |
+      | 12     | 50 GB     | United States | United States   | 3            |
+    Then the billing summary looks like:
+      | Description                          | Price  | Quantity | Amount  |
+      | MozyHome 50 GB (1 computer) - Annual | $65.89 | 1        | $65.89  |
+      | 20 Additional Storage - Annual       | $22.00 | 3        | $66.00  |
+      | Total Charge                         |        |          | $131.89 |
+    Then the user is successfully added.
+    And the user has activated their account
+    And I login as the user on the account.
+    And I downgrade my user account to:
+      | addl storage |
+      | 1            |
+    And Error message of Not allowed to decrease will show:
+    """
+     You are not allowed to decrease the amount of quota that you currently have.
+    """
+    And I click cancel button during change current plan
+    And the current plan summary looks like:
+      | Base Plan:          | MozyHome 50 GB   |
+      | Additional Storage: | 60 GB            |
+      | Computers:          | 1                |
+      | Subscription:       | Yearly           |
+      | Term Discount:      | 1 month free     |
+      | Next Billing:       | @1 year from now |
+      | Total:              | $131.89          |
+    And I log in bus admin console as administrator
+    And I search user by:
+      | keywords       |
+      | @mh_user_email |
+    And I view user details by newly created MozyHome username
+    And I delete user

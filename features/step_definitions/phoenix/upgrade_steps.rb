@@ -1,4 +1,4 @@
-And /^I (upgrade|change) my (partner|user|free) account to:$/ do |change_type,acct_type, upgrade_table|
+And /^I (upgrade|change|downgrade) my (partner|user|free) account to:$/ do |change_type,acct_type, upgrade_table|
   # There were two Home signups, (When I add ...)(When I sign up...) The string combines them
   #(partner | user) is keep all tests cases working from when Home and Pro where separate
   attributes = upgrade_table.hashes.first
@@ -10,7 +10,7 @@ And /^I (upgrade|change) my (partner|user|free) account to:$/ do |change_type,ac
 
   case change_type
     # for upgrading an account - ie .. going from free to paid
-    when "upgrade"
+    when "upgrade","downgrade"
      case acct_type
       when "free"
         # general info for upgrading user acct to diff values
@@ -80,7 +80,11 @@ And /^I (upgrade|change) my (partner|user|free) account to:$/ do |change_type,ac
         # @phoenix_site.user_account.go_to_plan(@partner)
         #find(:xpath, "//a[@href='/plan/edit']").click
         #@phoenix_site.update_profile.change_plan_current(@partner)
-        @phoenix_site.update_profile.change_plan_current(@partner, new_base_plan, new_additional_storage, new_additional_computers)
+        if change_type == 'downgrade'
+          @phoenix_site.update_profile.change_plan_current_before_confirm(@partner, new_base_plan, new_additional_storage, new_additional_computers)
+        else
+          @phoenix_site.update_profile.change_plan_current(@partner, new_base_plan, new_additional_storage, new_additional_computers)
+        end
         #step %{I logout of my user account}
      # for changing the current account - ie .. going from monthly to biennial billing
     end
@@ -245,6 +249,14 @@ And /^I update profile country from link in billing page and upgrade again$/ do 
   @partner.billing_info.country = attributes["billing country"] unless attributes['billing country'].nil?
   @phoenix_site.update_profile.update_profile_country_upgrade(profile_country)
   @phoenix_site.billing_fill_out.billing_info_fill_out(@partner)
+end
+
+And /^Error message of Not allowed to decrease will show:$/ do |msg|
+  @phoenix_site.update_profile.decrease_error_msg.strip.should == msg.strip
+end
+
+And /^I click cancel button during change current plan$/ do
+  @phoenix_site.update_profile.click_cancel_change_curplan
 end
 
 And /^I delete the user account with (changed password|original password)$/ do |password|

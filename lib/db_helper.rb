@@ -208,7 +208,7 @@ module DBHelper
         conn.exec sql
         Log.debug sql
 
-        sql = "select id from machines order by id desc limit 1"
+        sql = "select id from machines where user_id = #{user_id} order by id desc limit 1"
         c = conn.exec sql
         Log.debug sql
         machine_id = c.values[0][0].to_i

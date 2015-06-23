@@ -159,6 +159,14 @@ module Phoenix
   #--methods here are for changing plan specifics (GB, Adding Machines/Storage, Billing Cycle)
   # change plan - current
   def change_plan_current(partner, new_base_plan, new_additional_storage, new_additional_computers)
+    change_plan_current_before_confirm(partner, new_base_plan, new_additional_storage, new_additional_computers)
+    partner.curplan_payment_summary = curplan_payment_details_tb_rows
+    upgrade_submit_btn.click
+    payment_confirm.present?
+    upgrade_last_continue_btn.click
+  end
+
+  def change_plan_current_before_confirm(partner, new_base_plan, new_additional_storage, new_additional_computers)
     click_my_plan_link
     find(:xpath, "//a[contains(@href,'/plan/edit')]").click
     if !new_base_plan.nil?
@@ -168,10 +176,6 @@ module Phoenix
     fill_addl_mach(new_additional_computers) unless new_additional_computers.nil?
     # current plan's billing cycle is fixed
     upgrade_continue_btn.click
-    partner.curplan_payment_summary = curplan_payment_details_tb_rows
-    upgrade_submit_btn.click
-    payment_confirm.present?
-    upgrade_last_continue_btn.click
   end
 
   # change plan - future
@@ -285,6 +289,14 @@ module Phoenix
 
   def get_my_plan_title
     my_plan_title.text
+  end
+
+  def decrease_error_msg
+    find(:xpath, "//div[@id='maincontent']/div[1]/p").text
+  end
+
+  def click_cancel_change_curplan
+    find(:xpath, "//div[@id='maincontent']//input[@name='cancel']").click
   end
 
   def update_profile_country_upgrade(profile_country)
