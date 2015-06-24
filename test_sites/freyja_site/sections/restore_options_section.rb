@@ -112,12 +112,12 @@ module Freyja
     end
 
     def restore_manager_restore_sync
-      if page.has_xpath?("//span[@id='choose_delivery_method_download_manager']") then
-        fryr_restore_option.click
-      end
-      sleep 5
-      click_next
-      sleep 15
+      #if page.has_xpath?("//span[@id='choose_delivery_method_download_manager']") then
+      #  fryr_restore_option.click
+      #end
+      #sleep 5
+      #click_next
+      #sleep 15
       if fryr_download_link.visible? then
         fryr_download_link.click
       end
