@@ -31,8 +31,8 @@ Feature: Search and list partner
       | Partner                           | Type |
       | Charter Business Trial - Reserved | oem  |
     When I search partner by:
-      | name |
-      |      |
+      | name          |
+      | @company_name |
     Then Partner search results should be:
       | Partner       | Created |
       | @company_name | today   |
