@@ -9,7 +9,7 @@ module CyberSource
     element(:address_line2_tb, id: "bill_to_address_line2")
     element(:city_tb, id: "bill_to_address_city")
     element(:country_select, id: "bill_to_address_country")
-    element(:state_tb, id: "bill_to_address_state_other")
+    element(:state_tb, id: "bill_to_address_state")
     element(:state_select, id: "bill_to_address_state_us_ca")
     element(:phone_tb, id: "bill_to_phone")
     element(:zip_tb, id: "bill_to_address_postal_code")
