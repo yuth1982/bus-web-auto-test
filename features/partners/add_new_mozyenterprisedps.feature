@@ -45,7 +45,6 @@ Scenario: 22365 Add New MozyEnterprise DPS Partner - US - Yearly - 2 TB
   And Partner billing history should be:
     | Date  | Amount    | Total Paid | Balance Due |
     | today | $0.00     | $0.00      | $0.00       |
-    | today | $0.00     | $0.00      | $0.00       |
   And I delete partner account
 
 

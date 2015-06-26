@@ -194,7 +194,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                | Balance Due                                |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
   @TC.124291 @bus @2.17 @add_new_partner @mozypro
@@ -213,7 +212,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   #----------------------------------------------------------------------------------
@@ -243,7 +241,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124294 @bus @2.17 @add_new_partner @mozypro
@@ -262,7 +259,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                | Balance Due                                |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
 
@@ -282,7 +278,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
 
@@ -306,7 +301,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                | Balance Due                                |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
   @TC.124297 @bus @2.17 @add_new_partner @mozypro @coupon
@@ -325,7 +319,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                | Balance Due                                |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
   @TC.124298 @bus @2.17 @add_new_partner @mozypro
@@ -344,7 +337,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                | Balance Due                                |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
   @TC.124299 @bus @2.17 @add_new_partner @mozypro @coupon
@@ -363,7 +355,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                | Balance Due                                |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
   @TC.124300 @bus @2.17 @add_new_partner @mozypro
@@ -382,7 +373,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                | Balance Due                                |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
   @TC.124301 @bus @2.17 @add_new_partner @mozypro @coupon
@@ -401,7 +391,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                | Balance Due                                |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
   @TC.124302 @bus @2.17 @add_new_partner @mozypro @vat @coupon
@@ -420,7 +409,6 @@
       And Partner billing history should be:
         | Date  | Amount                                      | Total Paid                                | Balance Due                                |
         | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-        | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
       And I search and delete partner account by newly created partner company name
 
   @TC.124303 @bus @2.17 @add_new_partner @mozypro @vat
@@ -439,7 +427,6 @@
       And Partner billing history should be:
         | Date  | Amount                                      | Total Paid                                | Balance Due                                |
         | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-        | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
       And I search and delete partner account by newly created partner company name
 
   @TC.124304 @bus @2.17 @add_new_partner @mozypro @vat
@@ -458,7 +445,6 @@
       And Partner billing history should be:
         | Date  | Amount                                      | Total Paid                                | Balance Due                                |
         | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-        | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
       And I search and delete partner account by newly created partner company name
 
   @TC.124305 @BUG.132150 @bus @2.17 @add_new_partner @mozypro @coupon
@@ -477,7 +463,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                | Balance Due                                |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
   @TC.124306 @bus @2.17 @add_new_partner @mozypro @vat
@@ -496,7 +481,6 @@
       And Partner billing history should be:
         | Date  | Amount                                      | Total Paid                                | Balance Due                                |
         | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-        | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
       And I search and delete partner account by newly created partner company name
 
   @TC.124307 @bus @2.17 @add_new_partner @mozypro @coupon
@@ -515,7 +499,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                | Balance Due                                |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
   @TC.124308 @bus @2.17 @add_new_partner @mozypro @vat
@@ -534,7 +517,6 @@
       And Partner billing history should be:
         | Date  | Amount                                      | Total Paid                                | Balance Due                                |
         | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-        | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
       And I search and delete partner account by newly created partner company name
 
   @TC.124309 @bus @2.17 @add_new_partner @mozypro
@@ -553,7 +535,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                | Balance Due                                |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
   @TC.124310 @bus @2.17 @add_new_partner @mozypro @coupon
@@ -572,7 +553,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                | Balance Due                                |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
   @TC.124311 @bus @2.17 @add_new_partner @mozypro @coupon
@@ -591,7 +571,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                | Balance Due                                |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
   @TC.124312 @bus @2.17 @add_new_partner @mozypro
@@ -610,7 +589,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124313 @bus @2.17 @add_new_partner @mozypro
@@ -629,7 +607,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124314 @bus @2.17 @add_new_partner @mozypro
@@ -648,7 +625,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124315 @bus @2.17 @add_new_partner @mozypro
@@ -667,7 +643,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124316 @bus @2.17 @add_new_partner @mozypro @vat
@@ -686,7 +661,6 @@
       And Partner billing history should be:
         | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
         | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-        | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
       And I search and delete partner account by newly created partner company name
 
   @TC.124317 @bus @2.17 @add_new_partner @mozypro @coupon
@@ -705,7 +679,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124318 @bus @2.17 @add_new_partner @mozypro @coupon
@@ -724,7 +697,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124319 @bus @2.17 @add_new_partner @mozypro @coupon
@@ -743,7 +715,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124320 @bus @2.17 @add_new_partner @mozypro @coupon
@@ -762,7 +733,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124321 @bus @2.17 @add_new_partner @mozypro
@@ -781,7 +751,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124322 @bus @2.17 @add_new_partner @mozypro @coupon
@@ -800,7 +769,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124323 @bus @2.17 @add_new_partner @mozypro @coupon
@@ -819,7 +787,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124324 @bus @2.17 @add_new_partner @mozypro @coupon
@@ -838,7 +805,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124325 @bus @2.17 @add_new_partner @mozypro
@@ -857,7 +823,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124326 @bus @2.17 @add_new_partner @mozypro
@@ -876,7 +841,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124327 @bus @2.17 @add_new_partner @mozypro
@@ -895,7 +859,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124328 @bus @2.17 @add_new_partner @mozypro @coupon
@@ -914,7 +877,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124329 @bus @2.17 @add_new_partner @mozypro @vat
@@ -933,7 +895,6 @@
       And Partner billing history should be:
         | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
         | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-        | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
       And I search and delete partner account by newly created partner company name
 
   @TC.124330 @bus @2.17 @add_new_partner @mozypro
@@ -952,7 +913,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124331 @bus @2.17 @add_new_partner @mozypro
@@ -971,7 +931,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124332 @bus @2.17 @add_new_partner @mozypro @coupon
@@ -990,7 +949,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124333 @bus @2.17 @add_new_partner @mozypro @coupon
@@ -1009,7 +967,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124334 @bus @2.17 @add_new_partner @mozypro
@@ -1028,7 +985,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124335 @bus @2.17 @add_new_partner @mozypro
@@ -1047,7 +1003,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124336 @bus @2.17 @add_new_partner @mozypro @coupon
@@ -1066,7 +1021,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124337 @bus @2.17 @add_new_partner @mozypro
@@ -1085,7 +1039,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124338 @bus @2.17 @add_new_partner @mozypro @coupon
@@ -1104,7 +1057,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124339 @bus @2.17 @add_new_partner @mozypro @coupon
@@ -1123,7 +1075,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124340 @bus @2.17 @add_new_partner @mozypro
@@ -1142,7 +1093,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124341 @bus @2.17 @add_new_partner @mozypro
@@ -1161,7 +1111,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124342 @bus @2.17 @add_new_partner @mozypro
@@ -1180,7 +1129,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124343 @bus @2.17 @add_new_partner @mozypro @coupon
@@ -1199,7 +1147,6 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124344 @bus @2.17 @add_new_partner @mozypro
@@ -1218,5 +1165,4 @@
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name

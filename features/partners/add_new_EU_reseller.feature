@@ -25,7 +25,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124346 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -44,7 +43,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                | Balance Due                                |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
   @TC.124347 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -63,7 +61,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124348 @bus @2.17 @add_new_partner @reseller @env_dependent @coupon
@@ -82,7 +79,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                                                            | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124349 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -101,7 +97,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                | Balance Due                                |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
   @TC.124350 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -120,7 +115,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124351 @bus @2.17 @add_new_partner @reseller @env_dependent @coupon
@@ -139,7 +133,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124352 @bus @2.17 @add_new_partner @reseller @env_dependent @coupon
@@ -158,7 +151,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124353 @bus @2.17 @add_new_partner @reseller @vat @env_dependent @coupon
@@ -177,7 +169,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124354 @bus @2.17 @add_new_partner @reseller @vat @env_dependent @coupon
@@ -196,7 +187,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124355 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -215,7 +205,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                | Balance Due                                |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
   @TC.124356 @bus @2.17 @add_new_partner @reseller @vat @env_dependent @coupon
@@ -234,7 +223,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                | Balance Due                                |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
   @TC.124357 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -253,7 +241,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                | Balance Due                                |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
   @TC.124358 @bus @2.17 @add_new_partner @reseller @env_dependent @coupon
@@ -272,7 +259,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                | Balance Due                                |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
   @TC.124359 @bus @2.17 @add_new_partner @reseller @vat @env_dependent @coupon
@@ -291,7 +277,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                | Balance Due                                |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
   @TC.124360 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -310,7 +295,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124361 @bus @2.17 @add_new_partner @reseller @vat @env_dependent @coupon
@@ -329,7 +313,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124362 @bus @2.17 @add_new_partner @reseller @vat @env_dependent @coupon
@@ -348,7 +331,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124363 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -367,7 +349,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                | Balance Due                                |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
   @TC.124364 @bus @2.17 @add_new_partner @reseller @env_dependent @coupon
@@ -386,7 +367,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                | Balance Due                                |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
   @TC.124365 @bus @2.17 @add_new_partner @reseller @vat @env_dependent @coupon
@@ -405,7 +385,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                | Balance Due                                |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
   @TC.124366 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -424,7 +403,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124367 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -443,7 +421,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                | Balance Due                                |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
   @TC.124368 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -462,7 +439,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                | Balance Due                                |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
   @TC.124369 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -481,7 +457,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124370 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -500,7 +475,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124371 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -519,7 +493,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124372 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -538,7 +511,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124373 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -557,7 +529,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124374 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -576,7 +547,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124375 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -595,7 +565,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124376 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -614,7 +583,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124377 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -633,7 +601,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124378 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -652,7 +619,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124379 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -671,7 +637,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124380 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -690,7 +655,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124381 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -709,7 +673,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124382 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -728,7 +691,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                | Balance Due                                |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:zero]%>  |
     And I search and delete partner account by newly created partner company name
 
   @TC.124383 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -747,7 +709,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124384 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -766,7 +727,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124385 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -785,7 +745,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124386 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -804,7 +763,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124387 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -823,7 +781,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124388 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -842,7 +799,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124389 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -861,7 +817,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124390 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -880,7 +835,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124391 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -899,7 +853,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124392 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -918,7 +871,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124393 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -937,7 +889,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124394 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -956,7 +907,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124395 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -975,7 +925,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124396 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -994,7 +943,6 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
   @TC.124397 @bus @2.17 @add_new_partner @reseller @env_dependent
@@ -1013,5 +961,4 @@ Feature: Add a new EU reseller partner
     And Partner billing history should be:
       | Date  | Amount                                      | Total Paid                                  | Balance Due                               |
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
-      | today | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%>   | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name

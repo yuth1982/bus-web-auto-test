@@ -45,7 +45,6 @@ Feature: Add a new partner
   And Partner billing history should be:
       | Date  | Amount  | Total Paid | Balance Due |
       | today | $211.50 | $211.50    | $0.00       |
-      | today | $0.00   | $0.00      | $0.00       |
     And I delete partner account
 
   @TC.18146 @bus @2.5 @add_new_partner @reseller @env_dependent @vat
@@ -86,7 +85,6 @@ Feature: Add a new partner
     And Partner billing history should be:
       | Date  | Amount    | Total Paid | Balance Due |
       | today | €2,178.00 | €2,178.00  | €0.00       |
-      | today | €0.00     | €0.00      | €0.00       |
     And I delete partner account
 
   @TC.18149 @bus @2.5 @add_new_partner @reseller @env_dependent @vat
@@ -127,7 +125,6 @@ Feature: Add a new partner
   And Partner billing history should be:
       | Date  | Amount  | Total Paid | Balance Due |
       | today | €234.00 | €234.00    | €0.00       |
-      | today | €0.00   | €0.00      | €0.00       |
     And I delete partner account
 
   @TC.18152 @bus @2.5 @add_new_partner @reseller @env_dependent @vat
@@ -170,7 +167,6 @@ Feature: Add a new partner
   And Partner billing history should be:
       | Date  | Amount    | Total Paid | Balance Due |
       | today | €3,056.43 | €3,056.43  | €0.00       |
-      | today | €0.00     | €0.00      | €0.00       |
     And I delete partner account
 
   @TC.18153 @bus @2.5 @add_new_partner @reseller @env_dependent @vat
@@ -212,7 +208,6 @@ Feature: Add a new partner
   And Partner billing history should be:
       | Date  | Amount  | Total Paid | Balance Due |
       | today | £203.40 | £203.40    | £0.00       |
-      | today | £0.00   | £0.00      | £0.00       |
     And I delete partner account
 
   @TC.18155 @bus @2.5 @add_new_partner @reseller
@@ -252,7 +247,6 @@ Feature: Add a new partner
   And Partner billing history should be:
       | Date  | Amount    | Total Paid | Balance Due |
       | today | $2,310.00 | $0.00      | $2,310.00   |
-      | today | $0.00     | $0.00      | $0.00       |
     And I delete partner account
 
   @TC.17970  @bus @2.5 @add_new_partner @reseller
@@ -292,7 +286,6 @@ Feature: Add a new partner
   And Partner billing history should be:
       | Date  | Amount  | Total Paid | Balance Due |
       | today | €198.00 | €0.00      | €198.00     |
-      | today | €0.00   | €0.00      | €0.00       |
     And I delete partner account
 
   @TC.17971 @bus @2.5 @add_new_partner @reseller
@@ -332,7 +325,6 @@ Feature: Add a new partner
     And Partner billing history should be:
       | Date  | Amount    | Total Paid | Balance Due |
       | today | €1,832.60 | €0.00      | €1,832.60   |
-      | today | €0.00     | €0.00      | €0.00       |
     And I delete partner account
 
   @TC.17972 @bus @2.5 @add_new_partner @reseller
@@ -372,7 +364,6 @@ Feature: Add a new partner
     And Partner billing history should be:
       | Date  | Amount  | Total Paid | Balance Due |
       | today | €147.60 | €0.00      | €147.60     |
-      | today | €0.00   | €0.00      | €0.00       |
     And I delete partner account
 
   @TC.17973 @bus @2.5 @add_new_partner @reseller
@@ -413,7 +404,6 @@ Feature: Add a new partner
     And Partner billing history should be:
       | Date  | Amount    | Total Paid | Balance Due |
       | today | £2,494.80 | £0.00      | £2,494.80   |
-      | today | £0.00     | £0.00      | £0.00       |
     And I delete partner account
 
   @TC.17974 @bus @2.5 @add_new_partner @reseller
@@ -470,7 +460,6 @@ Feature: Add a new partner
     And New partner should be created
     And Partner billing history should be:
       | Date  | Amount | Total Paid | Balance Due |
-      | today | $0.00  | $0.00      | $0.00       |
       | today | $0.00  | $0.00      | $0.00       |
     And I delete partner account
 

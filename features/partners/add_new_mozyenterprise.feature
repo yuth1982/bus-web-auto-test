@@ -44,7 +44,6 @@ Feature: Add a new partner
     And Partner billing history should be:
       | Date  | Amount    | Total Paid | Balance Due |
       | today | $7,600.00 | $7,600.00  | $0.00       |
-      | today | $0.00     | $0.00      | $0.00       |
     And I delete partner account
 
   @TC.18147 @bus @2.5 @add_new_partner @mozyenterprise
@@ -86,7 +85,6 @@ Feature: Add a new partner
     And Partner billing history should be:
       | Date  | Amount     | Total Paid | Balance Due |
       | today | $58,478.48 | $58,478.48 | $0.00       |
-      | today | $0.00      | $0.00      | $0.00       |
     And I delete partner account
 
   @TC.18150 @bus @2.5 @add_new_partner @mozyenterprise @env_dependent
@@ -129,7 +127,6 @@ Feature: Add a new partner
     And Partner billing history should be:
       | Date  | Amount     | Total Paid | Balance Due |
       | today | $89,997.12 | $89,997.12 | $0.00       |
-      | today | $0.00      | $0.00      | $0.00       |
     And I delete partner account
 
   @TC.18156 @bus @2.5 @add_new_partner @mozyenterprise
@@ -171,7 +168,6 @@ Feature: Add a new partner
     And Partner billing history should be:
       | Date  | Amount     | Total Paid | Balance Due |
       | today | $52,958.68 | $52,958.68 | $0.00       |
-      | today | $0.00      | $0.00      | $0.00       |
     And I delete partner account
 
   @TC.17962 @bus @2.5 @add_new_partner @mozyenterprise @env_dependent
@@ -213,7 +209,6 @@ Feature: Add a new partner
     And Partner billing history should be:
       | Date  | Amount     | Total Paid | Balance Due |
       | today | $85,671.66 | $0.00      | $85,671.66  |
-      | today | $0.00      | $0.00      | $0.00       |
     And I delete partner account
 
   @TC.17963 @bus @2.5 @add_new_partner @mozyenterprise
@@ -255,7 +250,6 @@ Feature: Add a new partner
     And Partner billing history should be:
       | Date  | Amount      | Total Paid | Balance Due |
       | today | $228,596.40 | $0.00      | $228,596.40 |
-      | today | $0.00       | $0.00      | $0.00       |
     And I delete partner account
 
   @TC.18736 @bus @2.5 @add_new_partner @mozyenterprise
@@ -310,7 +304,6 @@ Feature: Add a new partner
     And New partner should be created
     And Partner billing history should be:
       | Date  | Amount | Total Paid | Balance Due |
-      | today | $0.00  | $0.00      | $0.00       |
       | today | $0.00  | $0.00      | $0.00       |
     And I delete partner account
 
