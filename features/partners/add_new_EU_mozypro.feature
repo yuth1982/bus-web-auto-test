@@ -214,6 +214,23 @@
       | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
     And I search and delete partner account by newly created partner company name
 
+    @TC.124292 @bus @2.17 @add_new_partner @mozypro
+    Scenario: 124292 Add New MozyPro Partner  -- US -- Monthly -- 1 TB -- server plan -- billing country
+      When I add a new MozyPro partner:
+        | period |  base plan |  country       | server plan | billing country | cc number        |
+        |   12   |  24 TB     |  United States | yes         | France          | 4485393141463880 |
+      And the sub-total before taxes or discounts should be correct
+      And the order summary table should be correct
+      And New partner should be created
+      And New Partner internal billing should be:
+        | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%> |
+        | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                               |
+        | Renewal Date:   | <%=@partner.subscription_period%>         | Renewal Period: | Use Current Period |
+        | Next Charge:    | <%=@partner.subscription_period%>         |                 |                    |
+      And Partner billing history should be:
+        | Date  | Amount                                          | Total Paid                                      | Balance Due                               |
+        | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> |
+      And I search and delete partner account by newly created partner company name
   #----------------------------------------------------------------------------------
   #
   #          Create under is not following  currency
