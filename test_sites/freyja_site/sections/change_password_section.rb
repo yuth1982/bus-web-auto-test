@@ -42,6 +42,7 @@ module Freyja
     #
     # Returns message text
     def password_changed_messages
+      sleep 3
       pw_change_message.text
     end
 
