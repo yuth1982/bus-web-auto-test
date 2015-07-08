@@ -1513,7 +1513,7 @@ Feature: MozyHome user changes current plan in phoenix
    And I login as the user on the account.
    Then the quota in account home page looks like:
     """
-     0 of 250 GB used
+    0 of 250 GB used
     """
    Then the plan details in account home page looks like:
      | MozyHome: 	      | 50 GB: 4 computers |

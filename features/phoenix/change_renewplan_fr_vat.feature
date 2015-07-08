@@ -461,7 +461,7 @@ Feature: MozyHome user change renewal plan through phoenix
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | addl storage | coupon       | cc number        |
-      | 12     | 125 Go    | France  | France          | 98           | 10percentoff | 4916783606275713 |
+      | 12     | 125 Go    | France  | France          | 98           | 10percentoff | 4485393141463880 |
     Then the billing summary looks like:
       | Description                                      | PriX                 | Quantité | Montant   |
       | MozyHome 125 Go (Jusqu'à 3 ordinateurs) - Annuel | 98,89€\n(inc. VAT)   | 1        | 98,89€    |
@@ -507,7 +507,7 @@ Feature: MozyHome user change renewal plan through phoenix
     When I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country | billing country | addl computers | coupon       | cc number        |
-      | 24     | 125 Go    | France  | France          | 1              | 10percentoff | 4916783606275713 |
+      | 24     | 125 Go    | France  | France          | 1              | 10percentoff | 4485393141463880 |
     Then the billing summary looks like:
       | Description                                         | PriX                | Quantité | Montant |
       | MozyHome 125 Go (Jusqu'à 3 ordinateurs) - Bisannuel | 188,79€\n(inc. VAT) | 1        | 188,79€ |
