@@ -125,7 +125,7 @@ Cucumber::Rake::Task.new(:rerun ) do |t|
 end
 
 Cucumber::Rake::Task.new(:parallel_rerun ) do |t|
-  t.cucumber_opts = 'features/bus_smoke_test/features/bus_smoke_test_part5.feature:42:67,features/bus_smoke_test/features/bus_smoke_test_part4.feature:39:91'
+  t.cucumber_opts = 'features/bus_smoke_test/features/bus_smoke_test_part5.feature:42:67,features/bus_smoke_test/features/bus_smoke_test_part3.feature:39:91'
 end
 
 def run_rake_task(name, arg)

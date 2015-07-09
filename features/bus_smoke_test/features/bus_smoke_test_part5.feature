@@ -7,6 +7,17 @@ Feature: BUS smoke test
   Background:
     Given I log in bus admin console as administrator
 
+  #================== partner 'Internal Mozy - Reseller Ireland BUS Smoke Test 7531-8642-90' related scenarios ===================
+  @bus_emea @TC.125966
+  Scenario: Test Case Mozy-125966: BUS EMEA -- Activate partner in email
+    When I add a new Reseller partner:
+      | company name                                                 | period | base plan | create under    | server plan | net terms | country | coupon                |
+      | Internal Mozy - Reseller Ireland BUS Smoke Test 7531-8642-90 | 12     | 10 GB     | MozyPro Ireland | yes         | yes       | Ireland | <%=QA_ENV['coupon']%> |
+    And New partner should be created
+    And the standard partner has activated the admin account
+    And I go to account
+    Then I login as mozypro admin successfully
+
   #================== partner 'Internal Mozy - MozyPro France BUS Smoke Test Data Shuttle 2468-1359-07' related scenarios ===================
   @bus_emea @TC.125975 @qa
   Scenario: Test Case Mozy-125975: BUS EMEA -- Order Data Shuttle
@@ -70,18 +81,6 @@ Feature: BUS smoke test
       | Internal Mozy - MozyPro BUS Smoke Test 5980-4326-85 | 1      | 10 GB     | MozyPro UK   | yes         | yes       | United Kingdom | <%=QA_ENV['coupon']%> | GB117223643 |
     And New partner should be created
     Then I delete partner account
-
-  #================== partner 'Internal Mozy - Reseller Ireland BUS Smoke Test 7531-8642-90' related scenarios ===================
-  @bus_emea @TC.125966
-  Scenario: Test Case Mozy-125966: BUS EMEA -- Activate partner in email
-    When I add a new Reseller partner:
-      | company name                                                 | period | base plan | create under    | server plan | net terms | country | coupon                |
-      | Internal Mozy - Reseller Ireland BUS Smoke Test 7531-8642-90 | 12     | 10 GB     | MozyPro Ireland | yes         | yes       | Ireland | <%=QA_ENV['coupon']%> |
-    And New partner should be created
-    And the standard partner has activated the admin account
-    And I go to account
-    Then I login as mozypro admin successfully
-
 
   @bus_us @TC.125981 @prod
   Scenario: Test Case Mozy-125981: BUS US -- Download manifests for US user machine
