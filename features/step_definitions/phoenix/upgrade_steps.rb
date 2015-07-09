@@ -201,7 +201,7 @@ And /^the (current plan|payment details) summary looks like:$/ do |type, data_ta
   expected = data_table.raw
   expected.each{|i|
     if i[1].start_with? '@'
-      with_timezone(ARIA_ENV['timezone']) {i[1].replace(Chronic.parse(i[1].sub('@','')).strftime(date_format))}
+      i[1].replace(Chronic.parse(i[1].sub('@','')).strftime(date_format))
       break
     end
   }
