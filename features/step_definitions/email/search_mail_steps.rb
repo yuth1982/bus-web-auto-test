@@ -48,6 +48,7 @@ When /^I search emails by keywords:$/ do |keywords_table|
 end
 
 Then /^I should see (\d+) email\(s\)$/ do |num_emails|
+  @found_emails = [] if @found_emails.nil?
   @found_emails.size.should == num_emails.to_i
 end
 
