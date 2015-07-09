@@ -38,7 +38,7 @@ Feature: MozyHome user update credit card in phoenix
       | 4018121111111122 | Visa        |
     And user credit card updated successfully
 
-  @TC.131705 @TC.131758 @regression_test @phoenix
+  @TC.131705 @TC.131758 @regression_test @phoenix @ip_country=INV
   Scenario: 131705 update credit card - us to uk to fr in change_credit_card_and_country page
   When I am at dom selection point:
   And I add a phoenix Home user:

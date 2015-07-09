@@ -145,7 +145,6 @@ Feature: Add a new partner through phoenix
      Failed to validate contact country, billing country, and VAT number
     """
 
-  #bug 130090. Actually got: "Could not validate payment information."
   @TC.125283 @phoenix @mozypro @profile_country=us @ip_country=fr @billing_country=it @bin_country=it @negative_test
   Scenario: 125283 Add a new US monthly basic MozyPro partner invalid location us_fr_it
     When I am at dom selection point:
@@ -157,7 +156,6 @@ Feature: Add a new partner through phoenix
      Failed to validate contact country, billing country, and VAT number
     """
 
-  #bug 130090.Actually got:  " Échec de validation du pays de contact, de facturation, et du numéro de TVA. "
   @TC.125284 @phoenix @mozypro @profile_country=fr @ip_country=fr @billing_country=uk @bin_country=uk
   Scenario: 125284 Add a new FR biennial basic MozyPro partner credit card not match fr_fr_uk
     When I am at dom selection point:
