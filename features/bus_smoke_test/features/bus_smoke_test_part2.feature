@@ -152,3 +152,19 @@ Feature: BUS smoke test
     Then Quick report Credit Card Transactions csv file details should be:
       | Column A | Column B | Column C | Column D  |
       | Date     | Amount   | Card #   | Card Type |
+
+  #================== partner 'Internal Mozy - MozyPro BUS Smoke Test 0709-1754-57' related scenarios ===================
+  @bus_us @TC.131996 @qa_std
+  Scenario: Test Case Mozy-131996: BUS US -- Create a new partner with credit card
+    When I add a new MozyPro partner:
+      | company name                                                    | period | base plan | coupon                | cc number        |
+      | Internal Mozy - MozyPro BUS Smoke Test Credit Card 0709-1754-57 | 1      | 10 GB     | <%=QA_ENV['coupon']%> | 4485467443715872 |
+    Then New partner should be created
+
+  #================== partner 'Internal Mozy - MozyPro France BUS Smoke Test 0709-1802-56' related scenarios ===================
+  @bus_emea @TC.131997 @qa_std
+  Scenario: Test Case Mozy-131997: BUS US -- Create a new partner with credit card
+    When I add a new MozyPro partner:
+      | company name                                                    | period | base plan | create under   | vat number    | coupon                | country | address           | city      | state | zip   | phone          | cc number        |
+      | Internal Mozy - MozyPro BUS Smoke Test Credit Card 0709-1802-56 | 1      | 10 GB     | MozyPro France | FR08410091490 | <%=QA_ENV['coupon']%> | France  | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 | 4485393141463880 |
+    Then New partner should be created
