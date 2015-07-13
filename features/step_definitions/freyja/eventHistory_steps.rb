@@ -12,12 +12,20 @@ Then /^this restore is (.+)/ do  |restore_status|
         when "staging"
           status = @freyja_site.event_history_page.get_download_restore_status
           if status != 'Ready for Download'
-            status.should == 'Processing'
+            if status != 'Processing'
+              status.should ==  'In Progress'
+            else
+              status.should ==  'Processing'
+            end
           end
         when "production"
           status = @freyja_site.event_history_page.get_download_restore_status
           if status != 'Ready for Download'
-            status.should ==  'Processing'
+            if status != 'Processing'
+              status.should ==  'In Progress'
+            else
+              status.should ==  'Processing'
+            end
           end
         else
           @restore.restore_id = RestoreHelper.get_restore_id(@restore.restore_name)

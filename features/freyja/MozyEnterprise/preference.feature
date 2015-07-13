@@ -10,6 +10,7 @@ Scenario: MozyEnterprise user change preference settings through Freyja
   And I choose Devices radio
   And I choose Yes for restore queue
   And I click save Preferences button
+  And I re-login
   Then freyja page should be Devices start
   Then freyja page should be enable restore queue
   When I select options menu
