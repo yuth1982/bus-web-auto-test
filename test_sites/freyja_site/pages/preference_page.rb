@@ -46,6 +46,7 @@ module Freyja
     end
 
     def get_start_device
+      refresh
       if page.find(:css, 'a.selected_device_name').visible?
         return "Devices"
       else
