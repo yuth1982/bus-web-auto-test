@@ -41,7 +41,7 @@ Feature: BUS smoke test
 
   @cleanup
   Scenario: Delete all the created partners
-    And I search and delete partner account if it exists by Internal Mozy - MozyPro BUS Smoke Test Credit Card 0709-1802-56
+    And I search and delete partner account if it exists by Internal Mozy - MozyPro France BUS Smoke Test Credit Card 0709-1802-56
 
   @cleanup
   Scenario: Delete all the created partners
