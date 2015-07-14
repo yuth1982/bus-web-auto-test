@@ -59,7 +59,7 @@ Feature:
     And I wait for 10 seconds
     And API* Aria account should be:
       | notify_method_name   |
-      | Printable (no Email) |
+      | HTML Email           |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
