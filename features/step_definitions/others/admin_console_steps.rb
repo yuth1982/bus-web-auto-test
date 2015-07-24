@@ -170,8 +170,8 @@ end
 
 When /^the standard partner has activated the admin account$/ do
   step %{I retrieve email content by keywords:}, table(%{
-    | to |
-    | @new_admin_email |
+    | to               | content                             |
+    | @new_admin_email | activate your administrator account |
   })
   match = @mail_content.match(/https?:\/\/[\S]+.mozy[\S]+.[\S]+\/registration\/admin_confirm\/[\S]+/)
   @activate_email_query = match[0] unless match.nil?
