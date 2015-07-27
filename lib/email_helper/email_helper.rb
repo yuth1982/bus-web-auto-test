@@ -115,23 +115,39 @@ module Email
     end
   end
 
+  def get_email_prefix
+    if RUBY_PLATFORM.include?('linux')
+      CONFIGS['global']['email_prefix'] = CONFIGS['global']['email_prefix_gmail']
+    else
+      CONFIGS['global']['email_prefix'] = CONFIGS['global']['email_prefix_outlook']
+    end
+  end
+
+  def get_email_domain
+    if RUBY_PLATFORM.include?('linux')
+      CONFIGS['global']['email_domain'] = CONFIGS['global']['email_domain_gmail']
+    else
+      CONFIGS['global']['email_domain'] = CONFIGS['global']['email_domain_outlook']
+    end
+  end
+
   def create_user_email
-    "#{CONFIGS['global']['email_prefix']}+#{Forgery(:basic).password(:at_least => 9, :at_most => 12)}@#{CONFIGS['global']['email_domain']}".downcase
+    "#{get_email_prefix}+#{Forgery(:basic).password(:at_least => 9, :at_most => 12)}@#{get_email_domain}".downcase
   end
 
   def create_admin_email(first_name,last_name)
-    "#{CONFIGS['global']['email_prefix']}+#{first_name}+#{last_name}+#{Time.now.strftime("%H%M")}@#{CONFIGS['global']['email_domain']}".downcase
+    "#{get_email_prefix}+#{first_name}+#{last_name}+#{Time.now.strftime("%H%M")}@#{get_email_domain}".downcase
   end
 
   def find_emails(query, _=nil)
     email = GmailBox.instance
-    email = Outlook.instance if MAILBOX.eql? 'outlook'
+    email = Outlook.instance unless RUBY_PLATFORM.include?('linux')
     email.find_emails(query)
   end
 
   def find_email_content(query, _=nil)
     email = GmailBox.instance
-    email = Outlook.instance if MAILBOX.eql? 'outlook'
+    email = Outlook.instance unless RUBY_PLATFORM.include?('linux')
     email.find_email_content(query)
   end
 
