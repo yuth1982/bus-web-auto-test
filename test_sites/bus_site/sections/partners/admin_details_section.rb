@@ -26,6 +26,14 @@ module Bus
     element(:new_password_change_btn, xpath: "//div[contains(@id,'admin-pass-change')]//input[@value='Save Changes']")
     element(:change_admin_pwd_msg_txt, xpath: "//div[contains(@id,'admin-show')]/ul/li")
 
+    # add remove admin group
+    element(:add_remove_ug_link, xpath: "//div[@id='user_groups']/div/a[text()='Add/remove user groups']")
+    element(:save_add_remove_admin_ug_msg_text, xpath:"//div[contains(@id,'admin-set_admin_user_groups')]/ul/li")
+    element(:save_admin_groups, xpath:"//div[@id='user_groups']/div/input[@value='Save']")
+    elements(:admin_user_groups,xpath: "//div[contains(@id,'admin-show')]//div[@id='user_groups']/ul/li/label")
+
+    # click here link
+    element(:click_here_link, xpath: "//a[text()='click here']")
     #
     # new_pwd - a password for account
     # pwd_confirm - password confirmation
@@ -74,6 +82,14 @@ module Bus
       return text
     end
 
+    def delete_admin_cancel
+      delete_admin_btn.click
+      confirm_txt = alert_text
+      alert_dismiss
+      return confirm_txt
+    end
+
+
     def set_admin_email(email)
       admin_email_tb.type_text email
     end
@@ -109,6 +125,31 @@ module Bus
 
     def change_admin_pwd_msg
       change_admin_pwd_msg_txt.text
+    end
+
+    def get_admin_groups
+      ug_array = admin_user_groups.map{|label|label.text.strip}
+      ug_array.select{|ug| ug.length > 0}
+    end
+
+    def add_remove_admin_groups(add_ug_array, remove_ug_array)
+      add_remove_ug_link.click
+      xpath_str = "//div[contains(@id,'admin-show')]//div[@id='user_groups']/ul/li/label"
+      add_ug_array.each do |add_ug|
+        find(:xpath, xpath_str + "[text() = ' #{add_ug}']/input").check
+      end
+      remove_ug_array.each do |remove_ug|
+        find(:xpath, xpath_str + "[text() = ' #{remove_ug}']/input").uncheck
+      end
+      save_admin_groups.click
+    end
+
+    def add_remove_admin_groups_save_msg
+      save_add_remove_admin_ug_msg_text.text
+    end
+
+    def click_here
+      click_here_link.click
     end
 
   end

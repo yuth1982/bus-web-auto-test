@@ -37,6 +37,7 @@ module Bus
 
     # Admin section
     section(:add_new_role_section, AddNewRoleSection, id: "roles-new")
+    section(:edit_role_section, EditRoleSection, css: "div[id^=roles-show]")
     section(:add_new_admin_section, AddNewAdminSection, id: "admin-new")
     section(:search_admins_section, SearchAdminsSection, id: "admin-search")
     section(:list_admins_section, ListAdminsSection, id: 'admin-list')
@@ -94,7 +95,7 @@ module Bus
 
     # Private element
     element(:current_admin_div, id: 'identify-me')
-    element(:current_admin_name_link, xpath: "//div[@id='identify-me']/a[2]")
+    element(:current_admin_name_link, xpath: "//div[@id='identify-me']/a[last()]")
     element(:stop_masquerading_link, xpath: "//a[text()='stop masquerading']")
     element(:quick_link_item, id: "nav-cat-quick")
 
@@ -119,8 +120,13 @@ module Bus
     # partner name in the right top corner
     element(:partner_top_link, xpath: "//div[@id='identify-me']/a[1]")
 
+    # list capabilities section
+    element(:list_capabilities_table, xpath: "//div[@id='capabilities-list-content']//table")
+
+
     def get_partner_name_topcorner
-      find(:xpath, "//div[@id='identify-me']/a[1]").text
+      wait_until{partner_top_link.visible?}
+      partner_top_link.text
     end
 
     def partner_id
@@ -234,8 +240,18 @@ module Bus
       go_to_partner_info(partner)
     end
 
-    def open_account_details_from_header
-      current_admin_name_link.click
+    def open_account_details_from_header(admin_name = nil)
+      if current_admin_name_link.text.strip =='stop masquerading'
+        if admin_name.nil?
+          # for act as admin
+          find(:xpath, "//div[@id='identify-me']/a[2]").click
+        else
+          find(:xpath, "//div[@id='identify-me']/a[text()='#{admin_name}']").click
+        end
+      else
+        # for act as admin, then click admin link
+        current_admin_name_link.click
+      end
     end
 
     # pro section
@@ -272,6 +288,14 @@ module Bus
 
     def go_to_account
       go_to_account_link.click
+    end
+
+    def get_list_capabilities
+      list_capabilities_table.raw_text
+    end
+
+    def check_capabilities_linkable
+      (list_capabilities_table.all(:xpath, "//td[2]/a").size > 0)? true:false
     end
 
   end

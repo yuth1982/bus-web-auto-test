@@ -89,29 +89,40 @@ When /^I close the admin details section$/ do
 end
 
 Then /^Admin information in List Admins section should be correct$/ do |admin_info|
-  actual = @bus_site.admin_console_page.list_admins_section.list_admins_table_hashes[0]
-  expected = admin_info.rows[0]
+  actual = @bus_site.admin_console_page.list_admins_section.list_admins_table_hashes
+  expected = admin_info.rows
   actual.should == expected
 end
 
-When /^I delete admin with (default password|Hipaa password|reset password|Standard password)$/ do |pwd|
+When /^I delete admin with (default password|Hipaa password|reset password|Standard password|bus admin password)$/ do |pwd|
+  pwd = QA_ENV['bus_password'] if pwd == 'bus admin password'
   @alert_text = @bus_site.admin_console_page.admin_details_section.delete_admin(pwd)
+end
+
+When /^I delete admin then cancel, the confirm message on the popup will be$/ do |msg|
+  @bus_site.admin_console_page.admin_details_section.delete_admin_cancel.strip.should == msg.strip
 end
 
 Then /^error message when delete admin will be$/ do |msg|
   @alert_text.strip.should == msg.strip
 end
 
-Then /^I should not search out admin record$/ do
-  @bus_site.admin_console_page.search_admins_section.search_admin_table_empty.should == true
+Then /^I should (not|can) search out admin record$/ do |type|
+  if type == 'not'
+    expected = true
+  else
+    expected = false
+  end
+  @bus_site.admin_console_page.search_admins_section.search_admin_table_empty.should == expected
 end
 
 When /^I change admin password to (.+)$/ do |password|
   @bus_site.admin_console_page.admin_details_section.change_admin_pwd(password)
 end
 
-Then /^I can change admin password successfully$/ do
-  string = "The password for " + @admin.name + " has been changed."
+Then /^I can change (.+) password successfully$/ do |admin|
+  admin = @admin.name if admin == 'admin'
+  string = "The password for " + admin + " has been changed."
   @bus_site.admin_console_page.admin_details_section.change_admin_pwd_msg.strip.should == string
 end
 
@@ -123,3 +134,26 @@ When /^(Fail|Succeed) to update admin password and the message should be (.+)$/ 
   @bus_site.admin_console_page.admin_details_section.change_admin_pwd_msg.strip.should == message.strip
 end
 
+Then /^I will see this admin has access to these user groups$/ do |user_groups|
+  attributes = user_groups.hashes.first
+  ug_array = attributes['user_groups'].split(',')
+  actual_groups = @bus_site.admin_console_page.admin_details_section.get_admin_groups
+  actual_groups.should == ug_array
+end
+
+And /^I add or remove user groups$/ do |user_groups|
+  add_ug_array = []
+  remove_ug_array = []
+  attributes = user_groups.hashes.first
+  add_ug_array = attributes['add'].split(',') unless attributes['add'].nil?
+  remove_ug_array = attributes['remove'].split(',') unless attributes['remove'].nil?
+  @bus_site.admin_console_page.admin_details_section.add_remove_admin_groups(add_ug_array, remove_ug_array)
+end
+
+Then /^I can save admin groups successfully$/ do
+  @bus_site.admin_console_page.admin_details_section.add_remove_admin_groups_save_msg.should == 'User group updated successfully.'
+end
+
+Then /^I click here to re-send activation email in admin details section$/ do
+  @bus_site.admin_console_page.admin_details_section.click_here
+end

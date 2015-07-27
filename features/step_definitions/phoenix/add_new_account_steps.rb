@@ -251,12 +251,17 @@ When /^I login (as the user|under changed password) on the account.$/ do |login_
 end
 
 When /^I log into phoenix with username (.+) and password (.+)$/ do |username,password|
-  username.replace ERB.new(username).result(binding)
-  password.replace ERB.new(password).result(binding)
+  if username == '@new_admin_email'
+    username = @partner.admin_info.email
+  elsif !(username.match(/^@.+$/).nil?)
+    username =  '<%=' + username + '%>'
+    username.replace ERB.new(username).result(binding)
+  else
+    #
+  end
   @bus_site ||= BusSite.new #In case you log into bus through the phoenix page
   @phoenix_site ||= PhoenixSite.new
   @phoenix_site.user_account.load
-  username = @partner.admin_info.email if username == '@new_admin_email'
   @phoenix_site.user_account.phoenix_login(username, password)
 end
 

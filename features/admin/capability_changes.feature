@@ -12,7 +12,7 @@ Feature: Manage admin capability change
 #    And I clean all roles with name which started with "$AUTOTEST$"
     When I navigate to Add New Role section from bus admin console page
     And I add a new role
-    And I check capabilities for the new role:
+    And I add capabilities for the new role:
       | Capabilities        |
       | Partners: list/view |
     And I navigate to Add New Admin section from bus admin console page
@@ -37,7 +37,7 @@ Feature: Manage admin capability change
     And I clean all roles with name which started with "$AUTOTEST$"
     When I navigate to Add New Role section from bus admin console page
     And I add a new role
-    And I check capabilities for the new role:
+    And I add capabilities for the new role:
       | Capabilities        |
       | Partners: delete    |
       | Partners: list/view |
@@ -63,7 +63,7 @@ Feature: Manage admin capability change
   Scenario: 698 Check Delete a partner works
     When I navigate to Add New Role section from bus admin console page
     And I add a new role
-    And I check capabilities for the new role:
+    And I add capabilities for the new role:
       | Capabilities        |
       | Partners: delete    |
       | Partners: list/view |
@@ -88,7 +88,7 @@ Feature: Manage admin capability change
   Scenario: 697 Check partners Delete, List/View capability
     When I navigate to Add New Role section from bus admin console page
     And I add a new role
-    And I check capabilities for the new role:
+    And I add capabilities for the new role:
       | Capabilities        |
       | Partners: delete    |
       | Partners: list/view |
@@ -112,7 +112,7 @@ Feature: Manage admin capability change
   Scenario: 696 Check partners Edit, List/View capability
     When I navigate to Add New Role section from bus admin console page
     And I add a new role
-    And I check capabilities for the new role:
+    And I add capabilities for the new role:
       | Capabilities        |
       | Partners: edit      |
       | Partners: list/view |
@@ -145,7 +145,7 @@ Feature: Manage admin capability change
   Scenario: 695 Check partners Add, List/View capability
     When I navigate to Add New Role section from bus admin console page
     And I add a new role
-    And I check capabilities for the new role:
+    And I add capabilities for the new role:
       | Capabilities        |
       | Partners: add       |
       | Partners: list/view |

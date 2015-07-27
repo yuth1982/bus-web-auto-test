@@ -134,6 +134,9 @@ module Bus
     element(:change_subdomain_link, css: "a[onclick*='/partner/subdomain']")
     element(:h3_section, css: "h3")
 
+    # security fiedld
+    element(:secuirty_field, xpath: "//span[contains(@id,'partner-display-hipaa-compliance-status')]")
+
     # Public: Partner Id
     #
     # Return string
@@ -665,6 +668,10 @@ module Bus
     def click_change_country_lnk
       chg_country_link_a.click
       wait_until_bus_section_load
+    end
+
+    def get_security_value
+      secuirty_field.text
     end
 
     # Public: set country in change country section

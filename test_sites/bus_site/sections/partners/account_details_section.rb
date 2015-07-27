@@ -24,6 +24,24 @@ module Bus
     element(:confirm_password_text, id: 'confirm_password')
     element(:reset_password_btn, xpath: "(//input[@name='commit'])[3]")
 
+    # newsletter, email notification, statements fields
+    # change link
+    element(:change_newsletter_link, xpath: "//dt[contains(text(),'Newsletter')]/../dd//a[text()='change']")
+    element(:change_email_notification_link, xpath: "//dt[contains(text(),'Notifications')]/../dd//a[text()='change']")
+    element(:change_statement_link, xpath: "//dt[contains(text(),'Statements')]/../dd//a[text()='change']")
+    # select
+    element(:change_newsletter_select, xpath: "//select[@id='receives_newsletter']")
+    element(:change_email_notification_select, xpath: "//select[@id='receives_email_notifications']")
+    element(:change_statement_select, xpath: "//select[@id='receives_aria_stmt_via_email']")
+    # submit button
+    element(:change_newsletter_submit_btn, xpath: "//select[@id='receives_newsletter']/../input")
+    element(:change_email_submit_btn, xpath: "//select[@id='receives_email_notifications']/../input")
+    element(:change_statement_submit_btn, xpath: "//select[@id='receives_aria_stmt_via_email']/../input")
+    # view selected value
+    element(:newsletter_value_text, xpath: "//dt[contains(text(),'Newsletter')]/../dd//span[1]")
+    element(:email_notification_value_text, xpath: "//dt[contains(text(),'Notifications')]/../dd//span[1]")
+    element(:statement_value_text, xpath: "//dt[contains(text(),'Statements')]/../dd//span[1]")
+
     # Public: account details table description column
     #
     # Example
@@ -89,6 +107,28 @@ module Bus
       change_name_link.click
       display_name_tb.type_text displayname
       submit_edit_name_btn.click
+    end
+
+    def edit_newsletter(value)
+      change_newsletter_link.click
+      change_newsletter_select.select(value)
+      change_newsletter_submit_btn.click
+    end
+
+    def edit_email_notification(value)
+      change_email_notification_link.click
+      change_email_notification_select.select(value)
+      change_email_submit_btn.click
+    end
+
+    def get_newsletter_setting
+      value = newsletter_value_text.text
+      (value.include?('No'))? 'No':'Yes'
+    end
+
+    def get_email_notification_setting
+      value = newsletter_value_text.text
+      (value.include?('No'))? 'No':'Yes'
     end
 
     def reset_password (current_password, new_password)

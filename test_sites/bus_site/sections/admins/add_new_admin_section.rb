@@ -7,11 +7,12 @@ module Bus
     elements(:roles_cb,xpath: "//div[@id='roles']/ul/li/label")
     element(:save_changes_btn,xpath: "//div[@id='admin-new-content']//form/table//input[@value='Save Changes']")
     element(:message, xpath: "//div[@id='admin-new-errors']/ul/li")
+    element(:parent_admin_select, xpath: "//select[contains(@name,'parent_admin_id')]")
 
     def add_new_admin(admin_obj)
       name_tb.set(admin_obj.name)
       email_tb.set(admin_obj.email)
-      #TODO - parent admin selection implementation
+      parent_admin_select.find(:xpath, "//option[contains(text(),'#{admin_obj.parent}')]").select_option unless admin_obj.parent.to_s == '0'
 
       admin_obj.user_groups.each do | ug |
         Log.debug("Processing grant user group #{ug} to admin")

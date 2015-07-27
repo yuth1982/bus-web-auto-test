@@ -473,3 +473,7 @@ When /^I get the partners name (.+) and type (.+)$/ do |name, type|
   @partner.company_info.name = name
   @partner.partner_info.type = type
 end
+
+Then /^The security filed value is (HIPAA|Standard)$/ do |security|
+  @bus_site.admin_console_page.partner_details_section.get_security_value.should == security
+end

@@ -53,6 +53,7 @@ end
 # Public: View admin details by click email in search partner results
 # Required: search list partner section must be visible
 When /^I view admin details by (.+)$/ do |partner_email|
+  partner_email = @subpartner.admin_email_address if partner_email == '@subpartner.admin_email_address'
   @bus_site.admin_console_page.search_list_partner_section.view_partner_detail(partner_email)
 end
 
@@ -99,3 +100,4 @@ end
 Then /^I will see (.+) in the search partner input box$/ do |search|
   @bus_site.admin_console_page.search_list_partner_section.search_input_text.should == search
 end
+

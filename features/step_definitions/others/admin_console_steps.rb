@@ -82,8 +82,13 @@ When /^I view the partner info$/ do
   @bus_site.admin_console_page.view_partner_info
 end
 
-And /^I click admin name on the top right$/ do
-  @bus_site.admin_console_page.open_account_details_from_header
+And /^I click admin (.+) on the top right$/ do |admin|
+  admin.replace ERB.new(admin).result(binding)
+  if admin != 'name'
+    @bus_site.admin_console_page.open_account_details_from_header(admin)
+  else
+    @bus_site.admin_console_page.open_account_details_from_header
+  end
 end
 
 # has_navigation returns a value if items are present, otherwise it will return empty
@@ -172,16 +177,27 @@ Given /^I verify Skeletor by visiting url$/ do
   @bus_site.admin_console_page.visit_skeletor_url
 end
 
-When /^the partner has activated the (admin|sub-admin) account with (default password|Hipaa password)$/ do |type, password|
+When /^the partner has activated the (.+) account with (default password|Hipaa password|reset password|Standard password)$/ do |type, password|
+
   if type == 'admin'
     step %{I retrieve email content by keywords:}, table(%{
       | to               | content                             |
       | @new_admin_email | activate your administrator account |
    })
-  else
+  elsif type == 'sub-admin'
     step %{I retrieve email content by keywords:}, table(%{
        | to                | content               |
        | <%=@admin.email%> | activate your account |
+  })
+  elsif type == 'oem-admin'
+      step %{I retrieve email content by keywords:}, table(%{
+      | to                                   | content                             |
+      | <%=@subpartner.admin_email_address%> | activate your administrator account |
+   })
+  else
+    step %{I retrieve email content by keywords:}, table(%{
+       | to      | content               |
+       | #{type} | activate your account |
   })
   end
   match = @mail_content.match(/https?:\/\/[\S]+.mozy[\S]+.[\S]+\/registration\/admin_confirm\/[\S]+/)
@@ -193,4 +209,15 @@ end
 
 When /^I go to account$/ do
   @bus_site.admin_console_page.go_to_account
+end
+
+Then /^The list capabilities column names would be$/ do |table|
+  expected = table.raw
+  actual = @bus_site.admin_console_page.get_list_capabilities
+  (actual.size > 1 ).should == true
+  actual[0].should == expected[0]
+end
+
+And /^capabilities name is linkable$/ do
+  @bus_site.admin_console_page.check_capabilities_linkable.should == true
 end

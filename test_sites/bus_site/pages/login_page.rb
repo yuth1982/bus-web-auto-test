@@ -13,6 +13,7 @@ module Bus
     element(:logout_btn, xpath: "//a[text()='LOG OUT']")
     element(:message_div, css: "div#inner-content div ul")
     element(:set_dialect_select, id: "set_dialect")
+    element(:phoenix_login_error_msg, xpath:"//div[@id='main']//p[@class='error']")
 
     # Public: Login bus admin console
     #
@@ -65,6 +66,10 @@ module Bus
       message_div.text
     end
 
+    # return  phoenix log in page error message
+    def phoenix_login_error_messages
+      phoenix_login_error_msg.text
+    end
     # Public: Check if the log out link is present (implies user/partner is logged in)
     #
     # @param none

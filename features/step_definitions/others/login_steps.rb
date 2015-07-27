@@ -1,7 +1,7 @@
 def login(environment)
   success = true
   begin
-    @bus_site = BusSite.new
+    @bus_site = BusSite.new if @bus_site.nil?
     case environment
       when 'bus admin console'
         @bus_site.login_page.load
@@ -32,23 +32,34 @@ Given /^I log in (bus admin console|to legacy bus01) as administrator$/ do |envi
 end
 
 And /^I login as (.+) admin successfully$/ do |admin|
-  admin = @partner.company_info.name  if admin == 'mozypro'
+  if admin == 'mozypro'
+    admin = @partner.company_info.name
+  elsif !(admin.match(/^@.+$/).nil?)
+    admin =  '<%=' + admin + '%>'
+    admin.replace ERB.new(admin).result(binding)
+  else
+  end
   @bus_site.admin_console_page.get_partner_name_topcorner.should eq(admin)
 end
 
 When /^I navigate to bus admin console login page$/ do
-  @bus_site = BusSite.new
+  @bus_site = BusSite.new if @bus_site.nil?
   @bus_site.login_page.load
 end
 
 When /^I navigate to (.+) user login page$/ do |subdomain|
-  @bus_site = BusSite.new
+  @bus_site = BusSite.new if @bus_site.nil?
   @bus_site.user_login_page(subdomain, 'mozy').load
 end
 
 When /^I log in bus admin console with user name (.+) and password (.+)$/ do |username, password|
-  username.replace ERB.new(username).result(binding)
-  password.replace ERB.new(password).result(binding)
+  if !(username.match(/^@.+$/).nil?)
+    username =  '<%=' + username + '%>'
+    username.replace ERB.new(username).result(binding)
+  end
+  username = QA_ENV['bus01_admin'] if username == 'bus01_admin'
+  password = QA_ENV['bus01_pass'] if password == 'bus01_pass'
+  password = '' if password == 'Empty'
   @bus_site.login_page.login(username, password)
 end
 
@@ -62,6 +73,10 @@ end
 
 Then /^Login page error message should be (.+)$/ do |messages|
   @bus_site.login_page.messages.should == messages
+end
+
+Then /^Phoenix Login page error message should be (.+)$/ do |messages|
+  @bus_site.login_page.phoenix_login_error_messages.strip.should == messages.strip
 end
 
 When /^I save login page cookies (.+) value$/ do |name|

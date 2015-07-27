@@ -80,8 +80,10 @@ Then /^Scheduled (.+) report csv file details should be:$/ do |report_type, repo
   report_table.map_column!('Column A') do |value|
     value.gsub(/@name/,@partner.company_info.name)
   end
-  report_table.rows.each do |row|
-    row.map {|col| col.force_encoding('IBM437');}
+  unless RUBY_PLATFORM.include?('linux') then
+    report_table.rows.each do |row|
+      row.map {|col| col.force_encoding('IBM437');}
+    end
   end
   @bus_site.admin_console_page.scheduled_reports_section.read_scheduled_report(report_type).should eql report_table.rows
 end

@@ -17,6 +17,8 @@ module Bus
     element(:contact_phone_tb, id: 'contact_phone')
     element(:vat_number_tb, id: 'vat_info_vat_number')
     element(:security_select, id: 'security_requirement')
+    elements(:security_select_options, xpath: "//select[@id='security_requirement']//option")
+    element(:security_tooltip, xpath: "//select[@id='security_requirement']/../img[contains(@src,'tooltip')]")
     element(:subpartner_company_type_select, id: 'company_type')
 
     # Admin info
@@ -171,6 +173,19 @@ module Bus
       company_type_select.select(type)
       wait_until_plans_loaded(type)
       period_labels.map{ |ele| ele.text}
+    end
+
+    # Returns security options
+    def available_security_options
+      security_select_options.collect { |option| option.text }
+    end
+
+    def get_security_default_value
+      security_select.find("option[selected]").text
+    end
+
+    def get_security_tooltip
+      security_tooltip[:'data-tooltip']
     end
 
     private
