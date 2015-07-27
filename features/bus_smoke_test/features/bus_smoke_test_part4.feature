@@ -7,214 +7,141 @@ Feature: BUS smoke test
   Background:
     Given I log in bus admin console as administrator
 
-  #================== partner 'Internal Mozy - MozyPro BUS Smoke Test Data Shuttle 6201-2851-04' related scenarios ===================
-  @bus_us @TC.125954 @qa
-  Scenario: Test Case Mozy-125954: BUS US -- Order Data Shuttle
-    When I add a new MozyPro partner:
-      | company name                                                     | period | base plan | coupon                | net terms | server plan | root role               |
-      | Internal Mozy - MozyPro BUS Smoke Test Data Shuttle 6201-2851-04 | 24     | 10 GB     | <%=QA_ENV['coupon']%> | yes       | yes         | Bundle Pro Partner Root |
-    Then New partner should be created
-    When I act as newly created partner account
-    And I add new user(s):
-      | name              | user_group           | storage_type | storage_limit | devices |
-      | user with machine | (default user group) | Desktop      | 5             | 1       |
-    When I navigate to Search / List Users section from bus admin console page
-    And I view user details by newly created user email
-    And I update the user password to default password
-    And activate the user's Desktop device without a key and with the default password
-    Then I stop masquerading
-    When I order data shuttle for Internal Mozy - MozyPro BUS Smoke Test Data Shuttle 6201-2851-04
-      | power adapter   | key from  | quota |
-      | Data Shuttle US | available | 5     |
-    Then Data shuttle order should be created
-
-  @bus_us @TC.125955 @qa
-  Scenario: Test Case Mozy-125955: BUS US -- Update Data Shuttle - Precondition:@TC.125954
-    When I search order in view data shuttle orders section by Internal Mozy - MozyPro BUS Smoke Test Data Shuttle 6201-2851-04
-    And I view data shuttle order details
-    And I add drive to data shuttle order
-    Then Add drive to data shuttle order message should include Successfully added drive to order
-
-  @bus_us @TC.125954 @std
-  Scenario: Test Case Mozy-125975: BUS EMEA -- Order Data Shuttle
-    When I order data shuttle for Internal Mozy - MozyPro for US Data Shuttle(Don't Edit)
-      | power adapter     | key from  |
-      | Data Shuttle EMEA | available |
-    Then Data shuttle order should be created
-
-  @bus_us @TC.125955 @std
-  Scenario: Test Case Mozy-125976: BUS EMEA -- Update Data Shuttle - Precondition:@TC.125975
-    When I search order in view data shuttle orders section by Internal Mozy - MozyPro for US Data Shuttle(Don't Edit)
-    And I view data shuttle order details
-    And I add drive to data shuttle order
-    Then Add drive to data shuttle order message should include Successfully added drive to order
-    When I cancel the latest data shuttle order for Internal Mozy - MozyPro for US Data Shuttle(Don't Edit)
-    Then The order should be Cancelled
-
-  #=====================================
-  @bus_us @TC.125958
-  Scenario: Test Case Mozy-125958: BUS US -- Delete test partner and validate they are in Pending Delete state
-    When I add a new MozyPro partner:
-      | company name                                        | period | coupon                | net terms | server plan | root role               |
-      | Internal Mozy - MozyPro BUS Smoke Test 5958-2015-10 | 24     | <%=QA_ENV['coupon']%> | yes       | yes         | Bundle Pro Partner Root |
-    Then New partner should be created
-    And I delete partner and verify pending delete
-
-  #=====================================
-  @bus_us @TC.125959
-  Scenario: Test Case Mozy-125959: BUS US -- Create a Pro partner (reseller) and verify Partner creation in BUS and Aria
-    When I add a new Reseller partner:
-      | company name                                         | period | base plan | coupon                | net terms | server plan |
-      | Internal Mozy - Reseller BUS Smoke Test 5959-3026-41 | 1      | 50 GB     | <%=QA_ENV['coupon']%> | yes       | yes         |
-    And New partner should be created
-    And I get partner aria id
-    Then API* Aria account should be:
-      | status_label |
-      | ACTIVE       |
-    But I activate the partner
-    And I delete partner account
-
-  #================== partner 'Internal Mozy - MozyEnterprise BUS Smoke Test 1704-3692-83' related scenarios ===================
-  @bus_us @TC.125960
-  Scenario: Test Case Mozy-125960: BUS US -- Create a Enterprise partner and verify Partner creation in BUS and Aria
-    When I add a new MozyEnterprise partner:
-      | company name                                               | period | users  | coupon                |  server plan | net terms |
-      | Internal Mozy - MozyEnterprise BUS Smoke Test 1704-3692-83 | 36     | 10     | <%=QA_ENV['coupon']%> |  100 GB      | yes       |
-    And New partner should be created
-    And I get partner aria id
-    Then API* Aria account should be:
-      | status_label |
-      | ACTIVE       |
-    But I activate the partner
-
-  @bus_us @TC.125983 @qa_std
-  Scenario: Test Case Mozy-125983: LDAP Pull - Precondition:@TC.125960
-    When I search partner by:
-      | name                                                       |
-      | Internal Mozy - MozyEnterprise BUS Smoke Test 1704-3692-83 |
-    And I view partner details by Internal Mozy - MozyEnterprise BUS Smoke Test 1704-3692-83
-    When I add partner settings
-      | Name                    | Value | Locked |
-      | allow_ad_authentication | t     | true   |
-    And I act as newly created partner account
-    And I add a new Itemized user group:
-      | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
-      | dev  | Shared               | 5               | Shared              | 10             |
-    Then dev user group should be created
-    And I navigate to Authentication Policy section from bus admin console page
-    And I use Directory Service as authentication provider
-    And I input server connection settings
-      | Server Host  | Protocol   | SSL Cert | Port   | Base DN  | Bind Username   | Bind Password   |
-      | @server_host | @protocol  |          | @port  | @base_dn | @bind_user      | @bind_password  |
-    And I save the changes
-    Then Authentication Policy has been updated successfully
-    When I Test Connection for AD
-    Then test connection message should be Test passed
-    And I click Sync Rules tab
-    And I add 1 new provision rules:
-      | rule               | group |
-      | cn=dev-17538-test* | dev   |
-    And I click the sync now button
-    And I wait for 90 seconds
-    And I delete 1 provision rules
-    And I save the changes
-    And I click Connection Settings tab
-    Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 3 succeeded, 0 failed \| Users Deprovisioned: 0 |
-    When I navigate to Search / List Users section from bus admin console page
-    And I sort user search results by User desc
-#    Then User search results should be:
-#      | User                     | Name            | User Group |
-#      | dev-17538-test3@test.com | dev-17538-test3 | dev        |
-#      | dev-17538-test2@test.com | dev-17538-test2 | dev        |
-#      | dev-17538-test1@test.com | dev-17538-test1 | dev        |
-    When I navigate to Authentication Policy section from bus admin console page
-    And I use Directory Service as authentication provider
-    And I click Sync Rules tab
-    And I add 1 new deprovision rules:
-      | rule               | action |
-      | cn=dev-17538-test* | Delete |
-    And I click the sync now button
-    And I wait for 90 seconds
-    And I delete 1 deprovision rules
-    And I save the changes
-    And I click Connection Settings tab
-    Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 3 succeeded, 0 failed |
-    When I navigate to Search / List Users section from bus admin console page
-    Then The users table should be empty
-
-  @bus_us @TC.125983 @prod
-  Scenario: Test Case Mozy-125983: LDAP Pull
-    When I act as partner by:
-      | name                 |
-      | SSO longevity Test 1 |
-    And I navigate to Authentication Policy section from bus admin console page
-    And I use Directory Service as authentication provider
-    And I input server connection settings
-      | Server Host  | Protocol   | SSL Cert | Port   | Base DN  | Bind Username   | Bind Password   |
-      | @server_host | @protocol  |          | @port  | @base_dn | @bind_user      | @bind_password  |
-    And I save the changes
-    Then Authentication Policy has been updated successfully
-    When I Test Connection for AD
-    Then test connection message should be Test passed
-    And I click Sync Rules tab
-    And I add 1 new provision rules:
-      | rule        | group |
-      | mail=gaobo* | qa    |
-    And I click the sync now button
-    And I wait for 120 seconds
-    And I delete 1 provision rules
-    And I save the changes
-    And I click Connection Settings tab
-    Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
-    When I navigate to Search / List Users section from bus admin console page
-    And I search user by:
-      | keywords        |
-      | gaobo@fedid.biz |
-    Then User search results should be:
-      | User            | Name  | User Group |
-      | gaobo@fedid.biz | gaobo | qa         |
-    When I navigate to Authentication Policy section from bus admin console page
-    And I use Directory Service as authentication provider
-    And I click Sync Rules tab
-    And I add 1 new deprovision rules:
-      | rule        | action |
-      | mail=gaobo* | Delete |
-    And I click the sync now button
-    And I wait for 90 seconds
-    And I delete 1 deprovision rules
-    And I save the changes
-    And I click Connection Settings tab
-    Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 1 succeeded, 0 failed |
-    When I navigate to Search / List Users section from bus admin console page
-    And I search user by:
-      | keywords        |
-      | gaobo@fedid.biz |
-    Then The users table should be empty
-
-  #================== partner 'Internal Mozy - Fortress BUS Smoke Test 2940-4826-39' related scenarios ===================
-  @bus_us @TC.125961
-  Scenario: Test Case Mozy-125961: BUS US -- Create a new Fortress partner and verify Partner creation in BUS and Aria
-    When I act as partner by:
-      | name     | including sub-partners |
-      | Fortress | no                     |
-    And I add a new sub partner:
-      | Company Name                                         |
-      | Internal Mozy - Fortress BUS Smoke Test 2940-4826-39 |
-    Then New partner should be created
-    When I stop masquerading
-    And I search partner by Internal Mozy - Fortress BUS Smoke Test 2940-4826-39
-    And I view partner details by Internal Mozy - Fortress BUS Smoke Test 2940-4826-39
-    And I delete partner account
-
   #=====================================
   @bus_emea @TC.125963
   Scenario: Test Case Mozy-125963: BUS EMEA -- Log into BUS
     Given I log in bus admin console as administrator
+
+  #================== partner 'Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27' related scenarios ===================
+  @bus_emea @TC.125964
+  Scenario: Test Case Mozy-125964: BUS EMEA -- Create a new partner (No VAT Number)
+    When I add a new MozyPro partner:
+      | company name                                               | period  | base plan | create under   | server plan | net terms | country | coupon                |
+      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 | 12      | 50 GB     | MozyPro France | yes         | yes       | France  | <%=QA_ENV['coupon']%> |
+    And New partner should be created
+    And I change root role to Business Root
+
+  @bus_emea @TC.125965
+  Scenario: Test Case Mozy-125965: BUS EMEA -- Verify partner creation in Aria - Precondition:@TC.125964
+    When I search partner by Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27
+    And I view partner details by Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27
+    And I get partner aria id
+    Then API* Aria account should be:
+      | status_label |
+      | ACTIVE       |
+
+  @bus_emea @TC.125967
+  Scenario: Test Case Mozy-125967: BUS EMEA -- Masquerade into the partner - Precondition:@TC.125964
+    When I act as partner by:
+      | name                                                       |
+      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 |
+
+  @bus_emea @TC.125968
+  Scenario: Test Case Mozy-125968: BUS EMEA -- Create a user group - Precondition:@TC.125964
+    When I act as partner by:
+      | name                                                       |
+      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 |
+    When I add a new Bundled user group:
+      | name         | storage_type |
+      | test-group-1 | Shared       |
+    Then test-group-1 user group should be created
+
+  @bus_emea @TC.125969
+  Scenario: Test Case Mozy-125969: BUS EMEA -- Create a user - Precondition:@TC.125968
+    When I act as partner by:
+      | name                                                       |
+      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 |
+    And I add new user(s):
+      | name        | user_group   | storage_type  | storage_limit | devices |
+      | EMEA-user-1 | test-group-1 | Desktop       | 10            | 1       |
+    Then 1 new user should be created
+
+  @bus_emea @TC.125970
+  Scenario: Test Case Mozy-125970: BUS EMEA -- Move the user from one user group to a different user group - Precondition:@TC.125969
+    When I act as partner by:
+      | name                                                       |
+      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 |
+    And  I navigate to Search / List Users section from bus admin console page
+    And I view user details by EMEA-user-1
+    And I reassign the user to user group (default user group)
+    Then the user's user group should be (default user group)
+
+  @bus_emea @TC.125971
+  Scenario: Test Case Mozy-125971: BUS EMEA -- Create a client config - Precondition:@TC.125964
+    When I act as partner by:
+      | name                                                       |
+      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 |
+    When I create a new client config:
+      | name                | user group   | type   |
+      | smoke_client_config | group-test-1 | Server |
+    Then client configuration section message should be Your configuration was saved.
+
+  @bus_emea @TC.125972
+  Scenario: Test Case Mozy-125972: BUS EMEA -- Open all of the Resources header to open all of the modules - Precondition:@TC.125964
+    When I act as partner by:
+      | name                                                       |
+      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 |
+    Given I navigate to Resource Summary section from bus admin console page
+    When I navigate to User Group List section from bus admin console page
+    Then I navigate to Change Plan section from bus admin console page
+    And  I navigate to Billing Information section from bus admin console page
+    But  I navigate to Billing History section from bus admin console page
+    Then I navigate to Change Payment Information section from bus admin console page
+    When I navigate to Download * Client section from bus admin console page
+
+  @bus_us @TC.125974 @support
+  Scenario: Test Case Mozy-125974: BUS EMEA -- Check the support link - Precondition:@TC.125964
+    When I act as partner by:
+      | name                                                       |
+      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 |
+    When I navigate to Contact section from bus admin console page
+    And I click my support
+    Then I login my support successfully
+
+  @bus_emea @TC.125977
+  Scenario: Test Case Mozy-125977: BUS EMEA -- Delete test user - Precondition:@TC.125969
+    When I act as partner by:
+      | name                                                        |
+      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27  |
+    And  I navigate to Search / List Users section from bus admin console page
+    And I view user details by EMEA-user-1
+    And I delete user
+
+  @bus_emea @TC.125978
+  Scenario: Test Case Mozy-125978: BUS EMEA -- Delete test user group - Precondition:@TC.125964
+    When I act as partner by:
+      | name                                                       |
+      | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 |
+    When I add a new Bundled user group:
+      | name         | storage_type |
+      | test-group-2 | Shared       |
+    Then test-group-2 user group should be created
+    When I delete user group details by name: test-group-2
+
+  #================== partner 'Internal Mozy - MozyPro France BUS Smoke Test Report 4170-3928-56' related scenarios ===================
+  @bus_emea @TC.125973
+  Scenario: Test Case Mozy-125973: BUS EMEA -- Run a report
+    When I add a new MozyPro partner:
+      | company name                                                      | period  | base plan | create under   | net terms | country | coupon                |
+      | Internal Mozy - MozyPro France BUS Smoke Test Report 4170-3928-56 | 12      | 50 GB     | MozyPro France | yes       | France  | <%=QA_ENV['coupon']%> |
+    Then New partner should be created
+    Then I change root role to Business Root
+    When I act as newly created partner account
+    When I build a new report:
+      | type            | name                |
+      | Billing Detail  | billing detail test |
+    Then Billing detail report should be created
+    And Scheduled report list should be:
+      | Name                | Type            | Schedule | Actions |
+      | billing detail test | Billing Detail  | Daily    | Run     |
+    When I download billing detail test scheduled report
+    Then Scheduled Billing Detail report csv file details should be:
+      | Column A | Column B              | Column C     | Column D           | Column E             | Column F             | Column G        | Column H       | Column I       | Column J                        | Column Q                     | Column S               |
+      | Partner  | User Group            | Billing Code | Total GB Purchased | GB Purchased         | Quota Allocated (GB) | Quota Used (GB) | Keys Purchased | Keys Activated | Keys Assigned But Not Activated | Effective price per  license | Effective price per GB |
+      | @name    | (default user group)  |              | Shared             | N/A                  | N/A                  | 0               | 0              | 0              | 0                               |                              | €0.32                  |
+    When I delete billing detail test scheduled report
+    Then I should see No results found in scheduled reports list
+    When I download Credit Card Transactions (CSV) quick report
+    Then Quick report Credit Card Transactions csv file details should be:
+      | Column A | Column B | Column C | Column D  |
+      | Date     | Amount   | Card #   | Card Type |

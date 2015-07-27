@@ -35,3 +35,33 @@ Then /^machine details should be:$/ do |md_table|
   end
   expected.keys.each{|key| actual[key].should == expected[key]}
 end
+
+And /^I view machine (.+) details from user details section$/ do  |device_name|
+  @bus_site.admin_console_page.user_details_section.view_device_details(device_name)
+end
+
+And /^I click manifest view link$/ do
+  @bus_site.admin_console_page.machine_details_section.click_view_manifest
+end
+
+And /^view manifest window of machine (.+) is opened$/ do |device_name|
+  @bus_site.manifest_view_page.view_manifest_window_visible(device_name).should > 0
+end
+
+And /^I click manifest raw link to download the manifest file$/ do
+  @bus_site.admin_console_page.machine_details_section.click_raw_manifest
+end
+
+Then /^the manifest file is downloaded$/ do  |file_table|
+  attributes = file_table.hashes.first
+  attributes.each do |header,attribute|
+    attribute.replace ERB.new(attribute).result(binding)
+    attributes[header] = nil if attribute == ''
+  end
+  @file_name = attributes["file name"]
+  @bus_site.admin_console_page.machine_details_section.wait_until_manifest_file_downloaded(@file_name).should be_true
+end
+
+Then /^I delete the newly downloaded file$/ do
+  @bus_site.admin_console_page.machine_details_section.delete_manifest_file(@file_name)
+end

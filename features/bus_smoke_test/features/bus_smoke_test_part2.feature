@@ -7,9 +7,100 @@ Feature: BUS smoke test
   Background:
     Given I log in bus admin console as administrator
 
+  #================== partner 'Internal Mozy - Reseller BUS Smoke Test 3849-7653-73' related scenarios ===================
+  @bus_us @TC.125938
+  Scenario: Test Case Mozy-125938: BUS US -- Activate partner in email
+    When I add a new Reseller partner:
+      | company name                                         | period | base plan | coupon                | net terms | server plan |
+      | Internal Mozy - Reseller BUS Smoke Test 3849-7653-73 | 1      | 50 GB     | <%=QA_ENV['coupon']%> | yes       | yes         |
+    And New partner should be created
+    And the standard partner has activated the admin account
+    And I go to account
+    Then I login as mozypro admin successfully
+    Given I log in bus admin console as administrator
+    And I search partner by Internal Mozy - Reseller BUS Smoke Test 3849-7653-73
+    And I view partner details by Internal Mozy - Reseller BUS Smoke Test 3849-7653-73
+    And I delete partner account
+
+  #================== partner 'Internal Mozy - OEM BUS Smoke Test 4863-2704-60' related scenarios ===================
+  @bus_us @TC.125945
+  Scenario: Test Case Mozy-125945: BUS US -- User Details - Change Partners
+    When I add a new OEM partner:
+      | Company Name                                    | Root role         | Security | Company Type     |
+      | Internal Mozy - OEM BUS Smoke Test 4863-2704-60 | OEM Partner Admin | HIPAA    | Service Provider |
+    Then New partner should be created
+    Then I stop masquerading as sub partner
+    And I stop masquerading
+    And I search partner by Internal Mozy - OEM BUS Smoke Test 4863-2704-60
+    And I view partner details by Internal Mozy - OEM BUS Smoke Test 4863-2704-60
+    And I change account type to Internal Test
+    Then account type should be changed to Internal Test successfully
+    When I act as newly created partner account
+    And I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name         | Type          | Parent            |
+      | new OEM role | Partner admin | OEM Partner Admin |
+    And I check all the capabilities for the new role
+    When I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for OEM partner:
+      | Name    | Company Type | Root Role    | Enabled | Public | Currency | Periods | Tax Percentage | Tax Name | Auto-include tax | Server Price per key | Server Min keys | Server Price per gigabyte | Server Min gigabytes | Desktop Price per key | Desktop Min keys | Desktop Price per gigabyte | Desktop Min gigabytes | Grandfathered Price per key | Grandfathered Min keys | Grandfathered Price per gigabyte | Grandfathered Min gigabytes |
+      | subplan | business     | new OEM role | Yes     | No     |          | yearly  | 10             | test     | false            | 1                    | 1               | 1                         | 1                    | 1                     | 1                | 1                          | 1                     | 1                           | 1                      | 1                                | 1                           |
+    And I add a new sub partner:
+      | Company Name                               | Pricing Plan | Admin Name |
+      | Internal Mozy - subpartner1 8376-3615-73   | subplan      | subadmin1  |
+    Then New partner should be created
+    And I stop masquerading
+    And I search partner by Internal Mozy - subpartner1 8376-3615-73
+    And I view partner details by Internal Mozy - subpartner1 8376-3615-73
+    And I change account type to Internal Test
+    Then account type should be changed to Internal Test successfully
+    When I act as newly created subpartner account
+    And I navigate to Purchase Resources section from bus admin console page
+    And I save current purchased resources
+    And I purchase resources:
+      | desktop license | desktop quota | server license | server quota |
+      | 2               | 20            | 2              | 20           |
+    Then Resources should be purchased
+    And Current purchased resources should increase:
+      | desktop license | desktop quota | server license | server quota |
+      | 2               | 20            | 2              | 20           |
+    And I add new itemized user(s):
+      | name     | devices_server | quota_server | devices_desktop | quota_desktop |
+      | oem user | 1              | 10           | 1               | 10            |
+    And new itemized user should be created
+    When I stop masquerading from subpartner
+    When I act as partner by:
+      | name                                            |
+      | Internal Mozy - OEM BUS Smoke Test 4863-2704-60 |
+    And I add a new sub partner:
+      | Company Name                               | Pricing Plan | Admin Name |
+      | Internal Mozy - subpartner2 4974-9147-43   | subplan      | subadmin2  |
+    Then New partner should be created
+    And I stop masquerading
+    And I search partner by Internal Mozy - subpartner2 4974-9147-43
+    And I view partner details by Internal Mozy - subpartner2 4974-9147-43
+    And I change account type to Internal Test
+    Then account type should be changed to Internal Test successfully
+    When I act as partner by:
+      | name                                            |
+      | Internal Mozy - OEM BUS Smoke Test 4863-2704-60 |
+    And I navigate to Search / List Users section from bus admin console page
+    And I view user details by oem user
+    When I reassign the user to partner Internal Mozy - subpartner2 4974-9147-43
+    Then I stop masquerading as sub partner
+    And I search partner by Internal Mozy - subpartner1 8376-3615-73
+    And I view partner details by Internal Mozy - subpartner1 8376-3615-73
+    And I delete partner account
+    And I search partner by Internal Mozy - subpartner2 4974-9147-43
+    And I view partner details by Internal Mozy - subpartner2 4974-9147-43
+    And I delete partner account
+    And I search partner by Internal Mozy - OEM BUS Smoke Test 4863-2704-60
+    And I view partner details by Internal Mozy - OEM BUS Smoke Test 4863-2704-60
+    And I delete partner account
+
   #================== partner 'Internal Mozy - MozyPro BUS Smoke Storage Test 1543-8769-22' related scenarios ===================
   @bus_us @TC.125951
-  Scenario: Test Case Mozy-125951: BUS US -- Change plan for the partner - Precondition:@TC.125935
+  Scenario: Test Case Mozy-125951: BUS US -- Change plan for the partner
     When I add a new MozyPro partner:
       | company name                                                | period | base plan | coupon                | net terms | server plan | root role               |
       | Internal Mozy - MozyPro BUS Smoke Storage Test 1543-8769-22 | 24     | 10 GB     | <%=QA_ENV['coupon']%> | yes       | yes         | Bundle Pro Partner Root |
@@ -34,75 +125,6 @@ Feature: BUS smoke test
       | Used | Available | Assigned | Used | Available | Assigned  |
       | 0    | 50        | 50       | 0    | Unlimited | Unlimited |
     Then I delete partner account
-
-  #================== partner 'Internal Mozy - Reseller BUS Smoke Test 3849-7653-73' related scenarios ===================
-  @bus_us @TC.125938
-  Scenario: Test Case Mozy-125938: BUS US -- Activate partner in email
-    When I add a new Reseller partner:
-      | company name                                         | period | base plan | coupon                | net terms | server plan |
-      | Internal Mozy - Reseller BUS Smoke Test 3849-7653-73 | 1      | 50 GB     | <%=QA_ENV['coupon']%> | yes       | yes         |
-    And New partner should be created
-    And the standard partner has activated the admin account
-    And I go to account
-    Then I login as mozypro admin successfully
-    Given I log in bus admin console as administrator
-    And I search partner by Internal Mozy - Reseller BUS Smoke Test 3849-7653-73
-    And I view partner details by Internal Mozy - Reseller BUS Smoke Test 3849-7653-73
-    And I delete partner account
-
-  #================== partner 'Internal Mozy - OEM BUS Smoke Test 4863-2704-60' related scenarios ===================
-  @bus_us @TC.125945
-  Scenario: Test Case Mozy-125945: BUS US -- User Details - Change Partners
-    When I add a new OEM partner:
-      | Company Name                                    | Root role         | Security | Company Type     |
-      | Internal Mozy - OEM BUS Smoke Test 4863-2704-60 | OEM Partner Admin | HIPAA    | Service Provider |
-    Then New partner should be created
-    When I act as newly created partner account
-    And I navigate to Add New Role section from bus admin console page
-    And I add a new role:
-      | Name         | Type          | Parent            |
-      | new OEM role | Partner admin | OEM Partner Admin |
-    And I check all the capabilities for the new role
-    When I navigate to Add New Pro Plan section from bus admin console page
-    And I add a new pro plan for OEM partner:
-      | Name    | Company Type | Root Role    | Enabled | Public | Currency | Periods | Tax Percentage | Tax Name | Auto-include tax | Server Price per key | Server Min keys | Server Price per gigabyte | Server Min gigabytes | Desktop Price per key | Desktop Min keys | Desktop Price per gigabyte | Desktop Min gigabytes | Grandfathered Price per key | Grandfathered Min keys | Grandfathered Price per gigabyte | Grandfathered Min gigabytes |
-      | subplan | business     | new OEM role | Yes     | No     |          | yearly  | 10             | test     | false            | 1                    | 1               | 1                         | 1                    | 1                     | 1                | 1                          | 1                     | 1                           | 1                      | 1                                | 1                           |
-    And I add a new sub partner:
-      | Company Name                               | Pricing Plan | Admin Name |
-      | Internal Mozy - subpartner1 8376-3615-73   | subplan      | subadmin1  |
-    Then New partner should be created
-    When I act as newly created subpartner account
-    And I navigate to Purchase Resources section from bus admin console page
-    And I save current purchased resources
-    And I purchase resources:
-      | desktop license | desktop quota | server license | server quota |
-      | 2               | 20            | 2              | 20           |
-    Then Resources should be purchased
-    And Current purchased resources should increase:
-      | desktop license | desktop quota | server license | server quota |
-      | 2               | 20            | 2              | 20           |
-    And I add new itemized user(s):
-      | name     | devices_server | quota_server | devices_desktop | quota_desktop |
-      | oem user | 1              | 10           | 1               | 10            |
-    And new itemized user should be created
-    When I stop masquerading from subpartner
-    And I add a new sub partner:
-      | Company Name                               | Pricing Plan | Admin Name |
-      | Internal Mozy - subpartner2 4974-9147-43   | subplan      | subadmin2  |
-    Then New partner should be created
-    And I navigate to Search / List Users section from bus admin console page
-    And I view user details by oem user
-    When I reassign the user to partner Internal Mozy - subpartner2 4974-9147-43
-    Then I stop masquerading as sub partner
-    And I search partner by Internal Mozy - subpartner1 8376-3615-73
-    And I view partner details by Internal Mozy - subpartner1 8376-3615-73
-    And I delete partner account
-    And I search partner by Internal Mozy - subpartner2 4974-9147-43
-    And I view partner details by Internal Mozy - subpartner2 4974-9147-43
-    And I delete partner account
-    And I search partner by Internal Mozy - OEM BUS Smoke Test 4863-2704-60
-    And I view partner details by Internal Mozy - OEM BUS Smoke Test 4863-2704-60
-    And I delete partner account
 
   #================== partner 'Internal Mozy - MozyEnterprise BUS Smoke Test Report 5062-7291-02' related scenarios ===================
   @bus_us @TC.125952
@@ -130,3 +152,19 @@ Feature: BUS smoke test
     Then Quick report Credit Card Transactions csv file details should be:
       | Column A | Column B | Column C | Column D  |
       | Date     | Amount   | Card #   | Card Type |
+
+  #================== partner 'Internal Mozy - MozyPro BUS Smoke Test 0709-1754-57' related scenarios ===================
+  @bus_us @TC.131996 @qa_std
+  Scenario: Test Case Mozy-131996: BUS US -- Create a new partner with credit card
+    When I add a new MozyPro partner:
+      | company name                                                    | period | base plan | coupon                | cc number        |
+      | Internal Mozy - MozyPro BUS Smoke Test Credit Card 0709-1754-57 | 1      | 10 GB     | <%=QA_ENV['coupon']%> | 4485467443715872 |
+    Then New partner should be created
+
+  #================== partner 'Internal Mozy - MozyPro France BUS Smoke Test 0709-1802-56' related scenarios ===================
+  @bus_emea @TC.131997 @qa_std
+  Scenario: Test Case Mozy-131997: BUS EMEA -- Create a new partner with credit card
+    When I add a new MozyPro partner:
+      | company name                                                           | period | base plan | create under   | vat number    | coupon                | country | address           | city      | state | zip   | phone          | cc number        |
+      | Internal Mozy - MozyPro France BUS Smoke Test Credit Card 0709-1802-56 | 1      | 10 GB     | MozyPro France | FR08410091490 | <%=QA_ENV['coupon']%> | France  | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 | 4485393141463880 |
+    Then New partner should be created

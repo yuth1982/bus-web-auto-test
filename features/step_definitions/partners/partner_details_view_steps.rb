@@ -314,6 +314,15 @@ When /^The subdomain in BUS will be @subdomain$/ do
   #something here
   @bus_site.admin_console_page.partner_details_section.subdomain.should == @subdomain
 end
+
+When /^I change account type to (.+)$/ do | type |
+  @bus_site.admin_console_page.partner_details_section.set_account_type(type)
+end
+
+Then /^account type should be changed to (.+) successfully$/ do |type|
+  @bus_site.admin_console_page.partner_details_section.account_type.should include(type)
+end
+
 When /^I change the partner contact information to:$/ do |info_table|
   # table is a | address          | city          | state          | zip_code                 | country          |
   new_info = info_table.hashes.first
