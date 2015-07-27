@@ -36,8 +36,8 @@ class Capybara::Node::Element
   #
   def clear_value
     #On Chrome, execute_script sometimes works sometimes not
-    #driver.execute_script("document.getElementById('#{self[:id]}').value=''")
-    set('')
+    driver.execute_script("document.getElementById('#{self[:id]}').value=''")
+    #set('')
   end
 
   # Public: Get parent element of current element

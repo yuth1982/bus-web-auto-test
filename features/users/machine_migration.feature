@@ -343,3 +343,14 @@ Feature: Machine migration (This is only for QA5 environment, This file will be 
     Then The import result should be like:
       | column 1      |  column 2          |  column 3                       | column 4                                   |
       |Import Results:| 9793 rows imported |9793 machines moved to new users | 0 machines skipped (no new user specified) |
+
+  @TC.2168 @bus @others
+  Scenario: 2168 Export to CSV
+    When I act as partner by:
+      | name                     |
+      | Topicstorm 46083 Company |
+    And I navigate to Search / List Users section from bus admin console page
+    And I export the users csv
+    And I navigate to Search / List Machines section from bus admin console page
+    And I export the machines csv
+    Then users.csv and machines.csv are downloaded

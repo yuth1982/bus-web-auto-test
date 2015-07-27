@@ -6,4 +6,8 @@ class OtherSites
     Migration::MigrationSite.new
   end
 
+  def cybersource_page
+    CyberSource::CyberSourceBillingFillOut.new
+  end
+
 end

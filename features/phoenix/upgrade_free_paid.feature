@@ -119,7 +119,7 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.124187 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk @qa6_dependent
+  @TC.124187 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr @qa6_dependent
   Scenario: TC.124187 Upgrade FR MozyHome free user to paid with 50 GB Yearly additional storage promotional code
     When I add a phoenix Free user:
       | base plan | country |
@@ -129,7 +129,7 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I login as the user on the account.
     And I upgrade my free account to:
       | period  | base plan | addl storage | coupon       | billing country | cc number        |
-      | 12      | 50 Go     |  10          | 10percentoff | Royaume-Uni     | 4916783606275713 |
+      | 12      | 50 Go     |  10          | 10percentoff | France          | 4485393141463880 |
     Then upgrade from free to paid will be successful
     Then the billing summary looks like:
       | Description                            | Prix                | Quantité | Montant |
@@ -193,7 +193,7 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.124189 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=uk
+  @TC.124189 @phoenix @mozyhome @profile_country=fr @ip_country=fr @billing_country=fr
   Scenario: TC.124189 Upgrade FR MozyHome free user to paid with 125 GB Monthly additional Storage computers
     When I add a phoenix Free user:
       | base plan | country |
@@ -203,7 +203,7 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I login as the user on the account.
     And I upgrade my free account to:
       | period  | base plan | addl storage | addl computers | billing country | cc number        |
-      | 1       | 125 Go    | 1            | 1              | Royaume-Uni     | 4916783606275713 |
+      | 1       | 125 Go    | 1            | 1              | France          | 4485393141463880 |
     Then upgrade from free to paid will be successful
     Then the billing summary looks like:
       | Description                                       | Prix              | Quantité | Montant |
@@ -370,41 +370,6 @@ Feature: MozyHome user upgrades from free to paid through phoenix
       | Betrag:                     | 83,10€           |
       | Umsatzsteuersatz (19%):     | 15,79€           |
       | Gesamt: 	                | 98,89€           |
-    And the renewal plan summary is Same as current plan
-    And I log in bus admin console as administrator
-    And I search user by:
-      | keywords       |
-      | @mh_user_email |
-    And I view user details by newly created MozyHome username
-    And I delete user
-
-  @TC.124194 @phoenix @mozyhome @profile_country=ie @ip_country=ie @billing_country=us
-  Scenario: TC.124194 Upgrade IE MozyHome free user to paid with 50 GB Monthly
-    When I add a phoenix Free user:
-      | base plan | country |
-      | free      | Ireland |
-    Then the user is successfully added.
-    And the user has activated their account
-    And I login as the user on the account.
-    And I upgrade my free account to:
-      | period  | base plan | billing country |
-      | 1       | 50 GB     | United States   |
-    Then upgrade from free to paid will be successful
-    Then the billing summary looks like:
-      | Description                           | Price             | Quantity | Amount |
-      | MozyHome 50 GB (1 computer) - Monthly | €4.99\n(inc. VAT) | 1        | €4.99  |
-      | Subscription Price                    |                   |          | €4.06  |
-      | VAT Rate (23%)                        |                   |          | €0.93  |
-      | Total Charge                          |                   |          | €4.99  |
-    And the current plan summary looks like:
-      | Base Plan:          | MozyHome 50 GB    |
-      | Additional Storage: | 0 GB              |
-      | Computers:          | 1                 |
-      | Subscription:       | Monthly           |
-      | Next Billing:       | @1 month from now |
-      | Amount:             | €4.06             |
-      | VAT Rate (23%):     | €0.93             |
-      | Total:              | €4.99             |
     And the renewal plan summary is Same as current plan
     And I log in bus admin console as administrator
     And I search user by:
@@ -651,7 +616,7 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.124202 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=fr @qa6_dependent
+  @TC.124202 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=us @qa6_dependent
   Scenario: TC.124202 Upgrade US MozyHome free user to paid with 50 GB Yearly additional computer promotional code
     When I add a phoenix Free user:
       | base plan | country       |
@@ -660,8 +625,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And the user has activated their account
     And I login as the user on the account.
     And I upgrade my free account to:
-      | period  | base plan | addl computers | coupon       | billing country | cc number        |
-      | 12      | 50 GB     | 3              | 10percentoff | France          | 4485393141463880 |
+      | period  | base plan | addl computers | coupon       |
+      | 12      | 50 GB     | 3              | 10percentoff |
     Then upgrade from free to paid will be successful
     Then the billing summary looks like:
       | Description                          | Price   | Quantity | Amount  |
@@ -686,7 +651,7 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.124203 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=fr
+  @TC.124203 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=us
   Scenario: TC.124203 Upgrade US MozyHome free user to paid with 125 GB Monthly additional storage computers
     When I add a phoenix Free user:
       | base plan | country       |
@@ -695,8 +660,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And the user has activated their account
     And I login as the user on the account.
     And I upgrade my free account to:
-      | period  | base plan | addl storage | addl computers | billing country | cc number        |
-      | 1       | 125 GB    | 30           | 2              | France          | 4485393141463880 |
+      | period  | base plan | addl storage | addl computers |
+      | 1       | 125 GB    | 30           | 2              |
     Then upgrade from free to paid will be successful
     Then the billing summary looks like:
       | Description                                   | Price  | Quantity | Amount |
@@ -711,38 +676,6 @@ Feature: MozyHome user upgrades from free to paid through phoenix
       | Subscription:       | Monthly           |
       | Next Billing:       | @1 month from now |
       | Total:              | $73.99            |
-    And the renewal plan summary is Same as current plan
-    And I log in bus admin console as administrator
-    And I search user by:
-      | keywords       |
-      | @mh_user_email |
-    And I view user details by newly created MozyHome username
-    And I delete user
-
-  @TC.124204 @phoenix @mozyhome @profile_country=us @ip_country=us @billing_country=fr
-  Scenario: TC.124204 Upgrade US MozyHome free user to paid with 125 GB Two Year
-    When I add a phoenix Free user:
-      | base plan | country       |
-      | free      | United States |
-    Then the user is successfully added.
-    And the user has activated their account
-    And I login as the user on the account.
-    And I upgrade my free account to:
-      | period  | base plan | billing country | cc number        |
-      | 24      | 125 GB    | France          | 4485393141463880 |
-    Then upgrade from free to paid will be successful
-    Then the billing summary looks like:
-      | Description                                    | Price   | Quantity | Amount  |
-      | MozyHome 125 GB (Up to 3 computers) - Biennial | $209.79 | 1        | $209.79 |
-      | Total Charge                                   |         |          | $209.79 |
-    And the current plan summary looks like:
-      | Base Plan:          | MozyHome 125 GB   |
-      | Additional Storage: | 0 GB              |
-      | Computers:          | 3                 |
-      | Subscription:       | Biennial          |
-      | Term Discount:      | 3 months free     |
-      | Next Billing:       | @2 years from now |
-      | Total:              | $209.79           |
     And the renewal plan summary is Same as current plan
     And I log in bus admin console as administrator
     And I search user by:
@@ -951,7 +884,7 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.124211 @phoenix @mozyhome @profile_country=us @ip_country=cn @billing_country=fr
+  @TC.124211 @phoenix @mozyhome @profile_country=us @ip_country=cn @billing_country=us
   Scenario: TC.124211 Upgrade US MozyHome free user to paid with 50 GB Two Year addl storage computer
     When I add a phoenix Free user:
       | base plan | country       |
@@ -960,8 +893,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And the user has activated their account
     And I login as the user on the account.
     And I upgrade my free account to:
-      | period  | base plan | addl storage | addl computers | billing country | cc number        |
-      | 12      | 50 GB     | 1            | 1              | France          | 4485393141463880 |
+      | period  | base plan | addl storage | addl computers |
+      | 12      | 50 GB     | 1            | 1              |
     Then upgrade from free to paid will be successful
     Then the billing summary looks like:
       | Description                            | Price   | Quantity | Amount  |
@@ -985,7 +918,7 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.124212 @phoenix @mozyhome @profile_country=us @ip_country=cn @billing_country=fr @qa6_dependent
+  @TC.124212 @phoenix @mozyhome @profile_country=us @ip_country=cn @billing_country=us @qa6_dependent
   Scenario: TC.124212 Upgrade US MozyHome free user to paid with 125 GB Monthly addl storage pc promotional code
     When I add a phoenix Free user:
       | base plan | country       |
@@ -994,8 +927,8 @@ Feature: MozyHome user upgrades from free to paid through phoenix
     And the user has activated their account
     And I login as the user on the account.
     And I upgrade my free account to:
-      | period  | base plan | addl storage | addl computers | coupon       | billing country | cc number        |
-      | 1       | 125 GB    |  99          | 2              | 10percentoff | France          | 4485393141463880 |
+      | period  | base plan | addl storage | addl computers | coupon       |
+      | 1       | 125 GB    |  99          | 2              | 10percentoff |
     Then upgrade from free to paid will be successful
     Then the billing summary looks like:
       | Description                                   | Price   | Quantity | Amount  |
@@ -1019,39 +952,6 @@ Feature: MozyHome user upgrades from free to paid through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And I delete user
-
-  @TC.124213 @phoenix @mozyhome @profile_country=us @ip_country=cn @billing_country=fr
-    Scenario: TC.124213 Upgrade US MozyHome free user to paid with 125 GB Yearly additional storage computers
-      When I add a phoenix Free user:
-        | base plan | country       |
-        | free      | United States |
-      Then the user is successfully added.
-      And the user has activated their account
-      And I login as the user on the account.
-      And I upgrade my free account to:
-        | period  | base plan | addl storage | billing country | cc number        |
-        | 12      | 125 GB    | 20           | France          | 4485393141463880 |
-      Then upgrade from free to paid will be successful
-      Then the billing summary looks like:
-        | Description                                  | Price   | Quantity | Amount   |
-        | MozyHome 125 GB (Up to 3 computers) - Annual | $109.89 | 1        | $109.89  |
-        | 20 Additional Storage - Annual               | $22.00  | 20       | $440.00  |
-        | Total Charge                                 |         |          | $549.89  |
-      And the current plan summary looks like:
-        | Base Plan:          | MozyHome 125 GB  |
-        | Additional Storage: | 400 GB           |
-        | Computers:          | 3                |
-        | Subscription:       | Yearly           |
-        | Term Discount:      | 1 month free     |
-        | Next Billing:       | @1 year from now |
-        | Total:              | $549.89          |
-      And the renewal plan summary is Same as current plan
-      And I log in bus admin console as administrator
-      And I search user by:
-        | keywords       |
-        | @mh_user_email |
-      And I view user details by newly created MozyHome username
-      And I delete user
 
   #
   # negative test case failed to upgrade from free to paid

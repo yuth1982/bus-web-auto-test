@@ -182,6 +182,25 @@ task :parallel_test_with_retry, :arg do |t, args|
   end
 end
 
+desc 'Run phoenix parallel test and rerun failed tests'
+task :phoenix_parallel_test_with_retry, :arg do |t, args|
+  first_run = system("bundle exec parallel_cucumber #{args[:arg]}")
+  rerun_success = true
+  unless first_run
+    rerun_success = run_rake_task('phoenix_smoke_rerun', nil)
+  end
+  
+  #merge html reports
+  render_parallel_report
+  
+  #merge parallel results
+  merge_parallel_json('.')
+  
+  unless first_run || rerun_success
+    raise 'Cucumber tests failed'
+  end
+end
+
 task :phoenix_smoke_test, :arg do |t, args|
   Cucumber::Rake::Task.new(:phoenix_run) do |t|
     t.cucumber_opts = "features/phoenix_smoke_test.feature #{args[:arg]} --format json --out report.json --format html --out html-report/report.html --format rerun --out rerun.txt --format pretty"

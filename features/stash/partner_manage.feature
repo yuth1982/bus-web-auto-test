@@ -24,9 +24,9 @@ Feature:
     Then 2 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                     | Name           | Sync    | Machines | Storage        | Storage Used  | Created | Backed Up |
-      | <%=@new_users[1].email%> | TC.19045 user2 | Enabled | 0        | Desktop Shared | None          | today   | never     |
-      | <%=@new_users[0].email%> | TC.19045 user1 | Enabled | 0        | Desktop Shared | None          | today   | never     |
+      | User                     | Name           | Sync    | Machines | Storage         | Storage Used           | Created | Backed Up |
+      | <%=@new_users[1].email%> | TC.19045 user2 | Enabled | 0        | Desktop: Shared | Desktop: None          | today   | never     |
+      | <%=@new_users[0].email%> | TC.19045 user1 | Enabled | 0        | Desktop: Shared | Desktop: None          | today   | never     |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -47,9 +47,9 @@ Feature:
     Then 2 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                     | Name            | Sync    | Machines | Storage         | Storage Used | Created | Backed Up |
-      | <%=@new_users[1].email%> | TC.19057.2-user | Enabled | 0        | Generic Shared  | None         | today   | never     |
-      | <%=@new_users[0].email%> | TC.19057.1-user | Enabled | 0        | Generic Shared  | None         | today   | never     |
+      | User                     | Name            | Sync    | Machines | Storage | Storage Used | Created | Backed Up |
+      | <%=@new_users[1].email%> | TC.19057.2-user | Enabled | 0        | Shared  | None         | today   | never     |
+      | <%=@new_users[0].email%> | TC.19057.1-user | Enabled | 0        | Shared  | None         | today   | never     |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 

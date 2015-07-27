@@ -8,42 +8,45 @@ Feature: Auto Grow
 
   @TC.14115 @bus @env_dependent
   Scenario: Mozy-14115::Enable autogrow partner admin
-    When I log in to legacy bus01 as administrator
-    And I successfully add an itemized Reseller partner:
-      | period | desktop licenses | desktop quota |
-      | 12     | 2                | 2             |
-    And I log in bus admin console as administrator
-    And I search partner by:
-      | name          | filter |
-      | @company_name | None   |
-    And I view partner details by newly created partner company name
+#    When I log in to legacy bus01 as administrator
+#    And I successfully add an itemized Reseller partner:
+#      | period | desktop licenses | desktop quota |
+#      | 12     | 2                | 2             |
+#    And I log in bus admin console as administrator
+#    And I search partner by:
+#      | name          | filter |
+#      | @company_name | None   |
+#    And I view partner details by newly created partner company name
+#    And I get the partner_id
+#    And I migrate the partner to aria
+#    And I Enable partner details autogrow
+#    Then partner details message should be
+#    """
+#    Autogrow protection enabled.
+#    """
+#    And I migrate the partner to pooled storage
+    When I log in bus admin console as administrator
+    When I search partner by Itemized_Reseller_DONOT_ChangePlan(Migrate)
+    And I view partner details by Itemized_Reseller_DONOT_ChangePlan(Migrate)
     And I get the partner_id
-    And I migrate the partner to aria
-    And I Enable partner details autogrow
-    Then partner details message should be
-    """
-    Autogrow protection enabled.
-    """
-    And I migrate the partner to pooled storage
-    And I act as newly created partner
-    When I add a new Itemized user group:
-      | name | desktop_storage_type | desktop_devices |
-      | UG 1 | Shared               | 1               |
+    And I get the partners name Itemized_Reseller_DONOT_ChangePlan(Migrate) and type Reseller
+    When I act as partner by:
+      | email                  |
+      | qa1+ruby_gem@decho.com |
     And I add new user(s):
       | user_group | storage_type | devices |
-      | UG 1       | Desktop      | 1       |
+      | UG 1       | Desktop      | 1        |
     And 1 new user should be created
     And I search user by:
-      | keywords   |
-      | @user_name |
+      | keywords   | user type                                         |
+      | @user_name | Itemized_Reseller_DONOT_ChangePlan(Migrate) Users |
     And I view user details by newly created user email
     And I update the user password to default password
     And activate the user's Desktop device without a key and with the default password
     And I get the machine_id by license_key
-    And I upload 2 GB of data to device
+    And I upload 1 GB of data to device
     Then tds returns successful upload
-    And I stop masquerading
-    And I search and delete partner account by newly created partner company name
+    And I delete user
 
 
   @TC.14116 @bus
@@ -107,10 +110,10 @@ Feature: Auto Grow
     And I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     Then User search results should be:
-      | User                    | Name          | User Group  | Machines | Storage         | Storage Used |
-      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 0        | Generic Shared  | None         |
-      | <%=@users[2].email%>    | Jane Limited  | Limited UG  | 0        | Generic Shared  | None         |
-      | <%=@users[1].email%>    | John Shared   | Shared UG   | 0        | Generic Shared  | None         |
+      | User                    | Name          | User Group  | Machines | Storage | Storage Used |
+      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 0        | Shared  | None         |
+      | <%=@users[2].email%>    | Jane Limited  | Limited UG  | 0        | Shared  | None         |
+      | <%=@users[1].email%>    | John Shared   | Shared UG   | 0        | Shared  | None         |
     And I view details of <%=@users[1].email%>'s user group
     Then User group details should be:
       | Available Quota: |
@@ -149,10 +152,10 @@ Feature: Auto Grow
     And I navigate to Search / List Users section from bus admin console page
     And I clear user search results
     Then User search results should be:
-      | User                    | Name          | User Group  | Machines | Storage        | Storage Used |
-      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 1        | Generic Shared | 4.7 GB       |
-      | <%=@users[2].email%>    | Jane Limited  | Limited UG  | 0        | Generic Shared | None         |
-      | <%=@users[1].email%>    | John Shared   | Shared UG   | 0        | Generic Shared | None         |
+      | User                    | Name          | User Group  | Machines | Storage | Storage Used |
+      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 1        | Shared  | 4.7 GB       |
+      | <%=@users[2].email%>    | Jane Limited  | Limited UG  | 0        | Shared  | None         |
+      | <%=@users[1].email%>    | John Shared   | Shared UG   | 0        | Shared  | None         |
     And I view details of <%=@users[1].email%>'s user group
     Then User group details should be:
       | Available Quota: |
@@ -192,10 +195,10 @@ Feature: Auto Grow
     And I navigate to Search / List Users section from bus admin console page
     And I clear user search results
     Then User search results should be:
-      | User                    | Name          | User Group  | Machines | Storage        | Storage Used |
-      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 1        | Generic Shared | 4.7 GB       |
-      | <%=@users[2].email%>    | Jane Limited  | Limited UG  | 1        | Generic Shared | 2.8 GB       |
-      | <%=@users[1].email%>    | John Shared   | Shared UG   | 0        | Generic Shared | None         |
+      | User                    | Name          | User Group  | Machines | Storage | Storage Used |
+      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 1        | Shared  | 4.7 GB       |
+      | <%=@users[2].email%>    | Jane Limited  | Limited UG  | 1        | Shared  | 2.8 GB       |
+      | <%=@users[1].email%>    | John Shared   | Shared UG   | 0        | Shared  | None         |
     And I view details of <%=@users[1].email%>'s user group
     Then User group details should be:
       | Available Quota: |
@@ -232,10 +235,10 @@ Feature: Auto Grow
     And I navigate to Search / List Users section from bus admin console page
     And I clear user search results
     Then User search results should be:
-      | User                    | Name          | User Group  | Machines | Storage        | Storage Used |
-      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 1        | Generic Shared | 4.7 GB       |
-      | <%=@users[2].email%>    | Jane Limited  | Limited UG  | 1        | Generic Shared | 2.8 GB       |
-      | <%=@users[1].email%>    | John Shared   | Shared UG   | 1        | Generic Shared | 16.8 GB      |
+      | User                    | Name          | User Group  | Machines | Storage | Storage Used |
+      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 1        | Shared  | 4.7 GB       |
+      | <%=@users[2].email%>    | Jane Limited  | Limited UG  | 1        | Shared  | 2.8 GB       |
+      | <%=@users[1].email%>    | John Shared   | Shared UG   | 1        | Shared  | 16.8 GB      |
     And I view details of <%=@users[1].email%>'s user group
     Then User group details should be:
       | Available Quota: |

@@ -12,8 +12,8 @@ Feature: User Details
       | keywords             |
       | last_update@test.com |
     Then User search results should be:
-      | User                 | Name        | Sync    | Machines | Storage         | Storage Used |
-      | last_update@test.com | last_update | Enabled | 3        | Generic Shared  | 60 GB        |
+      | User                 | Name        | Sync    | Machines | Storage | Storage Used |
+      | last_update@test.com | last_update | Enabled | 3        | Shared  | 60 GB        |
     When I view user details by last_update@test.com
     Then device table in user details should be:
       | Device   | Used/Available | Device Storage Limit | Last Update      | Action |

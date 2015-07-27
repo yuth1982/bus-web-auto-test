@@ -22,8 +22,8 @@ Feature:
     Then I should see 0 email(s)
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | Sync    | Machines | Storage                | Storage Used |
-      | <%=@new_users.first.email%> | TC.19040 User | Enabled | 0        | Generic 10 GB (Limited)| None         |
+      | User                        | Name          | Sync    | Machines | Storage         | Storage Used |
+      | <%=@new_users.first.email%> | TC.19040 User | Enabled | 0        | 10 GB (Limited) | None         |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                  | Enable Sync:                |
@@ -62,8 +62,8 @@ Feature:
     And I act as newly created partner account
     And I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | Sync     | Machines | Storage                | Storage Used |
-      | <%=@new_users.first.email%> | TC.19078 User | Disabled | 0        | Generic 10 GB (Limited)| None         |
+      | User                        | Name          | Sync     | Machines | Storage        | Storage Used |
+      | <%=@new_users.first.email%> | TC.19078 User | Disabled | 0        | 10 GB (Limited)| None         |
     And I view user details by newly created user email
     Then user details should be:
       | Name:                  | Enable Sync:  |
@@ -97,8 +97,8 @@ Feature:
       | Sync           | 0 / 10 GB          | Set                  | N/A              |
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | Sync    | Machines | Storage                | Storage Used |
-      | <%=@new_users.first.email%> | TC.19080 User | Enabled | 0        | Generic 10 GB (Limited)| None         |
+      | User                        | Name          | Sync    | Machines | Storage        | Storage Used |
+      | <%=@new_users.first.email%> | TC.19080 User | Enabled | 0        | 10 GB (Limited)| None         |
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
@@ -124,8 +124,8 @@ Feature:
     Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | User Group  | Sync    | Machines | Storage                | Storage Used |
-      | <%=@new_users.first.email%> | TC.19022 User | TC.19022 UG | Enabled | 0        | Generic 10 GB (Limited)| None         |
+      | User                        | Name          | User Group  | Sync    | Machines | Storage        | Storage Used |
+      | <%=@new_users.first.email%> | TC.19022 User | TC.19022 UG | Enabled | 0        | 10 GB (Limited)| None         |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                  | Enable Sync:                |
@@ -168,10 +168,10 @@ Feature:
     And I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     Then User search results should be:
-      | User                     | Name           | User Group           | Sync    | Machines | Storage                |
-      | <%=@new_users[0].email%> | TC.18967 user1 | (default user group) | Enabled | 0        | Generic 5 GB (Limited) |
-      | <%=@new_users[1].email%> | TC.18967 user2 | (default user group) | Enabled | 0        | Generic 5 GB (Limited) |
-      | <%=@new_users[2].email%> | TC.18967 user3 | (default user group) | Enabled | 0        | Generic 5 GB (Limited) |
+      | User                     | Name           | User Group           | Sync    | Machines | Storage        |
+      | <%=@new_users[0].email%> | TC.18967 user1 | (default user group) | Enabled | 0        | 5 GB (Limited) |
+      | <%=@new_users[1].email%> | TC.18967 user2 | (default user group) | Enabled | 0        | 5 GB (Limited) |
+      | <%=@new_users[2].email%> | TC.18967 user3 | (default user group) | Enabled | 0        | 5 GB (Limited) |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -231,8 +231,8 @@ Feature:
     Then I should see 0 email(s)
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | Sync    | Machines | Storage                | Storage Used  |
-      | <%=@new_users.first.email%> | TC.19035 User | Enabled | 0        | Desktop 10 GB (Limited)|  None         |
+      | User                        | Name          | Sync    | Machines | Storage                 | Storage Used   |
+      | <%=@new_users.first.email%> | TC.19035 User | Enabled | 0        | Desktop: 10 GB (Limited)| Desktop: None  |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                  | Enable Sync:                |
@@ -275,10 +275,10 @@ Feature:
     And I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     Then User search results should be:
-      | User                     | Name           | User Group           | Sync    | Machines | Storage                |
-      | <%=@new_users[0].email%> | TC.19102 user1 | (default user group) | Enabled | 0        | Desktop 5 GB (Limited) |
-      | <%=@new_users[1].email%> | TC.19102 user2 | (default user group) | Enabled | 0        | Desktop 5 GB (Limited) |
-      | <%=@new_users[2].email%> | TC.19102 user3 | (default user group) | Enabled | 0        | Desktop 5 GB (Limited) |
+      | User                     | Name           | User Group           | Sync    | Machines | Storage                 |
+      | <%=@new_users[0].email%> | TC.19102 user1 | (default user group) | Enabled | 0        | Desktop: 5 GB (Limited) |
+      | <%=@new_users[1].email%> | TC.19102 user2 | (default user group) | Enabled | 0        | Desktop: 5 GB (Limited) |
+      | <%=@new_users[2].email%> | TC.19102 user3 | (default user group) | Enabled | 0        | Desktop: 5 GB (Limited) |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -334,8 +334,8 @@ Feature:
     Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | Sync    | Machines | Storage                | Storage Used  |
-      | <%=@new_users.first.email%> | TC.19109 User | Enabled | 0        | Desktop 10 GB (Limited)|  None         |
+      | User                        | Name          | Sync    | Machines | Storage                 | Storage Used  |
+      | <%=@new_users.first.email%> | TC.19109 User | Enabled | 0        | Desktop: 10 GB (Limited)| Desktop: None |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                  | Enable Sync:                |
@@ -377,8 +377,8 @@ Feature:
     Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | Sync    | Machines | Storage                | Storage Used  |
-      | <%=@new_users.first.email%> | TC.19111 User | Enabled | 0        | Desktop 10 GB (Limited)|  None         |
+      | User                        | Name          | Sync    | Machines | Storage                 | Storage Used  |
+      | <%=@new_users.first.email%> | TC.19111 User | Enabled | 0        | Desktop: 10 GB (Limited)| Desktop: None |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                  | Enable Sync:                |
@@ -419,8 +419,8 @@ Feature:
     Then I should see 0 email(s)
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | Sync    | Machines | Storage                 | Storage Used  |
-      | <%=@new_users.first.email%> | TC.22189 User | Enabled | 0        | Desktop 10 GB (Limited) | None          |
+      | User                        | Name          | Sync    | Machines | Storage                  | Storage Used  |
+      | <%=@new_users.first.email%> | TC.22189 User | Enabled | 0        | Desktop: 10 GB (Limited) | Desktop: None |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                  | Enable Sync:                |
@@ -438,8 +438,8 @@ Feature:
     Then I act as newly created partner account
     And I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | Machines | Storage                 | Storage Used  |
-      | <%=@new_users.first.email%> | TC.22189 User | 0        | Desktop 10 GB (Limited) | None          |
+      | User                        | Name          | Machines | Storage                  | Storage Used  |
+      | <%=@new_users.first.email%> | TC.22189 User | 0        | Desktop: 10 GB (Limited) | Desktop: None |
     When I view user details by newly created user email
     Then I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
@@ -449,8 +449,8 @@ Feature:
     Then I act as newly created partner account
     And I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | Sync   | Machines | Storage                 | Storage Used  |
-      | <%=@new_users.first.email%> | TC.22189 User | Enabled| 0        | Desktop 10 GB (Limited) | None          |
+      | User                        | Name          | Sync   | Machines | Storage                  | Storage Used  |
+      | <%=@new_users.first.email%> | TC.22189 User | Enabled| 0        | Desktop: 10 GB (Limited) | Desktop: None |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                  | Enable Sync:                |
@@ -482,8 +482,8 @@ Feature:
     Then I should see 0 email(s)
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | Sync    | Machines | Storage                 | Storage Used  |
-      | <%=@new_users.first.email%> | TC.22194 User | Enabled | 0        | Desktop 10 GB (Limited) | None          |
+      | User                        | Name          | Sync    | Machines | Storage                  | Storage Used  |
+      | <%=@new_users.first.email%> | TC.22194 User | Enabled | 0        | Desktop: 10 GB (Limited) | Desktop: None |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                  | Enable Sync:               |
@@ -501,8 +501,8 @@ Feature:
     Then I act as newly created partner account
     And I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | Machines | Storage                | Storage Used  |
-      | <%=@new_users.first.email%> | TC.22194 User | 0        | Desktop 10 GB (Limited)| None          |
+      | User                        | Name          | Machines | Storage                 | Storage Used  |
+      | <%=@new_users.first.email%> | TC.22194 User | 0        | Desktop: 10 GB (Limited)| Desktop: None |
     Then I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
@@ -510,8 +510,8 @@ Feature:
     Then I act as newly created partner account
     And I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | Sync     | Machines | Storage                 | Storage Used  |
-      | <%=@new_users.first.email%> | TC.22194 User | Disabled | 0        | Desktop 10 GB (Limited) | None          |
+      | User                        | Name          | Sync     | Machines | Storage                  | Storage Used  |
+      | <%=@new_users.first.email%> | TC.22194 User | Disabled | 0        | Desktop: 10 GB (Limited) | Desktop: None |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                  | Enable Sync:  |
@@ -555,8 +555,8 @@ Feature:
     Then I act as newly created partner account
     And I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | Machines | Storage                 | Storage Used  |
-      | <%=@new_users.first.email%> | TC.22186 User | 0        | Generic 10 GB (Limited) | None          |
+      | User                        | Name          | Machines | Storage         | Storage Used  |
+      | <%=@new_users.first.email%> | TC.22186 User | 0        | 10 GB (Limited) | None          |
     Then I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
@@ -564,8 +564,8 @@ Feature:
     Then I act as newly created partner account
     And I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | Sync     | Machines | Storage                 | Storage Used  |
-      | <%=@new_users.first.email%> | TC.22186 User | Disabled | 0        | Generic 10 GB (Limited) | None          |
+      | User                        | Name          | Sync     | Machines | Storage         | Storage Used  |
+      | <%=@new_users.first.email%> | TC.22186 User | Disabled | 0        | 10 GB (Limited) | None          |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                  | Enable Sync:  |
@@ -609,8 +609,8 @@ Feature:
     Then I act as newly created partner account
     And I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | Machines | Storage                 | Storage Used  |
-      | <%=@new_users.first.email%> | TC.22187 User | 0        | Generic 10 GB (Limited) | None          |
+      | User                        | Name          | Machines | Storage         | Storage Used  |
+      | <%=@new_users.first.email%> | TC.22187 User | 0        | 10 GB (Limited) | None          |
     Then I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
@@ -618,8 +618,8 @@ Feature:
     Then I act as newly created partner account
     And I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | Sync      | Machines | Storage                 | Storage Used  |
-      | <%=@new_users.first.email%> | TC.22187 User | Disabled  | 0        | Generic 10 GB (Limited) | None          |
+      | User                        | Name          | Sync      | Machines | Storage         | Storage Used  |
+      | <%=@new_users.first.email%> | TC.22187 User | Disabled  | 0        | 10 GB (Limited) | None          |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                  | Enable Sync:  |
@@ -657,8 +657,8 @@ Feature:
     Then I should see 0 email(s)
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | Sync    | Machines | Storage                 | Storage Used |
-      | <%=@new_users.first.email%> | TC.22188 User | Enabled | 0        | Generic 10 GB (Limited) | None         |
+      | User                        | Name          | Sync    | Machines | Storage         | Storage Used |
+      | <%=@new_users.first.email%> | TC.22188 User | Enabled | 0        | 10 GB (Limited) | None         |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                  | Enable Sync:                |
@@ -676,8 +676,8 @@ Feature:
     Then I act as newly created partner account
     And I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | Machines | Storage                 | Storage Used  |
-      | <%=@new_users.first.email%> | TC.22188 User | 0        | Generic 10 GB (Limited) | None          |
+      | User                        | Name          | Machines | Storage         | Storage Used  |
+      | <%=@new_users.first.email%> | TC.22188 User | 0        | 10 GB (Limited) | None          |
     When I view user details by newly created user email
     Then I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
@@ -687,8 +687,8 @@ Feature:
     Then I act as newly created partner account
     And I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | Sync   | Machines | Storage                 | Storage Used  |
-      | <%=@new_users.first.email%> | TC.22188 User | Enabled| 0        | Generic 10 GB (Limited) | None          |
+      | User                        | Name          | Sync   | Machines | Storage         | Storage Used  |
+      | <%=@new_users.first.email%> | TC.22188 User | Enabled| 0        | 10 GB (Limited) | None          |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                  | Enable Sync:                |
@@ -720,8 +720,8 @@ Feature:
     Then I should see 0 email(s)
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | Sync    | Machines | Storage                 | Storage Used |
-      | <%=@new_users.first.email%> | TC.22022 User | Enabled | 0        | Generic 10 GB (Limited) | None         |
+      | User                        | Name          | Sync    | Machines | Storage         | Storage Used |
+      | <%=@new_users.first.email%> | TC.22022 User | Enabled | 0        | 10 GB (Limited) | None         |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                  | Enable Sync:                |
@@ -739,8 +739,8 @@ Feature:
     Then I act as newly created partner account
     And I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | Machines | Storage                 | Storage Used  |
-      | <%=@new_users.first.email%> | TC.22022 User | 0        | Generic 10 GB (Limited) | None          |
+      | User                        | Name          | Machines | Storage         | Storage Used  |
+      | <%=@new_users.first.email%> | TC.22022 User | 0        | 10 GB (Limited) | None          |
     When I view user details by newly created user email
     Then I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
@@ -750,8 +750,8 @@ Feature:
     Then I act as newly created partner account
     And I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
-      | User                        | Name          | Sync   | Machines | Storage                 | Storage Used  |
-      | <%=@new_users.first.email%> | TC.22022 User | Enabled| 0        | Generic 10 GB (Limited) | None          |
+      | User                        | Name          | Sync   | Machines | Storage         | Storage Used  |
+      | <%=@new_users.first.email%> | TC.22022 User | Enabled| 0        | 10 GB (Limited) | None          |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                  | Enable Sync:                |

@@ -169,7 +169,7 @@ module DBHelper
   def get_deleted_user_email
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "select username from users where username like '%@gmail.com%' and deleted = true order by id DESC limit 1;"
+      sql = "select username from users u1 where username SIMILAR TO '%@(gmail|emc).com%' and deleted = true and not exists (select 1 from users u2 where u2.deleted = false and u1.username = u2.username) order by id DESC limit 1;"
       c = conn.exec(sql)
       c.values[0][0]
     rescue PG::Error => e
@@ -208,20 +208,20 @@ module DBHelper
         conn.exec sql
         Log.debug sql
 
-        sql = "select id from machines order by id desc limit 1"
+        sql = "select id from machines where user_id = #{user_id} order by id desc limit 1"
         c = conn.exec sql
         Log.debug sql
         machine_id = c.values[0][0].to_i
-
-        sql = "update mozy_pro_keys set machine_id = #{machine_id}, activated_at = now() where id = #{mozy_pro_key_id}";
-        conn.exec sql
-        Log.debug sql
 
         sql = "update machines set space_used = #{quota}::bigint*1024*1024*1024, pending_space_used = 1024, patches = 0, files = 1, last_client_version = null,last_backup_at = now() where id = #{machine_id};"
         conn.exec sql
         Log.debug sql
 
         sql = "insert into machine_storage_pools(owner_id, license_type_id, created_at, updated_at) values(#{machine_id}, #{license_type_id}, now(), now());"
+        conn.exec sql
+        Log.debug sql
+
+        sql = "update mozy_pro_keys set machine_id = #{machine_id}, activated_at = now() where id = #{mozy_pro_key_id}";
         conn.exec sql
         Log.debug sql
       end
