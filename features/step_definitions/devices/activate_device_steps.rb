@@ -31,6 +31,20 @@ When /^I use keyless activation to activate devices$/  do |table|
 
 end
 
+Then /^activate machine result should be$/ do |table|
+  attr = table.hashes.first
+  expected_code = attr['code']
+  expected_body = attr['body']
+  @clients[0].response.code.should == expected_code
+  actual_body = @clients[0].response.body
+  Log.debug(actual_body)
+  if expected_body.include?('machine license key')
+    ((actual_body.match(/^\{"license_key":"(\w)+"\}$/)).nil?).should == false
+  else
+    actual_body.should == expected_body
+  end
+end
+
 When /^I add machines for the user and update its used quota$/ do |table|
   header = table.headers.join('|')
   table.rows.each_with_index do |row, index|

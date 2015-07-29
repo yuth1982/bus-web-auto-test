@@ -57,3 +57,4 @@ include Activation
 include DataShuttleSeeding
 include Email
 include Billing
+include MachineInfo
