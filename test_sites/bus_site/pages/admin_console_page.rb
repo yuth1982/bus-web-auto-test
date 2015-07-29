@@ -77,6 +77,7 @@ module Bus
 
     # internal tools
     section(:manage_vatfx_rates_section, ManageVATTXRatesSection, id: "internal-add_vat_rate")
+    section(:manage_pending_deletes_section, ManagePendingDeletesSection, id: "internal-manage_pending_deletes")
 
     # Private element
     element(:current_admin_div, id: 'identify-me')
