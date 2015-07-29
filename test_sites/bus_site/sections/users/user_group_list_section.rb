@@ -105,13 +105,18 @@ module Bus
     #   @bus_admin_console_page.user_group_list_section.view_user_group('(default user group)')
     #
     # @return [] nothing
-    def view_user_group(group_name)
+    def edit_user_group(group_name)
       ug_table.rows[1..-1].each do |row|
         if row[0].text == group_name
           row[-1].find(:css, 'a.action.edit_user_group').click
           break;
         end
       end
+    end
+
+
+    def view_user_group(group_name)
+      find_link(group_name).click
     end
 
     # Public: Delete user group by group name

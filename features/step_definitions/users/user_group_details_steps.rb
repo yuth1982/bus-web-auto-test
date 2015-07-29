@@ -79,3 +79,21 @@ When /^I search and delete (.+) user group$/ do |group_name|
   @bus_site.admin_console_page.user_group_details_section.delete_user_group
   @bus_site.admin_console_page.list_user_groups_section.wait_until_bus_section_load
 end
+
+
+When /^I view user group details by clicking group name: (.+)$/ do |group_name|
+  @bus_site.admin_console_page.user_group_list_section.view_user_group(group_name)
+end
+
+When /^I open (.+) tab$/ do |tab_name|
+  @bus_site.admin_console_page.user_group_details_section.click_tab(tab_name)
+end
+
+Then /^(.+) client configuration should be (.+)$/ do |type, config_value|
+  case type
+    when 'Server'
+      @bus_site.admin_console_page.user_group_details_section.server_config_value == config_value
+    when 'Desktop'
+      @bus_site.admin_console_page.user_group_details_section.desktop_config_value == config_value
+  end
+end

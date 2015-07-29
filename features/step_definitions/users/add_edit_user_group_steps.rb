@@ -15,7 +15,7 @@ When /^I (add|edit) (.+) (Bundled|Itemized) user group:$/ do |action, group_name
     when 'add'
       @bus_site.admin_console_page.user_group_list_section.view_add_group_section
     when 'edit'
-      @bus_site.admin_console_page.user_group_list_section.view_user_group(group_name)
+      @bus_site.admin_console_page.user_group_list_section.edit_user_group(group_name)
     else
       # Skipped
   end
