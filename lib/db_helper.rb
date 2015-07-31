@@ -246,7 +246,7 @@ module DBHelper
     end
   end
 
-  def get_password_config(partner_id, type='user')
+  def get_db_password_config(partner_id, type='user')
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
       sql = "select * from password_policies where pro_partner_id = #{partner_id} and (user_type = '#{type}' or user_type = 'all');"

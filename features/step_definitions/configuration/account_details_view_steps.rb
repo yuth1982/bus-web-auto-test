@@ -18,6 +18,10 @@ Then /^Account statement preference should be changed$/ do
   @bus_site.admin_console_page.account_details_section.messages.should == "Successfully saved Account Statement preference."
 end
 
+Then /^I change the display name to (.+)/ do |display_name|
+  @bus_site.admin_console_page.account_details_section.edit_display_name(display_name)
+end
+
 Then /^I change the username to (.+)$/ do  |username|
   @bus_site.admin_console_page.account_details_section.edit_username(username)
 end
@@ -26,6 +30,11 @@ Then /^Account Details error message should be:$/ do |messages|
   @bus_site.admin_console_page.account_details_section.messages.should == messages.to_s
 end
 
-Then /^username changed success message should be displayed$/ do
-  @bus_site.admin_console_page.account_details_section.messages.should == "Email address updated successfully"
+Then /^(.+) changed success message should be displayed$/ do |changes|
+  case changes
+    when 'username'
+      @bus_site.admin_console_page.account_details_section.messages.should == "Email address updated successfully"
+    when 'display name'
+      @bus_site.admin_console_page.account_details_section.messages.should == "Name updated successfully"
+  end
 end

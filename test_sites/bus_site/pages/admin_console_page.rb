@@ -17,6 +17,7 @@ module Bus
     section(:authentication_policy_section, AuthenticationPolicySection, id: 'authentication_policies-edit')
     section(:client_config_section, ClientConfigSection, id: 'setting-edit_client_config')
     section(:add_new_pro_plan_section, AddNewProPlanSection, id: 'plan-pro_new')
+    section(:edit_password_policy_section, EditPasswordPolicySection, id: 'setting-edit_password_policy')
 
     # Users section
     section(:search_list_users_section, SearchListUsersSection, id: 'user-list')

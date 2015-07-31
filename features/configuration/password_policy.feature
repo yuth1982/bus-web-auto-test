@@ -98,13 +98,13 @@ Feature: Password policy is saved successfully to db
 
   @TC.120104 @bus
   Scenario: 120104 [OEM]Hipaa partner password policy settings should be saved to database correctly
-    When I act as partner by: 
+    When I act as partner by:
       | name     | including sub-partners |
       | Fortress | no                     |
-    And I act as partner by: 
+    And I act as partner by:
       | name    | including sub-partners |
       | MozyOEM | no                     |
-    And I add a new sub partner:          
+    And I add a new sub partner:
       | Security |
       | HIPAA    |
     Then New partner should be created
@@ -220,3 +220,27 @@ Feature: Password policy is saved successfully to db
     Then I will not see the Password Policy link from navigation links
     Then I stop masquerading from subpartner
     And I search and delete partner account by newly created subpartner company name
+
+  @TC.120553 @bus
+  Scenario: 120553 Setting up a Password policy
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | root role  |
+      | 24     | 20    | 250 GB      | FedID role |
+    Then New partner should be created
+    When I act as newly created partner account
+    And I navigate to Password Policy section from bus admin console page
+    Then I edit user passowrd policy:
+      | user policy type | min character classes | character classes                             |
+      | custom           | 3                     | Lowercase letters,Numbers,Special characters  |
+    Then I edit admin passowrd policy:
+      | admin user same policy |
+      | Yes                    |
+    Then I save password policy
+    Then Password policy updated successfully
+    Then The user and admin password policy from database will be
+      | user_type | min_length | min_character_classes | min_age_hours | min_generations | display_captcha_on_login | verify_email_address |
+      | all       | 6          | 3                     | 0             | 1               | f                        | f                    |
+    And The user and admin password will contains at least 3 of the following types of charactors
+      | lower | digit | special |
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name

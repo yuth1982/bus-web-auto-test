@@ -27,13 +27,14 @@ When /^I get a deleted user email from the database$/ do
   Log.debug("Mozy Home deleted user email from database = #{@existing_user_email}")
 end
 
-When /^The( subpartner)? (user|admin) password policy from (database|rails console) will be$/ do |sub, type, db, table|
+When /^The( subpartner)? (user|admin|user and admin) password policy from (database|rails console) will be$/ do |sub, type, db, table|
   Log.debug "partner id is #{@partner_id}"
+  type = 'all' if type == 'user and admin'
   if db == 'database'
     raise 'You cannot get password policy from database' unless sub.nil?
-    password_policy = DBHelper.get_password_config(@partner_id, type)
+    password_policy = DBHelper.get_db_password_config(@partner_id, type)
   else
-    password_policy = SSHHelper.get_password_config(@partner_id, type)
+    password_policy = SSHHelper.get_ssh_password_config(@partner_id, type)
   end
   @password_policy_id = password_policy['id'].to_i
   table.hashes.first.each do |k, v|
@@ -41,7 +42,7 @@ When /^The( subpartner)? (user|admin) password policy from (database|rails conso
   end
 end
 
-Then /^The (user|admin) password will contains at least (\d+) of the following types of charactors$/ do |type, num, table|
+Then /^The (user|admin|user and admin) password will contains at least (\d+) of the following types of charactors$/ do |type, num, table|
   character_classes = DBHelper.get_password_character_classes(@password_policy_id)
   (character_classes.size >= num.to_i).should be_true
   character_classes.each do |character|
