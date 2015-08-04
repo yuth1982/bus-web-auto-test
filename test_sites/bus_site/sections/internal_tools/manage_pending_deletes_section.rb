@@ -10,6 +10,7 @@ module Bus
     element(:full_search_cb, id: 'full_search')
 
     #change delete days setting
+    element(:current_days_span, xpath: "//span[@id='pending_delete_setting_value']")
     element(:change_delete_setting_a, xpath: "//span[@id='modify_pending_delete_setting_read_group']//a")
     element(:change_delete_setting_input, xpath: "//span[@id='modify_pending_delete_setting_write_group']//input")
     element(:change_delete_setting_btn, xpath: "//span[@id='modify_pending_delete_setting_write_group']//button")
@@ -78,6 +79,46 @@ module Bus
           search_results_purged_table.rows_text.map{ |row| Hash[*search_results_purged_table.headers_text.zip(row).flatten] }
       end
     end
+
+    # Public: change days to purge partner after delete
+    #
+    #
+    # Example
+    #   @bus_site.admin_console_page.manage_pending_deletes_section.change_days_setting("60")
+    #
+    # @return [] nothing
+    def change_pending_deletes_setting(days)
+      change_delete_setting_a.click
+      change_delete_setting_input.type_text(days)
+      change_delete_setting_btn.click
+    end
+
+    # Public: verify days to purge partner after delete
+    #
+    #
+    # Example
+    #   @bus_site.admin_console_page.manage_pending_deletes_section.verify_pending_deletes_setting("60")
+    #
+    # @return [] nothing
+    def get_pending_deletes_setting(days)
+      current_days_span.text.strip
+    end
+
+    # Public: purge partner on 'Partners in Pending-Delete and available to Purge'
+    #
+    #
+    # Example
+    #  @bus_site.admin_console_page.manage_pending_deletes_section.purge_partner("Naich4yei8", "Babbleset Company 0728-1929-21")
+    #
+    # @return [] nothing
+    def purge_partner(password, partner_name)
+      find(:xpath, "//a[text()='#{partner_name}']//..//..//../tr[1]/td[1]/input").check
+      purge_btn.click
+      password_tb.type_text(password)
+      submit_purge_btn.click
+      wait_until_bus_section_load
+    end
+
 
   end
 end
