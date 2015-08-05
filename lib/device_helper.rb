@@ -76,21 +76,25 @@ module KeylessDeviceActivation
   #The client should send the user credentials, username and password,
   #to Mozy Auth service to exchange an access token. This requires two API calls.
   class KeylessClient
-    attr_accessor :username, :password, :license_key, :machine_alias, :machine_id, :machine_hash, :response
-    def initialize(username, password, partner_id, partner_name, device_type, company_type, machine_name = nil)
+    attr_accessor :username, :password, :license_key, :machine_alias, :machine_id, :machine_hash, :company_type, :response, :device_type, :access_token
+    def initialize(username, password, partner_id, partner_name, device_type, company_type, client_id = nil, client_secret = nil, machine_hash = nil, machine_name = nil)
       @username = username
       @password = password
       @partner_id = partner_id
       @partner_name = partner_name
       @device_type = device_type
+      @company_type = company_type
       @codename = "mozypro"
       @client_name = "BAC#{Time.now.strftime("%m%d%H%M%S")}"
-      @client_id = "bac#{Time.now.strftime("%m%d%H%M%S")}"
-      @client_secret = "bac#{Time.now.strftime("%m%d%H%M%S")}"
+      @client_id = client_id
+      @client_id = "bac#{Time.now.strftime("%m%d%H%M%S")}" if client_id.nil?
+      @client_secret = client_secret
+      @client_secret = "bac#{Time.now.strftime("%m%d%H%M%S")}" if client_secret.nil?
       @random_value = ""; 16.times{@random_value  << (65 + rand(25)).chr}
       @random_value = ""; 16.times{@random_value  << (65 + rand(25)).chr}
       @random_value = ""; 16.times{@random_value  << (65 + rand(25)).chr}
-      @machine_hash = "machinehash"+@random_value
+      @machine_hash = machine_hash
+      @machine_hash = "machinehash" + @random_value if machine_hash.nil?
       @sid = "sid_hash"+@random_value
       @mac = "mac_hash"+@random_value
       @machine_alias = machine_name || "AUTOTEST"
@@ -99,12 +103,23 @@ module KeylessDeviceActivation
       @access_token = {}
       @license_key = ""
       @response = ""
-      get_codename(company_type)
+    end
+
+    def activate_client_devices(access_token = nil)
+      get_codename(@company_type)
       enable_partner_to_sso(@partner_id, @partner_name)
       create_oauth_client
       sso_auth(@partner_id)
       sso_to_auth
+      @access_token = access_token unless access_token.nil?
       client_devices_activate
+    end
+
+    def get_access_token
+      enable_partner_to_sso(@partner_id, @partner_name)
+      sso_auth(@partner_id)
+      sso_to_auth
+      return @access_token
     end
 
     def enable_partner_to_sso(partner_id, partner_name)
@@ -221,12 +236,20 @@ module KeylessDeviceActivation
                       :use_ssl => uri.scheme == 'https', :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
         url =  "/client/devices/#{@machine_hash}/activate?alias=#{@machine_alias}&mac_hash=#{@mac}&sid_hash=#{@sid}&country=US&type=#{@device_type}&codename=#{@codename}"
         request = Net::HTTP::Put.new( url )
+        Log.debug url
         request.add_field("Authorization", "Bearer #{Base64.strict_encode64(@access_token["access_token"])}")
         response = http.request request
         @response = response
-        @license_key = JSON.parse(response.body)
-        Log.debug("license key = #{@license_key}")
-        @license_key = @license_key["license_key"]
+        Log.debug response.body
+        # for negative case, the response will not be JSON format
+        begin
+          @license_key = JSON.parse(response.body)
+          @license_key = @license_key["license_key"]
+          return response
+        rescue
+          return response
+        end
+
       end
     end
 
@@ -250,17 +273,18 @@ module KeylessDeviceActivation
 end
 
 module MachineInfo
-    # curl -v -X GET -H "Authorization: Basic  NzUwNjk0NDI4NGZkYWI1OGMzOTVlMzViNTlmMzNmN2M1YmExMjI3YzpwYXNzd29yZA=="
-    # http://busclient04.qa6.mozyops.com/client/machine_get_info\?machine_id\=4839933
-    # GET machine_get_info
-    # Return attributes for one machine.(quota, user_spaceused, encryption, encryption_key_hash)
-    # Attributes are presented as http response headers.
+  # curl -v -X GET -H "Authorization: Basic  NzUwNjk0NDI4NGZkYWI1OGMzOTVlMzViNTlmMzNmN2M1YmExMjI3YzpwYXNzd29yZA=="
+  # http://busclient04.qa6.mozyops.com/client/machine_get_info\?machine_id\=4839933
+  # GET machine_get_info
+  # Return attributes for one machine.(quota, user_spaceused, encryption, encryption_key_hash)
+  # Attributes are presented as http response headers.
   def get_machine_info(root_admin_id, username, password, machine_hash)
     user_hash = Digest::SHA1.hexdigest(root_admin_id.to_s + " " + username.to_s)
     string = "/client/machine_get_info\?machineid\=#{machine_hash}"
     uri = URI.parse("#{QA_ENV['bus_host']}")
     Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https', :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
       http.set_debug_output $stderr
+      Log.debug string
       req = Net::HTTP::Get.new(string)
       req.basic_auth(user_hash, password)
       response = http.request(req)

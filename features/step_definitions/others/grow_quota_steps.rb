@@ -5,21 +5,24 @@ When /^I upload ([0-9]*) GB of data to device$/ do |amount|
   end
 end
 
-When /^I upload data to device$/ do |grow_quota_table|
+When /^I upload data to device(| by batch)$/ do |upload_type, grow_quota_table|
   attr = grow_quota_table.hashes.first
+  attr.each do |_, v|
+    v.replace ERB.new(v).result(binding)
+  end
+
   user_email = @current_user[:email] || attr['user_name']
   machine_id = @machine_id || attr['machine_id']
   amount = attr['GB'] || 1
   @grow_quota_response = [] if @grow_quota_response.nil?
 
-  attr.each do |_, v|
-    v.replace ERB.new(v).result(binding)
+  if upload_type == ' by batch'
+    @grow_quota_response[0] = SSHTDSGrowQuota.grow_quota(user_email, CONFIGS['global']['test_pwd'], machine_id, amount)
+  else
+    amount.to_i.times do |i|
+      @grow_quota_response[i] = SSHTDSGrowQuota.grow_quota(user_email, CONFIGS['global']['test_pwd'], machine_id, '1')
+    end
   end
-
-  amount.to_i.times do |i|
-    @grow_quota_response[i] = SSHTDSGrowQuota.grow_quota(user_email, CONFIGS['global']['test_pwd'], machine_id, i)
-  end
-
 end
 
 When /^tds returns successful upload$/ do

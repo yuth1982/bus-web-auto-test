@@ -370,4 +370,20 @@ module DBHelper
       conn.close unless conn.nil?
     end
   end
+
+  # set machine used quota by sql
+  def set_machine_used_quota(machine_id, quota)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "update machines set space_used = #{quota}::bigint*1024*1024*1024, pending_space_used = 0, patches = 0, files = 1, last_client_version = null,last_backup_at = now() where id = #{machine_id};"
+      conn.exec sql
+      Log.debug sql
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+      puts "#{$!}\n#{$@.join("\n")}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
 end

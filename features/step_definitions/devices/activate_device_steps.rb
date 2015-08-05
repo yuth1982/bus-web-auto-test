@@ -2,6 +2,7 @@ And /^activate the user's (Server|Desktop) device without a key and with the def
   @new_clients =[]
   @clients =[] if @clients.nil?
   client = KeylessClient.new(@new_users.first.email, CONFIGS['global']['test_pwd'], @partner_id, @partner.company_info.name, device_type, @partner.partner_info.type)
+  client.activate_client_devices
   @license_key = client.license_key
   Log.debug @license_key
   @license_key.should_not be_nil
@@ -9,8 +10,7 @@ And /^activate the user's (Server|Desktop) device without a key and with the def
   @clients << client
 end
 
-When /^I use keyless activation to activate devices$/  do |table|
-
+When /^I use keyless activation to activate devices(| unsuccessful)$/  do | error, table|
   attr = table.hashes.first.each do |_, v|
     v.replace ERB.new(v).result(binding)
     v.gsub!(" ", "_")
@@ -23,21 +23,66 @@ When /^I use keyless activation to activate devices$/  do |table|
 
   @new_clients =[]
   @clients =[] if @clients.nil?
-  client = KeylessClient.new(user_email, @user_password, @current_partner[:id], partner_name, attr['machine_type'], @partner.partner_info.type, attr['machine_name'])
+  client = KeylessClient.new(user_email, @user_password, @current_partner[:id], partner_name, attr['machine_type'], @partner.partner_info.type, nil, nil, nil, attr['machine_name'])
+  client.activate_client_devices
   @license_key = client.license_key
-  @license_key.should_not be_nil
+  if error.include?('unsuccessful')
+    (client.response.body.include?('error')).should == true
+  else
+    @license_key.should_not be_nil
+  end
   @new_clients << client
   @clients << client
+end
 
+When /^I use keyless activation to activate devices with (none machine hash|invalid machine hash|none access token|error access token)$/  do |error_type, table|
+  attr = table.hashes.first.each do |_, v|
+    v.replace ERB.new(v).result(binding)
+    v.gsub!(" ", "_")
+  end
+  user_email = attr['user_name'].nil? ? @current_user[:email] : attr['user_name']
+  partner_name = (@partner && @partner.company_info.name) || @current_partner[:name]
+  @current_partner[:id] ||= @bus_site.admin_console_page.partner_id
+  @user_password = CONFIGS['global']['test_pwd'] unless !@user_password.nil?
+
+  machine_hash = nil
+  if error_type == 'none machine hash'
+    machine_hash = ''
+  #invalid machine hash with length > 40
+  elsif error_type == 'invalid machine hash'
+    machine_hash = 'invalidmachinehashabdafoier435gsgsgletw34nsgsdfgserttwer'
+  end
+
+  client = KeylessClient.new(user_email, @user_password, @current_partner[:id], partner_name, attr['machine_type'], @partner.partner_info.type, nil, nil, machine_hash, attr['machine_name'])
+
+  if error_type == 'none access token'
+    access_token = '{"access_token", ""}'
+  elsif error_type == 'error access token'
+    access_token = '{"access_token", "NzUwNjk0NDI4NGZkYWI1OGMzOTVlMzViNTlmMzNmN2M1YmExMjI3YzpwYXNzd29yZA=="}'
+  end
+  client.activate_client_devices(access_token)
+  @new_clients =[]
+  @clients =[] if @clients.nil?
+  @new_clients << client
+  @clients << client
 end
 
 Then /^activate machine result should be$/ do |table|
+  attr = table.hashes.first.each do |_, v|
+    v.replace ERB.new(v).result(binding)
+  end
   attr = table.hashes.first
   expected_code = attr['code']
   expected_body = attr['body']
-  @clients[0].response.code.should == expected_code
-  actual_body = @clients[0].response.body
-  Log.debug(actual_body)
+  #for negative case, the response could like:  #<Net::HTTPUnauthorized 401 Authorization Required readbody=true>
+  Log.debug @clients.last.response
+  begin
+    @clients.last.response.code.should == expected_code
+  rescue
+    (@clients.last.response).match(/\d+/)[0].should == expected_code
+  end
+
+  actual_body = @clients.last.response.body
   if expected_body.include?('machine license key')
     ((actual_body.match(/^\{"license_key":"(\w)+"\}$/)).nil?).should == false
   else
