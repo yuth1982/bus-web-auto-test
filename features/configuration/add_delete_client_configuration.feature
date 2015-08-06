@@ -66,10 +66,12 @@ Feature: Add/Delete Client Configuration
       | TC123904-desktop-client-config | Desktop | TC123904-group-1  | TC123904-group-2  |
     Then client configuration section message should be Your configuration was saved.
     When I edit the new created config TC123904-server-client-config
+    And I click tab User Groups
     Then I remove user group: TC123904-group-1 from the configuration
     And I remove user group: TC123904-group-2 from the configuration
     Then I save the client configuration changes
     When I edit the new created config TC123904-desktop-client-config
+    And I click tab User Groups
     Then I remove user group: TC123904-group-1 from the configuration
     And I remove user group: TC123904-group-2 from the configuration
     Then I save the client configuration changes

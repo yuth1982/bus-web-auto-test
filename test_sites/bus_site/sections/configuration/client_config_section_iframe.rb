@@ -18,9 +18,6 @@ module Bus
     element(:add_user_groups, xpath: "//div[@id='config-user-groups']/p[2]/a")
     element(:choose_user_groups, xpath: "//div[@id='config-user-groups']/table/tbody/tr[3]/td/label/input")
 
-    #tabs when edit config
-    element(:user_groups_edit, xpath: "//li[text()='User Groups']")
-
     element(:ckey_radio, xpath: "//input[@id='userinfo.allowed_encryption_key_sources.adminurl']")
     element(:ckey_input, xpath: "//input[@id='userinfo.encryption_key_url']")
     element(:default_key_check, id: "userinfo.allowed_encryption_key_sources.default")
@@ -28,6 +25,17 @@ module Bus
     element(:client_config_save_changes_btn, css: "input[value='Save Changes']")
 
     element(:message_div, xpath: "//div[@id='setting-edit_client_config-errors']/ul/li")
+
+    #backup_set
+    element(:create_backup_set_link, xpath: "//a[text()='Create Backup Set']")
+    element(:backup_name_input, xpath: "//input[@value='New Backup Set']")
+    element(:add_search_location_link, xpath: "//a[text()='Add Search Location']")
+    element(:done_link, xpath: "//a[text()='Done']")
+    element(:options_cb, xpath: "//div[@id='editlinuxbackupsetbox']//div//p//label//input")
+    element(:linux_rules_name_includes_input, xpath: "//input[@id='filenames_linuxrule']")
+    element(:linux_rules_name_excludes_input, xpath: "//input[@id='exclude_filenames_linuxrule']")
+    element(:linux_rules_type_includes_input, xpath: "//input[@id='filetypes_linuxrule']")
+    element(:linux_rules_type_excludes_input, xpath: "//input[@id='exclude_filetypes_linuxrule']")
 
     # Public: Enter name
     #         Select license type
@@ -81,7 +89,6 @@ module Bus
     end
 
     def remove_group_from_config(group_name)
-      user_groups_edit.click
       add_user_groups.click if add_user_groups.visible?
       user_group1_xpath = "//div[@id='config-user-groups']//label[text()='#{group_name}']/input"
       find(:xpath, user_group1_xpath).uncheck
@@ -93,6 +100,74 @@ module Bus
 
     def edit_client_config client_config_name
       find_link(client_config_name).click
+    end
+
+    def click_tab(tab_name)
+      find(:xpath, "//li[text()='#{tab_name}']").click
+    end
+
+    def set_linux_backup_name(name)
+      create_backup_set_link.click
+      backup_name_input.type_text(name)
+    end
+
+    def click_edit_backup(backup_name)
+      find(:xpath, "//label//b[text()='"+backup_name+"']//..//..//a[text()='view/edit']").click
+    end
+
+    def backup_name_visible(backup_name)
+      find(:xpath,"//input[@value='#{backup_name}']").visible?
+    end
+
+    def add_locations(locations)
+      locations.each_index do |n|
+        find(:xpath, "//div[@id='linuxfsitems']//select["+(n+1).to_s+"]").select(locations[n]['location types'])
+        find(:xpath, "//input[@id='linuxfsitem_"+n.to_s+"']").type_text(locations[n]['folder names'])
+        if n<(locations.size-1)
+          add_search_location_link.click if all(:xpath, "//div[@id='linuxfsitems']//select["+(n+2).to_s+"]").size == 0
+        end
+      end
+    end
+
+    def add_linux_backup_rules(rules)
+      linux_rules_name_includes_input.type_text(rules['name includes']) unless rules['name includes'].nil?
+      linux_rules_name_excludes_input.type_text(rules['name excludes']) unless rules['name excludes'].nil?
+      linux_rules_type_includes_input.type_text(rules['type includes']) unless rules['type includes'].nil?
+      linux_rules_type_excludes_input.type_text(rules['type excludes']) unless rules['type excludes'].nil?
+    end
+
+    def get_linux_backup_rules()
+      rules = {
+          "name includes" => linux_rules_name_includes_input.value,
+          "name excludes" => linux_rules_name_excludes_input.value,
+          "type includes" => linux_rules_type_includes_input.value,
+          "type excludes" => linux_rules_type_excludes_input.value
+      }
+      rules
+    end
+
+    def cascade_linux_backup(backup_name)
+      find(:xpath, "//label/b[text()='#{backup_name}']/../../../td[2]/input").click
+    end
+
+    def setting_linux_backup(backup_name)
+      find(:xpath, "//label/b[text()='#{backup_name}']/../../../td[1]/input").click
+    end
+
+    def lock_linux_backup(backup_name)
+      find(:xpath, "//label/b[text()='#{backup_name}']/../../../td[3]/input").click
+    end
+
+    def click_done()
+      done_link.click
+    end
+
+    def alert_accept
+      if page.driver.is_a?(Capybara::Selenium::Driver)
+        page.driver.browser.switch_to.alert.accept
+      else
+        raise("alert_accept method only works for Selenium Driver")
+      end
     end
 
     # Public: Messages for client configuration section
