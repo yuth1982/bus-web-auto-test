@@ -51,6 +51,10 @@ Transform /^default password$/ do |step_arg|
   CONFIGS['global']['test_pwd']
 end
 
+Transform /^reset password$/ do |step_arg|
+  CONFIGS['global']['test_hipaa_pwd']
+end
+
 Transform /^existing admin email$/ do |step_arg|
   @existing_admin_email
 end

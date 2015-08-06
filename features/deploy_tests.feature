@@ -99,7 +99,7 @@ Feature: These are the test we run for every deploy
       | period | net terms | coupon                |
       | 1      | yes       | <%=QA_ENV['coupon']%> |
     And New partner should be created
-    And the standard partner has activated the admin account
+    And the partner has activated the admin account with default password
     And I navigate to bus admin console login page
     Then I log in bus admin console as new partner admin
     When I log out bus admin console
@@ -223,7 +223,7 @@ Feature: These are the test we run for every deploy
       | status_label |
       | ACTIVE       |
     #Prod 90 active partner in email
-    And the standard partner has activated the admin account
+    And the partner has activated the admin account with default password
     Then I navigate to bus admin console login page
     Then I log in bus admin console as new partner admin
     #Prod 78 create a user group

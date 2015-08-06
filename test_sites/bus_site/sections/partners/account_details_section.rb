@@ -18,6 +18,11 @@ module Bus
     element(:change_username_link, xpath: "//div[@id='#{ACC_SETTINGS_DIV_ID}']/div[2]/dl/span[2]/dd/form/span/a")
     element(:username_tb, id: "username")
     element(:submit_edit_username_btn, xpath: "//div[@id='#{ACC_SETTINGS_DIV_ID}']//div[2]/dl/span[2]/dd/form/span[2]/input[2]")
+    element(:change_password_link, xpath: "(//a[contains(text(),'change')])[3]")
+    element(:current_password_text, id: 'current_password')
+    element(:new_password_text, id: 'new_password')
+    element(:confirm_password_text, id: 'confirm_password')
+    element(:reset_password_btn, xpath: "(//input[@name='commit'])[3]")
 
     # Public: account details table description column
     #
@@ -84,6 +89,14 @@ module Bus
       change_name_link.click
       display_name_tb.type_text displayname
       submit_edit_name_btn.click
+    end
+
+    def reset_password (current_password, new_password)
+      change_password_link.click
+      current_password_text.type_text(current_password)
+      new_password_text.type_text(new_password)
+      confirm_password_text.type_text(new_password)
+      reset_password_btn.click
     end
 
     private

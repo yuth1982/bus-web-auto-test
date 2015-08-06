@@ -23,7 +23,15 @@ Then /^I change the display name to (.+)/ do |display_name|
 end
 
 Then /^I change the username to (.+)$/ do  |username|
+  if username == 'auto generated email'
+    username = create_admin_email(Forgery::Name.first_name,Forgery::Name.last_name)
+    @partner.admin_info.email = username
+  end
   @bus_site.admin_console_page.account_details_section.edit_username(username)
+end
+
+And  /^I change root admin password in Account Details from old password (.+) to (.+)$/ do  |current_password, new_password|
+  @bus_site.admin_console_page.account_details_section.reset_password(current_password, new_password)
 end
 
 Then /^Account Details error message should be:$/ do |messages|
@@ -36,5 +44,8 @@ Then /^(.+) changed success message should be displayed$/ do |changes|
       @bus_site.admin_console_page.account_details_section.messages.should == "Email address updated successfully"
     when 'display name'
       @bus_site.admin_console_page.account_details_section.messages.should == "Name updated successfully"
+    when 'password'
+      @bus_site.admin_console_page.account_details_section.messages.should == "Password changed"
   end
 end
+
