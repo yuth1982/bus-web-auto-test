@@ -250,8 +250,13 @@ When /^I get the machine id for client (\d+) by license key (.+)$/ do |client_in
 end
 
 When(/^I update (.+) used quota to (\d+) GB$/) do |machine, quota|
-  machine_id = machine.is_a?(Fixnum) ? machine : @bus_site.admin_console_page.user_details_section.get_machine_id(machine)
-  DBHelper.update_machine_info(machine_id, quota)
+  machine.replace ERB.new(machine).result(binding)
+  if machine.to_s.match(/^[1-9]\d*$/).nil?
+    machine = @bus_site.admin_console_page.user_details_section.get_machine_id(machine)
+  else
+    machine = machine.to_i
+  end
+  DBHelper.update_machine_info(machine, quota)
 end
 
 When /Available quota of (.+) should be (\d+) GB/ do |machine, quota|

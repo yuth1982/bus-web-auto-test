@@ -278,8 +278,8 @@ module MachineInfo
   # GET machine_get_info
   # Return attributes for one machine.(quota, user_spaceused, encryption, encryption_key_hash)
   # Attributes are presented as http response headers.
-  def get_machine_info(root_admin_id, username, password, machine_hash)
-    user_hash = Digest::SHA1.hexdigest(root_admin_id.to_s + " " + username.to_s)
+  def get_machine_info(root_admin_id, user_email, password, machine_hash)
+    user_hash = Digest::SHA1.hexdigest(root_admin_id.to_s + " " + user_email.to_s)
     string = "/client/machine_get_info\?machineid\=#{machine_hash}"
     uri = URI.parse("#{QA_ENV['bus_host']}")
     Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https', :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|

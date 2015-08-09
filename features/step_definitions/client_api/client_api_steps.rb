@@ -5,12 +5,11 @@ And /^I get the machine info should be$/ do | machine_info_table |
   attr = machine_info_table.hashes.first
   expected_quota = attr['quota']
   expected_used_space = attr['user_spaceused']
-
-  username = @clients.last.username
+  user_email = attr['user_email'] || @clients.last.username
   password = @clients.last.password
-  machine_hash = @clients.last.machine_hash
-  machine_hash = attr['machine_hash'] unless attr['machine_hash'].nil?
-  machine_info = get_machine_info(@admin_id, username, password, machine_hash)
+  machine_hash = attr['machine_hash'] || @clients.last.machine_hash
+
+  machine_info = get_machine_info(@admin_id, user_email, password, machine_hash)
 
   # compare the result
   machine_info[/quota:\d+/].should == 'quota:' + expected_quota
@@ -18,19 +17,11 @@ And /^I get the machine info should be$/ do | machine_info_table |
 end
 
 And /^I get the machine info with other user authentication should be$/ do | error_msg|
-  username = @users.last.email
+  user_email = @users.last.email
   password = @clients.last.password
   machine_hash = @clients.last.machine_hash
-  machine_info = get_machine_info(@admin_id, username, password, machine_hash)
+  machine_info = get_machine_info(@admin_id, user_email, password, machine_hash)
   machine_info.strip.should == error_msg.strip
-end
-
-And /^I set machine used quota by sql$/ do | table |
-  table.hashes.first.each do |k,v|
-    v.replace ERB.new(v).result(binding)
-  end
-  attr = table.hashes.first
-  DBHelper.set_machine_used_quota(attr['machine_id'], attr['quota'])
 end
 
 And /^Get client user resources api with invalid authorization result should like$/ do | error_msg |
@@ -76,13 +67,13 @@ And /^Get client user resources api result should be$/ do | response_table |
 
   #if there are backup machines, check the device information
   if actual_backup.size > 0
-    @clients.each_with_index do |value, index|
-      actual_backup[index]['device_hash'].should == value.machine_hash
-      actual_backup[index]['license_type'].should == value.device_type
-      actual_backup[index]['license_key'].should == value.license_key
-      actual_backup[index]['alias'].should == value.machine_alias
-      (actual_backup[0]['id'].blank?).should == false
-    end
+     actual_backup.each_with_index do |value, index|
+        value.should == @clients[index].machine_hash
+        value.should == @clients[index].device_type
+        value.should == @clients[index].license_key
+        value.should == @clients[index].machine_alias
+        value.should == @clients[index].machine_id
+     end
   end
 
 end

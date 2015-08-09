@@ -33,6 +33,7 @@ require 'device_helper'
 require 'ssh_tds_grow_quota'
 require 'testlink_helper'
 require 'common_helper'
+require 'client_api_helper'
 
 require 'site_helper/site_helper'
 require 'capybara_helper/capybara_helper'
@@ -58,3 +59,4 @@ include DataShuttleSeeding
 include Email
 include Billing
 include MachineInfo
+include ClientUserResources

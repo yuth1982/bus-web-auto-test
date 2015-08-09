@@ -143,7 +143,7 @@ Feature: Auto Grow
       | Machine 1    | <%=@users.first.email%> | Desktop      |
     And I get the machine id for client 0 by license key <%=@clients.first.license_key%>
     And I upload data to device
-      | machine_id                     | GB | user_name               |
+      | machine_id                     | GB | user_email              |
       | <%=@clients.first.machine_id%> | 6  | <%=@users.first.email%> |
     Then tds return message should be:
     """
@@ -186,7 +186,7 @@ Feature: Auto Grow
       | Machine 2    | <%=@users[2].email%> | Desktop      |
     And I get the machine id for client 1 by license key <%=@clients[1].license_key%>
     And I upload data to device
-      | machine_id                  | GB | user_name            |
+      | machine_id                  | GB | user_email           |
       | <%=@clients[1].machine_id%> | 4  | <%=@users[2].email%> |
     Then tds return message should be:
     """
@@ -229,7 +229,7 @@ Feature: Auto Grow
       | Machine 3    | <%=@users[1].email%> | Server       |
     And I get the machine id for client 2 by license key <%=@clients[2].license_key%>
     And I upload data to device
-      | machine_id                  | GB | user_name            |
+      | machine_id                  | GB | user_email           |
       | <%=@clients[2].machine_id%> | 18 | <%=@users[1].email%> |
     Then tds returns successful upload
     And I navigate to Search / List Users section from bus admin console page

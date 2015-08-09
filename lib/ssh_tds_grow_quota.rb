@@ -29,8 +29,6 @@ module SSHTDSGrowQuota
     request["Content-Length"] = 0
 
     result = http_conn.start { |http| http.request(request) }
-    Log.debug password
-    Log.debug result.body
     Log.debug result
     return result
   end

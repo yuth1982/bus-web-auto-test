@@ -10,9 +10,8 @@ When /^I upload data to device(| by batch)$/ do |upload_type, grow_quota_table|
   attr.each do |_, v|
     v.replace ERB.new(v).result(binding)
   end
-
-  user_email = @current_user[:email] || attr['user_name']
-  machine_id = @machine_id || attr['machine_id']
+  user_email = attr['user_email'] || @current_user[:email]
+  machine_id = attr['machine_id'] || @machine_id
   amount = attr['GB'] || 1
   @grow_quota_response = [] if @grow_quota_response.nil?
 
