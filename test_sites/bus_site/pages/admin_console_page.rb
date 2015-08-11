@@ -80,6 +80,9 @@ module Bus
     section(:manage_vatfx_rates_section, ManageVATTXRatesSection, id: "internal-add_vat_rate")
     section(:manage_pending_deletes_section, ManagePendingDeletesSection, id: "internal-manage_pending_deletes")
 
+    #news
+    section(:news_section, NewsSection, id: "controller-news")
+
     # Private element
     element(:current_admin_div, id: 'identify-me')
     element(:stop_masquerading_link, xpath: "//a[text()='stop masquerading']")
