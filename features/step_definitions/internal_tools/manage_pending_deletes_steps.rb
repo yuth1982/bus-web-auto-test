@@ -43,15 +43,57 @@ end
 
 Then /^I change to (\d+) days to purge account after delete/ do |days|
   @bus_site.admin_console_page.manage_pending_deletes_section.change_pending_deletes_setting(days)
-  @bus_site.admin_console_page.manage_pending_deletes_section.wait_until_bus_section_load
 end
 
 Then /^I verify days to purge account after delete should be (\d+)/ do |days|
-  actual = @bus_site.admin_console_page.manage_pending_deletes_section.get_pending_deletes_setting
-  actual.should == days
+  @bus_site.admin_console_page.manage_pending_deletes_section.get_pending_deletes_setting.should == days
+end
+
+Then /^I make sure pending deletes setting is (\d+) days/ do |days|
+  @bus_site.admin_console_page.manage_pending_deletes_section.change_pending_deletes_setting_to_default(days)
 end
 
 Then /^I purge partner by (.+)/ do |company_name|
   @bus_site.admin_console_page.manage_pending_deletes_section.purge_partner(QA_ENV['bus_password'], company_name)
 end
+
+Then /^I purge partner for cleanup by (.+)/ do |company_name|
+  begin
+    step %{I search partners in pending-delete available to purge by:}, table(%{
+      | name            |
+      | #{company_name} |})
+    step %{Partners in pending-delete available to purge search results should be:}, table(%{
+      | Partner         |
+      | #{company_name} |})
+    step %{I purge partner by #{company_name}}
+    step %{I search partners in who have been purged by:}, table(%{
+      | name            |
+      | #{company_name} | })
+    step %{Partners in who have been purged search results should be:}, table(%{
+      | Partner         |
+      | #{company_name} |})
+  rescue Exception => ex
+    Log.debug ex.to_s
+  end
+end
+
+Then /^I undelete partner in (pending-delete not available to purge|pending-delete available to purge) by (.+)/ do |where, company_name|
+  @bus_site.admin_console_page.manage_pending_deletes_section.undelete_partner(where, company_name)
+end
+
+Then /^I advance the partner delete timestamp to (\d+) days/ do |days|
+  DBHelper.update_partner_delete_timestamp(@partner_id, days)
+  @bus_site.admin_console_page.manage_pending_deletes_section.refresh_bus_section
+  @bus_site.admin_console_page.manage_pending_deletes_section.wait_until_bus_section_load
+end
+
+Then /^I should see (.+) in (pending-delete not available to purge|pending-delete available to purge) table$/ do |message, table|
+  actual = @bus_site.admin_console_page.manage_pending_deletes_section.pending_deletes_table_text(table)
+  actual.should include(message)
+end
+
+Then /^I verify can not undelete a purged partner$/ do
+  @bus_site.admin_console_page.manage_pending_deletes_section.undelete_button_on_purged_table.should == 0
+end
+
 

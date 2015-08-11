@@ -19,6 +19,9 @@ module Bus
     #undelete button in 'Partners in Pending-Delete (not yet available to Purge)'
     element(:undelete_btn, xpath: "//form[@id='pending_delete']//input")
 
+    #checkbox of the first record in n 'Partners in Pending-Delete and available to Purge'
+    element(:partners_to_undelete_or_purge_input, xpath: "//tr[1]/td[1]/input[@name='partners_to_undelete_or_purge']")
+
     #undelete, purge button in 'Partners in Pending-Delete and available to Purge'
     element(:undelete_available_to_purge_btn, id: 'undelete')
     element(:purge_btn, id: 'purge')
@@ -43,6 +46,7 @@ module Bus
     #
     # @return [] nothing
     def search_partners(match, search_key, full_search = false)
+      wait_until_bus_section_load
       # By default, full search is not checked
       if full_search
         full_search_cb.check
@@ -72,11 +76,11 @@ module Bus
     def search_results_hashes(match)
       case match
         when 'pending-delete not available to purge'
-          search_results_pending_delete_table.rows_text.map{ |row| Hash[* search_results_pending_delete_table.headers_text.zip(row).flatten] }
+          search_results_pending_delete_table.rows_text.map{ |row| Hash[* search_results_pending_delete_table.headers_text.zip(row).flatten] } unless search_results_pending_delete_table.text.include?("No results found")
         when 'pending-delete available to purge'
-          search_results_available_to_purge_table.rows_text.map{ |row| Hash[*search_results_available_to_purge_table.headers_text.zip(row).flatten] }
+          search_results_available_to_purge_table.rows_text.map{ |row| Hash[*search_results_available_to_purge_table.headers_text.zip(row).flatten] } unless search_results_available_to_purge_table.text.include?("No results found")
         when 'who have been purged'
-          search_results_purged_table.rows_text.map{ |row| Hash[*search_results_purged_table.headers_text.zip(row).flatten] }
+          search_results_purged_table.rows_text.map{ |row| Hash[*search_results_purged_table.headers_text.zip(row).flatten] } unless search_results_purged_table.text.include?("No results found")
       end
     end
 
@@ -91,16 +95,33 @@ module Bus
       change_delete_setting_a.click
       change_delete_setting_input.type_text(days)
       change_delete_setting_btn.click
+      wait_until_bus_section_load
     end
 
-    # Public: verify days to purge partner after delete
+    # Public: make sure days to purge partner after delete if default value
     #
     #
     # Example
-    #   @bus_site.admin_console_page.manage_pending_deletes_section.verify_pending_deletes_setting("60")
+    #   @bus_site.admin_console_page.manage_pending_deletes_section.change_pending_deletes_setting_to_default("60")
     #
     # @return [] nothing
-    def get_pending_deletes_setting(days)
+    def change_pending_deletes_setting_to_default(days)
+      if current_days_span.text.strip != (days)
+        change_delete_setting_a.click
+        change_delete_setting_input.type_text(days)
+        change_delete_setting_btn.click
+        wait_until_bus_section_load
+      end
+    end
+
+    # Public: get days to purge partner after delete
+    #
+    #
+    # Example
+    #   @bus_site.admin_console_page.manage_pending_deletes_section.get_pending_deletes_setting
+    #
+    # @return [] nothing
+    def get_pending_deletes_setting
       current_days_span.text.strip
     end
 
@@ -112,13 +133,58 @@ module Bus
     #
     # @return [] nothing
     def purge_partner(password, partner_name)
-      find(:xpath, "//a[text()='#{partner_name}']//..//..//../tr[1]/td[1]/input").check
+      partners_to_undelete_or_purge_input.check
       purge_btn.click
       password_tb.type_text(password)
       submit_purge_btn.click
       wait_until_bus_section_load
     end
 
+
+    # Public: undelete partner on 'Partners in Pending-Delete (not yet available to Purge)' and 'Partners in Pending-Delete and available to Purge'
+    #
+    #
+    # Example
+    #  @bus_site.admin_console_page.manage_pending_deletes_section.undelete_partner("pending-delete not available to purge", "Babbleset Company 0728-1929-21")
+    #
+    # @return [] nothing
+    def undelete_partner(where, partner_name)
+      find(:xpath, "//a[text()='#{partner_name}']//..//../td[1]//input").check
+      case where
+        when 'pending-delete not available to purge'
+          undelete_btn.click
+        when 'pending-delete available to purge'
+          undelete_available_to_purge_btn.click
+      end
+      wait_until_bus_section_load
+    end
+
+    # Public: get 'No results found' text
+    #
+    #
+    # Example
+    #  @bus_site.admin_console_page.manage_pending_deletes_section.pending_deletes_table_text("pending-delete available to purge")
+    #
+    # @return string
+    def pending_deletes_table_text(table)
+      case table
+        when 'pending-delete not available to purge'
+          search_results_pending_delete_table.text
+        when 'pending-delete available to purge'
+          search_results_available_to_purge_table.text
+      end
+    end
+
+    # Public: get undelete button number on who has been purged table
+    #
+    #
+    # Example
+    #  @bus_site.admin_console_page.manage_pending_deletes_section.undelete_button_on_purged_table()
+    #
+    # @return string
+    def undelete_button_on_purged_table
+      all(:xpath, "//h4[contains(text(),'been Purged')]//../div[7]//*[@value='Undelete']").size
+    end
 
   end
 end
