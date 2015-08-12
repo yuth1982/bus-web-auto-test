@@ -489,12 +489,27 @@ module Bus
     end
 
     def edit_password(password)
-      change_user_password_link.click
-      wait_until_bus_section_load
+      if !new_password_tb.visible?
+        change_user_password_link.click
+        wait_until_bus_section_load
+      end
       new_password_tb.type_text(password)
       new_password_confirm_tb.type_text(password)
       new_password_change_btn.click
       wait_until_bus_section_load
+    end
+
+    def edit_password_with_incorrect_pass(password)
+      if !new_password_tb.visible?
+        change_user_password_link.click
+        wait_until_bus_section_load
+      end
+      new_password_tb.type_text(password)
+      new_password_confirm_tb.type_text(password)
+      new_password_change_btn.click
+      text = alert_text
+      alert_accept
+      text
     end
 
     def change_device_quota(count, type=nil)

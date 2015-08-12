@@ -252,7 +252,12 @@ module DBHelper
       sql = "select * from password_policies where pro_partner_id = #{partner_id} and (user_type = '#{type}' or user_type = 'all');"
       puts sql
       c = conn.exec sql
-      c[0]
+      if c.num_tuples.zero?
+        #0 db record searched out
+        nil
+      else
+        c[0]
+      end
     rescue PG::Error => e
       puts "postgres error: #{e}"
     ensure

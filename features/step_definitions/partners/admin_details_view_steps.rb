@@ -102,7 +102,7 @@ Then /^I should not search out admin record$/ do
   @bus_site.admin_console_page.search_admins_section.search_admin_table_empty.should == true
 end
 
-When /^I change admin password to (default password|Hipaa password|reset password|Standard password)$/ do |password|
+When /^I change admin password to (.+)$/ do |password|
   @bus_site.admin_console_page.admin_details_section.change_admin_pwd(password)
 end
 
@@ -110,3 +110,12 @@ Then /^I can change admin password successfully$/ do
   string = "The password for " + @admin.name + " has been changed."
   @bus_site.admin_console_page.admin_details_section.change_admin_pwd_msg.strip.should == string
 end
+
+When /^I active admin in admin details (.+)$/ do |password|
+  @bus_site.admin_console_page.admin_details_section.activate_admin(password, password)
+end
+
+When /^(Fail|Succeed) to update admin password and the message should be (.+)$/ do |type, message|
+  @bus_site.admin_console_page.admin_details_section.change_admin_pwd_msg.strip.should == message.strip
+end
+

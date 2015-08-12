@@ -3,7 +3,7 @@ Feature: Password policy is saved successfully to db
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.120092 @bus
+  @TC.120092 @password_policy @bus
   Scenario: 120092 [MozyEnterprise]Hipaa partner password policy settings should be saved to database correctly
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | root role  | security |
@@ -50,7 +50,7 @@ Feature: Password policy is saved successfully to db
     And I search and delete partner account by newly created partner company name
 
 
-  @TC.120103 @bus
+  @TC.120103 @password_policy @bus
   Scenario: 120103 [Reseller]Hipaa partner password policy settings should be saved to database correctly
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms | security |
@@ -96,7 +96,7 @@ Feature: Password policy is saved successfully to db
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120104 @bus
+  @TC.120104 @password_policy @bus
   Scenario: 120104 [OEM]Hipaa partner password policy settings should be saved to database correctly
     When I act as partner by:
       | name     | including sub-partners |
@@ -142,7 +142,7 @@ Feature: Password policy is saved successfully to db
     Then I stop masquerading from subpartner
     And I search and delete partner account by newly created subpartner company name
 
-  @TC.120088  @bus
+  @TC.120088  @password_policy @bus
   Scenario: 120088 [MozyEnterprise]Hipaa admin cannot see the password policy link in admin console
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | root role  | security |
@@ -170,7 +170,7 @@ Feature: Password policy is saved successfully to db
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120089  @bus
+  @TC.120089  @password_policy @bus
   Scenario: [Reseller]120089 Hipaa admin cannot see the password policy link in admin console
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms | security |
@@ -198,7 +198,7 @@ Feature: Password policy is saved successfully to db
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120090 @bus
+  @TC.120090 @password_policy @bus
   Scenario: 120090 [OEM]Hippa admin cannot see the password policy link in admin console
     When I add a new OEM partner:
       | Security |
@@ -221,7 +221,7 @@ Feature: Password policy is saved successfully to db
     Then I stop masquerading from subpartner
     And I search and delete partner account by newly created subpartner company name
 
-  @TC.120553 @bus
+  @TC.120553 @password_policy @bus
   Scenario: 120553 Setting up a Password policy
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  |
@@ -229,18 +229,336 @@ Feature: Password policy is saved successfully to db
     Then New partner should be created
     When I act as newly created partner account
     And I navigate to Password Policy section from bus admin console page
-    Then I edit user passowrd policy:
+    And I edit user passowrd policy:
       | user policy type | min character classes | character classes                             |
       | custom           | 3                     | Lowercase letters,Numbers,Special characters  |
-    Then I edit admin passowrd policy:
+    And I edit admin passowrd policy:
       | admin user same policy |
       | Yes                    |
-    Then I save password policy
+    And I save password policy
     Then Password policy updated successfully
     Then The user and admin password policy from database will be
       | user_type | min_length | min_character_classes | min_age_hours | min_generations | display_captcha_on_login | verify_email_address |
       | all       | 6          | 3                     | 0             | 1               | f                        | f                    |
-    And The user and admin password will contains at least 3 of the following types of charactors
+    Then The user and admin password will contains at least 3 of the following types of charactors
       | lower | digit | special |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
+
+  @TC.120555 @password_policy @bus
+  Scenario: 120555 Custom user password policy with default admin policy
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | server add on |root role  |
+      | 36     | 100   | 1 TB        | 10            |FedID role |
+    Then New partner should be created
+    When I act as newly created partner account
+    And I navigate to Add New Admin section from bus admin console page
+    And I add a new admin:
+      | Name            | Roles      |
+      | TC.120555_admin | FedID role |
+    And I view the admin details of TC.120555_admin
+    And I active admin in admin details default password
+    And I add new user(s):
+      | name           | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | TC.120555_user | (default user group) | Desktop      | 10            | 2       | yes          |
+    Then 1 new user should be created
+    And I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    And I activate the user
+    And I navigate to Password Policy section from bus admin console page
+    And I edit user passowrd policy:
+      | user policy type | min character classes | character classes                             |
+      | custom           | 2                     | Lowercase letters,Numbers,Special characters  |
+    And I edit admin passowrd policy:
+      | admin user same policy | admin policy type |
+      | No                     | default           |
+    And I save password policy
+    Then Password policy updated successfully
+    Then The user password policy from database will be
+      | min_length | min_character_classes | min_age_hours | min_generations | display_captcha_on_login | verify_email_address |
+      | 6          | 2                     | 0             | 1               | f                        | f                    |
+    Then The user password will contains at least 2 of the following types of charactors
+      | lower | digit | special |
+    Then The admin should use default password policy
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    Then I update user password to incorrect password wrongpass and get the error message:
+    """
+    Password needs to contain at least 2 kinds of characters.
+    """
+    Then I update user password to incorrect password pass! and get the error message:
+    """
+    Please enter a password at least 6 characters long
+    """
+    And I update the user password to test1234
+    And I navigate to Add New Admin section from bus admin console page
+    And I view the admin details of TC.120555_admin
+    And I change admin password to pass!
+    Then Fail to update admin password and the message should be Please enter a password at least 6 characters long
+    And I change admin password to testps
+    Then Succeed to update admin password and the message should be The password for TC.120555_admin has been changed.
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.120556 @password_policy @bus
+  Scenario: 120556 Using same password policy for admins and users
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | root role  | net terms |
+      | 24     | 5     | 50 GB       | FedID role | yes       |
+    Then New partner should be created
+    When I act as newly created partner account
+    And I navigate to Add New Admin section from bus admin console page
+    And I add a new admin:
+      | Name            | Roles      |
+      | TC.120556_admin | FedID role |
+    And I view the admin details of TC.120556_admin
+    And I active admin in admin details default password
+    And I add new user(s):
+      | name           | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | TC.120556_user | (default user group) | Desktop      | 10            | 2       | yes          |
+    Then 1 new user should be created
+    And I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    And I activate the user
+    When I navigate to Password Policy section from bus admin console page
+    And I edit user passowrd policy:
+      | user policy type | min character classes | character classes                      |
+      | custom           | 2                     | Lowercase letters,Special characters   |
+    And I edit admin passowrd policy:
+      | admin user same policy |
+      | Yes                    |
+    And I save password policy
+    Then Password policy updated successfully
+    Then The user and admin password policy from database will be
+      | user_type | min_length | min_character_classes | min_age_hours | min_generations | display_captcha_on_login | verify_email_address |
+      | all       | 6          | 2                     | 0             | 1               | f                        | f                    |
+    Then The user and admin password will contains at least 2 of the following types of charactors
+      | lower | special |
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    Then I update user password to incorrect password wrongpass and get the error message:
+    """
+    Password needs to contain at least 2 kinds of characters.
+    """
+    Then I update user password to incorrect password pass! and get the error message:
+    """
+    Please enter a password at least 6 characters long
+    """
+    And I update the user password to testp!
+    And I navigate to Add New Admin section from bus admin console page
+    And I view the admin details of TC.120556_admin
+    And I change admin password to wrongpass
+    Then Fail to update admin password and the message should be Password needs to contain at least 2 kinds of characters
+    And I change admin password to pass!
+    Then Fail to update admin password and the message should be Please enter a password at least 6 characters long
+    And I change admin password to testp!
+    Then Succeed to update admin password and the message should be The password for TC.120556_admin has been changed.
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.120557 @password_policy @bus
+  Scenario: 120557 Using custom admin password policy with default user policy
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | server add on |root role  |
+      | 12     | 10    | 2 TB        | 99            |FedID role |
+    Then New partner should be created
+    When I act as newly created partner account
+    And I navigate to Add New Admin section from bus admin console page
+    And I add a new admin:
+      | Name            | Roles      |
+      | TC.120557_admin | FedID role |
+    And I view the admin details of TC.120557_admin
+    And I active admin in admin details default password
+    And I add new user(s):
+      | name           | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | TC.120557_user | (default user group) | Desktop      | 15            | 2       | yes          |
+    Then 1 new user should be created
+    And I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    And I activate the user
+    And I navigate to Password Policy section from bus admin console page
+    And I edit user passowrd policy:
+      | user policy type |
+      | default          |
+    And I edit admin passowrd policy:
+      | admin user same policy | admin policy type | min character classes | character classes                             |
+      | No                     | custom            | 3                     | Lowercase letters,Numbers,Special characters  |
+    And I save password policy
+    Then Password policy updated successfully
+    Then The admin password policy from database will be
+      | min_length | min_character_classes | min_age_hours | min_generations | display_captcha_on_login | verify_email_address |
+      | 6          | 3                     | 0             | 1               | f                        | f                    |
+    Then The admin password will contains at least 3 of the following types of charactors
+      | lower | digit | special |
+    Then The user should use default password policy
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    Then I update user password to incorrect password pass! and get the error message:
+    """
+    Please enter a password at least 6 characters long
+    """
+    And I update the user password to testps
+    And I navigate to Add New Admin section from bus admin console page
+    And I view the admin details of TC.120557_admin
+    And I change admin password to wrongpass
+    Then Fail to update admin password and the message should be Password needs to contain at least 3 kinds of characters
+    And I change admin password to pa12!
+    Then Fail to update admin password and the message should be Please enter a password at least 6 characters long
+    And I change admin password to test123!
+    Then Succeed to update admin password and the message should be The password for TC.120557_admin has been changed.
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.120091 @password_policy @bus
+  Scenario: 120091 [MozyEnterprise]Non Hipaa admin can see the password policy link in admin console
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan |root role  | security |
+      | 24     | 98    | 500 GB      |FedID role | HIPAA    |
+    Then New partner should be created
+    And I act as newly created partner account
+    Then I should not see Password Policy link
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.131877 @password_policy @bus
+  Scenario: 131877 Custom Complextity, 2nd radio button and 4 in textbox and all checkboxes
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | server add on | root role  | net terms |
+      | 36     | 59    | 8 TB        | 58            | FedID role | yes       |
+    Then New partner should be created
+    When I act as newly created partner account
+    And I navigate to Add New Admin section from bus admin console page
+    And I add a new admin:
+      | Name            | Roles      |
+      | TC.131877_admin | FedID role |
+    And I view the admin details of TC.131877_admin
+    And I active admin in admin details default password
+    And I add new user(s):
+      | name           | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | TC.131877_user | (default user group) | Desktop      | 12            | 5       | yes          |
+    Then 1 new user should be created
+    And I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    And I activate the user
+    And I navigate to Password Policy section from bus admin console page
+    And I edit user passowrd policy:
+      | user policy type | min character classes | character classes                                             |
+      | custom           | 4                     | Capital letters,Lowercase letters,Numbers,Special characters  |
+    And I edit admin passowrd policy:
+      | admin user same policy | admin policy type | min character classes | character classes                                             |
+      | No                     | custom            | 4                     | Capital letters,Lowercase letters,Numbers,Special characters  |
+    And I save password policy
+    Then Password policy updated successfully
+    Then The user password policy from database will be
+      | min_length | min_character_classes | min_age_hours | min_generations | display_captcha_on_login | verify_email_address |
+      | 6          | 4                     | 0             | 1               | f                        | f                    |
+    Then The admin password policy from database will be
+      | min_length | min_character_classes | min_age_hours | min_generations | display_captcha_on_login | verify_email_address |
+      | 6          | 4                     | 0             | 1               | f                        | f                    |
+    Then The user password will contains at least 4 of the following types of charactors
+      | upper | lower | digit | special |
+    Then The admin password will contains at least 4 of the following types of charactors
+      | upper | lower | digit | special |
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    Then I update user password to incorrect password Pas4! and get the error message:
+    """
+    Please enter a password at least 6 characters long
+    """
+    Then I update user password to incorrect password test123! and get the error message:
+    """
+    Password needs to contain at least 4 kinds of characters.
+    """
+    And I update the user password to Test123!
+    And I navigate to Add New Admin section from bus admin console page
+    And I view the admin details of TC.131877_admin
+    And I change admin password to test1234!
+    Then Fail to update admin password and the message should be Password needs to contain at least 4 kinds of characters
+    And I change admin password to Pa12!
+    Then Fail to update admin password and the message should be Please enter a password at least 6 characters long
+    And I change admin password to Test1234!
+    Then Succeed to update admin password and the message should be The password for TC.131877_admin has been changed.
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.131879 @password_policy @bus
+  Scenario: 131879 Sub Partner, Custom Complextity, 2nd radio button and input 3 in textbox and select all checkboxes
+    When I add a new MozyEnterprise partner:
+      | company name       | period | users | server plan | root role  |
+      | TC.131879_partner  | 12     | 9     | 4 TB        | FedID role |
+    Then New partner should be created
+    When I act as newly created partner account
+    And I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          | Parent     |
+      | subrole | Partner admin | FedID role |
+    And I check all the capabilities for the new role
+    And I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for MozyEnterprise partner:
+      | Name    | Company Type | Root Role | Periods | Tax Percentage | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
+      | subplan | business     | subrole   | yearly  | 10             | test     | false            | 1                          | 1                     |
+    Then add new pro plan success message should be displayed
+    When I add a new sub partner:
+      | Company Name          |
+      | TC.131879_sub_partner |
+    Then New partner should be created
+    And I change pooled resource for the subpartner:
+      | Desktop Storage | Desktop Devices |
+      | 20              | 1               |
+    When I act as newly created partner account
+    And I navigate to Add New Admin section from bus admin console page
+    And I add a new admin:
+      | Name            | Roles      |
+      | TC.131879_admin | subrole    |
+    And I view the admin details of TC.131879_admin
+    And I active admin in admin details default password
+    And I add new user(s):
+      | name           | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | TC.131879_user | (default user group) | Desktop      | 5             | 1       | yes          |
+    Then 1 new user should be created
+    And I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    And I activate the user
+    And I navigate to Password Policy section from bus admin console page
+    And I edit user passowrd policy:
+      | user policy type | min character classes | character classes                                             |
+      | custom           | 3                     | Capital letters,Lowercase letters,Numbers,Special characters  |
+    And I edit admin passowrd policy:
+      | admin user same policy | admin policy type | min character classes | character classes                                             |
+      | No                     | custom            | 3                     | Capital letters,Lowercase letters,Numbers,Special characters  |
+    And I save password policy
+    Then Password policy updated successfully
+    Then The user password policy from database will be
+      | min_length | min_character_classes | min_age_hours | min_generations | display_captcha_on_login | verify_email_address |
+      | 6          | 3                     | 0             | 1               | f                        | f                    |
+    Then The admin password policy from database will be
+      | min_length | min_character_classes | min_age_hours | min_generations | display_captcha_on_login | verify_email_address |
+      | 6          | 3                     | 0             | 1               | f                        | f                    |
+    Then The user password will contains at least 3 of the following types of charactors
+      | upper | lower | digit | special |
+    Then The admin password will contains at least 3 of the following types of charactors
+      | upper | lower | digit | special |
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    Then I update user password to incorrect password pas4! and get the error message:
+    """
+    Please enter a password at least 6 characters long
+    """
+    Then I update user password to incorrect password test1234 and get the error message:
+    """
+    Password needs to contain at least 3 kinds of characters.
+    """
+    And I update the user password to test123!
+    And I navigate to Add New Admin section from bus admin console page
+    And I view the admin details of TC.131879_admin
+    And I change admin password to test1234
+    Then Fail to update admin password and the message should be Password needs to contain at least 3 kinds of characters
+    And I change admin password to pa12!
+    Then Fail to update admin password and the message should be Please enter a password at least 6 characters long
+    And I change admin password to test1234!
+    Then Succeed to update admin password and the message should be The password for TC.131879_admin has been changed.
+    And I stop masquerading as sub partner
+    And I stop masquerading
+    And I search and delete partner account by TC.131879_sub_partner
+    And I search and delete partner account by TC.131879_partner
+

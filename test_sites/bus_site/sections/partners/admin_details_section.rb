@@ -19,7 +19,7 @@ module Bus
     element(:admin_info_message_txt, xpath: "//div[contains(@id, 'admininfobox')]//ul/li")
     element(:admin_id_txt, xpath: "//div[contains(@id, 'admin-show-')]/div[2]/dl[2]/dd")
 
-    # change amdin password
+    # change admin password
     element(:change_admin_password_link, xpath: "//div[contains(@id,'admin-show')]//li//a[text()='Change Password']")
     element(:new_password_tb, xpath: "//input[@id='new_password']")
     element(:new_password_confirm_tb, xpath: "//input[@id='new_password_confirmation']")

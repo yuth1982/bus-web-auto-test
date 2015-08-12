@@ -42,6 +42,11 @@ When /^The( subpartner)? (user|admin|user and admin) password policy from (datab
   end
 end
 
+Then /^The (user|admin) should use default password policy$/ do |type|
+  DBHelper.get_db_password_config(@partner_id, type).nil?.should be_true
+  DBHelper.get_db_password_config(@partner_id, 'all').nil?.should be_true
+end
+
 Then /^The (user|admin|user and admin) password will contains at least (\d+) of the following types of charactors$/ do |type, num, table|
   character_classes = DBHelper.get_password_character_classes(@password_policy_id)
   (character_classes.size >= num.to_i).should be_true

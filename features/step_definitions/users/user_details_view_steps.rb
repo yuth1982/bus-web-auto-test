@@ -240,6 +240,10 @@ Then /^I update the user password to (.+)$/ do |password|
   @bus_site.admin_console_page.user_details_section.edit_password(password)
 end
 
+Then /^I update user password to incorrect password (.+) and get the error message:$/ do |password,message|
+  @bus_site.admin_console_page.user_details_section.edit_password_with_incorrect_pass(password).should == message
+end
+
 When(/^I get the machine_id by license_key$/) do
   @machine_id = DBHelper.get_machine_id_by_license_key(@license_key)
 end
