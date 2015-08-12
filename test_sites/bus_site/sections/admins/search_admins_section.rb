@@ -14,5 +14,10 @@ module Bus
       wait_until_bus_section_load
     end
 
+    def search_admin_table_empty
+      size = all(:xpath,"//div[@id='admin-search-content']//table/tbody/tr[2]/td[contains(text(),'No results')]").size
+      return (size == 1? true :false)
+    end
+
   end
 end

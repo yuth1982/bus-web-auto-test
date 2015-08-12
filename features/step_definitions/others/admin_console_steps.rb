@@ -82,6 +82,10 @@ When /^I view the partner info$/ do
   @bus_site.admin_console_page.view_partner_info
 end
 
+And /^I click admin name on the top right$/ do
+  @bus_site.admin_console_page.open_account_details_from_header
+end
+
 # has_navigation returns a value if items are present, otherwise it will return empty
 # in the case, am verifying that items are not present by checking for empty value
 Then /^navigation items should be removed$/ do
@@ -168,11 +172,18 @@ Given /^I verify Skeletor by visiting url$/ do
   @bus_site.admin_console_page.visit_skeletor_url
 end
 
-When /^the partner has activated the admin account with (default password|Hipaa password)$/ do |password|
-  step %{I retrieve email content by keywords:}, table(%{
-    | to               | content                             |
-    | @new_admin_email | activate your administrator account |
+When /^the partner has activated the (admin|sub-admin) account with (default password|Hipaa password)$/ do |type, password|
+  if type == 'admin'
+    step %{I retrieve email content by keywords:}, table(%{
+      | to               | content                             |
+      | @new_admin_email | activate your administrator account |
+   })
+  else
+    step %{I retrieve email content by keywords:}, table(%{
+       | to                | content               |
+       | <%=@admin.email%> | activate your account |
   })
+  end
   match = @mail_content.match(/https?:\/\/[\S]+.mozy[\S]+.[\S]+\/registration\/admin_confirm\/[\S]+/)
   @activate_email_query = match[0] unless match.nil?
 

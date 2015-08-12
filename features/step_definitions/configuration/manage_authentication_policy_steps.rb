@@ -17,6 +17,11 @@ When /^I select Horizon Manager with organization name (.*)$/ do |org_name|
   end
 end
 
+And /^I (check|uncheck) enable sso for admins to log in with their network credentials$/ do |type|
+  checked = (type == 'check'? true:false)
+  @bus_site.admin_console_page.authentication_policy_section.check_admin_sso(checked)
+end
+
 When /^I Test Connection for (Horizon Manager|AD)$/ do |provider|
   case provider
   when "Horizon Manager"

@@ -31,8 +31,9 @@ Given /^I log in (bus admin console|to legacy bus01) as administrator$/ do |envi
   end
 end
 
-And /^I login as mozypro admin successfully$/ do
-  @bus_site.admin_console_page.get_partner_name_topcorner.should eq(@partner.company_info.name)
+And /^I login as (.+) admin successfully$/ do |admin|
+  admin = @partner.company_info.name  if admin == 'mozypro'
+  @bus_site.admin_console_page.get_partner_name_topcorner.should eq(admin)
 end
 
 When /^I navigate to bus admin console login page$/ do
@@ -46,6 +47,8 @@ When /^I navigate to (.+) user login page$/ do |subdomain|
 end
 
 When /^I log in bus admin console with user name (.+) and password (.+)$/ do |username, password|
+  username.replace ERB.new(username).result(binding)
+  password.replace ERB.new(password).result(binding)
   @bus_site.login_page.login(username, password)
 end
 

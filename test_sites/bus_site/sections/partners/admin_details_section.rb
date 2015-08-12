@@ -17,10 +17,15 @@ module Bus
     element(:admin_parent_select, xpath: "//select[@name='target_admin[parent_admin_id]']")
     element(:admin_info_submit_btn, xpath: "//div[contains(@id, 'admininfobox')]//input[@value='Save Changes']")
     element(:admin_info_message_txt, xpath: "//div[contains(@id, 'admininfobox')]//ul/li")
+    element(:admin_id_txt, xpath: "//div[contains(@id, 'admin-show-')]/div[2]/dl[2]/dd")
 
+    # change amdin password
+    element(:change_admin_password_link, xpath: "//div[contains(@id,'admin-show')]//li//a[text()='Change Password']")
+    element(:new_password_tb, xpath: "//input[@id='new_password']")
+    element(:new_password_confirm_tb, xpath: "//input[@id='new_password_confirmation']")
+    element(:new_password_change_btn, xpath: "//div[contains(@id,'admin-pass-change')]//input[@value='Save Changes']")
+    element(:change_admin_pwd_msg_txt, xpath: "//div[contains(@id,'admin-show')]/ul/li")
 
-
-    # Public: activate an admin account
     #
     # new_pwd - a password for account
     # pwd_confirm - password confirmation
@@ -30,6 +35,7 @@ module Bus
     #   activate_admin("test1234","test1234")
     #
     # Returns nothing
+
     def activate_admin(new_pwd,pwd_confirm)
       activate_admin_link.click
       new_pwd_txt.type_text(new_pwd)
@@ -60,6 +66,12 @@ module Bus
       alert_accept
       pw_tb.set(admin_password)
       submit_btn.click
+      text = ""
+      if alert_present?
+        text = alert_text
+        alert_accept
+      end
+      return text
     end
 
     def set_admin_email(email)
@@ -83,7 +95,21 @@ module Bus
     end
 
     def admin_id
-      find(:xpath, "//div[contains(@id, 'admin-show-')]/div[2]/dl[2]/dd").text
+      admin_id_txt.text
     end
+
+    def change_admin_pwd(password)
+      change_admin_password_link.click
+      wait_until_bus_section_load
+      new_password_tb.type_text(password)
+      new_password_confirm_tb.type_text(password)
+      new_password_change_btn.click
+      wait_until_bus_section_load
+    end
+
+    def change_admin_pwd_msg
+      change_admin_pwd_msg_txt.text
+    end
+
   end
 end

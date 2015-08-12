@@ -7,7 +7,7 @@
 #   fill in confirm password with default password
 #   click 'Save Changes'
 #
-When /^I activate new partner admin with (default password|Hipaa password)$/ do |password|
+When /^I activate new partner admin with (default password|Hipaa password)$/ do |password_type|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_partner'])
   @bus_site.admin_console_page.search_list_partner_section.search_partner(@partner.admin_info.email)
   @bus_site.admin_console_page.search_list_partner_section.view_partner_detail(@partner.admin_info.email)
@@ -82,4 +82,31 @@ end
 
 When /^I close the admin details section$/ do
   @bus_site.admin_console_page.admin_details_section.close_bus_section
+end
+
+Then /^Admin information in List Admins section should be correct$/ do |admin_info|
+  actual = @bus_site.admin_console_page.list_admins_section.list_admins_table_hashes[0]
+  expected = admin_info.rows[0]
+  actual.should == expected
+end
+
+When /^I delete admin with (default password|Hipaa password|reset password|Standard password)$/ do |pwd|
+  @alert_text = @bus_site.admin_console_page.admin_details_section.delete_admin(pwd)
+end
+
+Then /^error message when delete admin will be$/ do |msg|
+  @alert_text.strip.should == msg.strip
+end
+
+Then /^I should not search out admin record$/ do
+  @bus_site.admin_console_page.search_admins_section.search_admin_table_empty.should == true
+end
+
+When /^I change admin password to (default password|Hipaa password|reset password|Standard password)$/ do |password|
+  @bus_site.admin_console_page.admin_details_section.change_admin_pwd(password)
+end
+
+Then /^I can change admin password successfully$/ do
+  string = "The password for " + @admin.name + " has been changed."
+  @bus_site.admin_console_page.admin_details_section.change_admin_pwd_msg.strip.should == string
 end

@@ -86,10 +86,16 @@ module KeylessDeviceActivation
       @company_type = company_type
       @codename = "mozypro"
       @client_name = "BAC#{Time.now.strftime("%m%d%H%M%S")}"
-      @client_id = client_id
-      @client_id = "bac#{Time.now.strftime("%m%d%H%M%S")}" if client_id.nil?
-      @client_secret = client_secret
-      @client_secret = "bac#{Time.now.strftime("%m%d%H%M%S")}" if client_secret.nil?
+      if client_id.nil?
+        @client_id = "bac#{Time.now.strftime("%m%d%H%M%S")}"
+      else
+        @client_id = client_id
+      end
+      if client_secret.nil?
+        @client_secret = "bac#{Time.now.strftime("%m%d%H%M%S")}"
+      else
+        @client_secret = client_secret
+      end
       @random_value = ""; 16.times{@random_value  << (65 + rand(25)).chr}
       @random_value = ""; 16.times{@random_value  << (65 + rand(25)).chr}
       @random_value = ""; 16.times{@random_value  << (65 + rand(25)).chr}

@@ -141,7 +141,7 @@ When /^I delete partner account with password (.+)$/ do | pw |
   warning_msg.should include("Incorrect password.")
 end
 
-When /^Add New Admin success message should be displayed$/ do
+Then /^Add New Admin success message should be displayed$/ do
   @bus_site.admin_console_page.add_new_admin_section.messages.should == "New Admin created. Please have the Admin check his or her email to complete the process."
 end
 
@@ -163,3 +163,6 @@ end
 When /^I save the admin email as existing admin email$/ do
   @existing_admin_email = @admin.email
 end
+
+
+

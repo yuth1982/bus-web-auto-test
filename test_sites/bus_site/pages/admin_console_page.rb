@@ -85,6 +85,7 @@ module Bus
 
     # Private element
     element(:current_admin_div, id: 'identify-me')
+    element(:current_admin_name_link, xpath: "//div[@id='identify-me']/a[2]")
     element(:stop_masquerading_link, xpath: "//a[text()='stop masquerading']")
     element(:quick_link_item, id: "nav-cat-quick")
 
@@ -222,6 +223,10 @@ module Bus
     def open_partner_details_from_header(partner)
       partner_created(partner)
       go_to_partner_info(partner)
+    end
+
+    def open_account_details_from_header
+      current_admin_name_link.click
     end
 
     # pro section

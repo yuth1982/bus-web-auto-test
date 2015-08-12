@@ -51,6 +51,9 @@ module Bus
     element(:provider_ldap_push_rd, id: "data_provider_ldap_push")
     element(:provider_horizon_rd, id: "data_provider_horizon")
 
+    # Enable SSO for Admins to log in with their network credentials
+    element(:enable_sso_admin_chexkbox, id: "data_allow_admin_login_via_sso")
+
     # Public: Select authentication provider
     #
     # Example
@@ -110,6 +113,15 @@ module Bus
         auth_config_fields.check
       else
         auth_config_fields.uncheck
+      end
+    end
+
+    # check enable SSO for Admins to log in with their network credentials
+    def check_admin_sso(check = true)
+      if check
+        enable_sso_admin_chexkbox.check
+      else
+        enable_sso_admin_chexkbox.uncheck
       end
     end
 
