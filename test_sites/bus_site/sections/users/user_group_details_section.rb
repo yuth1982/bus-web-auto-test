@@ -18,6 +18,11 @@ module Bus
     element(:submit_stash_status_btn, xpath: "//input[contains(@onclick,'submit_stash_status')]")
     element(:add_stash_to_all_users_link, xpath: "//a[contains(@onclick,'enable_stash_for_all_confirm')]")
     element(:add_stash_to_all_link, xpath: "//a[text()='Enable sync for all users']")
+
+    # client configuration section
+    element(:desktop_selected_option, xpath: "//div/label[text()='Desktop']/../select/option[@selected='selected']")
+    element(:server_selected_option, xpath: "//div/label[text()='Server']/../select/option[@selected='selected']")
+
     # Public: User group details information
     #
     # Example:
@@ -109,5 +114,27 @@ module Bus
       wait_until_bus_section_load
       users_list_table_rows.map{ |row| Hash[*users_list_table_headers.zip(row).flatten] }
     end
+
+    def click_tab(tab_name)
+      find(:xpath, "//li[text()='#{tab_name}']").click
+    end
+
+    def desktop_config_value
+
+      if all(:xpath, "//div/label[text()='Desktop']/../select/option[@selected='selected']").size > 0
+        desktop_selected_option.text
+      else
+        "None (Inherited defaults from parent partner)"
+      end
+    end
+
+    def server_config_value
+      if all(:xpath, "//div/label[text()='Server']/../select/option[@selected='selected']").size > 0
+        server_selected_option.text
+      else
+        "None (Inherited defaults from parent partner)"
+      end
+    end
+
   end
 end

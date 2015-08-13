@@ -14,7 +14,7 @@ Feature: BUS smoke test
       | company name                                         | period | base plan | coupon                | net terms | server plan |
       | Internal Mozy - Reseller BUS Smoke Test 3849-7653-73 | 1      | 50 GB     | <%=QA_ENV['coupon']%> | yes       | yes         |
     And New partner should be created
-    And the standard partner has activated the admin account
+    And the partner has activated the admin account with default password
     And I go to account
     Then I login as mozypro admin successfully
     Given I log in bus admin console as administrator

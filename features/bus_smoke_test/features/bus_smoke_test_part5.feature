@@ -14,7 +14,7 @@ Feature: BUS smoke test
       | company name                                                 | period | base plan | create under    | server plan | net terms | country | coupon                |
       | Internal Mozy - Reseller Ireland BUS Smoke Test 7531-8642-90 | 12     | 10 GB     | MozyPro Ireland | yes         | yes       | Ireland | <%=QA_ENV['coupon']%> |
     And New partner should be created
-    And the standard partner has activated the admin account
+    And the partner has activated the admin account with default password
     And I go to account
     Then I login as mozypro admin successfully
 

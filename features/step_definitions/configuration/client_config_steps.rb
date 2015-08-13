@@ -8,6 +8,7 @@ Then /^I create a new client config:$/ do |table|
   @client_config.type = attributes['type']
   @client_config.ckey = attributes['ckey']
   @client_config.user_group = attributes['user group']
+  @client_config.user_group_2 = attributes['user group 2']
   @client_config.private_key = attributes['private_key']
   @client_config.throttle = (attributes['throttle'] || "no").eql?("yes")
   @client_config.throttle_amount = attributes['throttle amount']
@@ -19,6 +20,20 @@ end
 Then /^client configuration section message should be (.+)/ do |message|
   @bus_site.admin_console_page.client_config_section.cc_iframe.messages == message
 end
+
+Then /^I edit the new created config (.+)$/ do |client_config_name|
+  @bus_site.admin_console_page.client_config_section.cc_iframe.edit_client_config(client_config_name)
+end
+
+Then /^I remove user group: (.+) from the configuration$/ do |user_group_name|
+  @bus_site.admin_console_page.client_config_section.cc_iframe.remove_group_from_config(user_group_name)
+end
+
+Then /^I save the client configuration changes$/ do
+  @bus_site.admin_console_page.client_config_section.cc_iframe.save_client_configs
+end
+
+
 
 Then /^I delete configuration (.+)/ do |client_config|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['client_configuration'])

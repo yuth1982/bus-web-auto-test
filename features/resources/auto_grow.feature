@@ -143,7 +143,7 @@ Feature: Auto Grow
       | Machine 1    | <%=@users.first.email%> | Desktop      |
     And I get the machine id for client 0 by license key <%=@clients.first.license_key%>
     And I upload data to device
-      | machine_id                     | GB | user_name               |
+      | machine_id                     | GB | user_email              |
       | <%=@clients.first.machine_id%> | 6  | <%=@users.first.email%> |
     Then tds return message should be:
     """
@@ -153,7 +153,7 @@ Feature: Auto Grow
     And I clear user search results
     Then User search results should be:
       | User                    | Name          | User Group  | Machines | Storage | Storage Used |
-      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 1        | Shared  | 4.7 GB       |
+      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 1        | Shared  | 5 GB         |
       | <%=@users[2].email%>    | Jane Limited  | Limited UG  | 0        | Shared  | None         |
       | <%=@users[1].email%>    | John Shared   | Shared UG   | 0        | Shared  | None         |
     And I view details of <%=@users[1].email%>'s user group
@@ -186,7 +186,7 @@ Feature: Auto Grow
       | Machine 2    | <%=@users[2].email%> | Desktop      |
     And I get the machine id for client 1 by license key <%=@clients[1].license_key%>
     And I upload data to device
-      | machine_id                  | GB | user_name            |
+      | machine_id                  | GB | user_email           |
       | <%=@clients[1].machine_id%> | 4  | <%=@users[2].email%> |
     Then tds return message should be:
     """
@@ -196,8 +196,8 @@ Feature: Auto Grow
     And I clear user search results
     Then User search results should be:
       | User                    | Name          | User Group  | Machines | Storage | Storage Used |
-      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 1        | Shared  | 4.7 GB       |
-      | <%=@users[2].email%>    | Jane Limited  | Limited UG  | 1        | Shared  | 2.8 GB       |
+      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 1        | Shared  | 5 GB         |
+      | <%=@users[2].email%>    | Jane Limited  | Limited UG  | 1        | Shared  | 3 GB         |
       | <%=@users[1].email%>    | John Shared   | Shared UG   | 0        | Shared  | None         |
     And I view details of <%=@users[1].email%>'s user group
     Then User group details should be:
@@ -229,20 +229,20 @@ Feature: Auto Grow
       | Machine 3    | <%=@users[1].email%> | Server       |
     And I get the machine id for client 2 by license key <%=@clients[2].license_key%>
     And I upload data to device
-      | machine_id                  | GB | user_name            |
+      | machine_id                  | GB | user_email           |
       | <%=@clients[2].machine_id%> | 18 | <%=@users[1].email%> |
     Then tds returns successful upload
     And I navigate to Search / List Users section from bus admin console page
     And I clear user search results
     Then User search results should be:
       | User                    | Name          | User Group  | Machines | Storage | Storage Used |
-      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 1        | Shared  | 4.7 GB       |
-      | <%=@users[2].email%>    | Jane Limited  | Limited UG  | 1        | Shared  | 2.8 GB       |
-      | <%=@users[1].email%>    | John Shared   | Shared UG   | 1        | Shared  | 16.8 GB      |
+      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 1        | Shared  | 5 GB         |
+      | <%=@users[2].email%>    | Jane Limited  | Limited UG  | 1        | Shared  | 3 GB         |
+      | <%=@users[1].email%>    | John Shared   | Shared UG   | 1        | Shared  | 18 GB        |
     And I view details of <%=@users[1].email%>'s user group
     Then User group details should be:
       | Available Quota: |
-      | -5 GB(Shared)    |
+      | -6 GB(Shared)    |
     And I close the user group detail page
     And I close the user detail page
     And I view details of <%=@users.first.email%>'s user group
@@ -254,23 +254,23 @@ Feature: Auto Grow
     And I view details of <%=@users[2].email%>'s user group
     Then User group details should be:
       | Available Quota:     |
-      | -5 GB(Limited: 3 GB) |
+      | -6 GB(Limited: 3 GB) |
     And I close the user group detail page
     And I close the user detail page
     And I navigate to Resource Summary section from bus admin console page
     Then Bundled storage summary should be:
-      | Available | Used    |
-      | 0         | 24.6 GB |
+      | Available | Used  |
+      | 0         | 26 GB |
     When I stop masquerading
     And I search partner by:
       | name          | filter |
       | @company_name | None   |
     And I view partner details by newly created partner company name
     And Partner pooled storage information should be:
-      | Used    | Available | Assigned | Used | Available | Assigned  |
-      | 24.6 GB | 0         | 20 GB    | 3    | Unlimited | Unlimited |
+      | Used  | Available | Assigned | Used | Available | Assigned  |
+      | 26 GB | 0         | 20 GB    | 3    | Unlimited | Unlimited |
     And the overdraft script should report:
     """
-    Partner <%=@current_partner[:id]%> is using autogrow and is overdrafted on its Generic license by 5 GB
+    Partner <%=@current_partner[:id]%> is using autogrow and is overdrafted on its Generic license by 6 GB
     """
     And I search and delete partner account by newly created partner company name

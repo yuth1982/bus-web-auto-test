@@ -17,6 +17,7 @@ module Bus
     section(:authentication_policy_section, AuthenticationPolicySection, id: 'authentication_policies-edit')
     section(:client_config_section, ClientConfigSection, id: 'setting-edit_client_config')
     section(:add_new_pro_plan_section, AddNewProPlanSection, id: 'plan-pro_new')
+    section(:edit_password_policy_section, EditPasswordPolicySection, id: 'setting-edit_password_policy')
 
     # Users section
     section(:search_list_users_section, SearchListUsersSection, id: 'user-list')
@@ -77,6 +78,7 @@ module Bus
 
     # internal tools
     section(:manage_vatfx_rates_section, ManageVATTXRatesSection, id: "internal-add_vat_rate")
+    section(:manage_pending_deletes_section, ManagePendingDeletesSection, id: "internal-manage_pending_deletes")
 
     # Private element
     element(:current_admin_div, id: 'identify-me')

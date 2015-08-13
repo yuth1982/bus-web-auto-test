@@ -6,7 +6,7 @@ module Bus
     element(:config_license_type_id_select, id: 'config_license_type_id')
     element(:next_btn, css: 'div#blank-div>form input[value=Next]')
 
-    # tabs
+    # tabs when create config
     element(:preferences_tab, xpath: "//div[@id='setting-edit_client_config-tabs']/ul/li")
     element(:scheduling_tab, xpath: "//div[@id='setting-edit_client_config-tabs']/ul/li[2]")
     element(:bandwidth_throttling_tab, xpath: "//div[@id='setting-edit_client_config-tabs']/ul/li[3]")
@@ -17,6 +17,9 @@ module Bus
     element(:user_groups, xpath: "//div[@id='setting-edit_client_config-tabs']/ul/li[7]")
     element(:add_user_groups, xpath: "//div[@id='config-user-groups']/p[2]/a")
     element(:choose_user_groups, xpath: "//div[@id='config-user-groups']/table/tbody/tr[3]/td/label/input")
+
+    #tabs when edit config
+    element(:user_groups_edit, xpath: "//li[text()='User Groups']")
 
     element(:ckey_radio, xpath: "//input[@id='userinfo.allowed_encryption_key_sources.adminurl']")
     element(:ckey_input, xpath: "//input[@id='userinfo.encryption_key_url']")
@@ -46,22 +49,21 @@ module Bus
       preferences_tab.click
       if !client_config.private_key.nil?
         default_key_check.click
-        if !client_config.user_group.nil?
-          user_groups.click
-          sleep 1
-          add_user_groups.click
-          choose_user_groups.click
-        end
       end
 
       if !client_config.ckey.nil?
         ckey_radio.click
         ckey_input.type_text(client_config.ckey)
-        if !client_config.user_group.nil?
-          user_groups.click
-          sleep 1
-          add_user_groups.click
-          choose_user_groups.click
+      end
+
+      if !client_config.user_group.nil?
+        user_groups.click
+        add_user_groups.click
+        user_group1_xpath = "//div[@id='config-user-groups']//label[text()='#{client_config.user_group}']/input"
+        find(:xpath, user_group1_xpath).click
+        if !client_config.user_group_2.nil?
+          user_group2_xpath = "//div[@id='config-user-groups']//label[text()='#{client_config.user_group_2}']/input"
+          find(:xpath, user_group2_xpath).click
         end
       end
 
@@ -76,6 +78,21 @@ module Bus
 
 
       client_config_save_changes_btn.click
+    end
+
+    def remove_group_from_config(group_name)
+      user_groups_edit.click
+      add_user_groups.click if add_user_groups.visible?
+      user_group1_xpath = "//div[@id='config-user-groups']//label[text()='#{group_name}']/input"
+      find(:xpath, user_group1_xpath).uncheck
+    end
+
+    def save_client_configs
+      client_config_save_changes_btn.click
+    end
+
+    def edit_client_config client_config_name
+      find_link(client_config_name).click
     end
 
     # Public: Messages for client configuration section

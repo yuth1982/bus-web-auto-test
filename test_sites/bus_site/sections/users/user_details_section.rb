@@ -588,7 +588,11 @@ module Bus
             confirm ? alert_accept : alert_dismiss
           end
         when 'user'
-          #TODO
+          case action
+            when 'remove'
+              find(:xpath, "//a[contains(@id,'remove-user-storage-max')]").click
+              alert_accept
+          end
       end
 
       if action == 'save' or action == 'remove'

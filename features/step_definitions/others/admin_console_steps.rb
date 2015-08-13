@@ -168,7 +168,7 @@ Given /^I verify Skeletor by visiting url$/ do
   @bus_site.admin_console_page.visit_skeletor_url
 end
 
-When /^the standard partner has activated the admin account$/ do
+When /^the partner has activated the admin account with (default password|Hipaa password)$/ do |password|
   step %{I retrieve email content by keywords:}, table(%{
     | to               | content                             |
     | @new_admin_email | activate your administrator account |
@@ -177,7 +177,7 @@ When /^the standard partner has activated the admin account$/ do
   @activate_email_query = match[0] unless match.nil?
 
   @bus_site.admin_console_page.open_admin_activate_page(@activate_email_query)
-  @bus_site.admin_console_page.set_admin_password(CONFIGS['global']['test_pwd'])
+  @bus_site.admin_console_page.set_admin_password(password)
 end
 
 When /^I go to account$/ do
