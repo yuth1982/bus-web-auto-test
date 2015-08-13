@@ -73,7 +73,7 @@ Feature: BUS smoke test
       | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 |
     When I create a new client config:
       | name                | user group   | type   |
-      | smoke_client_config | group-test-1 | Server |
+      | smoke_client_config | test-group-1 | Server |
     Then client configuration section message should be Your configuration was saved.
 
   @bus_emea @TC.125972
