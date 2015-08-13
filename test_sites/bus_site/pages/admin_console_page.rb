@@ -75,6 +75,13 @@ module Bus
     section(:new_email_alerts_section, NewEmailAlertsSection, xpath: "//div[@id='alerts-new']")
     section(:show_email_alerts_section, ShowEmailAlertsSection, xpath: "//div[starts-with(@id,'alerts-show')]")
 
+    # backupcleint section
+    section(:create_new_version_section, CreateNewVersionSection, id: "version-new")
+    section(:list_versions_section, ListVersionsSection, id: "version-list")
+    section(:version_show_section, VersionShowSection, css: 'div[id^=version-show-]')
+    #section(:upgrade_rules_section, UpgradeRulesSection, id: 'version-rules')
+
+
     # support section
     section(:contact_section, ContactSection, xpath: "//a[text()='Contact']")
 
