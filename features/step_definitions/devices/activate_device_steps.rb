@@ -20,12 +20,13 @@ When /^I use keyless activation to activate devices(| unsuccessful| newly)$/  do
   partner_name = (@partner && @partner.company_info.name) || @current_partner[:name]
   @current_partner[:id] ||= @bus_site.admin_console_page.partner_id
   @user_password = CONFIGS['global']['test_pwd'] unless !@user_password.nil?
+  region = attr['user_region'] || attr['ug_region'] || attr['partner_region'] || 'qa'
 
   @new_clients =[]
   @clients =[] if @clients.nil?
   # when run cases in a batch, sometimes need to clear the @client array for a new case if need to activate multiple devices and get all the license keys
   @clients = [] if type == ' newly'
-  client = KeylessClient.new(user_email, @user_password, @current_partner[:id], partner_name, attr['machine_type'], @partner.partner_info.type, nil, nil, nil, attr['machine_name'])
+  client = KeylessClient.new(user_email, @user_password, @current_partner[:id], partner_name, attr['machine_type'], @partner.partner_info.type, nil, nil, nil, attr['machine_name'], region)
   client.activate_client_devices
   @license_key = client.license_key
   if type.include?('unsuccessful')

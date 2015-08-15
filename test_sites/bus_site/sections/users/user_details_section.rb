@@ -32,6 +32,11 @@ module Bus
     element(:cancel_stash_btn, xpath: "//form[starts-with(@id,'stash-form-')]//a[text()='(cancel)']")
     element(:send_invitation_link, xpath: "//a[text()='(Send Invitation Email)']")
 
+    # Install Region Override
+    element(:change_region_link, xpath: "//form[contains(@id,'install-region-override-form')]/span[1]/a")
+    element(:change_region_select, xpath: "//div[@class='show-details']//select[@id='install_region_override']")
+    element(:change_region_submit_btn, xpath: "//form[contains(@id,'install-region-override-form')]/span[2]/input")
+
     # Change Stash Quota
     element(:change_stash_quota_link, css: "a[id^=edit_quota_for_user_show]")
     element(:cancel_change_stash_quota_link, css: "a[id^=cancel_edit_quota_for_user_show_]")
@@ -507,6 +512,19 @@ module Bus
       new_password_tb.type_text(password)
       new_password_confirm_tb.type_text(password)
       new_password_change_btn.click
+      text = alert_text
+      alert_accept
+      text
+    end
+
+    def edit_password_with_incorrect_pass(password)
+      if !new_password_tb.visible?
+        change_user_password_link.click
+        wait_until_bus_section_load
+      end
+      new_password_tb.type_text(password)
+      new_password_confirm_tb.type_text(password)
+      new_password_change_btn.click
       wait_until { alert_present? }
       text = alert_text
       alert_accept
@@ -664,6 +682,13 @@ module Bus
 
     def click_user_group_details_link
       user_group_details_link.click
+    end
+
+    # Install Region Override
+    def change_region(region)
+      change_region_link.click
+      change_region_select.select(region)
+      change_region_submit_btn.click
     end
 
     private

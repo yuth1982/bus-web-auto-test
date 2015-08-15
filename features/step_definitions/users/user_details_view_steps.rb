@@ -400,3 +400,7 @@ When /^I search and delete user account if it exists by (.+)/ do |account_name|
     @bus_site.admin_console_page.user_details_section.delete_user
   end
 end
+
+When /^I change user install override region to (.+)/ do |region|
+  @bus_site.admin_console_page.user_details_section.change_region(region)
+end

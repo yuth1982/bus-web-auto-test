@@ -77,8 +77,13 @@ module Bus
     #   @bus_site.admin_console_page.search_list_machine_section.view_machine_details("AUTOTEST")
     #
     # @return [] nothing
-    def view_machine_details(machine_name)
-      find_link(machine_name).click
+    def view_machine_details(machine_or_user)
+      if machine_or_user.include?('@')
+        find(:xpath, "//a[text()='#{machine_or_user}']/../../td[2]/a").click
+      else
+        wait_until{ find_link(machine_or_user).visible? }
+        find_link(machine_or_user).click
+      end
     end
 
     def search_list_machines_opened

@@ -76,8 +76,8 @@ module KeylessDeviceActivation
   #The client should send the user credentials, username and password,
   #to Mozy Auth service to exchange an access token. This requires two API calls.
   class KeylessClient
-    attr_accessor :username, :password, :license_key, :machine_alias, :machine_id, :machine_hash, :company_type, :response, :device_type, :access_token
-    def initialize(username, password, partner_id, partner_name, device_type, company_type, client_id = nil, client_secret = nil, machine_hash = nil, machine_name = nil)
+    attr_accessor :username, :password, :license_key, :machine_alias, :machine_id, :machine_hash, :company_type, :response, :device_type, :access_token, :region
+    def initialize(username, password, partner_id, partner_name, device_type, company_type, client_id = nil, client_secret = nil, machine_hash = nil, machine_name = nil, region=nil)
       @username = username
       @password = password
       @partner_id = partner_id
@@ -109,6 +109,7 @@ module KeylessDeviceActivation
       @access_token = {}
       @license_key = ""
       @response = ""
+      @region = region || 'qa'
     end
 
     def activate_client_devices(access_token = nil)
@@ -240,7 +241,7 @@ module KeylessDeviceActivation
       uri = URI.parse("#{QA_ENV['bus_host']}")
       Net::HTTP.start(uri.host, uri.port,
                       :use_ssl => uri.scheme == 'https', :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
-        url =  "/client/devices/#{@machine_hash}/activate?alias=#{@machine_alias}&mac_hash=#{@mac}&sid_hash=#{@sid}&country=US&type=#{@device_type}&codename=#{@codename}"
+        url =  "/client/devices/#{@machine_hash}/activate?alias=#{@machine_alias}&mac_hash=#{@mac}&sid_hash=#{@sid}&country=US&type=#{@device_type}&codename=#{@codename}&region=#{@region}"
         request = Net::HTTP::Put.new( url )
         Log.debug url
         request.add_field("Authorization", "Bearer #{Base64.strict_encode64(@access_token["access_token"])}")

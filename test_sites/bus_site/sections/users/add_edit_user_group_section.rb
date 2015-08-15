@@ -8,6 +8,7 @@ module Bus
     # Common
     element(:group_name_tb, id: 'name')
     element(:storage_device_err_p, id: 'show_storage_device_warning_row')
+    element(:install_region_override_select, id: 'install_region_override')
     # For bundled
     element(:generic_storage_type_select, css: 'select[id^=Generic_storage_pool_type_]')
     element(:generic_assigned_tb, id: 'Generic_storage_assigned')
@@ -53,6 +54,9 @@ module Bus
         else
           enable_stash_cb.uncheck
         end
+      end
+      unless ug.install_region_override.nil?
+        install_region_override_select.select(ug.install_region_override)
       end
       save_ug_btn.click
     end

@@ -65,3 +65,7 @@ end
 Then /^I delete the newly downloaded file$/ do
   @bus_site.admin_console_page.machine_details_section.delete_manifest_file(@file_name)
 end
+
+Then /^I delete the machine$/ do
+  @bus_site.admin_console_page.machine_details_section.delete_machine
+end
