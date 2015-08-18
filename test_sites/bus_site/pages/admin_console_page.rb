@@ -72,6 +72,8 @@ module Bus
     section(:add_report_section, AddReportSection, xpath: "*")
     section(:scheduled_reports_section, ScheduledReportsSection, id: "jobs-index")
     section(:quick_reports_section, QuickReportsSection, id: "jobs-quick_reports")
+    section(:new_email_alerts_section, NewEmailAlertsSection, xpath: "//div[@id='alerts-new']")
+    section(:show_email_alerts_section, ShowEmailAlertsSection, xpath: "//div[starts-with(@id,'alerts-show')]")
 
     # support section
     section(:contact_section, ContactSection, xpath: "//a[text()='Contact']")
