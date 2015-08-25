@@ -2,7 +2,7 @@ And /^I login my support successfully$/ do
   @bus_site.mysupport_page.logged_in
 end
 
-Then /^I click (.+)$/ do |link|
+Then /^I click (.+) on contact section$/ do |link|
   @bus_site.admin_console_page.contact_section.click_link_in_contact_section(link)
 end
 

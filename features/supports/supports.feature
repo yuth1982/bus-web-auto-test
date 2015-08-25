@@ -11,21 +11,21 @@ Feature: Supports on BUS
     And New partner should be created
     Then I act as newly created partner account
     When I navigate to Contact section from bus admin console page
-    And I click Community
+    And I click Community on contact section
     Then I login my support successfully
     When I log in bus admin console as administrator
     And I act as partner by:
     | email        |
     | @admin_email |
     When I navigate to Contact section from bus admin console page
-    And I click Knowledge Base
+    And I click Knowledge Base on contact section
     Then I login my support successfully
     When I log in bus admin console as administrator
     And I act as partner by:
       | email        |
       | @admin_email |
     When I navigate to Contact section from bus admin console page
-    And I click Documentation
+    And I click Documentation on contact section
     Then I login my support successfully
     When I log in bus admin console as administrator
     And I act as partner by:
@@ -39,7 +39,7 @@ Feature: Supports on BUS
       | email        |
       | @admin_email |
     When I navigate to Contact section from bus admin console page
-    And I click 24/7 Live Chat Support
+    And I click 24/7 Live Chat Support on contact section
     Then I login my support successfully
     Then I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
