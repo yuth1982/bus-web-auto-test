@@ -54,7 +54,7 @@ module Bus
       email_alerts
     end
 
-    def send_now()
+    def send_now
       send_now_a.click
     end
 
@@ -68,10 +68,10 @@ module Bus
           "Users with outdated clients" => "outdated_clients"
       }
       subject_line_a.click
-      edit_subject_line_input.type_text(email_alerts.subject_line)
+      edit_subject_line_input.type_text(email_alerts.subject_line) unless email_alerts.subject_line.nil?
       subject_save_changes_input.click
       frequency_a.click
-      edit_frequency_select.select(email_alerts.frequency)
+      edit_frequency_select.select(email_alerts.frequency) unless email_alerts.frequency.nil?
       frequency_save_changes_input.click
       edit_report_modules_li.click
       reports_hash.each_key do |r|
@@ -97,6 +97,12 @@ module Bus
       end
       find(:xpath, "//p/input[@value='Save Changes']").click
     end
+
+    def delete_email_alert
+      delete_alert_a.click
+    end
+
+
 
 
   end

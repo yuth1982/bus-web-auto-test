@@ -1,3 +1,7 @@
+Then /^I expand the add email alert$/ do
+  @bus_site.admin_console_page.new_email_alerts_section.expand_add_email_alert
+end
+
 Then /^I add a new email alert:$/ do|table|
   @email_alerts = Bus::DataObj::EmailAlerts.new
   email_alerts_hash = table.hashes.first
@@ -8,7 +12,7 @@ Then /^I add a new email alert:$/ do|table|
   @email_alerts.frequency = email_alerts_hash["frequency"] unless email_alerts_hash['frequency'].nil?
   @email_alerts.report_modules = email_alerts_hash["report modules"].split("\;")
   @email_alerts.scope = email_alerts_hash["scope"] unless email_alerts_hash['scope'].nil?
-  @email_alerts.recipients = email_alerts_hash["recipients"].split("\;")  unless email_alerts_hash['recipients'].nil?
+  @email_alerts.recipients = email_alerts_hash["recipients"].split("\;") unless email_alerts_hash['recipients'].nil?
   @email_alerts.percent_quota_used = email_alerts_hash["Percent quota used"] unless email_alerts_hash['Percent quota used'].nil?
   @bus_site.admin_console_page.new_email_alerts_section.add_new_email_alert(@email_alerts)
 
@@ -52,3 +56,31 @@ Then /^I modify email alert to:$/ do|table|
   @email_alerts.recipients = email_alerts_hash["recipients"].split(";") || email_alerts_hash["recipients"] unless email_alerts_hash['recipients'].nil?
   @bus_site.admin_console_page.show_email_alerts_section.modify_email_alert(@email_alerts)
 end
+
+Then /^I delete the email alert$/ do
+  @bus_site.admin_console_page.show_email_alerts_section.delete_email_alert
+end
+
+Then /^The email alert (.+) should be deleted$/ do |email_alert|
+  @bus_site.admin_console_page.new_email_alerts_section.find_email_alert(email_alert).should == 0
+end
+
+Then /^I get text for user group (.+) from email content$/ do |user_group|
+  match = @mail_content.match(/#{user_group}\s*.*\s*.*\s*.*/)
+  @verify_email_query = match[0] unless match.nil?
+end
+
+Then /^The email content should include (.+)$/ do |content|
+  if @verify_email_query.nil?
+    @mail_content.should include content
+  else
+    @verify_email_query.should include content
+  end
+end
+
+Then /^I close the show email alert section$/ do
+  @bus_site.admin_console_page.show_email_alerts_section.close_bus_section
+end
+
+
+
