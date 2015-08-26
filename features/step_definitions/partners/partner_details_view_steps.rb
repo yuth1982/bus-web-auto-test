@@ -56,8 +56,12 @@ When /^I delete (partner|subpartner) account$/ do |status|
   end
 end
 
-When /^I get the partner_id$/ do
-  @partner_id = @bus_site.admin_console_page.partner_details_section.partner_id()
+When /^I get the (partner_id|subpartner_id)$/ do |type|
+  if type =='partner_id'
+    @partner_id = @bus_site.admin_console_page.partner_details_section.partner_id()
+  else
+    @partner_id = @bus_site.admin_console_page.partner_details_section.subpartner.partner_id()
+  end
   Log.debug("partner id is #{@partner_id}")
 end
 

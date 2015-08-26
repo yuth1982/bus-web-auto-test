@@ -46,8 +46,12 @@ When /^I view the admin details of (.+)$/ do |admin|
   @bus_site.admin_console_page.list_admins_section.wait_until_bus_section_load
 end
 
-When /^I get the admin id from partner details$/ do
-  @bus_site.admin_console_page.partner_details_section.find_link(@partner.admin_info.full_name).click
+When /^I get the (admin|subadmin) id from partner details$/ do |type|
+  if type == 'admin'
+    @bus_site.admin_console_page.partner_details_section.find_link(@partner.admin_info.full_name).click
+  else
+    @bus_site.admin_console_page.partner_details_section.subpartner.find_link(@subpartner.admin_name).click
+  end
   @admin_id = @bus_site.admin_console_page.admin_details_section.admin_id
   Log.debug("admin id is #{@admin_id}")
 end
