@@ -18,6 +18,7 @@ module Bus
     section(:client_config_section, ClientConfigSection, id: 'setting-edit_client_config')
     section(:add_new_pro_plan_section, AddNewProPlanSection, id: 'plan-pro_new')
     section(:edit_password_policy_section, EditPasswordPolicySection, id: 'setting-edit_password_policy')
+    section(:edit_client_version_section, EditClientVersionSection, id: 'setting-edit_client_version')
 
     # Users section
     section(:search_list_users_section, SearchListUsersSection, id: 'user-list')
@@ -81,6 +82,7 @@ module Bus
     section(:create_new_version_section, CreateNewVersionSection, id: "version-new")
     section(:list_versions_section, ListVersionsSection, id: "version-list")
     section(:version_show_section, VersionShowSection, css: 'div[id^=version-show-]')
+    section(:upgrade_rules_section, UpgradeRulesSection, id: 'version-rules')
 
 
     # support section

@@ -298,6 +298,26 @@ module MachineInfo
       return response.body
     end
   end
+
+  # curl -k -I -u "b6ccaea77a4805031cba303d5b16daee18e82b55:test1234"
+  # "https://www.mozypro.com/client/get_config?arch=deb-32&codename=MozyEnterprise&machineid=a51d2ad8bddbe091667a70203dc47be9d4a958ea&platform=linux&ver=0.0.0.2"
+  # GET get_config
+  # Returns attributes on client upgrade rules
+  # Attributes are presented as http response headers.
+  def get_client_config_info(user_hash, user_password, machine, code_name, platform, arch, ver)
+      string = "/client/get_config?arch=#{arch}&codename=#{code_name}&machineid=#{machine}&platform=#{platform}&ver=#{ver}"
+      uri = URI.parse("#{QA_ENV['bus_host']}")
+      Log.debug "curl -k -I -u \"#{user_hash}:#{user_password}\" \"#{uri+string}\""
+      Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https', :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
+         http.set_debug_output $stderr
+        Log.debug string
+        req = Net::HTTP::Get.new(string)
+        req.basic_auth(user_hash, user_password)
+        response = http.request(req)
+        return response.header
+      end
+  end
+
 end
 
 module DataShuttleSeeding

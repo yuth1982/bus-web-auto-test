@@ -40,7 +40,7 @@ Feature: As a Mozy Admin, I should be able to add new linux version and manage t
     When I navigate to List Versions section from bus admin console page
     And I list versions for:
       | platform | show disabled |
-      | linux    | true         |
+      | linux    | true          |
     And I view version details for 10.10.10.10
     And I click Brandings tab of version details
     And I upload executable FakeLinuxClient.deb for partner Mozy, Inc.
@@ -71,6 +71,151 @@ Feature: As a Mozy Admin, I should be able to add new linux version and manage t
       | Version     | Platform  | Name             | Status  |
       | 10.10.10.10 | linux     | LinuxTestVersion | enabled |
 
+  @TC.122544 @bus @regression
+  Scenario: 122544 Create Auto upgrade rule for Linux client
+    When I act as partner by:
+      | name    | including sub-partners |
+      | MozyPro | no                     |
+    And I navigate to Upgrade Rules section from bus admin console page
+    And I delete rule for version LinuxTestVersion if it exists
+    Then I add a new upgrade rule:
+      | version name      | Req? | On? | min version | max version |
+      | LinuxTestVersion  | N    | Y   | 0.0.0.1     | 0.0.0.2     |
+    And I stop masquerading as sub partner
+
+    When I search partner by Internal Mozy - MozyPro with edit user group capability
+    And I view partner details by Internal Mozy - MozyPro with edit user group capability
+    And I record the MozyPro partner name Internal Mozy - MozyPro with edit user group capability and admin name Admin Automation
+    And I get the admin id from partner details
+    And I act as newly created partner
+    And I navigate to Edit Client Version section from bus admin console page
+    Then Client Version Rules should include rule:
+      | Update To                       | User Group      | Current Version         | OS  | Required | Install Command | Options |
+      | Linux - 32 bit .deb 10.10.10.10 | All User Groups | 0.0.0.1 through 0.0.0.2 | Any | No       |                 |         |
+    And I delete client version rule for Linux - 32 bit .deb 10.10.10.10 if it exists
+    When I add new user(s):
+      | name           | user_group           | storage_type | storage_limit | devices |
+      | TC.122544.User | (default user group) | Server       | 10            | 1       |
+    Then 1 new user should be created
+    When I search user by:
+      | keywords    |
+      | @user_email |
+    And I view user details by TC.122544.User
+    And I update the user password to default password
+    Then I use keyless activation to activate devices
+      | machine_name    | user_name                   | machine_type |
+      | Machine1_122544 | <%=@new_users.first.email%> | Server       |
+    When I got client config for the user machine:
+      | user_name                   | machine                       | platform | arch   | codename | version |
+      | <%=@new_users.first.email%> | <%=@clients[0].machine_hash%> | linux    | deb-32 | mozypro  | 0.0.0.2 |
+    And I delete user
+    Then client config should contains:
+      | update-url                                      |
+      | /downloads/mozypro-deb-32-10_10_10_10-XXXXX.deb |
+
+
+  @TC.122559 @bus @regression
+  Scenario: 122559 Partner without Edit User Group capability -- have limited edit client version functionality
+    When I act as partner by:
+      | name                                                  | including sub-partners |
+      | Internal Mozy - MozyPro no edit user group capability | yes                    |
+    And I navigate to Edit Client Version section from bus admin console page
+    And the set default client version note should be:
+    """
+    Set a default client version if you wish to force your users to update to a particular version of the MozyPro software.
+    """
+    And upgrade rule should contains:
+      | Windows Default: | Mac Default: | Linux - 32 bit .deb Default: | Windows Sync Default: | Mac Sync Default: |
+      | auto-update      | auto-update  | auto-update                  | auto-update           | auto-update       |
+
+
+  @TC.122561 @bus @regression
+  Scenario: 122521 Partner without Edit User Group cap: All client version in subpartner when there is no override rule
+    When I search partner by Internal Mozy - MozyPro no edit user group capability
+    And I view partner details by Internal Mozy - MozyPro no edit user group capability
+    And I record the MozyPro partner name Internal Mozy - MozyPro no edit user group capability and admin name Admin Automation
+    And I get the admin id from partner details
+    And I act as newly created partner
+    And I navigate to Edit Client Version section from bus admin console page
+    Then upgrade rule should contains:
+      | Linux - 32 bit .deb Default: |
+      | auto-update                  |
+    And I can see version Linux - 32 bit .deb 10.10.10.10 in option list for rule linux:deb-32
+
+    When I add new user(s):
+      | name           | storage_type | storage_limit | devices |
+      | TC.122561.User | Server       | 10            | 1       |
+    Then 1 new user should be created
+    When I search user by:
+      | keywords    |
+      | @user_email |
+    And I view user details by TC.122561.User
+    And I update the user password to default password
+    Then I use keyless activation to activate devices
+      | machine_name    | user_name                   | machine_type |
+      | Machine1_122561 | <%=@new_users.first.email%> | Server       |
+    When I got client config for the user machine:
+      | user_name                   | machine                       | platform | arch   | codename | version |
+      | <%=@new_users.first.email%> | <%=@clients[0].machine_hash%> | linux    | deb-32 | mozypro  | 0.0.0.2 |
+    And I delete user
+    Then client config should contains:
+      | update-url                                      |
+      | /downloads/mozypro-deb-32-10_10_10_10-XXXXX.deb |
+
+  @TC.122549 @bus @regression
+  Scenario: 122549 Upgrade to: Partner without server license can't list Linux client version
+    When I act as partner by:
+      | name                                           | including sub-partners |
+      | Internal Mozy - MozyPro without server license | yes                    |
+    And I navigate to Edit Client Version section from bus admin console page
+    Then there is no Linux rule in client rule fieldset
+    And I stop masquerading as sub partner
+
+    When I act as partner by:
+      | name                                                   | including sub-partners |
+      | Internal Mozy - MozyEnterprise without server license  | yes                    |
+    And I navigate to Edit Client Version section from bus admin console page
+    Then there is no rule for Linux - 32 bit .deb 10.10.10.10 in Client Version Rules
+    And there is no version Linux - 32 bit .deb 10.10.10.10 in Update to list
+
+
+
+  @TC.122553 @bus @regression
+  Scenario: 122553 Client Version Rules: Create Auto update client version rule for Linux client
+    When I search partner by Internal Mozy - MozyEnterprise with edit user group capability
+    And I view partner details by Internal Mozy - MozyEnterprise with edit user group capability
+    And I record the MozyEnterprise partner name Internal Mozy - MozyEnterprise with edit user group capability and admin name Admin Automation
+    And I get the admin id from partner details
+    And I act as newly created partner
+    And I navigate to Edit Client Version section from bus admin console page
+    And I delete client version rule for Linux - 32 bit .deb 10.10.10.10 if it exists
+
+    When I add a new rule in Edit Client Version:
+      | Update To                       | Current Version >= | Current Version <= | Required |
+      | Linux - 32 bit .deb 10.10.10.10 | 0.0.0.1            | 0.0.0.2            | No       |
+    Then Client Version Rules should include rule:
+      | Update To                       | User Group      | Current Version         | OS  | Required | Install Command | Options |
+      | Linux - 32 bit .deb 10.10.10.10 | All User Groups | 0.0.0.1 through 0.0.0.2 | Any | No       |                 | Remove  |
+
+    When I add new user(s):
+      | name           | user_group           | storage_type | storage_limit | devices |
+      | TC.122553.User | (default user group) | Server       | 10            | 1       |
+    Then 1 new user should be created
+    When I search user by:
+      | keywords    |
+      | @user_email |
+    And I view user details by TC.122553.User
+    And I update the user password to default password
+    Then I use keyless activation to activate devices
+      | machine_name    | user_name                   | machine_type |
+      | Machine1_122553 | <%=@new_users.first.email%> | Server       |
+    When I got client config for the user machine:
+      | user_name                   | machine                       | platform | arch   | codename       | version |
+      | <%=@new_users.first.email%> | <%=@clients[0].machine_hash%> | linux    | deb-32 | MozyEnterprise | 0.0.0.2 |
+    And I delete user
+    Then client config should contains:
+      | update-url                                             |
+      | /downloads/MozyEnterprise-deb-32-10_10_10_10-XXXXX.deb |
 
   # Precondition: (@TC.122544) No auto rule or auto rule defined in MozyPro is 10.10.10.10
   #
