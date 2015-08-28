@@ -17,7 +17,7 @@ module Bus
     element(:admin_parent_select, xpath: "//select[@name='target_admin[parent_admin_id]']")
     element(:admin_info_submit_btn, xpath: "//div[contains(@id, 'admininfobox')]//input[@value='Save Changes']")
     element(:admin_info_message_txt, xpath: "//div[contains(@id, 'admininfobox')]//ul/li")
-    element(:admin_id_txt, xpath: "//div[contains(@id, 'admin-show-')]/div[2]/dl[2]/dd")
+    element(:admin_id_txt, xpath: "//div[contains(@id, 'admin-show-')]//dt[text()='ID:']/../dd")
 
     # change admin password
     element(:change_admin_password_link, xpath: "//div[contains(@id,'admin-show')]//li//a[text()='Change Password']")
