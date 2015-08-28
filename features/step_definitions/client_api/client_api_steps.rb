@@ -65,15 +65,15 @@ And /^Get client user resources api result should be$/ do | response_table |
     actual_stash[0]['alias'].should == 'Sync'
   end
 
-  #if there are backup machines, check the device information
+#if there are backup machines, check the device information
   if actual_backup.size > 0
-     actual_backup.each_with_index do |value, index|
-        value.should == @clients[index].machine_hash
-        value.should == @clients[index].device_type
-        value.should == @clients[index].license_key
-        value.should == @clients[index].machine_alias
-        value.should == @clients[index].machine_id
-     end
+    actual_backup.each_with_index do |value, index|
+      value['device_hash'].should == @clients[index].machine_hash
+      value['license_type'].should == @clients[index].device_type
+      value['license_key'].should == @clients[index].license_key
+      value['alias'].should == @clients[index].machine_alias
+      value['id'].should == @clients[index].machine_id
+    end
   end
 
 end
