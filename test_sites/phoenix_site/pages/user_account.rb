@@ -32,6 +32,8 @@ module Phoenix
     element(:new_email_pwd_input, id: "password")
     element(:change_email_submit_btn, xpath: "//div[@id='account-form']/table//td[2]/input")
 
+    element(:access_freyja_link, xpath:  "//a[contains(text(),'Access Files')]")
+
     # this method verifies that the acct logged into belongs to this specific user
     # the banner should match the users email address
     #   it also clicks on the main left nav items:
@@ -247,6 +249,10 @@ module Phoenix
 
     def login_error_message
       login_error.text
+    end
+
+    def access_freyja
+      access_freyja_link.click
     end
   end
 end

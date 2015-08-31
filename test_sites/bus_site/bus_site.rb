@@ -46,5 +46,13 @@ class BusSite
   def manifest_view_page
     Bus::ManifestViewPage.new
   end
+
+  def user_pid_login_page(pid, partner_type)
+    Bus::UserPartnerIDLoginPage.new(pid, partner_type)
+  end
+
+  def user_login_bus_page
+    Bus::UserLoginBusPage.new
+  end
 end
 

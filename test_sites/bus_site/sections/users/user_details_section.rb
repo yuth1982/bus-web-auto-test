@@ -531,6 +531,10 @@ module Bus
       text
     end
 
+    def has_change_user_password_link
+      all(:xpath, "//a[text()='Change User Password']").size > 0
+    end
+
     def change_device_quota(count, type=nil)
       wait_until_bus_section_load
       device_edits.each_index do |i|
@@ -689,6 +693,10 @@ module Bus
       change_region_link.click
       change_region_select.select(region)
       change_region_submit_btn.click
+    end
+
+    def click_send_activation_email_again
+      find(:xpath, "//a[text()='Send activation email again']").click
     end
 
     private

@@ -129,3 +129,7 @@ When /^I clear downloads folder$/ do
   FileHelper.clean_up_client
 end
 
+And /^I access freyja from phoenix$/ do
+  @phoenix_site.user_account.access_freyja
+end
+

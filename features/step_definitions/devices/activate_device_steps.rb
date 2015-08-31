@@ -18,7 +18,12 @@ When /^I use keyless activation to activate devices(| unsuccessful| newly)$/  do
 
   user_email = attr['user_name'].nil? ? @current_user[:email] : attr['user_name']
   partner_name = (@partner && @partner.company_info.name) || @current_partner[:name]
-  @current_partner[:id] ||= @bus_site.admin_console_page.partner_id
+  if @current_partner.nil?
+    current_partner_id = @partner_id
+  else
+    @current_partner[:id] ||= @bus_site.admin_console_page.partner_id
+    current_partner_id = @current_partner[:id]
+    end
   @user_password = CONFIGS['global']['test_pwd'] unless !@user_password.nil?
   region = attr['user_region'] || attr['ug_region'] || attr['partner_region'] || 'qa'
 
@@ -26,7 +31,7 @@ When /^I use keyless activation to activate devices(| unsuccessful| newly)$/  do
   @clients =[] if @clients.nil?
   # when run cases in a batch, sometimes need to clear the @client array for a new case if need to activate multiple devices and get all the license keys
   @clients = [] if type == ' newly'
-  client = KeylessClient.new(user_email, @user_password, @current_partner[:id], partner_name, attr['machine_type'], @partner.partner_info.type, nil, nil, nil, attr['machine_name'], region)
+  client = KeylessClient.new(user_email, @user_password, current_partner_id, partner_name, attr['machine_type'], @partner.partner_info.type, nil, nil, nil, attr['machine_name'], region)
   client.activate_client_devices
   @license_key = client.license_key
   if type.include?('unsuccessful')

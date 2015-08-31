@@ -85,9 +85,13 @@ When /^I save login page cookies (.+) value$/ do |name|
   puts "login page #{name}: #@login_page_cookie_value"
 end
 
-And /^I log in bus admin console as new partner admin$/ do
+And /^I log in bus admin console as new partner admin(.+)?$/ do|password|
   @bus_site.login_page.load
-  @bus_site.login_page.login(@partner.admin_info.email, CONFIGS['global']['test_pwd'])
+  if password.nil?
+    @bus_site.login_page.login(@partner.admin_info.email, CONFIGS['global']['test_pwd'])
+  else
+    @bus_site.login_page.login(@partner.admin_info.email, password)
+  end
 end
 
 Then /^the new partner admin should be asked to verify their email address$/ do
@@ -120,3 +124,43 @@ When /^I log into (.+) with mixed case username (.+) and (.+)$/ do |subdomain, u
   user_account = {:user_name => username, :password => password}
   @bus_site.user_login_page(subdomain, 'mozy').login(user_account)
 end
+
+When /^I navigate to user login page with partner ID$/ do
+  @bus_site = BusSite.new
+  @bus_site.user_pid_login_page(@partner_id, @partner.partner_info.type).load
+end
+
+When /^I log in bus pid console with user name (.+) and password (.+)$/ do |username, password|
+  if password.eql?('empty')
+    password = ''
+  end
+  username.replace ERB.new(username).result(binding)
+  @bus_site.user_pid_login_page(@partner_id, @partner.partner_info.type).user_login(username, password)
+end
+
+When /^I log in bus pid console with( mixed username| uppercase username| lowercase username)?:$/ do |match,table|
+  login_hash = table.hashes.first
+  login_hash.each do |_, v|
+    v.replace ERB.new(v).result(binding)
+  end
+  username = login_hash['username']
+  if !match.nil?
+    case match.strip
+      when  'mixed username'
+        until username.match(/[A-Z]/) do
+          username = username.gsub /[a-z]/i do |x| rand(2)==0 ? x.downcase : x.upcase end
+        end
+      when 'uppercase username'
+        username = username.upcase
+      when 'lowercase username'
+        username = username.downcase
+    end
+  end
+  @bus_site.user_pid_login_page(@partner_id, @partner.partner_info.type).user_login(username, login_hash['password'])
+end
+
+Then /^I navigate to new window$/ do
+  page.driver.browser.switch_to().window(page.driver.browser.window_handles.last)
+end
+
+

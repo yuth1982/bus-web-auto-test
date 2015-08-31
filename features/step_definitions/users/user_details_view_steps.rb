@@ -404,3 +404,30 @@ end
 When /^I change user install override region to (.+)/ do |region|
   @bus_site.admin_console_page.user_details_section.change_region(region)
 end
+
+Then /^I will( not)? see the change user password link$/ do |t|
+  if t.nil?
+    @bus_site.admin_console_page.user_details_section.has_change_user_password_link.should be_true
+  else
+    @bus_site.admin_console_page.user_details_section.has_change_user_password_link.should be_false
+  end
+end
+
+Then /^I click Send activation email again$/ do
+  @bus_site.admin_console_page.user_details_section.click_send_activation_email_again
+end
+
+When /^the user has activated the account with (.+)$/ do |password|
+
+    step %{I retrieve email content by keywords:}, table(%{
+       | to                       |
+       | <%=@new_users[0].email%> |
+  })
+    match = @mail_content.match(/https?:\/\/[\S]+.mozy[\S]+.[\S]+\/account\/set_password[\S]+/)
+    @activate_email_query = match[0] unless match.nil?
+
+  @bus_site.admin_console_page.open_admin_activate_page(@activate_email_query)
+  @freyja_site = FreyjaSite.new
+  @freyja_site.main_page.set_user_password(password)
+end
+

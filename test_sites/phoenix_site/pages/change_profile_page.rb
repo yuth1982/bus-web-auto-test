@@ -57,6 +57,13 @@ module Phoenix
   element(:update_profile_country_upgrade_link, css: "p.error a")
   element(:continue_btn, css: "input.img-button")
 
+  #change password
+  element(:change_password_btn, xpath: "//h3[text()='Password:']/../following-sibling::td/span/a[text()='change']")
+  element(:old_password_tb, id: "old_password")
+  element(:new_password_tb, id: "new_password")
+  element(:new_password_again, id: "new_password2")
+  element(:submit_change_password_btn, xpath: "//input[@value='Change Password']")
+
 
 
   #--delete user section--
@@ -304,6 +311,15 @@ module Phoenix
     free2paid_country_select.select(profile_country)
     free2paid_continue_btn.click
     continue_btn.click
+  end
+
+  def change_password_in_my_profile (old_password, new_password)
+    change_password_btn.click
+    wait_until{old_password_tb.visible?}
+    old_password_tb.type_text(old_password)
+    new_password_tb.type_text(new_password)
+    new_password_again.type_text(new_password)
+    submit_change_password_btn.click
   end
 
   end
