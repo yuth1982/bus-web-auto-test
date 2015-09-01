@@ -1,4 +1,7 @@
-Then /^I create a new client config:$/ do |table|
+# for scheduling and preferences enter sample
+# | name                | warning days | all settings  |automatic max load|automatic min idle|automatic interval|
+# | TC488-client-config | 15:cascade   | check         |10                |10                |7:lock            |
+Then /^I (create a new|edit) client config:$/ do |action, table|
   #bus requires a throttle amount greater than zero when default throttle is left checked
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['client_configuration'])
 
@@ -6,19 +9,39 @@ Then /^I create a new client config:$/ do |table|
   attributes = table.hashes.first
   @client_config.name = attributes['name']
   @client_config.type = attributes['type']
-  @client_config.ckey = attributes['ckey']
   @client_config.user_group = attributes['user group']
-  @client_config.user_group_2 = attributes['user group 2']
-  @client_config.private_key = attributes['private_key']
+
+  # preferences
+  @config_preferences = Bus::DataObj::ConfigPreferences.new
+  @config_preferences.ckey = attributes['ckey'] unless attributes['ckey'].nil?
+  @config_preferences.private_key = attributes['private_key'] unless attributes['private_key'].nil?
+  @config_preferences.warning_days = attributes['warning days'] unless attributes['warning days'].nil?
+  @config_preferences.net_iftype = attributes['net iftype'] unless attributes['net iftype'].nil?
+  @config_preferences.all_settings = attributes['all settings'] unless attributes['all settings'].nil?
+
+  # scheduling
+  @config_scheduling = Bus::DataObj::ConfigScheduling.new
+  @config_scheduling.automatic_max_load = attributes['automatic max load'] unless attributes['automatic max load'].nil?
+  @config_scheduling.automatic_min_idle = attributes['automatic min idle'] unless attributes['automatic min idle'].nil?
+  @config_scheduling.automatic_interval = attributes['automatic interval'] unless attributes['automatic interval'].nil?
+
+  # bandwidth throttling
   @client_config.throttle = (attributes['throttle'] || "no").eql?("yes")
   @client_config.throttle_amount = attributes['throttle amount']
 
   @bus_site.admin_console_page.client_config_section.wait_until_bus_section_load
-  @bus_site.admin_console_page.client_config_section.cc_iframe.create_client_config(@client_config)
+  @bus_site.admin_console_page.client_config_section.cc_iframe.create_edit_client_config(@client_config,action)
+  @bus_site.admin_console_page.client_config_section.cc_iframe.edit_preferences_settings(@config_preferences)
+  @bus_site.admin_console_page.client_config_section.cc_iframe.edit_scheduling_settings(@config_scheduling)
+  @bus_site.admin_console_page.client_config_section.cc_iframe.save_client_configs
 end
 
-Then /^client configuration section message should be (.+)/ do |message|
-  @bus_site.admin_console_page.client_config_section.cc_iframe.messages == message
+Then /^client configuration section (message|warning) should be (.+)/ do |type,message|
+  if type == 'message'
+    @bus_site.admin_console_page.client_config_section.cc_iframe.messages == message
+  else
+    @bus_site.admin_console_page.client_config_section.cc_iframe.get_warning == message
+  end
 end
 
 Then /^I edit the new created config (.+)$/ do |client_config_name|
@@ -287,10 +310,135 @@ Then /^the backup sets from API should be:$/ do |sets_table|
   end
 end
 
-Then /^the linux backup set (.+) shouldn't exist in Client API$/ do |backup_name|
+Then /^the linux backup set (.+) should not exist in Client API$/ do |backup_name|
   @backupsets_from_client.each_index do |n|
     @backupsets_from_client[n]['name'].to_s.should_not == backup_name
   end
 end
+
+# |warning days| all settings | warning days editable |
+# |15:cascade | unchecked     | all disabled         |
+Then /^preferences settings should be:$/ do |table|
+  attributes = table.hashes.first
+  warning_days_settings = attributes['warning days'] unless attributes['warning days'].nil?
+  all_settings = attributes['all settings'] unless attributes['all settings'].nil?
+  warning_days_settings_editable = attributes['warning days editable'] unless attributes['warning days editable'].nil?
+  actual_warning_days_settings = @bus_site.admin_console_page.client_config_section.cc_iframe.get_warning_days_settings
+  if !warning_days_settings.nil?
+    expected_days_setting = warning_days_settings.split(":")[0]
+    expected_days_lock = false
+    expected_days_cascade = false
+    if warning_days_settings.include?("lock")
+      expected_days_lock = true
+    elsif warning_days_settings.include?("cascade")
+      expected_days_lock = true
+      expected_days_cascade = true
+    end
+    actual_warning_days_settings['warning days'].should == expected_days_setting
+    actual_warning_days_settings['warning days lock'].should == expected_days_lock
+    actual_warning_days_settings['warning days cascade'].should == expected_days_cascade unless actual_warning_days_settings['warning days cascade'].nil?
+  end
+
+  if !warning_days_settings_editable.nil?
+    days_expected_result = ((warning_days_settings_editable == 'all disabled')? true:false)
+    actual_warning_days_settings['warning days disabled'].to_s.should == days_expected_result.to_s
+    actual_warning_days_settings['warning days lock disabled'].to_s.should == days_expected_result.to_s
+    actual_warning_days_settings['warning days cascade disabled'].to_s.should == days_expected_result.to_s unless actual_warning_days_settings['warning days cascade editable'].nil?
+  end
+
+  if !all_settings.nil?
+    presetting_values = @bus_site.admin_console_page.client_config_section.cc_iframe.get_all_presetting_value
+    presetting_values.each_index do |n|
+      if all_settings == 'checked'
+        presetting_values[n].should be_true
+      else
+        presetting_values[n].should be_false
+      end
+    end
+  end
+end
+
+# |automatic max load|automatic min idle|automatic interval| automatic max load editable| automatic min idle editable | automatic interval editable |
+# | 10:cascade       | 10:cascade               |7:cascade           |  all disabled              |all disabled                  | all disabled|
+Then /^scheduling settings should be:$/ do |table|
+  attributes = table.hashes.first
+  automatic_max_load = attributes['automatic max load'] unless attributes['automatic max load'].nil?
+  automatic_max_load_editable = attributes['automatic max load editable'] unless attributes['automatic max load editable'].nil?
+  automatic_min_idle = attributes['automatic min idle'] unless attributes['automatic min idle'].nil?
+  automatic_min_idle_editable = attributes['automatic min idle editable'] unless attributes['automatic min idle editable'].nil?
+  automatic_interval = attributes['automatic interval'] unless attributes['automatic interval'].nil?
+  automatic_interval_editable = attributes['automatic interval editable'] unless attributes['automatic interval editable'].nil?
+  if !automatic_max_load.nil?
+    actual_max_load_values =  @bus_site.admin_console_page.client_config_section.cc_iframe.get_automatic_max_load_values
+    expected_max_setting = automatic_max_load.split(":")[0]
+    expected_max_lock = false
+    expected_max_cascade = false
+    if automatic_max_load.include?("lock")
+      expected_max_lock = true
+    elsif automatic_max_load.include?("cascade")
+      expected_max_lock = true
+      expected_max_cascade = true
+    end
+    actual_max_load_values['max setting'].should == expected_max_setting
+    actual_max_load_values['max lock'].should == expected_max_lock
+    actual_max_load_values['max cascade'].should == expected_max_cascade unless actual_max_load_values['max cascade'].nil?
+  end
+
+  if !automatic_max_load_editable.nil?
+    max_expected_value = ((automatic_max_load_editable == 'all disabled')? true:false)
+    actual_max_load_values['max setting disabled'].to_s.should == max_expected_value.to_s
+    actual_max_load_values['max lock disabled'].to_s.should == max_expected_value.to_s
+    actual_max_load_values['max cascade disabled'].to_s.should == max_expected_value.to_s unless actual_max_load_values['max cascade disabled'].nil?
+  end
+
+  if !automatic_min_idle.nil?
+    actual_min_idle_values =  @bus_site.admin_console_page.client_config_section.cc_iframe.get_automatic_min_idle_values
+    expected_min_setting = automatic_min_idle.split(":")[0]
+    expected_min_lock = false
+    expected_min_cascade = false
+    if automatic_min_idle.include?("lock")
+      expected_min_lock = true
+    elsif automatic_min_idle.include?("cascade")
+      expected_min_lock = true
+      expected_min_cascade = true
+    end
+    actual_min_idle_values['min setting'].should == expected_min_setting
+    actual_min_idle_values['min lock'].should == expected_min_lock
+    actual_min_idle_values['min cascade'].should == expected_min_cascade unless actual_min_idle_values['min cascade'].nil?
+  end
+
+  if !automatic_min_idle_editable.nil?
+    min_expected_result = ((automatic_min_idle_editable == 'all disabled')? true:false)
+    actual_min_idle_values['min setting disabled'].to_s.should == min_expected_result.to_s
+    actual_min_idle_values['min lock disabled'].to_s.should == min_expected_result.to_s
+    actual_min_idle_values['min cascade disabled'].to_s.should == min_expected_result.to_s unless actual_min_idle_values['min cascade disabled'].nil?
+  end
+
+  if !automatic_interval.nil?
+    actual_interval_values =  @bus_site.admin_console_page.client_config_section.cc_iframe.get_automatic_interval_values
+    expected_int_setting = automatic_interval.split(":")[0]
+    expected_int_lock = false
+    expected_int_cascade = false
+    if automatic_interval.include?("lock")
+      expected_int_lock = true
+    elsif automatic_interval.include?("cascade")
+      expected_int_lock = true
+      expected_int_cascade = true
+    end
+    actual_interval_values['interval setting'].should == expected_int_setting
+    actual_interval_values['interval lock'].should == expected_int_lock
+    actual_interval_values['interval cascade'].should == expected_int_cascade unless actual_interval_values['interval cascade'].nil?
+  end
+
+  if !automatic_interval_editable.nil?
+    int_expected_result = ((automatic_interval_editable == 'all disabled')? true:false)
+    actual_interval_values['interval setting disabled'].to_s.should == int_expected_result.to_s
+    actual_interval_values['interval lock disabled'].to_s.should == int_expected_result.to_s
+    actual_interval_values['interval cascade disabled'].to_s.should == int_expected_result.to_s unless actual_interval_values['interval cascade disabled'].nil?
+  end
+end
+
+
+
 
 

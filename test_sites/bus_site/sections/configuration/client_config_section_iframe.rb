@@ -6,6 +6,9 @@ module Bus
     element(:config_license_type_id_select, id: 'config_license_type_id')
     element(:next_btn, css: 'div#blank-div>form input[value=Next]')
     element(:cancel_edit_config_btn, xpath:"//div[contains(@id,'edit_client_config')]/ul/li/p/input[@value='Cancel']")
+    element(:client_config_save_changes_btn, css: "input[value='Save Changes']")
+    element(:message_div, xpath: "//div[@id='setting-edit_client_config-errors']/ul/li")
+    element(:warning_div, xpath:"//div/div[@class='warning']")
 
     # tabs when create config
     element(:preferences_tab, xpath: "//div[@id='setting-edit_client_config-tabs']/ul/li")
@@ -19,14 +22,27 @@ module Bus
     element(:add_user_groups, xpath: "//div[@id='config-user-groups']/p[2]/a")
     element(:choose_user_groups, xpath: "//div[@id='config-user-groups']/table/tbody/tr[3]/td/label/input")
 
+    #preferences
     element(:ckey_radio, xpath: "//input[@id='userinfo.allowed_encryption_key_sources.adminurl']")
     element(:ckey_input, xpath: "//input[@id='userinfo.encryption_key_url']")
     element(:default_key_check, id: "userinfo.allowed_encryption_key_sources.default")
     element(:private_key_input, id: "userinfo.allowed_encryption_key_sources.custom")
+    element(:warning_days_input, id:"options.warning_days")
+    element(:warning_days_cascade_input, id:"options.warning_days_cascade")
+    element(:warning_days_lock_input, id:"options.warning_days_forced")
+    element(:netiftype_input, id: 'options.net_iftype')
+    element(:netiftype_onoff_input, id: 'options.net_iftype_onoff')
 
-    element(:client_config_save_changes_btn, css: "input[value='Save Changes']")
-
-    element(:message_div, xpath: "//div[@id='setting-edit_client_config-errors']/ul/li")
+    # scheduling
+    element(:automatic_max_load_input, id: 'scheduling.automatic_max_load')
+    element(:max_load_cascade_input, id: 'scheduling.automatic_max_load_cascade')
+    element(:max_load_lock_input, id: 'scheduling.automatic_max_load_forced')
+    element(:automatic_min_idle_input, id: 'scheduling.automatic_min_idle')
+    element(:min_idle_cascade_input, id: 'scheduling.automatic_min_idle_cascade')
+    element(:min_idle_lock_input, id: 'scheduling.automatic_min_idle_forced')
+    element(:automatic_interval_input, id: 'scheduling.automatic_interval')
+    element(:interval_lock_input, id: 'scheduling.automatic_interval_forced')
+    element(:interval_cascade_input, id: 'scheduling.automatic_interval_cascade')
 
     #backup_set
     element(:create_backup_set_link, xpath: "//a[text()='Create Backup Set']")
@@ -45,52 +61,151 @@ module Bus
     #         Select license type
     #         Click next button
     #         Select/deselect throttle
-    #         Click save changes button
     #
     # @param [Object] client_config
     #
     # Example
-    #    @bus_admin_console_page.client_config_section.create_client_config(@client_config)
+    #    @bus_admin_console_page.client_config_section.create_client_config(@client_config,action)
     #
     # @return [nothing]
-    def create_client_config(client_config)
+    def create_edit_client_config(client_config, action)
+      if action == 'create a new'
         config_name_tb.type_text(client_config.name)
         config_license_type_id_select.select(client_config.type) unless client_config.type.nil?
         next_btn.click
-
-      preferences_tab.click
-      if !client_config.private_key.nil?
-        default_key_check.uncheck
-        private_key_input.check
-      end
-
-      if !client_config.ckey.nil?
-        ckey_radio.click
-        ckey_input.type_text(client_config.ckey)
+      else
+        wait_until{ find_link(client_config.name).visible? }
+        find_link(client_config.name).click
       end
 
       if !client_config.user_group.nil?
         user_groups.click
         add_user_groups.click
-        user_group1_xpath = "//div[@id='config-user-groups']//label[text()='#{client_config.user_group}']/input"
-        find(:xpath, user_group1_xpath).click
-        if !client_config.user_group_2.nil?
-          user_group2_xpath = "//div[@id='config-user-groups']//label[text()='#{client_config.user_group_2}']/input"
-          find(:xpath, user_group2_xpath).click
+        client_config.user_group.split(',').each_index do |n|
+          group_path = "//div[@id='config-user-groups']//label[text()='#{client_config.user_group.split(',')[n]}']/input"
+          find(:xpath, group_path).check
         end
       end
 
-      bandwidth_throttling_tab.click
+      find(:xpath, "//li[text()='Bandwidth Throttling']").click
       if client_config.throttle
         throttle_amount_tb.click unless throttle_cb.checked?
         throttle_amount_tb.type_text(client_config.throttle_amount)
       else
         throttle_cb.click if throttle_cb.checked?
       end
+    end
 
+    def edit_preferences_settings config_preferences
+      find(:xpath, "//li[text()='Preferences']").click
+      if !config_preferences.private_key.nil?
+        default_key_check.uncheck
+        private_key_input.check
+      end
 
+      if !config_preferences.ckey.nil?
+        ckey_radio.click
+        ckey_input.type_text(config_preferences.ckey)
+      end
 
-      client_config_save_changes_btn.click
+      if !config_preferences.warning_days.nil?
+        warning_days_input.type_text(config_preferences.warning_days.split(":")[0])
+        if config_preferences.warning_days.split(":").size > 1
+          case config_preferences.warning_days.split(":")[1]
+            when 'cascade'
+              warning_days_cascade_input.check
+            when 'lock'
+              warning_days_lock_input.check
+            when 'cascade uncheck'
+              warning_days_cascade_input.uncheck
+            when 'lock uncheck'
+              warning_days_lock_input.check
+          end
+        end
+      end
+
+      if !config_preferences.net_iftype.nil?
+        netiftype_onoff_input.check
+        wait_until{ netiftype_input.visible? }
+        netiftype_input.type_text config_preferences.net_iftype
+      end
+
+      if !config_preferences.all_settings.nil?
+        all(:xpath, "//tr/td[1]/input[contains(@id,'options')]").each do |obj|
+          if !obj[:id].include?("warning_days") & obj["disabled"].nil? & obj.visible?
+            if config_preferences.all_settings == 'check'
+              obj.check
+              if obj[:id] == 'options.net_iftype_onoff'
+                wait_until { netiftype_input.visible? }
+                net_iftype_value = config_preferences.net_iftype || "test net iftype"
+                netiftype_input.type_text net_iftype_value
+              end
+            else
+              obj.uncheck
+            end
+          end
+        end
+      end
+    end
+
+    def edit_scheduling_settings client_config
+      find(:xpath, "//li[text()='Scheduling']").click
+      if !client_config.automatic_max_load.nil?
+        if client_config.automatic_max_load.include?(":")
+          automatic_max_load_value = client_config.automatic_max_load.split(":")[0]
+          automatic_max_load_check = client_config.automatic_max_load.split(":")[1]
+          if automatic_max_load_check == 'lock'
+            max_load_lock_input.check
+          elsif automatic_max_load_check == 'cascade'
+            max_load_cascade_input.check
+          elsif automatic_max_load_check == 'lock uncheck'
+            max_load_lock_input.uncheck
+          elsif automatic_max_load_check == 'cascade uncheck'
+            max_load_cascade_input.uncheck
+          end
+        else
+          automatic_max_load_value = client_config.automatic_max_load
+        end
+        automatic_max_load_input.type_text automatic_max_load_value
+      end
+
+      if !client_config.automatic_min_idle.nil?
+        if client_config.automatic_min_idle.include?(":")
+          automatic_min_idle_value = client_config.automatic_min_idle.split(":")[0]
+          automatic_min_idle_check = client_config.automatic_min_idle.split(":")[1]
+          if automatic_min_idle_check == 'lock'
+            min_idle_lock_input.check
+          elsif automatic_min_idle_check == 'cascade'
+            min_idle_cascade_input.check
+          elsif automatic_min_idle_check == 'lock uncheck'
+            min_idle_lock_input.uncheck
+          elsif automatic_min_idle_check == 'cascade uncheck'
+            min_idle_cascade_input.uncheck
+          end
+        else
+          automatic_min_idle_value = client_config.automatic_min_idle
+        end
+        automatic_min_idle_input.type_text automatic_min_idle_value
+      end
+
+      if !client_config.automatic_interval.nil?
+        automatic_interval_value = client_config.automatic_interval
+        if client_config.automatic_interval.include?(":")
+          automatic_interval_value = client_config.automatic_interval.split(":")[0]
+          automatic_interval_check = client_config.automatic_interval.split(":")[1]
+          if automatic_interval_check == 'lock'
+            interval_lock_input.check
+          elsif automatic_interval_check == 'cascade'
+            interval_cascade_input.check
+          elsif automatic_interval_check == 'lock uncheck'
+            interval_lock_input.uncheck
+          elsif automatic_interval_check == 'cascade uncheck'
+            interval_cascade_input.uncheck
+          end
+        end
+        # delete existing values from field.. does not use node.clear as this trigger onchange event..
+        automatic_interval_input.native.send_keys("\b#{automatic_interval_value}")
+      end
     end
 
     def remove_group_from_config(group_name)
@@ -279,5 +394,72 @@ module Bus
       page.find(:xpath, "//a[text()='Delete Config']").click
       alert_accept
     end
+
+    def get_all_presetting_value
+      setting_values = []
+      all(:xpath, "//tr/td[1]/input[contains(@id,'options')]").each do |obj|
+        if !obj[:id].include?("warning_days") & obj["disabled"].nil? & obj.visible?
+          setting_values << obj.checked?
+        end
+      end
+      setting_values
+    end
+
+    def get_warning_days_settings
+      warning_days_settings = {
+          'warning days' => warning_days_input.value,
+          'warning days disabled' => warning_days_input[:disabled] || false,
+          'warning days lock' => warning_days_lock_input.checked?,
+          'warning days lock disabled' => warning_days_lock_input[:disabled] || false
+      }
+      if all(:id, 'options.warning_days_cascade').size > 0
+        warning_days_settings['warning days cascade'] = warning_days_cascade_input.checked?
+        warning_days_settings['warning days cascade disabled'] = warning_days_cascade_input[:disabled] || false
+      end
+      warning_days_settings
+    end
+
+    def get_automatic_max_load_values
+      automatic_max_load_values = {
+          'max setting' => automatic_max_load_input.value,
+          'max lock' => max_load_lock_input.checked?,
+          'max setting disabled' => automatic_max_load_input[:disabled] || false,
+          'max lock disabled' => max_load_lock_input[:disabled] || false
+      }
+      if all(:id, "scheduling.automatic_max_load_cascade").size > 0
+        automatic_max_load_values['max cascade'] = max_load_cascade_input.checked?
+        automatic_max_load_values['max cascade disabled'] = max_load_cascade_input[:disabled] || false
+      end
+      automatic_max_load_values
+    end
+
+    def get_automatic_min_idle_values
+      automatic_min_idle_values = {
+          'min setting' => automatic_min_idle_input.value,
+          'min lock' => min_idle_lock_input.checked?,
+          'min setting disabled' => automatic_min_idle_input[:disabled] || false,
+          'min lock disabled' => min_idle_lock_input[:disabled] || false
+      }
+      if all(:id, "scheduling.automatic_min_idle_cascade").size > 0
+        automatic_min_idle_values['min cascade'] = min_idle_cascade_input.checked?
+        automatic_min_idle_values['min cascade disabled'] = min_idle_cascade_input[:disabled] || false
+      end
+      automatic_min_idle_values
+    end
+
+    def get_automatic_interval_values
+      automatic_interval_values = {
+          'interval setting' => automatic_interval_input.value,
+          'interval lock' => interval_lock_input.checked?,
+          'interval setting disabled' => automatic_interval_input[:disabled] || false,
+          'interval lock disabled' => interval_lock_input[:disabled] || false
+      }
+      if all(:id, "scheduling.automatic_interval_cascade").size > 0
+        automatic_interval_values['interval cascade'] = interval_cascade_input.checked?
+        automatic_interval_values['interval cascade disabled'] = interval_cascade_input[:disabled] || false
+      end
+      automatic_interval_values
+    end
+
   end
 end

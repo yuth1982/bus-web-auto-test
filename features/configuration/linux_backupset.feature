@@ -770,7 +770,7 @@ Feature: Linux BackupSet
     When I delete configuration TC.126290_client_config
     And activate the user's Desktop device without a key and with the default password
     And I get linux backup sets through API
-    Then the linux backup set 126290_backupset shouldn't exist in Client API
+    Then the linux backup set 126290_backupset should not exist in Client API
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -1177,7 +1177,7 @@ Feature: Linux BackupSet
     And I save the client configuration changes
     Then client configuration section message should be Your configuration was saved.
     And I get linux backup sets through API
-    Then the linux backup set 123884_backupset_2 shouldn't exist in Client API
+    Then the linux backup set 123884_backupset_2 should not exist in Client API
     And I search and delete partner account by TC.123884_sub_sub_partner
     And I stop masquerading as sub partner
     And I search and delete partner account by TC.123884_sub_partner
@@ -1253,7 +1253,7 @@ Feature: Linux BackupSet
     Then client configuration section message should be Your configuration was saved.
     And activate the user's Server device without a key and with the default password
     And I get linux backup sets through API
-    Then the linux backup set 123882_backupset_1 shouldn't exist in Client API
+    Then the linux backup set 123882_backupset_1 should not exist in Client API
     And I navigate to Add New Role section from bus admin console page
     And I add a new role:
       | Name       | Type          | Parent  |
