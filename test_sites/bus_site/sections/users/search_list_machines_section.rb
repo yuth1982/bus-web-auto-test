@@ -3,13 +3,17 @@ module Bus
   class SearchListMachinesSection < SiteHelper::Section
     # Private elements
     #
-    element(:search_machine_tb, id: "machine_search")
+    element(:search_machine_tb, id: "search_box")
     element(:search_machine_btn, xpath: "//div[@id='machine-list-content']/div/form//input[@value='Submit']")
     element(:machine_filter_select, id: "machine_filter")
     element(:search_results_table, xpath: "//div[@id='machine-list-content']/div/table")
     element(:clear_search_link, xpath: "//table[@id=('search_box')]//tr/td[1]/a")
     element(:machine_mapping_link, xpath: "//div[@id='machine-list-content']/p[2]/a")
     element(:export_csv_link, css: "p.table-export-links a")
+
+    #search machine
+    element(:search_machine_input, id: "machine_search")
+    element(:replace_message, xpath: "//div[@id='machine-list-errors']//li")
 
     def navigate_to_machine_mapping
       machine_mapping_link.click
@@ -89,5 +93,20 @@ module Bus
     def search_list_machines_opened
       search_machine_tb.visible?
     end
+
+    def search_machine(keywords)
+      search_machine_input.type_text(keywords)
+      search_machine_btn.click
+      wait_until_bus_section_load
+    end
+
+    def search_machine_empty
+      !(locate(:xpath,"//td[contains(text(),'No results')]").nil?)
+    end
+
+    def get_replace_machine_message
+      replace_message.text
+    end
+
   end
 end

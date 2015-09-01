@@ -431,3 +431,15 @@ When /^the user has activated the account with (.+)$/ do |password|
   @freyja_site.main_page.set_user_password(password)
 end
 
+When /^I click delete sync device icon for the user$/ do
+  @bus_site.admin_console_page.user_details_section.click_delete_stash
+end
+
+And /^The button displayed on the pop up are (.+)$/ do |values|
+  @bus_site.admin_console_page.get_popup_buttons.should == values.split(' ')
+end
+
+Then /^The sync device (should not|should) be deleted$/ do |result|
+  exist = (result == 'should not'? true:false)
+  @bus_site.admin_console_page.user_details_section.check_sync_exist.should == exist
+end

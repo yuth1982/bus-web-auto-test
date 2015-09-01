@@ -9,6 +9,8 @@ module Bus
     element(:manifest_view_lnk, xpath: "//div[contains(@id,'machine-show')]//a[text()='View']")
     element(:manifest_raw_lnk, xpath: "//div[contains(@id,'machine-show')]//a[text()='Raw']")
 
+    element(:replace_machine_lnk, xpath: "//a[text()='Replace Machine']")
+
     # Public: General information hash
     #
     # @param [none]
@@ -44,6 +46,10 @@ module Bus
     def delete_manifest_file (file_name)
       file = File.join(default_download_path, file_name)
       File.delete(file) if File.file?(file)
+    end
+
+    def click_replace_machine
+      replace_machine_lnk.click
     end
 
   end

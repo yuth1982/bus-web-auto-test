@@ -31,17 +31,22 @@ When /^I use keyless activation to activate devices(| unsuccessful| newly)$/  do
   @clients =[] if @clients.nil?
   # when run cases in a batch, sometimes need to clear the @client array for a new case if need to activate multiple devices and get all the license keys
   @clients = [] if type == ' newly'
-  client = KeylessClient.new(user_email, @user_password, current_partner_id, partner_name, attr['machine_type'], @partner.partner_info.type, nil, nil, nil, attr['machine_name'], region)
-  client.activate_client_devices
-  @license_key = client.license_key
+  @client = KeylessClient.new(user_email, @user_password, @current_partner[:id], partner_name, attr['machine_type'], @partner.partner_info.type, nil, nil, nil, attr['machine_name'], region)
+  @client.activate_client_devices
+  @license_key = @client.license_key
   if type.include?('unsuccessful')
-    (client.response.body.include?('error')).should == true
+    (@client.response.body.include?('error')).should == true
   else
     @license_key.should_not be_nil
-    client.machine_id = DBHelper.get_machine_id_by_license_key(@license_key)
+    @client.machine_id = DBHelper.get_machine_id_by_license_key(@license_key)
   end
-  @new_clients << client
-  @clients << client
+  @new_clients << @client
+  @clients << @client
+end
+
+And /^I update (.+) encryption value to (.+)$/ do |machine_id, encrypt_value|
+  machine_id = @new_clients[0].machine_id if machine_id == 'newly created machine'
+  @client.set_machine_encryption(encrypt_value, machine_id)
 end
 
 And /^I use keyless activation to activate same devices twice$/ do | table |

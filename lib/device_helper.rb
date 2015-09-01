@@ -260,6 +260,25 @@ module KeylessDeviceActivation
       end
     end
 
+    # set machine Encryption field, Default or Custom
+    def set_machine_encryption(encryption_type, machine_id, access_token = @access_token)
+      if encryption_type == 'Default'
+        encryption_value = 'default'
+      elsif encryption_type == 'Custom'
+        encryption_value = 'blowfish'
+      end
+      uri = URI.parse("#{QA_ENV['bus_host']}")
+      Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https', :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
+        url =  "/client/machine_set_encryption?encryption=#{encryption_value}&machine_id=#{machine_id}"
+        request = Net::HTTP::Put.new( url )
+        Log.debug url
+        request.add_field("Authorization", "Bearer #{Base64.strict_encode64(access_token["access_token"])}")
+        response = http.request request
+        @response = response
+        Log.debug response.body
+      end
+    end
+
     def get_codename(company_type)
       @codename = case company_type
                     when 'MozyEnterprise'
@@ -274,8 +293,6 @@ module KeylessDeviceActivation
                       'mozypro'
                   end
     end
-
-
   end
 end
 

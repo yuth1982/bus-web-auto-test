@@ -35,6 +35,7 @@ module Bus
     section(:list_user_groups_section, ListUserGroupsSection, id: 'user_groups-list')
     section(:user_details_section, UserDetailsSection, css: 'div[id^=user-show]')
     section(:machine_details_section, MachineDetailsSection, css: 'div[id^=machine-show-]')
+    section(:replace_machine_section, ReplaceMachineSection, id: 'inner-content')
 
     # Admin section
     section(:add_new_role_section, AddNewRoleSection, id: "roles-new")
@@ -113,6 +114,9 @@ module Bus
     element(:allocate_resources_btn, css: "div.popup-window-footer input[value=Allocate]")
     element(:ok_btn, css: "div.popup-window-footer input[value=Ok]")
     element(:yes_btn, css: "div.popup-window-footer input[value=Yes]")
+    element(:no_btn, css: "div.popup-window-footer input[value=No]")
+    element(:msg_popup_text, css: "div.popup-window-content")
+    elements(:delete_popup_btns, css: "div.popup-window-footer input")
     # Activate element
     element(:password_set_text, id: 'admin_password')
     element(:password_set_again_text, id: 'admin_password_confirmation')
@@ -232,6 +236,14 @@ module Bus
 
     def click_yes
       yes_btn.click
+    end
+
+    def get_popup_msg
+      msg_popup_text.text
+    end
+
+    def get_popup_buttons
+      delete_popup_btns.map{|btn|btn[:value]}
     end
 
     # user/partner verification section

@@ -69,3 +69,19 @@ end
 Then /^I delete the machine$/ do
   @bus_site.admin_console_page.machine_details_section.delete_machine
 end
+
+And /^I click on the replace machine link$/ do
+  @bus_site.admin_console_page.machine_details_section.click_replace_machine
+end
+
+And /^I select (.+) to be replaced$/ do |machine_name|
+  @bus_site.admin_console_page.replace_machine_section.replace_machine(machine_name)
+end
+
+Then /^The machines listed for replacement should be$/ do |machines_table|
+  attributes = machines_table.raw
+  actual = @bus_site.admin_console_page.replace_machine_section.get_replace_machine_list
+  expected = attributes.map{ |attr| attr[0] }
+  actual.sort.should == expected.sort
+end
+

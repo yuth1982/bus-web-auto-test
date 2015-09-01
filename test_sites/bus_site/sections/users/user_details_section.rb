@@ -286,6 +286,10 @@ module Bus
       delete_stash_link.click
     end
 
+    def check_sync_exist
+      !(locate(:xpath,"//table[@class='mini-table']//a[text()='Sync']").nil?)
+    end
+
     # Public: Return user back up details table rows
     #
     # @params [] none
