@@ -507,6 +507,7 @@ module Bus
       new_password_tb.type_text(password)
       new_password_confirm_tb.type_text(password)
       new_password_change_btn.click
+      wait_until { alert_present? }
       text = alert_text
       alert_accept
       text
