@@ -56,6 +56,7 @@ module Bus
     section(:purchase_resources_section, PurchaseResourcesSection, id: "resource-purchase_resources")
     section(:return_resources_section, ReturnResourcesSection, id: "resource-unpurchase_resources")
     section(:resource_summary_section, ResourceSummarySection, id: 'storage-summary')
+    section(:download_client_section, DownloadClientSection, id: "resource-downloads")
 
     # Data shuttle section
     section(:data_shuttle_status_section, DataShuttleStatusSection, id: 'resource-data_shuttle_status')
@@ -76,11 +77,10 @@ module Bus
     section(:new_email_alerts_section, NewEmailAlertsSection, xpath: "//div[@id='alerts-new']")
     section(:show_email_alerts_section, ShowEmailAlertsSection, xpath: "//div[starts-with(@id,'alerts-show')]")
 
-    # backupcleint section
+    # backup client section
     section(:create_new_version_section, CreateNewVersionSection, id: "version-new")
     section(:list_versions_section, ListVersionsSection, id: "version-list")
     section(:version_show_section, VersionShowSection, css: 'div[id^=version-show-]')
-    #section(:upgrade_rules_section, UpgradeRulesSection, id: 'version-rules')
 
 
     # support section

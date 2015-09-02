@@ -18,6 +18,10 @@ And /^I upload executable (.+) for partner (.+)$/ do |exec, partner|
   @bus_site.admin_console_page.version_show_section.replace_executable(partner, exec)
 end
 
+And /^I save changes for the version$/ do
+  @bus_site.admin_console_page.version_show_section.save_changes
+end
+
 Then /^the download link for partner (.+) should be generated$/ do |partner|
   @bus_site.admin_console_page.version_show_section.download_link_present?(partner).should  be_true
 end

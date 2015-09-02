@@ -80,10 +80,14 @@ module Bus
     # Public: upload a client for a partner in Brandings tab
     #
     def replace_executable(partner, executable)
-      find(:xpath, "//a[text()='#{partner}']//parent::td//parent::tr//td[4]//a[text()='replace']").click
-      browse_button = find(:xpath, "//a[text()='#{partner}']//parent::td//parent::tr//td[4]//input")
+      if partner == 'MozyPro'
+        find(:xpath, "//td[text()='mozypro']//parent::tr//td[4]//a[text()='replace']").click
+        browse_button = find(:xpath, "//td[text()='mozypro']//parent::tr//td[4]//input")
+      else
+        find(:xpath, "//a[text()='#{partner}']//parent::td//parent::tr//td[4]//a[text()='replace']").click
+        browse_button = find(:xpath, "//a[text()='#{partner}']//parent::td//parent::tr//td[4]//input")
+      end
       upload_file(executable, browse_button.id)
-      version_save_btn.click
     end
 
 
@@ -93,6 +97,11 @@ module Bus
       file_path = File.dirname(Pathname.new(File.dirname(__FILE__)).parent.parent.parent) + "/test_data/#{executable}"
       file_path.gsub!('/', '\\') if OS.windows?
       attach_file(upload_button_id, file_path)
+    end
+
+    # Public: click save changes button in version details section
+    def save_changes
+      version_save_btn.click
     end
 
     # Public: check whether the download link for a partner exists in Brandings tab
