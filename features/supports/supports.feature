@@ -32,7 +32,7 @@ Feature: Supports on BUS
       | email        |
       | @admin_email |
     When I navigate to Contact section from bus admin console page
-    And I click Create or update a support case
+    And I click Create or update a support case on contact section
     Then I login my support successfully
     When I log in bus admin console as administrator
     And I act as partner by:
