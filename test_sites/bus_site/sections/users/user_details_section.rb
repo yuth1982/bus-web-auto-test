@@ -83,6 +83,12 @@ module Bus
     # License Keys
     element(:send_keys_btn, xpath: '//div[starts-with(@id, "all-license-keys")]/descendant::input[starts-with(@id, "send_key")]')
 
+    #downgrade
+    element(:expand_subscriptions_th, xpath: "//th[contains(@id,'sub-')]")
+    element(:edit_plan_a, xpath: "//a[text()='Edit Plan (Downgrade Only)']")
+    element(:mozyhome_user_quota_td, xpath: "//table[@class='mini-table'][2]/tbody/tr[1]/td[1]")
+    element(:mozyhome_user_status_td, xpath: "//table[@class='mini-table'][2]/tbody/tr[1]/td[4]")
+
 
     # Public: User details storage, devices, storage limit hash
     #
@@ -701,6 +707,32 @@ module Bus
 
     def click_send_activation_email_again
       find(:xpath, "//a[text()='Send activation email again']").click
+    end
+
+    def expand_subscriptions
+      expand_subscriptions_th.click
+    end
+
+    def click_edit_plan
+      edit_plan_a.click
+    end
+
+    def downgrade_user(match)
+      if match.eql?('50GB')
+        find(:xpath, "//a[text()='Change to MozyHome 50 GB']").click
+      else
+        find(:xpath, "//a[text()='Revert to Free']").click
+      end
+      alert_accept
+      wait_until_bus_section_load
+    end
+
+    def get_mozyhome_user_quota
+      mozyhome_user_quota_td.text
+    end
+
+    def get_mozyhome_user_status
+      mozyhome_user_status_td.text
     end
 
     private

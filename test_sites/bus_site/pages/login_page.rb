@@ -12,7 +12,7 @@ module Bus
     element(:password_confirm_tb, id: "password2")
     element(:login_btn, css: "span.login_button")
     element(:logout_btn, xpath: "//a[text()='LOG OUT']")
-    element(:message_div, css: "div#inner-content div ul")
+    element(:message_div, xpath: "//div[@id='inner-content']//ul[@class='flash errors']")
     element(:set_dialect_select, id: "set_dialect")
     element(:phoenix_login_error_msg, xpath:"//div[@id='main']//p[@class='error']")
     element(:forget_password_link, xpath:"//a[text()='Forgot your password?']")

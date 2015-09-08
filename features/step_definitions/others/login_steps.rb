@@ -175,5 +175,8 @@ When /^I go to page (.+)$/ do |url|
   url = url.gsub(/QA_ENV\['bus_host'\]/,QA_ENV['bus_host'])
   @bus_site.login_page.go_to_url(url)
 end
+Then /^I reset password to (.+)$/ do |pwd|
+  @bus_site.user_pid_login_page(@partner_id, @partner.partner_info.type).set_user_password(pwd)
+end
 
 

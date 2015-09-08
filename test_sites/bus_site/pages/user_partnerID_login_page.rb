@@ -12,6 +12,11 @@ module Bus
     element(:username_freyja, css: "span.text.username")
     element(:set_dialect_select, id: "set_dialect")
 
+    #reset password
+    element(:user_password_set_text, xpath: "//input[@id='password']")
+    element(:user_password_set_again_text, xpath: "//input[@id='password_confirmation']")
+    element(:user_continue_btn, xpath: "//input[@value='Continue']")
+
 
     attr_accessor :pid , :partner_type
 
@@ -36,6 +41,12 @@ module Bus
 
     def login_verify
       username_freyja.visible?
+    end
+
+    def set_user_password (password)
+      user_password_set_text.type_text(password)
+      user_password_set_again_text.type_text(password)
+      user_continue_btn.click
     end
 
 

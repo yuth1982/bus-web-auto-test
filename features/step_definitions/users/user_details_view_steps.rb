@@ -443,3 +443,20 @@ Then /^The sync device (should not|should) be deleted$/ do |result|
   exist = (result == 'should not'? true:false)
   @bus_site.admin_console_page.user_details_section.check_sync_exist.should == exist
 end
+
+Then /^I downgrade mozyhome user to (50GB|Free)$/ do |match|
+  @bus_site.admin_console_page.user_details_section.expand_subscriptions
+  @bus_site.admin_console_page.user_details_section.click_edit_plan
+  @bus_site.admin_console_page.user_details_section.downgrade_user(match)
+end
+
+Then /^I verify mozyhome user plan is (50GB|Free) after downgrade$/ do |match|
+  quota = @bus_site.admin_console_page.user_details_section.get_mozyhome_user_quota
+  status = @bus_site.admin_console_page.user_details_section.get_mozyhome_user_status
+  if match.eql?('50GB')
+    quota.should == '50 GB'
+    status.should include 'Active'
+  else
+    status.should include 'Cancelled on'
+  end
+end

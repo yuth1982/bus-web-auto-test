@@ -113,3 +113,55 @@ Feature: Mozyhome User Login
 #    And I log into phoenix with username newly created MozyHome username and password reset password
 #    And I log out bus admin console
 
+  @TC.123856 @bus @user_login @tasks_p1
+  Scenario: 123856:MozyHome user password would expire
+    When I log in bus admin console as administrator
+    Then I act as partner by:
+      | email                                 |
+      | redacted-4165@notarealdomain.mozy.com |
+    Then I navigate to Password Policy section from bus admin console page
+    Then I update Max age to 1 days
+    When I am at dom selection point:
+    And I add a phoenix Home user:
+      | period | base plan | country       |
+      | 1      | 50 GB     | United States |
+    Then the user is successfully added.
+    And the user has activated their account
+    Then I log in bus admin console as administrator
+    And I search user by:
+      | keywords       |
+      | @mh_user_email |
+    And I view user details by newly created MozyHome username
+    Then I get the user id
+    Then I update user passwords expires at yesterday
+    Then I log into phoenix with username newly created MozyHome username and password default password
+    And user log in failed, error message is:
+    """
+     Your Mozy password has expired. Please enter a new one now.
+    """
+    Then I set a new password hipaa password
+    Then I log into phoenix with username newly created MozyHome username and password hipaa password
+    When I log in bus admin console as administrator
+    Then I act as partner by:
+      | email                                 |
+      | redacted-4165@notarealdomain.mozy.com |
+    Then I navigate to Password Policy section from bus admin console page
+    Then I update Max age to unlimited days
+
+  @TC.122209  @bus @tasks_p1
+  Scenario: 122209:MozyHome Edit Plan (Downgrade Only)
+    When I am at dom selection point:
+    And I add a phoenix Home user:
+      | period | base plan  | country       |
+      | 1      | 125 GB     | United States |
+    Then the user is successfully added.
+    When I log in bus admin console as administrator
+    And I search user by:
+      | keywords       |
+      | @mh_user_email |
+    And I view user details by newly created MozyHome username
+    Then I downgrade mozyhome user to Free
+    Then I verify mozyhome user plan is Free after downgrade
+    And I delete user
+
+

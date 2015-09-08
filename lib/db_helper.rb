@@ -436,6 +436,18 @@ module DBHelper
     end
   end
 
+  def update_users_passwords_expires_at_yesterday(user_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "update users_passwords set expires_at = TIMESTAMP 'yesterday' where user_id='#{user_id}';"
+      c = conn.exec(sql)
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
 
 end
 
