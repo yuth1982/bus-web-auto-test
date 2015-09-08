@@ -23,15 +23,21 @@ module Bus
     element(:choose_user_groups, xpath: "//div[@id='config-user-groups']/table/tbody/tr[3]/td/label/input")
 
     #preferences
-    element(:ckey_radio, xpath: "//input[@id='userinfo.allowed_encryption_key_sources.adminurl']")
-    element(:ckey_input, xpath: "//input[@id='userinfo.encryption_key_url']")
-    element(:default_key_check, id: "userinfo.allowed_encryption_key_sources.default")
+    element(:non_ckey_radio, id: "userinfo.allowed_encryption_key_sources.choice")
+    element(:ckey_radio, id: 'userinfo.allowed_encryption_key_sources.adminurl')
+    element(:ckey_input, id: 'userinfo.encryption_key_url')
+    element(:default_key_input, id: "userinfo.allowed_encryption_key_sources.default")
+    element(:random_key_input, id: "userinfo.allowed_encryption_key_sources.random")
     element(:private_key_input, id: "userinfo.allowed_encryption_key_sources.custom")
     element(:warning_days_input, id:"options.warning_days")
     element(:warning_days_cascade_input, id:"options.warning_days_cascade")
     element(:warning_days_lock_input, id:"options.warning_days_forced")
     element(:netiftype_input, id: 'options.net_iftype')
     element(:netiftype_onoff_input, id: 'options.net_iftype_onoff')
+    element(:webrestores_setting_input, id: 'options.webrestores')
+    element(:webrestores_cascade_input, id: 'options.webrestores_cascade')
+    element(:enforce_encryption_type_input, id: 'options.enforce_encryption_type')
+    element(:enforce_encryption_type_cascade_input, id: 'options.enforce_encryption_type_cascade')
 
     # scheduling
     element(:automatic_max_load_input, id: 'scheduling.automatic_max_load')
@@ -56,6 +62,14 @@ module Bus
     element(:linux_rules_name_excludes_input, xpath: "//input[@id='exclude_filenames_linuxrule']")
     element(:linux_rules_type_includes_input, xpath: "//input[@id='filetypes_linuxrule']")
     element(:linux_rules_type_excludes_input, xpath: "//input[@id='exclude_filetypes_linuxrule']")
+
+    # mac back up set
+    element(:mac_set_name_input, xpath: "//tr[8]/td/input[@value='New Backup Set']")
+
+    # mobile rules
+    element(:mobile_rule_name_input, xpath: "//tr[8]/td/input[@value='New Mobile Rule']")
+    element(:mobile_lock_input, id: "locked_priority")
+    element(:mobile_cascade_input, id: "cascade")
 
     # Public: Enter name
     #         Select license type
@@ -99,13 +113,40 @@ module Bus
     def edit_preferences_settings config_preferences
       find(:xpath, "//li[text()='Preferences']").click
       if !config_preferences.private_key.nil?
-        default_key_check.uncheck
+        non_ckey_radio.check
+        if config_preferences.private_key == 'only private key'
+          default_key_input.uncheck
+          random_key_input.uncheck unless all(:id, "userinfo.allowed_encryption_key_sources.random").size == 0
+        end
         private_key_input.check
       end
 
       if !config_preferences.ckey.nil?
         ckey_radio.click
+        wait_until{ ckey_input.visible? }
         ckey_input.type_text(config_preferences.ckey)
+      end
+
+      if !config_preferences.default_key.nil?
+        non_ckey_radio.check
+        if config_preferences.default_key == 'only default key'
+          private_key_input.uncheck
+          random_key_input.uncheck unless all(:id, "userinfo.allowed_encryption_key_sources.random").size == 0
+        end
+        default_key_input.check
+      end
+
+      if !config_preferences.enforce_encryption_type.nil?
+        case config_preferences.enforce_encryption_type
+          when "setting"
+            enforce_encryption_type_cascade_input.uncheck unless all(:id, "options.enforce_encryption_type_cascade").size == 0
+            enforce_encryption_type_input.check
+          when "cascade"
+            enforce_encryption_type_cascade_input.check
+          when "all uncheck"
+            enforce_encryption_type_cascade_input.uncheck unless all(:id, "options.enforce_encryption_type_cascade").size == 0
+            enforce_encryption_type_input.uncheck
+        end
       end
 
       if !config_preferences.warning_days.nil?
@@ -115,11 +156,13 @@ module Bus
             when 'cascade'
               warning_days_cascade_input.check
             when 'lock'
+              warning_days_cascade_input.uncheck unless all(:id, "options.warning_days_cascade").size == 0
               warning_days_lock_input.check
             when 'cascade uncheck'
               warning_days_cascade_input.uncheck
             when 'lock uncheck'
-              warning_days_lock_input.check
+              warning_days_cascade_input.uncheck unless all(:id, "options.warning_days_cascade").size == 0
+              warning_days_lock_input.uncheck
           end
         end
       end
@@ -128,6 +171,19 @@ module Bus
         netiftype_onoff_input.check
         wait_until{ netiftype_input.visible? }
         netiftype_input.type_text config_preferences.net_iftype
+      end
+
+      if !config_preferences.web_restores.nil?
+        case config_preferences.web_restores
+          when 'setting'
+            webrestores_setting_input.check
+            webrestores_cascade_input.uncheck if all(:id, 'options.webrestores_cascade').size > 0
+          when 'cascade'
+            webrestores_cascade_input.check
+          when 'all uncheck'
+            webrestores_setting_input.uncheck
+            webrestores_cascade_input.uncheck if all(:id, 'options.webrestores_cascade').size > 0
+        end
       end
 
       if !config_preferences.all_settings.nil?
@@ -146,6 +202,25 @@ module Bus
           end
         end
       end
+
+      if !config_preferences.all_cascades.nil?
+        all(:xpath, "//tr/td[2]/input[contains(@id,'cascade')]").each do |obj|
+          if obj["disabled"].nil? & obj.visible?
+            if config_preferences.all_cascades == 'check'
+              obj.check
+              if obj[:id] == 'options.net_iftype_cascade'
+                netiftype_onoff_input.check
+                wait_until { netiftype_input.visible? }
+                net_iftype_value = config_preferences.net_iftype || "test net iftype"
+                netiftype_input.type_text net_iftype_value
+              end
+            else
+              obj.uncheck
+            end
+          end
+        end
+      end
+
     end
 
     def edit_scheduling_settings client_config
@@ -155,10 +230,12 @@ module Bus
           automatic_max_load_value = client_config.automatic_max_load.split(":")[0]
           automatic_max_load_check = client_config.automatic_max_load.split(":")[1]
           if automatic_max_load_check == 'lock'
+            max_load_cascade_input.uncheck unless all(:id, "scheduling.automatic_max_load_cascade").size == 0
             max_load_lock_input.check
           elsif automatic_max_load_check == 'cascade'
             max_load_cascade_input.check
           elsif automatic_max_load_check == 'lock uncheck'
+            max_load_cascade_input.uncheck unless all(:id, "scheduling.automatic_max_load_cascade").size == 0
             max_load_lock_input.uncheck
           elsif automatic_max_load_check == 'cascade uncheck'
             max_load_cascade_input.uncheck
@@ -174,10 +251,12 @@ module Bus
           automatic_min_idle_value = client_config.automatic_min_idle.split(":")[0]
           automatic_min_idle_check = client_config.automatic_min_idle.split(":")[1]
           if automatic_min_idle_check == 'lock'
+            min_idle_cascade_input.uncheck unless all(:id, 'scheduling.automatic_min_idle_cascade').size == 0
             min_idle_lock_input.check
           elsif automatic_min_idle_check == 'cascade'
             min_idle_cascade_input.check
           elsif automatic_min_idle_check == 'lock uncheck'
+            min_idle_cascade_input.uncheck unless all(:id, 'scheduling.automatic_min_idle_cascade').size == 0
             min_idle_lock_input.uncheck
           elsif automatic_min_idle_check == 'cascade uncheck'
             min_idle_cascade_input.uncheck
@@ -194,10 +273,12 @@ module Bus
           automatic_interval_value = client_config.automatic_interval.split(":")[0]
           automatic_interval_check = client_config.automatic_interval.split(":")[1]
           if automatic_interval_check == 'lock'
+            interval_cascade_input.uncheck unless all(:id, 'scheduling.automatic_interval_cascade').size == 0
             interval_lock_input.check
           elsif automatic_interval_check == 'cascade'
             interval_cascade_input.check
           elsif automatic_interval_check == 'lock uncheck'
+            interval_cascade_input.uncheck unless all(:id, 'scheduling.automatic_interval_cascade').size == 0
             interval_lock_input.uncheck
           elsif automatic_interval_check == 'cascade uncheck'
             interval_cascade_input.uncheck
@@ -218,9 +299,9 @@ module Bus
       client_config_save_changes_btn.click
     end
 
-    def edit_client_config client_config_name
-      wait_until{ find_link(client_config_name).visible? }
-      find_link(client_config_name).click
+    def open_link name
+      wait_until{ find_link(name).visible? }
+      find_link(name).click
     end
 
     def cancel_edit_client_config
@@ -266,7 +347,7 @@ module Bus
      location_exclude_check.checked?
     end
 
-    def click_edit_linux_backup(backup_name)
+    def click_edit_backup_set(backup_name)
       find(:xpath, "//label//b[text()='"+backup_name+"']//..//..//a[text()='view/edit']").click
     end
 
@@ -405,6 +486,40 @@ module Bus
       setting_values
     end
 
+    def get_all_precascade_value value_type
+      cascade_values = []
+      all(:xpath, "//tr/td[2]/input[contains(@id,'cascade')]").each do |obj|
+        case value_type
+          when 'checked'
+            if obj.visible?
+              cascade_values << obj.checked?
+            end
+          when 'unchecked'
+            if obj.visible? & obj["disabled"].nil?
+              cascade_values << obj.checked?
+            end
+        end
+      end
+      cascade_values
+    end
+
+    def get_all_prelock_value value_type
+      lock_values = []
+      all(:xpath, "//tr/td[3]/input[contains(@id,'forced')]").each do |obj|
+        case value_type
+          when 'checked'
+            if obj.visible?
+              lock_values << obj.checked?
+            end
+          when 'unchecked'
+            if obj.visible? & obj["disabled"].nil?
+              lock_values << obj.checked?
+            end
+        end
+      end
+      lock_values
+    end
+
     def get_warning_days_settings
       warning_days_settings = {
           'warning days' => warning_days_input.value,
@@ -459,6 +574,81 @@ module Bus
         automatic_interval_values['interval cascade disabled'] = interval_cascade_input[:disabled] || false
       end
       automatic_interval_values
+    end
+
+    def get_warning
+      warning_div.text
+    end
+
+    def create_mac_backup mac_backup_set
+      find_link("Create Backup Set").click
+      mac_set_name_input.type_text mac_backup_set['mac backup set name']
+      find_link("Done").click
+    end
+
+    def create_mobile_rules mobile_rules
+      find_link("Create new Mobile Rule").click
+      mobile_rules_name = mobile_rules.mobile_rules_name || "New Mobile Rule"
+      mobile_rule_name_input.type_text mobile_rules_name
+
+      if !mobile_rules.locking.nil?
+        case mobile_rules.locking
+          when "lock"
+            mobile_cascade_input.uncheck if all(:id, "cascade").size > 0
+            mobile_lock_input.check
+          when "cascade"
+            mobile_cascade_input.check
+          when "all uncheck"
+            mobile_cascade_input.uncheck if all(:id, "cascade").size > 0
+            mobile_lock_input.uncheck
+        end
+      end
+
+      find_link("Done").click
+    end
+
+    def get_mobile_rules_locking
+      rules_locking = { "mobile rules lock" => mobile_lock_input.checked? }
+      rules_locking["mobile rules cascade"] = mobile_cascade_input.checked? if all(:id, "cascade").size > 0
+      rules_locking
+    end
+
+    def encryption_key_cascade_visible?
+      size = all(:xpath, "//input[@id='userinfo.allowed_encryption_key_sources_cascade']").size
+      (size > 0)? true:false
+    end
+
+    def get_web_restores
+      web_restores = { "web restores setting" => webrestores_setting_input.checked? }
+      web_restores["web restores cascade"] = webrestores_cascade_input.checked? if all(:id, 'options.webrestores_cascade').size > 0
+      web_restores
+    end
+
+    def enforce_encryption_type_visible?
+      enforce_encryption_type_input.visible?
+    end
+
+    def get_ckey
+      ckey = {
+          "is ckey" => ckey_radio.checked?,
+          "ckey url" => ckey_input.value
+      }
+      ckey
+    end
+
+    def get_non_ckey
+      non_ckey = {
+          "is default key" => default_key_input.checked?,
+          "is private key" => private_key_input.checked?
+      }
+      non_ckey["is random key"] = random_key_input.checked? unless all(:id, "userinfo.allowed_encryption_key_sources.random").size == 0
+      non_ckey
+    end
+
+    def get_enforce_encryption_type
+      enforce_encryption_type = { "setting" => enforce_encryption_type_input.checked? }
+      enforce_encryption_type["cascade"] = enforce_encryption_type_cascade_input.checked? unless all(:id, "options.enforce_encryption_type_cascade").size == 0
+      enforce_encryption_type
     end
 
   end

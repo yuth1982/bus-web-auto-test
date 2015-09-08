@@ -1,6 +1,6 @@
 # for scheduling and preferences enter sample
-# | name                | warning days | all settings  |automatic max load|automatic min idle|automatic interval|
-# | TC488-client-config | 15:cascade   | check         |10                |10                |7:lock            |
+# | name                | warning days | all settings  | ckey                               | private key             | web_restores |automatic max load|automatic min idle|automatic interval|
+# | TC488-client-config | 15:cascade   | check         |http://gradyplayer.com/myckey.ckey  | only private key (/ yes)| all uncheked|10                |10                |7:lock            |
 Then /^I (create a new|edit) client config:$/ do |action, table|
   #bus requires a throttle amount greater than zero when default throttle is left checked
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['client_configuration'])
@@ -14,10 +14,14 @@ Then /^I (create a new|edit) client config:$/ do |action, table|
   # preferences
   @config_preferences = Bus::DataObj::ConfigPreferences.new
   @config_preferences.ckey = attributes['ckey'] unless attributes['ckey'].nil?
-  @config_preferences.private_key = attributes['private_key'] unless attributes['private_key'].nil?
+  @config_preferences.default_key = attributes['default key'] unless attributes['default key'].nil?
+  @config_preferences.private_key = attributes['private key'] unless attributes['private key'].nil?
+  @config_preferences.enforce_encryption_type = attributes['enforce encryption type'] unless attributes['enforce encryption type'].nil?
   @config_preferences.warning_days = attributes['warning days'] unless attributes['warning days'].nil?
   @config_preferences.net_iftype = attributes['net iftype'] unless attributes['net iftype'].nil?
   @config_preferences.all_settings = attributes['all settings'] unless attributes['all settings'].nil?
+  @config_preferences.all_cascades = attributes['all cascades'] unless attributes['all cascades'].nil?
+  @config_preferences.web_restores = attributes['web restores'] unless attributes['web restores'].nil?
 
   # scheduling
   @config_scheduling = Bus::DataObj::ConfigScheduling.new
@@ -44,8 +48,8 @@ Then /^client configuration section (message|warning) should be (.+)/ do |type,m
   end
 end
 
-Then /^I edit the new created config (.+)$/ do |client_config_name|
-  @bus_site.admin_console_page.client_config_section.cc_iframe.edit_client_config(client_config_name)
+Then /^I edit the new created (config|mobile rule) (.+)$/ do |type,config_or_rule_name|
+  @bus_site.admin_console_page.client_config_section.cc_iframe.open_link(config_or_rule_name)
 end
 
 And /^I cancel update client configuration$/ do
@@ -132,8 +136,8 @@ When /^I (create|edit) Linux Backup Set:$/ do |action,backupset_table|
   end
 end
 
-When /^I click edit link of linux backup set (.+)$/ do |backup_name|
-  @bus_site.admin_console_page.client_config_section.cc_iframe.click_edit_linux_backup(backup_name)
+When /^I click edit link of (linux|mac|windows) backup set (.+)$/ do |type,backup_name|
+  @bus_site.admin_console_page.client_config_section.cc_iframe.click_edit_backup_set(backup_name)
 end
 
 Then /^edit link of linux backup set (.+) should be disabled$/ do |backup_name|
@@ -144,7 +148,7 @@ When /^I delete linux backup set (.+)$/ do |backup_name|
   @bus_site.admin_console_page.client_config_section.cc_iframe.delete_linux_backup(backup_name)
 end
 
-Then /^linux backup set (.+) should be opened$/ do |backup_name|
+Then /(linux|mac|windows) backup set (.+) should be opened$/ do |type,backup_name|
   @bus_site.admin_console_page.client_config_section.cc_iframe.backup_name_visible(backup_name).should be_true
 end
 
@@ -316,13 +320,21 @@ Then /^the linux backup set (.+) should not exist in Client API$/ do |backup_nam
   end
 end
 
-# |warning days| all settings | warning days editable |
-# |15:cascade | unchecked     | all disabled         |
+# |warning days| all settings | warning days editable | ckey                               | private key          | web_restores |
+# |15:cascade | unchecked     | all disabled         | http://gradyplayer.com/myckey.ckey | only private key / yes| all uncheked |
 Then /^preferences settings should be:$/ do |table|
   attributes = table.hashes.first
+  ckey = attributes['ckey'] unless attributes['ckey'].nil?
+  private_key = attributes['private key'] unless attributes['private key'].nil?
+  default_key = attributes['default key'] unless attributes['default key'].nil?
+  enforce_encryption_type = attributes['enforce encryption type'] unless attributes['enforce encryption type'].nil?
   warning_days_settings = attributes['warning days'] unless attributes['warning days'].nil?
   all_settings = attributes['all settings'] unless attributes['all settings'].nil?
+  all_cascades = attributes['all cascades'] unless attributes['all cascades'].nil?
+  all_locks = attributes['all locks'] unless attributes['all locks'].nil?
+  web_restores = attributes['web restores'] unless attributes['web restores'].nil?
   warning_days_settings_editable = attributes['warning days editable'] unless attributes['warning days editable'].nil?
+  # warning days
   actual_warning_days_settings = @bus_site.admin_console_page.client_config_section.cc_iframe.get_warning_days_settings
   if !warning_days_settings.nil?
     expected_days_setting = warning_days_settings.split(":")[0]
@@ -346,6 +358,67 @@ Then /^preferences settings should be:$/ do |table|
     actual_warning_days_settings['warning days cascade disabled'].to_s.should == days_expected_result.to_s unless actual_warning_days_settings['warning days cascade editable'].nil?
   end
 
+  # ckey
+  if !ckey.nil?
+    actual_ckey = @bus_site.admin_console_page.client_config_section.cc_iframe.get_ckey
+    actual_ckey['is ckey'].should be_true
+    actual_ckey['ckey url'].should == ckey
+  end
+
+  # private key && default key
+  actual_non_ckey = @bus_site.admin_console_page.client_config_section.cc_iframe.get_non_ckey
+  if !private_key.nil?
+    actual_non_ckey['is private key'].should be_true
+    if private_key == 'only private key'
+      actual_non_ckey['is default key'].should be_false
+      actual_non_ckey['is random key'].should be_false unless actual_non_ckey['is random key'].nil?
+    end
+  end
+
+  if !default_key.nil?
+    actual_non_ckey['is default key'].should be_true
+    if private_key == 'only default key'
+      actual_non_ckey['is private key'].should be_false
+      actual_non_ckey['is random key'].should be_false unless actual_non_ckey['is random key'].nil?
+    end
+  end
+
+  # enforce encryption type: Prevent back up if encryption does not match policy..
+  if !enforce_encryption_type.nil?
+    actual_enforce_encryption_type = @bus_site.admin_console_page.client_config_section.cc_iframe.get_enforce_encryption_type
+    expected_type_setting = false
+    expected_type_cascade = false
+    case enforce_encryption_type
+      when 'setting'
+        expected_type_setting =true
+      when 'cascade'
+        expected_type_setting = true
+        expected_type_cascade = true
+      when  'all unchecked'
+        # same as the default
+    end
+    actual_enforce_encryption_type['setting'].should == expected_type_setting
+    actual_enforce_encryption_type['cascade'].should == expected_type_cascade unless actual_enforce_encryption_type['cascade'].nil?
+  end
+
+  # web restores: Enable "Access files online" link and "Restore files" button
+  if !web_restores.nil?
+    actual_web_restores = @bus_site.admin_console_page.client_config_section.cc_iframe.get_web_restores
+    expected_web_setting = false
+    expected_web_cascade =false
+    case web_restores
+      when 'setting'
+        expected_web_setting = true
+      when 'cascade'
+        expected_web_setting = true
+        expected_web_cascade =true
+      when 'all unchecked'
+        #same as default value
+    end
+    actual_web_restores['web restores setting'].should == expected_web_setting
+    actual_web_restores['web restores cascade'].should == expected_web_cascade unless actual_web_restores['web restores cascade'].nil?
+  end
+
   if !all_settings.nil?
     presetting_values = @bus_site.admin_console_page.client_config_section.cc_iframe.get_all_presetting_value
     presetting_values.each_index do |n|
@@ -353,6 +426,28 @@ Then /^preferences settings should be:$/ do |table|
         presetting_values[n].should be_true
       else
         presetting_values[n].should be_false
+      end
+    end
+  end
+
+  if !all_cascades.nil?
+    precascade_values = @bus_site.admin_console_page.client_config_section.cc_iframe.get_all_precascade_value(all_cascades)
+    precascade_values.each_index do |n|
+      if all_cascades == 'checked'
+        precascade_values[n].should be_true
+      else
+        precascade_values[n].should be_false
+      end
+    end
+  end
+
+  if !all_locks.nil?
+    prelock_values = @bus_site.admin_console_page.client_config_section.cc_iframe.get_all_prelock_value(all_locks)
+    prelock_values.each_index do |n|
+      if all_locks == 'checked'
+        prelock_values[n].should be_true
+      else
+        prelock_values[n].should be_false
       end
     end
   end
@@ -437,6 +532,53 @@ Then /^scheduling settings should be:$/ do |table|
     actual_interval_values['interval cascade disabled'].to_s.should == int_expected_result.to_s unless actual_interval_values['interval cascade disabled'].nil?
   end
 end
+
+And /^I create mac backup set$/ do |table|
+  mac_hash = table.hashes.first
+  @bus_site.admin_console_page.client_config_section.cc_iframe.create_mac_backup(mac_hash)
+end
+
+And /^I create mobile rules$/ do |table|
+  attributes = table.hashes.first
+  @mobile_rules = Bus::DataObj::ConfigMobileRules.new
+  @mobile_rules.mobile_rules_name = attributes['mobile rules name'] unless attributes['mobile rules name'].nil?
+  @mobile_rules.locking = attributes['mobile locking'] unless attributes['mobile locking'].nil?
+  @bus_site.admin_console_page.client_config_section.cc_iframe.create_mobile_rules(@mobile_rules)
+end
+
+Then /^mobile rules should be:$/ do |table|
+  attributes = table.hashes.first
+  locking = attributes['mobile locking'] unless attributes['mobile locking'].nil?
+  expected_lock_value = false
+  expected_cascade_value = false
+  if !locking.nil?
+    case locking
+      when 'lock'
+        expected_lock_value = true
+      when 'cascade'
+        expected_lock_value = true
+        expected_cascade_value = true
+      when 'all uncheck'
+        # same as default value
+    end
+    actual_locking = @bus_site.admin_console_page.client_config_section.cc_iframe.get_mobile_rules_locking
+    actual_locking["mobile rules lock" ].should == expected_lock_value
+    actual_locking["mobile rules cascade" ].should == expected_cascade_value unless actual_locking["mobile rules cascade" ].nil?
+  end
+end
+
+Then /^cascade option (should not|should) exist for encryption key$/ do |type|
+  if type == 'should not'
+    @bus_site.admin_console_page.client_config_section.cc_iframe.encryption_key_cascade_visible?.should be_false
+  else
+    @bus_site.admin_console_page.client_config_section.cc_iframe.encryption_key_cascade_visible?.should be_true
+  end
+end
+
+Then /^prevent backup with wrong encryption type is enabled$/ do
+  @bus_site.admin_console_page.client_config_section.cc_iframe.enforce_encryption_type_visible?.should be_true
+end
+
 
 
 

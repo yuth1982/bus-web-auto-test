@@ -871,8 +871,8 @@ Feature: Linux BackupSet
     And I view user details by newly created user email
     And I update the user password to default password
     When I create a new client config:
-      | name                    | type   | private_key       |
-      | TC.123916_client_config | Server | private_key       |
+      | name                    | type   | private key       |
+      | TC.123916_client_config | Server | only private key  |
     Then client configuration section message should be Your configuration was saved.
     And I edit the new created config TC.123916_client_config
     And I click tab Linux Backup Sets
