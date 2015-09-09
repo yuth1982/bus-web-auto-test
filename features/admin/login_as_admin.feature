@@ -3,6 +3,12 @@ Feature: login as admins
   Background:
     Given I log in bus admin console as administrator
 
+ #########################################################################
+
+ #  Test Suite : Log In Screen
+
+##########################################################################
+
 #  @TC.122151 @bus @admin
 #  Scenario: 122151 Trigger Authlockout
 #    When I add a new MozyPro partner:
@@ -35,6 +41,72 @@ Feature: login as admins
 #    And I log in bus admin console as administrator
 #    And I search and delete partner account by newly created partner company name
 
+  @TC.126033 @bus @admin
+  Scenario: 126033 Reset Admin Password from www.mozypro.com
+    When I add a new MozyPro partner:
+      | period | base plan |
+      | 12     | 24 TB     |
+    Then New partner should be created
+    And I view the newly created partner admin details
+    Then I active admin in admin details Hipaa password
+    And I log out bus admin console
+    When I go to page QA_ENV['bus_host']/login
+    And I click forget your password link
+    And I input email @partner.admin_info.email in reset password panel to reset password
+    When I search emails by keywords:
+      | subject                   | to                             |
+      | MozyPro password recovery | <%=@partner.admin_info.email%> |
+    Then I should see 1 email(s)
+    When I click reset password link from the email
+    Then I reset password with reset password
+    And I will see reset password massage Your password has been changed.
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name @partner.admin_info.email and password reset password
+    Then I login as mozypro admin successfully
+    And I log out bus admin console
+    And I log into phoenix with username @partner.admin_info.email and password reset password
+    Then I login as mozypro admin successfully
+    And I log out bus admin console
+    And I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
+
+  @TC.126043 @bus @admin
+  Scenario: 126043 Reset Admin Password from subdomain.mozypro.com
+    When I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I navigate to Authentication Policy section from bus admin console page
+    And I uncheck enable sso for admins to log in with their network credentials
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    And I navigate to Add New Admin section from bus admin console page
+    And I add a new admin newly:
+      | User Group           |
+      | (default user group) |
+    Then Add New Admin success message should be displayed
+    When I navigate to the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
+    And I click forget your password link
+    And I input email @admin.email in reset password panel to reset password
+    When I search emails by keywords:
+      | subject                   | to                |
+      | MozyPro password recovery | <%=@admin.email%> |
+    Then I should see 1 email(s)
+    When I click reset password link from the email
+    Then I reset password with default password
+    And I will see reset password massage Your password has been changed.
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name @admin.email and password default password
+    Then I login as @admin.name admin successfully
+    And I log in bus admin console as administrator
+    And I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I delete admin by:
+      | email             |
+      | <%=@admin.email%> |
+
+
+
 #########################################################################
 
  #  Test Suite : Standard partner login_Sub Admin
@@ -65,11 +137,92 @@ Feature: login as admins
     Then I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
+  @TC.123704 @bus @admin
+  Scenario: 123704 New created standard sub-admin forget password and reset password on bus
+    When I add a new MozyPro partner:
+      | period | base plan | net terms |
+      | 24     | 10 GB     | yes       |
+    Then New partner should be created
+    And I change root role to FedID role
+    And I view the newly created partner admin details
+    Then I active admin in admin details default password
+    And I log out bus admin console
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name @partner.admin_info.email and password default password
+    Then I login as mozypro admin successfully
+    And I navigate to Add New Admin section from bus admin console page
+    And I add a new admin newly:
+      | Name         | Roles      | User Group           |
+      | Admin_123704 | FedID role | (default user group) |
+    Then Add New Admin success message should be displayed
+    And I view admin details by:
+      | name         |
+      | Admin_123704 |
+    Then I active admin in admin details default password
+    When I navigate to bus admin console login page
+    And I click forget your password link
+    And I input email @admin.email in reset password panel to reset password
+    When I search emails by keywords:
+      | subject                   | to                |
+      | MozyPro password recovery | <%=@admin.email%> |
+    Then I should see 1 email(s)
+    When I click reset password link from the email
+    Then I reset password with standard password
+    And I will see reset password massage Your password has been changed.
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name @new_admins[0].email and password standard password
+    Then I login as Admin_123704 admin successfully
+    And I log out bus admin console
+    And I log into phoenix with username @new_admins[0].email and password standard password
+    Then I login as Admin_123704 admin successfully
+    And I log out bus admin console
+    And I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
+
+
 #########################################################################
 
  #  Test Suite : HIPAA partner login_Sub Admin
 
 ########################################################################
+  @TC.123421 @bus @admin
+  Scenario: 123421 New created standard sub-admin forget password and reset password on bus
+    When I add a new MozyPro partner:
+      | period | base plan | security |
+      | 24     | 10 GB     | HIPAA    |
+    Then New partner should be created
+    And I change root role to FedID role
+    And I view the newly created partner admin details
+    Then I active admin in admin details reset password
+    And I log out bus admin console
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name @partner.admin_info.email and password reset password
+    Then I login as mozypro admin successfully
+    And I navigate to Add New Admin section from bus admin console page
+    And I add a new admin newly:
+      | Name         | Roles      | User Group           |
+      | Admin_123421 | FedID role | (default user group) |
+    Then Add New Admin success message should be displayed
+    And the partner has activated the <%=@new_admins[0].email%> account with reset password
+    When I navigate to bus admin console login page
+    And I click forget your password link
+    And I input email @admin.email in reset password panel to reset password
+    When I search emails by keywords:
+      | subject                   | to                |
+      | MozyPro password recovery | <%=@admin.email%> |
+    Then I should see 1 email(s)
+    When I click reset password link from the email
+    Then I reset password with Hipaa password
+    And I will see reset password massage Your password has been changed.
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name @new_admins[0].email and password Hipaa password
+    Then I login as Admin_123421 admin successfully
+    And I log out bus admin console
+    And I log into phoenix with username @new_admins[0].email and password Hipaa password
+    Then I login as Admin_123421 admin successfully
+    And I log out bus admin console
+    And I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
 
   @TC.123401 @bus @admin
   Scenario: 123401 Hipaa MozyPro login bus and phoenix after activating and changing password(admin before subadmin)
@@ -422,6 +575,63 @@ Feature: login as admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created subpartner company name
 
+  @TC.123700 @bus @admin
+  Scenario: 123700 New created standard admin forget password and reset password on bus
+    When I add a new MozyPro partner:
+      | period | base plan | net terms |
+      | 24     | 10 GB     | yes       |
+    Then New partner should be created
+    And I view the newly created partner admin details
+    Then I active admin in admin details default password
+    And I log out bus admin console
+    When I navigate to bus admin console login page
+    And I click forget your password link
+    And I input email @partner.admin_info.email in reset password panel to reset password
+    When I search emails by keywords:
+      | subject                   | to                             |
+      | MozyPro password recovery | <%=@partner.admin_info.email%> |
+    Then I should see 1 email(s)
+    When I click reset password link from the email
+    Then I reset password with standard password
+    And I will see reset password massage Your password has been changed.
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name @partner.admin_info.email and password standard password
+    Then I login as mozypro admin successfully
+    And I log out bus admin console
+    And I log into phoenix with username @partner.admin_info.email and password standard password
+    Then I login as mozypro admin successfully
+    And I log out bus admin console
+    And I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
+
+  @TC.123702 @bus @admin
+  Scenario: 123702 New created standard admin forget password and reset password on phoenix
+    When I add a new MozyPro partner:
+      | period | base plan | net terms |
+      | 24     | 10 GB     | yes       |
+    Then New partner should be created
+    And I view the newly created partner admin details
+    Then I active admin in admin details default password
+    And I log out bus admin console
+    When I navigate to phoenix login page
+    And I click forget your password link
+    And I input email @partner.admin_info.email in reset password panel to reset password
+    When I search emails by keywords:
+      | subject                   | to                             |
+      | MozyPro password recovery | <%=@partner.admin_info.email%> |
+    Then I should see 1 email(s)
+    When I click reset password link from the email
+    Then I reset password with standard password
+    And I will see reset password massage Your password has been changed.
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name @partner.admin_info.email and password standard password
+    Then I login as mozypro admin successfully
+    And I log out bus admin console
+    And I log into phoenix with username @partner.admin_info.email and password standard password
+    Then I login as mozypro admin successfully
+    And I log out bus admin console
+    And I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
 
 #########################################################################
 
@@ -691,9 +901,63 @@ Feature: login as admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
+  @TC.123417 @bus @admin
+  Scenario: 123417 New created Hipaa admin forget password and reset password on bus
+    When I add a new MozyPro partner:
+      | period | base plan | security |
+      | 12     | 24 TB     | HIPAA    |
+    Then New partner should be created
+    And I view the newly created partner admin details
+    Then I active admin in admin details Hipaa password
+    And I log out bus admin console
+    When I navigate to bus admin console login page
+    And I click forget your password link
+    And I input email @partner.admin_info.email in reset password panel to reset password
+    When I search emails by keywords:
+      | subject                   | to                             |
+      | MozyPro password recovery | <%=@partner.admin_info.email%> |
+    Then I should see 1 email(s)
+    When I click reset password link from the email
+    Then I reset password with reset password
+    And I will see reset password massage Your password has been changed.
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name @partner.admin_info.email and password reset password
+    Then I login as mozypro admin successfully
+    And I log out bus admin console
+    And I log into phoenix with username @partner.admin_info.email and password reset password
+    Then I login as mozypro admin successfully
+    And I log out bus admin console
+    And I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
 
-
-
+  @TC.123418 @bus @admin
+  Scenario: 123418 New created Hipaa admin forget password and reset password on phoenix
+    When I add a new MozyPro partner:
+      | period | base plan | security |
+      | 12     | 24 TB     | HIPAA    |
+    Then New partner should be created
+    And I view the newly created partner admin details
+    Then I active admin in admin details Hipaa password
+    And I log out bus admin console
+    When I navigate to phoenix login page
+    And I click forget your password link
+    And I input email @partner.admin_info.email in reset password panel to reset password
+    When I search emails by keywords:
+      | subject                   | to                             |
+      | MozyPro password recovery | <%=@partner.admin_info.email%> |
+    Then I should see 1 email(s)
+    When I click reset password link from the email
+    Then I reset password with reset password
+    And I will see reset password massage Your password has been changed.
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name @partner.admin_info.email and password reset password
+    Then I login as mozypro admin successfully
+    And I log out bus admin console
+    And I log into phoenix with username @partner.admin_info.email and password reset password
+    Then I login as mozypro admin successfully
+    And I log out bus admin console
+    And I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
 
 
 

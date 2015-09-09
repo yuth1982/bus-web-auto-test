@@ -42,9 +42,15 @@ And /^I login as (.+) admin successfully$/ do |admin|
   @bus_site.admin_console_page.get_partner_name_topcorner.should eq(admin)
 end
 
-When /^I navigate to bus admin console login page$/ do
-  @bus_site = BusSite.new if @bus_site.nil?
-  @bus_site.login_page.load
+When /^I navigate to (bus admin console|phoenix) login page$/ do |site|
+  if site == 'bus admin console'
+    @bus_site = BusSite.new if @bus_site.nil?
+    @bus_site.login_page.load
+  else
+    @bus_site ||= BusSite.new #In case you log into bus through the phoenix page
+    @phoenix_site ||= PhoenixSite.new
+    @phoenix_site.user_account.load
+  end
 end
 
 When /^I navigate to (.+) user login page$/ do |subdomain|
@@ -57,6 +63,7 @@ When /^I log in bus admin console with user name (.+) and password (.+)$/ do |us
     username =  '<%=' + username + '%>'
     username.replace ERB.new(username).result(binding)
   end
+  password = '' if password == 'AD user default password'
   username = QA_ENV['bus01_admin'] if username == 'bus01_admin'
   password = QA_ENV['bus01_pass'] if password == 'bus01_pass'
   password = '' if password == 'Empty'
@@ -161,6 +168,12 @@ end
 
 Then /^I navigate to new window$/ do
   page.driver.browser.switch_to().window(page.driver.browser.window_handles.last)
+end
+
+When /^I go to page (.+)$/ do |url|
+  url = url.gsub(/CONFIGS\['fedid'\]\['subdomain'\]/,CONFIGS['fedid']['subdomain'])
+  url = url.gsub(/QA_ENV\['bus_host'\]/,QA_ENV['bus_host'])
+  @bus_site.login_page.go_to_url(url)
 end
 
 

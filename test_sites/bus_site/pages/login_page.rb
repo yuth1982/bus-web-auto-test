@@ -9,12 +9,16 @@ module Bus
     #
     element(:username_tb, id: "username")
     element(:password_tb, id: "password")
+    element(:password_confirm_tb, id: "password2")
     element(:login_btn, css: "span.login_button")
     element(:logout_btn, xpath: "//a[text()='LOG OUT']")
     element(:message_div, css: "div#inner-content div ul")
     element(:set_dialect_select, id: "set_dialect")
     element(:phoenix_login_error_msg, xpath:"//div[@id='main']//p[@class='error']")
-
+    element(:forget_password_link, xpath:"//a[text()='Forgot your password?']")
+    element(:captcha_input, id: "captcha")
+    element(:reset_password_continue_btn, xpath: "//input[@value='Continue']")
+    element(:reset_password_msg_div, xpath: "//div[@id='main']//p")
     # Public: Login bus admin console
     #
     # username - Bus admin console login user name
@@ -90,6 +94,32 @@ module Bus
           sleep 2
         end
       end
+    end
+
+    def go_to_url(url)
+      visit(url)
+    end
+
+    def click_forget_password
+      forget_password_link.click
+    end
+
+    def reset_password(email)
+      wait_until{username_tb.visible?}
+      username_tb.type_text(email)
+      # need to up this later for captcha input
+      # captcha_input.type_text("")
+      reset_password_continue_btn.click
+    end
+
+    def reset_password_enter(password)
+      password_tb.type_text(password)
+      password_confirm_tb.type_text(password)
+      reset_password_continue_btn.click
+    end
+
+    def reset_password_msg
+      reset_password_msg_div.text
     end
   end
 end
