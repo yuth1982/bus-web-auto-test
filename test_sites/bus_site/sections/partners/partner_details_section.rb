@@ -794,6 +794,13 @@ module Bus
         find(:xpath, "//td[text()=\'#{setting['Name']}\']/../td[3]").text == setting['Locked']
     end
 
+    def verify_settings(settings)
+      settings_link.click
+      settings.each do |setting|
+        has_setting?(setting)
+      end
+    end
+
     def has_setting_name?(setting_name)
       all(:xpath, "//td[text()=\'#{setting_name}\']").size >= 1
     end
