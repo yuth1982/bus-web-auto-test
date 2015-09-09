@@ -8,6 +8,10 @@ Then /^the version general info should be:$/ do |version_details|
   expected.keys.each{ |key| actual[key].should == expected[key] }
 end
 
+And /^I upload file (.+) for the windows version$/ do |file|
+  @bus_site.admin_console_page.version_show_section.upload_db3(file)
+end
+
 Then /^I can find the version branding info:$/ do |table|
   actual = @bus_site.admin_console_page.version_show_section.version_branding_table_text
   expected = table.raw
@@ -32,6 +36,10 @@ end
 
 Then /^version info should be changed successfully$/ do
   @bus_site.admin_console_page.version_show_section.version_saved_success_message.should == "Changes saved successfully"
+end
+
+When /^I close version details section$/ do
+  @bus_site.admin_console_page.version_show_section.close_bus_section
 end
 
 When /^I refresh version details section$/ do

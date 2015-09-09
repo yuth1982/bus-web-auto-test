@@ -12,8 +12,8 @@ Feature: As a Mozy Admin, I should be able to add new sync version and manage th
     And I delete version 10.10.10.10 if it exists
     And I navigate to Create New Version section from bus admin console page
     And I add a new client version:
-      | name                | platform | version number | notes                                              |
-      | WinSyncTestVersion  | win-sync | 10.10.10.10    | This is a test version for BUS version management. |
+      | name                           | platform | version number | notes                                              |
+      | WinSyncTestVersion 10.10.10.10 | win-sync | 10.10.10.10    | This is a test version for BUS version management. |
     Then the client version should be created successfully
 
   @TC.131358 @bus @regression
@@ -27,8 +27,8 @@ Feature: As a Mozy Admin, I should be able to add new sync version and manage th
       | platform | show disabled |
       | win-sync | true          |
     Then I can find the version info in versions list:
-      | Version     | Platform  | Name               | Status   |
-      | 10.10.10.10 | win-sync  | WinSyncTestVersion | disabled |
+      | Version     | Platform  | Name                           | Status   |
+      | 10.10.10.10 | win-sync  | WinSyncTestVersion 10.10.10.10 | disabled |
 
   @TC.131359 @TC.131360 @bus @regression
   Scenario: 131359 131360 Linux client can be uploaded successfully for Mozy, Inc.(MozyEnterprise/MozyPro root partner)
@@ -53,8 +53,8 @@ Feature: As a Mozy Admin, I should be able to add new sync version and manage th
       | platform | show disabled |
       | win-sync | false         |
     Then I can find the version info in versions list:
-      | Version     | Platform  | Name               | Status  |
-      | 10.10.10.10 | win-sync  | WinSyncTestVersion | enabled |
+      | Version     | Platform  | Name                           | Status  |
+      | 10.10.10.10 | win-sync  | WinSyncTestVersion 10.10.10.10 | enabled |
 
   @TC.131371 @bus @regression
   Scenario: 131371 Create Auto upgrade rule for Sync client
@@ -62,10 +62,10 @@ Feature: As a Mozy Admin, I should be able to add new sync version and manage th
       | name    | including sub-partners |
       | MozyPro | no                     |
     And I navigate to Upgrade Rules section from bus admin console page
-    And I delete rule for version WinSyncTestVersion if it exists
+    And I delete rule for version WinSyncTestVersion 10.10.10.10 if it exists
     Then I add a new upgrade rule:
-      | version name        | Req? | On? | min version | max version | Install CMD  |
-      | WinSyncTestVersion  | N    | Y   | 0.0.0.1     | 0.0.0.2     | "%1" /silent |
+      | version name                   | Req? | On? | min version | max version | Install CMD  |
+      | WinSyncTestVersion 10.10.10.10 | N    | Y   | 0.0.0.1     | 0.0.0.2     | "%1" /silent |
     And I stop masquerading as sub partner
     When I search partner by:
       | name                                                     | including sub-partners |
@@ -96,10 +96,10 @@ Feature: As a Mozy Admin, I should be able to add new sync version and manage th
       | name    | including sub-partners |
       | MozyPro | no                     |
     And I navigate to Upgrade Rules section from bus admin console page
-    And I delete rule for version WinSyncTestVersion if it exists
+    And I delete rule for version WinSyncTestVersion 10.10.10.10 if it exists
     Then I add a new upgrade rule:
-      | version name        | Req? | On? | min version | max version | Install CMD  |
-      | WinSyncTestVersion  | N    | Y   | 0.0.0.1     | 0.0.0.2     | "%1" /silent |
+      | version name                   | Req? | On? | min version | max version | Install CMD  |
+      | WinSyncTestVersion 10.10.10.10 | N    | Y   | 0.0.0.1     | 0.0.0.2     | "%1" /silent |
     And I stop masquerading as sub partner
 
     When I search partner by:
@@ -143,10 +143,10 @@ Feature: As a Mozy Admin, I should be able to add new sync version and manage th
       | name           | including sub-partners |
       | MozyEnterprise | no                     |
     And I navigate to Upgrade Rules section from bus admin console page
-    And I delete rule for version WinSyncTestVersion if it exists
+    And I delete rule for version WinSyncTestVersion 10.10.10.10 if it exists
     Then I add a new upgrade rule:
-      | version name        | Req? | On? | min version | max version | Install CMD  |
-      | WinSyncTestVersion  | N    | N   | 0.0.0.1     | 0.0.0.2     | "%1" /silent |
+      | version name                   | Req? | On? | min version | max version | Install CMD  |
+      | WinSyncTestVersion 10.10.10.10 | N    | N   | 0.0.0.1     | 0.0.0.2     | "%1" /silent |
     And I stop masquerading as sub partner
 
     When I act as partner by:
@@ -173,14 +173,300 @@ Feature: As a Mozy Admin, I should be able to add new sync version and manage th
       | Internal Mozy - MozyEnterprise product partner | yes                    |
     And I navigate to Download * Client section from bus admin console page
     Then I can find client download info of platform Windows in Sync Clients part:
-      | WinSyncTestVersion |
-    When I view Details for client WinSyncTestVersion
+      | WinSyncTestVersion 10.10.10.10 |
+    When I view Details for client WinSyncTestVersion 10.10.10.10
     Then I should see download link for MozyEnterprise-sync-10_10_10_10
     When I clear downloads folder
     And I click download link for MozyEnterprise-sync-10_10_10_10
     Then client started downloading successfully
     When I wait for client fully downloaded
     Then the downloaded client should be same as the uploaded file FakeWinSyncClient.exe
+
+  @TC.126245 @bus @regression
+  Scenario: 126245 Upgrade to: Drop down list version >= forced upgrade rules version in parent partner
+    When I navigate to List Versions section from bus admin console page
+    And I list versions for:
+      | platform | show disabled |
+      | win-sync | true          |
+    And I delete version 10.10.10.11 if it exists
+    And I navigate to Create New Version section from bus admin console page
+    And I add a new client version:
+      | name                            | platform | version number | notes                                              |
+      | WinSyncTestVersion 10.10.10.11  | win-sync | 10.10.10.11    | This is a test version for BUS version management. |
+    Then the client version should be created successfully
+    When I view version details for 10.10.10.11
+    And I click Brandings tab of version details
+    And I upload executable FakeWinSyncClient2.exe for partner MozyEnterprise
+    And I save changes for the version
+    Then version info should be changed successfully
+    And the download link for partner MozyEnterprise should be generated
+    And I click General tab of version details
+    And I change version status to enabled
+    Then version info should be changed successfully
+    And I close version details section
+
+    When I list versions for:
+      | platform | show disabled |
+      | win-sync | true          |
+    And I delete version 10.10.10.9 if it exists
+    And I navigate to Create New Version section from bus admin console page
+    And I add a new client version:
+      | name                          | platform | version number | notes                                              |
+      | WinSyncTestVersion 10.10.10.9 | win-sync | 10.10.10.9     | This is a test version for BUS version management. |
+    Then the client version should be created successfully
+    When I view version details for 10.10.10.9
+    And I click Brandings tab of version details
+    And I upload executable FakeWinSyncClient3.exe for partner MozyEnterprise
+    And I save changes for the version
+    Then version info should be changed successfully
+    And the download link for partner MozyEnterprise should be generated
+    And I click General tab of version details
+    And I change version status to enabled
+    Then version info should be changed successfully
+    And I close version details section
+
+    When I act as partner by:
+      | name           | including sub-partners |
+      | MozyEnterprise | no                     |
+    And I navigate to Upgrade Rules section from bus admin console page
+    And I delete rule for version WinSyncTestVersion 10.10.10.10 if it exists
+    And I stop masquerading as sub partner
+    When I act as partner by:
+      | name                                                           | including sub-partners |
+      | Internal Mozy - MozyEnterprise with edit user group capability | yes                    |
+    And I navigate to Edit Client Version section from bus admin console page
+    Then there is version Windows Sync 10.10.10.9 in Update to list
+    And there is version Windows Sync 10.10.10.10 in Update to list
+    And there is version Windows Sync 10.10.10.11 in Update to list
+    And I stop masquerading as sub partner
+
+    When I act as partner by:
+      | name           | including sub-partners |
+      | MozyEnterprise | no                     |
+    And I navigate to Upgrade Rules section from bus admin console page
+    And I delete rule for version WinSyncTestVersion 10.10.10.10 if it exists
+    Then I add a new upgrade rule:
+      | version name                   | Req? | On? | min version | max version | Install CMD  |
+      | WinSyncTestVersion 10.10.10.10 | Y    | Y   | 0.0.0.1     | 0.0.0.2     | "%1" /silent |
+    And I stop masquerading as sub partner
+    When I act as partner by:
+      | name                                                           | including sub-partners |
+      | Internal Mozy - MozyEnterprise with edit user group capability | yes                    |
+    And I navigate to Edit Client Version section from bus admin console page
+    Then Client Version Rules should include rule:
+      | Update To                | User Group      | Current Version         | OS  | Required | Install Command | Options |
+      | Windows Sync 10.10.10.10 | All User Groups | 0.0.0.1 through 0.0.0.2 | Any | Yes      | "%1" /silent    |         |
+    And there is no version Windows Sync 10.10.10.9 in Update to list
+    And there is version Windows Sync 10.10.10.10 in Update to list
+    And there is version Windows Sync 10.10.10.11 in Update to list
+
+    And I stop masquerading as sub partner
+    And I act as partner by:
+      | name           | including sub-partners |
+      | MozyEnterprise | no                     |
+    And I navigate to Upgrade Rules section from bus admin console page
+    And I delete rule for version WinSyncTestVersion 10.10.10.10 if it exists
+
+  @TC.126195 @TC.126196 @bus @regression
+  Scenario: 126195 126196 Client Version Rules: Upgrade rules show up in sub-partner when there is no override rule. Client Version Rules: Only Force Upgrade rules show up in sub-partner when there is override rule
+    When I act as partner by:
+      | name           | including sub-partners |
+      | MozyEnterprise | no                     |
+    And I navigate to Upgrade Rules section from bus admin console page
+    And I delete rule for version WinSyncTestVersion 10.10.10.10 if it exists
+    When I add a new upgrade rule:
+      | version name                   | Req? | On? | min version | max version | Install CMD  |
+      | WinSyncTestVersion 10.10.10.10 | N    | N   | 0.0.0.1     | 0.0.0.2     |              |
+    And I stop masquerading as sub partner
+    When I act as partner by:
+      | name                                                           | including sub-partners |
+      | Internal Mozy - MozyEnterprise with edit user group capability | yes                    |
+    And I navigate to Edit Client Version section from bus admin console page
+    And I delete client version rule for Windows Sync 10.10.10.10 if it exists
+    And I delete client version rule for Windows Sync 10.10.10.11 if it exists
+    Then Client Version Rules should include rule:
+      | Update To                | User Group      | Current Version         | OS  | Required | Install Command | Options |
+      | Windows Sync 10.10.10.10 | All User Groups | 0.0.0.1 through 0.0.0.2 | Any | No       |                 |         |
+    When I add a new rule in Edit Client Version:
+      | Update To                |  User Group     | Current Version  | Required |
+      | Windows Sync 10.10.10.11 | All User Groups | Any version      | No       |
+    Then Client Version Rules should not include rule:
+      | Update To                | User Group      | Current Version         | OS  | Required | Install Command | Options |
+      | Windows Sync 10.10.10.10 | All User Groups | 0.0.0.1 through 0.0.0.2 | Any | No       |                 |         |
+    And I stop masquerading as sub partner
+
+    When I act as partner by:
+      | name           | including sub-partners |
+      | MozyEnterprise | no                     |
+    And I navigate to Upgrade Rules section from bus admin console page
+    And I delete rule for version WinSyncTestVersion 10.10.10.10 if it exists
+    When I add a new upgrade rule:
+      | version name                   | Req? | On? | min version | max version | Install CMD  |
+      | WinSyncTestVersion 10.10.10.10 | Y    | Y   | 0.0.0.1     | 0.0.0.2     |              |
+    And I stop masquerading as sub partner
+    When I act as partner by:
+      | name                                                           | including sub-partners |
+      | Internal Mozy - MozyEnterprise with edit user group capability | yes                    |
+    And I navigate to Edit Client Version section from bus admin console page
+    And I delete client version rule for Windows Sync 10.10.10.10 if it exists
+    And I delete client version rule for Windows Sync 10.10.10.11 if it exists
+    Then Client Version Rules should include rule:
+      | Update To                | User Group      | Current Version         | OS  | Required | Install Command | Options |
+      | Windows Sync 10.10.10.10 | All User Groups | 0.0.0.1 through 0.0.0.2 | Any | Yes      |                 |         |
+    When I add a new rule in Edit Client Version:
+      | Update To                |  User Group     | Current Version  | Required |
+      | Windows Sync 10.10.10.11 | All User Groups | Any version      | No       |
+    Then Client Version Rules should include rule:
+      | Update To                | User Group      | Current Version         | OS  | Required | Install Command | Options |
+      | Windows Sync 10.10.10.10 | All User Groups | 0.0.0.1 through 0.0.0.2 | Any | Yes      |                 |         |
+      | Windows Sync 10.10.10.11 | All User Groups | Any version             | Any | No       |                 | Remove  |
+    And I delete client version rule for Windows Sync 10.10.10.10 if it exists
+    And I delete client version rule for Windows Sync 10.10.10.11 if it exists
+
+    And I stop masquerading as sub partner
+    When I act as partner by:
+      | name           | including sub-partners |
+      | MozyEnterprise | no                     |
+    And I navigate to Upgrade Rules section from bus admin console page
+    And I delete rule for version WinSyncTestVersion 10.10.10.10 if it exists
+
+
+  @TC.122571 @bus @regression
+  Scenario: 122571 The most appropriate upgrade rules take effect
+    When I act as partner by:
+      | name           | including sub-partners |
+      | MozyEnterprise | no                     |
+    And I navigate to Upgrade Rules section from bus admin console page
+    And I delete rule for version WinSyncTestVersion 10.10.10.10 if it exists
+
+    When I search partner by:
+      | name                                                           | including sub-partners |
+      | Internal Mozy - MozyEnterprise with edit user group capability | yes                    |
+    And I view partner details by Internal Mozy - MozyEnterprise with edit user group capability
+    And I record the MozyPro partner name Internal Mozy - MozyEnterprise with edit user group capability and admin name Admin Automation
+    And I get the admin id from partner details
+    When I act as newly created partner
+    And I navigate to Edit Client Version section from bus admin console page
+    And I delete client version rule for Windows Sync 10.10.10.9 if it exists
+    And I delete client version rule for Windows Sync 10.10.10.10 if it exists
+    And I delete client version rule for Windows Sync 10.10.10.11 if it exists
+
+    And I add a new rule in Edit Client Version:
+      | Update To                |  User Group          | Current Version >= | Required |
+      | Windows Sync 10.10.10.11 |  All User Groups     | 10.10.10.8         | No       |
+    And I add a new rule in Edit Client Version:
+      | Update To                |  User Group          | Required |
+      | Windows Sync 10.10.10.10 | (default user group) | No       |
+    And I add a new rule in Edit Client Version:
+      | Update To                |  User Group          | Current Version >= | Required |
+      | Windows Sync 10.10.10.9  | (default user group) | 10.10.10.8         | No       |
+    Then Client Version Rules should include rule:
+      | Update To                | User Group           | Current Version     | OS  | Required | Install Command | Options |
+      | Windows Sync 10.10.10.11 | All User Groups      | 10.10.10.8 or later | Any | No       |                 | Remove  |
+      | Windows Sync 10.10.10.10 | (default user group) | Any version         | Any | No       |                 | Remove  |
+      | Windows Sync 10.10.10.9  | (default user group) | 10.10.10.8 or later | Any | No       |                 | Remove  |
+
+    When I search partner by:
+      | name                                                           | including sub-partners |
+      | Internal Mozy - MozyEnterprise with edit user group capability | yes                    |
+    And I view partner details by Internal Mozy - MozyEnterprise with edit user group capability
+    And I record the MozyPro partner name Internal Mozy - MozyEnterprise with edit user group capability and admin name Admin Automation
+    And I get the admin id from partner details
+    When I act as newly created partner
+
+    When I add new user(s):
+      | name           | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | TC.125251.User | (default user group) | Desktop      | 10            | 1       | yes          |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords    |
+      | @user_email |
+    And I view user details by TC.125251.User
+    And I got client config for the user machine:
+      | user_name                   | machine    | platform | codename       | version    | arch |
+      | <%=@new_users.first.email%> | plop000001 | win      | MozyEnterprise | 10.10.10.8 | x86  |
+    And client config should contains:
+      | update-url                                          |
+      | /downloads/MozyEnterprise-sync-10_10_10_9-XXXXX.exe |
+    And I delete user
+    And I navigate to Edit Client Version section from bus admin console page
+    And I delete client version rule for Windows Sync 10.10.10.9 if it exists
+    And I delete client version rule for Windows Sync 10.10.10.10 if it exists
+    And I delete client version rule for Windows Sync 10.10.10.11 if it exists
+
+  @TC.126181 @TC.126182 @bus @regression
+  Scenario: 126181 Other Releases link of backup client should show up correctly 126182 The downloaded backup client version should be correct
+    When I act as partner by:
+      | name           | including sub-partners |
+      | MozyEnterprise | no                     |
+    And I navigate to Upgrade Rules section from bus admin console page
+    And I delete rule for version WinSyncTestVersion 10.10.10.10 if it exists
+    Then I add a new upgrade rule:
+      | version name                   | Req? | On? | min version | max version | Install CMD  |
+      | WinSyncTestVersion 10.10.10.10 | N    | N   | 0.0.0.1     | 0.0.0.2     | "%1" /silent |
+    And I stop masquerading as sub partner
+
+    When I act as partner by:
+      | name                                                           | including sub-partners |
+      | Internal Mozy - MozyEnterprise with edit user group capability | yes                    |
+    And I navigate to Download MozyEnterprise Client section from bus admin console page
+    Then I can find client download info of platform Windows in Sync Clients part:
+      | MozyEnterprise WinSyncTestVersion 10.10.10.10|
+    When I view Details for client MozyEnterprise WinSyncTestVersion 10.10.10.10
+    Then the version detail info should be:
+      | Download:                                 | MD5:                   | Date:  |
+      | MozyEnterprise-sync-10_10_10_10-XXXXX.exe | FakeWinSyncClient.exe  | @today |
+    And I view Details for client MozyEnterprise WinSyncTestVersion 10.10.10.10
+    When I view Other Releases for client MozyEnterprise WinSyncTestVersion 10.10.10.10
+    Then I can see version MozyEnterprise WinSyncTestVersion 10.10.10.9 in Older Releases
+    And the version detail info MozyEnterprise WinSyncTestVersion 10.10.10.9 should be:
+      | Download:                                 | MD5:                    | Date:  |
+      | MozyEnterprise-sync-10_10_10_9-XXXXX.exe  | FakeWinSyncClient3.exe  | @today |
+    And I can see version MozyEnterprise WinSyncTestVersion 10.10.10.11 in Upcoming Releases
+    And the version detail info MozyEnterprise WinSyncTestVersion 10.10.10.11 should be:
+      | Download:                                 | MD5:                    | Date:  |
+      | MozyEnterprise-sync-10_10_10_11-XXXXX.exe | FakeWinSyncClient2.exe  | @today |
+    When I clear downloads folder
+    And I visit BUS download link for MozyEnterprise-syncsetup.exe
+    Then client started downloading successfully
+    And I wait for client fully downloaded
+    Then the downloaded client should be same as the uploaded file FakeWinSyncClient.exe
+    And I clear downloads folder
+    And I stop masquerading as sub partner
+
+    When I navigate to List Versions section from bus admin console page
+    And I list versions for:
+      | platform | show disabled |
+      | win-sync | true          |
+    And I view version details for 10.10.10.10
+    And I click General tab of version details
+    And I change version status to disabled
+    Then version info should be changed successfully
+
+    When I act as partner by:
+      | name                                                           | including sub-partners |
+      | Internal Mozy - MozyEnterprise with edit user group capability | yes                    |
+    And I navigate to Download MozyEnterprise Client section from bus admin console page
+    Then I can find client download info of platform Windows in Sync Clients part:
+      | MozyEnterprise WinSyncTestVersion 10.10.10.11 |
+    When I view Other Releases for client MozyEnterprise WinSyncTestVersion
+    Then I can see version MozyEnterprise WinSyncTestVersion 10.10.10.9 in Older Releases
+    And I can not see version MozyEnterprise WinSyncTestVersion 10.10.10.10 in Older Releases
+    When I visit BUS download link for MozyEnterprise-syncsetup.exe
+    Then client started downloading successfully
+    And I wait for client fully downloaded
+    Then the downloaded client should be same as the uploaded file FakeWinSyncClient2.exe
+    And I stop masquerading as sub partner
+
+    When I navigate to List Versions section from bus admin console page
+    And I list versions for:
+      | platform | show disabled |
+      | win-sync | true          |
+    And I view version details for 10.10.10.10
+    And I click General tab of version details
+    And I change version status to enabled
+    Then version info should be changed successfully
+
 
   @TC.131357 @bus @regression
   Scenario: 131357 Sync client version can be deleted
@@ -190,3 +476,13 @@ Feature: As a Mozy Admin, I should be able to add new sync version and manage th
       | win-sync | true          |
     And I delete version 10.10.10.10 if it exists
     And I should not see version 10.10.10.10 in version list
+
+  @clean_up
+  Scenario: clean up all windows test versions
+    When I navigate to List Versions section from bus admin console page
+    And I list versions for:
+      | platform | show disabled |
+      | win-sync | true          |
+    And I delete version 10.10.10.9 if it exists
+    And I delete version 10.10.10.10 if it exists
+    And I delete version 10.10.10.11 if it exists

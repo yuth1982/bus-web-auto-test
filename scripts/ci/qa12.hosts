@@ -6,6 +6,8 @@
 10.135.14.40 client.mozy.com
 10.135.14.149 triton.mozy.com
 
+10.135.14.40 backupclient.mozyenterprise.com
+
 #google
 127.0.0.1 ssl.google-analytics.com www.google-analytics.com
 127.0.0.1 ajax.googleapis.com

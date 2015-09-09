@@ -12,7 +12,22 @@ module Bus
     element(:version_required_select, xpath: "//select[@name='rn_install_required[]']")
     element(:rule_enabled_select, xpath: "//select[@name='rn_is_enabled[]']")
     element(:install_command_input, xpath: "//input[@name='rn_install_command[]']")
+    # element for confirm window when creating force rule
+    element(:admin_password_input, xpath: "//div[@class='popup-window-content']//input[@name='password']")
+    element(:admin_password_confirm_btn, xpath: "//div[@class='popup-window-footer']//input[@value='Submit']")
 
+
+
+    # Public: input admin password to confirm creating force rule
+    #
+    def confirm_change_upgrade_rule
+      if alert_present?
+        alert_accept
+        Log.debug "alert show up when add/change upgrade rules"
+        admin_password_input.set(QA_ENV['bus_password'])
+        admin_password_confirm_btn.click
+      end
+    end
 
     # Public: add a new rule in Upgrade Rules iframe
     #
@@ -25,6 +40,51 @@ module Bus
       version_required_select.select(rule['Req?']) if rule.has_key?('Req?')
       rule_enabled_select.select(rule['On?']) if rule.has_key?('On?')
       rule_save_btn.click
+      confirm_change_upgrade_rule
+    end
+
+    # Public: get first rule detail info of the given version_name in Upgrade Rules iframe
+    #
+    def get_rule(version_name)
+      has_rule, rule_number = rule_exists?(version_name)
+
+      rule_version_select = "//tbody[@id='version_rules_tbody']//tr[#{rule_number[0]}]//select[contains(@name, 'version_id')]"
+      version_min_input = "//tbody[@id='version_rules_tbody']//tr[#{rule_number[0]}]//input[contains(@name,'check_requesting_ver_min')]"
+      version_max_input = "//tbody[@id='version_rules_tbody']//tr[#{rule_number[0]}]//input[contains(@name,'check_requesting_ver_max')]"
+      version_required_select = "//tbody[@id='version_rules_tbody']//tr[#{rule_number[0]}]//select[contains(@name, 'install_required')]"
+      rule_enabled_select = "//tbody[@id='version_rules_tbody']//tr[#{rule_number[0]}]//select[contains(@name, 'is_enabled')]"
+      install_command_input = "//tbody[@id='version_rules_tbody']//tr[#{rule_number[0]}]//input[contains(@name,'install_command')]"
+
+      rule = {}
+      rule['version name'] = find(:xpath, rule_version_select).first_selected_option.text
+      rule['min version'] = find(:xpath, version_min_input).value
+      rule['max version'] = find(:xpath, version_max_input).value
+      rule['Install CMD'] = find(:xpath, install_command_input).value
+      rule['Req?'] = find(:xpath, version_required_select).first_selected_option.text
+      rule['On?'] = find(:xpath, rule_enabled_select).first_selected_option.text
+      rule
+    end
+
+    # Public: modify rule of the first given version_name in Upgrade Rules iframe
+    #
+    def edit_rule(version_name, rule)
+      has_rule, rule_number = rule_exists?(version_name)
+
+      rule_version_select = "//tbody[@id='version_rules_tbody']//tr[#{rule_number[0]}]//select[contains(@name, 'version_id')]"
+      version_min_input = "//tbody[@id='version_rules_tbody']//tr[#{rule_number[0]}]//input[contains(@name,'check_requesting_ver_min')]"
+      version_max_input = "//tbody[@id='version_rules_tbody']//tr[#{rule_number[0]}]//input[contains(@name,'check_requesting_ver_max')]"
+      version_required_select = "//tbody[@id='version_rules_tbody']//tr[#{rule_number[0]}]//select[contains(@name, 'install_required')]"
+      rule_enabled_select = "//tbody[@id='version_rules_tbody']//tr[#{rule_number[0]}]//select[contains(@name, 'is_enabled')]"
+      install_command_input = "//tbody[@id='version_rules_tbody']//tr[#{rule_number[0]}]//input[contains(@name,'install_command')]"
+
+      find(:xpath, rule_version_select).select(version_name) if rule.has_key?('version name')
+      find(:xpath, version_min_input).type_text(rule['min version']) if rule.has_key?('min version')
+      find(:xpath, version_max_input).type_text(rule['max version']) if rule.has_key?('max version')
+      find(:xpath, install_command_input).type_text(rule['Install CMD']) if rule.has_key?('Install CMD')
+      find(:xpath, version_required_select).select(rule['Req?']) if rule.has_key?('Req?')
+      find(:xpath, rule_enabled_select).select(rule['On?']) if rule.has_key?('On?')
+      rule_save_btn.click
+      confirm_change_upgrade_rule
     end
 
     # Public: determine if a rule with specified version name exists in Upgrade Rules
@@ -55,6 +115,13 @@ module Bus
         find(:xpath, "//tbody[@id='version_rules_tbody']//tr[#{line}]//td[last()]//b").click if version_name == find(:xpath, "//tbody[@id='version_rules_tbody']//tr[#{line}]//td[1]//select[1]").first_selected_option.text
       end
       rule_save_btn.click
+    end
+
+    # Public: check if upgrade rules can select given version_name as rule version
+    #
+    def upgrade_version_contain?(version_name)
+      create_new_rule_link.click
+      rule_version_select.text.include?(version_name)
     end
 
   end

@@ -16,6 +16,8 @@ module Bus
     element(:version_arch_input, css: "input[id^='version_architecture']")
     element(:version_ver_input, id: "version_ver")
     element(:version_install_command_input, id: "version_install_command")
+    element(:version_oem_input, id: "oem_db_file")
+    element(:replace_db3_link, xpath: "//a[text()='replace']")
     element(:version_save_btn, css: "input[@value='Save Changes']")
     element(:version_oem_label, css: "label[for='oem_db_file']")
     element(:delete_version_link, xpath: "//a[text()='Delete Version']")
@@ -88,6 +90,13 @@ module Bus
         browse_button = find(:xpath, "//a[text()='#{partner}']//parent::td//parent::tr//td[4]//input")
       end
       upload_file(executable, browse_button.id)
+    end
+
+    # Public: upload a db3 file for windows client
+    #
+    def upload_db3(file)
+      replace_db3_link.click unless version_oem_input.visible?
+      upload_file(file, version_oem_input.id)
     end
 
 

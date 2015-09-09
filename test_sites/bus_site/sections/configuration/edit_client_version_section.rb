@@ -100,7 +100,7 @@ module Bus
       user_group_select.select(rule['User Group']) if rule.has_key?('User Group')
       os_min_select.select(rule['OS >=']) if rule.has_key?('OS >=')
       os_max_select.select(rule['OS <=']) if rule.has_key?('OS <=')
-      required_cb.check if rule.has_key?('Required Update') && rule['Required'] == 'Yes'
+      required_cb.check if rule['Required'] == 'Yes'
       install_command_select.select(rule['Install Command']) if rule.has_key?('Install Command')
       submit_button.click
 
@@ -141,7 +141,27 @@ module Bus
       upgrade_to_select.text.include?(version)
     end
 
+    # Public: select a version in update to selector
+    #
+    def select_version(version)
+      upgrade_to_select.select(version)
+    end
 
+    # Public: get OS selector options
+    #
+    def os_options(type)
+      if type == 'min' && os_min_select.visible?
+        os_min_select.options_text
+      elsif type == 'max' && os_max_select.visible?
+        os_max_select.options_text
+      end
+    end
+
+    # Public: get user group selector options
+    #
+    def user_group_options
+      user_group_select.options_text
+    end
 
   end
 

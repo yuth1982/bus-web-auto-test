@@ -47,6 +47,12 @@ Then /^client config (should|should not) contains:$/ do |option, table|
   end
 end
 
+Then /^there is no field for (.+) in edit client version section$/ do |text|
+  section_text = @bus_site.admin_console_page.edit_client_version_section.text
+  section_text.include?(text).should be_false
+  section_text.include?(text.downcase).should be_false
+end
+
 # steps for partner without edit user group capability
 
 Then /^there is no (.+) rule in client rule fieldset$/ do |version|
@@ -102,14 +108,36 @@ When /^I add a new rule in Edit Client Version:$/ do |table|
   @bus_site.admin_console_page.edit_client_version_section.wait_until_bus_section_load
 end
 
-Then /^Client Version Rules should include rule:$/ do |table|
+Then /^Client Version Rules (should|should not) include rule:$/ do |type, table|
   actual = @bus_site.admin_console_page.edit_client_version_section.client_version_rules_hash
   expected = table.hashes
   Log.debug actual
-  expected.each{ |key| (actual.include?(key)).should be_true}
+  if type == 'should'
+    expected.each{ |key| (actual.include?(key)).should be_true}
+  else
+    expected.each{ |key| (actual.include?(key)).should be_false}
+  end
 end
 
 And /^I delete client version rule for (.+) if it exists$/ do |version|
   @bus_site.admin_console_page.edit_client_version_section.delete_rule(version)
   @bus_site.admin_console_page.edit_client_version_section.wait_until_bus_section_load
+end
+
+When /^I select version (.+) in Update To list$/ do |version|
+  @bus_site.admin_console_page.edit_client_version_section.select_version(version)
+end
+
+Then /^Operating System should include OS:$/ do |table|
+  expected = table.headers
+  actual = @bus_site.admin_console_page.edit_client_version_section.os_options('min')
+  expected.each{ |key| (actual.include?(key)).should be_true}
+  actual = @bus_site.admin_console_page.edit_client_version_section.os_options('max')
+  expected.each{ |key| (actual.include?(key)).should be_true}
+end
+
+Then /^User Group selector should include:$/ do |table|
+  actual = @bus_site.admin_console_page.edit_client_version_section.user_group_options
+  expected = table.headers
+  expected.each{ |key| (actual.include?(key)).should be_true}
 end
