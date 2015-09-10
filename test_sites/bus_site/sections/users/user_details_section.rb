@@ -89,6 +89,12 @@ module Bus
     element(:mozyhome_user_quota_td, xpath: "//table[@class='mini-table'][2]/tbody/tr[1]/td[1]")
     element(:mozyhome_user_status_td, xpath: "//table[@class='mini-table'][2]/tbody/tr[1]/td[4]")
 
+    # refund link
+    element(:refund_a, xpath: "//a[text()='Refund now']")
+    element(:refund_amount_input, id: "refund_amount")
+    element(:refund_submit_input, xpath: "//span[starts-with(@id,'refund-transaction-')]/form/input[@value='Submit']")
+    element(:refunded_amount_td, xpath: "//div[@class='show-details']//table[@class='table-view']//tr[1]//td[4]")
+
 
     # Public: User details storage, devices, storage limit hash
     #
@@ -733,6 +739,20 @@ module Bus
 
     def get_mozyhome_user_status
       mozyhome_user_status_td.text
+    end
+
+    def refund_user(amount)
+      refund_a.click
+      before_amounts = refund_amount_input[:value]
+      amount = before_amounts if amount.eql?('all')
+      refund_amount_input.type_text(amount)
+      refund_submit_input.click
+      alert_accept
+      amount
+    end
+
+    def get_refunded_amount
+      refunded_amount_td.text
     end
 
     private

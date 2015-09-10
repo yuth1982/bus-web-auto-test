@@ -95,8 +95,8 @@ Feature: Mozyhome User Login
   Scenario: 123419 MozyHome user login phoenix after activating and changing password
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country       |
-      | 1      | 50 GB     | United States |
+      | period | base plan | country        | billing country | cc number        |
+      | 1      | 50 GB     | United Kingdom | United Kingdom  | 4916783606275713 |
     Then the user is successfully added.
     When I log in bus admin console as administrator
     And I search user by:
@@ -104,14 +104,11 @@ Feature: Mozyhome User Login
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     Then I verify the user
-#    And I log into phoenix with username newly created MozyHome username and password default password
-#    Then I click Resend link
-#    And the free user has verified user account newly created MozyHome username
-#    And I log into phoenix with username newly created MozyHome username and password default password
-#    When I navigate to My Profile section in Phoenix
-#    And I click change password in Phoenix
-#    And I log into phoenix with username newly created MozyHome username and password reset password
-#    And I log out bus admin console
+    And I log into phoenix with username newly created MozyHome username and password default password
+    When I navigate to My Profile section in Phoenix
+    And I change password in Phoenix from default password to reset password
+    And I log into phoenix with username newly created MozyHome username and password reset password
+    And I log out bus admin console
 
   @TC.123856 @bus @user_login @tasks_p1
   Scenario: 123856:MozyHome user password would expire
@@ -163,5 +160,35 @@ Feature: Mozyhome User Login
     Then I downgrade mozyhome user to Free
     Then I verify mozyhome user plan is Free after downgrade
     And I delete user
+
+  @TC.123512 @bus @user_login @tasks_p1
+  Scenario: 123512:New created MozyHome user forget password and reset password on phoenix
+    When I am at dom selection point:
+    And I add a phoenix Free user:
+      | base plan | country       |
+      | free      | United States |
+    Then the user is successfully added.
+    And the user has activated their account
+    Then I navigate to phoenix login page
+    And I click forget your password link
+    And I input email @partner.admin_info.email in reset password panel to reset password
+    When I search emails by keywords:
+      | subject                   | to                            |
+      | MozyPro password recovery | <%=@partner.admin_info.email%>|
+    Then I should see 1 email(s)
+    When I click reset password link from the email
+    Then I reset password with reset password
+    And I will see reset password massage Your password has been changed.
+    And I log into phoenix with username newly created MozyHome username and password reset password
+    And I access freyja from phoenix
+    And I select options menu
+    And I logout freyja
+    And I log in bus admin console as administrator
+    And I search user by:
+      | keywords       |
+      | @mh_user_email |
+    And I view user details by newly created MozyHome username
+    And I delete user
+
 
 

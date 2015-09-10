@@ -601,3 +601,19 @@ Feature: User Details
       | 1    | 3         | Desktop      |
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
+
+  @TC.122231 @bus @tasks_p1
+  Scenario: Mozy-122231:Refund MH User
+    When I am at dom selection point:
+    And I add a phoenix Home user:
+      | period | base plan | country       |
+      | 1      | 50 GB     | United States |
+    Then the user is successfully added.
+    When I log in bus admin console as administrator
+    And I search user by:
+      | keywords       |
+      | @mh_user_email |
+    And I view user details by newly created MozyHome username
+    Then I refund the user with all amount
+    Then I check the refund amount should be correct
+    And I delete user

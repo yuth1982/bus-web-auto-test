@@ -301,3 +301,40 @@ Feature: Stabdard user Login
     Then the user log out bus
     When I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
+
+  @TC.123710 @bus @user_login @tasks_p1
+  Scenario: Mozy-123710:New created standard user forget password and reset password on bus
+    When I add a new MozyPro partner:
+      | period | base plan | security |
+      | 12     | 100 GB    | Standard |
+    And New partner should be created
+    Then I get the partner_id
+    Then I change root role to FedID role
+    And I activate new partner admin with default password
+    And I act as newly created partner
+    And I add new user(s):
+      | name           | user_group           | storage_type | storage_limit | devices |
+      | TC.123710.User | (default user group) | Desktop      | 100           | 3       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by TC.123710.User
+    And I update the user password to reset password
+    Then I navigate to user login page with partner ID
+    And I click forget your password link
+    And I input email @new_users[0].email in reset password panel to reset password
+    When I search emails by keywords:
+      | subject                   | to                      |
+      | MozyPro password recovery | <%=@new_users[0].email%>|
+    Then I should see 1 email(s)
+    When I click reset password link from the email
+    Then I reset password with reset password
+    And I will see reset password massage Your password has been changed.
+    Then I navigate to user login page with partner ID
+    Then I log in bus pid console with:
+      | username                 | password                                  |
+      | <%=@new_users[0].email%> | <%=CONFIGS['global']['test_hipaa_pwd'] %> |
+    Then the user log out bus
+    When I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
