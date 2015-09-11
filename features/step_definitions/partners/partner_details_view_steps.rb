@@ -307,6 +307,18 @@ When /^I add a new partner external id$/ do
   @bus_site.admin_console_page.partner_details_section.change_external_id(@new_p_external_id)
 end
 
+When /^I set product name for the partner$/ do
+  @product_name = 'productname-'+(0...8).map{(97+Random.new.rand(26)).chr}.join
+  @bus_site.admin_console_page.partner_details_section.set_product_name
+  @bus_site.partner_product_name_page.set_product_name @product_name
+end
+
+Then /^The partner product name set up successfully$/ do
+  @bus_site.partner_product_name_page.product_name_set_message.should == "Product name set successfully. Your new build should be available in a few minutes."
+  @bus_site.partner_product_name_page.close_page
+end
+
+
 When /^I change the subdomain to @subdomain$/ do
   @subdomain = (0...8).map{(97+Random.new.rand(26)).chr}.join
   @bus_site.admin_console_page.partner_details_section.change_subdomain

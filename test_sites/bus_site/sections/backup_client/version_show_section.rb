@@ -19,6 +19,7 @@ module Bus
     element(:version_oem_input, id: "oem_db_file")
     element(:replace_db3_link, xpath: "//a[text()='replace']")
     element(:version_save_btn, css: "input[@value='Save Changes']")
+    element(:rebuild_btn, css: "input[@name='rebrand_executables']")
     element(:version_oem_label, css: "label[for='oem_db_file']")
     element(:delete_version_link, xpath: "//a[text()='Delete Version']")
     # Brandings info table of version details
@@ -76,6 +77,21 @@ module Bus
     #
     def version_branding_table_text
       version_branding_table.raw_text
+    end
+
+    # Public: rebuild a windows executable for product partner
+    #
+    def rebuild_executable(partner)
+      find(:xpath, "//a[text()='#{partner}']//parent::td//parent::tr//td[5]//input").check
+      rebuild_btn.click
+      alert_accept if alert_present?
+    end
+
+    # Public: check if executable build successfully
+    #
+    def executable_rebuild_success?(partner)
+      Log.debug find(:xpath, "//a[text()='#{partner}']//parent::td//parent::tr//td[4]").text
+      locate(:xpath, "//a[text()='#{partner}']//parent::td//parent::tr//td[4]//a[contains(text(), '.exe')]") && locate(:xpath, "//a[text()='#{partner}']//parent::td//parent::tr//td[4]//a[text()='build failed...']").nil?
     end
 
 

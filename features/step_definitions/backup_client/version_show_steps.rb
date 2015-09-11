@@ -22,6 +22,19 @@ And /^I upload executable (.+) for partner (.+)$/ do |exec, partner|
   @bus_site.admin_console_page.version_show_section.replace_executable(partner, exec)
 end
 
+And /^I choose to rebuild executable for partner (.+)$/ do |partner|
+  @bus_site.admin_console_page.version_show_section.rebuild_executable(partner)
+end
+
+Then /^executable for partner (.+) should be rebuild successfully$/ do |partner|
+  150.times do
+    sleep(15)
+    @bus_site.admin_console_page.version_show_section.refresh_bus_section
+    break if @bus_site.admin_console_page.version_show_section.has_rebuild_btn?
+  end
+  @bus_site.admin_console_page.version_show_section.executable_rebuild_success?(partner).should be_true
+end
+
 And /^I save changes for the version$/ do
   @bus_site.admin_console_page.version_show_section.save_changes
 end

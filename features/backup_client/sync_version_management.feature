@@ -330,7 +330,7 @@ Feature: As a Mozy Admin, I should be able to add new sync version and manage th
     And I navigate to Upgrade Rules section from bus admin console page
     And I delete rule for version WinSyncTestVersion 10.10.10.10 if it exists
 
-
+  # in qa12, create a desktop user with sync enabled will failed under MozyEnterprise sub partner
   @TC.122571 @bus @regression
   Scenario: 122571 The most appropriate upgrade rules take effect
     When I act as partner by:

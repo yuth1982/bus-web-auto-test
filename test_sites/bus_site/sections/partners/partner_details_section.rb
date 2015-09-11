@@ -21,6 +21,7 @@ module Bus
     element(:delete_partner_link, xpath: "//a[text()='Delete Partner']")
     element(:view_in_aria_link, xpath: "//a[text()='View in Aria']")
     element(:export_to_excel_link, xpath: "//a[text()='Export to Excel (CSV)']")
+    element(:set_product_name_link, xpath: "//a[text()='Set Product Name']")
 
     # Change partner external id
     element(:external_id_tb, id: 'external_id')
@@ -605,6 +606,13 @@ module Bus
     def subdomain
       change_subdomain_link.text
     end
+
+    # Public: Click the link to set product name
+    #
+    def set_product_name
+      set_product_name_link.click
+    end
+
 
     def set_account_type type
       account_type_change_link.click

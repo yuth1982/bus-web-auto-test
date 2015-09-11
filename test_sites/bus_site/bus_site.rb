@@ -31,6 +31,14 @@ class BusSite
     Bus::PartnerSubdomainPage.new
   end
 
+  def partner_product_name_page
+    Bus::PartnerProductNamePage.new
+  end
+
+  def branding_page
+    Bus::BrandingPage.new
+  end
+
   def adfs_login_page
     Bus::AdfsLoginPage.new
   end
