@@ -4,7 +4,7 @@ Feature: Override Region Setting
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.131175 @override_region_setting @bus
+  @TC.131175 @tasks_p1 @override_region_setting @bus
   Scenario: 131175 Regional Presidence
     When I add a new MozyPro partner:
       | period | base plan  | server plan |
@@ -89,7 +89,7 @@ Feature: Override Region Setting
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.131176 @override_region_setting @bus
+  @TC.131176 @tasks_p1 @override_region_setting @bus
   Scenario: 131176 Regional User - Change
     When I add a new MozyPro partner:
       | period | base plan  | server plan | net terms |

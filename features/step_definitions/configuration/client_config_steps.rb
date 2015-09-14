@@ -366,7 +366,7 @@ Then /^preferences settings should be:$/ do |table|
   end
 
   # private key && default key
-  actual_non_ckey = @bus_site.admin_console_page.client_config_section.cc_iframe.get_non_ckey
+  actual_non_ckey = @bus_site.admin_console_page.client_config_section.cc_iframe.get_non_ckey unless private_key.nil? & default_key.nil?
   if !private_key.nil?
     actual_non_ckey['is private key'].should be_true
     if private_key == 'only private key'

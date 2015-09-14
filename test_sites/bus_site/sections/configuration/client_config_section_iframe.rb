@@ -123,8 +123,10 @@ module Bus
 
       if !config_preferences.ckey.nil?
         ckey_radio.click
-        wait_until{ ckey_input.visible? }
-        ckey_input.type_text(config_preferences.ckey)
+        wait_until{ ckey_input[:disabled].nil? }
+        ckey_input.native.clear
+        ckey_input.native.send_keys(config_preferences.ckey)
+        ckey_input.native.send_keys :enter
       end
 
       if !config_preferences.default_key.nil?

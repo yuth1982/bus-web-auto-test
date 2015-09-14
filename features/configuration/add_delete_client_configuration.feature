@@ -3,7 +3,7 @@ Feature: Add/Delete Client Configuration
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.123901 @client_configuration @bus
+  @TC.123901 @tasks_p1 @client_configuration @bus
   Scenario: 123901 Add more user groups for the client configuration
     When I add a new MozyPro partner:
       | period | base plan | net terms | server plan | root role               |
@@ -40,7 +40,7 @@ Feature: Add/Delete Client Configuration
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.123904 @client_configuration @bus
+  @TC.123904 @tasks_p1 @client_configuration @bus
   Scenario: 123904 Remove more user groups for the client configuration
     When I add a new MozyPro partner:
       | period | base plan | server plan | root role               |
@@ -88,7 +88,7 @@ Feature: Add/Delete Client Configuration
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.1338 @client_configuration @bus
+  @TC.1338 @tasks_p1 @integration @client_configuration @bus
   Scenario: 1338:Edit a client config (Desktop) scheduling
     When I add a new MozyPro partner:
       | period | base plan | net terms | server plan |
@@ -107,7 +107,7 @@ Feature: Add/Delete Client Configuration
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.1339 @client_configuration @bus
+  @TC.1339 @tasks_p1 @integration @client_configuration @bus
   Scenario: 1339 Edit a client config (Server) scheduling
     When I add a new MozyPro partner:
       | period | base plan | storage add on | server plan |
@@ -126,7 +126,7 @@ Feature: Add/Delete Client Configuration
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.489 @client_configuration @bus
+  @TC.489 @tasks_p1 @integration @client_configuration @bus
   Scenario: 489 Set a client config option to Cascade - scheduling tab
     When I add a new MozyEnterprise partner:
       | company name      | period | users | server plan | net terms | root role  |
@@ -171,7 +171,7 @@ Feature: Add/Delete Client Configuration
     And I stop masquerading
     And I search and delete partner account by TC.489_partner
 
-  @TC.501 @client_configuration @bus
+  @TC.501 @tasks_p1 @integration @client_configuration @bus
   Scenario: 501 Delete client configuration
     When I add a new Reseller partner:
       | period |  reseller type  | reseller quota |  server plan |  net terms |
@@ -187,7 +187,7 @@ Feature: Add/Delete Client Configuration
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.129688 @client_configuration @bus
+  @TC.129688 @tasks_p1 @integration @client_configuration @bus
   Scenario: 129688 VMBU Client Configuration
     When I add a new MozyPro partner:
       | period | base plan  | server plan |
@@ -205,7 +205,7 @@ Feature: Add/Delete Client Configuration
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.506 @client_configuration @bus
+  @TC.506 @tasks_p1 @client_configuration @bus
   Scenario: 506 Verify view/edit link at Mac Backup Sets functions properly
     When I add a new MozyPro partner:
       | period | base plan  | server plan |
@@ -230,7 +230,7 @@ Feature: Add/Delete Client Configuration
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.450 @client_configuration @bus
+  @TC.450 @tasks_p1 @integration @client_configuration @bus
   Scenario: 450 Create a new moble rule
     When I add a new MozyPro partner:
       | period | base plan | server plan |

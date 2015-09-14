@@ -4,7 +4,7 @@ Feature: Linux BackupSet
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.126287 @client_configuration @bus
+  @TC.126287 @tasks_p1 @client_configuration @bus
   Scenario: 126287 view/edit a new created linux backupset records
     When I add a new MozyEnterprise partner:
       | period | users | server plan |
@@ -68,7 +68,7 @@ Feature: Linux BackupSet
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.126252 @client_configuration @bus
+  @TC.126252 @tasks_p1 @client_configuration @bus
   Scenario: 126252 #131235 BUS shows client config parent&sub-partner with same linux backup set name
     When I add a new MozyEnterprise partner:
       | company name         | period | users | server plan | net terms | root role  |
@@ -129,7 +129,7 @@ Feature: Linux BackupSet
     And I search and delete partner account by TC.126252_sub_partner
     And I search and delete partner account by TC.126252_partner
 
-  @TC.123886 @client_configuration @bus
+  @TC.123886 @tasks_p1 @client_configuration @bus
   Scenario: 123886 Edit search location: include folder name&exclude file name
     When I add a new MozyEnterprise partner:
       | period | users | server plan |
@@ -179,7 +179,7 @@ Feature: Linux BackupSet
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.126294 @client_configuration @bus
+  @TC.126294 @tasks_p1 @client_configuration @bus
   Scenario: 126294 Add linux backup set with include exclude search location and Options checked
     When I add a new MozyPro partner:
       | period |  base plan |   server plan |  net terms |
@@ -222,7 +222,7 @@ Feature: Linux BackupSet
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.123874 @client_configuration @bus
+  @TC.123874 @tasks_p1 @client_configuration @bus
   Scenario: 123874 Delete search location:include
     When I add a new MozyPro partner:
       | period |  base plan |   server plan |
@@ -281,7 +281,7 @@ Feature: Linux BackupSet
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.126285 @client_configuration @bus
+  @TC.126285 @tasks_p1 @client_configuration @bus
   Scenario: 126285:File name and File type includes and excludes
     When I add a new Reseller partner:
       | period |  reseller type  | reseller quota |  server plan |  net terms |
@@ -324,7 +324,7 @@ Feature: Linux BackupSet
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.126276 @client_configuration @bus
+  @TC.126276 @tasks_p1 @client_configuration @bus
   Scenario: 126276 Leave all 4 rules blank
     When I add a new MozyPro partner:
       | period |  base plan | server plan | storage add on |
@@ -367,7 +367,7 @@ Feature: Linux BackupSet
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.126297 @client_configuration @bus
+  @TC.126297 @tasks_p1 @client_configuration @bus
   Scenario: 126297 create/view/edit linux backupset of Key Type: Server
     When I add a new MozyPro partner:
       | period |  base plan | server plan | net terms |
@@ -426,7 +426,7 @@ Feature: Linux BackupSet
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.126277 @client_configuration @bus
+  @TC.126277 @tasks_p1 @client_configuration @bus
   Scenario: 126277 Click Cancel when create a new linux backup set
     When I add a new MozyPro partner:
       | period | base plan  | server plan |
@@ -453,7 +453,7 @@ Feature: Linux BackupSet
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.126278 @client_configuration @bus
+  @TC.126278 @tasks_p1 @client_configuration @bus
   Scenario: 126278 Click Cancel when view/edit a new linux backup set
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add on |
@@ -506,7 +506,7 @@ Feature: Linux BackupSet
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.126298 @client_configuration @bus
+  @TC.126298 @tasks_p1 @client_configuration @bus
   Scenario: 126298 create/view/edit linux backupset of Key Type: Desktop
     When I add a new MozyEnterprise partner:
       | period |  users | server plan | server add on |
@@ -565,7 +565,7 @@ Feature: Linux BackupSet
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.126286 @client_configuration @bus
+  @TC.126286 @tasks_p1 @client_configuration @bus
   Scenario: 126286 view/edit an existing linux backupset records
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -625,7 +625,7 @@ Feature: Linux BackupSet
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.126288 @client_configuration @bus
+  @TC.126288 @tasks_p1 @client_configuration @bus
   Scenario: 126288 Add 2 linux backupset records
     When I add a new MozyPro partner:
       | period | base plan | net terms | server plan |
@@ -683,7 +683,7 @@ Feature: Linux BackupSet
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.126289 @client_configuration @bus
+  @TC.126289 @tasks_p1 @client_configuration @bus
   Scenario: 126289 Delete a backupset records
     When I add a new Reseller partner:
       | period |  reseller type  | reseller quota |  server plan |
@@ -737,7 +737,7 @@ Feature: Linux BackupSet
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.126290 @client_configuration @bus
+  @TC.126290 @tasks_p1 @client_configuration @bus
   Scenario: 126290 Delete a client configuration with backupset record
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add on |
@@ -774,7 +774,7 @@ Feature: Linux BackupSet
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.126291 @client_configuration @bus
+  @TC.126291 @tasks_p1 @client_configuration @bus
   Scenario: 126291 Copy a client configuration with backupset record
     When I add a new MozyPro partner:
       | period | base plan | net terms | server plan | root role               |
@@ -852,7 +852,7 @@ Feature: Linux BackupSet
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.123916 @client_configuration @bus
+  @TC.123916 @tasks_p1 @client_configuration @bus
   Scenario: 123916  create/view/edit linux backupset of Key Type: Server
     When I add a new MozyPro partner:
       | period |  base plan | server plan | storage add on  | net terms |
@@ -912,7 +912,7 @@ Feature: Linux BackupSet
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.123917 @client_configuration @bus
+  @TC.123917 @tasks_p1 @client_configuration @bus
   Scenario: 123917 Use ckey user for Linux backup sets
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add on  |
@@ -972,7 +972,7 @@ Feature: Linux BackupSet
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.126296 @client_configuration @bus
+  @TC.126296 @tasks_p1 @client_configuration @bus
   Scenario: 126296 Create a linux backupset with Setting Cascade and Lock checked
     When I add a new MozyEnterprise partner:
       | company name      | period | users | server plan | net terms  | root role  |
@@ -1047,7 +1047,7 @@ Feature: Linux BackupSet
     And I stop masquerading
     And I search and delete partner account by TC.126296_partner
 
-  @TC.123884 @client_configuration @bus
+  @TC.123884 @tasks_p1 @client_configuration @bus
   Scenario: 123884 Set a client config options to add/remove setting - Linux BackupSets
     When I add a new MozyEnterprise partner:
       | company name      | period | users | server plan | net terms  | root role  |
@@ -1184,7 +1184,7 @@ Feature: Linux BackupSet
     And I stop masquerading
     And I search and delete partner account by TC.123884_partner
 
-  @TC.123882 @client_configuration @bus
+  @TC.123882 @tasks_p1 @client_configuration @bus
   Scenario: 123882 Delete a client config options with Cascade - Linux BackupSets
     When I add a new MozyEnterprise partner:
       | company name      | period | users | server plan | net terms  | root role  | server add on |

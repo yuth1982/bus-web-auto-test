@@ -221,7 +221,7 @@ Feature: Password policy is saved successfully to db
     Then I stop masquerading from subpartner
     And I search and delete partner account by newly created subpartner company name
 
-  @TC.120553 @password_policy @bus
+  @TC.120553 @tasks_p1 @password_policy @bus
   Scenario: 120553 Setting up a Password policy
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  |
@@ -245,7 +245,7 @@ Feature: Password policy is saved successfully to db
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120555 @password_policy @bus
+  @TC.120555 @tasks_p1 @password_policy @bus
   Scenario: 120555 Custom user password policy with default admin policy
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add on |root role  |
@@ -300,7 +300,7 @@ Feature: Password policy is saved successfully to db
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120556 @password_policy @bus
+  @TC.120556 @tasks_p1 @password_policy @bus
   Scenario: 120556 Using same password policy for admins and users
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  | net terms |
@@ -356,7 +356,7 @@ Feature: Password policy is saved successfully to db
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120557 @password_policy @bus
+  @TC.120557 @tasks_p1 @password_policy @bus
   Scenario: 120557 Using custom admin password policy with default user policy
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add on |root role  |
@@ -409,7 +409,7 @@ Feature: Password policy is saved successfully to db
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120091 @password_policy @bus
+  @TC.120091 @tasks_p1 @password_policy @bus
   Scenario: 120091 [MozyEnterprise]Non Hipaa admin can see the password policy link in admin console
     When I add a new MozyEnterprise partner:
       | period | users | server plan |root role  | security |
@@ -420,7 +420,7 @@ Feature: Password policy is saved successfully to db
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.131877 @password_policy @bus
+  @TC.131877 @tasks_p1 @password_policy @bus
   Scenario: 131877 Custom Complextity, 2nd radio button and 4 in textbox and all checkboxes
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add on | root role  | net terms |
@@ -481,7 +481,7 @@ Feature: Password policy is saved successfully to db
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.131879 @password_policy @bus
+  @TC.131879 @tasks_p1 @password_policy @bus
   Scenario: 131879 Sub Partner, Custom Complextity, 2nd radio button and input 3 in textbox and select all checkboxes
     When I add a new MozyEnterprise partner:
       | company name       | period | users | server plan | root role  |
