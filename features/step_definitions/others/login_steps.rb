@@ -166,8 +166,13 @@ When /^I log in bus pid console with( mixed username| uppercase username| lowerc
   @bus_site.user_pid_login_page(@partner_id, @partner.partner_info.type).user_login(username, login_hash['password'])
 end
 
-Then /^I navigate to new window$/ do
-  page.driver.browser.switch_to().window(page.driver.browser.window_handles.last)
+Then /^I navigate to (new|old) window$/ do |window|
+  @main_window = page.driver.browser.window_handles.first
+  if window == 'new'
+    page.driver.browser.switch_to().window(page.driver.browser.window_handles.last)
+  else
+    page.driver.browser.switch_to.window(@main_window)
+  end
 end
 
 When /^I go to page (.+)$/ do |url|
@@ -175,8 +180,13 @@ When /^I go to page (.+)$/ do |url|
   url = url.gsub(/QA_ENV\['bus_host'\]/,QA_ENV['bus_host'])
   @bus_site.login_page.go_to_url(url)
 end
+
 Then /^I reset password to (.+)$/ do |pwd|
   @bus_site.user_pid_login_page(@partner_id, @partner.partner_info.type).set_user_password(pwd)
+end
+
+And /^I start a new session$/ do
+  @bus_site.adfs_login_page.start_a_new_browser
 end
 
 

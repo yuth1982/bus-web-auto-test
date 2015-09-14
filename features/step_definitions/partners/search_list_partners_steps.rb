@@ -11,6 +11,7 @@ When /^I search partner by:$/ do |search_key_table|
   filter = attributes['filter'] || 'None'
   including_sub_partners = (attributes['including sub-partners'] || 'yes').eql?('yes')
   @bus_site.admin_console_page.search_list_partner_section.search_partner(keywords, filter, including_sub_partners)
+  @current_partner_name = @bus_site.admin_console_page.search_list_partner_section.get_partner_name if @current_partner.nil?
 end
 
 When /^I search partner by (.+)$/ do |keywords|

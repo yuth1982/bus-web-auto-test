@@ -16,7 +16,10 @@ When /^I login the(| admin) subdomain (.+)$/ do |type, subdomain|
   @bus_site.adfs_login_page.log_in(subdomain)
 end
 
-And /^I sign in with user name (.+) and password (.+)$/ do |username, password |
+And /^I sign in with user name (.+) and password (.+)$/ do |username, password|
+  if !(username.match(/^@.+$/).nil?)
+    username =  '<%=' + username + '%>'
+  end
   username.replace ERB.new(username).result(binding)
   password.replace ERB.new(password).result(binding)
   password = '' if password == 'AD user default password'
@@ -27,4 +30,23 @@ When /^I navigate to the admin subdomain (.+)$/ do |subdomain|
   subdomain.replace ERB.new(subdomain).result(binding)
   @bus_site.admin_login_page(subdomain, 'ldap').load
 end
+
+When /^I sign in the subdomain (.+)$/ do |subdomain|
+  subdomain.replace ERB.new(subdomain).result(binding)
+  @bus_site.adfs_login_page.log_in(subdomain)
+end
+
+Then /^I will see ldap admin log in error message (.+)$/ do |msg|
+  @bus_site.adfs_login_page.ldap_admin_login_failed.should == msg
+end
+
+Then /^ldap admin logout url is (.+)$/ do |url|
+  url = url.gsub(/CONFIGS\['fedid'\]\['subdomain'\]/,CONFIGS['fedid']['subdomain'])
+  @bus_site.adfs_login_page.get_ldap_logout_url.to_s.should == url
+end
+
+And /^ldap admin logout text is (.+)$/  do |text|
+  @bus_site.adfs_login_page.get_ldap_logout_content.strip.should == text
+end
+
 

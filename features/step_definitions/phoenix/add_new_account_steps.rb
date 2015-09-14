@@ -265,6 +265,20 @@ When /^I log into phoenix with username (.+) and password (.+)$/ do |username,pa
   @phoenix_site.user_account.phoenix_login(username, password)
 end
 
+When /^I log in with username (.+) and password (.+) from phoenix login page$/ do |username,password|
+  if username == '@new_admin_email'
+    username = @partner.admin_info.email
+  elsif !(username.match(/^@.+$/).nil?)
+    username =  '<%=' + username + '%>'
+    username.replace ERB.new(username).result(binding)
+  else
+    #
+  end
+  @bus_site ||= BusSite.new #In case you log into bus through the phoenix page
+  @phoenix_site ||= PhoenixSite.new
+  @phoenix_site.user_account.phoenix_login(username, password)
+end
+
 Given /^I log into phoenix with capitalized username$/ do
   username = QA_ENV['bus_username'].upcase
   password = QA_ENV['bus_password']
@@ -351,12 +365,9 @@ Then /^the plan details in account home page looks like:$/ do |plan_table|
   }
 end
 
-
-
 Then /^the user activate account by update db$/ do
   DBHelper.change_email_verified_at(@partner.admin_info.email)
 end
-
 
 And /^I save the partner info$/ do
   Bus::DataObj::PreviousPartner.new(@partner)

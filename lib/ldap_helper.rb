@@ -20,10 +20,12 @@ module LDAPHelper
         :sn => "#{user_name}",
         :name => "#{user_name}",
         :givenname => "#{user_name}",
+        :displayname => "#{user_name}",
         :mail => @ldap_user_mail || "#{user_name}#{email_postfix || EMAIL_POSTFIX}",
         :uid => '123',
         :userprincipalname => @ldap_user_mail || "#{user_name}#{email_postfix || EMAIL_POSTFIX}",
-        :useraccountcontrol => '66080'
+        :useraccountcontrol => '66080',
+        :samaccountname => "#{user_name}",
     }
     ldap = Net::LDAP.new :host => host || HOST,
                          :port => PORT,
@@ -35,6 +37,7 @@ module LDAPHelper
 
     ldap.open do |ldap|
       ldap.add(:dn => dn, :attributes => attr)
+      Log.debug ldap.get_operation_result
     end
     Log.debug("add a user #{user_name} to AD")
   end
@@ -52,6 +55,7 @@ module LDAPHelper
                          }
     ldap.open do |ldap|
       ldap.delete :dn => dn
+      Log.debug ldap.get_operation_result
     end
     Log.debug("delete a user #{user_name} to AD")
   end

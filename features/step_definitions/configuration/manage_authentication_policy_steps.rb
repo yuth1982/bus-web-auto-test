@@ -1,9 +1,11 @@
-When /^I use (Directory Service|Mozy) as authentication provider$/ do |provider|
-  @bus_site.admin_console_page.authentication_policy_section.select_auth(provider)
+When /^I use (Directory Service|Mozy) as authentication provider(| without saving)$/ do |provider, save_type|
+  save = (save_type.strip == 'without saving'? false : true)
+  @bus_site.admin_console_page.authentication_policy_section.select_auth(provider, save)
 end
 
-When /^I choose (LDAP Pull|LDAP Push|horizon) as Directory Service provider$/ do |provider|
-  @bus_site.admin_console_page.authentication_policy_section.select_ds_provider(provider)
+When /^I choose (LDAP Pull|LDAP Push|horizon) as Directory Service provider(| without saving)$/ do |provider, save_type|
+  save = (save_type.strip == 'without saving'? false : true)
+  @bus_site.admin_console_page.authentication_policy_section.select_ds_provider(provider, save)
   @provider = provider
 end
 
@@ -44,7 +46,7 @@ Then /test connection message should be (.+)$/ do |message|
   @bus_site.admin_console_page.authentication_policy_section.test_connection_result.should include(message)
 end
 
-When /^I clear (SAML Authentication|Connection Settings) information exists$/ do |tab|
+When /^I clear (SAML Authentication|Connection Settings) information(| exists)$/ do |tab,exists|
   case tab
     when "SAML Authentication"
       @bus_site.admin_console_page.authentication_policy_section.clear_all
@@ -53,7 +55,9 @@ When /^I clear (SAML Authentication|Connection Settings) information exists$/ do
     else
       #TODO
   end
-  step "I save the #{tab} information"
+  if exists.include?('exists')
+    step "I save the #{tab} information"
+  end
 end
 
 When /^I click (SAML Authentication|Connection Settings|Sync Rules|Attribute Mapping) tab$/ do |tab|
@@ -157,12 +161,11 @@ When /^I input SAML authentication information$/ do |table|
   # table is a |sso.connect.pingidentity.com|sso.connect.pingidentity.com | abcdefghijkl     | No        |
   auth = table.hashes.first
   @saml_info = Bus::DataObj::SAMLInfo.new
-  @saml_info.auth_url = auth['URL']
-  @saml_info.saml_endpoint = auth['Endpoint']
-  @saml_info.saml_cert = auth['Certificate']
+  @saml_info.auth_url = (auth['URL'] == '@url'? AD_CONNECTION_ENV['authentication_url'] : auth['URL'])
+  @saml_info.saml_endpoint = (auth['Endpoint'] == '@endpoint'? AD_CONNECTION_ENV['saml_endpoint'] : auth['Endpoint'])
+  @saml_info.saml_cert = (auth['Certificate'] == '@certificate'? AD_CONNECTION_ENV['saml_certificated'] : auth['Certificate'])
   @bus_site.admin_console_page.authentication_policy_section.fillin_saml_settings(@saml_info)
 end
-
 
 When /^I click Test Connection button$/ do
   @bus_site.admin_console_page.authentication_policy_section.test_connection
@@ -197,6 +200,16 @@ When /^I save the changes$/ do
   @bus_site.admin_console_page.authentication_policy_section.save_changes
   @bus_site.admin_console_page.authentication_policy_section.confirm_change_auth
   @bus_site.admin_console_page.authentication_policy_section.wait_until_bus_section_load
+end
+
+When /^I save the changes with password (.+)$/ do |password|
+  @bus_site.admin_console_page.authentication_policy_section.save_changes(password)
+  @bus_site.admin_console_page.authentication_policy_section.confirm_change_auth(password)
+  @bus_site.admin_console_page.authentication_policy_section.wait_until_bus_section_load
+end
+
+When /^I save the changes which will need re auth$/ do
+  @bus_site.admin_console_page.authentication_policy_section.save_changes('', 'reauth')
 end
 
 Then /^Authentication Policy has been updated successfully$/ do
@@ -328,11 +341,15 @@ When /^I add a user (.+) to the AD$/ do |username|
 end
 
 When /^I add a user to the AD$/ do |table|
-  data = table.rows.first
-  LDAPHelper.add_user(data[0], data[1], data[2], data[3], data[4], data[5], data[6])
+  table.hashes.first.each do |k,v|
+    v.replace ERB.new(v).result(binding)
+  end
+  ldap_hash = table.hashes.first
+  LDAPHelper.add_user(ldap_hash['user name'], ldap_hash['mail'], ldap_hash['host'], ldap_hash['user'],ldap_hash['password'], ldap_hash['treebase'], ldap_hash['email_postfix'])
 end
 
 When /^I delete a user (.+) in the AD$/ do |username|
+  username = @admin.name if username == '@admin.name'
   LDAPHelper.delete_user(username)
 end
 

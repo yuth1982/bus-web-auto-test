@@ -15,6 +15,10 @@ class BusSite
     Bus::UserLoginPage.new(subdomain, type)
   end
 
+  def admin_login_page(subdomain, type = 'mozy')
+    Bus::UserLoginPage.new(subdomain, type, 'admin')
+  end
+
   def user_account_page(subdomain = nil)
     Bus::UserAccountPage.new(subdomain)
   end

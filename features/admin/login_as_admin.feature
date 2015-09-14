@@ -9,7 +9,7 @@ Feature: login as admins
 
 ##########################################################################
 
-#  @TC.122151 @bus @admin
+#  @TC.122151 @bus @admin @tasks_p1
 #  Scenario: 122151 Trigger Authlockout
 #    When I add a new MozyPro partner:
 #      | period | base plan  |
@@ -41,7 +41,7 @@ Feature: login as admins
 #    And I log in bus admin console as administrator
 #    And I search and delete partner account by newly created partner company name
 
-  @TC.126033 @bus @admin
+  @TC.126033 @bus @admin @tasks_p1
   Scenario: 126033 Reset Admin Password from www.mozypro.com
     When I add a new MozyPro partner:
       | period | base plan |
@@ -70,7 +70,7 @@ Feature: login as admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.126043 @bus @admin
+  @TC.126043 @bus @admin @tasks_p1
   Scenario: 126043 Reset Admin Password from subdomain.mozypro.com
     When I act as partner by:
       | email                        |
@@ -105,6 +105,696 @@ Feature: login as admins
       | email             |
       | <%=@admin.email%> |
 
+#########################################################################
+
+ #  Test Suite : LDAP admin login
+
+########################################################################
+  @TC.121831 @bus @admin @tasks_p1
+  Scenario: 121831 Old admins which AD does not have can not login
+    When I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Mozy as authentication provider
+    And I navigate to Add New Admin section from bus admin console page
+    And I add a new admin newly:
+      | Roles      | User Group           |
+      | FedID role | (default user group) |
+    Then Add New Admin success message should be displayed
+    And I view admin details by:
+      | name             |
+      | <%=@admin.name%> |
+    And I active admin in admin details default password
+    And I log in bus admin console as administrator
+    And I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider without saving
+    And I input server connection settings
+      | Server Host  | Protocol  | SSL Cert | Port  | Base DN  | Bind Username | Bind Password  |
+      | @server_host | @protocol |          | @port | @base_dn | @bind_user    | @bind_password |
+    And I check enable sso for admins to log in with their network credentials
+    And I click SAML Authentication tab
+    And I clear SAML Authentication information
+    And I input SAML authentication information
+      | URL  | Endpoint  | Certificate  |
+      | @url | @endpoint | @certificate |
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I login the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
+    And I sign in with user name <%=@admin.name%> and password default password
+    Then I will see ldap admin log in error message The user name or password is incorrect.
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name @admin.email and password default password
+    Then Login page error message should be Incorrect email or password.
+    And I log in bus admin console as administrator
+    When I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I navigate to Authentication Policy section from bus admin console page
+    And I uncheck enable sso for admins to log in with their network credentials
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I navigate to the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
+    And I log in bus admin console with user name @admin.email and password default password
+    Then Login page error message should be This account has not yet been activated. Please check your email account for activation instructions.
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name @admin.email and password default password
+    Then Login page error message should be This account has not yet been activated. Please check your email account for activation instructions.
+    And I log in bus admin console as administrator
+    And I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I delete admin by:
+      | email             |
+      | <%=@admin.email%> |
+
+  @TC.121833 @bus @admin @tasks_p1
+  Scenario: 121833 New LDAP login through LDAP process
+    When I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider without saving
+    And I choose LDAP Pull as Directory Service provider without saving
+    And I check enable sso for admins to log in with their network credentials
+    And I click SAML Authentication tab
+    And I clear SAML Authentication information
+    And I input SAML authentication information
+      | URL  | Endpoint  | Certificate  |
+      | @url | @endpoint | @certificate |
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    And I navigate to Add New Admin section from bus admin console page
+    And I add a new admin newly:
+      | User Group           |
+      | (default user group) |
+    Then Add New Admin success message should be displayed
+    And I add a user to the AD
+      | user name        | mail              |
+      | <%=@admin.name%> | <%=@admin.email%> |
+    And I start a new session
+    When I login the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
+    And I sign in with user name <%=@admin.name%> and password wrongpass12
+    Then I will see ldap admin log in error message The user name or password is incorrect.
+    And I sign in with user name <%=@admin.name%> and password AD user default password
+    Then I login as @admin.name admin successfully
+    And I log out bus admin console
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name @admin.email and password AD user default password
+    Then Login page error message should be Incorrect email or password.
+    And I log in bus admin console as administrator
+    When I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I navigate to Authentication Policy section from bus admin console page
+    And I uncheck enable sso for admins to log in with their network credentials
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I navigate to the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
+    And I log in bus admin console with user name @admin.email and password AD user default password
+    Then Login page error message should be This account has not yet been activated. Please check your email account for activation instructions.
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name @admin.email and password AD user default password
+    Then Login page error message should be This account has not yet been activated. Please check your email account for activation instructions.
+    And I log in bus admin console as administrator
+    And I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I delete admin by:
+      | email             |
+      | <%=@admin.email%> |
+    And I delete a user @admin.name in the AD
+
+  @TC.121837 @bus @admin @tasks_p1
+  Scenario: 121837 New non LDAP admins can not login
+    When I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider without saving
+    And I choose LDAP Pull as Directory Service provider without saving
+    And I check enable sso for admins to log in with their network credentials
+    And I click SAML Authentication tab
+    And I clear SAML Authentication information
+    And I input SAML authentication information
+      | URL  | Endpoint  | Certificate  |
+      | @url | @endpoint | @certificate |
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    And I navigate to Add New Admin section from bus admin console page
+    And I add a new admin newly:
+      | User Group           |
+      | (default user group) |
+    Then Add New Admin success message should be displayed
+    And I start a new session
+    When I login the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
+    And I sign in with user name @admin.name and password AD user default password
+    Then I will see ldap admin log in error message The user name or password is incorrect.
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name @admin.email and password AD user default password
+    Then Login page error message should be Incorrect email or password.
+    And I log in bus admin console as administrator
+    When I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I navigate to Authentication Policy section from bus admin console page
+    And I uncheck enable sso for admins to log in with their network credentials
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I navigate to the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
+    And I log in bus admin console with user name @admin.email and password AD user default password
+    Then Login page error message should be This account has not yet been activated. Please check your email account for activation instructions.
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name @admin.email and password AD user default password
+    Then Login page error message should be This account has not yet been activated. Please check your email account for activation instructions.
+    And I log in bus admin console as administrator
+    And I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I delete admin by:
+      | email             |
+      | <%=@admin.email%> |
+
+  @TC.121838 @bus @admin @tasks_p1
+  Scenario: 121838 Old admins which AD has login through LDAP process
+    When I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Mozy as authentication provider
+    And I navigate to Add New Admin section from bus admin console page
+    And I add a new admin newly:
+      | Roles      | User Group           |
+      | FedID role | (default user group) |
+    Then Add New Admin success message should be displayed
+    And I view admin details by:
+      | name             |
+      | <%=@admin.name%> |
+    And I active admin in admin details default password
+    And I add a user to the AD
+      | user name        | mail              |
+      | <%=@admin.name%> | <%=@admin.email%> |
+    And I log in bus admin console as administrator
+    And I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider without saving
+    And I input server connection settings
+      | Server Host  | Protocol  | SSL Cert | Port  | Base DN  | Bind Username | Bind Password  |
+      | @server_host | @protocol |          | @port | @base_dn | @bind_user    | @bind_password |
+    And I check enable sso for admins to log in with their network credentials
+    And I click SAML Authentication tab
+    And I clear SAML Authentication information
+    And I input SAML authentication information
+      | URL  | Endpoint  | Certificate  |
+      | @url | @endpoint | @certificate |
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    And I start a new session
+    When I login the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
+    And I sign in with user name @admin.name and password wrongpass12
+    Then I will see ldap admin log in error message The user name or password is incorrect.
+    And I sign in with user name @admin.name and password AD user default password
+    Then I login as @admin.name admin successfully
+    And I log out bus admin console
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name @admins.last.email and password wrongpass12
+    Then Login page error message should be Incorrect email or password.
+    And I log in bus admin console as administrator
+    When I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I navigate to Authentication Policy section from bus admin console page
+    And I uncheck enable sso for admins to log in with their network credentials
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I navigate to the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
+    And I log in bus admin console with user name @admin.email and password AD user default password
+    Then Login page error message should be This account has not yet been activated. Please check your email account for activation instructions.
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name @admin.email and password AD user default password
+    Then Login page error message should be This account has not yet been activated. Please check your email account for activation instructions.
+    And I log in bus admin console as administrator
+    And I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I delete admin by:
+      | email             |
+      | <%=@admin.email%> |
+    And I delete a user @admins.last.name in the AD
+
+  @TC.121920 @bus @admin @tasks_p1
+  Scenario: 121920 Root admin can login BUS using secure.mozy.com
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | root role  |
+      | 24     | 18    | 500 GB      | FedID role |
+    Then New partner should be created
+    When I add partner settings
+      | Name                    | Value | Locked |
+      | allow_ad_authentication | t     | true   |
+    And I act as newly created partner account
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
+    And I choose LDAP Pull as Directory Service provider
+    And I check enable sso for admins to log in with their network credentials
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    And the partner has activated the admin account with default password
+    And I log into phoenix with username @partner.admin_info.email and password default password
+    Then I login as @partner.company_info.name admin successfully
+    And I navigate to Authentication Policy section from bus admin console page
+    And I uncheck enable sso for admins to log in with their network credentials
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    And I log into phoenix with username @partner.admin_info.email and password default password
+    Then I login as @partner.company_info.name admin successfully
+    And I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
+
+  @TC.121921 @bus @admin @tasks_p1
+  Scenario: 121921 Root admin can login BUS Root admin can login BUS using https://subdomain.mozypro.com/login/admin?authtype=mozy   When I add a new MozyEnterprise partner:
+    When I search partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I view admin details by qa8+saml+test+admin@mozy.com
+    And I change admin password to default password
+    When I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider without saving
+    And I input server connection settings
+      | Server Host  | Protocol  | SSL Cert | Port  | Base DN  | Bind Username | Bind Password  |
+      | @server_host | @protocol |          | @port | @base_dn | @bind_user    | @bind_password |
+    And I check enable sso for admins to log in with their network credentials
+    And I click SAML Authentication tab
+    And I clear SAML Authentication information
+    And I input SAML authentication information
+      | URL  | Endpoint  | Certificate  |
+      | @url | @endpoint | @certificate |
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    And I go to page https://CONFIGS['fedid']['subdomain'].mozypro.com/login/admin?authtype=mozy
+    And I log in bus admin console with user name qa8+saml+test+admin@mozy.com and password default password
+    Then I login as @current_partner_name admin successfully
+    And I log out bus admin console
+    And I log in bus admin console as administrator
+    When I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I navigate to Authentication Policy section from bus admin console page
+    And I uncheck enable sso for admins to log in with their network credentials
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    And I go to page https://CONFIGS['fedid']['subdomain'].mozypro.com/login/admin?authtype=mozy
+    And I log in bus admin console with user name qa8+saml+test+admin@mozy.com and password default password
+    Then I login as @current_partner_name admin successfully
+
+  @TC.121975 @bus @admin @tasks_p1
+  Scenario: 121975 Root admin can login BUS using https://www.mozypro.com/login/admin
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | root role  |
+      | 24     | 18    | 500 GB      | FedID role |
+    Then New partner should be created
+    When I add partner settings
+      | Name                    | Value | Locked |
+      | allow_ad_authentication | t     | true   |
+    And I view the newly created partner admin details
+    Then I active admin in admin details default password
+    And I act as newly created partner account
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
+    And I choose LDAP Pull as Directory Service provider
+    And I check enable sso for admins to log in with their network credentials
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I go to page QA_ENV['bus_host']/login/admin
+    And I log in with username @partner.admin_info.email and password default password from phoenix login page
+    Then I login as @partner.company_info.name admin successfully
+    And I navigate to Authentication Policy section from bus admin console page
+    And I uncheck enable sso for admins to log in with their network credentials
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I go to page QA_ENV['bus_host']/login/admin
+    And I log in with username @partner.admin_info.email and password default password from phoenix login page
+    Then I login as @partner.company_info.name admin successfully
+    And I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
+
+#########################################################################
+
+ #  Test Suite : LDAP admin login
+
+##########################################################################
+
+  @TC.121916 @bus @admin @tasks_p1
+  Scenario: 121916 Push Old admins which AD does not have can not login
+    When I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Mozy as authentication provider
+    And I navigate to Add New Admin section from bus admin console page
+    And I add a new admin newly:
+      | Roles      | User Group           |
+      | FedID role | (default user group) |
+    Then Add New Admin success message should be displayed
+    And I view admin details by:
+      | name             |
+      | <%=@admin.name%> |
+    And I active admin in admin details default password
+    And I log in bus admin console as administrator
+    And I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider without saving
+    And I choose LDAP Push as Directory Service provider without saving
+    And I input server connection settings
+      | Server Host  | Protocol  | SSL Cert | Port  | Base DN  | Bind Username | Bind Password  |
+      | @server_host | @protocol |          | @port | @base_dn | @bind_user    | @bind_password |
+    And I check enable sso for admins to log in with their network credentials
+    And I click SAML Authentication tab
+    And I clear SAML Authentication information
+    And I input SAML authentication information
+      | URL  | Endpoint  | Certificate  |
+      | @url | @endpoint | @certificate |
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    And I start a new session
+    When I login the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
+    And I sign in with user name <%=@admin.name%> and password default password
+    Then I will see ldap admin log in error message The user name or password is incorrect.
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name @admin.email and password default password
+    Then Login page error message should be Incorrect email or password.
+    And I log in bus admin console as administrator
+    When I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I navigate to Authentication Policy section from bus admin console page
+    And I uncheck enable sso for admins to log in with their network credentials
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I navigate to the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
+    And I log in bus admin console with user name @admin.email and password default password
+    Then Login page error message should be This account has not yet been activated. Please check your email account for activation instructions.
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name @admin.email and password default password
+    Then Login page error message should be This account has not yet been activated. Please check your email account for activation instructions.
+    And I log in bus admin console as administrator
+    And I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I delete admin by:
+      | email             |
+      | <%=@admin.email%> |
+
+  @TC.121917 @bus @admin @tasks_p1
+  Scenario: 121917 Push New LDAP login through LDAP process
+    When I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider without saving
+    And I choose LDAP Push as Directory Service provider without saving
+    And I input server connection settings
+      | Server Host  | Protocol  | SSL Cert | Port  | Base DN  |
+      | @server_host | @protocol |          | @port | @base_dn |
+    And I check enable sso for admins to log in with their network credentials
+    And I click SAML Authentication tab
+    And I clear SAML Authentication information
+    And I input SAML authentication information
+      | URL  | Endpoint  | Certificate  |
+      | @url | @endpoint | @certificate |
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    And I navigate to Add New Admin section from bus admin console page
+    And I add a new admin newly:
+      | User Group           |
+      | (default user group) |
+    Then Add New Admin success message should be displayed
+    And I add a user to the AD
+      | user name        | mail              |
+      | <%=@admin.name%> | <%=@admin.email%> |
+    And I start a new session
+    When I login the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
+    And I sign in with user name <%=@admin.name%> and password wrongpass12
+    Then I will see ldap admin log in error message The user name or password is incorrect.
+    And I sign in with user name <%=@admin.name%> and password AD user default password
+    Then I login as @admin.name admin successfully
+    And I log out bus admin console
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name @admin.email and password AD user default password
+    Then Login page error message should be Incorrect email or password.
+    And I log in bus admin console as administrator
+    When I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I navigate to Authentication Policy section from bus admin console page
+    And I uncheck enable sso for admins to log in with their network credentials
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I navigate to the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
+    And I log in bus admin console with user name @admin.email and password AD user default password
+    Then Login page error message should be This account has not yet been activated. Please check your email account for activation instructions.
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name @admin.email and password AD user default password
+    Then Login page error message should be This account has not yet been activated. Please check your email account for activation instructions.
+    And I log in bus admin console as administrator
+    And I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I delete admin by:
+      | email             |
+      | <%=@admin.email%> |
+    And I delete a user @admin.name in the AD
+
+  @TC.121918 @bus @admin @tasks_p1
+  Scenario: 121918 Push New non LDAP admins can not login
+    When I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider without saving
+    And I choose LDAP Push as Directory Service provider without saving
+    And I input server connection settings
+      | Server Host  | Protocol  | SSL Cert | Port  | Base DN  |
+      | @server_host | @protocol |          | @port | @base_dn |
+    And I check enable sso for admins to log in with their network credentials
+    And I click SAML Authentication tab
+    And I clear SAML Authentication information
+    And I input SAML authentication information
+      | URL  | Endpoint  | Certificate  |
+      | @url | @endpoint | @certificate |
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    And I navigate to Add New Admin section from bus admin console page
+    And I add a new admin newly:
+      | User Group           |
+      | (default user group) |
+    Then Add New Admin success message should be displayed
+    And I start a new session
+    When I login the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
+    And I sign in with user name @admins.last.name and password AD user default password
+    Then I will see ldap admin log in error message The user name or password is incorrect.
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name @admins.last.email and password AD user default password
+    Then Login page error message should be Incorrect email or password.
+    And I log in bus admin console as administrator
+    When I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I navigate to Authentication Policy section from bus admin console page
+    And I uncheck enable sso for admins to log in with their network credentials
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I navigate to the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
+    And I log in bus admin console with user name @admins.last.email and password AD user default password
+    Then Login page error message should be This account has not yet been activated. Please check your email account for activation instructions.
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name @admins.last.email and password AD user default password
+    Then Login page error message should be This account has not yet been activated. Please check your email account for activation instructions.
+    And I log in bus admin console as administrator
+    And I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I delete admin by:
+      | email                   |
+      | <%=@admins.last.email%> |
+
+  @TC.121919 @bus @admin @tasks_p1
+  Scenario: 121919 Push Old admins which AD has can login
+    When I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Mozy as authentication provider
+    And I navigate to Add New Admin section from bus admin console page
+    And I add a new admin newly:
+      | Roles      | User Group           |
+      | FedID role | (default user group) |
+    Then Add New Admin success message should be displayed
+    And I view admin details by:
+      | name             |
+      | <%=@admin.name%> |
+    And I active admin in admin details default password
+    And I add a user to the AD
+      | user name        | mail              |
+      | <%=@admin.name%> | <%=@admin.email%> |
+    And I log in bus admin console as administrator
+    And I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider without saving
+    And I choose LDAP Push as Directory Service provider without saving
+    And I input server connection settings
+      | Server Host  | Protocol  | SSL Cert | Port  | Base DN  |
+      | @server_host | @protocol |          | @port | @base_dn |
+    And I check enable sso for admins to log in with their network credentials
+    And I click SAML Authentication tab
+    And I clear SAML Authentication information
+    And I input SAML authentication information
+      | URL  | Endpoint  | Certificate  |
+      | @url | @endpoint | @certificate |
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    And I start a new session
+    When I login the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
+    And I sign in with user name @admins.last.name and password wrongpass12
+    Then I will see ldap admin log in error message The user name or password is incorrect.
+    And I sign in with user name @admins.last.name and password AD user default password
+    Then I login as @admin.name admin successfully
+    And I log out bus admin console
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name @admins.last.email and password wrongpass12
+    Then Login page error message should be Incorrect email or password.
+    And I log in bus admin console as administrator
+    When I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I navigate to Authentication Policy section from bus admin console page
+    And I uncheck enable sso for admins to log in with their network credentials
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I navigate to the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
+    And I log in bus admin console with user name @admins.last.email and password AD user default password
+    Then Login page error message should be This account has not yet been activated. Please check your email account for activation instructions.
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name @admins.last.email and password AD user default password
+    Then Login page error message should be This account has not yet been activated. Please check your email account for activation instructions.
+    And I log in bus admin console as administrator
+    And I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I delete admin by:
+      | email                   |
+      | <%=@admins.last.email%> |
+    And I delete a user @admins.last.name in the AD
+
+  @TC.121923 @bus @admin @tasks_p1
+  Scenario: 121923  Push Root admin can login BUS using secure.mozy.com
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | root role  |
+      | 24     | 18    | 500 GB      | FedID role |
+    Then New partner should be created
+    When I add partner settings
+      | Name                    | Value | Locked |
+      | allow_ad_authentication | t     | true   |
+    And I act as newly created partner account
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
+    And I choose LDAP Push as Directory Service provider
+    And I check enable sso for admins to log in with their network credentials
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    And the partner has activated the admin account with default password
+    And I log into phoenix with username @partner.admin_info.email and password default password
+    Then I login as @partner.company_info.name admin successfully
+    And I navigate to Authentication Policy section from bus admin console page
+    And I uncheck enable sso for admins to log in with their network credentials
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    And I log into phoenix with username @partner.admin_info.email and password default password
+    Then I login as @partner.company_info.name admin successfully
+    And I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
+
+  @TC.121924 @bus @admin @tasks_p1
+  Scenario: 121924 Push Root admin can login BUS Root admin can login BUS using https://subdomain.mozypro.com/login/admin?authtype=mozy   When I add a new MozyEnterprise partner:
+    When I search partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I view admin details by qa8+saml+test+admin@mozy.com
+    And I change admin password to default password
+    When I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider without saving
+    And I choose LDAP Push as Directory Service provider without saving
+    And I input server connection settings
+      | Server Host  | Protocol  | SSL Cert | Port  | Base DN  |
+      | @server_host | @protocol |          | @port | @base_dn |
+    And I check enable sso for admins to log in with their network credentials
+    And I click SAML Authentication tab
+    And I clear SAML Authentication information
+    And I input SAML authentication information
+      | URL  | Endpoint  | Certificate  |
+      | @url | @endpoint | @certificate |
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I go to page https://CONFIGS['fedid']['subdomain'].mozypro.com/login/admin?authtype=mozy
+    And I log in bus admin console with user name qa8+saml+test+admin@mozy.com and password default password
+    Then I login as @current_partner_name admin successfully
+    And I log out bus admin console
+    And I log in bus admin console as administrator
+    When I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I navigate to Authentication Policy section from bus admin console page
+    And I uncheck enable sso for admins to log in with their network credentials
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    And I go to page https://CONFIGS['fedid']['subdomain'].mozypro.com/login/admin?authtype=mozy
+    And I log in bus admin console with user name qa8+saml+test+admin@mozy.com and password default password
+    Then I login as @current_partner_name admin successfully
+
+  @TC.121974 @bus @admin @tasks_p1
+  Scenario: 121974 Push Root admin can login BUS using https://www.mozypro.com/login/admin
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | root role  |
+      | 24     | 18    | 500 GB      | FedID role |
+    Then New partner should be created
+    When I add partner settings
+      | Name                    | Value | Locked |
+      | allow_ad_authentication | t     | true   |
+    And I view the newly created partner admin details
+    Then I active admin in admin details default password
+    And I act as newly created partner account
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
+    And I choose LDAP Push as Directory Service provider
+    And I check enable sso for admins to log in with their network credentials
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I go to page QA_ENV['bus_host']/login/admin
+    And I log in with username @partner.admin_info.email and password default password from phoenix login page
+    Then I login as @partner.company_info.name admin successfully
+    And I navigate to Authentication Policy section from bus admin console page
+    And I uncheck enable sso for admins to log in with their network credentials
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+    When I go to page QA_ENV['bus_host']/login/admin
+    And I log in with username @partner.admin_info.email and password default password from phoenix login page
+    Then I login as @partner.company_info.name admin successfully
+    And I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
 
 
 #########################################################################
@@ -113,7 +803,7 @@ Feature: login as admins
 
 ########################################################################
 
-  @TC.14477 @bus @admin
+  @TC.14477 @bus @admin @tasks_p1
   Scenario: 14477 Sub-admin cannot login its account after partner was suspended from BUS
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -137,7 +827,7 @@ Feature: login as admins
     Then I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.123704 @bus @admin
+  @TC.123704 @bus @admin @tasks_p1
   Scenario: 123704 New created standard sub-admin forget password and reset password on bus
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -167,13 +857,13 @@ Feature: login as admins
       | MozyPro password recovery | <%=@admin.email%> |
     Then I should see 1 email(s)
     When I click reset password link from the email
-    Then I reset password with standard password
+    Then I reset password with Standard password
     And I will see reset password massage Your password has been changed.
     And I navigate to bus admin console login page
-    And I log in bus admin console with user name @new_admins[0].email and password standard password
+    And I log in bus admin console with user name @new_admins[0].email and password Standard password
     Then I login as Admin_123704 admin successfully
     And I log out bus admin console
-    And I log into phoenix with username @new_admins[0].email and password standard password
+    And I log into phoenix with username @new_admins[0].email and password Standard password
     Then I login as Admin_123704 admin successfully
     And I log out bus admin console
     And I log in bus admin console as administrator
@@ -185,7 +875,7 @@ Feature: login as admins
  #  Test Suite : HIPAA partner login_Sub Admin
 
 ########################################################################
-  @TC.123421 @bus @admin
+  @TC.123421 @bus @admin @tasks_p1
   Scenario: 123421 New created standard sub-admin forget password and reset password on bus
     When I add a new MozyPro partner:
       | period | base plan | security |
@@ -224,7 +914,7 @@ Feature: login as admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.123401 @bus @admin
+  @TC.123401 @bus @admin @tasks_p1
   Scenario: 123401 Hipaa MozyPro login bus and phoenix after activating and changing password(admin before subadmin)
     When I add a new MozyPro partner:
       | period | base plan | net terms | security |
@@ -278,7 +968,7 @@ Feature: login as admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.123402 @bus @admin
+  @TC.123402 @bus @admin @tasks_p1
   Scenario: 123402 Hipaa Reseller EMEA login bus after activating and changing password(subadmin before admin)
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | create under | net terms | country        | security |
@@ -325,7 +1015,7 @@ Feature: login as admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.123686 @bus @admin
+  @TC.123686 @bus @admin @tasks_p1
   Scenario: 123686 Hipaa Sub-admin cannot login its account after partner was suspended from BUS
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | root role     | security |
@@ -357,7 +1047,7 @@ Feature: login as admins
 
 ########################################################################
 
-  @TC.123673 @bus @admin
+  @TC.123673 @bus @admin @tasks_p1
   Scenario: 123673 Create standard for MozyPro US partner and sub-partners and admin on phoenix
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -399,7 +1089,7 @@ Feature: login as admins
     And I search and delete partner account by newly created subpartner company name
     And I search and delete partner account by newly created partner company name
 
-  @TC.123716 @bus @admin
+  @TC.123716 @bus @admin @tasks_p1
   Scenario: 123716 Standard MozyPro login bus and phoenix after activating and changing password(admin before subadmin)
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -453,7 +1143,7 @@ Feature: login as admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.123717 @bus @admin
+  @TC.123717 @bus @admin @tasks_p1
   Scenario: 123717 Standard Reseller EMEA login bus after activating and changing password(subadmin before admin)
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | storage add on | create under | net terms | country        |
@@ -500,7 +1190,7 @@ Feature: login as admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.123718 @bus @admin
+  @TC.123718 @bus @admin @tasks_p1
   Scenario: 123718 Standard MozyEnterprise login bus after activating and changing password
      When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  |
@@ -529,7 +1219,7 @@ Feature: login as admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.123719 @bus @admin
+  @TC.123719 @bus @admin @tasks_p1
   Scenario: 123719 Standard Mozy OEM login bus after activating and changing password
     When I act as partner by:
       | name     | including sub-partners |
@@ -575,7 +1265,7 @@ Feature: login as admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created subpartner company name
 
-  @TC.123700 @bus @admin
+  @TC.123700 @bus @admin @tasks_p1
   Scenario: 123700 New created standard admin forget password and reset password on bus
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -592,19 +1282,19 @@ Feature: login as admins
       | MozyPro password recovery | <%=@partner.admin_info.email%> |
     Then I should see 1 email(s)
     When I click reset password link from the email
-    Then I reset password with standard password
+    Then I reset password with Standard password
     And I will see reset password massage Your password has been changed.
     And I navigate to bus admin console login page
-    And I log in bus admin console with user name @partner.admin_info.email and password standard password
+    And I log in bus admin console with user name @partner.admin_info.email and password Standard password
     Then I login as mozypro admin successfully
     And I log out bus admin console
-    And I log into phoenix with username @partner.admin_info.email and password standard password
+    And I log into phoenix with username @partner.admin_info.email and password Standard password
     Then I login as mozypro admin successfully
     And I log out bus admin console
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.123702 @bus @admin
+  @TC.123702 @bus @admin @tasks_p1
   Scenario: 123702 New created standard admin forget password and reset password on phoenix
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -621,13 +1311,13 @@ Feature: login as admins
       | MozyPro password recovery | <%=@partner.admin_info.email%> |
     Then I should see 1 email(s)
     When I click reset password link from the email
-    Then I reset password with standard password
+    Then I reset password with Standard password
     And I will see reset password massage Your password has been changed.
     And I navigate to bus admin console login page
-    And I log in bus admin console with user name @partner.admin_info.email and password standard password
+    And I log in bus admin console with user name @partner.admin_info.email and password Standard password
     Then I login as mozypro admin successfully
     And I log out bus admin console
-    And I log into phoenix with username @partner.admin_info.email and password standard password
+    And I log into phoenix with username @partner.admin_info.email and password Standard password
     Then I login as mozypro admin successfully
     And I log out bus admin console
     And I log in bus admin console as administrator
@@ -639,7 +1329,7 @@ Feature: login as admins
 
 ########################################################################
 
-  @TC.120062 @TC.120063 @bus @admin
+  @TC.120062 @TC.120063 @bus @admin @tasks_p1
   Scenario: 120062 120063 New Hipaa admin can log in bus and phoenix after account activation
     When I add a new MozyPro partner:
       | period | base plan | net terms | security |
@@ -655,7 +1345,7 @@ Feature: login as admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.120073 @busNegative @admin
+  @TC.120073 @busNegative @admin @tasks_p1
   Scenario: 120073 [Negative]Hipaa admin cannot log in bus with error empty password
     When I add a new MozyPro partner:
       | period | base plan | security |
@@ -670,7 +1360,7 @@ Feature: login as admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.120076 @bus @admin
+  @TC.120076 @bus @admin @tasks_p1
   Scenario: 120076 HIPAA for MozyPro EMEA partner and sub-partners and admin could login bus and phoenix
     When I navigate to Add New Partner section from bus admin console page
     Then Security field options on add new partner page should be:
@@ -709,7 +1399,7 @@ Feature: login as admins
     And I search and delete partner account by newly created subpartner company name
     And I search and delete partner account by newly created partner company name
 
-  @TC.120078 @bus @admin
+  @TC.120078 @bus @admin @tasks_p1
   Scenario: 120078 HIPAA for Reseller EMEA partner and sub-partners and admin could login bus
     When I navigate to Add New Partner section from bus admin console page
     Then Security field options on add new partner page should be:
@@ -748,7 +1438,7 @@ Feature: login as admins
     And I search and delete partner account by newly created subpartner company name
     And I search and delete partner account by newly created partner company name
 
-  @TC.120083 @bus @admin
+  @TC.120083 @bus @admin @tasks_p1
   Scenario: 120083 Hipaa admin can login bus after activated through email
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  | security |
@@ -762,7 +1452,7 @@ Feature: login as admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.123404 @bus @admin
+  @TC.123404 @bus @admin @tasks_p1
   Scenario: 123404 HIPAA MozyEnterprise login bus after activating and changing password
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  | security |
@@ -791,7 +1481,7 @@ Feature: login as admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.123407 @bus @admin
+  @TC.123407 @bus @admin @tasks_p1
   Scenario: 123407 Hipaa Mozy OEM login bus after activating and changing password
     When I act as partner by:
       | name     | including sub-partners |
@@ -838,7 +1528,7 @@ Feature: login as admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created subpartner company name
 
-  @TC.123340 @bus @admin
+  @TC.123340 @bus @admin @tasks_p1
   Scenario: 123340 Activate a new HIPAA root admin in admin detail
      When I add a new MozyPro partner:
       | period | base plan | security |
@@ -885,7 +1575,7 @@ Feature: login as admins
     And I search and delete partner account by newly created subpartner company name
     And I search and delete partner account by newly created partner company name
 
-  @TC.123523 @bus @admin
+  @TC.123523 @bus @admin @tasks_p1
   Scenario: 123523 Create HIPAA for MozyPro US partner and sub-partner and admin on phoenix
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -902,7 +1592,7 @@ Feature: login as admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.123417 @bus @admin
+  @TC.123417 @bus @admin @tasks_p1
   Scenario: 123417 New created Hipaa admin forget password and reset password on bus
     When I add a new MozyPro partner:
       | period | base plan | security |
@@ -931,7 +1621,7 @@ Feature: login as admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.123418 @bus @admin
+  @TC.123418 @bus @admin @tasks_p1
   Scenario: 123418 New created Hipaa admin forget password and reset password on phoenix
     When I add a new MozyPro partner:
       | period | base plan | security |
