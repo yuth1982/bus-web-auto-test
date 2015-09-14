@@ -1,4 +1,8 @@
 And /^I view machine details for (.+)$/ do |machine_or_user|
+  if !(machine_or_user.match(/^@.+$/).nil?)
+    machine_or_user =  '<%=' + machine_or_user + '%>'
+  end
+  machine_or_user.replace ERB.new(machine_or_user).result(binding)
   @bus_site.admin_console_page.search_list_machines_section.view_machine_details(machine_or_user)
 end
 

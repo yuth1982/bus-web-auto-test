@@ -38,6 +38,10 @@ Then /^I click Yes button on popup window$/ do
   @bus_site.admin_console_page.click_yes
 end
 
+Then /^I click No button on popup window$/ do
+  @bus_site.admin_console_page.click_no
+end
+
 Then /^I click Cancel button on popup window$/ do
   @bus_site.admin_console_page.click_cancel
 end

@@ -221,7 +221,13 @@ end
 Then /^stash device table in user details should be:$/ do |table|
   actual = @bus_site.admin_console_page.user_details_section.stash_table_hashes
   expected = table.hashes.first
-  expected.keys.each{ |header| actual[header].should == expected[header] }
+  expected.keys.each{ |header|
+    if expected[header] == '< a minute ago'
+      (actual[header].match(/^(< a|1) minute ago$/).nil?).should == false
+    else
+      actual[header].should == expected[header]
+    end
+  }
 end
 
 When /^I delete device by name: (.+)$/ do |device_name|
@@ -360,6 +366,7 @@ end
 Then(/^set max message should be:$/) do | msg|
   @bus_site.admin_console_page.user_details_section.messages.should == msg
 end
+
 Then(/^The range of machine max for (.+) by tooltips should be:$/) do |machine, range|
   # table is a | 0   | 12  |
   tooltip = @bus_site.admin_console_page.user_details_section.machine_max_range(machine)

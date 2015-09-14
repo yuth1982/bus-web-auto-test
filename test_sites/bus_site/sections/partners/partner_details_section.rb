@@ -784,14 +784,18 @@ module Bus
       setting_save_btn.click
     end
 
-    def delete_settings(settings)
+    def delete_settings(settings,exist = true)
       settings_link.click
       settings.each do |setting|
-         row_el = find(:xpath, "//td[text()='#{setting['Name']}']/..")
-         capability_id = /[\d]+/.match(row_el[:id]).to_s.to_i
-         page.driver.execute_script("document.querySelector('span[id^=settings_editor_for_#{capability_id}]').style.display=''")
-         row_el.find(:css, 'span.delete_setting>a').click
-         alert_accept
+         xpath = "//td[text()='#{setting['Name']}']/.."
+         if (!exist) && locate(:xpath,xpath).nil?
+         else
+          row_el = find(:xpath, xpath)
+          capability_id = /[\d]+/.match(row_el[:id]).to_s.to_i
+          page.driver.execute_script("document.querySelector('span[id^=settings_editor_for_#{capability_id}]').style.display=''")
+          row_el.find(:css, 'span.delete_setting>a').click
+          alert_accept
+         end
       end
     end
 

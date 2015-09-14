@@ -302,9 +302,15 @@ module MachineInfo
   # GET machine_get_info
   # Return attributes for one machine.(quota, user_spaceused, encryption, encryption_key_hash)
   # Attributes are presented as http response headers.
-  def get_machine_info(root_admin_id, user_email, password, machine_hash)
+
+  def get_machine_info(root_admin_id, user_email, password, machine_hash, type = 'backup', region = 'americas', country ='US')
     user_hash = Digest::SHA1.hexdigest(root_admin_id.to_s + " " + user_email.to_s)
-    string = "/client/machine_get_info\?machineid\=#{machine_hash}"
+    if type == 'backup'
+      string = "/client/machine_get_info\?machineid\=#{machine_hash}"
+    else
+      # for sync machine
+      string = "/client/machine_get_info?sync=true&alias=Sync&region=#{region}&machineid=#{machine_hash}&country=#{country}"
+    end
     uri = URI.parse("#{QA_ENV['bus_host']}")
     Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https', :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
       http.set_debug_output $stderr

@@ -19,6 +19,8 @@ When /^I got client config for the user machine:$/ do |table|
     v.replace ERB.new(v).result(binding)
   end
   machine_table['root_admin_id'] = @admin_id
+  #for sync machine
+  machine_table['machine'] = "user_#{@user_id}_sync" if machine_table['machine'] == '@user_id'
   user_hash = Digest::SHA1.hexdigest(machine_table['root_admin_id'].to_s + " " + machine_table['user_name'].to_s)
   user_password = machine_table.has_key?('user_password')? machine_table['user_password'] : CONFIGS['global']['test_pwd']
   @get_client_config_response = get_client_config_info(user_hash, user_password, machine_table['machine'],

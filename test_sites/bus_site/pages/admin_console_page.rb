@@ -226,6 +226,10 @@ module Bus
       cancel_btn.click
     end
 
+    def click_no
+      no_btn.click
+    end
+
     def click_submit
       submit_btn.click
     end

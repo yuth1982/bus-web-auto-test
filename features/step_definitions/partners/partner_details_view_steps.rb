@@ -18,9 +18,10 @@ When /^I add partner settings$/ do |table|
   @bus_site.admin_console_page.partner_details_section.close_settings
 end
 
-When /^I delete partner settings$/ do |table|
+When /^I delete partner settings(.*)$/ do |exist, table|
   # | Name | Value |
-  @bus_site.admin_console_page.partner_details_section.delete_settings(table.hashes)
+  exist = (exist==(' if exist')? false : true)
+  @bus_site.admin_console_page.partner_details_section.delete_settings(table.hashes, exist)
   @bus_site.admin_console_page.partner_details_section.close_settings
 end
 
