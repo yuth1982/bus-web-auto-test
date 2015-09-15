@@ -486,6 +486,7 @@ module Bus
       partner_root_role_change_link.click
       partner_root_role_type_select.select(root_role)
       partner_root_role_submit_btn.click
+      wait_until_bus_section_load
     end
 
     # Public: Create API Key
