@@ -11,7 +11,7 @@ module Bus
     element(:submit, xpath: "//div[starts-with(@id, 'admin-pass-change-')]/form//input[@value='Save Changes']")
     element(:delete_admin_btn, xpath: "//a[text() = 'Delete Admin']")
     element(:pw_tb, xpath: "//input[@name='password']")
-    element(:submit_btn, xpath: "//div[@class='popup-window-footer']//input[@Value='Submit']")
+    element(:submit_btn, xpath: "//div[@class='popup-window-footer']//input[@value='Submit']")
     element(:admin_name_tb, id: "target_admin_display_name")
     element(:admin_email_tb, id: "target_admin_username")
     element(:admin_parent_select, xpath: "//select[@name='target_admin[parent_admin_id]']")
@@ -61,6 +61,7 @@ module Bus
     # Returns nothing
     def act_as_admin
       act_as_link.click
+      wait_until_bus_section_load
       alert_accept if alert_present?
     end
 
