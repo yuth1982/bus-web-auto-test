@@ -92,7 +92,7 @@ Feature: Password policy is saved successfully to db
       | 8          | 3                     | 0             | 90           | 12              | 3                   | 5                     | 30                      | 3                         | 5                           | 30                            | 2                       | t                        | f                    |
     And The admin password will contains at least 3 of the following types of charactors
       | lower | digit | special | upper |
-    Then I stop masquerading from subpartner
+    Then I stop masquerading as sub partner
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -194,7 +194,7 @@ Feature: Password policy is saved successfully to db
     Then New partner should be created
     And I act as newly created subpartner account
     Then I will not see the Password Policy link from navigation links
-    Then I stop masquerading from subpartner
+    Then I stop masquerading as sub partner
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 

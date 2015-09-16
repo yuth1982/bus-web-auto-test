@@ -184,6 +184,7 @@ Feature: Linux BackupSet
     When I add a new MozyPro partner:
       | period |  base plan |   server plan |  net terms |
       |   1    |  50 GB     |       yes     |     yes    |
+    Then New partner should be created
     And I get the partner_id
     And I get the admin id from partner details
     When I act as newly created partner account
