@@ -17,9 +17,10 @@ module Bus
     element(:admin_parent_select, xpath: "//select[@name='target_admin[parent_admin_id]']")
     element(:admin_info_submit_btn, xpath: "//div[contains(@id, 'admininfobox')]//input[@value='Save Changes']")
     element(:admin_info_message_txt, xpath: "//div[contains(@id, 'admininfobox')]//ul/li")
-    element(:admin_id_txt, xpath: "//div[contains(@id, 'admin-show-')]//dt[text()='ID:']/../dd")
+    element(:admin_id_txt, xpath: "//div[contains(@id,'admin-show')]//dt[text()='ID:']/../dd")
+    element(:admin_name_txt, xpath: "//div[contains(@id,'admin-show')]//a[@class='title']")
 
-    # change admin password
+     # change admin password
     element(:change_admin_password_link, xpath: "//div[contains(@id,'admin-show')]//li//a[text()='Change Password']")
     element(:new_password_tb, xpath: "//input[@id='new_password']")
     element(:new_password_confirm_tb, xpath: "//input[@id='new_password_confirmation']")
@@ -34,6 +35,9 @@ module Bus
 
     # click here link
     element(:click_here_link, xpath: "//a[text()='click here']")
+    # ldap admin delete admin will need to confirm
+    element(:ldap_delete_confirm_btn, xpath: "//input[@value='Confirm']")
+
     #
     # new_pwd - a password for account
     # pwd_confirm - password confirmation
@@ -86,6 +90,12 @@ module Bus
       text
     end
 
+    def ldap_admin_delete_admin
+      delete_admin_btn.click
+      alert_accept
+      ldap_delete_confirm_btn.click
+    end
+
     def delete_admin_cancel
       delete_admin_btn.click
       confirm_txt = alert_text
@@ -116,6 +126,10 @@ module Bus
 
     def admin_id
       admin_id_txt.text
+    end
+
+    def admin_name
+      admin_name_txt.text
     end
 
     def change_admin_pwd(password)

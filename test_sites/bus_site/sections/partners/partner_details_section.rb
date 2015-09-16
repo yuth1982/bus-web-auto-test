@@ -138,6 +138,7 @@ module Bus
     # security fiedld
     element(:secuirty_field, xpath: "//span[contains(@id,'partner-display-hipaa-compliance-status')]")
 
+    element(:ldap_delete_confirm_btn, xpath: "//input[@value='Confirm']")
     # Public: Partner Id
     #
     # Return string
@@ -412,6 +413,12 @@ module Bus
         alert_accept
         return_text
       end
+    end
+
+    def ldap_admin_delete_partner
+      wait_until_bus_section_load
+      delete_partner_link.click
+      ldap_delete_confirm_btn.click
     end
 
     # Public: Enable stash for a partner

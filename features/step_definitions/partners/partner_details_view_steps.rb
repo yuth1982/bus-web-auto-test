@@ -43,6 +43,10 @@ When /^I search and delete partner account by (.+)/ do |account_name|
   end
 end
 
+And /^LDAP admin delete partner$/ do
+  @bus_site.admin_console_page.partner_details_section.ldap_admin_delete_partner
+end
+
 When /^I search and delete partner account if it exists by (.+)/ do |account_name|
   begin
     step %{I search and delete partner account by #{account_name}}
@@ -52,12 +56,13 @@ When /^I search and delete partner account if it exists by (.+)/ do |account_nam
 end
 
 # When you are on partner details section, you are able to execute this steps
-When /^I delete (partner|subpartner) account$/ do |status|
+When /^I delete (partner|subpartner) account(|default password)$/ do |status, password|
+  password = QA_ENV['bus_password'] if password == ''
   case status
     when "partner"
-      @bus_site.admin_console_page.partner_details_section.delete_partner(QA_ENV['bus_password'])
+      @bus_site.admin_console_page.partner_details_section.delete_partner(password)
     when "subpartner"
-      @bus_site.admin_console_page.partner_details_section.subpartner.delete_partner(QA_ENV['bus_password'])
+      @bus_site.admin_console_page.partner_details_section.subpartner.delete_partner(password)
     else
   end
 end

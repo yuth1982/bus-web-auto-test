@@ -46,6 +46,10 @@ When /^I refresh Add New Admin section$/ do
   @bus_site.admin_console_page.add_new_admin_section.refresh_bus_section
 end
 
+When /^I refresh Search Admins section$/ do
+  @bus_site.admin_console_page.search_admins_section.refresh_bus_section
+end
+
 Then /^I should see capabilities in Admin Console panel$/ do |table|
   # table is a | Search / List Partners |pending
   data = table.raw[1..-1]
@@ -94,7 +98,7 @@ When /^I act as latest created admin$/ do
   })
 end
 
-When /^I delete admin by:$/ do |table|
+When /^(I|Ldap admin) delete admin by:$/ do |type, table|
   sleep 5 # Without sleep, the (stop masquerade) link comes back again
   1.times {
     step %{I search admin by:}, table(%{
@@ -110,11 +114,15 @@ When /^I delete admin by:$/ do |table|
   attributes['email'] = @existing_user_email[0..26] if attributes['email'] == '@existing_user_email'
   attributes['email'] = @existing_admin_email[0..26] if attributes['email'] == '@existing_admin_email'
   attributes['email'] = @admin.email[0..26] if attributes['email'] == '@admin_email'
-
+  password = attributes['password'] || QA_ENV['bus_password']
   page.find_link(attributes["email"].slice(0, 27) || attributes["name"]).click
-  @bus_site.admin_console_page.admin_details_section.delete_admin(QA_ENV['bus_password'])
-  step "I navigate to Search Admins section from bus admin console page"
-  @bus_site.admin_console_page.search_admins_section.refresh_bus_section
+  if type == 'I'
+    @bus_site.admin_console_page.admin_details_section.delete_admin(password)
+    step "I navigate to Search Admins section from bus admin console page"
+    @bus_site.admin_console_page.search_admins_section.refresh_bus_section
+  else
+    @bus_site.admin_console_page.admin_details_section.ldap_admin_delete_admin
+  end
 end
 
 When /^I delete lastest created admin$/ do
@@ -210,9 +218,7 @@ When /^I save the admin email as existing admin email$/ do
 end
 
 And /^I get the admin id for admin (.+) from admin details$/ do |index|
-  admin_id = @bus_site.admin_console_page.admin_details_section.admin_id
-  Log.debug "admin id for admin #{index} is #{admin_id}"
-  @admins[index.to_i].id = admin_id
+  @admins[index.to_i].id = @bus_site.admin_console_page.admin_details_section.admin_id
 end
 
 And /^I get the action record from db table action_audits$/ do |table|

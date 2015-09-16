@@ -55,9 +55,9 @@ module Bus
       search_results_table.rows_text.map{ |row| Hash[*search_results_table.headers_text.zip(row).flatten] }
     end
 
-    # get partner name from search result when serach by email
+    # get partner name from search result when serach by email, for act as existing partner
     def get_partner_name
-    searched_partner_name_txt.text
+      searched_partner_name_txt.text
     end
 
     # Public: Search results table header row text
