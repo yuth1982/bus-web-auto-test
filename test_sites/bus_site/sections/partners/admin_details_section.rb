@@ -128,6 +128,7 @@ module Bus
     end
 
     def get_admin_groups
+      wait_until{add_remove_ug_link.visible?}
       ug_array = admin_user_groups.map{|label|label.text.strip}
       ug_array.select{|ug| ug.length > 0}
     end

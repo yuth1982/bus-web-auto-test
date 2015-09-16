@@ -56,6 +56,7 @@ module Bus
     #
     # Returns nothing
     def logout
+      alert_accept if alert_present?
       logout_btn.click
     end
 
