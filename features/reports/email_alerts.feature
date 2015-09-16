@@ -6,7 +6,7 @@ Feature: Email Alerts
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.1980 @bus @email_alerts
+  @TC.1980 @bus @email_alerts @auto_tasks
   Scenario: 1980:Create New Daily Alert
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -24,7 +24,7 @@ Feature: Email Alerts
       | subject line       | frequency | report modules                               | recipients                         |
       | email_alerts_test  | daily     | Backup summary;Users without recent backups  | <%=@partner.admin_info.full_name%> |
     Then I Send Now the email alert
-    And I wait for 5 seconds
+    And I wait for 15 seconds
     And I search emails by keywords:
       | to               | content |
       | @new_admin_email | email_alerts_test|
@@ -32,7 +32,7 @@ Feature: Email Alerts
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.1983 @bus @email_alerts
+  @TC.1983 @bus @email_alerts @auto_tasks
   Scenario: 1983:Modify Existing Email Alert
     When I add a new MozyPro partner:
       | period | base plan | coupon              | country       |
@@ -59,7 +59,7 @@ Feature: Email Alerts
       | subject line         | frequency | report modules                                  | recipients  |
       | email_alerts_modify  | weekly    | Users/Machines nearing max;Storage pool summary | alert_admin |
     Then I Send Now the email alert
-    And I wait for 5 seconds
+    And I wait for 15 seconds
     And I search emails by keywords:
       | to                | content             |
       | <%=@admin.email%> | email_alerts_modify |
@@ -67,7 +67,7 @@ Feature: Email Alerts
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.1981 @bus @email_alerts
+  @TC.1981 @bus @email_alerts @auto_tasks
   Scenario: 1981:Create New Weekly Alert
     When I add a new MozyEnterprise partner:
       | period | users | coupon              | country       |
@@ -85,6 +85,7 @@ Feature: Email Alerts
       | subject line       | frequency | report modules                               | recipients                         |
       | email_alerts_test  | weekly    | Backup summary;Users without recent backups  | <%=@partner.admin_info.full_name%> |
     Then I Send Now the email alert
+    And I wait for 15 seconds
     And I search emails by keywords:
       | to               | content |
       | @new_admin_email | email_alerts_test|
@@ -92,7 +93,7 @@ Feature: Email Alerts
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.122228 @bus @email_alerts
+  @TC.122228 @bus @email_alerts @auto_tasks
   Scenario: 122228:Delete an email alert
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -112,7 +113,7 @@ Feature: Email Alerts
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.2169 @bus @email_alerts
+  @TC.2169 @bus @email_alerts @auto_tasks
   Scenario: 2169:Change the email alerts recipients
     When I add a new MozyPro partner:
       | period | base plan | coupon              | country       |
@@ -139,7 +140,7 @@ Feature: Email Alerts
       | recipients        |
       | email_alert_admin |
     Then I Send Now the email alert
-    And I wait for 5 seconds
+    And I wait for 15 seconds
     And I search emails by keywords:
       | to                | content             |
       | <%=@admin.email%> | email_alerts_test   |
@@ -147,7 +148,7 @@ Feature: Email Alerts
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.122440 @bus @email_alerts
+  @TC.122440 @bus @email_alerts @auto_tasks
   Scenario: 122440:Storage pool summary of Email Alerts
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -179,6 +180,7 @@ Feature: Email Alerts
     Then email alerts section message should be New alert created
     Then I view email alert details by alerts_test_storage_summary
     Then I Send Now the email alert
+    And I wait for 15 seconds
     And I retrieve email content by keywords:
       | to                | content                     |
       | @new_admin_email  | alerts_test_storage_summary |
@@ -188,7 +190,7 @@ Feature: Email Alerts
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.122441 @bus @email_alerts
+  @TC.122441 @bus @email_alerts @auto_tasks
   Scenario: 122441:Backup summary of Email Alerts
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -220,6 +222,7 @@ Feature: Email Alerts
     Then email alerts section message should be New alert created
     Then I view email alert details by alerts_test_backup_summary
     Then I Send Now the email alert
+    And I wait for 15 seconds
     And I retrieve email content by keywords:
       | to                | content                    |
       | @new_admin_email  | alerts_test_backup_summary |
@@ -229,7 +232,7 @@ Feature: Email Alerts
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.122442 @bus @email_alerts
+  @TC.122442 @bus @email_alerts @auto_tasks
   Scenario: 122442:Users without recent backups of Email Alerts
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -261,6 +264,7 @@ Feature: Email Alerts
     Then email alerts section message should be New alert created
     Then I view email alert details by alerts_test_without_backup_summary
     Then I Send Now the email alert
+    And I wait for 15 seconds
     And I retrieve email content by keywords:
       | to                | content                              |
       | @new_admin_email  | Machines that haven't been backed up |
@@ -270,7 +274,7 @@ Feature: Email Alerts
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.122443 @bus @email_alerts
+  @TC.122443 @bus @email_alerts @auto_tasks
   Scenario: 122443:Users with outdated clients of Email Alerts
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -302,6 +306,7 @@ Feature: Email Alerts
     Then email alerts section message should be New alert created
     Then I view email alert details by alerts_test_without_backup
     Then I Send Now the email alert
+    And I wait for 15 seconds
     And I retrieve email content by keywords:
       | to                | content                                                |
       | @new_admin_email  | Machines that haven't been backed up in the last 1 day |
@@ -309,7 +314,7 @@ Feature: Email Alerts
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21191_1 @bus @email_alerts
+  @TC.21191_1 @bus @email_alerts @auto_tasks
   Scenario: 21191_1:[Email Alert] Verify Users Nearing Quota Report Email
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -362,7 +367,7 @@ Feature: Email Alerts
     Then email alerts section message should be New alert created
     Then I view email alert details by alerts_test_nearing_max_90%
     Then I Send Now the email alert
-    And I wait for 5 seconds
+    And I wait for 15 seconds
     And I retrieve email content by keywords:
       | to                | content                     |
       | @new_admin_email  | alerts_test_nearing_max_90% |
@@ -376,7 +381,7 @@ Feature: Email Alerts
     Then email alerts section message should be New alert created
     Then I view email alert details by alerts_test_nearing_max_80%
     Then I Send Now the email alert
-    Then I wait for 5 seconds
+    Then I wait for 15 seconds
     And I retrieve email content by keywords:
       | to                | content                     |
       | @new_admin_email  | alerts_test_nearing_max_80% |
@@ -388,7 +393,7 @@ Feature: Email Alerts
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21191_2 @bus @email_alerts
+  @TC.21191_2 @bus @email_alerts @auto_tasks
   Scenario: 21191_2:[Email Alert] Verify Users Nearing Quota Report Email
     When I add a new MozyEnterprise partner:
       | period | users | server plan |
@@ -441,7 +446,7 @@ Feature: Email Alerts
     Then email alerts section message should be New alert created
     Then I view email alert details by alerts_test_nearing_max_70%
     Then I Send Now the email alert
-    Then I wait for 5 seconds
+    Then I wait for 15 seconds
     And I retrieve email content by keywords:
       | to                | content                     |
       | @new_admin_email  | alerts_test_nearing_max_70% |
@@ -455,7 +460,7 @@ Feature: Email Alerts
     Then email alerts section message should be New alert created
     Then I view email alert details by alerts_test_nearing_max_60%
     Then I Send Now the email alert
-    And I wait for 5 seconds
+    And I wait for 15 seconds
     And I retrieve email content by keywords:
       | to                | content                     |
       | @new_admin_email  | alerts_test_nearing_max_60% |
@@ -465,7 +470,7 @@ Feature: Email Alerts
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21191_3 @bus @email_alerts
+  @TC.21191_3 @bus @email_alerts @auto_tasks
   Scenario: 21191_3:[Email Alert] Verify Users Nearing Quota Report Email
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -481,7 +486,7 @@ Feature: Email Alerts
     Then email alerts section message should be New alert created
     Then I view email alert details by alerts_test_nearing_max_90%
     Then I Send Now the email alert
-    And I wait for 5 seconds
+    And I wait for 15 seconds
     And I retrieve email content by keywords:
       | to                | content                     |
       | @new_admin_email  | alerts_test_nearing_max_90% |
@@ -490,7 +495,7 @@ Feature: Email Alerts
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21191_4 @bus @email_alerts
+  @TC.21191_4 @bus @email_alerts @auto_tasks
   Scenario: 21191_4:[Email Alert] Verify Users Nearing Quota Report Email
     When I add a new MozyEnterprise partner:
       | period | users | server plan |
@@ -506,7 +511,7 @@ Feature: Email Alerts
     Then email alerts section message should be New alert created
     Then I view email alert details by alerts_test_nearing_max_60%
     Then I Send Now the email alert
-    And I wait for 5 seconds
+    And I wait for 15 seconds
     And I retrieve email content by keywords:
       | to                | content                     |
       | @new_admin_email  | alerts_test_nearing_max_60% |

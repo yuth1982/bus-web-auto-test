@@ -52,6 +52,9 @@ module Bus
 
     def view_alert_details(subject)
       find(:xpath, "//a[text()='#{subject}']").click
+      if all(:xpath, "//a[text()='Send Now']").size==0
+        find(:xpath, "//a[text()='#{subject}']").click
+      end
     end
 
     def alerts_messages

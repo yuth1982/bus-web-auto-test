@@ -55,6 +55,7 @@ module Bus
     end
 
     def send_now
+      wait_until{send_now_a.visible?}
       send_now_a.click
     end
 
