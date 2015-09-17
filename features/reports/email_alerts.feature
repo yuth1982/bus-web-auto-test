@@ -19,7 +19,7 @@ Feature: Email Alerts
       | subject line       | frequency | report modules                             | recipients                         |
       | email_alerts_test  | daily     | Backup summary;Users without recent backups| <%=@partner.admin_info.full_name%> |
     Then email alerts section message should be New alert created
-    Then I view email alert details by email_alerts_test
+#    Then I view email alert details by email_alerts_test
     And The email alert details should be:
       | subject line       | frequency | report modules                               | recipients                         |
       | email_alerts_test  | daily     | Backup summary;Users without recent backups  | <%=@partner.admin_info.full_name%> |
@@ -50,11 +50,11 @@ Feature: Email Alerts
       | subject line       | frequency | report modules                              | recipients                         |
       | email_alerts_test  | daily     | Backup summary;Users without recent backups | <%=@partner.admin_info.full_name%> |
     Then email alerts section message should be New alert created
-    Then I view email alert details by email_alerts_test
+#    Then I view email alert details by email_alerts_test
     Then I modify email alert to:
       | subject line        | frequency | report modules                                  | scope                |recipients |
       | email_alerts_modify | weekly    | Users/Machines nearing max;Storage pool summary | (default user group) |alert_admin |
-    Then I view email alert details by email_alerts_modify
+#    Then I view email alert details by email_alerts_modify
     And The email alert details should be:
       | subject line         | frequency | report modules                                  | recipients  |
       | email_alerts_modify  | weekly    | Users/Machines nearing max;Storage pool summary | alert_admin |
@@ -80,7 +80,7 @@ Feature: Email Alerts
       | subject line       | frequency | report modules                              | recipients                         |
       | email_alerts_test  | weekly    | Backup summary;Users without recent backups | <%=@partner.admin_info.full_name%> |
     Then email alerts section message should be New alert created
-    Then I view email alert details by email_alerts_test
+#    Then I view email alert details by email_alerts_test
     And The email alert details should be:
       | subject line       | frequency | report modules                               | recipients                         |
       | email_alerts_test  | weekly    | Backup summary;Users without recent backups  | <%=@partner.admin_info.full_name%> |
@@ -106,7 +106,7 @@ Feature: Email Alerts
       | subject line       | frequency | report modules |
       | email_alerts_test  | weekly    | Backup summary |
     Then email alerts section message should be New alert created
-    Then I view email alert details by email_alerts_test
+#    Then I view email alert details by email_alerts_test
     Then I delete the email alert
     And I wait for 2 seconds
     And The email alert email_alerts_test should be deleted
@@ -131,11 +131,11 @@ Feature: Email Alerts
       | subject line       | frequency | report modules                              | recipients                         |
       | email_alerts_test  | daily     | Backup summary;Users without recent backups | <%=@partner.admin_info.full_name%> |
     Then email alerts section message should be New alert created
-    Then I view email alert details by email_alerts_test
+#    Then I view email alert details by email_alerts_test
     Then I modify email alert to:
       | recipients        |
       | email_alert_admin |
-    Then I view email alert details by email_alerts_test
+#    Then I view email alert details by email_alerts_test
     And The email alert details should be:
       | recipients        |
       | email_alert_admin |
@@ -178,7 +178,7 @@ Feature: Email Alerts
       | subject line                 | frequency | report modules       | recipients                         |
       | alerts_test_storage_summary  | daily     | Storage pool summary | <%=@partner.admin_info.full_name%> |
     Then email alerts section message should be New alert created
-    Then I view email alert details by alerts_test_storage_summary
+#    Then I view email alert details by alerts_test_storage_summary
     Then I Send Now the email alert
     And I wait for 15 seconds
     And I retrieve email content by keywords:
@@ -220,7 +220,7 @@ Feature: Email Alerts
       | subject line                | frequency | report modules | recipients                         |
       | alerts_test_backup_summary  | daily     | Backup summary | <%=@partner.admin_info.full_name%> |
     Then email alerts section message should be New alert created
-    Then I view email alert details by alerts_test_backup_summary
+#    Then I view email alert details by alerts_test_backup_summary
     Then I Send Now the email alert
     And I wait for 15 seconds
     And I retrieve email content by keywords:
@@ -262,7 +262,7 @@ Feature: Email Alerts
       | subject line                        | frequency | report modules               | recipients                         |
       | alerts_test_without_backup_summary  | daily     | Users without recent backups | <%=@partner.admin_info.full_name%> |
     Then email alerts section message should be New alert created
-    Then I view email alert details by alerts_test_without_backup_summary
+#    Then I view email alert details by alerts_test_without_backup_summary
     Then I Send Now the email alert
     And I wait for 15 seconds
     And I retrieve email content by keywords:
@@ -304,7 +304,7 @@ Feature: Email Alerts
       | subject line               | frequency | report modules               | recipients                         |
       | alerts_test_without_backup | daily     | Users without recent backups | <%=@partner.admin_info.full_name%> |
     Then email alerts section message should be New alert created
-    Then I view email alert details by alerts_test_without_backup
+#    Then I view email alert details by alerts_test_without_backup
     Then I Send Now the email alert
     And I wait for 15 seconds
     And I retrieve email content by keywords:
@@ -365,7 +365,7 @@ Feature: Email Alerts
       | subject line                | frequency | report modules             | Percent quota used |
       | alerts_test_nearing_max_90% | daily     | Users/Machines nearing max | 90%                |
     Then email alerts section message should be New alert created
-    Then I view email alert details by alerts_test_nearing_max_90%
+#    Then I view email alert details by alerts_test_nearing_max_90%
     Then I Send Now the email alert
     And I wait for 15 seconds
     And I retrieve email content by keywords:
@@ -379,7 +379,7 @@ Feature: Email Alerts
       | subject line                | frequency | report modules             | Percent quota used |
       | alerts_test_nearing_max_80% | daily     | Users/Machines nearing max | 80%                |
     Then email alerts section message should be New alert created
-    Then I view email alert details by alerts_test_nearing_max_80%
+#    Then I view email alert details by alerts_test_nearing_max_80%
     Then I Send Now the email alert
     Then I wait for 15 seconds
     And I retrieve email content by keywords:
@@ -444,7 +444,7 @@ Feature: Email Alerts
       | subject line                | frequency | report modules             | Percent quota used |
       | alerts_test_nearing_max_70% | daily     | Users/Machines nearing max | 70%                |
     Then email alerts section message should be New alert created
-    Then I view email alert details by alerts_test_nearing_max_70%
+#    Then I view email alert details by alerts_test_nearing_max_70%
     Then I Send Now the email alert
     Then I wait for 15 seconds
     And I retrieve email content by keywords:
@@ -458,7 +458,7 @@ Feature: Email Alerts
       | subject line                | frequency | report modules             | Percent quota used |recipients                          |
       | alerts_test_nearing_max_60% | daily     | Users/Machines nearing max | 60%                | <%=@partner.admin_info.full_name%> |
     Then email alerts section message should be New alert created
-    Then I view email alert details by alerts_test_nearing_max_60%
+#    Then I view email alert details by alerts_test_nearing_max_60%
     Then I Send Now the email alert
     And I wait for 15 seconds
     And I retrieve email content by keywords:
@@ -484,7 +484,7 @@ Feature: Email Alerts
       | subject line                | frequency | report modules             | Percent quota used |
       | alerts_test_nearing_max_90% | daily     | Users/Machines nearing max | 90%                |
     Then email alerts section message should be New alert created
-    Then I view email alert details by alerts_test_nearing_max_90%
+#    Then I view email alert details by alerts_test_nearing_max_90%
     Then I Send Now the email alert
     And I wait for 15 seconds
     And I retrieve email content by keywords:
@@ -509,7 +509,7 @@ Feature: Email Alerts
       | subject line                | frequency | report modules             | Percent quota used |
       | alerts_test_nearing_max_60% | daily     | Users/Machines nearing max | 60%                |
     Then email alerts section message should be New alert created
-    Then I view email alert details by alerts_test_nearing_max_60%
+#    Then I view email alert details by alerts_test_nearing_max_60%
     Then I Send Now the email alert
     And I wait for 15 seconds
     And I retrieve email content by keywords:
