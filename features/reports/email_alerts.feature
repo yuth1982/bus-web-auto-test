@@ -24,7 +24,7 @@ Feature: Email Alerts
       | subject line       | frequency | report modules                               | recipients                         |
       | email_alerts_test  | daily     | Backup summary;Users without recent backups  | <%=@partner.admin_info.full_name%> |
     Then I Send Now the email alert
-    And I wait for 30 seconds
+    And I wait for 60 seconds
     And I search emails by keywords:
       | to               | content |
       | @new_admin_email | email_alerts_test|
