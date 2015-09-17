@@ -324,7 +324,6 @@ Then /^The partner product name set up successfully$/ do
   @bus_site.partner_product_name_page.close_page
 end
 
-
 When /^I change the subdomain to @subdomain$/ do
   @subdomain = (0...8).map{(97+Random.new.rand(26)).chr}.join
   @bus_site.admin_console_page.partner_details_section.change_subdomain
@@ -499,4 +498,33 @@ end
 
 Then /^The security filed value is (HIPAA|Standard)$/ do |security|
   @bus_site.admin_console_page.partner_details_section.get_security_value.should == security
+end
+
+Then /^I (should|should not) see (.+) part in partner details$/ do |type,section_name|
+  if type == 'should not'
+    type_value = false
+  else
+    type_value = true
+  end
+  @bus_site.admin_console_page.partner_details_section.has_section?(section_name).should == type_value
+end
+
+Then /(account details|billing information) should be (expanded|collapsed)$/ do |section_name,status|
+  if status == 'collapsed'
+    @bus_site.admin_console_page.partner_details_section.element_collapsed?(section_name).should be_true
+  else
+    @bus_site.admin_console_page.partner_details_section.element_collapsed?(section_name).should be_false
+  end
+end
+
+And /^I (expand|collapse) the (account details|billing information) section$/ do |action,section_name|
+  if action == 'collapse'
+    @bus_site.admin_console_page.partner_details_section.collapse_element(section_name)
+  else
+    @bus_site.admin_console_page.partner_details_section.expand_element(section_name)
+  end
+end
+
+And /^I click show link of billing history section$/ do
+  @bus_site.admin_console_page.partner_details_section.show_billing_history
 end

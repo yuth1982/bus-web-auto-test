@@ -380,6 +380,11 @@ module Bus
       billing_history_table.hashes
     end
 
+    def show_billing_history
+      expand(billing_information_icon)
+      show_billing_history_link.click
+    end
+
     # Public: Click act as partner link
     #
     # Example
@@ -620,7 +625,6 @@ module Bus
       set_product_name_link.click
     end
 
-
     def set_account_type type
       account_type_change_link.click
       wait_until{ account_type_select.visible? }
@@ -822,6 +826,38 @@ module Bus
 
     def has_setting_name?(setting_name)
       all(:xpath, "//td[text()=\'#{setting_name}\']").size >= 1
+    end
+
+    def has_section?(section_name)
+      size = all(:xpath, "//div[@class='show-details']//*[contains(text(),'#{section_name}')]").size
+      (size > 0)? true: false
+    end
+
+    def expand_element(element_name)
+      case element_name
+        when 'account details'
+          expand(account_details_icon)
+        when 'billing information'
+          expand(billing_information_icon)
+      end
+    end
+
+    def collapse_element(element_name)
+      case element_name
+        when 'account details'
+          collapse(account_details_icon)
+        when 'billing information'
+          collapse(billing_information_icon)
+      end
+    end
+
+    def element_collapsed?(element_name)
+      case element_name
+        when 'account details'
+          collapsed?(account_details_icon)
+        when 'billing information'
+          collapsed?(billing_information_icon)
+      end
     end
 
     # this is for subpartner

@@ -108,5 +108,10 @@ And /^I refresh sync details section$/ do
   @bus_site.admin_console_page.machine_details_section.refresh_bus_section
 end
 
-
-
+Then /^I (should|should not) see data shuttle table in machine details section$/ do |type|
+  if type.include? "not"
+    @bus_site.admin_console_page.machine_details_section.data_shuttle_table_visible?.should be_false
+  else
+    @bus_site.admin_console_page.machine_details_section.data_shuttle_table_visible?.should be_true
+  end
+end

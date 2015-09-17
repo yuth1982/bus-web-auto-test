@@ -52,5 +52,10 @@ module Bus
       replace_machine_lnk.click
     end
 
+    def data_shuttle_table_visible?
+      size = all(:xpath, "//th[text()='Order ID']/../../../../table").size
+      (size > 0)? true:false
+    end
+
   end
 end

@@ -6,6 +6,7 @@ module Bus
     #
     element(:source_group_select, id: "source_group_id")
     element(:target_group_select, id: "target_group_id")
+    element(:target_partner_select, id: "target_partner_id")
     element(:server_licenses_tb, id: "licenses_Server")
     element(:server_quota_tb, id: "quota_Server")
     element(:desktop_licenses_tb, id: "licenses_Desktop")
@@ -16,8 +17,9 @@ module Bus
     # Public: Transfer resources from source user group to target user group
     #
     #
-    def transfer_resources(source_group, target_group, server_licenses, server_quota, desktop_licenses, desktop_quota)
+    def transfer_resources(source_group, target_partner, target_group, server_licenses, server_quota, desktop_licenses, desktop_quota)
       source_group_select.select(source_group)
+      target_partner_select.select(target_partner) unless target_partner == 'the same partner'
       target_group_select.select(target_group)
       server_licenses_tb.type_text(server_licenses)
       server_quota_tb.type_text(server_quota)

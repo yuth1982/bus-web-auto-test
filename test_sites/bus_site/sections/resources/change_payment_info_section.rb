@@ -42,6 +42,7 @@ module Bus
       unless contact_info.country.nil?
         cc_country_select.select(contact_info.country)
         alert_accept if alert_present?
+        wait_until_bus_section_load
         case contact_info.country
           when 'United States'
             cc_state_us_select.select(contact_info.state_abbrev)
