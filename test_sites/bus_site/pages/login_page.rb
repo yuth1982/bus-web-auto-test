@@ -19,6 +19,7 @@ module Bus
     element(:captcha_input, id: "captcha")
     element(:reset_password_continue_btn, xpath: "//input[@value='Continue']")
     element(:reset_password_msg_div, xpath: "//div[@id='main']//p")
+    element(:start_using_mozy_btn, id: "start_using_mozy")
     # Public: Login bus admin console
     #
     # username - Bus admin console login user name
@@ -56,13 +57,9 @@ module Bus
     #
     # Returns nothing
     def logout
+      start_using_mozy_btn.click if has_start_using_mozy_btn?
       alert_accept if alert_present?
-      begin
-        logout_btn.click
-      rescue
-        alert_accept if alert_present?
-      end
-
+      logout_btn.click
     end
 
     # Public: Messages for login page

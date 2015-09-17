@@ -255,6 +255,7 @@ module Bus
     end
 
     def open_account_details_from_header(admin_name = nil)
+      start_using_mozy_btn.click if has_start_using_mozy_btn?
       alert_accept if alert_present?
       if current_admin_name_link.text.strip =='stop masquerading'
         if admin_name.nil?
