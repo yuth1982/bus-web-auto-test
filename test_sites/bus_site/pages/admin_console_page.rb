@@ -259,13 +259,19 @@ module Bus
       if current_admin_name_link.text.strip =='stop masquerading'
         if admin_name.nil?
           # for act as admin
-          find(:xpath, "//div[@id='identify-me']/a[2]").click
+          link = find(:xpath, "//div[@id='identify-me']/a[2]")
         else
-          find(:xpath, "//div[@id='identify-me']/a[text()='#{admin_name}']").click
+          link = find(:xpath, "//div[@id='identify-me']/a[text()='#{admin_name}']")
         end
       else
         # for act as admin, then click admin link
-        current_admin_name_link.click
+        link = current_admin_name_link
+      end
+      # for the  error: element is not clickable at point xxx
+      begin
+        link.click
+      rescue
+        alert_accept if alert_present?
       end
     end
 
