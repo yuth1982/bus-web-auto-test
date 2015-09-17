@@ -9,7 +9,6 @@ module Bus
     #
     element(:username_tb, id: "username")
     element(:password_tb, id: "password")
-    element(:password_confirm_tb, id: "password2")
     element(:login_btn, css: "span.login_button")
     element(:logout_btn, xpath: "//a[text()='LOG OUT']")
     element(:message_div, xpath: "//div[@id='inner-content']//ul[@class='flash errors']")
@@ -20,6 +19,7 @@ module Bus
     element(:reset_password_continue_btn, xpath: "//input[@value='Continue']")
     element(:reset_password_msg_div, xpath: "//div[@id='main']//p")
     element(:start_using_mozy_btn, id: "start_using_mozy")
+
     # Public: Login bus admin console
     #
     # username - Bus admin console login user name
@@ -117,12 +117,20 @@ module Bus
 
     def reset_password_enter(password)
       password_tb.type_text(password)
-      password_confirm_tb.type_text(password)
+      if all(:id, 'password2').size>0
+        find(:id, 'password2').type_text(password)
+      else
+        find(:id, 'password_confirmation').type_text(password)
+      end
       reset_password_continue_btn.click
     end
 
     def reset_password_msg
-      reset_password_msg_div.text
+      if all(:xpath, "//div[@id='main']//p").size>0
+        find(:xpath, "//div[@id='main']//p").text
+      else
+        find(:xpath, "//ul[@class='flash successes']/li").text
+      end
     end
   end
 end

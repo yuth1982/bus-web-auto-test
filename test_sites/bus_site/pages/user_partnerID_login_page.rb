@@ -21,14 +21,15 @@ module Bus
     attr_accessor :pid , :partner_type
 
     # type could be ladp, horizon or mozy
-    def initialize(pid, partner_type)
+    def initialize(pid, partner_type, prefix)
       @pid = pid
       @partner_type = partner_type
       case @partner_type
         when 'home'
           self.class.set_url("https://www.mozypro.com/login/")
         else
-          self.class.set_url("https://www.mozypro.com/login/user?pid="+@pid)
+          self.class.set_url("https://#{prefix}/login/user?pid="+@pid)
+
       end
     end
 

@@ -76,7 +76,7 @@ Feature: User Login
       | <%=@new_clients.first.machine_id%> | 30 |
     Then tds returns successful upload
     When I navigate to bus admin console login page
-    And I log in bus admin console with user name <%=@admin.email%> and password default password
+    And I log in bus admin console with user name @admin.email and password default password
     And I search user by:
       | keywords   |
       | @user_name |

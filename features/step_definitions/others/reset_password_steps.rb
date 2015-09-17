@@ -14,7 +14,7 @@ When /^I click reset password link from the email$/ do
   Log.debug("#{@found_emails.size} emails found, please update your search query") if @found_emails.size != 1
   @mail_content = find_email_content(@email_search_query)
   # the url is like # https://mozy.com/p/531724/1441692752/58674ae5dcf8939a9d206093eac25b69/pass
-  match = @mail_content.match(/https?:\/\/mozy.com\/[\S]+\/pass/)
+  match = @mail_content.match(/https?:\/\/mozy.com\/[\S]+\/pass/) || @mail_content.match(/https?:\/\/www.mozypro.com\/[\S]+\/pass\/\?pid=[\d]+/) ||@mail_content.match(/https?:\/\/resetpassword.mozypro.com\/[\S]+\/pass\/\?pid=[\d]+/)
   reset_url = match[0] unless match.nil?
   @bus_site.login_page.go_to_url(reset_url)
 end

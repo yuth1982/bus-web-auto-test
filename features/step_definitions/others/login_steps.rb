@@ -132,9 +132,14 @@ When /^I log into (.+) with mixed case username (.+) and (.+)$/ do |subdomain, u
   @bus_site.user_login_page(subdomain, 'mozy').login(user_account)
 end
 
-When /^I navigate to user login page with partner ID$/ do
+When /^I navigate to user login page with partner ID( oem\.partners\.com| partners\.mozy\.com)?$/ do |prefix|
   @bus_site = BusSite.new
-  @bus_site.user_pid_login_page(@partner_id, @partner.partner_info.type).load
+  if prefix.nil?
+    @bus_site.user_pid_login_page(@partner_id, @partner.partner_info.type).load
+  else
+    @bus_site.user_pid_login_page(@partner_id, 'oem', prefix.strip).load if @partner.nil?
+    @bus_site.user_pid_login_page(@partner_id, @partner.partner_info.type, prefix.strip).load unless @partner.nil?
+  end
 end
 
 When /^I log in bus pid console with user name (.+) and password (.+)$/ do |username, password|

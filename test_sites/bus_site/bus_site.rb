@@ -59,8 +59,8 @@ class BusSite
     Bus::ManifestViewPage.new
   end
 
-  def user_pid_login_page(pid, partner_type)
-    Bus::UserPartnerIDLoginPage.new(pid, partner_type)
+  def user_pid_login_page(pid, partner_type, prefix = 'www.mozypro.com')
+    Bus::UserPartnerIDLoginPage.new(pid, partner_type, prefix)
   end
 
   def user_login_bus_page
