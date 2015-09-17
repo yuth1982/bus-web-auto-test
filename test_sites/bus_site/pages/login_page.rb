@@ -32,7 +32,6 @@ module Bus
       username_tb.type_text(username)
       password_tb.type_text(password)
       login_btn.click
-      wait_until_bus_section_load
     end
 
     # Public: Partner login bus admin console
@@ -57,9 +56,13 @@ module Bus
     #
     # Returns nothing
     def logout
-      wait_until_bus_section_load
       alert_accept if alert_present?
-      logout_btn.click
+      begin
+        logout_btn.click
+      rescue
+        alert_accept if alert_present?
+      end
+
     end
 
     # Public: Messages for login page

@@ -61,7 +61,6 @@ module Bus
     # Returns nothing
     def act_as_admin
       act_as_link.click
-      wait_until_bus_section_load
       alert_accept if alert_present?
     end
 

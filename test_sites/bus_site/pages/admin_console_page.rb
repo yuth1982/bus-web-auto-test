@@ -255,6 +255,7 @@ module Bus
     end
 
     def open_account_details_from_header(admin_name = nil)
+      alert_accept if alert_present?
       if current_admin_name_link.text.strip =='stop masquerading'
         if admin_name.nil?
           # for act as admin
@@ -302,6 +303,7 @@ module Bus
 
     def go_to_account
       go_to_account_link.click
+      alert_accept if alert_present?
     end
 
     def get_list_capabilities
