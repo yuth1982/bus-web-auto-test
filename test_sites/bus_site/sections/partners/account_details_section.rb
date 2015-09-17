@@ -71,6 +71,7 @@ module Bus
     #
     # Returns nothing
     def set_receive_statement_status(status)
+      wait_until{ change_receive_statement_link.visible? }
       change_receive_statement_link.click
       receives_statement_input.select(status)
       submit_receives_statement_btn.click
@@ -96,6 +97,7 @@ module Bus
     #
     # @return [] nothing
     def edit_username(username)
+      wait_until{ change_username_link.visible? }
       change_username_link.click
       username_tb.type_text username
       submit_edit_username_btn.click
@@ -104,34 +106,40 @@ module Bus
     end
 
     def edit_display_name(displayname)
+      wait_until{ change_name_link.visible? }
       change_name_link.click
       display_name_tb.type_text displayname
       submit_edit_name_btn.click
     end
 
     def edit_newsletter(value)
+      wait_until{ change_newsletter_link.visible? }
       change_newsletter_link.click
       change_newsletter_select.select(value)
       change_newsletter_submit_btn.click
     end
 
     def edit_email_notification(value)
+      wait_until{ change_email_notification_link.visible? }
       change_email_notification_link.click
       change_email_notification_select.select(value)
       change_email_submit_btn.click
     end
 
     def get_newsletter_setting
+      wait_until{ newsletter_value_text.visible? }
       value = newsletter_value_text.text
       (value.include?('No'))? 'No':'Yes'
     end
 
     def get_email_notification_setting
-      value = newsletter_value_text.text
+      wait_until{ email_notification_value_text.visible? }
+      value = email_notification_value_text.text
       (value.include?('No'))? 'No':'Yes'
     end
 
     def reset_password (current_password, new_password)
+      wait_until{ change_password_link.visible? }
       change_password_link.click
       current_password_text.type_text(current_password)
       new_password_text.type_text(new_password)

@@ -273,6 +273,7 @@ module Bus
       rescue
         alert_accept if alert_present?
       end
+      alert_accept if alert_present?
     end
 
     # pro section
