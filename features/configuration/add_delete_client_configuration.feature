@@ -171,7 +171,7 @@ Feature: Add/Delete Client Configuration
     And I stop masquerading
     And I search and delete partner account by TC.489_partner
 
-  @TC.501 @tasks_p1 @integration @client_configuration @bus
+  @TC.501 @tasks_p1 @client_configuration @bus
   Scenario: 501 Delete client configuration
     When I add a new Reseller partner:
       | period |  reseller type  | reseller quota |  server plan |  net terms |
@@ -187,7 +187,7 @@ Feature: Add/Delete Client Configuration
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.129688 @tasks_p1 @integration @client_configuration @bus
+  @TC.129688 @tasks_p1 @client_configuration @bus
   Scenario: 129688 VMBU Client Configuration
     When I add a new MozyPro partner:
       | period | base plan  | server plan |
