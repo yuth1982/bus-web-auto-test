@@ -24,10 +24,10 @@ Feature: Email Alerts
       | subject line       | frequency | report modules                               | recipients                         |
       | email_alerts_test  | daily     | Backup summary;Users without recent backups  | <%=@partner.admin_info.full_name%> |
     Then I Send Now the email alert
-    And I wait for 60 seconds
+    And I wait for 10 seconds
     And I search emails by keywords:
-      | to               | content |
-      | @new_admin_email | email_alerts_test|
+      | to               | content       |
+      | @new_admin_email | Backup Summary|
     Then I should see 1 email(s)
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
@@ -61,8 +61,8 @@ Feature: Email Alerts
     Then I Send Now the email alert
     And I wait for 15 seconds
     And I search emails by keywords:
-      | to                | content             |
-      | <%=@admin.email%> | email_alerts_modify |
+      | to                | content                 |
+      | <%=@admin.email%> | Machines using over 90% |
     Then I should see 1 email(s)
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
@@ -87,8 +87,8 @@ Feature: Email Alerts
     Then I Send Now the email alert
     And I wait for 15 seconds
     And I search emails by keywords:
-      | to               | content |
-      | @new_admin_email | email_alerts_test|
+      | to               | content        |
+      | @new_admin_email | Backup Summary |
     Then I should see 1 email(s)
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
@@ -142,8 +142,8 @@ Feature: Email Alerts
     Then I Send Now the email alert
     And I wait for 15 seconds
     And I search emails by keywords:
-      | to                | content             |
-      | <%=@admin.email%> | email_alerts_test   |
+      | to                | content          |
+      | <%=@admin.email%> | Backup Summary   |
     Then I should see 1 email(s)
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
@@ -182,8 +182,8 @@ Feature: Email Alerts
     Then I Send Now the email alert
     And I wait for 15 seconds
     And I retrieve email content by keywords:
-      | to                | content                     |
-      | @new_admin_email  | alerts_test_storage_summary |
+      | to                | content         |
+      | @new_admin_email  | Storage Summary |
     Then I should see 1 email(s)
     Then I get text for user group (default user group) from email content
     Then The email content should include 30 GB/70 GB
@@ -224,8 +224,8 @@ Feature: Email Alerts
     Then I Send Now the email alert
     And I wait for 15 seconds
     And I retrieve email content by keywords:
-      | to                | content                    |
-      | @new_admin_email  | alerts_test_backup_summary |
+      | to                | content        |
+      | @new_admin_email  | Backup Summary |
     Then I should see 1 email(s)
     Then I get text for user group (default user group) from email content
     Then The email content should include Machine1_122441 (never)
@@ -369,8 +369,8 @@ Feature: Email Alerts
     Then I Send Now the email alert
     And I wait for 15 seconds
     And I retrieve email content by keywords:
-      | to                | content                     |
-      | @new_admin_email  | alerts_test_nearing_max_90% |
+      | to                | content                 |
+      | @new_admin_email  | Machines using over 90% |
     Then I should see 1 email(s)
     Then I get text for user group (default user group) from email content
     Then The email content should include Machine1_90 (90% quota used)
@@ -384,7 +384,7 @@ Feature: Email Alerts
     Then I wait for 15 seconds
     And I retrieve email content by keywords:
       | to                | content                     |
-      | @new_admin_email  | alerts_test_nearing_max_80% |
+      | @new_admin_email  | Machines using over 80% |
     Then I should see 1 email(s)
     Then I get text for user group (default user group) from email content
     Then The email content should include Machine1_90 (90% quota used)
@@ -449,7 +449,7 @@ Feature: Email Alerts
     Then I wait for 15 seconds
     And I retrieve email content by keywords:
       | to                | content                     |
-      | @new_admin_email  | alerts_test_nearing_max_70% |
+      | @new_admin_email  | Machines using over 70% |
     Then I should see 1 email(s)
     Then I get text for user group (default user group) from email content
     Then The email content should include Machine1_70 (70% quota used)
@@ -462,8 +462,8 @@ Feature: Email Alerts
     Then I Send Now the email alert
     And I wait for 15 seconds
     And I retrieve email content by keywords:
-      | to                | content                     |
-      | @new_admin_email  | alerts_test_nearing_max_60% |
+      | to                | content                 |
+      | @new_admin_email  | Machines using over 60% |
     Then I should see 1 email(s)
     Then I get text for user group NEW-Assigned-1 from email content
     Then The email content should include Machine1_60 (60% quota used)
@@ -489,7 +489,7 @@ Feature: Email Alerts
     And I wait for 15 seconds
     And I retrieve email content by keywords:
       | to                | content                     |
-      | @new_admin_email  | alerts_test_nearing_max_90% |
+      | @new_admin_email  | Machines using over 90% |
     Then I should see 1 email(s)
     Then The email content should include No machines
     Then I stop masquerading
@@ -513,8 +513,8 @@ Feature: Email Alerts
     Then I Send Now the email alert
     And I wait for 15 seconds
     And I retrieve email content by keywords:
-      | to                | content                     |
-      | @new_admin_email  | alerts_test_nearing_max_60% |
+      | to                | content                 |
+      | @new_admin_email  | Machines using over 60% |
     Then I should see 1 email(s)
     Then The email content should include No machines
     Then I stop masquerading
