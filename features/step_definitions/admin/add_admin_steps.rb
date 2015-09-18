@@ -210,7 +210,9 @@ When /^I save the admin email as existing admin email$/ do
 end
 
 And /^I get the admin id for admin (.+) from admin details$/ do |index|
-  @admins[index.to_i].id = @bus_site.admin_console_page.admin_details_section.admin_id
+  admin_id = @bus_site.admin_console_page.admin_details_section.admin_id
+  Log.debug "admin id for admin #{index} is #{admin_id}"
+  @admins[index.to_i].id = admin_id
 end
 
 And /^I get the action record from db table action_audits$/ do |table|

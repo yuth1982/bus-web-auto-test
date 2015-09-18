@@ -75,11 +75,15 @@ module Bus
       pw_tb.set(admin_password)
       submit_btn.click
       text = ""
-      if alert_present?
+      # for chrome, need to wait for alert present
+      begin
+        wait = Selenium::WebDriver::Wait.new ignore: Selenium::WebDriver::Error::NoAlertPresentError
+        wait.until { page.driver.browser.switch_to.alert }
         text = alert_text
         alert_accept
+      rescue
       end
-      return text
+      text
     end
 
     def delete_admin_cancel

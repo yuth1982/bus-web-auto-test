@@ -425,6 +425,7 @@ module Bus
     end
 
     def add_new_subpartner(partner)
+      Log.debug "sub partner name #{partner.company_name}"
       new_partner_name_tb.type_text(partner.company_name)
       partner.instance_variable_defined?('@pricing_plan') && pricing_plan_select.select(partner.pricing_plan) unless pricing_plan_select['type'] == 'hidden'
       partner.instance_variable_defined?('@root_role') && root_role_select.select(partner.root_role) unless root_role_select['type'] == 'hidden'

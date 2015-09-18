@@ -63,8 +63,8 @@ Feature: View edit admins details
       | email                 |
       | <%=@admins[1].email%> |
     And I get the admin id for admin 1 from admin details
-    And the partner has activated the <%=@admins[2].email%> account with default password
-    And the partner has activated the <%=@admins[0].email%> account with default password
+    And the partner has activated the @admins[2].email account with default password
+    And the partner has activated the @admins[0].email account with default password
     And I go to account
     And I act as admin by:
       | email                 |

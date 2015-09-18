@@ -808,6 +808,7 @@ Feature: login as admins
     And I add a new admin newly:
       | Name         | User Group           |
       | Admin_123407 | (default user group) |
+    And I wait for 15 seconds
     And the partner has activated the oem-admin account with Hipaa password
     And I go to account
     Then I login as @subpartner.company_name admin successfully

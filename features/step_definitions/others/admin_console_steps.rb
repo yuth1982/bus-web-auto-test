@@ -178,7 +178,10 @@ Given /^I verify Skeletor by visiting url$/ do
 end
 
 When /^the partner has activated the (.+) account with (default password|Hipaa password|reset password|Standard password)$/ do |type, password|
-
+  if !(type.match(/^@.+$/).nil?)
+    type =  '<%=' + type + '%>'
+    type.replace ERB.new(type).result(binding)
+  end
   if type == 'admin'
     step %{I retrieve email content by keywords:}, table(%{
       | to               | content                             |
