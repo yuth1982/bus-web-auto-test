@@ -38,6 +38,7 @@ module Bus
     end
 
     def add_remove_admins(action, admins_array)
+      wait_until{add_remove_admins_edit_role_link.visible?}
       add_remove_admins_edit_role_link.click
       admins_array.each do | admin |
         xpath_str = "//a[text()='#{admin[0]}']/../input"

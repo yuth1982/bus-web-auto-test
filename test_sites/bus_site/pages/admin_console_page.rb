@@ -311,6 +311,7 @@ module Bus
 
     def go_to_account
       go_to_account_link.click
+      start_using_mozy_btn.click if has_start_using_mozy_btn?
       alert_accept if alert_present?
     end
 
