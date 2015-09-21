@@ -380,6 +380,7 @@ Feature: login as admins
     When I search partner by:
       | email                        |
       | qa8+saml+test+admin@mozy.com |
+    Then I get current partner name
     And I view admin details by qa8+saml+test+admin@mozy.com
     And I change admin password to default password
     When I act as partner by:
@@ -730,6 +731,7 @@ Feature: login as admins
     When I search partner by:
       | email                        |
       | qa8+saml+test+admin@mozy.com |
+    Then I get current partner name
     And I view admin details by qa8+saml+test+admin@mozy.com
     And I change admin password to default password
     When I act as partner by:
