@@ -3,7 +3,7 @@ Feature: Add admins, delete admins
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.873 @bus @admin @smoke
+  @TC.873 @bus @admin @smoke @tasks_p1
   Scenario: 873 Add New Admin
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | root role  |
@@ -26,7 +26,7 @@ Feature: Add admins, delete admins
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.121840 @bus @admin
+  @TC.121840 @bus @admin @tasks_p1
   Scenario: 121840 Add LDAP admin in LDAP Push
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | root role  |
@@ -54,7 +54,7 @@ Feature: Add admins, delete admins
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.121911 @bus @admin
+  @TC.121911 @bus @admin @tasks_p1
   Scenario: 121911 Add root admin and active
     When I add a new MozyPro partner:
       | period | base plan | root role          |
@@ -67,7 +67,7 @@ Feature: Add admins, delete admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.121951 @bus @admin
+  @TC.121951 @bus @admin @tasks_p1
   Scenario: 121951 Add LDAP admin in LDAP Pull
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -102,7 +102,7 @@ Feature: Add admins, delete admins
 
   ##############################################################################################################
 
-  @TC.120206 @bus @admin
+  @TC.120206 @bus @admin @tasks_p1
   Scenario: 120206 Verify admin password when new created admin delete hipaa sub-admin
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms | security | root role     |
@@ -132,7 +132,7 @@ Feature: Add admins, delete admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.123728 @bus @admin
+  @TC.123728 @bus @admin @tasks_p1
   Scenario: 123728 Verify standard admin password when new created admin delete sub-admin
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | root role     |
@@ -162,7 +162,7 @@ Feature: Add admins, delete admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.121550 @bus @admin
+  @TC.121550 @bus @admin @tasks_p1
   Scenario: 121550 New JS popup window appears for delete admin
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | root role     |

@@ -9,7 +9,7 @@ Feature: add edit delete view assign roles
 
   ################################################################################
 
-  @TC.801 @TC.802 @TC.803 @TC.804 @bus @admin
+  @TC.801 @TC.802 @TC.803 @TC.804 @bus @admin @tasks_p1
   Scenario: 801 802 803 804 Create a new admin Role and edit admin Role capabilities, add/remove an admin from/to admin role
     When I add a new MozyPro partner:
       | period | base plan | create under   | country | cc number        |
@@ -55,7 +55,7 @@ Feature: add edit delete view assign roles
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.805 @bus @admin
+  @TC.805 @bus @admin @tasks_p1
   Scenario: 805 Export the Admin Types list to CSV
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  |
@@ -83,7 +83,7 @@ Feature: add edit delete view assign roles
 
   ################################################################################
 
-  @TC.2850 @2851 @2854 @2865 @bus @admin
+  @TC.2850 @TC.2851 @TC.2854 @TC.2865 @bus @admin @tasks_p1
   Scenario: 2850 2851 2854 2865 Create and edit a new role - partner admin, Click the search button with nothing in search field
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | net terms |
@@ -170,7 +170,7 @@ Feature: add edit delete view assign roles
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.2866 @bus @admin
+  @TC.2866 @bus @admin @tasks_p1
   Scenario: 2866 Create a new role - non partner admin
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  | net terms |

@@ -3,7 +3,7 @@ Feature: Search List admins
   Background:
    Given I log in bus admin console as administrator
 
-  @TC.872 @bus @admin
+  @TC.872 @bus @admin @tasks_p1
   Scenario: 872 List the admins on a partner
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  |
@@ -28,7 +28,7 @@ Feature: Search List admins
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.122120 @bus @admin
+  @TC.122120 @bus @admin @tasks_p1
   Scenario: 122120 Edit an admins user group
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | root role     |
@@ -63,7 +63,7 @@ Feature: Search List admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.123341 @bus @admin
+  @TC.123341 @bus @admin @tasks_p1
   Scenario: 123341 Activate a new HIPAA sub-admin via email
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  | security |
@@ -94,7 +94,7 @@ Feature: Search List admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.123354 @bus @admin
+  @TC.123354 @bus @admin @tasks_p1
   Scenario: 123354 Activate a new partner sub-admin via email
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  |
@@ -125,7 +125,7 @@ Feature: Search List admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.123356 @bus @admin
+  @TC.123356 @bus @admin @tasks_p1
   Scenario: 123356:Activate a new partner root admin via partners activate link
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -158,7 +158,7 @@ Feature: Search List admins
     And I search and delete partner account by newly created subpartner company name
     And I search and delete partner account by newly created partner company name
 
-  @TC.123861 @bus @admin
+  @TC.123861 @bus @admin @tasks_p1
   Scenario: 123861 Activate a new standard sub-admin in admin details
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | root role     |

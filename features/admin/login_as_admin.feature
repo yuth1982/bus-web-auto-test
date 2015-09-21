@@ -376,7 +376,7 @@ Feature: login as admins
     And I search and delete partner account by newly created partner company name
 
   @TC.121921 @bus @admin @tasks_p1
-  Scenario: 121921 Root admin can login BUS Root admin can login BUS using https://subdomain.mozypro.com/login/admin?authtype=mozy   When I add a new MozyEnterprise partner:
+  Scenario: 121921 Root admin can login BUS Root admin can login BUS using https://subdomain.mozypro.com/login/admin?authtype=mozy
     When I search partner by:
       | email                        |
       | qa8+saml+test+admin@mozy.com |
@@ -727,7 +727,7 @@ Feature: login as admins
     And I search and delete partner account by newly created partner company name
 
   @TC.121924 @bus @admin @tasks_p1
-  Scenario: 121924 Push Root admin can login BUS Root admin can login BUS using https://subdomain.mozypro.com/login/admin?authtype=mozy   When I add a new MozyEnterprise partner:
+  Scenario: 121924 Push Root admin can login BUS Root admin can login BUS using https://subdomain.mozypro.com/login/admin?authtype=mozy
     When I search partner by:
       | email                        |
       | qa8+saml+test+admin@mozy.com |

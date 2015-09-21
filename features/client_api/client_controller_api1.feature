@@ -3,7 +3,7 @@ Feature: 97636 Client Controller API
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.20948 @bus @client_api @smoke
+  @TC.20948 @bus @client_api @smoke @tasks_p1
   Scenario: 20948 machine_get_info when 0<m.used_quota<u.total_quota
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -33,7 +33,7 @@ Feature: 97636 Client Controller API
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.20949 @bus @client_api
+  @TC.20949 @bus @client_api @tasks_p1
   Scenario: 20949 machine_get_info when m1.used_quota+m2.used_quota=0
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -62,7 +62,7 @@ Feature: 97636 Client Controller API
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.20950 @bus @client_api
+  @TC.20950 @bus @client_api @tasks_p1
   Scenario: 20950 machine_get_info when m1.used_quota+m2.used_quota<u.total_quota
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -99,7 +99,7 @@ Feature: 97636 Client Controller API
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.20951 @bus @client_api
+  @TC.20951 @bus @client_api @tasks_p1
   Scenario: 20951 machine_get_info when m1.used_quota+m2.used_quota=u.total_quota
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -136,7 +136,7 @@ Feature: 97636 Client Controller API
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.20952 @bus @client_api
+  @TC.20952 @bus @client_api @tasks_p1
   Scenario: 20952 machine_get_info when m1.used_quota+m2.used_quota>u.total_quota
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -171,7 +171,7 @@ Feature: 97636 Client Controller API
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.20953 @bus @client_api
+  @TC.20953 @bus @client_api @tasks_p1
   Scenario: 20953 machine_get_info when m1.share_withmax+m2.used_quota<u.total_quota&&m1.used_quota<m1.shared_with_max
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -212,7 +212,7 @@ Feature: 97636 Client Controller API
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.20954 @bus @client_api
+  @TC.20954 @bus @client_api @tasks_p1
   Scenario: 20954 machine_get_info when m1.used_quota+m2.used_quota+m3.used_quota<u.total_quota
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -256,7 +256,7 @@ Feature: 97636 Client Controller API
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.20955 @bus @client_api
+  @TC.20955 @bus @client_api @tasks_p1
   Scenario: 20955 machine_get_info when m.used_quota>u.total_quota
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -283,7 +283,7 @@ Feature: 97636 Client Controller API
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.20956 @bus @client_api
+  @TC.20956 @bus @client_api @tasks_p1
   Scenario: 20956 machine_get_info when m1.share_withmax+m2.used_quota<u.total_quota&&m1.used_quota=m1.shared_with_max
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -324,7 +324,7 @@ Feature: 97636 Client Controller API
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.20957 @bus @client_api
+  @TC.20957 @bus @client_api @tasks_p1
   Scenario: 20957 machine_get_info when m1.share_withmax+m2.used_quota<u.total_quota&&m1.used_quota>m1.shared_with_max
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -365,7 +365,7 @@ Feature: 97636 Client Controller API
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.20958 @bus @client_api
+  @TC.20958 @bus @client_api @tasks_p1
   Scenario: 20958 machine_get_info when m1.share_withmax+m2.used_quota>u.total_quota&&m1.used_quota>m1.shared_with_max
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -407,7 +407,7 @@ Feature: 97636 Client Controller API
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.21004 @bus @client_api
+  @TC.21004 @bus @client_api @tasks_p1
   Scenario: 21004 machine_get_info when 0<m.used_quota<u.total_quota by machineid
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -437,7 +437,7 @@ Feature: 97636 Client Controller API
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.21005 @bus @client_api
+  @TC.21005 @bus @client_api @tasks_p1
   Scenario: 21005 machine_get_info when 0<m.used_quota<u.total_quota by machine_id and other user's authentication
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -475,7 +475,7 @@ Feature: 97636 Client Controller API
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.21049 @bus @client_api
+  @TC.21049 @bus @client_api @tasks_p1
   Scenario: 21049 machine_get_info when 2 users in the user group
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -535,7 +535,7 @@ Feature: 97636 Client Controller API
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.21212 @bus @client_api @smoke
+  @TC.21212 @bus @client_api @smoke @tasks_p1
   Scenario: 21212 [Itemized]GET /client/user/resources API for desktop user with stash and machines
     When I add a new MozyEnterprise partner:
       | period | users | server plan |
@@ -570,7 +570,7 @@ Feature: 97636 Client Controller API
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.21213 @bus @client_api
+  @TC.21213 @bus @client_api @tasks_p1
   Scenario: 21213 [Itemized]GET /client/user/resources API for server user with deleted machine
     When I add a new MozyEnterprise partner:
       | period | users | server plan |
@@ -600,7 +600,7 @@ Feature: 97636 Client Controller API
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.21214 @bus @client_api
+  @TC.21214 @bus @client_api @tasks_p1
   Scenario: 21214 [Itemized]GET /client/user/resources API with invalid authorization
     When I add a new MozyEnterprise partner:
       | period | users | server plan |
@@ -627,7 +627,7 @@ Feature: 97636 Client Controller API
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.21215 @bus @client_api
+  @TC.21215 @bus @client_api @tasks_p1
   Scenario: 21215 [Bundled]GET /client/user/resources API for desktop user with stash and machines
     When I add a new MozyPro partner:
       | period | base plan | root role               |
@@ -662,7 +662,7 @@ Feature: 97636 Client Controller API
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.21216 @bus @client_api
+  @TC.21216 @bus @client_api @tasks_p1
   Scenario: 21216 [Bundled]GET /client/user/resources API for server user with deleted machine
     When I add a new MozyPro partner:
       | period | base plan | server plan |
@@ -692,7 +692,7 @@ Feature: 97636 Client Controller API
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.21217 @bus @client_api
+  @TC.21217 @bus @client_api @tasks_p1
   Scenario: 21217 [Bunlded]GET /client/user/resources API with invalid authorization
     When I add a new MozyPro partner:
       | period | base plan | country        | net terms |

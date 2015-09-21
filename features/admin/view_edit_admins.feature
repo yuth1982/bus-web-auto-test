@@ -8,7 +8,7 @@ Feature: View edit admins details
   # Change Password Standard Hipaa
 
   ################################################################################
-  @TC.12435 @bus @admin
+  @TC.12435 @bus @admin @tasks_p1
   Scenario: 12435 Standard Login admin change sub-admins password successfully
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  |
@@ -39,7 +39,7 @@ Feature: View edit admins details
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.12437 @bus @admin
+  @TC.12437 @bus @admin @tasks_p1
   Scenario: 12437:Masquerade admin change sub-admins password successfully
     And I navigate to Add New Admin section from bus admin console page
     And I add a new admin newly:
@@ -89,7 +89,7 @@ Feature: View edit admins details
       | email                 |
       | <%=@admins[0].email%> |
 
-  @TC.12443 @bus @admin
+  @TC.12443 @bus @admin @tasks_p1
   Scenario: 12443 Login Admin doesnt change its own password successfully
     And I navigate to Add New Admin section from bus admin console page
     And I add a new admin newly:
@@ -118,7 +118,7 @@ Feature: View edit admins details
       | email                 |
       | <%=@admins[0].email%> |
 
-  @TC.12462 @bus @admin
+  @TC.12462 @bus @admin @tasks_p1
   Scenario: 12462:The last Masquerade admin change sub-admins password successfully
     And I navigate to Add New Admin section from bus admin console page
     And I add a new admin newly:
@@ -182,7 +182,7 @@ Feature: View edit admins details
       | email                  |
       | <%=@admins[0].email%>  |
 
-  @TC.123367 @bus @admin
+  @TC.123367 @bus @admin @tasks_p1
   Scenario: 123367 Hippa Login admin change sub-admins password successfully
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  | net terms | security |
@@ -213,7 +213,7 @@ Feature: View edit admins details
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.123371 @bus @admin
+  @TC.123371 @bus @admin @tasks_p1
   Scenario: 123371 Hipaa Masquerade admin change sub-admins password successfully
     When I add a new MozyPro partner:
       | period | base plan | net terms | security |
@@ -244,7 +244,7 @@ Feature: View edit admins details
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.123373 @bus @admin
+  @TC.123373 @bus @admin @tasks_p1
   Scenario: 123373 Hipaa The last Masquerade admin can change sub-admins password successfully
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  | security |
@@ -291,7 +291,7 @@ Feature: View edit admins details
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.123374 @bus @admin
+  @TC.123374 @bus @admin @tasks_p1
   Scenario: 123374 Hipaa Masquerade Admin didnt change its own password successfully
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  | security | net terms |
@@ -331,7 +331,7 @@ Feature: View edit admins details
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.123389 @bus @admin
+  @TC.123389 @bus @admin @tasks_p1
   Scenario: 123389 Hipaa Masquerade Admin can change its own password successfully
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  | security |
@@ -363,7 +363,7 @@ Feature: View edit admins details
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.123390 @bus @admin
+  @TC.123390 @bus @admin @tasks_p1
   Scenario: 123390 Hipaa The last Masquerade Admin can change its own password successfully
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | root role     | security |
@@ -415,7 +415,7 @@ Feature: View edit admins details
 
   ##############################################################################################################
 
-  @TC.1989 @bus @admin
+  @TC.1989 @bus @admin @tasks_p1
   Scenario: 1989 Edit an admins name
     When I add a new MozyPro partner:
       | period | base plan | country | cc number         |
@@ -428,7 +428,7 @@ Feature: View edit admins details
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.1990 @bus @admin
+  @TC.1990 @bus @admin @tasks_p1
   Scenario: 1990 Edit an admins email address
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -447,7 +447,7 @@ Feature: View edit admins details
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.1991 @bus @admin
+  @TC.1991 @bus @admin @tasks_p1
   Scenario: 1991 Edit an admins password
     When I add a new MozyEnterprise partner:
       | period | users | server plan |
@@ -470,7 +470,7 @@ Feature: View edit admins details
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.1992 @bus @admin
+  @TC.1992 @bus @admin @tasks_p1
   Scenario: 1992 Edit an admins option to receive the newsletter
     When I add a new MozyPro partner:
       | period | base plan | security | net terms |
@@ -484,7 +484,7 @@ Feature: View edit admins details
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.1993 @bus @admin
+  @TC.1993 @bus @admin @tasks_p1
   Scenario: 1993 Edit an admins option to receive email notifications
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  |
