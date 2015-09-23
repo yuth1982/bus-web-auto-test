@@ -171,6 +171,69 @@ Feature: As a Mozy Admin, I should be able to add new mac version and manage the
     When I wait for client fully downloaded
     Then the downloaded client should be same as the uploaded file FakeMacClient.dmg
 
+  @TC.126251 @bus @regression
+  Scenario: 126251 The most appropriate upgrade rules take effect
+    When I act as partner by:
+      | name    | including sub-partners |
+      | MozyPro | no                     |
+    And I navigate to Upgrade Rules section from bus admin console page
+    And I delete rule for version MacTestVersion 10.10.10.10 if it exists
+
+    When I search partner by:
+      | name                                                    | including sub-partners |
+      | Internal Mozy - MozyPro with edit user group capability | yes                    |
+    And I view partner details by Internal Mozy - MozyPro with edit user group capability
+    And I record the MozyPro partner name Internal Mozy - MozyPro with edit user group capability and admin name Admin Automation
+    And I get the admin id from partner details
+    When I act as newly created partner
+    And I navigate to Edit Client Version section from bus admin console page
+    And I delete client version rule for MacTestVersion 10.10.10.9 if it exists
+    And I delete client version rule for MacTestVersion 10.10.10.10 if it exists
+    And I delete client version rule for MacTestVersion 10.10.10.11 if it exists
+
+    And I add a new rule in Edit Client Version:
+      | Update To                  |  User Group          | Current Version >= | Required |
+      | MacTestVersion 10.10.10.11 |  All User Groups     | 10.10.10.8         | No       |
+    And I add a new rule in Edit Client Version:
+      | Update To                  |  User Group          | Required |
+      | MacTestVersion 10.10.10.10 | (default user group) | No       |
+    And I add a new rule in Edit Client Version:
+      | Update To                 |  User Group          | Current Version >= | Required |
+      | MacTestVersion 10.10.10.9 | (default user group) | 10.10.10.8         | No       |
+    Then Client Version Rules should include rule:
+      | Update To                | User Group           | Current Version     | OS  | Required | Install Command | Options |
+      | Windows Sync 10.10.10.11 | All User Groups      | 10.10.10.8 or later | Any | No       |                 | Remove  |
+      | Windows Sync 10.10.10.10 | (default user group) | Any version         | Any | No       |                 | Remove  |
+      | Windows Sync 10.10.10.9  | (default user group) | 10.10.10.8 or later | Any | No       |                 | Remove  |
+
+    When I search partner by:
+      | name                                                    | including sub-partners |
+      | Internal Mozy - MozyPro with edit user group capability | yes                    |
+    And I view partner details by Internal Mozy - MozyPro with edit user group capability
+    And I record the MozyPro partner name Internal Mozy - MozyPro with edit user group capability and admin name Admin Automation
+    And I get the admin id from partner details
+    When I act as newly created partner
+
+    When I add new user(s):
+      | name           | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | TC.126251.User | (default user group) | Desktop      | 10            | 1       | yes          |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords    |
+      | @user_email |
+    And I view user details by TC.126251.User
+    And I got client config for the user machine:
+      | user_name                   | machine    | platform | codename | version    | arch   |
+      | <%=@new_users.first.email%> | plop000001 | mac      | mozypro  | 10.10.10.8 | x86_64 |
+    And client config should contains:
+      | update-url                               |
+      | /downloads/mozypro-10_10_10_10-XXXXX.dmg |
+    And I delete user
+    And I navigate to Edit Client Version section from bus admin console page
+    And I delete client version rule for MacTestVersion 10.10.10.9 if it exists
+    And I delete client version rule for MacTestVersion 10.10.10.10 if it exists
+    And I delete client version rule for MacTestVersion 10.10.10.11 if it exists
+
   @clean_up
   Scenario: clean up all mac test versions and rules
     When I navigate to List Versions section from bus admin console page
