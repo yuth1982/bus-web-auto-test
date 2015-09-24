@@ -144,7 +144,7 @@ Feature: login as admins
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I login the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
-    And I sign in with user name <%=@admin.name%> and password default password
+    And I sign in with user name @admin.name and password default password
     Then I will see ldap admin log in error message The user name or password is incorrect.
     And I navigate to bus admin console login page
     And I log in bus admin console with user name @admin.email and password default password
@@ -197,9 +197,9 @@ Feature: login as admins
       | <%=@admin.name%> | <%=@admin.email%> |
     And I start a new session
     When I login the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
-    And I sign in with user name <%=@admin.name%> and password wrongpass12
+    And I sign in with user name @admin.name and password wrongpass12
     Then I will see ldap admin log in error message The user name or password is incorrect.
-    And I sign in with user name <%=@admin.name%> and password AD user default password
+    And I sign in with user name @admin.name and password AD user default password
     Then I login as @admin.name admin successfully
     And I log out bus admin console
     And I navigate to bus admin console login page
@@ -488,7 +488,7 @@ Feature: login as admins
     Then Authentication Policy has been updated successfully
     And I start a new session
     When I login the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
-    And I sign in with user name <%=@admin.name%> and password default password
+    And I sign in with user name @admin.name and password default password
     Then I will see ldap admin log in error message The user name or password is incorrect.
     And I navigate to bus admin console login page
     And I log in bus admin console with user name @admin.email and password default password
@@ -544,9 +544,9 @@ Feature: login as admins
       | <%=@admin.name%> | <%=@admin.email%> |
     And I start a new session
     When I login the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
-    And I sign in with user name <%=@admin.name%> and password wrongpass12
+    And I sign in with user name @admin.name and password wrongpass12
     Then I will see ldap admin log in error message The user name or password is incorrect.
-    And I sign in with user name <%=@admin.name%> and password AD user default password
+    And I sign in with user name @admin.name and password AD user default password
     Then I login as @admin.name admin successfully
     And I log out bus admin console
     And I navigate to bus admin console login page

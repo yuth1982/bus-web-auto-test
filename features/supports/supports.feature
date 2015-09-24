@@ -89,7 +89,7 @@ Feature: Supports on BUS
       | user name        | mail              |
       | <%=@admin.name%> | <%=@admin.email%> |
     When I login the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
-    And I sign in with user name <%=@admin.name%> and password AD user default password
+    And I sign in with user name @admin.name and password AD user default password
     Then I login as @admin.name admin successfully
     When I navigate to Contact section from bus admin console page
     And I click Community on contact section
@@ -152,7 +152,7 @@ Feature: Supports on BUS
       | <%=@admin.name%> | <%=@admin.email%> |
     When I start a new session
     And I login the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
-    And I sign in with user name <%=@admin.name%> and password AD user default password
+    And I sign in with user name @admin.name and password AD user default password
     Then I login as @admin.name admin successfully
     When I navigate to Contact section from bus admin console page
     And I click Community on contact section

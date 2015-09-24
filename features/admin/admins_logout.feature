@@ -32,7 +32,7 @@ Feature: admins log out
       | <%=@admin.name%> | <%=@admin.email%> |
     And I start a new session
     When I login the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
-    And I sign in with user name <%=@admin.name%> and password AD user default password
+    And I sign in with user name @admin.name and password AD user default password
     Then I login as @admin.name admin successfully
     And I log out bus admin console
     Then ldap admin logout url is https://CONFIGS['fedid']['subdomain'].mozypro.com/login/logout

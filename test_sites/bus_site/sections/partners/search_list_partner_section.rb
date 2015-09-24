@@ -11,6 +11,7 @@ module Bus
     element(:full_search_cb, id: 'full_search')
     element(:clear_search_link, xpath: "//a[text()='Clear search']")
     element(:search_results_table, css: 'div#partner-list-content table.table-view')
+    element(:searched_partner_name_txt, xpath: "//table[@class='table-view']//a[contains(@href,'/partner/show')]")
 
     # Public: Search partner
     #
@@ -52,6 +53,11 @@ module Bus
     def search_results_hashes
       sleep 3 #sometimes automation is still too fast which causes StaledElementError
       search_results_table.rows_text.map{ |row| Hash[*search_results_table.headers_text.zip(row).flatten] }
+    end
+
+    # get partner name from search result when serach by email
+    def get_partner_name
+    searched_partner_name_txt.text
     end
 
     # Public: Search results table header row text
