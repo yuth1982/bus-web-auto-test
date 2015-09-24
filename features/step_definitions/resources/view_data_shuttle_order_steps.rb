@@ -12,11 +12,31 @@ Then /^I search order in view data shuttle orders section by (.+)$/ do |keywords
   @order_search_table = @bus_site.admin_console_page.view_data_shuttle_orders_section.order_results_hashes[0]
 end
 
-
 Then /^order search results in data shuttle orders section should be:$/ do |orders_table|
   actual = @order_search_table
   expected = orders_table.hashes[0]
-  expected.keys.each{|key| actual[key].should == expected[key]}
+  expected.keys.each{|key|
+    expected[key].replace ERB.new(expected[key]).result(binding) if key == 'Pro Partner Name'
+    actual[key].should == expected[key]
+  }
+end
+
+Then /^data shuttle order details info should be$/ do |orders_table|
+  actual = @bus_site.admin_console_page.order_details_section.order_details_hash
+  @order.licensee_key[0]
+  expected_keys = @order.license_key
+  expected = orders_table.hashes
+  expected.each_with_index { |value, index |
+    value.keys.each{|key|
+      if key == 'License Key'
+        if !value[key].match(/^@order\.licensee_key\[\d+\]$/).nil?
+           n = value[key].match(/\d+/)[0]
+           value[key]= expected_keys[n]
+        end
+      end
+      actual[index][key].should == value[key]
+    }
+  }
 end
 
 Then /^the data shuttle order details should contain valid inbound number$/ do
@@ -41,3 +61,8 @@ end
 Then /^Add drive to data shuttle order message should include (.+)$/ do |messages|
   @bus_site.admin_console_page.order_details_section.messages.include?(messages).should be_true
 end
+
+And /^I should not query resources orders record from DB for the data shuttle order$/ do
+  DBHelper.get_model_audits(@seed_id.to_i).should == "0"
+end
+

@@ -528,3 +528,7 @@ end
 And /^I click show link of billing history section$/ do
   @bus_site.admin_console_page.partner_details_section.show_billing_history
 end
+
+When /I click the latest date link to view the invoice$/ do
+  @bus_site.admin_console_page.partner_details_section.click_invoice_link
+end

@@ -48,7 +48,7 @@ end
 #
 # | key type  | power adapter   | os  | quota | assign to | discount | win drivers | mac drivers | ship driver |
 
-When /^I order data shuttle for (.+)$/ do |company_name, order_table|
+When /^I (order|fill in) data shuttle for (.+)$/ do |type, company_name, order_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['order_data_shuttle'])
   @bus_site.admin_console_page.order_data_shuttle_section.search_partner(company_name)
   @bus_site.admin_console_page.order_data_shuttle_section.view_order_detail(company_name)
@@ -74,8 +74,21 @@ When /^I order data shuttle for (.+)$/ do |company_name, order_table|
   @order.num_mac_drivers = cell['mac drivers']
   @order.ship_driver = cell['ship driver']
   @order.drive_type = cell['drive type']
-  @bus_site.admin_console_page.process_order_section.create_order(@order)
- end
+  save = (type == 'order'? true : false)
+  @bus_site.admin_console_page.process_order_section.create_order(@order, save)
+end
+
+And /^I input discount percentage value (\d+)$/ do |value|
+  @bus_site.admin_console_page.process_order_section.input_discount(value)
+end
+
+When /^I click finish button$/ do
+  @bus_site.admin_console_page.process_order_section.finish_data_shuttle_order
+end
+
+When /^I refresh process data shuttle section$/ do
+  @bus_site.admin_console_page.process_order_section.refresh_bus_section
+end
 
 Then /^Verify shipping address table should be:$/ do |address_table|
   @bus_site.admin_console_page.process_order_section.address_desc_columns.should == address_table.rows.map{ |row| row.first}
@@ -105,7 +118,7 @@ Then /^Data shuttle order should be created$/ do
 end
 
 Then /^Data shuttle order summary should be:$/ do |summary_table|
-  @bus_site.admin_console_page.process_order_section.order_summary_table_rows.should == summary_table.rows
+  (@bus_site.admin_console_page.process_order_section.order_summary_table_rows.sort).should == (summary_table.rows).sort
 end
 
 When /^I cancel the latest data shuttle order for (.+)$/ do |account_name|

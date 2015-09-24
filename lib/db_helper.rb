@@ -448,6 +448,18 @@ module DBHelper
     end
   end
 
+  def get_model_audits(seed_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "SELECT count(*) from pro_resource_orders where seed_device_order_id = #{seed_id};"
+      c = conn.exec(sql)
+      c.values[0][0]
+     rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
 
 end
 

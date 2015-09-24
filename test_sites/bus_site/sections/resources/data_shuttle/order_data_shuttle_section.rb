@@ -41,15 +41,18 @@ module Bus
       wait_until_bus_section_load
     end
 
-    # Public: View partner detail by click partner's company name
+    # Public: View partner detail by click partner's company name or email when order data shuttle
     #
     # Examples
     #
     #  view_order_detail("Lego Company")
     #
     # Returns Nothing
-    def view_order_detail(company_name)
-      find_link(company_name).click
+    def view_order_detail(name)
+      xpath_string = "//table//td/a[text()='#{name}']"
+      xpath_string = "//table//td[text()='#{name}']/../td/a" if locate(:xpath, xpath_string).nil?
+      find(:xpath, xpath_string).click
+      wait_until_bus_section_load
     end
 
     def clear_search

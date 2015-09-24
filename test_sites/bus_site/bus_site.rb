@@ -66,5 +66,9 @@ class BusSite
   def user_login_bus_page
     Bus::UserLoginBusPage.new
   end
+
+  def partner_invoice_page
+    Bus::PartnerInvoicePage.new
+  end
 end
 

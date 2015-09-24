@@ -28,6 +28,7 @@ module Bus
     element(:available_keys_table, css: "div.box table.table-view")
     element(:add_new_key, xpath: "//a[text()='Add New Key']")
     element(:drive_type_select, id: 'data_shuttle_sku_type')
+    element(:discount_input,xpath: "//input[contains(@id,'discount')]")
 
     # Summary section
     element(:num_win_drivers_tb, id: "seed_device_order_win_drive_num")
@@ -51,7 +52,7 @@ module Bus
     #    @bus_admin_console_page.process_order_section.create_order(order_object)
     #
     # Return nothing
-    def create_order(order)
+    def create_order(order, save = true)
       wait_until_bus_section_load
       # fill shipping address section
 
@@ -103,19 +104,32 @@ module Bus
 
       unless order.adapter_type.nil?
         # fill create order section
-        case order.key_from
-          when "available"
-            # Add key from available keys
-            add_available_key.click
-          when "new"
-            add_new_key.click
-          else
-            raise "Please order key from either available keys or add a new key"
+        if order.key_from == "available"
+          # Add key from available keys
+          add_available_key.click
+        elsif !(order.key_from.match(/^\d* available$/).nil?)
+          # Add certain number keys on current page
+          number = order.key_from.match(/\d+/)[0].to_i
+          number.times {
+            find(:xpath,"//div[@class='box']//table//tr[1]//a[text()='Add']").click
+            wait_until_bus_section_load
+          }
+        elsif order.key_from == "new"
+          add_new_key.click
+        else
+           raise "Please order key from either available keys or add a new key"
         end
         wait_until_bus_section_load
 
         os_tb.select(order.os) unless order.os.nil?
-        order_quota_tb.type_text(order.quota) unless order.quota.nil?
+        # update quota for more than one key records
+        if !order.quota.nil?
+          quota_arr = order.quota.split("\;")
+          quota_arr.each_with_index do |value, index|
+            order_quota_tb(index).type_text(value)
+          end
+        end
+        order.license_key = get_added_keys
         order_assign_to_tb.type_text(order.assign_to) unless order.assign_to.nil?
         drive_type_select.select(order.drive_type) unless order.drive_type.nil?
 
@@ -135,10 +149,25 @@ module Bus
           num_win_drivers_tb.type_text(order.num_win_drivers) unless order.num_win_drivers.nil?
           num_mac_drivers_tb.type_text(order.num_mac_drivers) unless order.num_mac_drivers.nil?
           is_ship_driver_cb.check unless order.ship_driver.nil?
-          submit_order_btn.click
+          if save
+            submit_order_btn.click
+          end
         end
         wait_until_bus_section_load
       end
+    end
+
+    def input_discount(value)
+      discount_input.native.clear
+      discount_input.native.send_keys(value)
+      discount_input.native.send_keys :tab
+      # wait to re-calculate total price
+      sleep 1
+    end
+
+    def finish_data_shuttle_order
+      submit_order_btn.click
+      wait_until_bus_section_load
     end
 
     # Public: Messages for process order actions
@@ -161,6 +190,7 @@ module Bus
     #
     # Returns order summary table rows text
     def order_summary_table_rows
+      wait_until_bus_section_load
       order_summary_table.rows_text
     end
 
@@ -194,8 +224,17 @@ module Bus
       order_keys_table.rows.first[2].find("select")
     end
 
-    def order_quota_tb
-      order_keys_table.rows.first[4].find("input")
+    def order_quota_tb(index = 0)
+      (order_keys_table.rows)[index][4].find("input")
+    end
+
+    def get_added_keys
+      keys_array = []
+      order_keys_table.rows.each_with_index { |value,index |
+        value[3].text
+        keys_array << (order_keys_table.rows)[index][3].text
+      }
+      keys_array
     end
 
     def order_assign_to_tb

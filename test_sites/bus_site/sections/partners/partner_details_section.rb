@@ -385,6 +385,12 @@ module Bus
       show_billing_history_link.click
     end
 
+    def click_invoice_link
+      show_billing_history
+      wait_until { !billing_history_table.hashes.first.values.first.nil? }
+      (billing_history_table.rows.first[0].find("a")).click
+    end
+
     # Public: Click act as partner link
     #
     # Example
