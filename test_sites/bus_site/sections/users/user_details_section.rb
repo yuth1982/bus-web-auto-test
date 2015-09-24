@@ -95,6 +95,9 @@ module Bus
     element(:refund_submit_input, xpath: "//span[starts-with(@id,'refund-transaction-')]/form/input[@value='Submit']")
     element(:refunded_amount_td, xpath: "//div[@class='show-details']//table[@class='table-view']//tr[1]//td[4]")
 
+    elements(:all_billing_info, xpath: "//td[starts-with[text(),'Cybersource']/../../tr")
+
+
 
     # Public: User details storage, devices, storage limit hash
     #
@@ -741,6 +744,7 @@ module Bus
       mozyhome_user_status_td.text
     end
 
+<<<<<<< HEAD
     def refund_user(amount)
       refund_a.click
       before_amounts = refund_amount_input[:value]
@@ -753,6 +757,9 @@ module Bus
 
     def get_refunded_amount
       refunded_amount_td.text
+    end
+    def get_user_billed_info
+      all_billing_info.size
     end
 
     private

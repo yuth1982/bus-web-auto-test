@@ -617,3 +617,22 @@ Feature: User Details
     Then I refund the user with all amount
     Then I check the refund amount should be correct
     And I delete user
+
+  @TC.22264 @bus @tasks_p1
+  Scenario: Mozy-22264:verify that users can update payment info
+    When I am at dom selection point:
+    And I add a phoenix Home user:
+      | period | base plan | country       |
+      | 1      | 50 GB     | United States |
+    Then the user is successfully added.
+    When I log in bus admin console as administrator
+    And I search user by:
+      | keywords       |
+      | @mh_user_email |
+    And I view user details by newly created MozyHome username
+    Then I get the user id
+    Then I force current MozyHome account to billed
+    And I wait for 5 seconds
+    Then The current user should be billed
+    Then I delete user
+
