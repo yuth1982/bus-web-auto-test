@@ -157,15 +157,21 @@ end
 When /^I use key activation to activate devices$/  do |table|
   # table is a | Machine1     | Desktop      |
   attr = table.hashes.first
-  user_email = @current_user[:email]
+  user_email = attr['email']||=@current_user[:email]
   partner_name = (@partner && @partner.company_info.name) || @current_partner[:name]
   @current_partner[:id] ||= @bus_site.admin_console_page.partner_id
 
   @new_clients =[]
   @clients =[] if @clients.nil?
-  client = Client.new(@key, user_email, @user_password, partner_name, @partner.partner_info.type, attr['machine_name'])
+  type = (@partner && @partner.partner_info.type)||@product_name
+  client = Client.new(@key, user_email, @user_password, partner_name, type, attr['machine_name'])
   @new_clients << client
   @clients << client
 end
+
+When /^Activate key response should be (.+)$/  do |msg|
+  @clients[0].resp.should include(msg)
+end
+
 
 

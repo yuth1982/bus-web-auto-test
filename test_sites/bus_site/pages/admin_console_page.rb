@@ -60,6 +60,9 @@ module Bus
     section(:resource_summary_section, ResourceSummarySection, id: 'storage-summary')
     section(:download_client_section, DownloadClientSection, id: "resource-downloads")
 
+    # assign keys
+    section(:assign_keys_section, AssignKeysSection, id: "resource-available_key_list-content")
+
     # Data shuttle section
     section(:data_shuttle_status_section, DataShuttleStatusSection, id: 'resource-data_shuttle_status')
     section(:order_data_shuttle_section, OrderDataShuttleSection, id: 'resource-choose_pro_partner_for_new_seed')

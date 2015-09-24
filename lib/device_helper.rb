@@ -3,7 +3,7 @@ require 'base64'
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 module Activation
   class Client
-    attr_accessor :username, :password, :license_key, :machine_hash, :machine_alias
+    attr_accessor :username, :password, :license_key, :machine_hash, :machine_alias, :resp
     def initialize(license_key, username, password, partner_name, company_type, machine_name = nil)
       @license_key = license_key
       @username = username
@@ -16,7 +16,7 @@ module Activation
       @machine_alias = machine_name || "AUTOTEST"
       @codename = "mozypro"
       get_codename(company_type)
-      activate_key
+      @resp = activate_key
     end
 
     def activate_key
@@ -25,21 +25,11 @@ module Activation
       puts @mac
       puts @username
       puts @license_key
-      @passwordhash = Digest::SHA1.hexdigest(@password)
+      @passwordhash = @password
       puts @passwordhash
       puts @machine_hash
-      @username = CGI::escape (@username)
-      string = "/client/activate_product_key"\
-    +"?key="+@license_key\
-    +"&email="+@username\
-    +"&password="+@passwordhash\
-    +"&machineid="+@machine_hash\
-    +"&alias="+@machine_alias\
-    +"&sid="+@sid\
-    +"&mac="+@mac\
-    +"&sendurl=1"\
-    +"&codename="+@codename\
-
+      string = "/client/activate_product_key?key=#{@license_key}&email=#{@username}&password=#{@passwordhash}&machineid=#{@machine_hash}&alias=#{@machine_alias}&sid=#{@sid}&mac=#{@mac}&sendurl=1&codename=#{@codename}"
+      Log.debug(string)
       url = URI.parse("http://#{QA_ENV['client_host']}")
       Log.debug("host = #{url.host}, port = #{url.port}")
       resp = Net::HTTP.start(url.host, url.port) {|http|
@@ -48,6 +38,7 @@ module Activation
       }
 
       pp resp
+      Log.debug(resp.body)
       return resp.body
     end
 
@@ -63,6 +54,8 @@ module Activation
                       'mozy'
                     when "Reseller"
                       'mozypro'
+                    else
+                      company_type
                   end
     end
   end
