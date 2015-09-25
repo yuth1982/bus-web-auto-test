@@ -19,7 +19,7 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
       | @admin_email | yes         |
     Then Partners in pending-delete not available to purge search results should be:
       | ID          | Aria ID  | Partner       | Created | Root Admin   | Type            | Request Date | Days Remaining |
-      | @partner_id | @aria_id | @company_name | today   | @admin_email | MozyEnterprise  | today        | about 1 month  |
+      | @partner_id | @aria_id | @company_name | today   | @admin_email | MozyEnterprise  | today        | 2 months       |
 
   @TC.119214 @bus @pending_deletes @auto_tasks
   Scenario: 119214:Verify that purged partners appear in the "Partners who have been purged" table
@@ -242,8 +242,10 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
   Scenario: 120572:Changing pending delete days to purge
     When I navigate to Manage Pending Deletes section from bus admin console page
     Then I change to 30 days to purge account after delete
+    Then I wait for 30 seconds
     And I verify days to purge account after delete should be 30
     Then I change to 60 days to purge account after delete
+    Then I wait for 30 seconds
     And I verify days to purge account after delete should be 60
 
   @TC.120573 @bus @pending_deletes @auto_tasks
@@ -308,9 +310,13 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
       | @user_name |
     And I view user details by newly created user email
     And I update the user password to default password
-    And I add machines for the user and update its used quota
-      | machine_name | machine_type | used_quota |
-      | Machine1     | Desktop      | 10 GB      |
+    Then I use keyless activation to activate devices
+      | machine_name    | user_name                   | machine_type |
+      | Machine1_20921  | <%=@new_users.first.email%> | Desktop      |
+    And I upload data to device by batch
+      | machine_id                         | GB |
+      | <%=@new_clients.first.machine_id%> | 10 |
+    Then tds returns successful upload
 
   @TC.120574 @bus @pending_deletes @auto_tasks
   Scenario: 120574:Undelete pending partner
