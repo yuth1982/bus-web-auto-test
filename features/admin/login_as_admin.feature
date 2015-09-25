@@ -143,6 +143,7 @@ Feature: login as admins
       | @url | @endpoint | @certificate |
     And I save the changes
     Then Authentication Policy has been updated successfully
+    And I start a new session
     When I login the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
     And I sign in with user name @admin.name and password default password
     Then I will see ldap admin log in error message The user name or password is incorrect.
