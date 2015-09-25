@@ -89,13 +89,15 @@ Feature: reset user password
     And I input email @partner.admin_info.email in reset password panel to reset password
     When I search emails by keywords:
       | subject                   | to                            |
-      | MozyPro password recovery | <%=@partner.admin_info.email%>|
+      | MozyHome password recovery | <%=@partner.admin_info.email%>|
     Then I should see 1 email(s)
     When I click reset password link from the email
     Then I reset password with reset password
     And I will see reset password massage Your password has been changed.
     And I log into phoenix with username newly created MozyHome username and password reset password
-    Then the user log out bus
+    And I access freyja from phoenix
+    And I select options menu
+    And I logout freyja
     And I log in bus admin console as administrator
     And I search user by:
       | keywords       |
@@ -147,12 +149,14 @@ Feature: reset user password
     When I add a new MozyPro partner:
       | period | base plan | security | net terms |
       | 12     | 50 GB     | Standard |    yes    |
+    And New partner should be created
     Then I get the partner_id
+    Then I change root role to FedID role
     And I activate new partner admin with default password
     And I act as newly created partner
     And I add new user(s):
       | name           | user_group           | storage_type | storage_limit | devices |
-      | TC.126034.User | (default user group) | Desktop      | 100           | 3       |
+      | TC.126034.User | (default user group) | Desktop      | 10            | 3       |
     Then 1 new user should be created
     And I search user by:
       | keywords   |
