@@ -46,6 +46,7 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
       | ID          | Aria ID  | Partner       | Created | Root Admin   | Type      | Request Date | Days Pending |
       | @partner_id | @aria_id | @company_name | today   | @admin_email | Reseller  | today        | 1 minute     |
     And I purge partner by newly created partner company name
+    Then I wait for 5 seconds
     And I search partners in who have been purged by:
       | name          | full search |
       | @company_name | yes         |
@@ -86,6 +87,7 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
       | Partner       |
       | @company_name |
     Then I change to 0 days to purge account after delete
+    Then I wait for 5 seconds
     And I search partners in pending-delete available to purge by:
       | name          | full search |
       | @company_name | yes         |
@@ -363,6 +365,7 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
       | name          |
       | @company_name |
     And I undelete partner in pending-delete available to purge by newly created partner company name
+    Then I wait for 5 seconds
     Then I change to 60 days to purge account after delete
     When I search partner by newly created partner company name
     Then Partner search results should be:
