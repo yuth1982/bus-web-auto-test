@@ -8,39 +8,6 @@ Feature: login as admins
  #  Test Suite : Log In Screen
 
 ##########################################################################
-
-#  @TC.122151 @bus @admin @tasks_p1
-#  Scenario: 122151 Trigger Authlockout
-#    When I add a new MozyPro partner:
-#      | period | base plan  |
-#      | 24     | 500 GB     |
-#    Then New partner should be created
-#    And I change root role to FedID role
-#    And I act as newly created partner account
-#    And I navigate to Add New Admin section from bus admin console page
-#    And I add a new admin newly:
-#      | Name         | Roles      | User Group           |
-#      | Admin_122151 | FedID role | (default user group) |
-#    Then Add New Admin success message should be displayed
-#    And the partner has activated the sub-admin account with default password
-#    And the partner has activated the admin account with default password
-#    And I log in bus admin console with user name @admin.email and password Standard password
-#    Then Login page error message should be Incorrect email or password.
-#    And I log in bus admin console with user name @admin.email and password Standard password
-#    Then Login page error message should be Incorrect email or password.
-#    And I log in bus admin console with user name @admin.email and password Standard password
-#    Then Login page error message should be There have been too many failed login attempts on your account. Please try logging in again later.
-#    And I log in bus admin console with user name @partner.admin_info.email and password default password
-#    And I view the admin details of Admin_122151
-#    And I change admin password to Standard password
-#    Then I can change admin password successfully
-#    And I log out bus admin console
-#    And I log in bus admin console with user name @admin.email and password Standard password
-#    Then I login as Admin_122151 admin successfully
-#    And I log out bus admin console
-#    And I log in bus admin console as administrator
-#    And I search and delete partner account by newly created partner company name
-
   @TC.126033 @bus @admin @tasks_p1
   Scenario: 126033 Reset Admin Password from www.mozypro.com
     When I add a new MozyPro partner:
