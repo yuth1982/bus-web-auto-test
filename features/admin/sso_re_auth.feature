@@ -44,6 +44,8 @@ Feature: login as admins
       | cn=tc121959.user* | (default user group) |
     And I click the sync now button
     And I wait for 90 seconds
+    And I delete 1 provision rules
+    And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
       | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
@@ -67,10 +69,6 @@ Feature: login as admins
       | name           |
       | tc121959.user1 |
     Then I should not search out admin record
-    And I delete a user tc121959.user4 in the AD
-    And I delete a user tc121959.user3 in the AD
-    And I delete a user tc121959.user2 in the AD
-    And I delete a user tc121959.user1 in the AD
     And I navigate to Authentication Policy section from bus admin console page
     And I click Sync Rules tab
     And I add 1 new deprovision rules:
@@ -80,6 +78,10 @@ Feature: login as admins
     And I wait for 80 seconds
     And I delete 1 deprovision rules
     And I save the changes
+    And I delete a user tc121959.user4 in the AD
+    And I delete a user tc121959.user3 in the AD
+    And I delete a user tc121959.user2 in the AD
+    And I delete a user tc121959.user1 in the AD
 
   @TC.121965 @bus @admin @tasks_p1
   Scenario: 121965 LDAP admin changing auth type should require AD re-auth
@@ -170,10 +172,6 @@ Feature: login as admins
     Then The save error message should be:
       | Save failed         |
       | Incorrect password. |
-    And I delete a user tc121965.user4 in the AD
-    And I delete a user tc121965.user3 in the AD
-    And I delete a user tc121965.user2 in the AD
-    And I delete a user tc121965.user1 in the AD
     When I log in bus admin console as administrator
     And I act as partner by:
       | email                        |
@@ -206,6 +204,11 @@ Feature: login as admins
     And I wait for 80 seconds
     And I delete 1 deprovision rules
     And I save the changes
+    And I delete a user tc121965.user4 in the AD
+    And I delete a user tc121965.user3 in the AD
+    And I delete a user tc121965.user2 in the AD
+    And I delete a user tc121965.user1 in the AD
+
 
   @TC.121966 @bus @admin @tasks_p1
   Scenario: 121966 LDAP admin deleting admin should require AD re-auth

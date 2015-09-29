@@ -174,6 +174,7 @@ end
 Then /^I navigate to (new|old) window$/ do |window|
   @main_window = page.driver.browser.window_handles.first
   if window == 'new'
+    sleep 5 if page.driver.browser.window_handles.size == 1
     page.driver.browser.switch_to().window(page.driver.browser.window_handles.last)
   else
     page.driver.browser.switch_to.window(@main_window)
