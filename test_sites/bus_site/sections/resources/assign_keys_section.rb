@@ -1,10 +1,12 @@
 module Bus
+
   # This class provides actions for assign keys section
   class AssignKeysSection < SiteHelper::Section
 
     # Private elements
     #
     element(:assign_btn, xpath: "//input[@value='Assign']")
+    elements(:assign_key_summary_spans, xpath: "//div[@class='show-details']/div/div/span[@class='label' or @class='value']")
 
 
     def click_user_group(user_group)
@@ -20,6 +22,10 @@ module Bus
       assign_btn.click
     end
 
+    def resources_general_info_hash
+      array = assign_key_summary_spans.map{ |span| span.text }
+      Hash[*array]
+    end
 
   end
 end

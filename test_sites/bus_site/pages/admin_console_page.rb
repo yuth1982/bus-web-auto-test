@@ -57,6 +57,7 @@ module Bus
     section(:transfer_resources_section, TransferResourcesSection, id: "resource-transfer_resources")
     section(:purchase_resources_section, PurchaseResourcesSection, id: "resource-purchase_resources")
     section(:return_resources_section, ReturnResourcesSection, id: "resource-unpurchase_resources")
+    section(:assign_keys_section, AssignKeysSection, id: "resource-available_key_list")
     section(:resource_summary_section, ResourceSummarySection, id: 'storage-summary')
     section(:download_client_section, DownloadClientSection, id: "resource-downloads")
 
