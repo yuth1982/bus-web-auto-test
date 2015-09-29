@@ -468,7 +468,6 @@ Then /^I verify mozyhome user plan is (50GB|Free) after downgrade$/ do |match|
   end
 end
 
-<<<<<<< HEAD
 Then /^I refund the user with (.+) amount$/ do |amount|
   @amount = @bus_site.admin_console_page.user_details_section.refund_user(amount)
 end
@@ -477,10 +476,10 @@ Then /^I check the refund amount should be correct$/ do
   refunded_amount = @bus_site.admin_console_page.user_details_section.get_refunded_amount
   refunded_amount[1..-1].should eq(@amount)
 end
-=======
+
 Then /^The current user should be billed$/ do
   @bus_site.admin_console_page.user_details_section.refresh_bus_section
   @bus_site.admin_console_page.user_details_section.wait_until_bus_section_load
   (@bus_site.admin_console_page.user_details_section.get_user_billed_info > 1).should be_true
 end
->>>>>>> 4ee3465... new case TC.22264:verify that users can update payment info(4m18.851s)
+
