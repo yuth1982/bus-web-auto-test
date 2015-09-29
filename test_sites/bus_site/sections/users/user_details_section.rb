@@ -744,7 +744,6 @@ module Bus
       mozyhome_user_status_td.text
     end
 
-<<<<<<< HEAD
     def refund_user(amount)
       refund_a.click
       before_amounts = refund_amount_input[:value]
