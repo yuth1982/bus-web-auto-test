@@ -220,6 +220,24 @@ Feature: delete partner
     And I delete partner account with password xxx
     Then I search and delete partner account by newly created partner company name
 
+  @TC.123515 @bus @delete_partner @tasks_p1
+  Scenario: Mozy-123515:Delete a existing partner
+    When I add a new MozyPro partner:
+      | period  | base plan |
+      | 12      | 10 GB     |
+    And New partner should be created
+    Then I search partner by newly created partner company name
+    Then I view partner details by newly created partner company name
+    Then I delete partner account
+    Then I navigate to Manage Pending Deletes section from bus admin console page
+    Then I make sure pending deletes setting is 60 days
+    And I search partners in pending-delete not available to purge by:
+      | email        | full search |
+      | @admin_email | yes         |
+    Then Partners in pending-delete not available to purge search results should be:
+      | Partner       |
+      | @company_name |
+
   @TC.21276 @bus @delete_partner @tasks_p1
   Scenario: Mozy- 21276:MozyPro Bundled Partner with Sub Delete Subparner
     When I add a new MozyPro partner:

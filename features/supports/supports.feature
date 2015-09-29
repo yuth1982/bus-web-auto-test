@@ -3,7 +3,7 @@ Feature: Supports on BUS
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.22472 @bus @support
+  @TC.22472 @bus @support @tasks_p1
   Scenario: 22472:Verify that contact works for DPS admin.
     When I add a new MozyEnterprise DPS partner:
       | period | base plan | country       |
@@ -44,7 +44,7 @@ Feature: Supports on BUS
     Then I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.22479 @bus @support
+  @TC.22479 @bus @support @tasks_p1
   Scenario: 22479:Verify that Online Help works for DPS admin.
     When I add a new MozyEnterprise DPS partner:
       | period | base plan | country       |
@@ -61,7 +61,7 @@ Feature: Supports on BUS
     Then I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.122153 @bus @support
+  @TC.122153 @bus @support @tasks_p1
   Scenario: 122153:Push SSO admin stay logged in when go to support and community
     When I act as partner by:
       | email                        |
@@ -123,7 +123,7 @@ Feature: Supports on BUS
       | email             |
       | <%=@admin.email%> |
 
-  @TC.122154 @bus @support
+  @TC.122154 @bus @support @tasks_p1
   Scenario: 122154 Pull SSO admin stay logged in when go to support and community
     When I act as partner by:
       | email                        |

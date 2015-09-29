@@ -105,7 +105,7 @@ Feature: reset user password
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.126032 @bus @admin
+  @TC.126032 @bus @user_login @tasks_p1
   Scenario: 126032:Reset User Password from subdomain.mozypro.com
     Then I act as partner by:
       | name                      |
