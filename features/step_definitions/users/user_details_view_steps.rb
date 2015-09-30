@@ -436,6 +436,7 @@ When /^the user has activated the account with (.+)$/ do |password|
   @bus_site.admin_console_page.open_admin_activate_page(@activate_email_query)
   @freyja_site = FreyjaSite.new
   @freyja_site.main_page.set_user_password(password)
+  @user_password = password
 end
 
 When /^I click delete sync device icon for the user$/ do

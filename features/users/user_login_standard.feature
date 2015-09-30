@@ -163,6 +163,7 @@ Feature: Stabdard user Login
       | period | users | server plan | root role  | security | net terms |
       | 12     | 18    | 100 GB      | FedID role | Standard | yes       |
     Then New partner should be created
+    Then I get the partner_id
     And I act as newly created partner account
     And I add new user(s):
       | name           | user_group           | storage_type | storage_limit | devices |

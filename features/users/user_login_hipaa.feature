@@ -194,8 +194,8 @@ Feature: Hipaa user Login
     Then tds returns successful upload
     Then I navigate to user login page with partner ID
     Then I log in bus pid console with:
-      | username                 | password                                  |
-      | <%=@new_users[0].email%> | <%=CONFIGS['global']['test_hipaa_pwd'] %> |
+      | username                 | password                      |
+      | <%=@new_users[0].email%> | <%=QA_ENV['hipaa_password']%> |
     Then I change password from Hipaa password to reset password in user login bus page
     Then Change password should be successfully
     And I access freyja from bus admin
@@ -333,6 +333,7 @@ Feature: Hipaa user Login
       | 12     | 100 GB    | HIPAA    |
     And New partner should be created
     Then I get the partner_id
+    Then I change root role to FedID role
     And I act as newly created partner
     And I add new user(s):
       | name           | user_group           | storage_type | storage_limit | devices |

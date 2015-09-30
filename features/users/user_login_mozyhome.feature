@@ -174,7 +174,7 @@ Feature: Mozyhome User Login
     And I input email @partner.admin_info.email in reset password panel to reset password
     When I search emails by keywords:
       | subject                   | to                            |
-      | MozyPro password recovery | <%=@partner.admin_info.email%>|
+      | MozyHome password recovery | <%=@partner.admin_info.email%>|
     Then I should see 1 email(s)
     When I click reset password link from the email
     Then I reset password with reset password

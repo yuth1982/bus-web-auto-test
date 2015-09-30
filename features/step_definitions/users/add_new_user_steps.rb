@@ -3,6 +3,7 @@
 #
 # available columns:
 # name, email, user_group, storage_type, storage_max, devices, enable_stash, send_email
+
 When /^I add new user\(s\):$/ do |user_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_user'])
   @new_users =[]
