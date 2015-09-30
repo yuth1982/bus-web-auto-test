@@ -128,8 +128,7 @@ Feature: View Sync Details
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-   # seems a bug, if not set stash_region_override, the test will pass
-  @TC.120094 @machines_sync @bus @tasks_p1
+  @TC.120094 @machines_sync @bus @tasks_p1 @bug#141432
   Scenario: 120094:Sync client region does not match containers region without sync activity valid region and country
     When I add a new MozyEnterprise partner:
       | period | users | server plan |

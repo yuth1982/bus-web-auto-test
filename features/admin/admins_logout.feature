@@ -3,7 +3,7 @@ Feature: admins log out
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.123918 @bus @admin @tasks_p1
+  @TC.123918 @bus @admin @tasks_p1 @ldap_sequence
   Scenario: 123918 New LDAP login through LDAP process
     When I act as partner by:
       | email                        |
