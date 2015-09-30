@@ -177,5 +177,7 @@ Feature: Modify credit card information and billing contact information
       | newcard d | 6011868815065127  | 12           | 17          | 731 |
     And I save payment information changes
     Then Payment information should be updated
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name
 
 
