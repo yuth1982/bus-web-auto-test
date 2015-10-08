@@ -383,6 +383,7 @@ module Bus
     def show_billing_history
       expand(billing_information_icon)
       show_billing_history_link.click
+      wait_until_bus_section_load
     end
 
     def click_invoice_link

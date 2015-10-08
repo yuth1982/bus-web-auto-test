@@ -20,6 +20,7 @@ module Bus
     def transfer_resources(source_group, target_partner, target_group, server_licenses, server_quota, desktop_licenses, desktop_quota)
       source_group_select.select(source_group)
       target_partner_select.select(target_partner) unless target_partner == 'the same partner'
+      sleep 2
       target_group_select.select(target_group)
       server_licenses_tb.type_text(server_licenses)
       server_quota_tb.type_text(server_quota)
