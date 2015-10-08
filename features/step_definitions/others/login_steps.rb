@@ -178,6 +178,7 @@ Then /^I navigate to (new|old) window$/ do |window|
     page.driver.browser.switch_to().window(page.driver.browser.window_handles.last)
   else
     page.driver.browser.switch_to.window(@main_window)
+    sleep 25
   end
 end
 
