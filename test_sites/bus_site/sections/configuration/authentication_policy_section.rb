@@ -271,6 +271,7 @@ module Bus
           find(:css, 'div#auth_config_fields>div>div>input[name="password"]').set(password)
           find(:css, 'div#auth_config_fields>div>div>input[value=Submit]').click
         else
+          wait_until{reauth_confirm_btn.visible?}
           reauth_confirm_btn.click
         end
       end
