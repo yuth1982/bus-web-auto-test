@@ -157,7 +157,7 @@ Feature: Stabdard user Login
     When I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.125619 @bus @user_login @tasks_p1
+  @TC.125619 @bus @user_login @tasks_p1 @ldap_sequence
   Scenario: 125619:Partner changed to FedID partner user could not login
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  | security | net terms |

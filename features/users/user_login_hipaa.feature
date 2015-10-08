@@ -87,7 +87,7 @@ Feature: Hipaa user Login
     When I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.123852 @bus @user_login @tasks_p1
+  @TC.123852 @bus @user_login @tasks_p1 @ldap_sequence
   Scenario: 123852:Hipaa user does not have permission to set password when partner authentication changed
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  |security | net terms |
@@ -120,7 +120,7 @@ Feature: Hipaa user Login
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.123853 @bus @user_login @tasks_p1
+  @TC.123853 @bus @user_login @tasks_p1 @ldap_sequence
   Scenario: 123853:Hipaa user need to set password when partner authentication changed from FedId to Mozy
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  |security | net terms |
