@@ -149,6 +149,7 @@ Feature: login as admins
     And I navigate to new window
     Then I sign in the subdomain <%=CONFIGS['fedid']['subdomain']%>
     And I navigate to old window
+    And I wait for 3 seconds
     Then Authentication Policy has been updated successfully
     And I choose LDAP Pull as Directory Service provider without saving
     And I input server connection settings
@@ -159,12 +160,14 @@ Feature: login as admins
     And I navigate to new window
     Then I sign in the subdomain <%=CONFIGS['fedid']['subdomain']%>
     And I navigate to old window
+    And I wait for 3 seconds
     Then Authentication Policy has been updated successfully
     And I use Mozy as authentication provider without saving
     And I save the changes which will need re auth
     And I navigate to new window
     Then I sign in the subdomain <%=CONFIGS['fedid']['subdomain']%>
     And I navigate to old window
+    And I wait for 3 seconds
     Then Authentication Policy has been updated successfully
     When I use Directory Service as authentication provider without saving
     And I choose LDAP Pull as Directory Service provider without saving
@@ -258,6 +261,7 @@ Feature: login as admins
     And I navigate to new window
     Then I sign in the subdomain <%=CONFIGS['fedid']['subdomain']%>
     And I navigate to old window
+    And I wait for 3 seconds
     And I refresh Search Admins section
     Then I should not search out admin record
     And I delete a user tc121966.user3 in the AD
@@ -324,6 +328,7 @@ Feature: login as admins
     And I navigate to new window
     Then I sign in the subdomain <%=CONFIGS['fedid']['subdomain']%>
     When I navigate to old window
+    And I wait for 3 seconds
     And I refresh Search List Partners section
     Then Partner search results should be empty
     And I delete a user tc121967.user1 in the AD
@@ -466,6 +471,7 @@ Feature: login as admins
     And I navigate to new window
     Then I sign in the subdomain <%=CONFIGS['fedid']['subdomain']%>
     When I navigate to old window
+    And I wait for 3 seconds
     And I refresh Search List Partners section
     Then Partner search results should be empty
     And I delete a user tc122047.user1 in the AD
@@ -525,6 +531,7 @@ Feature: login as admins
     And I navigate to new window
     Then I sign in the subdomain <%=CONFIGS['fedid']['subdomain']%>
     And I navigate to old window
+    And I wait for 3 seconds
     And I refresh Search Admins section
     Then I should not search out admin record
     And I delete a user tc122048.user3 in the AD
@@ -581,18 +588,21 @@ Feature: login as admins
     And I navigate to new window
     Then I sign in the subdomain <%=CONFIGS['fedid']['subdomain']%>
     And I navigate to old window
+    And I wait for 3 seconds
     Then Authentication Policy has been updated successfully
     And I choose LDAP Push as Directory Service provider without saving
     And I save the changes which will need re auth
     And I navigate to new window
     Then I sign in the subdomain <%=CONFIGS['fedid']['subdomain']%>
     And I navigate to old window
+    And I wait for 3 seconds
     Then Authentication Policy has been updated successfully
     And I use Mozy as authentication provider without saving
     And I save the changes which will need re auth
     And I navigate to new window
     Then I sign in the subdomain <%=CONFIGS['fedid']['subdomain']%>
     And I navigate to old window
+    And I wait for 3 seconds
     Then Authentication Policy has been updated successfully
     When I use Directory Service as authentication provider without saving
     And I choose LDAP Push as Directory Service provider without saving
