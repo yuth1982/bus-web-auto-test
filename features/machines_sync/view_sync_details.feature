@@ -128,16 +128,13 @@ Feature: View Sync Details
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120094 @machines_sync @bus @tasks_p1 @bug#141432
+  @TC.120094 @machines_sync @bus @tasks_p1
   Scenario: 120094:Sync client region does not match containers region without sync activity valid region and country
     When I add a new MozyEnterprise partner:
       | period | users | server plan |
       | 12     | 10    | 250 GB      |
     Then New partner should be created
     And I get the admin id from partner details
-    And I add partner settings
-      | Name                  | Value    |
-      | stash_region_override | americas |
     When I act as newly created partner account
     And I add new user(s):
       | name            | user_group           | storage_type | storage_limit | devices | enable_stash |
