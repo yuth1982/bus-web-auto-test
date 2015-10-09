@@ -69,7 +69,7 @@ module KeylessDeviceActivation
   #The client should send the user credentials, username and password,
   #to Mozy Auth service to exchange an access token. This requires two API calls.
   class KeylessClient
-    attr_accessor :username, :password, :license_key, :machine_alias, :machine_id, :machine_hash, :company_type, :response, :device_type, :access_token, :region
+    attr_accessor :username, :password, :license_key, :machine_alias, :machine_id, :machine_hash, :company_type, :response, :device_type, :access_token, :region, :auth_code
     def initialize(username, password, partner_id, partner_name, device_type, company_type, client_id = nil, client_secret = nil, machine_hash = nil, machine_name = nil, region=nil)
       @username = username
       @password = password
@@ -114,6 +114,15 @@ module KeylessDeviceActivation
       @access_token = access_token unless access_token.nil?
       client_devices_activate
     end
+
+    def get_sso_auth_code(access_token = nil)
+      get_codename(@company_type)
+      enable_partner_to_sso(@partner_id, @partner_name)
+      create_oauth_client
+      sso_auth(@partner_id)
+    end
+
+
 
     def get_access_token
       enable_partner_to_sso(@partner_id, @partner_name)
@@ -202,7 +211,12 @@ module KeylessDeviceActivation
         request = Net::HTTP::Get.new("/login/oauth/authorize?client_id=#{@client_id}&partner_id=#{partner_id}")
         request.basic_auth(@username, @password)
         response = http.request request
-        @auth_code = JSON.parse(response.body)
+        if response.body == " "
+          @auth_code = {response.code=>response.message}
+        else
+          @auth_code = JSON.parse(response.body)
+        end
+        @auth_code
       end
     end
 

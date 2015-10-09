@@ -47,6 +47,27 @@ When /^I use keyless activation to activate devices(| unsuccessful| newly)$/  do
   @clients << @client
 end
 
+When /^I use keyless activation to activate devices to get sso auth code$/  do |table|
+  attr = table.hashes.first.each do |_, v|
+    v.replace ERB.new(v).result(binding)
+    v.gsub!(" ", "_")
+  end
+  user_email = attr['user_name'].nil? ? @current_user[:email] : attr['user_name']
+  partner_name = (@partner && @partner.company_info.name) || @current_partner[:name]
+
+  @user_password = CONFIGS['global']['test_pwd'] unless !@user_password.nil?
+  region = attr['user_region'] || attr['ug_region'] || attr['partner_region'] || 'qa'
+
+  @new_clients =[]
+  @clients =[] if @clients.nil?
+
+  machine_name = attr['machine_name']
+  machine_name = "machine#{Time.now.strftime("%m%d%H%M%S")}" if attr['machine_name'] == 'auto_generate'
+  @client = KeylessClient.new(user_email, @user_password, @current_partner[:id], partner_name, attr['machine_type'], @partner.partner_info.type, nil, nil, nil, machine_name, region)
+  @client.get_sso_auth_code
+  @clients << @client
+end
+
 And /^I update (.+) encryption value to (.+)$/ do |machine_id, encrypt_value|
   machine_id = @new_clients[0].machine_id if machine_id == 'newly created machine'
   @client.set_machine_encryption(encrypt_value, machine_id)
@@ -126,6 +147,17 @@ Then /^activate machine result should be$/ do |table|
     ((actual_body.match(/^\{"license_key":"(\w)+"\}$/)).nil?).should == false
   else
     actual_body.should == expected_body
+  end
+end
+
+Then /^activate machine auth code result should be$/ do |table|
+  attr = table.hashes.first.each do |_, v|
+    v.replace ERB.new(v).result(binding)
+  end
+  attr = table.hashes.first
+  @clients.last.auth_code.each do |k,v|
+    k.should ==attr['code']
+    v.should ==attr['body']
   end
 end
 

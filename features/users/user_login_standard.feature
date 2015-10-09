@@ -1,4 +1,4 @@
-Feature: Stabdard user Login
+Feature: Standard user Login
 
   Background:
     Given I log in bus admin console as administrator
@@ -183,11 +183,12 @@ Feature: Stabdard user Login
     And I act as newly created partner account
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
-    Then I navigate to user login page with partner ID
-    Then I log in bus pid console with:
-      | username                 | password                            |
-      | <%=@new_users[0].email%> | <%=CONFIGS['global']['test_pwd'] %> |
-    Then Login page error message should be Incorrect email or password.
+    Then I use keyless activation to activate devices to get sso auth code
+      | user_name                   | machine_name      | machine_type |
+      | <%=@new_users.first.email%> | TC.125619_machine | Desktop      |
+    Then activate machine auth code result should be
+      | code | body         |
+      | 401  | Unauthorized |
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
