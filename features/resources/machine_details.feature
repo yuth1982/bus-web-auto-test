@@ -45,9 +45,11 @@ Feature: Machine Details
     And activate the user's Desktop device without a key and with the default password
     Then I stop masquerading
     When I order data shuttle for newly created partner company name
-      | power adapter   | key from  | quota |
-      | Data Shuttle US | available | 20    |
+      | power adapter   | key from  |
+      | Data Shuttle US | available |
     Then Data shuttle order should be created
+    And I search partner by newly created partner company name
+    And I view partner details by newly created partner company name
     And I act as newly created partner account
     And I search user by:
       | keywords   |
@@ -67,8 +69,8 @@ Feature: Machine Details
     When I get the partner_id
     And I act as newly created partner account
     And I add new user(s):
-      | storage_type | storage_limit | devices |
-      | Desktop      | 30            | 1       |
+      | user_group           | storage_type | storage_limit | devices |
+      | (default user group) |  Desktop     |  1            |  1      |
     And I search user by:
       | keywords   |
       | @user_name |
@@ -77,9 +79,12 @@ Feature: Machine Details
     And activate the user's Desktop device without a key and with the default password
     Then I stop masquerading
     When I order data shuttle for newly created partner company name
-      | power adapter   | key from  | quota |
-      | Data Shuttle US | available | 10    |
+      | power adapter   | key from  |
+      | Data Shuttle US | available |
     Then Data shuttle order should be created
+    And I get the data shuttle seed id
+    And I search partner by newly created partner company name
+    And I view partner details by newly created partner company name
     And I act as newly created partner account
     And I search user by:
       | keywords   |
@@ -88,7 +93,7 @@ Feature: Machine Details
     And I view machine AUTOTEST details from user details section
     Then the data shuttle machine details should be:
       | Order ID      | Data Shuttle Device ID | Phase   |
-      | <%=@seed_id%> | <%=@seed_id%>          | Ordered |
+      | <%=@seed_id%> |                        | Ordered |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -97,14 +102,12 @@ Feature: Machine Details
     When I add a new MozyEnterprise partner:
       | period | users | server plan |
       | 36     | 112   | 24 TB       |
-    Then I stop masquerading
-    And I search and delete partner account by newly created partner company name
     Then New partner should be created
     When I get the partner_id
     And I act as newly created partner account
     And I add new user(s):
-      | storage_type | storage_limit | devices |
-      | Server       | 30            | 1       |
+      | user_group           | storage_type | storage_limit | devices |
+      | (default user group) | Server       | 30            | 1       |
     And I search user by:
       | keywords   |
       | @user_name |
@@ -113,9 +116,12 @@ Feature: Machine Details
     And activate the user's Server device without a key and with the default password
     Then I stop masquerading
     When I order data shuttle for newly created partner company name
-      | power adapter   | key from  | quota |
-      | Data Shuttle US | available | 11    |
+      | power adapter   | key from  |
+      | Data Shuttle US | available |
     Then Data shuttle order should be created
+    And I get the data shuttle seed id
+    And I search partner by newly created partner company name
+    And I view partner details by newly created partner company name
     And I act as newly created partner account
     And I search user by:
       | keywords   |
@@ -174,8 +180,8 @@ Feature: Machine Details
     And I get the admin id from partner details
     And I act as newly created partner account
     And I add new user(s):
-      | user_group           | storage_type | storage_limit | devices |
-      | (default user group) |  Desktop     | 29            | 1       |
+      | storage_type | storage_limit | devices |
+      |  Desktop     | 29            | 1       |
     And I search user by:
       | keywords   |
       | @user_name |
@@ -212,8 +218,8 @@ Feature: Machine Details
     And I get the admin id from partner details
     And I act as newly created partner account
     And I add new user(s):
-      | user_group           | storage_type | storage_limit | devices |
-      | (default user group) |  Desktop     | 35            | 1       |
+      | storage_type | storage_limit | devices |
+      |  Desktop     | 35            | 1       |
     And I search user by:
       | keywords   |
       | @user_name |
@@ -250,8 +256,8 @@ Feature: Machine Details
     And I get the admin id from partner details
     And I act as newly created partner account
     And I add new user(s):
-      | user_group           | storage_type | storage_limit | devices |
-      | (default user group) |  Desktop     | 28            | 1       |
+      | storage_type | storage_limit | devices |
+      |  Desktop     | 28            | 1       |
     And I search user by:
       | keywords   |
       | @user_name |
@@ -267,6 +273,9 @@ Feature: Machine Details
     When I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
     And I act as newly created partner account
+    And I set the data shuttle seed status:
+      | status  |
+      | seeding |
     And I set the data shuttle seed status:
       | status  |
       | loading |
@@ -306,6 +315,9 @@ Feature: Machine Details
     And I view partner details by newly created partner company name
     And I act as newly created partner account
     And I set the data shuttle seed status:
+      | status  |
+      | seeding |
+    And I set the data shuttle seed status:
       | status     |
       | load_error |
     Then I navigate to Search / List Machines section from bus admin console page
@@ -343,6 +355,9 @@ Feature: Machine Details
     When I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
     And I act as newly created partner account
+    And I set the data shuttle seed status:
+      | status  |
+      | seeding |
     And I set the data shuttle seed status:
       | status        | total files | total bytes | total files seeded | total bytes seeded |
       | load_complete | 1000        | 2097152     | 1000               | 2097152            |
@@ -382,13 +397,16 @@ Feature: Machine Details
     And I view partner details by newly created partner company name
     And I act as newly created partner account
     And I set the data shuttle seed status:
+      | status  |
+      | seeding |
+    And I set the data shuttle seed status:
       | status    |
       | cancelled |
     Then I navigate to Search / List Machines section from bus admin console page
     Then I view machine details for the newly created device name
     Then the data shuttle machine details should be:
       | Order ID      | Data Shuttle Device ID | Phase     |
-      | <%=@seed_id%> | <%=@seed_id%>          | cancelled |
+      | <%=@seed_id%> | <%=@seed_id%>          | Cancelled |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
