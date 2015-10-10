@@ -145,7 +145,7 @@ Feature: Modify credit card information and billing contact information
       | Velocity Consulting |
     Then I should not see Change Payment Information link
 
-  @TC.131843 @tasks_p1 @resources @bus
+  @TC.131843 @tasks_p1 @smoke @resources @bus
   Scenario: 131843 Change credit card using credit card of Visa, MasterCard, American Express, Discover
     When I add a new MozyEnterprise partner:
       | period | users | server add on |

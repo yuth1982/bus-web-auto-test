@@ -186,7 +186,7 @@ Feature: Preferences
     And I stop masquerading
     And I search and delete partner account by TC.491_partner
 
-  @TC.492 @tasks_p1 @client_configuration @bus
+  @TC.492 @tasks_p1 @smoke @client_configuration @bus
   Scenario: 492 Delete a cascaded client config
     When I add a new MozyEnterprise partner:
       | company name   | period | users | server plan | server add on | root role  |

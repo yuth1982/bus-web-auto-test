@@ -171,7 +171,7 @@ Feature: Add/Delete Client Configuration
     And I stop masquerading
     And I search and delete partner account by TC.489_partner
 
-  @TC.501 @tasks_p1 @client_configuration @bus
+  @TC.501 @tasks_p1 @smoke @client_configuration @bus
   Scenario: 501 Delete client configuration
     When I add a new Reseller partner:
       | period |  reseller type  | reseller quota |  server plan |  net terms |

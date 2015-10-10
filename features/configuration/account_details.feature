@@ -4,7 +4,7 @@ Feature: Configurations: Account Details
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.880 @tasks_p1 @account_details @bus
+  @TC.880 @tasks_p1 @smoke @account_details @bus
   Scenario: 880 Edit the name on an account
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -17,7 +17,7 @@ Feature: Configurations: Account Details
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.881 @tasks_p1 @account_details @bus
+  @TC.881 @tasks_p1 @smoke @account_details @bus
   Scenario: 881 Change the username/email on an account
     When I add a new MozyPro partner:
       | period | base plan  | server plan |
@@ -34,7 +34,7 @@ Feature: Configurations: Account Details
     When I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.882 @tasks_p1 @account_details @bus
+  @TC.882 @tasks_p1 @smoke @account_details @bus
   Scenario: 882 Change the password on an account (correct current password)
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add on |

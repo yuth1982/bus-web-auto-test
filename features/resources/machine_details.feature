@@ -60,7 +60,7 @@ Feature: Machine Details
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.12736 @tasks_p1 @resources @bus
+  @TC.12736 @tasks_p1 @smoke @resources @bus
   Scenario: 12736 Data Shuttle table is with order for data shuttle machine at first
     When I add a new MozyEnterprise partner:
       | period | users | server plan |

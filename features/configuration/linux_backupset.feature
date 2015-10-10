@@ -179,7 +179,7 @@ Feature: Linux BackupSet
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.126294 @tasks_p1 @client_configuration @bus
+  @TC.126294 @tasks_p1 @smoke @client_configuration @bus
   Scenario: 126294 Add linux backup set with include exclude search location and Options checked
     When I add a new MozyPro partner:
       | period |  base plan |   server plan |  net terms |

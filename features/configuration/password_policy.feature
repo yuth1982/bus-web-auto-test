@@ -481,7 +481,7 @@ Feature: Password policy is saved successfully to db
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.131879 @tasks_p1 @password_policy @bus
+  @TC.131879 @tasks_p1 @smoke @password_policy @bus
   Scenario: 131879 Sub Partner, Custom Complextity, 2nd radio button and input 3 in textbox and select all checkboxes
     When I add a new MozyEnterprise partner:
       | company name       | period | users | server plan | root role  |
