@@ -47,7 +47,7 @@ Feature: Mozyhome User Login
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.123501 @bus @user_login @tasks_p1
+  @TC.123501 @bus @user_login @tasks_p1 @smoke
   Scenario: 123501:Free MozyHome user login bus or phoenix or freyja after changing password in phoenix
     When I am at dom selection point:
     And I add a phoenix Free user:

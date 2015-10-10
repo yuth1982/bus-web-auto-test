@@ -4,7 +4,7 @@ Feature: delete partner
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.123785 @bus @delete_partner @tasks_p1
+  @TC.123785 @bus @delete_partner @tasks_p1 @smoke
   Scenario: Mozy-13785:Deletion is triggered by admins in the bus Mozypro,business,yearly
     When I add a new MozyPro partner:
       | period  | base plan | coupon              | country       |

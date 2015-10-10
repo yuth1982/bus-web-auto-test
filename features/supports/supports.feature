@@ -3,7 +3,7 @@ Feature: Supports on BUS
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.22472 @bus @support @tasks_p1
+  @TC.22472 @bus @support @tasks_p1 @smoke
   Scenario: 22472:Verify that contact works for DPS admin.
     When I add a new MozyEnterprise DPS partner:
       | period | base plan | country       |

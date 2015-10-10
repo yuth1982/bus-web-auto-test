@@ -3,7 +3,7 @@ Feature: News in Admin Console
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.22067 @bus @news @tasks_p1
+  @TC.22067 @bus @news @tasks_p1 @smoke
   Scenario: 22067:'New Features!' Section Link As The 'New Features' Link In The Take-over Welcome Page
     When I navigate to New Features! section from bus admin console page
     Then I check the new window title is New Features

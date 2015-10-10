@@ -47,7 +47,7 @@ Feature: Hipaa user Login
     When I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.123689 @bus @user_login @tasks_p1
+  @TC.123689 @bus @user_login @tasks_p1 @smoke
   Scenario: 123689:As existing not activated Masquerade Hipaa admin update user password and log in as user
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | security |

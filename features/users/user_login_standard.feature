@@ -191,7 +191,7 @@ Feature: Stabdard user Login
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.123749 @bus @user_login @tasks_p1
+  @TC.123749 @bus @user_login @tasks_p1 @smoke
   Scenario: 123749:MozyEnterprise user login bus and freyja after changing password
     When I add a new MozyEnterprise partner:
       | period | users | server plan | security |

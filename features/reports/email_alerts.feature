@@ -6,7 +6,7 @@ Feature: Email Alerts
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.1980 @bus @email_alerts @auto_tasks
+  @TC.1980 @bus @email_alerts @auto_tasks @smoke
   Scenario: 1980:Create New Daily Alert
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
