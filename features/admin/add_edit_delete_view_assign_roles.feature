@@ -79,7 +79,7 @@ Feature: add edit delete view assign roles
 
   ###############################################################################
 
-  # Add new role , edit roel
+  # Add new role , edit role
 
   ################################################################################
 
@@ -170,7 +170,7 @@ Feature: add edit delete view assign roles
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.2866 @bus @admin @tasks_p1
+  @TC.2866 @bus @admin @tasks_p1 @smoke
   Scenario: 2866 Create a new role - non partner admin
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  | net terms |

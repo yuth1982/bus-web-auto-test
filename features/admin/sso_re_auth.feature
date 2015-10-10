@@ -212,8 +212,7 @@ Feature: login as admins
     And I delete a user tc121965.user2 in the AD
     And I delete a user tc121965.user1 in the AD
 
-
-  @TC.121966 @bus @admin @tasks_p1 @ldap_sequence
+  @TC.121966 @bus @admin @tasks_p1 @ldap_sequence @smoke
   Scenario: 121966 LDAP admin deleting admin should require AD re-auth
     When I add a user to the AD
       | user name      | mail                               |

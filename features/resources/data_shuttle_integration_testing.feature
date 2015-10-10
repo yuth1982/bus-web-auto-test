@@ -9,7 +9,7 @@ Feature:
   # Purchase Resources
 
   ###############################################################################
-  @bus @TC.12676 @resources @tasks_p1
+  @bus @TC.12676 @resources @tasks_p1 @smoke
   Scenario: 12676 Partner purchase data shuttle order
     When I add a new MozyPro partner:
       | period  | base plan | server plan | net terms |

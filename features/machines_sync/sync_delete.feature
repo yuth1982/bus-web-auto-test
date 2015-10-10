@@ -84,7 +84,7 @@ Feature: Sync Delete
       | Storage Usage: | 0 |
     And I delete partner account
 
-  @TC.18988 @bus @machines_sync @tasks_p1
+  @TC.18988 @bus @machines_sync @tasks_p1 @smoke
   Scenario: 18988 MozyPro partner delete stash container in user details section
     When I add a new MozyPro partner:
       | period | base plan | net terms | root role               |

@@ -63,7 +63,7 @@ Feature: Search List admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.123341 @bus @admin @tasks_p1
+  @TC.123341 @bus @admin @tasks_p1 @smoke
   Scenario: 123341 Activate a new HIPAA sub-admin via email
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  | security |

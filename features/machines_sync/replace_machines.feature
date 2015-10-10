@@ -3,7 +3,7 @@ Feature: Replace Machines
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.868 @bus @machines_sync @tasks_p1
+  @TC.868 @bus @machines_sync @tasks_p1 @smoke
   Scenario: 868 Replace a machine
     When I add a new MozyPro partner:
       | period | base plan | root role               |

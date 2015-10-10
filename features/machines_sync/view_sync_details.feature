@@ -37,7 +37,7 @@ Feature: View Sync Details
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120016 @machines_sync @bus @tasks_p1
+  @TC.120016 @machines_sync @bus @tasks_p1 @smoke
   Scenario: 120016:Add sync container for user with one active machine and one deleted machine[ME]
     When I add a new MozyEnterprise partner:
       | period | users | server plan |

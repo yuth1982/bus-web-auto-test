@@ -8,7 +8,7 @@ Feature: login as admins
  #  Test Suite : Log In Screen
 
 ##########################################################################
-  @TC.126033 @bus @admin @tasks_p1
+  @TC.126033 @bus @admin @tasks_p1 @smoke
   Scenario: 126033 Reset Admin Password from www.mozypro.com
     When I add a new MozyPro partner:
       | period | base plan |
@@ -139,7 +139,7 @@ Feature: login as admins
       | email             |
       | <%=@admin.email%> |
 
-  @TC.121833 @bus @admin @tasks_p1 @ldap_sequence
+  @TC.121833 @bus @admin @tasks_p1 @ldap_sequence @smoke
   Scenario: 121833 New LDAP login through LDAP process
     When I act as partner by:
       | email                        |
@@ -1422,7 +1422,7 @@ Feature: login as admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.123404 @bus @admin @tasks_p1
+  @TC.123404 @bus @admin @tasks_p1 @smoke
   Scenario: 123404 HIPAA MozyEnterprise login bus after activating and changing password
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  | security |

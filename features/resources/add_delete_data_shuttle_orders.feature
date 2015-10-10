@@ -4,7 +4,7 @@ Feature:
   Background:
     Given I log in bus admin console as administrator
 
-  @bus @TC.12624 @resources @tasks_p1
+  @bus @TC.12624 @resources @tasks_p1 @smoke
   Scenario: 12624 Tiered Pricing - Add Link (1843GB And Less)
     When I add a new MozyPro partner:
       | period  | base plan | server plan | net terms |
