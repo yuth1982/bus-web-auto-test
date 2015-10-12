@@ -64,10 +64,12 @@ module Bus
     # Returns nothing
     def select_auth(provider, save = true)
       case provider
-      when 'Mozy'
-        provider_mozy_rd.check
-      when 'Directory Service'
-        provider_ldap_rd.check
+        when 'Mozy'
+          wait_until{provider_mozy_rd.visible?}
+          provider_mozy_rd.check
+        when 'Directory Service'
+          wait_until{provider_ldap_rd.visible?}
+          provider_ldap_rd.check
       else
         raise "Unable to find provider of #{provider}"
       end
@@ -280,6 +282,7 @@ module Bus
     # Public: The message show after saving changes
     #
     def result_message
+      wait_until{authentication_policies_edit_errors.visible?}
       authentication_policies_edit_errors.text
     end
 
