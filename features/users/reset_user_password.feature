@@ -115,9 +115,9 @@ Feature: reset user password
       | TC.126032.User | (default user group) | Desktop      | 10            | 1       | yes          |
     Then 1 new user should be created
     And I search user by:
-      | keywords   |
-      | @user_name |
-    And I view user details by TC.126032.User
+      | keywords    |
+      | @user_email |
+    And I view user details by newly created user email
     And I update the user password to default password
     Then I navigate to resetpassword user login page
     And I click forget your password link
@@ -130,17 +130,15 @@ Feature: reset user password
     Then I reset password with reset password
     And I will see reset password massage Your password has been changed.
     Then I navigate to resetpassword user login page
-    Then I log in bus pid console with:
-      | username                 | password                                  |
-      | <%=@new_users[0].email%> | <%=CONFIGS['global']['test_hipaa_pwd'] %> |
+    Then I log in bus admin console with user name @new_users[0].email and password reset password
     And the user log out bus
     When I log in bus admin console as administrator
     Then I act as partner by:
       | name                      |
       | DO NOT CHANGE SUBDOMAIN   |
     And I search user by:
-      | keywords   |
-      | @user_name |
+      | keywords    |
+      | @user_email |
     And I view user details by TC.126032.User
     Then I delete user
 
