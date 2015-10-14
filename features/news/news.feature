@@ -6,11 +6,13 @@ Feature: News in Admin Console
   @TC.22067 @bus @news @tasks_p1 @smoke
   Scenario: 22067:'New Features!' Section Link As The 'New Features' Link In The Take-over Welcome Page
     When I navigate to New Features! section from bus admin console page
+    Then I navigate to new window
     Then I check the new window title is New Features
 
   @TC.22068 @bus @news @tasks_p1
   Scenario: 22068:'Quick Start Guide' Section Link As The Quick Start Guide Link In The Take-over Welcome Page
     When I navigate to Quick Start Guide section from bus admin console page
+    Then I navigate to new window
     Then I check the new window title is Administrator Quick Start
 
   @TC.22070 @bus @news @tasks_p1
@@ -26,6 +28,7 @@ Feature: News in Admin Console
   @TC.22072 @bus @news @tasks_p1
   Scenario: 22072:'Maintenance/Outages' Link Unchanged
     When I navigate to Maintenance/Outages section from bus admin console page
+    Then I navigate to new window
     Then I check the new window title is Mozy Support Main Home Page
 
   @TC.22069 @bus @news @tasks_p1

@@ -331,5 +331,9 @@ module Bus
       (list_capabilities_table.all(:xpath, "//td[2]/a").size > 0)? true:false
     end
 
+    def get_new_window_page_title()
+      page.driver.browser.title
+    end
+
   end
 end
