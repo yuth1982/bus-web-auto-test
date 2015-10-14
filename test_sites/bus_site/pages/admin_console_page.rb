@@ -332,6 +332,7 @@ module Bus
     end
 
     def get_new_window_page_title()
+      page.execute_multiline_script('return window.stop')
       page.driver.browser.title
     end
 
