@@ -129,6 +129,7 @@ Feature: Standard user Login
       | @user_name |
     And I view user details by TC.123748.User
     And I click Send activation email again
+    Then I wait for 30 seconds
     Then the user has activated the account with default password
     Then I use keyless activation to activate devices
       | machine_name    | user_name                   | machine_type |

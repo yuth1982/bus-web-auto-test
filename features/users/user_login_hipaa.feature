@@ -184,6 +184,7 @@ Feature: Hipaa user Login
       | @user_name |
     And I view user details by TC.123414.User
     And I click Send activation email again
+    Then I wait for 30 seconds
     Then the user has activated the account with Hipaa password
     Then I use keyless activation to activate devices
       | machine_name    | user_name                   | machine_type |
@@ -344,6 +345,7 @@ Feature: Hipaa user Login
       | @user_name |
     And I view user details by TC.120066.User
     Then I click Send activation email again
+    Then I wait for 30 seconds
     Then the user has activated the account with Hipaa password
     Then I navigate to user login page with partner ID
     Then I log in bus pid console with:
