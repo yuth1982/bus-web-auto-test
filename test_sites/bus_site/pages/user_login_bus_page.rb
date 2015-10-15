@@ -29,6 +29,7 @@ module Bus
       new_password_tb.type_text(confirm_password)
       new_password_confirm_tb.type_text(confirm_password)
       new_password_change_btn.click
+      wait_until_bus_section_load
       alert_accept if alert_present?
     end
 
