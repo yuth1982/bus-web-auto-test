@@ -712,7 +712,7 @@ Feature: Change VAT Number
     And API* Aria tax exempt status for newly created partner aria id should be State/Province and Federal/National Tax Exempt
     When I act as newly created partner account
     Then I open partner details by partner name in header
-    When I change the partner contact information to
+    When I change the partner contact information to:
       | Contact Country: |
       | United States    |
     Then Partner contact information is changed

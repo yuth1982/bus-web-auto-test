@@ -423,7 +423,7 @@ Then /^VAT number shouldn't be changed and the error message should be:$/ do  |m
   @bus_site.admin_console_page.partner_details_section.error_message.should eq(message)
 end
 
-And /^I change contact country and VAT number to:$/ do |country_vat_table|
+And /^I change contact country and VAT number (to:|default password)$/ do |password, country_vat_table|
   attributes = country_vat_table.hashes.first
   attributes.each do |header,attribute| #can use variable inside <%= %>
     attribute.replace ERB.new(attribute).result(binding)
@@ -438,7 +438,8 @@ And /^I change contact country and VAT number to:$/ do |country_vat_table|
   else
     @bus_site.admin_console_page.partner_details_section.set_vat_for_partner_admin(vat) unless vat.nil?
   end
-  @bus_site.admin_console_page.partner_details_section.submit_change
+  password = QA_ENV['bus_password'] if password == 'to:'
+  @bus_site.admin_console_page.partner_details_section.submit_change(password)
 end
 
 Then /^I am (.+) and I change contact country to (.+)$/ do |admin_type, country_type|

@@ -729,8 +729,9 @@ module Bus
       find(:xpath, "//input[@id='vat_num']").visible?
     end
 
-    def submit_change
+    def submit_change(password = QA_ENV['bus_password'])
       submit_btn.click
+      verify_password(password)
     end
 
 
