@@ -742,7 +742,7 @@ module Bus
     def verify_password(password)
       wait_until{ verify_passowrd_input.visible? } # wait for load delete password div
       verify_passowrd_input.type_text(password)
-      submit_popup_btn.lick
+      submit_popup_btn.click
       wait_until{ !verify_passowrd_input.visible? }
     end
 
