@@ -28,6 +28,9 @@ module Bus
     element(:submit, id: "submit_button")
     element(:payment_info_table, css: "form#change_cc_form table")
 
+    element(:verify_passowrd_input, xpath: "//div[@class='popup-window']//input[@name='password']")
+    element(:submit_delete_btn, :css, 'div[class=popup-window-footer] input[value=Submit]')
+
     #these elements will pop up when change billing country with inconsistent value
     element(:contact_vat_number, xpath: "//input[@id='vat_num']")
     element(:contact_chg_country_select, xpath: "//select[@id='country_and_vat_contact_country']")
@@ -73,8 +76,16 @@ module Bus
       cc_exp_yyyy_select.select(credit_card.expire_year) unless credit_card.expire_year.nil?
     end
 
-    def submit_contact_cc_changes
+    def submit_contact_cc_changes(password = QA_ENV['bus_password'])
       submit.click
+      verify_password(password)
+    end
+
+    def verify_password(password)
+      wait_until{ verify_passowrd_input.visible? } # wait for load delete password div
+      verify_passowrd_input.type_text(password)
+      submit_delete_btn.click
+      wait_until{ !verify_passowrd_input.visible? }
     end
 
     # Public: Messages for change payment information actions

@@ -80,6 +80,10 @@ module Bus
     element(:contact_chg_country_select, xpath: "//select[@id='country_and_vat_contact_country']")
     element(:submit_btn, xpath: "//input[@id='submit_button']")
 
+    # verify password pop up
+    element(:verify_passowrd_input, xpath: "//div[@class='popup-window']//input[@name='password']")
+    element(:submit_delete_btn, :css, 'div[class=popup-window-footer] input[value=Submit]')
+
     # API Key
     element(:api_key_div, css: 'div[id^=api-key-box-] fieldset div:nth-child(1)')
     element(:create_or_delete_api_key_link, css: 'div[id^=api-key-box-] fieldset div:nth-child(1) a')
@@ -729,8 +733,17 @@ module Bus
       submit_btn.click
     end
 
-    def save_changes
+
+    def save_changes(password = QA_ENV['bus_password'])
       save_changes_btn.click
+      verify_password(password)
+    end
+
+    def verify_password(password)
+      wait_until{ verify_passowrd_input.visible? } # wait for load delete password div
+      verify_passowrd_input.type_text(password)
+      submit_delete_btn.click
+      wait_until{ !verify_passowrd_input.visible? }
     end
 
     # Public: Success messages for partner details section

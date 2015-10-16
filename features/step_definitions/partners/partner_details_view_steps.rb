@@ -349,7 +349,7 @@ Then /^account type should be changed to (.+) successfully$/ do |type|
   @bus_site.admin_console_page.partner_details_section.account_type.should include(type)
 end
 
-When /^I change the partner contact information to:$/ do |info_table|
+When /^I change the partner contact information (to:|default password)$/ do |password, info_table|
   # table is a | address          | city          | state          | zip_code                 | country          |
   new_info = info_table.hashes.first
   new_info.keys.each do |header|
@@ -372,7 +372,8 @@ When /^I change the partner contact information to:$/ do |info_table|
         raise "Unexpected #{new_info[header]}"
     end
   end
-  @bus_site.admin_console_page.partner_details_section.save_changes
+  password = QA_ENV['bus_password'] if password == 'to:'
+  @bus_site.admin_console_page.partner_details_section.save_changes(password)
 end
 
 Then /^Partner contact information is changed$/ do
