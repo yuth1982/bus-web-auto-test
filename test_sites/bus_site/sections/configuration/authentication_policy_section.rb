@@ -46,6 +46,7 @@ module Bus
     element(:user_name, xpath: "//ul[@class='tab-panes']/li[3]//div[3]/div/input")
     element(:name, xpath: "//ul[@class='tab-panes']/li[3]//div[2]/div/input")
     element(:loading_link, xpath: "//a[contains(@onclick,'toggle_module')]")
+    element(:sync_safeguards_checkbox, id: "data_sync_options_safeguard")
     # Directory Service Provider
     element(:provider_ldap_pull_rd, id: "data_provider_ldap")
     element(:provider_ldap_push_rd, id: "data_provider_ldap_push")
@@ -519,6 +520,19 @@ module Bus
       fillin_port(connection_info.port)
       fillin_base_dn(connection_info.base_dn)
       fillin_user(connection_info.bind_user, connection_info.bind_password) unless (provider_ldap_push_rd.checked? or connection_info.bind_user.nil?)
+
+      # Sync Rules, unselect Enable synchronization safeguards
+      check_uncheck_sync_safeguard(false)
+    end
+
+    def check_uncheck_sync_safeguard(check = true)
+      select_tab("Sync Rules")
+      wait_until{sync_safeguards_checkbox.visible?}
+      if check
+        sync_safeguards_checkbox.check
+      else
+        sync_safeguards_checkbox.uncheck
+      end
     end
 
     def fillin_auth_url(auth_url)
