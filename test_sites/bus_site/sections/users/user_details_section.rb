@@ -95,7 +95,7 @@ module Bus
     element(:refund_submit_input, xpath: "//span[starts-with(@id,'refund-transaction-')]/form/input[@value='Submit']")
     element(:refunded_amount_td, xpath: "//div[@class='show-details']//table[@class='table-view']//tr[1]//td[4]")
 
-    elements(:all_billing_info, xpath: "//td[starts-with[text(),'Cybersource']/../../tr")
+    elements(:all_billing_info, xpath: "//td[starts-with(text(),'Cybersource')]/../../tr")
 
 
 
