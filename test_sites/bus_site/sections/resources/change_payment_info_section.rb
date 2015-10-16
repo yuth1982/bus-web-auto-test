@@ -85,7 +85,6 @@ module Bus
       wait_until{ verify_passowrd_input.visible? } # wait for load delete password div
       verify_passowrd_input.type_text(password)
       submit_popup_btn.click
-      wait_until{ !verify_passowrd_input.visible? }
     end
 
     # Public: Messages for change payment information actions
@@ -100,7 +99,8 @@ module Bus
     end
 
     def modify_cc_error_message
-      cc_error_div.text
+      cc_error_div.text                            exit
+
     end
 
     # Public: Billing information

@@ -41,6 +41,7 @@ Feature: User sync
     And I input server connection settings
       | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
       | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
@@ -88,6 +89,7 @@ Feature: User sync
     And I input server connection settings
       | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
       | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
@@ -223,6 +225,7 @@ Feature: User sync
     And I input server connection settings
       | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
       | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
@@ -294,6 +297,7 @@ Feature: User sync
     And I input server connection settings
       | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
       | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
@@ -590,7 +594,12 @@ Feature: User sync
       | email                       |
       |qa8+saml+test+admin@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
-    And I use Directory Service as authentication provider
+    And I use Directory Service as authentication provider without saving
+    And I choose LDAP Pull as Directory Service provider without saving
+    And I input server connection settings
+      | Server Host  | Protocol  | SSL Cert | Port  | Base DN  | Bind Username | Bind Password  |
+      | @server_host | @protocol |          | @port | @base_dn | @bind_user    | @bind_password |
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I click Sync Rules tab
@@ -681,6 +690,7 @@ Feature: User sync
       | qa8+saml+test+admin@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I click Sync Rules tab
@@ -842,9 +852,10 @@ Feature: User sync
   Scenario: 17595 UserProvision - Suspend user after several days of not synced
     When I act as partner by:
       | email                       |
-      |qa8+saml+test+admin@mozy.com |
+      | qa8+saml+test+admin@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I click Sync Rules tab
@@ -941,6 +952,7 @@ Feature: User sync
     And I input server connection settings
       | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
       | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
     And I delete a user dev-17546-test2 in the AD
@@ -1138,6 +1150,7 @@ Feature: User sync
     And I input server connection settings
       | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
       | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
@@ -1213,6 +1226,7 @@ Feature: User sync
       | encoding_fedid@auto.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I click Sync Rules tab

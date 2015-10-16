@@ -216,6 +216,11 @@ Then /^Authentication Policy has been updated successfully$/ do
   @bus_site.admin_console_page.authentication_policy_section.result_message.should == 'Authentication Policy has been updated successfully.'
 end
 
+And /^I (uncheck|check) enable synchronization safeguards in Sync Rules tab$/ do |action|
+  checked = (action == 'check'? true:false)
+  @bus_site.admin_console_page.authentication_policy_section.check_uncheck_sync_safeguard(checked)
+end
+
 When /^I change the (.+) order by the following rule:$/ do |type, table|
   r = table.raw
   r.each do |row|
