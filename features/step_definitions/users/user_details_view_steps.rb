@@ -260,7 +260,7 @@ When /^I get the machine id for client (\d+) by license key (.+)$/ do |client_in
 end
 
 When(/^I update (.+) used quota to (\d+) GB$/) do |machine, quota|
-  machine.replace ERB.new(machine).result(binding)
+  machine.replace ERB.new(machine).result(binding) unless machine.to_s.match(/^[1-9]\d*$/)
   if machine.to_s.match(/^[1-9]\d*$/).nil?
     machine = @bus_site.admin_console_page.user_details_section.get_machine_id(machine)
   else
