@@ -522,7 +522,7 @@ module Bus
       fillin_user(connection_info.bind_user, connection_info.bind_password) unless (provider_ldap_push_rd.checked? or connection_info.bind_user.nil?)
 
       # Sync Rules, unselect Enable synchronization safeguards
-      check_uncheck_sync_safeguard(false)
+      #check_uncheck_sync_safeguard(false)
     end
 
     def check_uncheck_sync_safeguard(check = true)
@@ -533,6 +533,7 @@ module Bus
       else
         sync_safeguards_checkbox.uncheck
       end
+      sleep 2
     end
 
     def fillin_auth_url(auth_url)
