@@ -42,6 +42,10 @@ module Bus
     element(:email_notification_value_text, xpath: "//dt[contains(text(),'Notifications')]/../dd//span[1]")
     element(:statement_value_text, xpath: "//dt[contains(text(),'Statements')]/../dd//span[1]")
 
+    # verify password pop up
+    element(:verify_passowrd_input, xpath: "//div[@class='popup-window']//input[@name='password']")
+    element(:submit_popup_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Submit']")
+
     # Public: account details table description column
     #
     # Example
@@ -101,8 +105,15 @@ module Bus
       change_username_link.click
       username_tb.type_text username
       submit_edit_username_btn.click
+      verify_password(QA_ENV['bus_password'])
       alert_accept
-      wait_until{ !submit_edit_username_btn.visible? }
+       wait_until{ !submit_edit_username_btn.visible? }
+    end
+
+    def verify_password(password)
+      wait_until{ verify_passowrd_input.visible? } # wait for load delete password div
+      verify_passowrd_input.type_text(password)
+      submit_popup_btn.click
     end
 
     def edit_display_name(displayname)
