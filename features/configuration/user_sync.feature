@@ -45,6 +45,7 @@ Feature: User sync
     And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
+    And I click Connection Settings tab
     When I Test Connection for AD
     Then test connection message should be Test passed
     And I click Sync Rules tab
@@ -94,6 +95,7 @@ Feature: User sync
     And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
+    And I click Connection Settings tab
     When I Test Connection for AD
     Then test connection message should be Test passed
     When I click Connection Settings tab
@@ -231,6 +233,7 @@ Feature: User sync
     And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
+    And I click Connection Settings tab
     When I Test Connection for AD
     Then test connection message should be Test passed
     And I click Sync Rules tab
@@ -304,6 +307,7 @@ Feature: User sync
     And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
+    And I click Connection Settings tab
     When I Test Connection for AD
     Then test connection message should be Test passed
     And I click Sync Rules tab
@@ -572,6 +576,7 @@ Feature: User sync
       | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
+    And I click Connection Settings tab
     When I Test Connection for AD
     Then test connection message should be Test passed
     When I click Sync Rules tab
@@ -594,9 +599,13 @@ Feature: User sync
 
   @TC.17592 @firefox_profile @bus @2.1 @direct_ldap_integration @use_provision @qa8
   Scenario: 17592 UserProvision - Deleted users in BUS can be resumed
+    When I search partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    Then I get current partner name
     When I act as partner by:
-      | email                       |
-      |qa8+saml+test+admin@mozy.com |
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider without saving
     And I choose LDAP Pull as Directory Service provider without saving
@@ -620,8 +629,8 @@ Feature: User sync
       | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                            | filter |
-      | <%=CONFIGS['fedid']['user_email']%> | None   |
+      | keywords                            | filter | user type                  |
+      | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     Then User search results should be:
       | User                                | Name                               | User Group |
       | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%> | dev        |
@@ -677,8 +686,8 @@ Feature: User sync
       | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                            | filter |
-      | <%=CONFIGS['fedid']['user_email']%> | None   |
+      | keywords                            | filter | user type                  |
+      | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     Then User search results should be:
       | User                                | Name                               | User Group  |
       | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%> | dev         |
@@ -689,6 +698,10 @@ Feature: User sync
 
   @TC.17593 @firefox_profile  @bus @2.1 @direct_ldap_integration @use_provision @qa8
   Scenario: 17593 UserProvision - Suspended users in BUS can't be resumed
+    When I search partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    Then I get current partner name
     When I act as partner by:
       | email                        |
       | qa8+saml+test+admin@mozy.com |
@@ -708,12 +721,12 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0  |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                            | filter |
-      | <%=CONFIGS['fedid']['user_email']%> | None   |
+      | keywords                            | filter | user type                  |
+      | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     Then User search results should be:
       | User                                | Name                               | User Group  |
       | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%> | dev         |
@@ -743,11 +756,11 @@ Feature: User sync
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 1 succeeded, 0 failed |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                            | filter |
-      | <%=CONFIGS['fedid']['user_email']%> | None   |
+      | keywords                            | filter | user type                  |
+      | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     Then User search results should be:
-      | User                                | Name                                    | User Group  |
-      | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%>      | dev         |
+      | User                                | Name                               | User Group |
+      | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%> | dev        |
     When I view user details by <%=CONFIGS['fedid']['user_email']%>
     And The user status should be Suspended
     When I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
@@ -769,15 +782,15 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0  |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                            | filter |
-      | <%=CONFIGS['fedid']['user_email']%> | None   |
+      | keywords                            | filter | user type                  |
+      | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     Then User search results should be:
-      | User                                 | Name                                    | User Group  |
-      | <%=CONFIGS['fedid']['user_email']%>  | <%=CONFIGS['fedid']['user_name']%>      | dev         |
+      | User                                 | Name                               | User Group |
+      | <%=CONFIGS['fedid']['user_email']%>  | <%=CONFIGS['fedid']['user_name']%> | dev        |
     When I view user details by <%=CONFIGS['fedid']['user_email']%>
     Then The user status should be Suspended
     When I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
@@ -789,13 +802,17 @@ Feature: User sync
       |qa8+saml+test+admin@mozy.com |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                            | filter |
-      | <%=CONFIGS['fedid']['user_email']%> | None   |
+      | keywords                            | filter | user type                  |
+      | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     And I view user details by <%=CONFIGS['fedid']['user_email']%>
     And I activate the user
 
   @TC.17594 @firefox_profile @bus @2.1 @direct_ldap_integration @use_provision @qa8
   Scenario: 17594 UserProvision - Delete user after several days of not synced
+    When I search partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    Then I get current partner name
     When I act as partner by:
       | email                       |
       |qa8+saml+test+admin@mozy.com |
@@ -817,8 +834,8 @@ Feature: User sync
       | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                            | filter |
-      | <%=CONFIGS['fedid']['user_email']%> | None   |
+      | keywords                            | filter | user type                  |
+      | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     Then User search results should be:
       | User                                | Name                                    | User Group  |
       | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%>      | dev         |
@@ -843,8 +860,8 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                      |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
       | keywords                            | filter |
@@ -855,6 +872,10 @@ Feature: User sync
 
   @TC.17595 @firefox_profile @bus @2.1 @direct_ldap_integration @use_provision @qa8
   Scenario: 17595 UserProvision - Suspend user after several days of not synced
+    When I search partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    Then I get current partner name
     When I act as partner by:
       | email                       |
       | qa8+saml+test+admin@mozy.com |
@@ -877,8 +898,8 @@ Feature: User sync
       | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                            | filter |
-      | <%=CONFIGS['fedid']['user_email']%> | None   |
+      | keywords                            | filter | user type                  |
+      | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     Then User search results should be:
       | User                                | Name                                    | User Group  |
       | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%>      | dev         |
@@ -907,8 +928,8 @@ Feature: User sync
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                            | filter |
-      | <%=CONFIGS['fedid']['user_email']%> | None   |
+      | keywords                            | filter | user type                  |
+      | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     Then User search results should be:
       | User                                | Name                                    | User Group  |
       | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%>      | dev         |
@@ -923,8 +944,8 @@ Feature: User sync
       |qa8+saml+test+admin@mozy.com |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                            | filter |
-      | <%=CONFIGS['fedid']['user_email']%> | None   |
+      | keywords                            | filter | user type                  |
+      | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     And I view user details by <%=CONFIGS['fedid']['user_email']%>
     And I activate the user
 
@@ -962,6 +983,7 @@ Feature: User sync
     Then Authentication Policy has been updated successfully
     And I delete a user dev-17546-test2 in the AD
     And I delete a user dev-17546-test3 in the AD
+    And I click Connection Settings tab
     When I Test Connection for AD
     Then test connection message should be Test passed
     When I click Sync Rules tab
@@ -1159,6 +1181,7 @@ Feature: User sync
     And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
+    And I click Connection Settings tab
     When I Test Connection for AD
     Then test connection message should be Test passed
     When I click Sync Rules tab

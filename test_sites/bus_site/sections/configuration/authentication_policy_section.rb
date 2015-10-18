@@ -520,20 +520,15 @@ module Bus
       fillin_port(connection_info.port)
       fillin_base_dn(connection_info.base_dn)
       fillin_user(connection_info.bind_user, connection_info.bind_password) unless (provider_ldap_push_rd.checked? or connection_info.bind_user.nil?)
-
-      # Sync Rules, unselect Enable synchronization safeguards
-      #check_uncheck_sync_safeguard(false)
     end
 
     def check_uncheck_sync_safeguard(check = true)
-      select_tab("Sync Rules")
       wait_until{sync_safeguards_checkbox.visible?}
       if check
         sync_safeguards_checkbox.check
       else
         sync_safeguards_checkbox.uncheck
       end
-      sleep 1
     end
 
     def fillin_auth_url(auth_url)
