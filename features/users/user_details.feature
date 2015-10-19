@@ -311,8 +311,11 @@ Feature: User Details
     And I input server connection settings
       | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
       | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+    And I click Sync Rules tab
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
+    And I click Connection Settings tab
     When I Test Connection for AD
     Then test connection message should be Test passed
     When I click Sync Rules tab
@@ -475,8 +478,11 @@ Feature: User Details
     And I input server connection settings
       | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
       | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+    And I click Sync Rules tab
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
+    And I click Connection Settings tab
     When I Test Connection for AD
     Then test connection message should be Test passed
     When I click Sync Rules tab
