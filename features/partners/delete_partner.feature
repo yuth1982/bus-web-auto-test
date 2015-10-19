@@ -4,7 +4,7 @@ Feature: delete partner
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.123785 @bus @delete_partner @tasks_p1 @smoke
+  @TC.13785 @bus @delete_partner @tasks_p1 @smoke
   Scenario: Mozy-13785:Deletion is triggered by admins in the bus Mozypro,business,yearly
     When I add a new MozyPro partner:
       | period  | base plan | coupon              | country       |
@@ -20,7 +20,7 @@ Feature: delete partner
       | status_label |
       | CANCELLED    |
 
-  @TC.123786 @bus @delete_partner @tasks_p1
+  @TC.13786 @bus @delete_partner @tasks_p1
   Scenario: Mozy-13786:Deletion is triggered by Aria Mozypro, reseller , monthly
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | coupon              | country       |
@@ -46,7 +46,7 @@ Feature: delete partner
       | Aria ID  | Partner       |
       | @aria_id | @company_name |
 
-  @TC.123816 @bus @delete_partner @tasks_p1
+  @TC.13816 @bus @delete_partner @tasks_p1
   Scenario: Mozy-13816:can not automatically refundor credit a deleted partner mozypro,reseller,biennially
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -63,7 +63,7 @@ Feature: delete partner
     Then API* There is no refunds for aria account newly created partner aria id
     Then API* The Aria account newly created partner aria id payment amount should be 2310
 
-  @TC.123862 @bus @delete_partner @tasks_p1
+  @TC.13862 @bus @delete_partner @tasks_p1
   Scenario: Mozy-13862:can not automatically refund or credit a deleted partner Mozypro DE, reseller, yearly
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | create under    | vat number  | coupon              | country | cc number        |
