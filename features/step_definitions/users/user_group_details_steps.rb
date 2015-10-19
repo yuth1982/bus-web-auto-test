@@ -99,6 +99,6 @@ Then /^(.+) client configuration should be (.+)$/ do |type, config_value|
 end
 
 Then /^The key appears marked as a data shuttle order$/ do
-  @bus_site.admin_console_page.user_group_details_section.get_data_shuttle_keys.sort.should == @order.license_key.sort
+  @bus_site.admin_console_page.user_group_details_section.data_shuttle_keys_hashes[0]['Product Key'].should == @order.license_key[0]+ " *"
 end
 

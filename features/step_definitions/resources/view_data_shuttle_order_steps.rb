@@ -23,19 +23,10 @@ end
 
 Then /^data shuttle order details info should be$/ do |orders_table|
   actual = @bus_site.admin_console_page.order_details_section.order_details_hash
-  @order.licensee_key[0]
-  expected_keys = @order.license_key
-  expected = orders_table.hashes
-  expected.each_with_index { |value, index |
-    value.keys.each{|key|
-      if key == 'License Key'
-        if !value[key].match(/^@order\.licensee_key\[\d+\]$/).nil?
-           n = value[key].match(/\d+/)[0]
-           value[key]= expected_keys[n]
-        end
-      end
-      actual[index][key].should == value[key]
-    }
+  expected = orders_table.hashes[0]
+  expected.keys.each{|key|
+    expected[key].replace ERB.new(expected[key]).result(binding) if key == 'License Key'
+    actual[0][key].to_s.should == expected[key].to_s
   }
 end
 

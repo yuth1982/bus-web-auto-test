@@ -24,7 +24,7 @@ module Bus
     element(:server_selected_option, xpath: "//div/label[text()='Server']/../select/option[@selected='selected']")
 
     # Keys tab section
-    elements(:data_shuttle_keys_td, xpath: "//td/span[text()=' *']/..")
+    elements(:data_shuttle_table, xpath: "//table/thead/tr/th[text()='Product Key']/../../..")
 
     # Public: User group details information
     #
@@ -139,8 +139,8 @@ module Bus
       end
     end
 
-    def get_data_shuttle_keys
-      data_shuttle_keys_td.select{|element|element.text}
+    def data_shuttle_keys_hashes
+      data_shuttle_table[0].hashes
     end
   end
 end

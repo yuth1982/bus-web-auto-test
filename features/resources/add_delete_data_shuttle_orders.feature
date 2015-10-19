@@ -8,7 +8,7 @@ Feature:
   Scenario: 12624 Tiered Pricing - Add Link (1843GB And Less)
     When I add a new MozyPro partner:
       | period  | base plan | server plan | net terms |
-      | 12      | 32 TB     | yes         | yes       |
+      | 1       | 32 TB     | yes         | yes       |
     And New partner should be created
     And I change root role to FedID role
     When I act as newly created partner account
@@ -41,12 +41,12 @@ Feature:
     And I view partner details by newly created partner company name
     And Partner billing history should be:
       | Date  | Amount   | Total Paid | Balance Due |
-      | today | $375.00  | $0.00      | $375.00     |
+      | today | $375.00  | $0.00      | $131,493.24  |
     And I act as newly created partner account
     And I navigate to Billing History section from bus admin console page
     Then Billing history table should be:
       | Date  | Amount  | Total Paid | Balance Due |
-      | today | $375.00 | $375.00    | $0.00       |
+      | today | $375.00 | $0.00      | $131,493.24  |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -125,12 +125,12 @@ Feature:
     And I view partner details by newly created partner company name
     And Partner billing history should be:
       | Date  | Amount     | Total Paid | Balance Due |
-      | today | $2,275.00  | $0.00      | $2,275.00   |
+      | today | $2,275.00  | $0.00      | $133,393.24 |
     And I act as newly created partner account
     And I navigate to Billing History section from bus admin console page
     Then Billing history table should be:
       | Date  | Amount    | Total Paid | Balance Due |
-      | today | $2,275.00 | $2,275.00  | $0.00       |
+      | today | $2,275.00 | $0.00      | $133,393.24 |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -138,7 +138,7 @@ Feature:
   Scenario: 12714 Verify Payment Information on Partner (Cybersource)
     When I add a new MozyPro partner:
       | period  | base plan | server plan | net terms |
-      | 12      | 32 TB     | yes         | yes       |
+      | 24      | 28 TB     | yes         | yes       |
     And New partner should be created
     And I change root role to FedID role
     When I act as newly created partner account
@@ -165,20 +165,20 @@ Feature:
     When I search order in view data shuttle orders section by newly created partner company name
     Then order search results in data shuttle orders section should be:
       | # of Drives | Drives Ordered |
-      | 1           | Yes            |
+      | 5           | Yes            |
     When I navigate to Search / List Partners section from bus admin console page
     And I search partner by newly created partner company name
     And I view partner details by newly created partner company name
     And I act as newly created partner account
-    And I navigate to User Group List section from bus admin console page
-    When I view (default user group) user group details
+    When I navigate to User Group List section from bus admin console page
+    And I view user group details by clicking group name: (default user group)
     And I open Keys tab
     Then The key appears marked as a data shuttle order
     And I navigate to Billing History section from bus admin console page
     Then Billing history table should be:
-      | Date  | Amount  | Total Paid | Balance Due |
-      | today | $475.00 | $475.00    | $0.00       |
-      | today | $190.00 | $190.00    | $0.00       |
+      | Date  | Amount      | Total Paid | Balance Due |
+      | today | $475.00     | $0.00      | $131,593.24 |
+      | today | $131,118.24 | $0.00      | $131,118.24 |
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -206,8 +206,9 @@ Feature:
     And I refresh process data shuttle section
     Then Data shuttle order summary should be:
       | Description         | Quantity | Total    |
-      | Data Shuttle 1.8 TB | 1        | $275.00  |
-      | Total Price         |          | $275.00  |
+      | Data Shuttle 1.8 TB | 1        | €199.00  |
+      | Total Price         |          | €238.80  |
+      | VAT                 |          | €39.80   |
     When I click finish button
     Then Data shuttle order should be created
     When I search order in view data shuttle orders section by newly created partner company name
@@ -218,21 +219,20 @@ Feature:
     And I search partner by newly created partner company name
     And I view partner details by newly created partner company name
     And I act as newly created partner account
-    And I navigate to User Group List section from bus admin console page
-    When I view (default user group) user group details
+    When I navigate to User Group List section from bus admin console page
+    And I view user group details by clicking group name: (default user group)
     And I open Keys tab
     Then The key appears marked as a data shuttle order
     And I navigate to Billing History section from bus admin console page
     Then Billing history table should be:
       | Date  | Amount  | Total Paid | Balance Due |
-      | today | $475.00 | $475.00    | $0.00       |
-      | today | $190.00 | $190.00    | $0.00       |
+      | today | €238.80 | €0.00      | €344.38     |
+      | today | €105.58 | €0.00      | €105.58     |
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
   @bus @TC.12717 @resources @tasks_p1
-  Scenario: 12716 Verify VAT on EMEA Partner
-    When I add a new MozyPro partner:
+  Scenario: 12717 Verify VAT on EMEA Partner
     When I add a new MozyPro partner:
       | period | base plan | country  | create under    | net terms |
       | 24     | 500 GB    | Germany  | MozyPro Germany | yes       |
@@ -255,8 +255,9 @@ Feature:
     And I refresh process data shuttle section
     Then Data shuttle order summary should be:
       | Description         | Quantity | Total    |
-      | Data Shuttle 1.8 TB | 1        | $275.00  |
-      | Total Price         |          | $275.00  |
+      | Data Shuttle 1.8 TB | 1        | €199.00  |
+      | Total Price         |          | €236.81  |
+      | VAT                 |          | €37.81   |
     When I click finish button
     Then Data shuttle order should be created
     When I search order in view data shuttle orders section by newly created partner company name
@@ -268,17 +269,17 @@ Feature:
     And I view partner details by newly created partner company name
     And Partner billing history should be:
       | Date  | Amount     | Total Paid | Balance Due |
-      | today | $2,275.00  | $0.00      | $2,275.00   |
+      | today | €236.81    | €0.00      | €3,985.06   |
     And I act as newly created partner account
-    And I navigate to User Group List section from bus admin console page
-    When I view (default user group) user group details
+    When I navigate to User Group List section from bus admin console page
+    And I view user group details by clicking group name: (default user group)
     And I open Keys tab
     Then The key appears marked as a data shuttle order
     And I navigate to Billing History section from bus admin console page
     Then Billing history table should be:
-      | Date  | Amount  | Total Paid | Balance Due |
-      | today | $475.00 | $475.00    | $0.00       |
-      | today | $190.00 | $190.00    | $0.00       |
+      | Date  | Amount    | Total Paid | Balance Due |
+      | today | €236.81   | €0.00      | €3,985.06   |
+      | today | €3,748.25 | €0.00      | €3,748.25   |
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -306,8 +307,8 @@ Feature:
     And I refresh process data shuttle section
     Then Data shuttle order summary should be:
       | Description         | Quantity | Total    |
-      | Data Shuttle 5.4 TB | 1        | $475.00  |
-      | Total Price         |          | $475.00  |
+      | Data Shuttle 7.2 TB | 1        | $575.00  |
+      | Total Price         |          | $575.00  |
     When I click finish button
     Then Data shuttle order should be created
     When I navigate to Search / List Partners section from bus admin console page
@@ -317,12 +318,12 @@ Feature:
     And I navigate to new window
     Then Invoice head should include newly created partner company name
     And Billing details of partner invoice should be:
-      | Billing Detail |              |          |                        |       |               |                   |             |
-      | From Date      | To Date      | Quantity | Description            | Price | VAT(GB - 20%) | Percent of Period | Total Price |
-      | today          | after 1 year |    1     | MozyHome 50 GB         | £4.16 | £0.83         | 100.0%            | £4.99       |
-      |                |              |          | Total                  |       |               |                   | £4.99       |
-      | today          |              |          | Electronic Payment     |       |               |                   | £-4.99      |
-      |                |              |          | Balance                |       |               |                   | £0.00       |
+      | Billing Detail |              |          |                        |          |         |                   |               |
+      | From Date      | To Date      | Quantity | Description            | Price    | Tax     | Percent of Period | Total Price   |
+      |                |              |          | Previous Balance       |          |         |                   | $ 131,118.24  |
+      | today          | today        |          | Data Shuttle 7.2 TB    | $ 575.00 | $ 0.00  | 100.00%           | $ 575.00      |
+      |                |              |          | Total                  |          |         |                   | $ 575.00      |
+      |                |              |          | Amount Due             |          |         |                   | $ 131,693.24  |
     And I navigate to old window
     And I search and delete partner account by newly created partner company name
 
