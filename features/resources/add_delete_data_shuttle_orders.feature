@@ -177,8 +177,8 @@ Feature:
     And I navigate to Billing History section from bus admin console page
     Then Billing history table should be:
       | Date  | Amount      | Total Paid | Balance Due |
-      | today | $475.00     | $0.00      | $131,593.24 |
-      | today | $131,118.24 | $0.00      | $131,118.24 |
+      | today | $475.00     | $0.00      | $219,502.06 |
+      | today | $219,027.06 | $0.00      | $219,027.06 |
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
