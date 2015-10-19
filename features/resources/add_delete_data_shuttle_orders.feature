@@ -41,12 +41,12 @@ Feature:
     And I view partner details by newly created partner company name
     And Partner billing history should be:
       | Date  | Amount   | Total Paid | Balance Due |
-      | today | $375.00  | $0.00      | $131,493.24  |
+      | today | $375.00  | $0.00      | $12,294.84  |
     And I act as newly created partner account
     And I navigate to Billing History section from bus admin console page
     Then Billing history table should be:
       | Date  | Amount  | Total Paid | Balance Due |
-      | today | $375.00 | $0.00      | $131,493.24  |
+      | today | $375.00 | $0.00      | $12,294.84  |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
