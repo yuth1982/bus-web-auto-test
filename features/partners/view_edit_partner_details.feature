@@ -50,7 +50,6 @@ Feature: BUS Regression partner test
     And Partner billing history should be:
       | Date  | Amount | Total Paid | Balance Due |
       | today | $9.99  | $9.99      | $0.00       |
-      | today | $0.00  | $0.00      | $0.00       |
     And I delete partner account
 
   # This test cases requires an OEM partner with API Key

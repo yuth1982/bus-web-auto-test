@@ -1021,11 +1021,11 @@ Feature: Change VAT Number
     And I update payment contact information to:
       | country |
       | China   |
-    And I save payment information changes
+    And I save payment information changes with default password
     Then I change VAT number from change payment information section:
       | VAT Number    |
       | FR08410091490 |
-    And I save payment information changes
+    And I save payment information changes with default password
     Then Contact country and billing information should be updated:
     """
     Your contact country and billing information was successfully updated.
@@ -1056,11 +1056,11 @@ Feature: Change VAT Number
     And I update payment contact information to:
       | country |
       | China   |
-    And I save payment information changes
+    And I save payment information changes with default password
     Then I change VAT number from change payment information section:
       | VAT Number     |
       | invalid_number |
-    And I save payment information changes
+    And I save payment information changes with default password
     Then Contact country and billing information shouldn't be updated:
     """
      VAT number is not valid
@@ -1091,11 +1091,11 @@ Feature: Change VAT Number
     And I update payment contact information to:
       | country |
       | China   |
-    And I save payment information changes
+    And I save payment information changes with default password
     Then I change VAT number from change payment information section:
       | VAT Number     |
       | DE812321109    |
-    And I save payment information changes
+    And I save payment information changes with default password
     Then Contact country and billing information shouldn't be updated:
     """
      VAT number is not valid
@@ -1126,14 +1126,14 @@ Feature: Change VAT Number
     And I update payment contact information to:
       | country |
       | China   |
-    And I save payment information changes
+    And I save payment information changes with default password
     Then I change VAT number from change payment information section:
       | VAT Number    |
       | @blank_space  |
     And I update payment contact information to:
       | country |
       | France  |
-    And I save payment information changes
+    And I save payment information changes with default password
     Then Contact country and billing information should be updated:
     """
     Your contact country and billing information was successfully updated.
