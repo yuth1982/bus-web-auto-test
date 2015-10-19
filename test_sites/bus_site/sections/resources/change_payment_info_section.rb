@@ -99,7 +99,7 @@ module Bus
     end
 
     def modify_cc_error_message
-      cc_error_div.text                            exit
+      cc_error_div.text
 
     end
 
