@@ -68,6 +68,8 @@ module Bus
     #
     # Returns nothing
     def update_credit_card_info(credit_card)
+      wait_until_bus_section_load
+      wait_until {modify_credit_card_cb.visible?}
       modify_credit_card_cb.check
       cc_name_tb.type_text(credit_card.full_name) unless credit_card.full_name.nil?
       cc_no_tb.type_text(credit_card.number) unless credit_card.number.nil?
@@ -95,12 +97,15 @@ module Bus
     #
     # Returns success or error message text
     def messages
+      wait_until_bus_section_load
+      wait_until {message_div.visible?}
       message_div.text
     end
 
     def modify_cc_error_message
+      wait_until_bus_section_load
+      wait_until {cc_error_div.visible?}
       cc_error_div.text
-
     end
 
     # Public: Billing information
