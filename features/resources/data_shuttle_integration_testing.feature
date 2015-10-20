@@ -13,13 +13,13 @@ Feature:
   Scenario: 12676 Partner purchase data shuttle order
     When I add a new MozyPro partner:
       | period  | base plan | server plan | net terms |
-      | 12      | 500 GB    | yes         | yes       |
+      | 12      | 4 TB      | yes         | yes       |
     And New partner should be created
     And I change root role to FedID role
     When I act as newly created partner account
     And I add new user(s):
       | user_group           | storage_type  | storage_limit | devices |
-      | (default user group) | Desktop       | 10240         | 1       |
+      | (default user group) | Desktop       | 10            | 1       |
     And I search user by:
       | keywords   |
       | @user_name |
@@ -74,7 +74,7 @@ Feature:
   Scenario: 12784 Billing history for purchase data shuttle order
     When I add a new MozyPro partner:
       | period  | base plan | server plan | net terms |
-      | 12      | 52 TB     | yes         | yes       |
+      | 12      | 20 TB     | yes         | yes       |
     And New partner should be created
     And I change root role to FedID role
     When I act as newly created partner account
@@ -103,7 +103,7 @@ Feature:
     And I navigate to Billing History section from bus admin console page
     Then Billing history table should be:
       | Date  | Amount  | Total Paid | Balance Due |
-      | today | $375.00 | $0.00      | $131,493.24 |
+      | today | $375.00 | $0.00      | $82,323.90  |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
