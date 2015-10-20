@@ -30,6 +30,7 @@ Then /^data shuttle order details info should be$/ do |orders_table|
   }
 end
 
+
 Then /^the data shuttle order details should contain valid inbound number$/ do
   @bus_site.admin_console_page.view_data_shuttle_orders_section.view_latest_order
   @ship_table = @bus_site.admin_console_page.order_details_section.shipping_tracking_table_rows[0]
@@ -52,8 +53,7 @@ end
 Then /^Add drive to data shuttle order message should include (.+)$/ do |messages|
   @bus_site.admin_console_page.order_details_section.messages.include?(messages).should be_true
 end
-
 And /^I should not query resources orders record from DB for the data shuttle order$/ do
-  DBHelper.get_model_audits(@seed_id.to_i).should == "0"
+  DBHelper.get_count_seed_device_id(@seed_id.to_i).should == "0"
 end
 

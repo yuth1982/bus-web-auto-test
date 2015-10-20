@@ -36,6 +36,8 @@ Feature: login as admins
       | Server Host  | Protocol  | SSL Cert | Port  | Base DN  | Bind Username | Bind Password  |
       | @server_host | @protocol |          | @port | @base_dn | @bind_user    | @bind_password |
     And I check enable sso for admins to log in with their network credentials
+    And I click Sync Rules tab
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes with password default password
     Then Authentication Policy has been updated successfully
     And I click Sync Rules tab
@@ -112,6 +114,8 @@ Feature: login as admins
       | Server Host  | Protocol  | SSL Cert | Port  | Base DN  | Bind Username | Bind Password  |
       | @server_host | @protocol |          | @port | @base_dn | @bind_user    | @bind_password |
     And I check enable sso for admins to log in with their network credentials
+    And I click Sync Rules tab
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I click SAML Authentication tab
     And I clear SAML Authentication information
     And I input SAML authentication information

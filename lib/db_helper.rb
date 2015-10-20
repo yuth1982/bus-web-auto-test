@@ -409,6 +409,7 @@ module DBHelper
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
       sql = "SELECT * from model_audits where action_audit_id = #{action_audit_id} order by id desc limit 1;"
+      Log.debug sql
       c = conn.exec(sql)
       if c.values[0].nil?
         []
@@ -448,10 +449,11 @@ module DBHelper
     end
   end
 
-  def get_model_audits(seed_id)
+  def get_count_seed_device_id(seed_id)
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
       sql = "SELECT count(*) from pro_resource_orders where seed_device_order_id = #{seed_id};"
+      Log.debug sql
       c = conn.exec(sql)
       c.values[0][0]
      rescue PG::Error => e
