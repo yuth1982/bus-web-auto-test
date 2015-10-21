@@ -33,6 +33,10 @@ When /^I save payment information changes$/ do
   @bus_site.admin_console_page.change_payment_info_section.submit_contact_cc_changes
 end
 
+When /^I save payment information changes with (default password|Standard password)$/ do |password|
+  @bus_site.admin_console_page.change_payment_info_section.submit_contact_cc_changes(password)
+end
+
 Then /^Payment information should be updated$/ do
   @bus_site.admin_console_page.change_payment_info_section.messages.should include("Your billing information has been successfully updated.")
 end

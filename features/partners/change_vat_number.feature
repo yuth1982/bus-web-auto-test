@@ -21,7 +21,7 @@ Feature: Change VAT Number
       | taxpayer_id  |
       |              |
     And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
-    When I change the partner contact information to:
+    When I change the partner contact information default password
       | VAT Number:     |
       | IT03018900245   |
     Then Partner contact information is changed
@@ -51,9 +51,9 @@ Feature: Change VAT Number
     And I log out bus admin console
     And I log in bus admin console as new partner admin
     Then I open partner details by partner name in header
-    When I change the partner contact information to:
-      | VAT Number:     |
-      | IT03018900245   |
+    When I change the partner contact information default password
+      | VAT Number:   |
+      | IT03018900245 |
     Then VAT number shouldn't be changed and the error message should be:
     """
     Error updating VAT info. Please try again.
@@ -81,7 +81,7 @@ Feature: Change VAT Number
     And I log out bus admin console
     And I log in bus admin console as new partner admin
     Then I open partner details by partner name in header
-    When I change the partner contact information to:
+    When I change the partner contact information default password
       | VAT Number:     |
       | IT03            |
     Then VAT number shouldn't be changed and the error message should be:
@@ -111,7 +111,7 @@ Feature: Change VAT Number
     And I log out bus admin console
     And I log in bus admin console as new partner admin
     Then I open partner details by partner name in header
-    When I change the partner contact information to:
+    When I change the partner contact information default password
       | VAT Number:     |
       |                 |
     Then Partner contact information is changed
@@ -194,7 +194,7 @@ Feature: Change VAT Number
     And I log out bus admin console
     And I log in bus admin console as new partner admin
     Then I open partner details by partner name in header
-    And I change contact country and VAT number to:
+    And I change contact country and VAT number default password
       | Country | VAT Number    |
       | France  | FR08410091490 |
     Then Change contact country and VAT number should succeed and the message should be:
@@ -224,7 +224,7 @@ Feature: Change VAT Number
     And I log out bus admin console
     And I log in bus admin console as new partner admin
     Then I open partner details by partner name in header
-    And I change contact country and VAT number to:
+    And I change contact country and VAT number default password
       | Country | VAT Number    |
       | France  | DE812321109   |
     Then Change contact country and VAT number shouldn't succeed and the message should be:
@@ -254,7 +254,7 @@ Feature: Change VAT Number
     And I log out bus admin console
     And I log in bus admin console as new partner admin
     Then I open partner details by partner name in header
-    And I change contact country and VAT number to:
+    And I change contact country and VAT number default password
       | Country | VAT Number    |
       | France  | invalid11     |
     Then Change contact country and VAT number shouldn't succeed and the message should be:
@@ -284,7 +284,7 @@ Feature: Change VAT Number
     And I log out bus admin console
     And I log in bus admin console as new partner admin
     Then I open partner details by partner name in header
-    And I change contact country and VAT number to:
+    And I change contact country and VAT number default password
       | Country | VAT Number    |
       | France  | @blank_space  |
     Then Change contact country and VAT number should succeed and the message should be:
@@ -1021,11 +1021,11 @@ Feature: Change VAT Number
     And I update payment contact information to:
       | country |
       | China   |
-    And I save payment information changes
+    And I save payment information changes with default password
     Then I change VAT number from change payment information section:
       | VAT Number    |
       | FR08410091490 |
-    And I save payment information changes
+    And I save payment information changes with default password
     Then Contact country and billing information should be updated:
     """
     Your contact country and billing information was successfully updated.
@@ -1056,11 +1056,11 @@ Feature: Change VAT Number
     And I update payment contact information to:
       | country |
       | China   |
-    And I save payment information changes
+    And I save payment information changes with default password
     Then I change VAT number from change payment information section:
       | VAT Number     |
       | invalid_number |
-    And I save payment information changes
+    And I save payment information changes with default password
     Then Contact country and billing information shouldn't be updated:
     """
      VAT number is not valid
@@ -1091,11 +1091,11 @@ Feature: Change VAT Number
     And I update payment contact information to:
       | country |
       | China   |
-    And I save payment information changes
+    And I save payment information changes with default password
     Then I change VAT number from change payment information section:
       | VAT Number     |
       | DE812321109    |
-    And I save payment information changes
+    And I save payment information changes with default password
     Then Contact country and billing information shouldn't be updated:
     """
      VAT number is not valid
@@ -1126,14 +1126,14 @@ Feature: Change VAT Number
     And I update payment contact information to:
       | country |
       | China   |
-    And I save payment information changes
+    And I save payment information changes with default password
     Then I change VAT number from change payment information section:
       | VAT Number    |
       | @blank_space  |
     And I update payment contact information to:
       | country |
       | France  |
-    And I save payment information changes
+    And I save payment information changes with default password
     Then Contact country and billing information should be updated:
     """
     Your contact country and billing information was successfully updated.

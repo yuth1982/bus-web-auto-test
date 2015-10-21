@@ -252,7 +252,12 @@ module DBHelper
       sql = "select * from password_policies where pro_partner_id = #{partner_id} and (user_type = '#{type}' or user_type = 'all');"
       puts sql
       c = conn.exec sql
-      c[0]
+      if c.num_tuples.zero?
+        #0 db record searched out
+        nil
+      else
+        c[0]
+      end
     rescue PG::Error => e
       puts "postgres error: #{e}"
     ensure
@@ -383,4 +388,81 @@ module DBHelper
     end
   end
 
+  def get_action_audits(action,admin_id,type)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "SELECT * from action_audits where action = '#{action}' and effective_admin_id = #{admin_id} order by id desc limit 1;"
+      sql = "SELECT * from action_audits where action = '#{action}' and actual_admin_id = #{admin_id} order by id desc limit 1;" if type == 'actual'
+      Log.debug sql
+      c = conn.exec(sql)
+      [c.values[0][0],c.values[0][1],c.values[0][2], c.values[0][3],c.values[0][4], c.values[0][5]]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  #   id   | action_audit_id | column_name  | table_name | record_id |               changed_from               |                changed_to                | action |      performed_at
+  # 736289 |        12839186 | passwordhash | admins     |    563261 | 9bc34549d565d9505b287de0cd20ac77be1d3f2c | 86ba9a22970c2feb2d3095f889acf4c4e42473d5 | update | 2015-08-14 20:45:55-06
+  def get_model_audits(action_audit_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "SELECT * from model_audits where action_audit_id = #{action_audit_id} order by id desc limit 1;"
+      Log.debug sql
+      c = conn.exec(sql)
+      if c.values[0].nil?
+        []
+      else
+        [c.values[0][0],c.values[0][1],c.values[0][2], c.values[0][3],c.values[0][4], c.values[0][5], c.values[0][6], c.values[0][7]]
+      end
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_info_from_admins(username)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "SELECT * from admins where username='#{username}' order by id desc limit 1;"
+      Log.debug sql
+      c = conn.exec(sql)
+      [c.field_values('id')[0],c.field_values('passwordhash')[0]]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def update_users_passwords_expires_at_yesterday(user_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "update users_passwords set expires_at = TIMESTAMP 'yesterday' where user_id='#{user_id}';"
+      c = conn.exec(sql)
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_count_seed_device_id(seed_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "SELECT count(*) from pro_resource_orders where seed_device_order_id = #{seed_id};"
+      Log.debug sql
+      c = conn.exec(sql)
+      c.values[0][0]
+     rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
 end
+
+

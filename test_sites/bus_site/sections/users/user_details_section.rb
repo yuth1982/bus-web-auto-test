@@ -32,6 +32,11 @@ module Bus
     element(:cancel_stash_btn, xpath: "//form[starts-with(@id,'stash-form-')]//a[text()='(cancel)']")
     element(:send_invitation_link, xpath: "//a[text()='(Send Invitation Email)']")
 
+    # Install Region Override
+    element(:change_region_link, xpath: "//form[contains(@id,'install-region-override-form')]/span[1]/a")
+    element(:change_region_select, xpath: "//div[@class='show-details']//select[@id='install_region_override']")
+    element(:change_region_submit_btn, xpath: "//form[contains(@id,'install-region-override-form')]/span[2]/input")
+
     # Change Stash Quota
     element(:change_stash_quota_link, css: "a[id^=edit_quota_for_user_show]")
     element(:cancel_change_stash_quota_link, css: "a[id^=cancel_edit_quota_for_user_show_]")
@@ -77,6 +82,21 @@ module Bus
 
     # License Keys
     element(:send_keys_btn, xpath: '//div[starts-with(@id, "all-license-keys")]/descendant::input[starts-with(@id, "send_key")]')
+
+    #downgrade
+    element(:expand_subscriptions_th, xpath: "//th[contains(@id,'sub-')]")
+    element(:edit_plan_a, xpath: "//a[text()='Edit Plan (Downgrade Only)']")
+    element(:mozyhome_user_quota_td, xpath: "//table[@class='mini-table'][2]/tbody/tr[1]/td[1]")
+    element(:mozyhome_user_status_td, xpath: "//table[@class='mini-table'][2]/tbody/tr[1]/td[4]")
+
+    # refund link
+    element(:refund_a, xpath: "//a[text()='Refund now']")
+    element(:refund_amount_input, id: "refund_amount")
+    element(:refund_submit_input, xpath: "//span[starts-with(@id,'refund-transaction-')]/form/input[@value='Submit']")
+    element(:refunded_amount_td, xpath: "//div[@class='show-details']//table[@class='table-view']//tr[1]//td[4]")
+
+    elements(:all_billing_info, xpath: "//td[starts-with(text(),'Cybersource')]/../../tr")
+
 
 
     # Public: User details storage, devices, storage limit hash
@@ -279,6 +299,10 @@ module Bus
     # @return [] nothing
     def click_delete_stash
       delete_stash_link.click
+    end
+
+    def check_sync_exist
+      !(locate(:xpath,"//table[@class='mini-table']//a[text()='Sync']").nil?)
     end
 
     # Public: Return user back up details table rows
@@ -489,12 +513,45 @@ module Bus
     end
 
     def edit_password(password)
-      change_user_password_link.click
-      wait_until_bus_section_load
+      if !new_password_tb.visible?
+        change_user_password_link.click
+        wait_until_bus_section_load
+      end
       new_password_tb.type_text(password)
       new_password_confirm_tb.type_text(password)
       new_password_change_btn.click
       wait_until_bus_section_load
+    end
+
+    def edit_password_with_incorrect_pass(password)
+      if !new_password_tb.visible?
+        change_user_password_link.click
+        wait_until_bus_section_load
+      end
+      new_password_tb.type_text(password)
+      new_password_confirm_tb.type_text(password)
+      new_password_change_btn.click
+      text = alert_text
+      alert_accept
+      text
+    end
+
+    def edit_password_with_incorrect_pass(password)
+      if !new_password_tb.visible?
+        change_user_password_link.click
+        wait_until_bus_section_load
+      end
+      new_password_tb.type_text(password)
+      new_password_confirm_tb.type_text(password)
+      new_password_change_btn.click
+      wait_until { alert_present? }
+      text = alert_text
+      alert_accept
+      text
+    end
+
+    def has_change_user_password_link
+      all(:xpath, "//a[text()='Change User Password']").size > 0
     end
 
     def change_device_quota(count, type=nil)
@@ -648,6 +705,60 @@ module Bus
 
     def click_user_group_details_link
       user_group_details_link.click
+    end
+
+    # Install Region Override
+    def change_region(region)
+      change_region_link.click
+      change_region_select.select(region)
+      change_region_submit_btn.click
+    end
+
+    def click_send_activation_email_again
+      find(:xpath, "//a[text()='Send activation email again']").click
+    end
+
+    def expand_subscriptions
+      expand_subscriptions_th.click
+    end
+
+    def click_edit_plan
+      edit_plan_a.click
+    end
+
+    def downgrade_user(match)
+      if match.eql?('50GB')
+        find(:xpath, "//a[text()='Change to MozyHome 50 GB']").click
+      else
+        find(:xpath, "//a[text()='Revert to Free']").click
+      end
+      alert_accept
+      wait_until_bus_section_load
+    end
+
+    def get_mozyhome_user_quota
+      mozyhome_user_quota_td.text
+    end
+
+    def get_mozyhome_user_status
+      mozyhome_user_status_td.text
+    end
+
+    def refund_user(amount)
+      refund_a.click
+      before_amounts = refund_amount_input[:value]
+      amount = before_amounts if amount.eql?('all')
+      refund_amount_input.type_text(amount)
+      refund_submit_input.click
+      alert_accept
+      amount
+    end
+
+    def get_refunded_amount
+      refunded_amount_td.text
+    end
+    def get_user_billed_info
+      all_billing_info.size
     end
 
     private

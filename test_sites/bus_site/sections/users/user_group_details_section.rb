@@ -23,6 +23,9 @@ module Bus
     element(:desktop_selected_option, xpath: "//div/label[text()='Desktop']/../select/option[@selected='selected']")
     element(:server_selected_option, xpath: "//div/label[text()='Server']/../select/option[@selected='selected']")
 
+    # Keys tab section
+    elements(:data_shuttle_table, xpath: "//table/thead/tr/th[text()='Product Key']/../../..")
+
     # Public: User group details information
     #
     # Example:
@@ -136,5 +139,8 @@ module Bus
       end
     end
 
+    def data_shuttle_keys_hashes
+      data_shuttle_table[0].hashes
+    end
   end
 end

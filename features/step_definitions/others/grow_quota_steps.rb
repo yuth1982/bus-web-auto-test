@@ -14,12 +14,18 @@ When /^I upload data to device(| by batch)$/ do |upload_type, grow_quota_table|
   machine_id = attr['machine_id'] || @machine_id
   amount = attr['GB'] || 1
   @grow_quota_response = [] if @grow_quota_response.nil?
+  if attr['password'].nil?
+    password = CONFIGS['global']['test_pwd']
+  else
+    password = attr['password']
+  end
+
 
   if upload_type == ' by batch'
-    @grow_quota_response[0] = SSHTDSGrowQuota.grow_quota(user_email, CONFIGS['global']['test_pwd'], machine_id, amount)
+    @grow_quota_response[0] = SSHTDSGrowQuota.grow_quota(user_email, password, machine_id, amount)
   else
     amount.to_i.times do |i|
-      @grow_quota_response[i] = SSHTDSGrowQuota.grow_quota(user_email, CONFIGS['global']['test_pwd'], machine_id, '1')
+      @grow_quota_response[i] = SSHTDSGrowQuota.grow_quota(user_email, password, machine_id, '1')
     end
   end
 end

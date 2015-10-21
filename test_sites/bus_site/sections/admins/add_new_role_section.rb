@@ -7,7 +7,9 @@ module Bus
     element(:message_div, css: 'div#roles-new-errors ul')
 
     element(:submit_btn, xpath: "//div[@id='roles-new-content']//input[contains(@value, 'Save Changes')]")
-
+    element(:role_user_group_input, xpath: "//td[@id='preferred_parent_user_group_id_div']//input[@type='text']")
+    elements(:role_user_group_search_value, xpath: "//div[contains(@id,'auto_complete')]//li")
+    element(:role_user_group_search_button, xpath: "//td[@id='preferred_parent_user_group_id_div']/span")
 
     # Public: Add a new role with given role object information
     #
@@ -17,10 +19,24 @@ module Bus
     #   @bus_admin_console_page.add_new_role_section.add_new_role(role_obj)
     #
     # Returns nothing
-    def add_new_role(role_obj)
+    def add_new_role(role_obj,save = true)
       role_select.select(role_obj.type) unless role_obj.type.nil?
       name_tb.type_text(role_obj.name)
       role_parent_select.visible? && role_parent_select.select(role_obj.parent) unless role_obj.parent.nil?
+      search_group_values = []
+      if !role_obj.user_group.nil?
+        role_user_group_input.type_text(role_obj.user_group)
+        page.driver.execute_script("document.querySelector('img[alt=\"Search-button-icon\"]').click()")
+        sleep 1
+        search_group_values = role_user_group_search_value.map{|element|element.text}
+        find(:xpath,"//li[text()='#{role_obj.user_group}']").click unless role_obj.user_group == ''
+        sleep 1
+      end
+      submit_btn.click if save
+      search_group_values
+    end
+
+    def click_save_changes_button
       submit_btn.click
     end
 
@@ -47,5 +63,10 @@ module Bus
     def messages
       message_div.text
     end
+
+    def check_editable_ug_field
+      (role_user_group_input[:disabled] == 'disabled') & (role_user_group_search_button[:visibility] == 'hidden')
+    end
+
   end
 end

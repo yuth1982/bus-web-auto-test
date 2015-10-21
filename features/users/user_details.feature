@@ -311,8 +311,11 @@ Feature: User Details
     And I input server connection settings
       | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
       | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+    And I click Sync Rules tab
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
+    And I click Connection Settings tab
     When I Test Connection for AD
     Then test connection message should be Test passed
     When I click Sync Rules tab
@@ -475,8 +478,11 @@ Feature: User Details
     And I input server connection settings
       | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
       | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+    And I click Sync Rules tab
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
+    And I click Connection Settings tab
     When I Test Connection for AD
     Then test connection message should be Test passed
     When I click Sync Rules tab
@@ -601,3 +607,38 @@ Feature: User Details
       | 1    | 3         | Desktop      |
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
+
+  @TC.122231 @bus @tasks_p1
+  Scenario: Mozy-122231:Refund MH User
+    When I am at dom selection point:
+    And I add a phoenix Home user:
+      | period | base plan | country       |
+      | 1      | 50 GB     | United States |
+    Then the user is successfully added.
+    When I log in bus admin console as administrator
+    And I search user by:
+      | keywords       |
+      | @mh_user_email |
+    And I view user details by newly created MozyHome username
+    Then I refund the user with all amount
+    Then I check the refund amount should be correct
+    And I delete user
+
+  @TC.22264 @bus @tasks_p1
+  Scenario: Mozy-22264:verify that users can update payment info
+    When I am at dom selection point:
+    And I add a phoenix Home user:
+      | period | base plan | country       |
+      | 1      | 50 GB     | United States |
+    Then the user is successfully added.
+    When I log in bus admin console as administrator
+    And I search user by:
+      | keywords       |
+      | @mh_user_email |
+    And I view user details by newly created MozyHome username
+    Then I get the user id
+    Then I force current MozyHome account to billed
+    And I wait for 5 seconds
+    Then The current user should be billed
+    Then I delete user
+

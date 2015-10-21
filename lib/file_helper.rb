@@ -83,6 +83,11 @@ module FileHelper
   # Returns nothing
   def clean_up_client
     Dir.glob("#{default_download_path}/mozy*").each{ |path| File.delete(path) }
+    Dir.glob("#{default_download_path}/*.part").each{ |path| File.delete(path) }
+    Dir.glob("#{default_download_path}/*.deb").each{ |path| File.delete(path) }
+    Dir.glob("#{default_download_path}/*.rpm").each{ |path| File.delete(path) }
+    Dir.glob("#{default_download_path}/*.exe").each{ |path| File.delete(path) }
+    Dir.glob("#{default_download_path}/*.dmg").each{ |path| File.delete(path) }
   end
 
   # Public: delete *.csv files in download folder

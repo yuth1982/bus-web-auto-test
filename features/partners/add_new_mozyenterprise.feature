@@ -325,8 +325,8 @@ Feature: Add a new partner
        | private_group     | Shared               | 20               | Shared              | 50             | yes         |
      Then private_group user group should be created
      When I create a new client config:
-       | name | user group | type   | private_key       |
-       | private | private_group | Server | private_key |
+       | name | user group | type   | private key       |
+       | private | private_group | Server | only private key |
      And I add a new Itemized user group:
        | name              | desktop_storage_type | desktop_devices | server_storage_type | server_devices  | enable_stash|
        | ckey_group        | Shared               | 20               | Shared              | 50             | yes         |
@@ -388,8 +388,8 @@ Feature: Add a new partner
        | private_group     | Shared               | 20               | Shared              | 20             | yes         |
      Then private_group user group should be created
      When I create a new client config:
-       | name | user group | type   | private_key       |
-       | private | private_group | Server | private_key |
+       | name | user group | type   | private key       |
+       | private | private_group | Server | only private key |
      And I add a new Itemized user group:
        | name              | desktop_storage_type | desktop_devices | server_storage_type | server_devices  | enable_stash|
        | ckey_group        | Shared               | 20               | Shared              | 20             | yes         |

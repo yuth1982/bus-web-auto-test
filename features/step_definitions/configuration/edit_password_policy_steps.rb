@@ -30,3 +30,9 @@ Then /^Password policy updated successfully$/ do
   @bus_site.admin_console_page.edit_password_policy_section.message == 'Password policy updated successfully'
 end
 
+#if going to clear Max age , using 'I update Max age to unlimited days'
+Then /^I update Max age to (.+) days$/ do |days|
+  @bus_site.admin_console_page.edit_password_policy_section.update_max_age(days)
+  @bus_site.admin_console_page.edit_password_policy_section.save_policy
+  @bus_site.admin_console_page.edit_password_policy_section.wait_until_bus_section_load
+end

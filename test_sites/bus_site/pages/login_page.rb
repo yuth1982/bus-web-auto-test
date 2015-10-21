@@ -11,8 +11,14 @@ module Bus
     element(:password_tb, id: "password")
     element(:login_btn, css: "span.login_button")
     element(:logout_btn, xpath: "//a[text()='LOG OUT']")
-    element(:message_div, css: "div#inner-content div ul")
+    element(:message_div, xpath: "//div[@id='inner-content']//ul[@class='flash errors']")
     element(:set_dialect_select, id: "set_dialect")
+    element(:phoenix_login_error_msg, xpath:"//div[@id='main']//p[@class='error']")
+    element(:forget_password_link, xpath:"//a[text()='Forgot your password?']")
+    element(:captcha_input, id: "captcha")
+    element(:reset_password_continue_btn, xpath: "//input[@value='Continue']")
+    element(:reset_password_msg_div, xpath: "//div[@id='main']//p")
+    element(:start_using_mozy_btn, id: "start_using_mozy")
 
     # Public: Login bus admin console
     #
@@ -51,6 +57,8 @@ module Bus
     #
     # Returns nothing
     def logout
+      start_using_mozy_btn.click if has_start_using_mozy_btn?
+      alert_accept if alert_present?
       logout_btn.click
     end
 
@@ -65,6 +73,10 @@ module Bus
       message_div.text
     end
 
+    # return  phoenix log in page error message
+    def phoenix_login_error_messages
+      phoenix_login_error_msg.text
+    end
     # Public: Check if the log out link is present (implies user/partner is logged in)
     #
     # @param none
@@ -84,6 +96,40 @@ module Bus
           set_dialect_select.select('English')
           sleep 2
         end
+      end
+    end
+
+    def go_to_url(url)
+      visit(url)
+    end
+
+    def click_forget_password
+      forget_password_link.click
+    end
+
+    def reset_password(email)
+      wait_until{username_tb.visible?}
+      username_tb.type_text(email)
+      # need to up this later for captcha input
+      # captcha_input.type_text("")
+      reset_password_continue_btn.click
+    end
+
+    def reset_password_enter(password)
+      password_tb.type_text(password)
+      if all(:id, 'password2').size>0
+        find(:id, 'password2').type_text(password)
+      else
+        find(:id, 'password_confirmation').type_text(password)
+      end
+      reset_password_continue_btn.click
+    end
+
+    def reset_password_msg
+      if all(:xpath, "//div[@id='main']//p").size>0
+        find(:xpath, "//div[@id='main']//p").text
+      else
+        find(:xpath, "//ul[@class='flash successes']/li").text
       end
     end
   end

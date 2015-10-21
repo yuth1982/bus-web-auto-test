@@ -160,3 +160,12 @@ When(/^API\* I replace aria supplemental units plans for (.+)$/) do |aria_id, ta
   end
 
 end
+
+When /^API\* The Aria account (.+) payment amount should be (.+)$/ do |aria_id, amount|
+  transaction_id = AriaApi.get_acct_trans_history({:account_no=> aria_id.to_i})['history'][0]['transaction_id']
+  @aria_acc_details = AriaApi.get_payment_applications({:acct_no=> aria_id.to_i,:src_transaction_id=>transaction_id.to_i})['payment_applications'][0]['amount'].to_s.should == amount
+end
+
+When /^API\* There is no refunds for aria account (.+)$/ do |aria_id|
+  AriaApi.get_refund_details({:acct_no=> aria_id.to_i})['refund_details'].should be nil
+end

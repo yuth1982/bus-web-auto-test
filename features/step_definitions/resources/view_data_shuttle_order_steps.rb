@@ -12,12 +12,24 @@ Then /^I search order in view data shuttle orders section by (.+)$/ do |keywords
   @order_search_table = @bus_site.admin_console_page.view_data_shuttle_orders_section.order_results_hashes[0]
 end
 
-
 Then /^order search results in data shuttle orders section should be:$/ do |orders_table|
   actual = @order_search_table
   expected = orders_table.hashes[0]
-  expected.keys.each{|key| actual[key].should == expected[key]}
+  expected.keys.each{|key|
+    expected[key].replace ERB.new(expected[key]).result(binding) if key == 'Pro Partner Name'
+    actual[key].should == expected[key]
+  }
 end
+
+Then /^data shuttle order details info should be$/ do |orders_table|
+  actual = @bus_site.admin_console_page.order_details_section.order_details_hash
+  expected = orders_table.hashes[0]
+  expected.keys.each{|key|
+    expected[key].replace ERB.new(expected[key]).result(binding) if key == 'License Key'
+    actual[0][key].to_s.should == expected[key].to_s
+  }
+end
+
 
 Then /^the data shuttle order details should contain valid inbound number$/ do
   @bus_site.admin_console_page.view_data_shuttle_orders_section.view_latest_order
@@ -41,3 +53,7 @@ end
 Then /^Add drive to data shuttle order message should include (.+)$/ do |messages|
   @bus_site.admin_console_page.order_details_section.messages.include?(messages).should be_true
 end
+And /^I should not query resources orders record from DB for the data shuttle order$/ do
+  DBHelper.get_count_seed_device_id(@seed_id.to_i).should == "0"
+end
+

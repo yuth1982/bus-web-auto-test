@@ -221,6 +221,19 @@ Then /^(MozyPro|MozyEnterprise|Reseller) partner subscription period options sho
   @bus_site.admin_console_page.add_new_partner_section.available_periods(type).should == periods_table.headers
 end
 
+Then /^Security field options on add new partner page should be:$/ do |security_options|
+  @bus_site.admin_console_page.add_new_partner_section.available_security_options.should == security_options.headers
+end
+
+And /^Security field default value when add partner is blank$/ do
+  @bus_site.admin_console_page.add_new_partner_section.get_security_default_value.strip.should == ''
+end
+
+And /^HIPPA security tool tip appears next to the security drop-down$/ do
+  expected_text = "HIPAA (Health Insurance Portability and Accountabilty Act) rules apply to health care providers, health plans, and health care clearinghouses in the United States of America."
+  @bus_site.admin_console_page.add_new_partner_section.get_security_tooltip.should == expected_text
+end
+
 When /^I add a new sub partner:$/ do |sub_partner_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_partner'])
   @subpartner = Bus::DataObj::SubPartner.new(friendly_hash(sub_partner_table.hashes.first))

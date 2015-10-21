@@ -23,7 +23,7 @@ Transform /^newly created (Bundled|Itemized) user group name$/ do |type|
     when 'Itemized'
       @new_itemized_ug.name
     else
-     #Skipped
+      #Skipped
   end
 end
 
@@ -106,4 +106,5 @@ end
 Transform /^Hipaa user$/ do |step_arg|
   QA_ENV['hipaa_user']
 end
+
 

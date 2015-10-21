@@ -221,7 +221,13 @@ end
 Then /^stash device table in user details should be:$/ do |table|
   actual = @bus_site.admin_console_page.user_details_section.stash_table_hashes
   expected = table.hashes.first
-  expected.keys.each{ |header| actual[header].should == expected[header] }
+  expected.keys.each{ |header|
+    if expected[header] == '< a minute ago'
+      (actual[header].match(/^(< a|1) minute ago$/).nil?).should == false
+    else
+      actual[header].should == expected[header]
+    end
+  }
 end
 
 When /^I delete device by name: (.+)$/ do |device_name|
@@ -240,6 +246,10 @@ Then /^I update the user password to (.+)$/ do |password|
   @bus_site.admin_console_page.user_details_section.edit_password(password)
 end
 
+Then /^I update user password to incorrect password (.+) and get the error message:$/ do |password,message|
+  @bus_site.admin_console_page.user_details_section.edit_password_with_incorrect_pass(password).should == message
+end
+
 When(/^I get the machine_id by license_key$/) do
   @machine_id = DBHelper.get_machine_id_by_license_key(@license_key)
 end
@@ -250,7 +260,7 @@ When /^I get the machine id for client (\d+) by license key (.+)$/ do |client_in
 end
 
 When(/^I update (.+) used quota to (\d+) GB$/) do |machine, quota|
-  machine.replace ERB.new(machine).result(binding)
+  machine.replace ERB.new(machine).result(binding) if machine.to_s.match(/^[1-9]\d*$/).nil?
   if machine.to_s.match(/^[1-9]\d*$/).nil?
     machine = @bus_site.admin_console_page.user_details_section.get_machine_id(machine)
   else
@@ -356,6 +366,7 @@ end
 Then(/^set max message should be:$/) do | msg|
   @bus_site.admin_console_page.user_details_section.messages.should == msg
 end
+
 Then(/^The range of machine max for (.+) by tooltips should be:$/) do |machine, range|
   # table is a | 0   | 12  |
   tooltip = @bus_site.admin_console_page.user_details_section.machine_max_range(machine)
@@ -396,3 +407,80 @@ When /^I search and delete user account if it exists by (.+)/ do |account_name|
     @bus_site.admin_console_page.user_details_section.delete_user
   end
 end
+
+When /^I change user install override region to (.+)/ do |region|
+  @bus_site.admin_console_page.user_details_section.change_region(region)
+end
+
+Then /^I will( not)? see the change user password link$/ do |t|
+  if t.nil?
+    @bus_site.admin_console_page.user_details_section.has_change_user_password_link.should be_true
+  else
+    @bus_site.admin_console_page.user_details_section.has_change_user_password_link.should be_false
+  end
+end
+
+Then /^I click Send activation email again$/ do
+  @bus_site.admin_console_page.user_details_section.click_send_activation_email_again
+end
+
+When /^the user has activated the account with (.+)$/ do |password|
+
+    step %{I retrieve email content by keywords:}, table(%{
+       | to                       |
+       | <%=@new_users[0].email%> |
+  })
+    match = @mail_content.match(/https?:\/\/[\S]+.mozy[\S]+.[\S]+\/account\/set_password[\S]+/)
+    @activate_email_query = match[0] unless match.nil?
+
+  @bus_site.admin_console_page.open_admin_activate_page(@activate_email_query)
+  @freyja_site = FreyjaSite.new
+  @freyja_site.main_page.set_user_password(password)
+  @user_password = password
+end
+
+When /^I click delete sync device icon for the user$/ do
+  @bus_site.admin_console_page.user_details_section.click_delete_stash
+end
+
+And /^The button displayed on the pop up are (.+)$/ do |values|
+  @bus_site.admin_console_page.get_popup_buttons.should == values.split(' ')
+end
+
+Then /^The sync device (should not|should) be deleted$/ do |result|
+  exist = (result == 'should not'? true:false)
+  @bus_site.admin_console_page.user_details_section.check_sync_exist.should == exist
+end
+
+Then /^I downgrade mozyhome user to (50GB|Free)$/ do |match|
+  @bus_site.admin_console_page.user_details_section.expand_subscriptions
+  @bus_site.admin_console_page.user_details_section.click_edit_plan
+  @bus_site.admin_console_page.user_details_section.downgrade_user(match)
+end
+
+Then /^I verify mozyhome user plan is (50GB|Free) after downgrade$/ do |match|
+  quota = @bus_site.admin_console_page.user_details_section.get_mozyhome_user_quota
+  status = @bus_site.admin_console_page.user_details_section.get_mozyhome_user_status
+  if match.eql?('50GB')
+    quota.should == '50 GB'
+    status.should include 'Active'
+  else
+    status.should include 'Cancelled on'
+  end
+end
+
+Then /^I refund the user with (.+) amount$/ do |amount|
+  @amount = @bus_site.admin_console_page.user_details_section.refund_user(amount)
+end
+
+Then /^I check the refund amount should be correct$/ do
+  refunded_amount = @bus_site.admin_console_page.user_details_section.get_refunded_amount
+  refunded_amount[1..-1].should eq(@amount)
+end
+
+Then /^The current user should be billed$/ do
+  @bus_site.admin_console_page.user_details_section.refresh_bus_section
+  @bus_site.admin_console_page.user_details_section.wait_until_bus_section_load
+  (@bus_site.admin_console_page.user_details_section.get_user_billed_info > 1).should be_true
+end
+

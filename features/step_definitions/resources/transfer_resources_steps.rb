@@ -1,15 +1,20 @@
 #| server licences | server quota GB | desktop licences | desktop quota GB |
 #| 10              | 50              | 5                | 25               |
-When /^I transfer resources from (.+) to (.+) with:$/ do |source, target, resources_table|
+When /^I transfer resources from user group (.+) to partner (.+) and user group (.+) with:$/ do |source_group, target_partner, target_group, resources_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['transfer_resources'])
-  @source_group = source
-  @target_group = target
+  @source_group = source_group
+  @target_group = target_group
+  @target_partner = target_partner
   cells = resources_table.hashes.first
-  @bus_site.admin_console_page.transfer_resources_section.transfer_resources(@source_group, @target_group, cells['server_licenses'], cells['server_storage'], cells['desktop_licenses'], cells['desktop_storage'])
+  @bus_site.admin_console_page.transfer_resources_section.transfer_resources(@source_group, @target_partner, @target_group, cells['server_licenses'], cells['server_storage'], cells['desktop_licenses'], cells['desktop_storage'])
 end
 
 Then /^Resources should be transferred$/ do
-  @bus_site.admin_console_page.transfer_resources_section.messages.should == "Resources transferred from the #{@source_group} user group to the #{@target_group} user group."
+  if @target_partner == 'the same partner'
+    @bus_site.admin_console_page.transfer_resources_section.messages.should == "Resources transferred from the #{@source_group} user group to the #{@target_group} user group."
+  else
+    @bus_site.admin_console_page.transfer_resources_section.messages.should == "Resources transferred from the #{@source_group} user group to the #{@target_group} user group under #{@target_partner}."
+  end
 end
 
 When /^go to transfer resources and change the number of devices:$/ do |resource_table|

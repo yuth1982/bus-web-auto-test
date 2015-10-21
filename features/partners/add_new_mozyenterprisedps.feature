@@ -65,8 +65,8 @@ Scenario: 22365 Add New MozyEnterprise DPS Partner - US - Yearly - 2 TB
       | private_group | Shared      | yes          | yes            |
     Then private_group user group should be created
     When I create a new client config:
-      | name | user group | type   | private_key       |
-      | private | private_group | Server | private_key |
+      | name | user group | type   | private key       |
+      | private | private_group | Server | only private key |
     When I add a new Bundled user group:
       | name| storage_type | enable_stash | server_support |
       | ckey_group | Shared      | yes          | yes            |
@@ -130,8 +130,8 @@ Scenario: 22365 Add New MozyEnterprise DPS Partner - US - Yearly - 2 TB
       | private_group | Shared      | yes          | yes            |
     Then private_group user group should be created
     When I create a new client config:
-      | name | user group | type   | private_key       |
-      | private | private_group | Server | private_key |
+      | name | user group | type   | private key       |
+      | private | private_group | Server | only private key |
     When I add a new Bundled user group:
       | name| storage_type | enable_stash | server_support |
       | ckey_group | Shared      | yes          | yes            |

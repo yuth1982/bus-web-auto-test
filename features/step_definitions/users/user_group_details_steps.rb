@@ -97,3 +97,8 @@ Then /^(.+) client configuration should be (.+)$/ do |type, config_value|
       @bus_site.admin_console_page.user_group_details_section.desktop_config_value == config_value
   end
 end
+
+Then /^The key appears marked as a data shuttle order$/ do
+  @bus_site.admin_console_page.user_group_details_section.data_shuttle_keys_hashes[0]['Product Key'].should == @order.license_key[0]+ " *"
+end
+

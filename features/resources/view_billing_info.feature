@@ -128,3 +128,39 @@ Feature: View billing information
       | IT03018900245 |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
+
+  @TC.22041 @tasks_p1 @resources @need_test_account @bus
+  Scenario: 22041 Account Details, Billing Information appear correctly for Partners of Business
+    When I search partner by:
+      | name                       |
+      | M.B. Keller & Assocxiates  |
+    And I view partner details by M.B. Keller & Assocxiates
+    Then I should not see Subadmins part in partner details
+    And account details should be collapsed
+    And billing information should be collapsed
+    When I expand the billing information section
+    Then I should see Internal Billing part in partner details
+    And I should see Billing History part in partner details
+    And I click show link of billing history section
+    Then I should see Archived billing history part in partner details
+    When I expand the account details section
+    Then I should see Partner Details part in partner details
+    And I should see Discounts part in partner details
+    And I should see Account Attributes part in partner details
+    And I should see Key Types part in partner details
+    And I collapse the billing information section
+    And I collapse the account details section
+    When I expand the billing information section
+    Then I should see Internal Billing part in partner details
+    And I should see Billing History part in partner details
+    And I should see Archived billing history part in partner details
+    When I expand the account details section
+    Then I should see Partner Details part in partner details
+    And I should see Discounts part in partner details
+    And I should see Account Attributes part in partner details
+    And I should see Key Types part in partner details
+
+
+
+
+

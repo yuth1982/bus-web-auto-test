@@ -7,6 +7,7 @@ When /^I search partner by:$/ do |search_key_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_partner'])
   attributes = search_key_table.hashes.first
   keywords = (attributes['name'] || attributes['email'])
+  keywords.replace ERB.new(keywords).result(binding)
   keywords = keywords.gsub(/@company_name/,@partner.company_info.name).gsub(/@admin_email/,@partner.admin_info.email) unless @partner.nil?
   filter = attributes['filter'] || 'None'
   including_sub_partners = (attributes['including sub-partners'] || 'yes').eql?('yes')
@@ -53,6 +54,7 @@ end
 # Public: View admin details by click email in search partner results
 # Required: search list partner section must be visible
 When /^I view admin details by (.+)$/ do |partner_email|
+  partner_email = @subpartner.admin_email_address if partner_email == '@subpartner.admin_email_address'
   @bus_site.admin_console_page.search_list_partner_section.view_partner_detail(partner_email)
 end
 
@@ -99,3 +101,9 @@ end
 Then /^I will see (.+) in the search partner input box$/ do |search|
   @bus_site.admin_console_page.search_list_partner_section.search_input_text.should == search
 end
+
+Then /^I get current partner name$/ do
+  @current_partner_name = @bus_site.admin_console_page.search_list_partner_section.get_partner_name if @current_partner.nil?
+end
+
+

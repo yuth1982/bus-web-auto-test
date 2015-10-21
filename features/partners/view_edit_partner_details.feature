@@ -50,7 +50,6 @@ Feature: BUS Regression partner test
     And Partner billing history should be:
       | Date  | Amount | Total Paid | Balance Due |
       | today | $9.99  | $9.99      | $0.00       |
-      | today | $0.00  | $0.00      | $0.00       |
     And I delete partner account
 
   # This test cases requires an OEM partner with API Key
@@ -99,3 +98,212 @@ Feature: BUS Regression partner test
     Then New partner should be created
     And Partner API key should be empty
     And Partner ip whitelist should be There is no current API key.
+
+  @TC.122225 @bus @partners_setting @tasks_p1
+  Scenario: Mozy-122225:Click Settings Link
+    When I add a new MozyPro partner:
+      | period | base plan | net terms |
+      | 1      | 10 GB     | yes       |
+    Then New partner should be created
+    When I add partner settings
+      | Name                           | Value | Locked |
+      | mobile_access_enabled_external | t     | false   |
+    Then I delete partner account
+
+  @TC.122226 @bus @partners_setting @tasks_p1
+  Scenario: Mozy-122226:Edit partner settings
+    When I add a new MozyPro partner:
+      | period | base plan | net terms |
+      | 1      | 10 GB     | yes       |
+    Then New partner should be created
+    When I add partner settings
+      | Name                           | Value | Locked |
+      | mobile_access_enabled_external | t     | false  |
+    Then I verify partner settings
+      | Name                           | Value | Locked |
+      | mobile_access_enabled_external | t     | false  |
+    Then I delete partner account
+
+  @TC.122227 @bus @partner_setting @tasks_p1
+  Scenario: Mozy-122227:Lock setting as parent
+    When I add a new MozyPro partner:
+      | period | base plan |
+      | 1      | 100 GB    |
+    And New partner should be created
+    Then I change root role to FedID role
+    And Partner pooled storage information should be:
+      | Used | Available | Assigned | Used | Available | Assigned  |
+      | 0    | 100 GB    | 100 GB   | 0    | Unlimited | Unlimited |
+    And I act as newly created partner
+    When I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          |
+      | newrole | Partner admin |
+    When I navigate to Add New Pro Plan section from bus admin console page
+    Then I add a new pro plan for Mozypro partner:
+      | Name    | Company Type | Root Role | Enabled | Public | Currency                        | Periods | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
+      | newplan | business     | newrole   | Yes     | No     | $ — US Dollar (Partner Default) | yearly  | test     | false            | 1                          | 1                     |
+    And I add a new sub partner:
+      | Company Name |
+      | test1        |
+    And New partner should be created
+    Then I stop masquerading
+    And I search partner by newly created partner company name
+    Then I view partner details by newly created partner company name
+    When I add partner settings
+      | Name                           | Value | Locked |
+      | mobile_access_enabled_external | t     | true   |
+    Then I act as partner by:
+      | email        |
+      | @admin_email |
+    And I search partner by newly created subpartner company name
+    Then I view partner details by newly created subpartner company name
+    Then I verify partner settings
+      | Name                            | Value | Locked |
+      | mobile_access_enabled_external  | t     | true   |
+    Then I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.129678 @bus @partners_setting @tasks_p1
+  Scenario: Mozy-129678:2.15 VMBU: Partner Setting
+    When I add a new MozyPro partner:
+      | period | base plan | net terms |
+      | 1      | 10 GB     | yes       |
+    Then New partner should be created
+    When I add partner settings
+      | Name             | Value | Locked |
+      | enable_vmbu_beta | t     | false  |
+    Then I verify partner settings
+      | Name             | Value | Locked |
+      | enable_vmbu_beta | t     | false  |
+    Then I delete partner account
+
+  @TC.2007 @bus @partners_setting @tasks_p1
+  Scenario: Mozy-2007:Enforce association between email addresses and emailed keys (desktop)
+    When I add a new OEM partner:
+      | Company Name    | Root role         | Security | Company Type     |
+      | test_for_2007TC | OEM Partner Admin | HIPAA    | Service Provider |
+    Then New partner should be created
+    Then I stop masquerading as sub partner
+    Then I stop masquerading as sub partner
+    And I search partner by newly created subpartner company name
+    And I view partner details by newly created subpartner company name
+    When I add partner settings
+      | Name                    | Value | Locked |
+      | enforce_email_key_match | t     | false  |
+    When I set product name for the partner
+    Then I navigate to old window
+    When I act as newly created subpartner account
+    And I navigate to Purchase Resources section from bus admin console page
+    And I save current purchased resources
+    And I purchase resources:
+      | desktop license | desktop quota | server license | server quota |
+      | 2               | 20            | 2              | 20           |
+    Then Resources should be purchased
+    And I add new itemized user(s):
+      | name     | email               |
+      | oem user | tc2007test@mozy.com |
+    And new itemized user should be created
+    Then I search user by:
+      | name     |
+      | oem user |
+    Then I view user details by oem user
+    Then I update the user password to reset password
+    Then I navigate to Assign Keys section from bus admin console page
+    Then I assign Desktop key to user tc2007test@mozy.com on (default user group)
+    Then I use key activation to activate devices
+      | email                       | machine_name |
+      | tc2007test_invalid@mozy.com | machine_2007 |
+    Then Activate key response should be ERROR: KEY UNAVAILABLE
+    Then I stop masquerading from subpartner
+    And I search and delete partner account by newly created subpartner company name
+
+  @TC.2008 @bus @partners_setting @tasks_p1
+  Scenario: Mozy-2008:Enforce association between email addresses and emailed keys (desktop)
+    When I add a new OEM partner:
+      | Company Name    | Root role         | Security | Company Type     |
+      | test_for_2008TC | OEM Partner Admin | HIPAA    | Service Provider |
+    Then New partner should be created
+    Then I stop masquerading as sub partner
+    Then I stop masquerading as sub partner
+    And I search partner by newly created subpartner company name
+    And I view partner details by newly created subpartner company name
+    When I add partner settings
+      | Name                    | Value | Locked |
+      | enforce_email_key_match | t     | false  |
+    When I set product name for the partner
+    Then I navigate to old window
+    When I act as newly created subpartner account
+    And I navigate to Purchase Resources section from bus admin console page
+    And I save current purchased resources
+    And I purchase resources:
+      | desktop license | desktop quota | server license | server quota |
+      | 2               | 20            | 2              | 20           |
+    Then Resources should be purchased
+    And I add new itemized user(s):
+      | name     | email               |
+      | oem user | tc2008test@mozy.com |
+    And new itemized user should be created
+    Then I search user by:
+      | name     |
+      | oem user |
+    Then I view user details by oem user
+    Then I update the user password to reset password
+    Then I navigate to Assign Keys section from bus admin console page
+    Then I assign Server key to user tc2008test@mozy.com on (default user group)
+    Then I use key activation to activate devices
+      | email                       | machine_name |
+      | tc2008test_invalid@mozy.com | machine_2008 |
+    Then Activate key response should be ERROR: KEY UNAVAILABLE
+    Then I stop masquerading from subpartner
+    And I search and delete partner account by newly created subpartner company name
+
+  @TC.2052 @bus @partners_setting @tasks_p1
+  Scenario: Mozy-2052:enforce key to email-moving user groups
+    When I add a new OEM partner:
+      | Company Name    | Root role         | Security | Company Type     |
+      | test_for_2052TC | OEM Partner Admin | HIPAA    | Service Provider |
+    Then New partner should be created
+    Then I stop masquerading as sub partner
+    Then I stop masquerading as sub partner
+    And I search partner by newly created subpartner company name
+    And I view partner details by newly created subpartner company name
+    When I add partner settings
+      | Name                    | Value | Locked |
+      | enforce_email_key_match | t     | false  |
+    When I set product name for the partner
+    Then I navigate to old window
+    When I act as newly created subpartner account
+    And I navigate to Purchase Resources section from bus admin console page
+    And I save current purchased resources
+    And I purchase resources:
+      | desktop license | desktop quota | server license | server quota |
+      | 2               | 20            | 2              | 20           |
+    Then Resources should be purchased
+    And I add new itemized user(s):
+      | name     | email               |
+      | oem user | tc2052test@mozy.com |
+    And new itemized user should be created
+    Then I search user by:
+      | name     |
+      | oem user |
+    Then I view user details by oem user
+    Then I update the user password to reset password
+    Then I navigate to Assign Keys section from bus admin console page
+    Then I assign Desktop key to user tc2052test@mozy.com on (default user group)
+    When I add a new user group for an itemized partner:
+      | name         |
+      | 2052_ug_test |
+    Then I search user by:
+      | name     |
+      | oem user |
+    Then I view user details by oem user
+    Then I reassign the user to user group 2052_ug_test
+    Then I use key activation to activate devices
+      | email               | machine_name |
+      | tc2052test@mozy.com | machine_2052 |
+    Then Activate key response should be OK
+    Then I stop masquerading from subpartner
+    And I search and delete partner account by newly created subpartner company name
+
+

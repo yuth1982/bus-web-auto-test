@@ -65,3 +65,53 @@ end
 Then /^I delete the newly downloaded file$/ do
   @bus_site.admin_console_page.machine_details_section.delete_manifest_file(@file_name)
 end
+
+Then /^I delete the machine$/ do
+  @bus_site.admin_console_page.machine_details_section.delete_machine
+end
+
+And /^I click on the replace machine link$/ do
+  @bus_site.admin_console_page.machine_details_section.click_replace_machine
+end
+
+And /^I select (.+) to be replaced$/ do |machine|
+  if !(machine.match(/^@.+$/).nil?)
+    machine =  '<%=' + machine + '%>'
+  end
+  machine.replace ERB.new(machine).result(binding)
+  @bus_site.admin_console_page.replace_machine_section.replace_machine(machine)
+end
+
+Then /^The machines listed for replacement should be$/ do |machines_table|
+  attributes = machines_table.raw
+  actual = @bus_site.admin_console_page.replace_machine_section.get_replace_machine_list
+  expected = attributes.map{ |attr|
+    attr[0].replace ERB.new(attr[0]).result(binding)
+  }
+  actual.sort.should == expected.sort
+end
+
+And /^I close Sync section$/ do
+  @bus_site.admin_console_page.machine_details_section.close_bus_section
+end
+
+When /^I set (.+) sync client region as (.+) and country as (.+)$/ do |user, region, country|
+  user_email = @current_user[:email] if user == 'newly created user'
+  user_password = CONFIGS['global']['test_pwd']
+  machine_hash = "user_#{@user_id}_sync"
+  country = 'US' if country == 'default'
+  body = get_machine_info(@admin_id, user_email, user_password, machine_hash, 'sync', region, country)
+  (body.downcase.include?('error')).should == false
+end
+
+And /^I refresh sync details section$/ do
+  @bus_site.admin_console_page.machine_details_section.refresh_bus_section
+end
+
+Then /^I (should|should not) see data shuttle table in machine details section$/ do |type|
+  if type.include? "not"
+    @bus_site.admin_console_page.machine_details_section.data_shuttle_table_visible?.should be_false
+  else
+    @bus_site.admin_console_page.machine_details_section.data_shuttle_table_visible?.should be_true
+  end
+end

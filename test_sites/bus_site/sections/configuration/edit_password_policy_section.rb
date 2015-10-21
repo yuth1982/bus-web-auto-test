@@ -23,6 +23,8 @@ module Bus
     element(:admin_policy_min_character_classes, id: "admin_policy_min_character_classes")
     element(:admin_complexity_radio2_input, xpath: "//div[2]/div[2]/label/input[@id='admin_policy[all_classes][all]']")
 
+    element(:user_policy_max_age_input, id: "user_policy_max_age_days")
+
     # Public: edit user's password policy
     #
     # Example
@@ -83,6 +85,15 @@ module Bus
 
     def message
       message_li.text
+    end
+
+    def update_max_age(days)
+      find(:xpath, "//input[@id='user_policy_type_custom']").check
+      if days.eql?('unlimited')
+        user_policy_max_age_input.clear
+      else
+        user_policy_max_age_input.type_text(days)
+      end
     end
   end
 end

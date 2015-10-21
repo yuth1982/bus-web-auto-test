@@ -15,6 +15,10 @@ module Bus
     element(:password_tb, id: "ctl00_ContentPlaceHolder1_PasswordTextBox")
     element(:sign_in_btn, id: "ctl00_ContentPlaceHolder1_SubmitButton")
 
+    element(:ldap_admin_failed_msg, id: "ctl00_ContentPlaceHolder1_ErrorTextLabel")
+
+    element(:ldap_admin_logout_text1, xpath: "//div[@id='dashboard-e-content']/h3")
+    element(:ldap_admin_logout_text2, xpath: "//div[@id='dashboard-e-content']/p")
     # Public: get current url
     #
     def choose_mozy_radio
@@ -55,6 +59,22 @@ module Bus
         password_tb.type_text(password)
         sign_in_btn.click
       end
+    end
+
+    def ldap_admin_login_failed
+      ldap_admin_failed_msg.text
+    end
+
+    def get_ldap_logout_url
+      URI.parse(current_url)
+    end
+
+    def get_ldap_logout_content
+      ldap_admin_logout_text1.text + ldap_admin_logout_text2.text
+    end
+
+    def start_a_new_browser
+      Capybara.session_name = ":session_#{Time.now.to_i}"
     end
 
   end

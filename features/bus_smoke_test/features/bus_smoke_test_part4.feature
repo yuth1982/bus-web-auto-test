@@ -95,7 +95,7 @@ Feature: BUS smoke test
       | name                                                       |
       | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 |
     When I navigate to Contact section from bus admin console page
-    And I click my support
+    And I click My Support on contact section
     Then I login my support successfully
 
   @bus_emea @TC.125977

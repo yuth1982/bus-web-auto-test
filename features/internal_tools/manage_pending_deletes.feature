@@ -3,7 +3,7 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.120569 @bus @pending_deletes
+  @TC.120569 @bus @pending_deletes @auto_tasks @smoke
   Scenario: 120569:Pending delete for Enterprise partner
     When I add a new MozyEnterprise partner:
       | period | users | net terms |
@@ -19,9 +19,9 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
       | @admin_email | yes         |
     Then Partners in pending-delete not available to purge search results should be:
       | ID          | Aria ID  | Partner       | Created | Root Admin   | Type            | Request Date | Days Remaining |
-      | @partner_id | @aria_id | @company_name | today   | @admin_email | MozyEnterprise  | today        | about 1 month  |
+      | @partner_id | @aria_id | @company_name | today   | @admin_email | MozyEnterprise  | today        | 2 months       |
 
-  @TC.119214 @bus @pending_deletes
+  @TC.119214 @bus @pending_deletes @auto_tasks @smoke
   Scenario: 119214:Verify that purged partners appear in the "Partners who have been purged" table
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -46,6 +46,7 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
       | ID          | Aria ID  | Partner       | Created | Root Admin   | Type      | Request Date | Days Pending |
       | @partner_id | @aria_id | @company_name | today   | @admin_email | Reseller  | today        | 1 minute     |
     And I purge partner by newly created partner company name
+    Then I wait for 5 seconds
     And I search partners in who have been purged by:
       | name          | full search |
       | @company_name | yes         |
@@ -54,7 +55,7 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
       | @partner_id | @aria_id | @company_name | today   | @admin_email | Reseller  | today        | today       |
     Then I change to 60 days to purge account after delete
 
-  @TC.120570 @bus @pending_deletes
+  @TC.120570 @bus @pending_deletes @auto_tasks
   Scenario: 120570:Pending delete for MozyPro partner
     When I add a new MozyPro partner:
       | period | base plan |
@@ -70,7 +71,7 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
       | Partner       |
       | @company_name |
 
-  @TC.22474 @bus @pending_deletes
+  @TC.22474 @bus @pending_deletes @auto_tasks
   Scenario: 22474:Verify that deleted partners appear in the "Pending Delete - Waiting" for 180 day
     When I add a new Reseller partner:
       | period | base plan |
@@ -86,6 +87,7 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
       | Partner       |
       | @company_name |
     Then I change to 0 days to purge account after delete
+    Then I wait for 5 seconds
     And I search partners in pending-delete available to purge by:
       | name          | full search |
       | @company_name | yes         |
@@ -102,7 +104,7 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
       | Partner       |
       | @company_name |
 
-  @TC.119242 @bus @pending_deletes
+  @TC.119242 @bus @pending_deletes @auto_tasks
   Scenario: 119242:MozyPro Metalic Reseller Partner with Sub, Delete Subparner
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -134,7 +136,7 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
       | @company_name |
     Then I should see No results found in pending-delete not available to purge table
 
-  @TC.119243 @bus @pending_deletes
+  @TC.119243 @bus @pending_deletes @auto_tasks
   Scenario: 119243:MozyEnterprise Partner with Sub, Delete Subparner
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -166,7 +168,7 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
       | @company_name | no          |
     Then I should see No results found in pending-delete not available to purge table
 
-#  @TC.119249 @bus @pending_deletes
+#  @TC.119249 @bus @pending_deletes @auto_tasks
 #  Scenario: 119249:Delete MozyPro Partner
 #    When I add a new MozyPro partner:
 #      | period | base plan |
@@ -194,7 +196,7 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
 #    And I log in bus admin console as new partner admin
 #    Then Login page error message should be Incorrect email or password.
 
-  @TC.22473 @bus @pending_deletes
+  @TC.22473 @bus @pending_deletes @auto_tasks
   Scenario: 22473:Verify that deleted partners appear in the "Pending Delete Available to Purge"
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -238,15 +240,17 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
       | Partner       |
       | @company_name |
 
-  @TC.120572 @bus @pending_deletes
+  @TC.120572 @bus @pending_deletes @auto_tasks
   Scenario: 120572:Changing pending delete days to purge
     When I navigate to Manage Pending Deletes section from bus admin console page
     Then I change to 30 days to purge account after delete
+    Then I wait for 30 seconds
     And I verify days to purge account after delete should be 30
     Then I change to 60 days to purge account after delete
+    Then I wait for 30 seconds
     And I verify days to purge account after delete should be 60
 
-  @TC.120573 @bus @pending_deletes
+  @TC.120573 @bus @pending_deletes @auto_tasks
   Scenario: 120573:Purge partners ready to purge
     When I add a new MozyEnterprise partner:
       | period | users | coupon              | security   |
@@ -272,7 +276,7 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
       | @partner_id | @aria_id | @company_name | today   | @admin_email | MozyEnterprise  | today        | today       |
     Then I change to 60 days to purge account after delete
 
-  @TC.119257 @bus @pending_deletes
+  @TC.119257 @bus @pending_deletes @auto_tasks @smoke
   Scenario: 119257:Undelete MozyPro Partner
     When I add a new MozyPro partner:
       | period | base plan | server plan | net terms |
@@ -308,11 +312,15 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
       | @user_name |
     And I view user details by newly created user email
     And I update the user password to default password
-    And I add machines for the user and update its used quota
-      | machine_name | machine_type | used_quota |
-      | Machine1     | Desktop      | 10 GB      |
+    Then I use keyless activation to activate devices
+      | machine_name    | user_name                   | machine_type |
+      | Machine1_20921  | <%=@new_users.first.email%> | Desktop      |
+    And I upload data to device by batch
+      | machine_id                         | GB |
+      | <%=@new_clients.first.machine_id%> | 10 |
+    Then tds returns successful upload
 
-  @TC.120574 @bus @pending_deletes
+  @TC.120574 @bus @pending_deletes @auto_tasks
   Scenario: 120574:Undelete pending partner
     When I add a new MozyPro partner:
       | period | base plan | create under   | vat number    | coupon              | country | cc number        |
@@ -331,12 +339,12 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
       | Partner       | Root Admin  |
       | @company_name | @admin_email|
 
-  @TC.120575 @bus @pending_deletes
+  @TC.120575 @bus @pending_deletes @auto_tasks
   Scenario: 120575:Verify cannot undelete a purged partner
     When I navigate to Manage Pending Deletes section from bus admin console page
     Then I verify can not undelete a purged partner
 
-  @TC.120576 @bus @pending_deletes
+  @TC.120576 @bus @pending_deletes @auto_tasks
   Scenario: 120576:Verify undelete of ready to purge partner
     When I add a new MozyPro partner:
       | period | users |
@@ -357,13 +365,14 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
       | name          |
       | @company_name |
     And I undelete partner in pending-delete available to purge by newly created partner company name
+    Then I wait for 5 seconds
     Then I change to 60 days to purge account after delete
     When I search partner by newly created partner company name
     Then Partner search results should be:
       | Partner       |
       | @company_name |
 
-  @TC.119255 @bus @pending_deletes
+  @TC.119255 @bus @pending_deletes @auto_tasks
   Scenario: 119255:MozyPro Metalic Reseller with Sub, Undelete
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | storage add on | coupon              | country       | security |
@@ -399,7 +408,7 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
       | ID          | Aria ID  | Partner       | Created | Root Admin   | Type      |
       | @partner_id | @aria_id | @company_name | today   | @admin_email | Reseller  |
 
-  @TC.119256 @bus @pending_deletes
+  @TC.119256 @bus @pending_deletes @auto_tasks
   Scenario: 119256:MozyEnterprise Partner with Sub, Undelete
     When I add a new MozyEnterprise partner:
       | period |

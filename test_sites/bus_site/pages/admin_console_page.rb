@@ -18,6 +18,7 @@ module Bus
     section(:client_config_section, ClientConfigSection, id: 'setting-edit_client_config')
     section(:add_new_pro_plan_section, AddNewProPlanSection, id: 'plan-pro_new')
     section(:edit_password_policy_section, EditPasswordPolicySection, id: 'setting-edit_password_policy')
+    section(:edit_client_version_section, EditClientVersionSection, id: 'setting-edit_client_version')
 
     # Users section
     section(:search_list_users_section, SearchListUsersSection, id: 'user-list')
@@ -34,9 +35,11 @@ module Bus
     section(:list_user_groups_section, ListUserGroupsSection, id: 'user_groups-list')
     section(:user_details_section, UserDetailsSection, css: 'div[id^=user-show]')
     section(:machine_details_section, MachineDetailsSection, css: 'div[id^=machine-show-]')
+    section(:replace_machine_section, ReplaceMachineSection, id: 'inner-content')
 
     # Admin section
     section(:add_new_role_section, AddNewRoleSection, id: "roles-new")
+    section(:edit_role_section, EditRoleSection, css: "div[id^=roles-show]")
     section(:add_new_admin_section, AddNewAdminSection, id: "admin-new")
     section(:search_admins_section, SearchAdminsSection, id: "admin-search")
     section(:list_admins_section, ListAdminsSection, id: 'admin-list')
@@ -54,7 +57,12 @@ module Bus
     section(:transfer_resources_section, TransferResourcesSection, id: "resource-transfer_resources")
     section(:purchase_resources_section, PurchaseResourcesSection, id: "resource-purchase_resources")
     section(:return_resources_section, ReturnResourcesSection, id: "resource-unpurchase_resources")
+    section(:assign_keys_section, AssignKeysSection, id: "resource-available_key_list")
     section(:resource_summary_section, ResourceSummarySection, id: 'storage-summary')
+    section(:download_client_section, DownloadClientSection, id: "resource-downloads")
+
+    # assign keys
+    section(:assign_keys_section, AssignKeysSection, id: "resource-available_key_list-content")
 
     # Data shuttle section
     section(:data_shuttle_status_section, DataShuttleStatusSection, id: 'resource-data_shuttle_status')
@@ -72,6 +80,15 @@ module Bus
     section(:add_report_section, AddReportSection, xpath: "*")
     section(:scheduled_reports_section, ScheduledReportsSection, id: "jobs-index")
     section(:quick_reports_section, QuickReportsSection, id: "jobs-quick_reports")
+    section(:new_email_alerts_section, NewEmailAlertsSection, xpath: "//div[@id='alerts-new']")
+    section(:show_email_alerts_section, ShowEmailAlertsSection, xpath: "//div[starts-with(@id,'alerts-show')]")
+
+    # backup client section
+    section(:create_new_version_section, CreateNewVersionSection, id: "version-new")
+    section(:list_versions_section, ListVersionsSection, id: "version-list")
+    section(:version_show_section, VersionShowSection, css: 'div[id^=version-show-]')
+    section(:upgrade_rules_section, UpgradeRulesSection, id: 'version-rules')
+
 
     # support section
     section(:contact_section, ContactSection, xpath: "//a[text()='Contact']")
@@ -80,8 +97,12 @@ module Bus
     section(:manage_vatfx_rates_section, ManageVATTXRatesSection, id: "internal-add_vat_rate")
     section(:manage_pending_deletes_section, ManagePendingDeletesSection, id: "internal-manage_pending_deletes")
 
+    #news
+    section(:news_section, NewsSection, id: "controller-news")
+
     # Private element
     element(:current_admin_div, id: 'identify-me')
+    element(:current_admin_name_link, xpath: "//div[@id='identify-me']/a[last()]")
     element(:stop_masquerading_link, xpath: "//a[text()='stop masquerading']")
     element(:quick_link_item, id: "nav-cat-quick")
 
@@ -97,6 +118,9 @@ module Bus
     element(:allocate_resources_btn, css: "div.popup-window-footer input[value=Allocate]")
     element(:ok_btn, css: "div.popup-window-footer input[value=Ok]")
     element(:yes_btn, css: "div.popup-window-footer input[value=Yes]")
+    element(:no_btn, css: "div.popup-window-footer input[value=No]")
+    element(:msg_popup_text, css: "div.popup-window-content")
+    elements(:delete_popup_btns, css: "div.popup-window-footer input")
     # Activate element
     element(:password_set_text, id: 'admin_password')
     element(:password_set_again_text, id: 'admin_password_confirmation')
@@ -106,8 +130,13 @@ module Bus
     # partner name in the right top corner
     element(:partner_top_link, xpath: "//div[@id='identify-me']/a[1]")
 
+    # list capabilities section
+    element(:list_capabilities_table, xpath: "//div[@id='capabilities-list-content']//table")
+
+
     def get_partner_name_topcorner
-      find(:xpath, "//div[@id='identify-me']/a[1]").text
+      wait_until{partner_top_link.visible?}
+      partner_top_link.text
     end
 
     def partner_id
@@ -201,6 +230,10 @@ module Bus
       cancel_btn.click
     end
 
+    def click_no
+      no_btn.click
+    end
+
     def click_submit
       submit_btn.click
     end
@@ -213,12 +246,43 @@ module Bus
       yes_btn.click
     end
 
+    def get_popup_msg
+      msg_popup_text.text
+    end
+
+    def get_popup_buttons
+      delete_popup_btns.map{|btn|btn[:value]}
+    end
+
     # user/partner verification section
     # code here relates to
     # partner/user verification
     def open_partner_details_from_header(partner)
       partner_created(partner)
       go_to_partner_info(partner)
+    end
+
+    def open_account_details_from_header(admin_name = nil)
+      start_using_mozy_btn.click if has_start_using_mozy_btn?
+      alert_accept if alert_present?
+      if current_admin_name_link.text.strip =='stop masquerading'
+        if admin_name.nil?
+          # for act as admin
+          link = find(:xpath, "//div[@id='identify-me']/a[2]")
+        else
+          link = find(:xpath, "//div[@id='identify-me']/a[text()='#{admin_name}']")
+        end
+      else
+        # for act as admin, then click admin link
+        link = current_admin_name_link
+      end
+      # for the  error: element is not clickable at point xxx
+      begin
+        link.click
+      rescue
+        alert_accept if alert_present?
+      end
+      alert_accept if alert_present?
     end
 
     # pro section
@@ -255,6 +319,21 @@ module Bus
 
     def go_to_account
       go_to_account_link.click
+      start_using_mozy_btn.click if has_start_using_mozy_btn?
+      alert_accept if alert_present?
+    end
+
+    def get_list_capabilities
+      list_capabilities_table.raw_text
+    end
+
+    def check_capabilities_linkable
+      (list_capabilities_table.all(:xpath, "//td[2]/a").size > 0)? true:false
+    end
+
+    def get_new_window_page_title()
+      page.execute_multiline_script('return window.stop')
+      page.driver.browser.title
     end
 
   end

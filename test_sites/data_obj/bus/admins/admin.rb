@@ -2,7 +2,7 @@ module Bus
   module DataObj
     # This class contains attributes for add new admin
     class Admin
-      attr_accessor :name, :email, :parent, :user_groups, :roles, :num_desktop_licenses, :desktop_quota
+      attr_accessor :name, :email, :parent, :user_groups, :roles, :num_desktop_licenses, :desktop_quota, :id
 
       def initialize(name, email, parent, user_groups, roles)
         first_name = Forgery::Name.first_name
@@ -14,6 +14,7 @@ module Bus
         @roles = roles || []
         @num_desktop_licenses = 0
         @desktop_quota = 0
+        @id = ''
       end
     end
   end

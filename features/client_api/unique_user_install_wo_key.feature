@@ -4,7 +4,7 @@ Feature: unique user install w/o key client dependant on BUS
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.20262 @bus @client_api @smoke
+  @TC.20262 @bus @client_api @smoke @tasks_p1
   Scenario: 20262 Bundled - Activating machine success
     When I add a new MozyPro partner:
       | period | base plan | server plan | net terms |
@@ -27,7 +27,7 @@ Feature: unique user install w/o key client dependant on BUS
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.20375 @bus @client_api
+  @TC.20375 @bus @client_api @tasks_p1
   Scenario: 20375 Bundled - Activating server device success
     When I add a new MozyPro partner:
       | period | base plan | server plan |
@@ -50,7 +50,7 @@ Feature: unique user install w/o key client dependant on BUS
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.20266 @bus @client_api
+  @TC.20266 @bus @client_api @tasks_p1
   Scenario: 20266 Bundled - Activating machine which have been activated success
     When I add a new MozyPro partner:
       | period | base plan | country        | create under | server plan | storage add on | cc number        |
@@ -73,7 +73,7 @@ Feature: unique user install w/o key client dependant on BUS
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.20268 @bus @client_api
+  @TC.20268 @bus @client_api @tasks_p1
   Scenario: 20268 Bundled - Activating machine fail because of none machine hash
     When I add a new MozyPro partner:
       | period | base plan |
@@ -96,7 +96,7 @@ Feature: unique user install w/o key client dependant on BUS
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.20264 @bus @client_api
+  @TC.20264 @bus @client_api @tasks_p1
   Scenario: 20264 Bundled - Activating machine fail because of invalid machine hash
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -119,7 +119,7 @@ Feature: unique user install w/o key client dependant on BUS
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.20269 @bus @client_api
+  @TC.20269 @bus @client_api @tasks_p1
   Scenario: 20269 Bundled - Activating machine fail because of no more device available
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -149,7 +149,7 @@ Feature: unique user install w/o key client dependant on BUS
     Then I search and delete partner account by newly created partner company name
 
 ######################################################################################
-  @TC.20369 @bus @client_api
+  @TC.20369 @bus @client_api @tasks_p1
   Scenario: 20369 Itemized - Activating machine success
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -177,7 +177,7 @@ Feature: unique user install w/o key client dependant on BUS
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.20376 @bus @client_api
+  @TC.20376 @bus @client_api @tasks_p1
   Scenario: 20376 Itemized - Activating server device success
     When I add a new MozyEnterprise partner:
       | period | users | server plan |
@@ -200,7 +200,7 @@ Feature: unique user install w/o key client dependant on BUS
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.20373 @bus @client_api
+  @TC.20373 @bus @client_api @tasks_p1
   Scenario: 20373 Itemized - Activating machine which have been activated success
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -223,7 +223,7 @@ Feature: unique user install w/o key client dependant on BUS
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.20374 @bus @client_api
+  @TC.20374 @bus @client_api @tasks_p1
   Scenario: 20374 Itemized - Activating machine fail because of none machine hash
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -246,7 +246,7 @@ Feature: unique user install w/o key client dependant on BUS
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.20371 @bus @client_api
+  @TC.20371 @bus @client_api @tasks_p1
   Scenario: 20371 Itemized - Activating machine fail because of invalid machine hash
     When I add a new MozyEnterprise partner:
       | period | users | net terms |
@@ -269,7 +269,7 @@ Feature: unique user install w/o key client dependant on BUS
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.20293 @bus @client_api
+  @TC.20293 @bus @client_api @tasks_p1
   Scenario: 20293 Itemized - Activating machine fail because of no key available
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add on |
@@ -298,7 +298,7 @@ Feature: unique user install w/o key client dependant on BUS
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.20267 @bus @client_api
+  @TC.20267 @bus @client_api @tasks_p1
   Scenario: 20267 Activating machine fail because of none access token
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add on |
@@ -321,7 +321,7 @@ Feature: unique user install w/o key client dependant on BUS
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.20263 @bus @client_api
+  @TC.20263 @bus @client_api @tasks_p1
   Scenario: 20263 Activating machine fail because of error access token
     When I add a new MozyPro partner:
       | period | base plan | server plan | net terms |
