@@ -826,7 +826,7 @@ Feature: User sync
       | rule             | group |
       | cn=auto          | dev   |
     And I click the sync now button
-    And I wait for 60 seconds
+    And I wait for 240 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
@@ -856,7 +856,7 @@ Feature: User sync
     And I Choose to delete users if missing from LDAP for 60 days
     And I change the user last sync field in the db to be 60 days earlier
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 240 seconds
     And I clear the user sync information
     And I save the changes
     And I click Connection Settings tab
@@ -994,7 +994,7 @@ Feature: User sync
       | rule               | group |
       | cn=dev-17546-test* | dev   |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 240 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
@@ -1013,7 +1013,7 @@ Feature: User sync
       | rule               | group |
       | cn=dev-17546-test* | dev   |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 240 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
@@ -1035,7 +1035,7 @@ Feature: User sync
       | rule               | group |
       | cn=dev-17546-test* | dev   |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 240 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
@@ -1057,7 +1057,7 @@ Feature: User sync
       | rule               | group |
       | cn=dev-17546-test* | dev   |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 240 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
@@ -1078,7 +1078,7 @@ Feature: User sync
       | rule               | action |
       | cn=dev-17546-test* | Delete |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 240 seconds
     And I delete 1 deprovision rules
     And I save the changes
     And I click Connection Settings tab
@@ -1101,7 +1101,7 @@ Feature: User sync
       | rule               | group |
       | cn=dev-17546-test* | dev   |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 240 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
@@ -1125,7 +1125,7 @@ Feature: User sync
       | rule               | group |
       | cn=dev-17546-test* | dev   |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 240 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
@@ -1146,7 +1146,7 @@ Feature: User sync
       | rule               | action |
       | cn=dev-17546-test* | Delete |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 240 seconds
     And I delete 1 deprovision rules
     And I click Attribute Mapping tab
     And I clear the fixed attribute
