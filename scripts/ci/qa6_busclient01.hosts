@@ -5,7 +5,7 @@
 10.29.29.185 fedidga.mozypro.com adminsso.mozypro.com pulladminsso.mozypro.com backupclient.mozyenterprise.com
 10.29.29.200 mozy.com mozy.ie mozy.de mozy.fr mozy.co.uk
 10.29.29.185 qa6freyja.mozyenterprise.com qa8pull.mozypro.com resetpassword.mozypro.com oem.partners.com partners.mozy.com
-10.29.29.143 rainbow.mozy.com
+10.29.29.133 rainbow.mozy.com
 
 #AD server
 10.29.99.120 win-ko2af9k2doa.mtdev.mozypro.local
@@ -28,3 +28,6 @@
 127.0.0.1 server.iad.liveperson.net
 127.0.0.1 decho.122.2o7.net
 127.0.0.1 mozy.tt.omtrdc.net
+127.0.0.1 brainshark.com
+127.0.0.1 stats.g.doubleclick.net
+
