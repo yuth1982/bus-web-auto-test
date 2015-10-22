@@ -10,6 +10,8 @@ Feature: reset user password
       | TC.126029    | OEM Partner Admin  | Service Provider |
     Then New partner should be created
     When I view the newly created subpartner admin details
+    Then I change the subdomain to @subdomain
+    Then The subdomain is created with name https://@subdomain.mozypro.com/
     Then I get the subpartner_id
     And I act as newly created partner account
     And I navigate to Purchase Resources section from bus admin console page
