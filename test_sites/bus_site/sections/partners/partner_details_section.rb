@@ -136,7 +136,7 @@ module Bus
     element(:submit_autogrow_status_btn, css: 'span[id^=partner-change-overdraft-status-] input[value=Submit]')
 
     # Subdomain
-    element(:change_subdomain_link, css: "a[onclick*='/partner/subdomain']")
+    element(:change_subdomain_link, xpath: "//a[text()='(learn more and set up)']")
     element(:h3_section, css: "h3")
 
     # security fiedld

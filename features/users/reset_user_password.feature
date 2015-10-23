@@ -5,24 +5,9 @@ Feature: reset user password
 
   @TC.126029 @bus @user_login @tasks_p1
   Scenario: Mozy-126029:Reset Password from oem.partners.com
-    When I add a new OEM partner:
-      | Company Name | Root role          | Company Type     |
-      | TC.126029    | OEM Partner Admin  | Service Provider |
-    Then New partner should be created
-    When I view the newly created subpartner admin details
-    Then I change the subdomain to @subdomain
-    Then The subdomain is created with name https://@subdomain.mozypro.com/
-    Then I get the subpartner_id
-    And I act as newly created partner account
-    And I navigate to Purchase Resources section from bus admin console page
-    And I save current purchased resources
-    And I purchase resources:
-      | desktop license | desktop quota | server license | server quota |
-      | 2               | 20            | 2              | 20           |
-    Then Resources should be purchased
-    And Current purchased resources should increase:
-      | desktop license | desktop quota | server license | server quota |
-      | 2               | 20            | 2              | 20           |
+    When I act as partner by:
+      | name                        |
+      | test_for_126029_DO_NOT_EDIT |
     And I add new itemized user(s):
       | name     | devices_server | quota_server | devices_desktop | quota_desktop |
       | oem user | 1              | 10           | 1               | 10            |
@@ -30,19 +15,22 @@ Feature: reset user password
     Then I navigate to user login page with partner ID oem.partners.com
     And I click forget your password link
     And I input email @new_users[0].email in reset password panel to reset password
+    Then I wait for 30 seconds
     When I search emails by keywords:
-      | subject                   | to                       |
-      | MozyPro password recovery | <%=@new_users[0].email%> |
+      | subject                             | to                       |
+      | BDS Online Backup password recovery | <%=@new_users[0].email%> |
     Then I should see 1 email(s)
     When I click reset password link from the email
     Then I reset password with reset password
     And I will see reset password massage Your password has been changed.
-    Then I log in bus pid console with:
-      | username                 | password                                  |
-      | <%=@new_users[0].email%> | <%=CONFIGS['global']['test_hipaa_pwd'] %> |
+    Then I log in bus admin console with user name @new_users[0].email and password reset password
     And the user log out bus
     When I log in bus admin console as administrator
-    And I search and delete partner account if it exists by TC.126029
+    And I search user by:
+      | keywords    |
+      | @user_email |
+    Then I view user details by newly created user email
+    And I delete user
 
   @TC.126030 @bus @user_login @tasks_p1
   Scenario: Mozy-126030:Reset Password from partners.mozy.com (Reseller)
