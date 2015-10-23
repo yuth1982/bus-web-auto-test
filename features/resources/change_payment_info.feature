@@ -97,7 +97,7 @@ Feature: Modify credit card information and billing contact information
       | cc name     | cc number        | expire month | expire year | cvv |
       | new name    |                  | 12           | 19          | 123 |
     And I save payment information changes
-    Then Modify credit card error messages should be Please enter the name on your credit card.
+    Then Modify credit card error messages should be You must enter a credit card number.
     # Verification below is for Production only
     # When I update credit card information to:
     #   | cc name     | cc number        | expire month | expire year | cvv |
