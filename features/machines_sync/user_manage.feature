@@ -353,8 +353,8 @@ Feature: User stash setting management
       | email                |
       | test_120694@auto.com |
     And I add new user(s):
-      | name           |storage_type | storage_limit | devices | enable_stash |
-      | TC.120695 user |Desktop      | 10            | 1       | yes          |
+      | name           | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | TC.120695 user | (default user group) | Desktop      | 10            | 1       | yes          |
     Then 1 new user should be created
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
