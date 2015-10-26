@@ -118,8 +118,12 @@ When /^I log into bus admin console with mixed case (.+) and (.+)$/ do |username
   step %{I log in bus admin console with user name #{username} and password #{password}}
 end
 
-When /^I log into (.+) with uppercase username (.+) and (.+)$/ do |subdomain, username, password|
-  username = username.upcase
+When /^I log into (.+) with (uppercase|lowercase) username (.+) and (.+)$/ do |subdomain, type, username, password|
+  if type.eql?('uppercase')
+    username = username.upcase
+  else
+    username = username.downcase
+  end
   user_account = {:user_name => username, :password => password}
   @bus_site.user_login_page(subdomain, 'mozy').login(user_account)
 end
