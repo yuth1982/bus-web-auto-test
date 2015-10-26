@@ -36,7 +36,7 @@ Feature: delete partner
     Then API* Aria account should be:
       | status_label |
       | CANCELLED    |
-    Then I wait for 40 seconds
+    Then I wait for 180 seconds
     Then I navigate to Manage Pending Deletes section from bus admin console page
     Then I make sure pending deletes setting is 60 days
     And I search partners in pending-delete not available to purge by:
