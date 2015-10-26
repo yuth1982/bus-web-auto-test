@@ -168,33 +168,34 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
       | @company_name | no          |
     Then I should see No results found in pending-delete not available to purge table
 
-#  @TC.119249 @bus @pending_deletes @auto_tasks
-#  Scenario: 119249:Delete MozyPro Partner
-#    When I add a new MozyPro partner:
-#      | period | base plan |
-#      | 12     | 50 GB     |
-#    Then New partner should be created
-#    When I act as newly created partner account
-#    And I build a new report:
-#      | type            | name                  | frequency |
-#      | Billing Summary | billing summary test  | Daily     |
-#    Then Billing summary report should be created
-#    Then I stop masquerading
-#    And I search and delete partner account by newly created partner company name
-#    Then I navigate to Manage Pending Deletes section from bus admin console page
-#    And I search partners in pending-delete not available to purge by:
-#      | name          | full search |
-#      | @company_name | yes         |
-#    Then Partners in pending-delete not available to purge search results should be:
-#      | Partner       |
-#      | @company_name |
-#    Then I wait for 86400 seconds
-#    And I search emails by keywords:
-#      | content           |
-#      | <%=@report.name%> |
-#    Then I should see 0 email(s)
-#    And I log in bus admin console as new partner admin
-#    Then Login page error message should be Incorrect email or password.
+  @TC.119249 @bus @pending_deletes @auto_tasks
+  Scenario: 119249:Delete MozyPro Partner
+    When I add a new MozyPro partner:
+      | period | base plan |
+      | 12     | 50 GB     |
+    Then New partner should be created
+    Then I change root role to FedID role
+    When I act as newly created partner account
+    And I build a new report:
+      | type            | name                  | frequency |
+      | Billing Summary | billing summary test  | Daily     |
+    Then Billing summary report should be created
+    Then I stop masquerading
+    And I search and delete partner account by newly created partner company name
+    Then I navigate to Manage Pending Deletes section from bus admin console page
+    And I search partners in pending-delete not available to purge by:
+      | name          | full search |
+      | @company_name | yes         |
+    Then Partners in pending-delete not available to purge search results should be:
+      | Partner       |
+      | @company_name |
+    Then I wait for 86400 seconds
+    And I search emails by keywords:
+      | content           |
+      | <%=@report.name%> |
+    Then I should see 0 email(s)
+    And I log in bus admin console as new partner admin
+    Then Login page error message should be Incorrect email or password.
 
   @TC.22473 @bus @pending_deletes @auto_tasks
   Scenario: 22473:Verify that deleted partners appear in the "Pending Delete Available to Purge"
