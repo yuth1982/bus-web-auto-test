@@ -3,32 +3,6 @@ Feature: Add a new user group
   Background:
     Given I log in bus admin console as administrator
 
-#  @TC.849 @bus2.4
-#  Scenario: 849 Add a new user group
-#    When I add a new MozyEnterprise partner:
-#      | period | users |
-#      | 12     | 100   |
-#    Then New partner should be created
-#    When I act as newly created partner
-#    And I add a new itemized user group:
-#      | desktop_storage_type | desktop device | server_storage_type | server device |
-#      | Shared               | 1               | Shared             | 1             |
-#    Then Bundled user group should be created
-#    And I search and delete newly created user group name user group
-#
-#  @TC.848 @bus2.4
-#  Scenario: 848 Delete a user group
-#    When I act as partner by:
-#      | email                                    |
-#      | qa1+users+features+test+account@mozy.com |
-#    When I add a new user group:
-#      | desktop licenses | desktop quota |
-#      | 1                | 10            |
-#    Then New user group should be created
-#    When I view newly created user group name user group details
-#    And I delete the user group
-#    And I navigate to List User Group section from bus admin console page
-
   @TC.20716 @bus @2.5 @manage_storage @add_user_group @bundled
   Scenario: 20716 [Bundled] Add New Group
     When I add a new Reseller partner:
