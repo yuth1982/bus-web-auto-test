@@ -3,6 +3,22 @@ Feature: Hipaa user Login
   Background:
     Given I log in bus admin console as administrator
 
+  @TC.120660 @bus @log_in_screen @need_test_account @env_dependent
+  Scenario: 120660 Standard user log into BUS with upper/mixed case username
+    When I navigate to Standard subdomain user login page
+    Then I log into Standard subdomain with uppercase username Standard user and Standard password
+    And I log out user
+    Then I log into Standard subdomain with mixed case username Standard user and Standard password
+    And I log out user
+
+  @TC.120661 @bus @log_in_screen @need_test_account @env_dependents
+  Scenario: 120661 Hipaa user log into BUS with upper/mixed case username
+    When I navigate to Hipaa subdomain user login page
+    Then I log into Hipaa subdomain with uppercase username Hipaa user and Hipaa password
+    And I log out user
+    Then I log into Hipaa subdomain with mixed case username Hipaa user and Hipaa password
+    And I log out user
+
   @TC.120074 @bus @user_login @tasks_p1
   Scenario: 120074:[Negative]Hipaa user can not log in bus & client with error or empty password
     When I add a new MozyPro partner:

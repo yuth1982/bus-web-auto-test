@@ -541,121 +541,121 @@ Feature: Add a new partner
       | today | $0.00  | $0.00      | $0.00       |
     And I delete partner account
 
-  @STT_vmbu  @STT_vmbu_pro
-  Scenario:  Add New MozyPro Partner - FR - Biennially - 20 TB - Server Plan - 10 Storage Add on - VAT - Coupon - Net Terms
-
-    When I add a new MozyPro partner:
-      | period | base plan | server plan | storage add on | country       | address           | city      | state abbrev | zip   | phone          |  security |
-      | 12     | 16 TB     | yes         | 10             | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |   HIPAA   |
-    And I change root role to Fedid
-    And I enabled server in partner account details
-    And I act as newly created partner
-  ##create user groups and client configurations
-    When I create a new client config:
-      | name    | type   |
-      | default | Server |
-    When I add a new Bundled user group:
-      | name| storage_type | enable_stash | server_support |
-      | private_group | Shared      | yes          | yes            |
-    Then private_group user group should be created
-    When I create a new client config:
-      | name | user group | type   |
-      | private | private_group | Server |
-    When I add a new Bundled user group:
-      | name| storage_type | enable_stash | server_support |
-      | ckey_group | Shared      | yes          | yes            |
-    Then ckey_group user group should be created
-    When I create a new client config:
-      | name | user group | type   | ckey                         |
-      | ckey | ckey_group | Server | http://burgifam.com/Rich.ckey|
-    Then client configuration section message should be Your configuration was saved.
-  ##create users
-    When I add new user(s):
-      | name            | user_group           | storage_type | storage_limit | devices | enable_stash |
-      | default_desktop | (default user group) | Desktop      |               | 2       | yes          |
-    Then 1 new user should be created
-    When I add new user(s):
-      | name            | user_group           | storage_type | storage_limit | devices | enable_stash |
-      | ckey_desktop    | ckey_group           | Desktop      |               | 2       | yes          |
-    Then 1 new user should be created
-    When I add new user(s):
-      | name            | user_group           | storage_type | storage_limit | devices |
-      | default_server1 | (default user group) | Server       |               | 2       |
-      | default_server2 | (default user group) | Server       |               | 2       |
-    Then 2 new user should be created
-    When I add new user(s):
-      | name            | user_group           | storage_type | storage_limit | devices |
-      | private_server1 | private_group        | Server       |               | 2       |
-      | private_server2 | private_group        | Server       |               | 2       |
-    Then 2 new user should be created
-    When I add new user(s):
-      | name            | user_group           | storage_type | storage_limit | devices |
-      | ckey_server1    | ckey_group           | Server       |               | 2       |
-      | ckey_server2    | ckey_group           | Server       |               | 2       |
-    Then 2 new user should be created
-  ## create sub-partner
-    When I navigate to Add New Role section from bus admin console page
-    And I add a new role:
-      | Name    | Type          |
-      | newrole | Partner admin |
-    And I check all the capabilities for the new role
-    And I close the role details section
-    When I navigate to Add New Pro Plan section from bus admin console page
-    Then I add a new pro plan for Mozypro partner:
-      | Name    | Company Type | Root Role | Enabled | Public | Currency                        | Periods | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
-      | newplan | business     | newrole   | Yes     | No     | $ — US Dollar (Partner Default) | yearly  | test     | false            | 1                          | 1                     |
-    And I add a new sub partner:
-      | Company Name |
-      | STT_subpro    |
-    And New partner should be created
-    And I act as newly created partner
-    And I purchase resources:
-      | generic quota |
-      | 2200          |
-    Then Resources should be purchased
-  ##create sub-partner user groups and client configuration
-    When I create a new client config:
-      | name    | type   |
-      | default | Server |
-    When I add a new Bundled user group:
-      | name| storage_type | enable_stash | server_support |
-      | private_group | Shared      | yes          | yes            |
-    Then private_group user group should be created
-    When I create a new client config:
-      | name | user group | type   |
-      | private | private_group | Server |
-    When I add a new Bundled user group:
-      | name| storage_type | enable_stash | server_support |
-      | ckey_group | Shared      | yes          | yes            |
-    Then ckey_group user group should be created
-    When I create a new client config:
-      | name | user group | type   | ckey                         |
-      | ckey | ckey_group | Server | http://burgifam.com/Rich.ckey|
-    Then client configuration section message should be Your configuration was saved.
-  ##create sub-partner users
-    When I add new user(s):
-      | name            | user_group           | storage_type | storage_limit | devices | enable_stash |
-      | default_desktop | (default user group) | Desktop      |               | 2       | yes          |
-    Then 1 new user should be created
-    When I add new user(s):
-      | name            | user_group           | storage_type | storage_limit | devices | enable_stash |
-      | ckey_desktop    | ckey_group           | Desktop      |               | 2       | yes          |
-    Then 1 new user should be created
-    When I add new user(s):
-      | name            | user_group           | storage_type | storage_limit | devices |
-      | default_server1 | (default user group) | Server       |               | 2       |
-      | default_server2 | (default user group) | Server       |               | 2       |
-    Then 2 new user should be created
-    When I add new user(s):
-      | name            | user_group           | storage_type | storage_limit | devices |
-      | private_server1 | private_group        | Server       |               | 2       |
-      | private_server2 | private_group        | Server       |               | 2       |
-    Then 2 new user should be created
-    When I add new user(s):
-      | name            | user_group           | storage_type | storage_limit | devices |
-      | ckey_server1    | ckey_group           | Server       |               | 2       |
-      | ckey_server2    | ckey_group           | Server       |               | 2       |
-    Then 2 new user should be created
+#  @STT_vmbu  @STT_vmbu_pro
+#  Scenario:  Add New MozyPro Partner - FR - Biennially - 20 TB - Server Plan - 10 Storage Add on - VAT - Coupon - Net Terms
+#
+#    When I add a new MozyPro partner:
+#      | period | base plan | server plan | storage add on | country       | address           | city      | state abbrev | zip   | phone          |  security |
+#      | 12     | 16 TB     | yes         | 10             | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |   HIPAA   |
+#    And I change root role to Fedid
+#    And I enabled server in partner account details
+#    And I act as newly created partner
+#  ##create user groups and client configurations
+#    When I create a new client config:
+#      | name    | type   |
+#      | default | Server |
+#    When I add a new Bundled user group:
+#      | name| storage_type | enable_stash | server_support |
+#      | private_group | Shared      | yes          | yes            |
+#    Then private_group user group should be created
+#    When I create a new client config:
+#      | name | user group | type   |
+#      | private | private_group | Server |
+#    When I add a new Bundled user group:
+#      | name| storage_type | enable_stash | server_support |
+#      | ckey_group | Shared      | yes          | yes            |
+#    Then ckey_group user group should be created
+#    When I create a new client config:
+#      | name | user group | type   | ckey                         |
+#      | ckey | ckey_group | Server | http://burgifam.com/Rich.ckey|
+#    Then client configuration section message should be Your configuration was saved.
+#  ##create users
+#    When I add new user(s):
+#      | name            | user_group           | storage_type | storage_limit | devices | enable_stash |
+#      | default_desktop | (default user group) | Desktop      |               | 2       | yes          |
+#    Then 1 new user should be created
+#    When I add new user(s):
+#      | name            | user_group           | storage_type | storage_limit | devices | enable_stash |
+#      | ckey_desktop    | ckey_group           | Desktop      |               | 2       | yes          |
+#    Then 1 new user should be created
+#    When I add new user(s):
+#      | name            | user_group           | storage_type | storage_limit | devices |
+#      | default_server1 | (default user group) | Server       |               | 2       |
+#      | default_server2 | (default user group) | Server       |               | 2       |
+#    Then 2 new user should be created
+#    When I add new user(s):
+#      | name            | user_group           | storage_type | storage_limit | devices |
+#      | private_server1 | private_group        | Server       |               | 2       |
+#      | private_server2 | private_group        | Server       |               | 2       |
+#    Then 2 new user should be created
+#    When I add new user(s):
+#      | name            | user_group           | storage_type | storage_limit | devices |
+#      | ckey_server1    | ckey_group           | Server       |               | 2       |
+#      | ckey_server2    | ckey_group           | Server       |               | 2       |
+#    Then 2 new user should be created
+#  ## create sub-partner
+#    When I navigate to Add New Role section from bus admin console page
+#    And I add a new role:
+#      | Name    | Type          |
+#      | newrole | Partner admin |
+#    And I check all the capabilities for the new role
+#    And I close the role details section
+#    When I navigate to Add New Pro Plan section from bus admin console page
+#    Then I add a new pro plan for Mozypro partner:
+#      | Name    | Company Type | Root Role | Enabled | Public | Currency                        | Periods | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
+#      | newplan | business     | newrole   | Yes     | No     | $ — US Dollar (Partner Default) | yearly  | test     | false            | 1                          | 1                     |
+#    And I add a new sub partner:
+#      | Company Name |
+#      | STT_subpro    |
+#    And New partner should be created
+#    And I act as newly created partner
+#    And I purchase resources:
+#      | generic quota |
+#      | 2200          |
+#    Then Resources should be purchased
+#  ##create sub-partner user groups and client configuration
+#    When I create a new client config:
+#      | name    | type   |
+#      | default | Server |
+#    When I add a new Bundled user group:
+#      | name| storage_type | enable_stash | server_support |
+#      | private_group | Shared      | yes          | yes            |
+#    Then private_group user group should be created
+#    When I create a new client config:
+#      | name | user group | type   |
+#      | private | private_group | Server |
+#    When I add a new Bundled user group:
+#      | name| storage_type | enable_stash | server_support |
+#      | ckey_group | Shared      | yes          | yes            |
+#    Then ckey_group user group should be created
+#    When I create a new client config:
+#      | name | user group | type   | ckey                         |
+#      | ckey | ckey_group | Server | http://burgifam.com/Rich.ckey|
+#    Then client configuration section message should be Your configuration was saved.
+#  ##create sub-partner users
+#    When I add new user(s):
+#      | name            | user_group           | storage_type | storage_limit | devices | enable_stash |
+#      | default_desktop | (default user group) | Desktop      |               | 2       | yes          |
+#    Then 1 new user should be created
+#    When I add new user(s):
+#      | name            | user_group           | storage_type | storage_limit | devices | enable_stash |
+#      | ckey_desktop    | ckey_group           | Desktop      |               | 2       | yes          |
+#    Then 1 new user should be created
+#    When I add new user(s):
+#      | name            | user_group           | storage_type | storage_limit | devices |
+#      | default_server1 | (default user group) | Server       |               | 2       |
+#      | default_server2 | (default user group) | Server       |               | 2       |
+#    Then 2 new user should be created
+#    When I add new user(s):
+#      | name            | user_group           | storage_type | storage_limit | devices |
+#      | private_server1 | private_group        | Server       |               | 2       |
+#      | private_server2 | private_group        | Server       |               | 2       |
+#    Then 2 new user should be created
+#    When I add new user(s):
+#      | name            | user_group           | storage_type | storage_limit | devices |
+#      | ckey_server1    | ckey_group           | Server       |               | 2       |
+#      | ckey_server2    | ckey_group           | Server       |               | 2       |
+#    Then 2 new user should be created
 
 
 
