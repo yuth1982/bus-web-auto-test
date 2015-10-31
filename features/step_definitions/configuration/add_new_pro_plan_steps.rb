@@ -6,6 +6,9 @@ When /^I add a new pro plan for (MozyEnterprise|Mozypro|Reseller|OEM|MozyEnterpr
       plan[$1] ||= {}
       plan[$1][$2] = v
     else
+      unless RUBY_PLATFORM.include?('linux') then
+        plan[k] = v.force_encoding('IBM437')
+      end
       plan[k] = v
     end
   end

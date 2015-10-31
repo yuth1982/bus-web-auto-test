@@ -3,7 +3,7 @@ Feature: login as admins
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.121959 @bus @admin @tasks_p1
+  @TC.121959 @bus @admin @tasks_p1 @ldap_sequence
   Scenario: 121959 Root admin deleting admin should not require AD re-auth
     When I add a user to the AD
       | user name      | mail                               |
