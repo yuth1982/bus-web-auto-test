@@ -6,6 +6,7 @@ And /^activate the user's (Server|Desktop) device without a key and with the def
   @license_key = client.license_key
   Log.debug @license_key
   @license_key.should_not be_nil
+  client.machine_id = DBHelper.get_machine_id_by_license_key(@license_key)
   @new_clients << client
   @clients << client
 end
