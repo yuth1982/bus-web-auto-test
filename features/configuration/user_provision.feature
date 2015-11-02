@@ -1246,7 +1246,7 @@ Feature: User sync
     And I click Connection Settings tab
     Then The sync status result should like:
       | Sync Status | Failed at %m/%d/%y %H:%M %:z \(duration about (\d+\.\d+ seconds*\|\d+ minutes*)\) |
-      | Sync Result | Cannot connect to the LDAP server.                                                |
+      | Sync Result | Cannot connect to the LDAP server. Blocked Deprovision                            |
       | Next Sync   | Not Scheduled(Set)                                                                |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
