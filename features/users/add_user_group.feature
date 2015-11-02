@@ -3,6 +3,46 @@ Feature: Add a new user group
   Background:
     Given I log in bus admin console as administrator
 
+  @TC.849 @bus2.4
+  Scenario: 849 Add a new user group
+    When I add a new OEM partner:
+      | Company Name | Root role         | Security | Company Type     |
+      | test_for_849 | OEM Partner Admin | HIPAA    | Service Provider |
+    Then New partner should be created
+    When I act as newly created subpartner account
+    And I navigate to Purchase Resources section from bus admin console page
+    And I save current purchased resources
+    And I purchase resources:
+      | desktop license | desktop quota | server license | server quota |
+      | 2               | 20            | 2              | 20           |
+    Then Resources should be purchased
+    And I add a new user group for an itemized partner:
+      | name                | server_assigned_quota | desktop_assigned_quota |
+      | 849_user_group_test | 3                     | 3                      |
+    Then Itemized partner user group 849_user_group_test should be created
+    Then I stop masquerading from subpartner
+    And I search and delete partner account by newly created subpartner company name
+
+  @TC.848 @bus2.4
+  Scenario: 848 Delete a user group
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | root role  |
+      | 12     | 10    | 100 GB      | FedID role |
+    Then New partner should be created
+    And I act as newly created partner
+    When I add a new Itemized user group:
+      | name         | desktop_storage_type | desktop_devices | server_storage_type |
+      | TC.848_group | Shared               | 1               | Shared              |
+    Then Itemized user group should be created
+    Then I navigate to User Group List section from bus admin console page
+    And I view user group details by clicking group name: TC.848_group
+    And I delete the user group
+    And Itemized user groups table should be:
+      | Group Name           | Sync | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
+      | (default user group) | true  | Shared               |                    | 0                    | 0                    | 10                    | Shared              |                   | 0                   | 0                   | 200                  |
+    When I stop masquerading
+    Then I search and delete partner account by newly created partner company name
+
   @TC.20716 @bus @2.5 @manage_storage @add_user_group @bundled
   Scenario: 20716 [Bundled] Add New Group
     When I add a new Reseller partner:

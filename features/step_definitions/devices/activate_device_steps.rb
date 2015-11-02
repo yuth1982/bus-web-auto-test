@@ -38,7 +38,7 @@ When /^I use keyless activation to activate devices(| unsuccessful| newly)$/  do
   @client.activate_client_devices
   @license_key = @client.license_key
   if type.include?('unsuccessful')
-    (@client.response.body.include?('error')).should == true
+    (@client.response.body.downcase.include?('error')).should == true
   else
     @license_key.should_not be_nil
     @client.machine_id = DBHelper.get_machine_id_by_license_key(@license_key)
