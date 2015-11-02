@@ -210,7 +210,10 @@ module Bus
     def fill_partner_admin_info(partner_info, admin_info)
       company_type_select.select(partner_info.type)
       wait_until_plans_loaded(partner_info.type)
-
+      # for script execute on windows
+      unless RUBY_PLATFORM.include?('linux') then
+        sleep 2
+      end
       # MozyEnterprise is for US only
       unless [CONFIGS['bus']['company_type']['mozyenterprise'], CONFIGS['bus']['company_type']['mozyenterprise_dps']].include? partner_info.type
         parent_partner_select.select(partner_info.parent)
