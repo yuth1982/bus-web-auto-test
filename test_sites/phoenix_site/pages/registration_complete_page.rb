@@ -108,10 +108,10 @@ module Phoenix
       reg_get_started
       #reg_referral_banner
       localized_click(partner, 'acct_page_link')
-      # reg_comp_banner_present
-      # localized_click(partner, 'resend_verify_email_link')
-      # localized_click(partner, 'back_2_login_link')
-      logout(partner)
+      reg_comp_banner_present
+      localized_click(partner, 'resend_verify_email_link')
+      localized_click(partner, 'back_2_login_link')
+      #logout(partner)
       clear_phoenix_cookies
     end
 
