@@ -224,6 +224,8 @@ Feature: FedID push
     And I input server connection settings
       | Server Host   | Protocol | SSL Cert | Port | Base DN                    |
       | 10.135.16.154 | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com |
+    And I click Sync Rules tab
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I click Connection Settings tab
