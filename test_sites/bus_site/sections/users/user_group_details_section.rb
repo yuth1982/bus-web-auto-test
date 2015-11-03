@@ -18,9 +18,11 @@ module Bus
     element(:change_status_select, xpath: "//select[@id='status']")
 
     #change default storage
-    element(:change_default_storage_link, xpath: "//dt[text()='Default storage limit for new users:']/../dd[3]//a[text()='(change)']")
+    element(:change_default_storage_link, xpath: "//div[@class='show-details']//dl[2]/dd[3]//span/a[text()='(change)']")
     element(:change_default_storage_input, xpath: "//input[@id='generic_storage_limit']")
-    element(:change_default_storage_submit, xpath: "//dt[text()='Default storage limit for new users:']/../dd[3]//input[@value='Submit']")
+    element(:change_default_storage_legacy_desktop_input, xpath: "//input[@id='quota_in_gb_7']")
+    element(:change_default_storage_legacy_server_input, xpath: "//input[@id='quota_in_gb_8']")
+    element(:change_default_storage_submit, xpath: "//div[@class='show-details']//dl[2]/dd[3]//input[@value='Submit']")
 
 
     # Stash section
@@ -185,6 +187,16 @@ module Bus
       change_status_link.click
       change_status_select.select(status)
       change_status_submit.click
+    end
+
+    def change_legacy_user_group_default_storage(type,storage)
+      change_default_storage_link.click
+      if type.eql?('desktop')
+        change_default_storage_legacy_desktop_input.type_text(storage)
+      else
+        change_default_storage_legacy_server_input.type_text(storage)
+      end
+      change_default_storage_submit.click
     end
 
     def change_user_group_default_storage(storage)

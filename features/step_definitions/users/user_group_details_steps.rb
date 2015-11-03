@@ -144,3 +144,7 @@ end
 When /^There are (.+) keys under user group details$/ do |num|
   @bus_site.admin_console_page.user_group_details_section.get_current_page_keys.should == num
 end
+
+Then /I change legacy user group (desktop|server) default storage to (.+) GB$/ do |type,storage|
+  @bus_site.admin_console_page.user_group_details_section.change_legacy_user_group_default_storage(type,storage)
+end

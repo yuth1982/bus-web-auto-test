@@ -211,3 +211,23 @@ Feature: view user group details
       | 1 GB (change)                        |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
+
+  @TC.2171 @bus @tasks_p2 @user_group_details
+  Scenario: Mozy-2171:Modify user group in BUS to set it to unlimited quota
+    When I add a new OEM partner:
+      | Company Name    | Root role         | Security | Company Type     |
+      | test_for_2171   | OEM Partner Admin | HIPAA    | Service Provider |
+    Then New partner should be created
+    And I act as newly created partner account
+    When I add a new user group for an itemized partner:
+      | name            |
+      | 2171_user_group |
+    When I navigate to List User Groups section from bus admin console page
+    And I view user group details by clicking group name: 2171_user_group
+    And I change legacy user group desktop default storage to -1 GB
+    Then User group details should be:
+      | Default quota for new installs:           |
+      | ∞ GB (Desktop) and 2 GB (Server) (change) |
+    Then I stop masquerading as sub partner
+    Then I stop masquerading as sub partner
+    Then I search and delete partner account by newly created subpartner company name
