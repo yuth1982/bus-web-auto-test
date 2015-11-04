@@ -52,6 +52,7 @@ Feature: Supports on BUS
     And New partner should be created
     Then I act as newly created partner account
     When I navigate to Online Help section from bus admin console page
+    And I wait for 30 seconds
     Then I check link Community is exists
     And I check link Knowledge Base is exists
     And I check link Documentation is exists
