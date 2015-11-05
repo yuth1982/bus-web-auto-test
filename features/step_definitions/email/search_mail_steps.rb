@@ -25,7 +25,8 @@ When /^I search emails by keywords:$/ do |keywords_table|
           # do nothing
       end
       v.replace ERB.new(v).result(binding)
-
+      # for license key, the value contains space, need to remove the space
+      v.gsub!(/ /,'') unless v.match(/^\[.+\]$/).nil?
       case k.downcase
         when 'to','cc','from','subject','body';
         when 'before','since', 'on' ;

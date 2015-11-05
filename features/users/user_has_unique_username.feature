@@ -47,6 +47,7 @@ Feature: User Has Unique Username
       | email                 |
       | @existing_admin_email |
     And edit user email change confirmation message to existing admin email should be displayed
+    And I wait for 20 seconds
     And I retrieve email content by keywords:
       | to                    | subject                    | date  |
       | @existing_admin_email | Email Address Verification | today |

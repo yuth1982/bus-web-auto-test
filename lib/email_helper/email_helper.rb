@@ -59,13 +59,13 @@ module Email
     end
 
     def find_emails(query,_=nil)
-      @found = nil
+      @found = []
       start = Time.now
       while Time.now - start < 90
         begin
           ten_minutes_ago = Time.now - 10*60
           items = @inbox.items_since(DateTime.parse(ten_minutes_ago.to_s))
-          items.find do |item|
+          items.each {  |item|
             email = @client.get_item item.id
             query.each_index {|index| query[index]=query[index].downcase if index%2 == 0}
 
@@ -93,16 +93,14 @@ module Email
               end
             end
             next if !content_match
-
-            @found = Array.[](email)
-
-          end
+            @found << email
+         }
         rescue Exception => ex
           Log.debug ex
         ensure
           sleep 10
         end
-        break if !@found.nil?
+        break if @found.size > 0
       end
       @found
     end
