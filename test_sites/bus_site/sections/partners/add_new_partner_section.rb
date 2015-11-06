@@ -188,6 +188,59 @@ module Bus
       security_tooltip[:'data-tooltip']
     end
 
+    def get_vmbu_tooltip(partner)
+      base_plan_id = ""
+      case partner.partner_info.type
+        when CONFIGS['bus']['company_type']['mozypro']
+          base_plan_id = find_with_highlight(:id, "#{partner.subscription_period}_base_plan_select").value
+        when CONFIGS['bus']['company_type']['mozyenterprise']
+          base_plan_id = find(:id, "#{partner.subscription_period}_base_plan_id").value
+        when CONFIGS['bus']['company_type']['reseller']
+          inputs = all(:xpath, "//div[@id='base_plan_section_#{partner.subscription_period}']/div/div/input")
+          case partner.reseller_type
+            when CONFIGS['bus']['reseller_type']['silver']
+              base_plan_id = inputs[0].value
+            when CONFIGS['bus']['reseller_type']['gold']
+              base_plan_id = inputs[2].value
+            when CONFIGS['bus']['reseller_type']['platinum']
+              base_plan_id = inputs[4].value
+            else
+              raise "Unable to find reseller type of #{partner.reseller_type}"
+          end
+        else
+          raise "Unable to find partner type of #{partner.partner_info.type}"
+      end
+      find_with_highlight(:xpath, "//div[@id='add_on_plan_section_#{base_plan_id}']/div[2]/img")[:'data-tooltip']
+    end
+
+    def fill_company_type(partner_type)
+      company_type_select.select(partner_type)
+      wait_until_plans_loaded(partner_type)
+    end
+
+    def fill_subscription_period(period)
+      el = find(:id, "billing_period_#{period}")
+      wait_until { el.visible? && el.enabled? }
+      el.click
+    end
+
+    def fill_initial_purchase(partner)
+      case partner.partner_info.type
+        when CONFIGS['bus']['company_type']['mozypro']
+          fill_mozypro_purchase(partner)
+        when CONFIGS['bus']['company_type']['mozyenterprise']
+          raise('MozyEnterprise parent partner error') unless create_under_txt.text.eql?('(Creating under MozyEnterprise)')
+          fill_mozyenterprise_purchase(partner)
+        when CONFIGS['bus']['company_type']['mozyenterprise_dps']
+          raise('MozyEnterprise DPS parent partner error') unless create_under_txt.text.eql?('(Creating under MozyEnterprise)')
+          fill_mozyenterprise_dps_purchase(partner)
+        when CONFIGS['bus']['company_type']['reseller']
+          fill_reseller_purchase(partner)
+        else
+          raise "Unable to find partner type of #{partner.partner_info.type}"
+      end
+    end
+
     private
 
     def fill_company_info(company_info)
@@ -250,29 +303,6 @@ module Bus
         cc_phone_tb.type_text(partner.billing_info.phone)
       end
 
-    end
-
-    def fill_subscription_period(period)
-      el = find(:id, "billing_period_#{period}")
-      wait_until { el.visible? && el.enabled? }
-      el.click
-    end
-
-    def fill_initial_purchase(partner)
-      case partner.partner_info.type
-        when CONFIGS['bus']['company_type']['mozypro']
-          fill_mozypro_purchase(partner)
-        when CONFIGS['bus']['company_type']['mozyenterprise']
-          raise('MozyEnterprise parent partner error') unless create_under_txt.text.eql?('(Creating under MozyEnterprise)')
-          fill_mozyenterprise_purchase(partner)
-        when CONFIGS['bus']['company_type']['mozyenterprise_dps']
-          raise('MozyEnterprise DPS parent partner error') unless create_under_txt.text.eql?('(Creating under MozyEnterprise)')
-          fill_mozyenterprise_dps_purchase(partner)
-        when CONFIGS['bus']['company_type']['reseller']
-          fill_reseller_purchase(partner)
-      else
-        raise "Unable to find partner type of #{partner.partner_info.type}"
-      end
     end
 
     def fill_mozypro_purchase(partner)

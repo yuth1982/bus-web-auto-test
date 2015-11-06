@@ -234,6 +234,39 @@ And /^HIPPA security tool tip appears next to the security drop-down$/ do
   @bus_site.admin_console_page.add_new_partner_section.get_security_tooltip.should == expected_text
 end
 
+And /^I set initial purchase and base plan for specified company type$/ do |table|
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_partner'])
+  attributes = table.hashes.first
+  type = attributes['company type']
+  @bus_site.admin_console_page.add_new_partner_section.fill_company_type(type)
+  case type
+    when CONFIGS['bus']['company_type']['mozypro']
+      @partner = Bus::DataObj::MozyPro.new
+      @partner.base_plan = attributes["base plan"] || 0
+    when CONFIGS['bus']['company_type']['mozyenterprise']
+      @partner = Bus::DataObj::MozyEnterprise.new
+      @partner.server_plan = attributes["server plan"] || "None"
+      @partner.num_enterprise_users = attributes["users"] || 0
+      @partner.num_server_add_on = attributes["server add on"] || 0
+    when CONFIGS['bus']['company_type']['reseller']
+      @partner = Bus::DataObj::Reseller.new
+      @partner.reseller_type = attributes["reseller type"] || attributes["reseller type"].nil?
+      @partner.reseller_quota = attributes["reseller quota"] || 0
+    else
+      raise "Error: Company type #{type} does not exist."
+  end
+  @partner.partner_info.type = type
+  @partner.subscription_period = attributes['period']
+  @bus_site.admin_console_page.add_new_partner_section.fill_subscription_period(@partner.subscription_period)
+  @bus_site.admin_console_page.add_new_partner_section.fill_initial_purchase(@partner)
+end
+
+
+Then /(MozyPro|MozyEnterprise|Reseller) VMBU tool tip should appear next to the Server Add Ons$/ do |partner_type|
+  vmbu_text = 'Server Add On is used for physical and virtual servers.'
+  @bus_site.admin_console_page.add_new_partner_section.get_vmbu_tooltip(@partner).should == vmbu_text
+end
+
 When /^I add a new sub partner:$/ do |sub_partner_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_partner'])
   @subpartner = Bus::DataObj::SubPartner.new(friendly_hash(sub_partner_table.hashes.first))

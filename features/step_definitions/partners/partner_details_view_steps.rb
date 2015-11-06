@@ -394,6 +394,23 @@ When /^I (Enable|Disable) partner details autogrow$/ do |status|
   end
 end
 
+Then /^the (Server|Desktop|Generic|Server and Desktop) pooled resource should be editable for the subpartner$/ do |type|
+  @bus_site.admin_console_page.partner_details_section.subpartner.pooled_resource_edit_link_visible?.should == true
+  @bus_site.admin_console_page.partner_details_section.subpartner.edit_pooled_resource
+  items_visible = @bus_site.admin_console_page.partner_details_section.subpartner.pooled_resurce_inputs_visible?(type)
+  if type.include? "Server"
+    items_visible["server_quota_input"].should == true
+    items_visible["server_licenses_input"].should == true
+  end
+  if type.include? "Desktop"
+    items_visible["desktop_quota_input"].should == true
+    items_visible["desktop_licenses_input"].should == true
+  end
+  if type.include? "Generic"
+    items_visible["generic_quota_input"].should == true
+  end
+end
+
 When /^I change pooled resource for the subpartner:$/ do |table|
   @bus_site.admin_console_page.partner_details_section.subpartner.change_pooled_resource(friendly_hash(table.hashes.first))
 end

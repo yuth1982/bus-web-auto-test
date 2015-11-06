@@ -53,7 +53,7 @@ module Bus
 
     # Contact information
     element(:partner_details_div, css: 'div[id$=account_details] div:first-child')
-    element(:account_details_icon, css: 'i[id$=account-dtl-icon]')
+    element(:account_details_icon, xpath: "//i[contains(@id,'account-dtl-icon')]")
     element(:account_details_attribute_edit, xpath: "//a[contains(@id, 'toggle_partner_attribute_management_edit')]/span")
     element(:account_details_attribute_server, xpath: "//form[contains(@id, 'account_attributes_form')]/table/tbody/tr[6]/td[3]/input")
     element(:account_details_attribute_save, css: "div.partner_attribute_management_shown > input[type=\"submit\"]")
@@ -96,12 +96,18 @@ module Bus
     element(:pooled_resources_table, css: 'form[id^=pooled_resources_form] table')
     element(:pooled_resource_edit_link, css: 'a[id^=toggle_partner_pooled_resource_item_edit]')
     element(:pooled_resource_submit_btn, css: 'div.resource_item_edit input[type=submit]')
+    element(:assign_quota_desktop_input, xpath: "//input[@name='assigned_quota[Desktop]']")
+    element(:assigned_licenses_desktop_input, xpath: "//input[@name='assigned_licenses[Desktop]']")
+    element(:assign_quota_server_input, xpath: "//input[@name='assigned_quota[Server]']")
+    element(:assigned_licenses_server_input, xpath: "//input[@name='assigned_licenses[Server]']")
+    element(:assigned_quota_generic_input, xpath: "//input[@name='assigned_quota[Generic]']")
+
 
     # Resources table, for MozyPro
     element(:generic_resources_table, css: 'form[id^=generic_resources_form] table')
 
     # Pooled Resources table, for Pooled partner
-    element(:pooled_resources_table, css: 'form[id^=pooled_resources_form] table')
+    element(:pooled_resources_table, xpath: "//form[contains(@id,'pooled_resources_form')]/table")
 
     # License types table
     element(:license_types_table, css: 'div[id^=partner_license_types] table')
@@ -889,6 +895,32 @@ module Bus
       def initialize(root)
         @root_element = root
       end
+
+      def pooled_resource_edit_link_visible?
+        size = all(:xpath, "//div[contains(@id,'partner_pooled_resources')]/h4/span/a[contains(text(),'Edit')]").size
+        (size > 0)? true:false
+      end
+
+      def edit_pooled_resource
+        pooled_resource_edit_link.click
+      end
+
+      def pooled_resurce_inputs_visible?(type)
+        items_visible = Hash.new
+        if type.include? "Server"
+          items_visible["server_quota_input"] = assign_quota_server_input.visible?
+          items_visible["server_licenses_input"] = assigned_licenses_server_input.visible?
+        end
+        if type.include? "Desktop"
+          items_visible["desktop_quota_input"] = assign_quota_desktop_input.visible?
+          items_visible["desktop_licenses_input"] = assigned_licenses_desktop_input.visible?
+        end
+        if type.include? "Generic"
+          items_visible["generic_quota_input"] = assigned_quota_generic_input.visible?
+        end
+        items_visible
+      end
+
       def change_pooled_resource(pooled_resource, subpartner=false)
         wait_until_bus_section_load
         expand(account_details_icon)
