@@ -95,13 +95,13 @@ module Bus
     # Pooled Storage
     element(:pooled_resources_table, css: 'form[id^=pooled_resources_form] table')
     element(:pooled_resource_edit_link, css: 'a[id^=toggle_partner_pooled_resource_item_edit]')
-    element(:pooled_resource_submit_btn, css: 'div.resource_item_edit input[type=submit]')
+    element(:pooled_resource_submit_btn, xpath: "//div[@class='resource_item_edit']/p/input[@type='submit']")
     element(:assign_quota_desktop_input, xpath: "//input[@name='assigned_quota[Desktop]']")
     element(:assigned_licenses_desktop_input, xpath: "//input[@name='assigned_licenses[Desktop]']")
     element(:assign_quota_server_input, xpath: "//input[@name='assigned_quota[Server]']")
     element(:assigned_licenses_server_input, xpath: "//input[@name='assigned_licenses[Server]']")
     element(:assigned_quota_generic_input, xpath: "//input[@name='assigned_quota[Generic]']")
-
+    element(:pooled_resource_edit_link, xpath: "//a[contains(@id,'toggle_partner_pooled_resource_item_edit')]")
 
     # Resources table, for MozyPro
     element(:generic_resources_table, css: 'form[id^=generic_resources_form] table')
@@ -412,6 +412,11 @@ module Bus
       act_as_link.click
     end
 
+    def click_admin_name admin_name
+      find(:xpath, "//a[text()='#{admin_name}']").click
+
+    end
+
     # Public: Delete the current partner
     #
     # Example
@@ -691,7 +696,19 @@ module Bus
 
     def set_contact_country country
       contact_country_select.select country
-      alert_accept
+      alert_accept if alert_present?
+    end
+
+    def set_phone phone
+      contact_phone_tb.type_text phone
+    end
+
+    def set_contact_industry industry
+      contact_industry_select.select industry
+    end
+
+    def set_contact_of_employees range
+      contact_employees_select.select range
     end
 
     def set_vat_number vat
@@ -927,7 +944,7 @@ module Bus
         pooled_resource_edit_link.click
         pooled_resource.each do |k, v|
           if k.match(/(desktop|server|generic)_(storage|devices)/)
-            find(:css, "input[name='assigned_#{$2}[#{$1.capitalize}]']".gsub('storage', 'quota').gsub('devices', 'licenses')).type_text(v)
+            find(:xpath, "//input[@name='assigned_#{$2}[#{$1.capitalize}]']".gsub('storage', 'quota').gsub('devices', 'licenses')).type_text(v)
           end
         end
         pooled_resource_submit_btn.click

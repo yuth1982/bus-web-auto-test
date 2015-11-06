@@ -306,4 +306,40 @@ Feature: BUS Regression partner test
     Then I stop masquerading from subpartner
     And I search and delete partner account by newly created subpartner company name
 
+  #bus issue 141992
+  @TC.15508 @bus @edit_partner_details @tasks_p2
+  Scenario: 15508 BILL.10010 MozyPro Partner Account Name is programatically sync'd with Aria
+    When I add a new MozyPro partner:
+      | period | base plan  | server plan |
+      | 12     | 500 GB     | yes         |
+    Then New partner should be created
+    And I get partner aria id
+    And I search partner by newly created partner admin email
+    And I view partner details by newly created partner admin email
+    And I click admin name newly created admin name in partner details section
+    And edit admin details:
+      | Name:             |
+      | Fancisco1 Pardue1 |
+    Then edit sub admin personal information success message should display
+    Then API* Aria account should be:
+      | first_name | last_name  |
+      | Fancisco1  | Pardue1    |
+    When API* I set newly created partner aria id account contact to:
+      | first_name | last_name |
+      | fname      | lname     |
+    Then API* Aria account should be:
+      | first_name | last_name  |
+      | fname      | lname      |
+    And I refresh the partner details section
+    Then Partner general information should be:
+      | Root Admin:          |
+      | fname lname (act as) |
+    And I delete partner account
+
+
+
+
+
+
+
 

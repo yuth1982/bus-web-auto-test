@@ -133,6 +133,12 @@ Then /^API\* I set (.+) account notification method to (.+)$/ do |aria_id, notif
   @aria_notification_method = AriaApi.update_acct_notify_method({:account_no=> aria_id.to_i, :notify_method=> notification_method})
 end
 
+Then /^API\* I set (.+) account contact to:$/ do |aria_id, acct_contact_table |
+  acct_contact_info = acct_contact_table.hashes.first
+  acct_contact_info["account_no"] = aria_id.to_i
+  @aria_acct_contact_method = AriaApi.update_acct_contact(acct_contact_info)
+end
+
 Then /^API\* Aria account plans for (.+) should be:$/ do |aria_id, info_table|
 
   actual = AriaApi.get_acct_plans_all({:acct_no=> aria_id.to_i})

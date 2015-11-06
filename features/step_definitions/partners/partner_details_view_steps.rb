@@ -352,26 +352,17 @@ end
 When /^I change the partner contact information (to:|default password)$/ do |password, info_table|
   # table is a | address          | city          | state          | zip_code                 | country          |
   new_info = info_table.hashes.first
-  new_info.keys.each do |header|
-    case header
-      when 'Contact Email:'
-        @bus_site.admin_console_page.partner_details_section.set_contact_email(new_info[header])
-      when 'Contact Address:'
-        @bus_site.admin_console_page.partner_details_section.set_contact_address(new_info[header])
-      when 'Contact City:'
-        @bus_site.admin_console_page.partner_details_section.set_contact_city(new_info[header])
-      when 'Contact Country:'
-        @bus_site.admin_console_page.partner_details_section.set_contact_country(new_info[header])
-      when 'Contact State:'
-        @bus_site.admin_console_page.partner_details_section.set_contact_state(new_info[header])
-      when 'Contact ZIP/Postal Code:'
-        @bus_site.admin_console_page.partner_details_section.set_contact_zip(new_info[header])
-      when 'VAT Number:'
-        @bus_site.admin_console_page.partner_details_section.set_vat_number(new_info[header])
-      else
-        raise "Unexpected #{new_info[header]}"
-    end
-  end
+  @bus_site.admin_console_page.partner_details_section.set_contact_email(new_info["Contact Email:"]) unless new_info["Contact Email:"].nil?
+  @bus_site.admin_console_page.partner_details_section.set_contact_address(new_info["Contact Address:"]) unless new_info["Contact Address:"].nil?
+  @bus_site.admin_console_page.partner_details_section.set_contact_city(new_info["Contact City:"]) unless new_info["Contact City:"].nil?
+  @bus_site.admin_console_page.partner_details_section.set_contact_country(new_info["Contact Country:"]) unless new_info["Contact Country:"].nil?
+  @bus_site.admin_console_page.partner_details_section.set_contact_state(new_info["Contact State:"]) unless new_info["Contact State:"].nil?
+  @bus_site.admin_console_page.partner_details_section.set_contact_zip(new_info["Contact ZIP/Postal Code:"]) unless new_info["Contact ZIP/Postal Code:"].nil?
+  @bus_site.admin_console_page.partner_details_section.set_phone(new_info["Phone:"]) unless new_info["Phone:"].nil?
+  @bus_site.admin_console_page.partner_details_section.set_vat_number(new_info["VAT Number:"]) unless new_info["VAT Number:"].nil?
+  @bus_site.admin_console_page.partner_details_section.set_contact_industry(new_info["Industry:"]) unless new_info["Industry:"].nil?
+  @bus_site.admin_console_page.partner_details_section.set_contact_of_employees(new_info["# of employees:"]) unless new_info["# of employees:"].nil?
+  
   password = QA_ENV['bus_password'] if password == 'to:'
   @bus_site.admin_console_page.partner_details_section.save_changes(password)
 end
@@ -436,7 +427,7 @@ Then /^I open partner details by partner name in header$/ do
   @bus_site.admin_console_page.partner_details_section.expand_contact_info
 end
 
-Then /^VAT number shouldn't be changed and the error message should be:$/ do  |message|
+Then /(contact info|pooled resource) shouldn't be changed and the error message should be:$/ do  |section,message|
   @bus_site.admin_console_page.partner_details_section.error_message.should eq(message)
 end
 
@@ -550,4 +541,8 @@ end
 
 When /I click the latest date link to view the invoice$/ do
   @bus_site.admin_console_page.partner_details_section.click_invoice_link
+end
+
+And /^I click admin name (.+) in partner details section$/ do |admin_name|
+  @bus_site.admin_console_page.partner_details_section.click_admin_name(admin_name)
 end
