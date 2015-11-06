@@ -7,8 +7,8 @@ When /^I get the user id$/ do
   Log.debug("user id is #{@user_id}")
 end
 
-When /^I activate the user$/ do
-  @bus_site.admin_console_page.user_details_section.active_user
+When /^I (activate|suspended) the user$/ do |status|
+  @bus_site.admin_console_page.user_details_section.change_user_status(status)
 end
 
 Then /^user details should be:$/ do |user_table|
@@ -507,5 +507,10 @@ Then /^device name should show (with|without) \(deleted\)$/ do |deleted|
   end
 end
 
+Then /^I click allow re-activate$/ do
+  @bus_site.admin_console_page.user_details_section.click_allow_reactivation
+end
 
-
+Then /^I see Allow Re-Activation link is available$/ do
+  @bus_site.admin_console_page.user_details_section.check_allow_reactivation_available.should be true
+end

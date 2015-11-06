@@ -78,3 +78,11 @@ And /^I get verify email address from email content for mozyhome change email ad
   (match.nil?).should == false
   @verify_email_query = match[0] unless match.nil?
 end
+
+Then /^I check the email content should include:$/ do |msg|
+  @mail_content.should include (msg)
+end
+
+Then /^I check the mozy brand logo in email content is:(.+)$/ do |logo_url|
+  @mail_content.should include (logo_url)
+end

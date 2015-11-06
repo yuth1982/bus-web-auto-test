@@ -27,6 +27,7 @@ module Bus
     element(:desktop_devices_tb, id: 'Desktop_device')
     element(:server_devices_tb, id: 'Server_device')
 
+    element(:tooltips_span, xpath: "//span[@id='tooltip_for_new_user_storage_max']")
     # Public: Add new users
     #
     # @users     [Object] users
@@ -125,6 +126,15 @@ module Bus
 
     def server_device
       server_devices_tb.text
+    end
+
+    def get_tooltips(group,type)
+      wait_until_bus_section_load
+      user_group_select.select(group)
+      storage_type_select.select(type)
+      storage_max_tb.click
+      wait_until{tooltips_span.visible?}
+      tooltips_span.text
     end
   end
 end

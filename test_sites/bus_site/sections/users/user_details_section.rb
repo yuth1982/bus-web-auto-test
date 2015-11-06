@@ -8,6 +8,7 @@ module Bus
     # top menus
     element(:delete_user_link, xpath: "//a[text()='Delete User']")
     element(:change_user_password_link, xpath: "//a[text()='Change User Password']")
+    element(:allow_re_activation_a, xpath: "//a[text()='Allow Re-Activation']")
 
     elements(:user_details_dls, xpath: "//div[starts-with(@id,'user-show')]//div[3]/dl")
     element(:change_status_link, xpath: "//span[starts-with(@id,'user-display-status-')]//a")
@@ -328,9 +329,14 @@ module Bus
     #   @bus_site.admin_console_page.user_details_section.active_user
     #
     # @return [] nothing
-    def active_user
+    def change_user_status(status)
       change_status_link.click
-      status_selection.select('Active')
+      if status.eql?('activate')
+        status_selection.select('Active')
+      else
+        status_selection.select('Suspended')
+      end
+
       submit_status_btn.click
     end
 
@@ -787,6 +793,15 @@ module Bus
     end
     def get_user_billed_info
       all_billing_info.size
+    end
+
+    def click_allow_reactivation
+      allow_re_activation_a.click
+      alert_accept
+    end
+
+    def check_allow_reactivation_available
+      allow_re_activation_a.visible?
     end
 
     private

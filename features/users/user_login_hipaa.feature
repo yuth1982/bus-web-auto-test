@@ -368,6 +368,8 @@ Feature: Hipaa user Login
       | username                 | password                      |
       | <%=@new_users[0].email%> | <%=QA_ENV['hipaa_password']%> |
     Then the user log out bus
+    When I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
 
   @TC.123691 @bus @user_login @tasks_p1
   Scenario: 123691:New created activated Hipaa admin update user password and log in as user to verify

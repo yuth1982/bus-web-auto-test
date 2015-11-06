@@ -58,6 +58,66 @@ Feature: Remove a user
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
+  @TC.20944 @bus @tasks_p2 @remove_user
+  Scenario: 20944 [Itemized][Enterprise] Delete user from default user group
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | net terms |
+      | 12     | 10    | 100 GB      | yes       |
+    Then New partner should be created
+    When I get the partner_id
+    And I act as newly created partner
+    And I add new user(s):
+      | name       | user_group           | storage_type | storage_limit | devices |
+      | TC.20944-1 | (default user group) | Desktop      | 10            | 1       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    Then I view user details by newly created user email
+    And I update the user password to default password
+    And I use keyless activation to activate devices
+      | user_email  | machine_name | machine_type | partner_name  |
+      | @user_email | TEST_M1      | Desktop      | @partner_name |
+    And I get the machine_id by license_key
+    And I update the newly created machine used quota to 5 GB
+    And I refresh User Details section
+    Then device table in user details should be:
+      | Used/Available |
+      | 5 GB / 5 GB    |
+    When I navigate to Resource Summary section from bus admin console page
+    Then Itemized storage summary should be:
+      | Desktop Used | Desktop Total | Server Used | Server Total | used  | Available |
+      | 5 GB         | 250 GB        | 0           | 100 GB       | 5 GB  | 345 GB    |
+    When I navigate to User Group List section from bus admin console page
+    And Itemized user groups table should be:
+      | Group Name           | Sync  | Desktop Storage Type | Desktop Type Value | Desktop Storage Used | Desktop Devices Used | Desktop Devices Total | Server Storage Type | Server Type Value | Server Storage Used | Server Devices Used | Server Devices Total |
+      | (default user group) | true  | Shared               |                    | 5 GB                 | 1                    | 10                    | Shared              |                   | 0                   | 0                   | 200                  |
+    Then I navigate to user login page with partner ID
+    Then I log in bus pid console with:
+      | username                 | password                                  |
+      | <%=@new_users[0].email%> | <%=CONFIGS['global']['test_pwd'] %> |
+    Then the user log out bus
+    When I log in bus admin console as administrator
+    Then I act as partner by:
+      | email        |
+      | @admin_email |
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    Then I view user details by newly created user email
+    And I delete user
+    When I navigate to Resource Summary section from bus admin console page
+    Then Itemized storage summary should be:
+      | Desktop Used | Desktop Total | Server Used | Server Total | used |Available |
+      | 0            | 250 GB        | 0           | 100 GB       | 0    |350 GB    |
+    Then I navigate to user login page with partner ID
+    Then I log in bus pid console with:
+      | username                 | password                            |
+      | <%=@new_users[0].email%> | <%=CONFIGS['global']['test_pwd'] %> |
+    Then Login page error message should be Incorrect email or password.
+    When I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
+
   @TC.20945 @bus @2.5 @manage_storage @remove_user @itemized @enterprise
   Scenario: 20945 [Itemized][Enterprise] Delete user from new user group
     When I add a new MozyEnterprise partner:

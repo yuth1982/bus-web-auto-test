@@ -256,6 +256,10 @@ module Phoenix
       login_error.text
     end
 
+    def check_logout_link
+      all(:xpath, "//div[@id='header']//a[text()='Log Out']").size>0
+    end
+
     def access_freyja
       access_freyja_link.click
     end

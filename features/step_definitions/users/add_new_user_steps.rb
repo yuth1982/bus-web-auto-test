@@ -169,3 +169,7 @@ And /^I add some new users and activate one machine for each$/ do |table|
     })
   end
 end
+
+Then /^I check user group (.+) with (.+) storage limit tooltips is (.+)$/ do |group,type,tooltips|
+  @bus_site.admin_console_page.add_new_user_section.get_tooltips(group,type).should ==tooltips
+end
