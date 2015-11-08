@@ -135,8 +135,8 @@ phoenix:
   captcha:                      kwpa3121
 
 fedid:
-  user_email:                   auto@mtdev.mozypro.local
-  user_name:                    auto
+  user_email:                   auto1@mtdev.mozypro.local
+  user_name:                    auto1
   subdomain:                    qa8saml
 
 gmail:

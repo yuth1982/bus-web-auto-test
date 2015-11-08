@@ -246,8 +246,8 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 3 succeeded, 0 failed \| Users Deprovisioned: 0 |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 3 succeeded, 0 failed \| Users Deprovisioned: 0  |
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by User desc
     Then User search results should be:
@@ -267,8 +267,8 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 3 succeeded, 0 failed |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 3 succeeded, 0 failed  |
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
     When I stop masquerading
@@ -312,7 +312,7 @@ Feature: User sync
     Then test connection message should be Test passed
     And I click Sync Rules tab
     And I add 1 new provision rules:
-      | rule                                                                  | group |
+      | rule                                                                                    | group |
       | (&(objectClass=user)(\|(\|(cn=dev-17540-test*)(cn=pm-17540-test*))(cn=qa-17540-test*))) | dev   |
     And I click the sync now button
     And I wait for 90 seconds
@@ -320,8 +320,8 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 9 succeeded, 0 failed \| Users Deprovisioned: 0 |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 9 succeeded, 0 failed \| Users Deprovisioned: 0  |
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by User desc
     Then User search results should be:
@@ -347,15 +347,15 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 9 succeeded, 0 failed |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 9 succeeded, 0 failed  |
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
     # Scenario: 17542 17554 Multiple Ruls/Multiple Users
     When I navigate to Authentication Policy section from bus admin console page
     And I click Sync Rules tab
     And I add 3 new provision rules:
-      | rule         | group |
+      | rule               | group |
       | cn=dev-17542-test* | dev   |
       | cn=pm-17542-test*  | pm    |
       | cn=qa-17542-test*  | qa    |
@@ -365,12 +365,12 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 9 succeeded, 0 failed \| Users Deprovisioned: 0 |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 9 succeeded, 0 failed \| Users Deprovisioned: 0  |
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by User desc
     Then User search results should be:
-      | User               |      Name     | User Group  |
+      | User                     |   Name              | User Group  |
       | qa-17542-test3@test.com  |   qa-17542-test3    | qa          |
       | qa-17542-test2@test.com  |   qa-17542-test2    | qa          |
       | qa-17542-test1@test.com  |   qa-17542-test1    | qa          |
@@ -384,7 +384,7 @@ Feature: User sync
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
     And I add 3 new deprovision rules:
-      | rule         | action   |
+      | rule               | action   |
       | cn=dev-17542-test* | Delete   |
       | cn=pm-17542-test*  | Delete   |
       | cn=qa-17542-test*  | Delete   |
@@ -394,8 +394,8 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 9 succeeded, 0 failed |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 9 succeeded, 0 failed  |
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
     # Scenario: 17543 17557 17558 Multiple Ruls/Multiple Users/Rule order matters
@@ -413,12 +413,12 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 9 succeeded, 0 failed \| Users Deprovisioned: 0 |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 9 succeeded, 0 failed \| Users Deprovisioned: 0  |
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by User desc
     Then User search results should be:
-      | User               |      Name     | User Group  |
+      | User                     |   Name              | User Group  |
       | qa-17543-test3@test.com  |   qa-17543-test3    | qa          |
       | qa-17543-test2@test.com  |   qa-17543-test2    | qa          |
       | qa-17543-test1@test.com  |   qa-17543-test1    | qa          |
@@ -432,21 +432,21 @@ Feature: User sync
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
     And I add 2 new deprovision rules:
-      | rule         | action           |
-      | cn=dev-17543-test* | Take no action   |
-      | cn=dev-17543-test* | Delete           |
+      | rule               | action         |
+      | cn=dev-17543-test* | Take no action |
+      | cn=dev-17543-test* | Delete         |
     And I click the sync now button
     And I wait for 90 seconds
     And I delete 2 deprovision rules
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 3 succeeded, 0 failed |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 3 succeeded, 0 failed  |
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by User desc
     Then User search results should be:
-      | User               |      Name     | User Group  |
+      | User                     |   Name               | User Group  |
       | qa-17543-test3@test.com  |   qa-17543-test3    | qa          |
       | qa-17543-test2@test.com  |   qa-17543-test2    | qa          |
       | qa-17543-test1@test.com  |   qa-17543-test1    | qa          |
@@ -460,7 +460,7 @@ Feature: User sync
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
     And I add 3 new deprovision rules:
-      | rule         | action   |
+      | rule               | action   |
       | cn=dev-17543-test* | Delete   |
       | cn=pm-17543-test*  | Delete   |
       | cn=qa-17543-test*  | Delete   |
@@ -618,16 +618,16 @@ Feature: User sync
     Then Authentication Policy has been updated successfully
     When I click Sync Rules tab
     And I add 1 new provision rules:
-      | rule             | group |
-      | cn=auto          | dev   |
+      | rule     | group |
+      | cn=auto1 | dev   |
     And I click the sync now button
     And I wait for 100 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0  |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
       | keywords                            | filter | user type                  |
@@ -649,20 +649,20 @@ Feature: User sync
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
     And I add 1 new deprovision rules:
-      | rule             | action |
-      | cn=auto          | Delete |
+      | rule     | action |
+      | cn=auto1 | Delete |
     And I click the sync now button
     And I wait for 80 seconds
     And I delete 1 deprovision rules
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 1 succeeded, 0 failed |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 1 succeeded, 0 failed  |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                            | filter |
-      | <%=CONFIGS['fedid']['user_email']%> | None   |
+      | keywords                            | filter | user type                  |
+      | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     Then The users table should be empty
     When I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
     Then I will see the Authentication Failed page
@@ -675,16 +675,16 @@ Feature: User sync
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
     And I add 1 new provision rules:
-      | rule             | group |
-      | cn=auto          | dev   |
+      | rule     | group |
+      | cn=auto1 | dev   |
     And I click the sync now button
     And I wait for 60 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0  |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
       | keywords                            | filter | user type                  |
@@ -696,6 +696,21 @@ Feature: User sync
     Then The user status should be Active
     When I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
     Then I will see the user account page
+    ## clear data
+    When I log in bus admin console as administrator
+    When I act as partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
+    And I click Sync Rules tab
+    And I add 1 new deprovision rules:
+      | rule     | action |
+      | cn=auto1 | Delete |
+    And I click the sync now button
+    And I wait for 80 seconds
+    And I delete 1 deprovision rules
+    And I save the changes
 
   @TC.17593 @firefox_profile  @bus @2.1 @direct_ldap_integration @use_provision @qa8
   Scenario: 17593 UserProvision - Suspended users in BUS can't be resumed
@@ -714,8 +729,8 @@ Feature: User sync
     Then Authentication Policy has been updated successfully
     When I click Sync Rules tab
     And I add 1 new provision rules:
-      | rule             | group |
-      | cn=auto          | dev   |
+      | rule     | group |
+      | cn=auto1 | dev   |
     And I click the sync now button
     And I wait for 100 seconds
     And I delete 1 provision rules
@@ -729,8 +744,8 @@ Feature: User sync
       | keywords                            | filter | user type                  |
       | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     Then User search results should be:
-      | User                                | Name                               | User Group  |
-      | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%> | dev         |
+      | User                                | Name                               | User Group |
+      | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%> | dev        |
     When I view user details by <%=CONFIGS['fedid']['user_email']%>
     Then The user status should be Active
     When I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
@@ -739,22 +754,22 @@ Feature: User sync
 
     When I log in bus admin console as administrator
     And I act as partner by:
-      | email                       |
-      |qa8+saml+test+admin@mozy.com |
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
     And I add 1 new deprovision rules:
-      | rule             | action  |
-      | cn=auto          | Suspend |
+      | rule     | action  |
+      | cn=auto1 | Suspend |
     And I click the sync now button
     And I wait for 60 seconds
     And I delete 1 deprovision rules
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 1 succeeded, 0 failed |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 1 succeeded, 0 failed  |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
       | keywords                            | filter | user type                  |
@@ -769,14 +784,14 @@ Feature: User sync
 
     When I log in bus admin console as administrator
     And I act as partner by:
-      | email                       |
-      |qa8+saml+test+admin@mozy.com |
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
     And I add 1 new provision rules:
-      | rule             | group |
-      | cn=auto          | dev   |
+      | rule     | group |
+      | cn=auto1 | dev   |
     And I click the sync now button
     And I wait for 60 seconds
     And I delete 1 provision rules
@@ -807,6 +822,17 @@ Feature: User sync
       | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     And I view user details by <%=CONFIGS['fedid']['user_email']%>
     And I activate the user
+     ## clear data
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
+    And I click Sync Rules tab
+    And I add 1 new deprovision rules:
+      | rule     | action |
+      | cn=auto1 | Delete |
+    And I click the sync now button
+    And I wait for 80 seconds
+    And I delete 1 deprovision rules
+    And I save the changes
 
   @TC.17594 @firefox_profile @bus @2.1 @direct_ldap_integration @use_provision @qa8
   Scenario: 17594 UserProvision - Delete user after several days of not synced
@@ -823,23 +849,23 @@ Feature: User sync
     Then Authentication Policy has been updated successfully
     When I click Sync Rules tab
     And I add 1 new provision rules:
-      | rule             | group |
-      | cn=auto          | dev   |
+      | rule     | group |
+      | cn=auto1 | dev   |
     And I click the sync now button
-    And I wait for 240 seconds
+    And I wait for 100 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0  |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
       | keywords                            | filter | user type                  |
       | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     Then User search results should be:
-      | User                                | Name                                    | User Group  |
-      | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%>      | dev         |
+      | User                                | Name                               | User Group |
+      | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%> | dev        |
     When I view user details by <%=CONFIGS['fedid']['user_email']%>
     And I get the user id
     And I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
@@ -848,15 +874,15 @@ Feature: User sync
 
     When I log in bus admin console as administrator
     And I act as partner by:
-      | email                       |
-      |qa8+saml+test+admin@mozy.com |
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
     And I Choose to delete users if missing from LDAP for 60 days
     And I change the user last sync field in the db to be 60 days earlier
     And I click the sync now button
-    And I wait for 240 seconds
+    And I wait for 100 seconds
     And I clear the user sync information
     And I save the changes
     And I click Connection Settings tab
@@ -865,8 +891,8 @@ Feature: User sync
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                      |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                            | filter |
-      | <%=CONFIGS['fedid']['user_email']%> | None   |
+      | keywords                            | filter | user type                  |
+      | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     Then The users table should be empty
     When I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
     Then I will see the Authentication Failed page
@@ -878,7 +904,7 @@ Feature: User sync
       | qa8+saml+test+admin@mozy.com |
     Then I get current partner name
     When I act as partner by:
-      | email                       |
+      | email                        |
       | qa8+saml+test+admin@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
@@ -888,23 +914,23 @@ Feature: User sync
     Then Authentication Policy has been updated successfully
     When I click Sync Rules tab
     And I add 1 new provision rules:
-      | rule             | group |
-      | cn=auto          | dev   |
+      | rule     | group |
+      | cn=auto1 | dev   |
     And I click the sync now button
     And I wait for 60 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0  |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
       | keywords                            | filter | user type                  |
       | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     Then User search results should be:
-      | User                                | Name                                    | User Group  |
-      | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%>      | dev         |
+      | User                                | Name                               | User Group |
+      | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%> | dev        |
     When I view user details by <%=CONFIGS['fedid']['user_email']%>
     And I get the user id
     And I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
@@ -914,7 +940,7 @@ Feature: User sync
     When I log in bus admin console as administrator
     And I act as partner by:
       | email                       |
-      |qa8+saml+test+admin@mozy.com |
+      | qa8+saml+test+admin@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I click Sync Rules tab
@@ -927,14 +953,14 @@ Feature: User sync
     And I click Connection Settings tab
     Then The sync status result should like:
       | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                |
+      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                      |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
       | keywords                            | filter | user type                  |
       | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     Then User search results should be:
-      | User                                | Name                                    | User Group  |
-      | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%>      | dev         |
+      | User                                | Name                               | User Group |
+      | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%> | dev        |
     When I view user details by <%=CONFIGS['fedid']['user_email']%>
     Then The user status should be Suspended
     When I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
@@ -942,14 +968,25 @@ Feature: User sync
 
     And I log in bus admin console as administrator
     And I act as partner by:
-      | email                       |
-      |qa8+saml+test+admin@mozy.com |
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
       | keywords                            | filter | user type                  |
       | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     And I view user details by <%=CONFIGS['fedid']['user_email']%>
     And I activate the user
+    # clear data
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
+    And I click Sync Rules tab
+    And I add 1 new deprovision rules:
+      | rule     | action |
+      | cn=auto1 | Delete |
+    And I click the sync now button
+    And I wait for 80 seconds
+    And I delete 1 deprovision rules
+    And I save the changes
 
   @TC.17546 @bus @2.1 @direct_ldap_integration @use_provision
   Scenario: 17546 17548 17549 18723 UserProvision/Sync - Add(Delete, Modify) a new user in AD
@@ -994,13 +1031,13 @@ Feature: User sync
       | rule               | group |
       | cn=dev-17546-test* | dev   |
     And I click the sync now button
-    And I wait for 240 seconds
+    And I wait for 100 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0  |
     When I navigate to Search / List Users section from bus admin console page
     Then User search results should be:
       | User                     | Name            | User Group |
@@ -1013,13 +1050,13 @@ Feature: User sync
       | rule               | group |
       | cn=dev-17546-test* | dev   |
     And I click the sync now button
-    And I wait for 240 seconds
+    And I wait for 100 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 2 succeeded, 0 failed \| Users Deprovisioned: 0 |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 2 succeeded, 0 failed \| Users Deprovisioned: 0  |
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by User desc
     Then User search results should be:
@@ -1035,13 +1072,13 @@ Feature: User sync
       | rule               | group |
       | cn=dev-17546-test* | dev   |
     And I click the sync now button
-    And I wait for 240 seconds
+    And I wait for 100 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 2 succeeded, 0 failed \| Users Deprovisioned: 0 |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 2 succeeded, 0 failed \| Users Deprovisioned: 0  |
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by User desc
     Then User search results should be:
@@ -1057,13 +1094,13 @@ Feature: User sync
       | rule               | group |
       | cn=dev-17546-test* | dev   |
     And I click the sync now button
-    And I wait for 240 seconds
+    And I wait for 100 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 2 succeeded, 0 failed \| Users Deprovisioned: 0 |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 2 succeeded, 0 failed \| Users Deprovisioned: 0  |
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by User desc
     Then User search results should be:
@@ -1078,17 +1115,17 @@ Feature: User sync
       | rule               | action |
       | cn=dev-17546-test* | Delete |
     And I click the sync now button
-    And I wait for 240 seconds
+    And I wait for 100 seconds
     And I delete 1 deprovision rules
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 2 succeeded, 0 failed |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 2 succeeded, 0 failed  |
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
-
     And I delete a user dev-17546-test2 in the AD
+
     # Scenario: 18723 UserProvision-Fixed Attribute
     And I navigate to Authentication Policy section from bus admin console page
     And I click Attribute Mapping tab
@@ -1101,13 +1138,13 @@ Feature: User sync
       | rule               | group |
       | cn=dev-17546-test* | dev   |
     And I click the sync now button
-    And I wait for 240 seconds
+    And I wait for 100 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 2 succeeded, 0 failed \| Users Deprovisioned: 0 |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 2 succeeded, 0 failed \| Users Deprovisioned: 0  |
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by User desc
     Then User search results should be:
@@ -1125,13 +1162,13 @@ Feature: User sync
       | rule               | group |
       | cn=dev-17546-test* | dev   |
     And I click the sync now button
-    And I wait for 240 seconds
+    And I wait for 100 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 2 succeeded, 0 failed \| Users Deprovisioned: 0 |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 2 succeeded, 0 failed \| Users Deprovisioned: 0  |
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by User
     Then User search results should be:
@@ -1146,7 +1183,7 @@ Feature: User sync
       | rule               | action |
       | cn=dev-17546-test* | Delete |
     And I click the sync now button
-    And I wait for 240 seconds
+    And I wait for 100 seconds
     And I delete 1 deprovision rules
     And I click Attribute Mapping tab
     And I clear the fixed attribute
@@ -1195,7 +1232,7 @@ Feature: User sync
     When I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                      |
       | Next Sync   | 0                                                                   |
     And I click Sync Rules tab
@@ -1205,9 +1242,9 @@ Feature: User sync
     Then The daily sync time should be empty
     When I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                     |
-      | Next Sync   | Not Scheduled(Set)                                                 |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                      |
+      | Next Sync   | Not Scheduled(Set)                                                  |
     # Scenario: 17520 Scheduled Sync
     When I click Sync Rules tab
     And I choose to sync daily at the nearest sharp time
@@ -1216,9 +1253,9 @@ Feature: User sync
     And I wait for 80 seconds
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                |
-      | Next Sync   | @next_sync_time                                               |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                      |
+      | Next Sync   | @next_sync_time                                                     |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 

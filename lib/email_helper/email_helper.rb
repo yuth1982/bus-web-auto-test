@@ -114,18 +114,26 @@ module Email
   end
 
   def get_email_prefix
-    if RUBY_PLATFORM.include?('linux')
-      CONFIGS['global']['email_prefix'] = CONFIGS['global']['email_prefix_gmail']
+    if @aria_email.nil?
+      if RUBY_PLATFORM.include?('linux')
+        CONFIGS['global']['email_prefix'] = CONFIGS['global']['email_prefix_gmail']
+      else
+        CONFIGS['global']['email_prefix'] = CONFIGS['global']['email_prefix_outlook']
+      end
     else
-      CONFIGS['global']['email_prefix'] = CONFIGS['global']['email_prefix_outlook']
+      CONFIGS['global']['email_prefix'] = CONFIGS['global']['email_prefix_gmail']
     end
   end
 
   def get_email_domain
-    if RUBY_PLATFORM.include?('linux')
-      CONFIGS['global']['email_domain'] = CONFIGS['global']['email_domain_gmail']
+    if @aria_email.nil?
+      if RUBY_PLATFORM.include?('linux')
+        CONFIGS['global']['email_domain'] = CONFIGS['global']['email_domain_gmail']
+      else
+        CONFIGS['global']['email_domain'] = CONFIGS['global']['email_domain_outlook']
+      end
     else
-      CONFIGS['global']['email_domain'] = CONFIGS['global']['email_domain_outlook']
+      CONFIGS['global']['email_domain'] = CONFIGS['global']['email_domain_gmail']
     end
   end
 

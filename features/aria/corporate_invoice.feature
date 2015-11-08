@@ -6,6 +6,7 @@ Feature: Corporate Invoices
 
   Background:
     Given I log in bus admin console as administrator
+    And I set aria email gmail
 
   @TC.15686 @bus @2.0 @corporate_invoices @email
   Scenario: 15686 Verify Aria sends email when create a new MozyPro partner
