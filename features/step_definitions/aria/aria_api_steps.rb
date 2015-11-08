@@ -1,7 +1,3 @@
-And /^I set aria email gmail$/ do
-   @aria_email = 'gmail'
-end
-
 When /^API\* I get Aria account details by (.+)$/ do |aria_id|
   @aria_acc_details = AriaApi.get_acct_details_all({:acct_no=> aria_id.to_i})
 end

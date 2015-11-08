@@ -6,7 +6,6 @@ Feature: Notify about and collect past-due balances
 
   Background:
     Given I log in bus admin console as administrator
-    And I set aria email gmail
 
   @TC.16107 @firefox @bus @2.0 @notify_about_and_collect_past-due_balances
   Scenario: 16107 MozyPro account deleted in bus but history will remain in aria

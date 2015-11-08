@@ -661,8 +661,8 @@ Feature: User sync
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 1 succeeded, 0 failed  |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                            | filter | user type                  |
-      | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
+      | keywords                            | filter |
+      | <%=CONFIGS['fedid']['user_email']%> | None   |
     Then The users table should be empty
     When I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
     Then I will see the Authentication Failed page
@@ -891,8 +891,8 @@ Feature: User sync
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                      |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                            | filter | user type                  |
-      | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
+      | keywords                            | filter |
+      | <%=CONFIGS['fedid']['user_email']%> | None   |
     Then The users table should be empty
     When I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
     Then I will see the Authentication Failed page
