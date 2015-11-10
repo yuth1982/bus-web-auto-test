@@ -217,6 +217,10 @@ Then /^Order summary table should be:$/ do |order_summary_table|
   expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
 
+When /^I select company type as (MozyPro|MozyEnterprise|Reseller|MozyEnterprise DPS)$/ do |company_type|
+  @bus_site.admin_console_page.add_new_partner_section.select_company_type(company_type)
+end
+
 Then /^(MozyPro|MozyEnterprise|Reseller) partner subscription period options should be:$/ do |type, periods_table|
   @bus_site.admin_console_page.add_new_partner_section.available_periods(type).should == periods_table.headers
 end
@@ -368,4 +372,12 @@ When /^I (Enable|Disable) autogrow$/ do |status|
       @bus_site.admin_console_page.partner_details_section.disable_autogrow
     else
   end
+end
+
+Then /^storage based plan shows while user based plan and server add-on not show$/ do
+  array = @bus_site.admin_console_page.add_new_partner_section.check_mozyenterprise_dps_plan
+  # user_plan,storage_plan,server_addon_plan
+  array[0].should == false
+  array[1].should == true
+  array[2].should == false
 end

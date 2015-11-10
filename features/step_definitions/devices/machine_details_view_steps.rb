@@ -36,8 +36,16 @@ Then /^machine details should be:$/ do |md_table|
   expected.keys.each{|key| actual[key].should == expected[key]}
 end
 
+And /^I get machine details info$/ do
+  @machine_info = @bus_site.admin_console_page.machine_details_section.machine_info_hash
+end
+
 And /^I view machine (.+) details from user details section$/ do  |device_name|
   @bus_site.admin_console_page.user_details_section.view_device_details(device_name)
+end
+
+And /^I view deleted machine details from user details section$/ do
+  @bus_site.admin_console_page.user_details_section.view_device_details(@client.machine_alias, deleted = true)
 end
 
 And /^I click manifest view link$/ do
@@ -66,8 +74,8 @@ Then /^I delete the newly downloaded file$/ do
   @bus_site.admin_console_page.machine_details_section.delete_manifest_file(@file_name)
 end
 
-Then /^I delete the machine$/ do
-  @bus_site.admin_console_page.machine_details_section.delete_machine
+Then /^I (delete|undelete) the machine$/ do |action|
+  @bus_site.admin_console_page.machine_details_section.delete_undelete_machine(action)
 end
 
 And /^I click on the replace machine link$/ do
@@ -114,4 +122,33 @@ Then /^I (should|should not) see data shuttle table in machine details section$/
   else
     @bus_site.admin_console_page.machine_details_section.data_shuttle_table_visible?.should be_true
   end
+end
+
+And /^I refresh Machine Details section$/ do
+  @bus_site.admin_console_page.machine_details_section.refresh_bus_section
+end
+
+When /^I update the deleted at time to today minus (\S+) days$/ do |days|
+  global_undelete_value = DBHelper.get_global_setting_value("machine_undelete_window_length").to_i
+  if days == 'global_undelete_value'
+    days = global_undelete_value
+  elsif !(days.match(/global_undelete_value(\+|-)(\d+)/).nil?)
+    array = days.match(/global_undelete_value(\+|-)(\d+)/)
+    if array[1] == "+"
+      days = global_undelete_value + array[2].to_i
+    else
+      days = global_undelete_value - array[2].to_i
+    end
+  end
+  DBHelper.update_machine_deleted_at(@client.machine_id, days.to_i)
+end
+
+Then /^I (shouldnot|should) see Undelete Machine link$/ do |exist|
+  actual_result = @bus_site.admin_console_page.machine_details_section.undelete_machine_link_exist
+  expected = (exist == 'should'? true : false)
+  actual_result.should == expected
+end
+
+Then /^retention period should be (\d+) days$/ do |days|
+  @get_client_config_response["X-Data-Retention"].should == days
 end

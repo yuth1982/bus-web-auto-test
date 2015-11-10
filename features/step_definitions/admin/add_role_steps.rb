@@ -4,10 +4,10 @@ When /^I add a new role(| without saving):$/ do |type, table|
   role_hash.each do |_, v|
     v.replace ERB.new(v).result(binding)
   end
-  role = Bus::DataObj::Role.new(role_hash['Type'], role_hash['Name'], role_hash['Parent'], role_hash['User Group'])
+  @role = Bus::DataObj::Role.new(role_hash['Type'], role_hash['Name'], role_hash['Parent'], role_hash['User Group'])
   save = true
   save = false if type == ' without saving'
-  @ug_search_result = @bus_site.admin_console_page.add_new_role_section.add_new_role(role, save)
+  @ug_search_result = @bus_site.admin_console_page.add_new_role_section.add_new_role(@role, save)
 end
 
 And /^I save the role$/ do

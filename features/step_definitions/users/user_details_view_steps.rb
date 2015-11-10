@@ -208,6 +208,7 @@ Then /^device table in user details should be:$/ do |table|
   expected = table.hashes
   expected.each_index { |index|
     expected[index].keys.each { |key|
+      expected[index][key]= ERB.new(expected[index][key]).result(binding) if key == "Device"
       #depending on the performance of the testing env, the "Last Update" time could be different
       if !(expected[index][key].match(/^(1|< a|2) minute(s)* ago$/).nil?)
         actual[index][key].match(/^(1|< a|2) minute(s)* ago$/).nil?.should be_false
@@ -231,8 +232,17 @@ Then /^stash device table in user details should be:$/ do |table|
 end
 
 When /^I delete device by name: (.+)$/ do |device_name|
-  @bus_site.admin_console_page.user_details_section.delete_device(device_name)
+  @delete_device_msg = @bus_site.admin_console_page.user_details_section.delete_device(device_name)
   @bus_site.admin_console_page.user_details_section.wait_until_bus_section_load
+end
+
+Then /^the popup message when delete device is (.+)$/ do |message|
+  @delete_device_msg.should == message
+end
+
+Then /^Device (.+) (should not|should) show$/ do |device_name, exist|
+  exist = (exist == 'should'? true : false)
+  @bus_site.admin_console_page.user_details_section.device_exist(device_name).should == exist
 end
 
 Then /^I view the user's product keys$/ do
@@ -356,15 +366,19 @@ end
 
 
 When(/^I (set|edit|remove|save|cancel) (user|machine) max for (.+)$/) do |action, type, name|
-  @bus_site.admin_console_page.user_details_section.handle_max(action, type, name)
+  @alert_msg = @bus_site.admin_console_page.user_details_section.handle_max(action, type, name)
 end
 
-When(/^I input the (user|machine) max value for (.+) to (\d+) GB$/) do |type, name, quota|
+When(/^I input the (user|machine) max value for (.+) to (-?\d+) GB$/) do |type, name, quota|
   @bus_site.admin_console_page.user_details_section.set_max_value(type, name, quota)
 end
 
-Then(/^set max message should be:$/) do | msg|
-  @bus_site.admin_console_page.user_details_section.messages.should == msg
+Then(/^set max (message|alert) should be:$/) do | type, msg|
+  if type == 'message'
+    @bus_site.admin_console_page.user_details_section.messages.should == msg.strip
+  else
+    @alert_msg.should == msg.strip
+  end
 end
 
 Then(/^The range of machine max for (.+) by tooltips should be:$/) do |machine, range|
@@ -483,4 +497,15 @@ Then /^The current user should be billed$/ do
   @bus_site.admin_console_page.user_details_section.wait_until_bus_section_load
   (@bus_site.admin_console_page.user_details_section.get_user_billed_info > 1).should be_true
 end
+
+Then /^device name should show (with|without) \(deleted\)$/ do |deleted|
+  value = @bus_site.admin_console_page.user_details_section.get_device_name.strip
+  if deleted == 'with'
+    value.include?('(deleted)').should == true
+  else
+    value.include?('(deleted)').should == false
+  end
+end
+
+
 

@@ -41,6 +41,24 @@ module DBHelper
     end
   end
 
+  # update machine deleted time to days's before by machine id
+  def update_machine_deleted_at(machine_id, days)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      t = (Time.now - days * 24 * 3600)
+      Log.debug "########Time.now is #{Time.now}"
+      Log.debug "########days is #{days}"
+      sql = "update machines set deleted_at='#{t}' where ID='#{machine_id}';"
+      Log.debug sql
+      c = conn.exec(sql)
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+
+  end
+
   def get_machine_id_by_license_key(license_key)
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)

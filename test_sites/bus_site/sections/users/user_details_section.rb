@@ -75,6 +75,9 @@ module Bus
     #Sync details link
     element(:sync_details_link, xpath: "//table[@class='mini-table']//a[text()='Sync']")
 
+    # device section
+    element(:device_details_link, xpath: "//table[@class='mini-table']/tbody/tr[1]/td[1]/a")
+    element(:device_details_td, xpath: "//table[@class='mini-table']/tbody/tr[1]/td[1]")
     # Change User Password
     element(:new_password_tb, id: 'new_password')
     element(:new_password_confirm_tb, id: 'new_password_confirmation')
@@ -478,23 +481,39 @@ module Bus
     end
 
     def delete_device(device_name)
+      msg = ''
       device_table.rows.each do |row|
         if row[0].text == device_name
           row[-1].find(:css, 'form[id^=machine-delete] a.action').click
+          msg = alert_text
           alert_accept
           break;
         end
       end
+      msg
     end
 
-    def view_device_details(device_name)
+    # when view the device which has been deleted,deleted will be shown next to the device name
+    def view_device_details(device_name, deleted = false)
+      device_name_row = (deleted ? device_name + ' (deleted)' : device_name)
       device_table.rows.each do |row|
-        if row[0].text == device_name
+        if row[0].text == device_name_row
           row[0].find(:xpath, "//a[text()='#{device_name}']").click
-          wait_until{ find(:xpath, "//a[text()='Delete Machine']").visible? }
+          wait_until{ find(:xpath, "//dt[text()='Owner:']").visible? }
           break
         end
       end
+    end
+
+    def device_exist(device_name)
+      flag = false
+      device_table.rows.each do |row|
+        if row[0].text == device_name
+          flag = true
+          break
+        end
+      end
+      flag
     end
 
     def click_view_product_keys_link
@@ -653,8 +672,13 @@ module Bus
       end
 
       if action == 'save' or action == 'remove'
+        if alert_present?
+          alert_msg = alert_text
+          alert_accept
+        end
         wait_until_bus_section_load
       end
+      alert_msg
     end
 
     def set_max_value(type, name, quota)
@@ -752,6 +776,10 @@ module Bus
       refund_submit_input.click
       alert_accept
       amount
+    end
+
+    def get_device_name
+      device_details_td.text
     end
 
     def get_refunded_amount

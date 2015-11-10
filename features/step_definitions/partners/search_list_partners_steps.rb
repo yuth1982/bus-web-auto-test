@@ -55,7 +55,7 @@ end
 # Required: search list partner section must be visible
 When /^I view admin details by (.+)$/ do |partner_email|
   partner_email = @subpartner.admin_email_address if partner_email == '@subpartner.admin_email_address'
-  @bus_site.admin_console_page.search_list_partner_section.view_partner_detail(partner_email)
+  @bus_site.admin_console_page.search_list_partner_section.view_root_admin_detail(partner_email)
 end
 
 Then /^Partner search results (should|should not) be:$/ do |match, results_table|

@@ -128,6 +128,10 @@ module Bus
       end
     end
 
+    def select_company_type(company_type)
+      company_type_select.select(company_type)
+      wait_until_plans_loaded(company_type)
+    end
     # Public: Messages for change account details actions
     #
     # Example
@@ -239,6 +243,13 @@ module Bus
         else
           raise "Unable to find partner type of #{partner.partner_info.type}"
       end
+     end
+
+    def check_mozyenterprise_dps_plan
+      user_plan = !(locate(:xpath,"//label[contains(text(),'MozyEnterprise User')]").nil?)
+      storage_plan = !(locate(:xpath,"//label[contains(text(),'TB - MozyEnterprise DPS')]").nil?)
+      server_addon_plan = !(locate(:xpath,"//label[contains(text(),'250 GB Server Add-on')]").nil?)
+      [user_plan,storage_plan,server_addon_plan]
     end
 
     private
@@ -251,7 +262,7 @@ module Bus
       else
         contact_country_select.select(company_info.country)
         contact_state_tb.type_text(company_info.state)
-	vat_number_tb.type_text(company_info.vat_num) if company_info.vat_num != ""
+        vat_number_tb.type_text(company_info.vat_num) if company_info.vat_num != ""
       end
       contact_address_tb.type_text(company_info.address)
       contact_city_tb.type_text(company_info.city)

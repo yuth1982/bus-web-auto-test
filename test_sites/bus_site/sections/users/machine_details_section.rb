@@ -10,6 +10,8 @@ module Bus
     element(:manifest_raw_lnk, xpath: "//div[contains(@id,'machine-show')]//a[text()='Raw']")
 
     element(:replace_machine_lnk, xpath: "//a[text()='Replace Machine']")
+    element(:delete_machine_lnk, xpath: "//a[text()='Delete Machine']")
+    element(:undelete_machine_lnk, xpath: "//a[text()='Undelete Machine']")
 
     # Public: General information hash
     #
@@ -52,10 +54,21 @@ module Bus
       replace_machine_lnk.click
     end
 
-    def data_shuttle_table_visible?
-      size = all(:xpath, "//th[text()='Order ID']/../../../../table").size
-      (size > 0)? true:false
+    def delete_undelete_machine(action)
+      if action == 'delete'
+        delete_machine_lnk.click
+      else
+        undelete_machine_lnk.click
+      end
+      alert_accept
     end
 
+    def data_shuttle_table_visible?
+      !(locate(:xpath, "//th[text()='Order ID']/../../../../table").nil?)
+     end
+
+    def undelete_machine_link_exist
+       !(locate(:xpath, "//a[text()='Undelete Machine']").nil?)
+    end
   end
 end
