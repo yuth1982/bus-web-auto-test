@@ -1031,7 +1031,7 @@ Feature: User sync
       | rule               | group |
       | cn=dev-17546-test* | dev   |
     And I click the sync now button
-    And I wait for 100 seconds
+    And I wait for 130 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
