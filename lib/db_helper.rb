@@ -481,6 +481,20 @@ module DBHelper
     end
   end
 
+  def get_model_audits_record(partner_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select count(id) from model_audits where action_audit_id in (select id from action_audits where effective_admin_id in (select root_admin_id from pro_partners where id = #{partner_id}) order by id desc limit 1);"
+      Log.debug sql
+      c = conn.exec(sql)
+      c.values[0][0]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
 end
 
 

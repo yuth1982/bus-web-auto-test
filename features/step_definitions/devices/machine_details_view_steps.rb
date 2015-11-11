@@ -176,3 +176,6 @@ And /^(Backups|Restores) table will display as:$/ do |type, table|
   @bus_site.admin_console_page.machine_details_section.get_backup_restore_table(type).should == table.raw
 end
 
+Then /^I click (.+) from machines details section$/ do |match|
+  @bus_site.admin_console_page.machine_details_section.click_restore_files(match)
+end

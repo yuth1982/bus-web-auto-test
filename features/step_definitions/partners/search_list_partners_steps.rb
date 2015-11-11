@@ -106,4 +106,8 @@ Then /^I get current partner name$/ do
   @current_partner_name = @bus_site.admin_console_page.search_list_partner_section.get_partner_name if @current_partner.nil?
 end
 
+Then /^I get current partner type/ do
+  @partner = Bus::DataObj::MozyPro.new if @current_partner.nil?
+  @partner.partner_info.type = @bus_site.admin_console_page.search_list_partner_section.get_partner_type
+end
 

@@ -185,6 +185,11 @@ Then /^I navigate to (new|old) window$/ do |window|
   end
 end
 
+Then /^I close new window$/ do
+  page.driver.browser.close
+  page.driver.browser.switch_to().window(page.driver.browser.window_handles.first)
+end
+
 When /^I go to page (.+)$/ do |url|
   url = url.gsub(/CONFIGS\['fedid'\]\['subdomain'\]/,CONFIGS['fedid']['subdomain'])
   url = url.gsub(/QA_ENV\['bus_host'\]/,QA_ENV['bus_host'])
@@ -198,5 +203,6 @@ end
 And /^I start a new session$/ do
   @bus_site.adfs_login_page.start_a_new_browser
 end
+
 
 

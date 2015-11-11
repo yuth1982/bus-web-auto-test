@@ -57,6 +57,7 @@ delete_users_by_email('%17543-test%@test.com')
 delete_users_by_email('%17544-test%@test.com')
 
 delete_users_by_email('%17546-test%@test.com')
+delete_users_by_email('%dev-121960-test1%@test.com')
 
 delete_users_by_email('%auto%@mtdev.mozypro.local')
 

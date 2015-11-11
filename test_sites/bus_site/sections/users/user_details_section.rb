@@ -556,27 +556,14 @@ module Bus
       new_password_tb.type_text(password)
       new_password_confirm_tb.type_text(password)
       new_password_change_btn.click
-      text = alert_text
-      alert_accept
-      text
-    end
-
-    def edit_password_with_incorrect_pass(password)
-      if !new_password_tb.visible?
-        change_user_password_link.click
-        wait_until_bus_section_load
-      end
-      new_password_tb.type_text(password)
-      new_password_confirm_tb.type_text(password)
-      new_password_change_btn.click
       wait_until { alert_present? }
       text = alert_text
       alert_accept
       text
     end
 
-    def has_change_user_password_link
-      all(:xpath, "//a[text()='Change User Password']").size > 0
+    def has_link(link)
+      locate_link(link)
     end
 
     def change_device_quota(count, type=nil)
@@ -791,6 +778,7 @@ module Bus
     def get_refunded_amount
       refunded_amount_td.text
     end
+
     def get_user_billed_info
       all_billing_info.size
     end
@@ -802,6 +790,10 @@ module Bus
 
     def check_allow_reactivation_available
       allow_re_activation_a.visible?
+    end
+
+    def get_restore_vms_hints(type)
+      locate(:xpath, "//a[@title='#{type}']")
     end
 
     private

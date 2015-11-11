@@ -304,7 +304,9 @@ When /^edit user details:$/ do |info_table|
         new_info[header] = @existing_user_email if new_info[header] == '@existing_user_email'
         new_info[header] = @existing_admin_email if new_info[header] == '@existing_admin_email'
         new_info[header] = @partner.admin_info.email if new_info[header] == '@mh_user_email'
+        new_info[header] = create_user_email if new_info[header] == '@new_user_email'
         @bus_site.admin_console_page.user_details_section.set_user_email(new_info[header])
+        @new_users.first.email = new_info[header]
       when 'name'
         @bus_site.admin_console_page.user_details_section.set_user_name(new_info[header])
       when 'status'
@@ -426,11 +428,11 @@ When /^I change user install override region to (.+)/ do |region|
   @bus_site.admin_console_page.user_details_section.change_region(region)
 end
 
-Then /^I will( not)? see the change user password link$/ do |t|
+Then /^I will( not)? see the (Change User Password|Send activation email again|awaiting re-activation) link$/ do |t,link|
   if t.nil?
-    @bus_site.admin_console_page.user_details_section.has_change_user_password_link.should be_true
+    @bus_site.admin_console_page.user_details_section.has_link(link).nil?.should be_false
   else
-    @bus_site.admin_console_page.user_details_section.has_change_user_password_link.should be_false
+    @bus_site.admin_console_page.user_details_section.has_link(link).nil?.should be_true
   end
 end
 
@@ -513,4 +515,8 @@ end
 
 Then /^I see Allow Re-Activation link is available$/ do
   @bus_site.admin_console_page.user_details_section.check_allow_reactivation_available.should be true
+end
+
+Then /^I check the records of model_audits table is (.+)$/ do |records|
+  DBHelper.get_model_audits_record(@partner_id.to_i).should == "0"
 end
