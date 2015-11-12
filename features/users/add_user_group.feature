@@ -3,7 +3,7 @@ Feature: Add a new user group
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.849 @bus2.4
+  @TC.849 @bus2.4 @tasks_p2
   Scenario: 849 Add a new user group
     When I add a new OEM partner:
       | Company Name | Root role         | Security | Company Type     |
@@ -23,7 +23,7 @@ Feature: Add a new user group
     Then I stop masquerading from subpartner
     And I search and delete partner account by newly created subpartner company name
 
-  @TC.848 @bus2.4
+  @TC.848 @bus2.4 @tasks_p2
   Scenario: 848 Delete a user group
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  |
