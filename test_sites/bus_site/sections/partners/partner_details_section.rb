@@ -47,6 +47,14 @@ module Bus
     element(:account_type_submit_btn , xpath: "//select[@name='acct_type']/../input[@type='submit'] ")
     element(:account_type_span, xpath: "//span[contains(@id,'partner-display-acct-type-')]")
 
+    # change sales channnel
+    element(:sales_channel_change_link, xpath: "//a[contains(@onclick,'partner-display-sales-channel')][text()='(change)']")
+    element(:sales_channel_select, xpath: "//select[@name='sales_channel']")
+    element(:sales_channel_submit_btn , xpath: "//select[@name='sales_channel']/../input[@type='submit']")
+    element(:sales_channel_span, xpath: "//span[contains(@id,'partner-display-sales-channel')]")
+
+
+
     # General information
     elements(:general_info_dls, css: 'div>dl')
     element(:stash_info_dl, css: 'div>dl>form')
@@ -93,7 +101,6 @@ module Bus
     element(:account_attributes_table, css: 'form[id^=account_attributes_form] table')
 
     # Pooled Storage
-    element(:pooled_resources_table, css: 'form[id^=pooled_resources_form] table')
     element(:pooled_resource_edit_link, css: 'a[id^=toggle_partner_pooled_resource_item_edit]')
     element(:pooled_resource_submit_btn, xpath: "//div[@class='resource_item_edit']/p/input[@type='submit']")
     element(:assign_quota_desktop_input, xpath: "//input[@name='assigned_quota[Desktop]']")
@@ -614,7 +621,7 @@ module Bus
 
     # Public: Change Partner External ID
     #    #
-    # Example
+    # Example pooled_resource_edit_link
     #  @bus_site.admin_console_page.partner_details_section.change_external_id('Test_EID_12345')
     #
     # Return nothing
@@ -657,6 +664,18 @@ module Bus
 
     def account_type
       account_type_span.text
+    end
+
+    def set_sales_channel sales_type
+      sales_channel_change_link.click
+      wait_until{ sales_channel_select.visible? }
+      sales_channel_select.select sales_type
+      sales_channel_submit_btn.click
+      wait_until_bus_section_load
+    end
+
+    def get_sales_channel
+      sales_channel_span.text
     end
 
     # Public: Change the contact email
@@ -914,8 +933,7 @@ module Bus
       end
 
       def pooled_resource_edit_link_visible?
-        size = all(:xpath, "//div[contains(@id,'partner_pooled_resources')]/h4/span/a[contains(text(),'Edit')]").size
-        (size > 0)? true:false
+        !(locate(:xpath, "//div[contains(@id,'partner_pooled_resources')]/h4/span/a[contains(text(),'Edit')]").nil?)
       end
 
       def edit_pooled_resource

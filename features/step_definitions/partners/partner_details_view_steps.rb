@@ -341,12 +341,20 @@ When /^The subdomain in BUS will be @subdomain$/ do
   @bus_site.admin_console_page.partner_details_section.subdomain.should == @subdomain
 end
 
-When /^I change account type to (.+)$/ do | type |
-  @bus_site.admin_console_page.partner_details_section.set_account_type(type)
+When /^I change (account type|sales channel) to (.+)$/ do | input,type |
+  if input == 'account type'
+    @bus_site.admin_console_page.partner_details_section.set_account_type(type)
+  else
+    @bus_site.admin_console_page.partner_details_section.set_sales_channel(type)
+  end
 end
 
-Then /^account type should be changed to (.+) successfully$/ do |type|
-  @bus_site.admin_console_page.partner_details_section.account_type.should include(type)
+Then /^(account type|sales channel) should be changed to (.+) successfully$/ do |input,type|
+  if input == 'account type'
+    @bus_site.admin_console_page.partner_details_section.account_type.should include(type)
+  else
+    @bus_site.admin_console_page.partner_details_section.get_sales_channel.should include(type)
+  end
 end
 
 When /^I change the partner contact information (to:|default password)$/ do |password, info_table|
@@ -385,8 +393,11 @@ When /^I (Enable|Disable) partner details autogrow$/ do |status|
   end
 end
 
-Then /^the (Server|Desktop|Generic|Server and Desktop) pooled resource should be editable for the subpartner$/ do |type|
+Then /^the pooled resource section of subpartner should have edit link$/ do
   @bus_site.admin_console_page.partner_details_section.subpartner.pooled_resource_edit_link_visible?.should == true
+end
+
+Then /^the (Server|Desktop|Generic|Server and Desktop) pooled resource should be editable for the subpartner$/ do |type|
   @bus_site.admin_console_page.partner_details_section.subpartner.edit_pooled_resource
   items_visible = @bus_site.admin_console_page.partner_details_section.subpartner.pooled_resurce_inputs_visible?(type)
   if type.include? "Server"
