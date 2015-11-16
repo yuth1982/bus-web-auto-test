@@ -93,10 +93,7 @@ module Bus
     #
     # Returns nothing
     def view_partner_detail(search_key)
-      # Make sure include sub partners checked
-      include_sub_partners_cb.check
-      wait_until_bus_section_load # Wait to load sub partners
-      find(:xpath, "//a[text()='#{search_key}']").click
+      find_link(search_key).click
     end
 
     # Public: View partner's root admin detail by click root admin email/username
