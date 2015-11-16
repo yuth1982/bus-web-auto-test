@@ -8,6 +8,8 @@ module Bus
     element(:enterprise_users_tb, css: "input[id^=products_base_]")
     element(:desktop_licenses_tb, xpath: "//div[@id='base_plans']/div[3]/input")
     element(:server_licenses_tb, xpath: "//div[@id='base_plans']/div[4]/input")
+
+    element(:mozypro_server_plan_lable, xpath: "//div[@id='addon_products_list']/div/label")
     
     element(:storage_add_on_tb, css: "input[id^=products_addon_]")
     element(:server_plan_select, css: "select[id^=products_addon_]")
@@ -240,6 +242,14 @@ module Bus
       pro_base_plan_select.options.map{ |opt| opt.text.match(/(\d+) (GB|TB)/)[0]}
     end
 
+    def mozypro_available_base_plans_price
+      pro_base_plan_select.options.map{ |opt| opt.text.strip}
+    end
+
+    def mozypro_server_plan_price
+      mozypro_server_plan_lable.text
+    end
+
     # Public: MozyPro current purchase
     #
     # Example
@@ -293,6 +303,10 @@ module Bus
     def itemized_current_plan_hash
       wait_until_bus_section_load
       Hash['server quota' => itemized_plans_tbs[0].value, 'desktop quota' => itemized_plans_tbs[1].value, 'desktop license' => itemized_plans_tbs[2].value, 'server license' => itemized_plans_tbs[3].value]
+    end
+
+    def rate_schedule_present
+      !(locate(:xpath, "//*[contains(text(),'Rate Schedule')]").nil?)
     end
 
     private

@@ -78,6 +78,7 @@ end
 
 When /^I get partner aria id$/ do
   @aria_id = @bus_site.admin_console_page.partner_details_section.general_info_hash['Aria ID:']
+  Log.debug @aria_id
 end
 
 Then /^(Partner|SubPartner) general information should be:$/ do |status,details_table|

@@ -130,6 +130,14 @@ Then /^MozyPro available base plans should be:$/ do |plans_table|
   @bus_site.admin_console_page.change_plan_section.mozypro_available_base_plans.should == plans_table.rows.flatten
 end
 
+Then /^MozyPro available base plans and price should be:$/ do |plans_table|
+  @bus_site.admin_console_page.change_plan_section.mozypro_available_base_plans_price.should == plans_table.rows.flatten
+end
+
+And /^Add-ons price should be (.+)$/ do |text|
+  @bus_site.admin_console_page.change_plan_section.mozypro_server_plan_price.should == text
+end
+
 Then /^Change Plan section should be visible$/ do
   @bus_site.admin_console_page.change_plan_section.section_visible?.should be_true
 end
@@ -149,4 +157,8 @@ end
 Then /^Change Plan error message should be (.+)$/ do |expected|
   actual = @bus_site.admin_console_page.change_plan_section.messages
   actual.should == expected
+end
+
+Then /^Rate schedule can not be choosen when change plan$/ do
+  @bus_site.admin_console_page.change_plan_section.rate_schedule_present.should == false
 end

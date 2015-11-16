@@ -75,9 +75,9 @@ module Bus
     #  @bus_admin_console_page.billing_info_section.supp_plan_hashes
     #
     # Returns hash array
-    def supp_plan_hashes
+    def supp_plan_hashes(index = 2)
       wait_until_bus_section_load
-      tables[2].hashes
+      tables[index].hashes
     end
 
     # Public: VAT info hashes

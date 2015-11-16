@@ -140,11 +140,9 @@ Then /^API\* I set (.+) account contact to:$/ do |aria_id, acct_contact_table |
 end
 
 Then /^API\* Aria account plans for (.+) should be:$/ do |aria_id, info_table|
-
   actual = AriaApi.get_acct_plans_all({:acct_no=> aria_id.to_i})
   expected = info_table.hashes
   expected.each_index{ |index| expected[index].keys.each{ |key| actual['all_acct_plans'][index][key].to_s.should == expected[index][key]} }
-
 end
 
 When(/^API\* I replace aria supplemental units plans for (.+)$/) do |aria_id, table|
@@ -174,4 +172,60 @@ end
 
 When /^API\* There is no refunds for aria account (.+)$/ do |aria_id|
   AriaApi.get_refund_details({:acct_no=> aria_id.to_i})['refund_details'].should be nil
+end
+
+When /^API\* I change aria supplemental plan for (.+)$/ do |aria_id, info_table|
+  new_plan_rate = info_table.hashes
+  # get current supplemental plan
+  current_plan_info = AriaApi.get_acct_plans_all({:acct_no=> aria_id.to_i})
+  acct_plans = current_plan_info['all_acct_plans']
+
+
+  new_plan_rate.each_with_index {|v,_|
+    plan_name = v['plan_name']
+    new_rate_schedule = v['rate_schedule_name']
+    new_currency = v['schedule_currency']
+    num_plan_units = v['num_plan_units'].to_i
+
+    # find plan num based on given plan name
+    acct_plans.each_index { |n|
+      flag = false
+      Log.debug acct_plans[n]['plan_name']
+      if acct_plans[n]['plan_name'] == plan_name
+        supp_plan_no = acct_plans[n]['plan_no']
+        # get all the rate schedules for the given plan
+        rate_sched = AriaApi.get_rate_schedules_for_plan({ "plan_no" => supp_plan_no.to_i })
+
+        # find matching schedule rate and change to it
+        rate_sched['rate_sched'].each_with_index { |val, _|
+          if val['schedule_name'] == new_rate_schedule && val['schedule_currency'] == new_currency
+            rate_schedule_no = val['schedule_no']
+            if num_plan_units.nil?
+              aria_supp_plans = AriaApi.modify_supp_plan(:acct_no=> aria_id.to_i, :supp_plan_no=> supp_plan_no, :alt_rate_schedule_no=>rate_schedule_no)
+            else
+              aria_supp_plans = AriaApi.modify_supp_plan(:acct_no=> aria_id.to_i, :supp_plan_no=> supp_plan_no, :alt_rate_schedule_no=>rate_schedule_no, :num_plan_units=> num_plan_units)
+            end
+            flag = true
+            Log.debug aria_supp_plans
+            break
+          end
+        }
+      end
+      break if flag
+    }
+  }
+end
+
+When /^API\* I get aria plan for (.+)$/ do |aria_id|
+  current_plan_info = AriaApi.get_acct_plans({:acct_no=> aria_id.to_i})
+  plan = current_plan_info['acct_plans']
+  @plan_array = []
+  plan.each_index do |i|
+    @plan_array << plan[i]['plan_name']
+  end
+  @plan_array
+end
+
+Then /^The aria plan should be$/ do |aria_plan|
+  @plan_array.should == aria_plan.rows.flatten
 end

@@ -381,3 +381,8 @@ Then /^storage based plan shows while user based plan and server add-on not show
   array[1].should == true
   array[2].should == false
 end
+
+Then /^Rate schedule can not be choosen when add partner$/ do
+  @bus_site.admin_console_page.add_new_partner_section.rate_schedule_present.should == false
+end
+

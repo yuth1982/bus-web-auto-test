@@ -252,6 +252,10 @@ module Bus
       [user_plan,storage_plan,server_addon_plan]
     end
 
+    def rate_schedule_present
+      !(locate(:xpath, "//*[contains(text(),'Rate Schedule')]").nil?)
+    end
+
     private
 
     def fill_company_info(company_info)

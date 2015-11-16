@@ -12,6 +12,12 @@ Then /^Next renewal supplemental plan details should be:$/ do |plan_table|
   expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
 
+Then /^Next renewal supplemental plan server plan details should be:$/ do |plan_table|
+  actual = @bus_site.admin_console_page.billing_info_section.supp_plan_hashes(3)
+  expected = plan_table.hashes
+  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
+end
+
 Then /^VAT info should be:$/ do |vat_table|
   actual = @bus_site.admin_console_page.billing_info_section.vat_hashes
   expected = vat_table.hashes
