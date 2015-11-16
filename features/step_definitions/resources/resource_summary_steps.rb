@@ -24,3 +24,12 @@ end
 Then /^I refresh Resource Summary section$/ do
   @bus_site.admin_console_page.resource_summary_section.refresh_bus_section
 end
+
+Then /^the storage error message of resource summary section should be:$/ do  |message|
+  @bus_site.admin_console_page.resource_summary_section.get_storage_errors.should == message
+end
+
+
+Then /^resource summary section shouldn't have any storage errors$/ do
+  @bus_site.admin_console_page.resource_summary_section.storage_errors_visible?.should == false
+end

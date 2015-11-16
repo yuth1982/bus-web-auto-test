@@ -505,7 +505,7 @@ module Bus
       change_autogrow_status_link.click
       autogrow_status_select.select('No')
       submit_autogrow_status_btn.click
-      wait_until{ success_messages == "Overdraft protection disabled." }
+      wait_until{ success_messages == "Autogrow protection disabled." }
     end
 
     # Public: Add stash to all users

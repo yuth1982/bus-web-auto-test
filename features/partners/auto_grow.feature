@@ -6,6 +6,9 @@ Feature: Auto Grow
 
   Success Criteria:
 
+  Background:
+    Given I log in bus admin console as administrator
+
   @TC.14115 @bus @env_dependent
   Scenario: Mozy-14115::Enable autogrow partner admin
 #    When I log in to legacy bus01 as administrator
@@ -25,7 +28,6 @@ Feature: Auto Grow
 #    Autogrow protection enabled.
 #    """
 #    And I migrate the partner to pooled storage
-    When I log in bus admin console as administrator
     When I search partner by Itemized_Reseller_DONOT_ChangePlan(Migrate)
     And I view partner details by Itemized_Reseller_DONOT_ChangePlan(Migrate)
     And I get the partner_id
@@ -51,7 +53,6 @@ Feature: Auto Grow
 
   @TC.14116 @bus
   Scenario: Mozy-14116::Autogrow enabled billing
-    When I log in bus admin console as administrator
     And I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan |
       | 12     | Silver        | 2              | yes         |
@@ -274,3 +275,166 @@ Feature: Auto Grow
     Partner <%=@current_partner[:id]%> is using autogrow and is overdrafted on its Generic license by 6 GB
     """
     And I search and delete partner account by newly created partner company name
+
+  @TC.15727 @bus @auto_grow @tasks_p2
+  Scenario: 15727:BILL.9000 Autogrow may be enabled or disabled Reseller
+    When I add a new Reseller partner:
+      | period |  reseller type  | reseller quota |  server plan |  net terms |
+      |   1    |  Silver         | 1000           |      yes     |      yes   |
+    Then New partner should be created
+    And I Enable partner details autogrow
+    Then Partner general information should be:
+      | Enable Autogrow: |
+      | Yes (change)     |
+    And I Disable partner details autogrow
+    Then Partner general information should be:
+      | Enable Autogrow: |
+      | No (change)      |
+    When I act as newly created partner account
+    And I navigate to Billing Information section from bus admin console page
+    Then Autogrow details should be:
+      | Status               |
+      | Disabled (more info) |
+    And I Enable billing info autogrow
+    Then Autogrow details should be:
+      | Status            |
+      | Enabled (disable) |
+    And I Disable billing info autogrow
+    Then Autogrow details should be:
+      | Status               |
+      | Disabled (more info) |
+    Then I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.21937 @bus @auto_grow @tasks_p2
+  Scenario: 21937 [Bundled]Resource Summary and Change plan warn the user to purchase or reduce quota when overquota
+    When I add a new Reseller partner:
+      | period |  reseller type  | reseller quota | server plan |
+      | 12     |  Gold           | 100            | yes         |
+    Then New partner should be created
+    And I get the partner_id
+    And I act as newly created partner
+    And I navigate to Billing Information section from bus admin console page
+    And I Enable billing info autogrow
+    And I add a new Bundled user group:
+      | name       | storage_type |
+      | TC21937_UG | Shared       |
+    Then TC21937_UG user group should be created
+    And I add new user(s):
+      | user_group | storage_type | devices |
+      | TC21937_UG | Desktop      | 1       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    Then I use keyless activation to activate devices
+      | machine_name   | user_name                   | machine_type |
+      | Machine1_21937 | <%=@new_users.first.email%> | Desktop      |
+    And I upload data to device by batch
+      | machine_id                         | GB  |
+      | <%=@new_clients.first.machine_id%> | 100 |
+    Then tds returns successful upload
+    And I navigate to Resource Summary section from bus admin console page
+    Then the storage error message of resource summary section should be:
+    """
+    No Storage Available
+    """
+    And I navigate to Change Plan section from bus admin console page
+    Then change plan section shouldn't have any storage errors
+    And I upload data to device by batch
+      | machine_id                         | GB  |
+      | <%=@new_clients.first.machine_id%> | 1   |
+    And I refresh Resource Summary section
+    Then the storage error message of resource summary section should be:
+    """
+    Your organization is now using 1 GB storage more than was purchased. You can purchase more storage or reduce consumption of storage space.
+    """
+    And I refresh Change Plan section
+    Then the storage error message of change plan section should be:
+    """
+    Your organization is now using 1 GB storage more than was purchased. You can purchase more storage or reduce consumption of storage space.
+    """
+    When I change Reseller account plan to:
+      | storage add-on |
+      | 1              |
+    And I refresh Resource Summary section
+    Then resource summary section shouldn't have any storage errors
+    And I refresh Change Plan section
+    Then change plan section shouldn't have any storage errors
+    And I upload data to device by batch
+      | machine_id                         | GB  |
+      | <%=@new_clients.first.machine_id%> | 20  |
+    And I refresh Resource Summary section
+    Then the storage error message of resource summary section should be:
+    """
+    Your organization is now using 1 GB storage more than was purchased. You can purchase more storage or reduce consumption of storage space.
+    """
+    And I refresh Change Plan section
+    Then the storage error message of change plan section should be:
+    """
+    Your organization is now using 1 GB storage more than was purchased. You can purchase more storage or reduce consumption of storage space.
+    """
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.15728 @bus @auto_grow @tasks_p2
+  Scenario: 15728 BILL.9000 Autogrow may be enabled or disabled OEM
+    When I add a new OEM partner:
+      | company name        | Root role   |
+      | TC.15728oem_partner | D-SaaS Root |
+    Then New partner should be created
+    And I stop masquerading as sub partner
+    And I stop masquerading
+    When I search partner by TC.15728oem_partner
+    And I view partner details by TC.15728oem_partner
+    And I Enable partner details autogrow
+    Then Partner general information should be:
+      | Enable Autogrow: |
+      | Yes (change)     |
+    And I Disable partner details autogrow
+    Then Partner general information should be:
+      | Enable Autogrow: |
+      | No (change)      |
+    And I delete partner account
+
+  @TC.15726 @bus @auto_grow @tasks_p2
+  Scenario: 15726:BILL.9000 Autogrow may be enabled or disabled Business
+    When I add a new MozyEnterprise partner:
+      | company name     | period | users | server plan | server add on |
+      | TC.15726_partner |   36   | 30    | 2 TB        | 1             |
+    Then New partner should be created
+    When I act as newly created partner account
+    And I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          |
+      | subrole | Partner admin |
+    And I check all the capabilities for the new role
+    And I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for MozyEnterprise partner:
+      | Name    | Company Type | Root Role | Periods | Tax Percentage | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
+      | subplan | business     | subrole   | yearly  | 10             | test     | false            | 1                          | 1                     |
+    Then add new pro plan success message should be displayed
+    When I add a new sub partner:
+      | Company Name         |
+      | TC.15726_sub_partner |
+    Then New partner should be created
+    And I stop masquerading
+    When I search partner by TC.15726_sub_partner
+    And I view partner details by TC.15726_sub_partner
+    And I Enable partner details autogrow
+    Then Partner general information should be:
+      | Enable Autogrow: |
+      | Yes (change)     |
+    And I Disable partner details autogrow
+    Then Partner general information should be:
+      | Enable Autogrow: |
+      | No (change)      |
+    And I delete partner account
+
+
+
+
+
+

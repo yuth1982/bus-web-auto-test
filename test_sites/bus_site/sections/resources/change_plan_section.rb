@@ -28,6 +28,7 @@ module Bus
     element(:continue_btn, css: "div#change_plan_confirmation input[value=Continue]")
     element(:cancel_btn, css: "div#change_plan_confirmation input[value=Cancel]")
     element(:message_div, css: "div#resource-change_billing_plan-errors ul")
+    element(:error_input_div, xpath: "//div[@id='error_input']/p")
 
     # Public: Reseller Supplemental Plans Hashes
     #
@@ -197,6 +198,14 @@ module Bus
     # Returns success or error message text
     def messages
       message_div.text
+    end
+
+    def get_error_input_message
+      error_input_div.text
+    end
+
+    def error_input_visible?
+      !locate(:xpath, "//div[@id='error_input']/p").nil?
     end
 
     # Public: Return change plan charge summary table rows text

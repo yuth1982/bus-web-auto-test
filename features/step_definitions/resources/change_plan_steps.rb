@@ -162,3 +162,11 @@ end
 Then /^Rate schedule can not be choosen when change plan$/ do
   @bus_site.admin_console_page.change_plan_section.rate_schedule_present.should == false
 end
+
+Then /^the storage error message of change plan section should be:$/ do  |message|
+  @bus_site.admin_console_page.change_plan_section.get_error_input_message.should == message
+end
+
+Then /^change plan section shouldn't have any storage errors$/ do
+  @bus_site.admin_console_page.change_plan_section.error_input_visible?.should == false
+end
