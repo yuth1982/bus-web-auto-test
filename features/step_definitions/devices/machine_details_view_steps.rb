@@ -28,12 +28,14 @@ Then /^machine details should be:$/ do |md_table|
       case k
         when 'Owner:'
           v.gsub!(/@user_email/, @new_users.first.email) unless @new_users.nil?
+        when 'Product Key:'
+          v.gsub!(/@client.license_key/, @client.license_key) unless @client.nil?
         else
           # do nothing
       end
       v.replace ERB.new(v).result(binding)
   end
-  expected.keys.each{|key| actual[key].should == expected[key]}
+  expected.keys.each{|key| actual[key].should == expected[key] }
 end
 
 And /^I get machine details info$/ do
@@ -152,3 +154,25 @@ end
 Then /^retention period should be (\d+) days$/ do |days|
   @get_client_config_response["X-Data-Retention"].should == days
 end
+
+Then /^Machine action bar links should be$/ do |table|
+   expected_links = table.rows.flatten
+   @bus_site.admin_console_page.machine_details_section.get_machine_bar_actions.should == expected_links
+end
+
+And /^Backups section without backup history will show (.+)$/ do |text|
+  @bus_site.admin_console_page.machine_details_section.get_backup_section_text.should == text
+end
+
+And /^Restores section without finished restores will show (.+)$/ do |text|
+  @bus_site.admin_console_page.machine_details_section.get_restores_section_text.should == text
+end
+
+And /Backups table will display with text No results found.$/ do
+  @bus_site.admin_console_page.machine_details_section.backup_table_empty.should == true
+end
+
+And /^(Backups|Restores) table will display as:$/ do |type, table|
+  @bus_site.admin_console_page.machine_details_section.get_backup_restore_table(type).should == table.raw
+end
+

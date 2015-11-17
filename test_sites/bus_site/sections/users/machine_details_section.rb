@@ -9,9 +9,16 @@ module Bus
     element(:manifest_view_lnk, xpath: "//div[contains(@id,'machine-show')]//a[text()='View']")
     element(:manifest_raw_lnk, xpath: "//div[contains(@id,'machine-show')]//a[text()='Raw']")
 
+    elements(:machine_bar_actions_links, xpath: "//div[contains(@id,'machine-show')]//li/a")
+
     element(:replace_machine_lnk, xpath: "//a[text()='Replace Machine']")
     element(:delete_machine_lnk, xpath: "//a[text()='Delete Machine']")
     element(:undelete_machine_lnk, xpath: "//a[text()='Undelete Machine']")
+
+    # backups restores section
+    element(:backups_section_text, xpath: "//div[contains(@id,'machine-show-')]//h4[text()='Backups']/following-sibling::P")
+    element(:restores_section_text, xpath: "//div[contains(@id,'machine-show-')]//h4[text()='Restores']/following-sibling::P")
+
 
     # Public: General information hash
     #
@@ -70,5 +77,27 @@ module Bus
     def undelete_machine_link_exist
        !(locate(:xpath, "//a[text()='Undelete Machine']").nil?)
     end
+
+    def get_machine_bar_actions
+      machine_bar_actions_links.map{|ele|ele.text.strip}
+    end
+
+    def get_backup_section_text
+      backups_section_text.text
+    end
+
+    def get_restores_section_text
+      restores_section_text.text
+    end
+
+    def backup_table_empty
+      !(locate(:xpath, "div[contains(@id,'machine-show-')]//tbody//td[text()='No results found.']").nil?)
+    end
+
+    def get_backup_restore_table(type)
+      wait_until_bus_section_load
+      find(:xpath, "//h4[text()='#{type}']/following-sibling::div[1]/table").raw_text.select{|row|row!=[""]}
+    end
+
   end
 end

@@ -7,6 +7,49 @@ Feature: view edit machine details
 
   ###############################################################################
 
+  # view backup restores history
+  # using fixed data, company Dont Edit_backup_restore_history  ID: 3431834
+  ###############################################################################
+
+  @TC.122155 @bus @machines_sync @tasks_p2
+  Scenario: 122155:View Backup History
+    When I navigate to bus admin console login page
+    And I log in bus admin console with user name mozybus+backupsrestores@gmail.com and password default password
+    When I search machine by:
+      | machine_name   |
+      | CNENCHENC33L1C |
+    And I view machine details for mozybus+backup+restore@emc.com
+    And Backups table will display as:
+      | Start Time     | Type                | Duration | Result            | Files | Size | Files Encoded | Size Encoded | Files Transferred | Size Transferred |
+      | 10/08/15 17:53 | Local Manual Backup | 00:00:08 | LocalBackupError0 | 1 	| 284  | 0            | 0             |	0                 | 0                |
+      | 10/08/15 17:52 | Manual Backup       | 00:01:37 | Success 	        | 1 	| 284  | 1 	          | 288 bytes     |	1                 |	288 bytes        |
+      | 10/08/15 17:52 | Manual Backup       | 00:00:14 | CancelError0 	    | 0 	| 0    | 0            | 0             |	0                 | 0                |
+      | 08/04/15 11:29 | Local Manual Backup | 00:00:06 | LocalBackupError0 | 41    | 6904 | 0            | 0             |	0                 | 0                |
+      | 08/04/15 11:28 | Manual Backup       | 00:01:19 | Success 	        | 41    | 6904 | 1 	          | 24 bytes      |	1 	              | 24 bytes         |
+      | 08/04/15 11:27 | Local Manual Backup | 00:00:10 | LocalBackupError0 | 41    | 6901 | 0            | 0             |	0                 | 0                |
+      | 08/04/15 11:26 | Manual Backup       | 00:01:40 | Success 	        | 41    | 6901 | 1            |	16 bytes      |	1                 |	16 bytes         |
+      | 08/03/15 18:40 | Local Manual Backup | 00:00:12 | LocalBackupError0 | 40    | 6887 | 0            | 0             |	0                 | 0                |
+      | 08/03/15 18:38 | Manual Backup       | 00:01:59 | Success 	        | 40    | 6887 | 40 	      | 6.9 KB        |	40                |	6.9 KB           |
+
+  @TC.122156 @bus @machines_sync @tasks_p2
+  Scenario: 122156:View Restore History
+    When I navigate to bus admin console login page
+    And I log in bus admin console with user name mozybus+backupsrestores@gmail.com and password default password
+    When I search machine by:
+      | machine_name   |
+      | CNENCHENC33L1C |
+    And I view machine details for mozybus+backup+restore@emc.com
+    And Restores table will display as:
+      | ID    | Date/Time Requested | Date/Time Finished | Files Retrieved | Size  | Status / Downloads                       |
+      | 21284 |	08/11/15 05:05 	    | 08/10/15 15:07     | 41 / 41 	       | 1 DVD | Retrieved files; preparing to burn DVDs. |
+      | 20707 |	08/07/15 00:52 	    | 08/06/15 10:54 	 | 41 / 41         | 1 DVD | Retrieved files; preparing to burn DVDs. |
+
+
+
+
+
+  ###############################################################################
+
   # view edit details
 
   ###############################################################################
@@ -395,3 +438,57 @@ Feature: view edit machine details
     And I cancel machine max for Machine2_119220
     And I stop masquerading
     Then I search and delete partner account by newly created partner company name
+
+#  @TC.122433 @bus @machines_sync @tasks_p2
+#  Scenario: 122433:Linux machines displayed correctly in the machine list view
+#    When I add a new MozyEnterprise partner:
+#      | period | users | server plan |
+#      | 12     | 10    | 250 GB      |
+#    Then New partner should be created
+#    And I view the newly created partner admin details
+#    Then I active admin in admin details default password
+#    When I act as newly created partner account
+#    And I add new user(s):
+#      | name           | user_group           | storage_type | storage_limit | devices |
+#      | TC.122433.User | (default user group) | Server       | 50            | 3       |
+#    Then 1 new user should be created
+#    When I navigate to Search / List Users section from bus admin console page
+#    And I view user details by newly created user email
+#    And I update the user password to default password
+#    And I use keyless activation to activate devices
+#      | user_email  | machine_name  | machine_type |
+#      | @user_email | auto_generate | Server       |
+#    And I upload data to device by batch
+#      | machine_id              | GB |
+#      | <%=@client.machine_id%> | 1  |
+#    And I log out bus admin console
+#    And I navigate to bus admin console login page
+#    And I log in bus admin console with user name @partner.admin_info.email and password default password
+#    Then I login as mozypro admin successfully
+#    And I navigate to Search / List Machines section from bus admin console page
+#    Then Machine search results should be:
+#      | Machine                    | User                        | User Group           | Data Center                | Storage Used |
+#      | <%=@client.machine_alias%> | <%=@new_users.first.email%> | (default user group) | <%=QA_ENV['data_center']%> | 1 GB         |
+#    And I view machine details for @client.machine_alias
+#    Then machine details should be:
+#      | Owner:      | Space Used: | Last Update: | Encryption: | Client Version: | Product Key:                 | Data Center:               |
+#      | @user_email | 1 GB        | N/A          | Not Set     | unknown         | @client.license_key (Server) | <%=QA_ENV['data_center']%> |
+#    And Backups section without backup history will show Backup history unavailable.
+#    And Restores section without finished restores will show This machine does not have any finished restores.
+#    When I log out bus admin console
+#    And I navigate to bus admin console login page
+#    And I log in bus admin console as administrator
+#    When I search machine by:
+#      | machine_name               |
+#      | <%=@client.machine_alias%> |
+#    Then Machine search results should be:
+#      | Machine                    | User                        | User Group           | Data Center                | Storage Used |
+#      | <%=@client.machine_alias%> | <%=@new_users.first.email%> | (default user group) | <%=QA_ENV['data_center']%> | 1 GB         |
+#    And I view machine details for @client.machine_alias
+#    Then machine details should be:
+#      | ID:                     | External ID: | MTM/SN: | Retry PEW:  | Status:             | Suspended:              | Owner:      | Space Used: | Last Update: | Encryption: | Client Version: | Product Key:                 | Hash:                     | Data Center:               |
+#      | <%=@client.machine_id%> | (change)     | (edit)  | No (toggle) | No expiration (add) | Not Suspended (suspend) | @user_email | 1 GB        | N/A          | Not Set     | unknown         | @client.license_key (Server) | <%=@client.machine_hash%> | <%=QA_ENV['data_center']%> |
+#    And Backups table will display with text No results found.
+#    And Restores section without finished restores will show This machine does not have any finished restores.
+#    And I search and delete partner account by newly created partner company name
+

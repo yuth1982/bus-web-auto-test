@@ -83,7 +83,7 @@ module Bus
     # @return [] nothing
     def view_machine_details(machine_or_user)
       if machine_or_user.include?('@')
-        find(:xpath, "//a[text()='#{machine_or_user}']/../../td[2]/a").click
+        find(:xpath, "//a[text()='#{machine_or_user}']/../../td[1]/a").click
       else
         wait_until{ find_link(machine_or_user).visible? }
         find_link(machine_or_user).click
