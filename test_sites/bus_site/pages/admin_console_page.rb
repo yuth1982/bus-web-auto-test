@@ -19,6 +19,7 @@ module Bus
     section(:add_new_pro_plan_section, AddNewProPlanSection, id: 'plan-pro_new')
     section(:edit_password_policy_section, EditPasswordPolicySection, id: 'setting-edit_password_policy')
     section(:edit_client_version_section, EditClientVersionSection, id: 'setting-edit_client_version')
+    section(:network_domain_section, NetworkDomainSection, id: 'setting-netdomains_list-content')
 
     # Users section
     section(:search_list_users_section, SearchListUsersSection, id: 'user-list')
