@@ -513,6 +513,38 @@ Then /^I click allow re-activate$/ do
   @bus_site.admin_console_page.user_details_section.click_allow_reactivation
 end
 
+Then /^I check user storage limit is (.+) GB$/ do |storage|
+  @bus_site.admin_console_page.user_details_section.get_user_storage_limit.should == storage
+end
+
+Then /^I (edit|cancel edit) user storage limit to (.+) GB$/ do |type,storage|
+  @bus_site.admin_console_page.user_details_section.edit_user_storage_limit(type,storage)
+  @bus_site.admin_console_page.user_details_section.wait_until_bus_section_load
+end
+
+Then /^I remove user storage limit (Yes|No)$/ do |action|
+  @bus_site.admin_console_page.user_details_section.remove_user_storage_limit(action)
+  @bus_site.admin_console_page.user_details_section.wait_until_bus_section_load
+end
+
+Then /^I check user storage limit set link$/ do
+  @bus_site.admin_console_page.user_details_section.check_user_storage_limit_set_link.should be true
+end
+
+Then /^I check user storage limit help message should be:$/ do |msg|
+  @bus_site.admin_console_page.user_details_section.get_user_storage_limit_help_msg.should == msg
+end
+
+Then /^I (set|edit) device (.+) storage limit to (.+) GB$/ do |action,device,storage|
+  @bus_site.admin_console_page.user_details_section.set_device_storage_limit(action,device,storage)
+  @bus_site.admin_console_page.user_details_section.wait_until_bus_section_load
+end
+
+Then /^I set user storage limit to (.+) GB$/ do |storage|
+  @bus_site.admin_console_page.user_details_section.set_user_storage_limit(storage)
+  @bus_site.admin_console_page.user_details_section.wait_until_bus_section_load
+end
+
 Then /^I see Allow Re-Activation link is available$/ do
   @bus_site.admin_console_page.user_details_section.check_allow_reactivation_available.should be true
 end

@@ -206,3 +206,7 @@ And /^manifest (.+) txt file should include:$/ do |file, text|
  FileHelper.read_file(file, "txt").include?(text).should == true
 end
 
+And /^the machine (.+) available quota should be (.+)$/ do |machine_id,quota|
+  machine_id.replace ERB.new(machine_id).result(binding)
+  DBHelper.get_machine_available_quota(machine_id.to_i).should == quota
+end

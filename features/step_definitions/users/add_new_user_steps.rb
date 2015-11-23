@@ -43,7 +43,7 @@ Then /^new itemized user should be created$/ do
   @bus_site.admin_console_page.add_new_itemized_user_section.new_user_creation_success(@new_users)
 end
 
-Then /^Add new user error message should be:$/ do |messages|
+Then /^(Add new|Edit) user error message should be:$/ do |_,messages|
   @bus_site.admin_console_page.add_new_user_section.wait_until_bus_section_load
   @bus_site.admin_console_page.add_new_user_section.error_messages.should == messages.to_s
 end

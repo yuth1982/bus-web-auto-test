@@ -101,6 +101,20 @@ module Bus
 
     elements(:all_billing_info, xpath: "//td[starts-with(text(),'Cybersource')]/../../tr")
 
+    #desktop storage limit
+    element(:user_storage_limit_span, xpath: "//span[contains(text(),'User Storage Limit: ')]/../span[2]")
+    element(:edit_user_storage_limit_a, xpath: "//a[contains(@id,'edit-user-storage-max')][text()='Edit']")
+    element(:remove_user_storage_limit_a, xpath: "//a[contains(@id,'remove-user-storage-max')]")
+    element(:input_user_storage_limit_input, xpath: "//input[contains(@id,'input-user-storage-max')]")
+    element(:save_user_storage_limit_a, xpath: "//a[contains(@id,'save-user-storage-max')]")
+    element(:cancel_user_storage_limit_a, xpath: "//a[contains(@id,'cancel-edit-user-storage-max')]")
+    element(:user_storage_limit_set_a, xpath: "//a[contains(@id,'set-user-storage-max')]")
+    element(:user_storage_limit_help_img, xpath: "//form[contains(@id,'form-set-max-pooled-storage')]/img[@class='tooltip']")
+
+    #set machine storage
+    element(:device_storage_limit_span, xpath: "//span[contains(text(),'User Storage Limit: ')]/../span[2]")
+
+
 
 
     # Public: User details storage, devices, storage limit hash
@@ -794,6 +808,54 @@ module Bus
 
     def get_restore_vms_hints(type)
       locate(:xpath, "//a[@title='#{type}']")
+    end
+
+    def get_user_storage_limit
+      user_storage_limit_span.text.strip
+    end
+
+    def edit_user_storage_limit(action,storage)
+      edit_user_storage_limit_a.click
+      input_user_storage_limit_input.type_text(storage)
+      if action.eql?('edit')
+        save_user_storage_limit_a.click
+      else
+        cancel_user_storage_limit_a.click
+      end
+    end
+
+    def set_user_storage_limit(storage)
+      user_storage_limit_set_a.click
+      input_user_storage_limit_input.type_text(storage)
+      save_user_storage_limit_a.click
+    end
+
+    def remove_user_storage_limit(action)
+      remove_user_storage_limit_a.click
+      if action.eql?('Yes')
+        alert_accept
+      else
+        alert_dismiss
+      end
+    end
+
+    def check_user_storage_limit_set_link
+      user_storage_limit_set_a.visible?
+
+    end
+
+    def get_user_storage_limit_help_msg
+      user_storage_limit_help_img['data-tooltip']
+    end
+
+    def set_device_storage_limit(action,device,storage)
+      if action.eql?('set')
+        find(:xpath, "//td/a[text()='#{device}']/../../td[3]//a[contains(@id,'set-machine-storage-max')]").click
+      else
+        find(:xpath, "//td/a[text()='#{device}']/../../td[3]//a[text()='Edit']").click
+      end
+      find(:xpath, "//td/a[text()='#{device}']/../../td[3]//input[contains(@id,'input-machine-storage-max')]").type_text(storage)
+      find(:xpath, "//td/a[text()='#{device}']/../../td[3]//a[contains(@id,'save-machine-storage-max')]").click
     end
 
     private

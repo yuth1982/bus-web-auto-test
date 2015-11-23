@@ -495,6 +495,20 @@ module DBHelper
     end
   end
 
+  def get_machine_available_quota(machine_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "SELECT machine_available_quota(#{machine_id});"
+      Log.debug sql
+      c = conn.exec(sql)
+      c.values[0][0]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
 end
 
 
