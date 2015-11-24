@@ -58,22 +58,36 @@ And /^view manifest window of machine (.+) is opened$/ do |device_name|
   @bus_site.manifest_view_page.view_manifest_window_visible(device_name).should > 0
 end
 
+Then /^the manifest window title should be (.+)$/ do |title|
+  @bus_site.admin_console_page.get_new_window_page_title.should == title
+end
+
 And /^I click manifest raw link to download the manifest file$/ do
   @bus_site.admin_console_page.machine_details_section.click_raw_manifest
 end
 
-Then /^the manifest file is downloaded$/ do  |file_table|
+Then /^the (manifest|Logfile) file is downloaded$/ do  |_, file_table|
   attributes = file_table.hashes.first
   attributes.each do |header,attribute|
     attribute.replace ERB.new(attribute).result(binding)
     attributes[header] = nil if attribute == ''
   end
   @file_name = attributes["file name"]
-  @bus_site.admin_console_page.machine_details_section.wait_until_manifest_file_downloaded(@file_name).should be_true
+  wait_until { FileHelper.file_exists?(@file_name) }
+  FileHelper.file_exists?(@file_name).should be_true
+end
+
+And /^File size should be greater than 0$/ do
+  wait_until{FileHelper.get_file_size(@file_name) > 0}
+  (FileHelper.get_file_size(@file_name) > 0).should be_true
 end
 
 Then /^I delete the newly downloaded file$/ do
-  @bus_site.admin_console_page.machine_details_section.delete_manifest_file(@file_name)
+  FileHelper.delete_file(@file_name)
+end
+
+And /^I delete file (.+) if exist$/ do |file_name|
+  FileHelper.delete_file(file_name)
 end
 
 Then /^I (delete|undelete) the machine$/ do |action|
@@ -172,10 +186,23 @@ And /Backups table will display with text No results found.$/ do
   @bus_site.admin_console_page.machine_details_section.backup_table_empty.should == true
 end
 
-And /^(Backups|Restores) table will display as:$/ do |type, table|
-  @bus_site.admin_console_page.machine_details_section.get_backup_restore_table(type).should == table.raw
-end
-
 Then /^I click (.+) from machines details section$/ do |match|
   @bus_site.admin_console_page.machine_details_section.click_restore_files(match)
 end
+
+And /^(Backups|Restores|Virtual Machines) table will display as:$/ do |type, table|
+  @bus_site.admin_console_page.machine_details_section.get_backup_restore_table(type).should == table.raw
+end
+
+And /^action links in the manifest will be$/ do |table|
+  @bus_site.manifest_view_page.get_action_links.should == table.raw[0]
+end
+
+And /^manifest content will include$/ do |text|
+  @bus_site.manifest_view_page.get_manifest_content.include?(text.strip).should == true
+end
+
+And /^manifest (.+) txt file should include:$/ do |file, text|
+ FileHelper.read_file(file, "txt").include?(text).should == true
+end
+

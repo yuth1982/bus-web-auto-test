@@ -48,13 +48,8 @@ module Bus
       manifest_raw_lnk.click
     end
 
-    def wait_until_manifest_file_downloaded (file_name)
+    def wait_until_file_downloaded (file_name)
       wait_until { file_exists?(file_name) }
-    end
-
-    def delete_manifest_file (file_name)
-      file = File.join(default_download_path, file_name)
-      File.delete(file) if File.file?(file)
     end
 
     def click_replace_machine
@@ -101,6 +96,10 @@ module Bus
 
     def click_restore_files (match)
       find(:xpath, "//a[text()='#{match}']").click
+    end
+
+    def click_link(link_name)
+       find_link(link_name).click
     end
 
   end

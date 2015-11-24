@@ -21,15 +21,15 @@ Feature: view edit machine details
     And I view machine details for mozybus+backup+restore@emc.com
     And Backups table will display as:
       | Start Time     | Type                | Duration | Result            | Files | Size | Files Encoded | Size Encoded | Files Transferred | Size Transferred |
-      | 10/08/15 17:53 | Local Manual Backup | 00:00:08 | LocalBackupError0 | 1 	| 284  | 0            | 0             |	0                 | 0                |
-      | 10/08/15 17:52 | Manual Backup       | 00:01:37 | Success 	        | 1 	| 284  | 1 	          | 288 bytes     |	1                 |	288 bytes        |
-      | 10/08/15 17:52 | Manual Backup       | 00:00:14 | CancelError0 	    | 0 	| 0    | 0            | 0             |	0                 | 0                |
-      | 08/04/15 11:29 | Local Manual Backup | 00:00:06 | LocalBackupError0 | 41    | 6904 | 0            | 0             |	0                 | 0                |
-      | 08/04/15 11:28 | Manual Backup       | 00:01:19 | Success 	        | 41    | 6904 | 1 	          | 24 bytes      |	1 	              | 24 bytes         |
-      | 08/04/15 11:27 | Local Manual Backup | 00:00:10 | LocalBackupError0 | 41    | 6901 | 0            | 0             |	0                 | 0                |
-      | 08/04/15 11:26 | Manual Backup       | 00:01:40 | Success 	        | 41    | 6901 | 1            |	16 bytes      |	1                 |	16 bytes         |
-      | 08/03/15 18:40 | Local Manual Backup | 00:00:12 | LocalBackupError0 | 40    | 6887 | 0            | 0             |	0                 | 0                |
-      | 08/03/15 18:38 | Manual Backup       | 00:01:59 | Success 	        | 40    | 6887 | 40 	      | 6.9 KB        |	40                |	6.9 KB           |
+      | 10/08/15 17:53 | Local Manual Backup | 00:00:08 | LocalBackupError0 | 1     | 284  | 0            | 0             | 0                 | 0                |
+      | 10/08/15 17:52 | Manual Backup       | 00:01:37 | Success           | 1     | 284  | 1            | 288 bytes     | 1                 | 288 bytes        |
+      | 10/08/15 17:52 | Manual Backup       | 00:00:14 | CancelError0      | 0     | 0    | 0            | 0             | 0                 | 0                |
+      | 08/04/15 11:29 | Local Manual Backup | 00:00:06 | LocalBackupError0 | 41    | 6904 | 0            | 0             | 0                 | 0                |
+      | 08/04/15 11:28 | Manual Backup       | 00:01:19 | Success           | 41    | 6904 | 1            | 24 bytes      | 1                 | 24 bytes         |
+      | 08/04/15 11:27 | Local Manual Backup | 00:00:10 | LocalBackupError0 | 41    | 6901 | 0            | 0             | 0                 | 0                |
+      | 08/04/15 11:26 | Manual Backup       | 00:01:40 | Success           | 41    | 6901 | 1            | 16 bytes      | 1                 | 16 bytes         |
+      | 08/03/15 18:40 | Local Manual Backup | 00:00:12 | LocalBackupError0 | 40    | 6887 | 0            | 0             | 0                 | 0                |
+      | 08/03/15 18:38 | Manual Backup       | 00:01:59 | Success           | 40    | 6887 | 40           | 6.9 KB        | 40                | 6.9 KB           |
 
   @TC.122156 @bus @machines_sync @tasks_p2
   Scenario: 122156:View Restore History
@@ -41,8 +41,8 @@ Feature: view edit machine details
     And I view machine details for mozybus+backup+restore@emc.com
     And Restores table will display as:
       | ID    | Date/Time Requested | Date/Time Finished | Files Retrieved | Size  | Status / Downloads                       |
-      | 21284 |	08/11/15 05:05 	    | 08/10/15 15:07     | 41 / 41 	       | 1 DVD | Retrieved files; preparing to burn DVDs. |
-      | 20707 |	08/07/15 00:52 	    | 08/06/15 10:54 	 | 41 / 41         | 1 DVD | Retrieved files; preparing to burn DVDs. |
+      | 21284 | 08/11/15 05:05      | 08/10/15 15:07     | 41 / 41         | 1 DVD | Retrieved files; preparing to burn DVDs. |
+      | 20707 | 08/07/15 00:52      | 08/06/15 10:54     | 41 / 41         | 1 DVD | Retrieved files; preparing to burn DVDs. |
 
 
 
@@ -492,3 +492,44 @@ Feature: view edit machine details
 #    And Restores section without finished restores will show This machine does not have any finished restores.
 #    And I search and delete partner account by newly created partner company name
 
+  @TC.124098 @bus @machines_sync @tasks_p2 @qa12 @env_dependent
+  Scenario: 124098 VMBU container details
+    When I act as partner by:
+      | name                       |
+      | VMBU Enterprise_DONOT_EDIT |
+    When I search machine by:
+      | machine_name              |
+      | sh-loki4.mozy.lab.emc.com |
+    And I view machine details for sh-loki4.mozy.lab.emc.com
+    Then machine details should be:
+      | ID:     | External ID: | Suspended:              | Owner:                   | Space Used: | Last Update: | Encryption: | Client Version: | Product Key:                  | Data Center: |
+      | 7692271 | (change)     | Not Suspended (suspend) | vmbu_freyja_ent1@emc.com | 214.1 GB    | N/A          | Default     | unknown         | 4GAXEDSARDTGZZTWSZXF (Server) | q12a         |
+    And Virtual Machines table will display as:
+      | Name              | Type      | Created At | Backed Up | View Logfile |
+      | VMBU_windows_200  | vmware-vm | 08/07/15   | N/A       | View Logfile |
+      | VMBU_CentOS_test  | vmware-vm | 08/07/15   | N/A       | View Logfile |
+      | VMBU_ubuntu       | vmware-vm | 08/07/15   | N/A       | View Logfile |
+      | VMBU_windows_test | vmware-vm | 08/07/15   | N/A       | View Logfile |
+
+  @TC.124099 @bus @machines_sync @tasks_p2 @qa12 @env_dependent
+  Scenario: 124099:Server storage used for VMBU container
+    When I act as partner by:
+      | name                       |
+      | VMBU Enterprise_DONOT_EDIT |
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by vmbu_freyja_ent1@emc.com
+    And user resources details rows should be:
+      | Storage                                  | Devices                           | Server User Storage Limit:     |
+      | Server: 214.1 GB Used / 1.3 TB Available | Server: 3 Used / 7 Available Edit | Server User Storage Limit: Set |
+    And I view machine sh-loki4.mozy.lab.emc.com details from user details section
+    Then machine details should be:
+      | ID:     | External ID: | Suspended:              | Owner:                   | Space Used: | Last Update: | Encryption: | Client Version: | Product Key:                  | Data Center: |
+      | 7692271 | (change)     | Not Suspended (suspend) | vmbu_freyja_ent1@emc.com | 214.1 GB    | N/A          | Default     | unknown         | 4GAXEDSARDTGZZTWSZXF (Server) | q12a         |
+    When I navigate to Resource Summary section from bus admin console page
+    Then Itemized storage summary should be:
+      | Desktop Used | Desktop Total | Server Used | Server Total | Available | Used     |
+      | 0            | 125 GB        | 214.1 GB    | 1.5 TB       | 1.4 TB    | 214.1 GB |
+    When I download Machine Details (CSV) quick report
+    And I get record for column Machine with value sh-loki4.mozy.lab.emc.com from Quick report machines csv file should be
+      | Machine                   | Key Type | Quota Used |
+      | sh-loki4.mozy.lab.emc.com | Server   | 214.1      |

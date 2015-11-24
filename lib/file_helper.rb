@@ -36,19 +36,34 @@ module FileHelper
   #
   # Returns cvs rows array
   def read_csv_file(file_name, file_path = default_download_path)
-    report_file = nil
+    read_file(file_name, 'csv', file_path)
+  end
+
+  def read_file(file_name, file_type = 'csv', file_path = default_download_path)
+    unless file_name.downcase.end_with?("." + file_type)
+      file_name = "#{file_name}.#{file_type}"
+    end
+    file = nil
     now = Time.now
-    while report_file.nil? && Time.now < (now + 60)
-      report_file = Dir.glob(File.join(file_path, "#{file_name}.csv")).first
+    while file.nil? && Time.now < (now + 60)
+      file = Dir.glob(File.join(file_path, "#{file_name}")).first
       sleep 1
     end
-    rows = []
-    CSV.foreach(report_file) do |row|
-      if row.size > 1  #data header and data
-        rows << row.map{ |x| x == nil ? "" : x.strip}
+    if file_type == 'csv'
+      rows = []
+      CSV.foreach(file) do |row|
+        if row.size > 1  #data header and data
+          rows << row.map{ |x| x == nil ? "" : x.strip}
+        end
       end
+      return rows
+    elsif file_type == 'txt'
+      values = ''
+      File.open(file).each do |row|
+        values = values + row
+      end
+      return values
     end
-    rows
   end
 
   # Public: write csv file
@@ -97,8 +112,14 @@ module FileHelper
     Dir.glob("#{default_download_path}/*.csv").each{ |path| File.delete(path) }
   end
 
-  def delete_csv(name)
-    file = File.join(default_download_path, "#{name}.csv")
+  def delete_csv(name, file_path = default_download_path)
+    file = File.join(file_path, "#{name}.csv")
+    File.delete(file) if File.file?(file)
+  end
+
+
+  def delete_file(file_name, file_path = default_download_path)
+    file = File.join(file_path, file_name)
     File.delete(file) if File.file?(file)
   end
 
@@ -111,6 +132,11 @@ module FileHelper
   def file_exists?(file_name, file_path = default_download_path)
     file = File.join(file_path, file_name)
     File.file?(file)
+  end
+
+  def get_file_size(file_name, file_path = default_download_path)
+    file = File.join(file_path, "#{file_name}")
+    File.size(file)
   end
 
 end

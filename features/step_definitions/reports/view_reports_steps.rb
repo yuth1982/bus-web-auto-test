@@ -101,6 +101,24 @@ Then /^Quick report (.+) csv file details should be:$/ do |report_type, report_t
   actual.each { |row| report_table.rows.should include row }
 end
 
+# a report will return multiple lines of records, just need to check one record of specified columns
+And /^I get record for column (.+) with value (.+) from Quick report (.+) csv file should be$/ do |_, value, report, table|
+  expected = table.hashes[0]
+  actual = @bus_site.admin_console_page.quick_reports_section.read_quick_report(report)
+  record_index = 0
+  # find the record index which we need to check among all records
+  actual.each_with_index { | v,index |
+    if v.include?(value)
+      record_index = index
+      break
+    end
+  }
+  actual_record = {}
+  # combine the report head and the actual record to a hash
+  actual[0].each_with_index { |key, index| actual_record[key] = actual[record_index][index]}
+  expected.keys.each{|key| actual_record[key].should == expected[key] }
+end
+
 When /^I search report by name (.+)$/ do |report_name|
   @report_row = @bus_site.admin_console_page.scheduled_reports_section.find_report(report_name)
 end
