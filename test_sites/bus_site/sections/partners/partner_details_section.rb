@@ -627,7 +627,7 @@ module Bus
     end
 
     def subdomain
-      change_subdomain_link.text
+      find(:xpath, "//dt[text()='Subdomain:']/../dd[1]").text
     end
 
     # Public: Click the link to set product name
