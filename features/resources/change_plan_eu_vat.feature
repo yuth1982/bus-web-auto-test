@@ -367,7 +367,7 @@ Feature: Mozypro customers from 28 EU countries change plan
       | 1      | 500 GB    | Italy   | Italy           | 4916921703777575 |
     Then the order summary looks like:
       | Description        | Price  | Quantity | Amount |
-      | 250 GB - Monthly   | €74.99 | 1        | €74.99 |
+      | 500 GB - Monthly   | €74.99 | 1        | €74.99 |
       | Subscription Price | €74.99 |          | €74.99 |
       | VAT                | €16.50 |          | €16.50 |
       | Total Charge       | €91.49 |          | €91.49 |
@@ -493,7 +493,7 @@ Feature: Mozypro customers from 28 EU countries change plan
       | 12     | 500 GB    | yes         | Malta   | Malta           | 4313801111111121 |
     Then the order summary looks like:
       | Description          | Price     | Quantity | Amount    |
-      | 250 GB - Annual      | €824.89   | 1        | €824.89   |
+      | 500 GB - Annual      | €824.89   | 1        | €824.89   |
       | Server Plan - Annual | €142.89   | 1        | €142.89   |
       | Subscription Price   | €967.78   |          | €967.78   |
       | VAT                  | €174.20   |          | €174.20   |
@@ -513,7 +513,7 @@ Feature: Mozypro customers from 28 EU countries change plan
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
-      | 250 G     | no          |
+      | 500 GB    | no          |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
