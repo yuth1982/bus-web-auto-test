@@ -364,7 +364,7 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | cc number        |
-      | 1      | 250 GB    | Italy   | Italy           | 4916921703777575 |
+      | 1      | 500 GB    | Italy   | Italy           | 4916921703777575 |
     Then the order summary looks like:
       | Description        | Price  | Quantity | Amount |
       | 250 GB - Monthly   | €74.99 | 1        | €74.99 |
@@ -490,7 +490,7 @@ Feature: Mozypro customers from 28 EU countries change plan
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | server plan | country | billing country | cc number        |
-      | 12     | 250 GB    | yes         | Malta   | Malta           | 4313801111111121 |
+      | 12     | 500 GB    | yes         | Malta   | Malta           | 4313801111111121 |
     Then the order summary looks like:
       | Description          | Price     | Quantity | Amount    |
       | 250 GB - Annual      | €824.89   | 1        | €824.89   |
