@@ -474,8 +474,9 @@ Then /^I refund the user with (.+) amount$/ do |amount|
 end
 
 Then /^I check the refund amount should be correct$/ do
+  @bus_site.admin_console_page.user_details_section.refresh_bus_section
   refunded_amount = @bus_site.admin_console_page.user_details_section.get_refunded_amount
-  refunded_amount[1..-1].should eq(@amount)
+  refunded_amount[1..-1].to_f.should == - @amount.to_f
 end
 
 Then /^The current user should be billed$/ do
