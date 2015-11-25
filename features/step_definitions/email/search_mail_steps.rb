@@ -52,14 +52,15 @@ Then /^I should see (\d+) email\(s\)$/ do |num_emails|
   @found_emails.size.should == num_emails.to_i
 end
 
-When /^I retrieve email content by keywords:$/ do |keywords_table|
+When /^I (retrieve email content|download email attachment) by keywords:$/ do |type, keywords_table|
   sleep 30
   step %{I search emails by keywords:}, table(%{
       |#{keywords_table.headers.join('|')}|
       |#{keywords_table.rows.first.join('|')}|
     })
   Log.debug("#{@found_emails.size} emails found, please update your search query") if @found_emails.size != 1
-  @mail_content = find_email_content(@email_search_query)
+  attach =(type.include?("download")? true: nil)
+  @mail_content = find_email_content(@email_search_query, attach)
   Log.debug(@mail_content)
 end
 

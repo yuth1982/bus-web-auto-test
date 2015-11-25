@@ -14,16 +14,30 @@ module Email
       found
     end
 
-    def find_email_content(query,_=nil)
+    def find_email_content(query,attach = nil)
+      file_name = ''
       content = nil
       Gmail.new(CONFIGS['gmail']['username'],CONFIGS['gmail']['password']) do |gmail|
         content = gmail.mailbox('[Gmail]/All Mail').emails(query)[-1].body
+        unless attach.nil?
+          content.parts.attachments.each do |attachment|
+            file_name = attachment.filename
+            File.open("#{default_download_path}/" + attachment.filename,"w+") { |file|
+              file.write(attachment.body.decoded)
+            }
+          end
+        end
       end
-      content
+      if attach.nil?
+        return content
+      else
+        return file_name
+      end
     end
 
+
     def count_licenses_from_email(email_body)
-      #pu = past unactived, d = desktop, s = server, u = unactivated, a = activated
+      #pu = past unactivated, d = desktop, s = server, u = unactivated, a = activated
       pu,du,da,su,sa = false,0,0,0,0
       email_body.to_s.each_line do |line|
         pu = true if line.include?("<span class='label'>Activated</span></div>")
@@ -107,12 +121,28 @@ module Email
       @found
     end
 
-    def find_email_content(query, _=nil)
+    def find_email_content(query, attach = nil)
       content = nil
       find_emails query if @found.nil?
       content = @found[0].body if !@found.nil?
-      content
-    end
+      filename = ''
+      unless attach.nil?
+        message = @found[0]
+        message.attachments.each do |attachment|
+          filename = attachment.file_name
+          filepath = "#{default_download_path}/" + filename
+          filepath.gsub!('/', '\\') if OS.windows?
+          File.open("#{filepath}", 'w+') do |f|
+            f.write(Base64.decode64(attachment.content))
+          end
+        end
+      end
+      if attach.nil?
+        return content
+      else
+        return filename
+      end
+     end
   end
 
   def get_email_prefix
@@ -145,14 +175,14 @@ module Email
     email.find_emails(query)
   end
 
-  def find_email_content(query, _=nil)
+  def find_email_content(query, attach)
     email = GmailBox.instance
     email = Outlook.instance unless RUBY_PLATFORM.include?('linux')
-    email.find_email_content(query)
+    email.find_email_content(query, attach)
   end
 
   def count_licenses_from_email(email_body)
-    #pu = past unactived, d = desktop, s = server, u = unactivated, a = activated
+    #pu = past unactivated, d = desktop, s = server, u = unactivated, a = activated
     pu,du,da,su,sa = false,0,0,0,0
     email_body.to_s.each_line do |line|
       pu = true if line.include?("<span class='label'>Activated</span></div>")

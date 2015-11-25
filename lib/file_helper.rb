@@ -108,8 +108,8 @@ module FileHelper
   # Public: delete *.csv files in download folder
   #
   # Returns nothing
-  def clean_up_csv
-    Dir.glob("#{default_download_path}/*.csv").each{ |path| File.delete(path) }
+  def clean_up_csv(pattern = "*.csv")
+    Dir.glob("#{default_download_path}/#{pattern}").each{ |path| File.delete(path) }
   end
 
   def delete_csv(name, file_path = default_download_path)
