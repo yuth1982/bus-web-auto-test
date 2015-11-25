@@ -366,11 +366,11 @@ Feature: Mozypro customers from 28 EU countries change plan
       | period | base plan | country | billing country | cc number        |
       | 1      | 500 GB    | Italy   | Italy           | 4916921703777575 |
     Then the order summary looks like:
-      | Description        | Price  | Quantity | Amount |
-      | 500 GB - Monthly   | €74.99 | 1        | €74.99 |
-      | Subscription Price | €74.99 |          | €74.99 |
-      | VAT                | €16.50 |          | €16.50 |
-      | Total Charge       | €91.49 |          | €91.49 |
+      | Description        | Price   | Quantity | Amount  |
+      | 500 GB - Monthly   | €149.99 | 1        | €149.99 |
+      | Subscription Price | €149.99 |          | €149.99 |
+      | VAT                | €33.00  |          | €33.00  |
+      | Total Charge       | €182.99 |          | €182.99 |
     And the partner is successfully added.
     And I log in bus admin console as administrator
     When I act as partner by:
@@ -493,11 +493,11 @@ Feature: Mozypro customers from 28 EU countries change plan
       | 12     | 500 GB    | yes         | Malta   | Malta           | 4313801111111121 |
     Then the order summary looks like:
       | Description          | Price     | Quantity | Amount    |
-      | 500 GB - Annual      | €824.89   | 1        | €824.89   |
-      | Server Plan - Annual | €142.89   | 1        | €142.89   |
-      | Subscription Price   | €967.78   |          | €967.78   |
-      | VAT                  | €174.20   |          | €174.20   |
-      | Total Charge         | €1,141.98 |          | €1,141.98 |
+      | 500 GB - Annual      | €1,649.89 | 1        | €1,649.89 |
+      | Server Plan - Annual | €175.89   | 1        | €175.89   |
+      | Subscription Price   | €1,825.78 |          | €1,825.78 |
+      | VAT                  | €328.64   |          | €328.64   |
+      | Total Charge         | €2,154.42 |          | €2,154.42 |
     And the partner is successfully added.
     And I log in bus admin console as administrator
     When I act as partner by:
