@@ -73,12 +73,10 @@ end
 
 When /^I act as admin by:$/ do |table|
   # table is a | leongh+atc695@mozy.com |pending
-  1.times {
-    step %{I search admin by:}, table(%{
-      |#{table.headers.join('|')}|
-      |#{table.rows.first.join('|')}|
-    })
-  }
+  step %{I search admin by:}, table(%{
+    |#{table.headers.join('|')}|
+    |#{table.rows.first.join('|')}|
+  })
 
   attributes = table.hashes.first
   attributes.each do |k,v|
@@ -88,7 +86,7 @@ When /^I act as admin by:$/ do |table|
   page.find_link(attributes["email"] || attributes["name"]).click
   @current_partner = @bus_site.admin_console_page.admin_details_section.partner
   @bus_site.admin_console_page.admin_details_section.act_as_admin
-  @bus_site.admin_console_page.has_stop_masquerading_link?
+  wait_until { @bus_site.admin_console_page.has_stop_masquerading_link? }
 end
 
 When /^I act as latest created admin$/ do
@@ -100,12 +98,10 @@ end
 
 When /^(I|Ldap admin) delete admin by:$/ do |type, table|
   sleep 5 # Without sleep, the (stop masquerade) link comes back again
-  1.times {
-    step %{I search admin by:}, table(%{
-      |#{table.headers.join('|')}|
-      |#{table.rows.first.join('|')}|
-    })
-  }
+  step %{I search admin by:}, table(%{
+    |#{table.headers.join('|')}|
+    |#{table.rows.first.join('|')}|
+  })
 
   attributes = table.hashes.first
   attributes.each do |k,v|

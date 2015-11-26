@@ -39,7 +39,7 @@ When /^I act as partner by:$/ do |search_key_table|
   else
     raise 'Please act as partner by name or email'
   end
-  @bus_site.admin_console_page.has_stop_masquerading_link?
+  wait_until { @bus_site.admin_console_page.has_stop_masquerading_link? }
   @partner_id = @bus_site.admin_console_page.current_partner_id
   @current_partner[:id] ||= @bus_site.admin_console_page.partner_id if @current_partner
 end

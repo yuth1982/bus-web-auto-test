@@ -417,6 +417,7 @@ module Bus
     # Returns nothing
     def act_as_partner
       act_as_link.click
+      alert_accept if alert_present?
     end
 
     def click_admin_name admin_name

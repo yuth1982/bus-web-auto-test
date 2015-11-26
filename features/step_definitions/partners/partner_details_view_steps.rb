@@ -2,7 +2,7 @@ When /^I act as newly created (sub)*partner( account)?$/ do |type, account|
   if type.nil?
     @current_partner = @bus_site.admin_console_page.partner_details_section.partner
     @bus_site.admin_console_page.partner_details_section.act_as_partner
-    @bus_site.admin_console_page.has_stop_masquerading_link?
+    wait_until { @bus_site.admin_console_page.has_stop_masquerading_link? }
   else
     @current_partner = @bus_site.admin_console_page.partner_details_section.subpartner.partner
     @bus_site.admin_console_page.partner_details_section.subpartner.act_as_partner
