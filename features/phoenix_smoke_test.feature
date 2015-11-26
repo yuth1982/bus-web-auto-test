@@ -92,7 +92,7 @@ Feature: Phoenix smoke test
     And I login under changed password on the account.
 
   @TC.126137 @bus @regression_test @phoenix @mozyhome
-  Scenario: 126137 view home user detail in BUS - Precondition:@TC.126120
+  Scenario: 126137 view home user detail in BUS - Precondition:@TC.126120,@TC.126124
     When I get previous partner info
     And I log in bus admin console as administrator
     And I search user by:
@@ -105,6 +105,10 @@ Feature: Phoenix smoke test
     And MozyHome subscription details should be:
       | Subscription                                |
       | MozyHome 50 GB, + 0 GB, 1 machines, monthly |
+    Then MozyHome user billing info should be:
+      | ID   | Cause                                       | Date  | Amount | Card #    | Card Type  | Failure? | Captured? | Refunded?  | Payment Processor | Return Code |
+      | @id  | User CC Update                              | today | $1.00  | XXXX-1121 | MasterCard | No       | No        | No         | Cybersource US    |             |
+      | @id  | MozyHome 50 GB, + 0 GB, 1 machines, monthly | today | $5.99  | XXXX-1122 | Visa       | No       | Yes       | Refund now | Cybersource US    |             |
 
   @TC.126138 @bus @regression_test @phoenix @mozyhome
   Scenario: 126138 delete home user in BUS - Precondition:@TC.126120
@@ -209,6 +213,26 @@ Feature: Phoenix smoke test
     And I clear downloads folder
     And I download home client through phoenix
     And I download sync client through phoenix
+
+  @TC.132289 @bus @regression_test @phoenix @mozyhome
+  Scenario: 132289 BUS admin refund for home user - Precondition:@TC.126122,@TC.126127,@TC.126135
+    When I get previous partner info
+    And I log in bus admin console as administrator
+    And I search user by:
+      | keywords       |
+      | @mh_user_email |
+    And I view user details by newly created MozyHome username
+    Then MozyHome user billing info should be:
+      | ID   | Cause                                                   | Date  | Amount | Card #    | Card Type | Failure? | Captured? | Refunded?  | Payment Processor | Return Code |
+      | @id  | Prorated: MozyHome 125 GB, + 40 GB, 3 machines, monthly | today | £6.50  | XXXX-5713 | Visa      | No       | Yes       | Refund now | Cybersource Other |             |
+      | @id  | MozyHome 50 GB, + 0 GB, 1 machines, monthly             | today | £4.99  | XXXX-5713 | Visa      | No       | Yes       | Refund now | Cybersource Other |             |
+    When I refund the user with all amount
+    Then I check the refund amount should be correct
+    And MozyHome user billing info should be:
+      | ID   | Cause                                                   | Date  | Amount | Card #    | Card Type | Failure? | Captured? | Refunded?   | Payment Processor | Return Code |
+      | @id  | Refund for @id                                          | today | £-6.50 | XXXX-5713 | Visa      | No       | Yes       | Is a refund | Cybersource Other |             |
+      | @id  | Prorated: MozyHome 125 GB, + 40 GB, 3 machines, monthly | today | £6.50  | XXXX-5713 | Visa      | No       | Yes       | £6.50 by @id  | Cybersource Other |             |
+      | @id  | MozyHome 50 GB, + 0 GB, 1 machines, monthly             | today | £4.99  | XXXX-5713 | Visa      | No       | Yes       | Refund now  | Cybersource Other |             |
 
   @TC.126134 @bus @regression_test @phoenix @mozyhome
   Scenario: 126134 home user delete account by self - Precondition:@TC.126122

@@ -96,7 +96,7 @@ module Bus
     element(:refunded_amount_td, xpath: "//div[@class='show-details']//table[@class='table-view']//tr[1]//td[4]")
 
     elements(:all_billing_info, xpath: "//td[starts-with(text(),'Cybersource')]/../../tr")
-
+    element(:user_billing_table, css: "table.table-view")
 
 
     # Public: User details storage, devices, storage limit hash
@@ -759,6 +759,10 @@ module Bus
     end
     def get_user_billed_info
       all_billing_info.size
+    end
+
+    def home_user_billing_hash
+      user_billing_table.hashes
     end
 
     private

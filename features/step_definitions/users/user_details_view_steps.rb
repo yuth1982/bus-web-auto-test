@@ -485,3 +485,41 @@ Then /^The current user should be billed$/ do
   (@bus_site.admin_console_page.user_details_section.get_user_billed_info > 1).should be_true
 end
 
+
+Then /^MozyHome user billing info should be:$/ do |billing_table|
+  actual = @bus_site.admin_console_page.user_details_section.home_user_billing_hash
+  expected = billing_table.hashes
+
+  actual.size.should == expected.size
+
+  actual.each_index { |index|
+    expected[index].keys.each do |header|
+      case header
+        when 'ID'
+          if expected[index][header].start_with?('@')
+            actual[index][header].match(/\d+/).nil?.should be_false
+          else
+            actual[index][header].should == expected[index][header]
+          end
+        when 'Cause'
+          expected[index][header] = expected[index][header].gsub('@id','')
+          actual[index][header].should include(expected[index][header])
+        when 'Refunded?'
+          expected[index][header] = expected[index][header].gsub('@id','')
+          actual[index][header].should include(expected[index][header])
+        when 'Date'
+          if expected[index][header] == "today"
+            actual[index][header].should include(Chronic.parse(expected[index][header]).strftime("%m/%d/%y"))
+          else
+            actual[index][header].should == expected[index][header]
+          end
+        else
+          actual[index][header].should == expected[index][header]
+      end
+    end
+
+
+  }
+
+end
+
