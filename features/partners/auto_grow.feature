@@ -433,6 +433,208 @@ Feature: Auto Grow
       | No (change)      |
     And I delete partner account
 
+  @TC.21938 @bus @auto_grow @tasks_p2
+  Scenario: 21938 [Itemized]Resource Summary and Change plan warn the user to purchase or reduce (Server/Desktop)quota
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan |
+      |   12   | 8     | 100 GB      |
+    Then New partner should be created
+    And I get the partner_id
+    And I act as newly created partner
+    And I navigate to Billing Information section from bus admin console page
+    And I Enable billing info autogrow
+    #desktop
+    And I add new user(s):
+      | user_group           | storage_type | devices |
+      | (default user group) | Desktop      | 1       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    Then I use keyless activation to activate devices
+      | machine_name   | user_name                   | machine_type |
+      | Machine1_21938 | <%=@new_users.first.email%> | Desktop      |
+    And I upload data to device by batch
+      | machine_id                         | GB  |
+      | <%=@new_clients.first.machine_id%> | 200 |
+    Then tds returns successful upload
+    And I navigate to Resource Summary section from bus admin console page
+    Then the storage error message of resource summary section should be:
+    """
+    No Desktop Storage Available
+    """
+    And I navigate to Change Plan section from bus admin console page
+    Then change plan section shouldn't have any storage errors
+    And I upload data to device by batch
+      | machine_id                         | GB  |
+      | <%=@new_clients.first.machine_id%> | 2   |
+    And I refresh Resource Summary section
+    Then the storage error message of resource summary section should be:
+    """
+    Your organization is now using 2 GB Desktop storage more than was purchased. You can purchase more storage or reduce consumption of storage space.
+    """
+    And I refresh Change Plan section
+    Then the storage error message of change plan section should be:
+    """
+    Your organization is now using 2 GB Desktop storage more than was purchased. You can purchase more storage or reduce consumption of storage space.
+    """
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    And I delete user
+    #server
+    And I add new user(s):
+      | user_group           | storage_type | devices |
+      | (default user group) | Server       | 1       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    Then I use keyless activation to activate devices
+      | machine_name   | user_name                   | machine_type |
+      | Machine2_21938 | <%=@new_users.first.email%> | Server       |
+    And I upload data to device by batch
+      | machine_id                         | GB  |
+      | <%=@new_clients.first.machine_id%> | 100 |
+    Then tds returns successful upload
+    And I navigate to Resource Summary section from bus admin console page
+    Then the storage error message of resource summary section should be:
+    """
+    No Server Storage Available
+    """
+    And I navigate to Change Plan section from bus admin console page
+    Then change plan section shouldn't have any storage errors
+    And I upload data to device by batch
+      | machine_id                         | GB  |
+      | <%=@new_clients.first.machine_id%> | 1   |
+    And I refresh Resource Summary section
+    Then the storage error message of resource summary section should be:
+    """
+    Your organization is now using 1 GB Server storage more than was purchased. You can purchase more storage or reduce consumption of storage space.
+    """
+    And I refresh Change Plan section
+    Then the storage error message of change plan section should be:
+    """
+    Your organization is now using 1 GB Server storage more than was purchased. You can purchase more storage or reduce consumption of storage space.
+    """
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.21939 @bus @auto_grow @tasks_p2
+  Scenario: 21939 [Itemized]Resource Summary and Change plan warn the user to purchase or reduce (Server/Desktop)quota
+    When I add a new MozyEnterprise partner:
+      | company name                | period | users | server plan |
+      | TC.21939_enterprise_partner |   36   | 8     | 100 GB      |
+    Then New partner should be created
+    And I get the partner_id
+    And I act as newly created partner
+    And I navigate to Billing Information section from bus admin console page
+    And I Enable billing info autogrow
+    And I add new user(s):
+      | user_group           | storage_type | devices |
+      | (default user group) | Desktop      | 1       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    Then I use keyless activation to activate devices
+      | machine_name   | user_name                   | machine_type |
+      | Machine1_21939 | <%=@new_users.first.email%> | Desktop      |
+    And I upload data to device by batch
+      | machine_id                         | GB  |
+      | <%=@new_clients.first.machine_id%> | 150 |
+    Then tds returns successful upload
+    And I navigate to Resource Summary section from bus admin console page
+    Then resource summary section shouldn't have any storage errors
+    And I navigate to Change Plan section from bus admin console page
+    Then change plan section shouldn't have any storage errors
+    And I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          |
+      | subrole | Partner admin |
+    And I check all the capabilities for the new role
+    When I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for MozyEnterprise partner:
+      | Name    | Company Type | Root Role | Periods | Tax Percentage | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
+      | subplan | business     | subrole   | yearly  | 10             | test     | false            | 1                          | 1                     |
+    Then add new pro plan success message should be displayed
+    When I add a new sub partner:
+      | Company Name                    |
+      | TC.21939_enterprise_sub_partner |
+    And New partner should be created
+    And I get the partner_id
+    And I change pooled resource for the subpartner:
+      | Desktop Storage | Desktop Devices |
+      | 50              | 1               |
+    And I upload data to device by batch
+      | machine_id                         | GB  |
+      | <%=@new_clients.first.machine_id%> | 1   |
+    And I act as newly created partner account
+    And I add new user(s):
+      | user_group           | storage_type | devices |
+      | (default user group) | Desktop      | 1       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    Then I use keyless activation to activate devices
+      | machine_name   | user_name                   | machine_type |
+      | Machine2_21939 | <%=@new_users.first.email%> | Desktop      |
+    And I upload data to device by batch
+      | machine_id                         | GB |
+      | <%=@new_clients.first.machine_id%> | 10 |
+    Then tds returns successful upload
+    And I stop masquerading as sub partner
+    And I navigate to Resource Summary section from bus admin console page
+    Then the storage error message of resource summary section should be:
+    """
+    Your organization is now using 1 GB Desktop storage more than was purchased. You can purchase more storage or reduce consumption of storage space.
+    """
+    And I navigate to Change Plan section from bus admin console page
+    Then the storage error message of change plan section should be:
+    """
+    Your organization is now using 1 GB Desktop storage more than was purchased. You can purchase more storage or reduce consumption of storage space.
+    """
+    And I upload data to device by batch
+      | machine_id                         | GB |
+      | <%=@new_clients.first.machine_id%> | 41 |
+    Then tds return message should be:
+    """
+    Account or container quota has been exceeded
+    """
+    And I stop masquerading
+    When I search partner by TC.21939_enterprise_sub_partner
+    And I view partner details by TC.21939_enterprise_sub_partner
+    And I Enable partner details autogrow
+    And I upload data to device by batch
+      | machine_id                         | GB |
+      | <%=@new_clients.first.machine_id%> | 41 |
+    Then tds returns successful upload
+    And I act as partner by:
+      | name                            |
+      | TC.21939_enterprise_sub_partner |
+    And I navigate to Resource Summary section from bus admin console page
+    Then the storage error message of resource summary section should be:
+    """
+    Your organization is now using 1 GB Desktop storage more than was purchased. You can purchase more storage or reduce consumption of storage space.
+    """
+    And I navigate to Purchase Resources section from bus admin console page
+    Then the storage error message of purchase resource section should be:
+    """
+    Your organization is now using 1 GB Desktop storage more than was purchased. You can purchase more storage or reduce consumption of storage space.
+    """
+    And I stop masquerading
+    And I search and delete partner account by TC.21939_enterprise_sub_partner
+    And I search and delete partner account by TC.21939_enterprise_partner
+
+
 
 
 
