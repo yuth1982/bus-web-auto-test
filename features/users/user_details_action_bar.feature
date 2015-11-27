@@ -147,7 +147,7 @@ Feature: User Details
     When I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.125697 @bus @tasks_p2 @VMBU
+  @TC.125697 @bus @tasks_p2 @VMBU @qa12 @env_dependent
   Scenario: Mozy-125697:VMBU user has Restore icon when login as user from BUS
     When I search user by:
       | keywords                 |
@@ -163,7 +163,7 @@ Feature: User Details
     Then I navigate to old window
     Then I close new window
 
-  @TC.125698 @bus @tasks_p2 @VMBU
+  @TC.125698 @bus @tasks_p2 @VMBU @qa12 @env_dependent
   Scenario: Mozy-125698:VMBU contrainer has restore icon when list machine details in BUS
     When I search user by:
       | keywords                 |
@@ -176,7 +176,7 @@ Feature: User Details
     And I logout freyja
     Then I close new window
 
-  @TC.125699 @bus @tasks_p2 @VMBU
+  @TC.125699 @bus @tasks_p2 @VMBU @qa12 @env_dependent
   Scenario: Mozy-125699:VMBU user has Restore icon after user login from BUS
     When I search partner by VMBU Enterprise_DONOT_EDIT
     Then I get current partner type
@@ -193,7 +193,7 @@ Feature: User Details
     And I logout freyja
     Then I close new window
 
-  @TC.125700 @bus @tasks_p2 @VMBU
+  @TC.125700 @bus @tasks_p2 @VMBU @qa12 @env_dependent
   Scenario: Mozy-125700:VMBU user has Restore icon when list user details in BUS
     When I search user by:
       | keywords                 |
@@ -261,3 +261,4 @@ Feature: User Details
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 1 succeeded, 0 failed |
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
+
