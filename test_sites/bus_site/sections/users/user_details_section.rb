@@ -77,6 +77,12 @@ module Bus
 
     element(:device_table, css: 'table.mini-table')
 
+    element(:edit_device_a, xpath: "//span[@class='view']//a[text()='Edit']")
+    element(:edit_device_input, id: "device_count")
+    element(:edit_device_cancel_a, xpath: "//input[@id='device_count']/../a[text()='(cancel)']")
+
+
+
     #Sync details link
     element(:sync_details_link, xpath: "//table[@class='mini-table']//a[text()='Sync']")
 
@@ -118,6 +124,10 @@ module Bus
 
     #set machine storage
     element(:device_storage_limit_span, xpath: "//span[contains(text(),'User Storage Limit: ')]/../span[2]")
+
+    #buy more link
+    element(:buy_more_a, xpath: "//div[contains(@id,'user-show')]//a[text()='Buy More']")
+
 
 
 
@@ -869,6 +879,10 @@ module Bus
       external_id_tb.type_text(external_id)
       submit_external_id_btn.click
       wait_until_bus_section_load
+    end
+
+    def get_edit_device_tooltips
+      edit_device_input['onfocus'].match(/Min: \d, Max: \d+/)[0]
     end
 
     private

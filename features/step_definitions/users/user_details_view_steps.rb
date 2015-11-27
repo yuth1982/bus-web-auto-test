@@ -549,6 +549,10 @@ Then /^I see Allow Re-Activation link is available$/ do
   @bus_site.admin_console_page.user_details_section.check_allow_reactivation_available.should be true
 end
 
+Then /^edit device tooltips should be: (.+)$/ do |msg|
+  @bus_site.admin_console_page.user_details_section.get_edit_device_tooltips.should == msg
+end
+
 Then /^I check the records of model_audits table is (.+)$/ do |records|
   DBHelper.get_model_audits_record(@partner_id.to_i).should == "0"
 end
