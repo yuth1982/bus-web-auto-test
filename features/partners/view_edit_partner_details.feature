@@ -330,10 +330,126 @@ Feature: BUS Regression partner test
     Then API* Aria account should be:
       | first_name | last_name  |
       | fname      | lname      |
-    And I refresh the partner details section
-    Then Partner general information should be:
-      | Root Admin:          |
-      | fname lname (act as) |
+#    And I refresh the partner details section
+#    Then Partner general information should be:
+#      | Root Admin:          |
+#      | fname lname (act as) |
+    And I delete partner account
+
+  @TC.15478 @bus @edit_partner_details @tasks_p2
+  Scenario: 15478 BILL.10001 Mozy Admin Edits Subpartner Account
+    When I add a new Reseller partner:
+      | company name     | period | reseller type | reseller quota  |
+      | TC.15478_partner | 12     | Gold          | 1000            |
+    Then New partner should be created
+    And I act as newly created partner account
+    When I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          |
+      | subrole | Partner admin |
+    And I check all the capabilities for the new role
+    When I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for Reseller partner:
+      | Name    | Company Type | Root Role | Enabled | Public | Currency                        | Periods | Tax Percentage | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
+      | subplan | business     | subrole   | Yes     | No     | $ — US Dollar (Partner Default) | yearly  | 10             | test     | false            | 1                          | 1                     |
+    Then add new pro plan success message should be displayed
+    And I add a new sub partner:
+      | Company Name           | Pricing Plan | Admin Name |
+      | TC.15478_sub_partner   | subplan      | subadmin   |
+    Then New partner should be created
+    And I expand contact info from partner details section
+    When I change the partner contact information to:
+      | Contact Address: | Contact City: | Contact State: | Contact ZIP/Postal Code: |
+      | sh add test 123  | Richtest      | AL             | 12345                    |
+    Then Partner contact information is changed
+    And Partner contact information should be:
+      | Contact Address: | Contact City: | Contact State: | Contact ZIP/Postal Code: | Pricing Plan: |
+      | sh add test 123  | Richtest      | AL             | 12345                    | subplan       |
+    And I stop masquerading
+    And I search partner by:
+      | name                  |
+      | TC.15478_sub_partner  |
+    And I view partner details by TC.15478_sub_partner
+    Then Partner details shouldn't have Aria ID
+    And I delete partner account
+    And I search and delete partner account by TC.15478_partner
+
+  # existing bug 141992
+  @TC.15481 @bus @edit_partner_details @tasks_p2
+  Scenario: 15481 BILL.10009 sales and support representatives edit partner account in Aria
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | server add on |
+      | 36     | 30    | 2 TB        | 1             |
+    Then New partner should be created
+    And I get partner aria id
+    When API* I set newly created partner aria id account contact to:
+      | first_name  | last_name |
+      | Ftestname   | Ltestname |
+    Then API* Aria account should be:
+      | first_name | last_name  |
+      | Ftestname  | Ltestname  |
+#    And I refresh the partner details section
+#    Then Partner general information should be:
+#      | Root Admin:                  |
+#      | Ftestname Ltestname (act as) |
+    And I delete partner account
+
+  @TC.15485 @tasks_p2 @edit_partner_details @bus
+  Scenario: 15485 BILL.10006 OEM admins edit of sub-partners is continued support
+    When I add a new OEM partner:
+      | company name          | Root role   | Company Type     |
+      | TC.15485_OEM_partner  | D-SaaS Root | Service Provider |
+    Then New partner should be created
+    And I act as newly created partner
+    And I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          |
+      | subrole | Partner admin |
+    And I check all the capabilities for the new role
+    When I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for OEM partner:
+      | Name    | Company Type | Root Role | Enabled | Public | Currency                        | Periods | Tax Percentage | Tax Name | Auto-include tax | Server Price per key | Server Min keys | Server Price per gigabyte | Server Min gigabytes | Desktop Price per key | Desktop Min keys | Desktop Price per gigabyte | Desktop Min gigabytes | Grandfathered Price per key | Grandfathered Min keys | Grandfathered Price per gigabyte | Grandfathered Min gigabytes |
+      | subplan | business     | subrole   | Yes     | No     | $ — US Dollar (Partner Default) | yearly  | 10             | test     | false            | 1                    | 1               | 1                         | 1                    | 1                     | 1                | 1                          | 1                     | 1                           | 1                      | 1                                | 1                           |
+    Then add new pro plan success message should be displayed
+    When I add a new sub partner:
+      | Company Name                | Pricing Plan | Admin Name |
+      | TC.15485_OEM_sub_partner    | subplan      | subadmin   |
+    And New partner should be created
+    And I expand contact info from partner details section
+    When I change the partner contact information to:
+      | Contact Address: | Contact City: | Contact State: | Contact ZIP/Postal Code: |
+      | sh add test oem  | Richoemtest   | AR             | 12345                    |
+    Then Partner contact information is changed
+    And Partner contact information should be:
+      | Contact Address: | Contact City: | Contact State: | Contact ZIP/Postal Code: | Pricing Plan: |
+      | sh add test oem  | Richoemtest   | AR             | 12345                    | subplan       |
+    And I stop masquerading as sub partner
+    And I search and delete partner account by TC.15485_OEM_sub_partner
+    And I search and delete partner account by TC.15485_OEM_partner
+
+  @TC.15650 @tasks_p2 @edit_partner_details @bus
+  Scenario: 15650 BILL.10515 Partner Removes VAT is from partner details not tax exempt
+    When I add a new MozyEnterprise partner:
+      | period | base plan | country | vat number    |  cc number         |
+      | 24     | 1 TB      | France  | FR08410091490 |  4485393141463880  |
+    Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id   |
+      | FR08410091490 |
+    And API* Aria tax exempt status for newly created partner aria id should be State/Province and Federal/National Tax Exempt
+    And I expand contact info from partner details section
+    When I change the partner contact information to:
+      | VAT Number:      |
+      |                  |
+    Then Partner contact information is changed
+    And Partner contact information should be:
+      | VAT Number:     |
+      |                 |
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I delete partner account
 
 

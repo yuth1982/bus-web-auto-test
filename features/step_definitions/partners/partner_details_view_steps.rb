@@ -81,6 +81,14 @@ When /^I get partner aria id$/ do
   Log.debug @aria_id
 end
 
+And /^Partner details (shouldn't|should) have (.+)/ do |type,field|
+  unless type == "should"
+    @bus_site.admin_console_page.partner_details_section.general_info_hash[field + ":"].nil?.should == true
+  else
+    @bus_site.admin_console_page.partner_details_section.general_info_hash[field + ":"].nil?.should == false
+  end
+end
+
 Then /^(Partner|SubPartner) general information should be:$/ do |status,details_table|
   case status
     when "Partner"

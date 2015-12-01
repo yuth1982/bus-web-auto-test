@@ -60,27 +60,27 @@ module Bus
     element(:stash_info_dl, css: 'div>dl>form')
 
     # Contact information
-    element(:partner_details_div, css: 'div[id$=account_details] div:first-child')
+    element(:partner_details_div, xpath: "//div[contains(@id,'account_details')]")
     element(:account_details_icon, xpath: "//i[contains(@id,'account-dtl-icon')]")
     element(:account_details_attribute_edit, xpath: "//a[contains(@id, 'toggle_partner_attribute_management_edit')]/span")
     element(:account_details_attribute_server, xpath: "//form[contains(@id, 'account_attributes_form')]/table/tbody/tr[6]/td[3]/input")
     element(:account_details_attribute_save, css: "div.partner_attribute_management_shown > input[type=\"submit\"]")
 
-    elements(:contact_info_dls, css: 'div>form>dl')
-    element(:contact_address_tb, id: 'contact_address')
-    element(:contact_city_tb, id: 'contact_city')
-    element(:contact_state_select, id: 'contact_state')
-    element(:contact_state_us_select, id: 'contact_state_us')
-    element(:contact_state_ca_select, id: 'contact_state_ca')
-    element(:contact_zip_tb, id: 'contact_zip')
-    element(:contact_country_select, id: 'contact_country')
+    elements(:contact_info_dls, xpath: "//div/form/dl")
+    element(:contact_address_tb, xpath: "//input[@name='contact_address']")
+    element(:contact_city_tb, xpath: "//input[@name='contact_city']")
+    element(:contact_state_select, xpath: "//input[@name='contact_state']")
+    element(:contact_state_us_select, xpath: "//select[@id='contact_state_us']")
+    element(:contact_state_ca_select, xpath: "//select[@id='contact_state_ca']")
+    element(:contact_zip_tb, xpath: "//input[@name='contact_zip']")
+    element(:contact_country_select, xpath: "//select[@name='contact_country']")
     element(:contact_country_text, xpath: '//div/form/dl[2]/dd[5]')
-    element(:contact_phone_tb, id: 'partner_contact_phone')
-    element(:contact_industry_select, id: 'partner_industry')
-    element(:contact_employees_select, id: 'partner_num_employees')
-    element(:contact_email_tb, id: 'contact_email')
-    element(:contact_vat_tb, id: 'vat_info_vat_number')
-    element(:save_changes_btn, css: 'input.button')
+    element(:contact_phone_tb, xpath: "//input[@name='partner_contact_phone']")
+    element(:contact_industry_select, xpath: "//select[@name='partner[industry]']")
+    element(:contact_employees_select, xpath: "//select[@name='partner[num_employees]']")
+    element(:contact_email_tb, xpath: "//input[@name='contact_email']")
+    element(:contact_vat_tb, xpath: "//input[@id='vat_info_vat_number']")
+    element(:save_changes_btn, xpath: "//input[contains(@onclick,'password_dialog')]")
 
     #change contact country section
     element(:chg_country_link_a, xpath: "//a[text()='Change Contact Country']")
@@ -234,7 +234,10 @@ module Bus
       expand(account_details_icon)
       wait_until_ajax_finished(partner_details_div)
       wait_until { !(contact_info_dls.first.dt_dd_elements_text.first.first == '') }
-      output = Hash[*contact_info_dls.map{ |el| el.dt_dd_elements_text.delete_if{ |pair| pair.first.empty?}}.delete_if{ |el| el.empty?}.flatten]
+      outarray = contact_info_dls.map{ |el| el.dt_dd_elements_text.delete_if{ |pair| pair.first.empty?}}.delete_if{ |el| el.empty?}
+      # for OEM partner, outarray will have ["(Invoiced)"], and above code can't handle this
+      outarray.last.pop if outarray.last.last == ["(Invoiced)"]
+      output = Hash[*outarray.flatten]
       output['Contact Address:'] = contact_address_tb.value
       output['Contact City:'] = contact_city_tb.value
 
@@ -258,7 +261,7 @@ module Bus
       output['Phone:'] = contact_phone_tb.value
       output['Industry:'] = contact_industry_select.first_selected_option.text
       output['# of employees:'] = contact_employees_select.first_selected_option.text
-      output['Contact Email:'] = contact_email_tb.value
+      output['Contact Email:'] = contact_email_tb.value unless locate(:xpath, "//input[@id='contact_email']").nil?
       output['VAT Number:'] = contact_vat_tb.value if contact_vat_tb.visible?
       output
     end
@@ -702,7 +705,7 @@ module Bus
     def set_contact_state state
       case
         when contact_state_us_select.visible?
-          contact_state_us_select state
+          contact_state_us_select.select state
         when  contact_state_ca_select.visible?
           contact_state_ca_select.select state
         else
