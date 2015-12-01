@@ -35,7 +35,7 @@ require 'testlink_helper'
 require 'common_helper'
 require 'client_api_helper'
 require 'client_config_helper'
-
+require 'move_enterprise_to_dps'
 require 'site_helper/site_helper'
 require 'capybara_helper/capybara_helper'
 require 'bifrost_helper/bifrost_helper'
@@ -62,3 +62,4 @@ include Billing
 include MachineInfo
 include ClientUserResources
 include LinuxBackupSets
+include MoveEnterpriseToDPS

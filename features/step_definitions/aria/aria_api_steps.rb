@@ -88,13 +88,13 @@ Then /API\* Aria account should be:/ do |info_table|
   # "billing_address_verification_code", "billing_address_match_score", "error_msg",
 end
 
-When(/^API\\\* I get aria client defined field data by (.+)$/) do |aria_id|
+When (/^API\\\* I get aria client defined field data by (.+)$/) do |aria_id|
   # returns value of user defined fields in hash
   #   [{"field_name"=>"Channel", "field_value"=>"ISS"}, {"field_name"=>"Subsidiary", "field_value"=>"Mozy Inc. (US)"}]
   @aria_supp_fields = AriaApi.get_acct_supp_fields({:acct_no=> aria_id})
 end
 
-Then(/^API\\\* Aria client defined field data should be:$/) do |client_defined_fields|
+Then (/^API\\\* Aria client defined field data should be:$/) do |client_defined_fields|
   # | Channel | ISS | Subsidiary | Mozy Inc. (US) |
   # table is a Cucumber::Ast::Table
   expected_values = client_defined_fields.hashes
@@ -179,18 +179,17 @@ When /^API\* I change aria supplemental plan for (.+)$/ do |aria_id, info_table|
   # get current supplemental plan
   current_plan_info = AriaApi.get_acct_plans_all({:acct_no=> aria_id.to_i})
   acct_plans = current_plan_info['all_acct_plans']
-
+  @return_values = []
 
   new_plan_rate.each_with_index {|v,_|
     plan_name = v['plan_name']
     new_rate_schedule = v['rate_schedule_name']
     new_currency = v['schedule_currency']
-    num_plan_units = v['num_plan_units'].to_i
+    num_plan_units = v['num_plan_units']
 
     # find plan num based on given plan name
     acct_plans.each_index { |n|
       flag = false
-      Log.debug acct_plans[n]['plan_name']
       if acct_plans[n]['plan_name'] == plan_name
         supp_plan_no = acct_plans[n]['plan_no']
         # get all the rate schedules for the given plan
@@ -201,12 +200,12 @@ When /^API\* I change aria supplemental plan for (.+)$/ do |aria_id, info_table|
           if val['schedule_name'] == new_rate_schedule && val['schedule_currency'] == new_currency
             rate_schedule_no = val['schedule_no']
             if num_plan_units.nil?
-              aria_supp_plans = AriaApi.modify_supp_plan(:acct_no=> aria_id.to_i, :supp_plan_no=> supp_plan_no, :alt_rate_schedule_no=>rate_schedule_no)
+              result = AriaApi.modify_supp_plan(:acct_no=> aria_id.to_i, :supp_plan_no=> supp_plan_no, :alt_rate_schedule_no=> rate_schedule_no)
             else
-              aria_supp_plans = AriaApi.modify_supp_plan(:acct_no=> aria_id.to_i, :supp_plan_no=> supp_plan_no, :alt_rate_schedule_no=>rate_schedule_no, :num_plan_units=> num_plan_units)
+              result = AriaApi.modify_supp_plan(:acct_no=> aria_id.to_i, :supp_plan_no=> supp_plan_no, :alt_rate_schedule_no=> rate_schedule_no, :num_plan_units=> num_plan_units.to_i)
             end
+            @return_values << result
             flag = true
-            Log.debug aria_supp_plans
             break
           end
         }
@@ -216,14 +215,14 @@ When /^API\* I change aria supplemental plan for (.+)$/ do |aria_id, info_table|
   }
 end
 
-When /^API\* I get aria plan for (.+)$/ do |aria_id|
-  current_plan_info = AriaApi.get_acct_plans({:acct_no=> aria_id.to_i})
-  plan = current_plan_info['acct_plans']
-  @plan_array = []
-  plan.each_index do |i|
-    @plan_array << plan[i]['plan_name']
+When /^API\* I get (all )?aria plan for (.+)$/ do |all, aria_id|
+  if all.nil?
+    current_plan_info = AriaApi.get_acct_plans({:acct_no=> aria_id.to_i})
+    @aria_plan = current_plan_info['acct_plans']
+  else
+    current_plan_info = AriaApi.get_acct_plans_all({:acct_no=> aria_id.to_i})
+    @aria_plan_all = current_plan_info['all_acct_plans']
   end
-  @plan_array
 end
 
 When /^API\* I get supplemental field (.+) for (.+)$/ do |field_name, aria_id|
@@ -238,5 +237,108 @@ Then /^Supplemental field (.+) value should be (.+)$/ do |_,value|
 end
 
 Then /^The aria plan should be$/ do |aria_plan|
-  @plan_array.should == aria_plan.rows.flatten
+  expected = aria_plan.hashes
+  expected.each_with_index do |expect_plan, index|
+    expect_plan.each do |key, value|
+      @aria_plan[index][key].to_s.should == value
+    end
+  end
+end
+
+Then /^Move enterprise to DPS script output should include$/ do |message|
+  @move2DPS_output.should include(message)
+end
+
+When /^I move enterprise to DPS by script for (.+)$/ do |aria_id, table|
+  info_hash = table.hashes.first
+  if info_hash['dry run'].nil? || info_hash['dry run'] == 'no'
+    dry_run = false
+  else
+    dry_run = true
+  end
+  unit = info_hash['units'] || 1
+  all_child_plans = AriaApi.get_avail_child_plans_for_acct_all({:acct_no=> aria_id.to_i})
+  all_plan = all_child_plans['all_plans']
+  all_plan.each {|value|
+    if value['plan_name'] == info_hash['plan name']
+      plan_no = value['plan_no']
+      @move2DPS_output = MoveEnterpriseToDPS.move_me_dps(@partner_id, plan_no, unit.to_i, dry_run)
+      break
+    end
+  }
+end
+
+And /^API\* I (change aria plan to|assign aria plan) (.+) with (\d+) units for (.+)$/ do |type, plan_name, units_no, aria_id|
+  current_plan_info = AriaApi.get_acct_plans({:acct_no=> aria_id.to_i})
+  plan = current_plan_info['acct_plans']
+  # get all current plans number for remove and replace
+  plan_array = []
+  plan.each_index do |i|
+    plan_array << plan[i]['plan_no']
+  end
+  # remove supplemental Plans, except the last one and the first one which is master plan
+  # assignment_directive = 3 means assign or replace immediately
+  if type.include?('change')
+    for i in 1..(plan_array.size-2)
+      Log.debug AriaApi.cancel_supp_plan({:acct_no=> aria_id.to_i, :supp_plan_no => plan_array[i], :assignment_directive => 3})
+    end
+  end
+  all_child_plans = AriaApi.get_avail_child_plans_for_acct_all({:acct_no=> aria_id.to_i})
+
+  # replace the last supplemental plan to DPS plan
+  all_plan = all_child_plans['all_plans']
+  all_plan.each {|value|
+    if value['plan_name'] == plan_name
+      plan_no = value['plan_no']
+      if type.include?('change')
+        Log.debug AriaApi.replace_supp_plan({:acct_no=> aria_id.to_i, :existing_supp_plan_no => plan_array[-1], :new_supp_plan_no => plan_no, :num_plan_units => units_no, :assignment_directive => 3})
+      else
+        Log.debug AriaApi.assign_supp_plan({:acct_no=> aria_id.to_i, :supp_plan_no => plan_no, :num_plan_units => units_no, :assignment_directive => 3})
+      end
+      break
+    end
+  }
+end
+
+Then /^service rates per rate schedule should be$/ do |info_table|
+  expected_service_rate = info_table.hashes
+  (@aria_plan_all.size-1).should == expected_service_rate.size
+  for i in 1..(@aria_plan_all.size-1)
+    @aria_plan_all[i]['plan_name'].should == expected_service_rate[i-1]['plan_name']
+    plan_services = @aria_plan_all[i]['plan_services']
+    plan_services_rates = plan_services[0]['plan_service_rates']
+    plan_services[0]['service_desc'].should == expected_service_rate[i-1]['service_desc']
+    plan_services_rates[0]['rate_per_unit'].to_s.should == expected_service_rate[i-1]['rate_per_unit']
+    plan_services_rates[0]['monthly_fee'].to_s.should == expected_service_rate[i-1]['monthly_fee']
+  end
+end
+
+Then /^net pro-ration per rate schedule should be$/ do |info_table|
+  expected = info_table.hashes
+  Log.debug @return_values
+  @return_values.size.should == expected.size
+  @return_values.each_with_index do |value, index|
+    value['proration_result_amount'].to_s.should == expected[index]['proration_result_amount']
+    supp_plan_line_items = value['supp_plan_line_items']
+    supp_plan_line_items[0]['rate_per_unit'].to_s.should == expected[index]['rate_per_unit']
+    supp_plan_line_items[0]['plan_name'].should == expected[index]['plan_name']
+    supp_plan_line_items[0]['line_units'].to_s.should == expected[index]['line_units']
+  end
+end
+
+When /^I move (forward|backwards) account billing dates (1 month|1 year|2 years|3 years) for (.+)$/ do |action, date, aria_id|
+  date_new = Chronic.parse('in ' + date)
+  days = (date_new.to_i - Time.now.to_i)/(24*60*60)
+  Log.debug days
+  action_directive_value = (action == 'forward'? 1 : 2)
+  # only allow adjust max 27 days one time
+  n = days/27
+  (n + 1).downto(1){ |x|
+    day = (x==1? days%27 : 27)
+    if day > 0
+       # action_directive: 1, move forward; 2 move backwards
+      response = AriaApi.adjust_billing_dates({ :acct_no=> aria_id.to_i, :action_directive=> action_directive_value, :adjustment_days=> day,:comments=> "Test" })
+      Log.debug response
+    end
+  }
 end

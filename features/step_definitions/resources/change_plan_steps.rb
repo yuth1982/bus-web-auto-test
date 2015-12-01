@@ -7,7 +7,7 @@
 # Reseller available columns:
 # Optional: server plan, storage add-on
 #
-When /^I change (MozyPro|MozyEnterprise|Reseller|Itemized) account plan to:$/ do |type, plan_table|
+When /^I change (MozyPro|MozyEnterprise|Reseller|Itemized|MozyEnterprise DPS) account plan to:$/ do |type, plan_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['change_plan'])
 
   cells = plan_table.hashes.first
@@ -28,6 +28,8 @@ When /^I change (MozyPro|MozyEnterprise|Reseller|Itemized) account plan to:$/ do
       @bus_site.admin_console_page.change_plan_section.change_mozypro_plan(base_plan, server_plan, storage_add_on, coupon)
     when "Itemized"
       @bus_site.admin_console_page.change_plan_section.change_itemized_plan(server_licenses, desktop_licenses)
+    when 'MozyEnterprise DPS'
+      @bus_site.admin_console_page.change_plan_section.change_mozyenterprise_dps_plan(base_plan)
     else
       raise "#{type} Company type not exist"
   end
@@ -76,9 +78,9 @@ end
 
 # Success message depends on Manage Resources vs. Assigned Keys
 # which is determined by the company type of the account
-Then /^the (MozyPro|MozyEnterprise|Reseller|Itemized) account plan should be changed$/ do |type|
+Then /^the (MozyPro|MozyEnterprise|Reseller|Itemized|MozyEnterprise DPS) account plan should be changed$/ do |type|
   case type
-    when 'MozyEnterprise', 'Itemized', 'MozyPro', 'Reseller'
+    when 'MozyEnterprise', 'Itemized', 'MozyPro', 'Reseller', 'MozyEnterprise DPS'
       @bus_site.admin_console_page.change_plan_section.messages.should =~ /Successfully changed plan\./
     else
       raise "#{type} Company type not exist"

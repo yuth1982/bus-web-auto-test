@@ -144,6 +144,11 @@ module Bus
       find(:xpath, "//div[@id='identify-me']/a[1]")[:href][/partner-show-(\d+)/, 1]
     end
 
+    def dimiss_start_using_mozy
+      start_using_mozy_btn.click if has_start_using_mozy_btn?
+      alert_accept if alert_present?
+    end
+
     # Public: Navigate to menu item on admin console page
     # Note: if bus module is opened, menu will not be clicked
     #
@@ -152,8 +157,7 @@ module Bus
     #
     # @return [nothing]
     def navigate_to_menu(link_name, use_quick_link = false)
-      start_using_mozy_btn.click if has_start_using_mozy_btn?
-      alert_accept if alert_present?
+      dimiss_start_using_mozy
       # Looking for link in navigation menu
       find(:xpath, "//ul//a[text()='#{link_name}']")
       # calling all method does not require to wait
@@ -177,6 +181,7 @@ module Bus
     #
     # Returns nothing
     def stop_masquerading
+      dimiss_start_using_mozy
       current_admin = current_admin_div.text
       stop_masquerading_link.click
       wait_until{ current_admin != current_admin_div.text}
@@ -264,8 +269,7 @@ module Bus
     end
 
     def open_account_details_from_header(admin_name = nil)
-      start_using_mozy_btn.click if has_start_using_mozy_btn?
-      alert_accept if alert_present?
+      dimiss_start_using_mozy
       if current_admin_name_link.text.strip =='stop masquerading'
         if admin_name.nil?
           # for act as admin
@@ -291,7 +295,7 @@ module Bus
     # to mozypro related items
     def partner_created(partner)
       page.driver.browser.switch_to().window(page.driver.browser.window_handles.last)
-      start_using_mozy_btn.click if has_start_using_mozy_btn?
+      dimiss_start_using_mozy
       find_link(partner.company_info.name).present?
     end
 
@@ -320,8 +324,7 @@ module Bus
 
     def go_to_account
       go_to_account_link.click
-      start_using_mozy_btn.click if has_start_using_mozy_btn?
-      alert_accept if alert_present?
+      dimiss_start_using_mozy
     end
 
     def get_list_capabilities

@@ -17,6 +17,8 @@ module Bus
     element(:coupon_code_tb, id: "coupon_code")
     element(:server_plan_status_span, id: "server-pass-status")
     element(:charge_plan_div, xpath: "//div[@id='change_plan_confirmation']//p")
+    #ME DPS
+    element(:enterprise_dps_baseplan_input, id: "products_exclusive_base_qty")
 
     # Itemized
     elements(:itemized_plans_tbs, css: "div#base_plans_group input")
@@ -102,6 +104,13 @@ module Bus
         storage_add_on_tb.type_text(server_add_on)
       end
       coupon_code_tb.type_text(coupon) unless coupon.nil?
+      confirm_change
+    end
+
+    def change_mozyenterprise_dps_plan(base_plan)
+      value = base_plan.match(/\d+/)[0]
+      wait_until{enterprise_dps_baseplan_input.visible?}
+      enterprise_dps_baseplan_input.type_text(value)
       confirm_change
     end
 

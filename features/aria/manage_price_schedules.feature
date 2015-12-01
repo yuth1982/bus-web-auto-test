@@ -13,7 +13,7 @@ Feature: manage price schedules - billed partner
     And I get partner aria id
     When API* I get aria plan for newly created partner aria id
     Then The aria plan should be
-     | aria plan                                       |
+     | plan_name                                       |
      | Monthly EN                                      |
      | MozyPro 250 GB Plan (Monthly)                   |
      | MozyPro Server Add-on for 250 GB Plan (Monthly) |
@@ -25,7 +25,7 @@ Feature: manage price schedules - billed partner
     And I get partner aria id
     When API* I get aria plan for newly created partner aria id
     Then The aria plan should be
-      | aria plan                                  |
+      | plan_name                                  |
       | Annual DE                                  |
       | Mozy Reseller GB - Gold (Annual)           |
       | Mozy Reseller 20 GB add-on - Gold (Annual) |
@@ -37,7 +37,7 @@ Feature: manage price schedules - billed partner
     And I get partner aria id
     When API* I get aria plan for newly created partner aria id
     Then The aria plan should be
-      | aria plan                                        |
+      | plan_name                                        |
       | Biennial FR                                      |
       | MozyPro 250 GB Plan (Biennial)                   |
       | MozyPro Server Add-on for 250 GB Plan (Biennial) |
@@ -49,7 +49,7 @@ Feature: manage price schedules - billed partner
     And I get partner aria id
     When API* I get aria plan for newly created partner aria id
     Then The aria plan should be
-      | aria plan                                       |
+      | plan_name                                       |
       | Monthly EN                                      |
       | Mozy Reseller GB - Platinum (Monthly)           |
       | Mozy Reseller 20 GB add-on - Platinum (Monthly) |
@@ -64,7 +64,7 @@ Feature: manage price schedules - billed partner
     And I get partner aria id
     When API* I get aria plan for newly created partner aria id
     Then The aria plan should be
-      | aria plan                                     |
+      | plan_name                                     |
       | Annual EN                                     |
       | MozyPro 32 TB Plan (Annual)                   |
       | MozyPro Server Add-on for 32 TB Plan (Annual) |
@@ -76,7 +76,7 @@ Feature: manage price schedules - billed partner
     And I get partner aria id
     When API* I get aria plan for newly created partner aria id
     Then The aria plan should be
-      | aria plan                    |
+      | plan_name                    |
       | Monthly EN                   |
       | MozyPro 16 TB Plan (Monthly) |
     And I delete partner account
@@ -87,7 +87,7 @@ Feature: manage price schedules - billed partner
     And I get partner aria id
     When API* I get aria plan for newly created partner aria id
     Then The aria plan should be
-      | aria plan                          |
+      | plan_name                          |
       | Annual EN                          |
       | Mozy Reseller GB - Silver (Annual) |
     And I delete partner account
@@ -98,7 +98,7 @@ Feature: manage price schedules - billed partner
     And I get partner aria id
     When API* I get aria plan for newly created partner aria id
     Then The aria plan should be
-      | aria plan                                    |
+      | plan_name                                    |
       | Monthly EN                                   |
       | Mozy Reseller GB - Gold (Monthly)            |
       | Mozy Reseller Server Add-on - Gold (Monthly) |
@@ -114,7 +114,7 @@ Feature: manage price schedules - billed partner
     And I get partner aria id
     When API* I get aria plan for newly created partner aria id
     Then The aria plan should be
-      | aria plan                            |
+      | plan_name                            |
       | Annual EN                            |
       | MozyEnterprise for DPS 1 TB (Annual) |
     And I delete partner account
@@ -125,12 +125,129 @@ Feature: manage price schedules - billed partner
     And I get partner aria id
     When API* I get aria plan for newly created partner aria id
     Then The aria plan should be
-      | aria plan                                               |
+      | plan_name                                               |
       | Biennial EN                                             |
       | MozyEnterprise User (Biennial)                          |
       | MozyEnterprise 250 GB Server Plan (Biennial)            |
       | 250 GB Add-on for MozyEnterprise Server Plan (Biennial) |
     And I delete partner account
+
+  @TC.15713 @bus @aria @tasks_p2
+  Scenario: 15713:BILL 18500 Verify that Configuration add and list pro plans are not available MozyPro admins
+    When I add a new MozyPro partner:
+      | period | base plan | server plan |
+      | 1      | 50 GB     | yes         |
+    Then New partner should be created
+    When I act as newly created partner account
+    Then Navigation item List Pro Plan should be unavailable
+    And  Navigation item Add New Pro Plan should be unavailable
+    When I stop masquerading
+    Then I search and delete partner account by newly created partner company name
+    When I add a new Reseller partner:
+      | period | reseller type | reseller quota | net terms |
+      | 12     | Gold          | 500            | yes       |
+    Then New partner should be created
+    When I act as newly created partner account
+    Then Navigation item List Pro Plan should be available
+    And  Navigation item Add New Pro Plan should be available
+    And I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          | Parent        |
+      | subrole | Partner admin | Reseller Root |
+    And I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for Reseller partner:
+      | Name    | Company Type | Root Role | Enabled | Public | Periods | Tax Percentage | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
+      | subplan | business     | subrole   | Yes     | No     | yearly  | 10             | test     | false            | 1                          | 1                     |
+    When I navigate to List Pro Plans section from bus admin console page
+    Then list pro plan is
+      | Name    | Enabled | Public |
+      | subplan | Yes     | No     |
+    When I stop masquerading
+    Then I search and delete partner account by newly created partner company name
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan  | country        | cc number        |
+      | 24     | 98    | 500 GB       | United Kingdom | 4916783606275713 |
+    Then New partner should be created
+    When I act as newly created partner account
+    And I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          | Parent     |
+      | subrole | Partner admin | Enterprise |
+    And I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for MozyEnterprise partner:
+      | Name    | Company Type | Root Role | Periods | Tax Percentage | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
+      | subplan | business     | subrole    | yearly | 10             | test     | false            | 1                          | 1                     |
+    Then add new pro plan success message should be displayed
+    When I navigate to List Pro Plans section from bus admin console page
+    Then list pro plan is
+      | Name    | Enabled | Public |
+      | subplan | Yes     | No     |
+    When I stop masquerading
+    Then I search and delete partner account by newly created partner company name
+    When I add a new OEM partner:
+      | company_name | security |
+      | Test.OEM     | HIPAA    |
+    And New partner should be created
+    And I act as newly created partner
+    When I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          |
+      | newrole | Partner admin |
+    And I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for OEM partner:
+      | Name    | Company Type | Root Role | Enabled | Public | Currency | Periods | Tax Percentage | Tax Name | Auto-include tax | Server Price per key | Server Min keys | Server Price per gigabyte | Server Min gigabytes | Desktop Price per key | Desktop Min keys | Desktop Price per gigabyte | Desktop Min gigabytes | Grandfathered Price per key | Grandfathered Min keys | Grandfathered Price per gigabyte | Grandfathered Min gigabytes |
+      | subplan | business     | newrole   | Yes     | No     |          | yearly  | 10             | test     | false            | 1                    | 1               | 1                         | 1                    | 1                     | 1                | 1                          | 1                     | 1                           | 1                      | 1                                | 1                           |
+    When I navigate to List Pro Plans section from bus admin console page
+    Then list pro plan is
+      | Name    | Enabled | Public |
+      | subplan | Yes     | No     |
+    And I stop masquerading from subpartner
+    Then I search and delete partner account by Test.OEM
+
+  @TC.18749 @bus @aria @tasks_p2
+  Scenario: 18749 Mozy Employees can assign Aria price schedules and tiers to an account
+    When I add a new MozyPro partner:
+      | period | base plan | server plan |
+      | 12     | 100 GB    | yes         |
+    Then New partner should be created
+    And I get partner aria id
+    When API* I get aria plan for newly created partner aria id
+    Then The aria plan should be
+      | plan_name                                      | plan_units | currency_cd | rate_schedule_name |
+      | Annual EN                                      | 1          | usd         | Standard           |
+      | MozyPro 100 GB Plan (Annual)                   | 1          | usd         | Standard           |
+      | MozyPro Server Add-on for 100 GB Plan (Annual) | 1          | usd         | Standard           |
+    When API* I change aria supplemental plan for newly created partner aria id
+      | plan_name                                      | rate_schedule_name  | schedule_currency |
+      | MozyPro 100 GB Plan (Annual)                   | Non-profit Discount | usd               |
+      | MozyPro Server Add-on for 100 GB Plan (Annual) | Non-profit Discount | usd               |
+    And API* I get aria plan for newly created partner aria id
+    Then The aria plan should be
+      | plan_name                                      | plan_units | currency_cd | rate_schedule_name  |
+      | Annual EN                                      | 1          | usd         | Standard            |
+      | MozyPro 100 GB Plan (Annual)                   | 1          | usd         | Non-profit Discount |
+      | MozyPro Server Add-on for 100 GB Plan (Annual) | 1          | usd         | Non-profit Discount |
+    And API* I get all aria plan for newly created partner aria id
+    Then service rates per rate schedule should be
+      | plan_name                                      | service_desc           | rate_per_unit | monthly_fee |
+      | MozyPro 100 GB Plan (Annual)                   | MozyPro Bundle         | 395.9         | 32.99       |
+      | MozyPro Server Add-on for 100 GB Plan (Annual) | Mozy Pro Server Add On | 128.6         | 10.72       |
+    When API* I change aria supplemental plan for newly created partner aria id
+      | plan_name                                      | rate_schedule_name  | schedule_currency | num_plan_units |
+      | MozyPro 100 GB Plan (Annual)                   | Non-profit Discount | usd               | 2              |
+      | MozyPro Server Add-on for 100 GB Plan (Annual) | Non-profit Discount | usd               | 10             |
+    And API* I get aria plan for newly created partner aria id
+    Then The aria plan should be
+      | plan_name                                      | plan_units | currency_cd | rate_schedule_name  |
+      | Annual EN                                      | 1          | usd         | Standard            |
+      | MozyPro 100 GB Plan (Annual)                   | 2          | usd         | Non-profit Discount |
+      | MozyPro Server Add-on for 100 GB Plan (Annual) | 10         | usd         | Non-profit Discount |
+    And net pro-ration per rate schedule should be
+      | plan_name                                      | proration_result_amount | rate_per_unit | line_units |
+      | MozyPro 100 GB Plan (Annual)                   | 337.62                  | 395.9         | 2          |
+      | MozyPro Server Add-on for 100 GB Plan (Annual) | 1157.4                  | 128.6         | 10          |
+    And I delete partner account
+
 
   @TC.18752 @bus @aria @tasks_p2
   Scenario: 18752 Change plan will reflect the price schedule for a partner
@@ -214,6 +331,138 @@ Feature: manage price schedules - billed partner
       | 3                | $158.30    | $474.90                     |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
+
+#  Will implement this later
+#  @TC.18764 @bus @aria @tasks_p2
+#  Scenario: 18764 Price schedule will apply to customers in the next subscription period
+#    When I add a new MozyPro partner:
+#      | period | base plan | server plan |
+#      | 1      | 250 GB    | yes         |
+#    Then New partner should be created
+#    And I get partner aria id
+#    When API* I change aria supplemental plan for newly created partner aria id
+#      | plan_name                                       | rate_schedule_name  | schedule_currency | num_plan_units |
+#      | MozyPro 250 GB Plan (Monthly)                   | Non-profit Discount | usd               | 2              |
+#      | MozyPro Server Add-on for 250 GB Plan (Monthly) | Non-profit Discount | usd               | 3              |
+#    And I move backwards account billing dates 1 month for newly created partner aria id
+#    Then I wait for 86400 seconds
+#    When I navigate to bus admin console login page
+#    And I log in bus admin console as administrator
+#    When I act as newly created partner account
+#    And I navigate to Billing History section from bus admin console page
+#    And Billing history table should be:
+#      | Date  | Amount    | Total Paid | Balance Due |
+#      | today | $1,220.78 | $1,220.78  | $0.00       |
+#    When I stop masquerading
+#    And I search and delete partner account by newly created partner company name
+
+  @TC.18812 @bus @aria @tasks_p2
+  Scenario: 18812 Mozy Employees change from another rate schedule back to standard
+    When I add a new MozyPro partner:
+      | period | base plan | server plan |
+      | 1      | 12 TB     | yes         |
+    Then New partner should be created
+    And I get partner aria id
+    When API* I get aria plan for newly created partner aria id
+    Then The aria plan should be
+      | plan_name                                      | plan_units | currency_cd | rate_schedule_name |
+      | Monthly EN                                     | 1          | usd         | Standard           |
+      | MozyPro 12 TB Plan (Monthly)                   | 1          | usd         | Standard           |
+      | MozyPro Server Add-on for 12 TB Plan (Monthly) | 1          | usd         | Standard           |
+    When API* I change aria supplemental plan for newly created partner aria id
+      | plan_name                                      | rate_schedule_name  | schedule_currency |
+      | MozyPro 12 TB Plan (Monthly)                   | Non-profit Discount | usd               |
+      | MozyPro Server Add-on for 12 TB Plan (Monthly) | Non-profit Discount | usd               |
+    And API* I get aria plan for newly created partner aria id
+    Then The aria plan should be
+      | plan_name                                      | plan_units | currency_cd | rate_schedule_name  |
+      | Monthly EN                                     | 1          | usd         | Standard            |
+      | MozyPro 12 TB Plan (Monthly)                   | 1          | usd         | Non-profit Discount |
+      | MozyPro Server Add-on for 12 TB Plan (Monthly) | 1          | usd         | Non-profit Discount |
+    When API* I change aria supplemental plan for newly created partner aria id
+      | plan_name                                      | rate_schedule_name | schedule_currency |
+      | MozyPro 12 TB Plan (Monthly)                   | Standard           | usd               |
+      | MozyPro Server Add-on for 12 TB Plan (Monthly) | Standard           | usd               |
+    And API* I get all aria plan for newly created partner aria id
+    Then service rates per rate schedule should be
+      | plan_name                                      | service_desc           | rate_per_unit | monthly_fee   |
+      | MozyPro 12 TB Plan (Monthly)                   | MozyPro Bundle         | 4319.97       | 4319.97       |
+      | MozyPro Server Add-on for 12 TB Plan (Monthly) | Mozy Pro Server Add On | 149.97        | 149.97        |
+    When API* I get aria plan for newly created partner aria id
+    Then The aria plan should be
+      | plan_name                                      | plan_units | currency_cd | rate_schedule_name  |
+      | Monthly EN                                     | 1          | usd         | Standard            |
+      | MozyPro 12 TB Plan (Monthly)                   | 1          | usd         | Standard            |
+      | MozyPro Server Add-on for 12 TB Plan (Monthly) | 1          | usd         | Standard            |
+    When API* I change aria supplemental plan for newly created partner aria id
+      | plan_name                                      | rate_schedule_name | schedule_currency | num_plan_units |
+      | MozyPro 12 TB Plan (Monthly)                   | Standard           | usd               | 2              |
+      | MozyPro Server Add-on for 12 TB Plan (Monthly) | Standard           | usd               | 4              |
+    And API* I get aria plan for newly created partner aria id
+    Then The aria plan should be
+      | plan_name                                      | plan_units | currency_cd | rate_schedule_name  |
+      | Monthly EN                                     | 1          | usd         | Standard            |
+      | MozyPro 12 TB Plan (Monthly)                   | 2          | usd         | Standard            |
+      | MozyPro Server Add-on for 12 TB Plan (Monthly) | 4          | usd         | Standard            |
+    And net pro-ration per rate schedule should be
+      | plan_name                                      | proration_result_amount | rate_per_unit | line_units |
+      | MozyPro 12 TB Plan (Monthly)                   | 4319.97                 | 4319.97       | 2          |
+      | MozyPro Server Add-on for 12 TB Plan (Monthly) | 449.91                  | 149.97        | 4          |
+    And I delete partner account
+
+  @TC.18813 @bus @aria @tasks_p2
+  Scenario: 18813 Mozy Employees change one rate schedule back to another rate schedule
+    When I add a new MozyPro partner:
+      | period | base plan | server plan | create under   | net terms |  country |
+      | 24     | 250 GB    | yes         | MozyPro France | yes       |  France  |
+    Then New partner should be created
+    And I get partner aria id
+    When API* I get aria plan for newly created partner aria id
+    Then The aria plan should be
+      | plan_name                                        | plan_units | currency_cd | rate_schedule_name |
+      | Biennial FR                                      | 1          | eur         | Standard EUR       |
+      | MozyPro 250 GB Plan (Biennial)                   | 1          | eur         | Standard           |
+      | MozyPro Server Add-on for 250 GB Plan (Biennial) | 1          | eur         | Standard           |
+    When API* I change aria supplemental plan for newly created partner aria id
+      | plan_name                                        | rate_schedule_name  | schedule_currency |
+      | MozyPro 250 GB Plan (Biennial)                   | Non-profit Discount | eur               |
+      | MozyPro Server Add-on for 250 GB Plan (Biennial) | Non-profit Discount | eur               |
+    And API* I get aria plan for newly created partner aria id
+    Then The aria plan should be
+      | plan_name                                        | plan_units | currency_cd | rate_schedule_name  |
+      | Biennial FR                                      | 1          | eur         | Standard EUR        |
+      | MozyPro 250 GB Plan (Biennial)                   | 1          | eur         | Non-profit Discount |
+      | MozyPro Server Add-on for 250 GB Plan (Biennial) | 1          | eur         | Non-profit Discount |
+    When API* I change aria supplemental plan for newly created partner aria id
+      | plan_name                                        | rate_schedule_name | schedule_currency |
+      | MozyPro 250 GB Plan (Biennial)                   | Velocity           | eur               |
+      | MozyPro Server Add-on for 250 GB Plan (Biennial) | Velocity           | eur               |
+    And API* I get aria plan for newly created partner aria id
+    Then The aria plan should be
+      | plan_name                                        | plan_units | currency_cd | rate_schedule_name  |
+      | Biennial FR                                      | 1          | eur         | Standard EUR        |
+      | MozyPro 250 GB Plan (Biennial)                   | 1          | eur         | Velocity            |
+      | MozyPro Server Add-on for 250 GB Plan (Biennial) | 1          | eur         | Velocity            |
+    When API* I get all aria plan for newly created partner aria id
+    Then service rates per rate schedule should be
+      | plan_name                                        | service_desc           | rate_per_unit | monthly_fee |
+      | MozyPro 250 GB Plan (Biennial)                   | MozyPro Bundle         | 0             | 0           |
+      | MozyPro Server Add-on for 250 GB Plan (Biennial) | Mozy Pro Server Add On | 0             | 0           |
+    When API* I change aria supplemental plan for newly created partner aria id
+      | plan_name                                        | rate_schedule_name | schedule_currency | num_plan_units |
+      | MozyPro 250 GB Plan (Biennial)                   | Velocity           | eur               | 2              |
+      | MozyPro Server Add-on for 250 GB Plan (Biennial) | Velocity           | eur               | 4              |
+    And API* I get aria plan for newly created partner aria id
+    Then The aria plan should be
+      | plan_name                                        | plan_units | currency_cd | rate_schedule_name  |
+      | Biennial FR                                      | 1          | eur         | Standard EUR        |
+      | MozyPro 250 GB Plan (Biennial)                   | 2          | eur         | Velocity            |
+      | MozyPro Server Add-on for 250 GB Plan (Biennial) | 4          | eur         | Velocity            |
+    And net pro-ration per rate schedule should be
+      | plan_name                                        | proration_result_amount | rate_per_unit | line_units |
+      | MozyPro 250 GB Plan (Biennial)                   | 0                       | 0             | 2          |
+      | MozyPro Server Add-on for 250 GB Plan (Biennial) | 0                       | 0             | 4          |
+    And I delete partner account
 
   @TC.18788 @bus @aria @tasks_p2
   Scenario: 18788 Price schedules and tiers cannot be chosen for a given customer within the Mozy
