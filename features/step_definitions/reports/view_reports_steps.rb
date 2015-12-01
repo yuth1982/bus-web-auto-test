@@ -80,7 +80,7 @@ Then /^Scheduled (.+) report csv file( which attached to email)* details should 
   report_table.map_column!('Column A') do |value|
     value.gsub(/@name/,@partner.company_info.name)
   end
-  unless RUBY_PLATFORM.include?('linux') then
+  if OS.windows?
     report_table.rows.each do |row|
       row.map {|col| col.force_encoding('IBM437');}
     end
