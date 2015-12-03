@@ -236,6 +236,10 @@ When /^I delete device by name: (.+)$/ do |device_name|
   @bus_site.admin_console_page.user_details_section.wait_until_bus_section_load
 end
 
+When /^I delete sync container$/ do
+  @bus_site.admin_console_page.user_details_section.delete_sync
+end
+
 Then /^the popup message when delete device is (.+)$/ do |message|
   @delete_device_msg.should == message
 end
@@ -336,7 +340,7 @@ When /^I set device quota field to (\d+) and cancel$/ do |count|
   @bus_site.admin_console_page.user_details_section.device_edit_and_cancel(count)
 end
 
-When /^I edit user( Desktop| Server)* device quota to (\d+)$/ do |type, count|
+When /^I edit user( Desktop| Server)* device quota to (.+)$/ do |type, count|
   @bus_site.admin_console_page.user_details_section.change_device_quota(count, type)
   @bus_site.admin_console_page.user_details_section.wait_until_bus_section_load
 end
@@ -566,3 +570,4 @@ Then /^I update (.+) last backup time to 30 minutes ago$/ do |machine_id|
   machine_id.replace ERB.new(machine_id).result(binding)
   DBHelper.update_machines_last_update_time(machine_id)
 end
+

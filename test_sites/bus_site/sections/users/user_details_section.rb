@@ -128,8 +128,9 @@ module Bus
     #buy more link
     element(:buy_more_a, xpath: "//div[contains(@id,'user-show')]//a[text()='Buy More']")
 
-
-
+    #delete sync container
+    element(:delete_sync_i, xpath: "//i[@class='icon-trash icon-2x']")
+    element(:delete_sync_yes, xpath: "//input[@value='Yes']")
 
 
     # Public: User details storage, devices, storage limit hash
@@ -526,6 +527,12 @@ module Bus
         end
       end
       msg
+    end
+
+    def delete_sync
+      delete_sync_i.click
+      delete_sync_yes.click
+      wait_until{add_stash_link.visible?}
     end
 
     # when view the device which has been deleted,deleted will be shown next to the device name
