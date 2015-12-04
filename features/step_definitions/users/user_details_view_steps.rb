@@ -552,3 +552,8 @@ end
 Then /^I check the records of model_audits table is (.+)$/ do |records|
   DBHelper.get_model_audits_record(@partner_id.to_i).should == "0"
 end
+
+When /^I add user external id$/ do
+  @user_external_id = "#{Time.now.strftime('%m%d-%H%M-%S')}"
+  @bus_site.admin_console_page.user_details_section.change_user_external_id(@user_external_id)
+end

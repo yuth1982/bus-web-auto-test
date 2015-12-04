@@ -16,13 +16,14 @@ module Bus
 
       admin_obj.user_groups.each do | ug |
         Log.debug("Processing grant user group #{ug} to admin")
-        e = find(:xpath, "//label[text() = ' #{ug}']")
+        e = find(:xpath, "//div[@id='user_groups']//label[text() = ' #{ug}']")
         e.child[0].check
       end
 
       admin_obj.roles.each do | r |
         Log.debug("Processing grant role #{r} to admin")
-        e = find(:xpath, "//label[text() = ' #{r}']")
+        # if the user_groups and roles have the same name, then will select user groups instead of role
+        e = find(:xpath, "//div[@id='roles']//label[text() = ' #{r}']")
         e.child[0].check
       end
       save_changes_btn.click

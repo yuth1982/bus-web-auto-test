@@ -21,7 +21,7 @@ And /^I search machine by:$/ do |search_key_table|
   attributes.each do |k,v|
     v.replace ERB.new(v).result(binding)
   end
-  keywords = attributes["machine_name"] || attributes["user_email"]
+  keywords = attributes["machine_name"] || attributes["user_email"] || attributes["keywords"]
   @bus_site.admin_console_page.search_list_machines_section.search_machine(keywords)
 end
 

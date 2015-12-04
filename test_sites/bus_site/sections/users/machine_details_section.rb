@@ -4,6 +4,11 @@ module Bus
 
     element(:dso_table, xpath: "//th[text()='Order ID']/../../../../table")
     element(:machine_info_dls, css: 'div[id^=machine-show-] dl')
+    # change external id
+    element(:change_external_id_link, xpath: "//div[contains(@id,'machine')]//dt[text()='External ID:']/following-sibling::dd[1]//a[text()='(change)']")
+    element(:external_id_tb, xpath: "//div[contains(@id,'machine')]//input[@id='external_id']")
+    element(:submit_external_id_btn, xpath: "//div[contains(@id,'machine')]//dt[text()='External ID:']/following-sibling::dd[1]//input[@value='Submit']")
+
 
     #Manifest section
     element(:manifest_view_lnk, xpath: "//div[contains(@id,'machine-show')]//a[text()='View']")
@@ -100,6 +105,13 @@ module Bus
 
     def click_link(link_name)
        find_link(link_name).click
+    end
+
+    def change_machine_external_id(external_id)
+      change_external_id_link.click
+      external_id_tb.type_text(external_id)
+      submit_external_id_btn.click
+      wait_until_bus_section_load
     end
 
   end

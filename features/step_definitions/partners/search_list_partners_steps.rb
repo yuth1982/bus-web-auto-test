@@ -19,6 +19,13 @@ When /^I search partner by (.+)$/ do |keywords|
   @bus_site.admin_console_page.search_list_partner_section.search_partner(keywords, 'None', true, true)
 end
 
+When /^I full search partner by (.+)$/ do |keywords|
+  #keywords string would like : @new_p_external_id;last four digits;contact zip
+  keywords.gsub!(/@new_p_external_id/,@new_p_external_id).gsub!(/last four digits/,@partner.admin_info.email[@partner.admin_info.email.index('@')-4,4])
+  keywords.gsub!(/zip code/,@partner.company_info.zip)
+  keywords.gsub!("\;"," ")
+  @bus_site.admin_console_page.search_list_partner_section.search_partner(keywords, 'None', true, true)
+end
 
 When /^I act as partner by:$/ do |search_key_table|
   attributes = search_key_table.hashes.first

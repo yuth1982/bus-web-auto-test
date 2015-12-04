@@ -210,3 +210,8 @@ And /^the machine (.+) available quota should be (.+)$/ do |machine_id,quota|
   machine_id.replace ERB.new(machine_id).result(binding)
   DBHelper.get_machine_available_quota(machine_id.to_i).should == quota
 end
+
+And /^I add machine external id$/ do
+  @machine_external_id = "#{Time.now.strftime('%m%d-%H%M-%S')}"
+  @bus_site.admin_console_page.machine_details_section.change_machine_external_id(@machine_external_id)
+end

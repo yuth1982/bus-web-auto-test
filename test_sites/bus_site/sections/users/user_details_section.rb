@@ -25,6 +25,10 @@ module Bus
 
     elements(:product_keys_tables, css: 'div[id^=all-license-keys-] table.mini-table')
 
+    element(:change_external_id_link, xpath: "//dt[text()='External ID:']/following-sibling::dd[1]//a[text()='(change)']")
+    element(:external_id_tb, id: "external_id")
+    element(:submit_external_id_btn, xpath: "//dt[text()='External ID:']/following-sibling::dd[1]//input[@value='Submit']")
+
     # Add Stash
     element(:add_stash_link, xpath: "//a[text()='(Add Sync)']")
     element(:stash_quota_tb, css: "form[id^=stash-form-] input#quota")
@@ -858,6 +862,13 @@ module Bus
       end
       find(:xpath, "//td/a[text()='#{device}']/../../td[3]//input[contains(@id,'input-machine-storage-max')]").type_text(storage)
       find(:xpath, "//td/a[text()='#{device}']/../../td[3]//a[contains(@id,'save-machine-storage-max')]").click
+    end
+
+    def change_user_external_id(external_id)
+      change_external_id_link.click
+      external_id_tb.type_text(external_id)
+      submit_external_id_btn.click
+      wait_until_bus_section_load
     end
 
     private

@@ -67,7 +67,7 @@ When /^I search admin by:$/ do |search_key_table|
   attributes['email'] = @existing_user_email if attributes['email'] == '@existing_user_email'
   attributes['email'] = @existing_admin_email if attributes['email'] == '@existing_admin_email'
   attributes['email'] = @admin.email if attributes['email'] == '@admin_email'
-  keywords = attributes["name"] || attributes["email"]
+  keywords = attributes["name"] || attributes["email"]|| attributes["keywords"]
   @bus_site.admin_console_page.search_admins_section.search_admin(keywords)
 end
 
