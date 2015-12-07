@@ -97,7 +97,6 @@ When /^I act as latest created admin$/ do
 end
 
 When /^(I|Ldap admin) delete admin by:$/ do |type, table|
-  sleep 5 # Without sleep, the (stop masquerade) link comes back again
   step %{I search admin by:}, table(%{
     |#{table.headers.join('|')}|
     |#{table.rows.first.join('|')}|

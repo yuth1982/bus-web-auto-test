@@ -40,12 +40,10 @@ When /^I check all the capabilities for the new role$/ do
 end
 
 When /^I delete role (.+)$/ do | role_name |
-  sleep 5 # Without sleep, the (stop masquerade) link comes back again
-  step "I navigate to List Roles section from bus admin console page"
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['list_roles'])
   role_name = @role.name if role_name == '@role_name'
   @bus_site.admin_console_page.list_roles_section.list_role(role_name)
   @bus_site.admin_console_page.role_details_section.delete_role(role_name)
-  sleep 1
 end
 
 When /^I clean all roles with name which started with "([^"]+)"$/ do |prefix|
