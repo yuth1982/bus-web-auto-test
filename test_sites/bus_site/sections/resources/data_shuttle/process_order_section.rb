@@ -139,7 +139,7 @@ module Bus
         wait_until_bus_section_load
 
         #seperate from error/success message
-        order.notification_msg = order_notification_p.text
+        order.notification_msg = order_notification_p.text unless locate(:xpath, "//div[@class='show-details']/p").nil?
 
         # fill summary section
         if messages.empty?

@@ -59,9 +59,10 @@ module Bus
     #
     # Returns nothing
     def add_drive_to_order
-      wait_until_bus_section_load
+      wait_until { find_link("Add Drive To Order").visible? }
       add_drive_to_order_links.click
       add_drive_btn.click
+      wait_until { find(:xpath, "//div[contains(@id, 'resource-add_drive_to_seed_device_order-')]/ul/li").visible? }
     end
 
     # Public: Messages for add drive to order

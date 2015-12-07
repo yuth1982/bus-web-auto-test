@@ -39,5 +39,14 @@ module Bus
     def messages
       message_div.text
     end
+
+    def get_source_key_and_storage group_name
+      find(:xpath, "//select[@id='source_group_id']/option[contains(text(),'#{group_name}')] ").text
+    end
+
+    def get_target_key_and_storage group_name
+      find(:xpath, "//select[@id='target_group_id']/option[contains(text(),'#{group_name}')] ").text
+    end
+
   end
 end

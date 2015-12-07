@@ -509,13 +509,25 @@ module DBHelper
     end
   end
 
-
   def update_machines_last_update_time(machine_id)
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
       sql = "UPDATE machines SET last_successful_backup_at = (current_timestamp - interval '0.5 hours' ) WHERE id = #{machine_id};"
       Log.debug sql
       c = conn.exec(sql)
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_customcd_order_id(seed_device_order_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select customcd_order_id from seed_device_orders_customcd_orders where seed_device_order_id=#{seed_device_order_id};"
+      c = conn.exec(sql)
+      c.values[0][0]
     rescue PG::Error => e
       puts "postgres error: #{e}"
     ensure

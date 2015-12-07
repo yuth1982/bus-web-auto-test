@@ -218,5 +218,9 @@ module Bus
       current_page_keys_td.size.to_s
     end
 
+    def data_shuttle_text_visible?
+      !(locate(:xpath, "//div[contains(text(),'= Data Shuttle')]").nil?)
+    end
+
   end
 end

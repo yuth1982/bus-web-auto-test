@@ -26,7 +26,11 @@ module Bus
     element(:active_drivers_link, css: "a[href='/resource/show_drive_inventory_status/active']")
     element(:drivers_at_80_link, css: "a[href='/resource/show_drive_inventory_status/80percent']")
     element(:dead_drivers_link, css: "a[href='/resource/show_drive_inventory_status/dead']")
+
+    # cancelled status table
+    element(:status_cancelled_table, xpath: "//div[contains(@id,'status-cancelled-content')]/div/table")
     #
+
     def device_status_table_headers
       device_status_table.headers_text
     end
@@ -89,6 +93,10 @@ module Bus
 
     def view_dead_drivers
       dead_drivers_link.click
+    end
+
+    def cancelled_table_rows
+      status_cancelled_table.rows
     end
 
   end

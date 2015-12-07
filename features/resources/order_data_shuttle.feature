@@ -123,42 +123,49 @@ Feature:
   @TC.12197 @bus @data_shuttle @status @device_status
   Scenario: 12197 Verify clicking Seeding
     When I navigate to Data Shuttle Status section from bus admin console page
+    And I view data shuttle seeding status table
     Then Data shuttle device seeding status table header should be:
       |Order # | Partner | Created | Key | Machine | Data Shuttle Device ID | Phase | Status | % Complete | GB Transferred | Seed Size | Start | Elapsed |
 
   @TC.12198 @bus @data_shuttle @status @device_status
   Scenario: 12198 Verify clicking Seed Complete
     When I navigate to Data Shuttle Status section from bus admin console page
+    And I view data shuttle seed complete status table
     Then Data shuttle device seed complete status table header should be:
       |Order # | Partner | Created | Key | Machine | Data Shuttle Device ID | Phase | Status | % Complete | GB Transferred | Seed Size | Start | Elapsed |
 
   @TC.12199 @bus @data_shuttle @status @device_status
   Scenario: 12199 Verify clicking Seed Error
     When I navigate to Data Shuttle Status section from bus admin console page
+    And I view data shuttle seed error status table
     Then Data shuttle device seed error status table header should be:
       |Order # | Partner | Created | Key | Machine | Data Shuttle Device ID | Phase | Status | % Complete | GB Transferred | Seed Size | Start | Elapsed |
 
   @TC.12200 @bus @data_shuttle @status @device_status
   Scenario: 12200 Verify clicking Loading
     When I navigate to Data Shuttle Status section from bus admin console page
+    And I view data shuttle loading status table
     Then Data shuttle device loading status table header should be:
       |Order # | Partner | Created | Key | Machine | Data Shuttle Device ID | Phase | Status | % Complete | GB Transferred | Seed Size | Start | Elapsed |
 
   @TC.12201 @bus @data_shuttle @status @device_status
   Scenario: 12201 Verify clicking Load Complete
     When I navigate to Data Shuttle Status section from bus admin console page
+    And I view data shuttle load complete status table
     Then Data shuttle device load complete status table header should be:
       |Order # | Partner | Created | Key | Machine | Data Shuttle Device ID | Phase | Status | % Complete | GB Transferred | Seed Size | Start | Elapsed |
 
   @TC.12203 @bus @data_shuttle @status @device_status
   Scenario: 12203 Verify clicking Load Error
     When I navigate to Data Shuttle Status section from bus admin console page
+    And I view data shuttle load error status table
     Then Data shuttle device load error status table header should be:
       |Order # | Partner | Created | Key | Machine | Data Shuttle Device ID | Phase | Status | % Complete | GB Transferred | Seed Size | Start | Elapsed |
 
   @TC.12202 @bus @data_shuttle @status @device_status
   Scenario: 12202 Verify clicking Cancelled
     When I navigate to Data Shuttle Status section from bus admin console page
+    And I view data shuttle cancelled status table
     Then Data shuttle device cancelled status table header should be:
       | Order # | Partner | Created | Key | Machine | Data Shuttle Device ID | Phase | Status | % Complete | GB Transferred | Seed Size | Start | Elapsed | Cancelled |
 

@@ -98,8 +98,12 @@ Then /^(.+) client configuration should be (.+)$/ do |type, config_value|
   end
 end
 
-Then /^The key appears marked as a data shuttle order$/ do
-  @bus_site.admin_console_page.user_group_details_section.data_shuttle_keys_hashes[0]['Product Key'].should == @order.license_key[0]+ " *"
+Then /^The key appears( not)? marked as a data shuttle order$/ do |t|
+  if t.nil?
+    @bus_site.admin_console_page.user_group_details_section.data_shuttle_keys_hashes[0]['Product Key'].should == @order.license_key[0]+ " *"
+  else
+    @bus_site.admin_console_page.user_group_details_section.data_shuttle_keys_hashes[0]['Product Key'].should == @order.license_key[0]
+  end
 end
 
 When /^the (.+) table details under user group details should be:$/ do |match, table|
@@ -154,4 +158,12 @@ end
 
 Then /I change legacy user group (desktop|server) default storage to (.+) GB$/ do |type,storage|
   @bus_site.admin_console_page.user_group_details_section.change_legacy_user_group_default_storage(type,storage)
+end
+
+Then /^there (is|is not) data shuttle text in the user group keys section$/ do |type|
+  if type == 'is'
+    @bus_site.admin_console_page.user_group_details_section.data_shuttle_text_visible?.should == true
+  else
+    @bus_site.admin_console_page.user_group_details_section.data_shuttle_text_visible?.should == false
+  end
 end

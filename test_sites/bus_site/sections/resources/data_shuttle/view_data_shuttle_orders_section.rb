@@ -7,6 +7,9 @@ module Bus
     element(:search_order_tb, id: "seed_device_order_search")
     element(:search_order_btn, css: "div#resource-view_seed_device_orders-content input[value=Submit]")
     element(:order_results_table, css: "div#resource-view_seed_device_orders-content table.table-view")
+    elements(:order_view_info_ps, xpath: "//div[contains(@id,'resource-show_data_shuttle_order')]/div[2]/p")
+    element(:data_center_p, xpath: "//div[contains(@id,'resource-show_data_shuttle_order')]/div[2]/h3")
+    element(:shipping_tracking_table, xpath: "//div[contains(@id,'resource-show_data_shuttle_order')]/table[@class='mini-table']")
 
     # Public: Search data shuttle order
     #
@@ -44,6 +47,20 @@ module Bus
 
     def order_results_table_rows
       order_results_table.rows_text
+    end
+
+    def get_order_info
+      wait_until_bus_section_load
+      order_info = Hash.new
+      all_info_array = (order_view_info_ps[0].text+"  "+order_view_info_ps[1].text+"  "+data_center_p.text).split("  ")
+      all_info_array.each_index do |n|
+        order_info[all_info_array[n].split(":")[0]] = all_info_array[n].gsub(" ","").split(":")[1]
+      end
+      order_info
+    end
+
+    def get_shipping_tracking_table_hashes
+      shipping_tracking_table.hashes
     end
 
   end

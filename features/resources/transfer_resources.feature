@@ -73,6 +73,54 @@ Feature: Transfer Resources
     And I stop masquerading as sub partner
     And I search and delete partner account by TC.13085_partner
 
+  @TC.12819 @bus @partners_setting @tasks_p2
+  Scenario: 12819 Additional quota purchased through data shuttle order appears under transfer resources
+    When I add a new OEM partner:
+      | Company Name         | Root role         | Company Type     |
+      | TC.12819_oem_partner | OEM Partner Admin | Service Provider |
+    Then New partner should be created
+    Then I stop masquerading as sub partner
+    Then I stop masquerading as sub partner
+    And I search partner by newly created subpartner company name
+    And I view partner details by newly created subpartner company name
+    When I add partner settings
+      | Name                    | Value | Locked |
+      | enforce_email_key_match | t     | false  |
+    When I set product name for the partner
+    Then I navigate to old window
+    When I act as newly created subpartner account
+    And I navigate to Purchase Resources section from bus admin console page
+    And I purchase resources:
+      | desktop license | desktop quota | server license | server quota |
+      | 2               | 20            | 2              | 20           |
+    Then Resources should be purchased
+    And I add new itemized user(s):
+      | name     | email                |
+      | oem user | tc12819test@mozy.com |
+    And new itemized user should be created
+    Then I search user by:
+      | name     |
+      | oem user |
+    Then I view user details by oem user
+    Then I update the user password to reset password
+    Then I navigate to Assign Keys section from bus admin console page
+    Then I assign Desktop key to user tc12819test@mozy.com on (default user group)
+    Then I use key activation to activate devices
+      | email                | machine_name  |
+      | tc12819test@mozy.com | machine_12819 |
+    Then Activate key response should be OK
+    And I stop masquerading as sub partner
+    And I stop masquerading
+    When I order data shuttle for newly created partner company name
+      | address 1     | city         | state | zip    | country         | phone        | power adapter   | key from  | quota |
+      | 151 S Morgan  | Shelbyville  | IL    | 62565  | United States   | 3127584030   | Data Shuttle US | available | 10    |
+    Then Data shuttle order should be created
+    And I act as newly created subpartner account
+    And I navigate to Transfer Resources section from bus admin console page
+    Then available key and storage of group (default user group) from source user group should be (3 keys 30 GB)
+    Then available key and storage of group (default user group) from target user group should be (3 keys 30 GB)
+    And I search and delete partner account by newly created subpartner company name
+
 
 
 
