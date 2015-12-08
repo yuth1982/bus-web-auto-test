@@ -24,12 +24,55 @@ When /^I build a new report:$/ do |report_table|
       @report.start_date = attributes["start date"] unless attributes["start date"].nil?
       @report.is_active = (attributes["is active"] || "yes").eql?("yes")
     else
-      raise "#{attributes["type"]} report is not implemented"
+      @report = Bus::DataObj::ScheduledReport.new
+      @report.type = attributes["type"]
+      @report.name = attributes["name"] || "scheduled report"
+      @report.frequency = attributes["frequency"] || "Daily"
+      @report.start_date = attributes["start date"] unless attributes["start date"].nil?
+      @report.is_active = (attributes["is active"] || "yes").eql?("yes")
+      @report.threshold = attributes["threshold"]
   end
-  @report.recipients = attributes["recipients"] unless attributes["recipients"].nil?
+  if !attributes["recipients"].nil?
+    @report.recipients = attributes["recipients"]
+    @report.recipients.replace ERB.new(@report.recipients).result(binding)
+  elsif !attributes["multiple recipients"].nil?
+    # data should be like <%=create_user_email%>; <%=create_user_email%>
+    @report.recipients = ""
+    report_array = attributes["multiple recipients"].split("\;")
+    report_array.each { |value|
+      value = value.strip
+      value.replace ERB.new(value).result(binding)
+      @report.recipients = @report.recipients + value + ";"
+    }
+    @report.recipients = @report.recipients
+  end
+  @recipients_array = @report.recipients.split("\;") unless @report.recipients.nil?
   @report.subject = attributes["subject"] || ""
   @report.email_message = attributes["email message"] || ""
   @bus_site.admin_console_page.add_report_section.build_report(@report)
+end
+
+When /^I add more recipients to report (.+)$/ do |report_name, recipients_table|
+  attributes = recipients_table.hashes.first
+  recipients_str = ""
+  report_array = attributes["more recipients"].split("\;")
+  report_array.each { |value|
+    value = value.strip
+    value.replace ERB.new(value).result(binding)
+    recipients_str = recipients_str + value + ";"
+  }
+  recipients_str = recipients_str + @partner.admin_info.email
+  @recipients_array = recipients_str.split("\;")
+  Log.debug @recipients_array
+  @report.recipients = recipients_str
+  @bus_site.admin_console_page.scheduled_reports_section.wait_until_bus_section_load
+  @bus_site.admin_console_page.scheduled_reports_section.click_report(report_name)
+  @bus_site.admin_console_page.edit_report_section.set_email_recipients(recipients_str, true)
+end
+
+And /^I run report (.+)$/ do |report_name|
+  @bus_site.admin_console_page.scheduled_reports_section.wait_until_bus_section_load
+  @bus_site.admin_console_page.scheduled_reports_section.run_report(report_name)
 end
 
 Then /^I should see available reports are:$/ do |link_desc_link|
@@ -59,26 +102,34 @@ Then /^Report created successful message should be (.+)$/ do |message|
   @bus_site.admin_console_page.add_report_section.messages.should == message
 end
 
+Then /^Report updated successful message should be (.+)$/ do |message|
+  @bus_site.admin_console_page.edit_report_section.messages.should == message
+end
+
 When /^I delete (.+) scheduled report$/ do |report_name|
-  @bus_site.admin_console_page.add_report_section.delete_report(report_name)
+  @bus_site.admin_console_page.edit_report_section.delete_report(report_name)
 end
 
 Then /^I should see (.+) in scheduled reports list$/ do |message|
+  @bus_site.admin_console_page.scheduled_reports_section.wait_until_bus_section_load
   @bus_site.admin_console_page.scheduled_reports_section.reports_table_text.should include(message)
 end
 
 When /^I download (.+) scheduled report$/ do |report_name|
+  @bus_site.admin_console_page.scheduled_reports_section.wait_until_bus_section_load
   @bus_site.admin_console_page.scheduled_reports_section.download_report(report_name)
 end
 
 When /^I download (.+) quick report$/ do |report_name|
-  @bus_site.admin_console_page.click_link(CONFIGS['bus']['menu']['quick_reports'])
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['quick_reports'])
   @bus_site.admin_console_page.quick_reports_section.download_report(report_name)
 end
 
 Then /^Scheduled (.+) report csv file( which attached to email)* details should be:$/ do |report_type, type, report_table|
   report_table.map_column!('Column A') do |value|
-    value.gsub(/@name/,@partner.company_info.name)
+    value.gsub!(/@name/,@partner.company_info.name) unless @partner.nil?
+    value.gsub!(/@today/,DateTime.now.strftime("%m/%d/%Y")) if value == '@today'
+    value
   end
   if OS.windows?
     report_table.rows.each do |row|
@@ -95,15 +146,63 @@ end
 
 Then /^Quick report (.+) csv file details should be:$/ do |report_type, report_table|
   report_table.map_column!('Column A') do |value|
-    value.gsub(/@name/,@partner.company_info.name).gsub(/@today/,DateTime.now.strftime("%m/%d/%y"))
+    value.gsub(/@name/,@partner.company_info.name).gsub(/@today/,DateTime.now.strftime("%m/%d/%y")) if value == '@name'
+    value
   end
 
   report_table.map_column!('Column C') do |value|
-    value.gsub(/@XXXX/, @partner.credit_card.number[12..-1])
+    value.gsub(/@XXXX/, @partner.credit_card.number[12..-1]) unless @partner.nil?
+    value
   end
   actual = @bus_site.admin_console_page.quick_reports_section.read_quick_report(report_type)
   actual.size.should == report_table.rows.size
-  actual.each { |row| report_table.rows.should include row }
+  actual.each { |row| report_table.rows.should include row}
+end
+
+Then /^(Quick|Scheduled) report (.+) csv file details should include$/ do |type, report_type, report_table|
+  attributes = report_table.hashes
+  attributes.each { |v|
+    v.each{ |_,value|
+      value.replace ERB.new(value).result(binding) unless value.match(/^<%=@.+%>$/).nil?
+    }
+  }
+  if type == 'Scheduled'
+    actual = @bus_site.admin_console_page.scheduled_reports_section.read_scheduled_report(report_type)
+  else
+    actual = @bus_site.admin_console_page.quick_reports_section.read_quick_report(report_type)
+  end
+  report_table.rows.each { |row|
+    (actual.include?(row)).should == true
+  }
+end
+
+Then /^(Quick|Scheduled) report (.+) csv file header should be:$/ do |type, report_type, report_table|
+  if type == 'Quick'
+    actual = @bus_site.admin_console_page.quick_reports_section.read_quick_report(report_type)
+  else
+    actual = @bus_site.admin_console_page.scheduled_reports_section.read_scheduled_report(report_type)
+  end
+  report_table.rows[0].should == actual[0]
+end
+
+And /^Quick report (.+) csv file column (.+) value should (be|match) (.+)$/ do |report_type, column, type, value|
+  expected_value = value
+  expected_value = '' if value == 'empty'
+  column_index = column.ord - 65
+  actual = @bus_site.admin_console_page.quick_reports_section.read_quick_report(report_type)
+  actual.each_index { |index|
+    if index > 0
+      if type == 'be'
+        actual[index][column_index].should == expected_value
+      elsif type == 'match'
+        if value == "Shared or Limited: xx"
+          (actual[index][column_index] == "Shared" || (!actual[index][column_index].match(/^Limited: \d+$/).nil?)).should == true
+        elsif value == "number"
+          (actual[index][column_index].match(/^\d+\.*0*$/).nil?).should == false
+        end
+      end
+    end
+  }
 end
 
 # a report will return multiple lines of records, just need to check one record of specified columns
@@ -142,4 +241,26 @@ end
 
 And /^I clear downloads folder (.+) file$/ do |file_name|
   FileHelper.clean_up_csv(file_name)
+end
+
+When /^I close add report section$/ do
+  @bus_site.admin_console_page.add_report_section.close_bus_section
+end
+
+And /^(.+) scheduled report (Next Run|History) value should be (.+)$/ do |report_name, column, value|
+  @bus_site.admin_console_page.scheduled_reports_section.wait_until_bus_section_load
+  if column == 'Next Run'
+    actual = @bus_site.admin_console_page.scheduled_reports_section.get_next_run(report_name)
+  elsif  column == 'History'
+    actual = @bus_site.admin_console_page.scheduled_reports_section.get_history(report_name)
+  end
+  if value == 'tomorrow'
+    value = Chronic.parse(value).strftime('%a %b %d, %Y')
+  end
+  actual.should == value
+end
+
+When /^I inactive (.+) scheduled report$/ do |report_name|
+  @bus_site.admin_console_page.scheduled_reports_section.click_report(report_name)
+  @bus_site.admin_console_page.edit_report_section.inactive_report
 end

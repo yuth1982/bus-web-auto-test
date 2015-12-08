@@ -85,7 +85,16 @@ module Email
 
             to_match = from_match = content_match = subject_match = true
 
-            to_match = false if query.include?('to') && !(email.to_recipients[0].email_address.eql? query[query.index('to')+1])
+            if query.include?('to')
+              flag = false
+              email.to_recipients.each {|recipient|
+                if recipient.email_address.eql? query[query.index('to')+1]
+                   flag = true
+                   break
+                end
+              }
+            to_match = flag
+            end
             next if !to_match
 
             from_match = false if query.include?('from') && !(email.from.email_address.eql? query[query.index('from')+1])
