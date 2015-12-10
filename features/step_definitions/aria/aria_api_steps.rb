@@ -226,6 +226,17 @@ When /^API\* I get aria plan for (.+)$/ do |aria_id|
   @plan_array
 end
 
+When /^API\* I get supplemental field (.+) for (.+)$/ do |field_name, aria_id|
+  # values would like: {"error_code"=>0, "error_msg"=>"OK", "supp_field_values"=>["Mozy International Limited (Ireland)"],
+  # "acct_supp_field_values"=>[{"supp_field_value"=>"Mozy International Limited (Ireland)"}]}
+  return_value = AriaApi.get_supp_field_values({:acct_no=> aria_id.to_i,:field_name=>field_name})
+  @field_value = return_value['acct_supp_field_values'][0]['supp_field_value']
+end
+
+Then /^Supplemental field (.+) value should be (.+)$/ do |_,value|
+  @field_value.should == value
+end
+
 Then /^The aria plan should be$/ do |aria_plan|
   @plan_array.should == aria_plan.rows.flatten
 end
