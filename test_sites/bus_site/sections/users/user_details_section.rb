@@ -79,6 +79,7 @@ module Bus
     element(:new_password_tb, id: 'new_password')
     element(:new_password_confirm_tb, id: 'new_password_confirmation')
     element(:new_password_change_btn, css: "div[id^=user-pass-change] input[value='Save Changes']")
+    element(:temporary_password_check, id: 'is_temporary')
 
     # License Keys
     element(:send_keys_btn, xpath: '//div[starts-with(@id, "all-license-keys")]/descendant::input[starts-with(@id, "send_key")]')
@@ -512,13 +513,14 @@ module Bus
         :name => general_info_hash['Name:'][/^(.*)(change)$/, 1]}
     end
 
-    def edit_password(password)
+    def edit_password(password, is_temporary = false)
       if !new_password_tb.visible?
         change_user_password_link.click
         wait_until_bus_section_load
       end
       new_password_tb.type_text(password)
       new_password_confirm_tb.type_text(password)
+      temporary_password_check.uncheck unless is_temporary
       new_password_change_btn.click
       wait_until_bus_section_load
     end
