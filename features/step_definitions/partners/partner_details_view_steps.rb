@@ -56,7 +56,7 @@ When /^I search and delete partner account if it exists by (.+)/ do |account_nam
 end
 
 # When you are on partner details section, you are able to execute this steps
-When /^I delete (partner|subpartner) account(|default password)$/ do |status, password|
+When /^I delete (partner|subpartner) account(|default password|Hipaa password)$/ do |status, password|
   password = QA_ENV['bus_password'] if password == ''
   case status
     when "partner"
@@ -565,4 +565,15 @@ end
 
 And /^I click admin name (.+) in partner details section$/ do |admin_name|
   @bus_site.admin_console_page.partner_details_section.click_admin_name(admin_name)
+end
+
+Then /^I will (not )?see fields (.+)$/ do |visible, fields|
+  array = fields.split("\,").map{|str|str.strip}
+  result = @bus_site.admin_console_page.partner_details_section.check_fields_visible(array)
+  result.each{|t| t.should == visible.nil?}
+end
+
+And /^field (Account Type|Sales Channel) can (not )?be changed/ do |_, editable|
+  @bus_site.admin_console_page.partner_details_section.check_account_type_change.should == editable.nil?
+  @bus_site.admin_console_page.partner_details_section.check_sales_channel_change.should == editable.nil?
 end

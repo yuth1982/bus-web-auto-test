@@ -974,6 +974,22 @@ module Bus
       end
     end
 
+    def check_fields_visible(array)
+      result = []
+      array.each{|field|
+        result << !(locate(:xpath, "//div[starts-with(@id,'partner-show')]//dl/dt[text()='#{field}']").nil?)
+      }
+      result
+    end
+
+    def check_account_type_change
+      !(locate(:xpath, "//a[contains(@onclick,'-acct-type-')][contains(text(),'change')]").nil?)
+    end
+
+    def check_sales_channel_change
+      !(locate(:xpath, "//a[contains(@onclick,'partner-display-sales-channel')][text()='(change)']").nil?)
+    end
+
     private
     def expanded?(element)
       element['class'] == 'icon-chevron-down'

@@ -8,9 +8,144 @@ Feature: add edit delete capabilities
   # Partner Capabilities
 
   ################################################################################
+  @TC.20692 @bus @admin @tasks_p2
+  Scenario: 20692:Enable edit and view partner details capability
+    When I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Type             | Parent |
+      | Mozy, Inc. admin | Root   |
+    And I add capabilities for the new role:
+      | Capabilities         |
+      | Edit Partner Details |
+      | View Partner Details |
+      | Partners: edit       |
+      | Partners: list/view  |
+      | Partners: delete     |
+    And I navigate to Add New Admin section from bus admin console page
+    When I add a new admin:
+      | Roles          |
+      | <%=@role.name%>|
+    And I view admin details by:
+      | email             |
+      | <%=@admin.email%> |
+    And I active admin in admin details Hipaa password
+    When I act as partner by:
+      | name                      | including sub-partners |
+      | MozyEnterprise (Fortress) | yes                    |
+    And I add a new sub partner:
+      | Company Name                 |
+      | TC.20692_me_fortress_partner |
+    Then New partner should be created
+    When I navigate to bus admin console login page
+    And I log in bus admin console with user name @admin.email and password Hipaa password
+    And I search partner by newly created subpartner company name
+    And I view partner details by newly created subpartner company name
+    Then I will see fields Account Type, Sales Origin, Sales Channel
+    And field Account Type can be changed
+    And field Sales Channel can be changed
+    When I change account type to Internal Test
+    Then account type should be changed to Internal Test successfully
+    And I change account type to Live
+    Then account type should be changed to Live successfully
+    And I change account type to Trial
+    Then account type should be changed to Trial successfully
+    And I change account type to Lifetime Free
+    Then account type should be changed to Lifetime Free successfully
+    And I change sales channel to Inside Sales
+    Then sales channel should be changed to Inside Sales successfully
+    And I change sales channel to Velocity
+    Then sales channel should be changed to Velocity successfully
+    And I change sales channel to Reseller
+    Then sales channel should be changed to Reseller successfully
+    And I delete partner accountHipaa password
+    And I log out bus admin console
+    And I navigate to bus admin console login page
+    And I log in bus admin console as administrator
+    And I delete admin by:
+      | email             |
+      | <%=@admin.email%> |
 
+  @TC.20693 @bus @admin @tasks_p2
+  Scenario: 20693:Enable edit partner details capability only
+    When I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Type             | Parent |
+      | Mozy, Inc. admin | Root   |
+    And I add capabilities for the new role:
+      | Capabilities         |
+      | Edit Partner Details |
+      | Partners: edit       |
+      | Partners: list/view  |
+      | Partners: delete     |
+    And I navigate to Add New Admin section from bus admin console page
+    When I add a new admin:
+      | Roles          |
+      | <%=@role.name%>|
+    And I view admin details by:
+      | email             |
+      | <%=@admin.email%> |
+    And I active admin in admin details Hipaa password
+    When I act as partner by:
+      | name                      | including sub-partners |
+      | MozyEnterprise (Fortress) | yes                    |
+    And I add a new sub partner:
+      | Company Name                 |
+      | TC.20693_me_fortress_partner |
+    Then New partner should be created
+    When I navigate to bus admin console login page
+    And I log in bus admin console with user name @admin.email and password Hipaa password
+    And I search partner by newly created subpartner company name
+    And I view partner details by newly created subpartner company name
+    Then I will not see fields Account Type, Sales Origin, Sales Channel
+    And I delete partner accountHipaa password
+    And I log out bus admin console
+    And I navigate to bus admin console login page
+    And I log in bus admin console as administrator
+    And I delete admin by:
+      | email             |
+      | <%=@admin.email%> |
 
-
+  @TC.20694 @bus @admin @tasks_p2
+  Scenario: 20694: Enable view partner details capability only
+    When I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Type             | Parent |
+      | Mozy, Inc. admin | Root   |
+    And I add capabilities for the new role:
+      | Capabilities         |
+      | View Partner Details |
+      | Partners: edit       |
+      | Partners: list/view  |
+      | Partners: delete     |
+    And I navigate to Add New Admin section from bus admin console page
+    When I add a new admin:
+      | Roles          |
+      | <%=@role.name%>|
+    And I view admin details by:
+      | email             |
+      | <%=@admin.email%> |
+    And I active admin in admin details Hipaa password
+    When I act as partner by:
+      | name                      | including sub-partners |
+      | MozyEnterprise (Fortress) | yes                    |
+    And I add a new sub partner:
+      | Company Name                 |
+      | TC.20694_me_fortress_partner |
+    Then New partner should be created
+    When I navigate to bus admin console login page
+    And I log in bus admin console with user name @admin.email and password Hipaa password
+    And I search partner by newly created subpartner company name
+    And I view partner details by newly created subpartner company name
+    Then I will see fields Account Type, Sales Origin, Sales Channel
+    And field Account Type can not be changed
+    And field Sales Channel can not be changed
+    And I delete partner accountHipaa password
+    And I log out bus admin console
+    And I navigate to bus admin console login page
+    And I log in bus admin console as administrator
+    And I delete admin by:
+      | email             |
+      | <%=@admin.email%> |
 
   ###############################################################################
 
@@ -30,28 +165,6 @@ Feature: add edit delete capabilities
       | External ID  | Partner       | Created | Type    | Root Admin   | Users | Keys      |
       | @external_id | @company_name | today   | MozyPro | @admin_email | 0     | Unlimited |
     And I search and delete partner account by newly created partner company name
-
-# Dont support admin external ID search, will remove it
-#  @TC.1175 @bus @admin @tasks_p2
-#  Scenario: 1175 Do a search for External IDs in the admin search field
-#    And I navigate to Add New Admin section from bus admin console page
-#    And I add a new admin:
-#      | Roles |
-#      | Sales |
-#    Then Add New Admin success message should be displayed
-#    And I view admin details by:
-#      | email             |
-#      | <%=@admin.email%> |
-#    And I add admin external id
-#    And I search admin by:
-#      | keywords               |
-#      | <%=@admin_external_id%> |
-#    Then Admin information in List Admins section should be correct
-#      | Name             | Email             | Role  |
-#      | <%=@admin.name%> | <%=@admin.email%> | Sales |
-#    And I delete admin by:
-#      | email             |
-#      | <%=@admin.email%> |
 
   @TC.1177 @bus @admin @tasks_p2
   Scenario: 1177 Do a search for External IDs in the user search field
