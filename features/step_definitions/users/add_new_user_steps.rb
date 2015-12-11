@@ -19,6 +19,22 @@ When /^I add new user\(s\):$/ do |user_table|
   @bus_site.admin_console_page.add_new_user_section.add_new_users(@new_users)
 end
 
+When /^I add new user with error message (.+) unsuccessfully:$/ do |message, user_table|
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_user'])
+  @new_users =[]
+  @users =[] if @users.nil?
+  user_table.hashes.each do |hash|
+    hash['email'] = @existing_user_email if hash['email'] == '@existing_user_email'
+    hash['email'] = @existing_admin_email if hash['email'] == '@existing_admin_email'
+    user = Bus::DataObj::User.new
+    hash_to_object(hash, user)
+    @new_users << user
+    @users << user
+  end
+  msg = @bus_site.admin_console_page.add_new_user_section.add_new_users_unsuccessfully(@new_users)
+    msg.should == message
+end
+
 # If you are create one user: You can specify user name and email
 # If you are create more than on users: User names and emails are random
 #
@@ -172,4 +188,8 @@ end
 
 Then /^I check user group (.+) with (.+) storage limit tooltips is (.+)$/ do |group,type,tooltips|
   @bus_site.admin_console_page.add_new_user_section.get_tooltips(group,type).should ==tooltips
+end
+
+Then /^I check (.+) help message under add new user section should be:$/ do |type,msg|
+  @bus_site.admin_console_page.add_new_user_section.get_help_msg(type).gsub("\n", " ").should == msg
 end

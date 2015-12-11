@@ -45,7 +45,7 @@ module Bus
     elements(:current_page_keys_td, xpath: "//div[starts-with(@id,'user_groups-show')]//li[2]//tbody//td[1]")
 
     #tab tables
-    element(:users_table, xpath: "//th[text()='External ID']/../../..")
+    element(:users_table, xpath: "//th/a[text()='User']/../../../..")
     element(:keys_table, xpath: "//th[text()='Product Key']/../../..")
     element(:admins_table, xpath: "//div[starts-with(@id,'user_groups-show')]/ul[2]/li[3]/div/table")
 

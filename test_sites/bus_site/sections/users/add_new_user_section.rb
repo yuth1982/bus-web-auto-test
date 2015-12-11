@@ -29,6 +29,13 @@ module Bus
     element(:server_devices_tb, id: 'Server_device')
 
     element(:tooltips_span, xpath: "//span[@id='tooltip_for_new_user_storage_max']")
+
+    element(:user_group_help_img, xpath: "//select[@id='user_user_group_id']/following-sibling::img")
+    element(:user_type_help_img, xpath: "//div[@class='div_row wrapper new_users_in_batch_step_2']//div[@class='div_col field_name section_title']/following-sibling::div/img")
+    element(:enter_user_help_img, xpath: "//div[@class='div_row wrapper new_users_in_batch_step_3']//div[@class='div_col field_name section_title']/following-sibling::div/img")
+    element(:send_email_help_img, xpath: "//div[@class='div_row wrapper new_users_in_batch_step_3']//div[@class='div_col field_name']/following-sibling::div/img")
+    element(:region_override_help_img, xpath: "//select[@id='install_region_override']/following-sibling::img")
+
     # Public: Add new users
     #
     # @users     [Object] users
@@ -71,6 +78,47 @@ module Bus
       submit_btn.click
       wait_until_bus_section_load
     end
+
+    def add_new_users_unsuccessfully(users)
+      user = users.first
+      wait_until_bus_section_load
+      user_group_select.select(user.user_group) unless user.user_group.nil?
+      storage_type_select.select(user.storage_type) unless user.storage_type.nil?
+      storage_max_tb.type_text(user.storage_limit) unless user.storage_limit.nil?
+      device_tb.type_text(user.devices) unless user.devices.nil?
+
+      unless user.enable_stash.nil?
+        if user.enable_stash.downcase.eql?('yes')
+          enable_stash_cb.check
+        else
+          enable_stash_cb.uncheck
+        end
+      end
+
+      users.each_index do |index|
+        Log.debug "##########adding the #{index} user"
+        find(:id, "user#{index+1}_name").type_text(users[index].name)
+        find(:id, "user#{index+1}_username").type_text(users[index].email)
+        add_user_btn.click if index != users.length-1
+      end
+
+      unless user.send_email.nil?
+        if user.send_email.downcase.eql?('yes')
+          send_emails_cb.check
+        else
+          send_emails_cb.uncheck
+        end
+      end
+
+      submit_btn.click
+      page.driver.browser.switch_to.alert.text
+      alert = page.driver.browser.switch_to.alert
+      msg =alert.text
+      alert.accept
+      msg
+
+    end
+
 
     # Public: Success messages for add new user sections
     #
@@ -137,5 +185,21 @@ module Bus
       wait_until{tooltips_span.visible?}
       tooltips_span.text
     end
+
+    def get_help_msg(type)
+      case type
+        when 'user group'
+          user_group_help_img['data-tooltip']
+        when 'user type'
+          user_type_help_img['data-tooltip']
+        when 'enter user'
+          enter_user_help_img['data-tooltip']
+        when 'send email'
+          send_email_help_img['data-tooltip']
+        when 'region override'
+          region_override_help_img['data-tooltip']
+      end
+    end
+
   end
 end
