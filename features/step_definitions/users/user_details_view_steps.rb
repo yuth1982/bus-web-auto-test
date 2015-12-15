@@ -561,3 +561,8 @@ When /^I add user external id$/ do
   @user_external_id = "#{Time.now.strftime('%m%d-%H%M-%S')}"
   @bus_site.admin_console_page.user_details_section.change_user_external_id(@user_external_id)
 end
+
+Then /^I update (.+) last backup time to 30 minutes ago$/ do |machine_id|
+  machine_id.replace ERB.new(machine_id).result(binding)
+  DBHelper.update_machines_last_update_time(machine_id)
+end
