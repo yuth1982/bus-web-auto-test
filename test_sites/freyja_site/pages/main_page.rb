@@ -5,6 +5,9 @@ module Freyja
     element(:backupDevice, css: "a[onclick*=ACCESS_CONTROLLER_BACKUP]")
     element(:syncDevice, css: "a[onclick*=ACCESS_CONTROLLER_SYNC]")
     element(:action_panel_toggle, css: 'div.panel-toggle.btn-panel-toggle')
+    element(:options_menu, css: 'span.text.username')
+    element(:latest_version_radio, css: 'span.radio.radio-off')
+
     element(:options_menu, xpath: "//div[@id='menu-user']")
     element(:latest_version_radio, css: 'span.radio.radio-off')
 
@@ -12,6 +15,163 @@ module Freyja
     element(:user_password_set_text, xpath: "//input[@id='password']")
     element(:user_password_set_again_text, xpath: "//input[@id='password_confirmation']")
     element(:user_continue_activate_btn, xpath: "//div[text()='Activate account']")
+
+    # Public: enter into one backup device
+    #
+    # Example
+    #   @freyja_site.main_page.choose_one_backup_device(machineID)
+    #
+    # Returns nothing
+    def choose_one_backup_device(machineID)
+      find(:xpath, "//*[starts-with(@id,'#{machineID}:Folder:')][1]/td[1]/div/span").click
+    end
+
+    # Public: choose one device tab
+    #
+    # Example
+    #   @freyja_site.main_page.chooseDevice(deviceTab)
+    #
+    # Returns nothing
+    def chooseDevice(deviceTab)
+      case deviceTab
+        when 'Devices'
+          wait_until do
+            backupDevice.visible?
+          end
+          backupDevice.click
+        when 'Synced'
+          wait_until do
+            syncDevice.visible?
+          end
+          syncDevice.click
+      end
+    end
+
+    # Public: choose one file in sync
+    #
+    # Example
+    #   @freyja_site.main_page.Drillin_sync_file
+    #
+    # Returns nothing
+    def Drillin_sync_file(machineID, filePath)
+      pathArray = filePath.to_s.split('/')
+      pathLength = 0
+      folderPath = ""
+      (pathArray.size-1).times do
+        if pathLength == 0
+          folderPath = folderPath + pathArray[pathLength]
+        else
+          folderPath = folderPath + '/' + pathArray[pathLength]
+        end
+        find(:xpath, "//tr[@id='#{machineID}:Folder:/sync/1/#{folderPath}']/td[2]/div/span[2]/span").click
+        sleep 2
+        pathLength += 1
+      end
+      find(:xpath, "//tr[@id='#{machineID}:File:/sync/1/#{filePath}']/td[1]/div/span").click
+      sleep 2
+    end
+
+    # Public: choose one folder in sync
+    #
+    # Example
+    #   @freyja_site.main_page.Drillin_sync_folder
+    #
+    # Returns nothing
+    def Drillin_sync_folder(machineID, folderPath)
+      pathArray = folderPath.to_s.split('/')
+      pathLength = 0
+      folderPathList = ""
+      (pathArray.size-1).times do
+        if pathLength == 0
+          folderPathList = folderPathList + pathArray[pathLength]
+        else
+          folderPathList = folderPathList + '/' + pathArray[pathLength]
+        end
+        find(:xpath, "//tr[@id='#{machineID}:Folder:/sync/1/#{folderPathList}']/td[2]/div/span[2]/span").click
+        sleep 2
+        pathLength += 1
+      end
+      find(:xpath, "//tr[@id='#{machineID}:Folder:/sync/1/#{folderPath}']/td/div/span").click
+      sleep 2
+    end
+
+    # Public: choose one file in backup
+    #
+    # Example
+    #   @freyja_site.main_page.Drillin_win_backup_file
+    #
+    # Returns nothing
+    def Drillin_win_backup_file(machineID, filePath)
+      pathArray = filePath.to_s.split('\\')
+      pathLength = 0
+      folderPath = ""
+      find(:xpath, "//tr[@id='#{machineID}:Folder:']/td[2]/div/span[2]/span").click
+      (pathArray.size-1).times do
+        if  pathLength == 0
+          folderPath = folderPath + pathArray[pathLength]
+        else
+          folderPath = folderPath + '\\' + pathArray[pathLength]
+        end
+        find(:xpath, "//tr[@id='#{machineID}:Folder:#{folderPath}']/td[2]/div/span[2]/span").click
+        sleep 2
+        pathLength += 1
+      end
+      find(:xpath, "//tr[@id='#{machineID}:File:#{filePath}']/td/div/span").click
+      sleep 2
+    end
+
+    # Public: choose one folder in backup
+    #
+    # Example
+    #   @freyja_site.main_page.Drillin_win_backup_folder
+    #
+    # Returns nothing
+    def Drillin_win_backup_folder(machineID, folderPath)
+      pathArray = folderPath.to_s.split('\\')
+      pathLength = 0
+      folderPathList = ""
+      find(:xpath, "//tr[@id='#{machineID}:Folder:']/td[2]/div/span[2]/span").click
+      (pathArray.size-1).times do
+        if  pathLength == 0
+          folderPathList = folderPathList + pathArray[pathLength]
+        else
+          folderPathList = folderPathList + '\\' + pathArray[pathLength]
+        end
+        find(:xpath, "//tr[@id='#{machineID}:Folder:#{folderPathList}']/td[2]/div/span[2]/span").click
+        sleep 2
+        pathLength += 1
+      end
+      find(:xpath, "//tr[@id='#{machineID}:Folder:#{folderPath}']/td/div/span").click
+      sleep 2
+    end
+
+    def open_actions_panel
+      action_panel_toggle.click
+      sleep 1
+    end
+
+    def select_options_panel
+      options_menu.click
+      sleep 1
+    end
+
+    def select_uploaded_file(machine_id, file_name)
+      find(:xpath, "//tr[@id='#{machine_id}:File:/sync/1/#{file_name}']/td/div/span").click
+    end
+
+    def select_latest_version
+      latest_version_radio.click
+    end
+
+    def check_file_exist(machine_id, file_name)
+      #find(:xpath, "//tr[@id='#{machine_id}:File:/sync/1/#{file_name}']/td/div/span").visible?
+      #puts page.has_xpath?("//tr[@id='#{machine_id}:File:/sync/1/#{file_name}']/td/div/span")
+      false
+    end
+
+    def select_backup_device(machineID)
+      find(:xpath, "//tr[@id='#{machineID}:Folder:']/td[2]/div/span[2]/span").click
+    end
 
     def select_options_panel
       wait_until{options_menu.visible?}

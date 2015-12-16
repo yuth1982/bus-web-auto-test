@@ -1,9 +1,44 @@
-== Description
+== Description ==
 
 Welcome to bus-web-auto-test.
 
 This project is intended to house the test automation for the BUS, Phoenix and Freyja projects.
 
+== Installation ==
+
+For Mac automation installation, please refer to https://redmine.mozycorp.com/projects/chinaqa/wiki/Setup_Automation_Development_Environment_-_Mac
+
+For Windows automation installation, please refer to https://redmine.mozycorp.com/projects/chinaqa/wiki/Setup_Automation_Development_Environment_-_Windows
+
+== Configuration ==
+
+If run automation on QA13 environment, please add the following in hosts file
+    10.29.73.198 secure.mozy.com secure.mozy.ie secure.mozy.fr secure.mozy.co.uk secure.mozy.de
+    10.29.73.197 www.mozypro.com secure.mozypro.com busmaster01.qa13.mozyops.com
+    10.29.73.241 freyja05.qa13.mozyops.com
+    10.29.73.208 tds02.qa13.mozyops.com
+    10.29.73.236 tds05.qa13.mozyops.com
+    10.29.73.203 auth01.qa13.mozyops.com
+    10.29.73.252 cas01.qa13.mozyops.com
+
+== Preparation ==
+
+    1. Put the file named test_for_upload.pptx in root folder. This file is ready for upload to Sync device
+    2. Edit /System/Library/Frameworks/Ruby.framework/Versions/2.0/usr/lib/ruby/2.0.0/net/protocol.rb
+       Increase @read_timeout to 600
+
+== Execution ==
+
+    1. Checkout Freyja automation code:  git clone -b freyja ssh://christinef@gerrit.dechocorp.com:29418/bus-web-auto-test.git
+       Switch to branch freyja: git checkout freyja
+    2. Navigate to bus-web-auto-test folder, and run Freyja automation test cases: cucumber -t <Tag>.
+       For example, cucumber -t @freyja: run all of Freyja automation test cases
+                    cucumber -t @freyja_smoke: run all of Freyja smoke automation test cases
+                    cucumber -t @ent: run all of Enterprise partner automation test cases
+                    cucumber -t @home_archive_restore_one_file: run MozyHome user do archive restore
+
+
+=======
 == Documentation
 
 See https://redmine.dechocorp.com/projects/busqa/wiki for project documentation.
@@ -71,3 +106,4 @@ In IRC find commands (bot currently named jarvis, in #bus)
 
 Some of the bot's methods can be testing on the command line using:
 $ ruby /ircbot/executer.rb
+

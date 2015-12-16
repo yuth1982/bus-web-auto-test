@@ -1,4 +1,3 @@
-
 module FileHelper
 
   # Public: Default download folder for files
@@ -117,7 +116,6 @@ module FileHelper
     File.delete(file) if File.file?(file)
   end
 
-
   def delete_file(file_name, file_path = default_download_path)
     file = File.join(file_path, file_name)
     File.delete(file) if File.file?(file)
@@ -140,3 +138,4 @@ module FileHelper
   end
 
 end
+

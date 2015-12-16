@@ -177,6 +177,50 @@ When /^I will( not)* see the (.+) link from navigation links$/ do |t, link|
   end
 end
 
+
+When /^I input content color (hex|name) for header and footer$/ do |color_format|
+  case color_format
+    when "hex"
+      @bus_site.admin_console_page.branding_section.cb_iframe.css_header_color_hex
+    when "name"
+      @bus_site.admin_console_page.branding_section.cb_iframe.css_header_color_name
+  end
+end
+
+When /^I choose (.+) tab$/ do  |tab_name|
+   case tab_name
+     when "Footer"
+       @bus_site.admin_console_page.branding_section.cb_iframe.choose_footer_tab
+     when "Images/Icons"
+       @bus_site.admin_console_page.branding_section.cb_iframe.choose_image_tab
+   end
+end
+
+When /^I input Footer$/ do
+  @bus_site.admin_console_page.branding_section.cb_iframe.input_footer
+end
+
+And /^I input sub-partner Footer$/ do
+  @bus_site.admin_console_page.branding_section.cb_iframe.input_sub_footer
+end
+
+When /^I remove content color$/ do
+  @bus_site.admin_console_page.branding_section.cb_iframe.remove_header_color
+end
+
+And /^I save changes$/ do
+  @bus_site.admin_console_page.branding_section.cb_iframe.click_save_changes
+end
+
+And /^I remove footer$/ do
+  @bus_site.admin_console_page.branding_section.cb_iframe.remove_footer
+end
+
+And /^I upload the logo$/ do
+  @bus_site.admin_console_page.branding_section.cb_iframe.attach_image_file
+  @bus_site.admin_console_page.branding_section.cb_iframe.click_upload_files
+end
+
 Given /^I verify Skeletor by visiting url$/ do
   @bus_site.admin_console_page.visit_skeletor_url
 end
@@ -232,3 +276,4 @@ end
 Then /^Navigation item (.+) should be (un)?available$/ do |link, t|
   @bus_site.admin_console_page.has_navigation?(link).should == t.nil?
 end
+

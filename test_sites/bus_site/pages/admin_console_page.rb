@@ -91,6 +91,11 @@ module Bus
     section(:upgrade_rules_section, UpgradeRulesSection, id: 'version-rules')
 
 
+    # Branding
+    section(:branding_section, BrandingSection, xpath: "//li[@id='nav-cat-site_branding']/ul/li[4]/a")
+    #section(:footer_branding_section, BrandingSection, xpath: "//*[@id='site_branding-webrestore_site-tabs']/ul[1]/li[3]")
+    #iframe(:css_iframe, CSSIframe, :id, 'site_branding-webrestore_site-content')
+
     # support section
     section(:contact_section, ContactSection, xpath: "//a[text()='Contact']")
 
@@ -100,6 +105,7 @@ module Bus
 
     #news
     section(:news_section, NewsSection, id: "controller-news")
+
 
     # Private element
     element(:current_admin_div, id: 'identify-me')

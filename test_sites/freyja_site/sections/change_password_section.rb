@@ -14,6 +14,7 @@ module Freyja
     #event history
     element(:event_history_action, xpath: "//li[@id='panel-action-event-history']")
 
+
     # Public: Change user login password
     #
     # old_password - Freyja old password
@@ -24,10 +25,10 @@ module Freyja
     #
     # Returns nothing
     def change_password(old_password, new_password)
-        old_password_tb.type_text(old_password)
-        new_password_tb.type_text(new_password)
-        password_confirm_tb.type_text(new_password)
-        change_pw_btn.click
+       old_password_tb.type_text(old_password)
+       new_password_tb.type_text(new_password)
+       password_confirm_tb.type_text(new_password)
+       change_pw_btn.click
     end
 
     # Public: Messages for change password
