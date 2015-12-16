@@ -38,7 +38,6 @@ Feature: View machine manifest, logfile
       """
       _hash|89047df06bfabd45fa8af58f28c995d69aeb5dcc
       """
-    Then I delete the newly downloaded file
 
   @TC.2059 @bus @machines_sync @tasks_p2 @smoke
   Scenario: 2059 View the Logfile in BUS
