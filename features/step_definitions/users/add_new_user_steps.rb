@@ -194,8 +194,17 @@ Then /^I check (.+) help message under add new user section should be:$/ do |typ
   @bus_site.admin_console_page.add_new_user_section.get_help_msg(type).gsub("\n", " ").should == msg
 end
 
+
 Then /^The error message beside email should be (.+)$/ do |msg|
   @bus_site.admin_console_page.add_new_user_section.get_beside_email_message.should == msg
+end
+
+Then /^created new itemized user message should be (.+)$/ do |msg|
+  @bus_site.admin_console_page.add_new_itemized_user_section.error_messages.gsub("\n"," ").should == msg
+end
+
+Then /^User group (storage|resource) details warning message should be (.+)$/ do |type, message|
+  @bus_site.admin_console_page.add_new_user_section.get_user_group_storage_warning_message(type).should == message
 end
 
 

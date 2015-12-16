@@ -135,5 +135,6 @@ module Bus
       user_group_select.select(group_name)
       sleep 2 # wait for ajax call back
     end
+
   end
 end
