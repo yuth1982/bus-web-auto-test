@@ -15,25 +15,16 @@ module Phoenix
   element(:new_pw, id: "new_password")
   element(:new_pw2, id: "new_password2")
   element(:change_btn, css: "input.ui-button")
-  # change cc info
-  element(:change_cc_type_select, id: "card_type")
-  element(:change_cc_number_tb, id: "card_number")
-  element(:change_card_cvv_tb, id: "card_cvn")
-  element(:change_exp_mm_select, id: "card_expiry_month")
-  element(:change_exp_yy_select, id: "card_expiry_year")
-  # cc addressing info
-  element(:change_billing_country_select, id: "bill_to_address_country")
-  element(:change_bill_fname_tb, id: "bill_to_forename")
-  element(:change_bill_lname_tb, id: "bill_to_surname")
-  element(:change_bill_co_tb, id: "bill_to_company_name")
-  element(:change_bill_addr1_tb, id: "bill_to_address_line1")
-  element(:change_bill_addr2_tb, id: "bill_to_address_line2")
-  element(:change_bill_city_tb, id: "bill_to_address_city")
-  element(:change_bill_state_tb, id: "bill_to_address_state")
-  element(:change_bill_state_select, id: "bill_to_address_state_us")
-  element(:change_bill_zip_tb, id: "bill_to_address_postal_code")
+  # cc change submit button
   element(:change_submit_btn, id: "submit_button")
-  element(:captcha, id: "captcha")
+  # change credit card and country
+  element(:profile_country_ccc, id: "user_country")
+  element(:change_cc_country_submit_btn, css: "input.img-button")
+  element(:change_cc_and_country_link, css: "p.error a")
+
+  # change profile country
+  element(:profile_country, xpath: "//select[@name='user[country]']")
+  element(:profile_country_error_text, css: "p.error")
 
   # items relating to changing the account
   element(:change_plan_select, id: "consumer_plan_id")
@@ -63,8 +54,16 @@ module Phoenix
   element(:free2paid_country_name, xpath: "//input[@id='user_name']")
   element(:free2paid_country_select, xpath: "//select[@name='user[country]']")
   element(:free2paid_continue_btn, xpath: "//input[@id='conti_button']")
-  element(:update_profile_country_upgrade_link, xpath: "//div[@id='cybersourceErrors']//a")
+  element(:update_profile_country_upgrade_link, css: "p.error a")
   element(:continue_btn, css: "input.img-button")
+
+  #change password
+  element(:change_password_btn, xpath: "//h3[text()='Password:']/../following-sibling::td/span/a[text()='change']")
+  element(:old_password_tb, id: "old_password")
+  element(:new_password_tb, id: "new_password")
+  element(:new_password_again, id: "new_password2")
+  element(:submit_change_password_btn, xpath: "//input[@value='Change Password']")
+
 
 
   #--delete user section--
@@ -77,6 +76,16 @@ module Phoenix
 
   def delete_account_link()
     find(:xpath, "//a[contains(@href,'/account/cancel_verify')]").click
+  end
+
+  #--change credit card and country section--
+  def change_cc_and_country(partner)
+    change_cc_and_country_link.click
+    profile_country_ccc.select(partner.company_info.country)
+    change_cc_country_submit_btn.click
+    # code for filling in payment info in cybersource page
+    @orther_site = OtherSites.new
+    @orther_site.cybersource_page.fill_billing_info(partner)
   end
 
   #--change credit card information section--
@@ -93,37 +102,33 @@ module Phoenix
 
   # change cc info script
   def change_cc_entry(partner)
-    # card info entry
-    change_cc_type_select.select(partner.credit_card.type)
-    change_cc_number_tb.type_text(partner.credit_card.number)
-    change_card_cvv_tb.type_text(partner.credit_card.cvv)
-    change_exp_mm_select.select(partner.credit_card.expire_month)
-    change_exp_yy_select.select(partner.credit_card.expire_year)
+    continue_btn.click
 
-    # biller info entry
-    change_billing_country_select.select(partner.company_info.country)
-    change_bill_fname_tb.type_text(partner.admin_info.first_name)
-    change_bill_lname_tb.type_text(partner.admin_info.last_name)
-    change_bill_addr1_tb.type_text(partner.company_info.address)
-    change_bill_city_tb.type_text(partner.company_info.city)
-    state_entry(partner)
-    change_bill_zip_tb.type_text(partner.company_info.zip)
+    # code for filling in payment info in cybersource page
+    @orther_site = OtherSites.new
+    @orther_site.cybersource_page.fill_billing_info(partner)
 
-    # submission
-    captcha.type_text(CONFIGS['phoenix']['captcha'])
-    change_submit_btn.click
-    message_text.eql?("Your card has been successfully filed. All future payments will be charged to your #{partner.credit_card.type} ending in #{partner.credit_card.last_four_digits}.")
   end
 
-  def state_entry(partner)
-    if partner.company_info.country == "United States"
-      change_bill_state_select.type_text(partner.company_info.state_abbrev)
-    else
-      change_bill_state_tb.type_text(partner.company_info.state)
-    end
+  # cc changed successfully
+  def cc_changed?(partner)
+    cc_type = (partner.credit_card.type == 'Maestro UK')? 'credit card' : partner.credit_card.type
+    message_text.text.should == " Your card has been successfully filed. All future payments will be charged to your #{cc_type} ending in #{partner.credit_card.last_four_digits}."
   end
 
+  # change profile country in account/profile page
+  def change_profile_country(partner)
+    profile_country.select(partner.company_info.country)
+    change_btn.click
+  end
 
+  def profile_changed?
+    message_profile.eql?("Profile saved.")
+  end
+
+  def profile_error_message
+    profile_country_error_text.text
+  end
 
   #--change password section--
   # calls the whole process
@@ -161,6 +166,14 @@ module Phoenix
   #--methods here are for changing plan specifics (GB, Adding Machines/Storage, Billing Cycle)
   # change plan - current
   def change_plan_current(partner, new_base_plan, new_additional_storage, new_additional_computers)
+    change_plan_current_before_confirm(partner, new_base_plan, new_additional_storage, new_additional_computers)
+    partner.curplan_payment_summary = curplan_payment_details_tb_rows
+    upgrade_submit_btn.click
+    payment_confirm.present?
+    upgrade_last_continue_btn.click
+  end
+
+  def change_plan_current_before_confirm(partner, new_base_plan, new_additional_storage, new_additional_computers)
     click_my_plan_link
     find(:xpath, "//a[contains(@href,'/plan/edit')]").click
     if !new_base_plan.nil?
@@ -170,10 +183,6 @@ module Phoenix
     fill_addl_mach(new_additional_computers) unless new_additional_computers.nil?
     # current plan's billing cycle is fixed
     upgrade_continue_btn.click
-    partner.curplan_payment_summary = curplan_payment_details_tb_rows
-    upgrade_submit_btn.click
-    payment_confirm.present?
-    upgrade_last_continue_btn.click
   end
 
   # change plan - future
@@ -289,11 +298,28 @@ module Phoenix
     my_plan_title.text
   end
 
+  def decrease_error_msg
+    find(:xpath, "//div[@id='maincontent']/div[1]/p").text
+  end
+
+  def click_cancel_change_curplan
+    find(:xpath, "//div[@id='maincontent']//input[@name='cancel']").click
+  end
+
   def update_profile_country_upgrade(profile_country)
     update_profile_country_upgrade_link.click
     free2paid_country_select.select(profile_country)
     free2paid_continue_btn.click
     continue_btn.click
+  end
+
+  def change_password_in_my_profile (old_password, new_password)
+    change_password_btn.click
+    wait_until{old_password_tb.visible?}
+    old_password_tb.type_text(old_password)
+    new_password_tb.type_text(new_password)
+    new_password_again.type_text(new_password)
+    submit_change_password_btn.click
   end
 
   end

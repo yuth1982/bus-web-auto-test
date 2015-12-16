@@ -48,6 +48,10 @@ module Bus
       find_link(inbound).present?
     end
 
+    def order_details_hash
+      order_detail_table.hashes
+    end
+
     # Public: Click Add Drive To Order to add drive to data shuttle order
     #
     # Example

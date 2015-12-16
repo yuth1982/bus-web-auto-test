@@ -8,6 +8,8 @@ module Bus
     element(:enterprise_users_tb, css: "input[id^=products_base_]")
     element(:desktop_licenses_tb, xpath: "//div[@id='base_plans']/div[3]/input")
     element(:server_licenses_tb, xpath: "//div[@id='base_plans']/div[4]/input")
+
+    element(:mozypro_server_plan_lable, xpath: "//div[@id='addon_products_list']/div/label")
     
     element(:storage_add_on_tb, css: "input[id^=products_addon_]")
     element(:server_plan_select, css: "select[id^=products_addon_]")
@@ -15,6 +17,8 @@ module Bus
     element(:coupon_code_tb, id: "coupon_code")
     element(:server_plan_status_span, id: "server-pass-status")
     element(:charge_plan_div, xpath: "//div[@id='change_plan_confirmation']//p")
+    #ME DPS
+    element(:enterprise_dps_baseplan_input, id: "products_exclusive_base_qty")
 
     # Itemized
     elements(:itemized_plans_tbs, css: "div#base_plans_group input")
@@ -26,6 +30,7 @@ module Bus
     element(:continue_btn, css: "div#change_plan_confirmation input[value=Continue]")
     element(:cancel_btn, css: "div#change_plan_confirmation input[value=Cancel]")
     element(:message_div, css: "div#resource-change_billing_plan-errors ul")
+    element(:error_input_div, xpath: "//div[@id='error_input']/p")
 
     # Public: Reseller Supplemental Plans Hashes
     #
@@ -99,6 +104,13 @@ module Bus
         storage_add_on_tb.type_text(server_add_on)
       end
       coupon_code_tb.type_text(coupon) unless coupon.nil?
+      confirm_change
+    end
+
+    def change_mozyenterprise_dps_plan(base_plan)
+      value = base_plan.match(/\d+/)[0]
+      wait_until{enterprise_dps_baseplan_input.visible?}
+      enterprise_dps_baseplan_input.type_text(value)
       confirm_change
     end
 
@@ -197,6 +209,14 @@ module Bus
       message_div.text
     end
 
+    def get_error_input_message
+      error_input_div.text
+    end
+
+    def error_input_visible?
+      !locate(:xpath, "//div[@id='error_input']/p").nil?
+    end
+
     # Public: Return change plan charge summary table rows text
     #
     # Example
@@ -238,6 +258,14 @@ module Bus
     #  Return an array of mozypro base plans
     def mozypro_available_base_plans
       pro_base_plan_select.options.map{ |opt| opt.text.match(/(\d+) (GB|TB)/)[0]}
+    end
+
+    def mozypro_available_base_plans_price
+      pro_base_plan_select.options.map{ |opt| opt.text.strip}
+    end
+
+    def mozypro_server_plan_price
+      mozypro_server_plan_lable.text
     end
 
     # Public: MozyPro current purchase
@@ -293,6 +321,10 @@ module Bus
     def itemized_current_plan_hash
       wait_until_bus_section_load
       Hash['server quota' => itemized_plans_tbs[0].value, 'desktop quota' => itemized_plans_tbs[1].value, 'desktop license' => itemized_plans_tbs[2].value, 'server license' => itemized_plans_tbs[3].value]
+    end
+
+    def rate_schedule_present
+      !(locate(:xpath, "//*[contains(text(),'Rate Schedule')]").nil?)
     end
 
     private

@@ -41,8 +41,11 @@ Feature: User sync
     And I input server connection settings
       | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
       | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+    And I click Sync Rules tab
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
+    And I click Connection Settings tab
     When I Test Connection for AD
     Then test connection message should be Test passed
     And I click Sync Rules tab
@@ -88,8 +91,11 @@ Feature: User sync
     And I input server connection settings
       | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
       | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+    And I click Sync Rules tab
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
+    And I click Connection Settings tab
     When I Test Connection for AD
     Then test connection message should be Test passed
     When I click Connection Settings tab
@@ -223,8 +229,11 @@ Feature: User sync
     And I input server connection settings
       | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
       | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+    And I click Sync Rules tab
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
+    And I click Connection Settings tab
     When I Test Connection for AD
     Then test connection message should be Test passed
     And I click Sync Rules tab
@@ -294,8 +303,11 @@ Feature: User sync
     And I input server connection settings
       | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
       | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+    And I click Sync Rules tab
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
+    And I click Connection Settings tab
     When I Test Connection for AD
     Then test connection message should be Test passed
     And I click Sync Rules tab
@@ -564,6 +576,7 @@ Feature: User sync
       | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
+    And I click Connection Settings tab
     When I Test Connection for AD
     Then test connection message should be Test passed
     When I click Sync Rules tab
@@ -586,11 +599,21 @@ Feature: User sync
 
   @TC.17592 @firefox_profile @bus @2.1 @direct_ldap_integration @use_provision @qa8
   Scenario: 17592 UserProvision - Deleted users in BUS can be resumed
+    When I search partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    Then I get current partner name
     When I act as partner by:
-      | email                       |
-      |qa8+saml+test+admin@mozy.com |
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
-    And I use Directory Service as authentication provider
+    And I use Directory Service as authentication provider without saving
+    And I choose LDAP Pull as Directory Service provider without saving
+    And I input server connection settings
+      | Server Host  | Protocol  | SSL Cert | Port  | Base DN  | Bind Username | Bind Password  |
+      | @server_host | @protocol |          | @port | @base_dn | @bind_user    | @bind_password |
+    And I click Sync Rules tab
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I click Sync Rules tab
@@ -607,8 +630,8 @@ Feature: User sync
       | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                            | filter |
-      | <%=CONFIGS['fedid']['user_email']%> | None   |
+      | keywords                            | filter | user type                  |
+      | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     Then User search results should be:
       | User                                | Name                               | User Group |
       | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%> | dev        |
@@ -664,8 +687,8 @@ Feature: User sync
       | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                            | filter |
-      | <%=CONFIGS['fedid']['user_email']%> | None   |
+      | keywords                            | filter | user type                  |
+      | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     Then User search results should be:
       | User                                | Name                               | User Group  |
       | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%> | dev         |
@@ -676,11 +699,17 @@ Feature: User sync
 
   @TC.17593 @firefox_profile  @bus @2.1 @direct_ldap_integration @use_provision @qa8
   Scenario: 17593 UserProvision - Suspended users in BUS can't be resumed
+    When I search partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    Then I get current partner name
     When I act as partner by:
       | email                        |
       | qa8+saml+test+admin@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
+    And I click Sync Rules tab
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I click Sync Rules tab
@@ -693,12 +722,12 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0  |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                            | filter |
-      | <%=CONFIGS['fedid']['user_email']%> | None   |
+      | keywords                            | filter | user type                  |
+      | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     Then User search results should be:
       | User                                | Name                               | User Group  |
       | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%> | dev         |
@@ -728,11 +757,11 @@ Feature: User sync
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 1 succeeded, 0 failed |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                            | filter |
-      | <%=CONFIGS['fedid']['user_email']%> | None   |
+      | keywords                            | filter | user type                  |
+      | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     Then User search results should be:
-      | User                                | Name                                    | User Group  |
-      | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%>      | dev         |
+      | User                                | Name                               | User Group |
+      | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%> | dev        |
     When I view user details by <%=CONFIGS['fedid']['user_email']%>
     And The user status should be Suspended
     When I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
@@ -754,15 +783,15 @@ Feature: User sync
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0  |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                            | filter |
-      | <%=CONFIGS['fedid']['user_email']%> | None   |
+      | keywords                            | filter | user type                  |
+      | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     Then User search results should be:
-      | User                                 | Name                                    | User Group  |
-      | <%=CONFIGS['fedid']['user_email']%>  | <%=CONFIGS['fedid']['user_name']%>      | dev         |
+      | User                                 | Name                               | User Group |
+      | <%=CONFIGS['fedid']['user_email']%>  | <%=CONFIGS['fedid']['user_name']%> | dev        |
     When I view user details by <%=CONFIGS['fedid']['user_email']%>
     Then The user status should be Suspended
     When I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
@@ -774,13 +803,17 @@ Feature: User sync
       |qa8+saml+test+admin@mozy.com |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                            | filter |
-      | <%=CONFIGS['fedid']['user_email']%> | None   |
+      | keywords                            | filter | user type                  |
+      | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     And I view user details by <%=CONFIGS['fedid']['user_email']%>
     And I activate the user
 
   @TC.17594 @firefox_profile @bus @2.1 @direct_ldap_integration @use_provision @qa8
   Scenario: 17594 UserProvision - Delete user after several days of not synced
+    When I search partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    Then I get current partner name
     When I act as partner by:
       | email                       |
       |qa8+saml+test+admin@mozy.com |
@@ -793,7 +826,7 @@ Feature: User sync
       | rule             | group |
       | cn=auto          | dev   |
     And I click the sync now button
-    And I wait for 60 seconds
+    And I wait for 240 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
@@ -802,8 +835,8 @@ Feature: User sync
       | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                            | filter |
-      | <%=CONFIGS['fedid']['user_email']%> | None   |
+      | keywords                            | filter | user type                  |
+      | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     Then User search results should be:
       | User                                | Name                                    | User Group  |
       | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%>      | dev         |
@@ -823,13 +856,13 @@ Feature: User sync
     And I Choose to delete users if missing from LDAP for 60 days
     And I change the user last sync field in the db to be 60 days earlier
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 240 seconds
     And I clear the user sync information
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                      |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
       | keywords                            | filter |
@@ -840,11 +873,17 @@ Feature: User sync
 
   @TC.17595 @firefox_profile @bus @2.1 @direct_ldap_integration @use_provision @qa8
   Scenario: 17595 UserProvision - Suspend user after several days of not synced
+    When I search partner by:
+      | email                        |
+      | qa8+saml+test+admin@mozy.com |
+    Then I get current partner name
     When I act as partner by:
       | email                       |
-      |qa8+saml+test+admin@mozy.com |
+      | qa8+saml+test+admin@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
+    And I click Sync Rules tab
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I click Sync Rules tab
@@ -861,8 +900,8 @@ Feature: User sync
       | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                            | filter |
-      | <%=CONFIGS['fedid']['user_email']%> | None   |
+      | keywords                            | filter | user type                  |
+      | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     Then User search results should be:
       | User                                | Name                                    | User Group  |
       | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%>      | dev         |
@@ -891,8 +930,8 @@ Feature: User sync
       | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 0                |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                            | filter |
-      | <%=CONFIGS['fedid']['user_email']%> | None   |
+      | keywords                            | filter | user type                  |
+      | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     Then User search results should be:
       | User                                | Name                                    | User Group  |
       | <%=CONFIGS['fedid']['user_email']%> | <%=CONFIGS['fedid']['user_name']%>      | dev         |
@@ -907,8 +946,8 @@ Feature: User sync
       |qa8+saml+test+admin@mozy.com |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
-      | keywords                            | filter |
-      | <%=CONFIGS['fedid']['user_email']%> | None   |
+      | keywords                            | filter | user type                  |
+      | <%=CONFIGS['fedid']['user_email']%> | None   | <%=@current_partner_name%> |
     And I view user details by <%=CONFIGS['fedid']['user_email']%>
     And I activate the user
 
@@ -941,10 +980,13 @@ Feature: User sync
     And I input server connection settings
       | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
       | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+    And I click Sync Rules tab
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
     And I delete a user dev-17546-test2 in the AD
     And I delete a user dev-17546-test3 in the AD
+    And I click Connection Settings tab
     When I Test Connection for AD
     Then test connection message should be Test passed
     When I click Sync Rules tab
@@ -952,7 +994,7 @@ Feature: User sync
       | rule               | group |
       | cn=dev-17546-test* | dev   |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 240 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
@@ -971,7 +1013,7 @@ Feature: User sync
       | rule               | group |
       | cn=dev-17546-test* | dev   |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 240 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
@@ -993,7 +1035,7 @@ Feature: User sync
       | rule               | group |
       | cn=dev-17546-test* | dev   |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 240 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
@@ -1015,7 +1057,7 @@ Feature: User sync
       | rule               | group |
       | cn=dev-17546-test* | dev   |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 240 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
@@ -1036,7 +1078,7 @@ Feature: User sync
       | rule               | action |
       | cn=dev-17546-test* | Delete |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 240 seconds
     And I delete 1 deprovision rules
     And I save the changes
     And I click Connection Settings tab
@@ -1059,7 +1101,7 @@ Feature: User sync
       | rule               | group |
       | cn=dev-17546-test* | dev   |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 240 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
@@ -1083,7 +1125,7 @@ Feature: User sync
       | rule               | group |
       | cn=dev-17546-test* | dev   |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 240 seconds
     And I delete 1 provision rules
     And I save the changes
     And I click Connection Settings tab
@@ -1104,7 +1146,7 @@ Feature: User sync
       | rule               | action |
       | cn=dev-17546-test* | Delete |
     And I click the sync now button
-    And I wait for 80 seconds
+    And I wait for 240 seconds
     And I delete 1 deprovision rules
     And I click Attribute Mapping tab
     And I clear the fixed attribute
@@ -1138,8 +1180,11 @@ Feature: User sync
     And I input server connection settings
       | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
       | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+    And I click Sync Rules tab
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
+    And I click Connection Settings tab
     When I Test Connection for AD
     Then test connection message should be Test passed
     When I click Sync Rules tab
@@ -1213,6 +1258,8 @@ Feature: User sync
       | encoding_fedid@auto.com |
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
+    And I click Sync Rules tab
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I click Sync Rules tab

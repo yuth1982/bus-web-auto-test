@@ -1,7 +1,9 @@
 $:.unshift(File.dirname(__FILE__))
+
 require 'sections/restore_options_section'
 require 'sections/change_password_section'
 require 'iframes/upload_iframe'
+require 'sections/change_password_section'
 
 Dir.glob("#{File.dirname(__FILE__)}/iframes/**/*.rb").each{ |file| require file }
 Dir.glob("#{File.dirname(__FILE__)}/sections/**/*.rb").each{ |file| require file }
@@ -14,6 +16,7 @@ class FreyjaSite
   def login_page(user)
     Freyja::LoginPage.new(user)
   end
+
 
   def main_page
     Freyja::MainPage.new
@@ -58,4 +61,5 @@ class FreyjaSite
   def cybersource_page
     Freyja::CybersourceManinPage.new
   end
+
 end

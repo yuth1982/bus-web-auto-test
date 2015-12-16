@@ -30,6 +30,7 @@ Feature: Send activated / unactivated license keys
     Then Number of Server activated keys should be 0
     And Number of Server unactivated keys should be 3
     When I click Send Keys button
+    And I wait for 15 seconds
     And I search emails by keywords:
       | content                |
       | <%=@unactivated_keys%> |
@@ -45,6 +46,7 @@ Feature: Send activated / unactivated license keys
     Then Number of Server activated keys should be 1
     And Number of Server unactivated keys should be 2
     When I click Send Keys button
+    And I wait for 45 seconds
     And I search emails by keywords:
       | content                                  |
       | <%=@activated_keys + @unactivated_keys%> |
@@ -63,6 +65,7 @@ Feature: Send activated / unactivated license keys
     Then Number of Server activated keys should be 3
     And Number of Server unactivated keys should be 0
     When I click Send Keys button
+    And I wait for 45 seconds
     And I search emails by keywords:
       | content              |
       | <%=@activated_keys%> |
@@ -97,6 +100,7 @@ Feature: Send activated / unactivated license keys
     Then Number of Desktop activated keys should be 0
     And Number of Desktop unactivated keys should be 3
     When I click Send Keys button
+    And I wait for 15 seconds
     And I search emails by keywords:
       | content                |
       | <%=@unactivated_keys%> |
@@ -112,6 +116,7 @@ Feature: Send activated / unactivated license keys
     Then Number of Desktop activated keys should be 1
     And Number of Desktop unactivated keys should be 2
     When I click Send Keys button
+    And I wait for 45 seconds
     And I search emails by keywords:
       | content                                  |
       | <%=@activated_keys + @unactivated_keys%> |
@@ -130,6 +135,7 @@ Feature: Send activated / unactivated license keys
     Then Number of Desktop activated keys should be 3
     And Number of Desktop unactivated keys should be 0
     When I click Send Keys button
+    And I wait for 45 seconds
     And I search emails by keywords:
       | content              |
       | <%=@activated_keys%> |

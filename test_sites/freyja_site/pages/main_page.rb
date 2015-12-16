@@ -8,6 +8,14 @@ module Freyja
     element(:options_menu, css: 'span.text.username')
     element(:latest_version_radio, css: 'span.radio.radio-off')
 
+    element(:options_menu, xpath: "//div[@id='menu-user']")
+    element(:latest_version_radio, css: 'span.radio.radio-off')
+
+    # Activate user element
+    element(:user_password_set_text, xpath: "//input[@id='password']")
+    element(:user_password_set_again_text, xpath: "//input[@id='password_confirmation']")
+    element(:user_continue_activate_btn, xpath: "//div[text()='Activate account']")
+
     # Public: enter into one backup device
     #
     # Example
@@ -163,6 +171,17 @@ module Freyja
 
     def select_backup_device(machineID)
       find(:xpath, "//tr[@id='#{machineID}:Folder:']/td[2]/div/span[2]/span").click
+    end
+
+    def select_options_panel
+      wait_until{options_menu.visible?}
+      options_menu.click
+    end
+
+    def set_user_password (password)
+      user_password_set_text.type_text(password)
+      user_password_set_again_text.type_text(password)
+      user_continue_activate_btn.click
     end
 
   end

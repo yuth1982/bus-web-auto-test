@@ -8,20 +8,18 @@ Feature: Manage admin capability change
 
   @TC.700 @bus @admin @partner_capability_changes
   Scenario: 700 Check partners list/view check to make sure you can't change the name
-    When I navigate to List Roles section from bus admin console page
-    And I clean all roles with name which started with "$AUTOTEST$"
+#    When I navigate to List Roles section from bus admin console page
+#    And I clean all roles with name which started with "$AUTOTEST$"
     When I navigate to Add New Role section from bus admin console page
-    And I add a new role:
-      | Name             |
-      | $AUTOTEST$ATC700 |
-    And I check capabilities for the new role:
+    And I add a new role
+    And I add capabilities for the new role:
       | Capabilities        |
       | Partners: list/view |
     And I navigate to Add New Admin section from bus admin console page
     And I add a new admin:
     # Multiple roles can be specified as role1, role2, role3 (separated by comma)
-      | Roles            |
-      | $AUTOTEST$ATC700 |
+      | Roles      |
+      | @role_name |
     And I act as latest created admin
     Then I should see capabilities in Admin Console panel
       | Capabilities           |
@@ -31,25 +29,23 @@ Feature: Manage admin capability change
     And I cannot change partner name
     And I log in bus admin console as administrator
     And I delete lastest created admin
-    And I delete role $AUTOTEST$ATC700
+    And I delete role @role_name
 
   @TC.699 @bus @admin @partner_capability_changes
   Scenario: 699 Check Delete a partner with invalid password
     When I navigate to List Roles section from bus admin console page
     And I clean all roles with name which started with "$AUTOTEST$"
     When I navigate to Add New Role section from bus admin console page
-    And I add a new role:
-      | Name          |
-      | $AUTOTEST$699 |
-    And I check capabilities for the new role:
+    And I add a new role
+    And I add capabilities for the new role:
       | Capabilities        |
       | Partners: delete    |
       | Partners: list/view |
     And I navigate to Add New Admin section from bus admin console page
     And I add a new admin:
     # Multiple roles can be specified as role1, role2, role3 (separated by comma)
-      | Roles         |
-      | $AUTOTEST$699 |
+      | Roles      |
+      | @role_name |
     And Add New Admin success message should be displayed
     And I act as latest created admin
     Then I should see capabilities in Admin Console panel
@@ -61,23 +57,21 @@ Feature: Manage admin capability change
     And I delete partner account with password xxx
     And I log in bus admin console as administrator
     And I delete lastest created admin
-    And I delete role $AUTOTEST$699
+    And I delete role @role_name
 
   @TC.698 @bus @admin @partner_capability_changes
   Scenario: 698 Check Delete a partner works
     When I navigate to Add New Role section from bus admin console page
-    And I add a new role:
-      | Name             |
-      | $AUTOTEST$ATC698 |
-    And I check capabilities for the new role:
+    And I add a new role
+    And I add capabilities for the new role:
       | Capabilities        |
       | Partners: delete    |
       | Partners: list/view |
     And I navigate to Add New Admin section from bus admin console page
     And I add a new admin:
     # Multiple roles can be specified as role1, role2, role3 (separated by comma)
-      | Roles            |
-      | $AUTOTEST$ATC698 |
+      | Roles      |
+      | @role_name |
     And I act as latest created admin
     Then I should see capabilities in Admin Console panel
       | Capabilities           |
@@ -88,23 +82,21 @@ Feature: Manage admin capability change
     And I delete partner account
     And I log in bus admin console as administrator
     And I delete lastest created admin
-    And I delete role $AUTOTEST$ATC698
+    And I delete role @role_name
 
   @TC.697 @bus @admin @partner_capability_changes
   Scenario: 697 Check partners Delete, List/View capability
     When I navigate to Add New Role section from bus admin console page
-    And I add a new role:
-      | Name             |
-      | $AUTOTEST$ATC697 |
-    And I check capabilities for the new role:
+    And I add a new role
+    And I add capabilities for the new role:
       | Capabilities        |
       | Partners: delete    |
       | Partners: list/view |
     And I navigate to Add New Admin section from bus admin console page
     And I add a new admin:
     # Multiple roles can be specified as role1, role2, role3 (separated by comma)
-      | Roles            |
-      | $AUTOTEST$ATC697 |
+      | Roles      |
+      | @role_name |
     And I act as latest created admin
     Then I should see capabilities in Admin Console panel
       | Capabilities           |
@@ -114,23 +106,21 @@ Feature: Manage admin capability change
     And I can delete partner
     And I log in bus admin console as administrator
     And I delete lastest created admin
-    And I delete role $AUTOTEST$ATC697
+    And I delete role @role_name
 
   @TC.696 @bus @admin @partner_capability_changes
   Scenario: 696 Check partners Edit, List/View capability
     When I navigate to Add New Role section from bus admin console page
-    And I add a new role:
-      | Name             |
-      | $AUTOTEST$ATC696 |
-    And I check capabilities for the new role:
+    And I add a new role
+    And I add capabilities for the new role:
       | Capabilities        |
       | Partners: edit      |
       | Partners: list/view |
     And I navigate to Add New Admin section from bus admin console page
     And I add a new admin:
     # Multiple roles can be specified as role1, role2, role3 (separated by comma)
-      | Roles            |
-      | $AUTOTEST$ATC696 |
+      | Roles      |
+      | @role_name |
     And I act as latest created admin
     Then I should see capabilities in Admin Console panel
       | Capabilities           |
@@ -149,23 +139,21 @@ Feature: Manage admin capability change
       | # of employees: |
     And I log in bus admin console as administrator
     And I delete lastest created admin
-    And I delete role $AUTOTEST$ATC696
+    And I delete role @role_name
 
   @TC.695 @bus @admin @partner_capability_changes
   Scenario: 695 Check partners Add, List/View capability
     When I navigate to Add New Role section from bus admin console page
-    And I add a new role:
-      | Name             |
-      | $AUTOTEST$ATC695 |
-    And I check capabilities for the new role:
+    And I add a new role
+    And I add capabilities for the new role:
       | Capabilities        |
       | Partners: add       |
       | Partners: list/view |
     And I navigate to Add New Admin section from bus admin console page
     And I add a new admin:
     # Multiple roles can be specified as role1, role2, role3 (separated by comma)
-      | Roles            |
-      | $AUTOTEST$ATC695 |
+      | Roles      |
+      | @role_name |
     And I act as latest created admin
     Then I should see capabilities in Admin Console panel
       | Capabilities           |
@@ -173,4 +161,4 @@ Feature: Manage admin capability change
       | Add New Partner        |
     And I log in bus admin console as administrator
     And I delete lastest created admin
-    And I delete role $AUTOTEST$ATC695
+    And I delete role @role_name

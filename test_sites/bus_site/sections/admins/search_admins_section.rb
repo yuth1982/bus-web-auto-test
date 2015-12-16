@@ -14,5 +14,9 @@ module Bus
       wait_until_bus_section_load
     end
 
+    def search_admin_table_empty
+      !(locate(:xpath,"//td[contains(text(),'No results')]").nil?)
+    end
+
   end
 end

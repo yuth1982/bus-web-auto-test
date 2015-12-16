@@ -20,6 +20,7 @@ module Bus
     element(:nu_stash_quota_tb , id: 'requested_stash_quota')
 
     element(:nu_create_btn , id: 'create_user-submit')
+    element(:loading_img, xpath: "//img[@alt='Suggestions loading...']")
 
     # Public: Add new users
     #
@@ -33,8 +34,11 @@ module Bus
       user = users.first
 
       unless user.user_group.nil?
-        user_group_select.select(user.user_group)
-        sleep 2 # wait for ajax call back
+        user_group_select.type_text(user.user_group)
+        page.driver.execute_script("document.querySelector('img[alt=\"Search-button-icon\"]').click()")
+        wait_until { !loading_img.visible? }
+        find(:xpath,"//li[text()='#{user.user_group}']").click unless user.user_group == ''
+        wait_until {!(find(:xpath, "//li[text()='#{user.user_group}']").visible?) }
       end
 
       # name/email section

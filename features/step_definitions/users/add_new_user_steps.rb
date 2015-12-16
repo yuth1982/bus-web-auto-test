@@ -3,6 +3,7 @@
 #
 # available columns:
 # name, email, user_group, storage_type, storage_max, devices, enable_stash, send_email
+
 When /^I add new user\(s\):$/ do |user_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_user'])
   @new_users =[]
@@ -42,7 +43,7 @@ Then /^new itemized user should be created$/ do
   @bus_site.admin_console_page.add_new_itemized_user_section.new_user_creation_success(@new_users)
 end
 
-Then /^Add new user error message should be:$/ do |messages|
+Then /^(Add new|Edit) user error message should be:$/ do |_,messages|
   @bus_site.admin_console_page.add_new_user_section.wait_until_bus_section_load
   @bus_site.admin_console_page.add_new_user_section.error_messages.should == messages.to_s
 end
@@ -167,4 +168,8 @@ And /^I add some new users and activate one machine for each$/ do |table|
       |#{row.join('|')}|
     })
   end
+end
+
+Then /^I check user group (.+) with (.+) storage limit tooltips is (.+)$/ do |group,type,tooltips|
+  @bus_site.admin_console_page.add_new_user_section.get_tooltips(group,type).should ==tooltips
 end

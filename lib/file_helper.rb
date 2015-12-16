@@ -35,14 +35,34 @@ module FileHelper
   #
   # Returns cvs rows array
   def read_csv_file(file_name, file_path = default_download_path)
-    report_file = Dir.glob(File.join(file_path, "#{file_name}.csv")).first
-    rows = []
-    CSV.foreach(report_file) do |row|
-      if row.size > 1  #data header and data
-        rows << row.map{ |x| x == nil ? "" : x}
-      end
+    read_file(file_name, 'csv', file_path)
+  end
+
+  def read_file(file_name, file_type = 'csv', file_path = default_download_path)
+    unless file_name.downcase.end_with?("." + file_type)
+      file_name = "#{file_name}.#{file_type}"
     end
-    rows
+    file = nil
+    now = Time.now
+    while file.nil? && Time.now < (now + 60)
+      file = Dir.glob(File.join(file_path, "#{file_name}")).first
+      sleep 1
+    end
+    if file_type == 'csv'
+      rows = []
+      CSV.foreach(file) do |row|
+        if row.size > 1  #data header and data
+          rows << row.map{ |x| x == nil ? "" : x.strip}
+        end
+      end
+      return rows
+    elsif file_type == 'txt'
+      values = ''
+      File.open(file).each do |row|
+        values = values + row
+      end
+      return values
+    end
   end
 
   # Public: write csv file
@@ -72,20 +92,32 @@ module FileHelper
     File.rename(old_file, new_file)
   end
 
+  # Public: delete *.part/ mozy* files of mozyclient in download folder
+  #
+  # Returns nothing
+  def clean_up_client
+    Dir.glob("#{default_download_path}/mozy*").each{ |path| File.delete(path) }
+    Dir.glob("#{default_download_path}/*.part").each{ |path| File.delete(path) }
+    Dir.glob("#{default_download_path}/*.deb").each{ |path| File.delete(path) }
+    Dir.glob("#{default_download_path}/*.rpm").each{ |path| File.delete(path) }
+    Dir.glob("#{default_download_path}/*.exe").each{ |path| File.delete(path) }
+    Dir.glob("#{default_download_path}/*.dmg").each{ |path| File.delete(path) }
+  end
+
   # Public: delete *.csv files in download folder
   #
   # Returns nothing
-  def clean_up_csv
-    Dir.glob("#{default_download_path}/*.csv").each{ |path| File.delete(path) }
+  def clean_up_csv(pattern = "*.csv")
+    Dir.glob("#{default_download_path}/#{pattern}").each{ |path| File.delete(path) }
   end
 
-  def clean_up_client
-    Dir.glob("#{default_download_path}/Mozy*").each{ |path| File.delete(path) }
+  def delete_csv(name, file_path = default_download_path)
+    file = File.join(file_path, "#{name}.csv")
+    File.delete(file) if File.file?(file)
   end
 
-
-  def delete_csv(name)
-    file = File.join(default_download_path, "#{name}.csv")
+  def delete_file(file_name, file_path = default_download_path)
+    file = File.join(file_path, file_name)
     File.delete(file) if File.file?(file)
   end
 
@@ -98,6 +130,11 @@ module FileHelper
   def file_exists?(file_name, file_path = default_download_path)
     file = File.join(file_path, file_name)
     File.file?(file)
+  end
+
+  def get_file_size(file_name, file_path = default_download_path)
+    file = File.join(file_path, "#{file_name}")
+    File.size(file)
   end
 
 end

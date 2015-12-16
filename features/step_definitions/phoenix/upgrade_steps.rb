@@ -1,4 +1,4 @@
-And /^I (upgrade|change) my (partner|user|free) account to:$/ do |change_type,acct_type, upgrade_table|
+And /^I (upgrade|change|downgrade) my (partner|user|free) account to:$/ do |change_type,acct_type, upgrade_table|
   # There were two Home signups, (When I add ...)(When I sign up...) The string combines them
   #(partner | user) is keep all tests cases working from when Home and Pro where separate
   attributes = upgrade_table.hashes.first
@@ -10,7 +10,7 @@ And /^I (upgrade|change) my (partner|user|free) account to:$/ do |change_type,ac
 
   case change_type
     # for upgrading an account - ie .. going from free to paid
-    when "upgrade"
+    when "upgrade","downgrade"
      case acct_type
       when "free"
         # general info for upgrading user acct to diff values
@@ -80,7 +80,11 @@ And /^I (upgrade|change) my (partner|user|free) account to:$/ do |change_type,ac
         # @phoenix_site.user_account.go_to_plan(@partner)
         #find(:xpath, "//a[@href='/plan/edit']").click
         #@phoenix_site.update_profile.change_plan_current(@partner)
-        @phoenix_site.update_profile.change_plan_current(@partner, new_base_plan, new_additional_storage, new_additional_computers)
+        if change_type == 'downgrade'
+          @phoenix_site.update_profile.change_plan_current_before_confirm(@partner, new_base_plan, new_additional_storage, new_additional_computers)
+        else
+          @phoenix_site.update_profile.change_plan_current(@partner, new_base_plan, new_additional_storage, new_additional_computers)
+        end
         #step %{I logout of my user account}
      # for changing the current account - ie .. going from monthly to biennial billing
     end
@@ -110,6 +114,20 @@ And /^I (upgrade|change) my (partner|user|free) account to:$/ do |change_type,ac
    end
 end
 
+And /^I change credit card and country from bin country not match error link:$/ do |change_cc_and_country_table|
+  attributes = change_cc_and_country_table.hashes.first
+
+  @partner.credit_card.number = attributes["new_cc_num"] unless attributes["new_cc_num"].nil?
+  @partner.credit_card.type = attributes["new_cc_type"] unless attributes["new_cc_type"].nil?
+  @partner.credit_card.last_four_digits = @partner.credit_card.number[-4..-1] unless attributes["new_cc_num"].nil?
+  @partner.company_info.country = attributes["profile country"] unless attributes["profile country"].nil?
+  @partner.use_company_info = attributes['billing country'].nil?
+  @partner.billing_info.country = attributes["billing country"] unless attributes["billing country"].nil?
+
+  @phoenix_site.update_profile.change_cc_and_country(@partner)
+
+end
+
 And /^I change my profile attributes to:$/ do |change_info_table|
   attributes = change_info_table.hashes.first
 
@@ -118,16 +136,26 @@ And /^I change my profile attributes to:$/ do |change_info_table|
 
     @partner.credit_card.number = attributes["new_cc_num"] unless attributes["new_cc_num"].nil?
     @partner.credit_card.type = attributes["new_cc_type"] unless attributes["new_cc_type"].nil?
-    @partner.credit_card.last_four_digits = attributes["last_four_digs"] unless attributes["last_four_digs"].nil?
+    @partner.credit_card.last_four_digits = @partner.credit_card.number[-4..-1] unless attributes["new_cc_num"].nil?
     @partner.admin_info.first_name = attributes["new_username_first"] unless attributes["new_username_first"].nil?
     @partner.admin_info.last_name = attributes["new_username_last"] unless attributes["new_username_last"].nil?
     @partner.admin_info.full_name = attributes["new_username_full"] unless attributes["new_username_full"].nil?
+    @partner.use_company_info = attributes['billing country'].nil?
+    @partner.billing_info.country = attributes["billing country"] unless attributes["billing country"].nil?
+
 
   # section: changing password, cc, username in my_profile
   # change password - changing to default bus_password - hard coded into method (temporarily)
   #   consideration: may be better to create a variable in the admin_info obj for password
   # change cc - default is Visa, setting to MasterCard
   # change user name - default is system generated, new one is tester created
+  # change profile country - if profile country changed to not meet bin country rule, error message will show up
+
+  unless (attributes["new_profile_country"]).nil?
+    @phoenix_site.user_account.localized_click(@partner, 'profile_link')
+    @partner.company_info.country = attributes["new_profile_country"] unless attributes["new_profile_country"].nil?
+    @phoenix_site.update_profile.change_profile_country(@partner)
+  end
 
   unless (attributes["new_password"]).nil?
     @phoenix_site.user_account.localized_click(@partner, 'profile_link')
@@ -143,6 +171,18 @@ And /^I change my profile attributes to:$/ do |change_info_table|
     @phoenix_site.user_account.localized_click(@partner, 'profile_link')
     @phoenix_site.update_profile.change_user_name(@partner)
   end
+end
+
+And /^user profile page error message should be:$/ do |message|
+  @phoenix_site.update_profile.profile_error_message.strip.should eq(message.strip)
+end
+
+And /^user profile country updated successfully$/ do
+  @phoenix_site.update_profile.profile_country_changed?.should be_true
+end
+
+And /^user credit card updated successfully$/ do
+  @phoenix_site.update_profile.cc_changed?(@partner).should be_true
 end
 
 And /^I logout of my (user|partner) account$/ do |account|
@@ -161,7 +201,7 @@ And /^the (current plan|payment details) summary looks like:$/ do |type, data_ta
   expected = data_table.raw
   expected.each{|i|
     if i[1].start_with? '@'
-      with_timezone(ARIA_ENV['timezone']) {i[1].replace(Chronic.parse(i[1].sub('@','')).strftime(date_format))}
+      i[1].replace(Chronic.parse(i[1].sub('@','')).strftime(date_format))
       break
     end
   }
@@ -209,6 +249,14 @@ And /^I update profile country from link in billing page and upgrade again$/ do 
   @partner.billing_info.country = attributes["billing country"] unless attributes['billing country'].nil?
   @phoenix_site.update_profile.update_profile_country_upgrade(profile_country)
   @phoenix_site.billing_fill_out.billing_info_fill_out(@partner)
+end
+
+And /^Error message of Not allowed to decrease will show:$/ do |msg|
+  @phoenix_site.update_profile.decrease_error_msg.strip.should == msg.strip
+end
+
+And /^I click cancel button during change current plan$/ do
+  @phoenix_site.update_profile.click_cancel_change_curplan
 end
 
 And /^I delete the user account with (changed password|original password)$/ do |password|

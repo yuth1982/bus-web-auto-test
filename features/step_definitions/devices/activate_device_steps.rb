@@ -2,6 +2,7 @@ And /^activate the user's (Server|Desktop) device without a key and with the def
   @new_clients =[]
   @clients =[] if @clients.nil?
   client = KeylessClient.new(@new_users.first.email, CONFIGS['global']['test_pwd'], @partner_id, @partner.company_info.name, device_type, @partner.partner_info.type)
+  client.activate_client_devices
   @license_key = client.license_key
   Log.debug @license_key
   @license_key.should_not be_nil
@@ -9,8 +10,70 @@ And /^activate the user's (Server|Desktop) device without a key and with the def
   @clients << client
 end
 
-When /^I use keyless activation to activate devices$/  do |table|
+When /^I use keyless activation to activate devices(| unsuccessful| newly)$/  do | type, table|
+  attr = table.hashes.first.each do |_, v|
+    v.replace ERB.new(v).result(binding)
+    v.gsub!(" ", "_")
+  end
 
+  user_email = attr['user_name'].nil? ? @current_user[:email] : attr['user_name']
+  partner_name = (@partner && @partner.company_info.name) || @current_partner[:name]
+  if @current_partner.nil?
+    current_partner_id = @partner_id
+  else
+    @current_partner[:id] ||= @bus_site.admin_console_page.partner_id
+    current_partner_id = @current_partner[:id]
+  end
+  @user_password = CONFIGS['global']['test_pwd'] unless !@user_password.nil?
+  region = attr['user_region'] || attr['ug_region'] || attr['partner_region'] || 'qa'
+
+  @new_clients =[]
+  @clients =[] if @clients.nil?
+  # when run cases in a batch, sometimes need to clear the @client array for a new case if need to activate multiple devices and get all the license keys
+  @clients = [] if type == ' newly'
+
+  machine_name = attr['machine_name']
+  machine_name = "machine#{Time.now.strftime("%m%d%H%M%S")}" if attr['machine_name'] == 'auto_generate'
+  @client = KeylessClient.new(user_email, @user_password, current_partner_id, partner_name, attr['machine_type'], @partner.partner_info.type, nil, nil, nil, machine_name, region)
+  @client.activate_client_devices
+  @license_key = @client.license_key
+  if type.include?('unsuccessful')
+    (@client.response.body.downcase.include?('error')).should == true
+  else
+    @license_key.should_not be_nil
+    @client.machine_id = DBHelper.get_machine_id_by_license_key(@license_key)
+  end
+  @new_clients << @client
+  @clients << @client
+end
+
+When /^I use keyless activation to activate devices to get sso auth code$/  do |table|
+  attr = table.hashes.first.each do |_, v|
+    v.replace ERB.new(v).result(binding)
+    v.gsub!(" ", "_")
+  end
+  user_email = attr['user_name'].nil? ? @current_user[:email] : attr['user_name']
+  partner_name = (@partner && @partner.company_info.name) || @current_partner[:name]
+
+  @user_password = CONFIGS['global']['test_pwd'] unless !@user_password.nil?
+  region = attr['user_region'] || attr['ug_region'] || attr['partner_region'] || 'qa'
+
+  @new_clients =[]
+  @clients =[] if @clients.nil?
+
+  machine_name = attr['machine_name']
+  machine_name = "machine#{Time.now.strftime("%m%d%H%M%S")}" if attr['machine_name'] == 'auto_generate'
+  @client = KeylessClient.new(user_email, @user_password, @current_partner[:id], partner_name, attr['machine_type'], @partner.partner_info.type, nil, nil, nil, machine_name, region)
+  @client.get_sso_auth_code
+  @clients << @client
+end
+
+And /^I update (.+) encryption value to (.+)$/ do |machine_id, encrypt_value|
+  machine_id = @new_clients[0].machine_id if machine_id == 'newly created machine'
+  @client.set_machine_encryption(encrypt_value, machine_id)
+end
+
+And /^I use keyless activation to activate same devices twice$/ do | table |
   attr = table.hashes.first.each do |_, v|
     v.replace ERB.new(v).result(binding)
     v.gsub!(" ", "_")
@@ -23,12 +86,79 @@ When /^I use keyless activation to activate devices$/  do |table|
 
   @new_clients =[]
   @clients =[] if @clients.nil?
-  client = KeylessClient.new(user_email, @user_password, @current_partner[:id], partner_name, attr['machine_type'], @partner.partner_info.type, attr['machine_name'])
+  client = KeylessClient.new(user_email, @user_password, @current_partner[:id], partner_name, attr['machine_type'], @partner.partner_info.type, nil, nil, nil, attr['machine_name'])
+  client.activate_client_devices
   @license_key = client.license_key
-  @license_key.should_not be_nil
   @new_clients << client
   @clients << client
 
+  # active the same machine again
+  client.client_devices_activate
+  @new_clients << client
+  @clients << client
+end
+
+When /^I use keyless activation to activate devices with (none machine hash|invalid machine hash|none access token|error access token)$/  do |error_type, table|
+  attr = table.hashes.first.each do |_, v|
+    v.replace ERB.new(v).result(binding)
+    v.gsub!(" ", "_")
+  end
+  user_email = attr['user_name'].nil? ? @current_user[:email] : attr['user_name']
+  partner_name = (@partner && @partner.company_info.name) || @current_partner[:name]
+  @current_partner[:id] ||= @bus_site.admin_console_page.partner_id
+  @user_password = CONFIGS['global']['test_pwd'] unless !@user_password.nil?
+
+  machine_hash = nil
+  if error_type == 'none machine hash'
+    machine_hash = ' '
+    #invalid machine hash with length > 40
+  elsif error_type == 'invalid machine hash'
+    machine_hash = 'invalidmachinehashabdafoier435gsgsgletw34nsgsdfgserttwer'
+  end
+  client = KeylessClient.new(user_email, @user_password, @current_partner[:id], partner_name, attr['machine_type'], @partner.partner_info.type, nil, nil, machine_hash, attr['machine_name'])
+  if error_type == 'none access token'
+    access_token = '{"access_token", ""}'
+  elsif error_type == 'error access token'
+    access_token = '{"access_token", "NzUwNjk0NDI4NGZkYWI1OGMzOTVlMzViNTlmMzNmN2M1YmExMjI3YzpwYXNzd29yZA=="}'
+  end
+  client.activate_client_devices(access_token)
+  @new_clients =[]
+  @clients =[] if @clients.nil?
+  @new_clients << client
+  @clients << client
+end
+
+Then /^activate machine result should be$/ do |table|
+  attr = table.hashes.first.each do |_, v|
+    v.replace ERB.new(v).result(binding)
+  end
+  attr = table.hashes.first
+  expected_code = attr['code']
+  expected_body = attr['body']
+  #for negative case, the response could like:  #<Net::HTTPUnauthorized 401 Authorization Required readbody=true>
+  begin
+    @clients.last.response.code.should == expected_code
+  rescue
+    (@clients.last.response.to_s).match(/\d+/)[0].should == expected_code
+  end
+
+  actual_body = @clients.last.response.body
+  if expected_body.include?('machine license key')
+    ((actual_body.match(/^\{"license_key":"(\w)+"\}$/)).nil?).should == false
+  else
+    actual_body.should == expected_body
+  end
+end
+
+Then /^activate machine auth code result should be$/ do |table|
+  attr = table.hashes.first.each do |_, v|
+    v.replace ERB.new(v).result(binding)
+  end
+  attr = table.hashes.first
+  @clients.last.auth_code.each do |k,v|
+    k.should ==attr['code']
+    v.should ==attr['body']
+  end
 end
 
 When /^I add machines for the user and update its used quota$/ do |table|
@@ -59,15 +189,21 @@ end
 When /^I use key activation to activate devices$/  do |table|
   # table is a | Machine1     | Desktop      |
   attr = table.hashes.first
-  user_email = @current_user[:email]
+  user_email = attr['email']||=@current_user[:email]
   partner_name = (@partner && @partner.company_info.name) || @current_partner[:name]
   @current_partner[:id] ||= @bus_site.admin_console_page.partner_id
 
   @new_clients =[]
   @clients =[] if @clients.nil?
-  client = Client.new(@key, user_email, @user_password, partner_name, @partner.partner_info.type, attr['machine_name'])
+  type = (@partner && @partner.partner_info.type)||@product_name
+  client = Client.new(@key, user_email, @user_password, partner_name, type, attr['machine_name'])
   @new_clients << client
   @clients << client
 end
+
+When /^Activate key response should be (.+)$/  do |msg|
+  @clients[0].resp.should include(msg)
+end
+
 
 

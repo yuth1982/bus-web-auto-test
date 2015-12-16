@@ -114,11 +114,9 @@ Then /^I run (identification|first notification|second notification|third notifi
   end
 end
 
-
-
-
-
-
-
+And /^I force current MozyHome account to billed$/ do
+  DBHelper.set_expiration_time(@user_id,1)
+  run_phoenix_process_subscription_script(@user_id)
+end
 
 

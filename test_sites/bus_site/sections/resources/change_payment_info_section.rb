@@ -28,6 +28,9 @@ module Bus
     element(:submit, id: "submit_button")
     element(:payment_info_table, css: "form#change_cc_form table")
 
+    element(:verify_passowrd_input, xpath: "//div[@class='popup-window']//input[@name='password']")
+    element(:submit_popup_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Submit']")
+
     #these elements will pop up when change billing country with inconsistent value
     element(:contact_vat_number, xpath: "//input[@id='vat_num']")
     element(:contact_chg_country_select, xpath: "//select[@id='country_and_vat_contact_country']")
@@ -42,6 +45,7 @@ module Bus
       unless contact_info.country.nil?
         cc_country_select.select(contact_info.country)
         alert_accept if alert_present?
+        wait_until_bus_section_load
         case contact_info.country
           when 'United States'
             cc_state_us_select.select(contact_info.state_abbrev)
@@ -64,6 +68,8 @@ module Bus
     #
     # Returns nothing
     def update_credit_card_info(credit_card)
+      wait_until_bus_section_load
+      wait_until {modify_credit_card_cb.visible?}
       modify_credit_card_cb.check
       cc_name_tb.type_text(credit_card.full_name) unless credit_card.full_name.nil?
       cc_no_tb.type_text(credit_card.number) unless credit_card.number.nil?
@@ -72,8 +78,15 @@ module Bus
       cc_exp_yyyy_select.select(credit_card.expire_year) unless credit_card.expire_year.nil?
     end
 
-    def submit_contact_cc_changes
+    def submit_contact_cc_changes(password = QA_ENV['bus_password'])
       submit.click
+      verify_password(password)
+    end
+
+    def verify_password(password)
+      wait_until{ verify_passowrd_input.visible? } # wait for load delete password div
+      verify_passowrd_input.type_text(password)
+      submit_popup_btn.click
     end
 
     # Public: Messages for change payment information actions
@@ -84,10 +97,14 @@ module Bus
     #
     # Returns success or error message text
     def messages
+      wait_until_bus_section_load
+      wait_until {message_div.visible?}
       message_div.text
     end
 
     def modify_cc_error_message
+      wait_until_bus_section_load
+      wait_until {cc_error_div.visible?}
       cc_error_div.text
     end
 

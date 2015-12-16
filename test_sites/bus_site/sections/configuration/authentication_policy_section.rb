@@ -20,7 +20,7 @@ module Bus
     #element(:bind_password, id: "bind_password")
     element(:test_ad_connection, id: "test_ad_connection")
     # SAML Authentication Tab with Horizon Application Manager selected
-    element(:tab_titles, xpath: "//div[@id='authentication_policies-edit-tabs']/ul")
+    element(:tab_titles, xpath: "//div[contains(@id,'authentication_policie')]/ul[@class='tab-titles']")
     element(:web_auth_enable_rd, id: "data_saml_connection_webauth_true")
     element(:mac_only_rd, id: "data_saml_connection_webauth_mac")
     element(:web_auth_disable_rd, id: "data_saml_connection_webauth_false")
@@ -46,10 +46,16 @@ module Bus
     element(:user_name, xpath: "//ul[@class='tab-panes']/li[3]//div[3]/div/input")
     element(:name, xpath: "//ul[@class='tab-panes']/li[3]//div[2]/div/input")
     element(:loading_link, xpath: "//a[contains(@onclick,'toggle_module')]")
+    element(:sync_safeguards_checkbox, xpath: "//input[@id='data_sync_options_safeguard']")
     # Directory Service Provider
     element(:provider_ldap_pull_rd, id: "data_provider_ldap")
     element(:provider_ldap_push_rd, id: "data_provider_ldap_push")
     element(:provider_horizon_rd, id: "data_provider_horizon")
+
+    # Enable SSO for Admins to log in with their network credentials
+    element(:enable_sso_admin_chexkbox, id: "data_allow_admin_login_via_sso")
+
+    element(:reauth_confirm_btn, xpath: "//input[@value='Confirm']")
 
     # Public: Select authentication provider
     #
@@ -57,22 +63,26 @@ module Bus
     #   @bus_admin_console_page.authentication_policy_section.select_auth('LDAP')
     #
     # Returns nothing
-    def select_auth(provider)
+    def select_auth(provider, save = true)
       case provider
-      when 'Mozy'
-        provider_mozy_rd.check
-      when 'Directory Service'
-        provider_ldap_rd.check
+        when 'Mozy'
+          wait_until{provider_mozy_rd.visible?}
+          provider_mozy_rd.check
+        when 'Directory Service'
+          wait_until{provider_ldap_rd.visible?}
+          provider_ldap_rd.check
       else
         raise "Unable to find provider of #{provider}"
       end
       wait_until_bus_section_load
-      save_changes
-      confirm_change_auth
-      wait_until_bus_section_load
+      if save
+        save_changes
+        confirm_change_auth
+        wait_until_bus_section_load
+      end
     end
 
-    def select_ds_provider(provider)
+    def select_ds_provider(provider, save = true)
       case provider
         when 'horizon'
           provider_horizon_rd.check
@@ -84,9 +94,11 @@ module Bus
           raise "Unable to find provider of #{provider}"
       end
       wait_until_bus_section_load
-      save_changes
-      confirm_change_auth
-      wait_until_bus_section_load
+      if save
+        save_changes
+        confirm_change_auth
+        wait_until_bus_section_load
+      end
     end
 
     def provider_mozy_checked?
@@ -110,6 +122,15 @@ module Bus
         auth_config_fields.check
       else
         auth_config_fields.uncheck
+      end
+    end
+
+    # check enable SSO for Admins to log in with their network credentials
+    def check_admin_sso(check = true)
+      if check
+        enable_sso_admin_chexkbox.check
+      else
+        enable_sso_admin_chexkbox.uncheck
       end
     end
 
@@ -231,7 +252,7 @@ module Bus
       (1..number).each do |num|
         find(:id, "add-#{type}-rule").click
         find(:xpath, "//ol[@id='#{type}-rules']//li[#{num}]//input").set(rule[num])
-        if drop_down_content[num] != ''
+        if (!drop_down_content.nil?) && drop_down_content[num] != ''
           find(:xpath, "//ol[@id='#{type}-rules']//select[@name='data[rules][#{type}][#{num}][#{type_action_hash[type]}]']").select(drop_down_content[num])
         end
         Log.debug('add a new rule')
@@ -240,22 +261,29 @@ module Bus
 
     # Public: Click the save changes button
     #
-    def save_changes
+    def save_changes(password = QA_ENV['bus_password'],type = 'default')
       save_changes_button.click
-      confirm_change_auth
+      confirm_change_auth(password, type)
     end
 
-    def confirm_change_auth
+    def confirm_change_auth(password = QA_ENV['bus_password'],type = 'default')
       if all(:css, 'div#change-provider-confirm-box').size >=1 && find(:css, 'div#change-provider-confirm-box').visible?
         find(:css, 'div#change-provider-confirm-box>div>input[value=Submit]').click
-        find(:css, 'div#auth_config_fields>div>div>input[name="password"]').set(QA_ENV['bus_password'])
-        find(:css, 'div#auth_config_fields>div>div>input[value=Submit]').click
+        # when LDAP admin change auth type will need AD re-auth
+        if type == 'default'
+          find(:css, 'div#auth_config_fields>div>div>input[name="password"]').set(password)
+          find(:css, 'div#auth_config_fields>div>div>input[value=Submit]').click
+        else
+          wait_until{reauth_confirm_btn.visible?}
+          reauth_confirm_btn.click
+        end
       end
     end
 
     # Public: The message show after saving changes
     #
     def result_message
+      wait_until{authentication_policies_edit_errors.visible?}
       authentication_policies_edit_errors.text
     end
 
@@ -492,6 +520,15 @@ module Bus
       fillin_port(connection_info.port)
       fillin_base_dn(connection_info.base_dn)
       fillin_user(connection_info.bind_user, connection_info.bind_password) unless (provider_ldap_push_rd.checked? or connection_info.bind_user.nil?)
+    end
+
+    def check_uncheck_sync_safeguard(check = true)
+      wait_until{sync_safeguards_checkbox.visible?}
+      if check
+        sync_safeguards_checkbox.check
+      else
+        sync_safeguards_checkbox.uncheck
+      end
     end
 
     def fillin_auth_url(auth_url)

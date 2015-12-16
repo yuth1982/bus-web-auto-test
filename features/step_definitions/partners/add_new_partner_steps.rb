@@ -217,8 +217,58 @@ Then /^Order summary table should be:$/ do |order_summary_table|
   expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
 
+When /^I select company type as (MozyPro|MozyEnterprise|Reseller|MozyEnterprise DPS)$/ do |company_type|
+  @bus_site.admin_console_page.add_new_partner_section.select_company_type(company_type)
+end
+
 Then /^(MozyPro|MozyEnterprise|Reseller) partner subscription period options should be:$/ do |type, periods_table|
   @bus_site.admin_console_page.add_new_partner_section.available_periods(type).should == periods_table.headers
+end
+
+Then /^Security field options on add new partner page should be:$/ do |security_options|
+  @bus_site.admin_console_page.add_new_partner_section.available_security_options.should == security_options.headers
+end
+
+And /^Security field default value when add partner is blank$/ do
+  @bus_site.admin_console_page.add_new_partner_section.get_security_default_value.strip.should == ''
+end
+
+And /^HIPPA security tool tip appears next to the security drop-down$/ do
+  expected_text = "HIPAA (Health Insurance Portability and Accountabilty Act) rules apply to health care providers, health plans, and health care clearinghouses in the United States of America."
+  @bus_site.admin_console_page.add_new_partner_section.get_security_tooltip.should == expected_text
+end
+
+And /^I set initial purchase and base plan for specified company type$/ do |table|
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_partner'])
+  attributes = table.hashes.first
+  type = attributes['company type']
+  @bus_site.admin_console_page.add_new_partner_section.fill_company_type(type)
+  case type
+    when CONFIGS['bus']['company_type']['mozypro']
+      @partner = Bus::DataObj::MozyPro.new
+      @partner.base_plan = attributes["base plan"] || 0
+    when CONFIGS['bus']['company_type']['mozyenterprise']
+      @partner = Bus::DataObj::MozyEnterprise.new
+      @partner.server_plan = attributes["server plan"] || "None"
+      @partner.num_enterprise_users = attributes["users"] || 0
+      @partner.num_server_add_on = attributes["server add on"] || 0
+    when CONFIGS['bus']['company_type']['reseller']
+      @partner = Bus::DataObj::Reseller.new
+      @partner.reseller_type = attributes["reseller type"] || attributes["reseller type"].nil?
+      @partner.reseller_quota = attributes["reseller quota"] || 0
+    else
+      raise "Error: Company type #{type} does not exist."
+  end
+  @partner.partner_info.type = type
+  @partner.subscription_period = attributes['period']
+  @bus_site.admin_console_page.add_new_partner_section.fill_subscription_period(@partner.subscription_period)
+  @bus_site.admin_console_page.add_new_partner_section.fill_initial_purchase(@partner)
+end
+
+
+Then /(MozyPro|MozyEnterprise|Reseller) VMBU tool tip should appear next to the Server Add Ons$/ do |partner_type|
+  vmbu_text = 'Server Add On is used for physical and virtual servers.'
+  @bus_site.admin_console_page.add_new_partner_section.get_vmbu_tooltip(@partner).should == vmbu_text
 end
 
 When /^I add a new sub partner:$/ do |sub_partner_table|
@@ -323,3 +373,16 @@ When /^I (Enable|Disable) autogrow$/ do |status|
     else
   end
 end
+
+Then /^storage based plan shows while user based plan and server add-on not show$/ do
+  array = @bus_site.admin_console_page.add_new_partner_section.check_mozyenterprise_dps_plan
+  # user_plan,storage_plan,server_addon_plan
+  array[0].should == false
+  array[1].should == true
+  array[2].should == false
+end
+
+Then /^Rate schedule can not be choosen when add partner$/ do
+  @bus_site.admin_console_page.add_new_partner_section.rate_schedule_present.should == false
+end
+

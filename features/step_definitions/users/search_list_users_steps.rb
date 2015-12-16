@@ -9,6 +9,7 @@ When /^I search user by:$/ do |search_key_table|
 
   attributes['keywords'] = @partner.admin_info.email if attributes['keywords'] == '@mh_user_email'
   attributes['keywords'] = @new_users[0].name if attributes['keywords'] == '@user_name'
+  attributes['keywords'] = @new_users[0].email if attributes['keywords'] == '@user_email'
   attributes['keywords'] = @existing_user_email if attributes['keywords'] == '@existing_user_email'
   attributes['keywords'] = @existing_admin_email if attributes['keywords'] == '@existing_admin_email'
 

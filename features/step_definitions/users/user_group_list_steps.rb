@@ -4,7 +4,7 @@ When /^I navigate to Add User Group section$/ do
 end
 
 When /^I view user group details by name: (.+)$/ do |group_name|
-  @bus_site.admin_console_page.user_group_list_section.view_user_group(group_name)
+  @bus_site.admin_console_page.user_group_list_section.edit_user_group(group_name)
 end
 
 Then /^(Bundled|Itemized) user groups table should be:$/ do |type, ug_table|
@@ -41,4 +41,8 @@ end
 
 When /^I refresh User Group list section$/ do
   @bus_site.admin_console_page.user_group_list_section.refresh_bus_section
+end
+
+When /^I set user group filter to (.+)$/ do |filter|
+  @bus_site.admin_console_page.list_user_groups_section.set_user_group_filter(filter)
 end

@@ -1,6 +1,6 @@
 require "#{File.dirname(__FILE__)}/../../test_sites/test_sites"
 
-Capybara.register_driver :firefox do |app|
+def firefox_profile
   profile = Selenium::WebDriver::Firefox::Profile.new
   profile['browser.download.folderList'] = 2
   profile['browser.download.dir'] = FileHelper.ff_download_path
@@ -8,11 +8,14 @@ Capybara.register_driver :firefox do |app|
   profile['browser.download.lastDir'] = FileHelper.ff_download_path
   profile['browser.download.manager.showWhenStarting'] = false
   profile['browser.download.manager.closeWhenDone'] = true
-  profile['browser.helperApps.neverAsk.saveToDisk'] = "application/csv;text/csv;application/vnd.ms-excel;application/x-msi;application/mzd;text/html;application/json;application/octet-stream;
-  application/x-msdos-program;application/x-apple-diskimage;application/x-debian-, :profile => profilepackage;application/x-redhat-package-manager"
+  profile['browser.helperApps.neverAsk.saveToDisk'] = "text/plain;application/csv;text/csv;application/vnd.ms-excel;application/octet-stream;application/x-msdos-program;application/x-apple-diskimage;application/x-debian-package;application/x-redhat-package-manager"
   profile.assume_untrusted_certificate_issuer = false
   #profile.native_events = true
-  Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => profile)
+  profile
+end
+
+Capybara.register_driver :firefox do |app|
+  Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => firefox_profile)
 end
 
 Capybara.register_driver :firefox_profile do |app|
@@ -34,8 +37,18 @@ Capybara.register_driver :firefox_debug do |app|
   Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => profile)
 end
 
+def chrome_prefs
+  prefs = {
+      :download => {
+          :prompt_for_download => false,
+          :default_directory => FileHelper.ff_download_path
+      }
+  }
+  prefs
+end
+
 Capybara.register_driver :chrome do |app|
-  Capybara::Selenium::Driver.new(app, :browser => :chrome)
+  Capybara::Selenium::Driver.new(app, :browser => :chrome, :prefs => chrome_prefs)
 end
 
 Capybara.register_driver :ie do |app|
@@ -50,6 +63,21 @@ Capybara.register_driver :webkit do |app|
   Capybara::Driver::Webkit.new(app, options)
 end
 
+Capybara.register_driver :remote_browser  do |app|
+  url = 'http://127.0.0.1:4444/wd/hub'
+  case BROWSER
+    when "remote_firefox"
+      capabilities = Selenium::WebDriver::Remote::Capabilities.firefox(:firefox_profile => firefox_profile)
+    when "remote_chrome"
+          capabilities = Selenium::WebDriver::Remote::Capabilities.chrome('chromeOptions' => {:prefs => chrome_prefs})
+    when "remote_ie"
+      capabilities = Selenium::WebDriver::Remote::Capabilities.internet_explorer
+  end
+
+  Capybara::Selenium::Driver.new(app, :browser => :remote, :url => url,
+                                 :desired_capabilities => capabilities)
+end
+
 case BROWSER
   when "firefox"
     Capybara.default_driver = :firefox
@@ -61,8 +89,14 @@ case BROWSER
     Capybara.default_driver = :ie
   when "webkit"
     Capybara.default_driver = :webkit
-  when 'firefox_debug'
+  when "firefox_debug"
     Capybara.default_driver = :firefox_debug
+  when "remote_firefox"
+    Capybara.default_driver = :remote_browser
+  when "remote_chrome"
+    Capybara.default_driver = :remote_browser
+  when "remote_ie"
+    Capybara.default_driver = :remote_browser
   else
     raise "Unknown browser, please check env variable br"
 end

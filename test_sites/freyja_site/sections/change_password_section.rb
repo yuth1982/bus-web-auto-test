@@ -2,17 +2,18 @@ module Freyja
   # This class provides actions for add new admin section
   class ChangePasswordSection < SiteHelper::Section
     element(:change_pw_action, id: "panel-action-change-password")
-    element(:old_password_tb, xpath: "//*[@id='change_password_dialog']//*[@id='old-pw']")
-    element(:new_password_tb, xpath: "//*[@id='change_password_dialog']//*[@id='new-pw']")
-    element(:password_confirm_tb, xpath: "//*[@id='change_password_dialog']//*[@id='pw-confirm']")
-    element(:change_pw_btn, xpath: "//*[@id='change_password_dialog']//a//*[text()='Change password']")
-    element(:pw_change_message, xpath: "//*[@id='flash']//*[@id='noid']//span")
-    element(:pw_change_confirm, xpath: "//*[@id='flash']//a//*[text()='OK']")
+    element(:old_password_tb, xpath: "//input[@id='old-pw']")
+    element(:new_password_tb, xpath: "//input[@id='new-pw']")
+    element(:password_confirm_tb, xpath: "//input[@id='pw-confirm']")
+    element(:change_pw_btn, xpath: "//span[text()='Change password']")
+    element(:pw_change_message, xpath: "//div[@id='noid']//span")
+    element(:pw_change_confirm, xpath: "//div[@id='flash']//span[text()='OK']")
     #log out
-    element(:log_out_action, id: "panel-action-sign-out")
-    element(:log_out_yes_btn, xpath: "//*[@id='logout_confirm_dialog']//a//*[text()='Yes']")
+    element(:log_out_action, xpath: "//li[@id='panel-action-sign-out']")
+    element(:log_out_yes_btn, xpath: "//div[@id='logout_confirm_dialog']//span[text()='Yes']")
     #event history
-    element(:event_history_action, id: "panel-action-event-history")
+    element(:event_history_action, xpath: "//li[@id='panel-action-event-history']")
+
 
     # Public: Change user login password
     #
@@ -24,14 +25,10 @@ module Freyja
     #
     # Returns nothing
     def change_password(old_password, new_password)
-        sleep 3
-        old_password_tb.type_text(old_password)
-        new_password_tb.type_text(new_password)
-        sleep 3
-        password_confirm_tb.type_text(new_password)
-        sleep 3
-        change_pw_btn.click
-        sleep 3
+       old_password_tb.type_text(old_password)
+       new_password_tb.type_text(new_password)
+       password_confirm_tb.type_text(new_password)
+       change_pw_btn.click
     end
 
     # Public: Messages for change password
@@ -42,8 +39,6 @@ module Freyja
     #
     # Returns message text
     def password_changed_messages
-      sleep 3
-      wait_until {pw_change_message.visible?}
       pw_change_message.text
     end
 

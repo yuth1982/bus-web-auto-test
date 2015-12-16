@@ -57,7 +57,7 @@ module Phoenix
     element(:continue_btn, css: "input.img-button")
     element(:back_btn, id: "back_button")
     element(:submit_btn, id: "submit_button")
-    element(:error_message, xpath: "//div[@id='cybersourceErrors']//ul//li")
+    element(:error_message, css: "p.error")
     element(:pro_error_message, xpath: "//*[@id='ariaErrors']/ul/li")
 
     # Public elements & methods
@@ -80,6 +80,7 @@ module Phoenix
     def pro_fill_out(partner)
       # for pro, mainly the cc info - then click 'same as' link
       # card info
+      cc_type_select.select(partner.credit_card.type) unless partner.credit_card.type["type"].nil?
       cc_no_tb.type_text(partner.credit_card.number)
       cvv_tb.type_text(partner.credit_card.cvv)
       cc_exp_mm_select.select(partner.credit_card.expire_month)
@@ -174,11 +175,14 @@ module Phoenix
       #
       if partner.partner_info.type.eql?("MozyPro")
         pro_fill_out(partner)
+        submit_btn.click
       else
-        home_fill_out(partner)
+        continue_btn.click
+
+        # code for filling in payment info in cybersource page
+        @orther_site = OtherSites.new
+        @orther_site.cybersource_page.fill_billing_info(partner)
       end
-      # submission
-      submit_btn.click
     end
 
     def pro_billing_country

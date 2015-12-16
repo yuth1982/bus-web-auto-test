@@ -11,6 +11,8 @@ module Bus
     element(:full_search_cb, id: 'full_search')
     element(:clear_search_link, xpath: "//a[text()='Clear search']")
     element(:search_results_table, css: 'div#partner-list-content table.table-view')
+    element(:searched_partner_name_txt, xpath: "//table[@class='table-view']//a[contains(@href,'/partner/show')]")
+    element(:searched_partner_type_txt, xpath: "//table[@class='table-view']//td[5]")
 
     # Public: Search partner
     #
@@ -22,7 +24,7 @@ module Bus
     #  @bus_admin_console_page.search_list_partner_section.search_partner("qa1+test@mozy.com")
     #
     # Returns nothing
-    def search_partner(search_key, filter = 'None', include_sub_partners = true, full_search =true)
+    def search_partner(search_key, filter = 'None', include_sub_partners = true, full_search = false)
       # By default, include sub partners is checked
       if include_sub_partners
         include_sub_partners_cb.check
@@ -52,6 +54,11 @@ module Bus
     def search_results_hashes
       sleep 3 #sometimes automation is still too fast which causes StaledElementError
       search_results_table.rows_text.map{ |row| Hash[*search_results_table.headers_text.zip(row).flatten] }
+    end
+
+    # get partner name from search result when serach by email, for act as existing partner
+    def get_partner_name
+      searched_partner_name_txt.text
     end
 
     # Public: Search results table header row text
@@ -86,10 +93,7 @@ module Bus
     #
     # Returns nothing
     def view_partner_detail(search_key)
-      # Make sure include sub partners checked
-      include_sub_partners_cb.check
-      wait_until_bus_section_load # Wait to load sub partners
-      find(:xpath, "//a[text()='#{search_key}']").click
+      find_link(search_key).click
     end
 
     # Public: View partner's root admin detail by click root admin email/username
@@ -109,6 +113,10 @@ module Bus
 
     def search_input_text
       search_partner_tb.value
+    end
+
+    def get_partner_type
+      searched_partner_type_txt.text
     end
   end
 end

@@ -13,10 +13,10 @@ module Bus
     attr_accessor :subdomain, :type
 
     # type could be ladp, horizon or mozy
-    def initialize(subdomain = nil, type = 'mozy')
+    def initialize(subdomain = nil, type = 'mozy', account_type = 'user')
       @subdomain = subdomain
       @type = type
-      self.class.set_url("https://#{@subdomain}.mozypro.com/login/user")
+      self.class.set_url("https://#{@subdomain}.mozypro.com/login/#{account_type}")
     end
 
     # Public: login bus admin console

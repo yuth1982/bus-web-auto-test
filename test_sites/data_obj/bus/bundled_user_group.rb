@@ -4,7 +4,8 @@ module Bus
     class BundledUserGroup
       attr_accessor :name,
                     :storage_type, :assigned_quota, :limited_quota, :server_support,
-                    :enable_stash
+                    :enable_stash,
+                    :install_region_override
 
       def initialize
         @name = "#{Forgery::Name.company_name} Group"

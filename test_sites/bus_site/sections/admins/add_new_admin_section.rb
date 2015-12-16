@@ -7,21 +7,23 @@ module Bus
     elements(:roles_cb,xpath: "//div[@id='roles']/ul/li/label")
     element(:save_changes_btn,xpath: "//div[@id='admin-new-content']//form/table//input[@value='Save Changes']")
     element(:message, xpath: "//div[@id='admin-new-errors']/ul/li")
+    element(:parent_admin_select, xpath: "//select[contains(@name,'parent_admin_id')]")
 
     def add_new_admin(admin_obj)
       name_tb.set(admin_obj.name)
       email_tb.set(admin_obj.email)
-      #TODO - parent admin selection implementation
+      parent_admin_select.find(:xpath, "//option[contains(text(),'#{admin_obj.parent}')]").select_option unless admin_obj.parent.to_s == '0'
 
       admin_obj.user_groups.each do | ug |
         Log.debug("Processing grant user group #{ug} to admin")
-        e = find(:xpath, "//label[text() = ' #{ug}']")
+        e = find(:xpath, "//div[@id='user_groups']//label[text() = ' #{ug}']")
         e.child[0].check
       end
 
       admin_obj.roles.each do | r |
         Log.debug("Processing grant role #{r} to admin")
-        e = find(:xpath, "//label[text() = ' #{r}']")
+        # if the user_groups and roles have the same name, then will select user groups instead of role
+        e = find(:xpath, "//div[@id='roles']//label[text() = ' #{r}']")
         e.child[0].check
       end
       save_changes_btn.click

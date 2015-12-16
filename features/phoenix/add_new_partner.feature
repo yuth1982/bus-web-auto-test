@@ -102,8 +102,8 @@ Background:
   Scenario: 20967 Add a new IE monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-    | period | base plan | country | vat number |
-    | 1      | 50 GB     | Ireland | IE9691104A |
+    | period | base plan | country | vat number | cc number        |
+    | 1      | 50 GB     | Ireland | IE9691104A | 4319402211111113 |
     Then the order summary looks like:
     | Description        | Price  | Quantity | Amount |
     | 50 GB - Monthly    | €15.99 | 1        | €15.99 |
@@ -144,8 +144,8 @@ Background:
   Scenario: 20968 Add a new IE yearly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-    | period | base plan | country | vat number | security |
-    | 12     | 250 GB    | Ireland |            |   HIPAA  |
+    | period | base plan | country | vat number | security | cc number        |
+    | 12     | 250 GB    | Ireland |            |   HIPAA  | 4319402211111113 |
     Then the order summary looks like:
     | Description        | Price     | Quantity | Amount    |
     | 250 GB - Annual    | €824.89   | 1        | €824.89   |
@@ -186,8 +186,8 @@ Background:
   Scenario: 20969 Add a new IE biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-    | period | base plan | country | vat number | server plan |
-    | 24     | 1 TB      | Ireland | IE9691104A | yes         |
+    | period | base plan | country | vat number | server plan | cc number        |
+    | 24     | 1 TB      | Ireland | IE9691104A | yes         | 4319402211111113 |
     Then the order summary looks like:
     | Description            | Price     | Quantity | Amount    |
     | 1 TB - Biennial        | €6,299.79 | 1        | €6,299.79 |
@@ -229,8 +229,8 @@ Background:
   Scenario: 20970 Add a new UK monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-    | period | base plan | country        | vat number  |
-    | 1      | 100 GB    | United Kingdom | GB117223643 |
+    | period | base plan | country        | vat number  | cc number        |
+    | 1      | 100 GB    | United Kingdom | GB117223643 | 4916783606275713 |
     Then the order summary looks like:
     | Description            | Price  | Quantity | Amount |
     | 100 GB - Monthly       | £26.99 | 1        | £26.99 |
@@ -270,8 +270,8 @@ Background:
   Scenario: 20971 Add a new UK yearly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-    | period | base plan | country        | vat number  | server plan |
-    | 12     | 10 GB     | United Kingdom | GB117223643 | yes         |
+    | period | base plan | country        | vat number  | server plan | cc number        |
+    | 12     | 10 GB     | United Kingdom | GB117223643 | yes         | 4916783606275713 |
     Then the order summary looks like:
     | Description          | Price   | Quantity | Amount  |
     | 10 GB - Annual       | £76.89  | 1        | £76.89  |
@@ -312,14 +312,14 @@ Background:
   Scenario: 20972 Add a new UK biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-    | period | base plan | country        | vat number  |
-    | 24     | 500 GB    | United Kingdom |             |
+    | period | base plan | country        | vat number  | cc number        |
+    | 24     | 500 GB    | United Kingdom |             | 4916783606275713 |
     Then the order summary looks like:
     | Description            | Price     | Quantity | Amount    |
     | 500 GB - Biennial      | £2,624.79 | 1        | £2,624.79 |
     | Subscription Price     | £2,624.79 |          | £2,624.79 |
-    | VAT                    | £603.70   |          | £603.70   |
-    | Total Charge           | £3,228.49 |          | £3,228.49 |
+    | VAT                    | £524.96   |          | £524.96   |
+    | Total Charge           | £3,149.75 |          | £3,149.75 |
     And the partner is successfully added.
     And they have logged in and verified their account.
     And I log in bus admin console as administrator
@@ -354,8 +354,8 @@ Background:
   Scenario: 20973 Add a new DE monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-    | period | base plan | country | vat number  | server plan | security |
-    | 1      | 500 GB    | Germany | DE812321109 | yes         |   HIPAA  |
+    | period | base plan | country | vat number  | server plan | security | cc number        |
+    | 1      | 500 GB    | Germany | DE812321109 | yes         |   HIPAA  | 4188181111111112 |
     Then the order summary looks like:
     | Beschreibung           | Preis   | Menge  | Betrag  |
     | 500 GB - Monatlich     | 149,99€ | 1      | 149,99€ |
@@ -396,14 +396,14 @@ Background:
   Scenario: 20974 Add a new DE biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-    | period | base plan | country | vat number  |
-    | 24     | 100 GB    | Germany |             |
+    | period | base plan | country | vat number  | cc number        |
+    | 24     | 100 GB    | Germany |             | 4188181111111112 |
     Then the order summary looks like:
     | Beschreibung           | Preis   | Menge  | Betrag  |
     | 100 GB - 2-Jahre       | 650,79€ | 1      | 650,79€ |
     | Abonnementpreis        | 650,79€ |        | 650,79€ |
-    | Umsatzsteuer           | 149,68€ |        | 149,68€ |
-    | Gesamtbelastung        | 800,47€ |        | 800,47€ |
+    | Umsatzsteuer           | 123,65€ |        | 123,65€ |
+    | Gesamtbelastung        | 774,44€ |        | 774,44€ |
     And the partner is successfully added.
     And they have logged in and verified their account.
     And I log in bus admin console as administrator
@@ -438,8 +438,8 @@ Background:
   Scenario: 20975 Add a new DE biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-    | period | base plan | country | vat number  |
-    | 24     | 250 GB    | Germany | DE812321109 |
+    | period | base plan | country | vat number  | cc number        |
+    | 24     | 250 GB    | Germany | DE812321109 | 4188181111111112 |
     Then the order summary looks like:
     | Beschreibung           | Preis     | Menge  | Betrag    |
     | 250 GB - 2-Jahre       | 1.574,79€ | 1      | 1.574,79€ |
@@ -479,8 +479,8 @@ Background:
   Scenario: 20976 Add a new FR monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-    | period | base plan | country | vat number    | server plan |
-    | 1      | 250 Go    | France  | FR08410091490 | yes         |
+    | period | base plan | country | vat number    | server plan | cc number        |
+    | 1      | 250 Go    | France  | FR08410091490 | yes         | 4485393141463880 |
     Then the order summary looks like:
     | Description             | Prix      | Quantité  | Montant   |
     | 250 Go - Mensuel        | 74,99€    | 1         | 74,99€    |
@@ -521,8 +521,8 @@ Background:
   Scenario: 20977 Add a new FR yearly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-    | period | base plan | country | vat number    |
-    | 12      | 500 Go   | France  | FR08410091490 |
+    | period | base plan | country | vat number    | cc number        |
+    | 12      | 500 Go   | France  | FR08410091490 | 4485393141463880 |
     Then the order summary looks like:
     | Description             | Prix      | Quantité  | Montant   |
     | 500 Go - Annuel         | 1 649,89€ | 1         | 1 649,89€ |
@@ -562,14 +562,14 @@ Background:
   Scenario: 20978 Add a new FR biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-    | period | base plan | country | vat number |
-    | 24      | 50 Go    | France  |            |
+    | period | base plan | country | vat number | cc number        |
+    | 24     |  50 Go    | France  |            | 4485393141463880 |
     Then the order summary looks like:
     | Description              | Prix    | Quantité | Montant |
     | 50 Go - Bisannuel        | 335,79€ | 1        | 335,79€ |
     | Prix d'abonnement        | 335,79€ |          | 335,79€ |
-    | TVA                      | 77,23€  |          | 77,23€  |
-    | Montant total des frais  | 413,02€ |          | 413,02€ |
+    | TVA                      | 67,16€  |          | 67,16€  |
+    | Montant total des frais  | 402,95€ |          | 402,95€ |
     And the partner is successfully added.
     And they have logged in and verified their account.
     And I log in bus admin console as administrator
@@ -607,8 +607,8 @@ Background:
   Scenario: 20979 Add a new IE monthly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-    | period | base plan | coupon              | country | vat number | server plan |
-    | 1      | 10 GB     | 10PERCENTOFFOUTLINE | Ireland | IE9691104A | yes         |
+    | period | base plan | coupon              | country | vat number | server plan | cc number        |
+    | 1      | 10 GB     | 10PERCENTOFFOUTLINE | Ireland | IE9691104A | yes         | 4319402211111113 |
     Then the order summary looks like:
     | Description           | Price   | Quantity | Amount  |
     | 10 GB - Monthly       | €7.99   | 1        | €7.99   |
@@ -616,8 +616,8 @@ Background:
     | Subscription Price    | €10.98  |          | €10.98  |
     | Discounts             | - €1.10 |          | - €1.10 |
     | Subtotal              | €9.88   |          | €9.88   |
-    | VAT                   | €2.53   |          | €2.53   |
-    | Total Charge          | €12.41  |          | €12.41  |
+    | VAT                   | €2.27   |          | €2.27   |
+    | Total Charge          | €12.15  |          | €12.15  |
     And the partner is successfully added.
     And they have logged in and verified their account.
     And I log in bus admin console as administrator
@@ -652,8 +652,8 @@ Background:
   Scenario: 20980 Add a new DE biennial basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-    | period | base plan | coupon              | country | vat number  | server plan |
-    | 12     | 50 GB     | 10PERCENTOFFOUTLINE | Germany |             | yes         |
+    | period | base plan | coupon              | country | vat number  | server plan | cc number        |
+    | 12     | 50 GB     | 10PERCENTOFFOUTLINE | Germany |             | yes         | 4188181111111112 |
     Then the order summary looks like:
     | Beschreibung          | Preis    | Menge  | Betrag   |
     | 50 GB - jährlich      | 175,89€  | 1      | 175,89€  |
@@ -661,8 +661,8 @@ Background:
     | Abonnementpreis       | 236,28€  |        | 236,28€  |
     | Rabatte               | - 23,63€ |        | - 23,63€ |
     | Zwischensumme         | 212,65€  |        | 212,65€  |
-    | Umsatzsteuer          | 54,34€   |        | 54,34€   |
-    | Gesamtbelastung       | 266,99€  |        | 266,99€  |
+    | Umsatzsteuer          | 40,41€   |        | 40,41€   |
+    | Gesamtbelastung       | 253,06€  |        | 253,06€  |
     And the partner is successfully added.
     And they have logged in and verified their account.
     And I log in bus admin console as administrator
@@ -697,8 +697,8 @@ Background:
   Scenario: 20982 Add a new FR yearly basic MozyPro partner
     When I am at dom selection point:
     And I add a phoenix Pro partner:
-    | period | base plan | coupon              | country | vat number    |
-    | 12     | 1 To      | 10PERCENTOFFOUTLINE | France  | FR08410091490 |
+    | period | base plan | coupon              | country | vat number    | cc number        |
+    | 12     | 1 To      | 10PERCENTOFFOUTLINE | France  | FR08410091490 | 4485393141463880 |
     Then the order summary looks like:
     | Description             | Prix      | Quantité  | Montant   |
     | 1 To - Annuel           | 3 299,89€ | 1         | 3 299,89€ |

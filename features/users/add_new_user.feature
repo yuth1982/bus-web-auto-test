@@ -40,15 +40,15 @@ Feature: Add a new user
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     Then User search results should be:
-      | Name        | User Group            | Sync     | Storage                |
-      | TC.20875-1  | (default user group)  | Enabled  | Generic 10 GB (Limited)|
-      | TC.20875-2  | (default user group)  | Disabled | Generic Shared         |
-      | TC.20875-3  | (default user group)  | Disabled | Generic 10 GB (Limited)|
-      | TC.20875-4  | (default user group)  | Disabled | Generic Shared         |
-      | TC.20875-5  | (default user group)  | Disabled | Generic Shared         |
-      | TC.20875-6  | (default user group)  | Disabled | Generic Shared         |
-      | TC.20875-7  | (default user group)  | Disabled | Generic Shared         |
-      | TC.20875-8  | (default user group)  | Disabled | Generic Shared         |
+      | Name        | User Group            | Sync     | Storage         |
+      | TC.20875-1  | (default user group)  | Enabled  |  10 GB (Limited)|
+      | TC.20875-2  | (default user group)  | Disabled |  Shared         |
+      | TC.20875-3  | (default user group)  | Disabled |  10 GB (Limited)|
+      | TC.20875-4  | (default user group)  | Disabled |  Shared         |
+      | TC.20875-5  | (default user group)  | Disabled |  Shared         |
+      | TC.20875-6  | (default user group)  | Disabled |  Shared         |
+      | TC.20875-7  | (default user group)  | Disabled |  Shared         |
+      | TC.20875-8  | (default user group)  | Disabled |  Shared         |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -101,15 +101,15 @@ Feature: Add a new user
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     Then User search results should be:
-      | Name        | User Group     | Sync     | Storage                |
-      | TC.20910-1  | TC.20910 UG 1  | Enabled  | Generic 10 GB (Limited)|
-      | TC.20910-2  | TC.20910 UG 1  | Disabled | Generic Shared         |
-      | TC.20910-3  | TC.20910 UG 2  | Disabled | Generic 10 GB (Limited)|
-      | TC.20910-4  | TC.20910 UG 2  | Disabled | Generic Shared         |
-      | TC.20910-5  | TC.20910 UG 3  | Disabled | Generic Shared         |
-      | TC.20910-6  | TC.20910 UG 3  | Disabled | Generic Shared         |
-      | TC.20910-7  | TC.20910 UG 3  | Disabled | Generic Shared         |
-      | TC.20910-8  | TC.20910 UG 3  | Disabled | Generic Shared         |
+      | Name        | User Group     | Sync     | Storage         |
+      | TC.20910-1  | TC.20910 UG 1  | Enabled  |  10 GB (Limited)|
+      | TC.20910-2  | TC.20910 UG 1  | Disabled |  Shared         |
+      | TC.20910-3  | TC.20910 UG 2  | Disabled |  10 GB (Limited)|
+      | TC.20910-4  | TC.20910 UG 2  | Disabled |  Shared         |
+      | TC.20910-5  | TC.20910 UG 3  | Disabled |  Shared         |
+      | TC.20910-6  | TC.20910 UG 3  | Disabled |  Shared         |
+      | TC.20910-7  | TC.20910 UG 3  | Disabled |  Shared         |
+      | TC.20910-8  | TC.20910 UG 3  | Disabled |  Shared         |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -150,15 +150,15 @@ Feature: Add a new user
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     Then User search results should be:
-      | Name        | User Group            | Sync     | Storage                 |
-      | TC.20871-1  | (default user group)  | Enabled  | Desktop 10 GB (Limited) |
-      | TC.20871-2  | (default user group)  | Disabled | Desktop Shared          |
-      | TC.20871-3  | (default user group)  | Disabled | Server 10 GB (Limited)  |
-      | TC.20871-4  | (default user group)  | Disabled | Server Shared           |
-      | TC.20871-5  | (default user group)  | Disabled | Desktop Shared          |
-      | TC.20871-6  | (default user group)  | Disabled | Desktop Shared          |
-      | TC.20871-7  | (default user group)  | Disabled | Server Shared           |
-      | TC.20871-8  | (default user group)  | Disabled | Server Shared           |
+      | Name        | User Group            | Sync     | Storage                  |
+      | TC.20871-1  | (default user group)  | Enabled  | Desktop: 10 GB (Limited) |
+      | TC.20871-2  | (default user group)  | Disabled | Desktop: Shared          |
+      | TC.20871-3  | (default user group)  | Disabled | Server: 10 GB (Limited)  |
+      | TC.20871-4  | (default user group)  | Disabled | Server: Shared           |
+      | TC.20871-5  | (default user group)  | Disabled | Desktop: Shared          |
+      | TC.20871-6  | (default user group)  | Disabled | Desktop: Shared          |
+      | TC.20871-7  | (default user group)  | Disabled | Server: Shared           |
+      | TC.20871-8  | (default user group)  | Disabled | Server: Shared           |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -212,14 +212,14 @@ Feature: Add a new user
     And I sort user search results by Name
     Then User search results should be:
       | Name        | User Group     | Sync     | Storage                  |
-      | TC.20906-1  | TC.20906 UG 1  | Enabled  | Desktop 10 GB (Limited) |
-      | TC.20906-2  | TC.20906 UG 1  | Disabled | Desktop Shared          |
-      | TC.20906-3  | TC.20906 UG 2  | Disabled | Server 10 GB (Limited)  |
-      | TC.20906-4  | TC.20906 UG 2  | Disabled | Server Shared           |
-      | TC.20906-5  | TC.20906 UG 3  | Disabled | Desktop Shared          |
-      | TC.20906-6  | TC.20906 UG 3  | Disabled | Desktop Shared          |
-      | TC.20906-7  | TC.20906 UG 3  | Disabled | Server Shared           |
-      | TC.20906-8  | TC.20906 UG 3  | Disabled | Server Shared           |
+      | TC.20906-1  | TC.20906 UG 1  | Enabled  | Desktop: 10 GB (Limited) |
+      | TC.20906-2  | TC.20906 UG 1  | Disabled | Desktop: Shared          |
+      | TC.20906-3  | TC.20906 UG 2  | Disabled | Server: 10 GB (Limited)  |
+      | TC.20906-4  | TC.20906 UG 2  | Disabled | Server: Shared           |
+      | TC.20906-5  | TC.20906 UG 3  | Disabled | Desktop: Shared          |
+      | TC.20906-6  | TC.20906 UG 3  | Disabled | Desktop: Shared          |
+      | TC.20906-7  | TC.20906 UG 3  | Disabled | Server: Shared           |
+      | TC.20906-8  | TC.20906 UG 3  | Disabled | Server: Shared           |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -260,15 +260,15 @@ Feature: Add a new user
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by Name
     Then User search results should be:
-      | Name        | Sync     | Storage                |
-      | TC.20921-1  | Enabled  | Generic 10 GB (Limited)|
-      | TC.20921-2  | Disabled | Generic Shared         |
-      | TC.20921-3  | Disabled | Generic 10 GB (Limited)|
-      | TC.20921-4  | Disabled | Generic Shared         |
-      | TC.20921-5  | Disabled | Generic Shared         |
-      | TC.20921-6  | Disabled | Generic Shared         |
-      | TC.20921-7  | Disabled | Generic Shared         |
-      | TC.20921-8  | Disabled | Generic Shared         |
+      | Name        | Sync     | Storage         |
+      | TC.20921-1  | Enabled  |  10 GB (Limited)|
+      | TC.20921-2  | Disabled |  Shared         |
+      | TC.20921-3  | Disabled |  10 GB (Limited)|
+      | TC.20921-4  | Disabled |  Shared         |
+      | TC.20921-5  | Disabled |  Shared         |
+      | TC.20921-6  | Disabled |  Shared         |
+      | TC.20921-7  | Disabled |  Shared         |
+      | TC.20921-8  | Disabled |  Shared         |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -286,3 +286,80 @@ Feature: Add a new user
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
+  @TC.465 @bus @tasks_p2
+  Scenario: Mozy-465:Suspend a User
+    When I add a new MozyEnterprise partner:
+      | period | users |
+      | 12     | 2     |
+    Then New partner should be created
+    When I get the partner_id
+    And I act as newly created partner account
+    And I add new user(s):
+      | name        | user_group           | storage_type | storage_limit | devices |
+      | TC.465.User | (default user group) | Desktop      |               | 1       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    Then I suspended the user
+    And I use keyless activation to activate devices unsuccessful
+      | machine_name | machine_type |
+      | Machine1     | Desktop      |
+    Then I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.466 @bus @tasks_p2
+  Scenario: Mozy-466:Acivate a User
+    When I add a new MozyEnterprise partner:
+      | period | users |
+      | 12     | 2     |
+    Then New partner should be created
+    When I get the partner_id
+    And I act as newly created partner account
+    And I add new user(s):
+      | name        | user_group           | storage_type | storage_limit | devices |
+      | TC.466.User | (default user group) | Desktop      |               | 1       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    Then I suspended the user
+    And I use keyless activation to activate devices unsuccessful
+      | machine_name | machine_type |
+      | Machine1     | Desktop      |
+    Then I activate the user
+    And I use keyless activation to activate devices
+      | machine_name | machine_type |
+      | Machine1     | Desktop      |
+    And I upload data to device by batch
+      | machine_id                         | GB |
+      | <%=@new_clients.first.machine_id%> | 10 |
+    Then tds returns successful upload
+    Then I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.21218 @bus @tasks_p2
+  Scenario: Mozy-21218:[Bundled] Verify Add New User input Tooltips
+    When I add a new Reseller partner:
+      | period | reseller type | reseller quota | server plan |
+      | 12     | Silver        | 100            | yes         |
+    Then New partner should be created
+    And I act as newly created partner
+    Then I navigate to Add New User section from bus admin console page
+    Then I check user group (default user group) with Desktop storage limit tooltips is Min: 0 GB, Max: 100 GB
+    When I edit (default user group) Bundled user group:
+      | storage_type | assigned_quota | enable_stash | server_support |
+      | Assigned     | 50             | yes          | no             |
+    Then I navigate to Add New User section from bus admin console page
+    Then I check user group (default user group) with Desktop storage limit tooltips is Min: 0 GB, Max: 50 GB
+    When I edit (default user group) Bundled user group:
+      | storage_type | limited_quota | enable_stash | server_support |
+      | Limited      | 50            | yes          | yes            |
+    Then I navigate to Add New User section from bus admin console page
+    Then I check user group (default user group) with Desktop storage limit tooltips is Min: 0 GB, Max: 50 GB
+    Then I stop masquerading
+    And I search and delete partner account by newly created partner company name

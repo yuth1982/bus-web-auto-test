@@ -16,6 +16,10 @@ class BusSite
     Bus::UserLoginPage.new(subdomain, type)
   end
 
+  def admin_login_page(subdomain, type = 'mozy')
+    Bus::UserLoginPage.new(subdomain, type, 'admin')
+  end
+
   def user_account_page(subdomain = nil)
     Bus::UserAccountPage.new(subdomain)
   end
@@ -32,6 +36,14 @@ class BusSite
     Bus::PartnerSubdomainPage.new
   end
 
+  def partner_product_name_page
+    Bus::PartnerProductNamePage.new
+  end
+
+  def branding_page
+    Bus::BrandingPage.new
+  end
+
   def adfs_login_page
     Bus::AdfsLoginPage.new
   end
@@ -42,6 +54,22 @@ class BusSite
 
   def mysupport_page
     Bus::MySupportPage.new
+  end
+
+  def manifest_view_page
+    Bus::ManifestViewPage.new
+  end
+
+  def user_pid_login_page(pid, partner_type, prefix = 'www.mozypro.com')
+    Bus::UserPartnerIDLoginPage.new(pid, partner_type, prefix)
+  end
+
+  def user_login_bus_page
+    Bus::UserLoginBusPage.new
+  end
+
+  def partner_invoice_page
+    Bus::PartnerInvoicePage.new
   end
 end
 

@@ -41,3 +41,7 @@ Then /^Current purchased resources should (increase|be):$/ do |how, resources_ta
       raise 'unknown error'
   end
 end
+
+Then /^the storage error message of purchase resource section should be:$/ do |message|
+  @bus_site.admin_console_page.purchase_resources_section.error_message.should == message
+end

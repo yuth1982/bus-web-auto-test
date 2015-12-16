@@ -1,7 +1,7 @@
 def login(environment)
   success = true
   begin
-    @bus_site = BusSite.new
+    @bus_site = BusSite.new if @bus_site.nil?
     case environment
       when 'bus admin console'
         @bus_site.login_page.load
@@ -31,21 +31,42 @@ Given /^I log in (bus admin console|to legacy bus01) as administrator$/ do |envi
   end
 end
 
-And /^I login as mozypro admin successfully$/ do
-  @bus_site.admin_console_page.get_partner_name_topcorner.should eq(@partner.company_info.name)
+And /^I login as (.+) admin successfully$/ do |admin|
+  if admin == 'mozypro'
+    admin = @partner.company_info.name
+  elsif !(admin.match(/^@.+$/).nil?)
+    admin =  '<%=' + admin + '%>'
+    admin.replace ERB.new(admin).result(binding)
+  else
+  end
+  @bus_site.admin_console_page.get_partner_name_topcorner.should eq(admin)
 end
 
-When /^I navigate to bus admin console login page$/ do
-  @bus_site = BusSite.new
-  @bus_site.login_page.load
+When /^I navigate to (bus admin console|phoenix) login page$/ do |site|
+  if site == 'bus admin console'
+    @bus_site = BusSite.new if @bus_site.nil?
+    @bus_site.login_page.load
+  else
+    @bus_site ||= BusSite.new #In case you log into bus through the phoenix page
+    @phoenix_site ||= PhoenixSite.new
+    @phoenix_site.user_account.load
+  end
 end
 
 When /^I navigate to (.+) user login page$/ do |subdomain|
-  @bus_site = BusSite.new
+  @bus_site = BusSite.new if @bus_site.nil?
   @bus_site.user_login_page(subdomain, 'mozy').load
 end
 
 When /^I log in bus admin console with user name (.+) and password (.+)$/ do |username, password|
+  if !(username.match(/^@.+$/).nil?)
+    username =  '<%=' + username + '%>'
+    username.replace ERB.new(username).result(binding)
+  end
+  password = '' if password == 'AD user default password'
+  username = QA_ENV['bus01_admin'] if username == 'bus01_admin'
+  password = QA_ENV['bus01_pass'] if password == 'bus01_pass'
+  password = '' if password == 'Empty'
   @bus_site.login_page.login(username, password)
 end
 
@@ -61,15 +82,23 @@ Then /^Login page error message should be (.+)$/ do |messages|
   @bus_site.login_page.messages.should == messages
 end
 
+Then /^Phoenix Login page error message should be (.+)$/ do |messages|
+  @bus_site.login_page.phoenix_login_error_messages.strip.should == messages.strip
+end
+
 When /^I save login page cookies (.+) value$/ do |name|
   cookie = @bus_site.login_page.cookies.select{ |cookie| cookie[:name] == name }.first
   @login_page_cookie_value = cookie[:value]
   puts "login page #{name}: #@login_page_cookie_value"
 end
 
-And /^I log in bus admin console as new partner admin$/ do
+And /^I log in bus admin console as new partner admin(.+)?$/ do|password|
   @bus_site.login_page.load
-  @bus_site.login_page.login(@partner.admin_info.email, CONFIGS['global']['test_pwd'])
+  if password.nil?
+    @bus_site.login_page.login(@partner.admin_info.email, CONFIGS['global']['test_pwd'])
+  else
+    @bus_site.login_page.login(@partner.admin_info.email, password)
+  end
 end
 
 Then /^the new partner admin should be asked to verify their email address$/ do
@@ -89,8 +118,12 @@ When /^I log into bus admin console with mixed case (.+) and (.+)$/ do |username
   step %{I log in bus admin console with user name #{username} and password #{password}}
 end
 
-When /^I log into (.+) with uppercase username (.+) and (.+)$/ do |subdomain, username, password|
-  username = username.upcase
+When /^I log into (.+) with (uppercase|lowercase) username (.+) and (.+)$/ do |subdomain, type, username, password|
+  if type.eql?('uppercase')
+    username = username.upcase
+  else
+    username = username.downcase
+  end
   user_account = {:user_name => username, :password => password}
   @bus_site.user_login_page(subdomain, 'mozy').login(user_account)
 end
@@ -102,3 +135,74 @@ When /^I log into (.+) with mixed case username (.+) and (.+)$/ do |subdomain, u
   user_account = {:user_name => username, :password => password}
   @bus_site.user_login_page(subdomain, 'mozy').login(user_account)
 end
+
+When /^I navigate to user login page with partner ID( oem\.partners\.com| partners\.mozy\.com)?$/ do |prefix|
+  @bus_site = BusSite.new
+  if prefix.nil?
+    @bus_site.user_pid_login_page(@partner_id, @partner.partner_info.type).load
+  else
+    @bus_site.user_pid_login_page(@partner_id, 'oem', prefix.strip).load if @partner.nil?
+    @bus_site.user_pid_login_page(@partner_id, @partner.partner_info.type, prefix.strip).load unless @partner.nil?
+  end
+end
+
+When /^I log in bus pid console with user name (.+) and password (.+)$/ do |username, password|
+  if password.eql?('empty')
+    password = ''
+  end
+  username.replace ERB.new(username).result(binding)
+  @bus_site.user_pid_login_page(@partner_id, @partner.partner_info.type).user_login(username, password)
+end
+
+When /^I log in bus pid console with( mixed username| uppercase username| lowercase username)?:$/ do |match,table|
+  login_hash = table.hashes.first
+  login_hash.each do |_, v|
+    v.replace ERB.new(v).result(binding)
+  end
+  username = login_hash['username']
+  if !match.nil?
+    case match.strip
+      when  'mixed username'
+        until username.match(/[A-Z]/) do
+          username = username.gsub /[a-z]/i do |x| rand(2)==0 ? x.downcase : x.upcase end
+        end
+      when 'uppercase username'
+        username = username.upcase
+      when 'lowercase username'
+        username = username.downcase
+    end
+  end
+  @bus_site.user_pid_login_page(@partner_id, @partner.partner_info.type).user_login(username, login_hash['password'])
+end
+
+Then /^I navigate to (new|old) window$/ do |window|
+  @main_window = page.driver.browser.window_handles.first
+  if window == 'new'
+    sleep 5 if page.driver.browser.window_handles.size == 1
+    page.driver.browser.switch_to().window(page.driver.browser.window_handles.last)
+  else
+    page.driver.browser.switch_to.window(@main_window)
+  end
+end
+
+Then /^I close new window$/ do
+  page.driver.browser.close
+  page.driver.browser.switch_to().window(page.driver.browser.window_handles.first)
+end
+
+When /^I go to page (.+)$/ do |url|
+  url = url.gsub(/CONFIGS\['fedid'\]\['subdomain'\]/,CONFIGS['fedid']['subdomain'])
+  url = url.gsub(/QA_ENV\['bus_host'\]/,QA_ENV['bus_host'])
+  @bus_site.login_page.go_to_url(url)
+end
+
+Then /^I reset password to (.+)$/ do |pwd|
+  @bus_site.user_pid_login_page(@partner_id, @partner.partner_info.type).set_user_password(pwd)
+end
+
+And /^I start a new session$/ do
+  @bus_site.adfs_login_page.start_a_new_browser
+end
+
+
+

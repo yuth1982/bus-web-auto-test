@@ -16,13 +16,22 @@ Feature: Change VAT Number
     And the partner is successfully added.
     And I log in bus admin console as new partner admin
     Then I open partner details by partner name in header
-    When I change the partner contact information to:
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
+    When I change the partner contact information default password
       | VAT Number:     |
       | IT03018900245   |
     Then Partner contact information is changed
 #    And Partner contact information should be:
 #      | VAT Number:     |
 #      | IT03018900245   |
+    Then API* Aria account should be:
+      | taxpayer_id   |
+      | IT03018900245 |
+    And API* Aria tax exempt status for newly created partner aria id should be State/Province and Federal/National Tax Exempt
     Then I log in bus admin console as administrator
     And I view partner details by newly created partner company name
     And I delete partner account
@@ -33,17 +42,26 @@ Feature: Change VAT Number
       | period | base plan | country | cc number         |
       | 1      | 50 GB     | France  | 4485393141463880  |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I activate new partner admin with default password
     And I log out bus admin console
     And I log in bus admin console as new partner admin
     Then I open partner details by partner name in header
-    When I change the partner contact information to:
-      | VAT Number:     |
-      | IT03018900245   |
-    Then VAT number shouldn't be changed and the error message should be:
+    When I change the partner contact information default password
+      | VAT Number:   |
+      | IT03018900245 |
+    Then contact info shouldn't be changed and the error message should be:
     """
     Error updating VAT info. Please try again.
     """
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     Then I log in bus admin console as administrator
     And I view partner details by newly created partner company name
     And I delete partner account
@@ -54,17 +72,26 @@ Feature: Change VAT Number
       | period | base plan | country |  cc number         |
       | 12     | 50 GB     | France  |  4485393141463880  |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I activate new partner admin with default password
     And I log out bus admin console
     And I log in bus admin console as new partner admin
     Then I open partner details by partner name in header
-    When I change the partner contact information to:
+    When I change the partner contact information default password
       | VAT Number:     |
       | IT03            |
-    Then VAT number shouldn't be changed and the error message should be:
+    Then contact info shouldn't be changed and the error message should be:
     """
     Error updating VAT info. Please try again.
     """
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     Then I log in bus admin console as administrator
     And I view partner details by newly created partner company name
     And I delete partner account
@@ -75,17 +102,26 @@ Feature: Change VAT Number
       | period | base plan | country | vat number    |  cc number         |
       | 24     | 50 GB     | France  | FR08410091490 |  4485393141463880  |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id   |
+      | FR08410091490 |
+    And API* Aria tax exempt status for newly created partner aria id should be State/Province and Federal/National Tax Exempt
     And I activate new partner admin with default password
     And I log out bus admin console
     And I log in bus admin console as new partner admin
     Then I open partner details by partner name in header
-    When I change the partner contact information to:
+    When I change the partner contact information default password
       | VAT Number:     |
       |                 |
     Then Partner contact information is changed
 #    And Partner contact information should be:
 #      | VAT Number:     |
 #      |                 |
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     Then I log in bus admin console as administrator
     And I view partner details by newly created partner company name
     And I delete partner account
@@ -99,12 +135,21 @@ Feature: Change VAT Number
       | period | country |  cc number        |
       | 12     | France  |  4485393141463880 |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I activate new partner admin with default password
     And I log out bus admin console
     And I log in bus admin console as new partner admin
     Then I open partner details by partner name in header
     Then I am partner admin and I change contact country to Non-EU country
     Then VAT number field of Change Contact Country section should disappear
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     Then I log in bus admin console as administrator
     And I view partner details by newly created partner company name
     And I delete partner account
@@ -115,12 +160,21 @@ Feature: Change VAT Number
       | period | country        | cc number        |
       | 12     | United States  | 4916655952145825 |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I activate new partner admin with default password
     And I log out bus admin console
     And I log in bus admin console as new partner admin
     Then I open partner details by partner name in header
     Then I am partner admin and I change contact country to EU country
     Then VAT number field of Change Contact Country section should appear
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     Then I log in bus admin console as administrator
     And I view partner details by newly created partner company name
     And I delete partner account
@@ -131,17 +185,26 @@ Feature: Change VAT Number
       | period | base plan | country |  cc number        |
       | 24     | 50 GB     | France  | 4485393141463880  |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I activate new partner admin with default password
     And I log out bus admin console
     And I log in bus admin console as new partner admin
     Then I open partner details by partner name in header
-    And I change contact country and VAT number to:
+    And I change contact country and VAT number default password
       | Country | VAT Number    |
       | France  | FR08410091490 |
     Then Change contact country and VAT number should succeed and the message should be:
     """
     Your contact country was successfully updated.
     """
+    Then API* Aria account should be:
+      | taxpayer_id   |
+      | FR08410091490 |
+    And API* Aria tax exempt status for newly created partner aria id should be State/Province and Federal/National Tax Exempt
     Then I log in bus admin console as administrator
     And I view partner details by newly created partner company name
     And I delete partner account
@@ -152,17 +215,26 @@ Feature: Change VAT Number
       | period | base plan | country | cc number         |
       | 24     | 50 GB     | France  | 4485393141463880  |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I activate new partner admin with default password
     And I log out bus admin console
     And I log in bus admin console as new partner admin
     Then I open partner details by partner name in header
-    And I change contact country and VAT number to:
+    And I change contact country and VAT number default password
       | Country | VAT Number    |
       | France  | DE812321109   |
     Then Change contact country and VAT number shouldn't succeed and the message should be:
     """
      VAT number is not valid
     """
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     Then I log in bus admin console as administrator
     And I view partner details by newly created partner company name
     And I delete partner account
@@ -173,17 +245,26 @@ Feature: Change VAT Number
       | period | base plan | country | cc number         |
       | 24     | 50 GB     | France  | 4485393141463880  |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I activate new partner admin with default password
     And I log out bus admin console
     And I log in bus admin console as new partner admin
     Then I open partner details by partner name in header
-    And I change contact country and VAT number to:
+    And I change contact country and VAT number default password
       | Country | VAT Number    |
       | France  | invalid11     |
     Then Change contact country and VAT number shouldn't succeed and the message should be:
     """
      VAT number is not valid
     """
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     Then I log in bus admin console as administrator
     And I view partner details by newly created partner company name
     And I delete partner account
@@ -194,17 +275,26 @@ Feature: Change VAT Number
       | period | base plan | country | vat number     | cc number         |
       | 24     | 50 GB     | France  | FR08410091490  | 4485393141463880  |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id   |
+      | FR08410091490 |
+    And API* Aria tax exempt status for newly created partner aria id should be State/Province and Federal/National Tax Exempt
     And I activate new partner admin with default password
     And I log out bus admin console
     And I log in bus admin console as new partner admin
     Then I open partner details by partner name in header
-    And I change contact country and VAT number to:
+    And I change contact country and VAT number default password
       | Country | VAT Number    |
       | France  | @blank_space  |
     Then Change contact country and VAT number should succeed and the message should be:
     """
     Your contact country was successfully updated.
     """
+    Then API* Aria account should be:
+      | taxpayer_id   |
+      |               |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     Then I log in bus admin console as administrator
     And I view partner details by newly created partner company name
     And I delete partner account
@@ -218,6 +308,11 @@ Feature: Change VAT Number
       | period | base plan | country | vat number     | cc number         |
       | 24     | 50 GB     | France  | FR08410091490  | 4485393141463880  |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id   |
+      | FR08410091490 |
+    And API* Aria tax exempt status for newly created partner aria id should be State/Province and Federal/National Tax Exempt
     And I activate new partner admin with default password
     And I log out bus admin console
     And I log in bus admin console as new partner admin
@@ -233,6 +328,12 @@ Feature: Change VAT Number
       | period | base plan | country        | cc number          |
       | 24     | 50 GB     | United States  | 4916655952145825   |
     Then New partner should be created
+    Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I activate new partner admin with default password
     And I log out bus admin console
     And I log in bus admin console as new partner admin
@@ -248,6 +349,11 @@ Feature: Change VAT Number
       | period | base plan | country  | cc number          |
       | 24     | 50 GB     | France   | 4485393141463880   |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I activate new partner admin with default password
     And I log out bus admin console
     And I log in bus admin console as new partner admin
@@ -258,6 +364,10 @@ Feature: Change VAT Number
     Then VAT number was saved successfully:
       | VAT number     |
       | FR08410091490  |
+    Then API* Aria account should be:
+      | taxpayer_id   |
+      | FR08410091490 |
+    And API* Aria tax exempt status for newly created partner aria id should be State/Province and Federal/National Tax Exempt
     Then I log in bus admin console as administrator
     And I view partner details by newly created partner company name
     And I delete partner account
@@ -268,6 +378,11 @@ Feature: Change VAT Number
       | period | base plan | country          | cc number          |
       | 24     | 50 GB     | United Kingdom   | 4916783606275713   |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I activate new partner admin with default password
     And I log out bus admin console
     And I log in bus admin console as new partner admin
@@ -279,6 +394,10 @@ Feature: Change VAT Number
     """
     VAT number is invalid. Please try again.
     """
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     Then I log in bus admin console as administrator
     And I view partner details by newly created partner company name
     And I delete partner account
@@ -289,6 +408,11 @@ Feature: Change VAT Number
       | period | base plan | country  | cc number          |
       | 24     | 50 GB     | France   | 4485393141463880   |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I activate new partner admin with default password
     And I log out bus admin console
     And I log in bus admin console as new partner admin
@@ -300,6 +424,10 @@ Feature: Change VAT Number
     """
     VAT number is invalid. Please try again.
     """
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     Then I log in bus admin console as administrator
     And I view partner details by newly created partner company name
     And I delete partner account
@@ -310,6 +438,11 @@ Feature: Change VAT Number
       | period | base plan | country  | cc number          | vat number    |
       | 24     | 50 GB     | France   | 4485393141463880   | FR08410091490 |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id   |
+      | FR08410091490 |
+    And API* Aria tax exempt status for newly created partner aria id should be State/Province and Federal/National Tax Exempt
     And I activate new partner admin with default password
     And I log out bus admin console
     And I log in bus admin console as new partner admin
@@ -320,6 +453,10 @@ Feature: Change VAT Number
     Then VAT number was saved successfully:
       | VAT number   |
       | @blank_value |
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     Then I log in bus admin console as administrator
     And I view partner details by newly created partner company name
     And I delete partner account
@@ -330,12 +467,21 @@ Feature: Change VAT Number
       | period | base plan | country  | cc number          | vat number    |
       | 24     | 50 GB     | France   | 4485393141463880   | FR08410091490 |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id   |
+      | FR08410091490 |
+    And API* Aria tax exempt status for newly created partner aria id should be State/Province and Federal/National Tax Exempt
     And I activate new partner admin with default password
     And I log out bus admin console
     And I log in bus admin console as new partner admin
     When I navigate to Billing Information section from bus admin console page
     Then I delete VAT number
     Then VAT number was deleted successfully
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     Then I log in bus admin console as administrator
     And I view partner details by newly created partner company name
     And I delete partner account
@@ -349,8 +495,17 @@ Feature: Change VAT Number
       | period | base plan | country  | cc number          |
       | 24     | 1 TB      | France   | 4485393141463880   |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     Then I am BUS admin and I change contact country to Non-EU country
     Then VAT number field of Partner Details section should disappear
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I delete partner account
 
   @TC.124679 @bus @change_vat_number
@@ -359,8 +514,17 @@ Feature: Change VAT Number
       | period | base plan | country        | server plan |  cc number         |
       | 1      | 100 GB    | United States  |  yes        |  4916655952145825  |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     Then I am BUS admin and I change contact country to EU country
     Then VAT number field of Partner Details section should appear
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I delete partner account
 
   @TC.124680 @bus @change_vat_number
@@ -369,6 +533,11 @@ Feature: Change VAT Number
       | period | base plan | country  | cc number          | vat number    |
       | 12     | 50 GB     | France   | 4485393141463880   | FR08410091490 |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id   |
+      | FR08410091490 |
+    And API* Aria tax exempt status for newly created partner aria id should be State/Province and Federal/National Tax Exempt
     Then I expand contact info from partner details section
     When I change the partner contact information to:
       | Contact Country: |
@@ -377,6 +546,10 @@ Feature: Change VAT Number
     And Partner contact information should be:
       | Contact Country:  |
       | United States     |
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I delete partner account
 
   @TC.124681 @bus @change_vat_number
@@ -385,14 +558,23 @@ Feature: Change VAT Number
       | period | base plan | country  | cc number          |
       | 12     | 50 GB     | France   | 4485393141463880   |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     Then I expand contact info from partner details section
     When I change the partner contact information to:
       | VAT Number:      |
       | DE812321109      |
-    Then VAT number shouldn't be changed and the error message should be:
+    Then contact info shouldn't be changed and the error message should be:
     """
     Error updating VAT info. Please try again.
     """
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I delete partner account
 
   @TC.124682 @bus @change_vat_number
@@ -401,14 +583,23 @@ Feature: Change VAT Number
       | period | base plan | country  | cc number          |
       | 12     | 50 GB     | France   | 4485393141463880   |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     Then I expand contact info from partner details section
     When I change the partner contact information to:
       | VAT Number:      |
       | invalid_number   |
-    Then VAT number shouldn't be changed and the error message should be:
+    Then contact info shouldn't be changed and the error message should be:
     """
     Error updating VAT info. Please try again.
     """
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I delete partner account
 
   @TC.124683 @bus @change_vat_number
@@ -417,6 +608,11 @@ Feature: Change VAT Number
       | period | base plan | country  | cc number          | vat number    |
       | 1      | 50 GB     | France   | 4485393141463880   | FR08410091490 |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id   |
+      | FR08410091490 |
+    And API* Aria tax exempt status for newly created partner aria id should be State/Province and Federal/National Tax Exempt
     Then I expand contact info from partner details section
     When I change the partner contact information to:
       | VAT Number:      |
@@ -425,6 +621,10 @@ Feature: Change VAT Number
 #    And Partner contact information should be:
 #      | VAT Number:     |
 #      |                 |
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I delete partner account
 
   @TC.124684 @bus @change_vat_number
@@ -433,6 +633,11 @@ Feature: Change VAT Number
       | period | base plan | country  | cc number          | vat number    |
       | 24     | 50 GB     | France   | 4485393141463880   | FR08410091490 |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id   |
+      | FR08410091490 |
+    And API* Aria tax exempt status for newly created partner aria id should be State/Province and Federal/National Tax Exempt
     Then I expand contact info from partner details section
     When I change the partner contact information to:
       | Contact Country: | VAT Number:      |
@@ -441,6 +646,10 @@ Feature: Change VAT Number
 #    And Partner contact information should be:
 #      | Contact Country: | VAT Number:      |
 #      | Germany          | DE812321109      |
+    Then API* Aria account should be:
+      | taxpayer_id |
+      | DE812321109 |
+    And API* Aria tax exempt status for newly created partner aria id should be State/Province and Federal/National Tax Exempt
     And I delete partner account
 
   #
@@ -452,10 +661,19 @@ Feature: Change VAT Number
       | period | base plan | country  | cc number          |
       | 12     | 1 TB      | France   | 4485393141463880   |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     When I act as newly created partner account
     Then I open partner details by partner name in header
     Then I am BUS admin and I change contact country to Non-EU country
     Then VAT number field of Partner Details section should disappear
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -465,10 +683,19 @@ Feature: Change VAT Number
       | period | base plan | country        | server plan |  cc number         |
       | 1      | 4 TB      | United States  |  yes        |  4916655952145825  |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     When I act as newly created partner account
     Then I open partner details by partner name in header
     Then I am BUS admin and I change contact country to EU country
     Then VAT number field of Partner Details section should appear
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -478,6 +705,11 @@ Feature: Change VAT Number
       | period | base plan | country  | cc number          | vat number    |
       | 12     | 4 TB      | France   | 4485393141463880   | FR08410091490 |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id   |
+      | FR08410091490 |
+    And API* Aria tax exempt status for newly created partner aria id should be State/Province and Federal/National Tax Exempt
     When I act as newly created partner account
     Then I open partner details by partner name in header
     When I change the partner contact information to:
@@ -487,6 +719,10 @@ Feature: Change VAT Number
     And Partner contact information should be:
       | Contact Country:  |
       | United States     |
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -496,15 +732,24 @@ Feature: Change VAT Number
       | period | base plan | country  | cc number          |
       | 12     | 100 GB    | France   | 4485393141463880   |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     When I act as newly created partner account
     Then I open partner details by partner name in header
     When I change the partner contact information to:
       | VAT Number:      |
       | DE812321109      |
-    Then VAT number shouldn't be changed and the error message should be:
+    Then contact info shouldn't be changed and the error message should be:
     """
     Error updating VAT info. Please try again.
     """
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -514,15 +759,24 @@ Feature: Change VAT Number
       | period | base plan | country  | cc number          |
       | 12     | 100 GB    | France   | 4485393141463880   |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     When I act as newly created partner account
     Then I open partner details by partner name in header
     When I change the partner contact information to:
       | VAT Number:      |
       | invalid_number   |
-    Then VAT number shouldn't be changed and the error message should be:
+    Then contact info shouldn't be changed and the error message should be:
     """
     Error updating VAT info. Please try again.
     """
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -532,6 +786,11 @@ Feature: Change VAT Number
       | period | base plan | country  | cc number          | vat number    |
       | 24     | 50 GB     | France   | 4485393141463880   | FR08410091490 |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id   |
+      | FR08410091490 |
+    And API* Aria tax exempt status for newly created partner aria id should be State/Province and Federal/National Tax Exempt
     When I act as newly created partner account
     Then I open partner details by partner name in header
     When I change the partner contact information to:
@@ -541,8 +800,12 @@ Feature: Change VAT Number
 #    And Partner contact information should be:
 #      | VAT Number:     |
 #      |                 |
-  When I stop masquerading
-  And I search and delete partner account by newly created partner company name
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name
 
   @TC.124691 @bus @change_vat_number
   Scenario: 124691 act as partner, edit its contact country and VAT number with valid value
@@ -550,6 +813,11 @@ Feature: Change VAT Number
       | period | base plan | country  | cc number          | vat number    |
       | 24     | 100 GB    | France   | 4485393141463880   | FR08410091490 |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id   |
+      | FR08410091490 |
+    And API* Aria tax exempt status for newly created partner aria id should be State/Province and Federal/National Tax Exempt
     When I act as newly created partner account
     Then I open partner details by partner name in header
     When I change the partner contact information to:
@@ -559,8 +827,13 @@ Feature: Change VAT Number
 #    And Partner contact information should be:
 #      | Contact Country: | VAT Number:      |
 #      | Germany          | DE812321109      |
-  When I stop masquerading
-  And I search and delete partner account by newly created partner company name
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id   |
+      | DE812321109 |
+    And API* Aria tax exempt status for newly created partner aria id should be State/Province and Federal/National Tax Exempt
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name
 
   #
   #BUS Admin Change/billing information
@@ -571,6 +844,11 @@ Feature: Change VAT Number
       | period | base plan | country | vat number     | cc number         |
       | 24     | 50 GB     | France  | FR08410091490  | 4485393141463880  |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id   |
+      | FR08410091490 |
+    And API* Aria tax exempt status for newly created partner aria id should be State/Province and Federal/National Tax Exempt
     When I act as newly created partner account
     When I navigate to Billing Information section from bus admin console page
     Then VAT table should display
@@ -583,6 +861,11 @@ Feature: Change VAT Number
       | period | base plan | country        | cc number          |
       | 24     | 50 GB     | United States  | 4916655952145825   |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     When I act as newly created partner account
     When I navigate to Billing Information section from bus admin console page
     Then VAT table shouldn't display
@@ -595,6 +878,11 @@ Feature: Change VAT Number
       | period | base plan | country  | cc number          |
       | 24     | 50 GB     | France   | 4485393141463880   |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     When I act as newly created partner account
     When I navigate to Billing Information section from bus admin console page
     Then I change VAT number to:
@@ -603,6 +891,10 @@ Feature: Change VAT Number
     Then VAT number was saved successfully:
       | VAT number     |
       | FR08410091490  |
+    Then API* Aria account should be:
+      | taxpayer_id   |
+      | FR08410091490 |
+    And API* Aria tax exempt status for newly created partner aria id should be State/Province and Federal/National Tax Exempt
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -612,6 +904,11 @@ Feature: Change VAT Number
       | period | base plan | country          | cc number          |
       | 24     | 50 GB     | United Kingdom   | 4916783606275713   |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     When I act as newly created partner account
     When I navigate to Billing Information section from bus admin console page
     Then I change VAT number to:
@@ -621,6 +918,10 @@ Feature: Change VAT Number
     """
     VAT number is invalid. Please try again.
     """
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -630,6 +931,11 @@ Feature: Change VAT Number
       | period | base plan | country  | cc number          |
       | 24     | 50 GB     | France   | 4485393141463880   |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     When I act as newly created partner account
     When I navigate to Billing Information section from bus admin console page
     Then I change VAT number to:
@@ -639,6 +945,10 @@ Feature: Change VAT Number
     """
     VAT number is invalid. Please try again.
     """
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -648,6 +958,11 @@ Feature: Change VAT Number
       | period | base plan | country  | cc number          | vat number    |
       | 24     | 50 GB     | France   | 4485393141463880   | FR08410091490 |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id   |
+      | FR08410091490 |
+    And API* Aria tax exempt status for newly created partner aria id should be State/Province and Federal/National Tax Exempt
     When I act as newly created partner account
     When I navigate to Billing Information section from bus admin console page
     Then I change VAT number to:
@@ -656,6 +971,10 @@ Feature: Change VAT Number
     Then VAT number was saved successfully:
       | VAT number   |
       | @blank_value |
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -665,10 +984,19 @@ Feature: Change VAT Number
       | period | base plan | country  | cc number          | vat number    |
       | 24     | 50 GB     | France   | 4485393141463880   | FR08410091490 |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id   |
+      | FR08410091490 |
+    And API* Aria tax exempt status for newly created partner aria id should be State/Province and Federal/National Tax Exempt
     When I act as newly created partner account
     When I navigate to Billing Information section from bus admin console page
     Then I delete VAT number
     Then VAT number was deleted successfully
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -681,6 +1009,11 @@ Feature: Change VAT Number
       | period | base plan | country  | net terms          |
       | 24     | 50 GB     | France   | yes                |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I activate new partner admin with default password
     And I log out bus admin console
     And I log in bus admin console as new partner admin
@@ -688,15 +1021,19 @@ Feature: Change VAT Number
     And I update payment contact information to:
       | country |
       | China   |
-    And I save payment information changes
+    And I save payment information changes with default password
     Then I change VAT number from change payment information section:
       | VAT Number    |
       | FR08410091490 |
-    And I save payment information changes
+    And I save payment information changes with default password
     Then Contact country and billing information should be updated:
     """
     Your contact country and billing information was successfully updated.
     """
+    Then API* Aria account should be:
+      | taxpayer_id   |
+      | FR08410091490 |
+    And API* Aria tax exempt status for newly created partner aria id should be State/Province and Federal/National Tax Exempt
     Then I log in bus admin console as administrator
     And I view partner details by newly created partner company name
     And I delete partner account
@@ -707,6 +1044,11 @@ Feature: Change VAT Number
       | period | base plan | country  | cc number          |
       | 12     | 50 GB     | France   | 4485393141463880   |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I activate new partner admin with default password
     And I log out bus admin console
     And I log in bus admin console as new partner admin
@@ -714,15 +1056,19 @@ Feature: Change VAT Number
     And I update payment contact information to:
       | country |
       | China   |
-    And I save payment information changes
+    And I save payment information changes with default password
     Then I change VAT number from change payment information section:
       | VAT Number     |
       | invalid_number |
-    And I save payment information changes
+    And I save payment information changes with default password
     Then Contact country and billing information shouldn't be updated:
     """
      VAT number is not valid
     """
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     Then I log in bus admin console as administrator
     And I view partner details by newly created partner company name
     And I delete partner account
@@ -733,6 +1079,11 @@ Feature: Change VAT Number
       | period | base plan | country  | cc number          |
       | 1      | 50 GB     | France   | 4485393141463880   |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I activate new partner admin with default password
     And I log out bus admin console
     And I log in bus admin console as new partner admin
@@ -740,15 +1091,19 @@ Feature: Change VAT Number
     And I update payment contact information to:
       | country |
       | China   |
-    And I save payment information changes
+    And I save payment information changes with default password
     Then I change VAT number from change payment information section:
       | VAT Number     |
       | DE812321109    |
-    And I save payment information changes
+    And I save payment information changes with default password
     Then Contact country and billing information shouldn't be updated:
     """
      VAT number is not valid
     """
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     Then I log in bus admin console as administrator
     And I view partner details by newly created partner company name
     And I delete partner account
@@ -759,6 +1114,11 @@ Feature: Change VAT Number
       | period | base plan | country  | net terms          |
       | 24     | 100 GB    | France   | yes                |
     Then New partner should be created
+    And I get partner aria id
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I activate new partner admin with default password
     And I log out bus admin console
     And I log in bus admin console as new partner admin
@@ -766,30 +1126,22 @@ Feature: Change VAT Number
     And I update payment contact information to:
       | country |
       | China   |
-    And I save payment information changes
+    And I save payment information changes with default password
     Then I change VAT number from change payment information section:
       | VAT Number    |
       | @blank_space  |
     And I update payment contact information to:
       | country |
       | France  |
-    And I save payment information changes
+    And I save payment information changes with default password
     Then Contact country and billing information should be updated:
     """
     Your contact country and billing information was successfully updated.
     """
+    Then API* Aria account should be:
+      | taxpayer_id  |
+      |              |
+    And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     Then I log in bus admin console as administrator
     And I view partner details by newly created partner company name
     And I delete partner account
-
-
-
-
-
-
-
-
-
-
-
-

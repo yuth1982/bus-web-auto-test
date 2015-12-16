@@ -26,6 +26,7 @@ module Bus
     element(:minimum_quota_tb, id: "price0_minimum_quota")
     element(:submit_btn, xpath: "//input[contains(@value, 'Save Changes')]")
     element(:anpp_message_li, css: "ul.flash.successes > li")
+    element(:proplan_record_table, xpath: "//div[@id='plan-pro_list-content']/div[1]/table")
 
     # Public: Add a new pro plan
     #
@@ -78,6 +79,11 @@ module Bus
     # @return [String]
     def anpp_messages
       anpp_message_li.text
+    end
+
+    # result will like [["Name", "Enabled", "Public"], ["subplan", "Yes", "No"], [""]], tfoot
+    def get_proplan_info
+      proplan_record_table.raw_text.select{|row|row.size > 1}
     end
   end
 end

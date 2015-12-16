@@ -7,6 +7,7 @@ When /^I search partner by:$/ do |search_key_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_partner'])
   attributes = search_key_table.hashes.first
   keywords = (attributes['name'] || attributes['email'])
+  keywords.replace ERB.new(keywords).result(binding)
   keywords = keywords.gsub(/@company_name/,@partner.company_info.name).gsub(/@admin_email/,@partner.admin_info.email) unless @partner.nil?
   filter = attributes['filter'] || 'None'
   including_sub_partners = (attributes['including sub-partners'] || 'yes').eql?('yes')
@@ -15,28 +16,23 @@ end
 
 When /^I search partner by (.+)$/ do |keywords|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_partner'])
-  @bus_site.admin_console_page.search_list_partner_section.search_partner(keywords)
+  @bus_site.admin_console_page.search_list_partner_section.search_partner(keywords, 'None', true, true)
 end
 
-When /^I not full search partner by:$/ do |search_key_table|
-  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_partner'])
-  attributes = search_key_table.hashes.first
-  keywords = (attributes['name'] || attributes['email'])
-  keywords = keywords.gsub(/@company_name/,@partner.company_info.name).gsub(/@admin_email/,@partner.admin_info.email) unless @partner.nil?
-  filter = attributes['filter'] || 'None'
-  including_sub_partners = (attributes['including sub-partners'] || 'yes').eql?('yes')
-  @bus_site.admin_console_page.search_list_partner_section.search_partner(keywords, filter, including_sub_partners, false)
+When /^I full search partner by (.+)$/ do |keywords|
+  #keywords string would like : @new_p_external_id;last four digits;contact zip
+  keywords.gsub!(/@new_p_external_id/,@new_p_external_id).gsub!(/last four digits/,@partner.admin_info.email[@partner.admin_info.email.index('@')-4,4])
+  keywords.gsub!(/zip code/,@partner.company_info.zip)
+  keywords.gsub!("\;"," ")
+  @bus_site.admin_console_page.search_list_partner_section.search_partner(keywords, 'None', true, true)
 end
 
 When /^I act as partner by:$/ do |search_key_table|
   attributes = search_key_table.hashes.first
-  sleep 10
-  step %{I not full search partner by:}, table(%{
+  step %{I search partner by:}, table(%{
       |#{search_key_table.headers.join('|')}|
       |#{search_key_table.rows.first.join('|')}|
     })
-
-  sleep 10
   keywords = (attributes['name'] || attributes['email'])
   keywords = keywords.gsub(/@company_name/,@partner.company_info.name).gsub(/@admin_email/,@partner.admin_info.email) unless @partner.nil?
   if attributes['name'].nil? == false
@@ -50,7 +46,7 @@ When /^I act as partner by:$/ do |search_key_table|
   else
     raise 'Please act as partner by name or email'
   end
-  @bus_site.admin_console_page.has_stop_masquerading_link?
+  wait_until { @bus_site.admin_console_page.has_stop_masquerading_link? }
   @partner_id = @bus_site.admin_console_page.current_partner_id
   @current_partner[:id] ||= @bus_site.admin_console_page.partner_id if @current_partner
 end
@@ -65,7 +61,8 @@ end
 # Public: View admin details by click email in search partner results
 # Required: search list partner section must be visible
 When /^I view admin details by (.+)$/ do |partner_email|
-  @bus_site.admin_console_page.search_list_partner_section.view_partner_detail(partner_email)
+  partner_email = @subpartner.admin_email_address if partner_email == '@subpartner.admin_email_address'
+  @bus_site.admin_console_page.search_list_partner_section.view_root_admin_detail(partner_email)
 end
 
 Then /^Partner search results (should|should not) be:$/ do |match, results_table|
@@ -111,3 +108,13 @@ end
 Then /^I will see (.+) in the search partner input box$/ do |search|
   @bus_site.admin_console_page.search_list_partner_section.search_input_text.should == search
 end
+
+Then /^I get current partner name$/ do
+  @current_partner_name = @bus_site.admin_console_page.search_list_partner_section.get_partner_name if @current_partner.nil?
+end
+
+Then /^I get current partner type/ do
+  @partner = Bus::DataObj::MozyPro.new if @current_partner.nil?
+  @partner.partner_info.type = @bus_site.admin_console_page.search_list_partner_section.get_partner_type
+end
+

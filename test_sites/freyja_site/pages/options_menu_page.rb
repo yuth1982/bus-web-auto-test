@@ -6,12 +6,12 @@ module Freyja
     element(:preference, css: "#panel-action-preferences")
     element(:notification, css: "#notifications-count")
     element(:product_download, css: "div[title='Product Downloads'] > a")
-
-    element(:log_out_action, id: "panel-action-sign-out")
-    #element(:log_out_yes_btn, xpath: "//*[@id='logout_confirm_dialog']//a//*[text()='Yes']")
+    element(:manage_account_option, xpath: "//*[@id='panel-action-account-summary']")
+    element(:log_out_action, xpath: "//li[@id='panel-action-sign-out']")
     element(:log_out_yes_btn, xpath: "//div[@id='logout_confirm_dialog']/div[3]/div/a[2]/span")
     section(:change_password_section, ChangePasswordSection, xpath: "//li[@id='panel-action-change-password']")
-    element(:manage_account_option, xpath: "//*[@id='panel-action-account-summary']")
+
+
     # Public: launch change password wizard
     #
     # Example
@@ -50,16 +50,14 @@ module Freyja
       product_download.click
     end
 
-    def logout
-      sleep 1
-      log_out_action.click
-      sleep 1
-      log_out_yes_btn.click
-      sleep 1
-    end
-
     def manage_account
       manage_account_option.click
     end
+
+    def logout
+      log_out_action.click
+      log_out_yes_btn.click
+    end
+
   end
 end

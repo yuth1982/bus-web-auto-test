@@ -22,8 +22,8 @@ Feature: User Resources
       | keywords   |
       | @user_name |
     Then User search results should be:
-      | User        | Name         | Machines | Storage         | Storage Used | Created  | Backed Up |
-      | @user_email | @user_name   | 0 	      | Generic Shared  | None  	   | today    | never     |
+      | User        | Name         | Machines | Storage | Storage Used | Created  | Backed Up |
+      | @user_email | @user_name   | 0 	      | Shared  | None  	   | today    | never     |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                           |
@@ -51,8 +51,8 @@ Scenario: Mozy-19646:Access Partner as Bus Admin
     | keywords   |
     | @user_name |
   Then User search results should be:
-    | External ID | User        | Name       | User Group           | Machines | Storage         | Storage Used | Created  | Backed Up |
-    |             | @user_email | @user_name | (default user group) | 0        | Generic Shared  | None         | today    | never     |
+    | External ID | User        | Name       | User Group           | Machines | Storage | Storage Used | Created  | Backed Up |
+    |             | @user_email | @user_name | (default user group) | 0        | Shared  | None         | today    | never     |
   When I view user details by newly created user email
   Then user details should be:
     | ID:        | External ID: | Name:                           |
@@ -91,8 +91,8 @@ Scenario: Mozy-19646:Access Partner as Bus Admin
       | keywords   |   user type |
       | @user_name |  Itemized Reseller 750GB BS (Migrate)DONOT_delete_TC19839 Users|
     Then User search results should be:
-      | User        | Name         | User Group           | Machines  | Storage         | Storage Used  | Created  | Backed Up |
-      | @user_email | @user_name   | (default user group) | 0         | Desktop Shared  | None          | today    | never     |
+      | User        | Name         | User Group           | Machines  | Storage          | Storage Used  | Created  | Backed Up |
+      | @user_email | @user_name   | (default user group) | 0         | Desktop: Shared  | Desktop: None | today    | never     |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                           |
@@ -129,8 +129,8 @@ Scenario: Mozy-19646:Access Partner as Bus Admin
       | keywords   |
       | @user_name |
     Then User search results should be:
-      | External ID | User        | Name         | User Group           | Machines | Storage        | Storage Used | Created  | Backed Up |
-      |             | @user_email | @user_name   | (default user group) | 0  	   | Desktop Shared | None         | today    | never     |
+      | External ID | User        | Name         | User Group           | Machines | Storage         | Storage Used  | Created  | Backed Up |
+      |             | @user_email | @user_name   | (default user group) | 0  	   | Desktop: Shared | Desktop: None | today    | never     |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                           |
@@ -158,8 +158,8 @@ Scenario: Mozy-19844: Access an Enterprise Partner's User's details as Partner A
     | keywords   |
     | @user_name |
   Then User search results should be:
-    | User        | Name         | Machines | Storage        | Storage Used | Created  | Backed Up |
-    | @user_email | @user_name   | 0 	    | Server Shared  | None         | today    | never     |
+    | User        | Name         | Machines | Storage         | Storage Used   | Created  | Backed Up |
+    | @user_email | @user_name   | 0 	    | Server: Shared  | Server: None   | today    | never     |
   When I view user details by newly created user email
   Then user details should be:
     | Name:                           |
@@ -189,8 +189,8 @@ Scenario: Mozy-19850: Access an Irish Partner's User's details as Partner Admin
     | keywords   |
     | @user_name |
   Then User search results should be:
-    | User        | Name         | Machines | Storage          | Storage Used | Created  | Backed Up |
-    | @user_email | @user_name   | 0 	    | Generic Shared   | None         | today    | never     |
+    | User        | Name         | Machines | Storage  | Storage Used | Created  | Backed Up |
+    | @user_email | @user_name   | 0 	    | Shared   | None         | today    | never     |
   When I view user details by newly created user email
   Then user details should be:
     | Name:                           |
@@ -221,8 +221,8 @@ Scenario: Mozy-19853: Access an United Kingdom Partner's User's details as Partn
     | keywords   |
     | @user_name |
   Then User search results should be:
-    | User        | Name         | Machines   | Storage        | Storage Used  | Created  | Backed Up |
-    | @user_email | @user_name   | 0 	      | Desktop Shared | None          | today    | never     |
+    | User        | Name         | Machines   | Storage         | Storage Used     | Created  | Backed Up |
+    | @user_email | @user_name   | 0 	      | Desktop: Shared | Desktop: None    | today    | never     |
   When I view user details by newly created user email
   Then user details should be:
     | Name:                           |
@@ -251,8 +251,8 @@ Scenario: Mozy-19853: Access an United Kingdom Partner's User's details as Partn
       | keywords   |
       | @user_name |
     Then User search results should be:
-      | User        | Name         | Machines | Storage         | Storage Used | Created  | Backed Up |
-      | @user_email | @user_name   | 0 	      | Generic Shared  | None  	   | today    | never     |
+      | User        | Name         | Machines | Storage | Storage Used | Created  | Backed Up |
+      | @user_email | @user_name   | 0 	      | Shared  | None  	   | today    | never     |
     When I view user details by newly created user email
     Then user details should be:
       | ID:        | External ID: | Name:                           |
@@ -290,8 +290,8 @@ Scenario: Mozy-19859:Access German Partner's User's details as Bus Admin
       | keywords   |
       | @user_name |
     Then User search results should be:
-      | External ID | User        | Name         | User Group           | Machines | Storage        | Storage Used | Created  | Backed Up |
-      |             | @user_email | @user_name   | (default user group) | 0  	   | Desktop Shared | None         | today    | never     |
+      | External ID | User        | Name         | User Group           | Machines | Storage         | Storage Used  | Created  | Backed Up |
+      |             | @user_email | @user_name   | (default user group) | 0  	   | Desktop: Shared | Desktop: None | today    | never     |
     When I view user details by newly created user email
     Then user details should be:
       | Name:                           |

@@ -11,8 +11,16 @@ Transform /^newly created partner company name$/ do |step_arg|
   @partner.company_info.name
 end
 
+Transform /^newly created admin name$/ do |step_arg|
+  @partner.admin_info.full_name
+end
+
 Transform /^newly created subpartner company name$/ do |step_arg|
   @subpartner.company_name
+end
+
+Transform /^newly created subpartner admin email$/ do |step_arg|
+  @subpartner.admin_email_address
 end
 
 
@@ -23,7 +31,7 @@ Transform /^newly created (Bundled|Itemized) user group name$/ do |type|
     when 'Itemized'
       @new_itemized_ug.name
     else
-     #Skipped
+      #Skipped
   end
 end
 
@@ -49,6 +57,10 @@ end
 
 Transform /^default password$/ do |step_arg|
   CONFIGS['global']['test_pwd']
+end
+
+Transform /^reset password$/ do |step_arg|
+  CONFIGS['global']['test_hipaa_pwd']
 end
 
 Transform /^existing admin email$/ do |step_arg|
@@ -102,4 +114,5 @@ end
 Transform /^Hipaa user$/ do |step_arg|
   QA_ENV['hipaa_user']
 end
+
 

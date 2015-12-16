@@ -19,7 +19,7 @@ Feature: Add a new user through phoenix
     Then the billing summary looks like:
       | Description                           | Price | Quantity | Amount |
       | MozyHome 50 GB (1 computer) - Monthly | $5.99 | 1        | $5.99  |
-      | Total Charge                          | $5.99 |          | $5.99  |
+      | Total Charge                          |       |          | $5.99  |
     Then the user is successfully added.
     #steps for email-verification & account-access
     And the user has activated their account
@@ -53,7 +53,7 @@ Feature: Add a new user through phoenix
     Then the billing summary looks like:
       | Description                           | Price  | Quantity | Amount |
       | MozyHome 50 GB (1 computer) - Annual  | $65.89 | 1        | $65.89 |
-      | Total Charge                          | $65.89 |          | $65.89 |
+      | Total Charge                          |        |          | $65.89 |
     Then the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -82,7 +82,7 @@ Feature: Add a new user through phoenix
     Then the billing summary looks like:
       | Description                            | Price   | Quantity | Amount  |
       | MozyHome 50 GB (1 computer) - Biennial | $125.79 | 1        | $125.79 |
-      | Total Charge                           | $125.79 |          | $125.79 |
+      | Total Charge                           |         |          | $125.79 |
     Then the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -106,12 +106,14 @@ Feature: Add a new user through phoenix
   Scenario: 13468 Add a new IE monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country |
-      | 1      | 50 GB     | Ireland |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 50 GB     | Ireland | Ireland         | 4319402211111113 |
     Then the billing summary looks like:
-      | Description                           | Price | Quantity | Amount |
-      | MozyHome 50 GB (1 computer) - Monthly | €4.99 | 1        | €4.99  |
-      | Total Charge                          | €4.99 |          | €4.99  |
+      | Description                           | Price             | Quantity | Amount |
+      | MozyHome 50 GB (1 computer) - Monthly | €4.99\n(inc. VAT) | 1        | €4.99  |
+      | Subscription Price                    |                   |          | €4.06  |
+      | VAT Rate (23%)                        |                   |          | €0.93  |
+      | Total Charge                          |                   |          | €4.99  |
     Then the user is successfully added.
   #steps for email-verification & account-access
     And the user has activated their account
@@ -135,12 +137,14 @@ Feature: Add a new user through phoenix
   Scenario: 13469 Add a new IE yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period  | base plan | country |
-      | 12      | 50 GB     | Ireland |
+      | period  | base plan | country | billing country | cc number        |
+      | 12      | 50 GB     | Ireland | Ireland         | 4319402211111113 |
     Then the billing summary looks like:
-      | Description                          | Price  | Quantity | Amount |
-      | MozyHome 50 GB (1 computer) - Annual | €54.89 | 1        | €54.89 |
-      | Total Charge                         | €54.89 |          | €54.89 |
+      | Description                          | Price              | Quantity | Amount |
+      | MozyHome 50 GB (1 computer) - Annual | €54.89\n(inc. VAT) | 1        | €54.89 |
+      | Subscription Price                   |                    |          | €44.63 |
+      | VAT Rate (23%)                       |                    |          | €10.26 |
+      | Total Charge                         |                    |          | €54.89 |
     Then the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -164,12 +168,14 @@ Feature: Add a new user through phoenix
   Scenario: 13470 Add a new IE biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period  | base plan | country |
-      | 24      | 50 GB     | Ireland |
+      | period  | base plan | country | billing country | cc number        |
+      | 24      | 50 GB     | Ireland | Ireland         | 4319402211111113 |
     Then the billing summary looks like:
-      | Description                            | Price   | Quantity | Amount  |
-      | MozyHome 50 GB (1 computer) - Biennial | €104.79 | 1        | €104.79 |
-      | Total Charge                           | €104.79 |          | €104.79 |
+      | Description                            | Price               | Quantity | Amount  |
+      | MozyHome 50 GB (1 computer) - Biennial | €104.79\n(inc. VAT) | 1        | €104.79 |
+      | Subscription Price                     |                     |          | €85.20  |
+      | VAT Rate (23%)                         |                     |          | €19.59  |
+      | Total Charge                           |                     |          | €104.79 |
     Then the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -193,12 +199,14 @@ Feature: Add a new user through phoenix
   Scenario: 13467 Add a new UK monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country        |
-      | 1      | 50 GB     | United Kingdom |
+      | period | base plan | country        | billing country | cc number        |
+      | 1      | 50 GB     | United Kingdom | United Kingdom  | 4916783606275713 |
     Then the billing summary looks like:
-      | Description                           | Price | Quantity | Amount |
-      | MozyHome 50 GB (1 computer) - Monthly | £4.99 | 1        | £4.99  |
-      | Total Charge                          | £4.99 |          | £4.99  |
+      | Description                           | Price             | Quantity | Amount |
+      | MozyHome 50 GB (1 computer) - Monthly | £4.99\n(inc. VAT) | 1        | £4.99  |
+      | Subscription Price                    |                   |          | £4.16  |
+      | VAT Rate (20%)                        |                   |          | £0.83  |
+      | Total Charge                          |                   |          | £4.99  |
     Then the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -222,12 +230,14 @@ Feature: Add a new user through phoenix
   Scenario: 13471 Add a new UK yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country        |
-      | 12     | 50 GB     | United Kingdom |
+      | period | base plan | country        | billing country | cc number        |
+      | 12     | 50 GB     | United Kingdom | United Kingdom  | 4916783606275713 |
     Then the billing summary looks like:
-      | Description                          | Price  | Quantity | Amount |
-      | MozyHome 50 GB (1 computer) - Annual | £54.89 | 1        | £54.89 |
-      | Total Charge                         | £54.89 |          | £54.89 |
+      | Description                          | Price              | Quantity | Amount |
+      | MozyHome 50 GB (1 computer) - Annual | £54.89\n(inc. VAT) | 1        | £54.89 |
+      | Subscription Price                   |                    |          | £45.74 |
+      | VAT Rate (20%)                       |                    |          | £9.15  |
+      | Total Charge                         |                    |          | £54.89 |
     Then the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -251,12 +261,14 @@ Feature: Add a new user through phoenix
   Scenario: 13472 Add a new UK biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country        |
-      | 24     | 50 GB     | United Kingdom |
+      | period | base plan | country        | billing country | cc number        |
+      | 24     | 50 GB     | United Kingdom | United Kingdom  | 4916783606275713 |
     Then the billing summary looks like:
-      | Description                            | Price   | Quantity | Amount  |
-      | MozyHome 50 GB (1 computer) - Biennial | £104.79 | 1        | £104.79 |
-      | Total Charge                           | £104.79 |          | £104.79 |
+      | Description                            | Price               | Quantity | Amount  |
+      | MozyHome 50 GB (1 computer) - Biennial | £104.79\n(inc. VAT) | 1        | £104.79 |
+      | Subscription Price                     |                     |          | £87.32  |
+      | VAT Rate (20%)                         |                     |          | £17.47  |
+      | Total Charge                           |                     |          | £104.79 |
     Then the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -280,12 +292,14 @@ Feature: Add a new user through phoenix
   Scenario: 13465 Add a new DE monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country |
-      | 1      | 50 GB     | Germany |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 50 GB     | Germany | Deutschland     | 4188181111111112 |
     Then the billing summary looks like:
-      | Beschreibung                            | Preis | Menge | Betrag |
-      | MozyHome 50 GB (1 Computer) - Monatlich | 4,99€ | 1     | 4,99€ |
-      | Gesamtbelastung                         | 4,99€ |       | 4,99€ |
+      | Beschreibung                            | Preis             | Menge | Betrag |
+      | MozyHome 50 GB (1 Computer) - Monatlich | 4,99€\n(inc. VAT) | 1     | 4,99€  |
+      | Abonnementpreis                         |                   |       | 4,19€  |
+      | Umsatzsteuersatz (19%)                  |                   |       | 0,80€  |
+      | Gesamtbelastung                         |                   |       | 4,99€  |
     Then the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -310,12 +324,14 @@ Feature: Add a new user through phoenix
   Scenario: 13476 Add a new DE yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period  | base plan | country |
-      | 12      | 50 GB     | Germany |
+      | period  | base plan | country | billing country | cc number        |
+      | 12      | 50 GB     | Germany | Deutschland     | 4188181111111112 |
     Then the billing summary looks like:
-      | Beschreibung                           | Preis  | Menge | Betrag |
-      | MozyHome 50 GB (1 Computer) - jährlich | 54,89€ | 1     | 54,89€ |
-      | Gesamtbelastung                        | 54,89€ |       | 54,89€ |
+      | Beschreibung                           | Preis              | Menge | Betrag |
+      | MozyHome 50 GB (1 Computer) - jährlich | 54,89€\n(inc. VAT) | 1     | 54,89€ |
+      | Abonnementpreis                        |                    |       | 46,13€ |
+      | Umsatzsteuersatz (19%)                 |                    |       | 8,76€  |
+      | Gesamtbelastung                        |                    |       | 54,89€ |
     Then the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -340,12 +356,14 @@ Feature: Add a new user through phoenix
   Scenario: 13475 Add a new DE biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period  | base plan | country |
-      | 24      | 50 GB     | Germany |
+      | period  | base plan | country | billing country | cc number        |
+      | 24      | 50 GB     | Germany | Deutschland     | 4188181111111112 |
     Then the billing summary looks like:
-      | Beschreibung                          | Preis   | Menge | Betrag |
-      | MozyHome 50 GB (1 Computer) - 2-Jahre | 104,79€ | 1     | 104,79€ |
-      | Gesamtbelastung                       | 104,79€ |       | 104,79€ |
+      | Beschreibung                          | Preis               | Menge | Betrag  |
+      | MozyHome 50 GB (1 Computer) - 2-Jahre | 104,79€\n(inc. VAT) | 1     | 104,79€ |
+      | Abonnementpreis                       |                     |       | 88,06€  |
+      | Umsatzsteuersatz (19%)                |                     |       | 16,73€  |
+      | Gesamtbelastung                       |                     |       | 104,79€ |
     Then the user is successfully added.
   #steps for email-verification & account-access
     And the user has activated their account
@@ -370,12 +388,14 @@ Feature: Add a new user through phoenix
   Scenario: 13466 Add a new FR monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country |
-      | 1      | 50 Go     | France  |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 50 Go     | France  | France          | 4485393141463880 |
     Then the billing summary looks like:
-      | Description                             | Prix  | Quantité | Montant |
-      | MozyHome 50 Go (1 ordinateur) - Mensuel | 4,99€ | 1        | 4,99€   |
-      | Montant total des frais                 | 4,99€ |          | 4,99€   |
+      | Description                             | Prix              | Quantité | Montant |
+      | MozyHome 50 Go (1 ordinateur) - Mensuel | 4,99€\n(inc. VAT) | 1        | 4,99€   |
+      | Prix d'abonnement                       |                   |          | 4,16€   |
+      | Taux de TVA (20%)                       |                   |          | 0,83€   |
+      | Montant total des frais                 |                   |          | 4,99€   |
     And the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -400,12 +420,14 @@ Feature: Add a new user through phoenix
   Scenario: 13474 Add a new FR yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period  | base plan | country |
-      | 12      | 50 Go     | France  |
+      | period  | base plan | country | billing country | cc number        |
+      | 12      | 50 Go     | France  | France          | 4485393141463880 |
     Then the billing summary looks like:
-      | Description                            | Prix   | Quantité | Montant |
-      | MozyHome 50 Go (1 ordinateur) - Annuel | 54,89€ | 1        | 54,89€  |
-      | Montant total des frais                | 54,89€ |          | 54,89€  |
+      | Description                            | Prix               | Quantité | Montant |
+      | MozyHome 50 Go (1 ordinateur) - Annuel | 54,89€\n(inc. VAT) | 1        | 54,89€  |
+      | Prix d'abonnement                      |                    |          | 45,74€  |
+      | Taux de TVA (20%)                      |                    |          | 9,15€   |
+      | Montant total des frais                |                    |          | 54,89€  |
     And the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -430,12 +452,14 @@ Feature: Add a new user through phoenix
   Scenario: 13473 Add a new FR biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period  | base plan | country |
-      | 24      | 50 Go     | France  |
+      | period  | base plan | country | billing country | cc number        |
+      | 24      | 50 Go     | France  | France          | 4485393141463880 |
     Then the billing summary looks like:
-      | Description                               | Prix    | Quantité | Montant |
-      | MozyHome 50 Go (1 ordinateur) - Bisannuel | 104,79€ | 1        | 104,79€ |
-      | Montant total des frais                   | 104,79€ |          | 104,79€ |
+      | Description                               | Prix                | Quantité | Montant |
+      | MozyHome 50 Go (1 ordinateur) - Bisannuel | 104,79€\n(inc. VAT) | 1        | 104,79€ |
+      | Prix d'abonnement                         |                     |          | 87,32€  |
+      | Taux de TVA (20%)                         |                     |          | 17,47€  |
+      | Montant total des frais                   |                     |          | 104,79€ |
     And the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -468,7 +492,7 @@ Feature: Add a new user through phoenix
     Then the billing summary looks like:
       | Description                                   | Price | Quantity | Amount |
       | MozyHome 125 GB (Up to 3 computers) - Monthly | $9.99 | 1        | $9.99  |
-      | Total Charge                                  | $9.99 |          | $9.99  |
+      | Total Charge                                  |       |          | $9.99  |
     Then the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -497,7 +521,7 @@ Feature: Add a new user through phoenix
     Then the billing summary looks like:
       | Description                                  | Price   | Quantity | Amount  |
       | MozyHome 125 GB (Up to 3 computers) - Annual | $109.89 | 1        | $109.89 |
-      | Total Charge                                 | $109.89 |          | $109.89 |
+      | Total Charge                                 |         |          | $109.89 |
     Then the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -526,7 +550,7 @@ Feature: Add a new user through phoenix
     Then the billing summary looks like:
       | Description                                    | Price   | Quantity | Amount  |
       | MozyHome 125 GB (Up to 3 computers) - Biennial | $209.79 | 1        | $209.79 |
-      | Total Charge                                   | $209.79 |          | $209.79 |
+      | Total Charge                                   |         |          | $209.79 |
     Then the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -550,12 +574,14 @@ Feature: Add a new user through phoenix
   Scenario: 13478 Add a new IE monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan  | country |
-      | 1      | 125 GB     | Ireland |
+      | period | base plan  | country | billing country | cc number        |
+      | 1      | 125 GB     | Ireland | Ireland         | 4319402211111113 |
     Then the billing summary looks like:
-      | Description                                   | Price | Quantity | Amount |
-      | MozyHome 125 GB (Up to 3 computers) - Monthly | €8.99 | 1        | €8.99  |
-      | Total Charge                                  | €8.99 |          | €8.99  |
+      | Description                                   | Price             | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Monthly | €8.99\n(inc. VAT) | 1        | €8.99  |
+      | Subscription Price                            |                   |          | €7.31  |
+      | VAT Rate (23%)                                |                   |          | €1.68  |
+      | Total Charge                                  |                   |          | €8.99  |
     Then the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -579,12 +605,14 @@ Feature: Add a new user through phoenix
   Scenario: 13485 Add a new IE yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period  | base plan  | country |
-      | 12      | 125 GB     | Ireland |
+      | period  | base plan  | country | billing country | cc number        |
+      | 12      | 125 GB     | Ireland | Ireland         | 4319402211111113 |
     Then the billing summary looks like:
-      | Description                                  | Price  | Quantity | Amount |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89 | 1        | €98.89 |
-      | Total Charge                                 | €98.89 |          | €98.89 |
+      | Description                                  | Price              | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Annual | €98.89\n(inc. VAT) | 1        | €98.89 |
+      | Subscription Price                           |                    |          | €80.40 |
+      | VAT Rate (23%)                               |                    |          | €18.49 |
+      | Total Charge                                 |                    |          | €98.89 |
     Then the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -608,12 +636,14 @@ Feature: Add a new user through phoenix
   Scenario: 13484 Add a new IE biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period  | base plan  | country |
-      | 24      | 125 GB     | Ireland |
+      | period  | base plan  | country | billing country | cc number        |
+      | 24      | 125 GB     | Ireland | Ireland         | 4319402211111113 |
     Then the billing summary looks like:
-      | Description                                    | Price   | Quantity | Amount  |
-      | MozyHome 125 GB (Up to 3 computers) - Biennial | €188.79 | 1        | €188.79 |
-      | Total Charge                                   | €188.79 |          | €188.79 |
+      | Description                                    | Price               | Quantity | Amount  |
+      | MozyHome 125 GB (Up to 3 computers) - Biennial | €188.79\n(inc. VAT) | 1        | €188.79 |
+      | Subscription Price                             |                     |          | €153.49 |
+      | VAT Rate (23%)                                 |                     |          | €35.30  |
+      | Total Charge                                   |                     |          | €188.79 |
     Then the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -637,12 +667,14 @@ Feature: Add a new user through phoenix
   Scenario: 13479 Add a new UK monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country        |
-      | 1      | 125 GB    | United Kingdom |
+      | period | base plan | country        | billing country | cc number        |
+      | 1      | 125 GB    | United Kingdom | United Kingdom  | 4916783606275713 |
     Then the billing summary looks like:
-      | Description                                   | Price | Quantity | Amount |
-      | MozyHome 125 GB (Up to 3 computers) - Monthly | £7.99 | 1        | £7.99  |
-      | Total Charge                                  | £7.99 |          | £7.99  |
+      | Description                                   | Price             | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Monthly | £7.99\n(inc. VAT) | 1        | £7.99  |
+      | Subscription Price                            |                   |          | £6.66  |
+      | VAT Rate (20%)                                |                   |          | £1.33  |
+      | Total Charge                                  |                   |          | £7.99  |
     Then the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -666,12 +698,14 @@ Feature: Add a new user through phoenix
   Scenario: 13487 Add a new UK yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country        |
-      | 12     | 125 GB    | United Kingdom |
+      | period | base plan | country        | billing country | cc number        |
+      | 12     | 125 GB    | United Kingdom | United Kingdom  | 4916783606275713 |
     Then the billing summary looks like:
-      | Description                                  | Price  | Quantity | Amount |
-      | MozyHome 125 GB (Up to 3 computers) - Annual | £87.89 | 1        | £87.89 |
-      | Total Charge                                 | £87.89 |          | £87.89 |
+      | Description                                  | Price              | Quantity | Amount |
+      | MozyHome 125 GB (Up to 3 computers) - Annual | £87.89\n(inc. VAT) | 1        | £87.89 |
+      | Subscription Price                           |                    |          | £73.24 |
+      | VAT Rate (20%)                               |                    |          | £14.65 |
+      | Total Charge                                 |                    |          | £87.89 |
     Then the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -695,12 +729,14 @@ Feature: Add a new user through phoenix
   Scenario: 13486 Add a new UK biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country        |
-      | 24     | 125 GB    | United Kingdom |
+      | period | base plan | country        | billing country | cc number        |
+      | 24     | 125 GB    | United Kingdom | United Kingdom  | 4916783606275713 |
     Then the billing summary looks like:
-      | Description                                    | Price   | Quantity | Amount  |
-      | MozyHome 125 GB (Up to 3 computers) - Biennial | £167.79 | 1        | £167.79 |
-      | Total Charge                                   | £167.79 |          | £167.79 |
+      | Description                                    | Price               | Quantity | Amount  |
+      | MozyHome 125 GB (Up to 3 computers) - Biennial | £167.79\n(inc. VAT) | 1        | £167.79 |
+      | Subscription Price                             |                     |          | £139.82 |
+      | VAT Rate (20%)                                 |                     |          | £27.97  |
+      | Total Charge                                   |                     |          | £167.79 |
     Then the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -724,12 +760,14 @@ Feature: Add a new user through phoenix
   Scenario: 13481 Add a new DE monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country |
-      | 1      | 125 GB    | Germany |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 125 GB    | Germany | Deutschland     | 4188181111111112 |
     Then the billing summary looks like:
-      | Beschreibung                                    | Preis | Menge | Betrag |
-      | MozyHome 125 GB (Bis zu 3 Computer) - Monatlich | 8,99€ | 1     | 8,99€  |
-      | Gesamtbelastung                                 | 8,99€ |       | 8,99€  |
+      | Beschreibung                                    | Preis             | Menge | Betrag |
+      | MozyHome 125 GB (Bis zu 3 Computer) - Monatlich | 8,99€\n(inc. VAT) | 1     | 8,99€  |
+      | Abonnementpreis                                 |                   |       | 7,55€  |
+      | Umsatzsteuersatz (19%)                          |                   |       | 1,44€  |
+      | Gesamtbelastung                                 |                   |       | 8,99€  |
     Then the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -754,12 +792,14 @@ Feature: Add a new user through phoenix
   Scenario: 13491 Add a new DE yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period  | base plan | country |
-      | 12      | 125 GB    | Germany |
+      | period  | base plan | country | billing country | cc number        |
+      | 12      | 125 GB    | Germany | Deutschland     | 4188181111111112 |
     Then the billing summary looks like:
-      | Beschreibung                                   | Preis  | Menge | Betrag |
-      | MozyHome 125 GB (Bis zu 3 Computer) - jährlich | 98,89€ | 1     | 98,89€ |
-      | Gesamtbelastung                                | 98,89€ |       | 98,89€ |
+      | Beschreibung                                   | Preis              | Menge | Betrag |
+      | MozyHome 125 GB (Bis zu 3 Computer) - jährlich | 98,89€\n(inc. VAT) | 1     | 98,89€ |
+      | Abonnementpreis                                |                    |       | 83,10€ |
+      | Umsatzsteuersatz (19%)                         |                    |       | 15,79€ |
+      | Gesamtbelastung                                |                    |       | 98,89€ |
     Then the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -784,12 +824,14 @@ Feature: Add a new user through phoenix
   Scenario: 13492 Add a new DE biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period  | base plan | country |
-      | 24      | 125 GB    | Germany |
+      | period  | base plan | country | billing country | cc number        |
+      | 24      | 125 GB    | Germany | Deutschland     | 4188181111111112 |
     Then the billing summary looks like:
-      | Beschreibung                                  | Preis   | Menge | Betrag  |
-      | MozyHome 125 GB (Bis zu 3 Computer) - 2-Jahre | 188,79€ | 1     | 188,79€ |
-      | Gesamtbelastung                               | 188,79€ |       | 188,79€ |
+      | Beschreibung                                  | Preis               | Menge | Betrag  |
+      | MozyHome 125 GB (Bis zu 3 Computer) - 2-Jahre | 188,79€\n(inc. VAT) | 1     | 188,79€ |
+      | Abonnementpreis                               |                     |       | 158,65€ |
+      | Umsatzsteuersatz (19%)                        |                     |       | 30,14€  |
+      | Gesamtbelastung                               |                     |       | 188,79€ |
     Then the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -814,12 +856,14 @@ Feature: Add a new user through phoenix
   Scenario: 13480 Add a new FR monthly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period | base plan | country |
-      | 1      | 125 Go    | France  |
+      | period | base plan | country | billing country | cc number        |
+      | 1      | 125 Go    | France  | France          | 4485393141463880 |
     Then the billing summary looks like:
-      | Description                                       | Prix  | Quantité | Montant |
-      | MozyHome 125 Go (Jusqu'à 3 ordinateurs) - Mensuel | 8,99€ | 1        | 8,99€   |
-      | Montant total des frais                           | 8,99€ |          | 8,99€   |
+      | Description                                       | Prix              | Quantité | Montant |
+      | MozyHome 125 Go (Jusqu'à 3 ordinateurs) - Mensuel | 8,99€\n(inc. VAT) | 1        | 8,99€   |
+      | Prix d'abonnement                                 |                   |          | 7,49€   |
+      | Taux de TVA (20%)                                 |                   |          | 1,50€   |
+      | Montant total des frais                           |                   |          | 8,99€   |
     And the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -844,12 +888,14 @@ Feature: Add a new user through phoenix
   Scenario: 13488 Add a new FR yearly basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period  | base plan | country |
-      | 12      | 125 Go    | France  |
+      | period  | base plan | country | billing country | cc number        |
+      | 12      | 125 Go    | France  | France          | 4485393141463880 |
     Then the billing summary looks like:
-      | Description                                      | Prix   | Quantité | Montant |
-      | MozyHome 125 Go (Jusqu'à 3 ordinateurs) - Annuel | 98,89€ | 1        | 98,89€  |
-      | Montant total des frais                          | 98,89€ |          | 98,89€  |
+      | Description                                      | Prix               | Quantité | Montant |
+      | MozyHome 125 Go (Jusqu'à 3 ordinateurs) - Annuel | 98,89€\n(inc. VAT) | 1        | 98,89€  |
+      | Prix d'abonnement                                |                    |          | 82,41€  |
+      | Taux de TVA (20%)                                |                    |          | 16,48€  |
+      | Montant total des frais                          |                    |          | 98,89€  |
     And the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -874,12 +920,14 @@ Feature: Add a new user through phoenix
   Scenario: 13489 Add a new FR biennial basic MozyHome user
     When I am at dom selection point:
     And I add a phoenix Home user:
-      | period  | base plan | country |
-      | 24      | 125 Go    | France  |
+      | period  | base plan | country | billing country | cc number        |
+      | 24      | 125 Go    | France  | France          | 4485393141463880 |
     Then the billing summary looks like:
-      | Description                                         | Prix    | Quantité | Montant |
-      | MozyHome 125 Go (Jusqu'à 3 ordinateurs) - Bisannuel | 188,79€ | 1        | 188,79€ |
-      | Montant total des frais                             | 188,79€ |          | 188,79€ |
+      | Description                                         | Prix                | Quantité | Montant |
+      | MozyHome 125 Go (Jusqu'à 3 ordinateurs) - Bisannuel | 188,79€\n(inc. VAT) | 1        | 188,79€ |
+      | Prix d'abonnement                                   |                     |          | 157,32€ |
+      | Taux de TVA (20%)                                   |                     |          | 31,47€  |
+      | Montant total des frais                             |                     |          | 188,79€ |
     And the user is successfully added.
     #steps for email-verification & account-access
       And the user has activated their account
@@ -906,7 +954,7 @@ Feature: Add a new user through phoenix
   Scenario: 3573 Add a new US monthly free MozyHome user
     When I am at dom selection point:
     And I add a phoenix Free user:
-      | base plan | country |
+      | base plan | country       |
       | free      | United States |
     Then the user is successfully added.
     #steps for email-verification & account-access
@@ -920,8 +968,8 @@ Feature: Add a new user through phoenix
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     And MozyHome user details should be:
-      | Partner:          | Country: |
-      | @partner (change) | @country |
+      | Partner:          |
+      | @partner (change) |
     And MozyHome subscription details should be:
       | Subscription     |
       | No subscriptions |

@@ -1,11 +1,14 @@
 #qa12 busclient02
 10.135.14.124 auth.mozy.com auth2.mozy.com
 10.135.14.105 secure.mozy.com secure.mozy.ie secure.mozy.fr secure.mozy.co.uk secure.mozy.de
-10.135.14.40 www.mozypro.com mozypro.com secure.mozypro.com www.mozyenterprise.com mozyenterprise.com
+10.135.14.40 www.mozypro.com mozypro.com secure.mozypro.com www.mozyenterprise.com mozyenterprise.com mozyoem.mozypro.com
 10.135.14.106 mozy.com mozy.ie mozy.de mozy.fr mozy.co.uk
-10.135.14.40 client.mozy.com
+10.135.14.40 client.mozy.com resetpassword.mozypro.com oem.partners.com partners.mozy.com
 10.135.14.149 triton.mozy.com
+10.135.14.40 backupclient.mozyenterprise.com
 
+#google
+127.0.0.1 ssl.google-analytics.com www.google-analytics.com
 127.0.0.1 ajax.googleapis.com
 127.0.0.1 apis.google.com
 127.0.0.1 ads.revsci.net
@@ -43,3 +46,8 @@
 127.0.0.1 us-u.openx.net
 
 127.0.0.1 x.bidswitch.com
+127.0.0.1 decho.122.2o7.net
+127.0.0.1 mozy.tt.omtrdc.net
+127.0.0.1 brainshark.com
+127.0.0.1 stats.g.doubleclick.net
+

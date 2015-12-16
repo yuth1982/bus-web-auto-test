@@ -17,7 +17,7 @@ module Bus
     element(:storage_used_span, id: 'resource_summary_storage_used')
 
     element(:storage_subpartner_all_span, id: 'resource_storage_subpartner_all')
-    element(:storage_errors_div, css: 'div#resource_summary_storage_errors div')
+    element(:storage_errors_div, xpath: "//div[@id='resource_summary_storage_errors']/div")
     element(:storage_buy_more_link, css: 'div.div_col:first-child span.buy_more>a')
     # Itemized
     element(:storage_subpartner_Desktop_span, id: 'resource_storage_subpartner_Desktop')
@@ -70,6 +70,14 @@ module Bus
     def click_more_hide_link(action, type)
       action = 'display' if action == 'more'
       find(:id, "#{action}_#{type}_details_of_other_license_types").click
+    end
+
+    def get_storage_errors
+      storage_errors_div.text
+    end
+
+    def storage_errors_visible?
+      !locate(:xpath, "//div[@id='resource_summary_storage_errors']/div").nil?
     end
   end
 end

@@ -76,14 +76,21 @@ When /^I download (.+) quick report$/ do |report_name|
   @bus_site.admin_console_page.quick_reports_section.download_report(report_name)
 end
 
-Then /^Scheduled (.+) report csv file details should be:$/ do |report_type, report_table|
+Then /^Scheduled (.+) report csv file( which attached to email)* details should be:$/ do |report_type, type, report_table|
   report_table.map_column!('Column A') do |value|
     value.gsub(/@name/,@partner.company_info.name)
   end
-  report_table.rows.each do |row|
-    row.map {|col| col.force_encoding('IBM437');}
+  if OS.windows?
+    report_table.rows.each do |row|
+      row.map {|col| col.force_encoding('IBM437');}
+    end
   end
-  @bus_site.admin_console_page.scheduled_reports_section.read_scheduled_report(report_type).should eql report_table.rows
+  if type.nil?
+    @bus_site.admin_console_page.scheduled_reports_section.read_scheduled_report(report_type).should eql report_table.rows
+  else
+    wait_until{FileHelper.get_file_size(@mail_content) > 0}
+    FileHelper.read_csv_file(@mail_content).should == report_table.rows
+  end
 end
 
 Then /^Quick report (.+) csv file details should be:$/ do |report_type, report_table|
@@ -97,6 +104,24 @@ Then /^Quick report (.+) csv file details should be:$/ do |report_type, report_t
   actual = @bus_site.admin_console_page.quick_reports_section.read_quick_report(report_type)
   actual.size.should == report_table.rows.size
   actual.each { |row| report_table.rows.should include row }
+end
+
+# a report will return multiple lines of records, just need to check one record of specified columns
+And /^I get record for column (.+) with value (.+) from Quick report (.+) csv file should be$/ do |_, value, report, table|
+  expected = table.hashes[0]
+  actual = @bus_site.admin_console_page.quick_reports_section.read_quick_report(report)
+  record_index = 0
+  # find the record index which we need to check among all records
+  actual.each_with_index { | v,index |
+    if v.include?(value)
+      record_index = index
+      break
+    end
+  }
+  actual_record = {}
+  # combine the report head and the actual record to a hash
+  actual[0].each_with_index { |key, index| actual_record[key] = actual[record_index][index]}
+  expected.keys.each{|key| actual_record[key].should == expected[key] }
 end
 
 When /^I search report by name (.+)$/ do |report_name|
@@ -113,4 +138,8 @@ Then /^Scheduled report list should be:$/ do |results_table|
   end
 
   expected.keys.each{ |key| actual[key].should == expected[key]}
+end
+
+And /^I clear downloads folder (.+) file$/ do |file_name|
+  FileHelper.clean_up_csv(file_name)
 end

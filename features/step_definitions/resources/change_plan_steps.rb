@@ -7,7 +7,7 @@
 # Reseller available columns:
 # Optional: server plan, storage add-on
 #
-When /^I change (MozyPro|MozyEnterprise|Reseller|Itemized) account plan to:$/ do |type, plan_table|
+When /^I change (MozyPro|MozyEnterprise|Reseller|Itemized|MozyEnterprise DPS) account plan to:$/ do |type, plan_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['change_plan'])
 
   cells = plan_table.hashes.first
@@ -28,6 +28,8 @@ When /^I change (MozyPro|MozyEnterprise|Reseller|Itemized) account plan to:$/ do
       @bus_site.admin_console_page.change_plan_section.change_mozypro_plan(base_plan, server_plan, storage_add_on, coupon)
     when "Itemized"
       @bus_site.admin_console_page.change_plan_section.change_itemized_plan(server_licenses, desktop_licenses)
+    when 'MozyEnterprise DPS'
+      @bus_site.admin_console_page.change_plan_section.change_mozyenterprise_dps_plan(base_plan)
     else
       raise "#{type} Company type not exist"
   end
@@ -76,9 +78,9 @@ end
 
 # Success message depends on Manage Resources vs. Assigned Keys
 # which is determined by the company type of the account
-Then /^the (MozyPro|MozyEnterprise|Reseller|Itemized) account plan should be changed$/ do |type|
+Then /^the (MozyPro|MozyEnterprise|Reseller|Itemized|MozyEnterprise DPS) account plan should be changed$/ do |type|
   case type
-    when 'MozyEnterprise', 'Itemized', 'MozyPro', 'Reseller'
+    when 'MozyEnterprise', 'Itemized', 'MozyPro', 'Reseller', 'MozyEnterprise DPS'
       @bus_site.admin_console_page.change_plan_section.messages.should =~ /Successfully changed plan\./
     else
       raise "#{type} Company type not exist"
@@ -130,6 +132,14 @@ Then /^MozyPro available base plans should be:$/ do |plans_table|
   @bus_site.admin_console_page.change_plan_section.mozypro_available_base_plans.should == plans_table.rows.flatten
 end
 
+Then /^MozyPro available base plans and price should be:$/ do |plans_table|
+  @bus_site.admin_console_page.change_plan_section.mozypro_available_base_plans_price.should == plans_table.rows.flatten
+end
+
+And /^Add-ons price should be (.+)$/ do |text|
+  @bus_site.admin_console_page.change_plan_section.mozypro_server_plan_price.should == text
+end
+
 Then /^Change Plan section should be visible$/ do
   @bus_site.admin_console_page.change_plan_section.section_visible?.should be_true
 end
@@ -149,4 +159,16 @@ end
 Then /^Change Plan error message should be (.+)$/ do |expected|
   actual = @bus_site.admin_console_page.change_plan_section.messages
   actual.should == expected
+end
+
+Then /^Rate schedule can not be choosen when change plan$/ do
+  @bus_site.admin_console_page.change_plan_section.rate_schedule_present.should == false
+end
+
+Then /^the storage error message of change plan section should be:$/ do  |message|
+  @bus_site.admin_console_page.change_plan_section.get_error_input_message.should == message
+end
+
+Then /^change plan section shouldn't have any storage errors$/ do
+  @bus_site.admin_console_page.change_plan_section.error_input_visible?.should == false
 end

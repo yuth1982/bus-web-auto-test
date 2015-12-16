@@ -21,6 +21,7 @@ module Bus
     element(:delete_partner_link, xpath: "//a[text()='Delete Partner']")
     element(:view_in_aria_link, xpath: "//a[text()='View in Aria']")
     element(:export_to_excel_link, xpath: "//a[text()='Export to Excel (CSV)']")
+    element(:set_product_name_link, xpath: "//a[text()='Set Product Name']")
 
     # Change partner external id
     element(:external_id_tb, id: 'external_id')
@@ -35,43 +36,61 @@ module Bus
     element(:cancel_change_status_link, css: 'span[id^=partner-change-status-] a')
 
     # Change partner root role
-    element(:partner_root_role_change_link, css: 'span[id^=partner-display-root-role] a')
-    element(:partner_root_role_type_select, css: 'span[id^=partner-change-root-role] select')
-    element(:partner_root_role_submit_btn, css: 'span[id^=partner-change-root-role] input')
-    element(:partner_root_role_cancel_btn, css: 'span[id^=partner-change-root-role] a')
+    element(:partner_root_role_change_link, xpath: "//span[contains(@id,'partner-display-root-role')]/a")
+    element(:partner_root_role_type_select, xpath: "//span[contains(@id,'partner-change-root-role')]/select")
+    element(:partner_root_role_submit_btn, xpath: "//span[contains(@id,'partner-change-root-role')]/input")
+    element(:partner_root_role_cancel_btn, xpath: "//span[contains(@id,'partner-change-root-role')]/a")
+
+    # Change partner account type
+    element(:account_type_change_link, xpath: "//a[contains(@onclick,'-acct-type-')][contains(text(),'change')]")
+    element(:account_type_select, xpath: "//select[@name='acct_type']")
+    element(:account_type_submit_btn , xpath: "//select[@name='acct_type']/../input[@type='submit'] ")
+    element(:account_type_span, xpath: "//span[contains(@id,'partner-display-acct-type-')]")
+
+    # change sales channnel
+    element(:sales_channel_change_link, xpath: "//a[contains(@onclick,'partner-display-sales-channel')][text()='(change)']")
+    element(:sales_channel_select, xpath: "//select[@name='sales_channel']")
+    element(:sales_channel_submit_btn , xpath: "//select[@name='sales_channel']/../input[@type='submit']")
+    element(:sales_channel_span, xpath: "//span[contains(@id,'partner-display-sales-channel')]")
+
+
 
     # General information
     elements(:general_info_dls, css: 'div>dl')
     element(:stash_info_dl, css: 'div>dl>form')
 
     # Contact information
-    element(:partner_details_div, css: 'div[id$=account_details] div:first-child')
-    element(:account_details_icon, css: 'i[id$=account-dtl-icon]')
+    element(:partner_details_div, xpath: "//div[contains(@id,'account_details')]")
+    element(:account_details_icon, xpath: "//i[contains(@id,'account-dtl-icon')]")
     element(:account_details_attribute_edit, xpath: "//a[contains(@id, 'toggle_partner_attribute_management_edit')]/span")
     element(:account_details_attribute_server, xpath: "//form[contains(@id, 'account_attributes_form')]/table/tbody/tr[6]/td[3]/input")
     element(:account_details_attribute_save, css: "div.partner_attribute_management_shown > input[type=\"submit\"]")
 
-    elements(:contact_info_dls, css: 'div>form>dl')
-    element(:contact_address_tb, id: 'contact_address')
-    element(:contact_city_tb, id: 'contact_city')
-    element(:contact_state_select, id: 'contact_state')
-    element(:contact_state_us_select, id: 'contact_state_us')
-    element(:contact_state_ca_select, id: 'contact_state_ca')
-    element(:contact_zip_tb, id: 'contact_zip')
-    element(:contact_country_select, id: 'contact_country')
+    elements(:contact_info_dls, xpath: "//div/form/dl")
+    element(:contact_address_tb, xpath: "//input[@name='contact_address']")
+    element(:contact_city_tb, xpath: "//input[@name='contact_city']")
+    element(:contact_state_select, xpath: "//input[@name='contact_state']")
+    element(:contact_state_us_select, xpath: "//select[@id='contact_state_us']")
+    element(:contact_state_ca_select, xpath: "//select[@id='contact_state_ca']")
+    element(:contact_zip_tb, xpath: "//input[@name='contact_zip']")
+    element(:contact_country_select, xpath: "//select[@name='contact_country']")
     element(:contact_country_text, xpath: '//div/form/dl[2]/dd[5]')
-    element(:contact_phone_tb, id: 'partner_contact_phone')
-    element(:contact_industry_select, id: 'partner_industry')
-    element(:contact_employees_select, id: 'partner_num_employees')
-    element(:contact_email_tb, id: 'contact_email')
-    element(:contact_vat_tb, id: 'vat_info_vat_number')
-    element(:save_changes_btn, css: 'input.button')
+    element(:contact_phone_tb, xpath: "//input[@name='partner_contact_phone']")
+    element(:contact_industry_select, xpath: "//select[@name='partner[industry]']")
+    element(:contact_employees_select, xpath: "//select[@name='partner[num_employees]']")
+    element(:contact_email_tb, xpath: "//input[@name='contact_email']")
+    element(:contact_vat_tb, xpath: "//input[@id='vat_info_vat_number']")
+    element(:save_changes_btn, xpath: "//input[contains(@onclick,'password_dialog')]")
 
     #change contact country section
     element(:chg_country_link_a, xpath: "//a[text()='Change Contact Country']")
     element(:contact_vat_number, xpath: "//input[@id='vat_num']")
     element(:contact_chg_country_select, xpath: "//select[@id='country_and_vat_contact_country']")
     element(:submit_btn, xpath: "//input[@id='submit_button']")
+
+    # verify password pop up
+    element(:verify_passowrd_input, xpath: "//div[@class='popup-window']//input[@name='password']")
+    element(:submit_popup_btn, xpath: "//div[@class='popup-window-footer']/input[@value='Submit']")
 
     # API Key
     element(:api_key_div, css: 'div[id^=api-key-box-] fieldset div:nth-child(1)')
@@ -82,15 +101,20 @@ module Bus
     element(:account_attributes_table, css: 'form[id^=account_attributes_form] table')
 
     # Pooled Storage
-    element(:pooled_resources_table, css: 'form[id^=pooled_resources_form] table')
     element(:pooled_resource_edit_link, css: 'a[id^=toggle_partner_pooled_resource_item_edit]')
-    element(:pooled_resource_submit_btn, css: 'div.resource_item_edit input[type=submit]')
+    element(:pooled_resource_submit_btn, xpath: "//div[@class='resource_item_edit']/p/input[@type='submit']")
+    element(:assign_quota_desktop_input, xpath: "//input[@name='assigned_quota[Desktop]']")
+    element(:assigned_licenses_desktop_input, xpath: "//input[@name='assigned_licenses[Desktop]']")
+    element(:assign_quota_server_input, xpath: "//input[@name='assigned_quota[Server]']")
+    element(:assigned_licenses_server_input, xpath: "//input[@name='assigned_licenses[Server]']")
+    element(:assigned_quota_generic_input, xpath: "//input[@name='assigned_quota[Generic]']")
+    element(:pooled_resource_edit_link, xpath: "//a[contains(@id,'toggle_partner_pooled_resource_item_edit')]")
 
     # Resources table, for MozyPro
     element(:generic_resources_table, css: 'form[id^=generic_resources_form] table')
 
     # Pooled Resources table, for Pooled partner
-    element(:pooled_resources_table, css: 'form[id^=pooled_resources_form] table')
+    element(:pooled_resources_table, xpath: "//form[contains(@id,'pooled_resources_form')]/table")
 
     # License types table
     element(:license_types_table, css: 'div[id^=partner_license_types] table')
@@ -125,9 +149,13 @@ module Bus
     element(:submit_autogrow_status_btn, css: 'span[id^=partner-change-overdraft-status-] input[value=Submit]')
 
     # Subdomain
-    element(:change_subdomain_link, css: "a[onclick*='/partner/subdomain']")
+    element(:change_subdomain_link, xpath: "//a[text()='(learn more and set up)']")
     element(:h3_section, css: "h3")
 
+    # security fiedld
+    element(:secuirty_field, xpath: "//span[contains(@id,'partner-display-hipaa-compliance-status')]")
+
+    element(:ldap_delete_confirm_btn, xpath: "//input[@value='Confirm']")
     # Public: Partner Id
     #
     # Return string
@@ -206,7 +234,10 @@ module Bus
       expand(account_details_icon)
       wait_until_ajax_finished(partner_details_div)
       wait_until { !(contact_info_dls.first.dt_dd_elements_text.first.first == '') }
-      output = Hash[*contact_info_dls.map{ |el| el.dt_dd_elements_text.delete_if{ |pair| pair.first.empty?}}.delete_if{ |el| el.empty?}.flatten]
+      outarray = contact_info_dls.map{ |el| el.dt_dd_elements_text.delete_if{ |pair| pair.first.empty?}}.delete_if{ |el| el.empty?}
+      # for OEM partner, outarray will have ["(Invoiced)"], and above code can't handle this
+      outarray.last.pop if outarray.last.last == ["(Invoiced)"]
+      output = Hash[*outarray.flatten]
       output['Contact Address:'] = contact_address_tb.value
       output['Contact City:'] = contact_city_tb.value
 
@@ -230,7 +261,7 @@ module Bus
       output['Phone:'] = contact_phone_tb.value
       output['Industry:'] = contact_industry_select.first_selected_option.text
       output['# of employees:'] = contact_employees_select.first_selected_option.text
-      output['Contact Email:'] = contact_email_tb.value
+      output['Contact Email:'] = contact_email_tb.value unless locate(:xpath, "//input[@id='contact_email']").nil?
       output['VAT Number:'] = contact_vat_tb.value if contact_vat_tb.visible?
       output
     end
@@ -369,6 +400,18 @@ module Bus
       billing_history_table.hashes
     end
 
+    def show_billing_history
+      expand(billing_information_icon)
+      show_billing_history_link.click
+      wait_until_bus_section_load
+    end
+
+    def click_invoice_link
+      show_billing_history
+      wait_until { !billing_history_table.hashes.first.values.first.nil? }
+      (billing_history_table.rows.first[0].find("a")).click
+    end
+
     # Public: Click act as partner link
     #
     # Example
@@ -377,6 +420,12 @@ module Bus
     # Returns nothing
     def act_as_partner
       act_as_link.click
+      alert_accept if alert_present?
+    end
+
+    def click_admin_name admin_name
+      find(:xpath, "//a[text()='#{admin_name}']").click
+
     end
 
     # Public: Delete the current partner
@@ -402,6 +451,12 @@ module Bus
         alert_accept
         return_text
       end
+    end
+
+    def ldap_admin_delete_partner
+      wait_until_bus_section_load
+      delete_partner_link.click
+      ldap_delete_confirm_btn.click
     end
 
     # Public: Enable stash for a partner
@@ -454,7 +509,7 @@ module Bus
       change_autogrow_status_link.click
       autogrow_status_select.select('No')
       submit_autogrow_status_btn.click
-      wait_until{ success_messages == "Overdraft protection disabled." }
+      wait_until{ success_messages == "Autogrow protection disabled." }
     end
 
     # Public: Add stash to all users
@@ -477,6 +532,7 @@ module Bus
       partner_root_role_change_link.click
       partner_root_role_type_select.select(root_role)
       partner_root_role_submit_btn.click
+      wait_until_bus_section_load
     end
 
     # Public: Create API Key
@@ -569,7 +625,7 @@ module Bus
 
     # Public: Change Partner External ID
     #    #
-    # Example
+    # Example pooled_resource_edit_link
     #  @bus_site.admin_console_page.partner_details_section.change_external_id('Test_EID_12345')
     #
     # Return nothing
@@ -596,6 +652,36 @@ module Bus
       change_subdomain_link.text
     end
 
+    # Public: Click the link to set product name
+    #
+    def set_product_name
+      set_product_name_link.click
+    end
+
+    def set_account_type type
+      account_type_change_link.click
+      wait_until{ account_type_select.visible? }
+      account_type_select.select type
+      account_type_submit_btn.click
+      wait_until_bus_section_load
+    end
+
+    def account_type
+      account_type_span.text
+    end
+
+    def set_sales_channel sales_type
+      sales_channel_change_link.click
+      wait_until{ sales_channel_select.visible? }
+      sales_channel_select.select sales_type
+      sales_channel_submit_btn.click
+      wait_until_bus_section_load
+    end
+
+    def get_sales_channel
+      sales_channel_span.text
+    end
+
     # Public: Change the contact email
     #
     # @param email
@@ -619,7 +705,7 @@ module Bus
     def set_contact_state state
       case
         when contact_state_us_select.visible?
-          contact_state_us_select state
+          contact_state_us_select.select state
         when  contact_state_ca_select.visible?
           contact_state_ca_select.select state
         else
@@ -633,7 +719,19 @@ module Bus
 
     def set_contact_country country
       contact_country_select.select country
-      alert_accept
+      alert_accept if alert_present?
+    end
+
+    def set_phone phone
+      contact_phone_tb.type_text phone
+    end
+
+    def set_contact_industry industry
+      contact_industry_select.select industry
+    end
+
+    def set_contact_of_employees range
+      contact_employees_select.select range
     end
 
     def set_vat_number vat
@@ -647,6 +745,10 @@ module Bus
     def click_change_country_lnk
       chg_country_link_a.click
       wait_until_bus_section_load
+    end
+
+    def get_security_value
+      secuirty_field.text
     end
 
     # Public: set country in change country section
@@ -673,12 +775,21 @@ module Bus
       find(:xpath, "//input[@id='vat_num']").visible?
     end
 
-    def submit_change
+    def submit_change(password = QA_ENV['bus_password'])
       submit_btn.click
+      verify_password(password)
     end
 
-    def save_changes
+
+    def save_changes(password = QA_ENV['bus_password'])
       save_changes_btn.click
+      verify_password(password)
+    end
+
+    def verify_password(password)
+      wait_until{ verify_passowrd_input.visible? } # wait for load delete password div
+      verify_passowrd_input.type_text(password)
+      submit_popup_btn.click
     end
 
     # Public: Success messages for partner details section
@@ -750,14 +861,18 @@ module Bus
       setting_save_btn.click
     end
 
-    def delete_settings(settings)
+    def delete_settings(settings,exist = true)
       settings_link.click
       settings.each do |setting|
-         row_el = find(:xpath, "//td[text()='#{setting['Name']}']/..")
-         capability_id = /[\d]+/.match(row_el[:id]).to_s.to_i
-         page.driver.execute_script("document.querySelector('span[id^=settings_editor_for_#{capability_id}]').style.display=''")
-         row_el.find(:css, 'span.delete_setting>a').click
-         alert_accept
+         xpath = "//td[text()='#{setting['Name']}']/.."
+         if (!exist) && locate(:xpath,xpath).nil?
+         else
+          row_el = find(:xpath, xpath)
+          capability_id = /[\d]+/.match(row_el[:id]).to_s.to_i
+          page.driver.execute_script("document.querySelector('span[id^=settings_editor_for_#{capability_id}]').style.display=''")
+          row_el.find(:css, 'span.delete_setting>a').click
+          alert_accept
+         end
       end
     end
 
@@ -768,8 +883,47 @@ module Bus
         find(:xpath, "//td[text()=\'#{setting['Name']}\']/../td[3]").text == setting['Locked']
     end
 
+    def verify_settings(settings)
+      settings_link.click
+      settings.each do |setting|
+        has_setting?(setting)
+      end
+    end
+
     def has_setting_name?(setting_name)
       all(:xpath, "//td[text()=\'#{setting_name}\']").size >= 1
+    end
+
+    def has_section?(section_name)
+      size = all(:xpath, "//div[@class='show-details']//*[contains(text(),'#{section_name}')]").size
+      (size > 0)? true: false
+    end
+
+    def expand_element(element_name)
+      case element_name
+        when 'account details'
+          expand(account_details_icon)
+        when 'billing information'
+          expand(billing_information_icon)
+      end
+    end
+
+    def collapse_element(element_name)
+      case element_name
+        when 'account details'
+          collapse(account_details_icon)
+        when 'billing information'
+          collapse(billing_information_icon)
+      end
+    end
+
+    def element_collapsed?(element_name)
+      case element_name
+        when 'account details'
+          collapsed?(account_details_icon)
+        when 'billing information'
+          collapsed?(billing_information_icon)
+      end
     end
 
     # this is for subpartner
@@ -781,18 +935,59 @@ module Bus
       def initialize(root)
         @root_element = root
       end
+
+      def pooled_resource_edit_link_visible?
+        !(locate(:xpath, "//div[contains(@id,'partner_pooled_resources')]/h4/span/a[contains(text(),'Edit')]").nil?)
+      end
+
+      def edit_pooled_resource
+        pooled_resource_edit_link.click
+      end
+
+      def pooled_resurce_inputs_visible?(type)
+        items_visible = Hash.new
+        if type.include? "Server"
+          items_visible["server_quota_input"] = assign_quota_server_input.visible?
+          items_visible["server_licenses_input"] = assigned_licenses_server_input.visible?
+        end
+        if type.include? "Desktop"
+          items_visible["desktop_quota_input"] = assign_quota_desktop_input.visible?
+          items_visible["desktop_licenses_input"] = assigned_licenses_desktop_input.visible?
+        end
+        if type.include? "Generic"
+          items_visible["generic_quota_input"] = assigned_quota_generic_input.visible?
+        end
+        items_visible
+      end
+
       def change_pooled_resource(pooled_resource, subpartner=false)
         wait_until_bus_section_load
         expand(account_details_icon)
         pooled_resource_edit_link.click
         pooled_resource.each do |k, v|
           if k.match(/(desktop|server|generic)_(storage|devices)/)
-            find(:css, "input[name='assigned_#{$2}[#{$1.capitalize}]']".gsub('storage', 'quota').gsub('devices', 'licenses')).type_text(v)
+            find(:xpath, "//input[@name='assigned_#{$2}[#{$1.capitalize}]']".gsub('storage', 'quota').gsub('devices', 'licenses')).type_text(v)
           end
         end
         pooled_resource_submit_btn.click
         wait_until_bus_section_load
       end
+    end
+
+    def check_fields_visible(array)
+      result = []
+      array.each{|field|
+        result << !(locate(:xpath, "//div[starts-with(@id,'partner-show')]//dl/dt[text()='#{field}']").nil?)
+      }
+      result
+    end
+
+    def check_account_type_change
+      !(locate(:xpath, "//a[contains(@onclick,'-acct-type-')][contains(text(),'change')]").nil?)
+    end
+
+    def check_sales_channel_change
+      !(locate(:xpath, "//a[contains(@onclick,'partner-display-sales-channel')][text()='(change)']").nil?)
     end
 
     private

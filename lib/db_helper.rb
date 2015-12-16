@@ -41,6 +41,24 @@ module DBHelper
     end
   end
 
+  # update machine deleted time to days's before by machine id
+  def update_machine_deleted_at(machine_id, days)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      t = (Time.now - days * 24 * 3600)
+      Log.debug "########Time.now is #{Time.now}"
+      Log.debug "########days is #{days}"
+      sql = "update machines set deleted_at='#{t}' where ID='#{machine_id}';"
+      Log.debug sql
+      c = conn.exec(sql)
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+
+  end
+
   def get_machine_id_by_license_key(license_key)
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
@@ -169,7 +187,7 @@ module DBHelper
   def get_deleted_user_email
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "select username from users where username like '%@gmail.com%' and deleted = true order by id DESC limit 1;"
+      sql = "select username from users u1 where username SIMILAR TO '%@(gmail|emc).com%' and deleted = true and not exists (select 1 from users u2 where u2.deleted = false and u1.username = u2.username) order by id DESC limit 1;"
       c = conn.exec(sql)
       c.values[0][0]
     rescue PG::Error => e
@@ -208,20 +226,20 @@ module DBHelper
         conn.exec sql
         Log.debug sql
 
-        sql = "select id from machines order by id desc limit 1"
+        sql = "select id from machines where user_id = #{user_id} order by id desc limit 1"
         c = conn.exec sql
         Log.debug sql
         machine_id = c.values[0][0].to_i
-
-        sql = "update mozy_pro_keys set machine_id = #{machine_id}, activated_at = now() where id = #{mozy_pro_key_id}";
-        conn.exec sql
-        Log.debug sql
 
         sql = "update machines set space_used = #{quota}::bigint*1024*1024*1024, pending_space_used = 1024, patches = 0, files = 1, last_client_version = null,last_backup_at = now() where id = #{machine_id};"
         conn.exec sql
         Log.debug sql
 
         sql = "insert into machine_storage_pools(owner_id, license_type_id, created_at, updated_at) values(#{machine_id}, #{license_type_id}, now(), now());"
+        conn.exec sql
+        Log.debug sql
+
+        sql = "update mozy_pro_keys set machine_id = #{machine_id}, activated_at = now() where id = #{mozy_pro_key_id}";
         conn.exec sql
         Log.debug sql
       end
@@ -246,13 +264,18 @@ module DBHelper
     end
   end
 
-  def get_password_config(partner_id, type='user')
+  def get_db_password_config(partner_id, type='user')
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
       sql = "select * from password_policies where pro_partner_id = #{partner_id} and (user_type = '#{type}' or user_type = 'all');"
       puts sql
       c = conn.exec sql
-      c[0]
+      if c.num_tuples.zero?
+        #0 db record searched out
+        nil
+      else
+        c[0]
+      end
     rescue PG::Error => e
       puts "postgres error: #{e}"
     ensure
@@ -370,4 +393,122 @@ module DBHelper
       conn.close unless conn.nil?
     end
   end
+
+  def update_partner_delete_timestamp(partner_id, days)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "update pro_partner_details set value=value::timestamp - interval '#{days} days' where key='purge_requested_on' and pro_partner_id=#{partner_id};"
+      c = conn.exec(sql)
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_action_audits(action,admin_id,type)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "SELECT * from action_audits where action = '#{action}' and effective_admin_id = #{admin_id} order by id desc limit 1;"
+      sql = "SELECT * from action_audits where action = '#{action}' and actual_admin_id = #{admin_id} order by id desc limit 1;" if type == 'actual'
+      Log.debug sql
+      c = conn.exec(sql)
+      [c.values[0][0],c.values[0][1],c.values[0][2], c.values[0][3],c.values[0][4], c.values[0][5]]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  #   id   | action_audit_id | column_name  | table_name | record_id |               changed_from               |                changed_to                | action |      performed_at
+  # 736289 |        12839186 | passwordhash | admins     |    563261 | 9bc34549d565d9505b287de0cd20ac77be1d3f2c | 86ba9a22970c2feb2d3095f889acf4c4e42473d5 | update | 2015-08-14 20:45:55-06
+  def get_model_audits(action_audit_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "SELECT * from model_audits where action_audit_id = #{action_audit_id} order by id desc limit 1;"
+      Log.debug sql
+      c = conn.exec(sql)
+      if c.values[0].nil?
+        []
+      else
+        [c.values[0][0],c.values[0][1],c.values[0][2], c.values[0][3],c.values[0][4], c.values[0][5], c.values[0][6], c.values[0][7]]
+      end
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_info_from_admins(username)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "SELECT * from admins where username='#{username}' order by id desc limit 1;"
+      Log.debug sql
+      c = conn.exec(sql)
+      [c.field_values('id')[0],c.field_values('passwordhash')[0]]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def update_users_passwords_expires_at_yesterday(user_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "update users_passwords set expires_at = TIMESTAMP 'yesterday' where user_id='#{user_id}';"
+      c = conn.exec(sql)
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_count_seed_device_id(seed_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "SELECT count(*) from pro_resource_orders where seed_device_order_id = #{seed_id};"
+      Log.debug sql
+      c = conn.exec(sql)
+      c.values[0][0]
+     rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_model_audits_record(partner_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select count(id) from model_audits where action_audit_id in (select id from action_audits where effective_admin_id in (select root_admin_id from pro_partners where id = #{partner_id}) order by id desc limit 1);"
+      Log.debug sql
+      c = conn.exec(sql)
+      c.values[0][0]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_machine_available_quota(machine_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "SELECT machine_available_quota(#{machine_id});"
+      Log.debug sql
+      c = conn.exec(sql)
+      c.values[0][0]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
 end
+
+

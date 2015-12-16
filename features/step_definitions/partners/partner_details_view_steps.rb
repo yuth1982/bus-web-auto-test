@@ -2,7 +2,7 @@ When /^I act as newly created (sub)*partner( account)?$/ do |type, account|
   if type.nil?
     @current_partner = @bus_site.admin_console_page.partner_details_section.partner
     @bus_site.admin_console_page.partner_details_section.act_as_partner
-    @bus_site.admin_console_page.has_stop_masquerading_link?
+    wait_until { @bus_site.admin_console_page.has_stop_masquerading_link? }
   else
     @current_partner = @bus_site.admin_console_page.partner_details_section.subpartner.partner
     @bus_site.admin_console_page.partner_details_section.subpartner.act_as_partner
@@ -18,9 +18,15 @@ When /^I add partner settings$/ do |table|
   @bus_site.admin_console_page.partner_details_section.close_settings
 end
 
-When /^I delete partner settings$/ do |table|
+When /^I delete partner settings(.*)$/ do |exist, table|
   # | Name | Value |
-  @bus_site.admin_console_page.partner_details_section.delete_settings(table.hashes)
+  exist = (exist==(' if exist')? false : true)
+  @bus_site.admin_console_page.partner_details_section.delete_settings(table.hashes, exist)
+  @bus_site.admin_console_page.partner_details_section.close_settings
+end
+
+When /^I verify partner settings$/ do |table|
+  @bus_site.admin_console_page.partner_details_section.verify_settings(table.hashes)
   @bus_site.admin_console_page.partner_details_section.close_settings
 end
 
@@ -37,6 +43,10 @@ When /^I search and delete partner account by (.+)/ do |account_name|
   end
 end
 
+And /^LDAP admin delete partner$/ do
+  @bus_site.admin_console_page.partner_details_section.ldap_admin_delete_partner
+end
+
 When /^I search and delete partner account if it exists by (.+)/ do |account_name|
   begin
     step %{I search and delete partner account by #{account_name}}
@@ -46,23 +56,37 @@ When /^I search and delete partner account if it exists by (.+)/ do |account_nam
 end
 
 # When you are on partner details section, you are able to execute this steps
-When /^I delete (partner|subpartner) account$/ do |status|
+When /^I delete (partner|subpartner) account(|default password|Hipaa password)$/ do |status, password|
+  password = QA_ENV['bus_password'] if password == ''
   case status
     when "partner"
-      @bus_site.admin_console_page.partner_details_section.delete_partner(QA_ENV['bus_password'])
+      @bus_site.admin_console_page.partner_details_section.delete_partner(password)
     when "subpartner"
-      @bus_site.admin_console_page.partner_details_section.subpartner.delete_partner(QA_ENV['bus_password'])
+      @bus_site.admin_console_page.partner_details_section.subpartner.delete_partner(password)
     else
   end
 end
 
-When /^I get the partner_id$/ do
-  @partner_id = @bus_site.admin_console_page.partner_details_section.partner_id()
+When /^I get the (partner_id|subpartner_id)$/ do |type|
+  if type =='partner_id'
+    @partner_id = @bus_site.admin_console_page.partner_details_section.partner_id()
+  else
+    @partner_id = @bus_site.admin_console_page.partner_details_section.subpartner.partner_id()
+  end
   Log.debug("partner id is #{@partner_id}")
 end
 
 When /^I get partner aria id$/ do
   @aria_id = @bus_site.admin_console_page.partner_details_section.general_info_hash['Aria ID:']
+  Log.debug @aria_id
+end
+
+And /^Partner details (shouldn't|should) have (.+)/ do |type,field|
+  unless type == "should"
+    @bus_site.admin_console_page.partner_details_section.general_info_hash[field + ":"].nil?.should == true
+  else
+    @bus_site.admin_console_page.partner_details_section.general_info_hash[field + ":"].nil?.should == false
+  end
 end
 
 Then /^(Partner|SubPartner) general information should be:$/ do |status,details_table|
@@ -298,6 +322,17 @@ When /^I add a new partner external id$/ do
   @bus_site.admin_console_page.partner_details_section.change_external_id(@new_p_external_id)
 end
 
+When /^I set product name for the partner$/ do
+  @product_name = 'productname-'+(0...8).map{(97+Random.new.rand(26)).chr}.join
+  @bus_site.admin_console_page.partner_details_section.set_product_name
+  @bus_site.partner_product_name_page.set_product_name @product_name
+end
+
+Then /^The partner product name set up successfully$/ do
+  @bus_site.partner_product_name_page.product_name_set_message.should == "Product name set successfully. Your new build should be available in a few minutes."
+  @bus_site.partner_product_name_page.close_page
+end
+
 When /^I change the subdomain to @subdomain$/ do
   @subdomain = (0...8).map{(97+Random.new.rand(26)).chr}.join
   @bus_site.admin_console_page.partner_details_section.change_subdomain
@@ -314,30 +349,39 @@ When /^The subdomain in BUS will be @subdomain$/ do
   #something here
   @bus_site.admin_console_page.partner_details_section.subdomain.should == @subdomain
 end
-When /^I change the partner contact information to:$/ do |info_table|
+
+When /^I change (account type|sales channel) to (.+)$/ do | input,type |
+  if input == 'account type'
+    @bus_site.admin_console_page.partner_details_section.set_account_type(type)
+  else
+    @bus_site.admin_console_page.partner_details_section.set_sales_channel(type)
+  end
+end
+
+Then /^(account type|sales channel) should be changed to (.+) successfully$/ do |input,type|
+  if input == 'account type'
+    @bus_site.admin_console_page.partner_details_section.account_type.should include(type)
+  else
+    @bus_site.admin_console_page.partner_details_section.get_sales_channel.should include(type)
+  end
+end
+
+When /^I change the partner contact information (to:|default password)$/ do |password, info_table|
   # table is a | address          | city          | state          | zip_code                 | country          |
   new_info = info_table.hashes.first
-  new_info.keys.each do |header|
-    case header
-      when 'Contact Email:'
-        @bus_site.admin_console_page.partner_details_section.set_contact_email(new_info[header])
-      when 'Contact Address:'
-        @bus_site.admin_console_page.partner_details_section.set_contact_address(new_info[header])
-      when 'Contact City:'
-        @bus_site.admin_console_page.partner_details_section.set_contact_city(new_info[header])
-      when 'Contact Country:'
-        @bus_site.admin_console_page.partner_details_section.set_contact_country(new_info[header])
-      when 'Contact State:'
-        @bus_site.admin_console_page.partner_details_section.set_contact_state(new_info[header])
-      when 'Contact ZIP/Postal Code:'
-        @bus_site.admin_console_page.partner_details_section.set_contact_zip(new_info[header])
-      when 'VAT Number:'
-        @bus_site.admin_console_page.partner_details_section.set_vat_number(new_info[header])
-      else
-        raise "Unexpected #{new_info[header]}"
-    end
-  end
-  @bus_site.admin_console_page.partner_details_section.save_changes
+  @bus_site.admin_console_page.partner_details_section.set_contact_email(new_info["Contact Email:"]) unless new_info["Contact Email:"].nil?
+  @bus_site.admin_console_page.partner_details_section.set_contact_address(new_info["Contact Address:"]) unless new_info["Contact Address:"].nil?
+  @bus_site.admin_console_page.partner_details_section.set_contact_city(new_info["Contact City:"]) unless new_info["Contact City:"].nil?
+  @bus_site.admin_console_page.partner_details_section.set_contact_country(new_info["Contact Country:"]) unless new_info["Contact Country:"].nil?
+  @bus_site.admin_console_page.partner_details_section.set_contact_state(new_info["Contact State:"]) unless new_info["Contact State:"].nil?
+  @bus_site.admin_console_page.partner_details_section.set_contact_zip(new_info["Contact ZIP/Postal Code:"]) unless new_info["Contact ZIP/Postal Code:"].nil?
+  @bus_site.admin_console_page.partner_details_section.set_phone(new_info["Phone:"]) unless new_info["Phone:"].nil?
+  @bus_site.admin_console_page.partner_details_section.set_vat_number(new_info["VAT Number:"]) unless new_info["VAT Number:"].nil?
+  @bus_site.admin_console_page.partner_details_section.set_contact_industry(new_info["Industry:"]) unless new_info["Industry:"].nil?
+  @bus_site.admin_console_page.partner_details_section.set_contact_of_employees(new_info["# of employees:"]) unless new_info["# of employees:"].nil?
+  
+  password = QA_ENV['bus_password'] if password == 'to:'
+  @bus_site.admin_console_page.partner_details_section.save_changes(password)
 end
 
 Then /^Partner contact information is changed$/ do
@@ -355,6 +399,26 @@ When /^I (Enable|Disable) partner details autogrow$/ do |status|
     when "Disable"
       @bus_site.admin_console_page.partner_details_section.disable_autogrow
     else
+  end
+end
+
+Then /^the pooled resource section of subpartner should have edit link$/ do
+  @bus_site.admin_console_page.partner_details_section.subpartner.pooled_resource_edit_link_visible?.should == true
+end
+
+Then /^the (Server|Desktop|Generic|Server and Desktop) pooled resource should be editable for the subpartner$/ do |type|
+  @bus_site.admin_console_page.partner_details_section.subpartner.edit_pooled_resource
+  items_visible = @bus_site.admin_console_page.partner_details_section.subpartner.pooled_resurce_inputs_visible?(type)
+  if type.include? "Server"
+    items_visible["server_quota_input"].should == true
+    items_visible["server_licenses_input"].should == true
+  end
+  if type.include? "Desktop"
+    items_visible["desktop_quota_input"].should == true
+    items_visible["desktop_licenses_input"].should == true
+  end
+  if type.include? "Generic"
+    items_visible["generic_quota_input"].should == true
   end
 end
 
@@ -383,11 +447,11 @@ Then /^I open partner details by partner name in header$/ do
   @bus_site.admin_console_page.partner_details_section.expand_contact_info
 end
 
-Then /^VAT number shouldn't be changed and the error message should be:$/ do  |message|
+Then /(contact info|pooled resource) shouldn't be changed and the error message should be:$/ do  |section,message|
   @bus_site.admin_console_page.partner_details_section.error_message.should eq(message)
 end
 
-And /^I change contact country and VAT number to:$/ do |country_vat_table|
+And /^I change contact country and VAT number (to:|default password)$/ do |password, country_vat_table|
   attributes = country_vat_table.hashes.first
   attributes.each do |header,attribute| #can use variable inside <%= %>
     attribute.replace ERB.new(attribute).result(binding)
@@ -402,7 +466,8 @@ And /^I change contact country and VAT number to:$/ do |country_vat_table|
   else
     @bus_site.admin_console_page.partner_details_section.set_vat_for_partner_admin(vat) unless vat.nil?
   end
-  @bus_site.admin_console_page.partner_details_section.submit_change
+  password = QA_ENV['bus_password'] if password == 'to:'
+  @bus_site.admin_console_page.partner_details_section.submit_change(password)
 end
 
 Then /^I am (.+) and I change contact country to (.+)$/ do |admin_type, country_type|
@@ -452,4 +517,63 @@ end
 
 Then /^I expand contact info from partner details section$/ do
   @bus_site.admin_console_page.partner_details_section.expand_contact_info
+end
+
+#this is only used for TC.14115
+When /^I get the partners name (.+) and type (.+)$/ do |name, type|
+  @partner = Bus::DataObj::MozyPro.new
+  @partner.company_info.name = name
+  @partner.partner_info.type = type
+end
+
+Then /^The security filed value is (HIPAA|Standard)$/ do |security|
+  @bus_site.admin_console_page.partner_details_section.get_security_value.should == security
+end
+
+Then /^I (should|should not) see (.+) part in partner details$/ do |type,section_name|
+  if type == 'should not'
+    type_value = false
+  else
+    type_value = true
+  end
+  @bus_site.admin_console_page.partner_details_section.has_section?(section_name).should == type_value
+end
+
+Then /(account details|billing information) should be (expanded|collapsed)$/ do |section_name,status|
+  if status == 'collapsed'
+    @bus_site.admin_console_page.partner_details_section.element_collapsed?(section_name).should be_true
+  else
+    @bus_site.admin_console_page.partner_details_section.element_collapsed?(section_name).should be_false
+  end
+end
+
+And /^I (expand|collapse) the (account details|billing information) section$/ do |action,section_name|
+  if action == 'collapse'
+    @bus_site.admin_console_page.partner_details_section.collapse_element(section_name)
+  else
+    @bus_site.admin_console_page.partner_details_section.expand_element(section_name)
+  end
+end
+
+And /^I click show link of billing history section$/ do
+  @bus_site.admin_console_page.partner_details_section.show_billing_history
+end
+
+When /I click the latest date link to view the invoice$/ do
+  @bus_site.admin_console_page.partner_details_section.click_invoice_link
+end
+
+And /^I click admin name (.+) in partner details section$/ do |admin_name|
+  @bus_site.admin_console_page.partner_details_section.click_admin_name(admin_name)
+end
+
+Then /^I will (not )?see fields (.+)$/ do |visible, fields|
+  array = fields.split("\,").map{|str|str.strip}
+  result = @bus_site.admin_console_page.partner_details_section.check_fields_visible(array)
+  result.each{|t| t.should == visible.nil?}
+end
+
+And /^field (Account Type|Sales Channel) can (not )?be changed/ do |_, editable|
+  @bus_site.admin_console_page.partner_details_section.check_account_type_change.should == editable.nil?
+  @bus_site.admin_console_page.partner_details_section.check_sales_channel_change.should == editable.nil?
 end
