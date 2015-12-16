@@ -131,3 +131,129 @@ Feature: Add a new user
     Then I delete user
     And I log in bus admin console as administrator
     Then I search and delete partner account by newly created partner company name
+
+  @TC.19658 @bus @tasks_p2
+  Scenario: Mozy-19658:Create new user as BUS Admin
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan |
+      | 12     | 10    | 250 GB      |
+    And New partner should be created
+    Then I enable stash for the partner
+    And I act as newly created partner
+    And I add new user with error message User Storage must be entered in an amount greater than zero. unsuccessfully:
+      | name   | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | User1  | (default user group) | Desktop      | test          | 3       | yes          |
+    And I add new user(s):
+      | name   | email                     | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | User2  | XXX                       | (default user group) | Desktop      | 10            | 3       | yes          |
+    Then The error message beside email should be Invalid Email
+    And I add new user(s):
+      | name   | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | User1  | (default user group) | Desktop      | 10            | 3       | yes          |
+    Then 1 new user should be created
+    Then I navigate to User Group List section from bus admin console page
+    And I view user group details by clicking group name: (default user group)
+    Then I open Users tab under user group details
+    Then the Users table details under user group details should be:
+      | User                     | Name  | Sync    | Machines | Storage                    | Storage Used  | Created  | Backed Up |
+      | <%=@new_users[0].email%> | User1 | Enabled |   0      | Desktop: 10 GB (Limited)   | Desktop: None | today    | never     |
+    And I search user by:
+      | keywords |
+      | User1    |
+    And I view user details by User1
+    And user resources details rows should be:
+      | Storage                           | Devices                             |
+      | Desktop: 0 Used / 10 GB Available | Desktop: 0 Used / 3 Available Edit  |
+    Then I delete user
+    And I stop masquerading
+    Then I search and delete partner account by newly created partner company name
+
+  @TC.19808 @bus @tasks_p2
+  Scenario:  Mozy-19808:Create new user as BUS Admin
+    When I add a new Reseller partner:
+      | period |  reseller type  | country         | create under     | reseller quota | net terms |
+      |   1    |  Silver         | Germany         | MozyPro Germany  | 100            | yes       |
+    And New partner should be created
+    And I act as newly created partner
+    And I navigate to Add New User section from bus admin console page
+    And I choose (default user group) from Choose a Group
+    Then User group storage details table should be:
+      | Storage(GB) | 100 |
+    And I add new user with error message User Storage must be entered in an amount greater than zero. unsuccessfully:
+      | name   | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | User1  | (default user group) | Desktop      | test          |3       | yes         |
+    And I add new user(s):
+      | name   | email                     | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | User1  | test_for_tc.19808@emc.com | (default user group) | Desktop      | 10            |3        | yes          |
+      | User2  |  XXX                      | (default user group) | Desktop      | 10            |3        | yes          |
+    Then 1 new user should be created
+    And I add new user(s):
+      | name   | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | User2  | (default user group) | Desktop      | 10            | 3       | yes          |
+      | User3  | (default user group) | Desktop      | 10            | 3       | yes          |
+    Then 2 new user should be created
+    Then I navigate to User Group List section from bus admin console page
+    And I view user group details by clicking group name: (default user group)
+    Then I open Users tab under user group details
+    Then the Users table details under user group details should be:
+      | User                     | Name  | Sync    | Machines | Storage           | Storage Used  | Created  | Backed Up |
+      | <%=@new_users[1].email%> | User3 | Enabled |   0      | 10 GB (Limited)   | None          | today    | never     |
+      | <%=@new_users[0].email%> | User2 | Enabled |   0      | 10 GB (Limited)   | None          | today    | never     |
+      | test_for_tc.19808@emc.com| User1 | Enabled |   0      | 10 GB (Limited)   | None          | today    | never     |
+    And I search user by:
+      | keywords |
+      | User1    |
+    And I view user details by User1
+    And user resources details rows should be:
+      | Storage                  | Devices                             |
+      | 0 Used / 10 GB Available | Desktop: 0 Used / 3 Available Edit  |
+    Then I delete user
+    And I stop masquerading
+    Then I search and delete partner account by newly created partner company name
+
+  @TC.19809 @bus @tasks_p2
+  Scenario:Mozy-19809:Create new user as Partner Admin
+    When I add a new MozyPro partner:
+      | period | base plan |   create under    |  country  | net terms |
+      | 1      | 100 GB     |  MozyPro France  |  France   | yes       |
+    And New partner should be created
+    Then I change root role to MozyPro Emea Root
+    Then I activate new partner admin with Hipaa password
+    Then I navigate to bus admin console login page
+    And I log in bus admin console as new partner adminHipaa password
+    And I navigate to Add New User section from bus admin console page
+    And I choose (default user group) from Choose a Group
+    Then User group storage details table should be:
+      | Storage(GB) | 100 |
+    And I add new user with error message User Storage must be entered in an amount greater than zero. unsuccessfully:
+      | name   | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | User1  | (default user group) | Desktop      | test          | 3       | yes         |
+    And I add new user(s):
+      | name   | email                     | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | User1  | test_for_tc.19809@emc.com | (default user group) | Desktop      | 10            |3        | yes          |
+      | User2  |  XXX                      | (default user group) | Desktop      | 10            |3        | yes          |
+    Then 1 new user should be created
+    And I add new user(s):
+      | name   | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | User2  | (default user group) | Desktop      | 10            | 3       | yes          |
+      | User3  | (default user group) | Desktop      | 10            | 3       | yes          |
+    Then 2 new user should be created
+    Then I navigate to User Group List section from bus admin console page
+    And I view user group details by clicking group name: (default user group)
+    Then I open Users tab under user group details
+    Then the Users table details under user group details should be:
+      | User                     | Name  | Sync    | Machines | Storage           | Storage Used  | Created  | Backed Up |
+      | <%=@new_users[1].email%> | User3 | Enabled |   0      | 10 GB (Limited)   | None          | today    | never     |
+      | <%=@new_users[0].email%> | User2 | Enabled |   0      | 10 GB (Limited)   | None          | today    | never     |
+      | test_for_tc.19809@emc.com| User1 | Enabled |   0      | 10 GB (Limited)   | None          | today    | never     |
+    And I search user by:
+      | keywords |
+      | User1    |
+    And I view user details by User1
+    And user resources details rows should be:
+      | Storage                  | Devices                             |
+      | 0 Used / 10 GB Available | Desktop: 0 Used / 3 Available Edit  |
+    Then I delete user
+    And I log in bus admin console as administrator
+    Then I search and delete partner account by newly created partner company name
+

@@ -36,6 +36,9 @@ module Bus
     element(:send_email_help_img, xpath: "//div[@class='div_row wrapper new_users_in_batch_step_3']//div[@class='div_col field_name']/following-sibling::div/img")
     element(:region_override_help_img, xpath: "//select[@id='install_region_override']/following-sibling::img")
 
+    element(:beside_email_message_span, xpath: "//table[@id='users_in_batch']/tbody/tr/td[3]/span")
+
+
     # Public: Add new users
     #
     # @users     [Object] users
@@ -199,6 +202,10 @@ module Bus
         when 'region override'
           region_override_help_img['data-tooltip']
       end
+    end
+
+    def get_beside_email_message
+      beside_email_message_span.text
     end
 
   end

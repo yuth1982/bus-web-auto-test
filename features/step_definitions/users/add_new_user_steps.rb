@@ -193,3 +193,9 @@ end
 Then /^I check (.+) help message under add new user section should be:$/ do |type,msg|
   @bus_site.admin_console_page.add_new_user_section.get_help_msg(type).gsub("\n", " ").should == msg
 end
+
+Then /^The error message beside email should be (.+)$/ do |msg|
+  @bus_site.admin_console_page.add_new_user_section.get_beside_email_message.should == msg
+end
+
+
