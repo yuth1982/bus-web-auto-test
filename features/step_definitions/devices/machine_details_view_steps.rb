@@ -21,6 +21,10 @@ When(/^I close machine details section$/) do
   @bus_site.admin_console_page.machine_details_section.close_bus_section
 end
 
+And /^I refresh Machines Details section$/ do
+  @bus_site.admin_console_page.machine_details_section.refresh_bus_section
+end
+
 Then /^machine details should be:$/ do |md_table|
   actual = @bus_site.admin_console_page.machine_details_section.machine_info_hash
   expected = md_table.hashes[0]
@@ -30,6 +34,8 @@ Then /^machine details should be:$/ do |md_table|
           v.gsub!(/@user_email/, @new_users.first.email) unless @new_users.nil?
         when 'Product Key:'
           v.gsub!(/@client.license_key/, @client.license_key) unless @client.nil?
+        when 'Client Version:'
+          v.gsub!(/@version_name/, @version_name) unless @version_name.nil?
         else
           # do nothing
       end
@@ -214,4 +220,9 @@ end
 And /^I add machine external id$/ do
   @machine_external_id = "#{Time.now.strftime('%m%d-%H%M-%S')}"
   @bus_site.admin_console_page.machine_details_section.change_machine_external_id(@machine_external_id)
+end
+
+Then /^I will see (.+) in machine details$/ do |text|
+  text.gsub!(/today/,Chronic.parse('today').strftime('%m/%d/%y'))
+  @bus_site.admin_console_page.machine_details_section.get_replace_machine_text.should include(text)
 end

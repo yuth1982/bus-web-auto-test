@@ -438,59 +438,207 @@ Feature: view edit machine details
     And I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-#  @TC.122433 @bus @machines_sync @tasks_p2
-#  Scenario: 122433:Linux machines displayed correctly in the machine list view
-#    When I add a new MozyEnterprise partner:
-#      | period | users | server plan |
-#      | 12     | 10    | 250 GB      |
-#    Then New partner should be created
-#    And I view the newly created partner admin details
-#    Then I active admin in admin details default password
-#    When I act as newly created partner account
-#    And I add new user(s):
-#      | name           | user_group           | storage_type | storage_limit | devices |
-#      | TC.122433.User | (default user group) | Server       | 50            | 3       |
-#    Then 1 new user should be created
-#    When I navigate to Search / List Users section from bus admin console page
-#    And I view user details by newly created user email
-#    And I update the user password to default password
-#    And I use keyless activation to activate devices
-#      | user_email  | machine_name  | machine_type |
-#      | @user_email | auto_generate | Server       |
-#    And I upload data to device by batch
-#      | machine_id              | GB |
-#      | <%=@client.machine_id%> | 1  |
-#    And I log out bus admin console
-#    And I navigate to bus admin console login page
-#    And I log in bus admin console with user name @partner.admin_info.email and password default password
-#    Then I login as mozypro admin successfully
-#    And I navigate to Search / List Machines section from bus admin console page
-#    Then Machine search results should be:
-#      | Machine                    | User                        | User Group           | Data Center                | Storage Used |
-#      | <%=@client.machine_alias%> | <%=@new_users.first.email%> | (default user group) | <%=QA_ENV['data_center']%> | 1 GB         |
-#    And I view machine details for @client.machine_alias
-#    Then machine details should be:
-#      | Owner:      | Space Used: | Last Update: | Encryption: | Client Version: | Product Key:                 | Data Center:               |
-#      | @user_email | 1 GB        | N/A          | Not Set     | unknown         | @client.license_key (Server) | <%=QA_ENV['data_center']%> |
-#    And Backups section without backup history will show Backup history unavailable.
-#    And Restores section without finished restores will show This machine does not have any finished restores.
-#    When I log out bus admin console
-#    And I navigate to bus admin console login page
-#    And I log in bus admin console as administrator
-#    When I search machine by:
-#      | machine_name               |
-#      | <%=@client.machine_alias%> |
-#    Then Machine search results should be:
-#      | Machine                    | User                        | User Group           | Data Center                | Storage Used |
-#      | <%=@client.machine_alias%> | <%=@new_users.first.email%> | (default user group) | <%=QA_ENV['data_center']%> | 1 GB         |
-#    And I view machine details for @client.machine_alias
-#    Then machine details should be:
-#      | ID:                     | External ID: | MTM/SN: | Retry PEW:  | Status:             | Suspended:              | Owner:      | Space Used: | Last Update: | Encryption: | Client Version: | Product Key:                 | Hash:                     | Data Center:               |
-#      | <%=@client.machine_id%> | (change)     | (edit)  | No (toggle) | No expiration (add) | Not Suspended (suspend) | @user_email | 1 GB        | N/A          | Not Set     | unknown         | @client.license_key (Server) | <%=@client.machine_hash%> | <%=QA_ENV['data_center']%> |
-#    And Backups table will display with text No results found.
-#    And Restores section without finished restores will show This machine does not have any finished restores.
-#    And I search and delete partner account by newly created partner company name
+    # using fixed data Linux GA Test
+  @TC.122433 @TC.122434 @bus @machines_sync @tasks_p2
+  Scenario: 122433 122434:Linux machines displayed correctly in the machine list view
+    When I search machine by:
+      | machine_name                  |
+      | ubuntu10-x86.bif.mozycorp.com |
+    Then Machine search results should be:
+      | External ID | Machine                       | User                 | User Group           | Data Center | Storage Used |
+      |             | ubuntu10-x86.bif.mozycorp.com | chris.qa6.1@mozy.com | (default user group) | qa6         | 107 bytes    |
+    And I view machine details for ubuntu10-x86.bif.mozycorp.com
+    Then machine details should be:
+      | ID:      | External ID: | MTM/SN: | Retry PEW:  | Status:             | Suspended:              | Owner:               | Space Used: | Encryption: | Client Version:                 | Product Key:                  | Hash:                                    | Data Center: |
+      | 81309996 | (change)     | (edit)  | No (toggle) | No expiration (add) | Not Suspended (suspend) | chris.qa6.1@mozy.com | 107 bytes   | Default     | MozyPro linux deb-64 1.0.5.4698 | QZA5CBD6DXZ3AGCD622D (Server) | a58b657962424b20e7229cec2f87afb320c4ca0d | qa6          |
+    And I log out bus admin console
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name mozybus+catherine+0401@gmail.com and password default password
+    When I search machine by:
+      | machine_name                  |
+      | ubuntu10-x86.bif.mozycorp.com |
+    Then Machine search results should be:
+      | Machine                       | User                 | User Group           | Data Center | Storage Used |
+      | ubuntu10-x86.bif.mozycorp.com | chris.qa6.1@mozy.com | (default user group) | qa6         | 107 bytes    |
+    And I view machine details for ubuntu10-x86.bif.mozycorp.com
+    Then machine details should be:
+      | ID:      | MTM/SN: | Retry PEW:  | Status:             | Suspended:              | Owner:               | Space Used: | Encryption: | Client Version:                 | Product Key:                  | Hash:                                    | Data Center: |
+      | 81309996 | (edit)  | No (toggle) | No expiration (add) | Not Suspended (suspend) | chris.qa6.1@mozy.com | 107 bytes   | Default     | MozyPro linux deb-64 1.0.5.4698 | QZA5CBD6DXZ3AGCD622D (Server) | a58b657962424b20e7229cec2f87afb320c4ca0d | qa6          |
 
+  @TC.122435 @bus @machines_sync @tasks_p2
+  Scenario: 122435: Linux client version updates correctly in the machine's details after replace
+    When I navigate to List Versions section from bus admin console page
+    And I list versions for:
+      | platform | show disabled |
+      | linux    | false         |
+    And I get 2 enabled linux version
+    When I act as partner by:
+      | name           | including sub-partners |
+      | MozyEnterprise | no                     |
+    And I navigate to Upgrade Rules section from bus admin console page
+    And I delete rule for version @version_name if it exists
+    And I delete rule for version @version_name2 if it exists
+    Then I add a new upgrade rule:
+      | version name       | Req? | On? | min version | max version |
+      | <%=@version_name%> | N    | Y   | 0.0.0.1111  | 1.0.0.1111  |
+    Then I add a new upgrade rule:
+      | version name        | Req? | On? | min version | max version |
+      | <%=@version_name2%> | N    | Y   | 0.0.0.1111  | 1.0.0.1111  |
+    And I stop masquerading as sub partner
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan |
+      | 12     | 10    | 250 GB      |
+    Then New partner should be created
+    And I get the admin id from partner details
+    When I act as newly created partner account
+    And I add new user(s):
+      | name            | user_group           | storage_type | storage_limit | devices |
+      | TC.122435.User1 | (default user group) | Server       | 40            | 1       |
+      | TC.122435.User2 | (default user group) | Server       | 40            | 1       |
+    Then 2 new user should be created
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by TC.122435.User1
+    And I update the user password to default password
+    Then I close user details section
+    And I view user details by TC.122435.User2
+    And I update the user password to default password
+    Then I use keyless activation to activate devices newly
+      | machine_name    | user_name                   | machine_type |
+      | Machine1_122435 | <%=@new_users.first.email%> | Server       |
+    And I update newly created machine encryption value to Default
+    And I got client config for the user machine:
+      | user_name                | machine                   | platform | arch   | codename       | version       |
+      | <%=@new_users[0].email%> | <%=@client.machine_hash%> | linux    | deb-64 | MozyEnterprise | <%=@version%> |
+    Then I use keyless activation to activate devices
+      | machine_name    | user_name                | machine_type |
+      | Machine2_122435 | <%=@new_users[1].email%> | Server       |
+    And I update newly created machine encryption value to Default
+    And I got client config for the user machine:
+      | user_name                | machine                   | platform | arch   | codename       | version        |
+      | <%=@new_users[1].email%> | <%=@client.machine_hash%> | linux    | deb-64 | MozyEnterprise | <%=@version2%> |
+    And I navigate to Search / List Machines section from bus admin console page
+    And I view machine details for Machine2_122435
+    And I click on the replace machine link
+    And I select Machine1_122435 to be replaced
+    And I navigate to Search / List Machines section from bus admin console page
+    Then replace machine message should be Replace operation was successful.
+    And I search machine by:
+      | machine_name    |
+      | Machine1_122435 |
+    Then I should not search out machine record
+    When I search machine by:
+      | machine_name    |
+      | Machine2_122435 |
+    And I view machine details for Machine2_122435
+    Then machine details should be:
+      | Client Version:              |
+      | MozyEnterprise @version_name |
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.122537 @TC.122540 @bus @machines_sync @tasks_p2
+  Scenario: 122537 122540:Mac Sync machines and client version displayed correctly in the machine details and list view
+    # Use external id to search
+    When I search machine by:
+      | keywords |
+      | 81310305 |
+    Then Machine search results should be:
+      | External ID | Machine  | User                                 | User Group           | Data Center | Storage Used | Backed Up |
+      | 81310305    | Sync     | mozybus+linuxgaserversync1@gmail.com | (default user group) | qa6         | 68 MB        | N/A       |
+    And I view machine details for Sync
+    Then machine details should be:
+      | ID:      | External ID:      | Owner:                               | Space Used: | Encryption: | Client Version:             | Hash:               | Data Center: |
+      | 81310305 | 81310305 (change) | mozybus+linuxgaserversync1@gmail.com | 68 MB       | Default     | MozyPro mac sync 1.3.0.4667 | user_303028902_sync | qa6          |
+    And I log out bus admin console
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name admin+catherine@mozy.com and password default password
+    When I search machine by:
+      | machine_name |
+      | Sync         |
+    Then Machine search results for user mozybus+linuxgaserversync1@gmail.com should be:
+      | Machine  | User                                 | User Group           | Data Center | Storage Used | Backed Up | MTM/SN |
+      | Sync     | mozybus+linuxgaserversync1@gmail.com | (default user group) | qa6         | 68 MB        | N/A       |        |
+    And I view machine details for mozybus+linuxgaserversync1@gmail.com
+    Then machine details should be:
+      | ID:      | Owner:                               | Space Used: | Encryption: | Client Version:             | Hash:               | Data Center: |
+      | 81310305 | mozybus+linuxgaserversync1@gmail.com | 68 MB       | Default     | MozyPro mac sync 1.3.0.4667 | user_303028902_sync | qa6          |
+
+  # using fixed data, partner: Linux GA Test
+  @TC.122455 @TC.122456 @bus @machines_sync @tasks_p2
+  Scenario: 122455 122456:Windows Sync machines and client version displayed correctly in the machine details and list view
+    # Use external id to search
+    When I search machine by:
+      | keywords |
+      | 81309978 |
+    Then Machine search results should be:
+      | External ID | Machine  | User                     | User Group           | Data Center | Storage Used | Backed Up |
+      | 81309978    | Sync     | qiezidesktoppro1@emc.com | (default user group) | qa6         | 953.5 MB     | N/A       |
+    And I view machine details for Sync
+    Then machine details should be:
+      | ID:      | External ID:      | Owner:                   | Space Used: | Encryption: | Client Version:             | Hash:               | Data Center: |
+      | 81309978 | 81309978 (change) | qiezidesktoppro1@emc.com | 953.5 MB    | Default     | MozyPro win sync 1.3.0.4679 | user_303028272_sync | qa6          |
+    And I log out bus admin console
+    And I navigate to bus admin console login page
+    And I log in bus admin console with user name mozybus+catherine+0401@gmail.com and password default password
+    When I search machine by:
+      | machine_name |
+      | Sync         |
+    Then Machine search results for user qiezidesktoppro1@emc.com should be:
+      | Machine  | User                     | User Group           | Data Center | Storage Used | Backed Up | MTM/SN |
+      | Sync     | qiezidesktoppro1@emc.com | (default user group) | qa6         | 953.5 MB     | N/A       |        |
+    And I view machine details for qiezidesktoppro1@emc.com
+    Then machine details should be:
+      | ID:      | Owner:                   | Space Used: | Encryption: | Client Version:             | Hash:               | Data Center: |
+      | 81309978 | qiezidesktoppro1@emc.com | 953.5 MB    | Default     | MozyPro win sync 1.3.0.4679 | user_303028272_sync | qa6          |
+
+  @TC.122569 @bus @machines_sync @tasks_p2
+  Scenario: 122569: Sync client version update from unknown to correct one in the machines details
+    When I navigate to List Versions section from bus admin console page
+    And I list versions for:
+      | platform | show disabled |
+      | linux    | false         |
+    And I get 1 enabled win-sync version
+    When I act as partner by:
+      | name    | including sub-partners |
+      | MozyPro | no                     |
+    And I navigate to Upgrade Rules section from bus admin console page
+    And I delete rule for version @version_name if it exists
+    Then I add a new upgrade rule:
+      | version name       | Req? | On? | min version | max version | Install CMD  |
+      | <%=@version_name%> | N    | Y   | 0.0.0.1111  | 1.0.0.1111  | "%1" /silent |
+    And I stop masquerading as sub partner
+    When I add a new MozyPro partner:
+      | period | base plan | net terms |
+      | 12     | 8 TB      | yes       |
+    Then New partner should be created
+    And I get the admin id from partner details
+    When I act as newly created partner account
+    And I add new user(s):
+      | name           | storage_type | storage_limit | devices | enable_stash |
+      | TC.122569.User | Desktop      | 10            | 1       | yes          |
+    Then 1 new user should be created
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    And I update the user password to default password
+    When I view Sync details
+    Then machine details should be:
+      | Client Version: |
+      | unknown         |
+    And I got client config for the user machine:
+      | user_name                   | machine    | platform | codename | version       | arch |
+      | <%=@new_users.first.email%> | plop000001 | win      | mozypro  | <%=@version%> | x86  |
+    When I refresh Machine Details section
+    Then machine details should be:
+      | Client Version:       |
+      | MozyPro @version_name |
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  #######################################################################
+
+  ## VMBU View Search
+
+  #######################################################################
   @TC.124098 @bus @machines_sync @tasks_p2 @qa12 @env_dependent
   Scenario: 124098 VMBU container details
     When I act as partner by:
@@ -532,3 +680,4 @@ Feature: view edit machine details
     And I get record for column Machine with value sh-loki4.mozy.lab.emc.com from Quick report machines csv file should be
       | Machine                   | Key Type | Quota Used |
       | sh-loki4.mozy.lab.emc.com | Server   | 214.1      |
+

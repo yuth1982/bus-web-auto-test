@@ -6,6 +6,14 @@ Then /^I get the data shuttle seed id$/ do
   Log.debug("seed id is #{@seed_id}")
 end
 
+Then /^I get the data shuttle seed id by partner (.+)$/ do |partner_name|
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['view_data_shuttle_orders'])
+  @bus_site.admin_console_page.view_data_shuttle_orders_section.search_order(partner_name)
+
+  @seed_id = @bus_site.admin_console_page.view_data_shuttle_orders_section.top_seed_id
+  Log.debug("seed id is #{@seed_id}")
+end
+
 Then /^I search order in view data shuttle orders section by (.+)$/ do |keywords|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['view_data_shuttle_orders'])
   @bus_site.admin_console_page.view_data_shuttle_orders_section.search_order(keywords)

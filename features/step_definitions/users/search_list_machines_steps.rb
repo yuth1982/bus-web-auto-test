@@ -19,6 +19,21 @@ Then /^Machine search results should be:$/ do |results_table|
   expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
 
+# When search sync machine, only support machine name search, sometimes will search out multiple records
+Then /^Machine search results for user (.+) should be:$/ do |user, results_table|
+  actual = @bus_site.admin_console_page.search_list_machines_section.search_results_hashes
+  expected = results_table.hashes
+  # finde out the right record according to user email
+  i = 0;
+  actual.each_with_index { |value, index|
+    if value['User'] == user
+      i = index
+      break
+    end
+  }
+  expected.each_index{ |index| expected[index].keys.each{ |key| actual[i][key].should == expected[index][key]} }
+end
+
 When /^I export the machines csv$/ do
   @bus_site.admin_console_page.search_list_machines_section.export_csv
 end

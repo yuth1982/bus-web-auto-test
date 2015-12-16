@@ -29,6 +29,9 @@ module Bus
     element(:add_new_key, xpath: "//a[text()='Add New Key']")
     element(:drive_type_select, id: 'data_shuttle_sku_type')
     element(:discount_input,xpath: "//input[contains(@id,'discount')]")
+    element(:add_first_key,xpath: "//div[@class='box']//table//tr[1]//a[text()='Add']")
+    element(:filter_key_input, id: "mozy_pro_key_search")
+    element(:filter_button, xpath: "//input[@value='Filter']")
 
     # Summary section
     element(:num_win_drivers_tb, id: "seed_device_order_win_drive_num")
@@ -111,11 +114,16 @@ module Bus
           # Add certain number keys on current page
           number = order.key_from.match(/\d+/)[0].to_i
           number.times {
-            find(:xpath,"//div[@class='box']//table//tr[1]//a[text()='Add']").click
+            add_first_key.click
             wait_until_bus_section_load
           }
         elsif order.key_from == "new"
           add_new_key.click
+        elsif !order.key_from.match(/[0-9A-Z]{20}/).nil?   # filter key
+          filter_key_input.type_text(order.key_from)
+          filter_button.click
+          wait_until_bus_section_load
+          add_first_key.click
         else
            raise "Please order key from either available keys or add a new key"
         end

@@ -17,6 +17,7 @@ module Bus
     elements(:machine_bar_actions_links, xpath: "//div[contains(@id,'machine-show')]//li/a")
 
     element(:replace_machine_lnk, xpath: "//a[text()='Replace Machine']")
+    element(:replace_machine_li, xpath: "//a[text()='Replace Machine']/..")
     element(:delete_machine_lnk, xpath: "//a[text()='Delete Machine']")
     element(:undelete_machine_lnk, xpath: "//a[text()='Undelete Machine']")
 
@@ -114,5 +115,8 @@ module Bus
       wait_until_bus_section_load
     end
 
+    def get_replace_machine_text
+      replace_machine_li.text.strip
+    end
   end
 end
