@@ -27,7 +27,7 @@ And /^I click edit network domain button$/ do
 end
 
 Then /^(Add|Edit) network domain message will be (.+)$/ do |_, msg|
-  @bus_site.admin_console_page.network_domain_section.network_doman_message.should == msg
+  @bus_site.admin_console_page.network_domain_section.network_domain_message.should == msg
 end
 
 And /^Existing network domain record should be$/ do |table|

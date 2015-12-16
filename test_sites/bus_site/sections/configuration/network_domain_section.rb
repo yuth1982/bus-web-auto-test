@@ -44,7 +44,8 @@ module Bus
       create_button.click
     end
 
-    def network_doman_message
+    def network_domain_message
+      wait_until{network_domain_msg.visible?}
       network_domain_msg.text
     end
 
