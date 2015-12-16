@@ -99,7 +99,7 @@ module Bus
       find(:xpath, "//h4[text()='#{type}']/following-sibling::div[1]/table").raw_text.select{|row|row!=[""]}
     end
 
-    def click_restore_files (match)
+    def click_machine_link (match)
       find(:xpath, "//a[text()='#{match}']").click
     end
 

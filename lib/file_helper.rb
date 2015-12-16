@@ -118,7 +118,10 @@ module FileHelper
 
   def delete_file(file_name, file_path = default_download_path)
     file = File.join(file_path, file_name)
-    File.delete(file) if File.file?(file)
+    if File.file?(file)
+      File.chmod(0777, file)   # in windows, will throw (Errno::EACCES)
+      File.delete(file)
+    end
   end
 
   # Public: rename file

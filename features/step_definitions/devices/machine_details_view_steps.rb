@@ -186,8 +186,8 @@ And /Backups table will display with text No results found.$/ do
   @bus_site.admin_console_page.machine_details_section.backup_table_empty.should == true
 end
 
-Then /^I click (.+) from machines details section$/ do |match|
-  @bus_site.admin_console_page.machine_details_section.click_restore_files(match)
+Then /^I click (.+) from machines details section$/ do |link_name|
+  @bus_site.admin_console_page.machine_details_section.click_machine_link(link_name)
 end
 
 And /^(Backups|Restores|Virtual Machines) table will display as:$/ do |type, table|
