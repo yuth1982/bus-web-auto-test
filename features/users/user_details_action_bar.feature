@@ -262,3 +262,82 @@ Feature: User Details
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
+  @TC.123813 @bus @tasks_p2
+  Scenario: Mozy-123813:User doesn't have permission to set password when partner authentication changed from Mozy to FedID
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | root role  | net terms |
+      | 12     | 18    | 100 GB      | FedID role | yes       |
+    Then New partner should be created
+    And I act as newly created partner account
+    And I add new user(s):
+      | name           | user_group           | storage_type | storage_limit | devices |
+      | TC.123813.User | (default user group) | Desktop      | 100           | 3       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by TC.123813.User
+    Then I will see the Change User Password link
+    Then I stop masquerading
+    Then I search partner by newly created partner company name
+    And I view partner details by newly created partner company name
+    When I add partner settings
+      | Name                    | Value | Locked |
+      | allow_ad_authentication | t     | true   |
+    And I act as newly created partner account
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by TC.123813.User
+    Then I will not see the Change User Password link
+    Then I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.123825 @bus @tasks_p2
+  Scenario: Mozy-123825:User need to set password when partner authentication changed from FedId to Mozy
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | root role  | net terms |
+      | 12     | 18    | 100 GB      | FedID role | yes       |
+    Then New partner should be created
+    Then I get the partner_id
+    And I act as newly created partner account
+    And I add new user(s):
+      | name           | user_group           | storage_type | storage_limit | devices |
+      | TC.123825.User | (default user group) | Desktop      | 100           | 3       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by TC.123825.User
+    And I update the user password to reset password
+    Then I stop masquerading
+    Then I search partner by newly created partner company name
+    And I view partner details by newly created partner company name
+    When I add partner settings
+      | Name                    | Value | Locked |
+      | allow_ad_authentication | t     | true   |
+    And I act as newly created partner account
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by TC.123825.User
+    Then I will not see the Change User Password link
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Mozy as authentication provider
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by TC.123825.User
+    And I update the user password to reset password
+    Then I navigate to user login page with partner ID
+    Then I log in bus pid console with:
+      | username                 | password                                  |
+      | <%=@new_users[0].email%> | <%=CONFIGS['global']['test_hipaa_pwd'] %> |
+    Then the user log out bus
+    When I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
+
