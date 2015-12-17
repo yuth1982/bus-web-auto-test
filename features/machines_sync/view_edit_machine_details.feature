@@ -41,11 +41,10 @@ Feature: view edit machine details
     And I view machine details for mozybus+backup+restore@emc.com
     And Restores table will display as:
       | ID    | Date/Time Requested | Date/Time Finished | Files Retrieved | Size  | Status / Downloads                       |
+      | 30247 | 12/17/15 15:08      | 12/17/15 15:08     | 1 / 1           | 1 DVD | Retrieved files; preparing to burn DVDs. |
+      | 30246 | 12/17/15 14:57      | 12/17/15 14:57     | 1 / 1           | 1 DVD | Retrieved files; preparing to burn DVDs. |
       | 21284 | 08/11/15 05:05      | 08/10/15 15:07     | 41 / 41         | 1 DVD | Retrieved files; preparing to burn DVDs. |
       | 20707 | 08/07/15 00:52      | 08/06/15 10:54     | 41 / 41         | 1 DVD | Retrieved files; preparing to burn DVDs. |
-
-
-
 
 
   ###############################################################################
