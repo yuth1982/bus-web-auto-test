@@ -342,3 +342,25 @@ When /^I move (forward|backwards) account billing dates (1 month|1 year|2 years|
     end
   }
 end
+
+And /^API\* I change account schedule price for (.+)$/ do |aria_id, info_table|
+  rate_price = info_table.hashes
+  rate_price.each_with_index {|v,_|
+    plan_name = v['plan_name']
+    rate_per_unit = v['rate_per_unit'].to_f
+
+    @aria_plan_all.each_index { |n|
+       if @aria_plan_all[n]['plan_name'] == plan_name
+        supp_plan_no = @aria_plan_all[n]['plan_no']
+        plan_services = @aria_plan_all[n]['plan_services']
+        service_no = plan_services[0]['service_no']
+        plan_service_rates = plan_services[0]['plan_service_rates']
+        rate_seq_no = plan_service_rates[0]['rate_seq_no']
+        return_value = AriaApi.assign_custom_acct_rates({:acct_no=> aria_id.to_i,:plan_no=> supp_plan_no, :service_no=>service_no, :rate_seq_no=>rate_seq_no, :rate_per_unit=>rate_per_unit })
+        return_value['error_msg'].should == 'OK'
+        break
+      end
+    }
+  }
+
+end

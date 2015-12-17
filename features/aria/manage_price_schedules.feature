@@ -332,6 +332,85 @@ Feature: manage price schedules - billed partner
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
+  @TC.18754 @bus @aria @tasks_p2
+  Scenario: 18754 Change plan will reflect the Modified Price schedule
+    When I add a new MozyPro partner:
+      | period | base plan | server plan |
+      | 1      | 10 GB     | yes         |
+    Then New partner should be created
+    And I get partner aria id
+    When I act as newly created partner account
+    And I navigate to Change Plan section from bus admin console page
+    Then MozyPro available base plans and price should be:
+      | plan                             |
+      | 10 GB, $9.99 (current purchase)  |
+      | 50 GB, $19.99                    |
+      | 100 GB, $39.99                   |
+      | 250 GB, $94.99                   |
+      | 500 GB, $189.99                  |
+      | 1 TB, $379.99                    |
+      | 2 TB, $749.99                    |
+      | 4 TB, $1,439.99                  |
+      | 8 TB, $2,879.98                  |
+      | 12 TB, $4,319.97                 |
+      | 16 TB, $5,759.96                 |
+      | 20 TB, $7,199.95                 |
+      | 24 TB, $8,639.94                 |
+      | 28 TB, $10,079.93                |
+      | 32 TB, $11,519.92                |
+    And Add-ons price should be Server Plan, $3.99
+    When API* I change aria supplemental plan for newly created partner aria id
+      | plan_name                                      | rate_schedule_name  | schedule_currency |
+      | MozyPro 10 GB Plan (Monthly)                   | Non-profit Discount | usd               |
+      | MozyPro Server Add-on for 10 GB Plan (Monthly) | Non-profit Discount | usd               |
+    And I wait for 5 seconds
+    And I refresh Change Plan section
+    Then MozyPro available base plans and price should be:
+      | plan                             |
+      | 10 GB, $8.00 (current purchase)  |
+      | 50 GB, $17.99                    |
+      | 100 GB, $35.99                   |
+      | 250 GB, $85.49                   |
+      | 500 GB, $170.99                  |
+      | 1 TB, $341.99                    |
+      | 2 TB, $674.99                    |
+      | 4 TB, $1,295.99                  |
+      | 8 TB, $2,591.98                  |
+      | 12 TB, $3,887.97                 |
+      | 16 TB, $5,183.96                 |
+      | 20 TB, $6,479.96                 |
+      | 24 TB, $7,775.95                 |
+      | 28 TB, $9,071.94                 |
+      | 32 TB, $10,367.93                |
+    And Add-ons price should be Server Plan, $3.59
+    When API* I get all aria plan for newly created partner aria id
+    And API* I change account schedule price for newly created partner aria id
+      | plan_name                                      | rate_per_unit  |
+      | MozyPro 10 GB Plan (Monthly)                   | 11.09          |
+      | MozyPro Server Add-on for 10 GB Plan (Monthly) | 3.77           |
+    And I wait for 5 seconds
+    And I refresh Change Plan section
+    Then MozyPro available base plans and price should be:
+      | plan                             |
+      | 10 GB, $11.09 (current purchase) |
+      | 50 GB, $19.99                    |
+      | 100 GB, $39.99                   |
+      | 250 GB, $94.99                   |
+      | 500 GB, $189.99                  |
+      | 1 TB, $379.99                    |
+      | 2 TB, $749.99                    |
+      | 4 TB, $1,439.99                  |
+      | 8 TB, $2,879.98                  |
+      | 12 TB, $4,319.97                 |
+      | 16 TB, $5,759.96                 |
+      | 20 TB, $7,199.95                 |
+      | 24 TB, $8,639.94                 |
+      | 28 TB, $10,079.93                |
+      | 32 TB, $11,519.92                |
+    And Add-ons price should be Server Plan, $3.77
+    When I stop masquerading
+    Then I search and delete partner account by newly created partner company name
+
 #  Will implement this later
 #  @TC.18764 @bus @aria @tasks_p2
 #  Scenario: 18764 Price schedule will apply to customers in the next subscription period
