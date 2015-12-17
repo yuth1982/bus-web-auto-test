@@ -110,23 +110,25 @@ When /^the (.+) table details under user group details should be:$/ do |match, t
   actual = @bus_site.admin_console_page.user_group_details_section.search_table_details_hash(match)
   expected = table.hashes
   expected.each_index do |index|
-    expected[index].keys.each do |k|
+    expected[index].each do |k, v|
       case k
         when 'Product Key'
-          (actual[index][k].match(/\w{20}/).size>0).should == true
+          (v.match(/\w{20}/).size>0).should == true
         when 'Created'
-          expected[index][k].replace(Chronic.parse(expected[index][k]).strftime('%m/%d/%y'))
-          actual[index][k].should == expected[index][k]
+          v.replace(Chronic.parse(v).strftime('%m/%d/%y'))
+          actual[index][k].should == v
         when 'User'
-            if expected[index][k].length <= 30
-              expected[index][k].replace ERB.new(expected[index][k]).result(binding).downcase
-            else
-              expected[index][k].replace ERB.new(expected[index][k]).result(binding).slice(0,27).downcase
-              expected[index][k] << '...'
-            end
-            actual[index][k].should == expected[index][k]
+          v.replace ERB.new(v).result(binding)
+          if v.length <= 30
+            v.replace ERB.new(v).result(binding).downcase
+            actual[index][k].should == v
+          else
+            v.replace ERB.new(v).result(binding).slice(0,27).downcase
+            v << '...'
+            actual[index][k].should == v
+          end
         else
-            actual[index][k].should == expected[index][k]
+          actual[index][k].should == v
       end
     end
   end

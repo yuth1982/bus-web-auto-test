@@ -47,6 +47,11 @@ end
   delete_user_by_email(email)
 end
 
+delete_users_by_email('%test_for_tc.19656@emc.com')
+delete_users_by_email('%test_for_tc.19808@emc.com')
+delete_users_by_email('%test_for_tc.19809@emc.com')
+delete_users_by_email('%test_for_tc.19815@emc.com')
+
 delete_users_by_email('%fediduser%@test.com')
 
 delete_users_by_email('%17538-test%@test.com')
@@ -70,4 +75,3 @@ delete_users_by_email('%120021-test%@test.com')
 delete_users_by_email('%tc121959.user%@mtdev.mozypro.local')
 
 delete_users_by_email('%tc121965.user%@mtdev.mozypro.local')
-
