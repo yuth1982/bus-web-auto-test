@@ -62,8 +62,8 @@ module Bus
     section(:resource_summary_section, ResourceSummarySection, id: 'storage-summary')
     section(:download_client_section, DownloadClientSection, id: "resource-downloads")
 
-    # assign keys
-    section(:assign_keys_section, AssignKeysSection, id: "resource-available_key_list-content")
+    # assign keys group
+    section(:assign_keys_group_section, AssignKeysGroupSection, css: "div[id^=resource-group_available_keys-]")
 
     # Data shuttle section
     section(:data_shuttle_status_section, DataShuttleStatusSection, id: 'resource-data_shuttle_status')
@@ -191,6 +191,7 @@ module Bus
       current_admin = current_admin_div.text
       stop_masquerading_link.click
       wait_until{ current_admin != current_admin_div.text}
+      wait_until { !current_admin.eql?(current_admin_div.text) }
     end
 
     # Public: Get partner id from top admin identification div

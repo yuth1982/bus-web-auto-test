@@ -571,3 +571,6 @@ Then /^I update (.+) last backup time to 30 minutes ago$/ do |machine_id|
   DBHelper.update_machines_last_update_time(machine_id)
 end
 
+When /^I change machine quota to (.+) under user details$/ do |quota|
+  @bus_site.admin_console_page.user_details_section.change_machine_quota(quota)
+end

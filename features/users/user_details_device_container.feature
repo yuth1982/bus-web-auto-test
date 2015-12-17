@@ -212,4 +212,89 @@ Feature: User Details Device Container
       | Machine1_21043_2 | Server       | 5 GB / 245 GB  | Set                  |
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
-    
+
+  @TC.2174 @bus @tasks_p2
+  Scenario: Mozy-2174:Edit a machines quota to unlimited
+    When I add a new OEM partner:
+      | Company Name    | Root role         | Security | Company Type     |
+      | test_for_2174TC | OEM Partner Admin | Standard | Service Provider |
+    Then New partner should be created
+    When I set product name for the partner
+    Then I navigate to old window
+    When I act as newly created subpartner account
+    And I purchase resources:
+      | desktop license | desktop quota | server license | server quota |
+      | 2               | 20            | 2              | 20           |
+    Then Resources should be purchased
+    And I add new itemized user(s):
+      | name     | email               |
+      | oem user | tc2174test@mozy.com |
+    And new itemized user should be created
+    Then I search user by:
+      | name     |
+      | oem user |
+    Then I view user details by oem user
+    Then I update the user password to default password
+    Then I navigate to Assign Keys section from bus admin console page
+    Then I assign Server key to user tc2174test@mozy.com on (default user group)
+    Then I use key activation to activate devices
+      | email               | machine_name |
+      | tc2174test@mozy.com | machine_2174 |
+    Then Activate key response should be OK
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    Then device table in user details should be:
+      | Computer     | Encryption | Storage Used      | Last Update |
+      | machine_2174 | Not Set    | 0 / 2 GB (change) | N/A         |
+    When I change machine quota to -1 under user details
+    And I refresh User Details section
+    Then device table in user details should be:
+      | Computer     | Encryption | Storage Used   | Last Update |
+      | machine_2174 | Not Set    | 0 / ∞ (change) | N/A         |
+    Then I stop masquerading from subpartner
+    And I search and delete partner account by newly created subpartner company name
+
+  @TC.2175 @bus @tasks_p2
+  Scenario: Mozy-2175:Edit a machines quota to limited
+    When I add a new OEM partner:
+      | Company Name    | Root role         | Security | Company Type     |
+      | test_for_2175TC | OEM Partner Admin | Standard | Service Provider |
+    Then New partner should be created
+    When I set product name for the partner
+    Then I navigate to old window
+    When I act as newly created subpartner account
+    And I purchase resources:
+      | desktop license | desktop quota | server license | server quota |
+      | 2               | 20            | 2              | 20           |
+    Then Resources should be purchased
+    And I add new itemized user(s):
+      | name     | email               |
+      | oem user | tc2175test@mozy.com |
+    And new itemized user should be created
+    Then I search user by:
+      | name     |
+      | oem user |
+    Then I view user details by oem user
+    Then I update the user password to default password
+    Then I navigate to Assign Keys section from bus admin console page
+    Then I assign Server key to user tc2175test@mozy.com on (default user group)
+    Then I use key activation to activate devices
+      | email               | machine_name |
+      | tc2175test@mozy.com | machine_2175 |
+    Then Activate key response should be OK
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    Then device table in user details should be:
+      | Computer     | Encryption | Storage Used      | Last Update |
+      | machine_2175 | Not Set    | 0 / 2 GB (change) | N/A         |
+    When I change machine quota to 5 under user details
+    And I refresh User Details section
+    Then device table in user details should be:
+      | Computer     | Encryption | Storage Used      | Last Update |
+      | machine_2175 | Not Set    | 0 / 5 GB (change) | N/A         |
+    Then I stop masquerading from subpartner
+    And I search and delete partner account by newly created subpartner company name

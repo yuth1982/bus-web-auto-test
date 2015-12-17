@@ -219,7 +219,7 @@ Feature: BUS Regression partner test
     And I search and delete partner account by newly created subpartner company name
 
   @TC.2008 @bus @partners_setting @tasks_p1
-  Scenario: Mozy-2008:Enforce association between email addresses and emailed keys (desktop)
+  Scenario: Mozy-2008:Enforce association between email addresses and emailed keys (server)
     When I add a new OEM partner:
       | Company Name    | Root role         | Security | Company Type     |
       | test_for_2008TC | OEM Partner Admin | HIPAA    | Service Provider |

@@ -132,6 +132,10 @@ module Bus
     element(:delete_sync_i, xpath: "//i[@class='icon-trash icon-2x']")
     element(:delete_sync_yes, xpath: "//input[@value='Yes']")
 
+    # Change Machine Quota under user details for OEM partners
+    element(:change_machine_quota_link, css: "a[id^=edit_quota_for_user_show]")
+    element(:change_machine_quota_tb, css: "input[id^=quota_in_gb_for_user_show_]")
+    element(:change_machine_quota_btn, css: "div[id^=change_quota_for_user_show_] input[value='Save']")
 
     # Public: User details storage, devices, storage limit hash
     #
@@ -890,6 +894,21 @@ module Bus
 
     def get_edit_device_tooltips
       edit_device_input['onfocus'].match(/Min: \d, Max: \d+/)[0]
+    end
+
+    # Public: Update machine quota under user details for OEM
+    #
+    # @params [] none
+    #
+    # Example:
+    #   @bus_site.admin_console_page.user_details_details_section.change_machine_quota(quota)
+    #
+    # @return [] nothing
+    def change_machine_quota(quota)
+      change_machine_quota_link.click
+      change_machine_quota_tb.type_text(quota)
+      change_machine_quota_btn.click
+      wait_until { !locate(:css, "div[id^=change_quota_for_user_show_]").nil? }
     end
 
     private
