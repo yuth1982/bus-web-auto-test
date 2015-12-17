@@ -9,6 +9,7 @@ When /^I add new user\(s\):$/ do |user_table|
   @new_users =[]
   @users =[] if @users.nil?
   user_table.hashes.each do |hash|
+    hash['email'].replace ERB.new(hash['email']).result(binding)
     hash['email'] = @existing_user_email if hash['email'] == '@existing_user_email'
     hash['email'] = @existing_admin_email if hash['email'] == '@existing_admin_email'
     user = Bus::DataObj::User.new
@@ -207,4 +208,7 @@ Then /^User group (storage|resource) details warning message should be (.+)$/ do
   @bus_site.admin_console_page.add_new_user_section.get_user_group_storage_warning_message(type).should == message
 end
 
+Then /^I get mail domain from dea_services$/ do
+  @domain_name = DBHelper.get_mail_domain_form_dea_services
+end
 
