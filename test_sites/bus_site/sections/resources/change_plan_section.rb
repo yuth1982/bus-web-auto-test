@@ -338,10 +338,11 @@ module Bus
     def confirm_change
       wait_until{ submit_btn['disabled'] != 'true' }
       submit_btn.click
-      wait_until_bus_section_load
+      wait_until { !locate(:css, "div#change_plan_confirmation input[value=Continue]").nil? }
       using_wait_time 1 do
         continue_btn.click unless page.has_css?("div#resource-change_billing_plan-errors ul")
       end
+      wait_until{ !locate(:id, "submit_new_resources_btn").nil? }
     end
 
     def wait_for_all_elements_loaded

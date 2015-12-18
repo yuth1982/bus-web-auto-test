@@ -140,7 +140,7 @@ module Bus
     #
     # Returns success or error message text
     def messages
-      wait_until { message_div.visible? }
+      wait_until { !locate(:css, "div#partner-new-errors ul").nil? }
       message_div.text
     end
 
