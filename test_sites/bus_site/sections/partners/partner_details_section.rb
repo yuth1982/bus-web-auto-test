@@ -132,9 +132,9 @@ module Bus
     element(:sub_admins_table, css: 'div#subadminbox table')
 
     # Billing history
-    element(:billing_information_icon, css: 'i[id$=bill-info-icon]')
+    element(:billing_information_icon, xpath: "//i[contains(@id,'bill-info-icon')]")
     element(:show_billing_history_link, css: 'a[onclick*=billing-history]')
-    element(:billing_history_table, css: 'table.table-view')
+    element(:billing_history_table, xpath: "//div[contains(@id,'partner-aria-txn-history-')]/div[1]/table")
 
     # Stash section
     element(:change_stash_link, css: 'a[onclick*=change_stash]')
@@ -407,9 +407,13 @@ module Bus
     end
 
     def click_invoice_link
-      show_billing_history
+      show_billing_history unless locate(:xpath, "//div[contains(@id,'billing-history')]/h4/a").nil?
       wait_until { !billing_history_table.hashes.first.values.first.nil? }
       (billing_history_table.rows.first[0].find("a")).click
+    end
+
+    def view_in_aria
+      view_in_aria_link.click
     end
 
     # Public: Click act as partner link
@@ -988,6 +992,10 @@ module Bus
 
     def check_sales_channel_change
       !(locate(:xpath, "//a[contains(@onclick,'partner-display-sales-channel')][text()='(change)']").nil?)
+    end
+
+    def billing_history_visible?
+      !locate(:xpath,"//a[contains(@onclick,'billing-history')]").nil?
     end
 
     private

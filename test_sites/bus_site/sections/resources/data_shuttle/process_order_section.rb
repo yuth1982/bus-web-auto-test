@@ -24,6 +24,11 @@ module Bus
     # [0] Order Keys table [1] Licence Key table [2] Order Summary table
     elements(:keys_tables, css: "ul.tab-panes > li > div > table")
 
+    # filter key
+    element(:filter_key_input, id: "mozy_pro_key_search")
+    element(:filter_button, xpath: "//input[@value='Filter']")
+    element(:add_first_key, xpath: "//table/tbody/tr[1]/td[8]/a[text()='Add']")
+
     # Create order section
     element(:available_keys_table, css: "div.box table.table-view")
     element(:add_new_key, xpath: "//a[text()='Add New Key']")
@@ -110,6 +115,12 @@ module Bus
         if order.key_from == "available"
           # Add key from available keys
           add_available_key.click
+        elsif !order.key_from.match(/[0-9A-Z]{20}/).nil?
+          # add key for fixed data (product key)
+          filter_key_input.type_text(order.key_from)
+          filter_button.click
+          wait_until_bus_section_load
+          add_first_key.click
         elsif !(order.key_from.match(/^\d* available$/).nil?)
           # Add certain number keys on current page
           number = order.key_from.match(/\d+/)[0].to_i

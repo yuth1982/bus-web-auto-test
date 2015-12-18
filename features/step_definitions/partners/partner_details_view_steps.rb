@@ -234,11 +234,12 @@ Then /^New Partner internal billing should be:$/ do |internal_billing_table|
   end
 
   with_timezone(ARIA_ENV['timezone']) do
-    expected[2][1].replace(Chronic.parse(expected[2][1]).strftime('%m/%d/%y'))
-    expected[3][1].replace(Chronic.parse(expected[3][1]).strftime('%m/%d/%y'))
+    expected[2][1].replace(Chronic.parse(expected[2][1]).strftime('%m/%d/%y')) unless expected[2][1].size == 0
+    expected[3][1].replace(Chronic.parse(expected[3][1]).strftime('%m/%d/%y')) unless expected.size < 4
   end
 
-  actual.flatten.should == expected.flatten.select { |item| item != '' }
+  # actual.flatten.should == expected.flatten.select { |item| item != '' }
+  (actual.flatten.select { |item| item != '' }).should == expected.flatten.select { |item| item != '' }
 
   Log.debug(expected)
 end
@@ -576,4 +577,16 @@ end
 And /^field (Account Type|Sales Channel) can (not )?be changed/ do |_, editable|
   @bus_site.admin_console_page.partner_details_section.check_account_type_change.should == editable.nil?
   @bus_site.admin_console_page.partner_details_section.check_sales_channel_change.should == editable.nil?
+end
+
+And /^I click view in aria link of billing history section$/ do
+  @bus_site.admin_console_page.partner_details_section.view_in_aria
+end
+
+Then /^billing history section should (not )?visible$/ do |visible|
+  if visible.nil?
+    @bus_site.admin_console_page.partner_details_section.billing_history_visible?.should == true
+  else
+    @bus_site.admin_console_page.partner_details_section.billing_history_visible?.should == false
+  end
 end

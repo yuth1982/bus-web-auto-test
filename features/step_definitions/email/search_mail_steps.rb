@@ -21,6 +21,8 @@ When /^I search emails by keywords:$/ do |keywords_table|
         when  'date','after'
           #IMAP doesn't search over minutes just dates
             v = Net::IMAP.format_date(Date.today) if v == 'today'
+        when 'subject'
+          v.gsub!(/@license_key/, @order.license_key[0])
         else
           # do nothing
       end

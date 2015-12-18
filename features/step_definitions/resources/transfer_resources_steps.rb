@@ -38,10 +38,16 @@ When /^go to transfer resources and change the number of devices:$/ do |resource
   end
 end
 
-Then /^available key and storage of group (.+) from (source user group|target user group) should be (.+)/ do |group_name,group_type,value|
-  if group_type == 'source user group'
-    @bus_site.admin_console_page.transfer_resources_section.get_source_key_and_storage(group_name).should include(value)
+Then /^available key and storage (of group|of partner) (.+) from (source user group|target user group|target partner) should be (.+)/ do |input,name,type,value|
+  if type == 'source user group'
+    @bus_site.admin_console_page.transfer_resources_section.get_source_key_and_storage(name).should include(value)
+  elsif type == 'target user group'
+    @bus_site.admin_console_page.transfer_resources_section.get_target_key_and_storage(name).should include(value)
   else
-    @bus_site.admin_console_page.transfer_resources_section.get_target_key_and_storage(group_name).should include(value)
+    @bus_site.admin_console_page.transfer_resources_section.get_target_partner_key_and_storage(name).should include(value)
   end
+end
+
+And /^I select (.+) as target partner$/ do |name|
+  @bus_site.admin_console_page.transfer_resources_section.select_target_partner(name)
 end

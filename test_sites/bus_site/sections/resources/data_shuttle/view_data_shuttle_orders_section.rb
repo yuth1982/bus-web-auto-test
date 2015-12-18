@@ -12,7 +12,8 @@ module Bus
     element(:shipping_tracking_table, xpath: "//div[contains(@id,'resource-show_data_shuttle_order')]/table[@class='mini-table']")
     element(:outbound_link, xpath: "//table/tbody/tr/td[2]/a")
     element(:inbound_link, xpath: "//table/tbody/tr/td[3]/a")
-
+    element(:refresh_order_view_img, xpath: "//div[contains(@id,'resource-show_data_shuttle_order')]/h2/a/img[@alt='Refresh']")
+    element(:order_view_title_a, xpath: "//div[contains(@id,'resource-show_data_shuttle_order')]/h2/a[contains(@onclick,'toggle_module')]")
     # Public: Search data shuttle order
     #
     # Examples
@@ -71,6 +72,12 @@ module Bus
 
     def click_inbound_link
       inbound_link.click
+
+    def refresh_view_data_shuttle_order_section
+      refresh_order_view_img.click
+      unless order_view_title_a[:class].nil?
+        wait_until{ order_view_title_a[:class].match(/loading/).nil? }
+      end
     end
 
   end

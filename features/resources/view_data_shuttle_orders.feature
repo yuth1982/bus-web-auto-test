@@ -28,7 +28,7 @@ Feature:
       | power adapter   | key from  | quota | drive type     |
       | Data Shuttle US | available | 20    | 3.5" 2TB Drive |
     Then Data shuttle order should be created
-    And I get the data shuttle seed id
+    And I get the data shuttle seed id for newly created partner company name
     When I search order in view data shuttle orders section by newly created partner company name
     And I view data shuttle order details
     Then The order should be Ordered
@@ -232,7 +232,7 @@ Feature:
       | power adapter   | key from  |
       | Data Shuttle US | available |
     Then Data shuttle order should be created
-    And I get the data shuttle seed id
+    And I get the data shuttle seed id for newly created partner company name
     And I cancel the latest data shuttle order for newly created partner company name
     And I search order in view data shuttle orders section by newly created partner company name
     And I view data shuttle order details

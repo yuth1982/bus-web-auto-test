@@ -29,8 +29,27 @@ module CustomCDAPI
         raise CustomCDOrderStatusException, result[:message]
       end
     end
+
+    #{:order_status=>"Cancelled", :order_id=>"22852", :is_status_retrieved_succesfuly=>true}
+    def cancel_order(order_id)
+      result = (@savon_client.request :cancel_order, "xmlns:wsdl" => "http://www.customcd.us/selfservice/publicApi" do
+        soap.body = {
+            :developer_id => CUSTOMCD_API_KEY,
+            :order_id => order_id
+        }
+      end)
+      result = result.to_hash[:cancel_order_response][:cancel_order_result]
+      if result[:is_status_retrieved_succesfuly]
+        result
+      else
+        raise CustomCDCancelOrderException, result[:error_message]
+      end
+
+    end
   end
 end
 class CustomCDOrderStatusException < Exception
+end
+class CustomCDCancelOrderException < Exception
 end
 

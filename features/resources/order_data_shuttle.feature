@@ -542,7 +542,7 @@ Feature:
       | power adapter   | key from  | quota | drive type     |
       | Data Shuttle US | available | 20    | 3.5" 2TB Drive |
     Then Data shuttle order should be created
-    Then I get the data shuttle seed id
+    Then I get the data shuttle seed id for newly created partner company name
     When I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
     And I act as newly created partner account
@@ -586,7 +586,7 @@ Feature:
       | power adapter   | key from  | quota | drive type     |
       | Data Shuttle US | available | 20    | 3.5" 2TB Drive |
     Then Data shuttle order should be created
-    Then I get the data shuttle seed id
+    Then I get the data shuttle seed id for newly created partner company name
     When I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
     And I act as newly created partner account
@@ -723,3 +723,32 @@ Feature:
       | # of Drives | Drives Ordered |
       | 1           | Yes            |
     Then the data shuttle order details should contain valid inbound number
+
+  @bus @TC.12342 @resources @tasks_p2
+  Scenario: 12342 data_shuttle_ordered_active: (Data Shuttle ordered for activated machine phase III - to user)
+    And I add a new Reseller partner:
+      | company name    | period | reseller type | reseller quota | server plan | net terms |
+      | tc12342_partner | 1      | Silver        | 50             | yes         | yes       |
+    Then New partner should be created
+    And I get the partner_id
+    And I act as newly created partner
+    And I add new user(s):
+      | user_group           | storage_type | devices |
+      | (default user group) | Desktop      | 1       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    Then I stop masquerading
+    When I order data shuttle for newly created partner company name
+      | power adapter   | key from  | quota |
+      | Data Shuttle US | available | 10    |
+    Then Data shuttle order should be created
+    When I search emails by keywords:
+      | subject                                                          | content                     |
+      | Your Key @license_key for MozyPro Now Activated for Data Shuttle | <%=@new_users.first.email%> |
+    Then I should see 1 email(s)
+    And I search and delete partner account by newly created partner company name

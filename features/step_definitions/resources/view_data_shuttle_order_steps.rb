@@ -1,6 +1,6 @@
-Then /^I get the data shuttle seed id$/ do
+Then /^I get the data shuttle seed id for (.+)$/ do |partner_name|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['view_data_shuttle_orders'])
-  @bus_site.admin_console_page.view_data_shuttle_orders_section.search_order(@partner.company_info.name)
+  @bus_site.admin_console_page.view_data_shuttle_orders_section.search_order(partner_name)
 
   @seed_id = @bus_site.admin_console_page.view_data_shuttle_orders_section.top_seed_id
   Log.debug("seed id is #{@seed_id}")
@@ -85,7 +85,7 @@ Then /^the shipping tracking table of data shuttle order should be$/ do |table|
   expected = table.hashes
   expected.each_index { |index|
     expected[index].keys.each { |key|
-      expected[index][key].should == actual[index][key]
+      actual[index][key].should == expected[index][key]
     }
   }
 end
@@ -101,3 +101,33 @@ end
 Then /^the new url should contains (.+)$/ do |content|
   @bus_site.fedex_page.current_url.should include(content)
 end
+
+Then /^the status of shipping tracking table should have Submitted and Processing and Burned$/ do
+  arr_status = ['Submitted','Processing','Burned']
+  flag = true
+  index = -1
+  times = 0
+  actual_status = 'Submitted'
+  while flag == true && index < 2
+    if index == -1
+      actual_status1 = @bus_site.admin_console_page.view_data_shuttle_orders_section.get_shipping_tracking_table_hashes.first['Status']
+    else index > -1
+      while index == index1 && times < 3
+        @bus_site.admin_console_page.view_data_shuttle_orders_section.refresh_view_data_shuttle_order_section
+        actual_status1 = @bus_site.admin_console_page.view_data_shuttle_orders_section.get_shipping_tracking_table_hashes.first['Status']
+        break if actual_status1 != actual_status
+        times = times + 1
+      end
+    end
+    index1 = arr_status.index(actual_status1)
+    flag =false if index1.nil? || index1 <= index
+    index = index1
+    actual_status = actual_status1
+  end
+  flag.should == true
+end
+
+And /^I refresh view data shuttle order section$/ do
+  @bus_site.admin_console_page.view_data_shuttle_orders_section.refresh_view_data_shuttle_order_section
+end
+

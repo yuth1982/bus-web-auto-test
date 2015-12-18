@@ -48,5 +48,13 @@ module Bus
       find(:xpath, "//select[@id='target_group_id']/option[contains(text(),'#{group_name}')] ").text
     end
 
+    def get_target_partner_key_and_storage group_name
+      find(:xpath, "//select[@id='target_partner_id']/option[contains(text(),'#{group_name}')] ").text
+    end
+
+    def select_target_partner target_partner
+      target_partner_select.select(target_partner)
+    end
+
   end
 end

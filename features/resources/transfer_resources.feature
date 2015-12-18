@@ -109,8 +109,8 @@ Feature: Transfer Resources
       | email                | machine_name  |
       | tc12819test@mozy.com | machine_12819 |
     Then Activate key response should be OK
-    And I stop masquerading as sub partner
-    When I order data shuttle for newly created subpartner company name
+    And I stop masquerading
+    When I order data shuttle for TC.12819_oem_partner
       | address 1     | city         | state | zip    | country         | phone        | power adapter   | key from  | quota |
       | 151 S Morgan  | Shelbyville  | IL    | 62565  | United States   | 3127584030   | Data Shuttle US | available | 10    |
     Then Data shuttle order should be created
@@ -123,8 +123,77 @@ Feature: Transfer Resources
     And I stop masquerading
     And I search and delete partner account by newly created subpartner company name
 
-
-
+  @TC.12816 @tasks_p2 @resuorces @bus
+  Scenario: 12816 Existing keys assigned to data shuttle order don't appear under transfer resources of parent partner
+    When I add a new OEM partner:
+      | company name      | Root role      | Company Type     |
+      | TC.12816_partner  | OEM Root Trial | Service Provider |
+    Then New partner should be created
+    And I act as newly created partner account
+    And I purchase resources:
+      | desktop license | desktop quota | server license | server quota |
+      | 88              | 88            | 88             | 88           |
+    And I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          | Parent         |
+      | subrole | Partner admin | OEM Root Trial |
+    And I check all the capabilities for the new role
+    And I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for OEM partner:
+      | Name    | Company Type | Root Role | Enabled | Public | Currency                        | Periods | Tax Percentage | Tax Name | Auto-include tax | Server Price per key | Server Min keys | Server Price per gigabyte | Server Min gigabytes | Desktop Price per key | Desktop Min keys | Desktop Price per gigabyte | Desktop Min gigabytes | Grandfathered Price per key | Grandfathered Min keys | Grandfathered Price per gigabyte | Grandfathered Min gigabytes |
+      | subplan | business     | subrole   | Yes     | No     | $ — US Dollar (Partner Default) | yearly  | 10             | test     | false            | 1                    | 1               | 1                         | 1                    | 1                     | 1                | 1                          | 1                     | 1                           | 1                      | 1                                | 1                           |
+    Then add new pro plan success message should be displayed
+    When I add a new sub partner:
+      | Company Name          | Pricing Plan | Admin Name |
+      | TC.12816_sub_partner  | subplan      | subadmin   |
+    Then New partner should be created
+    And I transfer resources from user group (default user group) to partner TC.12816_sub_partner and user group (default user group) with:
+      | server_licenses | server_storage | desktop_licenses | desktop_storage |
+      | 8               | 8              | 8                | 8               |
+    Then Resources should be transferred
+    And I stop masquerading as sub partner
+    And I stop masquerading as sub partner
+    And I stop masquerading
+    And I search partner by TC.12816_sub_partner
+    And I view partner details by TC.12816_sub_partner
+    When I add partner settings
+      | Name                    | Value | Locked |
+      | enforce_email_key_match | t     | false  |
+    When I set product name for the partner
+    Then I navigate to old window
+    When I act as partner by:
+      | name                 |
+      | TC.12816_sub_partner |
+    And I add new itemized user(s):
+      | name     | email                |
+      | oem user | tc12816test@mozy.com |
+    And new itemized user should be created
+    Then I search user by:
+      | name     |
+      | oem user |
+    Then I view user details by oem user
+    Then I update the user password to reset password
+    Then I navigate to Assign Keys section from bus admin console page
+    Then I assign Desktop key to user tc12816test@mozy.com on (default user group)
+    Then I use key activation to activate devices
+      | email                | machine_name  |
+      | tc12816test@mozy.com | machine_12816 |
+    Then Activate key response should be OK
+    And I stop masquerading
+    When I order data shuttle for TC.12816_sub_partner
+      | address 1     | city         | state | zip    | country         | phone        | power adapter   | key from  | quota |
+      | 151 S Morgan  | Shelbyville  | IL    | 62565  | United States   | 3127584030   | Data Shuttle US | available | 2     |
+    Then Data shuttle order should be created
+    When I act as partner by:
+      | name             |
+      | TC.12816_partner |
+    And I navigate to Transfer Resources section from bus admin console page
+    Then available key and storage of partner TC.12816_sub_partner from target partner should be (15 keys 14 GB)
+    And I select TC.12816_sub_partner as target partner
+    Then available key and storage of group (default user group) from target user group should be (15 keys 14 GB)
+    And I stop masquerading
+    And I search and delete partner account by TC.12816_sub_partner
+    And I search and delete partner account by TC.12816_partner
 
 
 

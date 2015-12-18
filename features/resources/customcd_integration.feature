@@ -25,7 +25,7 @@ Feature:
       | power adapter   | key from  | quota |
       | Data Shuttle US | available | 10    |
     Then Data shuttle order should be created
-    And I get the data shuttle seed id
+    And I get the data shuttle seed id for newly created partner company name
     And I cancel the latest data shuttle order for newly created partner company name
     And I get customcd order id from database for data shuttle order
     And I wait for 60 seconds
@@ -70,3 +70,55 @@ Feature:
     Then the new url should contains /fedextrack/?action=track&tracknumbers=797391636848
     And I close new window
     And I search and delete partner account by newly created partner company name
+
+  @bus @TC.12898 @resources @tasks_p2
+  Scenario: 12898 Verify CustomCD order status updates make it through to BUS.
+    When I add a new MozyPro partner:
+      | company name    | period  | base plan | storage add on |
+      | tc12898_partner | 24      | 8 TB      | 28             |
+    And New partner should be created
+    When I act as newly created partner account
+    And I add new user(s):
+      | storage_type  | storage_limit | devices |
+      | Desktop       | 55            | 1       |
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    Then I stop masquerading
+    When I order data shuttle for newly created partner company name
+      | address 1     | city         | state | zip    | country         | phone        | power adapter   | key from  | quota |
+      | 151 S Morgan  | Shelbyville  | IL    | 62565  | United States   | 3127584030   | Data Shuttle US | available | 10    |
+    Then Data shuttle order should be created
+    And I search order in view data shuttle orders section by newly created partner company name
+    And I view data shuttle order details
+    Then the status of shipping tracking table should have Submitted and Processing and Burned
+    And I get the data shuttle seed id for newly created partner company name
+    And I get customcd order id from database for data shuttle order
+    When API* cancel data shuttle order in customcd
+    And I wait for 60 seconds
+    Then API* data shuttle order status should be Cancelled
+    And I refresh view data shuttle order section
+    Then the shipping tracking table of data shuttle order should be
+      | Drive # | Outbound | Inbound | Status     |
+      | 1       |          |         | Cancelled  |
+    And I search and delete partner account by newly created partner company name
+
+  @bus @TC.125785 @qa12 @env_dependent @resources @tasks_p2
+  Scenario: 125785 VMBU data shuttle is reflected correctly in CustomCD
+    When I order data shuttle for ClientQA-VMBU
+      | address 1     | city         | state | zip    | country         | phone        | power adapter   | key from             | quota  | os         |
+      | 151 S Morgan  | Shelbyville  | IL    | 62565  | United States   | 3127584030   | Data Shuttle US | 9X37WGFV58DBXBC7TSS2 | 10     | vSphere    |
+    Then Data shuttle order should be created
+    And I search order in view data shuttle orders section by ClientQA-VMBU
+    And I view data shuttle order details
+    Then the status of shipping tracking table should have Submitted and Processing and Burned
+    And I get the data shuttle seed id for ClientQA-VMBU
+    And I get customcd order id from database for data shuttle order
+    Then API* data shuttle order status should be Burned
+    And I cancel the latest data shuttle order for ClientQA-VMBU
+    And I wait for 60 seconds
+    Then API* data shuttle order status should be Cancelled
+

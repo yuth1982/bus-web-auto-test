@@ -31,7 +31,7 @@ Feature:
       | power adapter   | key from  | quota |
       | Data Shuttle US | available | 1     |
     Then Data shuttle order should be created
-    And I get the data shuttle seed id
+    And I get the data shuttle seed id for newly created partner company name
     When I search order in view data shuttle orders section by newly created partner company name
     Then order search results in data shuttle orders section should be:
       | Pro Partner Name               | # of Drives | Drives Ordered |
@@ -380,7 +380,7 @@ Feature:
       | power adapter   | key from  |
       | Data Shuttle US | available |
     Then Data shuttle order should be created
-    And I get the data shuttle seed id
+    And I get the data shuttle seed id for newly created partner company name
     And I cancel the latest data shuttle order for newly created partner company name
     And I search order in view data shuttle orders section by newly created partner company name
     And I view data shuttle order details
@@ -419,7 +419,7 @@ Feature:
       | power adapter   | key from  |
       | Data Shuttle US | available |
     Then Data shuttle order should be created
-    And I get the data shuttle seed id
+    And I get the data shuttle seed id for newly created partner company name
     When I set the data shuttle seed status:
       | status  |
       | seeding |
