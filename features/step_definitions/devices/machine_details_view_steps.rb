@@ -208,6 +208,35 @@ And /^(Backups|Restores|Virtual Machines) table will display as:$/ do |type, tab
   @bus_site.admin_console_page.machine_details_section.get_backup_restore_table(type).should == table.raw
 end
 
+And /^(Backups|Restores|Virtual Machines) table first record will display as:$/ do |type, table|
+  actual = @bus_site.admin_console_page.machine_details_section.get_backup_restore_table_hashes(type)[0]
+  expected = table.hashes[0]
+  expected.each do |k,v|
+    v.replace ERB.new(v).result(binding)
+    case k
+      when 'Date/Time Requested'
+        v.replace(Chronic.parse(v).strftime('%m/%d/%y'))
+        actual[k].should include(v)
+      when 'Date/Time Finished'
+        if v == 'today'
+          v.replace(Chronic.parse(v).strftime('%m/%d/%y'))
+          actual[k].should include(v)
+        else
+          actual[k].should == v
+        end
+      when 'Status / Downloads'
+        if v.include? ('today')
+          v.gsub!(/today/, Chronic.parse(v).strftime('%m/%d/%y'))
+          actual[k].should include(v)
+        else
+          actual[k].should == v
+        end
+      else
+        actual[k].should == v
+    end
+  end
+end
+
 And /^action links in the manifest will be$/ do |table|
   @bus_site.manifest_view_page.get_action_links.should == table.raw[0]
 end

@@ -2,12 +2,13 @@ module Freyja
   module DataObj
     # This class contains attributes for data shuttle order
     class Restore
-      attr_accessor :restore_name, :include_deleted, :restore_date, :restore_type, :num_files, :track_num, :partner_id, :machine_id, :restore_id, :use_company_info, :dvd_to_biz, :address_info, :credit_card
+      attr_accessor :restore_name, :include_deleted, :restore_date, :restore_type, :num_files, :track_num, :partner_id, :machine_id, :restore_id, :use_company_info, :dvd_to_biz, :address_info, :credit_card, :type
 
       # Public: Initialize the Restore object
       #
       def initialize
         super
+        @type = "files"
         @restore_name = "RestoreAutomation-#{Time.now.strftime("%Y%m%d-%H%M%S")}"
         @track_num = "#{Time.now.strftime("%YD%m%dR%H%M%SCC")}"
         @include_deleted = false

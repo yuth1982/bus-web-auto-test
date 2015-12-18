@@ -1,5 +1,5 @@
 When /^I select options menu$/ do
-  @freyja_site = FreyjaSite.new
+  @freyja_site = FreyjaSite.new unless @freyja_site.nil?
   @freyja_site.main_page.select_options_panel
 end
 

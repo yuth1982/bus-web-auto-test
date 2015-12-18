@@ -45,3 +45,9 @@ end
 And /^I download the previous archive result$/ do
   @freyja_site.event_history_page.restore_second_event
 end
+
+And /^I set the restore dvd (burned|mailed) at time$/ do |type|
+  RestoreHelper.set_restore_burned_mailed_time(type, @restore.restore_id)
+end
+
+

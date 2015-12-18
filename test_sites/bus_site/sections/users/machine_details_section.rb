@@ -100,6 +100,12 @@ module Bus
       find(:xpath, "//h4[text()='#{type}']/following-sibling::div[1]/table").raw_text.select{|row|row!=[""]}
     end
 
+    def get_backup_restore_table_hashes(type)
+      wait_until_bus_section_load
+      find(:xpath, "//h4[text()='#{type}']/following-sibling::div[1]/table").hashes
+    end
+
+
     def click_machine_link (match)
       find(:xpath, "//a[text()='#{match}']").click
     end

@@ -9,7 +9,7 @@ end
 #
 # Available columns: restore name, restore type
 #
-And /^I fill out the restore all files wizard$/ do |restore_table|
+And /^I fill out the restore (all files|VMs) wizard$/ do |_, restore_table|
   attributes = restore_table.hashes.first
   @restore.restore_name = attributes["restore_name"] + "#{Time.now.strftime("%Y%m%d-%H%M%S")}" unless attributes["restore_name"].nil?
   @restore.restore_type = attributes["restore_type"] unless attributes["restore_type"].nil?

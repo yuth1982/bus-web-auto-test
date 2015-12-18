@@ -4,9 +4,8 @@ module Freyja
 
     element(:backup_download_btn, xpath: "//*[@id='backup-layout']/div/table/tbody/tr/td/table/tbody/tr/td[2]/div/div[2]/div[1]/div/a[1]/span")
     element(:download_key_btn, xpath: "//*[@id='decrypt_utility_dialog']/div[4]/div/a/span")
+    section(:restore_all_files_section, RestoreOptionsSection, xpath: "//*[contains(@id,'_tab')]")
 
-    section(:restore_all_files_section, RestoreOptionsSection, xpath: "//*[@id='backup_tab']//a[@title='Restore All Files...']")
-    #section(:restore_all_files_section, RestoreOptionsSection, xpath: "//section[@id='backup-layout']/div/table/tbody/tr/td/table/tbody/tr/td[2]/div/div[2]/div/div/a[2]/span")
     # Public: launch restore wizard
     #
     # Example

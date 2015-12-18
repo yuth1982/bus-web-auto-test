@@ -57,7 +57,12 @@ module Freyja
       card_expiry_month.select(credit_card.expire_month)
       card_expiry_year.select(credit_card.expire_year)
       finish_button.click
-      switch_to_lastWindow
+      if page.driver.browser.window_handles.size == 2
+        switch_to_lastWindow
+      else  # when click restore file from BUS, then there will be 3 windows
+        main = page.driver.browser.window_handles[1]
+        page.driver.browser.switch_to.window(main)
+      end
       upper_close_btn.click
     end
 

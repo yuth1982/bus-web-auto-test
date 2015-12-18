@@ -911,6 +911,10 @@ module Bus
       wait_until { !locate(:css, "div[id^=change_quota_for_user_show_]").nil? }
     end
 
+    def click_restore_files(type, device)
+      find(:xpath, "//a[text()='#{device}']/../..//a[@title='Restore #{type}']/i").click
+    end
+
     private
     def device_stash_divide_row_index
       device_table.rows_text.index{ |row| row.first == ''}

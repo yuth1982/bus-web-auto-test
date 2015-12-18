@@ -658,6 +658,47 @@ Feature: view edit machine details
       | VMBU_ubuntu       | vmware-vm | 08/07/15   | N/A       | View Logfile |
       | VMBU_windows_test | vmware-vm | 08/07/15   | N/A       | View Logfile |
 
+  # fixed data, partner: vmbu_emea
+  @TC.125782 @bus @machines_sync @tasks_p2 @qa12 @env_dependent
+  Scenario: 125782:VMBU restore status is reflected correctly in BUS
+    When I search user by:
+      | keywords               |
+      | jaden+vmbutest@emc.com |
+    And I view user details by jaden+vmbutest@emc.com
+    When I click restore VMs folder icon for device sh-loki4.mozy.lab.emc.com
+    And I navigate to new window
+    Then I have login freyja from BUS
+    When I select the vSphere VMs tab
+    And I click VM container sh-loki4.mozy.lab.emc.com
+    And I right click VM VMBU_windows_test to add to restore queue and then restore
+    And I fill out the restore VMs wizard
+      | restore_name | restore_type |
+      | archive_vm   | media        |
+    When I select options menu
+    And I select event history
+    Then this restore is In Progress
+    When I close new window
+    And I view machine sh-loki4.mozy.lab.emc.com details from user details section
+    Then Restores table first record will display as:
+      | ID                       | Date/Time Requested | Date/Time Finished | Files Retrieved | Size   | Status / Downloads                                                |
+      | <%=@restore.restore_id%> | today               | —                  | 0 / 4           | 0 DVDs | Restore building - you will receive an email when it is complete. |
+    When I wait for 850 seconds
+    And I refresh Machine Details section
+    Then Restores table first record will display as:
+      | ID                       | Date/Time Requested | Date/Time Finished | Files Retrieved | Size  | Status / Downloads                       |
+      | <%=@restore.restore_id%> | today               | today              | 4 / 4           | 1 DVD | Retrieved files; preparing to burn DVDs. |
+    When I set the restore dvd burned at time
+    And I refresh Machine Details section
+    Then Restores table first record will display as:
+      | ID                       | Date/Time Requested | Date/Time Finished | Files Retrieved | Size  | Status / Downloads |
+      | <%=@restore.restore_id%> | today               | today              | 4 / 4           | 1 DVD | Burned on today    |
+    When I set the restore dvd mailed at time
+    And I refresh Machine Details section
+    Then Restores table first record will display as:
+      | ID                       | Date/Time Requested | Date/Time Finished | Files Retrieved | Size  | Status / Downloads |
+      | <%=@restore.restore_id%> | today               | today              | 4 / 4           | 1 DVD | Mailed on today    |
+
+
   @TC.124099 @bus @machines_sync @tasks_p2 @qa12 @env_dependent
   Scenario: 124099:Server storage used for VMBU container
     When I act as partner by:

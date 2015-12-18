@@ -9,7 +9,7 @@ module Freyja
     element(:backup_download_btn, xpath: "//*[@id='backup_tab']//*[text()='Download']")
     element(:restore_all_files_btn, xpath: "//*[@id='backup_tab']//a[@title='Restore All Files...']")
     element(:restore_name_tb, xpath: "//*[@id='wizard_main']//*[@id='restore_name']")
-    element(:next_btn, xpath: "//*[@id='wizard_buttons']//*[@id='button-next']")
+    element(:next_btn, xpath: "//*[@id='wizard_buttons']//*[@id='button-next']//div[contains(@class,'content')]")
     element(:close_btn, xpath: "//*[@id='restore_complete_buttons']//*[@id='button-close']")
     element(:fryr_restore_option, xpath: "//span[@id='choose_delivery_method_download_manager']")
     element(:archive_rb, xpath: "//span[@id='choose_delivery_method_archive']")
@@ -58,8 +58,10 @@ module Freyja
       sleep 3
       click_next
       sleep 3
-      click_next
-      sleep 3
+      unless restore.type == 'vms'
+        click_next
+        sleep 3
+      end
       case restore.restore_type
         when 'fryr'
           restore_manager_restore
@@ -137,10 +139,12 @@ module Freyja
     end
 
     def media_restore(restore, language = "English")
-      media_rb.click
-      sleep 1
-      click_next
-      sleep 1
+      unless restore.type == 'vms'
+        media_rb.click
+        sleep 1
+        click_next
+        sleep 1
+      end
       fill_media_address(restore.address_info, language)
       click_next
       click_next

@@ -4,6 +4,7 @@ module Freyja
 
     element(:backupDevice, css: "a[onclick*=ACCESS_CONTROLLER_BACKUP]")
     element(:syncDevice, css: "a[onclick*=ACCESS_CONTROLLER_SYNC]")
+    element(:vmDevice, css: "a[onclick*=ACCESS_CONTROLLER_VMBU]")
     element(:action_panel_toggle, css: 'div.panel-toggle.btn-panel-toggle')
     element(:options_menu, css: 'span.text.username')
     element(:latest_version_radio, css: 'span.radio.radio-off')
@@ -15,6 +16,10 @@ module Freyja
     element(:user_password_set_text, xpath: "//input[@id='password']")
     element(:user_password_set_again_text, xpath: "//input[@id='password_confirmation']")
     element(:user_continue_activate_btn, xpath: "//div[text()='Activate account']")
+    element(:add_to_restore_queue, xpath: "//div[@id='context-menu']//li[@title='Add to Restore Queue']")
+    element(:remove_from_restore_queue, xpath: "//div[@id='context-menu']//li[@title='Remove from Restore Queue']")
+    element(:view_restore_queue, xpath: "//div[@id='context-menu']//li[@title='View Restore Queue']")
+    element(:restores_vm_in_queue, xpath: "//div[@id='context-menu']//li[@title='Restore VMs in Queue...']")
 
     # Public: enter into one backup device
     #
@@ -23,7 +28,11 @@ module Freyja
     #
     # Returns nothing
     def choose_one_backup_device(machineID)
-      find(:xpath, "//*[starts-with(@id,'#{machineID}:Folder:')][1]/td[1]/div/span").click
+      if machineID == ''
+        find(:xpath, "//*[contains(@id,':Folder:')][1]/td[1]/div/span").click
+      else
+        find(:xpath, "//*[starts-with(@id,'#{machineID}:Folder:')][1]/td[1]/div/span").click
+      end
     end
 
     # Public: choose one device tab
@@ -44,6 +53,11 @@ module Freyja
             syncDevice.visible?
           end
           syncDevice.click
+        when 'vSphere VMs'
+          wait_until do
+            vmDevice.visible?
+          end
+          vmDevice.click
       end
     end
 
@@ -173,6 +187,10 @@ module Freyja
       find(:xpath, "//tr[@id='#{machineID}:Folder:']/td[2]/div/span[2]/span").click
     end
 
+    def click_vm(vm)
+      find(:xpath, "//span[text()='#{vm}']").click
+    end
+
     def select_options_panel
       wait_until{options_menu.visible?}
       options_menu.click
@@ -182,6 +200,24 @@ module Freyja
       user_password_set_text.type_text(password)
       user_password_set_again_text.type_text(password)
       user_continue_activate_btn.click
+    end
+
+    def restore_vm(vm)
+      el = find(:xpath, "//*[text()='#{vm}']")
+      page.driver.browser.action.context_click(el.native).perform
+      if all(:xpath, "//div[@id='context-menu']//li[@title='Remove from Restore Queue']").size == 1
+        remove_from_restore_queue.click
+        page.driver.browser.action.context_click(el.native).perform
+        wait_until{add_to_restore_queue.visible?}
+      end
+      add_to_restore_queue.click
+      page.driver.browser.action.context_click(el.native).perform
+      wait_until{view_restore_queue.visible?}
+      view_restore_queue.click
+      el = find(:xpath, "//*[@title='#{vm}']")
+      page.driver.browser.action.context_click(el.native).perform
+      wait_until{restores_vm_in_queue.visible?}
+      restores_vm_in_queue.click
     end
 
   end

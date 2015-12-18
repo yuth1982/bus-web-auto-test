@@ -1,9 +1,8 @@
 
 # select (Devices|Synced) tab
-When /^I select the (Devices|Synced) tab$/ do |device_choice|
+When /^I select the (Devices|Synced|vSphere VMs) tab$/ do |device_choice|
   @user.deviceTab = device_choice
   @freyja_site.main_page.chooseDevice(@user.deviceTab)
-
 end
 
 # choose one file in Sync or Backup devices
@@ -20,9 +19,9 @@ And /^I open Actions panel$/ do
   @freyja_site.main_page.open_actions_panel
 end
 
-When /^I select options menu$/ do
-  @freyja_site.main_page.select_options_panel
-end
+#When /^I select options menu$/ do
+#  @freyja_site.main_page.select_options_panel
+#end
 
 # choose one folder in Sync or Backup devices
 And /^I choose one folder$/ do
@@ -91,3 +90,12 @@ Then /^I waited (.+) minutes$/ do |wait_time|
   sleep (wait_time.to_i)*60
 end
 
+And /^I click VM container (.+)$/ do |vm|
+  @freyja_site.main_page.click_vm(vm)
+end
+
+And /^I right click VM (.+) to add to restore queue and then restore$/ do |vm|
+  @restore = Freyja::DataObj::Restore.new
+  @restore.type = 'vms'
+  @freyja_site.main_page.restore_vm(vm)
+end

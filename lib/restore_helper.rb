@@ -19,4 +19,16 @@ module RestoreHelper
     end
   end
 
+  def self.set_restore_burned_mailed_time(type, id, time = 'now()')
+    begin
+      conn = PG::Connection.open(:host => @db_host, :port=> @db_port, :user => @db_user, :dbname => @db_name)
+      sql = "update dvd_orders set #{type}_at = #{time} where restore_id = #{id};"
+      conn.exec sql
+    rescue PGError => e
+      puts 'postgres error'
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
 end

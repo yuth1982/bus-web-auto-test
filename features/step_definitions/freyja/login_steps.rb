@@ -100,3 +100,9 @@ Given /^I have login freyja as (home|pro|ent|oem) user using language (.+)$/ do 
   @freyja_site.login_page(@user).UserLogin_language(@user, @user.language)
   @freyja_site.login_page(@user).verify_localization(@user.language).should be_true
 end
+
+Then /^I have login freyja from BUS$/ do
+  @freyja_site = FreyjaSite.new
+  @user = Freyja::DataObj::User.new
+  @user.language = "English"
+end
