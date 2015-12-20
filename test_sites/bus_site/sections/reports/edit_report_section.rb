@@ -33,16 +33,11 @@ module Bus
     #
     # Returns nothing
     def delete_report(report_name)
-      report_row = reports_table.rows.select{ |row| row[0].text == report_name}.first
-      report_row[0].find(:css, "a:contains('#{report_name}')").click
-      #page.suppress_alert
       wait_until{delete_btn.visible?}
       delete_btn.click
       wait_until{alert_present?}
       alert_accept
-      wait_until { locate_link("Delete").nil? }
     end
-
 
   end
 

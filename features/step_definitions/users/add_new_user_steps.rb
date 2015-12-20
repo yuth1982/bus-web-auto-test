@@ -9,7 +9,7 @@ When /^I add new user\(s\):$/ do |user_table|
   @new_users =[]
   @users =[] if @users.nil?
   user_table.hashes.each do |hash|
-    hash['email'].replace ERB.new(hash['email']).result(binding)
+    hash['email'].replace ERB.new(hash['email']).result(binding) unless hash['email'].nil?
     hash['email'] = @existing_user_email if hash['email'] == '@existing_user_email'
     hash['email'] = @existing_admin_email if hash['email'] == '@existing_admin_email'
     user = Bus::DataObj::User.new
