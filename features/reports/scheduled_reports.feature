@@ -241,6 +241,7 @@ Feature: Scheduled Reports
       | @today       | [MozyPro] Delete Device | (default user group) |              |           |          |                | 0.00     |          |
     And I delete resources added delete device TC21201 scheduled report
     And I clear downloads folder resources-added*.csv file
+    When I stop masquerading
     When I act as partner by:
       | name                                         |
       | [DO NOT CHANGE][Bundled] Resource Added Test |
