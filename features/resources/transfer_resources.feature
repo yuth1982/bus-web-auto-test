@@ -110,15 +110,17 @@ Feature: Transfer Resources
       | tc12819test@mozy.com | machine_12819 |
     Then Activate key response should be OK
     And I stop masquerading as sub partner
-    And I stop masquerading
-    When I order data shuttle for newly created partner company name
+    When I order data shuttle for newly created subpartner company name
       | address 1     | city         | state | zip    | country         | phone        | power adapter   | key from  | quota |
       | 151 S Morgan  | Shelbyville  | IL    | 62565  | United States   | 3127584030   | Data Shuttle US | available | 10    |
     Then Data shuttle order should be created
-    And I act as newly created subpartner account
+    And I act as partner by:
+      | name                  |
+      | TC.12819_oem_partner  |
     And I navigate to Transfer Resources section from bus admin console page
     Then available key and storage of group (default user group) from source user group should be (3 keys 30 GB)
     Then available key and storage of group (default user group) from target user group should be (3 keys 30 GB)
+    And I stop masquerading
     And I search and delete partner account by newly created subpartner company name
 
 
