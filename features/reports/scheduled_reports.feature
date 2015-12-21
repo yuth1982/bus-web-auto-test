@@ -117,7 +117,7 @@ Feature: Scheduled Reports
       | Machine Status | machine status bundle TC21200 | Daily     |
     Then Report created successful message should be Created Machine Status Report.
     And I clear downloads folder machine-status*.csv file
-    And I wait for 10 seconds
+    And I wait for 30 seconds
     And I download machine status bundle TC21200 scheduled report
     Then Scheduled Machine Status report csv file details should be:
       | Column A                        | Column B        | Column C     | Column D               | Column E           | Column F        | Column G               |
@@ -142,7 +142,7 @@ Feature: Scheduled Reports
       | Machine Status | machine status itemized TC21200 | Daily     |
     Then Report created successful message should be Created Machine Status Report.
     And I clear downloads folder machine-status*.csv file
-    And I wait for 10 seconds
+    And I wait for 25 seconds
     And I download machine status itemized TC21200 scheduled report
     Then Scheduled Machine Status report csv file details should be:
       | Column A                         | Column B        | Column C     | Column D               | Column E           | Column F        | Column G               |
@@ -165,7 +165,7 @@ Feature: Scheduled Reports
       | Machine Status | machine status delete device TC21200 | Daily     |
     Then Report created successful message should be Created Machine Status Report.
     And I clear downloads folder machine-status*.csv file
-    And I wait for 10 seconds
+    And I wait for 20 seconds
     And I download machine status delete device TC21200 scheduled report
     Then Scheduled Machine Status report csv file details should be:
       | Column A              | Column B         | Column C     | Column D               | Column E           | Column F        | Column G               |
@@ -206,13 +206,13 @@ Feature: Scheduled Reports
     And I wait for 10 seconds
     And I download resources added bundle TC21201 scheduled report
     Then Scheduled Resources Added report csv file details should be:
-      | Column A     | Column B                                | Column C             | Column D     | Column E  | Column F | Column G       | Column H | Column I |
-      | Date Applied | Partner                                 | User Group           | Billing Code | User      | Machine  | Licenses Count | GB Count | Cost     |
-      | @today       | [DO NOT CHANGE][Bundled] Reporting Test | (default user group) |              |           |          |                | 0.00     |          |
-      | @today       | [DO NOT CHANGE][Bundled] Reporting Test | NEW-Assigned-1       |              |           |          |                | 0.00     |          |
-      | @today       | [DO NOT CHANGE][Bundled] Reporting Test | NEW-Assigned-2       |              |           |          |                | 0.00     |          |
-      | @today       | [DO NOT CHANGE][Bundled] Reporting Test | NEW-Limited          |              |           |          |                | 0.00     |          |
-      | @today       | [DO NOT CHANGE][Bundled] Reporting Test | NEW-None             |              |           |          |                | 0.00     |          |
+      | Column A           | Column B                                | Column C             | Column D     | Column E  | Column F | Column G       | Column H | Column I |
+      | Date Applied       | Partner                                 | User Group           | Billing Code | User      | Machine  | Licenses Count | GB Count | Cost     |
+      | <%=@current_date%> | [DO NOT CHANGE][Bundled] Reporting Test | (default user group) |              |           |          |                | 0.00     |          |
+      | <%=@current_date%> | [DO NOT CHANGE][Bundled] Reporting Test | NEW-Assigned-1       |              |           |          |                | 0.00     |          |
+      | <%=@current_date%> | [DO NOT CHANGE][Bundled] Reporting Test | NEW-Assigned-2       |              |           |          |                | 0.00     |          |
+      | <%=@current_date%> | [DO NOT CHANGE][Bundled] Reporting Test | NEW-Limited          |              |           |          |                | 0.00     |          |
+      | <%=@current_date%> | [DO NOT CHANGE][Bundled] Reporting Test | NEW-None             |              |           |          |                | 0.00     |          |
     And I delete resources added bundle TC21201 scheduled report
     When I stop masquerading
     When I act as partner by:
@@ -223,15 +223,15 @@ Feature: Scheduled Reports
       | Resources Added | resources added itemized TC21201 |
     Then Report created successful message should be Created Resources Added Report.
     And I clear downloads folder resources-added*.csv file
-    And I wait for 10 seconds
+    And I wait for 15 seconds
     And I download resources added itemized TC21201 scheduled report
     Then Scheduled Resources Added report csv file details should be:
-      | Column A     | Column B                                 | Column C             | Column D     | Column E  | Column F | Column G       | Column H | Column I |
-      | Date Applied | Partner                                  | User Group           | Billing Code | User      | Machine  | Licenses Count | GB Count | Cost     |
-      | @today       | [DO NOT CHANGE][Itemized] Reporting Test | (default user group) |              |           |          |                | 0.00     |          |
-      | @today       | [DO NOT CHANGE][Itemized] Reporting Test | NEW-Assigned         |              |           |          |                | 0.00     |          |
-      | @today       | [DO NOT CHANGE][Itemized] Reporting Test | NEW-Limited          |              |           |          |                | 0.00     |          |
-      | @today       | [DO NOT CHANGE][Itemized] Reporting Test | NEW-None             |              |           |          |                | 0.00     |          |
+      | Column A           | Column B                                 | Column C             | Column D     | Column E  | Column F | Column G       | Column H | Column I |
+      | Date Applied       | Partner                                  | User Group           | Billing Code | User      | Machine  | Licenses Count | GB Count | Cost     |
+      | <%=@current_date%> | [DO NOT CHANGE][Itemized] Reporting Test | (default user group) |              |           |          |                | 0.00     |          |
+      | <%=@current_date%> | [DO NOT CHANGE][Itemized] Reporting Test | NEW-Assigned         |              |           |          |                | 0.00     |          |
+      | <%=@current_date%> | [DO NOT CHANGE][Itemized] Reporting Test | NEW-Limited          |              |           |          |                | 0.00     |          |
+      | <%=@current_date%> | [DO NOT CHANGE][Itemized] Reporting Test | NEW-None             |              |           |          |                | 0.00     |          |
     And I delete resources added itemized TC21201 scheduled report
     When I stop masquerading
     When I act as partner by:
@@ -245,9 +245,9 @@ Feature: Scheduled Reports
     And I wait for 10 seconds
     And I download resources added delete device TC21201 scheduled report
     Then Scheduled Resources Added report csv file details should be:
-      | Column A     | Column B                | Column C             | Column D     | Column E  | Column F | Column G       | Column H | Column I |
-      | Date Applied | Partner                 | User Group           | Billing Code | User      | Machine  | Licenses Count | GB Count | Cost     |
-      | @today       | [MozyPro] Delete Device | (default user group) |              |           |          |                | 0.00     |          |
+      | Column A           | Column B                | Column C             | Column D     | Column E  | Column F | Column G       | Column H | Column I |
+      | Date Applied       | Partner                 | User Group           | Billing Code | User      | Machine  | Licenses Count | GB Count | Cost     |
+      | <%=@current_date%> | [MozyPro] Delete Device | (default user group) |              |           |          |                | 0.00     |          |
     And I delete resources added delete device TC21201 scheduled report
     And I clear downloads folder resources-added*.csv file
     When I stop masquerading
@@ -259,14 +259,14 @@ Feature: Scheduled Reports
       | Resources Added | resources added overdraft TC21201 |
     Then Report created successful message should be Created Resources Added Report.
     And I clear downloads folder resources-added*.csv file
-    And I wait for 10 seconds
+    And I wait for 15 seconds
     And I download resources added overdraft TC21201 scheduled report
     Then Scheduled Resources Added report csv file details should be:
-      | Column A     | Column B                                     | Column C             | Column D     | Column E  | Column F | Column G       | Column H | Column I |
-      | Date Applied | Partner                                      | User Group           | Billing Code | User      | Machine  | Licenses Count | GB Count | Cost     |
-      | 05/08/2013   | [DO NOT CHANGE][Bundled] Resource Added Test |                      |              |           |          |                | 5        |          |
-      | 05/15/2013   | [DO NOT CHANGE][Bundled] Resource Added Test |                      |              |           |          |                | 5        |          |
-      | @today       | [DO NOT CHANGE][Bundled] Resource Added Test | (default user group) |              |           |          |                | 0.00     |          |
+      | Column A           | Column B                                     | Column C             | Column D     | Column E  | Column F | Column G       | Column H | Column I |
+      | Date Applied       | Partner                                      | User Group           | Billing Code | User      | Machine  | Licenses Count | GB Count | Cost     |
+      | 05/08/2013         | [DO NOT CHANGE][Bundled] Resource Added Test |                      |              |           |          |                | 5        |          |
+      | 05/15/2013         | [DO NOT CHANGE][Bundled] Resource Added Test |                      |              |           |          |                | 5        |          |
+      | <%=@current_date%> | [DO NOT CHANGE][Bundled] Resource Added Test | (default user group) |              |           |          |                | 0.00     |          |
     And I delete resources added overdraft TC21201 scheduled report
     And I clear downloads folder resources-added*.csv file
 
@@ -610,7 +610,7 @@ Feature: Scheduled Reports
       | type            | name                   |
       | Billing Summary | billing summary tc7329 |
     Then Billing summary report should be created
-    And I wait for 30 seconds
+    And I wait for 45 seconds
     And I search emails by keywords:
       | to               | content                                       |
       | @new_admin_email | Your billing summary tc7329 - Billing Summary |
@@ -619,7 +619,7 @@ Feature: Scheduled Reports
       | type           | name                  | recipients             |
       | Billing Detail | billing detail tc7329 | <%=create_user_email%> |
     Then Billing detail report should be created
-    And I wait for 30 seconds
+    And I wait for 45 seconds
     And I search emails by keywords:
       | to                        | content                                     |
       | <%=@recipients_array[0]%> | Your billing detail tc7329 - Billing Detail |
@@ -628,7 +628,7 @@ Feature: Scheduled Reports
       | type              | name                     |
       | Machine Watchlist | machine watchlist tc7329 |
     Then Report created successful message should be Created Machine Watchlist Report.
-    And I wait for 30 seconds
+    And I wait for 45 seconds
     And I search emails by keywords:
       | to               | content                                           |
       | @new_admin_email | Your machine watchlist tc7329 - Machine Watchlist |
@@ -637,16 +637,16 @@ Feature: Scheduled Reports
       | type           | name                  | recipients             |
       | Machine Status | machine status tc7329 | <%=create_user_email%> |
     Then Report created successful message should be Created Machine Status Report.
-    And I wait for 30 seconds
+    And I wait for 45 seconds
     And I search emails by keywords:
       | to                        | content                                     |
       | <%=@recipients_array[0]%> | Your machine status tc7329 - Machine Status |
-    Then I should see 1 email(s)
+    Then I should see 45 email(s)
     And I build a new report:
       | type            | name                   |
       | Resources Added | resources added tc7329 |
     Then Report created successful message should be Created Resources Added Report.
-    And I wait for 30 seconds
+    And I wait for 45 seconds
     And I search emails by keywords:
       | to               | content                                       |
       | @new_admin_email | Your resources added tc7329 - Resources Added |
@@ -655,7 +655,7 @@ Feature: Scheduled Reports
       | type               | name                      | recipients             |
       | Machine Over Quota | machine over quota tc7329 | <%=create_user_email%> |
     Then Report created successful message should be Created Machine Over Quota Report.
-    And I wait for 30 seconds
+    And I wait for 45 seconds
     And I search emails by keywords:
       | to                        | content                                             |
       | <%=@recipients_array[0]%> | Your machine over quota tc7329 - Machine Over Quota |

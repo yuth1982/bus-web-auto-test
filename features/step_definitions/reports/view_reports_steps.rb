@@ -49,7 +49,8 @@ When /^I build a new report:$/ do |report_table|
   @recipients_array = @report.recipients.split("\;") unless @report.recipients.nil?
   @report.subject = attributes["subject"] || ""
   @report.email_message = attributes["email message"] || ""
-  @bus_site.admin_console_page.add_report_section.build_report(@report)
+  @current_date = @bus_site.admin_console_page.add_report_section.build_report(@report)
+  @current_date = Chronic.parse(@current_date).strftime('%m/%d/%Y')
 end
 
 When /^I add more recipients to report (.+)$/ do |report_name, recipients_table|
@@ -129,6 +130,7 @@ end
 
 Then /^Scheduled (.+) report csv file( which attached to email)* details should be:$/ do |report_type, type, report_table|
   report_table.map_column!('Column A') do |value|
+    value.replace ERB.new(value).result(binding)
     value.gsub!(/@name/,@partner.company_info.name) unless @partner.nil?
     value.gsub!(/@today/,DateTime.now.strftime("%m/%d/%Y")) if value == '@today'
     value

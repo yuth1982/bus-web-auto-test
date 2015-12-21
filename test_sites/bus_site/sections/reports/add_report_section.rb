@@ -59,6 +59,7 @@ module Bus
     #
     # Returns nothing
     def build_report(report)
+      current_date = 'today'
       report_settings_tab.click unless report_settings_tab[:class]== 'selected'
       wait_until{report_name_tb.visible?}
       case report
@@ -75,6 +76,9 @@ module Bus
         else
           report_name_tb.type_text(report.name)
           if report.type == 'Resources Added'
+            # get current date from range end checkbox for the Date Applied in the report
+            str_arr = range_end_checkbox[:onclick].scan(/'\d+'/)
+            current_date = 'yesterday' unless str_arr[2].match(/\d+/)[0] == Time.now.day.to_s
             range_start_checkbox.check
             range_end_checkbox.check
           else
@@ -89,6 +93,7 @@ module Bus
       end
       set_email_recipients(report.recipients) unless report.recipients.nil?
       save_btn.click
+      current_date
     end
 
     private
