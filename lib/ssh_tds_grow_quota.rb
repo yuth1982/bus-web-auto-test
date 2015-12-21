@@ -12,11 +12,11 @@ module SSHTDSGrowQuota
   #  SSHTDSGrowQuota.grow_quota('qa1+andrea+fisher+1417@decho.com', 'test1234', '4903844', '1')
   #
   # @return [String] "Partner 12345 is using autogrow and is overdrafted on its Generic license by 5 GB"
-  def grow_quota(username, password, machine_id, i)
+  def grow_quota(username, password, machine_id, i, filename)
     #encrypted_file_size = "1000000008"
     encrypted_file_size = (("1073741824".to_i)*(i.to_i)).to_s
     object_id = "73aecc4d92453e5dacaa1eddf1df55487cfb50af"
-    filename = "gig-ishfile#{rand(500)}#{i}.txt"
+    filename = "gig-ishfile#{rand(500)}#{i}.txt" if filename.nil?
 
     Log.debug "#{QA_ENV['tds_host']}, #{username}, #{password}, #{machine_id}, #{filename}, #{object_id}, #{encrypted_file_size}"
     http_conn = http_connect(QA_ENV['tds_host'])
