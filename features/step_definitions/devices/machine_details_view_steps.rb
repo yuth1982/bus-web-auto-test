@@ -7,14 +7,22 @@ Then /^the data shuttle machine details should be:$/ do |ds_table|
         when 'Order Date'
           v.replace(Chronic.parse(v).strftime('%m/%d/%y'))
         when 'Start'
-          v.replace(Chronic.parse(v).strftime('%m/%d/%y'))
+          v.replace(Chronic.parse(v).strftime('%m/%d/%y')) unless v == ''
         else
           # do nothing
       end
       v.replace ERB.new(v).result(binding)
     end
   end
-  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
+  expected.each_index{ |index|
+    expected[index].keys.each{ |key|
+      if key == 'Elapsed' && expected[index][key].include?('minute')
+        (actual[index][key].match(/^(less than a|1|2|3) minute(s)?/)[0].nil?).should == false
+      else
+        actual[index][key].should == expected[index][key]
+      end
+    }
+  }
 end
 
 When(/^I close machine details section$/) do
