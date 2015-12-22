@@ -411,29 +411,29 @@ Feature: manage price schedules - billed partner
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-#  Will implement this later
-#  @TC.18764 @bus @aria @tasks_p2
-#  Scenario: 18764 Price schedule will apply to customers in the next subscription period
-#    When I add a new MozyPro partner:
-#      | period | base plan | server plan |
-#      | 1      | 250 GB    | yes         |
-#    Then New partner should be created
-#    And I get partner aria id
-#    When API* I change aria supplemental plan for newly created partner aria id
-#      | plan_name                                       | rate_schedule_name  | schedule_currency | num_plan_units |
-#      | MozyPro 250 GB Plan (Monthly)                   | Non-profit Discount | usd               | 2              |
-#      | MozyPro Server Add-on for 250 GB Plan (Monthly) | Non-profit Discount | usd               | 3              |
-#    And I move backwards account billing dates 1 month for newly created partner aria id
-#    Then I wait for 86400 seconds
-#    When I navigate to bus admin console login page
-#    And I log in bus admin console as administrator
-#    When I act as newly created partner account
-#    And I navigate to Billing History section from bus admin console page
-#    And Billing history table should be:
-#      | Date  | Amount    | Total Paid | Balance Due |
-#      | today | $1,220.78 | $1,220.78  | $0.00       |
-#    When I stop masquerading
-#    And I search and delete partner account by newly created partner company name
+  @TC.18764 @bus @aria @tasks_p2
+  Scenario: 18764 Price schedule will apply to customers in the next subscription period
+    When I add a new MozyPro partner:
+      | period | base plan | server plan |
+      | 1      | 250 GB    | yes         |
+    Then New partner should be created
+    And I get partner aria id
+    When API* I change aria supplemental plan for newly created partner aria id
+      | plan_name                                       | rate_schedule_name  | schedule_currency | num_plan_units |
+      | MozyPro 250 GB Plan (Monthly)                   | Non-profit Discount | usd               | 2              |
+      | MozyPro Server Add-on for 250 GB Plan (Monthly) | Non-profit Discount | usd               | 3              |
+    And I move backwards account billing dates 1 month for newly created partner aria id
+    Then I wait for 86400 seconds
+    When I navigate to bus admin console login page
+    And I log in bus admin console as administrator
+    When I act as newly created partner account
+    And I navigate to Billing History section from bus admin console page
+    And Billing history table should be:
+      | Date      | Amount  | Total Paid | Balance Due |
+      | yesterday | $110.98 | $110.98    | $0.00       |
+      | today     |         |            | $110.98     |
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name
 
   @TC.18812 @bus @aria @tasks_p2
   Scenario: 18812 Mozy Employees change from another rate schedule back to standard
