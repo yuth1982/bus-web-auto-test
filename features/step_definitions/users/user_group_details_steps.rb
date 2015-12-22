@@ -111,22 +111,21 @@ When /^the (.+) table details under user group details should be:$/ do |match, t
   expected = table.hashes
   expected.each_index do |index|
     expected[index].each do |k, v|
+      v.replace ERB.new(v).result(binding)
       case k
         when 'Product Key'
-          (v.match(/\w{20}/).size>0).should == true
+          (actual[index][k].match(/\w{20}/).size>0).should == true
         when 'Created'
           v.replace(Chronic.parse(v).strftime('%m/%d/%y'))
           actual[index][k].should == v
         when 'User'
-          v.replace ERB.new(v).result(binding)
           if v.length <= 30
-            v.replace ERB.new(v).result(binding).downcase
-            actual[index][k].should == v
+            v.downcase
           else
             v.replace ERB.new(v).result(binding).slice(0,27).downcase
             v << '...'
-            actual[index][k].should == v
           end
+          actual[index][k].should == v
         else
           actual[index][k].should == v
       end
