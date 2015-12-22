@@ -641,7 +641,7 @@ Feature: Scheduled Reports
     And I search emails by keywords:
       | to                        | content                                     |
       | <%=@recipients_array[0]%> | Your machine status tc7329 - Machine Status |
-    Then I should see 45 email(s)
+    Then I should see 1 email(s)
     And I build a new report:
       | type            | name                   |
       | Resources Added | resources added tc7329 |
