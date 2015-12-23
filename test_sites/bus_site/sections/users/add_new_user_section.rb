@@ -11,8 +11,8 @@ module Bus
     element(:ug_resources_details_table, id: 'resource-details')
     element(:buy_more_link, css: 'span.buy_more>a[href*=change_billing_plan]')
     element(:add_group_link, css: 'a[href*=add_group]')
-    element(:resource_warning_message_span, id: 'no_resources_warning')
-    element(:storage_warning_message_span, id: 'no_storage_warning')
+    element(:resource_warning_message_span, xpath: "//span[@id='no_resources_warning']")
+    element(:storage_warning_message_span, xpath: "//span[@id='no_storage_warning']")
 
     element(:storage_type_select, {:id => 'user_storage_pool_policy'}, true)
     element(:storage_max_tb, {id: 'desired_user_storage'}, true)
