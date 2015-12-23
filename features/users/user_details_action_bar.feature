@@ -98,7 +98,7 @@ Feature: User Details
     And I view user details by TC.12454.User
     Then I update user password to incorrect password test and get the error message:
     """
-    Please enter a password at least 6 characters long
+    Please enter a password at least 8 characters long
     """
     Then I check the records of model_audits table is 0
     Then I stop masquerading
