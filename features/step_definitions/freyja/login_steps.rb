@@ -105,5 +105,5 @@ Then /^I have login freyja from BUS$/ do
   @freyja_site = FreyjaSite.new
   @user = Freyja::DataObj::User.new
   @user.backup_file = @filename unless @filename.nil?
-  @user.backup_machineID = @new_clients.first.machine_id unless @new_clients.first.machine_id.nil?
+  @user.backup_machineID = @new_clients.first.machine_id unless @new_clients.nil?
 end
