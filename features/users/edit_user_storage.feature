@@ -58,16 +58,18 @@ Feature: Users Storage/Device/Product Key Section
     """
     User Group Shared_test does not have enough storage available.
     """
+    Then I refresh Add New User section
     And I add new user(s):
-      | name          | user_group           | storage_type | storage_limit  |
-      | TC.20996_user | Shared_with_max_test | Server       | 51             |
+      | name           | user_group           | storage_type | storage_limit  |
+      | TC.20996_user1 | Shared_with_max_test | Server       | 51             |
     Then Add new user error message should be:
     """
     User Group Shared_with_max_test does not have enough storage available.
     """
+    Then I refresh Add New User section
     And I add new user(s):
-      | name          | user_group    | storage_type | storage_limit  |
-      | TC.20996_user | Assigned_test | Server       | 31             |
+      | name           | user_group    | storage_type | storage_limit  |
+      | TC.20996_user2 | Assigned_test | Server       | 31             |
     Then Add new user error message should be:
     """
     User Group Assigned_test does not have enough storage available.
