@@ -74,6 +74,7 @@ Feature: Users Storage/Device/Product Key Section
     """
     User Group Assigned_test does not have enough storage available.
     """
+    Then I refresh Add New User section
     And I add new user(s):
       | name            | user_group  | storage_type | storage_limit  |devices |
       | TC.20996_user_1 | Shared_test | Server       | 90             |3       |
