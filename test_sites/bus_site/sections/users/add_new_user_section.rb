@@ -212,8 +212,10 @@ module Bus
 
     def get_user_group_storage_warning_message(type)
       if type.eql?('resource')
+        wait_until{resource_warning_message_span.visible?}
         resource_warning_message_span.text
       else
+        wait_until{storage_warning_message_span.visible?}
         storage_warning_message_span.text
       end
     end
