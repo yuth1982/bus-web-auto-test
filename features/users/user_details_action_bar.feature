@@ -129,9 +129,9 @@ Feature: User Details
       | machine_id                         | GB | password                      |
       | <%=@new_clients.first.machine_id%> | 30 | <%=QA_ENV['hipaa_password']%> |
     Then tds returns successful upload
-    Then I update user password to incorrect password default password and get the error message:
+    Then I update user password to incorrect password test1234 and get the error message:
     """
-    Password needs to contain at least 3 kinds of characters.
+    Passwords must contain at least 3 of the following types of characters: numbers, lowercase letters, special characters, capital letters
     """
     Then I navigate to user login page with partner ID
     Then I log in bus pid console with:
