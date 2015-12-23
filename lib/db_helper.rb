@@ -535,6 +535,19 @@ module DBHelper
     end
   end
 
+  def update_customcd_order_id(seed_id,customcd_order_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "UPDATE seed_device_orders_customcd_orders SET customcd_order_id = #{customcd_order_id} WHERE seed_device_order_id = #{seed_id};"
+      Log.debug sql
+      c = conn.exec(sql)
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
   def get_mail_domain_form_dea_services
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)

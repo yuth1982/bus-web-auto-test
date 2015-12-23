@@ -89,3 +89,15 @@ Then /^the shipping tracking table of data shuttle order should be$/ do |table|
     }
   }
 end
+
+And /^I click (outbound|inbound) link of shipping tracking table$/ do |type|
+  if type == 'outbound'
+    @bus_site.admin_console_page.view_data_shuttle_orders_section.click_outbound_link
+  else
+    @bus_site.admin_console_page.view_data_shuttle_orders_section.click_inbound_link
+  end
+end
+
+Then /^the new url should contains (.+)$/ do |content|
+  @bus_site.fedex_page.current_url.should include(content)
+end

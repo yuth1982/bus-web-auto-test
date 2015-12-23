@@ -10,6 +10,8 @@ module Bus
     elements(:order_view_info_ps, xpath: "//div[contains(@id,'resource-show_data_shuttle_order')]/div[2]/p")
     element(:data_center_p, xpath: "//div[contains(@id,'resource-show_data_shuttle_order')]/div[2]/h3")
     element(:shipping_tracking_table, xpath: "//div[contains(@id,'resource-show_data_shuttle_order')]/table[@class='mini-table']")
+    element(:outbound_link, xpath: "//table/tbody/tr/td[2]/a")
+    element(:inbound_link, xpath: "//table/tbody/tr/td[3]/a")
 
     # Public: Search data shuttle order
     #
@@ -61,6 +63,14 @@ module Bus
 
     def get_shipping_tracking_table_hashes
       shipping_tracking_table.hashes
+    end
+
+    def click_outbound_link
+      outbound_link.click
+    end
+
+    def click_inbound_link
+      inbound_link.click
     end
 
   end

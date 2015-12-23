@@ -59,3 +59,7 @@ Then /^I get customcd order id from database for data shuttle order$/ do
   @customcd_order_id = DBHelper.get_customcd_order_id(@seed_id)
   Log.debug("Customcd Order Id of Data Shuttle Order #{@seed_id} is #{@customcd_order_id}")
 end
+
+And /^I set customcd order id to (.+) for just created data shuttle order$/ do |change_to_id|
+  DBHelper.update_customcd_order_id(@seed_id,change_to_id)
+end

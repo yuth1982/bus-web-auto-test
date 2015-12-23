@@ -71,5 +71,9 @@ class BusSite
   def partner_invoice_page
     Bus::PartnerInvoicePage.new
   end
+
+  def fedex_page
+    Bus::FedEXPage.new
+  end
 end
 
