@@ -215,8 +215,8 @@ Feature: Set/Remove Max at Machine
     The Sync Storage limit cannot be more than what is available for this user.
     """
     Then stash device table in user details should be:
-      | Sync Container | Used/Available     | Device Storage Limit | Last Update      |
-      | Sync           | 0 / 101 GB         | 101 GB Edit Remove   | N/A              |
+      | Sync Container | Used/Available    | Device Storage Limit | Last Update      |
+      | Sync           | 0 / 99 GB         |  Set                 | N/A              |
     When I edit Test Server Itemized user group:
       | name        | desktop_storage_type | desktop_assigned_quota |
       | Test Server | Assigned             | 150                    |
@@ -250,7 +250,7 @@ Feature: Set/Remove Max at Machine
     And I save machine max for Machine1
     Then set max message should be:
     """
-    The Sync Storage limit cannot be more than what is available for this user.
+    Machine Storage limit cannot be set to 201 GB, out of resources.
     """
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
