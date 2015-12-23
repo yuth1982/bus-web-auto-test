@@ -386,3 +386,6 @@ Then /^Rate schedule can not be choosen when add partner$/ do
   @bus_site.admin_console_page.add_new_partner_section.rate_schedule_present.should == false
 end
 
+When /^I refresh Add New Partner section$/ do
+  @bus_site.admin_console_page.add_new_partner_section.refresh_bus_section
+end

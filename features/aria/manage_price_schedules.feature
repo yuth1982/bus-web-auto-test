@@ -18,6 +18,7 @@ Feature: manage price schedules - billed partner
      | MozyPro 250 GB Plan (Monthly)                   |
      | MozyPro Server Add-on for 250 GB Plan (Monthly) |
     And I delete partner account
+    And I refresh Add New Partner section
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | storage add on | create under    | net terms | country |
       | 12      | Gold          | 200            | 2              | MozyPro Germany | yes       | Germany |
@@ -30,6 +31,7 @@ Feature: manage price schedules - billed partner
       | Mozy Reseller GB - Gold (Annual)           |
       | Mozy Reseller 20 GB add-on - Gold (Annual) |
     And I delete partner account
+    And I refresh Add New Partner section
     When I add a new MozyPro partner:
       | period | base plan | server plan | create under   | net terms |  country |
       | 24     | 250 GB    | yes         | MozyPro France | yes       |  France  |
@@ -42,6 +44,7 @@ Feature: manage price schedules - billed partner
       | MozyPro 250 GB Plan (Biennial)                   |
       | MozyPro Server Add-on for 250 GB Plan (Biennial) |
     And I delete partner account
+    And I refresh Add New Partner section
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | storage add on | net terms |
       | 1      | Platinum      | 500            | 10             | yes       |
@@ -69,6 +72,7 @@ Feature: manage price schedules - billed partner
       | MozyPro 32 TB Plan (Annual)                   |
       | MozyPro Server Add-on for 32 TB Plan (Annual) |
     And I delete partner account
+    And I refresh Add New Partner section
     When I add a new MozyPro partner:
       | period | base plan | create under    | net terms | country |
       | 1      | 16 TB     | MozyPro Ireland | yes       | Ireland |
@@ -80,6 +84,7 @@ Feature: manage price schedules - billed partner
       | Monthly EN                   |
       | MozyPro 16 TB Plan (Monthly) |
     And I delete partner account
+    And I refresh Add New Partner section
     When I add a new Reseller partner:
       | period  | reseller type | reseller quota | create under | net terms | country        |
       | 12      | Silver        | 10             | MozyPro UK   | yes       | United Kingdom |
@@ -91,6 +96,7 @@ Feature: manage price schedules - billed partner
       | Annual EN                          |
       | Mozy Reseller GB - Silver (Annual) |
     And I delete partner account
+    And I refresh Add New Partner section
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | storage add on | create under    | net terms | country |
       | 1      | Gold          | 10             | yes         | 10             | MozyPro Ireland | yes       | Ireland |
@@ -118,6 +124,7 @@ Feature: manage price schedules - billed partner
       | Annual EN                            |
       | MozyEnterprise for DPS 1 TB (Annual) |
     And I delete partner account
+    And I refresh Add New Partner section
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add on | country       |
       | 24     | 200   | 250 GB      | 10            | United States |
@@ -307,28 +314,28 @@ Feature: manage price schedules - billed partner
   Scenario: 18753 Billing History will reflect the price schedule for a partner
     When I add a new MozyPro partner:
       | period | base plan | server plan |
-      | 12     | 250 GB    | yes         |
+      | 24     | 50 GB     | yes         |
     Then New partner should be created
     And I get partner aria id
     When I act as newly created partner account
     And I navigate to Billing History section from bus admin console page
     And Billing history table should be:
-      | Date  | Amount    | Total Paid | Balance Due |
-      | today | $1,220.78 | $1,220.78  | $0.00       |
+      | Date  | Amount  | Total Paid | Balance Due |
+      | today | $566.58 | $566.58    | $0.00       |
     When API* I change aria supplemental plan for newly created partner aria id
-      | plan_name                                      | rate_schedule_name  | schedule_currency | num_plan_units |
-      | MozyPro 250 GB Plan (Annual)                   | Non-profit Discount | usd               | 2              |
-      | MozyPro Server Add-on for 250 GB Plan (Annual) | Non-profit Discount | usd               | 3              |
+      | plan_name                                       | rate_schedule_name  | schedule_currency | num_plan_units |
+      | MozyPro 50 GB Plan (Biennial)                   | Non-profit Discount | usd               | 2              |
+      | MozyPro Server Add-on for 50 GB Plan (Biennial) | Non-profit Discount | usd               | 3              |
     When I navigate to Billing Information section from bus admin console page
     Then Next renewal info table should be:
-      | Period          | Date          | Amount                                 | Payment Type                  |
-      | Yearly (change) | after 1 years | $2,355.70 (Without taxes or discounts) | Visa ending in @XXXX (change) |
+      | Period            | Date          | Amount                                 | Payment Type                  |
+      | Biennial (change) | after 2 years | $1,151.95 (Without taxes or discounts) | Visa ending in @XXXX (change) |
     Then Next renewal supplemental plan details should be:
-      | Number purchased | Price each | Total price for 250 GB |
-      | 2                | $940.40    | $1,880.80              |
+      | Number purchased | Price each | Total price for 50 GB |
+      | 2                | $377.81    | $755.62               |
     Then Next renewal supplemental plan server plan details should be:
       | Number purchased | Price each | Total price for Server Plan |
-      | 3                | $158.30    | $474.90                     |
+      | 3                | $132.11    | $396.33                     |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -430,8 +437,8 @@ Feature: manage price schedules - billed partner
     And I navigate to Billing History section from bus admin console page
     And Billing history table should be:
       | Date      | Amount  | Total Paid | Balance Due |
+      | today     | $214.15 | $214.15    | $0.00       |
       | yesterday | $110.98 | $110.98    | $0.00       |
-      | today     |         |            | $110.98     |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 

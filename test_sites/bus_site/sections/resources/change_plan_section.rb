@@ -16,7 +16,7 @@ module Bus
     element(:server_plan_change_link, xpath: "//a[text()='(change)']")
     element(:coupon_code_tb, id: "coupon_code")
     element(:server_plan_status_span, id: "server-pass-status")
-    element(:charge_plan_div, xpath: "//div[@id='change_plan_confirmation']//p")
+
     #ME DPS
     element(:enterprise_dps_baseplan_input, id: "products_exclusive_base_qty")
 
@@ -230,9 +230,6 @@ module Bus
       charge_summary_table.rows_text
     end
 
-    def charge_message
-      charge_plan_div.text
-    end
 
     # Public: Return change plan charge summary table headers text
     #
@@ -339,10 +336,13 @@ module Bus
       wait_until{ submit_btn['disabled'] != 'true' }
       submit_btn.click
       wait_until { !locate(:css, "div#change_plan_confirmation input[value=Continue]").nil? }
+      message_el =  locate(:xpath, "//div[@id='change_plan_confirmation']//p")
+      message = message_el.text unless message_el.nil?
       using_wait_time 1 do
         continue_btn.click unless page.has_css?("div#resource-change_billing_plan-errors ul")
       end
       wait_until{ !locate(:id, "submit_new_resources_btn").nil? }
+      message
     end
 
     def wait_for_all_elements_loaded

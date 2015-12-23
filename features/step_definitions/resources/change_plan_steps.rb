@@ -21,15 +21,15 @@ When /^I change (MozyPro|MozyEnterprise|Reseller|Itemized|MozyEnterprise DPS) ac
 
   case type
     when 'MozyEnterprise'
-      @bus_site.admin_console_page.change_plan_section.change_mozyenterprise_plan(users, server_plan, storage_add_on, coupon)
+      @change_plan_msg = @bus_site.admin_console_page.change_plan_section.change_mozyenterprise_plan(users, server_plan, storage_add_on, coupon)
     when 'Reseller'
-      @bus_site.admin_console_page.change_plan_section.change_reseller_plan(server_plan, storage_add_on)
+      @change_plan_msg = @bus_site.admin_console_page.change_plan_section.change_reseller_plan(server_plan, storage_add_on)
     when 'MozyPro'
-      @bus_site.admin_console_page.change_plan_section.change_mozypro_plan(base_plan, server_plan, storage_add_on, coupon)
+      @change_plan_msg = @bus_site.admin_console_page.change_plan_section.change_mozypro_plan(base_plan, server_plan, storage_add_on, coupon)
     when "Itemized"
-      @bus_site.admin_console_page.change_plan_section.change_itemized_plan(server_licenses, desktop_licenses)
+      @change_plan_msg = @bus_site.admin_console_page.change_plan_section.change_itemized_plan(server_licenses, desktop_licenses)
     when 'MozyEnterprise DPS'
-      @bus_site.admin_console_page.change_plan_section.change_mozyenterprise_dps_plan(base_plan)
+      @change_plan_msg = @bus_site.admin_console_page.change_plan_section.change_mozyenterprise_dps_plan(base_plan)
     else
       raise "#{type} Company type not exist"
   end
@@ -125,7 +125,7 @@ Then /^Change plan charge summary should be:$/ do |charge_table|
 end
 
 Then /^Change plan charge message should be:$/ do |message|
-  @bus_site.admin_console_page.change_plan_section.charge_message.strip.should eq(message.strip)
+  @change_plan_msg.strip.should eq(message.strip)
 end
 
 Then /^MozyPro available base plans should be:$/ do |plans_table|
