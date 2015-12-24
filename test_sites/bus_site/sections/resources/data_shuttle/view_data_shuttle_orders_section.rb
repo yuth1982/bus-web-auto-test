@@ -72,6 +72,7 @@ module Bus
 
     def click_inbound_link
       inbound_link.click
+    end
 
     def refresh_view_data_shuttle_order_section
       refresh_order_view_img.click
@@ -79,6 +80,6 @@ module Bus
         wait_until{ order_view_title_a[:class].match(/loading/).nil? }
       end
     end
-
+    
   end
 end
