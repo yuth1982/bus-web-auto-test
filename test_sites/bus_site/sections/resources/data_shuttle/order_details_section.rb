@@ -9,7 +9,7 @@ module Bus
     element(:shipping_tracking_table, css: "div[id^=resource-show_data_shuttle_order-] table.mini-table")
     element(:add_drive_to_order_links, xpath: "//a[text()='Add Drive To Order']")
     element(:add_drive_btn, xpath: "//input[@type='submit' and @value='Add Drive']")
-    element(:message_div, xpath: "//ul[@class='flash successes' or @class='flash errors']/li")
+    element(:message_div, xpath: "//div[contains(@id,'resource-add_drive_to_seed_device_order')]/ul[@class='flash successes' or @class='flash errors']/li")
 
     # Public: Click cancel button of first order in list
     #
