@@ -109,8 +109,8 @@ Feature:
   @bus @TC.125785 @qa12 @env_dependent @resources @tasks_p2
   Scenario: 125785 VMBU data shuttle is reflected correctly in CustomCD
     When I order data shuttle for ClientQA-VMBU
-      | address 1     | city         | state | zip    | country         | phone        | power adapter   | key from             | quota  | os         |
-      | 151 S Morgan  | Shelbyville  | IL    | 62565  | United States   | 3127584030   | Data Shuttle US | 9X37WGFV58DBXBC7TSS2 | 10     | vSphere    |
+      | address 1     | city         | state | zip    | country         | phone        | power adapter   | key from             | os         |
+      | 151 S Morgan  | Shelbyville  | IL    | 62565  | United States   | 3127584030   | Data Shuttle US | 9X37WGFV58DBXBC7TSS2 | vSphere    |
     Then Data shuttle order should be created
     And I search order in view data shuttle orders section by ClientQA-VMBU
     And I view data shuttle order details
