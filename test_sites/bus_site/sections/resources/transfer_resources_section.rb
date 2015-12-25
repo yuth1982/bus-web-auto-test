@@ -54,6 +54,7 @@ module Bus
 
     def select_target_partner target_partner
       target_partner_select.select(target_partner)
+      sleep 2
     end
 
   end
