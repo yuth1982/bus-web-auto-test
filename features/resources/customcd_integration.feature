@@ -54,7 +54,7 @@ Feature:
       | address 1     | city         | state | zip    | country         | phone        | power adapter   | key from  | quota |
       | 151 S Morgan  | Shelbyville  | IL    | 62565  | United States   | 3127584030   | Data Shuttle US | available | 10    |
     Then Data shuttle order should be created
-    And I get the data shuttle seed id
+    And I get the data shuttle seed id for newly created partner company name
     And I set customcd order id to 24651 for just created data shuttle order
     And I search order in view data shuttle orders section by newly created partner company name
     And I view data shuttle order details
