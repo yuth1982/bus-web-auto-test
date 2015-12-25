@@ -30,9 +30,10 @@ Feature: Move between offers
     Then New partner should be created
     And I get partner aria id
     And API* I change aria plan to MozyEnterprise for DPS 1 TB (Annual) with 34 units for newly created partner aria id
-    And I wait for 20 seconds
+    And I wait for 30 seconds
     And I close the partner detail page
     And I navigate to Search / List Partners section from bus admin console page
+    And I search partner by newly created partner company name
     And I view partner details by newly created partner company name
     Then Partner contact information should be:
       | Company Type:      | Users: | Contact Email:                 |
