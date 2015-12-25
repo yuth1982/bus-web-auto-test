@@ -748,7 +748,7 @@ Feature:
       | Data Shuttle US | available | 10    |
     Then Data shuttle order should be created
     When I search emails by keywords:
-      | subject                                                          | content                     |
+      | subject                                                          | to                          |
       | Your Key @license_key for MozyPro Now Activated for Data Shuttle | <%=@new_users.first.email%> |
     Then I should see 1 email(s)
     And I search and delete partner account by newly created partner company name

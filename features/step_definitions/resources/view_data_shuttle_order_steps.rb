@@ -109,6 +109,7 @@ Then /^the status of shipping tracking table should have Submitted and Processin
   times = 0
   actual_status = 'Submitted'
   while flag == true && index < 2
+    index1 = -1
     if index == -1
       actual_status1 = @bus_site.admin_console_page.view_data_shuttle_orders_section.get_shipping_tracking_table_hashes.first['Status']
     else index > -1
