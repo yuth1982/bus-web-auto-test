@@ -22,7 +22,7 @@ When /^I search emails by keywords:$/ do |keywords_table|
           #IMAP doesn't search over minutes just dates
             v = Net::IMAP.format_date(Date.today) if v == 'today'
         when 'subject'
-          v.gsub!(/@license_key/, @order.license_key[0])
+          v.gsub!(/@license_key/, @order.license_key[0]) if v.include?("@license_key")
         else
           # do nothing
       end

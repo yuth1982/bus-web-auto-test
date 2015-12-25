@@ -731,61 +731,61 @@ Feature: view edit machine details
     And I get the admin id from admin details
     When I order data shuttle for ClientQA-VMBU
       | power adapter   | key from             | os      |
-      | Data Shuttle US | ZF6G2QZ4WRBSAR7FXF64 | vSphere |
+      | Data Shuttle US | 9X37WGFV58DBXBC7TSS2 | vSphere |
     Then Data shuttle order should be created
     Then I get the data shuttle seed id by partner ClientQA-VMBU
     When I search machine by:
-      | machine_name                |
-      | qa2-loki.mozyclientqa.local |
+      | machine_name                  |
+      | jeff2-loki.mozyclientqa.local |
     And I view machine details for vmbu_test_user_5@mozy.com
     Then the data shuttle machine details should be:
       | Order ID      | Data Shuttle Device ID | Phase   | % Complete | GB Transferred | GB Remaining | Start | Elapsed |
       | <%=@seed_id%> |                        | Ordered |            |                |              |       |         |
     And I set the data shuttle seed status:
-      | status  | username                  | password                           | machine_hash                             |
-      | seeding | vmbu_test_user_5@mozy.com | <%=CONFIGS['global']['test_pwd']%> | 8a56f3a13b7c0f90177bed41cb16ca5caa2555b5 |
+      | status  | username                | password                           | machine_hash                             |
+      | seeding | jefft+qa12loki@mozy.com | <%=CONFIGS['global']['test_pwd']%> | 45f3e4287416ace3b94a6d372c6329f9315d7974 |
     When I refresh Machines Details section
     Then the data shuttle machine details should be:
       | Order ID      | Data Shuttle Device ID | Phase   | % Complete | GB Transferred | GB Remaining | Elapsed  |
       | <%=@seed_id%> | <%=@seed_id%>          | Seeding | 0%         | 0              | 0            | 1 minute |
     And I set the data shuttle seed status:
-      | status        | username                  | password                           | total files | total bytes | machine_hash                             |
-      | seed_complete | vmbu_test_user_5@mozy.com | <%=CONFIGS['global']['test_pwd']%> | 1000        | 2097152     | 8a56f3a13b7c0f90177bed41cb16ca5caa2555b5 |
+      | status        | username                | password                           | total files | total bytes | machine_hash                             |
+      | seed_complete | jefft+qa12loki@mozy.com | <%=CONFIGS['global']['test_pwd']%> | 1000        | 2097152     | 45f3e4287416ace3b94a6d372c6329f9315d7974 |
     When I refresh Machines Details section
     Then the data shuttle machine details should be:
       | Order ID      | Data Shuttle Device ID | Phase         | % Complete | GB Transferred | GB Remaining | Elapsed  |
       | <%=@seed_id%> | <%=@seed_id%>          | Seed Complete | 0%         | 0              | 0            | 1 minute |
     And I set the data shuttle seed status:
-      | status     | username                  | password                            | machine_hash                             |
-      | seed_error | vmbu_test_user_5@mozy.com | <%=CONFIGS['global']['test_pwd'] %> | 8a56f3a13b7c0f90177bed41cb16ca5caa2555b5 |
+      | status     | username                | password                            | machine_hash                             |
+      | seed_error | jefft+qa12loki@mozy.com | <%=CONFIGS['global']['test_pwd'] %> | 45f3e4287416ace3b94a6d372c6329f9315d7974 |
     When I refresh Machines Details section
     Then the data shuttle machine details should be:
       | Order ID      | Data Shuttle Device ID | Phase      | % Complete | GB Transferred | GB Remaining | Elapsed  |
       | <%=@seed_id%> | <%=@seed_id%>          | Seed Error | 0%         | 0              | 0            | 1 minute |
     And I set the data shuttle seed status:
-      | status  | username                  | password                           | total files seeded | total bytes seeded | machine_hash                             |
-      | loading | vmbu_test_user_5@mozy.com | <%=CONFIGS['global']['test_pwd']%> | 100                | 2000000            | 8a56f3a13b7c0f90177bed41cb16ca5caa2555b5 |
+      | status  | username                | password                           | total files seeded | total bytes seeded | machine_hash                             |
+      | loading | jefft+qa12loki@mozy.com | <%=CONFIGS['global']['test_pwd']%> | 100                | 2000000            | 45f3e4287416ace3b94a6d372c6329f9315d7974 |
     When I refresh Machines Details section
     Then the data shuttle machine details should be:
       | Order ID      | Data Shuttle Device ID | Phase   | % Complete | GB Transferred | GB Remaining | Elapsed  |
       | <%=@seed_id%> | <%=@seed_id%>          | Loading | 0%         | 0              | 0            | 1 minute |
     And I set the data shuttle seed status:
-      | status        | username                  | password                            | total files | total bytes | total files seeded | total bytes seeded | machine_hash                             |
-      | load_complete | vmbu_test_user_5@mozy.com |  <%=CONFIGS['global']['test_pwd']%> | 1000        | 2097152     | 1000               | 2097152            | 8a56f3a13b7c0f90177bed41cb16ca5caa2555b5 |
+      | status        | username                | password                            | total files | total bytes | total files seeded | total bytes seeded | machine_hash                             |
+      | load_complete | jefft+qa12loki@mozy.com |  <%=CONFIGS['global']['test_pwd']%> | 1000        | 2097152     | 1000               | 2097152            | 45f3e4287416ace3b94a6d372c6329f9315d7974 |
     When I refresh Machines Details section
     Then the data shuttle machine details should be:
       | Order ID      | Data Shuttle Device ID | Phase         | % Complete | GB Transferred | GB Remaining | Elapsed  |
       | <%=@seed_id%> | <%=@seed_id%>          | Load Complete |  0%        | 0              | 0            | 1 minute |
     And I set the data shuttle seed status:
-      | status     | username                  | password                           | machine_hash                             |
-      | load_error | vmbu_test_user_5@mozy.com | <%=CONFIGS['global']['test_pwd']%> | 8a56f3a13b7c0f90177bed41cb16ca5caa2555b5 |
+      | status     | username                | password                           | machine_hash                             |
+      | load_error | jefft+qa12loki@mozy.com | <%=CONFIGS['global']['test_pwd']%> | 45f3e4287416ace3b94a6d372c6329f9315d7974 |
     When I refresh Machines Details section
     Then the data shuttle machine details should be:
       | Order ID      | Data Shuttle Device ID | Phase      | % Complete | GB Transferred | GB Remaining | Elapsed  |
       | <%=@seed_id%> | <%=@seed_id%>          | Load Error | 0%         | 0              | 0            | 1 minute |
     And I set the data shuttle seed status:
-      | status    | username                  | password                           | machine_hash                             |
-      | cancelled | vmbu_test_user_5@mozy.com | <%=CONFIGS['global']['test_pwd']%> | 8a56f3a13b7c0f90177bed41cb16ca5caa2555b5 |
+      | status    | username                | password                           | machine_hash                             |
+      | cancelled | jefft+qa12loki@mozy.com | <%=CONFIGS['global']['test_pwd']%> | 45f3e4287416ace3b94a6d372c6329f9315d7974 |
     When I refresh Machines Details section
     Then the data shuttle machine details should be:
       | Order ID      | Data Shuttle Device ID | Phase     | % Complete | GB Transferred | GB Remaining | Elapsed  |
