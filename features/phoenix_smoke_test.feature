@@ -63,8 +63,8 @@ Feature: Phoenix smoke test
     When I get previous partner info
     And I login as the user on the account.
     And I change email address to:
-      | new email        | password |
-      | @new_admin_email | test1234 |
+      | new email        | password                            |
+      | @new_admin_email | <%=CONFIGS['global']['test_pwd'] %> |
     And I change email address successfully
     """
       Your email change request requires verification. We sent an email to @new_admin_email. Please open the email and click the verification link to confirm this change.
@@ -78,7 +78,7 @@ Feature: Phoenix smoke test
       | @new_admin_email  | Email Address Verification |
     And I get verify email address from email content for mozyhome change email address
     Then verify email address link should show success message
-    And I log into phoenix with username @new_admin_email and password test1234
+    And I log into phoenix with username @new_admin_email and password default password
     And I save the partner info
 
   @TC.126133 @bus @regression_test @phoenix @mozyhome
