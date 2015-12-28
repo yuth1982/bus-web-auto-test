@@ -64,7 +64,7 @@ module Bus
     def download_report(report_name)
       for i in 1..10
         break unless find(:xpath, "//a[text()='#{report_name}']/../../*[7]").text.match(/.*Download.*/).nil?
-        sleep 6
+        sleep 8
       end
       report_row = find_report(report_name)
       report_row[6].find(:css, "a:contains('Download')").click

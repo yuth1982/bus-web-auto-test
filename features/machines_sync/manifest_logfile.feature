@@ -76,6 +76,7 @@ Feature: View machine manifest, logfile
     And I select event history
     Then this restore is In Progress
     When I close new window
+    And I wait for 50 seconds
     And I view machine CNENCHENC33L1C details from user details section
     Then Restores table first record will display as:
       | ID                       | Date/Time Requested | Date/Time Finished | Files Retrieved | Size  | Status / Downloads                       |
