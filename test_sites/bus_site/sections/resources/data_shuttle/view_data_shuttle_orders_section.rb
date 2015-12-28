@@ -55,6 +55,7 @@ module Bus
     def get_order_info
       wait_until_bus_section_load
       order_info = Hash.new
+      wait_until { all(:xpath, "//div[contains(@id,'resource-show_data_shuttle_order')]/div[2]/h3").size > 0 }
       all_info_array = (order_view_info_ps[0].text+"  "+order_view_info_ps[1].text+"  "+data_center_p.text).split("  ")
       all_info_array.each_index do |n|
         order_info[all_info_array[n].split(":")[0]] = all_info_array[n].gsub(" ","").split(":")[1]
