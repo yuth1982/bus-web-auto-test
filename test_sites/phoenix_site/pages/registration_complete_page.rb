@@ -42,6 +42,7 @@ module Phoenix
     # @partner - partner specific info, namely country/partner type
     # localize item to click - label localized for language to be specifically selected.
     def localized_click(partner, loc_click)
+      Log.debug "#{LANG[partner.partner_info.parent][partner.partner_info.type][loc_click]}"
       navigate_to_link("#{LANG[partner.partner_info.parent][partner.partner_info.type][loc_click]}")
     end
 
@@ -102,6 +103,8 @@ module Phoenix
 
     # home registration complete
     def home_success(partner)
+      wait_until { !first(:css, "div.center-form-box > h2").nil? }
+      wait_until { !first(:xpath, "//input[@type='button']").nil? }
       check_url
       reg_comp_banner_present
       reg_comp_text
