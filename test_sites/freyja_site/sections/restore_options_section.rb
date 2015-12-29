@@ -147,6 +147,7 @@ module Freyja
       end
       fill_media_address(restore.address_info, language)
       click_next
+      sleep 2
       click_next
       #fill_media_payment(restore.credit_card)
       #click_next

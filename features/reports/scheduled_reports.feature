@@ -73,7 +73,7 @@ Feature: Scheduled Reports
       | type           | name                        | frequency |
       | Billing Detail | billing detail test TC21199 | Daily     |
     Then Billing detail report should be created
-    And I wait for 10 seconds
+    And I wait for 15 seconds
     And I clear downloads folder billing-detail*.csv file
     And I download billing detail test TC21199 scheduled report
     Then Scheduled Billing Detail report csv file details should be:
@@ -95,7 +95,7 @@ Feature: Scheduled Reports
       | Billing Detail | billing detail test itemized TC21199 | Daily     |
     Then Billing detail report should be created
     And I clear downloads folder billing-detail*.csv file
-    And I wait for 10 seconds
+    And I wait for 15 seconds
     And I download billing detail test itemized TC21199 scheduled report
     Then Scheduled Billing Detail report csv file details should be:
       | Column A                                 | Column B              | Column C     | Column D           | Column E            | Column F                    | Column G               | Column H              | Column I              | Column J                               | Column K             | Column L                     | Column M                | Column N               | Column O               | Column P                                | Column Q                           | Column R                            | Column S               |
@@ -142,7 +142,7 @@ Feature: Scheduled Reports
       | Machine Status | machine status itemized TC21200 | Daily     |
     Then Report created successful message should be Created Machine Status Report.
     And I clear downloads folder machine-status*.csv file
-    And I wait for 25 seconds
+    And I wait for 30 seconds
     And I download machine status itemized TC21200 scheduled report
     Then Scheduled Machine Status report csv file details should be:
       | Column A                         | Column B        | Column C     | Column D               | Column E           | Column F        | Column G               |
@@ -165,7 +165,7 @@ Feature: Scheduled Reports
       | Machine Status | machine status delete device TC21200 | Daily     |
     Then Report created successful message should be Created Machine Status Report.
     And I clear downloads folder machine-status*.csv file
-    And I wait for 20 seconds
+    And I wait for 30 seconds
     And I download machine status delete device TC21200 scheduled report
     Then Scheduled Machine Status report csv file details should be:
       | Column A              | Column B         | Column C     | Column D               | Column E           | Column F        | Column G               |
@@ -183,7 +183,7 @@ Feature: Scheduled Reports
       | Machine Status | machine status reseller TC21200 | Daily     |
     Then Report created successful message should be Created Machine Status Report.
     And I clear downloads folder machine-status*.csv file
-    And I wait for 10 seconds
+    And I wait for 30 seconds
     And I download machine status reseller TC21200 scheduled report
     Then Scheduled report Machine Status csv file details should include
       | Column A                                  | Column B      | Column C     | Column D               | Column E           | Column F        | Column G               |
@@ -203,7 +203,7 @@ Feature: Scheduled Reports
       | Resources Added | resources added bundle TC21201 |
     Then Report created successful message should be Created Resources Added Report.
     And I clear downloads folder resources-added*.csv file
-    And I wait for 10 seconds
+    And I wait for 20 seconds
     And I download resources added bundle TC21201 scheduled report
     Then Scheduled Resources Added report csv file details should be:
       | Column A           | Column B                                | Column C             | Column D     | Column E  | Column F | Column G       | Column H | Column I |
@@ -223,7 +223,7 @@ Feature: Scheduled Reports
       | Resources Added | resources added itemized TC21201 |
     Then Report created successful message should be Created Resources Added Report.
     And I clear downloads folder resources-added*.csv file
-    And I wait for 15 seconds
+    And I wait for 20 seconds
     And I download resources added itemized TC21201 scheduled report
     Then Scheduled Resources Added report csv file details should be:
       | Column A           | Column B                                 | Column C             | Column D     | Column E  | Column F | Column G       | Column H | Column I |
@@ -242,7 +242,7 @@ Feature: Scheduled Reports
       | Resources Added | resources added delete device TC21201 |
     Then Report created successful message should be Created Resources Added Report.
     And I clear downloads folder resources-added*.csv file
-    And I wait for 10 seconds
+    And I wait for 20 seconds
     And I download resources added delete device TC21201 scheduled report
     Then Scheduled Resources Added report csv file details should be:
       | Column A           | Column B                | Column C             | Column D     | Column E  | Column F | Column G       | Column H | Column I |
@@ -259,7 +259,7 @@ Feature: Scheduled Reports
       | Resources Added | resources added overdraft TC21201 |
     Then Report created successful message should be Created Resources Added Report.
     And I clear downloads folder resources-added*.csv file
-    And I wait for 15 seconds
+    And I wait for 20 seconds
     And I download resources added overdraft TC21201 scheduled report
     Then Scheduled Resources Added report csv file details should be:
       | Column A           | Column B                                     | Column C             | Column D     | Column E  | Column F | Column G       | Column H | Column I |
@@ -281,7 +281,7 @@ Feature: Scheduled Reports
       | Machine Over Quota | machine over quota bundle 1 | 1         |
     Then Report created successful message should be Created Machine Over Quota Report.
     And I clear downloads folder machine-over-quota*.csv file
-    And I wait for 15 seconds
+    And I wait for 20 seconds
     And I download machine over quota bundle 1 scheduled report
     Then Scheduled Machine Over Quota report csv file details should be:
       | Column A                                | Column B             | Column C        | Column D           | Column E        | Column F        |
@@ -304,7 +304,7 @@ Feature: Scheduled Reports
       | type               | name                         | threshold |
       | Machine Over Quota | machine over quota bundle 10 | 10        |
     Then Report created successful message should be Created Machine Over Quota Report.
-    And I wait for 15 seconds
+    And I wait for 20 seconds
     And I download machine over quota bundle 10 scheduled report
     Then Scheduled Machine Over Quota report csv file details should be:
       | Column A                                | Column B             | Column C        | Column D           | Column E        | Column F        |
@@ -327,7 +327,7 @@ Feature: Scheduled Reports
       | type               | name                         | threshold |
       | Machine Over Quota | machine over quota bundle 60 | 60        |
     Then Report created successful message should be Created Machine Over Quota Report.
-    And I wait for 15 seconds
+    And I wait for 20 seconds
     And I download machine over quota bundle 60 scheduled report
     Then Scheduled Machine Over Quota report csv file details should be:
       | Column A                                | Column B             | Column C        | Column D           | Column E        | Column F        |
@@ -346,7 +346,7 @@ Feature: Scheduled Reports
       | type               | name                         | threshold |
       | Machine Over Quota | machine over quota bundle 70 | 70        |
     Then Report created successful message should be Created Machine Over Quota Report.
-    And I wait for 15 seconds
+    And I wait for 20 seconds
     And I download machine over quota bundle 70 scheduled report
     Then Scheduled Machine Over Quota report csv file details should be:
       | Column A                                | Column B             | Column C        | Column D           | Column E        | Column F        |
@@ -363,7 +363,7 @@ Feature: Scheduled Reports
       | type               | name                         | threshold |
       | Machine Over Quota | machine over quota bundle 80 | 80        |
     Then Report created successful message should be Created Machine Over Quota Report.
-    And I wait for 15 seconds
+    And I wait for 20 seconds
     And I download machine over quota bundle 80 scheduled report
     Then Scheduled Machine Over Quota report csv file details should be:
       | Column A                                | Column B             | Column C        | Column D           | Column E        | Column F        |
@@ -377,7 +377,7 @@ Feature: Scheduled Reports
       | type               | name                         | threshold |
       | Machine Over Quota | machine over quota bundle 90 | 90        |
     Then Report created successful message should be Created Machine Over Quota Report.
-    And I wait for 15 seconds
+    And I wait for 20 seconds
     And I download machine over quota bundle 90 scheduled report
     Then Scheduled Machine Over Quota report csv file details should be:
       | Column A | Column B   | Column C     | Column D           | Column E        | Column F        |
@@ -390,7 +390,7 @@ Feature: Scheduled Reports
       | type               | name                          | threshold |
       | Machine Over Quota | machine over quota bundle 100 | 100       |
     Then Report created successful message should be Created Machine Over Quota Report.
-    And I wait for 15 seconds
+    And I wait for 20 seconds
     And I download machine over quota bundle 100 scheduled report
     Then Scheduled Machine Over Quota report csv file details should be:
       | Column A | Column B   | Column C     | Column D           | Column E        | Column F        |
@@ -407,7 +407,7 @@ Feature: Scheduled Reports
       | Machine Over Quota | machine over quota itemized 1 | 1         |
     Then Report created successful message should be Created Machine Over Quota Report.
     And I clear downloads folder machine-over-quota*.csv file
-    And I wait for 15 seconds
+    And I wait for 20 seconds
     And I download machine over quota itemized 1 scheduled report
     Then Scheduled Machine Over Quota report csv file details should be:
       | Column A                                 | Column B     | Column C        | Column D           | Column E        | Column F        |
@@ -430,7 +430,7 @@ Feature: Scheduled Reports
       | type               | name                           | threshold |
       | Machine Over Quota | machine over quota itemized 10 | 10        |
     Then Report created successful message should be Created Machine Over Quota Report.
-    And I wait for 15 seconds
+    And I wait for 20 seconds
     And I download machine over quota itemized 10 scheduled report
     Then Scheduled Machine Over Quota report csv file details should be:
       | Column A                                 | Column B     | Column C        | Column D           | Column E        | Column F        |
@@ -451,7 +451,7 @@ Feature: Scheduled Reports
       | type               | name                           | threshold |
       | Machine Over Quota | machine over quota itemized 60 | 60        |
     Then Report created successful message should be Created Machine Over Quota Report.
-    And I wait for 15 seconds
+    And I wait for 20 seconds
     And I download machine over quota itemized 60 scheduled report
     Then Scheduled Machine Over Quota report csv file details should be:
       | Column A                                 | Column B     | Column C        | Column D           | Column E        | Column F        |
@@ -471,7 +471,7 @@ Feature: Scheduled Reports
       | type               | name                           | threshold |
       | Machine Over Quota | machine over quota itemized 70 | 70        |
     Then Report created successful message should be Created Machine Over Quota Report.
-    And I wait for 15 seconds
+    And I wait for 20 seconds
     And I download machine over quota itemized 70 scheduled report
     Then Scheduled Machine Over Quota report csv file details should be:
       | Column A                                 | Column B     | Column C        | Column D           | Column E        | Column F        |
@@ -489,7 +489,7 @@ Feature: Scheduled Reports
       | type               | name                           | threshold |
       | Machine Over Quota | machine over quota itemized 80 | 80        |
     Then Report created successful message should be Created Machine Over Quota Report.
-    And I wait for 15 seconds
+    And I wait for 20 seconds
     And I download machine over quota itemized 80 scheduled report
     Then Scheduled Machine Over Quota report csv file details should be:
       | Column A                                 | Column B     | Column C        | Column D           | Column E        | Column F        |
@@ -505,7 +505,7 @@ Feature: Scheduled Reports
       | type               | name                           | threshold |
       | Machine Over Quota | machine over quota itemized 90 | 90        |
     Then Report created successful message should be Created Machine Over Quota Report.
-    And I wait for 15 seconds
+    And I wait for 20 seconds
     And I download machine over quota itemized 90 scheduled report
     Then Scheduled Machine Over Quota report csv file details should be:
       | Column A                                 | Column B     | Column C        | Column D           | Column E        | Column F        |
@@ -520,7 +520,7 @@ Feature: Scheduled Reports
       | type               | name                            | threshold |
       | Machine Over Quota | machine over quota itemized 100 | 100       |
     Then Report created successful message should be Created Machine Over Quota Report.
-    And I wait for 15 seconds
+    And I wait for 20 seconds
     And I download machine over quota itemized 100 scheduled report
     Then Scheduled Machine Over Quota report csv file details should be:
       | Column A                                 | Column B     | Column C        | Column D           | Column E        | Column F        |
@@ -536,7 +536,7 @@ Feature: Scheduled Reports
       | type               | name                           | threshold |
       | Machine Over Quota | machine over quota reseller 90 | 90        |
     Then Report created successful message should be Created Machine Over Quota Report.
-    And I wait for 15 seconds
+    And I wait for 20 seconds
     And I download machine over quota reseller 90 scheduled report
     Then Scheduled Machine Over Quota report csv file details should be:
       | Column A                             | Column B                         | Column C     | Column D           | Column E        | Column F        |
@@ -556,7 +556,7 @@ Feature: Scheduled Reports
       | type               | name                            | threshold  |
       | Machine Over Quota | machine over quota reseller 100 | 100        |
     Then Report created successful message should be Created Machine Over Quota Report.
-    And I wait for 15 seconds
+    And I wait for 20 seconds
     And I download machine over quota reseller 100 scheduled report
     Then Scheduled Machine Over Quota report csv file details should be:
       | Column A | Column B   | Column C     | Column D           | Column E        | Column F        |
@@ -610,7 +610,7 @@ Feature: Scheduled Reports
       | type            | name                   |
       | Billing Summary | billing summary tc7329 |
     Then Billing summary report should be created
-    And I wait for 50 seconds
+    And I wait for 60 seconds
     And I search emails by keywords:
       | to               | content                                       |
       | @new_admin_email | Your billing summary tc7329 - Billing Summary |
@@ -619,7 +619,7 @@ Feature: Scheduled Reports
       | type           | name                  | recipients             |
       | Billing Detail | billing detail tc7329 | <%=create_user_email%> |
     Then Billing detail report should be created
-    And I wait for 50 seconds
+    And I wait for 60 seconds
     And I search emails by keywords:
       | to                        | content                                     |
       | <%=@recipients_array[0]%> | Your billing detail tc7329 - Billing Detail |
@@ -628,7 +628,7 @@ Feature: Scheduled Reports
       | type              | name                     |
       | Machine Watchlist | machine watchlist tc7329 |
     Then Report created successful message should be Created Machine Watchlist Report.
-    And I wait for 50 seconds
+    And I wait for 60 seconds
     And I search emails by keywords:
       | to               | content                                           |
       | @new_admin_email | Your machine watchlist tc7329 - Machine Watchlist |
@@ -637,7 +637,7 @@ Feature: Scheduled Reports
       | type           | name                  | recipients             |
       | Machine Status | machine status tc7329 | <%=create_user_email%> |
     Then Report created successful message should be Created Machine Status Report.
-    And I wait for 50 seconds
+    And I wait for 60 seconds
     And I search emails by keywords:
       | to                        | content                                     |
       | <%=@recipients_array[0]%> | Your machine status tc7329 - Machine Status |
@@ -646,7 +646,7 @@ Feature: Scheduled Reports
       | type            | name                   |
       | Resources Added | resources added tc7329 |
     Then Report created successful message should be Created Resources Added Report.
-    And I wait for 50 seconds
+    And I wait for 60 seconds
     And I search emails by keywords:
       | to               | content                                       |
       | @new_admin_email | Your resources added tc7329 - Resources Added |
@@ -655,7 +655,7 @@ Feature: Scheduled Reports
       | type               | name                      | recipients             |
       | Machine Over Quota | machine over quota tc7329 | <%=create_user_email%> |
     Then Report created successful message should be Created Machine Over Quota Report.
-    And I wait for 50 seconds
+    And I wait for 60 seconds
     And I search emails by keywords:
       | to                        | content                                             |
       | <%=@recipients_array[0]%> | Your machine over quota tc7329 - Machine Over Quota |
@@ -679,7 +679,7 @@ Feature: Scheduled Reports
       | type            | name                   | multiple recipients                            |
       | Billing Summary | billing summary tc7330 | <%=create_user_email%>; <%=create_user_email%> |
     Then Billing summary report should be created
-    And I wait for 45 seconds
+    And I wait for 50 seconds
     And I search emails by keywords:
       | to                        | content                                       |
       | <%=@recipients_array[0]%> | Your billing summary tc7330 - Billing Summary |
@@ -692,7 +692,7 @@ Feature: Scheduled Reports
       | type           | name                  | multiple recipients                            |
       | Billing Detail | billing detail tc7330 | <%=create_user_email%>; <%=create_user_email%> |
     Then Billing detail report should be created
-    And I wait for 45 seconds
+    And I wait for 50 seconds
     And I search emails by keywords:
       | to                        | content                                     |
       | <%=@recipients_array[0]%> | Your billing detail tc7330 - Billing Detail |
@@ -705,7 +705,7 @@ Feature: Scheduled Reports
       | type              | name                     | multiple recipients                            |
       | Machine Watchlist | machine watchlist tc7330 | <%=create_user_email%>; <%=create_user_email%> |
     Then Report created successful message should be Created Machine Watchlist Report.
-    And I wait for 45 seconds
+    And I wait for 50 seconds
     And I search emails by keywords:
       | to                        | content                                           |
       | <%=@recipients_array[0]%> | Your machine watchlist tc7330 - Machine Watchlist |
@@ -718,7 +718,7 @@ Feature: Scheduled Reports
       | type           | name                  | multiple recipients                            |
       | Machine Status | machine status tc7330 | <%=create_user_email%>; <%=create_user_email%> |
     Then Report created successful message should be Created Machine Status Report.
-    And I wait for 45 seconds
+    And I wait for 50 seconds
     And I search emails by keywords:
       | to                        | content                                     |
       | <%=@recipients_array[0]%> | Your machine status tc7330 - Machine Status |
@@ -731,7 +731,7 @@ Feature: Scheduled Reports
       | type            | name                   | multiple recipients                            |
       | Resources Added | resources added tc7330 | <%=create_user_email%>; <%=create_user_email%> |
     Then Report created successful message should be Created Resources Added Report.
-    And I wait for 45 seconds
+    And I wait for 50 seconds
     And I search emails by keywords:
       | to                        | content                                       |
       | <%=@recipients_array[0]%> | Your resources added tc7330 - Resources Added |
@@ -744,7 +744,7 @@ Feature: Scheduled Reports
       | type               | name                      | multiple recipients                            |
       | Machine Over Quota | machine over quota tc7330 | <%=create_user_email%>; <%=create_user_email%> |
     Then Report created successful message should be Created Machine Over Quota Report.
-    And I wait for 45 seconds
+    And I wait for 50 seconds
     And I search emails by keywords:
       | to                        | content                                             |
       | <%=@recipients_array[0]%> | Your machine over quota tc7330 - Machine Over Quota |
@@ -774,7 +774,7 @@ Feature: Scheduled Reports
       | <%=create_user_email%>; <%=create_user_email%> |
     Then Report updated successful message should be Updated Billing Summary Report.
     And I run report billing summary test7345
-    And I wait for 45 seconds
+    And I wait for 50 seconds
     And I search emails by keywords:
       | to                        | content                                         | after |
       | <%=@recipients_array[0]%> | Your billing summary test7345 - Billing Summary | today |
