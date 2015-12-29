@@ -8,12 +8,14 @@ And /^Billing details of partner invoice should be:$/ do |billing_detail_table|
   expected_arr = expected[3...-1]
   expected_arr.each_index { |i|
     Log.debug expected_arr
-    expected_arr[i][0].replace(Chronic.parse(expected_arr[i][0]).strftime('%m/%d/%Y')) unless expected_arr[i][0].size == 0
-    if expected_arr[i][1] == 'after 1 year yesterday'
-      date = Chronic.parse("after 1 year")
-      expected_arr[i][1] = date.month.to_s+"/"+(date.day-1).to_s+"/"+date.year.to_s
-    else
-      expected_arr[i][1].replace(Chronic.parse(expected_arr[i][1]).strftime('%m/%d/%Y')) unless expected_arr[i][1].size == 0
+    with_timezone(ARIA_ENV['timezone']) do
+      expected_arr[i][0].replace(Chronic.parse(expected_arr[i][0]).strftime('%m/%d/%Y')) unless expected_arr[i][0].size == 0
+      if expected_arr[i][1] == 'after 1 year yesterday'
+        date = Chronic.parse("after 1 year")
+        expected_arr[i][1] = date.month.to_s+"/"+(date.day-1).to_s+"/"+date.year.to_s
+      else
+        expected_arr[i][1].replace(Chronic.parse(expected_arr[i][1]).strftime('%m/%d/%Y')) unless expected_arr[i][1].size == 0
+      end
     end
   }
   expected[3...-1] = expected_arr
