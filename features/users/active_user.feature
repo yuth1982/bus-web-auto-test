@@ -111,7 +111,7 @@ Feature: Add a new user
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.123841 @bus @user_login @tasks_p1
+  @TC.123841 @bus @user_login @tasks_p2
   Scenario: Mozy-123841:Reactivate existing mozyenterprise user
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role   | net terms |
@@ -154,7 +154,7 @@ Feature: Add a new user
     When I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.123857 @bus @user_login @tasks_p1
+  @TC.123857 @bus @user_login @tasks_p2
   Scenario:Mozy-123857:Reactivate existing hipaa mozyenterprise user
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  |security | net terms |
@@ -197,7 +197,7 @@ Feature: Add a new user
     When I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.123842 @bus @user_login @tasks_p1
+  @TC.123842 @bus @user_login @tasks_p2
   Scenario: Mozy-123842:Reactivate existing mozyhome user
     When I am at dom selection point:
     And I add a phoenix Home user:

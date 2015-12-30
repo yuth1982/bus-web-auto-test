@@ -309,8 +309,8 @@ Feature: Users Storage/Device/Product Key Section
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21382_1 @bus @tasks_p2
-  Scenario: Mozy-21382_1:Desktop only, Bundled partner, user details
+  @TC.132441 @bus @tasks_p2
+  Scenario: Mozy-132441:Desktop only, reseller partner, user details
     When I add a new Reseller partner:
       | period | root role               | reseller type | reseller quota  |
       | 1      | Bundle Pro Partner Root | Silver        | 100             |
@@ -347,8 +347,8 @@ Feature: Users Storage/Device/Product Key Section
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21382_2 @bus @tasks_p2
-  Scenario: Mozy-21382_2:Desktop only, enterprise partner, user details
+  @TC.132442 @bus @tasks_p2
+  Scenario: Mozy-132442:Desktop only, enterprise partner, user details
     When I add a new MozyEnterprise partner:
       | period | users |
       | 12     | 10    |
