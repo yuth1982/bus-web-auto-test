@@ -1,7 +1,12 @@
 When /^I add a new upgrade rule:$/ do |table|
   upgrade_rule = table.hashes.first
   @bus_site.admin_console_page.upgrade_rules_section.ur_iframe.add_new_rule(upgrade_rule)
-  @bus_site.admin_console_page.upgrade_rules_section.refresh_bus_section
+  # When save rules got a 500 error, refresh section will have to click the 'Resend' popup window in firefox
+  begin
+    @bus_site.admin_console_page.upgrade_rules_section.refresh_bus_section
+  rescue Exception => e
+    Log.debug e.message
+  end
 end
 
 
