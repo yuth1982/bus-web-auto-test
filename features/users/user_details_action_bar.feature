@@ -236,8 +236,8 @@ Feature: User Details
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)                    |
+      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 Blocked Deprovision |
     And I search user by:
       | keywords   |
       | dev-121960-test1@test.com |
