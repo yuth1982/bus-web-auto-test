@@ -1034,7 +1034,7 @@ Feature: login as admins
       | 12     | Silver        | 100            | Reseller Root | HIPAA    |
     Then New partner should be created
     And I view the newly created partner admin details
-    Then I active admin in admin details default password
+    #Then I active admin in admin details default password
     And I view partner details by newly created partner company name
     Then I suspend the partner
     And I act as newly created partner account
