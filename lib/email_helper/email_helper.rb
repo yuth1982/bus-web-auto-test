@@ -53,7 +53,7 @@ module Email
       f.close
       cipher = Gibberish::RSA.new(private_key)
       pass = cipher.decrypt(encrypted)
-      @client = Viewpoint::EWSClient.new endpoint, user, pass, server_version: SOAP::ExchangeWebService::VERSION_2007_SP1
+      @client = Viewpoint::EWSClient.new endpoint, user, pass, server_version: SOAP::ExchangeWebService::VERSION_2007
       @inbox = @client.get_folder_by_name 'Inbox', :act_as => CONFIGS['outlook']['mailbox']
       @found = nil
     end

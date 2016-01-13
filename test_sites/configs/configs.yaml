@@ -146,7 +146,7 @@ gmail:
 outlook:
   username:                     svc_mozybusauto
   password:                     lib/email_helper/svc_mozybusauto.pwd
-  endpoint:                     https://legacyemail.emc.com/ews/Exchange.asmx
+  endpoint:                     https://email.emc.com/ews/Exchange.asmx
   mailbox:                      mozyautotest@emc.com
 
 rsa:
