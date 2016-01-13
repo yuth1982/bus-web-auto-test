@@ -239,7 +239,7 @@ Feature: Password policy is saved successfully to db
     Then Password policy updated successfully
     Then The user and admin password policy from database will be
       | user_type | min_length | min_character_classes | min_age_hours | min_generations | display_captcha_on_login | verify_email_address |
-      | all       | 6          | 3                     | 0             | 1               | f                        | f                    |
+      | all       | 8          | 3                     | 0             | 1               | f                        | f                    |
     Then The user and admin password will contains at least 3 of the following types of charactors
       | lower | digit | special |
     And I stop masquerading
@@ -276,7 +276,7 @@ Feature: Password policy is saved successfully to db
     Then Password policy updated successfully
     Then The user password policy from database will be
       | min_length | min_character_classes | min_age_hours | min_generations | display_captcha_on_login | verify_email_address |
-      | 6          | 2                     | 0             | 1               | f                        | f                    |
+      | 8          | 2                     | 0             | 1               | f                        | f                    |
     Then The user password will contains at least 2 of the following types of charactors
       | lower | digit | special |
     Then The admin should use default password policy
@@ -284,18 +284,20 @@ Feature: Password policy is saved successfully to db
     And I view user details by newly created user email
     Then I update user password to incorrect password wrongpass and get the error message:
     """
-    Password needs to contain at least 2 kinds of characters.
+    Passwords must contain at least 2 of the following types of characters: numbers, lowercase letters, special characters
     """
     Then I update user password to incorrect password pass! and get the error message:
     """
-    Please enter a password at least 6 characters long
+    Please enter a password at least 8 characters long
     """
-    And I update the user password to test1234
+    And I update the user password to Test1234
     And I navigate to Add New Admin section from bus admin console page
     And I view the admin details of TC.120555_admin
     And I change admin password to pass!
-    Then Fail to update admin password and the message should be Please enter a password at least 6 characters long
-    And I change admin password to testps
+    Then Fail to update admin password and the message should be Please enter a password at least 8 characters long
+    And I change admin password to wrongpassword
+    Then Fail to update admin password and the message should be Passwords must contain at least 3 of the following types of characters: lowercase letters, capital letters, numbers, special characters
+    And I change admin password to testps90.
     Then Succeed to update admin password and the message should be The password for TC.120555_admin has been changed.
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
@@ -331,27 +333,27 @@ Feature: Password policy is saved successfully to db
     Then Password policy updated successfully
     Then The user and admin password policy from database will be
       | user_type | min_length | min_character_classes | min_age_hours | min_generations | display_captcha_on_login | verify_email_address |
-      | all       | 6          | 2                     | 0             | 1               | f                        | f                    |
+      | all       | 8          | 2                     | 0             | 1               | f                        | f                    |
     Then The user and admin password will contains at least 2 of the following types of charactors
       | lower | special |
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by newly created user email
     Then I update user password to incorrect password wrongpass and get the error message:
     """
-    Password needs to contain at least 2 kinds of characters.
+    Passwords must contain all of the following types of characters: lowercase letters, special characters
     """
     Then I update user password to incorrect password pass! and get the error message:
     """
-    Please enter a password at least 6 characters long
+    Please enter a password at least 8 characters long
     """
-    And I update the user password to testp!
+    And I update the user password to testp!pp
     And I navigate to Add New Admin section from bus admin console page
     And I view the admin details of TC.120556_admin
     And I change admin password to wrongpass
-    Then Fail to update admin password and the message should be Password needs to contain at least 2 kinds of characters
+    Then Fail to update admin password and the message should be Passwords must contain all of the following types of characters: lowercase letters, special characters
     And I change admin password to pass!
-    Then Fail to update admin password and the message should be Please enter a password at least 6 characters long
-    And I change admin password to testp!
+    Then Fail to update admin password and the message should be Please enter a password at least 8 characters long
+    And I change admin password to testp!pp
     Then Succeed to update admin password and the message should be The password for TC.120556_admin has been changed.
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
@@ -387,7 +389,7 @@ Feature: Password policy is saved successfully to db
     Then Password policy updated successfully
     Then The admin password policy from database will be
       | min_length | min_character_classes | min_age_hours | min_generations | display_captcha_on_login | verify_email_address |
-      | 6          | 3                     | 0             | 1               | f                        | f                    |
+      | 8          | 3                     | 0             | 1               | f                        | f                    |
     Then The admin password will contains at least 3 of the following types of charactors
       | lower | digit | special |
     Then The user should use default password policy
@@ -395,15 +397,15 @@ Feature: Password policy is saved successfully to db
     And I view user details by newly created user email
     Then I update user password to incorrect password pass! and get the error message:
     """
-    Please enter a password at least 6 characters long
+    Please enter a password at least 8 characters long
     """
-    And I update the user password to testps
+    And I update the user password to testps1.
     And I navigate to Add New Admin section from bus admin console page
     And I view the admin details of TC.120557_admin
     And I change admin password to wrongpass
-    Then Fail to update admin password and the message should be Password needs to contain at least 3 kinds of characters
+    Then Fail to update admin password and the message should be Passwords must contain all of the following types of characters: numbers, lowercase letters, special characters
     And I change admin password to pa12!
-    Then Fail to update admin password and the message should be Please enter a password at least 6 characters long
+    Then Fail to update admin password and the message should be Please enter a password at least 8 characters long
     And I change admin password to test123!
     Then Succeed to update admin password and the message should be The password for TC.120557_admin has been changed.
     And I stop masquerading
@@ -451,10 +453,10 @@ Feature: Password policy is saved successfully to db
     Then Password policy updated successfully
     Then The user password policy from database will be
       | min_length | min_character_classes | min_age_hours | min_generations | display_captcha_on_login | verify_email_address |
-      | 6          | 4                     | 0             | 1               | f                        | f                    |
+      | 8          | 4                     | 0             | 1               | f                        | f                    |
     Then The admin password policy from database will be
       | min_length | min_character_classes | min_age_hours | min_generations | display_captcha_on_login | verify_email_address |
-      | 6          | 4                     | 0             | 1               | f                        | f                    |
+      | 8          | 4                     | 0             | 1               | f                        | f                    |
     Then The user password will contains at least 4 of the following types of charactors
       | upper | lower | digit | special |
     Then The admin password will contains at least 4 of the following types of charactors
@@ -463,19 +465,19 @@ Feature: Password policy is saved successfully to db
     And I view user details by newly created user email
     Then I update user password to incorrect password Pas4! and get the error message:
     """
-    Please enter a password at least 6 characters long
+    Please enter a password at least 8 characters long
     """
     Then I update user password to incorrect password test123! and get the error message:
     """
-    Password needs to contain at least 4 kinds of characters.
+    Passwords must contain all of the following types of characters: numbers, lowercase letters, special characters, capital letters
     """
     And I update the user password to Test123!
     And I navigate to Add New Admin section from bus admin console page
     And I view the admin details of TC.131877_admin
     And I change admin password to test1234!
-    Then Fail to update admin password and the message should be Password needs to contain at least 4 kinds of characters
+    Then Fail to update admin password and the message should be Passwords must contain all of the following types of characters: numbers, lowercase letters, special characters, capital letters
     And I change admin password to Pa12!
-    Then Fail to update admin password and the message should be Please enter a password at least 6 characters long
+    Then Fail to update admin password and the message should be Please enter a password at least 8 characters long
     And I change admin password to Test1234!
     Then Succeed to update admin password and the message should be The password for TC.131877_admin has been changed.
     And I stop masquerading
@@ -530,10 +532,10 @@ Feature: Password policy is saved successfully to db
     Then Password policy updated successfully
     Then The user password policy from database will be
       | min_length | min_character_classes | min_age_hours | min_generations | display_captcha_on_login | verify_email_address |
-      | 6          | 3                     | 0             | 1               | f                        | f                    |
+      | 8          | 3                     | 0             | 1               | f                        | f                    |
     Then The admin password policy from database will be
       | min_length | min_character_classes | min_age_hours | min_generations | display_captcha_on_login | verify_email_address |
-      | 6          | 3                     | 0             | 1               | f                        | f                    |
+      | 8          | 3                     | 0             | 1               | f                        | f                    |
     Then The user password will contains at least 3 of the following types of charactors
       | upper | lower | digit | special |
     Then The admin password will contains at least 3 of the following types of charactors
@@ -542,19 +544,19 @@ Feature: Password policy is saved successfully to db
     And I view user details by newly created user email
     Then I update user password to incorrect password pas4! and get the error message:
     """
-    Please enter a password at least 6 characters long
+    Please enter a password at least 8 characters long
     """
     Then I update user password to incorrect password test1234 and get the error message:
     """
-    Password needs to contain at least 3 kinds of characters.
+    Passwords must contain at least 3 of the following types of characters: numbers, lowercase letters, special characters, capital letters
     """
     And I update the user password to test123!
     And I navigate to Add New Admin section from bus admin console page
     And I view the admin details of TC.131879_admin
     And I change admin password to test1234
-    Then Fail to update admin password and the message should be Password needs to contain at least 3 kinds of characters
+    Then Fail to update admin password and the message should be Passwords must contain at least 3 of the following types of characters: numbers, lowercase letters, special characters, capital letters
     And I change admin password to pa12!
-    Then Fail to update admin password and the message should be Please enter a password at least 6 characters long
+    Then Fail to update admin password and the message should be Please enter a password at least 8 characters long
     And I change admin password to test1234!
     Then Succeed to update admin password and the message should be The password for TC.131879_admin has been changed.
     And I stop masquerading as sub partner
