@@ -33,11 +33,11 @@ Feature:
     Then New partner should be created
     And I wait for 10 seconds
     And I get partner aria id
-    And API* I set newly created partner aria id account notification method to 8
-    And I wait for 10 seconds
-    Then API* Aria account should be:
-      | notify_method_name   |
-      | Printable (no Email) |
+#    And API* I set newly created partner aria id account notification method to 8
+#    And I wait for 10 seconds
+#    Then API* Aria account should be:
+#      | notify_method_name   |
+#      | Printable (no Email) |
     When API* I set newly created partner aria id account notification method to 1
     And I wait for 10 seconds
     Then API* Aria account should be:
