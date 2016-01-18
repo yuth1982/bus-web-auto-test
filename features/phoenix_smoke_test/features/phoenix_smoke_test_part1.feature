@@ -49,8 +49,8 @@ Feature: Phoenix smoke test
     When I get previous partner info
     And I login as the user on the account.
     And I change email address to:
-      | new email        | password |
-      | @new_admin_email | test1234 |
+      | new email        | password                            |
+      | @new_admin_email | <%=CONFIGS['global']['test_pwd'] %> |
     And I change email address successfully
     """
       Your email change request requires verification. We sent an email to @new_admin_email. Please open the email and click the verification link to confirm this change.
@@ -78,7 +78,7 @@ Feature: Phoenix smoke test
     And I login under changed password on the account.
 
   @TC.126137 @bus @regression_test @phoenix @mozyhome
-  Scenario: 126137 view home user detail in BUS - Precondition:@TC.126120
+  Scenario: 126137 view home user detail in BUS - Precondition:@TC.126120,@TC.126124
     When I get previous partner info
     And I log in bus admin console as administrator
     And I search user by:
@@ -91,6 +91,11 @@ Feature: Phoenix smoke test
     And MozyHome subscription details should be:
       | Subscription                                |
       | MozyHome 50 GB, + 0 GB, 1 machines, monthly |
+    Then MozyHome user billing info should be:
+      | ID   | Cause                                       | Date  | Amount | Card #    | Card Type  | Failure? | Captured? | Refunded?  | Payment Processor | Return Code |
+      | @id  | User CC Update                              | today | $1.00  | XXXX-1121 | MasterCard | No       | No        | No         | Cybersource US    |             |
+      | @id  | MozyHome 50 GB, + 0 GB, 1 machines, monthly | today | $5.99  | XXXX-1122 | Visa       | No       | Yes       | Refund now | Cybersource US    |             |
+
 
   @TC.126138 @bus @regression_test @phoenix @mozyhome
   Scenario: 126138 delete home user in BUS - Precondition:@TC.126120
