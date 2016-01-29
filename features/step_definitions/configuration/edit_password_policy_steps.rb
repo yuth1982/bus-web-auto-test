@@ -9,12 +9,14 @@ Then /^I edit (.+) passowrd policy:$/ do |account_type,policy_table|
   case account_type
     when 'user'
       @password_policy.user_policy_type = attributes["user policy type"] unless attributes["user policy type"].nil?
+      @password_policy.user_policy_min_length = attributes["min length"] unless attributes["min length"].nil?
       @password_policy.user_min_character_classes = attributes["min character classes"] unless attributes["min character classes"].nil?
       @password_policy.user_character_classes = attributes["character classes"].split(',') unless attributes["character classes"].nil?
       @bus_site.admin_console_page.edit_password_policy_section.edit_user_password_policy(@password_policy)
     when 'admin'
       @password_policy.admin_user_same_policy = attributes["admin user same policy"] unless attributes["admin user same policy"].nil?
       @password_policy.admin_policy_type = attributes["admin policy type"] unless attributes["admin policy type"].nil?
+      @password_policy.admin_policy_min_length = attributes["min length"] unless attributes["min length"].nil?
       @password_policy.admin_min_character_classes = attributes["min character classes"] unless attributes["min character classes"].nil?
       @password_policy.admin_character_classes = attributes["character classes"].split(',') unless attributes["character classes"].nil?
       @bus_site.admin_console_page.edit_password_policy_section.edit_admin_password_policy(@password_policy)
