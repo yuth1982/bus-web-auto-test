@@ -108,7 +108,13 @@ Feature: Mozyhome User Login
     When I navigate to My Profile section in Phoenix
     And I change password in Phoenix from default password to reset password
     And I log into phoenix with username newly created MozyHome username and password reset password
-    And I log out bus admin console
+    And I access freyja from phoenix
+    And I log in bus admin console as administrator
+    And I search user by:
+      | keywords       |
+      | @mh_user_email |
+    And I view user details by newly created MozyHome username
+    And I delete user
 
   @TC.123856 @bus @user_login @tasks_p1
   Scenario: 123856:MozyHome user password would expire

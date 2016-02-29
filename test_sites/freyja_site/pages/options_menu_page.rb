@@ -6,10 +6,11 @@ module Freyja
     element(:preference, css: "#panel-action-preferences")
     element(:notification, css: "#notifications-count")
     element(:product_download, css: "div[title='Product Downloads'] > a")
-
+    element(:manage_account_option, xpath: "//*[@id='panel-action-account-summary']")
     element(:log_out_action, xpath: "//li[@id='panel-action-sign-out']")
     element(:log_out_yes_btn, xpath: "//div[@id='logout_confirm_dialog']/div[3]/div/a[2]/span")
     section(:change_password_section, ChangePasswordSection, xpath: "//li[@id='panel-action-change-password']")
+
 
     # Public: launch change password wizard
     #
@@ -26,6 +27,31 @@ module Freyja
       if sections.first.element_parent[:class].match(/active/).nil? && sections.last.element_parent[:class].match(/active/).nil?
         el.click
       end
+    end
+
+    def open_event_history
+      event_history.click
+    end
+
+    def open_preference
+      preference.click
+    end
+
+    def open_notifications
+      notification.click
+      sleep 5
+    end
+
+    def notifications_detail_slide_in
+      page.has_content?("Restore ID")
+    end
+
+    def open_product_downloads
+      product_download.click
+    end
+
+    def manage_account
+      manage_account_option.click
     end
 
     def logout

@@ -1,0 +1,110 @@
+[
+  {
+    "keyword": "Feature",
+    "name": "Login freyja",
+    "line": 1,
+    "description": "",
+    "id": "login-freyja",
+    "uri": "features/freyja/MozyHome/user_login.feature",
+    "elements": [
+      {
+        "keyword": "Scenario",
+        "name": "home user login freyja valid username and password",
+        "line": 4,
+        "description": "",
+        "tags": [
+          {
+            "name": "@TC.120358",
+            "line": 3
+          },
+          {
+            "name": "@freyja",
+            "line": 3
+          },
+          {
+            "name": "@freyja_smoke",
+            "line": 3
+          },
+          {
+            "name": "@home",
+            "line": 3
+          },
+          {
+            "name": "@home_login_logout",
+            "line": 3
+          }
+        ],
+        "id": "login-freyja;home-user-login-freyja-valid-username-and-password",
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "When ",
+            "name": "I navigate to freyja home login page",
+            "line": 5,
+            "match": {
+              "arguments": [
+                {
+                  "offset": 21,
+                  "val": "home"
+                }
+              ],
+              "location": "features/step_definitions/freyja/login_steps.rb:3"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 10120650754
+            }
+          },
+          {
+            "keyword": "And ",
+            "name": "I login as a existing user",
+            "line": 6,
+            "match": {
+              "location": "features/step_definitions/freyja/login_steps.rb:15"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 17955042520
+            }
+          },
+          {
+            "keyword": "Then ",
+            "name": "freyja page is displayed",
+            "line": 7,
+            "match": {
+              "location": "features/step_definitions/freyja/login_steps.rb:29"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 671445654
+            }
+          },
+          {
+            "keyword": "When ",
+            "name": "I select options menu",
+            "line": 8,
+            "match": {
+              "location": "features/step_definitions/freyja/mainPage_steps.rb:23"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3670240077
+            }
+          },
+          {
+            "keyword": "And ",
+            "name": "I logout",
+            "line": 9,
+            "match": {
+              "location": "features/step_definitions/freyja/optionsMenu_steps.rb:19"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 7055034439
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

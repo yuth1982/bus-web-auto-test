@@ -4,6 +4,7 @@ And /^I view machine details for (.+)$/ do |machine_or_user|
   end
   machine_or_user.replace ERB.new(machine_or_user).result(binding)
   @bus_site.admin_console_page.search_list_machines_section.view_machine_details(machine_or_user)
+  @bus_site.admin_console_page.search_list_machines_section.wait_until_bus_section_load
 end
 
 And /^I view Sync details$/ do
@@ -20,7 +21,7 @@ And /^I search machine by:$/ do |search_key_table|
   attributes.each do |k,v|
     v.replace ERB.new(v).result(binding)
   end
-  keywords = attributes["machine_name"] || attributes["user_email"]
+  keywords = attributes["machine_name"] || attributes["user_email"] || attributes["keywords"]
   @bus_site.admin_console_page.search_list_machines_section.search_machine(keywords)
 end
 

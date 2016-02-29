@@ -4,12 +4,27 @@ module Bus
 
     element(:dso_table, xpath: "//th[text()='Order ID']/../../../../table")
     element(:machine_info_dls, css: 'div[id^=machine-show-] dl')
+    # change external id
+    element(:change_external_id_link, xpath: "//div[contains(@id,'machine')]//dt[text()='External ID:']/following-sibling::dd[1]//a[text()='(change)']")
+    element(:external_id_tb, xpath: "//div[contains(@id,'machine')]//input[@id='external_id']")
+    element(:submit_external_id_btn, xpath: "//div[contains(@id,'machine')]//dt[text()='External ID:']/following-sibling::dd[1]//input[@value='Submit']")
+
 
     #Manifest section
     element(:manifest_view_lnk, xpath: "//div[contains(@id,'machine-show')]//a[text()='View']")
     element(:manifest_raw_lnk, xpath: "//div[contains(@id,'machine-show')]//a[text()='Raw']")
 
+    elements(:machine_bar_actions_links, xpath: "//div[contains(@id,'machine-show')]//li/a")
+
     element(:replace_machine_lnk, xpath: "//a[text()='Replace Machine']")
+    element(:replace_machine_li, xpath: "//a[text()='Replace Machine']/..")
+    element(:delete_machine_lnk, xpath: "//a[text()='Delete Machine']")
+    element(:undelete_machine_lnk, xpath: "//a[text()='Undelete Machine']")
+
+    # backups restores section
+    element(:backups_section_text, xpath: "//div[contains(@id,'machine-show-')]//h4[text()='Backups']/following-sibling::P")
+    element(:restores_section_text, xpath: "//div[contains(@id,'machine-show-')]//h4[text()='Restores']/following-sibling::P")
+
 
     # Public: General information hash
     #
@@ -39,23 +54,75 @@ module Bus
       manifest_raw_lnk.click
     end
 
-    def wait_until_manifest_file_downloaded (file_name)
+    def wait_until_file_downloaded (file_name)
       wait_until { file_exists?(file_name) }
-    end
-
-    def delete_manifest_file (file_name)
-      file = File.join(default_download_path, file_name)
-      File.delete(file) if File.file?(file)
     end
 
     def click_replace_machine
       replace_machine_lnk.click
     end
 
-    def data_shuttle_table_visible?
-      size = all(:xpath, "//th[text()='Order ID']/../../../../table").size
-      (size > 0)? true:false
+    def delete_undelete_machine(action)
+      if action == 'delete'
+        delete_machine_lnk.click
+      else
+        undelete_machine_lnk.click
+      end
+      alert_accept
     end
 
+    def data_shuttle_table_visible?
+      !(locate(:xpath, "//th[text()='Order ID']/../../../../table").nil?)
+     end
+
+    def undelete_machine_link_exist
+       !(locate(:xpath, "//a[text()='Undelete Machine']").nil?)
+    end
+
+    def get_machine_bar_actions
+      machine_bar_actions_links.map{|ele|ele.text.strip}
+    end
+
+    def get_backup_section_text
+      backups_section_text.text
+    end
+
+    def get_restores_section_text
+      restores_section_text.text
+    end
+
+    def backup_table_empty
+      !(locate(:xpath, "div[contains(@id,'machine-show-')]//tbody//td[text()='No results found.']").nil?)
+    end
+
+    def get_backup_restore_table(type)
+      wait_until_bus_section_load
+      find(:xpath, "//h4[text()='#{type}']/following-sibling::div[1]/table").raw_text.select{|row|row!=[""]}
+    end
+
+    def get_backup_restore_table_hashes(type)
+      wait_until_bus_section_load
+      find(:xpath, "//h4[text()='#{type}']/following-sibling::div[1]/table").hashes
+    end
+
+
+    def click_machine_link (match)
+      find(:xpath, "//a[text()='#{match}']").click
+    end
+
+    def click_link(link_name)
+       find_link(link_name).click
+    end
+
+    def change_machine_external_id(external_id)
+      change_external_id_link.click
+      external_id_tb.type_text(external_id)
+      submit_external_id_btn.click
+      wait_until_bus_section_load
+    end
+
+    def get_replace_machine_text
+      replace_machine_li.text.strip
+    end
   end
 end

@@ -9,6 +9,7 @@ When /^I add new user\(s\):$/ do |user_table|
   @new_users =[]
   @users =[] if @users.nil?
   user_table.hashes.each do |hash|
+    hash['email'].replace ERB.new(hash['email']).result(binding) unless hash['email'].nil?
     hash['email'] = @existing_user_email if hash['email'] == '@existing_user_email'
     hash['email'] = @existing_admin_email if hash['email'] == '@existing_admin_email'
     user = Bus::DataObj::User.new
@@ -17,6 +18,22 @@ When /^I add new user\(s\):$/ do |user_table|
     @users << user
   end
   @bus_site.admin_console_page.add_new_user_section.add_new_users(@new_users)
+end
+
+When /^I add new user with error message (.+) unsuccessfully:$/ do |message, user_table|
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_user'])
+  @new_users =[]
+  @users =[] if @users.nil?
+  user_table.hashes.each do |hash|
+    hash['email'] = @existing_user_email if hash['email'] == '@existing_user_email'
+    hash['email'] = @existing_admin_email if hash['email'] == '@existing_admin_email'
+    user = Bus::DataObj::User.new
+    hash_to_object(hash, user)
+    @new_users << user
+    @users << user
+  end
+  msg = @bus_site.admin_console_page.add_new_user_section.add_new_users_unsuccessfully(@new_users)
+    msg.should == message
 end
 
 # If you are create one user: You can specify user name and email
@@ -43,7 +60,7 @@ Then /^new itemized user should be created$/ do
   @bus_site.admin_console_page.add_new_itemized_user_section.new_user_creation_success(@new_users)
 end
 
-Then /^Add new user error message should be:$/ do |messages|
+Then /^(Add new|Edit) user error message should be:$/ do |_,messages|
   @bus_site.admin_console_page.add_new_user_section.wait_until_bus_section_load
   @bus_site.admin_console_page.add_new_user_section.error_messages.should == messages.to_s
 end
@@ -169,3 +186,29 @@ And /^I add some new users and activate one machine for each$/ do |table|
     })
   end
 end
+
+Then /^I check user group (.+) with (.+) storage limit tooltips is (.+)$/ do |group,type,tooltips|
+  @bus_site.admin_console_page.add_new_user_section.get_tooltips(group,type).should ==tooltips
+end
+
+Then /^I check (.+) help message under add new user section should be:$/ do |type,msg|
+  @bus_site.admin_console_page.add_new_user_section.get_help_msg(type).gsub("\n", " ").should == msg
+end
+
+
+Then /^The error message beside email should be (.+)$/ do |msg|
+  @bus_site.admin_console_page.add_new_user_section.get_beside_email_message.should == msg
+end
+
+Then /^created new itemized user message should be (.+)$/ do |msg|
+  @bus_site.admin_console_page.add_new_itemized_user_section.error_messages.gsub("\n"," ").should == msg
+end
+
+Then /^User group (storage|resource) details warning message should be (.+)$/ do |type, message|
+  @bus_site.admin_console_page.add_new_user_section.get_user_group_storage_warning_message(type).should == message
+end
+
+Then /^I get mail domain from dea_services$/ do
+  @domain_name = DBHelper.get_mail_domain_form_dea_services
+end
+

@@ -11,8 +11,16 @@ Transform /^newly created partner company name$/ do |step_arg|
   @partner.company_info.name
 end
 
+Transform /^newly created admin name$/ do |step_arg|
+  @partner.admin_info.full_name
+end
+
 Transform /^newly created subpartner company name$/ do |step_arg|
   @subpartner.company_name
+end
+
+Transform /^newly created subpartner admin email$/ do |step_arg|
+  @subpartner.admin_email_address
 end
 
 

@@ -48,5 +48,10 @@ module Bus
     def user_group_list_hashes
       user_groups_list_table.rows_text.map{ |row| Hash[*user_groups_list_table.headers_text.zip(row).flatten] }
     end
+
+    def set_user_group_filter(filter)
+      filter_select.select(filter)
+    end
+
   end
 end

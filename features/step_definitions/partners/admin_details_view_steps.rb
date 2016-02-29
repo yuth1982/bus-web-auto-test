@@ -46,11 +46,13 @@ When /^I view the admin details of (.+)$/ do |admin|
   @bus_site.admin_console_page.list_admins_section.wait_until_bus_section_load
 end
 
-When /^I get the (admin|subadmin) id from partner details$/ do |type|
-  if type == 'admin'
-    @bus_site.admin_console_page.partner_details_section.find_link(@partner.admin_info.full_name).click
-  else
-    @bus_site.admin_console_page.partner_details_section.subpartner.find_link(@subpartner.admin_name).click
+When /^I get the (admin|subadmin) id from (partner|admin) details$/ do |type, section|
+  if section == 'partner'
+    if type == 'admin'
+      @bus_site.admin_console_page.partner_details_section.find_link(@partner.admin_info.full_name).click
+    else
+      @bus_site.admin_console_page.partner_details_section.subpartner.find_link(@subpartner.admin_name).click
+    end
   end
   @admin_id = @bus_site.admin_console_page.admin_details_section.admin_id
   Log.debug("admin id is #{@admin_id}")
@@ -89,6 +91,10 @@ When /^I close the admin details section$/ do
 end
 
 Then /^Admin information in List Admins section should be correct$/ do |admin_info|
+  attributes = admin_info.hashes.first
+  attributes.each do |k,v|
+    v.replace ERB.new(v).result(binding)
+  end
   actual = @bus_site.admin_console_page.list_admins_section.list_admins_table_hashes
   expected = admin_info.rows
   actual.should == expected
@@ -156,4 +162,9 @@ end
 
 Then /^I click here to re-send activation email in admin details section$/ do
   @bus_site.admin_console_page.admin_details_section.click_here
+end
+
+And /^I add admin external id$/ do
+  @admin_external_id = "#{Time.now.strftime('%m%d-%H%M-%S')}"
+  @bus_site.admin_console_page.admin_details_section.change_admin_external_id(@admin_external_id)
 end

@@ -286,3 +286,95 @@ Feature: Add a new user
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
+  @TC.465 @bus @tasks_p2
+  Scenario: Mozy-465:Suspend a User
+    When I add a new MozyEnterprise partner:
+      | period | users |
+      | 12     | 2     |
+    Then New partner should be created
+    When I get the partner_id
+    And I act as newly created partner account
+    And I add new user(s):
+      | name        | user_group           | storage_type | storage_limit | devices |
+      | TC.465.User | (default user group) | Desktop      |               | 1       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    Then I suspended the user
+    And I use keyless activation to activate devices unsuccessful
+      | machine_name | machine_type |
+      | Machine1     | Desktop      |
+    Then I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.466 @bus @tasks_p2
+  Scenario: Mozy-466:Acivate a User
+    When I add a new MozyEnterprise partner:
+      | period | users |
+      | 12     | 2     |
+    Then New partner should be created
+    When I get the partner_id
+    And I act as newly created partner account
+    And I add new user(s):
+      | name        | user_group           | storage_type | storage_limit | devices |
+      | TC.466.User | (default user group) | Desktop      |               | 1       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    Then I suspended the user
+    And I use keyless activation to activate devices unsuccessful
+      | machine_name | machine_type |
+      | Machine1     | Desktop      |
+    Then I activate the user
+    And I use keyless activation to activate devices
+      | machine_name | machine_type |
+      | Machine1     | Desktop      |
+    And I upload data to device by batch
+      | machine_id                         | GB |
+      | <%=@new_clients.first.machine_id%> | 10 |
+    Then tds returns successful upload
+    Then I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.21218 @bus @tasks_p2
+  Scenario: Mozy-21218:[Bundled] Verify Add New User input Tooltips
+    When I add a new Reseller partner:
+      | period | reseller type | reseller quota | server plan |
+      | 12     | Silver        | 100            | yes         |
+    Then New partner should be created
+    And I act as newly created partner
+    Then I navigate to Add New User section from bus admin console page
+    Then I check user group (default user group) with Desktop storage limit tooltips is Min: 0 GB, Max: 100 GB
+    When I edit (default user group) Bundled user group:
+      | storage_type | assigned_quota | enable_stash | server_support |
+      | Assigned     | 50             | yes          | no             |
+    Then I navigate to Add New User section from bus admin console page
+    Then I check user group (default user group) with Desktop storage limit tooltips is Min: 0 GB, Max: 50 GB
+    When I edit (default user group) Bundled user group:
+      | storage_type | limited_quota | enable_stash | server_support |
+      | Limited      | 50            | yes          | yes            |
+    Then I navigate to Add New User section from bus admin console page
+    Then I check user group (default user group) with Desktop storage limit tooltips is Min: 0 GB, Max: 50 GB
+    Then I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.122222 @bus @tasks_p2
+  Scenario: Mozy-122222:Add a user with a domain in the dea_services table
+    When I add a new Reseller partner:
+      | period | reseller type | reseller quota |
+      | 12     | Silver        | 100            |
+    Then New partner should be created
+    And I act as newly created partner
+    Then I get mail domain from dea_services
+    And I add new user(s):
+      | name  | email                            |user_group           | storage_type | storage_limit | devices |
+      | User1 | <%='test_122222@'+@domain_name%> |(default user group) | Desktop      |               | 1       |
+    Then The error message beside email should be It looks like you're trying to sign up with an email address provided by one of those throw-away email address deals. Please read our NO SPAM policy if you're worried or something, then sign up with a real email account.
+    Then I stop masquerading
+    And I search and delete partner account by newly created partner company name

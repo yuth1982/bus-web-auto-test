@@ -1,8 +1,10 @@
 Feature: Search and list user
 
+  Background:
+    Given I log in bus admin console as administrator
+
   @TC.683 @need_test_account @bus @regression_test @users @search @env_dependent
   Scenario: 683 Search user
-    When I log in bus admin console as administrator
     And I act as partner by:
       | email                                    |
       | qa1+users+features+test+account@mozy.com |
@@ -24,7 +26,6 @@ Feature: Search and list user
   #
   @TC.21012 @bus @2.5 @pooled_storage
   Scenario: 21012 Pooled Storage - User List View change - removal of assigned/used quota from Storage column
-    When I log in bus admin console as administrator
     And I add a new MozyPro partner:
       | period | base plan | server plan | net terms |
       | 1      | 100 GB    | yes         | yes       |
@@ -56,7 +57,6 @@ Feature: Search and list user
   #
   @TC.21014 @bus @2.5 @pooled_storage
   Scenario: 21014 Pooled Storage - Pro SMB - User List View - removal of assigned/used quota
-    When I log in bus admin console as administrator
     And I add a new MozyPro partner:
       | period | base plan | server plan | net terms |
       | 1      | 100 GB    | yes         | yes       |
@@ -107,7 +107,6 @@ Feature: Search and list user
 
   @TC.21016 @bus @2.5 @pooled_storage @metallic
   Scenario: 21016 Pool Storage - Reseller Metal - User List View change - removal of assigned/used quota
-    When I log in bus admin console as administrator
     And I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | net terms |
       | 12     | Silver        | 500            | yes         | yes       |
@@ -158,7 +157,6 @@ Feature: Search and list user
 
   @TC.21015 @bus @2.5 @pooled_storage @enterprise
   Scenario: 21015 - Pool Storage - Enterprise - User List View change - removal of assigned/used quota
-    When I log in bus admin console as administrator
     And I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
       | 12     | 10    | 100 GB      | yes       |
@@ -343,3 +341,123 @@ Feature: Search and list user
         | TC.21012-2  | Disabled | Shared         |
       And I stop masquerading
       And I search and delete partner account by newly created partner company name
+
+  @TC.809 @bus @tasks_p2
+  Scenario: Mozy-809:Export a list of users to Excel
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | net terms |
+      | 12     | 10    | 100 GB      | yes       |
+    Then New partner should be created
+    And I act as newly created partner
+    And I add new user(s):
+      | name  | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | user1 | (default user group) | Desktop      | 10            | 2       | yes          |
+    Then 1 new user should be created
+    When I navigate to Search / List Users section from bus admin console page
+    And I export the users csv
+    Then The exported users csv file should be like
+      | Column A     | Column B                     | Column C | Column D             | Column E | Column F | Column G                 | Column H      | Column I | Column J |
+      | External ID  | User                         | Name     | User Group           | Sync     | Machines | Storage                  | Storage Used  | Created  | Backed Up |
+      |              | <%=@new_users.first.email%>  | user1    | (default user group) | Enabled  | 0        | Desktop: 10 GB (Limited) | Desktop: None | @today    | never     |
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.808 @bus @tasks_p2
+  Scenario: Mozy-808:Do a search for a valid user
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | net terms |
+      | 12     | 10    | 100 GB      | yes       |
+    Then New partner should be created
+    And I act as newly created partner
+    And I add new user(s):
+      | name  | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | user1 | (default user group) | Desktop      | 10            | 2       | yes          |
+    Then 1 new user should be created
+    When I navigate to Search / List Users section from bus admin console page
+    Then User search results should be:
+      | External ID  | User                         | Name     | User Group           | Sync     | Machines | Storage                  | Storage Used  | Created  | Backed Up |
+      |              | <%=@new_users.first.email%>  | user1    | (default user group) | Enabled  | 0        | Desktop: 10 GB (Limited) | Desktop: None | today    | never     |
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.815 @bus @tasks_p2
+  Scenario: Mozy-815:Do a search for all users that have backed up within the last 24 hours
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan |
+      | 12     | 10    | 250 GB      |
+    And New partner should be created
+    And I act as newly created partner
+    And I add new user(s):
+      | name | user_group           | storage_type | storage_limit | devices |
+      | User | (default user group) | Desktop      | 100           | 3       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to Hipaa password
+    Then I use keyless activation to activate devices
+      | machine_name  | user_name                   | machine_type |
+      | Machine1      | <%=@new_users.first.email%> | Desktop      |
+    And I upload data to device by batch
+      | machine_id                         | GB | password                      |
+      | <%=@new_clients.first.machine_id%> | 30 | <%=QA_ENV['hipaa_password']%> |
+    Then tds returns successful upload
+    When I update <%=@new_clients.first.machine_id%> last backup time to 30 minutes ago
+    When I navigate to Search / List Users section from bus admin console page
+    Then I search user by:
+      | filter                    |
+      | Backed up within 24 hours |
+    Then User search results should be:
+      | External ID | User                        | Name | User Group           | Sync     | Machines | Storage                   | Storage Used   | Created | Backed Up      |
+      |             | <%=@new_users.first.email%> | User | (default user group) | Disabled | 1        | Desktop: 100 GB (Limited) | Desktop: 30 GB | today   | 30 minutes ago |
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.21940 @bus @tasks_p2
+  Scenario:  Mozy-21940:Filter within 1 week include whin 24 hours in search list users view
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan |
+      | 12     | 10    | 250 GB      |
+    And New partner should be created
+    And I act as newly created partner
+    And I add new user(s):
+      | name | user_group           | storage_type | storage_limit | devices |
+      | User | (default user group) | Desktop      | 100           | 3       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to Hipaa password
+    Then I use keyless activation to activate devices
+      | machine_name  | user_name                   | machine_type |
+      | Machine1      | <%=@new_users.first.email%> | Desktop      |
+    And I upload data to device by batch
+      | machine_id                         | GB | password                      |
+      | <%=@new_clients.first.machine_id%> | 30 | <%=QA_ENV['hipaa_password']%> |
+    Then tds returns successful upload
+    When I update <%=@new_clients.first.machine_id%> last backup time to 30 minutes ago
+    When I navigate to Search / List Users section from bus admin console page
+    Then I search user by:
+      | filter                    |
+      | Backed up within 24 hours |
+    Then User search results should be:
+      | External ID | User                        | Name | User Group           | Sync     | Machines | Storage                   | Storage Used   | Created | Backed Up      |
+      |             | <%=@new_users.first.email%> | User | (default user group) | Disabled | 1        | Desktop: 100 GB (Limited) | Desktop: 30 GB | today   | 30 minutes ago |
+    When I update <%=@new_clients.first.machine_id%> last backup time to 30 minutes ago
+    Then I search user by:
+      | filter                  |
+      | Backed up within 1 week |
+    Then User search results should be:
+      | External ID | User                        | Name | User Group           | Sync     | Machines | Storage                   | Storage Used   | Created | Backed Up      |
+      |             | <%=@new_users.first.email%> | User | (default user group) | Disabled | 1        | Desktop: 100 GB (Limited) | Desktop: 30 GB | today   | 30 minutes ago |
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.2761 @bus @tasks_p2
+  Scenario: Mozy-2761:Do a search for all EMC Gift users
+    Then I search user by:
+      | filter   |
+      | EMC Gift   |
+    And The users table should not be empty

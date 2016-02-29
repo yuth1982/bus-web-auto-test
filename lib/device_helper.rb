@@ -1,6 +1,13 @@
 require 'net/https'
 require 'base64'
+
+module OpenSSL
+  module SSL
+    remove_const :VERIFY_PEER
+  end
+end
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
+
 module Activation
   class Client
     attr_accessor :username, :password, :license_key, :machine_hash, :machine_alias, :resp

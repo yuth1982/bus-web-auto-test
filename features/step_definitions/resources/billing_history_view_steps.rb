@@ -14,3 +14,11 @@ Then /^Billing history table should be:$/ do |billing_table|
   end
   expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
+
+Then /^there no recent billing history content in billing history section$/ do
+  @bus_site.admin_console_page.billing_history_section.recent_billing_visible?.should == false
+end
+
+Then /^I click the latest date link to view the invoice from billing history section$/ do
+  @bus_site.admin_console_page.billing_history_section.click_invoice_link
+end

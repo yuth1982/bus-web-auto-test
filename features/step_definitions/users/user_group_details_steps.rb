@@ -85,7 +85,7 @@ When /^I view user group details by clicking group name: (.+)$/ do |group_name|
   @bus_site.admin_console_page.user_group_list_section.view_user_group(group_name)
 end
 
-When /^I open (.+) tab$/ do |tab_name|
+When /^I open (.+) tab under user group details$/ do |tab_name|
   @bus_site.admin_console_page.user_group_details_section.click_tab(tab_name)
 end
 
@@ -98,7 +98,73 @@ Then /^(.+) client configuration should be (.+)$/ do |type, config_value|
   end
 end
 
-Then /^The key appears marked as a data shuttle order$/ do
-  @bus_site.admin_console_page.user_group_details_section.data_shuttle_keys_hashes[0]['Product Key'].should == @order.license_key[0]+ " *"
+Then /^The key appears( not)? marked as a data shuttle order$/ do |t|
+  if t.nil?
+    @bus_site.admin_console_page.user_group_details_section.data_shuttle_keys_hashes[0]['Product Key'].should == @order.license_key[0]+ " *"
+  else
+    @bus_site.admin_console_page.user_group_details_section.data_shuttle_keys_hashes[0]['Product Key'].should == @order.license_key[0]
+  end
 end
 
+When /^the (.+) table details under user group details should be:$/ do |match, table|
+  actual = @bus_site.admin_console_page.user_group_details_section.search_table_details_hash(match)
+  expected = table.hashes
+  expected.each_index do |index|
+    expected[index].each do |k, v|
+      v.replace ERB.new(v).result(binding)
+      case k
+        when 'Product Key'
+          (actual[index][k].match(/\w{20}/).size>0).should == true
+        when 'Created'
+          v.replace(Chronic.parse(v).strftime('%m/%d/%y'))
+          actual[index][k].should == v
+        when 'User'
+          if v.length <= 30
+            v.downcase
+          else
+            v.replace ERB.new(v).result(binding).slice(0,27).downcase
+            v << '...'
+          end
+          actual[index][k].should == v
+        else
+          actual[index][k].should == v
+      end
+    end
+  end
+end
+
+Then /I change user group name to (.+)$/ do |new_name|
+  @bus_site.admin_console_page.user_group_details_section.change_user_group_name(new_name)
+end
+
+Then /I change user group status to (.+)$/ do |status|
+  @bus_site.admin_console_page.user_group_details_section.change_user_group_status(status)
+end
+
+Then /I change user group default storage to (.+) GB$/ do |storage|
+  @bus_site.admin_console_page.user_group_details_section.change_user_group_default_storage(storage)
+end
+
+When /^I check total keys under user group details is (.+)$/ do |total|
+  @bus_site.admin_console_page.user_group_details_section.get_total_keys.should == total
+end
+
+When /^I click the last keys page under user group details$/ do
+  @bus_site.admin_console_page.user_group_details_section.click_last_keys_page
+end
+
+When /^There are (.+) keys under user group details$/ do |num|
+  @bus_site.admin_console_page.user_group_details_section.get_current_page_keys.should == num
+end
+
+Then /I change legacy user group (desktop|server) default storage to (.+) GB$/ do |type,storage|
+  @bus_site.admin_console_page.user_group_details_section.change_legacy_user_group_default_storage(type,storage)
+end
+
+Then /^there (is|is not) data shuttle text in the user group keys section$/ do |type|
+  if type == 'is'
+    @bus_site.admin_console_page.user_group_details_section.data_shuttle_text_visible?.should == true
+  else
+    @bus_site.admin_console_page.user_group_details_section.data_shuttle_text_visible?.should == false
+  end
+end

@@ -720,3 +720,52 @@ Feature: User Details
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
+  @TC.131831 @bus @tasks_p2
+  Scenario: Mozy-131831:Refund Cybersource media restore
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | security |
+      | 12     | 10    | 250 GB      | HIPAA    |
+    And New partner should be created
+    Then I get the partner_id
+    And I act as newly created partner
+    And I add new user(s):
+      | name  | user_group           | storage_type | storage_limit | devices |
+      | User1 | (default user group) | Desktop      | 100           | 3       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | User1 |
+    And I view user details by newly created user email
+    And I update the user password to Hipaa password
+    Then I use keyless activation to activate devices
+      | machine_name  | user_name                   | machine_type |
+      | Machine1      | <%=@new_users.first.email%> | Desktop      |
+    And I upload data to device by batch
+      | machine_id                         | GB | password                      |file_name   |
+      | <%=@new_clients.first.machine_id%> | 30 | <%=QA_ENV['hipaa_password']%> |TC131831.txt|
+    Then tds returns successful upload
+    Then I refresh User Details section
+    And I access freyja from bus admin
+    Then I navigate to new window
+    Then I have login freyja from BUS
+    When I select the Devices tab
+    And I choose one file
+    And I open Actions panel
+    And I click Large Download Options restore wizard
+    And I fill out the restore wizard
+      | restore_name         | restore_type |
+      | archive_restore_file | media    |
+    When I select options menu
+    And I select event history
+    Then this restore is In Progress
+    When I log in bus admin console as administrator
+    And I search user by:
+      | keywords    |
+      | @user_email |
+    And I view user details by newly created user email
+    Then I refund the user with all amount
+    Then I check the refund amount should be correct
+    And I search and delete partner account by newly created partner company name
+
+
+

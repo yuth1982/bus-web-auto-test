@@ -54,7 +54,7 @@ Feature: Change VAT Number
     When I change the partner contact information default password
       | VAT Number:   |
       | IT03018900245 |
-    Then VAT number shouldn't be changed and the error message should be:
+    Then contact info shouldn't be changed and the error message should be:
     """
     Error updating VAT info. Please try again.
     """
@@ -84,7 +84,7 @@ Feature: Change VAT Number
     When I change the partner contact information default password
       | VAT Number:     |
       | IT03            |
-    Then VAT number shouldn't be changed and the error message should be:
+    Then contact info shouldn't be changed and the error message should be:
     """
     Error updating VAT info. Please try again.
     """
@@ -567,7 +567,7 @@ Feature: Change VAT Number
     When I change the partner contact information to:
       | VAT Number:      |
       | DE812321109      |
-    Then VAT number shouldn't be changed and the error message should be:
+    Then contact info shouldn't be changed and the error message should be:
     """
     Error updating VAT info. Please try again.
     """
@@ -592,7 +592,7 @@ Feature: Change VAT Number
     When I change the partner contact information to:
       | VAT Number:      |
       | invalid_number   |
-    Then VAT number shouldn't be changed and the error message should be:
+    Then contact info shouldn't be changed and the error message should be:
     """
     Error updating VAT info. Please try again.
     """
@@ -742,7 +742,7 @@ Feature: Change VAT Number
     When I change the partner contact information to:
       | VAT Number:      |
       | DE812321109      |
-    Then VAT number shouldn't be changed and the error message should be:
+    Then contact info shouldn't be changed and the error message should be:
     """
     Error updating VAT info. Please try again.
     """
@@ -769,7 +769,7 @@ Feature: Change VAT Number
     When I change the partner contact information to:
       | VAT Number:      |
       | invalid_number   |
-    Then VAT number shouldn't be changed and the error message should be:
+    Then contact info shouldn't be changed and the error message should be:
     """
     Error updating VAT info. Please try again.
     """

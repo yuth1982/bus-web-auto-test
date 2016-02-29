@@ -32,6 +32,7 @@ module CyberSource
 
 
     def fill_billing_info(partner)
+      wait_until { !first(:xpath, "//input[@class='right complete']").nil? }
       first_name_tb.type_text(partner.credit_card.first_name)
       last_name_tb.type_text(partner.credit_card.last_name)
       address_line1_tb.type_text(partner.company_info.address)

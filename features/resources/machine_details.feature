@@ -82,7 +82,7 @@ Feature: Machine Details
       | power adapter   | key from  |
       | Data Shuttle US | available |
     Then Data shuttle order should be created
-    And I get the data shuttle seed id
+    And I get the data shuttle seed id for newly created partner company name
     And I search partner by newly created partner company name
     And I view partner details by newly created partner company name
     And I act as newly created partner account
@@ -119,7 +119,7 @@ Feature: Machine Details
       | power adapter   | key from  |
       | Data Shuttle US | available |
     Then Data shuttle order should be created
-    And I get the data shuttle seed id
+    And I get the data shuttle seed id for newly created partner company name
     And I search partner by newly created partner company name
     And I view partner details by newly created partner company name
     And I act as newly created partner account
@@ -155,7 +155,7 @@ Feature: Machine Details
       | power adapter   | key from  | quota | drive type     |
       | Data Shuttle US | available | 20    | 3.5" 2TB Drive |
     Then Data shuttle order should be created
-    Then I get the data shuttle seed id
+    Then I get the data shuttle seed id for newly created partner company name
     When I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
     And I act as newly created partner account
@@ -193,7 +193,7 @@ Feature: Machine Details
       | power adapter   | key from  | quota | drive type     |
       | Data Shuttle US | available | 29    | 3.5" 2TB Drive |
     Then Data shuttle order should be created
-    Then I get the data shuttle seed id
+    Then I get the data shuttle seed id for newly created partner company name
     When I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
     And I act as newly created partner account
@@ -231,7 +231,7 @@ Feature: Machine Details
       | power adapter   | key from  | quota | drive type     |
       | Data Shuttle US | available | 35    | 3.5" 2TB Drive |
     Then Data shuttle order should be created
-    Then I get the data shuttle seed id
+    Then I get the data shuttle seed id for newly created partner company name
     When I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
     And I act as newly created partner account
@@ -269,7 +269,7 @@ Feature: Machine Details
       | power adapter   | key from  | quota | drive type     |
       | Data Shuttle US | available | 28    | 3.5" 2TB Drive |
     Then Data shuttle order should be created
-    Then I get the data shuttle seed id
+    Then I get the data shuttle seed id for newly created partner company name
     When I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
     And I act as newly created partner account
@@ -310,7 +310,7 @@ Feature: Machine Details
       | power adapter   | key from  | quota | drive type     |
       | Data Shuttle US | available | 99    | 3.5" 2TB Drive |
     Then Data shuttle order should be created
-    Then I get the data shuttle seed id
+    Then I get the data shuttle seed id for newly created partner company name
     When I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
     And I act as newly created partner account
@@ -351,7 +351,7 @@ Feature: Machine Details
       | power adapter   | key from  | quota | drive type     |
       | Data Shuttle US | available | 100   | 3.5" 2TB Drive |
     Then Data shuttle order should be created
-    Then I get the data shuttle seed id
+    Then I get the data shuttle seed id for newly created partner company name
     When I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
     And I act as newly created partner account
@@ -392,7 +392,7 @@ Feature: Machine Details
       | power adapter   | key from  | quota | drive type     |
       | Data Shuttle US | available | 101   | 3.5" 2TB Drive |
     Then Data shuttle order should be created
-    Then I get the data shuttle seed id
+    Then I get the data shuttle seed id for newly created partner company name
     When I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
     And I act as newly created partner account

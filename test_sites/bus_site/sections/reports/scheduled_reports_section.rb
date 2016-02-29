@@ -62,11 +62,33 @@ module Bus
     #
     # Returns nothing
     def download_report(report_name)
-      wait_until do 
+      wait_until do
         !find(:xpath, "//a[text()='#{report_name}']/../../*[7]").text.match(/.*Download.*/).nil?
       end
       report_row = find_report(report_name)
       report_row[6].find(:css, "a:contains('Download')").click
+    end
+
+    def click_report(report_name)
+      report_row = find_report(report_name)
+      report_row[0].find(:css, "a:contains('#{report_name}')").click
+    end
+
+    def run_report(report_name)
+      report_row = find_report(report_name)
+      report_row[4].find(:css, "a:contains('Run')").click
+      wait_until{!find(:xpath, "//a[text()='#{report_name}']/../../*[7]").text.match(/.*Progress.*/).nil?}
+      wait_until{!find(:xpath, "//a[text()='#{report_name}']/../../*[7]").text.match(/.*Download.*/).nil?}
+    end
+
+    def get_next_run(report_name)
+      report_row = find_report(report_name)
+      report_row[5].text
+    end
+
+    def get_history(report_name)
+      report_row = find_report(report_name)
+      report_row[7].text
     end
 
     # Public: Read downloaded scheduled reports

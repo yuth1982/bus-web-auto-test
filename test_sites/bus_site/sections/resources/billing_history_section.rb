@@ -15,5 +15,13 @@ module Bus
     def billing_history_hashes
       billing_history_table.rows_text.map{ |row| Hash[*billing_history_table.headers_text.zip(row).flatten] }
     end
+
+    def recent_billing_visible?
+      !locate(:xpath, "//div[@id='resource-all_charges-content']/h5").nil?
+    end
+
+    def click_invoice_link
+      (billing_history_table.rows.first[0].find("a")).click
+    end
   end
 end

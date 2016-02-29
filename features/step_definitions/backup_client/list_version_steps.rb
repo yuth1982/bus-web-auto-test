@@ -28,3 +28,13 @@ end
 Then /^I should not see version (.+) in version list$/ do |version_number|
   @bus_site.admin_console_page.list_versions_section.version_listed?(version_number).should be_false
 end
+
+And /^I get (1|2) enabled (win-sync|linux) version$/ do |number, _|
+  version_info = @bus_site.admin_console_page.list_versions_section.version_list_table_hash
+  @version_name = version_info[0]['Name']
+  @version = version_info[0]['Version']
+  if number == '2'
+    @version_name2 = version_info[1]['Name']
+    @version2 = version_info[1]['Version']
+  end
+end

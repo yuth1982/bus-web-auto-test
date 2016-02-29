@@ -4,10 +4,10 @@ When /^I add a new role(| without saving):$/ do |type, table|
   role_hash.each do |_, v|
     v.replace ERB.new(v).result(binding)
   end
-  role = Bus::DataObj::Role.new(role_hash['Type'], role_hash['Name'], role_hash['Parent'], role_hash['User Group'])
+  @role = Bus::DataObj::Role.new(role_hash['Type'], role_hash['Name'], role_hash['Parent'], role_hash['User Group'])
   save = true
   save = false if type == ' without saving'
-  @ug_search_result = @bus_site.admin_console_page.add_new_role_section.add_new_role(role, save)
+  @ug_search_result = @bus_site.admin_console_page.add_new_role_section.add_new_role(@role, save)
 end
 
 And /^I save the role$/ do
@@ -40,12 +40,10 @@ When /^I check all the capabilities for the new role$/ do
 end
 
 When /^I delete role (.+)$/ do | role_name |
-  sleep 5 # Without sleep, the (stop masquerade) link comes back again
-  step "I navigate to List Roles section from bus admin console page"
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['list_roles'])
   role_name = @role.name if role_name == '@role_name'
   @bus_site.admin_console_page.list_roles_section.list_role(role_name)
   @bus_site.admin_console_page.role_details_section.delete_role(role_name)
-  sleep 1
 end
 
 When /^I clean all roles with name which started with "([^"]+)"$/ do |prefix|

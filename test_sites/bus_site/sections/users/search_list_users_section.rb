@@ -98,5 +98,6 @@ module Bus
       clear_search_link.click
       wait_until_bus_section_load
     end
+
   end
 end

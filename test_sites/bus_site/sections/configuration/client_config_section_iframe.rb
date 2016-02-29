@@ -71,9 +71,12 @@ module Bus
     element(:mobile_lock_input, id: "locked_priority")
     element(:mobile_cascade_input, id: "cascade")
 
+    element(:css_input, xpath: "//*[@id='site_branding-webrestore_site-tabs']/ul[2]/li[1]/textarea")
+    element(:save_changes_btn, xpath: "//*[@id='site_branding-webrestore_site-tabs']/ul[2]/li[7]/p/input")
+
     # Public: Enter name
     #         Select license type
-    #         Click next button
+    #         Click next button             git a
     #         Select/deselect throttle
     #
     # @param [Object] client_config
@@ -476,6 +479,23 @@ module Bus
       page.find(:xpath, "//a[text()='#{client_config}']").click
       page.find(:xpath, "//a[text()='Delete Config']").click
       alert_accept
+    end
+
+    def css_header_color_hex
+      color_hex_list = ["#FAEBD7", "#00FFFF", "#8A2BE2", "#FF1493"]
+      color_hex = color_hex_list[rand(4)]
+      puts color_hex
+      header_hex = ".content-header{ background-color: " + color_hex +";}"
+      footer_hex = ".footer{ background-color: " + color_hex +";}"
+      css_input.type_text(header_hex)
+      puts "---input----"
+      css_input.type_text(footer_hex)
+      sleep 3
+    end
+
+    def click_save_changes
+      save_changes_btn.click
+      sleep 5
     end
 
     def get_all_presetting_value

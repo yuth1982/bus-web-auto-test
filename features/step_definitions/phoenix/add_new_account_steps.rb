@@ -381,3 +381,8 @@ end
 When /^user log in failed, error message is:$/ do  |message|
   @phoenix_site.user_account.login_error_message.should == message.to_s
 end
+
+When /^user log in phoenix failed$/ do
+  @phoenix_site.user_account.check_logout_link.should == false
+end
+

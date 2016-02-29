@@ -17,6 +17,7 @@ module Bus
     def delete_role(role_name)
       delete_role_lnk.click
       alert_accept
+      wait_until { locate(:link, "Delete Role").nil? }
     end
 
     def add_all_available_capabilities

@@ -24,11 +24,19 @@ module Bus
     # [0] Order Keys table [1] Licence Key table [2] Order Summary table
     elements(:keys_tables, css: "ul.tab-panes > li > div > table")
 
+    # filter key
+    element(:filter_key_input, id: "mozy_pro_key_search")
+    element(:filter_button, xpath: "//input[@value='Filter']")
+    element(:add_first_key, xpath: "//table/tbody/tr[1]/td[8]/a[text()='Add']")
+
     # Create order section
     element(:available_keys_table, css: "div.box table.table-view")
     element(:add_new_key, xpath: "//a[text()='Add New Key']")
     element(:drive_type_select, id: 'data_shuttle_sku_type')
     element(:discount_input,xpath: "//input[contains(@id,'discount')]")
+    element(:add_first_key,xpath: "//div[@class='box']//table//tr[1]//a[text()='Add']")
+    element(:filter_key_input, id: "mozy_pro_key_search")
+    element(:filter_button, xpath: "//input[@value='Filter']")
 
     # Summary section
     element(:num_win_drivers_tb, id: "seed_device_order_win_drive_num")
@@ -107,15 +115,26 @@ module Bus
         if order.key_from == "available"
           # Add key from available keys
           add_available_key.click
+        elsif !order.key_from.match(/[0-9A-Z]{20}/).nil?
+          # add key for fixed data (product key)
+          filter_key_input.type_text(order.key_from)
+          filter_button.click
+          wait_until_bus_section_load
+          add_first_key.click
         elsif !(order.key_from.match(/^\d* available$/).nil?)
           # Add certain number keys on current page
           number = order.key_from.match(/\d+/)[0].to_i
           number.times {
-            find(:xpath,"//div[@class='box']//table//tr[1]//a[text()='Add']").click
+            add_first_key.click
             wait_until_bus_section_load
           }
         elsif order.key_from == "new"
           add_new_key.click
+        elsif !order.key_from.match(/[0-9A-Z]{20}/).nil?   # filter key
+          filter_key_input.type_text(order.key_from)
+          filter_button.click
+          wait_until_bus_section_load
+          add_first_key.click
         else
            raise "Please order key from either available keys or add a new key"
         end
@@ -139,7 +158,7 @@ module Bus
         wait_until_bus_section_load
 
         #seperate from error/success message
-        order.notification_msg = order_notification_p.text
+        order.notification_msg = order_notification_p.text unless locate(:xpath, "//div[@class='show-details']/p").nil?
 
         # fill summary section
         if messages.empty?

@@ -90,10 +90,14 @@ Then /^Itemized user search results should be:$/ do |results_table|
   expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
 
-When /^The users table should be empty$/ do
+When /^The users table should( not)? be empty$/ do |t|
   rows = @bus_site.admin_console_page.search_list_users_section.search_results_table_rows
   #rows.to_s.include?('No results found.').should be_true
-  (rows.empty? || (rows[0][0]=="")).should be_true
+  if t.nil?
+    (rows.empty? || (rows[0][0]==" ")).should be_true
+  else
+    rows.empty?.should be_false
+  end
 end
 
 When /^I view user details by (.+)$/ do |user|
@@ -120,4 +124,18 @@ end
 
 When /^I clear user search results$/ do
   @bus_site.admin_console_page.search_list_users_section.clear_search
+end
+
+Then /^The exported users csv file should be like$/ do |report_table|
+  report_table.map_column!('Column B') do |value|
+    value.replace ERB.new(value).result(binding)
+  end
+
+  report_table.map_column!('Column I') do |value|
+    value.gsub!(/@today/,DateTime.now.strftime("%m/%d/%y"))
+    value
+  end
+
+  actual_csv = FileHelper.read_csv_file("users")
+  actual_csv.should == report_table.rows
 end

@@ -6,7 +6,7 @@ Feature: Email Alerts
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.1980 @bus @email_alerts @auto_tasks @smoke
+  @TC.1980 @bus @email_alerts @tasks_p1 @smoke
   Scenario: 1980:Create New Daily Alert
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -32,7 +32,7 @@ Feature: Email Alerts
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.1983 @bus @email_alerts @auto_tasks
+  @TC.1983 @bus @email_alerts @tasks_p1
   Scenario: 1983:Modify Existing Email Alert
     When I add a new MozyPro partner:
       | period | base plan | coupon              | country       |
@@ -67,7 +67,7 @@ Feature: Email Alerts
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.1981 @bus @email_alerts @auto_tasks
+  @TC.1981 @bus @email_alerts @tasks_p1
   Scenario: 1981:Create New Weekly Alert
     When I add a new MozyEnterprise partner:
       | period | users | coupon              | country       |
@@ -93,7 +93,7 @@ Feature: Email Alerts
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.122228 @bus @email_alerts @auto_tasks
+  @TC.122228 @bus @email_alerts @tasks_p1
   Scenario: 122228:Delete an email alert
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -113,7 +113,7 @@ Feature: Email Alerts
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.2169 @bus @email_alerts @auto_tasks
+  @TC.2169 @bus @email_alerts @tasks_p1
   Scenario: 2169:Change the email alerts recipients
     When I add a new MozyPro partner:
       | period | base plan | coupon              | country       |
@@ -148,7 +148,7 @@ Feature: Email Alerts
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.122440 @bus @email_alerts @auto_tasks
+  @TC.122440 @bus @email_alerts @tasks_p1
   Scenario: 122440:Storage pool summary of Email Alerts
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -190,7 +190,7 @@ Feature: Email Alerts
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.122441 @bus @email_alerts @auto_tasks
+  @TC.122441 @bus @email_alerts @tasks_p1
   Scenario: 122441:Backup summary of Email Alerts
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -232,7 +232,7 @@ Feature: Email Alerts
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.122442 @bus @email_alerts @auto_tasks
+  @TC.122442 @bus @email_alerts @tasks_p1
   Scenario: 122442:Users without recent backups of Email Alerts
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -274,7 +274,7 @@ Feature: Email Alerts
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.122443 @bus @email_alerts @auto_tasks
+  @TC.122443 @bus @email_alerts @tasks_p1
   Scenario: 122443:Users with outdated clients of Email Alerts
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -314,7 +314,7 @@ Feature: Email Alerts
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21191_1 @bus @email_alerts @auto_tasks
+  @TC.21191_1 @bus @email_alerts @tasks_p1
   Scenario: 21191_1:[Email Alert] Verify Users Nearing Quota Report Email
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -393,7 +393,7 @@ Feature: Email Alerts
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21191_2 @bus @email_alerts @auto_tasks
+  @TC.21191_2 @bus @email_alerts @tasks_p1
   Scenario: 21191_2:[Email Alert] Verify Users Nearing Quota Report Email
     When I add a new MozyEnterprise partner:
       | period | users | server plan |
@@ -470,7 +470,7 @@ Feature: Email Alerts
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21191_3 @bus @email_alerts @auto_tasks
+  @TC.21191_3 @bus @email_alerts @tasks_p1
   Scenario: 21191_3:[Email Alert] Verify Users Nearing Quota Report Email
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -495,7 +495,7 @@ Feature: Email Alerts
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21191_4 @bus @email_alerts @auto_tasks
+  @TC.21191_4 @bus @email_alerts @tasks_p1
   Scenario: 21191_4:[Email Alert] Verify Users Nearing Quota Report Email
     When I add a new MozyEnterprise partner:
       | period | users | server plan |

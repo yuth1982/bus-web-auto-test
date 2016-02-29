@@ -14,6 +14,7 @@ module Bus
     element(:continue_btn, css: "input[value=Submit]")
     element(:submit_purchase_btn, id: "btn-purchase_resource_submit")
     element(:message_span, css: "div#resource-purchase_resources-content div span")
+    element(:error_message_p, xpath: "//div[@id='error_input']/p")
 
     # Public: Purchase resources
     #
@@ -47,6 +48,10 @@ module Bus
     # Returns success or error message text
     def messages
       message_span.text
+    end
+
+    def error_message
+      error_message_p.text
     end
 
     # Public: Current purchased resources
