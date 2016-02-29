@@ -67,19 +67,19 @@ module Email
       f.close
       cipher = Gibberish::RSA.new(private_key)
       pass = cipher.decrypt(encrypted)
-      @client = Viewpoint::EWSClient.new endpoint, user, pass, server_version: SOAP::ExchangeWebService::VERSION_2007_SP1
+      @client = Viewpoint::EWSClient.new endpoint, user, pass, server_version: SOAP::ExchangeWebService::VERSION_2007
       @inbox = @client.get_folder_by_name 'Inbox', :act_as => CONFIGS['outlook']['mailbox']
       @found = nil
     end
 
     def find_emails(query,_=nil)
-      @found = nil
+      @found = []
       start = Time.now
       while Time.now - start < 90
         begin
           ten_minutes_ago = Time.now - 10*60
           items = @inbox.items_since(DateTime.parse(ten_minutes_ago.to_s))
-          items.find do |item|
+          items.each {  |item|
             email = @client.get_item item.id
             query.each_index {|index| query[index]=query[index].downcase if index%2 == 0}
 
@@ -116,16 +116,14 @@ module Email
               end
             end
             next if !content_match
-
-            @found = Array.[](email)
-
-          end
+            @found << email
+         }
         rescue Exception => ex
           Log.debug ex
         ensure
           sleep 10
         end
-        break if !@found.nil?
+        break if @found.size > 0
       end
       @found
     end

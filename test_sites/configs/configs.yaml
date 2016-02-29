@@ -135,8 +135,8 @@ phoenix:
   captcha:                      kwpa3121
 
 fedid:
-  user_email:                   auto@mtdev.mozypro.local
-  user_name:                    auto
+  user_email:                   auto1@mtdev.mozypro.local
+  user_name:                    auto1
   subdomain:                    qa8saml
 
 gmail:
@@ -146,7 +146,7 @@ gmail:
 outlook:
   username:                     svc_mozybusauto
   password:                     lib/email_helper/svc_mozybusauto.pwd
-  endpoint:                     https://legacyemail.emc.com/ews/Exchange.asmx
+  endpoint:                     https://email.emc.com/ews/Exchange.asmx
   mailbox:                      mozyautotest@emc.com
 
 rsa:

@@ -1,4 +1,5 @@
 And /^I login my support successfully$/ do
+  sleep 30
   @bus_site.mysupport_page.logged_in
 end
 
@@ -15,6 +16,7 @@ Then /^I search with subject (.+)$/ do |subject|
 end
 
 Then /^The search results title should include (.+)$/ do |subject|
+  sleep 20
   @bus_site.admin_console_page.contact_section.get_search_results_title.should include("search results for \"#{subject}\"")
 end
 

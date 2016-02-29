@@ -8,6 +8,7 @@ def firefox_profile
   profile['browser.download.lastDir'] = FileHelper.ff_download_path
   profile['browser.download.manager.showWhenStarting'] = false
   profile['browser.download.manager.closeWhenDone'] = true
+  profile['browser.startup.homepage_override.mstone'] = 'ignore'
   profile['browser.helperApps.neverAsk.saveToDisk'] = "text/plain;application/csv;text/csv;application/vnd.ms-excel;application/octet-stream;application/x-msdos-program;application/x-apple-diskimage;application/x-debian-package;application/x-redhat-package-manager"
   profile.assume_untrusted_certificate_issuer = false
   #profile.native_events = true
@@ -28,6 +29,7 @@ end
 Capybara.register_driver :firefox_debug do |app|
   profile = Selenium::WebDriver::Firefox::Profile.new
   profile.add_extension("#{FileHelper.default_test_data_path}/firebug-2.0.9-fx.xpi")
+  profile['browser.startup.homepage_override.mstone'] = 'ignore'
   profile["extensions.firebug.console.enableSites"] = true
   profile["extensions.firebug.net.enableSites"]     = true
   profile["extensions.firebug.script.enableSites"]  = true

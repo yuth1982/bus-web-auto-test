@@ -46,10 +46,11 @@ Feature: Auto Grow
     And I update the user password to default password
     And activate the user's Desktop device without a key and with the default password
     And I get the machine_id by license_key
-    And I upload 1 GB of data to device
+    And I upload data to device by batch
+      | machine_id                  | GB  |
+      | <%=@clients[0].machine_id%> | 0.8 |
     Then tds returns successful upload
     And I delete user
-
 
   @TC.14116 @bus
   Scenario: Mozy-14116::Autogrow enabled billing
@@ -76,7 +77,12 @@ Feature: Auto Grow
     And I update the user password to default password
     And activate the user's Server device without a key and with the default password
     And I get the machine_id by license_key
-    And I upload 2 GB of data to device
+    And I upload data to device by batch
+      | machine_id                  | GB  |
+      | <%=@clients[0].machine_id%> | 0.8 |
+    And I upload data to device by batch
+      | machine_id                  | GB  |
+      | <%=@clients[0].machine_id%> | 0.8 |
     Then tds return message should be:
     """
     Account or container quota has been exceeded

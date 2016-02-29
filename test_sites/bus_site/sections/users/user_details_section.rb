@@ -111,6 +111,7 @@ module Bus
     element(:refunded_amount_td, xpath: "//div[@class='show-details']//table[@class='table-view']//tr[1]//td[4]")
 
     elements(:all_billing_info, xpath: "//td[starts-with(text(),'Cybersource')]/../../tr")
+    element(:user_billing_table, css: "table.table-view")
 
     #desktop storage limit
     element(:user_storage_limit_span, xpath: "//span[contains(text(),'User Storage Limit: ')]/../span[2]")
@@ -913,6 +914,10 @@ module Bus
 
     def click_restore_files(type, device)
       find(:xpath, "//a[text()='#{device}']/../..//a[@title='Restore #{type}']/i").click
+    end
+
+    def home_user_billing_hash
+      user_billing_table.hashes
     end
 
     private

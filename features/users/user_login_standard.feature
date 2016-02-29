@@ -323,7 +323,7 @@ Feature: Standard user Login
       | keywords   |
       | @user_name |
     And I view user details by TC.123710.User
-    And I update the user password to reset password
+    And I update the user password to default password
     Then I navigate to user login page with partner ID
     And I click forget your password link
     And I input email @new_users[0].email in reset password panel to reset password

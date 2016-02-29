@@ -39,6 +39,7 @@ Feature: News in Admin Console
     And New partner should be created
     And I act as newly created partner
     Then I navigate to Learn About Sync section from bus admin console page
+    And I navigate to new window
     Then I check the new window title is File sync download for Windows and Mac | Mozy
 
 

@@ -172,8 +172,8 @@ Feature: Notify about and collect past-due balances
     Then New partner should be created
     And I get partner aria id
     And I wait for 40 seconds
-    And API* I change the Aria account status by newly created partner aria id to 12
-    And I wait for 30 seconds
+#    And API* I change the Aria account status by newly created partner aria id to 12
+#    And I wait for 30 seconds
     And API* I get Aria account details by newly created partner aria id
     Then API* Aria account should be:
       | status_label     |

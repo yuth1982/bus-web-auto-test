@@ -22,8 +22,8 @@ module LDAPHelper
         :givenname => "#{user_name}",
         :displayname => "#{user_name}",
         :mail => @ldap_user_mail || "#{user_name}#{email_postfix || EMAIL_POSTFIX}",
-        :uid => '123',
-        :userprincipalname => @ldap_user_mail || "#{user_name}#{email_postfix || EMAIL_POSTFIX}",
+       # :uid => '335',
+        :userprincipalname =>@ldap_user_mail || "#{user_name}#{email_postfix || EMAIL_POSTFIX}",
         :useraccountcontrol => '66080',
         :samaccountname => "#{user_name}",
     }
