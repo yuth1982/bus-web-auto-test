@@ -19,7 +19,7 @@ Feature: Phoenix smoke test
 
 
 
-  @TC.126120 @bus @regression_test @phoenix @mozyhome
+  @TC.126120 @bus @regression_test @phoenix @mozyhome @us
   Scenario: 126120 Create a MozyHome paid user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -33,13 +33,13 @@ Feature: Phoenix smoke test
     Then the user is successfully added.
     And the user has activated their account
 
-  @TC.126132 @bus @regression_test @phoenix @mozyhome
+  @TC.126132 @bus @regression_test @phoenix @mozyhome @us
   Scenario: 126132 Log into the MozyHome paid user - Precondition:@TC.126120
     When I get previous partner info
     And I login as the user on the account.
     And I verify the user account.
 
-  @TC.126139 @bus @regression_test @phoenix @mozyhome
+  @TC.126139 @bus @regression_test @phoenix @mozyhome @us
   Scenario: 126139 update a profile info of home user - Precondition:@TC.126120
     When I get previous partner info
     And I login as the user on the account.
@@ -49,7 +49,7 @@ Feature: Phoenix smoke test
     # Add change country, address, Add check point
     And I save the partner info
 
-  @TC.126124 @bus @regression_test @phoenix @mozyhome @qa
+  @TC.126124 @bus @regression_test @phoenix @mozyhome @us @qa
   Scenario: 126124 Update Billing address of MozyHome user - Precondition:@TC.126120
     When I get previous partner info
     When I login as the user on the account.
@@ -58,7 +58,7 @@ Feature: Phoenix smoke test
       | 5111991111111121 | MasterCard  | 1121           |
     And I save the partner info
 
-  @TC.126128 @bus @regression_test @phoenix @mozyhome
+  @TC.126128 @bus @regression_test @phoenix @mozyhome @us
   Scenario: 126128 update a user name - Precondition:@TC.126120
     When I get previous partner info
     And I login as the user on the account.
@@ -81,7 +81,7 @@ Feature: Phoenix smoke test
     And I log into phoenix with username @new_admin_email and password default password
     And I save the partner info
 
-  @TC.126133 @bus @regression_test @phoenix @mozyhome
+  @TC.126133 @bus @regression_test @phoenix @mozyhome @us
   Scenario: 126133 Mozyhome user change password - Precondition:@TC.126120
     When I get previous partner info
     When I login as the user on the account.
@@ -91,7 +91,23 @@ Feature: Phoenix smoke test
     #And I logout of my user account
     And I login under changed password on the account.
 
-  @TC.126137 @bus @regression_test @phoenix @mozyhome
+  @TC.126131 @bus @regression_test @phoenix @mozyhome @us @qa
+  Scenario: 126131 Mozyhome user forget password - Precondition:@TC.126120
+    When I get previous partner info
+    And I navigate to phoenix login page
+    And I click forget your password link
+    And I input email @partner.admin_info.email in reset password panel to reset password
+    When I search emails by keywords:
+      | subject                    | to                            |
+      | MozyHome password recovery | <%=@partner.admin_info.email%>|
+    Then I should see 1 email(s)
+    When I click reset password link from the email
+    Then I reset password with reset password
+    And I will see reset password massage Your password has been changed.
+    And I log into phoenix with username @new_admin_email and password reset password
+    And I save the partner info
+
+  @TC.126137 @bus @regression_test @phoenix @mozyhome @us
   Scenario: 126137 view home user detail in BUS - Precondition:@TC.126120,@TC.126124
     When I get previous partner info
     And I log in bus admin console as administrator
@@ -110,7 +126,7 @@ Feature: Phoenix smoke test
       | @id  | User CC Update                              | today | $1.00  | XXXX-1121 | MasterCard | No       | No        | No         | Cybersource US    |             |
       | @id  | MozyHome 50 GB, + 0 GB, 1 machines, monthly | today | $5.99  | XXXX-1122 | Visa       | No       | Yes       | Refund now | Cybersource US    |             |
 
-  @TC.126138 @bus @regression_test @phoenix @mozyhome
+  @TC.126138 @bus @regression_test @phoenix @mozyhome @us
   Scenario: 126138 delete home user in BUS - Precondition:@TC.126120
     When I get previous partner info
     And I log in bus admin console as administrator
@@ -121,7 +137,7 @@ Feature: Phoenix smoke test
     And I delete user
 
 
-  @TC.126122 @bus @regression_test @phoenix @mozyhome @free @email
+  @TC.126122 @bus @regression_test @phoenix @mozyhome @free @email @uk
   Scenario: 126122 Add a new UK monthly free MozyHome user
     When I am at dom selection point:
     And I add a phoenix Free user:
@@ -132,13 +148,13 @@ Feature: Phoenix smoke test
     And the user has activated their account
 
 
-  @TC.126123 @bus @regression_test @phoenix @mozyhome
+  @TC.126123 @bus @regression_test @phoenix @mozyhome @uk
   Scenario: 126123 Log into the MozyHome free user - Precondition:@TC.126122
     When I get previous partner info
     And I login as the user on the account.
     And I verify the user account.
 
-  @TC.126127 @bus @regression_test @phoenix @mozyhome
+  @TC.126127 @bus @regression_test @phoenix @mozyhome @uk
   Scenario: 126127 Verify that home user can upgrade to a paid home user - Precondition:@TC.126122
     When I get previous partner info
     And I login as the user on the account.
@@ -147,7 +163,7 @@ Feature: Phoenix smoke test
       | 50 GB     | 1      | United Kingdom | Internal Mozy - Phoenix smoke test - free2paid | <%=QA_ENV['coupon']%> | 4916783606275713 |
     Then upgrade from free to paid will be successful
 
-  @TC.126135 @bus @regression_test @phoenix @mozyhome @qa
+  @TC.126135 @bus @regression_test @phoenix @mozyhome @uk @qa
   Scenario: 126135 home user can upgrade current plan - Precondition:@TC.126122,@TC.126127
     When I get previous partner info
     And I login as the user on the account.
@@ -178,7 +194,7 @@ Feature: Phoenix smoke test
       | Total:                              | £11.49            |
     And the renewal plan summary is Same as current plan
 
-  @TC.126136 @bus @regression_test @phoenix @mozyhome @qa
+  @TC.126136 @bus @regression_test @phoenix @mozyhome @uk @qa
   Scenario: 126136 home user can upgrade next renewal plan - Precondition:@TC.126122,@TC.126127,@TC.126135
     When I get previous partner info
     And I login as the user on the account.
@@ -205,7 +221,7 @@ Feature: Phoenix smoke test
       | VAT Rate (20%):     | £21.07          |
       | Total:              | £126.39         |
 
-  @TC.126126 @bus @regression_test @phoenix @mozyhome
+  @TC.126126 @bus @regression_test @phoenix @mozyhome @uk
   Scenario: 126126 client can be downloaded when home user log in phoenix - Precondition:@TC.126122
     When I get previous partner info
     And I login as the user on the account.
@@ -214,7 +230,7 @@ Feature: Phoenix smoke test
     And I download home client through phoenix
     And I download sync client through phoenix
 
-  @TC.132289 @bus @regression_test @phoenix @mozyhome
+  @TC.132289 @bus @regression_test @phoenix @mozyhome @uk
   Scenario: 132289 BUS admin refund for home user - Precondition:@TC.126122,@TC.126127,@TC.126135
     When I get previous partner info
     And I log in bus admin console as administrator
@@ -234,7 +250,7 @@ Feature: Phoenix smoke test
       | @id  | Prorated: MozyHome 125 GB, + 40 GB, 3 machines, monthly | today | £6.50  | XXXX-5713 | Visa      | No       | Yes       | £6.50 by @id  | Cybersource Other |             |
       | @id  | MozyHome 50 GB, + 0 GB, 1 machines, monthly             | today | £4.99  | XXXX-5713 | Visa      | No       | Yes       | Refund now  | Cybersource Other |             |
 
-  @TC.126134 @bus @regression_test @phoenix @mozyhome
+  @TC.126134 @bus @regression_test @phoenix @mozyhome @uk
   Scenario: 126134 home user delete account by self - Precondition:@TC.126122
     When I get previous partner info
     And I login as the user on the account.

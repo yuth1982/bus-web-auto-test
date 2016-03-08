@@ -6,7 +6,7 @@ Feature: Phoenix smoke test
   So that I can organize my business in a way that works for me
 
 
-  @TC.126122 @bus @regression_test @phoenix @mozyhome @free @email
+  @TC.126122 @bus @regression_test @phoenix @mozyhome @free @email @uk
   Scenario: 126122 Add a new UK monthly free MozyHome user
     When I am at dom selection point:
     And I add a phoenix Free user:
@@ -17,13 +17,13 @@ Feature: Phoenix smoke test
     And the user has activated their account
 
 
-  @TC.126123 @bus @regression_test @phoenix @mozyhome
+  @TC.126123 @bus @regression_test @phoenix @mozyhome @uk
   Scenario: 126123 Log into the MozyHome free user - Precondition:@TC.126122
     When I get previous partner info
     And I login as the user on the account.
     And I verify the user account.
 
-  @TC.126127 @bus @regression_test @phoenix @mozyhome
+  @TC.126127 @bus @regression_test @phoenix @mozyhome @uk
   Scenario: 126127 Verify that home user can upgrade to a paid home user - Precondition:@TC.126122
     When I get previous partner info
     And I login as the user on the account.
@@ -32,7 +32,7 @@ Feature: Phoenix smoke test
       | 50 GB     | 1      | United Kingdom | Internal Mozy - Phoenix smoke test - free2paid | <%=QA_ENV['coupon']%> | 4916783606275713 |
     Then upgrade from free to paid will be successful
 
-  @TC.126135 @bus @regression_test @phoenix @mozyhome @qa
+  @TC.126135 @bus @regression_test @phoenix @mozyhome @uk @qa
   Scenario: 126135 home user can upgrade current plan - Precondition:@TC.126122,@TC.126127
     When I get previous partner info
     And I login as the user on the account.
@@ -63,7 +63,7 @@ Feature: Phoenix smoke test
       | Total:                              | £11.49            |
     And the renewal plan summary is Same as current plan
 
-  @TC.126136 @bus @regression_test @phoenix @mozyhome @qa
+  @TC.126136 @bus @regression_test @phoenix @mozyhome @uk @qa
   Scenario: 126136 home user can upgrade next renewal plan - Precondition:@TC.126122,@TC.126127,@TC.126135
     When I get previous partner info
     And I login as the user on the account.
@@ -90,7 +90,7 @@ Feature: Phoenix smoke test
       | VAT Rate (20%):     | £21.07          |
       | Total:              | £126.39         |
 
-  @TC.126126 @bus @regression_test @phoenix @mozyhome
+  @TC.126126 @bus @regression_test @phoenix @mozyhome @uk
   Scenario: 126126 client can be downloaded when home user log in phoenix - Precondition:@TC.126122
     When I get previous partner info
     And I login as the user on the account.
@@ -99,7 +99,7 @@ Feature: Phoenix smoke test
     And I download home client through phoenix
     And I download sync client through phoenix
 
-  @TC.126134 @bus @regression_test @phoenix @mozyhome
+  @TC.126134 @bus @regression_test @phoenix @mozyhome @uk
   Scenario: 126134 home user delete account by self - Precondition:@TC.126122
     When I get previous partner info
     And I login as the user on the account.
