@@ -134,14 +134,20 @@ And /^I change my profile attributes to:$/ do |change_info_table|
   # for changing PWD am going to pull a PWD value from the ENV file & use it
   # specific info that can be repopulated to the data_obj's
 
-    @partner.credit_card.number = attributes["new_cc_num"] unless attributes["new_cc_num"].nil?
-    @partner.credit_card.type = attributes["new_cc_type"] unless attributes["new_cc_type"].nil?
-    @partner.credit_card.last_four_digits = @partner.credit_card.number[-4..-1] unless attributes["new_cc_num"].nil?
-    @partner.admin_info.first_name = attributes["new_username_first"] unless attributes["new_username_first"].nil?
-    @partner.admin_info.last_name = attributes["new_username_last"] unless attributes["new_username_last"].nil?
-    @partner.admin_info.full_name = attributes["new_username_full"] unless attributes["new_username_full"].nil?
-    @partner.use_company_info = attributes['billing country'].nil?
-    @partner.billing_info.country = attributes["billing country"] unless attributes["billing country"].nil?
+  @partner.credit_card.number = attributes["new_cc_num"] unless attributes["new_cc_num"].nil?
+  @partner.credit_card.type = attributes["new_cc_type"] unless attributes["new_cc_type"].nil?
+  @partner.credit_card.first_name = attributes["cc first name"] unless attributes["cc first name"].nil?
+  @partner.credit_card.last_name = attributes["cc last name"] unless attributes["cc last name"].nil?
+  @partner.credit_card.last_four_digits = @partner.credit_card.number[-4..-1] unless attributes["new_cc_num"].nil?
+  @partner.credit_card.expire_month = attributes["expire month"] unless attributes["expire month"].nil?
+  @partner.credit_card.expire_year = attributes["expire year"] unless attributes["expire year"].nil?
+  @partner.credit_card.cvv = attributes["cvv"] unless attributes["cvv"].nil?
+
+  @partner.admin_info.first_name = attributes["new_username_first"] unless attributes["new_username_first"].nil?
+  @partner.admin_info.last_name = attributes["new_username_last"] unless attributes["new_username_last"].nil?
+  @partner.admin_info.full_name = attributes["new_username_full"] unless attributes["new_username_full"].nil?
+  @partner.use_company_info = attributes['billing country'].nil?
+  @partner.billing_info.country = attributes["billing country"] unless attributes["billing country"].nil?
 
 
   # section: changing password, cc, username in my_profile
