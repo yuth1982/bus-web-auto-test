@@ -53,8 +53,8 @@ Feature: Add a new partner through phoenix
       | 24     | 500 GB    | United States | United States   | 4018121111111122 |
     Then the order summary looks like:
       | Description       | Price     | Quantity | Amount    |
-      | 500 GB - Biennial | $3,989.79 | 1        | $3,989.79 |
-      | Total Charge      | $3,989.79 |          | $3,989.79 |
+      | 500 GB - Biennial | $2,789.79 | 1        | $2,789.79 |
+      | Total Charge      | $2,789.79 |          | $2,789.79 |
     And the partner is successfully added.
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
@@ -81,8 +81,8 @@ Feature: Add a new partner through phoenix
       | 12     | 500 GB    | United States | United States   | 4018121111111122 |
     Then the order summary looks like:
       | Description     | Price     | Quantity | Amount    |
-      | 500 GB - Annual | $2,089.89 | 1        | $2,089.89 |
-      | Total Charge    | $2,089.89 |          | $2,089.89 |
+      | 500 GB - Annual | $1,459.89 | 1        | $1,459.89 |
+      | Total Charge    | $1,459.89 |          | $1,459.89 |
     And the partner is successfully added.
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
@@ -109,9 +109,9 @@ Feature: Add a new partner through phoenix
       | 24     | 250 GB    | United States | France          | yes         | 4018121111111122 |
     Then the order summary looks like:
       | Description            | Price     | Quantity | Amount    |
-      | 250 GB - Biennial      | $1,994.79 | 1        | $1,994.79 |
-      | Server Plan - Biennial | $335.79   | 1        | $335.79   |
-      | Total Charge           | $2,330.58 |          | $2,330.58 |
+      | 250 GB - Biennial      | $1,399.79 | 1        | $1,399.79 |
+      | Server Plan - Biennial | $231.79   | 1        | $231.79   |
+      | Total Charge           | $1,631.58 |          | $1,631.58 |
     And the partner is successfully added.
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
@@ -140,11 +140,11 @@ Feature: Add a new partner through phoenix
       | 12     | 500 GB    | United States | France          | yes         | 10PERCENTOFFOUTLINE | 4018121111111122 |
     Then the order summary looks like:
       | Description          | Price     | Quantity | Amount    |
-      | 500 GB - Annual      | $2,089.89 | 1        | $2,089.89 |
-      | Server Plan - Annual | $219.89   | 1        | $219.89   |
-      | Subscription Price   | $2,309.78 |          | $2,309.78 |
-      | Discounts            | - $230.98 |          | - $230.98 |
-      | Total Charge         | $2,078.80 |          | $2,078.80 |
+      | 500 GB - Annual      | $1,459.89 | 1        | $1,459.89 |
+      | Server Plan - Annual | $156.89   | 1        | $156.89   |
+      | Subscription Price   | $1,616.78 |          | $1,616.78 |
+      | Discounts            | - $161.68 |          | - $161.68 |
+      | Total Charge         | $1,455.10 |          | $1,455.10 |
     And the partner is successfully added.
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
@@ -171,8 +171,8 @@ Feature: Add a new partner through phoenix
       | 24     | 250 GB    | United States | China           | 4018121111111122 |
     Then the order summary looks like:
       | Description            | Price     | Quantity | Amount    |
-      | 250 GB - Biennial      | $1,994.79 | 1        | $1,994.79 |
-      | Total Charge           | $1,994.79 |          | $1,994.79 |
+      | 250 GB - Biennial      | $1,399.79 | 1        | $1,399.79 |
+      | Total Charge           | $1,399.79 |          | $1,399.79 |
     And the partner is successfully added.
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
@@ -198,9 +198,9 @@ Feature: Add a new partner through phoenix
       | period | base plan | country       | billing country | cc number        |
       | 12     | 250 GB    | United States | China           | 4018121111111122 |
     Then the order summary looks like:
-      | Description     | Price     | Quantity | Amount    |
-      | 250 GB - Annual | $1,044.89 | 1        | $1,044.89 |
-      | Total Charge    | $1,044.89 |          | $1,044.89 |
+      | Description     | Price   | Quantity | Amount  |
+      | 250 GB - Annual | $729.89 | 1        | $729.89 |
+      | Total Charge    | $729.89 |          | $729.89 |
     And the partner is successfully added.
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name

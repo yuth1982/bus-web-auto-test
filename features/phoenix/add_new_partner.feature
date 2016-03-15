@@ -148,10 +148,10 @@ Background:
     | 12     | 250 GB    | Ireland |            |   HIPAA  | 4319402211111113 |
     Then the order summary looks like:
     | Description        | Price     | Quantity | Amount    |
-    | 250 GB - Annual    | €824.89   | 1        | €824.89   |
-    | Subscription Price | €824.89   |          | €824.89   |
-    | VAT                | €189.72   |          | €189.72   |
-    | Total Charge       | €1,014.61 |          | €1,014.61 |
+    | 250 GB - Annual    | €663.89   | 1        | €663.89   |
+    | Subscription Price | €663.89   |          | €663.89   |
+    | VAT                | €152.69   |          | €152.69   |
+    | Total Charge       | €816.58   |          | €816.58   |
     And the partner is successfully added.
     And they have logged in and verified their account.
     And I log in bus admin console as administrator
@@ -190,11 +190,11 @@ Background:
     | 24     | 1 TB      | Ireland | IE9691104A | yes         | 4319402211111113 |
     Then the order summary looks like:
     | Description            | Price     | Quantity | Amount    |
-    | 1 TB - Biennial        | €6,299.79 | 1        | €6,299.79 |
-    | Server Plan - Biennial | €419.79   | 1        | €419.79   |
-    | Subscription Price     | €6,719.58 |          | €6,719.58 |
-    | VAT                    | €1,545.50 |          | €1,545.50 |
-    | Total Charge           | €8,265.08 |          | €8,265.08 |
+    | 1 TB - Biennial        | €5,072.79 | 1        | €5,072.79 |
+    | Server Plan - Biennial | €405.79   | 1        | €405.79   |
+    | Subscription Price     | €5,478.58 |          | €5,478.58 |
+    | VAT                    | €1,260.07 |          | €1,260.07 |
+    | Total Charge           | €6,738.65 |          | €6,738.65 |
     And the partner is successfully added.
     And they have logged in and verified their account.
     And I log in bus admin console as administrator
@@ -316,10 +316,10 @@ Background:
     | 24     | 500 GB    | United Kingdom |             | 4916783606275713 |
     Then the order summary looks like:
     | Description            | Price     | Quantity | Amount    |
-    | 500 GB - Biennial      | £2,624.79 | 1        | £2,624.79 |
-    | Subscription Price     | £2,624.79 |          | £2,624.79 |
-    | VAT                    | £524.96   |          | £524.96   |
-    | Total Charge           | £3,149.75 |          | £3,149.75 |
+    | 500 GB - Biennial      | £1,823.79 | 1        | £1,823.79 |
+    | Subscription Price     | £1,823.79 |          | £1,823.79 |
+    | VAT                    | £364.76   |          | £364.76   |
+    | Total Charge           | £2,188.55 |          | £2,188.55 |
     And the partner is successfully added.
     And they have logged in and verified their account.
     And I log in bus admin console as administrator
@@ -442,9 +442,9 @@ Background:
     | 24     | 250 GB    | Germany | DE812321109 | 4188181111111112 |
     Then the order summary looks like:
     | Beschreibung           | Preis     | Menge  | Betrag    |
-    | 250 GB - 2-Jahre       | 1.574,79€ | 1      | 1.574,79€ |
+    | 250 GB - 2-Jahre       | 1.272,79€ | 1      | 1.272,79€ |
     | Umsatzsteuer           | Befreit   |        | Befreit   |
-    | Gesamtbelastung        | 1.574,79€ |        | 1.574,79€ |
+    | Gesamtbelastung        | 1.272,79€ |        | 1.272,79€ |
     And the partner is successfully added.
     And they have logged in and verified their account.
     And I log in bus admin console as administrator
@@ -522,12 +522,12 @@ Background:
     When I am at dom selection point:
     And I add a phoenix Pro partner:
     | period | base plan | country | vat number    | cc number        |
-    | 12      | 500 Go   | France  | FR08410091490 | 4485393141463880 |
+    | 12     | 500 Go    | France  | FR08410091490 | 4485393141463880 |
     Then the order summary looks like:
     | Description             | Prix      | Quantité  | Montant   |
-    | 500 Go - Annuel         | 1 649,89€ | 1         | 1 649,89€ |
+    | 500 Go - Annuel         | 1 327,89€ | 1         | 1 327,89€ |
     | TVA                     | Exemption |           | Exemption |
-    | Montant total des frais | 1 649,89€ |           | 1 649,89€ |
+    | Montant total des frais | 1 327,89€ |           | 1 327,89€ |
     And the partner is successfully added.
     And they have logged in and verified their account.
     And I log in bus admin console as administrator
@@ -701,11 +701,11 @@ Background:
     | 12     | 1 To      | 10PERCENTOFFOUTLINE | France  | FR08410091490 | 4485393141463880 |
     Then the order summary looks like:
     | Description             | Prix      | Quantité  | Montant   |
-    | 1 To - Annuel           | 3 299,89€ | 1         | 3 299,89€ |
-    | Prix d'abonnement       | 3 299,89€ |           | 3 299,89€ |
-    | Réductions              | - 329,99€ |           | - 329,99€ |
+    | 1 To - Annuel           | 2 654,89€ | 1         | 2 654,89€ |
+    | Prix d'abonnement       | 2 654,89€ |           | 2 654,89€ |
+    | Réductions              | - 265,49€ |           | - 265,49€ |
     | TVA                     | Exemption |           | Exemption |
-    | Montant total des frais | 2 969,90€ |           | 2 969,90€ |
+    | Montant total des frais | 2 389,40€ |           | 2 389,40€ |
     And the partner is successfully added.
     And they have logged in and verified their account.
     And I log in bus admin console as administrator

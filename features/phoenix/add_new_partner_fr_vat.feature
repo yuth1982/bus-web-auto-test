@@ -199,10 +199,10 @@ Feature: Add a new partner through phoenix
       | 12     | 250 Go    | France  | France          | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix    | Quantité | Montant |
-      | 250 Go - Annuel         | 824,89€ | 1        | 824,89€ |
-      | Prix d'abonnement       | 824,89€ |          | 824,89€ |
-      | TVA                     | 164,98€ |          | 164,98€ |
-      | Montant total des frais | 989,87€ |          | 989,87€ |
+      | 250 Go - Annuel         | 663,89€ | 1        | 663,89€ |
+      | Prix d'abonnement       | 663,89€ |          | 663,89€ |
+      | TVA                     | 132,78€ |          | 132,78€ |
+      | Montant total des frais | 796,67€ |          | 796,67€ |
     And the partner is successfully added.
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
@@ -212,13 +212,13 @@ Feature: Add a new partner through phoenix
     When I am at dom selection point:
     And I add a phoenix Pro partner:
       | period | base plan | country | billing country | cc number        |
-      | 24     | 250 Go     | France  | France         | 4485393141463880 |
+      | 24     | 250 Go    | France  | France         | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix      | Quantité | Montant   |
-      | 250 Go - Bisannuel      | 1 574,79€ | 1        | 1 574,79€ |
-      | Prix d'abonnement       | 1 574,79€ |          | 1 574,79€ |
-      | TVA                     | 314,96€   |          | 314,96€   |
-      | Montant total des frais | 1 889,75€ |          | 1 889,75€ |
+      | 250 Go - Bisannuel      | 1 272,79€ | 1        | 1 272,79€ |
+      | Prix d'abonnement       | 1 272,79€ |          | 1 272,79€ |
+      | TVA                     | 254,56€   |          | 254,56€   |
+      | Montant total des frais | 1 527,35€ |          | 1 527,35€ |
     And the partner is successfully added.
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
@@ -247,10 +247,10 @@ Feature: Add a new partner through phoenix
       | 12     | 500 Go    | France  | France          | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix      | Quantité | Montant   |
-      | 500 Go - Annuel         | 1 649,89€ | 1        | 1 649,89€ |
-      | Prix d'abonnement       | 1 649,89€ |          | 1 649,89€ |
-      | TVA                     | 329,98€   |          | 329,98€   |
-      | Montant total des frais | 1 979,87€ |          | 1 979,87€ |
+      | 500 Go - Annuel         | 1 327,89€ | 1        | 1 327,89€ |
+      | Prix d'abonnement       | 1 327,89€ |          | 1 327,89€ |
+      | TVA                     | 265,58€   |          | 265,58€   |
+      | Montant total des frais | 1 593,47€ |          | 1 593,47€ |
     And the partner is successfully added.
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
@@ -263,10 +263,10 @@ Feature: Add a new partner through phoenix
       | 24     | 500 Go    | France  | France          | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix      | Quantité | Montant   |
-      | 500 Go - Bisannuel      | 3 149,79€ | 1        | 3 149,79€ |
-      | Prix d'abonnement       | 3 149,79€ |          | 3 149,79€ |
-      | TVA                     | 629,96€   |          | 629,96€   |
-      | Montant total des frais | 3 779,75€ |          | 3 779,75€ |
+      | 500 Go - Bisannuel      | 2 536,79€ | 1        | 2 536,79€ |
+      | Prix d'abonnement       | 2 536,79€ |          | 2 536,79€ |
+      | TVA                     | 507,36€   |          | 507,36€   |
+      | Montant total des frais | 3 044,15€ |          | 3 044,15€ |
     And the partner is successfully added.
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
@@ -295,10 +295,10 @@ Feature: Add a new partner through phoenix
       | 12     | 1 To      | France  | France          | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix      | Quantité | Montant   |
-      | 1 To - Annuel           | 3 299,89€ | 1        | 3 299,89€ |
-      | Prix d'abonnement       | 3 299,89€ |          | 3 299,89€ |
-      | TVA                     | 659,98€   |          | 659,98€   |
-      | Montant total des frais | 3 959,87€ |          | 3 959,87€ |
+      | 1 To - Annuel           | 2 654,89€ | 1        | 2 654,89€ |
+      | Prix d'abonnement       | 2 654,89€ |          | 2 654,89€ |
+      | TVA                     | 530,98€   |          | 530,98€   |
+      | Montant total des frais | 3 185,87€ |          | 3 185,87€ |
     And the partner is successfully added.
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
@@ -311,10 +311,10 @@ Feature: Add a new partner through phoenix
       | 24     | 1 To      | France  | France          | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix      | Quantité | Montant   |
-      | 1 To - Bisannuel        | 6 299,79€ | 1        | 6 299,79€ |
-      | Prix d'abonnement       | 6 299,79€ |          | 6 299,79€ |
-      | TVA                     | 1 259,96€ |          | 1 259,96€ |
-      | Montant total des frais | 7 559,75€ |          | 7 559,75€ |
+      | 1 To - Bisannuel        | 5 072,79€ | 1        | 5 072,79€ |
+      | Prix d'abonnement       | 5 072,79€ |          | 5 072,79€ |
+      | TVA                     | 1 014,56€ |          | 1 014,56€ |
+      | Montant total des frais | 6 087,35€ |          | 6 087,35€ |
     And the partner is successfully added.
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
@@ -507,9 +507,9 @@ Feature: Add a new partner through phoenix
       | 12     | 500 Go    | France  | Royaume-Uni     | FR08410091490 | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix      | Quantité | Montant   |
-      | 500 Go - Annuel         | 1 649,89€ | 1        | 1 649,89€ |
+      | 500 Go - Annuel         | 1 327,89€ | 1        | 1 327,89€ |
       | TVA                     | Exemption |          | Exemption |
-      | Montant total des frais | 1 649,89€ |          | 1 649,89€ |
+      | Montant total des frais | 1 327,89€ |          | 1 327,89€ |
     And the partner is successfully added.
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
@@ -522,9 +522,9 @@ Feature: Add a new partner through phoenix
       | 24     | 1 To      | France  | États-Unis      | FR08410091490 | 4485393141463880 |
     Then the order summary looks like:
       | Description             | Prix      | Quantité | Montant   |
-      | 1 To - Bisannuel        | 6 299,79€ | 1        | 6 299,79€ |
+      | 1 To - Bisannuel        | 5 072,79€ | 1        | 5 072,79€ |
       | TVA                     | Exemption |          | Exemption |
-      | Montant total des frais | 6 299,79€ |          | 6 299,79€ |
+      | Montant total des frais | 5 072,79€ |          | 5 072,79€ |
     And the partner is successfully added.
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
