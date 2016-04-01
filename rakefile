@@ -268,6 +268,7 @@ task :win_hosts do
   QA6_BUSCLIENT04_HOSTS = 'scripts/ci/qa6_busclient04.hosts'
   QA6_BUSCLIENT01_HOSTS = 'scripts/ci/qa6_busclient01.hosts'
   QA6_BUSCLIENT05_HOSTS = 'scripts/ci/qa6_busclient05.hosts'
+  QA6_BUSCLIENT06_HOSTS = 'scripts/ci/qa6_busclient06.hosts'
   QA12_HOSTS = 'scripts/ci/qa12.hosts'
   STG_HOSTS = 'scripts/ci/stg.hosts'
   PANTHEON_HOSTS = 'scripts/ci/pantheon.hosts'
@@ -284,6 +285,8 @@ task :win_hosts do
       srcHostName = QA6_BUSCLIENT01_HOSTS
     when 'qa6_busclient05'
       srcHostName = QA6_BUSCLIENT05_HOSTS
+    when 'qa6_busclient06'
+      srcHostName = QA6_BUSCLIENT06_HOSTS
     when 'qa12h'
       srcHostName = QA12_HOSTS
     when 'std'
