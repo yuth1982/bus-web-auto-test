@@ -237,11 +237,38 @@ task :phoenix_smoke_test_with_retry, :arg do |t, args|
   end
 end
 
+
+task :freyja_deployment_test, :arg do |t, args|
+  Cucumber::Rake::Task.new(:run) do |t|
+    t.cucumber_opts = "features/freyja/ #{args[:arg]} --format json --out report.json --format html --out html-report/report.html --format rerun --out rerun.txt --format pretty"
+  end
+  Rake::Task[:run].invoke()
+end
+
+desc 'Run Freyja deployment test and rerun failed tests'
+task :freyja_deployment_test_with_retry, :arg do |t, args|
+  first_run = run_rake_task('freyja_deployment_test', args[:arg])
+  rerun_success = true
+  unless first_run
+    rerun_success = run_rake_task('rerun', nil)
+  end
+
+  #merge the results
+  merge('report_rerun.json', 'report.json', 'report_merged.json')
+  include Version
+  get_version
+  unless first_run || rerun_success
+    raise 'Cucumber tests failed'
+  end
+end
+
+
 desc 'update windows hosts file according to the environment variable settings. This task must be run as administrator'
 task :win_hosts do
   QA6_BUSCLIENT04_HOSTS = 'scripts/ci/qa6_busclient04.hosts'
   QA6_BUSCLIENT01_HOSTS = 'scripts/ci/qa6_busclient01.hosts'
   QA6_BUSCLIENT05_HOSTS = 'scripts/ci/qa6_busclient05.hosts'
+  QA6_BUSCLIENT06_HOSTS = 'scripts/ci/qa6_busclient06.hosts'
   QA12_HOSTS = 'scripts/ci/qa12.hosts'
   STG_HOSTS = 'scripts/ci/stg.hosts'
   PANTHEON_HOSTS = 'scripts/ci/pantheon.hosts'
@@ -258,6 +285,8 @@ task :win_hosts do
       srcHostName = QA6_BUSCLIENT01_HOSTS
     when 'qa6_busclient05'
       srcHostName = QA6_BUSCLIENT05_HOSTS
+    when 'qa6_busclient06'
+      srcHostName = QA6_BUSCLIENT06_HOSTS
     when 'qa12h'
       srcHostName = QA12_HOSTS
     when 'std'

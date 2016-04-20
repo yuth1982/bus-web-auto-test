@@ -8,6 +8,7 @@ total_bytes = attributes["total bytes"] || 0
 total_files_seeded = attributes["total files seeded"] || 0
 total_bytes_seeded = attributes["total bytes seeded"] || 0
 username = attributes["username"] || @clients.last.username
+attributes["password"].replace ERB.new(attributes["password"]).result(binding) unless attributes["password"].nil?
 password = attributes["password"] || @clients.last.password
 machine_hash = attributes["machine_hash"] || @clients.last.machine_hash
 

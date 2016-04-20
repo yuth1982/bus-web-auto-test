@@ -27,3 +27,7 @@ end
 When /^add new pro plan success message should be displayed$/ do
   @bus_site.admin_console_page.add_new_pro_plan_section.anpp_messages.should match(/Pro plan was successfully created./)
 end
+
+Then /^list pro plan is$/ do |proplan_info|
+  @bus_site.admin_console_page.add_new_pro_plan_section.get_proplan_info.should == proplan_info.raw
+end

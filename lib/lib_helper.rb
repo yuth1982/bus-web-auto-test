@@ -5,6 +5,7 @@ require 'bundler'
 Bundler.setup
 require "selenium-webdriver"
 require 'rspec'
+#require 'nokogiri'
 require 'forgery'
 require 'csv'
 require 'rest_client'
@@ -20,6 +21,7 @@ require 'erb'
 require 'ostruct'
 
 require 'capybara/cucumber'
+#require 'capybara-webkit'
 
 require 'aria_api/lib/aria_api'
 require 'file_helper'
@@ -33,9 +35,11 @@ require 'device_helper'
 require 'ssh_tds_grow_quota'
 require 'testlink_helper'
 require 'common_helper'
+require 'restore_helper'
 require 'client_api_helper'
 require 'client_config_helper'
-
+require 'move_enterprise_to_dps'
+require 'customcd_api_helper'
 require 'site_helper/site_helper'
 require 'capybara_helper/capybara_helper'
 require 'bifrost_helper/bifrost_helper'
@@ -62,3 +66,5 @@ include Billing
 include MachineInfo
 include ClientUserResources
 include LinuxBackupSets
+include MoveEnterpriseToDPS
+include CustomCDAPI

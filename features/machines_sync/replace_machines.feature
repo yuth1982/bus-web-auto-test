@@ -143,3 +143,52 @@ Feature: Replace Machines
       | <%=@clients[0].machine_alias%> |
     Then I should not search out machine record
     And I search and delete partner account by newly created partner company name
+
+  @TC.2061 @bus @machines_sync @tasks_p2
+  Scenario: 2061 Replace a machine
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan |
+      | 12     | 10    | 250 GB      |
+    Then New partner should be created
+    When I act as newly created partner account
+    And I add new user(s):
+      | name          | user_group           | storage_type | storage_limit | devices |
+      | TC.2061.User1 | (default user group) | Server       | 40            | 1       |
+      | TC.2061.User2 | (default user group) | Server       | 40            | 1       |
+    Then 2 new user should be created
+    And I search user by:
+      | keywords                |
+      | <%=@new_users[0].name%> |
+    And I view user details by TC.2061.User1
+    And I update the user password to default password
+    Then I close user details section
+    And I search user by:
+      | keywords                |
+      | <%=@new_users[1].name%> |
+    And I view user details by TC.2061.User2
+    And I update the user password to default password
+    Then I use keyless activation to activate devices newly
+      | machine_name  | user_name                   | machine_type |
+      | Machine1_2061 | <%=@new_users.first.email%> | Server       |
+    And I update newly created machine encryption value to Default
+    Then I use keyless activation to activate devices
+      | machine_name  | user_name                | machine_type |
+      | Machine2_2061 | <%=@new_users[1].email%> | Server       |
+    And I update newly created machine encryption value to Default
+    And I navigate to Search / List Machines section from bus admin console page
+    When I view machine details for Machine1_2061
+    And I click on the replace machine link
+    And I select Machine2_2061 to be replaced
+    And I navigate to Search / List Machines section from bus admin console page
+    Then replace machine message should be Replace operation was successful.
+    And I search machine by:
+      | machine_name  |
+      | Machine2_2061 |
+    Then I should not search out machine record
+    When I search machine by:
+      | machine_name  |
+      | Machine1_2061 |
+    And I view machine details for Machine1_2061
+    Then I will see Replaced Machine2_2061 on today in machine details
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name

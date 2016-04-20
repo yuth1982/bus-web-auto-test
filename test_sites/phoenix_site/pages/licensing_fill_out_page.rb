@@ -150,6 +150,7 @@ module Phoenix
     #   calls specific methods passing partner data, then clicks continue button
     #
     def licensing_billing_fillout(partner)
+      # wait_until { !first(:id, "conti_button").nil? | !first(:id, "submit_button").nil?}
       # define base plan
       fill_base_plan(partner.base_plan)
       # define base plan subscription period

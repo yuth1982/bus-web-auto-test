@@ -8,6 +8,7 @@ module Bus
     # top menus
     element(:delete_user_link, xpath: "//a[text()='Delete User']")
     element(:change_user_password_link, xpath: "//a[text()='Change User Password']")
+    element(:allow_re_activation_a, xpath: "//a[text()='Allow Re-Activation']")
 
     elements(:user_details_dls, xpath: "//div[starts-with(@id,'user-show')]//div[3]/dl")
     element(:change_status_link, xpath: "//span[starts-with(@id,'user-display-status-')]//a")
@@ -23,6 +24,10 @@ module Bus
     element(:product_key_lbl, xpath: "//div[starts-with(@id, 'all-license-keys-')]//div/div/div[2]/table[2]/tbody/tr/td")
 
     elements(:product_keys_tables, css: 'div[id^=all-license-keys-] table.mini-table')
+
+    element(:change_external_id_link, xpath: "//dt[text()='External ID:']/following-sibling::dd[1]//a[text()='(change)']")
+    element(:external_id_tb, id: "external_id")
+    element(:submit_external_id_btn, xpath: "//dt[text()='External ID:']/following-sibling::dd[1]//input[@value='Submit']")
 
     # Add Stash
     element(:add_stash_link, xpath: "//a[text()='(Add Sync)']")
@@ -72,9 +77,18 @@ module Bus
 
     element(:device_table, css: 'table.mini-table')
 
+    element(:edit_device_a, xpath: "//span[@class='view']//a[text()='Edit']")
+    element(:edit_device_input, id: "device_count")
+    element(:edit_device_cancel_a, xpath: "//input[@id='device_count']/../a[text()='(cancel)']")
+
+
+
     #Sync details link
     element(:sync_details_link, xpath: "//table[@class='mini-table']//a[text()='Sync']")
 
+    # device section
+    element(:device_details_link, xpath: "//table[@class='mini-table']/tbody/tr[1]/td[1]/a")
+    element(:device_details_td, xpath: "//table[@class='mini-table']/tbody/tr[1]/td[1]")
     # Change User Password
     element(:new_password_tb, id: 'new_password')
     element(:new_password_confirm_tb, id: 'new_password_confirmation')
@@ -99,6 +113,30 @@ module Bus
     elements(:all_billing_info, xpath: "//td[starts-with(text(),'Cybersource')]/../../tr")
     element(:user_billing_table, css: "table.table-view")
 
+    #desktop storage limit
+    element(:user_storage_limit_span, xpath: "//span[contains(text(),'User Storage Limit: ')]/../span[2]")
+    element(:edit_user_storage_limit_a, xpath: "//a[contains(@id,'edit-user-storage-max')][text()='Edit']")
+    element(:remove_user_storage_limit_a, xpath: "//a[contains(@id,'remove-user-storage-max')]")
+    element(:input_user_storage_limit_input, xpath: "//input[contains(@id,'input-user-storage-max')]")
+    element(:save_user_storage_limit_a, xpath: "//a[contains(@id,'save-user-storage-max')]")
+    element(:cancel_user_storage_limit_a, xpath: "//a[contains(@id,'cancel-edit-user-storage-max')]")
+    element(:user_storage_limit_set_a, xpath: "//a[contains(@id,'set-user-storage-max')]")
+    element(:user_storage_limit_help_img, xpath: "//form[contains(@id,'form-set-max-pooled-storage')]/img[@class='tooltip']")
+
+    #set machine storage
+    element(:device_storage_limit_span, xpath: "//span[contains(text(),'User Storage Limit: ')]/../span[2]")
+
+    #buy more link
+    element(:buy_more_a, xpath: "//div[contains(@id,'user-show')]//a[text()='Buy More']")
+
+    #delete sync container
+    element(:delete_sync_i, xpath: "//i[@class='icon-trash icon-2x']")
+    element(:delete_sync_yes, xpath: "//input[@value='Yes']")
+
+    # Change Machine Quota under user details for OEM partners
+    element(:change_machine_quota_link, css: "a[id^=edit_quota_for_user_show]")
+    element(:change_machine_quota_tb, css: "input[id^=quota_in_gb_for_user_show_]")
+    element(:change_machine_quota_btn, css: "div[id^=change_quota_for_user_show_] input[value='Save']")
 
     # Public: User details storage, devices, storage limit hash
     #
@@ -326,9 +364,14 @@ module Bus
     #   @bus_site.admin_console_page.user_details_section.active_user
     #
     # @return [] nothing
-    def active_user
+    def change_user_status(status)
       change_status_link.click
-      status_selection.select('Active')
+      if status.eql?('activate')
+        status_selection.select('Active')
+      else
+        status_selection.select('Suspended')
+      end
+
       submit_status_btn.click
     end
 
@@ -479,23 +522,45 @@ module Bus
     end
 
     def delete_device(device_name)
+      msg = ''
       device_table.rows.each do |row|
         if row[0].text == device_name
           row[-1].find(:css, 'form[id^=machine-delete] a.action').click
+          msg = alert_text
           alert_accept
           break;
         end
       end
+      msg
     end
 
-    def view_device_details(device_name)
+    def delete_sync
+      delete_sync_i.click
+      delete_sync_yes.click
+      wait_until{add_stash_link.visible?}
+    end
+
+    # when view the device which has been deleted,deleted will be shown next to the device name
+    def view_device_details(device_name, deleted = false)
+      device_name_row = (deleted ? device_name + ' (deleted)' : device_name)
       device_table.rows.each do |row|
-        if row[0].text == device_name
+        if row[0].text == device_name_row
           row[0].find(:xpath, "//a[text()='#{device_name}']").click
-          wait_until{ find(:xpath, "//a[text()='Delete Machine']").visible? }
+          wait_until{ find(:xpath, "//dt[text()='Owner:']").visible? }
           break
         end
       end
+    end
+
+    def device_exist(device_name)
+      flag = false
+      device_table.rows.each do |row|
+        if row[0].text == device_name
+          flag = true
+          break
+        end
+      end
+      flag
     end
 
     def click_view_product_keys_link
@@ -533,27 +598,14 @@ module Bus
       new_password_tb.type_text(password)
       new_password_confirm_tb.type_text(password)
       new_password_change_btn.click
-      text = alert_text
-      alert_accept
-      text
-    end
-
-    def edit_password_with_incorrect_pass(password)
-      if !new_password_tb.visible?
-        change_user_password_link.click
-        wait_until_bus_section_load
-      end
-      new_password_tb.type_text(password)
-      new_password_confirm_tb.type_text(password)
-      new_password_change_btn.click
       wait_until { alert_present? }
       text = alert_text
       alert_accept
       text
     end
 
-    def has_change_user_password_link
-      all(:xpath, "//a[text()='Change User Password']").size > 0
+    def has_link(link)
+      locate_link(link)
     end
 
     def change_device_quota(count, type=nil)
@@ -655,8 +707,13 @@ module Bus
       end
 
       if action == 'save' or action == 'remove'
+        if alert_present?
+          alert_msg = alert_text
+          alert_accept
+        end
         wait_until_bus_section_load
       end
+      alert_msg
     end
 
     def set_max_value(type, name, quota)
@@ -756,11 +813,107 @@ module Bus
       amount
     end
 
+    def get_device_name
+      device_details_td.text
+    end
+
     def get_refunded_amount
       refunded_amount_td.text
     end
+
     def get_user_billed_info
       all_billing_info.size
+    end
+
+    def click_allow_reactivation
+      allow_re_activation_a.click
+      alert_accept
+    end
+
+    def check_allow_reactivation_available
+      allow_re_activation_a.visible?
+    end
+
+    def get_restore_vms_hints(type)
+      locate(:xpath, "//a[@title='#{type}']")
+    end
+
+    def get_user_storage_limit
+      user_storage_limit_span.text.strip
+    end
+
+    def edit_user_storage_limit(action,storage)
+      edit_user_storage_limit_a.click
+      input_user_storage_limit_input.type_text(storage)
+      if action.eql?('edit')
+        save_user_storage_limit_a.click
+      else
+        cancel_user_storage_limit_a.click
+      end
+    end
+
+    def set_user_storage_limit(storage)
+      user_storage_limit_set_a.click
+      input_user_storage_limit_input.type_text(storage)
+      save_user_storage_limit_a.click
+    end
+
+    def remove_user_storage_limit(action)
+      remove_user_storage_limit_a.click
+      if action.eql?('Yes')
+        alert_accept
+      else
+        alert_dismiss
+      end
+    end
+
+    def check_user_storage_limit_set_link
+      user_storage_limit_set_a.visible?
+
+    end
+
+    def get_user_storage_limit_help_msg
+      user_storage_limit_help_img['data-tooltip']
+    end
+
+    def set_device_storage_limit(action,device,storage)
+      if action.eql?('set')
+        find(:xpath, "//td/a[text()='#{device}']/../../td[3]//a[contains(@id,'set-machine-storage-max')]").click
+      else
+        find(:xpath, "//td/a[text()='#{device}']/../../td[3]//a[text()='Edit']").click
+      end
+      find(:xpath, "//td/a[text()='#{device}']/../../td[3]//input[contains(@id,'input-machine-storage-max')]").type_text(storage)
+      find(:xpath, "//td/a[text()='#{device}']/../../td[3]//a[contains(@id,'save-machine-storage-max')]").click
+    end
+
+    def change_user_external_id(external_id)
+      change_external_id_link.click
+      external_id_tb.type_text(external_id)
+      submit_external_id_btn.click
+      wait_until_bus_section_load
+    end
+
+    def get_edit_device_tooltips
+      edit_device_input['onfocus'].match(/Min: \d, Max: \d+/)[0]
+    end
+
+    # Public: Update machine quota under user details for OEM
+    #
+    # @params [] none
+    #
+    # Example:
+    #   @bus_site.admin_console_page.user_details_details_section.change_machine_quota(quota)
+    #
+    # @return [] nothing
+    def change_machine_quota(quota)
+      change_machine_quota_link.click
+      change_machine_quota_tb.type_text(quota)
+      change_machine_quota_btn.click
+      wait_until { !locate(:css, "div[id^=change_quota_for_user_show_]").nil? }
+    end
+
+    def click_restore_files(type, device)
+      find(:xpath, "//a[text()='#{device}']/../..//a[@title='Restore #{type}']/i").click
     end
 
     def home_user_billing_hash

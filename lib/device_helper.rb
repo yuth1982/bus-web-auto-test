@@ -1,6 +1,13 @@
 require 'net/https'
 require 'base64'
+
+module OpenSSL
+  module SSL
+    remove_const :VERIFY_PEER
+  end
+end
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
+
 module Activation
   class Client
     attr_accessor :username, :password, :license_key, :machine_hash, :machine_alias, :resp
@@ -30,16 +37,18 @@ module Activation
       puts @machine_hash
       string = "/client/activate_product_key?key=#{@license_key}&email=#{@username}&password=#{@passwordhash}&machineid=#{@machine_hash}&alias=#{@machine_alias}&sid=#{@sid}&mac=#{@mac}&sendurl=1&codename=#{@codename}"
       Log.debug(string)
-      url = URI.parse("http://#{QA_ENV['client_host']}")
-      Log.debug("host = #{url.host}, port = #{url.port}")
-      resp = Net::HTTP.start(url.host, url.port) {|http|
-        http.set_debug_output $stderr
-        http.get(string)
-      }
+      uri = URI.parse("https://#{QA_ENV['client_host']}")
 
-      pp resp
-      Log.debug(resp.body)
-      return resp.body
+      Net::HTTP.start(uri.host, uri.port,
+                      :use_ssl => uri.scheme == 'https', :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
+        http.set_debug_output $stderr
+        req = Net::HTTP::Get.new(string)
+        response = http.request(req)
+        pp response
+        Log.debug(response.body)
+        return response.body
+      end
+
     end
 
     def get_codename(company_type)

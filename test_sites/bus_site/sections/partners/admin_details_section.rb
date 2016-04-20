@@ -20,6 +20,11 @@ module Bus
     element(:admin_id_txt, xpath: "//div[contains(@id,'admin-show')]//dt[text()='ID:']/../dd")
     element(:admin_name_txt, xpath: "//div[contains(@id,'admin-show')]//a[@class='title']")
 
+    # change external id
+    element(:change_admin_external_id_link, xpath: "//dt[text()='External ID:']/following-sibling::dd[1]//a[text()='(change)']")
+    element(:admin_external_id_tb, id: "external_id")
+    element(:submit_admin_external_id_btn, xpath: "//dt[text()='External ID:']/following-sibling::dd[1]//input[@value='Submit']")
+
      # change admin password
     element(:change_admin_password_link, xpath: "//div[contains(@id,'admin-show')]//li//a[text()='Change Password']")
     element(:new_password_tb, xpath: "//input[@id='new_password']")
@@ -171,5 +176,11 @@ module Bus
       click_here_link.click
     end
 
+    def change_admin_external_id(admin_external_id)
+      change_admin_external_id_link.click
+      admin_external_id_tb.type_text(admin_external_id)
+      submit_admin_external_id_btn.click
+      wait_until_bus_section_load
+    end
   end
 end

@@ -7,7 +7,7 @@ module Bus
     # Private elements
     #
     element(:access_freyja_btn, xpath: "//a[@title='Restore Files']/i")
-
+    element(:access_freyja_vms_btn, xpath: "//a[@title='Restore VMs']/i")
     # Change User Password
     element(:change_user_password_link, xpath: "//a[text()='Change Password']")
     element(:current_password_tb, id: 'password')
@@ -18,9 +18,14 @@ module Bus
     element(:log_out_a, xpath: "//a[text()='LOG OUT']")
 
 
-    def access_freyja_user_login_bus
-      wait_until{access_freyja_btn.visible?}
-      access_freyja_btn.click
+    def access_freyja_user_login_bus(vms)
+      if vms.nil?
+        wait_until{access_freyja_btn.visible?}
+        access_freyja_btn.click
+      else
+        wait_until{access_freyja_vms_btn.visible?}
+        access_freyja_vms_btn.click
+      end
     end
 
     def change_password_user_login_bus(password,confirm_password)
@@ -39,6 +44,10 @@ module Bus
 
     def user_log_out_bus
       log_out_a.click
+    end
+
+    def get_restore_vms_hints(type)
+      all(:xpath, "//a[@title='#{type}']").size
     end
 
   end

@@ -152,3 +152,4 @@ outlook:
 rsa:
   public_key:                   lib/rsa/appsqa.publickey
   private_key:                  appsqa.privatekey
+

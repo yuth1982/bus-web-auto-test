@@ -172,7 +172,7 @@ Feature:
     And I act as newly created partner account
     When I navigate to User Group List section from bus admin console page
     And I view user group details by clicking group name: (default user group)
-    And I open Keys tab
+    And I open Keys tab under user group details
     Then The key appears marked as a data shuttle order
     And I navigate to Billing History section from bus admin console page
     Then Billing history table should be:
@@ -221,7 +221,7 @@ Feature:
     And I act as newly created partner account
     When I navigate to User Group List section from bus admin console page
     And I view user group details by clicking group name: (default user group)
-    And I open Keys tab
+    And I open Keys tab under user group details
     Then The key appears marked as a data shuttle order
     And I navigate to Billing History section from bus admin console page
     Then Billing history table should be:
@@ -273,7 +273,7 @@ Feature:
     And I act as newly created partner account
     When I navigate to User Group List section from bus admin console page
     And I view user group details by clicking group name: (default user group)
-    And I open Keys tab
+    And I open Keys tab under user group details
     Then The key appears marked as a data shuttle order
     And I navigate to Billing History section from bus admin console page
     Then Billing history table should be:

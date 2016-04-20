@@ -41,6 +41,24 @@ module DBHelper
     end
   end
 
+  # update machine deleted time to days's before by machine id
+  def update_machine_deleted_at(machine_id, days)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      t = (Time.now - days * 24 * 3600)
+      Log.debug "########Time.now is #{Time.now}"
+      Log.debug "########days is #{days}"
+      sql = "update machines set deleted_at='#{t}' where ID='#{machine_id}';"
+      Log.debug sql
+      c = conn.exec(sql)
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+
+  end
+
   def get_machine_id_by_license_key(license_key)
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
@@ -457,6 +475,87 @@ module DBHelper
       c = conn.exec(sql)
       c.values[0][0]
      rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_model_audits_record(partner_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select count(id) from model_audits where action_audit_id in (select id from action_audits where effective_admin_id in (select root_admin_id from pro_partners where id = #{partner_id}) order by id desc limit 1);"
+      Log.debug sql
+      c = conn.exec(sql)
+      c.values[0][0]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_machine_available_quota(machine_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "SELECT machine_available_quota(#{machine_id});"
+      Log.debug sql
+      c = conn.exec(sql)
+      c.values[0][0]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def update_machines_last_update_time(machine_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "UPDATE machines SET last_successful_backup_at = (current_timestamp - interval '0.5 hours' ) WHERE id = #{machine_id};"
+      Log.debug sql
+      c = conn.exec(sql)
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_customcd_order_id(seed_device_order_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select customcd_order_id from seed_device_orders_customcd_orders where seed_device_order_id=#{seed_device_order_id};"
+      c = conn.exec(sql)
+      c.values[0][0]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def update_customcd_order_id(seed_id,customcd_order_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "UPDATE seed_device_orders_customcd_orders SET customcd_order_id = #{customcd_order_id} WHERE seed_device_order_id = #{seed_id};"
+      Log.debug sql
+      c = conn.exec(sql)
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_mail_domain_form_dea_services
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "SELECT mail_domain FROM dea_services ORDER BY id limit 1;"
+      Log.debug sql
+      c = conn.exec(sql)
+      c.values[0][0]
+    rescue PG::Error => e
       puts "postgres error: #{e}"
     ensure
       conn.close unless conn.nil?

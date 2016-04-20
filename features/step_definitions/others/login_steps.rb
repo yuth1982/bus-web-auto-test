@@ -185,6 +185,11 @@ Then /^I navigate to (new|old) window$/ do |window|
   end
 end
 
+Then /^I close new window$/ do
+  page.driver.browser.close
+  page.driver.browser.switch_to().window(page.driver.browser.window_handles.first)
+end
+
 When /^I go to page (.+)$/ do |url|
   url = url.gsub(/CONFIGS\['fedid'\]\['subdomain'\]/,CONFIGS['fedid']['subdomain'])
   url = url.gsub(/QA_ENV\['bus_host'\]/,QA_ENV['bus_host'])
@@ -208,5 +213,6 @@ When /^I click login link from the email$/ do
   Log.debug(login_url)
   @bus_site.login_page.go_to_url(login_url)
 end
+
 
 

@@ -1,6 +1,7 @@
 Dir.glob("#{File.dirname(__FILE__)}/sections/**/*.rb").each{ |file| require file }
 Dir.glob("#{File.dirname(__FILE__)}/pages/**/*.rb").each{ |file| require file }
 
+
 class BusSite
 
   def login_page
@@ -69,6 +70,10 @@ class BusSite
 
   def partner_invoice_page
     Bus::PartnerInvoicePage.new
+  end
+
+  def fedex_page
+    Bus::FedEXPage.new
   end
 end
 

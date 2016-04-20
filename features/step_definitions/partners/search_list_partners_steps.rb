@@ -19,6 +19,13 @@ When /^I search partner by (.+)$/ do |keywords|
   @bus_site.admin_console_page.search_list_partner_section.search_partner(keywords, 'None', true, true)
 end
 
+When /^I full search partner by (.+)$/ do |keywords|
+  #keywords string would like : @new_p_external_id;last four digits;contact zip
+  keywords.gsub!(/@new_p_external_id/,@new_p_external_id).gsub!(/last four digits/,@partner.admin_info.email[@partner.admin_info.email.index('@')-4,4])
+  keywords.gsub!(/zip code/,@partner.company_info.zip)
+  keywords.gsub!("\;"," ")
+  @bus_site.admin_console_page.search_list_partner_section.search_partner(keywords, 'None', true, true)
+end
 
 When /^I act as partner by:$/ do |search_key_table|
   attributes = search_key_table.hashes.first
@@ -39,7 +46,7 @@ When /^I act as partner by:$/ do |search_key_table|
   else
     raise 'Please act as partner by name or email'
   end
-  @bus_site.admin_console_page.has_stop_masquerading_link?
+  wait_until { @bus_site.admin_console_page.has_stop_masquerading_link? }
   @partner_id = @bus_site.admin_console_page.current_partner_id
   @current_partner[:id] ||= @bus_site.admin_console_page.partner_id if @current_partner
 end
@@ -55,7 +62,7 @@ end
 # Required: search list partner section must be visible
 When /^I view admin details by (.+)$/ do |partner_email|
   partner_email = @subpartner.admin_email_address if partner_email == '@subpartner.admin_email_address'
-  @bus_site.admin_console_page.search_list_partner_section.view_partner_detail(partner_email)
+  @bus_site.admin_console_page.search_list_partner_section.view_root_admin_detail(partner_email)
 end
 
 Then /^Partner search results (should|should not) be:$/ do |match, results_table|
@@ -134,5 +141,10 @@ When /^I use a existing partner:$/ do |partner_table|
   @partner.admin_info.email = attributes['admin email'] unless attributes['admin email'].nil?
   @partner.admin_info.full_name = attributes['admin name'] unless attributes['admin name'].nil?
   @partner_id = attributes['partner id'] unless attributes['partner id'].nil?
+end
+
+Then /^I get current partner type/ do
+  @partner = Bus::DataObj::MozyPro.new if @current_partner.nil?
+  @partner.partner_info.type = @bus_site.admin_console_page.search_list_partner_section.get_partner_type
 end
 

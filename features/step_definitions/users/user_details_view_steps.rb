@@ -7,8 +7,8 @@ When /^I get the user id$/ do
   Log.debug("user id is #{@user_id}")
 end
 
-When /^I activate the user$/ do
-  @bus_site.admin_console_page.user_details_section.active_user
+When /^I (activate|suspended) the user$/ do |status|
+  @bus_site.admin_console_page.user_details_section.change_user_status(status)
 end
 
 Then /^user details should be:$/ do |user_table|
@@ -208,6 +208,7 @@ Then /^device table in user details should be:$/ do |table|
   expected = table.hashes
   expected.each_index { |index|
     expected[index].keys.each { |key|
+      expected[index][key]= ERB.new(expected[index][key]).result(binding) if key == "Device"
       #depending on the performance of the testing env, the "Last Update" time could be different
       if !(expected[index][key].match(/^(1|< a|2) minute(s)* ago$/).nil?)
         actual[index][key].match(/^(1|< a|2) minute(s)* ago$/).nil?.should be_false
@@ -231,8 +232,21 @@ Then /^stash device table in user details should be:$/ do |table|
 end
 
 When /^I delete device by name: (.+)$/ do |device_name|
-  @bus_site.admin_console_page.user_details_section.delete_device(device_name)
+  @delete_device_msg = @bus_site.admin_console_page.user_details_section.delete_device(device_name)
   @bus_site.admin_console_page.user_details_section.wait_until_bus_section_load
+end
+
+When /^I delete sync container$/ do
+  @bus_site.admin_console_page.user_details_section.delete_sync
+end
+
+Then /^the popup message when delete device is (.+)$/ do |message|
+  @delete_device_msg.should == message
+end
+
+Then /^Device (.+) (should not|should) show$/ do |device_name, exist|
+  exist = (exist == 'should'? true : false)
+  @bus_site.admin_console_page.user_details_section.device_exist(device_name).should == exist
 end
 
 Then /^I view the user's product keys$/ do
@@ -295,7 +309,9 @@ When /^edit user details:$/ do |info_table|
         new_info[header] = @existing_user_email if new_info[header] == '@existing_user_email'
         new_info[header] = @existing_admin_email if new_info[header] == '@existing_admin_email'
         new_info[header] = @partner.admin_info.email if new_info[header] == '@mh_user_email'
+        new_info[header] = create_user_email if new_info[header] == '@new_user_email'
         @bus_site.admin_console_page.user_details_section.set_user_email(new_info[header])
+        @new_users.first.email = new_info[header]
       when 'name'
         @bus_site.admin_console_page.user_details_section.set_user_name(new_info[header])
       when 'status'
@@ -325,7 +341,7 @@ When /^I set device quota field to (\d+) and cancel$/ do |count|
   @bus_site.admin_console_page.user_details_section.device_edit_and_cancel(count)
 end
 
-When /^I edit user( Desktop| Server)* device quota to (\d+)$/ do |type, count|
+When /^I edit user( Desktop| Server)* device quota to (.+)$/ do |type, count|
   @bus_site.admin_console_page.user_details_section.change_device_quota(count, type)
   @bus_site.admin_console_page.user_details_section.wait_until_bus_section_load
 end
@@ -357,15 +373,19 @@ end
 
 
 When(/^I (set|edit|remove|save|cancel) (user|machine) max for (.+)$/) do |action, type, name|
-  @bus_site.admin_console_page.user_details_section.handle_max(action, type, name)
+  @alert_msg = @bus_site.admin_console_page.user_details_section.handle_max(action, type, name)
 end
 
-When(/^I input the (user|machine) max value for (.+) to (\d+) GB$/) do |type, name, quota|
+When(/^I input the (user|machine) max value for (.+) to (-?\d+) GB$/) do |type, name, quota|
   @bus_site.admin_console_page.user_details_section.set_max_value(type, name, quota)
 end
 
-Then(/^set max message should be:$/) do | msg|
-  @bus_site.admin_console_page.user_details_section.messages.should == msg
+Then(/^set max (message|alert) should be:$/) do | type, msg|
+  if type == 'message'
+    @bus_site.admin_console_page.user_details_section.messages.should == msg.strip
+  else
+    @alert_msg.should == msg.strip
+  end
 end
 
 Then(/^The range of machine max for (.+) by tooltips should be:$/) do |machine, range|
@@ -413,11 +433,11 @@ When /^I change user install override region to (.+)/ do |region|
   @bus_site.admin_console_page.user_details_section.change_region(region)
 end
 
-Then /^I will( not)? see the change user password link$/ do |t|
+Then /^I will( not)? see the (Change User Password|Send activation email again|awaiting re-activation) link$/ do |t,link|
   if t.nil?
-    @bus_site.admin_console_page.user_details_section.has_change_user_password_link.should be_true
+    @bus_site.admin_console_page.user_details_section.has_link(link).nil?.should be_false
   else
-    @bus_site.admin_console_page.user_details_section.has_change_user_password_link.should be_false
+    @bus_site.admin_console_page.user_details_section.has_link(link).nil?.should be_true
   end
 end
 
@@ -486,6 +506,80 @@ Then /^The current user should be billed$/ do
   (@bus_site.admin_console_page.user_details_section.get_user_billed_info > 1).should be_true
 end
 
+Then /^device name should show (with|without) \(deleted\)$/ do |deleted|
+  value = @bus_site.admin_console_page.user_details_section.get_device_name.strip
+  if deleted == 'with'
+    value.include?('(deleted)').should == true
+  else
+    value.include?('(deleted)').should == false
+  end
+end
+
+Then /^I click allow re-activate$/ do
+  @bus_site.admin_console_page.user_details_section.click_allow_reactivation
+end
+
+Then /^I check user storage limit is (.+) GB$/ do |storage|
+  @bus_site.admin_console_page.user_details_section.get_user_storage_limit.should == storage
+end
+
+Then /^I (edit|cancel edit) user storage limit to (.+) GB$/ do |type,storage|
+  @bus_site.admin_console_page.user_details_section.edit_user_storage_limit(type,storage)
+  @bus_site.admin_console_page.user_details_section.wait_until_bus_section_load
+end
+
+Then /^I remove user storage limit (Yes|No)$/ do |action|
+  @bus_site.admin_console_page.user_details_section.remove_user_storage_limit(action)
+  @bus_site.admin_console_page.user_details_section.wait_until_bus_section_load
+end
+
+Then /^I check user storage limit set link$/ do
+  @bus_site.admin_console_page.user_details_section.check_user_storage_limit_set_link.should be true
+end
+
+Then /^I check user storage limit help message should be:$/ do |msg|
+  @bus_site.admin_console_page.user_details_section.get_user_storage_limit_help_msg.should == msg
+end
+
+Then /^I (set|edit) device (.+) storage limit to (.+) GB$/ do |action,device,storage|
+  @bus_site.admin_console_page.user_details_section.set_device_storage_limit(action,device,storage)
+  @bus_site.admin_console_page.user_details_section.wait_until_bus_section_load
+end
+
+Then /^I set user storage limit to (.+) GB$/ do |storage|
+  @bus_site.admin_console_page.user_details_section.set_user_storage_limit(storage)
+  @bus_site.admin_console_page.user_details_section.wait_until_bus_section_load
+end
+
+Then /^I see Allow Re-Activation link is available$/ do
+  @bus_site.admin_console_page.user_details_section.check_allow_reactivation_available.should be true
+end
+
+Then /^edit device tooltips should be: (.+)$/ do |msg|
+  @bus_site.admin_console_page.user_details_section.get_edit_device_tooltips.should == msg
+end
+
+Then /^I check the records of model_audits table is (.+)$/ do |records|
+  DBHelper.get_model_audits_record(@partner_id.to_i).should == "0"
+end
+
+When /^I add user external id$/ do
+  @user_external_id = "#{Time.now.strftime('%m%d-%H%M-%S')}"
+  @bus_site.admin_console_page.user_details_section.change_user_external_id(@user_external_id)
+end
+
+Then /^I update (.+) last backup time to 30 minutes ago$/ do |machine_id|
+  machine_id.replace ERB.new(machine_id).result(binding)
+  DBHelper.update_machines_last_update_time(machine_id)
+end
+
+When /^I change machine quota to (.+) under user details$/ do |quota|
+  @bus_site.admin_console_page.user_details_section.change_machine_quota(quota)
+end
+
+When /^I click restore (Files|VMs) folder icon for device (.+)$/ do  |type, device_name|
+  @bus_site.admin_console_page.user_details_section.click_restore_files(type, device_name)
+end
 
 Then /^MozyHome user billing info should be:$/ do |billing_table|
   actual = @bus_site.admin_console_page.user_details_section.home_user_billing_hash
@@ -523,4 +617,3 @@ Then /^MozyHome user billing info should be:$/ do |billing_table|
   }
 
 end
-

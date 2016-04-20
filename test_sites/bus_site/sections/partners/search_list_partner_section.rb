@@ -12,6 +12,7 @@ module Bus
     element(:clear_search_link, xpath: "//a[text()='Clear search']")
     element(:search_results_table, css: 'div#partner-list-content table.table-view')
     element(:searched_partner_name_txt, xpath: "//table[@class='table-view']//a[contains(@href,'/partner/show')]")
+    element(:searched_partner_type_txt, xpath: "//table[@class='table-view']//td[5]")
 
     # Public: Search partner
     #
@@ -92,10 +93,7 @@ module Bus
     #
     # Returns nothing
     def view_partner_detail(search_key)
-      # Make sure include sub partners checked
-      include_sub_partners_cb.check
-      wait_until_bus_section_load # Wait to load sub partners
-      find(:xpath, "//a[text()='#{search_key}']").click
+      find_link(search_key).click
     end
 
     # Public: View partner's root admin detail by click root admin email/username
@@ -115,6 +113,10 @@ module Bus
 
     def search_input_text
       search_partner_tb.value
+    end
+
+    def get_partner_type
+      searched_partner_type_txt.text
     end
   end
 end

@@ -123,42 +123,49 @@ Feature:
   @TC.12197 @bus @data_shuttle @status @device_status
   Scenario: 12197 Verify clicking Seeding
     When I navigate to Data Shuttle Status section from bus admin console page
+    And I view data shuttle seeding status table
     Then Data shuttle device seeding status table header should be:
       |Order # | Partner | Created | Key | Machine | Data Shuttle Device ID | Phase | Status | % Complete | GB Transferred | Seed Size | Start | Elapsed |
 
   @TC.12198 @bus @data_shuttle @status @device_status
   Scenario: 12198 Verify clicking Seed Complete
     When I navigate to Data Shuttle Status section from bus admin console page
+    And I view data shuttle seed complete status table
     Then Data shuttle device seed complete status table header should be:
       |Order # | Partner | Created | Key | Machine | Data Shuttle Device ID | Phase | Status | % Complete | GB Transferred | Seed Size | Start | Elapsed |
 
   @TC.12199 @bus @data_shuttle @status @device_status
   Scenario: 12199 Verify clicking Seed Error
     When I navigate to Data Shuttle Status section from bus admin console page
+    And I view data shuttle seed error status table
     Then Data shuttle device seed error status table header should be:
       |Order # | Partner | Created | Key | Machine | Data Shuttle Device ID | Phase | Status | % Complete | GB Transferred | Seed Size | Start | Elapsed |
 
   @TC.12200 @bus @data_shuttle @status @device_status
   Scenario: 12200 Verify clicking Loading
     When I navigate to Data Shuttle Status section from bus admin console page
+    And I view data shuttle loading status table
     Then Data shuttle device loading status table header should be:
       |Order # | Partner | Created | Key | Machine | Data Shuttle Device ID | Phase | Status | % Complete | GB Transferred | Seed Size | Start | Elapsed |
 
   @TC.12201 @bus @data_shuttle @status @device_status
   Scenario: 12201 Verify clicking Load Complete
     When I navigate to Data Shuttle Status section from bus admin console page
+    And I view data shuttle load complete status table
     Then Data shuttle device load complete status table header should be:
       |Order # | Partner | Created | Key | Machine | Data Shuttle Device ID | Phase | Status | % Complete | GB Transferred | Seed Size | Start | Elapsed |
 
   @TC.12203 @bus @data_shuttle @status @device_status
   Scenario: 12203 Verify clicking Load Error
     When I navigate to Data Shuttle Status section from bus admin console page
+    And I view data shuttle load error status table
     Then Data shuttle device load error status table header should be:
       |Order # | Partner | Created | Key | Machine | Data Shuttle Device ID | Phase | Status | % Complete | GB Transferred | Seed Size | Start | Elapsed |
 
   @TC.12202 @bus @data_shuttle @status @device_status
   Scenario: 12202 Verify clicking Cancelled
     When I navigate to Data Shuttle Status section from bus admin console page
+    And I view data shuttle cancelled status table
     Then Data shuttle device cancelled status table header should be:
       | Order # | Partner | Created | Key | Machine | Data Shuttle Device ID | Phase | Status | % Complete | GB Transferred | Seed Size | Start | Elapsed | Cancelled |
 
@@ -535,7 +542,7 @@ Feature:
       | power adapter   | key from  | quota | drive type     |
       | Data Shuttle US | available | 20    | 3.5" 2TB Drive |
     Then Data shuttle order should be created
-    Then I get the data shuttle seed id
+    Then I get the data shuttle seed id for newly created partner company name
     When I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
     And I act as newly created partner account
@@ -579,7 +586,7 @@ Feature:
       | power adapter   | key from  | quota | drive type     |
       | Data Shuttle US | available | 20    | 3.5" 2TB Drive |
     Then Data shuttle order should be created
-    Then I get the data shuttle seed id
+    Then I get the data shuttle seed id for newly created partner company name
     When I navigate to Search / List Partners section from bus admin console page
     And I view partner details by newly created partner company name
     And I act as newly created partner account
@@ -716,3 +723,32 @@ Feature:
       | # of Drives | Drives Ordered |
       | 1           | Yes            |
     Then the data shuttle order details should contain valid inbound number
+
+  @bus @TC.12342 @resources @tasks_p2
+  Scenario: 12342 data_shuttle_ordered_active: (Data Shuttle ordered for activated machine phase III - to user)
+    And I add a new Reseller partner:
+      | company name    | period | reseller type | reseller quota | server plan | net terms |
+      | tc12342_partner | 1      | Silver        | 50             | yes         | yes       |
+    Then New partner should be created
+    And I get the partner_id
+    And I act as newly created partner
+    And I add new user(s):
+      | user_group           | storage_type | devices |
+      | (default user group) | Desktop      | 1       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    Then I stop masquerading
+    When I order data shuttle for newly created partner company name
+      | power adapter   | key from  | quota |
+      | Data Shuttle US | available | 10    |
+    Then Data shuttle order should be created
+    When I search emails by keywords:
+      | subject                                                          | to                          |
+      | Your Key @license_key for MozyPro Now Activated for Data Shuttle | <%=@new_users.first.email%> |
+    Then I should see 1 email(s)
+    And I search and delete partner account by newly created partner company name

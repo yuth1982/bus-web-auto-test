@@ -42,3 +42,7 @@ end
 When /^I refresh User Group list section$/ do
   @bus_site.admin_console_page.user_group_list_section.refresh_bus_section
 end
+
+When /^I set user group filter to (.+)$/ do |filter|
+  @bus_site.admin_console_page.list_user_groups_section.set_user_group_filter(filter)
+end

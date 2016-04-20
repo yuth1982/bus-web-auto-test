@@ -36,8 +36,8 @@ Feature:
     And API* I set newly created partner aria id account notification method to 8
     And I wait for 10 seconds
     Then API* Aria account should be:
-      | notify_method_name   |
-      | Printable (no Email) |
+      | notify_method_name |
+      | Printable          |
     When API* I set newly created partner aria id account notification method to 1
     And I wait for 10 seconds
     Then API* Aria account should be:

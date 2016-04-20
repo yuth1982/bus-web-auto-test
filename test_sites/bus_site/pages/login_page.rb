@@ -32,6 +32,7 @@ module Bus
     def login(username, password)
       username_tb.type_text(username)
       password_tb.type_text(password)
+
       login_btn.click
     end
 
