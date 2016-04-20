@@ -113,6 +113,36 @@ Then /^I get current partner name$/ do
   @current_partner_name = @bus_site.admin_console_page.search_list_partner_section.get_partner_name if @current_partner.nil?
 end
 
+When /^I use a existing partner:$/ do |partner_table|
+  attributes = partner_table.hashes.first
+
+  attributes.each do |header,attribute| #can use variable inside <%= %>
+    attribute.replace ERB.new(attribute).result(binding)
+    attributes[header] = nil  if (attribute == '' && !attributes.has_key?("security") )
+  end
+
+  case attributes['partner type']
+    when CONFIGS['bus']['company_type']['oem']
+      @partner = Bus::DataObj::MozyPro.new # use mozypro construction here as class sub_partner do not have necessary attributes
+    when CONFIGS['bus']['company_type']['mozypro']
+      @partner = Bus::DataObj::MozyPro.new
+    when CONFIGS['bus']['company_type']['mozyenterprise']
+      @partner = Bus::DataObj::MozyEnterprise.new
+    when CONFIGS['bus']['company_type']['mozyenterprise_dps']
+      @partner = Bus::DataObj::MozyEnterpriseDPS.new
+    when CONFIGS['bus']['company_type']['reseller']
+      @partner = Bus::DataObj::Reseller.new
+    else
+      raise "Error: Company type #{type} does not exist."
+  end
+  @partner.partner_info.type = attributes['partner type']
+  @partner.company_info.name = attributes['company name'] unless attributes['company name'].nil?
+  @partner.partner_info.parent = attributes['create under'] || CONFIGS['bus']['mozy_root_partner']['mozypro'] # to be changed according to partner type
+  @partner.admin_info.email = attributes['admin email'] unless attributes['admin email'].nil?
+  @partner.admin_info.full_name = attributes['admin name'] unless attributes['admin name'].nil?
+  @partner_id = attributes['partner id'] unless attributes['partner id'].nil?
+end
+
 Then /^I get current partner type/ do
   @partner = Bus::DataObj::MozyPro.new if @current_partner.nil?
   @partner.partner_info.type = @bus_site.admin_console_page.search_list_partner_section.get_partner_type

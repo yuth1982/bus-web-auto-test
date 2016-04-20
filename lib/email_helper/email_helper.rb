@@ -169,7 +169,7 @@ module Email
     email.find_emails(query)
   end
 
-  def find_email_content(query, attach)
+  def find_email_content(query, attach=nil)
     if MAILBOX.eql? 'outlook'
       email = Outlook.instance
     else

@@ -204,5 +204,15 @@ And /^I start a new session$/ do
   @bus_site.adfs_login_page.start_a_new_browser
 end
 
+When /^I click login link from the email$/ do
+  Log.debug("#{@found_emails.size} emails found, please update your search query") if @found_emails.size != 1
+  @mail_content = find_email_content(@email_search_query)
+  # the url is like # https://<subdomain>.mozypro.com/login/user | https://www(mozyoem).mozypro.com/login/user?pid=XXXX
+  match = @mail_content.match(/https?:\/\/[\S]+\.(mozypro|mozyenterprise)\.com\/login\/user(\?pid=\d+)?/)
+  login_url = match[0] unless match.nil?
+  Log.debug(login_url)
+  @bus_site.login_page.go_to_url(login_url)
+end
+
 
 

@@ -96,6 +96,7 @@ When /^I (.+) a phoenix (Home|Pro|Direct|Free) (partner|user):$/ do |string,type
   # Admin info attributes
   @partner.admin_info.full_name = attributes["admin name"] unless attributes["admin name"].nil?
   @partner.admin_info.email = attributes["admin email"] unless attributes["admin email"].nil?
+  Log.debug "Home user email: #{@partner.admin_info.email}"
 
   # Account Details
   @partner.account_detail.account_type = "Live"
@@ -322,9 +323,10 @@ Then /^the (user|partner) has activated their account$/ do |_|
       | @new_admin_email |
       })
   else
+    dialect_country = LANG[@partner.company_info.country].nil?? 'United States' : @partner.company_info.country
     step %{I retrieve email content by keywords:}, table(%{
         | to | subject |
-        | @new_admin_email | #{LANG[@partner.company_info.country][@partner.partner_info.type]["#{subject}"]} |
+        | @new_admin_email | #{LANG[dialect_country][@partner.partner_info.type]["#{subject}"]} |
         })
   end
   step %{I get verify email address from email content}

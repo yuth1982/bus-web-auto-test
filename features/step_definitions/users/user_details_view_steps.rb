@@ -253,11 +253,12 @@ Then /^I view the user's product keys$/ do
   @bus_site.admin_console_page.user_details_section.click_view_product_keys_link
 end
 
-Then /^I update the user password to (.+)$/ do |password|
+Then /^I update the user (temporary |)password to (.+)$/ do |temporary, password|
+  is_temporary = !(temporary.empty?)
   next if ENV['BUS_ENV'] == 'qa3'
   password = rand.to_s if password == '@user_password'
   @user_password = password
-  @bus_site.admin_console_page.user_details_section.edit_password(password)
+  @bus_site.admin_console_page.user_details_section.edit_password(password, is_temporary)
 end
 
 Then /^I update user password to incorrect password (.+) and get the error message:$/ do |password,message|

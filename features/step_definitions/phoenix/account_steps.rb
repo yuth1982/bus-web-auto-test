@@ -116,6 +116,7 @@ And /^I change email address to:$/ do |table|
   # update email address from e.g mozybus+test+1234@gmail.com to mozybus+test+1234new@gmail.com
   new_email1 = old_email.insert(old_email.rindex('@'),'new') if new_email=='@new_admin_email'
   password = attributes['password']
+  password.replace ERB.new(password).result(binding)
   @partner.admin_info.email = new_email1
   @phoenix_site.user_account.change_email_address(@partner, new_email1, password)
 end

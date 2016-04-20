@@ -41,9 +41,14 @@ module Bus
           user_policy_min_character_classes.type_text policy_table.user_min_character_classes
         end
         if !policy_table.user_character_classes.nil?
-          policy_table.user_character_classes.each do | classes |
-          Log.debug("Processing grant character class #{classes} to policy")
-          find(:xpath, "//fieldset[@id='user_policy_form']//label[text()='#{classes}']/input").check
+          character_classes = ['Capital letters','Lowercase letters','Numbers','Special characters']
+          character_classes.each do |classes|
+            if policy_table.user_character_classes.include?(classes)
+              Log.debug("Processing grant character class #{classes} to policy")
+              find(:xpath, "//fieldset[@id='user_policy_form']//label[text()='#{classes}']/input").check
+            else
+              find(:xpath, "//fieldset[@id='user_policy_form']//label[text()='#{classes}']/input").uncheck
+            end
           end
         end
 
@@ -67,9 +72,14 @@ module Bus
             admin_policy_min_character_classes.type_text policy_table.admin_min_character_classes
           end
           if !policy_table.admin_character_classes.nil?
-            policy_table.admin_character_classes.each do | classes |
-              Log.debug("Processing grant character class #{classes} to policy")
-              find(:xpath, "//fieldset[@id='admin_policy_form']//label[text()='#{classes}']/input").check
+            character_classes = ['Capital letters','Lowercase letters','Numbers','Special characters']
+            character_classes.each do |classes|
+              if policy_table.admin_character_classes.include?(classes)
+                Log.debug("Processing grant character class #{classes} to policy")
+                find(:xpath, "//fieldset[@id='admin_policy_form']//label[text()='#{classes}']/input").check
+              else
+                find(:xpath, "//fieldset[@id='admin_policy_form']//label[text()='#{classes}']/input").uncheck
+              end
             end
           end
 

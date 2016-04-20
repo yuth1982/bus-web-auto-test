@@ -75,20 +75,20 @@ module Phoenix
 
     # go to acct section
     def go_to_acct(partner)
-      localized_click(partner, 'acct_link')
-      main_section_head.eql?("#{LANG[partner.company_info.country][partner.partner_info.type]['acct_link']}")
+      localization_text = localized_click(partner, 'acct_link')
+      main_section_head.eql?(localization_text)
     end
 
     # go to my plan section
     def go_to_plan(partner)
-      localized_click(partner, 'plan_link')
-      main_section_head.eql?("#{LANG[partner.company_info.country][partner.partner_info.type]['plan_link']}")
+      localization_text = localized_click(partner, 'plan_link')
+      main_section_head.eql?(localization_text)
     end
 
     # go to devices section
     def go_to_devices(partner)
-      localized_click(partner, 'devices_link')
-      main_section_head.eql?("#{LANG[partner.company_info.country][partner.partner_info.type]['devices_link']}")
+      localization_text = localized_click(partner, 'devices_link')
+      main_section_head.eql?(localization_text)
     end
 
     def get_download_backup_links
@@ -136,14 +136,14 @@ module Phoenix
 
     # go to dl link
     def go_to_downloads(partner)
-      localized_click(partner, 'dl_link')
-      main_section_head.eql?("#{LANG[partner.company_info.country][partner.partner_info.type]['dl_link']}")
+      localization_text = localized_click(partner, 'dl_link')
+      main_section_head.eql?(localization_text)
     end
 
     # go to profile
     def go_to_profile(partner)
-      localized_click(partner, 'profile_link')
-      main_section_head.eql?("#{LANG[partner.company_info.country][partner.partner_info.type]['profile_link']}")
+      localization_text = localized_click(partner, 'profile_link')
+      main_section_head.eql?(localization_text)
     end
 
     # change email address
@@ -170,8 +170,8 @@ module Phoenix
         when "Germany"
           #skip stash
         else
-            localized_click(partner, 'stash_link')
-            main_section_head.text.match("#{LANG[partner.company_info.country][partner.partner_info.type]['stash_link']}")
+            localization_text = localized_click(partner, 'stash_link')
+            main_section_head.text.match(localization_text)
       end
     end
 
@@ -185,8 +185,8 @@ module Phoenix
     end
     # go to referrals
     def go_to_referrals(partner)
-      localized_click(partner, 'refer_link')
-      main_section_head.eql?("#{LANG[partner.company_info.country][partner.partner_info.type]['refer_link']}")
+      localization_text = localized_click(partner, 'refer_link')
+      main_section_head.eql?(localization_text)
     end
 
     # go to change plan
@@ -212,9 +212,16 @@ module Phoenix
     end
 
     def localized_click(partner, loc_click)
-      navigate_to_link("#{LANG[partner.company_info.country][partner.partner_info.type][loc_click]}")	;end
+      dialect_country = LANG[partner.company_info.country].nil?? 'United States' : partner.company_info.country
+      navigate_to_link("#{LANG[dialect_country][partner.partner_info.type][loc_click]}")
+      return "#{LANG[dialect_country][partner.partner_info.type][loc_click]}"
+    end
+
     def localized_select(loc_item, partner, loc_select)
-      loc_item.select("#{LANG[partner.company_info.country][partner.partner_info.type][loc_select]}")	;end
+      dialect_country = LANG[partner.company_info.country].nil?? 'United States' : partner.company_info.country
+      loc_item.select("#{LANG[dialect_country][partner.partner_info.type][loc_select]}")
+      return "#{LANG[dialect_country][partner.partner_info.type][loc_select]}"
+    end
 
     def user_login(partner)
       username = partner.admin_info.email
