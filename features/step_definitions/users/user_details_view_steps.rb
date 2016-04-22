@@ -311,7 +311,7 @@ When /^edit user details:$/ do |info_table|
         new_info[header] = @partner.admin_info.email if new_info[header] == '@mh_user_email'
         new_info[header] = create_user_email if new_info[header] == '@new_user_email'
         @bus_site.admin_console_page.user_details_section.set_user_email(new_info[header])
-        @new_users.first.email = new_info[header]
+        #@new_users.first.email = new_info[header]
       when 'name'
         @bus_site.admin_console_page.user_details_section.set_user_name(new_info[header])
       when 'status'
