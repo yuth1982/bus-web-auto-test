@@ -46,7 +46,7 @@ module Phoenix
       country_select.select(partner.company_info.country)
       continue_btn.click
       # sleep 2 # take a sec and then check the url - ensures we are @ correct dom location
-      wait_until { !first(:id, "conti_button").nil? }
+      wait_until { !first(:xpath, "//input[contains(@id,'username')]").nil? }
       verify_domain(partner)
     end
 
