@@ -213,12 +213,12 @@ Feature: The capabilities that govern the HIPAA compliant root admin role should
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms | security |
       | 12     |  Silver       | 100            |    yes    |   HIPAA  |
-    Then Sub-total before taxes or discounts should be $462.00
+    Then Sub-total before taxes or discounts should be $396.00
     And Order summary table should be:
       | Description           | Quantity | Price Each | Total Price |
-      | GB - Silver Reseller  | 100      | $4.62      | $462.00     |
-      | Pre-tax Subtotal      |          |            | $462.00     |
-      | Total Charges         |          |            | $462.00     |
+      | GB - Silver Reseller  | 100      | $3.96      | $396.00     |
+      | Pre-tax Subtotal      |          |            | $396.00     |
+      | Total Charges         |          |            | $396.00     |
     And New partner should be created
     And Partner general information should be:
       | Security: | Status:         | Root Admin:          | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: |
