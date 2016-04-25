@@ -152,11 +152,11 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
     When I add a new MozyPro partner:
       | company name                                         | period | base plan | country       | net terms | coupon               |
       | DONOT EDIT MozyPro 250 GB Plan (Biennial) USD coupon | 24     | 250 GB    | United States | yes       | 100PERCENTOFFOUTLINE |
-    Then Sub-total before taxes or discounts should be $1,396.35
+    Then Sub-total before taxes or discounts should be $1,399.79
     And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
-      | 250 GB            | 1        | $1,396.35  | $1,396.35   |
-      | Discounts Applied |          |            | -$1,396.35  |
+      | 250 GB            | 1        | $1,399.79  | $1,399.79   |
+      | Discounts Applied |          |            | -$1,399.79  |
       | Total Charges     |          |            | $0.00       |
     And New partner should be created
 
@@ -165,14 +165,14 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
     When I add a new MozyPro partner:
       | company name                                                           | period | base plan | server plan | country       | net terms | coupon              |
       | DONOT EDIT MozyPro Server Add-on for 250 GB Plan (Biennial) USD coupon | 24     | 250 GB    | yes         | United States | yes       | 10PERCENTOFFOUTLINE |
-    Then Sub-total before taxes or discounts should be $1,631.40
+    Then Sub-total before taxes or discounts should be $1,631.58
     And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
-      | 250 GB            | 1        | $1,396.35  | $1,396.35   |
-      | Server Plan       | 1        | $235.05    | $235.05     |
-      | Discounts Applied |          |            | -$163.14    |
-      | Pre-tax Subtotal  |          |            | $1,468.26   |
-      | Total Charges     |          |            | $1,468.26   |
+      | 250 GB            | 1        | $1,399.79  | $1,399.79   |
+      | Server Plan       | 1        | $231.79    | $231.79     |
+      | Discounts Applied |          |            | -$163.16    |
+      | Pre-tax Subtotal  |          |            | $1,468.42   |
+      | Total Charges     |          |            | $1,468.42   |
     And New partner should be created
 
   @TC.141405_coupon_13 @add_new_partner @mozypro @bus
@@ -180,11 +180,11 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
     When I add a new MozyPro partner:
       | company name                                                 | period | base plan | create under    | country | net terms | coupon               |
       | DONOT EDIT MozyPro 250 GB Plan (Biennial) EUR Ireland coupon | 24     | 250 GB    | MozyPro Ireland | Ireland | yes       | 100PERCENTOFFOUTLINE |
-    Then Sub-total before taxes or discounts should be €1,269.41
+    Then Sub-total before taxes or discounts should be €1,272.79
     And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
-      | 250 GB            | 1        | €1,269.41  | €1,269.41   |
-      | Discounts Applied |          |            | -€1,269.41  |
+      | 250 GB            | 1        | €1,272.79  | €1,272.79   |
+      | Discounts Applied |          |            | -€1,272.79  |
       | Total Charges     |          |            | €0.00       |
     And New partner should be created
 
@@ -193,13 +193,13 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
     When I add a new MozyPro partner:
       | company name                                                               | period | base plan | server plan | create under   | country | net terms | vat number    |
       | DONOT EDIT MozyPro Server Add-on for 250 GB Plan (Biennial) EUR France VAT | 24     | 250 GB    | yes         | MozyPro France | France  | yes       | FR08410091490 |
-    Then Sub-total before taxes or discounts should be €1,483.09
+    Then Sub-total before taxes or discounts should be €1,483.58
     And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
-      | 250 GB            | 1        | €1,269.41  | €1,269.41   |
-      | Server Plan       | 1        | €213.68    | €213.68     |
-      | Pre-tax Subtotal  |          |            | €1,483.09   |
-      | Total Charges     |          |            | €1,483.09   |
+      | 250 GB            | 1        | €1,272.79  | €1,272.79   |
+      | Server Plan       | 1        | €210.79    | €210.79     |
+      | Pre-tax Subtotal  |          |            | €1,483.58   |
+      | Total Charges     |          |            | €1,483.58   |
     And New partner should be created
 
   @TC.141405_coupon_15 @add_new_partner @mozypro @bus
@@ -207,14 +207,14 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
     When I add a new MozyPro partner:
       | company name                                                                       | period | base plan | server plan | create under    | country | net terms | coupon              | vat number  |
       | DONOT EDIT MozyPro Server Add-on for 250 GB Plan (Biennial) EUR Germany Coupon VAT | 24     | 250 GB    | yes         | MozyPro Germany | Germany | yes       | 20PERCENTOFFOUTLINE | DE812321109 |
-    Then Sub-total before taxes or discounts should be €1,483.09
+    Then Sub-total before taxes or discounts should be €1,483.58
     And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
-      | 250 GB            | 1        | €1,269.41  | €1,269.41   |
-      | Server Plan       | 1        | €213.68    | €213.68     |
-      | Discounts Applied |          |            | -€296.62    |
-      | Pre-tax Subtotal  |          |            | €1,186.47   |
-      | Total Charges     |          |            | €1,186.47   |
+      | 250 GB            | 1        | €1,272.79   | €1,272.79  |
+      | Server Plan       | 1        | €210.79    | €210.79     |
+      | Discounts Applied |          |            | -€296.72    |
+      | Pre-tax Subtotal  |          |            | €1,186.86   |
+      | Total Charges     |          |            | €1,186.86   |
     And New partner should be created
 
   @TC.141405_coupon_16 @add_new_partner @mozypro @bus
@@ -222,12 +222,12 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
     When I add a new MozyPro partner:
       | company name                                      | period | base plan | create under | country        | net terms | vat number  |
       | DONOT EDIT MozyPro 250 GB Plan (Biennial) GBP VAT | 24     | 250 GB    | MozyPro UK   | United Kingdom | yes       | GB117223643 |
-    Then Sub-total before taxes or discounts should be £912.65
+    Then Sub-total before taxes or discounts should be £914.79
     And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
-      | 250 GB            | 1        | £912.65    | £912.65   |
-      | Pre-tax Subtotal  |          |            | £912.65   |
-      | Total Charges     |          |            | £912.65   |
+      | 250 GB            | 1        | £914.79    | £914.79     |
+      | Pre-tax Subtotal  |          |            | £914.79     |
+      | Total Charges     |          |            | £914.79     |
     And New partner should be created
 
   @TC.141405_coupon_17 @add_new_partner @mozypro @bus
@@ -235,13 +235,13 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
     When I add a new MozyPro partner:
       | company name                                                           | period | base plan | server plan | create under | country        | net terms | coupon              |
       | DONOT EDIT MozyPro Server Add-on for 250 GB Plan (Biennial) GBP Coupon | 24     | 250 GB    | yes         | MozyPro UK   | United Kingdom | yes       | 20PERCENTOFFOUTLINE |
-    Then Sub-total before taxes or discounts should be £1,066.28
+    Then Sub-total before taxes or discounts should be £1,066.58
     And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
-      | 250 GB            | 1        | £912.65    | £912.65     |
-      | Server Plan       | 1        | £153.63    | £153.63     |
-      | Discounts Applied |          |            | -£213.26    |
-      | Pre-tax Subtotal  |          |            | £853.02    |
-      | Taxes             |          |            | £170.60     |
-      | Total Charges     |          |            | £1,023.62   |
+      | 250 GB            | 1        | £914.79    | £914.79     |
+      | Server Plan       | 1        | £151.79    | £151.79     |
+      | Discounts Applied |          |            | -£213.32    |
+      | Pre-tax Subtotal  |          |            | £853.26     |
+      | Taxes             |          |            | £170.66     |
+      | Total Charges     |          |            | £1,023.92   |
     And New partner should be created
