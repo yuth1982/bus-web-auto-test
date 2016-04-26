@@ -12,7 +12,7 @@ module SSHTDSGrowQuota
   #  SSHTDSGrowQuota.grow_quota('qa1+andrea+fisher+1417@decho.com', 'test1234', '4903844', '1')
   #
   # @return [String] "Partner 12345 is using autogrow and is overdrafted on its Generic license by 5 GB"
-  def grow_quota(username, password, machine_id, i, filename)
+  def grow_quota(username, password, machine_id, i, filename = nil)
     #encrypted_file_size = "1000000008"
     encrypted_file_size = (("1073741824".to_f)*(i.to_f)).to_i.to_s
     object_id = "73aecc4d92453e5dacaa1eddf1df55487cfb50af"
