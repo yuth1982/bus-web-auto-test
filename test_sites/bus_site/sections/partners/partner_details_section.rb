@@ -79,7 +79,7 @@ module Bus
     element(:contact_industry_select, xpath: "//select[@name='partner[industry]']")
     element(:contact_employees_select, xpath: "//select[@name='partner[num_employees]']")
     element(:contact_email_tb, xpath: "//input[@name='contact_email']")
-    element(:contact_vat_tb, xpath: "//input[@id='vat_info_vat_number']")
+    element(:contact_vat_tb, id: 'vat_info_vat_number')
     element(:save_changes_btn, xpath: "//input[contains(@onclick,'password_dialog')]")
 
     #change contact country section
@@ -262,7 +262,7 @@ module Bus
       output['Industry:'] = contact_industry_select.first_selected_option.text
       output['# of employees:'] = contact_employees_select.first_selected_option.text
       output['Contact Email:'] = contact_email_tb.value unless locate(:xpath, "//input[@id='contact_email']").nil?
-      output['VAT Number:'] = contact_vat_tb.value if contact_vat_tb.visible?
+      output['VAT Number:'] = contact_vat_tb.value unless locate(:id, 'vat_info_vat_number').nil?
       output
     end
 
