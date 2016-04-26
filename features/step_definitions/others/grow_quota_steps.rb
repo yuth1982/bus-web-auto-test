@@ -23,10 +23,10 @@ When /^I upload data to device(| by batch)$/ do |upload_type, grow_quota_table|
   @filename =filename
 
   if upload_type == ' by batch'
-    @grow_quota_response[0] = SSHTDSGrowQuota.grow_quota(user_email, password, machine_id, amount,filename)
+    @grow_quota_response[0] = SSHTDSGrowQuota.grow_quota(user_email, password, machine_id, amount, filename)
   else
     amount.to_i.times do |i|
-      @grow_quota_response[i] = SSHTDSGrowQuota.grow_quota(user_email, password, machine_id, '1')
+      @grow_quota_response[i] = SSHTDSGrowQuota.grow_quota(user_email, password, machine_id, '1', filename)
     end
   end
 end
