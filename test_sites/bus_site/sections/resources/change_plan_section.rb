@@ -31,6 +31,7 @@ module Bus
     element(:cancel_btn, css: "div#change_plan_confirmation input[value=Cancel]")
     element(:message_div, css: "div#resource-change_billing_plan-errors ul")
     element(:error_input_div, xpath: "//div[@id='error_input']/p")
+    element(:confirm_msg, xpath: "//div[@id='change_plan_confirmation']//p")
 
     # Public: Reseller Supplemental Plans Hashes
     #
@@ -333,16 +334,23 @@ module Bus
     #
     # @return [] nothing
     def confirm_change
+      change_plan_info = Array.new
       wait_until{ submit_btn['disabled'] != 'true' }
       submit_btn.click
+
       wait_until { !locate(:css, "div#change_plan_confirmation input[value=Continue]").nil? }
-      message_el =  locate(:xpath, "//div[@id='change_plan_confirmation']//p")
-      message = message_el.text unless message_el.nil?
-      using_wait_time 1 do
-        continue_btn.click unless page.has_css?("div#resource-change_billing_plan-errors ul")
+      message = confirm_msg.text
+      change_plan_info.push(message)
+      unless locate(:xpath, "//div[@id='charge_summary']/table").nil?
+        @charge_summary_header = charge_summary_table_headers
+        @charge_summary_rows = charge_summary_table_rows
+        change_plan_info.push(@charge_summary_header)
+        change_plan_info.push(@charge_summary_rows)
       end
+      continue_btn.click
+
       wait_until{ !locate(:id, "submit_new_resources_btn").nil? }
-      message
+      change_plan_info
     end
 
     def wait_for_all_elements_loaded

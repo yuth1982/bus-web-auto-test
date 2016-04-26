@@ -21,15 +21,15 @@ When /^I change (MozyPro|MozyEnterprise|Reseller|Itemized|MozyEnterprise DPS) ac
 
   case type
     when 'MozyEnterprise'
-      @change_plan_msg = @bus_site.admin_console_page.change_plan_section.change_mozyenterprise_plan(users, server_plan, storage_add_on, coupon)
+      @change_plan_info = @bus_site.admin_console_page.change_plan_section.change_mozyenterprise_plan(users, server_plan, storage_add_on, coupon)
     when 'Reseller'
-      @change_plan_msg = @bus_site.admin_console_page.change_plan_section.change_reseller_plan(server_plan, storage_add_on)
+      @change_plan_info = @bus_site.admin_console_page.change_plan_section.change_reseller_plan(server_plan, storage_add_on)
     when 'MozyPro'
-      @change_plan_msg = @bus_site.admin_console_page.change_plan_section.change_mozypro_plan(base_plan, server_plan, storage_add_on, coupon)
+      @change_plan_info = @bus_site.admin_console_page.change_plan_section.change_mozypro_plan(base_plan, server_plan, storage_add_on, coupon)
     when "Itemized"
-      @change_plan_msg = @bus_site.admin_console_page.change_plan_section.change_itemized_plan(server_licenses, desktop_licenses)
+      @change_plan_info = @bus_site.admin_console_page.change_plan_section.change_itemized_plan(server_licenses, desktop_licenses)
     when 'MozyEnterprise DPS'
-      @change_plan_msg = @bus_site.admin_console_page.change_plan_section.change_mozyenterprise_dps_plan(base_plan)
+      @change_plan_info = @bus_site.admin_console_page.change_plan_section.change_mozyenterprise_dps_plan(base_plan)
     else
       raise "#{type} Company type not exist"
   end
@@ -120,12 +120,12 @@ Then /^(MozyPro|MozyEnterprise|Reseller|Itemized) new plan should be:$/ do |type
 end
 
 Then /^Change plan charge summary should be:$/ do |charge_table|
-  @bus_site.admin_console_page.change_plan_section.charge_summary_table_headers.should == charge_table.headers
-  @bus_site.admin_console_page.change_plan_section.charge_summary_table_rows.should == charge_table.rows
+  @change_plan_info.at(1).should == charge_table.headers
+  @change_plan_info.at(2).should == charge_table.rows
 end
 
 Then /^Change plan charge message should be:$/ do |message|
-  @change_plan_msg.strip.should eq(message.strip)
+  @change_plan_info.at(0).strip.should eq(message.strip)
 end
 
 Then /^MozyPro available base plans should be:$/ do |plans_table|
