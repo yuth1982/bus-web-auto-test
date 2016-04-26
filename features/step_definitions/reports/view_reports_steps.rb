@@ -150,12 +150,12 @@ end
 
 Then /^Quick report (.+) csv file details should be:$/ do |report_type, report_table|
   report_table.map_column!('Column A') do |value|
-    value.gsub(/@name/,@partner.company_info.name).gsub(/@today/,DateTime.now.strftime("%m/%d/%y")) if value == '@name'
+    value.gsub!(/@today/,DateTime.now.strftime("%m/%d/%y")) if value == '@today'
     value
   end
 
   report_table.map_column!('Column C') do |value|
-    value.gsub(/@XXXX/, @partner.credit_card.number[12..-1]) unless @partner.nil?
+    value.gsub!(/@XXXX/, @partner.credit_card.number[12..-1]) unless @partner.nil?
     value
   end
   actual = @bus_site.admin_console_page.quick_reports_section.read_quick_report(report_type)
