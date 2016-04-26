@@ -52,6 +52,7 @@ Feature: Configurable Retention Partner Setting (111550)
       | 1      |
     Then New partner should be created
     Then I stop masquerading as sub partner
+    And I stop masquerading
     And I search partner by newly created subpartner company name
     And I view partner details by newly created subpartner company name
     #OEM partners default retention is 30 days

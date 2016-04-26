@@ -384,7 +384,7 @@ Feature: View edit admins details
       | Name           | Roles         | Parent               |
       | Admin_123390_3 | Reseller Root | <%=@admins[1].name%> |
     And the partner has activated the <%=@admins[2].email%> account with Hipaa password
-    And the partner has activated the <%=@admins[0].email%> account with Hipaa password
+    And the partner has activated the admin account with Hipaa password
     And I go to account
     And I act as admin by:
       | email                 |

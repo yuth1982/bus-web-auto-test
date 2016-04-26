@@ -28,13 +28,13 @@ Feature: Add/Delete Client Configuration
     Then client configuration section message should be Your configuration was saved.
     When I navigate to User Group List section from bus admin console page
     And I view user group details by clicking group name: TC123901-group-1
-    And I open Client Configuration tab
+    And I open Client Configuration tab under user group details
     Then Server client configuration should be TC123901-server-client-config
     Then Desktop client configuration should be TC123901-desktop-client-config
     And I close the user group detail page
     When I navigate to User Group List section from bus admin console page
     And I view user group details by clicking group name: TC123901-group-2
-    And I open Client Configuration tab
+    And I open Client Configuration tab under user group details
     Then Server client configuration should be TC123901-server-client-config
     Then Desktop client configuration should be TC123901-desktop-client-config
     When I stop masquerading
@@ -76,13 +76,13 @@ Feature: Add/Delete Client Configuration
     Then client configuration section message should be Your configuration was saved.
     When I navigate to User Group List section from bus admin console page
     And I view user group details by clicking group name: TC123904-group-1
-    And I open Client Configuration tab
+    And I open Client Configuration tab under user group details
     Then Server client configuration should be None (Inherited defaults from parent partner)
     Then Desktop client configuration should be None (Inherited defaults from parent partner)
     And I close the user group detail page
     When I navigate to User Group List section from bus admin console page
     And I view user group details by clicking group name: TC123904-group-2
-    And I open Client Configuration tab
+    And I open Client Configuration tab under user group details
     Then Server client configuration should be None (Inherited defaults from parent partner)
     Then Desktop client configuration should be None (Inherited defaults from parent partner)
     When I stop masquerading
