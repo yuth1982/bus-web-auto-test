@@ -142,10 +142,10 @@ Feature: Change Plan for MozyPro Partners
       | 1 TB      |
     Then Change plan charge summary should be:
       | Description                     | Amount     |
-      | Credit for remainder of 500 GB  | -$2,507.87 |
-      | Charge for new 1 TB             | $5,015.87  |
+      | Credit for remainder of 500 GB  | -$1,751.87 |
+      | Charge for new 1 TB             | $3,503.87  |
       |                                 |            |
-      | Total amount to be charged      | $2,508.00  |
+      | Total amount to be charged      | $1,752.00  |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan |
@@ -182,10 +182,10 @@ Feature: Change Plan for MozyPro Partners
       | 2 TB      |
     Then Change plan charge summary should be:
       | Description                  | Amount     |
-      | Credit for remainder of 1 TB | -$9,815.14 |
-      | Charge for new 2 TB          | $19,372.24 |
+      | Credit for remainder of 1 TB | -$6,863.14 |
+      | Charge for new 2 TB          | $13,554.34 |
       |                              |            |
-      | Total amount to be charged   | $9,557.10  |
+      | Total amount to be charged   | $6,691.20  |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan |
@@ -262,7 +262,7 @@ Feature: Change Plan for MozyPro Partners
       | Yes         |
     Then Change plan charge summary should be:
       | Description                | Amount  |
-      | Charge for new Server Plan | $263.87 |
+      | Charge for new Server Plan | $188.27 |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -302,7 +302,7 @@ Feature: Change Plan for MozyPro Partners
       | Yes         |
     Then Change plan charge summary should be:
       | Description                | Amount  |
-      | Charge for new Server Plan | $516.34 |
+      | Charge for new Server Plan | $365.05 |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |

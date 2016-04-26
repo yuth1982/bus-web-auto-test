@@ -78,9 +78,9 @@ Feature:
       | 1      | Platinum      | 100            | Italy   | IT03018900245 | yes       |
     Then Order summary table should be:
       | Description            | Quantity | Price Each | Total Price |
-      | GB - Platinum Reseller | 100      | $0.30      | $30.00      |
-      | Pre-tax Subtotal       |          |            | $30.00      |
-      | Total Charges          |          |            | $30.00      |
+      | GB - Platinum Reseller | 100      | $0.24      | $24.00      |
+      | Pre-tax Subtotal       |          |            | $24.00      |
+      | Total Charges          |          |            | $24.00      |
     And New partner should be created
 
 

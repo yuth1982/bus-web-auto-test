@@ -13,7 +13,7 @@ Feature: View billing information
     And I navigate to Billing Information section from bus admin console page
     Then Next renewal info table should be:
       | Period            | Date          | Amount                                 | Payment Type                  |
-      | Biennial (change) | after 2 years | $1,994.79 (Without taxes or discounts) | Visa ending in @XXXX (change) |
+      | Biennial (change) | after 2 years | $1,399.79 (Without taxes or discounts) | Visa ending in @XXXX (change) |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -27,7 +27,7 @@ Feature: View billing information
     And I navigate to Billing Information section from bus admin console page
     Then Next renewal info table should be:
       | Period          | Date          | Amount                               | Payment Type                  |
-      | Yearly (change) | after 1 years | $462.00 (Without taxes or discounts) | Visa ending in @XXXX (change) |
+      | Yearly (change) | after 1 years | $396.00 (Without taxes or discounts) | Visa ending in @XXXX (change) |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -111,7 +111,7 @@ Feature: View billing information
     And I navigate to Billing Information section from bus admin console page
     Then Next renewal supplemental plan details should be:
       | Number purchased | Price each | Total price for GB - Silver Reseller |
-      | 100              | $0.42      | $42.00                               |
+      | 100              | $0.33      | $33.00                               |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 

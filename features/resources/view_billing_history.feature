@@ -114,7 +114,7 @@ Feature: View billing history
     And I navigate to Billing History section from bus admin console page
     Then Billing history table should be:
       | Date  | Amount   | Total Paid | Balance Due |
-      | today | $462.00  | $462.00    | $0.00       |
+      | today | $396.00  | $396.00    | $0.00       |
     When I stop masquerading
     And I search and delete partner account by TC.15132_reseller_sub_partner
     And I search and delete partner account by TC.15132_reseller_partner
@@ -287,7 +287,7 @@ Feature: View billing history
       | Next Charge:    | after 1 year    |                 |                    |
     And Partner billing history should be:
       | Date  | Amount      | Total Paid   | Balance Due |
-      | today | $3,842.30   | $3,842.30    | $0.00       |
+      | today | $3,353.28   | $3,353.28    | $0.00       |
     When I click the latest date link to view the invoice
     And I navigate to new window
     Then Invoice head should include newly created partner company name
@@ -295,9 +295,9 @@ Feature: View billing history
       | Billing Detail |                        |          |                                                |             |         |                   |               |
       | From Date      | To Date                | Quantity | Description                                    | Price       | Tax     | Percent of Period | Total Price   |
       |                |                        |          | Previous Balance                               |             |         |                   | $ 0.00        |
-      | today          | after 1 year yesterday | 998      | Mozy Reseller GB - Gold (Annual) Mozy Reseller | $ 3.85      | $ 0.00  | 100.00%           | $ 3,842.30    |
-      |                |                        |          | Total                                          |             |         |                   | $ 3,842.30    |
-      | today          |                        |          | Electronic Payment                             |             |         |                   | $-3,842.30    |
+      | today          | after 1 year yesterday | 998      | Mozy Reseller GB - Gold (Annual) Mozy Reseller | $ 3.36      | $ 0.00  | 100.00%           | $ 3,353.28    |
+      |                |                        |          | Total                                          |             |         |                   | $ 3,353.28    |
+      | today          |                        |          | Electronic Payment                             |             |         |                   | $-3,353.28    |
       |                |                        |          | Balance                                        |             |         |                   | $ 0.00        |
     And I navigate to old window
     And I act as newly created partner account
@@ -310,8 +310,8 @@ Feature: View billing history
     And I navigate to Billing History section from bus admin console page
     And Billing history table should be:
       | Date  | Amount     | Total Paid  | Balance Due |
-      | today | $231.00    | $231.00     | $0.00       |
-      | today | $3,842.30  | $3,842.30   | $0.00       |
+      | today | $201.60    | $201.60     | $0.00       |
+      | today | $3,353.28  | $3,353.28   | $0.00       |
     When I click the latest date link to view the invoice from billing history section
     And I navigate to new window
     Then Invoice head should include newly created partner company name
@@ -319,9 +319,9 @@ Feature: View billing history
       | Billing Detail |                        |          |                                                          |             |         |                   |               |
       | From Date      | To Date                | Quantity | Description                                              | Price       | Tax     | Percent of Period | Total Price   |
       |                |                        |          | Previous Balance                                         |             |         |                   | $ 0.00        |
-      | today          | after 1 year yesterday | 3        | Mozy Reseller 20 GB add-on - Gold (Annual) Mozy Reseller | $ 77.00     | $ 0.00  | 100.00%           | $ 231.00      |
-      |                |                        |          | Total                                                    |             |         |                   | $ 231.00      |
-      | today          |                        |          | Electronic Payment                                       |             |         |                   | $-231.00      |
+      | today          | after 1 year yesterday | 3        | Mozy Reseller 20 GB add-on - Gold (Annual) Mozy Reseller | $ 67.20     | $ 0.00  | 100.00%           | $ 201.60      |
+      |                |                        |          | Total                                                    |             |         |                   | $ 201.60      |
+      | today          |                        |          | Electronic Payment                                       |             |         |                   | $-201.60      |
       |                |                        |          | Balance                                                  |             |         |                   | $ 0.00        |
     And I navigate to old window
     And I stop masquerading

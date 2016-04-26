@@ -269,7 +269,7 @@ Feature:
     And I view partner details by newly created partner company name
     And Partner billing history should be:
       | Date  | Amount     | Total Paid | Balance Due |
-      | today | €236.81    | €0.00      | €3,985.06   |
+      | today | €236.81    | €0.00      | €3,255.59   |
     And I act as newly created partner account
     When I navigate to User Group List section from bus admin console page
     And I view user group details by clicking group name: (default user group)
@@ -278,8 +278,8 @@ Feature:
     And I navigate to Billing History section from bus admin console page
     Then Billing history table should be:
       | Date  | Amount    | Total Paid | Balance Due |
-      | today | €236.81   | €0.00      | €3,985.06   |
-      | today | €3,748.25 | €0.00      | €3,748.25   |
+      | today | €236.81   | €0.00      | €3,255.59   |
+      | today | €3,018.78 | €0.00      | €3,018.78   |
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 

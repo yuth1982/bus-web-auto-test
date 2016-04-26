@@ -169,13 +169,13 @@ Feature: Add a new partner
     When I add a new MozyPro partner:
       | period | base plan | create under | vat number  | coupon              | country        | address           | city      | state | zip   | phone          | cc number        |
       | 12     | 500 GB    | MozyPro UK   | GB117223643 | 10PERCENTOFFOUTLINE | United Kingdom | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 | 4916783606275713 |
-    Then Sub-total before taxes or discounts should be £1,374.89
+    Then Sub-total before taxes or discounts should be £954.89
     And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
-      | 500 GB            | 1        | £1,374.89  | £1,374.89   |
-      | Discounts Applied |          |            | -£137.49    |
-      | Pre-tax Subtotal  |          |            | £1,237.40   |
-      | Total Charges     |          |            | £1,237.40   |
+      | 500 GB            | 1        | £954.89    | £954.89     |
+      | Discounts Applied |          |            | -£95.49     |
+      | Pre-tax Subtotal  |          |            | £859.40     |
+      | Total Charges     |          |            | £859.40     |
     And New partner should be created
     And Partner general information should be:
       | Status:         | Root Admin:          | Root Role:                  | Parent:              | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
@@ -199,8 +199,8 @@ Feature: Add a new partner
       | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period |
       | Next Charge:    | after 1 year          |                 |                    |
     And Partner billing history should be:
-      | Date  | Amount    | Total Paid | Balance Due |
-      | today | £1,237.40 | £1,237.40  | £0.00       |
+      | Date  | Amount  | Total Paid | Balance Due |
+      | today | £859.40 | £859.40    | £0.00       |
     And I delete partner account
 
   @TC.18151 @bus @2.5 @add_new_partner @mozypro
@@ -208,14 +208,14 @@ Feature: Add a new partner
     When I add a new MozyPro partner:
       | period | base plan | server plan | storage add on | net terms | country       | address           | city      | state abbrev | zip   | phone          |
       | 24     | 1 TB      | yes         | 10             | yes       | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
-    Then Sub-total before taxes or discounts should be $28,557.48
+    Then Sub-total before taxes or discounts should be $25,974.48
     And Order summary table should be:
       | Description      | Quantity | Price Each | Total Price |
-      | 1 TB             | 1        | $7,979.79  | $7,979.79   |
-      | Server Plan      | 1        | $629.79    | $629.79     |
+      | 1 TB             | 1        | $5,579.79  | $5,579.79   |
+      | Server Plan      | 1        | $446.79    | $446.79     |
       | 250 GB Add-on    | 10       | $1,994.79  | $19,947.90  |
-      | Pre-tax Subtotal |          |            | $28,557.48  |
-      | Total Charges    |          |            | $28,557.48  |
+      | Pre-tax Subtotal |          |            | $25,974.48  |
+      | Total Charges    |          |            | $25,974.48  |
     And New partner should be created
     And Partner general information should be:
       | Status:         | Root Admin:          | Root Role:                  | Parent: | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
@@ -235,12 +235,12 @@ Feature: Add a new partner
       | 0    | 3524      | 3524     | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Net Terms 30           | Current Period: | Biennial           |
-      | Unpaid Balance: | $28,557.48             | Collect On:     | N/A                |
+      | Unpaid Balance: | $25,974.48             | Collect On:     | N/A                |
       | Renewal Date:   | after 2 years          | Renewal Period: | Use Current Period |
       | Next Charge:    | after 2 years          |                 |                    |
     And Partner billing history should be:
       | Date  | Amount     | Total Paid | Balance Due |
-      | today | $28,557.48 | $0.00      | $28,557.48  |
+      | today | $25,974.48 | $0.00      | $25,974.48  |
     And I delete partner account
 
   @TC.18154 @bus @2.5 @add_new_partner @mozypro
@@ -288,14 +288,14 @@ Feature: Add a new partner
     When I add a new MozyPro partner:
       | period | base plan | create under    | server plan | net terms | country | address           | city      | state | zip   | phone          |
       | 12     | 4 TB      | MozyPro Germany | yes         | yes       | Germany | 3401 Hillview Ave | Palo Alto | CA    | 94304 | 1-877-486-9273 |
-    Then Sub-total before taxes or discounts should be €12,649.78
+    Then Sub-total before taxes or discounts should be €10,429.78
     And Order summary table should be:
       | Description      | Quantity | Price Each | Total Price |
-      | 4 TB             | 1        | €12,209.89 | €12,209.89  |
-      | Server Plan      | 1        | €439.89    | €439.89     |
-      | Pre-tax Subtotal |          |            | €12,649.78  |
-      | Taxes            |          |            | €2,403.46   |
-      | Total Charges    |          |            | €15,053.24  |
+      | 4 TB             | 1        | €10,081.89 | €10,081.89  |
+      | Server Plan      | 1        | €347.89    | €347.89     |
+      | Pre-tax Subtotal |          |            | €10,429.78  |
+      | Taxes            |          |            | €1,981.66   |
+      | Total Charges    |          |            | €12,411.44  |
     And New partner should be created
     And Partner general information should be:
       | Status:         | Root Admin:          | Root Role:                  | Parent:                   | Marketing Referrals:                  | Subdomain:              | Enable Mobile Access: | Enable Co-branding: | Require Ingredient: | Enable Sync: |
@@ -315,12 +315,12 @@ Feature: Add a new partner
       | 0    | 4096      | 4096     | 0    | Unlimited | Unlimited |
     And Partner internal billing should be:
       | Account Type:   | Net Terms 30          | Current Period: | Yearly             |
-      | Unpaid Balance: | €15,053.24            | Collect On:     | N/A                |
+      | Unpaid Balance: | €12,411.44            | Collect On:     | N/A                |
       | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period |
       | Next Charge:    | after 1 year          |                 |                    |
     And Partner billing history should be:
       | Date  | Amount     | Total Paid | Balance Due |
-      | today | €15,053.24 | €0.00      | €15,053.24  |
+      | today | €12,411.44 | €0.00      | €12,411.44  |
     And I delete partner account
 
   @TC.18852 @bus @2.5 @add_new_partner @mozypro

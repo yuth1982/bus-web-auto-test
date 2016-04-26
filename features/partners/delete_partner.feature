@@ -53,7 +53,7 @@ Feature: delete partner
       | 12     | Silver        | 500            |
     And New partner should be created
     Then I get partner aria id
-    Then API* The Aria account newly created partner aria id payment amount should be 2310
+    Then API* The Aria account newly created partner aria id payment amount should be 1980
     And API* I change the Aria account status by newly created partner aria id to -2
     And I wait for 30 seconds
     And API* I get Aria account details by newly created partner aria id
@@ -61,7 +61,7 @@ Feature: delete partner
       | status_label |
       | CANCELLED    |
     Then API* There is no refunds for aria account newly created partner aria id
-    Then API* The Aria account newly created partner aria id payment amount should be 2310
+    Then API* The Aria account newly created partner aria id payment amount should be 1980
 
   @TC.13862 @bus @delete_partner @tasks_p1
   Scenario: Mozy-13862:can not automatically refund or credit a deleted partner Mozypro DE, reseller, yearly
@@ -70,7 +70,7 @@ Feature: delete partner
       | 12     | Platinum      | 500            | yes         | MozyPro Germany | DE812321109 | 10PERCENTOFFOUTLINE | Germany | 4188181111111112 |
     And New partner should be created
     Then I get partner aria id
-    Then API* The Aria account newly created partner aria id payment amount should be 2574
+    Then API* The Aria account newly created partner aria id payment amount should be 2700
     And API* I change the Aria account status by newly created partner aria id to -2
     And I wait for 30 seconds
     And API* I get Aria account details by newly created partner aria id
@@ -78,7 +78,7 @@ Feature: delete partner
       | status_label |
       | CANCELLED    |
     Then API* There is no refunds for aria account newly created partner aria id
-    Then API* The Aria account newly created partner aria id payment amount should be 2574
+    Then API* The Aria account newly created partner aria id payment amount should be 2700
 
   @TC.13865 @bus @delete_partner @tasks_p1
   Scenario: 13865:can not log in if account has been deleted Mozypro,business, monthly
