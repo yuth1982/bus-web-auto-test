@@ -212,11 +212,13 @@ Feature: Add a new user
       | @mh_user_email |
     And I view user details by newly created MozyHome username
     Then I click allow re-activate
+    And User details changed message should be The machine now needs to be re-activated with MozyHome.
     And I log into phoenix with username newly created MozyHome username and password default password
     And user log in failed, error message is:
     """
      Incorrect email or password.
     """
+    # bug 143460
     And the user has activated their account
     And I log into phoenix with username newly created MozyHome username and password default password
     And I access freyja from phoenix
