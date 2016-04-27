@@ -12,7 +12,7 @@ Feature: Add a new partner
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | coupon              | country       | address           | city      | state abbrev | zip   | phone          |
       | 1      | Silver        | 500            | yes         | 10PERCENTOFFOUTLINE | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
-    Then Sub-total before taxes or discounts should be 190.00
+    Then Sub-total before taxes or discounts should be $190.00
     And Order summary table should be:
       | Description          | Quantity | Price Each | Total Price |
       | GB - Silver Reseller | 500      | $0.33      | $165.00     |
