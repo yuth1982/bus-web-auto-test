@@ -182,10 +182,10 @@ module Email
     #pu = past unactivated, d = desktop, s = server, u = unactivated, a = activated
     pu,du,da,su,sa = false,0,0,0,0
     email_body.to_s.each_line do |line|
-      pu = true if line.include?("<span class='label'>Activated</span></div>")
-      if line.include?("</td><td>Desktop</td></tr>")
+      pu = true if line.include?(">Activated</span></div>")
+      if line.include?("<td>Desktop</td>")
         (pu ? da += line.scan('Desktop').length : du += line.scan('Desktop').length )
-      elsif line.include?("</td><td>Server</td></tr>")
+      elsif line.include?("<td>Server</td>")
         (pu ? sa += line.scan('Server').length : su += line.scan('Server').length )
       end
     end
