@@ -4,100 +4,100 @@ qa:
     'MozyPro':
       '1':
         'Silver':
-          base plan: 0.42
+          base plan: 0.33
           server plan: 25
-          add on: 8.40
+          add on: 6.60
           add on quota: 20 GB add-on
         'Gold':
-          base plan: 0.35
+          base plan: 0.28
           server plan: 100
-          add on: 7.00
+          add on: 5.60
           add on quota: 20 GB add-on
         'Platinum':
-          base plan: 0.30
+          base plan: 0.24
           server plan: 175
-          add on: 6.00
+          add on: 4.80
           add on quota: 20 GB add-on
       '12':
         'Silver':
-          base plan: 4.62
-          server plan: 275
-          add on: 92.4
+          base plan: 3.96
+          server plan: 300
+          add on: 79.2
           add on quota: 20 GB add-on
         'Gold':
-          base plan: 3.85
-          server plan: 1100
-          add on: 77
+          base plan: 3.36
+          server plan: 1200
+          add on: 67.2
           add on quota: 20 GB add-on
         'Platinum':
-          base plan: 3.30
-          server plan: 1925
-          add on: 66
+          base plan: 2.88
+          server plan: 2100
+          add on: 57.6
           add on quota: 20 GB add-on
     'MozyPro UK':
       '1':
         'Silver':
-          base plan: 0.27
+          base plan: 0.22
           server plan: 20
-          add on: 5.4
+          add on: 4.4
           add on quota: 20 GB add-on
         'Gold':
-          base plan: 0.23
+          base plan: 0.18
           server plan: 65
-          add on: 4.6
+          add on: 3.6
           add on quota: 20 GB add-on
         'Platinum':
-          base plan: 0.20
+          base plan: 0.16
           server plan: 115
-          add on: 4
+          add on: 3.2
           add on quota: 20 GB add-on
       '12':
         'Silver':
-          base plan: 2.97
-          server plan: 220
-          add on: 59.4
+          base plan: 2.64
+          server plan: 240
+          add on: 52.8
           add on quota: 20 GB add-on
         'Gold':
-          base plan: 2.53
-          server plan: 715
-          add on: 50.6
+          base plan: 2.16
+          server plan: 780
+          add on: 43.2
           add on quota: 20 GB add-on
         'Platinum':
-          base plan: 2.20
-          server plan: 1265
-          add on: 44
+          base plan: 1.92
+          server plan: 1380
+          add on: 38.4
           add on quota: 20 GB add-on
     'MozyPro EU':
       '1':
         'Silver':
-          base plan: 0.33
+          base plan: 0.30
           server plan: 20
-          add on: 6.6
+          add on: 6.0
           add on quota: 20 GB add-on
         'Gold':
-          base plan: 0.28
+          base plan: 0.25
           server plan: 80
-          add on: 5.6
+          add on: 5.0
           add on quota: 20 GB add-on
         'Platinum':
-          base plan: 0.24
+          base plan: 0.22
           server plan: 140
-          add on: 4.8
+          add on: 4.4
           add on quota: 20 GB add-on
       '12':
         'Silver':
-          base plan: 3.63
-          server plan: 220
-          add on: 72.6
+          base plan: 3.60
+          server plan: 240
+          add on: 72.0
           add on quota: 20 GB add-on
         'Gold':
-          base plan: 3.08
-          server plan: 880
-          add on: 61.6
+          base plan: 3.00
+          server plan: 960
+          add on: 60.0
           add on quota: 20 GB add-on
         'Platinum':
           base plan: 2.64
-          server plan: 1540
+          server plan: 1680
           add on: 52.8
           add on quota: 20 GB add-on
 
@@ -196,28 +196,28 @@ qa:
           add on:
           add on quota:
         250 GB:
-          base plan: 703.89
-          server plan: 120.89
+          base plan: 477.89
+          server plan: 80.89
           add on:
           add on quota:
         500 GB:
-          base plan: 1374.89
-          server plan: 153.89
+          base plan: 954.89
+          server plan: 101.89
           add on:
           add on quota:
         1 TB:
-          base plan: 2694.89
-          server plan: 219.89
+          base plan: 1908.89
+          server plan: 154.89
           add on: 703.89
           add on quota: 250 GB Add-on
         2 TB:
-          base plan: 5224.89
-          server plan: 329.89
+          base plan: 3771.89
+          server plan: 203.89
           add on: 703.89
           add on quota: 250 GB Add-on
         4 TB:
-          base plan: 10020.89
-          server plan: 384.89
+          base plan: 7248.89
+          server plan: 249.89
           add on: 703.89
           add on quota: 250 GB Add-on
         8 TB:
@@ -272,28 +272,28 @@ qa:
           add on:
           add on quota:
         250 GB:
-          base plan: 1343.79
-          server plan: 230.79
+          base plan: 914.79
+          server plan: 151.79
           add on:
           add on quota:
         500 GB:
-          base plan: 2624.79
-          server plan: 293.79
+          base plan: 1823.79
+          server plan: 193.79
           add on:
           add on quota:
         1 TB:
-          base plan: 5144.79
-          server plan: 419.79
+          base plan: 3646.79
+          server plan: 291.79
           add on: 1343.79
           add on quota: 250 GB Add-on
         2 TB:
-          base plan: 9974.79
-          server plan: 629.79
+          base plan: 7202.79
+          server plan: 386.79
           add on: 1343.79
           add on quota: 250 GB Add-on
         4 TB:
-          base plan: 19130.79
-          server plan: 734.79
+          base plan: 13836.79
+          server plan: 478.79
           add on: 1343.79
           add on quota: 250 GB Add-on
         8 TB:
@@ -426,28 +426,28 @@ qa:
           add on:
           add on quota:
         250 GB:
-          base plan: 824.89
-          server plan: 142.89
+          base plan: 663.89
+          server plan: 113.89
           add on:
           add on quota:
         500 GB:
-          base plan: 1649.89
-          server plan: 175.89
+          base plan: 1327.89
+          server plan: 141.89
           add on:
           add on quota:
         1 TB:
-          base plan: 3299.89
-          server plan: 219.89
+          base plan: 2654.89
+          server plan: 214.89
           add on: 824.89
           add on quota: 250 GB Add-on
         2 TB:
-          base plan: 6379.89
-          server plan: 329.89
+          base plan: 5245.89
+          server plan: 283.89
           add on: 824.89
           add on quota: 250 GB Add-on
         4 TB:
-          base plan: 12209.89
-          server plan: 439.89
+          base plan: 10081.89
+          server plan: 347.89
           add on: 824.89
           add on quota: 250 GB Add-on
         8 TB:
@@ -502,28 +502,28 @@ qa:
           add on:
           add on quota:
         250 GB:
-          base plan: 1574.79
-          server plan: 272.79
+          base plan: 1272.79
+          server plan: 210.79
           add on:
           add on quota:
         500 GB:
-          base plan: 3149.79
-          server plan: 335.79
+          base plan: 2536.79
+          server plan: 268.79
           add on:
           add on quota:
         1 TB:
-          base plan: 6299.79
-          server plan: 419.79
+          base plan: 5072.79
+          server plan: 405.79
           add on: 1574.79
           add on quota: 250 GB Add-on
         2 TB:
-          base plan: 12179.79
-          server plan: 629.79
+          base plan: 10017.79
+          server plan: 538.79
           add on: 1574.79
           add on quota: 250 GB Add-on
         4 TB:
-          base plan: 23309.79
-          server plan: 839.79
+          base plan: 19245.79
+          server plan: 665.79
           add on: 1574.79
           add on quota: 250 GB Add-on
         8 TB:
@@ -657,28 +657,28 @@ qa:
           add on:
           add on quota:
         250 GB:
-          base plan: 1044.89
-          server plan: 175.89
+          base plan: 729.89
+          server plan: 124.89
           add on:
           add on quota:
         500 GB:
-          base plan: 2089.89
-          server plan: 219.89
+          base plan: 1459.89
+          server plan: 156.89
           add on:
           add on quota:
         1 TB:
-          base plan: 4179.89
-          server plan: 329.89
+          base plan: 2919.89
+          server plan: 236.89
           add on: 1044.89
           add on quota: 250 GB Add-on
         2 TB:
-          base plan: 8249.89
-          server plan: 439.89
+          base plan: 5769.89
+          server plan: 312.89
           add on: 1044.89
           add on quota: 250 GB Add-on
         4 TB:
-          base plan: 15839.89
-          server plan: 549.89
+          base plan: 11089.89
+          server plan: 382.89
           add on: 1044.89
           add on quota: 250 GB Add-on
         8 TB:
@@ -734,28 +734,28 @@ qa:
           add on:
           add on quota:
         250 GB:
-          base plan: 1994.79
-          server plan: 335.79
+          base plan: 1399.79
+          server plan: 231.79
           add on:
           add on quota:
         500 GB:
-          base plan: 3989.79
-          server plan: 419.79
+          base plan: 2789.79
+          server plan: 296.79
           add on:
           add on quota:
         1 TB:
-          base plan: 7979.79
-          server plan: 629.79
+          base plan: 5579.79
+          server plan: 446.79
           add on: 1994.79
           add on quota: 250 GB Add-on
         2 TB:
-          base plan: 15749.79
-          server plan: 839.79
+          base plan: 11019.79
+          server plan: 592.79
           add on: 1994.79
           add on quota: 250 GB Add-on
         4 TB:
-          base plan: 30239.79
-          server plan: 1049.79
+          base plan: 21169.79
+          server plan: 732.79
           add on: 1994.79
           add on quota: 250 GB Add-on
         8 TB:
@@ -876,98 +876,98 @@ std:
         'Silver':
           base plan: 0.42
           server plan: 25
-          add on: 8.40
+          add on: 6.60
           add on quota: 20 GB add-on
         'Gold':
-          base plan: 0.35
+          base plan: 0.28
           server plan: 100
-          add on: 7.00
+          add on: 5.60
           add on quota: 50 GB add-on
         'Platinum':
-          base plan: 0.30
+          base plan: 0.24
           server plan: 175
-          add on: 6.00
+          add on: 4.80
           add on quota: 100 GB add-on
       '12':
         'Silver':
-          base plan: 4.62
-          server plan: 275
-          add on: 92.4
+          base plan: 3.96
+          server plan: 300
+          add on: 79.2
           add on quota: 20 GB add-on
         'Gold':
-          base plan: 3.85
-          server plan: 1100
-          add on: 77
+          base plan: 3.36
+          server plan: 1200
+          add on: 67.2
           add on quota: 50 GB add-on
         'Platinum':
-          base plan: 3.30
-          server plan: 1925
-          add on: 66
+          base plan: 2.88
+          server plan: 2100
+          add on: 57.6
           add on quota: 120 GB add-on
     'MozyPro UK':
       '1':
         'Silver':
-          base plan: 0.27
+          base plan: 0.22
           server plan: 20
-          add on: 5.4
+          add on: 4.4
           add on quota: 20 GB add-on
         'Gold':
-          base plan: 0.23
+          base plan: 0.18
           server plan: 65
-          add on: 4.6
+          add on: 3.6
           add on quota: 50 GB add-on
         'Platinum':
-          base plan: 0.20
+          base plan: 0.16
           server plan: 115
-          add on: 4
+          add on: 3.2
           add on quota: 100 GB add-on
       '12':
         'Silver':
-          base plan: 2.97
-          server plan: 220
-          add on: 59.4
+          base plan: 2.64
+          server plan: 240
+          add on: 52.8
           add on quota: 20 GB add-on
         'Gold':
-          base plan: 2.53
-          server plan: 715
-          add on: 50.6
+          base plan: 2.16
+          server plan: 780
+          add on: 43.2
           add on quota: 50 GB add-on
         'Platinum':
-          base plan: 2.20
-          server plan: 1265
-          add on: 44
+          base plan: 1.92
+          server plan: 1380
+          add on: 38.4
           add on quota: 100 GB add-on
     'MozyPro EU':
       '1':
         'Silver':
-          base plan: 0.33
+          base plan: 0.30
           server plan: 20
-          add on: 6.6
+          add on: 6.0
           add on quota: 20 GB add-on
         'Gold':
-          base plan: 0.28
+          base plan: 0.25
           server plan: 80
-          add on: 5.6
+          add on: 5.0
           add on quota: 50 GB add-on
         'Platinum':
-          base plan: 0.24
+          base plan: 0.22
           server plan: 140
-          add on: 4.8
+          add on: 4.4
           add on quota: 100 GB add-on
       '12':
         'Silver':
-          base plan: 3.63
-          server plan: 220
-          add on: 72.6
+          base plan: 3.60
+          server plan: 240
+          add on: 72.0
           add on quota: 20 GB add-on
         'Gold':
-          base plan: 3.08
-          server plan: 880
-          add on: 61.6
+          base plan: 3.00
+          server plan: 960
+          add on: 60.0
           add on quota: 50 GB add-on
         'Platinum':
           base plan: 2.64
-          server plan: 1540
+          server plan: 1680
           add on: 52.8
           add on quota: 100 GB add-on
 
@@ -1066,28 +1066,28 @@ std:
           add on: 153.89
           add on quota: 50 GB Add-on
         250 GB:
-          base plan: 703.89
-          server plan: 120.89
+          base plan: 477.89
+          server plan: 80.89
           add on: 153.89
           add on quota: 50 GB Add-on
         500 GB:
-          base plan: 1374.89
-          server plan: 153.89
+          base plan: 954.89
+          server plan: 101.89
           add on: 153.89
           add on quota: 50 GB Add-on
         1 TB:
-          base plan: 2694.89
-          server plan: 219.89
+          base plan: 1908.89
+          server plan: 154.89
           add on: 153.89
           add on quota: 50 GB Add-on
         2 TB:
-          base plan: 5224.89
-          server plan: 329.89
+          base plan: 3771.89
+          server plan: 203.89
           add on: 153.89
           add on quota: 50 GB Add-on
         4 TB:
-          base plan: 10020.89
-          server plan: 384.89
+          base plan: 7248.89
+          server plan: 249.89
           add on: 153.89
           add on quota: 50 GB Add-on
         8 TB:
@@ -1142,28 +1142,28 @@ std:
           add on: 293.79
           add on quota: 50 GB Add-on
         250 GB:
-          base plan: 1343.79
-          server plan: 230.79
+          base plan: 914.79
+          server plan: 151.79
           add on: 293.79
           add on quota: 50 GB Add-on
         500 GB:
-          base plan: 2624.79
-          server plan: 293.79
+          base plan: 1823.79
+          server plan: 193.79
           add on: 293.79
           add on quota: 50 GB Add-on
         1 TB:
-          base plan: 5144.79
-          server plan: 419.79
+          base plan: 3646.79
+          server plan: 291.79
           add on: 293.79
           add on quota: 50 GB Add-on
         2 TB:
-          base plan: 9974.79
-          server plan: 629.79
+          base plan: 7202.79
+          server plan: 386.79
           add on: 293.79
           add on quota: 50 GB Add-on
         4 TB:
-          base plan: 19130.79
-          server plan: 734.79
+          base plan: 13836.79
+          server plan: 478.79
           add on: 293.79
           add on quota: 50 GB Add-on
         8 TB:
@@ -1296,28 +1296,28 @@ std:
           add on: 175.89
           add on quota: 50 GB Add-on
         250 GB:
-          base plan: 824.89
-          server plan: 142.89
+          base plan: 663.89
+          server plan: 113.89
           add on: 175.89
           add on quota: 50 GB Add-on
         500 GB:
-          base plan: 1649.89
-          server plan: 175.89
+          base plan: 1327.89
+          server plan: 141.89
           add on: 175.89
           add on quota: 50 GB Add-on
         1 TB:
-          base plan: 3299.89
-          server plan: 219.89
+          base plan: 2654.89
+          server plan: 214.89
           add on: 175.89
           add on quota: 50 GB Add-on
         2 TB:
-          base plan: 6379.89
-          server plan: 329.89
+          base plan: 5245.89
+          server plan: 283.89
           add on: 175.89
           add on quota: 50 GB Add-on
         4 TB:
-          base plan: 12209.89
-          server plan: 439.89
+          base plan: 10081.89
+          server plan: 347.89
           add on: 175.89
           add on quota: 50 GB Add-on
         8 TB:
@@ -1372,28 +1372,28 @@ std:
           add on: 335.79
           add on quota: 50 GB Add-on
         250 GB:
-          base plan: 1574.79
-          server plan: 272.79
+          base plan: 1272.79
+          server plan: 210.79
           add on: 335.79
           add on quota: 50 GB Add-on
         500 GB:
-          base plan: 3149.79
-          server plan: 335.79
+          base plan: 2536.79
+          server plan: 268.79
           add on: 335.79
           add on quota: 50 GB Add-on
         1 TB:
-          base plan: 6299.79
-          server plan: 419.79
+          base plan: 5072.79
+          server plan: 405.79
           add on: 335.79
           add on quota: 50 GB Add-on
         2 TB:
-          base plan: 12179.79
-          server plan: 629.79
+          base plan: 10017.79
+          server plan: 538.79
           add on: 335.79
           add on quota: 50 GB Add-on
         4 TB:
-          base plan: 23309.79
-          server plan: 839.79
+          base plan: 19245.79
+          server plan: 665.79
           add on: 335.79
           add on quota: 50 GB Add-on
         8 TB:
@@ -1527,28 +1527,28 @@ std:
           add on: 219.89
           add on quota: 50 GB Add-on
         250 GB:
-          base plan: 1044.89
-          server plan: 175.89
+          base plan: 729.89
+          server plan: 124.89
           add on: 219.89
           add on quota: 50 GB Add-on
         500 GB:
-          base plan: 2089.89
-          server plan: 219.89
+          base plan: 1459.89
+          server plan: 156.89
           add on: 219.89
           add on quota: 50 GB Add-on
         1 TB:
-          base plan: 4179.89
-          server plan: 329.89
+          base plan: 2919.89
+          server plan: 236.89
           add on: 219.89
           add on quota: 50 GB Add-on
         2 TB:
-          base plan: 8249.89
-          server plan: 439.89
+          base plan: 5769.89
+          server plan: 312.89
           add on: 219.89
           add on quota: 50 GB Add-on
         4 TB:
-          base plan: 15839.89
-          server plan: 549.89
+          base plan: 11089.89
+          server plan: 382.89
           add on: 219.89
           add on quota: 50 GB Add-on
         8 TB:
@@ -1604,28 +1604,28 @@ std:
           add on: 419.79
           add on quota: 50 GB Add-on
         250 GB:
-          base plan: 1994.79
-          server plan: 335.79
+          base plan: 1399.79
+          server plan: 231.79
           add on: 419.79
           add on quota: 50 GB Add-on
         500 GB:
-          base plan: 3989.79
-          server plan: 419.79
+          base plan: 2789.79
+          server plan: 296.79
           add on: 419.79
           add on quota: 50 GB Add-on
         1 TB:
-          base plan: 7979.79
-          server plan: 629.79
+          base plan: 5579.79
+          server plan: 446.79
           add on: 419.79
           add on quota: 50 GB Add-on
         2 TB:
-          base plan: 15749.79
-          server plan: 839.79
+          base plan: 11019.79
+          server plan: 592.79
           add on: 419.79
           add on quota: 50 GB Add-on
         4 TB:
-          base plan: 30239.79
-          server plan: 1049.79
+          base plan: 21169.79
+          server plan: 732.79
           add on: 419.79
           add on quota: 50 GB Add-on
         8 TB:

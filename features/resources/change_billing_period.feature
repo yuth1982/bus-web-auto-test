@@ -264,13 +264,14 @@ Feature: Change subscription period
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
       | 1      | Silver        | 100            |
+    And the sub-total before taxes or discounts should be correct
     Then New partner should be created
     When I act as newly created partner account
     And I change account subscription to annual billing period!
     Then Subscription changed message should be Your account has been changed to yearly billing.
     Then Next renewal info table should be:
-      | Period          | Date         | Amount                                |
-      | Yearly (change) | after 1 year | $462.00 (Without taxes or discounts)  |
+      | Period          | Date         | Amount                                                                                                                                        |
+      | Yearly (change) | after 1 year | <%=format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
     When I stop masquerading
     And I view partner details by newly created partner company name
     Then Partner internal billing should be:

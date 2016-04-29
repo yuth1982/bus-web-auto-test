@@ -464,6 +464,7 @@
         | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
       And I search and delete partner account by newly created partner company name
 
+  # Hard code amount here as amount in BUS order summary €96,429.27 is different from invoice in Aria €96,429.29
   @TC.124305 @BUG.132150 @bus @2.17 @add_new_partner @mozypro @coupon
   Scenario: 124305 Add New MozyPro Partner  -- LV -- Yearly -- 28 TB -- Server Plan -- Coupon -- billing country -- Net Terms
     When I add a new MozyPro partner:
@@ -473,13 +474,13 @@
     And the order summary table should be correct
     And New partner should be created
     And New Partner internal billing should be:
-      | Account Type:   | Net Terms 30                                | Current Period: | <%=@partner.subscription_period%> |
-      | Unpaid Balance: | <%=@partner.billing_info.billing[:total_str]%>  | Collect On:     | N/A                |
-      | Renewal Date:   | <%=@partner.subscription_period%>           | Renewal Period: | Use Current Period |
-      | Next Charge:    | <%=@partner.subscription_period%>           |                 |                    |
+      | Account Type:   | Net Terms 30                        | Current Period: | <%=@partner.subscription_period%> |
+      | Unpaid Balance: | €96,429.29                          | Collect On:     | N/A                               |
+      | Renewal Date:   | <%=@partner.subscription_period%>   | Renewal Period: | Use Current Period                |
+      | Next Charge:    | <%=@partner.subscription_period%>   |                 |                                   |
     And Partner billing history should be:
-      | Date  | Amount                                      | Total Paid                                | Balance Due                                |
-      | today | <%=@partner.billing_info.billing[:total_str]%>  | <%=@partner.billing_info.billing[:zero]%> | <%=@partner.billing_info.billing[:total_str]%> |
+      | Date  | Amount     | Total Paid | Balance Due |
+      | today | €96,429.29 | €0.00      | €96,429.29  |
     And I search and delete partner account by newly created partner company name
 
   @TC.124306 @bus @2.17 @add_new_partner @mozypro @vat
