@@ -13,9 +13,4 @@ Feature: Add a new user, execute cucumber features/add_new_user_100.feature
     And I add multiple users:
       | name                | storage_type | storage_limit | devices |
       | shijing-server-user | Server       | 500           | 2       |
-    Then 1 new user should be created
-    And I search user by:
-      | keywords   |
-      | @user_name |
-    And I view user details by newly created user email
-    And I update the user password to default password
+

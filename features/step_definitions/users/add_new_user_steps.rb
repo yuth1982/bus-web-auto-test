@@ -26,6 +26,14 @@ When /^I add multiple users:$/ do |table|
     |#{table.headers.join('|')}|
     |#{table.rows.first.join('|')}|
   })
+  step %{1 new user should be created}
+  step %{I search user by:}, table(%{
+    | keywords   |
+    | @user_name |
+  })
+  step %{I view user details by newly created user email}
+  step %{I update the user password to default password}
+  step %{I close user details section}
   end
 end
 
