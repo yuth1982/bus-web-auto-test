@@ -20,6 +20,15 @@ When /^I add new user\(s\):$/ do |user_table|
   @bus_site.admin_console_page.add_new_user_section.add_new_users(@new_users)
 end
 
+When /^I add multiple users:$/ do |table|
+  100.times do
+  step %{I add new user\(s\):}, table(%{
+    |#{table.headers.join('|')}|
+    |#{table.rows.first.join('|')}|
+  })
+  end
+end
+
 When /^I add new user with error message (.+) unsuccessfully:$/ do |message, user_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_user'])
   @new_users =[]
