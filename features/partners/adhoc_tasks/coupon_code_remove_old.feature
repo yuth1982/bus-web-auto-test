@@ -123,14 +123,14 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     When I add a new MozyPro partner:
       | company name                                         | period | base plan | server plan | create under | country        | vat number  | coupon              | cc number        |
       | DONOT EDIT MozyPro 500 GB Plan yearly GBP VAT Coupon | 12     | 500 GB    | yes         | MozyPro UK   | United Kingdom | GB117223643 | 20PERCENTOFFOUTLINE | 4916783606275713 |
-    Then Sub-total before taxes or discounts should be £1,528.78
-    And Order summary table should be:
-      | Description       | Quantity | Price Each | Total Price |
-      | 500 GB            | 1        | £1,374.89  | £1,374.89   |
-      | Server Plan       | 1        | £153.89    | £153.89     |
-      | Discounts Applied |          |            | -£305.76    |
-      | Pre-tax Subtotal  |          |            | £1,223.02   |
-      | Total Charges     |          |            | £1,223.02   |
+#    Then Sub-total before taxes or discounts should be £1,528.78
+#    And Order summary table should be:
+#      | Description       | Quantity | Price Each | Total Price |
+#      | 500 GB            | 1        | £1,374.89  | £1,374.89   |
+#      | Server Plan       | 1        | £153.89    | £153.89     |
+#      | Discounts Applied |          |            | -£305.76    |
+#      | Pre-tax Subtotal  |          |            | £1,223.02   |
+#      | Total Charges     |          |            | £1,223.02   |
     And New partner should be created
 
   @TC.143134_010 @add_new_partner @mozypro

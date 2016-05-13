@@ -138,7 +138,7 @@ Feature: BUS smoke test
     And I click Connection Settings tab
     Then The sync status result should like:
       | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 3 succeeded, 0 failed \| Users Deprovisioned: 0 |
+      | Sync Result | Users Provisioned: 3 succeeded, 0 failed \| Users Deprovisioned: 0 Blocked Deprovision |
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by User desc
   #    Then User search results should be:
@@ -159,7 +159,7 @@ Feature: BUS smoke test
     And I click Connection Settings tab
     Then The sync status result should like:
       | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 3 succeeded, 0 failed |
+      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 3 succeeded, 0 failed Blocked Deprovision |
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
 
