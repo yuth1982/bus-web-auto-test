@@ -29,7 +29,7 @@ When /^I add multiple users:$/ do |table|
   step %{1 new user should be created}
   step %{I search user by:}, table(%{
     | keywords   |
-    | @user_name |
+    | <%=@new_users[0].email%> |
   })
   step %{I view user details by newly created user email}
   step %{I update the user password to default password}
