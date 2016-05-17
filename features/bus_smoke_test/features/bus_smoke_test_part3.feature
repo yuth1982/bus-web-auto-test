@@ -37,18 +37,18 @@ Feature: BUS smoke test
 
   @bus_us @TC.125954 @std
   Scenario: Test Case Mozy-125954: BUS US -- Order Data Shuttle
-    When I order data shuttle for Internal Mozy - MozyPro for US Data Shuttle(Don't Edit)
+    When I order data shuttle for Internal Mozy - DoNotEdit - MozyPro for US Data Shuttle
       | power adapter     | key from  |
       | Data Shuttle EMEA | available |
     Then Data shuttle order should be created
 
   @bus_us @TC.125955 @std
   Scenario: Test Case Mozy-125955: BUS US -- Update Data Shuttle - Precondition:@TC.125954
-    When I search order in view data shuttle orders section by Internal Mozy - MozyPro for US Data Shuttle(Don't Edit)
+    When I search order in view data shuttle orders section by Internal Mozy - DoNotEdit - MozyPro for US Data Shuttle
     And I view data shuttle order details
     And I add drive to data shuttle order
     Then Add drive to data shuttle order message should include Successfully added drive to order
-    When I cancel the latest data shuttle order for Internal Mozy - MozyPro for US Data Shuttle(Don't Edit)
+    When I cancel the latest data shuttle order for Internal Mozy - DoNotEdit - MozyPro for US Data Shuttle
     Then The order should be Cancelled
 
   #=====================================
