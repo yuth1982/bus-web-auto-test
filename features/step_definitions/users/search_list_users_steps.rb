@@ -94,9 +94,9 @@ When /^The users table should( not)? be empty$/ do |t|
   rows = @bus_site.admin_console_page.search_list_users_section.search_results_table_rows
   #rows.to_s.include?('No results found.').should be_true
   if t.nil?
-    (rows.empty? || (rows[0][0]==" ")).should be_true
+    (rows.empty? || rows.to_s.include?('No results found.')).should be_true
   else
-    rows.empty?.should be_false
+    (!rows.empty? && rows[0].size > 1).should be_true
   end
 end
 
