@@ -112,10 +112,10 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 8 TB      |
 
   @TC.143134_410 @add_new_partner @mozypro
-  Scenario: MozyPro 500 GB Plan Biennially USD new
+  Scenario: MozyPro 500 GB Plan Biennially USD to 2 TB Biennially
     When I add a new MozyPro partner:
-      | company name                                      | period | base plan | country       |
-      | DONOT EDIT MozyPro 500 GB Plan Biennially USD new | 24     | 500 GB    | United States |
+      | company name                                                     | period | base plan | country       |
+      | DONOT EDIT MozyPro 500 GB Plan Biennially USD to 2 TB Biennially | 24     | 500 GB    | United States |
     Then Sub-total before taxes or discounts should be $2,789.79
     And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
