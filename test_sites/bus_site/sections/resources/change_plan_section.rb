@@ -16,6 +16,7 @@ module Bus
     element(:server_plan_change_link, xpath: "//a[text()='(change)']")
     element(:coupon_code_tb, id: "coupon_code")
     element(:server_plan_status_span, id: "server-pass-status")
+    element(:reseller_quota_input, id: "products_exclusive_base_qty")
 
     #ME DPS
     element(:enterprise_dps_baseplan_input, id: "products_exclusive_base_qty")
@@ -314,6 +315,16 @@ module Bus
     # Returns string
     def mozyenterprise_server_plan
       server_plan_select.first_selected_option.text
+    end
+
+    # Public: Current Reseller quota
+    #
+    # Example
+    #   @bus_site.admin_console_page.change_plan_section.reseller_quota
+    #
+    # Returns string
+    def reseller_quota
+      reseller_quota_input.value
     end
 
     def itemized_current_plan_hash

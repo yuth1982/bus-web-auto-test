@@ -93,6 +93,7 @@ Then /^(MozyPro|MozyEnterprise|Reseller|Itemized) new plan should be:$/ do |type
   users = expected["users"]
   server_plan = expected["server plan"]
   add_on = expected["storage add-on"]
+  reseller_quota = expected["reseller quota"]
 
   case type
     when 'MozyPro'
@@ -106,6 +107,7 @@ Then /^(MozyPro|MozyEnterprise|Reseller|Itemized) new plan should be:$/ do |type
       @bus_site.admin_console_page.change_plan_section.storage_add_on.should == add_on unless add_on.nil?
 
     when 'Reseller'
+      @bus_site.admin_console_page.change_plan_section.reseller_quota.should == reseller_quota unless reseller_quota.nil?
       @bus_site.admin_console_page.change_plan_section.server_plan_status.should == server_plan.capitalize unless server_plan.nil?
       @bus_site.admin_console_page.change_plan_section.storage_add_on.should == add_on unless add_on.nil?
 

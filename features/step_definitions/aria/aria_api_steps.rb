@@ -364,3 +364,18 @@ And /^API\* I change account schedule price for (.+)$/ do |aria_id, info_table|
   }
 
 end
+
+Then /^API\* Aria account coupon code info should be (.+)$/ do |coupon|
+  coupon_details = Aria_SDK.call('get_coupon_details', {:acct_no=> @aria_id.to_i})
+  coupons = coupon_details['coupons']
+
+  if !coupons.nil?
+    coupon_code = coupons[0]['out_coupon_cd']
+    Log.debug coupon_code
+    coupon_code.should == coupon
+  else
+    Log.debug coupons
+    coupons.should == nil
+  end
+
+end

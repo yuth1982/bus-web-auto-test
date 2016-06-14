@@ -1,4 +1,5 @@
 require "#{File.dirname(__FILE__)}/../../test_sites/test_sites"
+require "aria_sdk"
 
 def firefox_profile
   profile = Selenium::WebDriver::Firefox::Profile.new
@@ -110,3 +111,5 @@ AriaApi::Configuration.auth_key = ARIA_API_ENV['auth_key']
 AriaApi::Configuration.client_no = ARIA_API_ENV['client_no']
 AriaApi::Configuration.url = ARIA_API_ENV['url']
 
+# Setup Aria REST API through aria_sdk
+Aria_SDK = AriaCoreRestClient.new(ARIA_API_ENV['client_no'], ARIA_API_ENV['auth_key'], TEST_ENV == "prod")
