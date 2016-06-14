@@ -562,6 +562,35 @@ module DBHelper
     end
   end
 
+  def get_partner_adr_policy_name(partner_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select adr_policy_name from pro_partners where id = #{partner_id};"
+      Log.debug sql
+      c = conn.exec(sql)
+      c.values[0][0]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_user_groups_adr_policy_name(partner_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select adr_policy_name from user_groups where pro_partner_id = #{partner_id};"
+      Log.debug sql
+      c = conn.exec(sql)
+      puts c.column_values( 0 )
+      c.column_values( 0 )
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
 end
 
 
