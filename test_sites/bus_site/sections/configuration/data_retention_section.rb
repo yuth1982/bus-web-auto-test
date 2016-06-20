@@ -17,6 +17,8 @@ module Bus
     element(:submit_adr_policy_btn, xpath: "//input[@value='Submit'][@type='button']")
     element(:message_div, xpath: "//div[starts-with(@id,'setting-change_adr_policy-')]/ul/li")
 
+    # element(:user_group_adr_policy_link, xpath: "//div[@id='setting-adr_status-content']/div[3]//table/tbody/tr[1]/td[2]/a")
+
 
     # Pubic: get adr policy of the partner, user group, sub partner
     #
@@ -68,6 +70,29 @@ module Bus
 
     def messages
       message_div.text
+    end
+
+    def click_user_group_adr_policy(user_group)
+      find(:xpath, "//td[text()='#{user_group}']/../td[2]/a").click
+    end
+
+    def get_adr_policy_name
+      adr_policy_name_select.first_selected_option.text
+    end
+
+    # Public:
+    #
+    # Example
+    #  @bus_site.admin_console_page.data_retention_section.available_policy_name
+    #  # => ["7 Days", "14 Days", "1 Month (daily)", "2 Months (weekly)", "2 Months (weekly)", "6 Months (monthly)", "1 Year (monthly)", "2 Years (quarterly)", "3 Years (quarterly)", "4 Years (quarterly)", "5 Years (quarterly)", "6 Years (quarterly)", "7 Years (quarterly)"]
+    #
+    #  Return an array of policy names
+    def available_policy_names
+      adr_policy_name_select.options_text
+    end
+
+    def available_policy_values
+      adr_policy_name_select.options_values
     end
 
   end

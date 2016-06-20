@@ -576,14 +576,83 @@ module DBHelper
     end
   end
 
-  def get_user_groups_adr_policy_name(partner_id)
+  def get_user_groups_adr_from_partner(partner_id)
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
       sql = "select adr_policy_name from user_groups where pro_partner_id = #{partner_id};"
       Log.debug sql
       c = conn.exec(sql)
-      puts c.column_values( 0 )
-      c.column_values( 0 )
+      c.field_values('adr_policy_name')
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_user_group_adr_policy_name(partner_id, user_group_name)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select adr_policy_name from user_groups where pro_partner_id = #{partner_id} and name = '#{user_group_name}';"
+      Log.debug sql
+      c = conn.exec(sql)
+      c.values[0][0]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_main_adr_jobs(object_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select * from adr_jobs where object_id = #{object_id} and main_job_id is null;"
+      Log.debug sql
+      c = conn.exec(sql)
+      c.values
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_sub_adr_jobs(main_job_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select * from adr_jobs where main_job_id = #{main_job_id};"
+      Log.debug sql
+      c = conn.exec(sql)
+      c.values
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_user_group_id(partner_id, user_group_name)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select id from user_groups where pro_partner_id = #{partner_id} and name = '#{user_group_name}';"
+      Log.debug sql
+      c = conn.exec(sql)
+      c.values[0][0]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_main_job_id(partner_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select id from adr_jobs where object_id = #{partner_id};"
+      Log.debug sql
+      c = conn.exec(sql)
+      c.values[0][0]
     rescue PG::Error => e
       puts "postgres error: #{e}"
     ensure
