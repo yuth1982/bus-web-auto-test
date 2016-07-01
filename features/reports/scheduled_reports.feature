@@ -786,7 +786,7 @@ Feature: Scheduled Reports
     And I search emails by keywords:
       | to                        | content                                         | after |
       | <%=@recipients_array[2]%> | Your billing summary test7345 - Billing Summary | today |
-    Then I should see 1 email(s)
+    Then I should see 2 email(s)
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
