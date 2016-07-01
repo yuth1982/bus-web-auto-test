@@ -199,6 +199,7 @@ module Freyja
     def set_user_password (password)
       user_password_set_text.type_text(password)
       user_password_set_again_text.type_text(password)
+      wait_until {user_continue_activate_btn.visible?}
       user_continue_activate_btn.click
     end
 
