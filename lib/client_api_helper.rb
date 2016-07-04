@@ -22,7 +22,7 @@ module ClientUserResources
     uri = URI.parse("#{QA_ENV['bus_host']}")
       Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https', :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
         url =  "/client/user/resources"
-        request = Net::HTTP::Put.new(url)
+        request = Net::HTTP::Get.new(url)
         request.add_field("Authorization", "Bearer #{Base64.strict_encode64(access_token)}")
         response = http.request request
         begin
