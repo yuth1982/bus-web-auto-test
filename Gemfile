@@ -26,3 +26,4 @@ gem 'os', '0.9.6'                       # Detect OS
 gem 'parallel_tests', '1.3.7'
 gem 'parallel_tests_extension', :path => 'lib/parallel_tests_extension-1.3.7'
 gem 'aria_sdk'
+gem 'rack', '~>1.6.0'
