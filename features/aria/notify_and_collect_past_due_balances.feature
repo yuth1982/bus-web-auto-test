@@ -79,8 +79,8 @@ Feature: Notify about and collect past-due balances
       | status_label     |
       | ACTIVE DUNNING 1 |
     When I search emails by keywords:
-      | from                    | subject                               | after | content                             |
-      | AccountManager@mozy.com | [Mozy] Mozy invoice, due upon receipt | today |<%=@partner.credit_card.first_name%> |
+      | from                    | subject                                          | after | content                             |
+      | AccountManager@mozy.com | [Mozy] Your credit card payment was unsuccessful | today |<%=@partner.credit_card.first_name%> |
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 
@@ -99,8 +99,8 @@ Feature: Notify about and collect past-due balances
       | status_label     |
       | ACTIVE DUNNING 2 |
     When I search emails by keywords:
-      | from                    | subject                                  | after | content                             |
-      | AccountManager@mozy.com | [Mozy] Mozy subscription invoice overdue | today |<%=@partner.credit_card.first_name%> |
+      | from                    | subject                                                          | after | content                             |
+      | AccountManager@mozy.com | [Mozy] SECOND NOTICE - Your credit card payment was unsuccessful | today |<%=@partner.credit_card.first_name%> |
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 
@@ -119,8 +119,8 @@ Feature: Notify about and collect past-due balances
       | status_label     |
       | ACTIVE DUNNING 3 |
     When I search emails by keywords:
-      | from                    | subject                                                        | after | content                              |
-      | AccountManager@mozy.com | [Mozy] Your account is suspended - all users unable to back up | today | <%=@partner.credit_card.first_name%> |
+      | from                    | subject                                         | after | content                              |
+      | AccountManager@mozy.com | [Mozy] Your account will be suspended in 7 days | today | <%=@partner.credit_card.first_name%> |
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 
@@ -159,8 +159,8 @@ Feature: Notify about and collect past-due balances
       | status_label     |
       | ACTIVE DUNNING 1 |
     When I search emails by keywords:
-      | from                    | subject                               | after | content                             |
-      | AccountManager@mozy.com | [Mozy] Mozy invoice, due upon receipt | today | <%=@partner.admin_info.first_name%> |
+      | from                    | subject                                          | after | content                             |
+      | AccountManager@mozy.com | [Mozy] Your credit card payment was unsuccessful | today | <%=@partner.admin_info.first_name%> |
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 
@@ -179,8 +179,8 @@ Feature: Notify about and collect past-due balances
       | status_label     |
       | ACTIVE DUNNING 2 |
     When I search emails by keywords:
-      | from                    | subject                                  | after | content                             |
-      | AccountManager@mozy.com | [Mozy] Mozy subscription invoice overdue | today | <%=@partner.admin_info.first_name%> |
+      | from                    | subject                                                          | after | content                             |
+      | AccountManager@mozy.com | [Mozy] SECOND NOTICE - Your credit card payment was unsuccessful | today | <%=@partner.admin_info.first_name%> |
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 
@@ -199,8 +199,8 @@ Feature: Notify about and collect past-due balances
       | status_label     |
       | ACTIVE DUNNING 3 |
     When I search emails by keywords:
-      | from                    | subject                                                        | after | content                             |
-      | AccountManager@mozy.com | [Mozy] Your account is suspended - all users unable to back up | today | <%=@partner.admin_info.first_name%> |
+      | from                    | subject                                         | after | content                             |
+      | AccountManager@mozy.com | [Mozy] Your account will be suspended in 7 days | today | <%=@partner.admin_info.first_name%> |
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 

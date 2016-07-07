@@ -82,6 +82,14 @@ module Email
           items.each {  |item|
             email = @client.get_item item.id
             query.each_index {|index| query[index]=query[index].downcase if index%2 == 0}
+            Log.info("=====================================================")
+            Log.info("From: " + email.from.email_address)
+            Log.info("To: " + (email.to_recipients.collect {|recipient| recipient.email_address}).join(', '))
+            Log.info("Subject: " + email.subject)
+            first_name = "N/A"
+            first_name = email.body.to_s.split("Dear ")[1].split(" ")[0] if !email.body.to_s.match("Dear ").nil?
+            first_name = email.body.to_s.split("Hi, ")[1].split(":<")[0] if !email.body.to_s.match("Hi, ").nil?
+            Log.info("First Name: " + first_name)
 
             to_match = from_match = content_match = subject_match = true
 
@@ -100,13 +108,13 @@ module Email
             from_match = false if query.include?('from') && !(email.from.email_address.eql? query[query.index('from')+1])
             next if !from_match
 
-            subject_match = false if query.include?('subject') && !(email.subject.eql? query[query.index('subject')+1])
+            subject_match = false if query.include?('subject') && !(email.subject.include? query[query.index('subject')+1])
             next if !subject_match
 
             if query.include?('body')
               content = email.body
               body_pattern = query[query.index('body')+1]
-              if body_pattern.include?('@') || body_pattern.include?(' ') # if the search pattern is email address or full name
+              if body_pattern.split(/,/).length == 1 # if the search pattern is email address or full name
                 content_match &&= !content.match(body_pattern.gsub('+','\\\+')).nil?
               else                           # else the search patter should be license key array
                 query_arr = eval body_pattern
@@ -117,6 +125,7 @@ module Email
             end
             next if !content_match
             @found << email
+            Log.info("Email Count: " + @found.size.to_s)
          }
         rescue Exception => ex
           Log.debug ex
