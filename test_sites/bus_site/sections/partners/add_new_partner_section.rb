@@ -119,8 +119,12 @@ module Bus
         set_order_summary(partner)
         #Sometimes automation is too fast that the page doest not response to the click event on the button "Create Partner"
         #Pause for 3 seconds as a workaround
-        sleep 3
-        create_partner_btn.click
+        #sleep 3
+        5.times do
+          create_partner_btn.click
+          sleep 5
+          break if !locate(:css, "div#partner-new-errors ul").nil?
+        end
       else
         include_initial_purchase_cb.uncheck
         set_pre_sub_total(partner)
