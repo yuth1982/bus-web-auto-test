@@ -59,7 +59,7 @@ Feature: Mozypro customers from 28 EU countries change plan
       | 1 TB      | yes         | 10             |
     Then Change plan charge summary should be:
       | Description                   | Amount     |
-      | Charge for upgraded plans     | $12,934.55 |
+      | Charge for upgraded plans     | $12,822.95 |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan | storage add-on |
@@ -80,10 +80,10 @@ Feature: Mozypro customers from 28 EU countries change plan
       | 500 GB    |
     Then Change plan charge summary should be:
       | Description                    | Amount     |
-      | Credit for remainder of 250 GB | -€1,968.49 |
-      | Charge for new 500 GB          | €3,937.24  |
+      | Credit for remainder of 250 GB | -€1,590.99 |
+      | Charge for new 500 GB          | €3,170.99  |
       |                                |            |
-      | Total amount to be charged     | €1,968.75  |
+      | Total amount to be charged     | €1,580.00  |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan |
@@ -128,10 +128,10 @@ Feature: Mozypro customers from 28 EU countries change plan
       | 2 TB      | yes         |
     Then Change plan charge summary should be:
       | Description                  | Amount     |
-      | Credit for remainder of 1 TB | -€3,992.87 |
-      | Charge for upgraded plans    | €8,118.84  |
+      | Credit for remainder of 1 TB | -€3,212.42 |
+      | Charge for upgraded plans    | €6,691.04  |
       |                              |            |
-      | Total amount to be charged   | €4,125.97  |
+      | Total amount to be charged   | €3,478.62  |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -152,10 +152,10 @@ Feature: Mozypro customers from 28 EU countries change plan
       | 4 TB      | 2              |
     Then Change plan charge summary should be:
       | Description                  | Amount      |
-      | Credit for remainder of 2 TB | -€15,224.74 |
-      | Charge for upgraded plans    | €33,074.22  |
+      | Credit for remainder of 2 TB | -€12,522.24 |
+      | Charge for upgraded plans    | €27,994.22  |
       |                              |             |
-      | Total amount to be charged   | €17,849.48  |
+      | Total amount to be charged   | €15,471.98  |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | storage add-on |
@@ -245,10 +245,10 @@ Feature: Mozypro customers from 28 EU countries change plan
       | 8 TB      | yes         |
     Then Change plan charge summary should be:
       | Description                    | Amount     |
-      | Credit for remainder of 500 GB | -€3,748.25 |
+      | Credit for remainder of 500 GB | -€3,018.78 |
       | Charge for upgraded plans      | €57,476.00 |
       |                                |            |
-      | Total amount to be charged     | €53,727.75 |
+      | Total amount to be charged     | €54,457.22 |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -397,11 +397,11 @@ Feature: Mozypro customers from 28 EU countries change plan
       | 12     | 500 GB    | yes         | Latvia  | Latvia          | 4405211111111122 |
     Then the order summary looks like:
       | Description          | Price     | Quantity | Amount    |
-      | 500 GB - Annual      | €1,649.89 | 1        | €1,649.89 |
-      | Server Plan - Annual | €175.89   | 1        | €175.89   |
-      | Subscription Price   | €1,825.78 |          | €1,825.78 |
-      | VAT                  | €383.42   |          | €383.42   |
-      | Total Charge         | €2,209.20 |          | €2,209.20 |
+      | 500 GB - Annual      | €1,327.89 | 1        | €1,327.89 |
+      | Server Plan - Annual | €141.89   | 1        | €141.89   |
+      | Subscription Price   | €1,469.78 |          | €1,469.78 |
+      | VAT                  | €308.66   |          | €308.66   |
+      | Total Charge         | €1,778.44 |          | €1,778.44 |
     And the partner is successfully added.
     And I log in bus admin console as administrator
     When I act as partner by:
@@ -429,11 +429,11 @@ Feature: Mozypro customers from 28 EU countries change plan
       | 24     | 1 TB      | yes         | Lithuania | Lithuania       | 4797121111111111 |
     Then the order summary looks like:
       | Description            | Price     | Quantity | Amount    |
-      | 1 TB - Biennial        | €6,299.79 | 1        | €6,299.79 |
-      | Server Plan - Biennial | €419.79   | 1        | €419.79   |
-      | Subscription Price     | €6,719.58 |          | €6,719.58 |
-      | VAT                    | €1,411.12 |          | €1,411.12 |
-      | Total Charge           | €8,130.70 |          | €8,130.70 |
+      | 1 TB - Biennial        | €5,072.79 | 1        | €5,072.79 |
+      | Server Plan - Biennial | €405.79   | 1        | €405.79   |
+      | Subscription Price     | €5,478.58 |          | €5,478.58 |
+      | VAT                    | €1,150.51 |          | €1,150.51 |
+      | Total Charge           | €6,629.09 |          | €6,629.09 |
     And the partner is successfully added.
     And I log in bus admin console as administrator
     When I act as partner by:
@@ -444,10 +444,10 @@ Feature: Mozypro customers from 28 EU countries change plan
       | 16 TB     | 2              |
     Then Change plan charge summary should be:
       | Description                    | Amount      |
-      | Credit for remainder of plans  | -€8,130.70  |
+      | Credit for remainder of plans  | -€6,629.09  |
       | Charge for upgraded plans      | €120,694.95 |
       |                                |             |
-      | Total amount to be charged     | €112,564.25 |
+      | Total amount to be charged     | €114,065.86 |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -493,11 +493,11 @@ Feature: Mozypro customers from 28 EU countries change plan
       | 12     | 500 GB    | yes         | Malta   | Malta           | 4313801111111121 |
     Then the order summary looks like:
       | Description          | Price     | Quantity | Amount    |
-      | 500 GB - Annual      | €1,649.89 | 1        | €1,649.89 |
-      | Server Plan - Annual | €175.89   | 1        | €175.89   |
-      | Subscription Price   | €1,825.78 |          | €1,825.78 |
-      | VAT                  | €328.64   |          | €328.64   |
-      | Total Charge         | €2,154.42 |          | €2,154.42 |
+      | 500 GB - Annual      | €1,327.89 | 1        | €1,327.89 |
+      | Server Plan - Annual | €141.89   | 1        | €141.89   |
+      | Subscription Price   | €1,469.78 |          | €1,469.78 |
+      | VAT                  | €264.56   |          | €264.56   |
+      | Total Charge         | €1,734.34 |          | €1,734.34 |
     And the partner is successfully added.
     And I log in bus admin console as administrator
     When I act as partner by:
@@ -525,11 +525,11 @@ Feature: Mozypro customers from 28 EU countries change plan
       | 24     | 500 GB    | yes         | Netherlands | Netherlands     | 5100291111111111 |
     Then the order summary looks like:
       | Description            | Price     | Quantity | Amount    |
-      | 500 GB - Biennial      | €3,149.79 | 1        | €3,149.79 |
-      | Server Plan - Biennial | €335.79   | 1        | €335.79   |
-      | Subscription Price     | €3,485.58 |          | €3,485.58 |
-      | VAT                    | €731.98   |          | €731.98   |
-      | Total Charge           | €4,217.56 |          | €4,217.56 |
+      | 500 GB - Biennial      | €2,536.79 | 1        | €2,536.79 |
+      | Server Plan - Biennial | €268.79   | 1        | €268.79   |
+      | Subscription Price     | €2,805.58 |          | €2,805.58 |
+      | VAT                    | €589.18   |          | €589.18   |
+      | Total Charge           | €3,394.76 |          | €3,394.76 |
     And the partner is successfully added.
     And I log in bus admin console as administrator
     When I act as partner by:
@@ -540,10 +540,10 @@ Feature: Mozypro customers from 28 EU countries change plan
       | 20 TB     | no          | 10             |
     Then Change plan charge summary should be:
       | Description                    | Amount      |
-      | Credit for remainder of 500 GB | -€3,811.25  |
+      | Credit for remainder of 500 GB | -€3,069.52  |
       | Charge for upgraded plans      | €160,079.19 |
       |                                |             |
-      | Total amount to be charged     | €156,267.94 |
+      | Total amount to be charged     | €157,009.67 |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -657,9 +657,9 @@ Feature: Mozypro customers from 28 EU countries change plan
     Then Change plan charge summary should be:
       | Description                   | Amount     |
       | Credit for remainder of plans | -€549.96   |
-      | Charge for upgraded plans     | €16,439.11 |
+      | Charge for upgraded plans     | €13,730.71 |
       |                               |            |
-      | Total amount to be charged    | €15,889.15 |
+      | Total amount to be charged    | €13,180.75 |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan | storage add-on |
@@ -727,9 +727,9 @@ Feature: Mozypro customers from 28 EU countries change plan
     Then Change plan charge summary should be:
       | Description                   | Amount    |
       | Credit for remainder of plans | -£474.94  |
-      | Charge for upgraded plans     | £1,834.54 |
+      | Charge for upgraded plans     | £1,268.14 |
       |                               |           |
-      | Total amount to be charged    | £1,359.60 |
+      | Total amount to be charged    | £793.20   |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -751,9 +751,9 @@ Feature: Mozypro customers from 28 EU countries change plan
     Then Change plan charge summary should be:
       | Description                   | Amount    |
       | Credit for remainder of plans | -£395.78  |
-      | Charge for upgraded plans     | £1,528.78 |
+      | Charge for upgraded plans     | £1,056.78 |
       |                               |           |
-      | Total amount to be charged    | £1,133.00 |
+      | Total amount to be charged    | £661.00   |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -774,10 +774,10 @@ Feature: Mozypro customers from 28 EU countries change plan
       | 1 TB      |
     Then Change plan charge summary should be:
       | Description                   | Amount     |
-      | Credit for remainder of plans | -€2,272.52 |
-      | Charge for upgraded plans     | €8,265.08  |
+      | Credit for remainder of plans | -€1,824.80 |
+      | Charge for upgraded plans     | €6,738.65  |
       |                               |            |
-      | Total amount to be charged    | €5,992.56  |
+      | Total amount to be charged    | €4,913.85  |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -822,10 +822,10 @@ Feature: Mozypro customers from 28 EU countries change plan
       | 8 TB      | yes         |
     Then Change plan charge summary should be:
       | Description                    | Amount     |
-      | Credit for remainder of 500 GB | -€3,149.79 |
+      | Credit for remainder of 500 GB | -€2,536.79 |
       | Charge for upgraded plans      | €48,299.16 |
       |                                |            |
-      | Total amount to be charged     | €45,149.37 |
+      | Total amount to be charged     | €45,762.37 |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
