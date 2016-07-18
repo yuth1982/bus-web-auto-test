@@ -128,6 +128,7 @@ Feature: BUS smoke test
     When I Test Connection for AD
     Then test connection message should be Test passed
     And I click Sync Rules tab
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I add 1 new provision rules:
       | rule               | group |
       | cn=dev-17538-test* | dev   |
@@ -137,8 +138,8 @@ Feature: BUS smoke test
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 3 succeeded, 0 failed \| Users Deprovisioned: 0 Blocked Deprovision |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 3 succeeded, 0 failed \| Users Deprovisioned: 0  |
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by User desc
   #    Then User search results should be:
@@ -158,8 +159,8 @@ Feature: BUS smoke test
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 3 succeeded, 0 failed Blocked Deprovision |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 3 succeeded, 0 failed  |
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
 
@@ -187,6 +188,7 @@ Feature: BUS smoke test
     When I Test Connection for AD
     Then test connection message should be Test passed
     And I click Sync Rules tab
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I add 1 new provision rules:
       | rule           | group |
       | cn=pullpostqa* | dev   |
@@ -196,8 +198,8 @@ Feature: BUS smoke test
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 4 succeeded, 0 failed \| Users Deprovisioned: 0 |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 4 succeeded, 0 failed \| Users Deprovisioned: 0  |
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by User desc
   #    Then User search results should be:
@@ -238,6 +240,7 @@ Feature: BUS smoke test
     When I Test Connection for AD
     Then test connection message should be Test passed
     And I click Sync Rules tab
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I add 1 new provision rules:
       | rule            | group |
       | cn=pullpostqa4* | qa    |
@@ -247,8 +250,8 @@ Feature: BUS smoke test
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0  |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
       | keywords                  |
