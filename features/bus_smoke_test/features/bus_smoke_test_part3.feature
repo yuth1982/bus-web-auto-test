@@ -79,7 +79,7 @@ Feature: BUS smoke test
   Scenario: Test Case Mozy-125960: BUS US -- Create a Enterprise partner and verify Partner creation in BUS and Aria
     When I add a new MozyEnterprise partner:
       | company name                                               | period | users  | coupon                |  server plan | net terms |
-      | Internal Mozy - MozyEnterprise BUS Smoke Test 1704-3692-83 | 36     | 10     | <%=QA_ENV['coupon']%> |  100 GB      | yes       |
+      | Internal Mozy - MozyEnterprise BUS Smoke Test 1704-3692-83 | 36     | 90     | <%=QA_ENV['coupon']%> |  100 GB      | yes       |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account should be:
