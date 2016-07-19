@@ -292,12 +292,12 @@ Feature: Change subscription period
     Then Subscription changed message should be Your account will be switched to monthly billing schedule at your next renewal.
     Then Next renewal info table should be:
       | Period           | Date         | Amount                               |
-      | Monthly (change) | after 1 year | $35.00 (Without taxes or discounts)  |
+      | Monthly (change) | after 1 year | $28.00 (Without taxes or discounts)  |
     When I stop masquerading
     And I view partner details by newly created partner company name
     Then Partner internal billing should be:
       | Account Type:   | Net Terms 30 | Current Period: | Yearly  |
-      | Unpaid Balance: | $385.00      | Collect On:     | N/A     |
+      | Unpaid Balance: | $336.00      | Collect On:     | N/A     |
       | Renewal Date:   | after 1 year | Renewal Period: | Monthly |
       | Next Charge:    | after 1 year |                 |         |
     And I delete partner account
@@ -318,14 +318,14 @@ Feature: Change subscription period
       """
     And Change subscription price table should be:
       | Description                                   | Amount   |
-      | Credit for remainder of monthly subscription  | $42.00   |
-      | Charge for new yearly subscription            | $462.00  |
-      | Total amount to be charged                    | $420.00  |
+      | Credit for remainder of monthly subscription  | $33.00   |
+      | Charge for new yearly subscription            | $396.00  |
+      | Total amount to be charged                    | $363.00  |
     When I continue to change account subscription
     Then Subscription changed message should be Your account has been changed to yearly billing.
     Then Next renewal info table should be:
       | Period          | Date         | Amount                                |
-      | Yearly (change) | after 1 year | $462.00 (Without taxes or discounts)  |
+      | Yearly (change) | after 1 year | $396.00 (Without taxes or discounts)  |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
