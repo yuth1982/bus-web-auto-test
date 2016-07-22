@@ -367,7 +367,7 @@ Feature: Change subscription period
     Then Change subscription confirmation message should be:
       """
       Are you sure that you want to change your subscription period from yearly to 3-year billing?
-      If you choose to continue, your account will be credited for the remainder of your yearly Subscription, then charged for a new 3-year subscription beginning today. By choosing 3-year billing, you will receive 0 free month(s) of Mozy service.
+      If you choose to continue, your account will be credited for the remainder of your yearly Subscription, then charged for a new 3-year subscription beginning today.
       Any resources you scheduled for return in your next subscription have been deducted from the new subscription total.
       """
     And Change subscription price table should be:
