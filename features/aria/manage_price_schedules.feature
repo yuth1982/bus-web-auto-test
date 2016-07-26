@@ -418,7 +418,7 @@ Feature: manage price schedules - billed partner
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.18764 @bus @aria @tasks_p2
+  @TC.18764 @bus @aria @tasks_p2 @24hours
   Scenario: 18764 Price schedule will apply to customers in the next subscription period
     When I add a new MozyPro partner:
       | period | base plan | server plan |

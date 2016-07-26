@@ -822,7 +822,7 @@ Feature: Scheduled Reports
     When I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.7356 @bus @tasks_p2 @reports
+  @TC.7356 @bus @tasks_p2 @reports @24hours
   Scenario: 7356 Delete a report
     When I add a new MozyEnterprise partner:
       | period | users |

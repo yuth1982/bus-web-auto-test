@@ -85,6 +85,8 @@ module Email
             Log.info("=====================================================")
             Log.info("From: " + email.from.email_address)
             Log.info("To: " + (email.to_recipients.collect {|recipient| recipient.email_address}).join(', '))
+            subject = email.subject
+            subject = email.subject.gsub('BDS Online Backup', 'MozyPro') if TEST_ENV == 'qa12h'
             Log.info("Subject: " + email.subject)
             first_name = "N/A"
             first_name = email.body.to_s.split("Dear ")[1].split(" ")[0] if !email.body.to_s.match("Dear ").nil?
@@ -108,7 +110,7 @@ module Email
             from_match = false if query.include?('from') && !(email.from.email_address.eql? query[query.index('from')+1])
             next if !from_match
 
-            subject_match = false if query.include?('subject') && !(email.subject.include? query[query.index('subject')+1])
+            subject_match = false if query.include?('subject') && !(subject.include? query[query.index('subject')+1])
             next if !subject_match
 
             if query.include?('body')
