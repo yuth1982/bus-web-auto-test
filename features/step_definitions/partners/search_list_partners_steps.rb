@@ -132,6 +132,8 @@ When /^I use a existing partner:$/ do |partner_table|
       @partner = Bus::DataObj::MozyEnterpriseDPS.new
     when CONFIGS['bus']['company_type']['reseller']
       @partner = Bus::DataObj::Reseller.new
+    when CONFIGS['phoenix']['company_type']['mozyhome']
+      @partner = Bus::DataObj::MozyHome.new
     else
       raise "Error: Company type #{type} does not exist."
   end
