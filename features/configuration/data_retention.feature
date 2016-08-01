@@ -51,7 +51,7 @@ Feature: Adjustable retention at the partner and user group level
     When I click partner adr policy
     Then adr policy name should be 7 Days
     When I set adr policy to 1 Year (monthly)
-    Then Change ADR Policy section message should be Update Adr policy successfully.
+    Then Change ADR Policy section message should be Update data retention policy successfully.
     And adr policy name should be 1 Year (monthly)
     When I refresh Data Retention section
     And partner adr policy should be 1 Year (monthly)
@@ -88,7 +88,7 @@ Feature: Adjustable retention at the partner and user group level
     And I should see No results found. in sub partner adr policy list
     When I click partner adr policy
     And I set adr policy to 1 Year (monthly)
-    Then Change ADR Policy section message should be Update Adr policy successfully.
+    Then Change ADR Policy section message should be Update data retention policy successfully.
     When I refresh Data Retention section
     And partner adr policy should be 1 Year (monthly)
     And user group adr policy should be:
@@ -117,6 +117,7 @@ Feature: Adjustable retention at the partner and user group level
     | 14 Days             |
     | 1 Month (daily)     |
     | 2 Months (weekly)   |
+    | 3 Months (weekly)   |
     | 6 Months (monthly)  |
     | 1 Year (monthly)    |
     | 2 Years (quarterly) |
@@ -131,6 +132,7 @@ Feature: Adjustable retention at the partner and user group level
       | Mozy2Week_daily     |
       | Mozy1Month_daily    |
       | Mozy2Month_weekly   |
+      | Mozy3Month_weekly   |
       | Mozy6Month_monthly  |
       | Mozy1Year_monthly   |
       | Mozy2Year_quarterly |
@@ -140,7 +142,7 @@ Feature: Adjustable retention at the partner and user group level
       | Mozy6Year_quarterly |
       | Mozy7Year_quarterly |
     When I set adr policy to 1 Month (daily)
-    Then Change ADR Policy section message should be Update Adr policy successfully.
+    Then Change ADR Policy section message should be Update data retention policy successfully.
     When I refresh Data Retention section
     And partner adr policy should be 1 Month (daily)
     And user group adr policy should be:
@@ -150,7 +152,7 @@ Feature: Adjustable retention at the partner and user group level
     And ADR policy in DB for partner is Mozy1Month_daily
     And ADR policy in DB for user group (default user group) is nil
     When I set adr policy to 2 Months (weekly)
-    Then Change ADR Policy section message should be Update Adr policy successfully.
+    Then Change ADR Policy section message should be Update data retention policy successfully.
     When I refresh Data Retention section
     And partner adr policy should be 2 Months (weekly)
     And user group adr policy should be:
@@ -170,7 +172,7 @@ Feature: Adjustable retention at the partner and user group level
     And I navigate to Data Retention section from bus admin console page
     And I click user group (default user group) adr policy
     And I set adr policy to 7 Days
-    Then Change ADR Policy section message should be Update Adr policy successfully.
+    Then Change ADR Policy section message should be Update data retention policy successfully.
     When I refresh Data Retention section
     And partner adr policy should be None
     And user group adr policy should be:
@@ -199,7 +201,7 @@ Feature: Adjustable retention at the partner and user group level
     And I should see No results found. in sub partner adr policy list
     When I click user group qa-test-group adr policy
     And I set adr policy to 14 Days
-    Then Change ADR Policy section message should be Update Adr policy successfully.
+    Then Change ADR Policy section message should be Update data retention policy successfully.
     When I refresh Data Retention section
     And partner adr policy should be None
     And user group adr policy should be:
@@ -232,7 +234,7 @@ Feature: Adjustable retention at the partner and user group level
     And I navigate to Data Retention section from bus admin console page
     And I click partner adr policy
     And I set adr policy to 6 Months (monthly)
-    Then Change ADR Policy section message should be Update Adr policy successfully.
+    Then Change ADR Policy section message should be Update data retention policy successfully.
     When I refresh Data Retention section
     And partner adr policy should be 6 Months (monthly)
     And user group adr policy should be:
