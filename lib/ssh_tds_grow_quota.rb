@@ -38,6 +38,7 @@ module SSHTDSGrowQuota
 
     result = http_conn.start { |http| http.request(request) }
     Log.debug result
+    DBHelper.update_machine_info(machine_id, i)
     return result
   end
 

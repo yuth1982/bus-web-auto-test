@@ -718,11 +718,39 @@ Feature:
 
   @TC.120693 @bus @data_shuttle @Bug.116986 @need_test_account
   Scenario: 120693 Verify shipped drive has inbound number
-    When I search order in view data shuttle orders section by Jabberstorm Company 0311-1822-21
-    Then order search results in data shuttle orders section should be:
-      | # of Drives | Drives Ordered |
-      | 1           | Yes            |
-    Then the data shuttle order details should contain valid inbound number
+#    When I search order in view data shuttle orders section by Jabberstorm Company 0311-1822-21
+#    Then order search results in data shuttle orders section should be:
+#      | # of Drives | Drives Ordered |
+#      | 1           | Yes            |
+#    Then the data shuttle order details should contain valid inbound number
+    When I add a new MozyPro partner:
+      | period | base plan | server plan | country | create under   | net terms |
+      | 1      | 250 GB    | yes         | France  | MozyPro France | yes       |
+    And New partner should be created
+    And I change root role to FedID role
+    When I act as newly created partner account
+    And I add new user(s):
+      | user_group           | storage_type  | storage_limit | devices |
+      | (default user group) | Desktop       | 250           | 1       |
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    Then I stop masquerading
+    When I fill in data shuttle for newly created partner company name
+      | power adapter     | key from  | quota |
+      | Data Shuttle EMEA | available | 250  |
+    And I refresh process data shuttle section
+    When I click finish button
+    Then Data shuttle order should be created
+    And I wait for 100 seconds
+    When I view data shuttle order details
+    Then the shipping tracking table of data shuttle order should be
+      | Drive # | Status |
+      | 1       | Burned |
+    And I search and delete partner account by newly created partner company name
 
   @bus @TC.12342 @resources @tasks_p2
   Scenario: 12342 data_shuttle_ordered_active: (Data Shuttle ordered for activated machine phase III - to user)

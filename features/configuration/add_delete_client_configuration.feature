@@ -194,8 +194,8 @@ Feature: Add/Delete Client Configuration
       | 12     | 500 GB     | yes         |
     Then New partner should be created
     And I add partner settings
-      | Name             | Value     |
-      | enable_vmbu_beta | t         |
+      | Name             | Value | Locked |
+      | enable_vmbu_beta | t     | false  |
     When I act as newly created partner account
     When I create a new client config:
       | name                     | type   |

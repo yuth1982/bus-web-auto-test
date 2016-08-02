@@ -121,7 +121,7 @@ module Bus
         #Pause for 3 seconds as a workaround
         #sleep 3
         5.times do
-          create_partner_btn.click
+          create_partner_btn.click if create_partner_btn.visible?
           sleep 5
           break if !locate(:css, "div#partner-new-errors ul").nil?
         end
