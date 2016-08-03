@@ -5,56 +5,115 @@ Feature: View machine manifest, logfile
 
   @TC.869 @bus @machines_sync @tasks_p2 @smoke
   Scenario: 869 View a manifest normal
-    When I navigate to bus admin console login page
-    And I log in bus admin console with user name mozybus+backupsrestores@gmail.com and password default password
+    When I add a new MozyPro partner:
+      | period | base plan | net terms | root role               |
+      | 1      | 10 GB     | yes       | Bundle Pro Partner Root |
+    And New partner should be created
+    Then I change root role to testall(partner)
+    And I act as newly created partner account
+    And I add new user(s):
+      | name          | user_group           | storage_type | devices |
+      | TC.869.User   | (default user group) | Desktop      | 3       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by TC.869.User
+    And I update the user password to default password
+    Then I use keyless activation to activate devices newly
+      | machine_name   | user_name                   | machine_type |
+      | Machine_869    | <%=@new_users.first.email%> | Desktop      |
+    And I upload data to device by batch
+      | machine_id                  | GB |
+      | <%=@clients[0].machine_id%> | 10 |
     When I search machine by:
       | machine_name   |
-      | CNENCHENC33L1C |
-    And I view machine details for mozybus+backup+restore@emc.com
+      | Machine_869    |
+    And I view machine details for <%=@new_users.first.email%>
     And I click View from machines details section
     And I navigate to new window
-    Then the manifest window title should be Dont Edit_backup_restore_history - Manifest for CNENCHENC33L1C
+    Then the manifest window title should include Manifest for Machine_869
     And action links in the manifest will be
       | show deleted files | show real filenames | open raw | reload |
     And manifest content will include
       """
       backup time    | mtime          |  file size |  comp size | patch size | hash
       """
+    Then I stop masquerading
+    And I search and delete partner account by newly created partner company name
 
   @TC.870 @bus @machines_sync @tasks_p2 @smoke
   Scenario: 870 View a manifest raw
-    When I navigate to bus admin console login page
-    And I log in bus admin console with user name mozybus+backupsrestores@gmail.com and password default password
+    When I add a new MozyPro partner:
+      | period | base plan | net terms | root role               |
+      | 1      | 10 GB     | yes       | Bundle Pro Partner Root |
+    And New partner should be created
+    Then I change root role to testall(partner)
+    And I act as newly created partner account
+    And I add new user(s):
+      | name          | user_group           | storage_type | devices |
+      | TC.870.User   | (default user group) | Desktop      | 3       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by TC.870.User
+    And I update the user password to default password
+    Then I use keyless activation to activate devices newly
+      | machine_name   | user_name                   | machine_type |
+      | Machine_870    | <%=@new_users.first.email%> | Desktop      |
+    And I upload data to device by batch
+      | machine_id                  | GB |
+      | <%=@clients[0].machine_id%> | 10 |
     When I search machine by:
       | machine_name   |
-      | CNENCHENC33L1C |
-    And I view machine details for mozybus+backup+restore@emc.com
-    And I delete file manifest-mozybusbackuprestore@emc.com-CNENCHENC33L1C.txt if exist
+      | Machine_870    |
+    And I view machine details for <%=@new_users.first.email%>
+    And I delete the manifest file belongs to Machine_870
     And I click Raw from machines details section
     Then the manifest file is downloaded
-      | file name                                                |
-      | manifest-mozybusbackuprestore@emc.com-CNENCHENC33L1C.txt |
-    And manifest manifest-mozybusbackuprestore@emc.com-CNENCHENC33L1C txt file should include:
-      """
-      _hash|89047df06bfabd45fa8af58f28c995d69aeb5dcc
-      """
+      | file name                |
+      | <%=@manifest_file_name%> |
+    And manifest file should have valid manifest
+    Then I stop masquerading
+    And I search and delete partner account by newly created partner company name
 
   @TC.2059 @bus @machines_sync @tasks_p2 @smoke
   Scenario: 2059 View the Logfile in BUS
-    When I act as partner by:
-      | email                             |
-      | mozybus+backupsrestores@gmail.com |
+    When I add a new MozyPro partner:
+      | period | base plan | net terms | root role               |
+      | 1      | 10 GB     | yes       | Bundle Pro Partner Root |
+    And New partner should be created
+    Then I change root role to testall(partner)
+    And I act as newly created partner account
+    And I add new user(s):
+      | name          | user_group           | storage_type | devices |
+      | TC.2059.User  | (default user group) | Desktop      | 3       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by TC.2059.User
+    And I update the user password to default password
+    Then I use keyless activation to activate devices newly
+      | machine_name   | user_name                   | machine_type |
+      | Machine_2059   | <%=@new_users.first.email%> | Desktop      |
+    And I upload data to device by batch
+      | machine_id                  | GB |
+      | <%=@clients[0].machine_id%> | 10 |
     When I search machine by:
       | machine_name   |
-      | CNENCHENC33L1C |
-    And I view machine details for mozybus+backup+restore@emc.com
-    And I delete file client-mozybusbackuprestore@emc.com-CNENCHENC33L1C.log if exist
+      | Machine_2059   |
+    And I view machine details for <%=@new_users.first.email%>
+    And I delete the client log belongs to Machine_2059
     And I click View Logfile from machines details section
     Then the Logfile file is downloaded
-      | file name                                              |
-      | client-mozybusbackuprestore@emc.com-CNENCHENC33L1C.log |
+      | file name           |
+      | <%=@log_file_name%> |
     And File size should be greater than 0
     Then I delete the newly downloaded file
+    Then I stop masquerading
+    And I search and delete partner account by newly created partner company name
 
   # using fixed data partner id: 3431128,  partner: freyatest01[Do Not Edit]
   @TC.122221 @bus @machines_sync @tasks_p2 @smoke

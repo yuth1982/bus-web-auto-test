@@ -76,6 +76,10 @@ Then /^the manifest window title should be (.+)$/ do |title|
   @bus_site.admin_console_page.get_new_window_page_title.should == title
 end
 
+Then /^the manifest window title should include (.+)$/ do |title|
+  @bus_site.admin_console_page.get_new_window_page_title.include?(title).should == true
+end
+
 And /^I click manifest raw link to download the manifest file$/ do
   @bus_site.admin_console_page.machine_details_section.click_raw_manifest
 end
@@ -102,6 +106,18 @@ end
 
 And /^I delete file (.+) if exist$/ do |file_name|
   FileHelper.delete_file(file_name)
+end
+
+And /^I delete the manifest file belongs to (.+)$/ do |machine_name|
+  @manifest_file_name = "manifest-" + @new_users.first.email.to_s + "-" + machine_name + ".txt"
+  @manifest_file_name = @manifest_file_name.gsub("+", "")
+  FileHelper.delete_file(@manifest_file_name)
+end
+
+And /^I delete the client log belongs to (.+)$/ do |machine_name|
+  @log_file_name = "client-" + @new_users.first.email.to_s + "-" + machine_name + ".log"
+  @log_file_name = @log_file_name.gsub("+", "")
+  FileHelper.delete_file(@log_file_name)
 end
 
 Then /^I (delete|undelete) the machine$/ do |action|
@@ -247,6 +263,11 @@ end
 
 And /^manifest (.+) txt file should include:$/ do |file, text|
  FileHelper.read_file(file, "txt").include?(text).should == true
+end
+
+And /^manifest file should have valid manifest$/ do
+  file_prefix = @manifest_file_name.split(".txt")[0]
+  FileHelper.read_file(file_prefix, "txt").split("_hash|")[1].split("\n")[0].length.should == 40
 end
 
 And /^the machine (.+) available quota should be (.+)$/ do |machine_id,quota|
