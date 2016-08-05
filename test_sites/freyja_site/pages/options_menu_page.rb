@@ -2,7 +2,7 @@ module Freyja
 
   class OptionsMenuPage < SiteHelper::Page
 
-    element(:event_history, css: "#panel-action-event-history")
+    element(:event_history, xpath: "//li[@id='panel-action-event-history']")
     element(:preference, css: "#panel-action-preferences")
     element(:notification, css: "#notifications-count")
     element(:product_download, css: "div[title='Product Downloads'] > a")
