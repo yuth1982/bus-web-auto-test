@@ -221,14 +221,7 @@ Then /^I click (.+) from machines details section$/ do |link_name|
 end
 
 And /^(Backups|Restores|Virtual Machines) table will display as:$/ do |type, table|
-  if TEST_ENV == 'qa12h'
-    str = "Start Time" if type == "Backups"
-    str = "Date/Time Requested" if type == "Restores"
-    str = "Start Time" if type == "Virtual Machines"
-    @bus_site.admin_console_page.machine_details_section.get_backup_restore_table(type).to_s.include?(str).should == true
-  else
-    @bus_site.admin_console_page.machine_details_section.get_backup_restore_table(type).should == table.raw
-  end
+  @bus_site.admin_console_page.machine_details_section.get_backup_restore_table(type).should == table.raw
 end
 
 And /^(Backups|Restores|Virtual Machines) table first record will display as:$/ do |type, table|
