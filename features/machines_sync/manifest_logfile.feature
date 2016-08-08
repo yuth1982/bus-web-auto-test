@@ -23,9 +23,9 @@ Feature: View machine manifest, logfile
     Then I use keyless activation to activate devices newly
       | machine_name   | user_name                   | machine_type |
       | Machine_869    | <%=@new_users.first.email%> | Desktop      |
-    And I upload data to device by batch
-      | machine_id                  | GB |
-      | <%=@clients[0].machine_id%> | 10 |
+    And I upload data to device
+      | machine_id                  |
+      | <%=@clients[0].machine_id%> |
     When I search machine by:
       | machine_name   |
       | Machine_869    |
@@ -39,8 +39,6 @@ Feature: View machine manifest, logfile
       """
       backup time    | mtime          |  file size |  comp size | patch size | hash
       """
-    Then I stop masquerading
-    And I search and delete partner account by newly created partner company name
 
   @TC.870 @bus @machines_sync @tasks_p2 @smoke
   Scenario: 870 View a manifest raw
@@ -62,9 +60,9 @@ Feature: View machine manifest, logfile
     Then I use keyless activation to activate devices newly
       | machine_name   | user_name                   | machine_type |
       | Machine_870    | <%=@new_users.first.email%> | Desktop      |
-    And I upload data to device by batch
-      | machine_id                  | GB |
-      | <%=@clients[0].machine_id%> | 10 |
+    And I upload data to device
+      | machine_id                  |
+      | <%=@clients[0].machine_id%> |
     When I search machine by:
       | machine_name   |
       | Machine_870    |
@@ -75,8 +73,6 @@ Feature: View machine manifest, logfile
       | file name                |
       | <%=@manifest_file_name%> |
     And manifest file should have valid manifest
-    Then I stop masquerading
-    And I search and delete partner account by newly created partner company name
 
   @TC.2059 @bus @machines_sync @tasks_p2 @smoke
   Scenario: 2059 View the Logfile in BUS
@@ -98,9 +94,9 @@ Feature: View machine manifest, logfile
     Then I use keyless activation to activate devices newly
       | machine_name   | user_name                   | machine_type |
       | Machine_2059   | <%=@new_users.first.email%> | Desktop      |
-    And I upload data to device by batch
-      | machine_id                  | GB |
-      | <%=@clients[0].machine_id%> | 10 |
+    And I upload data to device
+      | machine_id                  |
+      | <%=@clients[0].machine_id%> |
     When I search machine by:
       | machine_name   |
       | Machine_2059   |
@@ -112,8 +108,6 @@ Feature: View machine manifest, logfile
       | <%=@log_file_name%> |
     And File size should be greater than 0
     Then I delete the newly downloaded file
-    Then I stop masquerading
-    And I search and delete partner account by newly created partner company name
 
   # using fixed data partner id: 3431128,  partner: freyatest01[Do Not Edit]
   @TC.122221 @bus @machines_sync @tasks_p2 @smoke

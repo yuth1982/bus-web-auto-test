@@ -13,21 +13,19 @@ module SSHTDSGrowQuota
   #
   # @return [String] "Partner 12345 is using autogrow and is overdrafted on its Generic license by 5 GB"
   def grow_quota(username, password, machine_id, i, filename = nil)
-    http_conn = http_connect(QA_ENV['tds_host'])
-    file = filename
     if TEST_ENV == 'qa12h'
-      file = File.new("test_data/upload_file.txt")
-      Log.debug "#{QA_ENV['tds_host']}, #{username}, #{password}, #{machine_id}, #{uri_escape(file.to_path)}"
-      url = "/namedObjects/#{machine_id}/#{uri_escape(file.to_path)}"
+      filename = File.new("test_data/upload_file.txt") if filename.nil?
+      Log.debug "#{QA_ENV['tds_host']}, #{username}, #{password}, #{machine_id}, #{uri_escape(filename.to_path)}"
+      url = "/namedObjects/#{machine_id}/#{uri_escape(filename.to_path)}"
       request = Net::HTTP::Put.new(url)
       request.basic_auth(username, password)
       request["User-agent"] = "kalypso/2.26.4.395"
     else
       encrypted_file_size = (("1073741824".to_f)*(i.to_f)).to_i.to_s
       object_id = "73aecc4d92453e5dacaa1eddf1df55487cfb50af"
-      file = "gig-ishfile#{rand(500)}#{i}.txt" if filename.nil?
+      filename = "gig-ishfile#{rand(500)}#{i}.txt" if filename.nil?
       Log.debug "#{QA_ENV['tds_host']}, #{username}, #{password}, #{machine_id}, #{filename}, #{object_id}, #{encrypted_file_size}"
-      url = "/namedObjects/#{machine_id}/#{uri_escape(file)}"
+      url = "/namedObjects/#{machine_id}/#{uri_escape(filename)}"
       request = Net::HTTP::Put.new(url)
       request.basic_auth(username, password)
       request["X-Objectid"] = object_id
@@ -36,6 +34,7 @@ module SSHTDSGrowQuota
       request["Content-Length"] = 0
     end
 
+    http_conn = http_connect(QA_ENV['tds_host'])
     result = http_conn.start { |http| http.request(request) }
     Log.debug result
     DBHelper.update_machine_info(machine_id, i)
