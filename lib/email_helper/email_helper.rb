@@ -103,7 +103,7 @@ module Email
                    break
                 end
               }
-            to_match = flag
+              to_match = flag
             end
             next if !to_match
 
@@ -180,7 +180,7 @@ module Email
     email.find_emails(query)
   end
 
-  def find_email_content(query, attach=nil)
+  def find_email_content(query, attach = nil)
     if MAILBOX.eql? 'outlook'
       email = Outlook.instance
     else
@@ -193,7 +193,7 @@ module Email
     #pu = past unactivated, d = desktop, s = server, u = unactivated, a = activated
     pu,du,da,su,sa = false,0,0,0,0
     email_body.to_s.each_line do |line|
-      pu = true if line.include?(">Activated</span></div>")
+      pu = true if line.include?("<span class=\"label\">Activated</span></div>")
       if line.include?("<td>Desktop</td>")
         (pu ? da += line.scan('Desktop').length : du += line.scan('Desktop').length )
       elsif line.include?("<td>Server</td>")

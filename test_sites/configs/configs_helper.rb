@@ -44,13 +44,7 @@ BROWSER = (ENV['br'] || 'firefox').downcase
 
 SCREEN_SHOT = (ENV["SCREEN_SHOT"] || "no").eql?("yes")
 
-#when the platform is US machine Linux will use gmail, other platforms will use outlook
-if RUBY_PLATFORM.include?('linux')
-  MAILBOX = 'gmail'
-else
-  MAILBOX = 'outlook'
-end
-MAILBOX = ENV['BUS_MAILBOX'] unless ENV['BUS_MAILBOX'].nil?
+MAILBOX = ENV['BUS_MAILBOX'] || 'outlook'
 if MAILBOX.eql? 'outlook'
   CONFIGS['global']['email_prefix'] = CONFIGS['global']['email_prefix_outlook']
   CONFIGS['global']['email_domain'] = CONFIGS['global']['email_domain_outlook']

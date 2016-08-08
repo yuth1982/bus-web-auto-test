@@ -727,11 +727,10 @@ Feature:
       | period | base plan | server plan | country | create under   | net terms |
       | 1      | 250 GB    | yes         | France  | MozyPro France | yes       |
     And New partner should be created
-    And I change root role to FedID role
     When I act as newly created partner account
     And I add new user(s):
-      | user_group           | storage_type  | storage_limit | devices |
-      | (default user group) | Desktop       | 250           | 1       |
+      | storage_type  | storage_limit | devices |
+      | Desktop       | 250           | 1       |
     And I search user by:
       | keywords   |
       | @user_name |
