@@ -109,6 +109,8 @@ Then /^(Partner|SubPartner) general information should be:$/ do |status,details_
       when 'Marketing Referrals:'
         v.gsub!(/@login_admin_email/,@admin_username)
         v.gsub!(/@bus01_admin/, QA_ENV['bus01_admin'])
+      when 'Parent:'
+        v.gsub!("(MozyPro)", "(BDS Online Backup)") if TEST_ENV == 'qa12h'
       else
         # do nothing
     end
