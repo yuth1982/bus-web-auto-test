@@ -86,7 +86,6 @@ module Email
             Log.info("From: " + email.from.email_address)
             Log.info("To: " + (email.to_recipients.collect {|recipient| recipient.email_address}).join(', '))
             subject = email.subject
-            subject = email.subject.gsub('BDS Online Backup', 'MozyPro') if TEST_ENV == 'qa12h'
             Log.info("Subject: " + email.subject)
             first_name = "N/A"
             first_name = email.body.to_s.split("Dear ")[1].split(" ")[0] if !email.body.to_s.match("Dear ").nil?

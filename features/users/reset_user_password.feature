@@ -17,8 +17,8 @@ Feature: reset user password
     And I input email @new_users[0].email in reset password panel to reset password
     Then I wait for 30 seconds
     When I search emails by keywords:
-      | subject                             | to                       |
-      | BDS Online Backup password recovery | <%=@new_users[0].email%> |
+      | subject                | to                       |
+      | Mozy password recovery | <%=@new_users[0].email%> |
     Then I should see 1 email(s)
     When I click reset password link from the email
     Then I reset password with reset password
