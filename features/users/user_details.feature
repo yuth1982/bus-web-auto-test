@@ -741,8 +741,8 @@ Feature: User Details
       | machine_name  | user_name                   | machine_type |
       | Machine1      | <%=@new_users.first.email%> | Desktop      |
     And I upload data to device by batch
-      | machine_id                         | GB | password                      |file_name   |
-      | <%=@new_clients.first.machine_id%> | 30 | <%=QA_ENV['hipaa_password']%> |TC131831.txt|
+      | machine_id                         | GB | password                      | file_name              |
+      | <%=@new_clients.first.machine_id%> | 30 | <%=QA_ENV['hipaa_password']%> | test_data/TC131831.txt |
     Then tds returns successful upload
     Then I refresh User Details section
     And I access freyja from bus admin

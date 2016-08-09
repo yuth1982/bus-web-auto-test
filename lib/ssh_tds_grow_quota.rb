@@ -14,7 +14,7 @@ module SSHTDSGrowQuota
   # @return [String] "Partner 12345 is using autogrow and is overdrafted on its Generic license by 5 GB"
   def grow_quota(username, password, machine_id, i, filename = nil)
     if TEST_ENV == 'qa12h'
-      filename = File.new("test_data/upload_file.txt") if filename.nil?
+      filename = filename.nil? ? File.new("test_data/upload_file.txt") : File.new(filename)
       Log.debug "#{QA_ENV['tds_host']}, #{username}, #{password}, #{machine_id}, #{uri_escape(filename.to_path)}"
       url = "/namedObjects/#{machine_id}/#{uri_escape(filename.to_path)}"
       request = Net::HTTP::Put.new(url)
