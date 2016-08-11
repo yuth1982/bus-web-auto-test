@@ -3,7 +3,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.126168 @bus @regression
+  @TC.126168 @bus @windows_version_management @tasks_p1
   Scenario: 126168 Create a windows client version in Mozy Inc
     When I navigate to List Versions section from bus admin console page
     And I list versions for:
@@ -16,7 +16,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
       | WinTestVersion 10.10.10.10 | win      | 10.10.10.10    | This is a test version for BUS version management. |
     Then the client version should be created successfully
 
-  @TC.126172 @bus @regression
+  @TC.126172 @bus @windows_version_management @tasks_p1
   Scenario: 126172 Windows Backup client version can be listed in List Version view
     When I navigate to List Versions section from bus admin console page
     And I list versions for:
@@ -30,7 +30,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
       | Version     | Platform  | Name                       | Status     |
       | 10.10.10.10 | win       | WinTestVersion 10.10.10.10 | incomplete |
 
-  @TC.132025 @bus @regression
+  @TC.132025 @bus @windows_version_management @tasks_p1
   Scenario: 132025 Backup client version can only be managed by BDS partner
     When I act as partner by:
       | name                                                    | including sub-partners |
@@ -41,7 +41,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
     Then there is no field for Create New Version in edit client version section
     Then there is no field for List Versions in edit client version section
 
-  @TC.122205 @bus @regression
+  @TC.122205 @bus @windows_version_management @tasks_p1
   Scenario: 122205 Upload an oem.db3 for windows version
     When I navigate to List Versions section from bus admin console page
     And I list versions for:
@@ -70,7 +70,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
     And the download link for partner MozyPro should be generated
     And the download link for partner MozyEnterprise should be generated
 
-  @TC.126170 @bus @regression
+  @TC.126170 @bus @windows_version_management @tasks_p1
   Scenario: 126170 Backup client version can be disabled
     When I navigate to List Versions section from bus admin console page
     And I list versions for:
@@ -88,7 +88,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
 
   # Upgrade Rules
 
-  @TC.126183 @bus @regression
+  @TC.126183 @bus @windows_version_management @tasks_p1
   Scenario: 126183 "Upgrade Version" selector should include enabled Backup client versions
     When I navigate to Upgrade Rules section from bus admin console page
     Then there is no version WinTestVersion 10.10.10.10 in Upgrade Version list
@@ -107,7 +107,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
     Then there is version WinTestVersion 10.10.10.10 in Upgrade Version list
 
 
-  @TC.124042 @bus @regression
+  @TC.124042 @bus @windows_version_management @tasks_p1
   Scenario: 124042 Create Manual upgrade rule for Backup client in Mozypro partner
     When I act as partner by:
       | name    | including sub-partners |
@@ -148,7 +148,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
       | /downloads/mozypro-10_10_10_10-XXXXX.exe |
     And I delete user
 
-  @TC.124044 @bus @regression
+  @TC.124044 @bus @windows_version_management @tasks_p1
   Scenario: 124044 Create Force upgrade rule for Backup client in MozyEnterprise partner
     When I act as partner by:
       | name           | including sub-partners |
@@ -195,7 +195,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
     And I navigate to Upgrade Rules section from bus admin console page
     And I delete rule for version WinTestVersion 10.10.10.10 if it exists
 
-  @TC.126184 @bus @regression
+  @TC.126184 @bus @windows_version_management @tasks_p1
   Scenario: 126184 Remove the client upgrade rule in BDS partner
     When I act as partner by:
       | name           | including sub-partners |
@@ -211,7 +211,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
     Then there is no rule for WinTestVersion 10.10.10.10 in Upgrade Rules
 
 
-  @TC.124041 @bus @regression
+  @TC.124041 @bus @windows_version_management @tasks_p1
   Scenario: 124041 bds partner can update the client upgrade rule successfully
     When I act as partner by:
       | name    | including sub-partners |
@@ -237,7 +237,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
 
   # Edit Client Version
 
-  @TC.126189 @bus @regression
+  @TC.126189 @bus @windows_version_management @tasks_p1
   Scenario: 126189 Upgrade to: Product partner can't list the inherited version if not branded
     When I act as partner by:
       | name                                           | including sub-partners |
@@ -245,7 +245,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
     And I navigate to Edit Client Version section from bus admin console page
     Then there is no version Windows 10.10.10.10 in Update to list
 
-  @TC.126188 @bus @regression
+  @TC.126188 @bus @windows_version_management @tasks_p1
   Scenario: 126188 Upgrade to: Product partner can list the Branding version if branded
     When I navigate to List Versions section from bus admin console page
     And I list versions for:
@@ -264,7 +264,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
     And I navigate to Edit Client Version section from bus admin console page
     Then there is version Windows 10.10.10.10 in Update to list
 
-  @TC.131322 @bus @regression
+  @TC.131322 @bus @windows_version_management @tasks_p1
   Scenario: 131322 Operating System: Operating System should list all the required windows os
     When I act as partner by:
       | name                                                           | including sub-partners |
@@ -274,7 +274,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
     Then Operating System should include OS:
       | Any | Windows 2000 (NT 5.0) | Windows XP (NT 5.1) | Windows XP(x64)/Windows Server 2003/2003R2 (NT 5.2) | Windows Vista/Windows Server 2008 (NT 6.0) | Windows 7/Windows Server 2008 R2 (NT 6.1) | Windows 8/Windows Server 2012 (NT 6.2) | Windows 8.1/Windows Server 2012 R2 (NT 6.3) |
 
-  @TC.126194 @bus @regression
+  @TC.126194 @bus @windows_version_management @tasks_p1
   Scenario: 126194 User Group: User groups selector will list "All User Groups" and each user group of the partner
     When I act as partner by:
       | name                                                    | including sub-partners |
@@ -288,7 +288,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
     And I navigate to User Group List section from bus admin console page
     And I delete user group details by name: TC.126194-Shared
 
-  @TC.126191 @TC.126192 @bus @regression
+  @TC.126191 @TC.126192 @bus @windows_version_management @tasks_p1
   Scenario: 126191 126192 Client Version Rules: Create Force update client version rule for Backup client. Client Version Rules: Remove the client version rules in non-BDS partner
     When I search partner by Internal Mozy - MozyEnterprise with edit user group capability
     And I view partner details by Internal Mozy - MozyEnterprise with edit user group capability
@@ -346,7 +346,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
   # Download * Client
 
   # qa12 download permission bug
-  @TC.126176 @bus @regression
+  @TC.126176 @bus @windows_version_management @tasks_p1
   Scenario: 126176 backup client can be downloaded successfully for none product partner
     When I act as partner by:
       | name                                                           | including sub-partners |
@@ -364,7 +364,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
 
   # precondition: TC.126188
   # qa12 download permission bug
-  @TC.126177 @bus @regression
+  @TC.126177 @bus @windows_version_management @tasks_p1
   Scenario: 126177 backup client can be downloaded successfully for product partner
     When I act as partner by:
       | name                                           | including sub-partners |
@@ -380,7 +380,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
     When I wait for client fully downloaded
     Then the downloaded client should be same as the uploaded file FakeWinSyncClient.exe
 
-  @TC.126178 @bus @regression
+  @TC.126178 @bus @windows_version_management @tasks_p1
   Scenario: 126178 "Windows Crypto Utility" link of windows client should work correctly
     When I act as partner by:
       | name                                                  | including sub-partners |
@@ -392,7 +392,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
     And I click download link for Windows Crypto Utility
     Then client started downloading successfully
 
-  @TC.126180 @bus @regression
+  @TC.126180 @bus @windows_version_management @tasks_p1
   Scenario: 126180 Details link of backup client should work correctly
     When I act as partner by:
       | name                                                    | including sub-partners |
@@ -405,7 +405,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
       | Download:                     | MD5:               | Date:  |
       | mozypro-10_10_10_10-XXXXX.exe | FakeWinClient.exe  | @today |
 
-  @TC.505 @bus @regression
+  @TC.505 @bus @windows_version_management @tasks_p1
   Scenario: 505 Verify md5 checksum explanation links are functional
     When I act as partner by:
       | name                                                    | including sub-partners |

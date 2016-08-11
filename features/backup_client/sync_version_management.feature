@@ -3,7 +3,7 @@ Feature: As a Mozy Admin, I should be able to add new sync version and manage th
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.131353 @bus @regression
+  @TC.131353 @bus @sync_version_management @tasks_p1
   Scenario: 131353 Create a new mozy sync version and in Mozy Inc
     When I navigate to List Versions section from bus admin console page
     And I list versions for:
@@ -16,7 +16,7 @@ Feature: As a Mozy Admin, I should be able to add new sync version and manage th
       | WinSyncTestVersion 10.10.10.10 | win-sync | 10.10.10.10    | This is a test version for BUS version management. |
     Then the client version should be created successfully
 
-  @TC.131358 @bus @regression
+  @TC.131358 @bus @sync_version_management @tasks_p1
   Scenario: 131358 Sync client version can be listed in List Version view
     When I navigate to List Versions section from bus admin console page
     And I list versions for:
@@ -30,7 +30,7 @@ Feature: As a Mozy Admin, I should be able to add new sync version and manage th
       | Version     | Platform  | Name                           | Status   |
       | 10.10.10.10 | win-sync  | WinSyncTestVersion 10.10.10.10 | disabled |
 
-  @TC.131359 @TC.131360 @bus @regression
+  @TC.131359 @TC.131360 @bus @sync_version_management @tasks_p1
   Scenario: 131359 131360 Linux client can be uploaded successfully for Mozy, Inc.(MozyEnterprise/MozyPro root partner)
     When I navigate to List Versions section from bus admin console page
     And I list versions for:
@@ -56,7 +56,7 @@ Feature: As a Mozy Admin, I should be able to add new sync version and manage th
       | Version     | Platform  | Name                           | Status  |
       | 10.10.10.10 | win-sync  | WinSyncTestVersion 10.10.10.10 | enabled |
 
-  @TC.131371 @bus @regression
+  @TC.131371 @bus @sync_version_management @tasks_p1
   Scenario: 131371 Create Auto upgrade rule for Sync client
     When I act as partner by:
       | name    | including sub-partners |
@@ -90,7 +90,7 @@ Feature: As a Mozy Admin, I should be able to add new sync version and manage th
       | /downloads/mozypro-sync-10_10_10_10-XXXXX.exe |
     And I delete user
 
-  @TC.132043 @bus @regression
+  @TC.132043 @bus @sync_version_management @tasks_p1
   Scenario: 132043 Partner without Edit User Group capability -- Auto update will inherit parent upgrade rules
     When I act as partner by:
       | name    | including sub-partners |
@@ -129,7 +129,7 @@ Feature: As a Mozy Admin, I should be able to add new sync version and manage th
       | /downloads/mozypro-sync-10_10_10_10-XXXXX.exe |
     And I delete user
 
-  @TC.132044 @bus @regression
+  @TC.132044 @bus @sync_version_management @tasks_p1
   Scenario: 132044 Partner without Edit User Group capability -- Sync Default is not displayed if it's Sync disabled
     When I act as partner by:
       | name                                       | including sub-partners |
@@ -137,7 +137,7 @@ Feature: As a Mozy Admin, I should be able to add new sync version and manage th
     And I navigate to Edit Client Version section from bus admin console page
     Then there is no Sync rule in client rule fieldset
 
-  @TC.132030 @bus @regression
+  @TC.132030 @bus @sync_version_management @tasks_p1
   Scenario: 132030 Upgrade to: Product partner can list the inherited version if not branded
     When I act as partner by:
       | name           | including sub-partners |
@@ -158,7 +158,7 @@ Feature: As a Mozy Admin, I should be able to add new sync version and manage th
       | Windows Sync 10.10.10.10 | All User Groups | 0.0.0.1 through 0.0.0.2 | Any | No       | "%1" /silent    |         |
     And there is version Windows Sync 10.10.10.10 in Update to list
 
-  @TC.131403 @bus @regression
+  @TC.131403 @bus @sync_version_management @tasks_p1
   Scenario: 131403 Sync client can not be downloaded if sync is not enabled
     When I act as partner by:
       | name                                       | including sub-partners |
@@ -166,7 +166,7 @@ Feature: As a Mozy Admin, I should be able to add new sync version and manage th
     And I navigate to Download MozyPro Client section from bus admin console page
     Then I should not see Sync Clients download info
 
-  @TC.131405 @bus @regression
+  @TC.131405 @bus @sync_version_management @tasks_p1
   Scenario: 131405 Product partner can download sync executable upload in Mozy,Inc if it has no branded executables
     When I act as partner by:
       | name                                           | including sub-partners |
@@ -182,7 +182,7 @@ Feature: As a Mozy Admin, I should be able to add new sync version and manage th
     When I wait for client fully downloaded
     Then the downloaded client should be same as the uploaded file FakeWinSyncClient.exe
 
-  @TC.126245 @bus @regression
+  @TC.126245 @bus @sync_version_management @tasks_p1
   Scenario: 126245 Upgrade to: Drop down list version >= forced upgrade rules version in parent partner
     When I navigate to List Versions section from bus admin console page
     And I list versions for:
@@ -267,7 +267,7 @@ Feature: As a Mozy Admin, I should be able to add new sync version and manage th
     And I navigate to Upgrade Rules section from bus admin console page
     And I delete rule for version WinSyncTestVersion 10.10.10.10 if it exists
 
-  @TC.126195 @TC.126196 @bus @regression
+  @TC.126195 @TC.126196 @bus @sync_version_management @tasks_p1
   Scenario: 126195 126196 Client Version Rules: Upgrade rules show up in sub-partner when there is no override rule. Client Version Rules: Only Force Upgrade rules show up in sub-partner when there is override rule
     When I act as partner by:
       | name           | including sub-partners |
@@ -330,7 +330,7 @@ Feature: As a Mozy Admin, I should be able to add new sync version and manage th
     And I navigate to Upgrade Rules section from bus admin console page
     And I delete rule for version WinSyncTestVersion 10.10.10.10 if it exists
 
-  @TC.126181 @TC.126182 @bus @regression
+  @TC.126181 @TC.126182 @bus @sync_version_management @tasks_p1
   Scenario: 126181 Other Releases link of backup client should show up correctly 126182 The downloaded backup client version should be correct
     When I act as partner by:
       | name           | including sub-partners |
@@ -404,7 +404,7 @@ Feature: As a Mozy Admin, I should be able to add new sync version and manage th
     Then version info should be changed successfully
 
 
-  @TC.131357 @bus @regression
+  @TC.131357 @bus @sync_version_management @tasks_p1
   Scenario: 131357 Sync client version can be deleted
     When I navigate to List Versions section from bus admin console page
     And I list versions for:
