@@ -5,7 +5,7 @@ Feature: As a Mozy Admin, I should be able to add new linux version and manage t
 
   # It takes about 51s in qa6 if the version is not existed
   # It takes about 13m25s in qa6 if the version has executable uploaded (It will iterate all product partner when deleting a version with executable)
-  @TC.122460 @bus @regression
+  @TC.122460 @bus @phoenix @task_p1
   Scenario: 122460 create a new linux version in Mozy Inc
     When I navigate to List Versions section from bus admin console page
     And I list versions for:
