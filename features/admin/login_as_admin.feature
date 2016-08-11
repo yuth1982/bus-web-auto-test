@@ -72,19 +72,19 @@ Feature: login as admins
       | email             |
       | <%=@admin.email%> |
 
-  @TC.2134 @bus @log_in_screen
+  @TC.2134 @bus @log_in_screen @regression
   Scenario: 2134 Attempt to log into BUS with a invalid username
     When I navigate to bus admin console login page
     And I log in bus admin console with user name invalid_name@mozy.com and password Naich4yei8
     Then Login page error message should be Incorrect email or password.
 
-  @TC.2135 @bus @log_in_screen
+  @TC.2135 @bus @log_in_screen @regression
   Scenario: 2135 Attempt to log into BUS with a invalid password
     When I navigate to bus admin console login page
     And I log in bus admin console with user name qa1+automation+admin@mozy.com and password wrong_password
     Then Login page error message should be Incorrect email or password.
 
-  @TC.2187 @bus @log_in_screen
+  @TC.2187 @bus @log_in_screen @regression
   Scenario: 2187 Prevent Session Fixation
     When I navigate to bus admin console login page
     And I save login page cookies _session_id value
@@ -96,7 +96,7 @@ Feature: login as admins
       | mozy  |
     And Admin console page cookies _session_id value should not changed
 
-  @TC.120658 @bus @log_in_screen @need_test_account @env_dependent
+  @TC.120658 @bus @log_in_screen @need_test_account @env_dependent @regression
   Scenario: 120658 Standard admin log into BUS with upper/mixed case username
     When I navigate to bus admin console login page
     Then I log into bus admin console with uppercase Standard admin and Standard password
@@ -105,7 +105,7 @@ Feature: login as admins
     And I log into bus admin console with mixed case Standard admin and Standard password
     And I log out bus admin console
 
-  @TC.120659 @bus @log_in_screen @need_test_account @env_dependent
+  @TC.120659 @bus @log_in_screen @need_test_account @env_dependent @regression
   Scenario: 120659 Hipaa admin log into BUS with upper/mixed case username
     When I navigate to bus admin console login page
     Then I log into bus admin console with uppercase Hipaa admin and Hipaa password
