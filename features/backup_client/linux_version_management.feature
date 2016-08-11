@@ -5,7 +5,7 @@ Feature: As a Mozy Admin, I should be able to add new linux version and manage t
 
   # It takes about 51s in qa6 if the version is not existed
   # It takes about 13m25s in qa6 if the version has executable uploaded (It will iterate all product partner when deleting a version with executable)
-  @TC.122460 @bus @phoenix @task_p1
+  @TC.122460 @bus @linux_version @tasks_p1
   Scenario: 122460 create a new linux version in Mozy Inc
     When I navigate to List Versions section from bus admin console page
     And I list versions for:
@@ -19,7 +19,7 @@ Feature: As a Mozy Admin, I should be able to add new linux version and manage t
     Then the client version should be created successfully
 
   #It takes about 2m16s in qa6
-  @TC.122465 @bus @regression
+  @TC.122465 @bus @linux_version @tasks_p1
   Scenario: 122465 Linux client version can be listed in List Version view
     When I navigate to List Versions section from bus admin console page
     And I list versions for:
@@ -35,7 +35,7 @@ Feature: As a Mozy Admin, I should be able to add new linux version and manage t
 
   #It sometimes fail in qa6, bus will return 500 error (timeout) in this section, while the client is uploaded successfully
   #It takes 2m3s in staging
-  @TC.123296 @bus @regression
+  @TC.123296 @bus @linux_version @tasks_p1
   Scenario: 123296 Linux client can be uploaded successfully for Mozy, Inc.
     When I navigate to List Versions section from bus admin console page
     And I list versions for:
@@ -54,7 +54,7 @@ Feature: As a Mozy Admin, I should be able to add new linux version and manage t
 
   #It sometimes fails in qa6, bus will return 500 error (timeout) in this section, while the version status will changed to enabled
   #It takes 2m3s in staging
-  @TC.122462 @bus @regression
+  @TC.122462 @bus @linux_version @tasks_p1
   Scenario: 122462 Linux client version can be enabled
     When I navigate to List Versions section from bus admin console page
     And I list versions for:
@@ -71,7 +71,7 @@ Feature: As a Mozy Admin, I should be able to add new linux version and manage t
       | Version     | Platform  | Name             | Status  |
       | 10.10.10.10 | linux     | LinuxTestVersion | enabled |
 
-  @TC.122544 @bus @regression
+  @TC.122544 @bus @linux_version @tasks_p1
   Scenario: 122544 Create Auto upgrade rule for Linux client
     When I act as partner by:
       | name    | including sub-partners |
@@ -114,7 +114,7 @@ Feature: As a Mozy Admin, I should be able to add new linux version and manage t
       | /downloads/mozypro-deb-32-10_10_10_10-XXXXX.deb |
 
 
-  @TC.122559 @bus @regression
+  @TC.122559 @bus @linux_version @tasks_p1
   Scenario: 122559 Partner without Edit User Group capability -- have limited edit client version functionality
     When I act as partner by:
       | name                                                  | including sub-partners |
@@ -129,7 +129,7 @@ Feature: As a Mozy Admin, I should be able to add new linux version and manage t
       | auto-update      | auto-update  | auto-update                  | auto-update           | auto-update       |
 
 
-  @TC.122561 @bus @regression
+  @TC.122561 @bus @linux_version @tasks_p1
   Scenario: 122521 Partner without Edit User Group cap: All client version in subpartner when there is no override rule
     When I search partner by Internal Mozy - MozyPro no edit user group capability
     And I view partner details by Internal Mozy - MozyPro no edit user group capability
@@ -162,7 +162,7 @@ Feature: As a Mozy Admin, I should be able to add new linux version and manage t
       | update-url                                      |
       | /downloads/mozypro-deb-32-10_10_10_10-XXXXX.deb |
 
-  @TC.122549 @bus @regression
+  @TC.122549 @bus @linux_version @tasks_p1
   Scenario: 122549 Upgrade to: Partner without server license can't list Linux client version
     When I act as partner by:
       | name                                           | including sub-partners |
@@ -180,7 +180,7 @@ Feature: As a Mozy Admin, I should be able to add new linux version and manage t
 
 
 
-  @TC.122553 @bus @regression
+  @TC.122553 @bus @linux_version @tasks_p1
   Scenario: 122553 Client Version Rules: Create Auto update client version rule for Linux client
     When I search partner by Internal Mozy - MozyEnterprise with edit user group capability
     And I view partner details by Internal Mozy - MozyEnterprise with edit user group capability
@@ -219,7 +219,7 @@ Feature: As a Mozy Admin, I should be able to add new linux version and manage t
 
   # Precondition: (@TC.122544) No auto rule or auto rule defined in MozyPro is 10.10.10.10
   #
-  @TC.123298 @bus @regression
+  @TC.123298 @bus @linux_version @tasks_p1
   Scenario: 123298 Linux client can be downloaded successfully for none product partner
     When I act as partner by:
       | name                                                    | including sub-partners |
@@ -233,7 +233,7 @@ Feature: As a Mozy Admin, I should be able to add new linux version and manage t
     And I wait for client fully downloaded
     Then the downloaded client should be same as the uploaded file FakeLinuxClient.deb
 
-  @TC.131413 @bus @regression
+  @TC.131413 @bus @linux_version @tasks_p1
   Scenario: 131413 Linux client can not be downloaded if the partner don't have server license
     When I act as partner by:
       | name                                                  | including sub-partners |
@@ -244,7 +244,7 @@ Feature: As a Mozy Admin, I should be able to add new linux version and manage t
 
   # Only automate part of 123391.
   # Disabling all linux version (except one only have Mozy,Inc uploaded) is not a necessary scenario in production
-  @TC.123391 @bus @regression
+  @TC.123391 @bus @linux_version @tasks_p1
   Scenario: 123391 bds linux client can be download successfully for MozyOEM partner
     When I navigate to Download BDS Remote Backup Client section from bus admin console page
     Then I can find client download info of platform Linux in Backup Clients part:
@@ -269,7 +269,7 @@ Feature: As a Mozy Admin, I should be able to add new linux version and manage t
     And I wait for client fully downloaded
     Then the downloaded client should be same as the uploaded file FakeLinuxClient.deb
 
-  @TC.123297 @bus @regression
+  @TC.123297 @bus @linux_version @tasks_p1
   Scenario: 123297 Check download links for bds linux client
     When I navigate to Download BDS Remote Backup Client section from bus admin console page
     And I clear downloads folder
@@ -278,7 +278,7 @@ Feature: As a Mozy Admin, I should be able to add new linux version and manage t
     And I wait for client fully downloaded
     Then the downloaded client should be same as the uploaded file FakeLinuxClient.deb
 
-  @TC.124097 @bus @regression
+  @TC.124097 @bus @linux_version @tasks_p1
   Scenario: 124097 VMBU Client can be downloaded
     When I act as partner by:
       | name                                                    | including sub-partners |
