@@ -8,7 +8,7 @@ global:
   # Fixed test password for all password field
   test_pwd:                     Test1234
   # Fixed test password for hipaa password field
-  test_hipaa_pwd:               test1234*
+  test_hipaa_pwd:               Test1234*
   # User email prefix, e.g qa1+reg+test@mozy.com
   email_prefix_gmail:                 mozybus
   email_domain_gmail:                 gmail.com

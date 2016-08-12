@@ -78,11 +78,8 @@ Feature: Auto Grow
     And activate the user's Server device without a key and with the default password
     And I get the machine_id by license_key
     And I upload data to device by batch
-      | machine_id                  | GB  |
-      | <%=@clients[0].machine_id%> | 0.8 |
-    And I upload data to device by batch
-      | machine_id                  | GB  |
-      | <%=@clients[0].machine_id%> | 0.8 |
+      | machine_id                  | GB  | upload_file |
+      | <%=@clients[0].machine_id%> | 1.1 | true        |
     Then tds return message should be:
     """
     Account or container quota has been exceeded

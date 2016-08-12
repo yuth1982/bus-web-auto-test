@@ -13,6 +13,7 @@ When /^I upload data to device(| by batch)$/ do |upload_type, grow_quota_table|
   user_email = attr['user_email'] || @current_user[:email]
   machine_id = attr['machine_id'] || @machine_id
   filename = attr['file_name']
+  upload_file = attr['upload_file']
   amount = attr['GB'] || 1
   @grow_quota_response = [] if @grow_quota_response.nil?
   if attr['password'].nil?
@@ -23,7 +24,7 @@ When /^I upload data to device(| by batch)$/ do |upload_type, grow_quota_table|
   @filename =filename
 
   if upload_type == ' by batch'
-    @grow_quota_response[0] = SSHTDSGrowQuota.grow_quota(user_email, password, machine_id, amount, filename)
+    @grow_quota_response[0] = SSHTDSGrowQuota.grow_quota(user_email, password, machine_id, amount, filename, upload_file)
   else
     amount.to_i.times do |i|
       @grow_quota_response[i] = SSHTDSGrowQuota.grow_quota(user_email, password, machine_id, '1', filename)
