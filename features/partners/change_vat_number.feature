@@ -7,7 +7,7 @@ Feature: Change VAT Number
   #
   #Partner Admin Change/Partner Details
   #
-  @TC.124661 @bus @change_vat_number @regression
+  @TC.124661 @bus @change_vat_number
   Scenario: 124661 Partner admin change VAT number with valid value
     When I am at dom selection point:
     And I add a phoenix Pro partner:
@@ -36,7 +36,7 @@ Feature: Change VAT Number
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.124662 @bus @change_vat_number @regression
+  @TC.124662 @bus @change_vat_number
   Scenario: 124662 Partner admin change VAT number with other country's VAT number
     When I add a new MozyPro partner:
       | period | base plan | country | cc number         |
@@ -66,7 +66,7 @@ Feature: Change VAT Number
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.124663 @bus @change_vat_number @regression
+  @TC.124663 @bus @change_vat_number
   Scenario: 124663 Partner admin change VAT number with invalid value
     When I add a new MozyPro partner:
       | period | base plan | country |  cc number         |
@@ -96,7 +96,7 @@ Feature: Change VAT Number
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.124664 @bus @change_vat_number @regression
+  @TC.124664 @bus @change_vat_number
   Scenario: 124664 Partner admin change VAT number with blank value should succeed
     When I add a new MozyEnterprise partner:
       | period | base plan | country | vat number    |  cc number         |
@@ -129,7 +129,7 @@ Feature: Change VAT Number
   #
   #Partner Admin Change/VAT Number in "Change Contact Country"
   #
-  @TC.124665 @bus @change_vat_number @regression
+  @TC.124665 @bus @change_vat_number
   Scenario: 124665 Partner admin change from EU country to Non-EU country check VAT Number
     When I add a new Reseller partner:
       | period | country |  cc number        |
@@ -154,7 +154,7 @@ Feature: Change VAT Number
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.124666 @bus @change_vat_number @regression
+  @TC.124666 @bus @change_vat_number
   Scenario: 124666 Partner admin change from Non-EU country to EU country check VAT Number
     When I add a new Reseller partner:
       | period | country        | cc number        |
@@ -179,7 +179,7 @@ Feature: Change VAT Number
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.124667 @bus @change_vat_number @regression
+  @TC.124667 @bus @change_vat_number
   Scenario: 124667 Partner admin change VAT number with valid value should succeed
     When I add a new MozyEnterprise partner:
       | period | base plan | country |  cc number        |
@@ -209,7 +209,7 @@ Feature: Change VAT Number
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.124668 @bus @change_vat_number @regression
+  @TC.124668 @bus @change_vat_number
   Scenario: 124668 Partner admin change VAT number with other country's VAT number
     When I add a new MozyEnterprise partner:
       | period | base plan | country | cc number         |
@@ -239,7 +239,7 @@ Feature: Change VAT Number
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.124669 @bus @change_vat_number @regression
+  @TC.124669 @bus @change_vat_number
   Scenario: 124669 Partner admin change VAT number with invalid value
     When I add a new MozyEnterprise partner:
       | period | base plan | country | cc number         |
@@ -269,7 +269,7 @@ Feature: Change VAT Number
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.124670 @bus @change_vat_number @regression
+  @TC.124670 @bus @change_vat_number
   Scenario: 124670 Partner admin change VAT number with blank value should succeed
     When I add a new MozyPro partner:
       | period | base plan | country | vat number     | cc number         |
@@ -302,7 +302,7 @@ Feature: Change VAT Number
   #
   #Partner Admin Change/billing information
   #
-  @TC.124671 @bus @change_vat_number @regression
+  @TC.124671 @bus @change_vat_number
   Scenario: 124671 Partner admin check billing information section should have VAT table
     When I add a new MozyPro partner:
       | period | base plan | country | vat number     | cc number         |
@@ -322,7 +322,7 @@ Feature: Change VAT Number
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.124672 @bus @change_vat_number @regression
+  @TC.124672 @bus @change_vat_number
   Scenario: 124672 Partner admin check billing information section shouldn't have VAT table
     When I add a new MozyPro partner:
       | period | base plan | country        | cc number          |
@@ -343,7 +343,7 @@ Feature: Change VAT Number
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.124673 @bus @change_vat_number @regression
+  @TC.124673 @bus @change_vat_number
   Scenario: 124673 Partner admin's billing information section, change vat number with valid value
     When I add a new MozyPro partner:
       | period | base plan | country  | cc number          |
@@ -372,7 +372,7 @@ Feature: Change VAT Number
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.124674 @bus @change_vat_number @regression
+  @TC.124674 @bus @change_vat_number
   Scenario: 124674 Partner admin's billing information section, change vat number with other country's VAT number
     When I add a new MozyPro partner:
       | period | base plan | country          | cc number          |
@@ -402,7 +402,7 @@ Feature: Change VAT Number
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.124675 @bus @change_vat_number @regression
+  @TC.124675 @bus @change_vat_number
   Scenario: 124675 Partner admin's billing information section, change vat number with invalid VAT number
     When I add a new MozyPro partner:
       | period | base plan | country  | cc number          |
@@ -432,7 +432,7 @@ Feature: Change VAT Number
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.124676 @bus @change_vat_number @regression
+  @TC.124676 @bus @change_vat_number
   Scenario: 124676 Partner admin's billing information section, change vat number with blank value
     When I add a new MozyPro partner:
       | period | base plan | country  | cc number          | vat number    |
@@ -461,7 +461,7 @@ Feature: Change VAT Number
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.124677 @bus @change_vat_number @regression
+  @TC.124677 @bus @change_vat_number
   Scenario: 124677 Partner admin's billing information section, delete vat number
     When I add a new MozyPro partner:
       | period | base plan | country  | cc number          | vat number    |
@@ -489,7 +489,7 @@ Feature: Change VAT Number
   #
   #BUS Admin Change/Partner Details
   #
-  @TC.124678 @bus @change_vat_number @regression
+  @TC.124678 @bus @change_vat_number
   Scenario: 124678 BUS admin change partner's contact country from EU country to Non-EU country, check VAT number field
     When I add a new MozyPro partner:
       | period | base plan | country  | cc number          |
@@ -508,7 +508,7 @@ Feature: Change VAT Number
     And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I delete partner account
 
-  @TC.124679 @bus @change_vat_number @regression
+  @TC.124679 @bus @change_vat_number
   Scenario: 124679 BUS admin change partner's contact country from Non-EU country to EU country, check VAT number field
     When I add a new MozyPro partner:
       | period | base plan | country        | server plan |  cc number         |
@@ -527,7 +527,7 @@ Feature: Change VAT Number
     And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I delete partner account
 
-  @TC.124680 @bus @change_vat_number @regression
+  @TC.124680 @bus @change_vat_number
   Scenario: 124680 BUS admin change partner's contact country (with a vat number) from EU country to Non-EU country, save changes
     When I add a new MozyPro partner:
       | period | base plan | country  | cc number          | vat number    |
@@ -552,7 +552,7 @@ Feature: Change VAT Number
     And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I delete partner account
 
-  @TC.124681 @bus @change_vat_number @regression
+  @TC.124681 @bus @change_vat_number
   Scenario: 124681 BUS admin edit partner's VAT number with other country's VAT number
     When I add a new MozyPro partner:
       | period | base plan | country  | cc number          |
@@ -577,7 +577,7 @@ Feature: Change VAT Number
     And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I delete partner account
 
-  @TC.124682 @bus @change_vat_number @regression
+  @TC.124682 @bus @change_vat_number
   Scenario: 124682 BUS admin edit partner's VAT number with invalid value
     When I add a new MozyPro partner:
       | period | base plan | country  | cc number          |
@@ -602,7 +602,7 @@ Feature: Change VAT Number
     And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I delete partner account
 
-  @TC.124683 @bus @change_vat_number @regression
+  @TC.124683 @bus @change_vat_number
   Scenario: 124683 BUS admin edit partner's VAT number with blank value
     When I add a new MozyPro partner:
       | period | base plan | country  | cc number          | vat number    |
@@ -627,7 +627,7 @@ Feature: Change VAT Number
     And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     And I delete partner account
 
-  @TC.124684 @bus @change_vat_number @regression
+  @TC.124684 @bus @change_vat_number
   Scenario: 124684 BUS admin edit partner's contact country and VAT number with valid value
     When I add a new MozyPro partner:
       | period | base plan | country  | cc number          | vat number    |
@@ -655,7 +655,7 @@ Feature: Change VAT Number
   #
   #BUS Admin Change/act as partner: Partner Details
   #
-  @TC.124685 @bus @change_vat_number @regression
+  @TC.124685 @bus @change_vat_number
   Scenario: 124685 act as partner and change contact country from EU country to Non-EU country, check VAT number field
     When I add a new MozyPro partner:
       | period | base plan | country  | cc number          |
@@ -677,7 +677,7 @@ Feature: Change VAT Number
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.124686 @bus @change_vat_number @regression
+  @TC.124686 @bus @change_vat_number
   Scenario: 124686 act as partner and change contact country from Non-EU country to EU country, check VAT number field
     When I add a new MozyPro partner:
       | period | base plan | country        | server plan |  cc number         |
@@ -699,7 +699,7 @@ Feature: Change VAT Number
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.124687 @bus @change_vat_number @regression
+  @TC.124687 @bus @change_vat_number
   Scenario: 124687 act as partner and change contact country (with a vat number) from EU country to Non-EU country, save changes
     When I add a new MozyPro partner:
       | period | base plan | country  | cc number          | vat number    |
@@ -726,7 +726,7 @@ Feature: Change VAT Number
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.124688 @bus @change_vat_number @regression
+  @TC.124688 @bus @change_vat_number
   Scenario: 124688 act as partner and edit its VAT number with other country's VAT number
     When I add a new MozyPro partner:
       | period | base plan | country  | cc number          |
@@ -753,7 +753,7 @@ Feature: Change VAT Number
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.124689 @bus @change_vat_number @regression
+  @TC.124689 @bus @change_vat_number
   Scenario: 124689 act as partner and edit its VAT number with invalid value
     When I add a new MozyPro partner:
       | period | base plan | country  | cc number          |
@@ -780,7 +780,7 @@ Feature: Change VAT Number
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.124690 @bus @change_vat_number @regression
+  @TC.124690 @bus @change_vat_number
   Scenario: 124690 act as partner and edit its VAT number with blank value
     When I add a new MozyPro partner:
       | period | base plan | country  | cc number          | vat number    |
@@ -807,7 +807,7 @@ Feature: Change VAT Number
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.124691 @bus @change_vat_number @regression
+  @TC.124691 @bus @change_vat_number
   Scenario: 124691 act as partner, edit its contact country and VAT number with valid value
     When I add a new MozyPro partner:
       | period | base plan | country  | cc number          | vat number    |
@@ -838,7 +838,7 @@ Feature: Change VAT Number
   #
   #BUS Admin Change/billing information
   #
-  @TC.124692 @bus @change_vat_number @regression
+  @TC.124692 @bus @change_vat_number
   Scenario: 124692 act as a partner which contact country is EU country, check billing information section should have VAT table
     When I add a new MozyPro partner:
       | period | base plan | country | vat number     | cc number         |
@@ -855,7 +855,7 @@ Feature: Change VAT Number
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.124693 @bus @change_vat_number @regression
+  @TC.124693 @bus @change_vat_number
   Scenario: 124693 act as a partner which contact country is Non-EU country, check billing information section shouldn't have VAT table
     When I add a new MozyPro partner:
       | period | base plan | country        | cc number          |
@@ -872,7 +872,7 @@ Feature: Change VAT Number
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.124694 @bus @change_vat_number @regression
+  @TC.124694 @bus @change_vat_number
   Scenario: 124694 act as a partner and then go to billing information section, change vat number with valid value
     When I add a new MozyPro partner:
       | period | base plan | country  | cc number          |
@@ -898,7 +898,7 @@ Feature: Change VAT Number
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.124695 @bus @change_vat_number @regression
+  @TC.124695 @bus @change_vat_number
   Scenario: 124695 act as a partner and then go to billing information section, change vat number with other country's VAT number
     When I add a new MozyPro partner:
       | period | base plan | country          | cc number          |
@@ -925,7 +925,7 @@ Feature: Change VAT Number
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.124696 @bus @change_vat_number @regression
+  @TC.124696 @bus @change_vat_number
   Scenario: 124696 act as a partner and then go to billing information section, change vat number with invalid VAT number
     When I add a new MozyPro partner:
       | period | base plan | country  | cc number          |
@@ -952,7 +952,7 @@ Feature: Change VAT Number
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.124697 @bus @change_vat_number @regression
+  @TC.124697 @bus @change_vat_number
   Scenario: 124697 act as a partner and then go to billing information section, change vat number with blank value
     When I add a new MozyPro partner:
       | period | base plan | country  | cc number          | vat number    |
@@ -978,7 +978,7 @@ Feature: Change VAT Number
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.124698 @bus @change_vat_number @regression
+  @TC.124698 @bus @change_vat_number
   Scenario: 124698 act as a partner and then go to billing information section, delete vat number
     When I add a new MozyPro partner:
       | period | base plan | country  | cc number          | vat number    |
@@ -1003,7 +1003,7 @@ Feature: Change VAT Number
   #
   #Partner Admin Change/Change Payment Information
   #
-  @TC.124699 @bus @change_vat_number @regression
+  @TC.124699 @bus @change_vat_number
   Scenario: 124699 Partner admin change payment information section, set vat number with valid value
     When I add a new MozyPro partner:
       | period | base plan | country  | net terms          |
@@ -1038,7 +1038,7 @@ Feature: Change VAT Number
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.124700 @bus @change_vat_number @regression
+  @TC.124700 @bus @change_vat_number
   Scenario: 124700 Partner admin change payment information section, set vat number with invalid value
     When I add a new MozyPro partner:
       | period | base plan | country  | cc number          |
@@ -1073,7 +1073,7 @@ Feature: Change VAT Number
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.124701 @bus @change_vat_number @regression
+  @TC.124701 @bus @change_vat_number
   Scenario: 124701 Partner admin change payment information section, set vat number with other country's VAT number
     When I add a new MozyPro partner:
       | period | base plan | country  | cc number          |
@@ -1108,7 +1108,7 @@ Feature: Change VAT Number
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.124702 @bus @change_vat_number @regression
+  @TC.124702 @bus @change_vat_number
   Scenario: 124702 Partner admin change payment information section, set vat number with blank value
     When I add a new MozyPro partner:
       | period | base plan | country  | net terms          |
