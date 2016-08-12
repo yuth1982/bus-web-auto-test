@@ -136,7 +136,7 @@ Feature: Manage resources
     # Restore partner status
     And I allocate 0 GB Desktop quota to MozyPro partner
 
-  @TC.19165 @BSA.3010 @bus @2.5 @user_stories @stash @need_test_account @env_dependent
+  @TC.19165 @BSA.3010 @bus @2.5 @user_stories @stash @need_test_account @env_dependent @regression
   Scenario: 19165 US Pro admin can see stash details in manage resources
     When I act as partner by:
       | email                 |

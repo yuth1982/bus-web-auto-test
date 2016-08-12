@@ -7,7 +7,7 @@ Feature: Resource Summary
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.20783 @bus @2.5 @manage_storage @display_account_storage @device_summary @need_test_account @env_dependent
+  @TC.20783 @bus @2.5 @manage_storage @display_account_storage @device_summary @need_test_account @env_dependent @regression
   Scenario: 20783 [Itemized]Available and Used, Used/Total has correct values when 0<used<total
     When I act as partner by:
       | email                                     |
@@ -20,7 +20,7 @@ Feature: Resource Summary
       | Desktop Used | Desktop Total | Server Used | Server Total | Available | Used |
       | 1            | 8             | 0           | 200          | 207       | 1    |
 
-  @TC.20787 @bus @2.5 @manage_storage @display_account_storage @device_summary @need_test_account @env_dependent
+  @TC.20787 @bus @2.5 @manage_storage @display_account_storage @device_summary @need_test_account @env_dependent @regression
   Scenario: 20787 [Itemized]Total=Available+Used and Total_Used=sum(storage type) when 0<used<total
     When I act as partner by:
       | email                                     |
@@ -35,7 +35,7 @@ Feature: Resource Summary
     And The following equation about device for Itemized partner is right
       | Desktop Used | + | Server Used | == | Used |
 
-  @TC.20798 @bus @2.5 @manage_storage @display_account_storage @device_summary @need_test_account @env_dependent
+  @TC.20798 @bus @2.5 @manage_storage @display_account_storage @device_summary @need_test_account @env_dependent @regression
   Scenario: 20798 [Itemized with subpartner]The subpartner info shows
     When I act as partner by:
       | email                                                |
@@ -49,7 +49,7 @@ Feature: Resource Summary
       | 0            | 5             | 1           | 198          | 202       | 1    | 5              | 3                  | 2                 |
 
 
-  @TC.20803 @bus @2.5 @manage_storage @display_account_storage @device_summary @need_test_account @env_dependent
+  @TC.20803 @bus @2.5 @manage_storage @display_account_storage @device_summary @need_test_account @env_dependent @regression
   Scenario: 20803 [Bundled]Available and Used, Used/Total has correct values when 0<used<total
     When I act as partner by:
       | email                                             |
@@ -59,7 +59,7 @@ Feature: Resource Summary
       | Available | Used  |
       | 70 GB     | 30 GB |
 
-  @TC.20805 @bus @2.5 @manage_storage @display_account_storage @device_summary @need_test_account @env_dependent
+  @TC.20805 @bus @2.5 @manage_storage @display_account_storage @device_summary @need_test_account @env_dependent @regression
   Scenario: 20805 [Bundled with subpartner]The subpartner Storage shows in the partner's summary view
     When I act as partner by:
       | email                                        |

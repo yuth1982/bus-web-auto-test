@@ -3,7 +3,7 @@ Feature: Modify credit card information and billing contact information
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.15266 @bus @2.5 @modify @cc @billing_contact_info
+  @TC.15266 @bus @2.5 @modify @cc @billing_contact_info @regression
   Scenario: 15266 Verify Change Payment Information Contact Info
     When I add a new MozyPro partner:
       | period | base plan | country       | address           | city      | state abbrev | zip   | phone          |
@@ -17,7 +17,7 @@ Feature: Modify credit card information and billing contact information
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15286 @bus @2.5 @modify @cc @billing_contact_info
+  @TC.15286 @bus @2.5 @modify @cc @billing_contact_info @regression
   Scenario: 15286 Change Payment Information With Credit Card
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -44,7 +44,7 @@ Feature: Modify credit card information and billing contact information
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15272 @bus @2.5 @modify @cc @billing_contact_info
+  @TC.15272 @bus @2.5 @modify @cc @billing_contact_info @regression
   Scenario: 15272 Verify Modify Credit Card Checkbox
     When I add a new MozyPro partner:
       | period | base plan |
@@ -58,7 +58,7 @@ Feature: Modify credit card information and billing contact information
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15273  @bus @2.5 @modify @cc @billing_contact_info
+  @TC.15273  @bus @2.5 @modify @cc @billing_contact_info @regression
   Scenario: 15273 Change Payment Information Without Credit Card
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -80,7 +80,7 @@ Feature: Modify credit card information and billing contact information
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15275 @bus @2.5 @modify @cc @billing_contact_info @BUG.96359
+  @TC.15275 @bus @2.5 @modify @cc @billing_contact_info @BUG.96359 @regression
   Scenario: 15275 Verify Credit Card Required Fields
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -107,7 +107,7 @@ Feature: Modify credit card information and billing contact information
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15459 @bus @2.5 @modify @cc @billing_contact_info
+  @TC.15459 @bus @2.5 @modify @cc @billing_contact_info @regression
   Scenario: 15459 Verify Net Terms Customers Cannot Enter a Credit Card Number
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -119,7 +119,7 @@ Feature: Modify credit card information and billing contact information
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15458 @bus @2.5 @modify @cc @billing_contact_info
+  @TC.15458 @bus @2.5 @modify @cc @billing_contact_info @regression
   Scenario: 15458 Verify Only the Last Four Digits of Credit Card Number Visible
     When I add a new MozyPro partner:
       | period | base plan | cc number        |
@@ -131,21 +131,21 @@ Feature: Modify credit card information and billing contact information
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15376 @bus @2.5 @modify @cc @billing_contact_info @need_test_account
+  @TC.15376 @bus @2.5 @modify @cc @billing_contact_info @need_test_account @regression
   Scenario: 15376 Verify OEM Do Not Keep Credit Card
     When I act as partner by:
       | name            | filter  |
       | Muskadel Backup | OEMs    |
     Then I should not see Change Payment Information link
 
-  @TC.19276 @bus @2.5 @modify @cc @billing_contact_info @need_test_account
+  @TC.19276 @bus @2.5 @modify @cc @billing_contact_info @need_test_account @regression
   Scenario: 19276 Velocity Partner Do Not Keep Credit Card
     When I act as partner by:
       | name                |
       | Velocity Consulting |
     Then I should not see Change Payment Information link
 
-  @TC.131843 @tasks_p1 @smoke @resources @bus
+  @TC.131843 @tasks_p1 @smoke @resources @bus @regression
   Scenario: 131843 Change credit card using credit card of Visa, MasterCard, American Express, Discover
     When I add a new MozyEnterprise partner:
       | period | users | server add on |
