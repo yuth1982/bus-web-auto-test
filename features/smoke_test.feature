@@ -3,7 +3,7 @@ Feature: Bus Smoke Test
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.18361 @slow @bus @2.5 @smoke @enterprise @email
+  @TC.18361 @slow @bus @2.5 @smoke @enterprise @email @regression
   Scenario: 18361 Mozy Enterprise Smoke Test
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add on | company name | address           | city      | state abbrev | zip   | country       | phone          | admin name   | cc number        | expire month | expire year | cvv |
@@ -88,7 +88,7 @@ Feature: Bus Smoke Test
       | <%=@partner.admin_info.email%>     |
     Then I should see 1 email(s)
 
-  @TC.112
+  @TC.112 @regression
   Scenario: 112 MozyPro France
     When I add a new MozyPro partner:
       | period | base plan | create under   | country | vat number    |
@@ -101,6 +101,6 @@ Feature: Bus Smoke Test
     And New partner should be created
     And I delete partner account
 
-  @TC.120711 @prod_206
+  @TC.120711 @prod_206 @regression
   Scenario: Verify Skeletor
     Given I verify Skeletor by visiting url
