@@ -3,7 +3,7 @@ Feature: BUS Regression partner test
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.1649 @selenium @bus @others
+  @TC.1649 @selenium @bus @others @regression
   Scenario: 1649 Set a partners subdomain
     When I add a new MozyPro partner:
     | period | base plan |
@@ -14,7 +14,7 @@ Feature: BUS Regression partner test
     And The subdomain in BUS will be @subdomain
     And I delete partner account
 
-  @TC.1051 @bus @2.5 @partner
+  @TC.1051 @bus @2.5 @partner @regression
   Scenario: 1051 Verify Partner Details Links - Strings
     When I add a new MozyPro partner:
       | period | base plan | country       | address           | city      | state abbrev | zip   | phone          |
@@ -56,7 +56,7 @@ Feature: BUS Regression partner test
   # Test account Barclays Root - Reserved is in QA6 only
   #
   # Todo: this case need to check create ip white list successful message
-  @TC.643 @need_test_account @bus @2.5 @partner @ip_white_list_visibility @env_dependents
+  @TC.643 @need_test_account @bus @2.5 @partner @ip_white_list_visibility @env_dependents @regression
   Scenario: 643 Verify White List visibility for an OEM partner with an API Key
     When I search partner by:
       | name                     | filter |
@@ -66,7 +66,7 @@ Feature: BUS Regression partner test
 
   # Todo: this case need to check create ip white list successful message
   # Todo: This test cases could be failed because no ui for api creating if partner uses pooled storage
-  @TC.644 @bus @2.5 @partner @ip_white_list_visibility
+  @TC.644 @bus @2.5 @partner @ip_white_list_visibility @regression
   Scenario: 644 Verify White List visibility for a Corp partner with an API Key
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -80,7 +80,7 @@ Feature: BUS Regression partner test
   # This test cases requires an OEM partner without API Key
   # Test account Charter Business Trial - Reserved is in QA6 only
   #
-  @TC.645 @need_test_account @bus @2.5 @partner @ip_white_list_visibility @env_dependent
+  @TC.645 @need_test_account @bus @2.5 @partner @ip_white_list_visibility @env_dependent @regression
   Scenario: 645 Verify White List visibility for an OEM partner without an API Key
     When I search partner by:
       | name                              | filter |
@@ -90,7 +90,7 @@ Feature: BUS Regression partner test
     And Partner ip whitelist should be There is no current API key.
 
   # Todo: This test cases could be failed because no ui for api creating if partner uses pooled storage
-  @TC.646 @bus @2.5 @partner @ip_white_list_visibility
+  @TC.646 @bus @2.5 @partner @ip_white_list_visibility @regression
   Scenario: 646 Verify White List visibility for a Corp partner without an API Key
     When I add a new MozyPro partner:
       | period | base plan | net terms |
