@@ -12,7 +12,7 @@ Feature: Assign User To A New User Group
   Background:
     Given I log in bus admin console as administrator
 
-  @change_user_group @env_dependent @regression
+  @change_user_group @env_dependent
   Scenario: Change User Group
     When I act as partner by:
       | email                            |
