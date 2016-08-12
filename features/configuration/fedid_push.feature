@@ -8,7 +8,7 @@ Feature: FedID push
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.121644 @ui @bus @2.11 @ldap_push_integration @connection_settings @sync_rules
+  @TC.121644 @ui @bus @2.11 @ldap_push_integration @connection_settings @sync_rules @regression
   Scenario: ETS 439979 440012 Check UI for connection settings and sync_rules
     When I add a new MozyEnterprise partner:
       | period | users | server plan |
@@ -206,7 +206,7 @@ Feature: FedID push
     And I search and delete partner account by newly created partner company name
 
 
-  @TC.121630 @ui @bus @2.11 @ldap_push_integration @attribute_mapping @SAML_Authentication @sync_rules
+  @TC.121630 @ui @bus @2.11 @ldap_push_integration @attribute_mapping @SAML_Authentication @sync_rules @regression
   Scenario: 121630 121631 121645 121646 121647 121648 120740 120744 Check UI for attribute mapping, SAML Authentication, sync rules
   # Scenario: 121630 Happy Path: Initial values for SAML Authentication for a clean partner
     When I add a new MozyEnterprise partner:
