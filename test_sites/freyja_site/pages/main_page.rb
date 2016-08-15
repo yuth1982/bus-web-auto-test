@@ -130,7 +130,7 @@ module Freyja
         sleep 2
         pathLength += 1
       end
-      find(:xpath, "//tr[@id='#{machineID}:File:#{filePath}']/td/div/span").click
+      find(:xpath, "//tr[@id='#{machineID}:File:test_data/#{filePath}']/td/div/span").click
       sleep 2
     end
 

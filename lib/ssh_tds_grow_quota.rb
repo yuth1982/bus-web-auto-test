@@ -14,17 +14,20 @@ module SSHTDSGrowQuota
   # @return [String] "Partner 12345 is using autogrow and is overdrafted on its Generic license by 5 GB"
   def grow_quota(username, password, machine_id, i, filename = nil, upload_file = 'false')
     if TEST_ENV == 'qa12h'
+      @filename = filename.nil? ? 'upload_file.txt' : filename
       if upload_file == 'true'
-        result = upload_quota(username, password, machine_id, i, filename)
-        return result
+        #Create a file in customized size (GB)
+        create_file (i)
       else
-        filename = filename.nil? ? File.new("test_data/upload_file.txt") : File.new(filename)
-        Log.debug "#{QA_ENV['tds_host']}, #{username}, #{password}, #{machine_id}, #{uri_escape(filename.to_path)}"
-        url = "/namedObjects/#{machine_id}/#{uri_escape(filename.to_path)}"
-        request = Net::HTTP::Put.new(url)
-        request.basic_auth(username, password)
-        request["User-agent"] = "kalypso/2.26.4.395"
+        #Create a 1M file to upload
+        create_file (0.001)
       end
+      file_path = File.new("test_data/" + @filename)
+      Log.debug "#{QA_ENV['tds_host']}, #{username}, #{password}, #{machine_id}, #{uri_escape(file_path.to_path)}"
+      url = "/namedObjects/#{machine_id}/#{uri_escape(file_path.to_path)}"
+      request = Net::HTTP::Put.new(url)
+      request.basic_auth(username, password)
+      request["User-agent"] = "kalypso/2.26.4.395"
     else
       encrypted_file_size = (("1073741824".to_f)*(i.to_f)).to_i.to_s
       object_id = "73aecc4d92453e5dacaa1eddf1df55487cfb50af"
@@ -49,20 +52,6 @@ module SSHTDSGrowQuota
   def http_connect (host, port = 80)
     http_connection = Net::HTTP.new(host, port)
     return http_connection
-  end
-
-  def upload_quota(username, password, machine_id, i, filename = nil)
-    @filename = filename.nil? ? 'upload_file.txt' : filename
-    create_file (i)
-    filename = File.new("test_data/" + @filename)
-    url = "/namedObjects/#{machine_id}/#{uri_escape(filename.to_path)}"
-    request = Net::HTTP::Put.new(url)
-    request.basic_auth(username, password)
-    request["User-agent"] = "kalypso/2.26.4.395"
-    http_conn = http_connect(QA_ENV['tds_host'])
-    result = http_conn.start { |http| http.request(request) }
-    Log.debug result
-    return result
   end
 
   def create_file (size)
