@@ -23,11 +23,13 @@ module SSHTDSGrowQuota
         create_file (0.001)
       end
       file_path = File.new("test_data/" + @filename)
+      file_content = File.read("test_data/" + @filename)
       Log.debug "#{QA_ENV['tds_host']}, #{username}, #{password}, #{machine_id}, #{uri_escape(file_path.to_path)}"
       url = "/namedObjects/#{machine_id}/#{uri_escape(file_path.to_path)}"
       request = Net::HTTP::Put.new(url)
       request.basic_auth(username, password)
       request["User-agent"] = "kalypso/2.26.4.395"
+      request.body = file_content
     else
       encrypted_file_size = (("1073741824".to_f)*(i.to_f)).to_i.to_s
       object_id = "73aecc4d92453e5dacaa1eddf1df55487cfb50af"
@@ -45,7 +47,7 @@ module SSHTDSGrowQuota
     http_conn = http_connect(QA_ENV['tds_host'])
     result = http_conn.start { |http| http.request(request) }
     Log.debug result
-    DBHelper.update_machine_info(machine_id, i)
+    DBHelper.update_machine_info(machine_id, i) if upload_file == 'false'
     return result
   end
 

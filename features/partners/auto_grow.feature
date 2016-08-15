@@ -80,6 +80,7 @@ Feature: Auto Grow
     And I upload data to device by batch
       | machine_id                  | GB  | upload_file |
       | <%=@clients[0].machine_id%> | 1.1 | true        |
+    And I wait for 4000 seconds
     Then tds return message should be:
     """
     Account or container quota has been exceeded
