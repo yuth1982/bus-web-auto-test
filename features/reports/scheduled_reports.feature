@@ -643,15 +643,6 @@ Feature: Scheduled Reports
       | <%=@recipients_array[0]%> | Your machine status tc7329 - Machine Status |
     Then I should see 1 email(s)
     And I build a new report:
-      | type            | name                   |
-      | Resources Added | resources added tc7329 |
-    Then Report created successful message should be Created Resources Added Report.
-    And I wait for 60 seconds
-    And I search emails by keywords:
-      | to               | content                                       |
-      | @new_admin_email | Your resources added tc7329 - Resources Added |
-    Then I should see 1 email(s)
-    And I build a new report:
       | type               | name                      | recipients             |
       | Machine Over Quota | machine over quota tc7329 | <%=create_user_email%> |
     Then Report created successful message should be Created Machine Over Quota Report.
@@ -659,6 +650,15 @@ Feature: Scheduled Reports
     And I search emails by keywords:
       | to                        | content                                             |
       | <%=@recipients_array[0]%> | Your machine over quota tc7329 - Machine Over Quota |
+    Then I should see 1 email(s)
+    And I build a new report:
+      | type            | name                   |
+      | Resources Added | resources added tc7329 |
+    Then Report created successful message should be Created Resources Added Report.
+    And I wait for 60 seconds
+    And I search emails by keywords:
+      | to               | content                                       |
+      | @new_admin_email | Your resources added tc7329 - Resources Added |
     Then I should see 1 email(s)
     And I log out bus admin console
     And I log in bus admin console as administrator
@@ -728,19 +728,6 @@ Feature: Scheduled Reports
       | <%=@recipients_array[1]%> | Your machine status tc7330 - Machine Status |
     Then I should see 1 email(s)
     And I build a new report:
-      | type            | name                   | multiple recipients                            |
-      | Resources Added | resources added tc7330 | <%=create_user_email%>; <%=create_user_email%> |
-    Then Report created successful message should be Created Resources Added Report.
-    And I wait for 50 seconds
-    And I search emails by keywords:
-      | to                        | content                                       |
-      | <%=@recipients_array[0]%> | Your resources added tc7330 - Resources Added |
-    Then I should see 1 email(s)
-    And I search emails by keywords:
-      | to                        | content                                       |
-      | <%=@recipients_array[1]%> | Your resources added tc7330 - Resources Added |
-    Then I should see 1 email(s)
-    And I build a new report:
       | type               | name                      | multiple recipients                            |
       | Machine Over Quota | machine over quota tc7330 | <%=create_user_email%>; <%=create_user_email%> |
     Then Report created successful message should be Created Machine Over Quota Report.
@@ -752,6 +739,19 @@ Feature: Scheduled Reports
     And I search emails by keywords:
       | to                        | content                                             |
       | <%=@recipients_array[1]%> | Your machine over quota tc7330 - Machine Over Quota |
+    Then I should see 1 email(s)
+    And I build a new report:
+      | type            | name                   | multiple recipients                            |
+      | Resources Added | resources added tc7330 | <%=create_user_email%>; <%=create_user_email%> |
+    Then Report created successful message should be Created Resources Added Report.
+    And I wait for 50 seconds
+    And I search emails by keywords:
+      | to                        | content                                       |
+      | <%=@recipients_array[0]%> | Your resources added tc7330 - Resources Added |
+    Then I should see 1 email(s)
+    And I search emails by keywords:
+      | to                        | content                                       |
+      | <%=@recipients_array[1]%> | Your resources added tc7330 - Resources Added |
     Then I should see 1 email(s)
     And I log out bus admin console
     And I log in bus admin console as administrator
