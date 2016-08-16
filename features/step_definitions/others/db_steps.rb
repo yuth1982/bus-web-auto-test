@@ -63,3 +63,8 @@ end
 And /^I set customcd order id to (.+) for just created data shuttle order$/ do |change_to_id|
   DBHelper.update_customcd_order_id(@seed_id,change_to_id)
 end
+
+And /^I get partner id by admin email from database$/ do
+  @partner_id = DBHelper.get_partner_id_by_admin_email @partner.admin_info.email
+  Log.debug("partner id is #{@partner_id}")
+end

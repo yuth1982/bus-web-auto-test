@@ -562,6 +562,34 @@ module DBHelper
     end
   end
 
+
+  def get_partner_id_by_admin_email(admin_email)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select pp.id from pro_partners pp left join admins a on pp.root_admin_id = a.id where a.username = '#{admin_email}' order by pp.id desc limit 1;"
+      c = conn.exec(sql)
+      c.values[0][0]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_count_delayed_job(partner_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select count(*) from jobs j left join job_results jr on j.id=jr.job_id left join delayed_jobs dj on jr.delayed_job_id=dj.id where j.pro_partner_id=#{partner_id} and dj.run_at > now();"
+      Log.debug sql
+      c = conn.exec(sql)
+      c.values[0][0]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
 end
 
 

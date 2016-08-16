@@ -268,3 +268,8 @@ When /^I inactive (.+) scheduled report$/ do |report_name|
   @bus_site.admin_console_page.scheduled_reports_section.click_report(report_name)
   @bus_site.admin_console_page.edit_report_section.inactive_report
 end
+
+And /^no report is scheduled for this partner$/ do
+  delayed_job_count = DBHelper.get_count_delayed_job @partner_id
+  delayed_job_count.should == '0'
+end

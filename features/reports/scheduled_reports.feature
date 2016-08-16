@@ -796,6 +796,7 @@ Feature: Scheduled Reports
       | period | users |
       | 12     | 1     |
     Then New partner should be created
+    And I get partner id by admin email from database
     When I act as newly created partner account
     And I build a new report:
       | type            | name                     | frequency |
@@ -813,12 +814,14 @@ Feature: Scheduled Reports
     Then billing summary test7352 scheduled report Next Run value should be Inactive
     And billing summary test7352 scheduled report History value should be 2 reports
     # wait for 1 day and 1 min
-    And I wait for 86460 seconds
-    And I search emails by keywords:
-      | to               | content                                         | after |
-      | @new_admin_email | Your billing summary test7352 - Billing Summary | today |
-    Then I should see 0 email(s)
-    And I navigate to bus admin console login page
+    #And I wait for 86460 seconds
+    #And I search emails by keywords:
+    #  | to               | content                                         | after |
+    #  | @new_admin_email | Your billing summary test7352 - Billing Summary | today |
+    #Then I should see 0 email(s)
+    #And I navigate to bus admin console login page
+    Then no report is scheduled for this partner
+    And I log out bus admin console
     When I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
@@ -828,6 +831,7 @@ Feature: Scheduled Reports
       | period | users |
       | 12     | 1     |
     Then New partner should be created
+    And I get partner id by admin email from database
     When I act as newly created partner account
     And I build a new report:
       | type            | name                     | frequency |
@@ -836,11 +840,13 @@ Feature: Scheduled Reports
     And I delete billing summary test7356 scheduled report
     Then I should see No results found in scheduled reports list
     # wait for 1 day and 1 min
-    And I wait for 86460 seconds
-    And I search emails by keywords:
-      | to               | content                                         | after |
-      | @new_admin_email | Your billing summary test7352 - Billing Summary | today |
-    Then I should see 0 email(s)
-    And I navigate to bus admin console login page
+    #And I wait for 86460 seconds
+    #And I search emails by keywords:
+    #  | to               | content                                         | after |
+    #  | @new_admin_email | Your billing summary test7352 - Billing Summary | today |
+    #Then I should see 0 email(s)
+    #And I navigate to bus admin console login page
+    And no report is scheduled for this partner
+    And I log out bus admin console
     When I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
