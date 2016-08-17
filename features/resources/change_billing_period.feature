@@ -31,16 +31,17 @@ Feature: Change subscription period
     When I add a new MozyPro partner:
       | period | base plan | create under   | country | cc number        |
       | 12     | 50 GB     | MozyPro France | France  | 4485393141463880 |
+    And the sub-total before taxes or discounts should be correct
     Then New partner should be created
     When I act as newly created partner account
     And I change account subscription to biennial billing period!
     Then Subscription changed message should be Your account has been changed to biennial billing.
     Then Next renewal info table should be:
       | Period            | Date          | Amount                                |
-      | Biennial (change) | after 2 years | €335.79 (Without taxes or discounts)  |
+      | Biennial (change) | after 2 years | <%=format_price(@next_period_partner.billing_info.billing[:currency],@next_period_partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
     When I stop masquerading
     And I view partner details by newly created partner company name
-    Then Partner internal billing should be:
+    Then New Partner internal billing should be:
       | Account Type:   | Credit Card   | Current Period: | Biennial           |
       | Unpaid Balance: | €0.00         | Collect On:     | N/A                |
       | Renewal Date:   | after 2 years | Renewal Period: | Use Current Period |
@@ -52,16 +53,17 @@ Feature: Change subscription period
     When I add a new MozyPro partner:
       | period | base plan | create under    | country  | cc number        |
       | 1      | 50 GB     | MozyPro Germany | Portugal | 4556581910687747 |
+    And the sub-total before taxes or discounts should be correct
     Then New partner should be created
     When I act as newly created partner account
     And I change account subscription to biennial billing period!
     Then Subscription changed message should be Your account has been changed to biennial billing.
     Then Next renewal info table should be:
       | Period            | Date          | Amount                                |
-      | Biennial (change) | after 2 years | €335.79 (Without taxes or discounts)  |
+      | Biennial (change) | after 2 years | <%=format_price(@next_period_partner.billing_info.billing[:currency],@next_period_partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
     When I stop masquerading
     And I view partner details by newly created partner company name
-    Then Partner internal billing should be:
+    Then New Partner internal billing should be:
       | Account Type:   | Credit Card   | Current Period: | Biennial            |
       | Unpaid Balance: | €0.00         | Collect On:     | N/A                 |
       | Renewal Date:   | after 2 years | Renewal Period: | Use Current Period  |
@@ -80,12 +82,12 @@ Feature: Change subscription period
     Then Subscription changed message should be Your account will be switched to yearly billing schedule at your next renewal.
     Then Next renewal info table should be:
       | Period          | Date          | Amount                                |
-      | Yearly (change) | after 2 years | €175.89 (Without taxes or discounts)  |
+      | Yearly (change) | after 2 years | <%=format_price(@next_period_partner.billing_info.billing[:currency],@next_period_partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
     When I stop masquerading
     And I view partner details by newly created partner company name
     Then New Partner internal billing should be:
       | Account Type:   | Net Terms 30  | Current Period: | Biennial  |
-      | Unpaid Balance: | <%=@partner.billing_info.billing[:last_total]%> | Collect On:     | N/A       |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:total_str]%> | Collect On:     | N/A       |
       | Renewal Date:   | after 2 years | Renewal Period: | Yearly    |
       | Next Charge:    | after 2 years |                 |           |
     And I delete partner account
@@ -102,12 +104,12 @@ Feature: Change subscription period
     Then Subscription changed message should be Your account will be switched to monthly billing schedule at your next renewal.
     Then Next renewal info table should be:
       | Period           | Date         | Amount                               |
-      | Monthly (change) | after 1 year | £13.99 (Without taxes or discounts)  |
+      | Monthly (change) | after 1 year | <%=format_price(@next_period_partner.billing_info.billing[:currency],@next_period_partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
     When I stop masquerading
     And I view partner details by newly created partner company name
     Then New Partner internal billing should be:
         | Account Type:   | Net Terms 30 | Current Period: | Yearly  |
-        | Unpaid Balance: | <%=@partner.billing_info.billing[:last_total]%> | Collect On:     | N/A     |
+        | Unpaid Balance: | <%=@partner.billing_info.billing[:total_str]%> | Collect On:     | N/A     |
         | Renewal Date:   | after 1 year | Renewal Period: | Monthly |
         | Next Charge:    | after 1 year |                 |         |
     And I delete partner account
@@ -117,18 +119,19 @@ Feature: Change subscription period
     When I add a new MozyPro partner:
       | period | base plan | net terms |
       | 24     | 50 GB     | yes       |
+    And the sub-total before taxes or discounts should be correct
     Then New partner should be created
     When I act as newly created partner account
     And I change account subscription to monthly billing period!
     Then Subscription changed message should be Your account will be switched to monthly billing schedule at your next renewal.
     Then Next renewal info table should be:
       | Period           | Date          | Amount                               |
-      | Monthly (change) | after 2 years | $19.99 (Without taxes or discounts)  |
+      | Monthly (change) | after 2 years | <%=format_price(@next_period_partner.billing_info.billing[:currency],@next_period_partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
     When I stop masquerading
     And I view partner details by newly created partner company name
-    Then Partner internal billing should be:
+    Then New Partner internal billing should be:
       | Account Type:   | Net Terms 30  | Current Period: | Biennial    |
-      | Unpaid Balance: | $419.79       | Collect On:     | N/A         |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:total_str]%>       | Collect On:     | N/A         |
       | Renewal Date:   | after 2 years | Renewal Period: | Monthly     |
       | Next Charge:    | after 2 years |                 |          |
     And I delete partner account
@@ -271,7 +274,7 @@ Feature: Change subscription period
     Then Subscription changed message should be Your account has been changed to yearly billing.
     Then Next renewal info table should be:
       | Period          | Date         | Amount                                                                                                                                        |
-      | Yearly (change) | after 1 year | <%=format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
+      | Yearly (change) | after 1 year | <%=format_price(@next_period_partner.billing_info.billing[:currency],@next_period_partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
     When I stop masquerading
     And I view partner details by newly created partner company name
     Then Partner internal billing should be:
@@ -286,18 +289,19 @@ Feature: Change subscription period
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
       | 12     | Gold          | 100            | yes       |
+    And the sub-total before taxes or discounts should be correct
     Then New partner should be created
     When I act as newly created partner account
     And I change account subscription to monthly billing period!
     Then Subscription changed message should be Your account will be switched to monthly billing schedule at your next renewal.
     Then Next renewal info table should be:
       | Period           | Date         | Amount                               |
-      | Monthly (change) | after 1 year | $28.00 (Without taxes or discounts)  |
+      | Monthly (change) | after 1 year | <%=format_price(@next_period_partner.billing_info.billing[:currency],@next_period_partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
     When I stop masquerading
     And I view partner details by newly created partner company name
-    Then Partner internal billing should be:
+    Then New Partner internal billing should be:
       | Account Type:   | Net Terms 30 | Current Period: | Yearly  |
-      | Unpaid Balance: | $336.00      | Collect On:     | N/A     |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:total_str]%>      | Collect On:     | N/A     |
       | Renewal Date:   | after 1 year | Renewal Period: | Monthly |
       | Next Charge:    | after 1 year |                 |         |
     And I delete partner account
@@ -307,6 +311,7 @@ Feature: Change subscription period
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
       | 1      | Silver        | 100            |
+    And the sub-total before taxes or discounts should be correct
     Then New partner should be created
     When I act as newly created partner account
     And I change account subscription to annual billing period
@@ -318,14 +323,14 @@ Feature: Change subscription period
       """
     And Change subscription price table should be:
       | Description                                   | Amount   |
-      | Credit for remainder of monthly subscription  | $33.00   |
-      | Charge for new yearly subscription            | $396.00  |
-      | Total amount to be charged                    | $363.00  |
+      | Credit for remainder of monthly subscription  | <%=@previous_period_partner.billing_info.billing[:total_str]%>   |
+      | Charge for new yearly subscription            | <%=@partner.billing_info.billing[:total_str]%>  |
+      | Total amount to be charged                    | <%=format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:total].to_f - @previous_period_partner.billing_info.billing[:total].to_f)%>  |
     When I continue to change account subscription
     Then Subscription changed message should be Your account has been changed to yearly billing.
     Then Next renewal info table should be:
       | Period          | Date         | Amount                                |
-      | Yearly (change) | after 1 year | $396.00 (Without taxes or discounts)  |
+      | Yearly (change) | after 1 year | <%=format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -334,6 +339,7 @@ Feature: Change subscription period
     When I add a new MozyPro partner:
       | period | base plan |
       | 1      | 50 GB     |
+    And the sub-total before taxes or discounts should be correct
     Then New partner should be created
     When I act as newly created partner account
     And I change account subscription to biennial billing period
@@ -345,14 +351,14 @@ Feature: Change subscription period
       """
     And Change subscription price table should be:
       | Description                                   | Amount   |
-      | Credit for remainder of monthly subscription  | $19.99   |
-      | Charge for new biennial subscription          | $419.79  |
-      | Total amount to be charged                    | $399.80  |
+      | Credit for remainder of monthly subscription  | <%=@previous_period_partner.billing_info.billing[:total_str]%>   |
+      | Charge for new biennial subscription          | <%=@partner.billing_info.billing[:total_str]%>  |
+      | Total amount to be charged                    | <%=format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:total].to_f - @previous_period_partner.billing_info.billing[:total].to_f)%>  |
     When I continue to change account subscription
     Then Subscription changed message should be Your account has been changed to biennial billing.
     Then Next renewal info table should be:
       | Period            | Date          | Amount                                |
-      | Biennial (change) | after 2 years | $419.79 (Without taxes or discounts)  |
+      | Biennial (change) | after 2 years | <%=format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -400,7 +406,7 @@ Feature: Change subscription period
     Then Subscription changed message should be Your account will be switched to monthly billing schedule at your next renewal.
     Then Next renewal info table should be:
       | Period            | Date         | Amount                                |
-      | Monthly (change)  | after 1 year | <%=format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
+      | Monthly (change)  | after 1 year | <%=format_price(@next_period_partner.billing_info.billing[:currency],@next_period_partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
     When I stop masquerading
     And I search partner by newly created partner company name
     And I view partner details by newly created partner company name
@@ -428,7 +434,7 @@ Feature: Change subscription period
     Then Subscription changed message should be Your account has been changed to yearly billing.
     Then Next renewal info table should be:
       | Period            | Date         | Amount                                |
-      | Yearly (change)   | after 1 year | <%=format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
+      | Yearly (change)   | after 1 year | <%=format_price(@next_period_partner.billing_info.billing[:currency],@next_period_partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
     When I stop masquerading
     And I search partner by newly created partner company name
     And I view partner details by newly created partner company name
@@ -456,7 +462,7 @@ Feature: Change subscription period
     Then Subscription changed message should be Your account has been changed to yearly billing.
     Then Next renewal info table should be:
       | Period            | Date         | Amount                                |
-      | Yearly (change)   | after 1 year | <%=format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
+      | Yearly (change)   | after 1 year | <%=format_price(@next_period_partner.billing_info.billing[:currency],@next_period_partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
     When I stop masquerading
     And I search partner by newly created partner company name
     And I view partner details by newly created partner company name
@@ -483,13 +489,13 @@ Feature: Change subscription period
     Then Subscription changed message should be Your account will be switched to monthly billing schedule at your next renewal.
     Then Next renewal info table should be:
       | Period            | Date         | Amount                                |
-      | Monthly (change)  | after 1 year | <%=format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
+      | Monthly (change)  | after 1 year | <%=format_price(@next_period_partner.billing_info.billing[:currency],@next_period_partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
     When I stop masquerading
     And I search partner by newly created partner company name
     And I view partner details by newly created partner company name
     Then New Partner internal billing should be:
       | Account Type:   | Net Terms 30 | Current Period: | Yearly  |
-      | Unpaid Balance: | <%=@partner.billing_info.billing[:last_total]%>      | Collect On:     | N/A     |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:total_str]%>      | Collect On:     | N/A     |
       | Renewal Date:   | after 1 year | Renewal Period: | Monthly |
       | Next Charge:    | after 1 year |                 |         |
     And I search and delete partner account by newly created partner company name
@@ -512,7 +518,7 @@ Feature: Change subscription period
     Then Subscription changed message should be Your account has been changed to yearly billing.
     Then Next renewal info table should be:
       | Period            | Date         | Amount                                |
-      | Yearly (change)   | after 1 year | <%=format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
+      | Yearly (change)   | after 1 year | <%=format_price(@next_period_partner.billing_info.billing[:currency],@next_period_partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
     When I stop masquerading
     And I search partner by newly created partner company name
     And I view partner details by newly created partner company name
@@ -539,13 +545,13 @@ Feature: Change subscription period
     Then Subscription changed message should be Your account will be switched to monthly billing schedule at your next renewal.
     Then Next renewal info table should be:
       | Period            | Date         | Amount                                |
-      | Monthly (change)  | after 1 year | <%=format_price(@partner.billing_info.billing[:currency],@partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
+      | Monthly (change)  | after 1 year | <%=format_price(@next_period_partner.billing_info.billing[:currency],@next_period_partner.billing_info.billing[:pre_all_subtotal])+" (Without taxes or discounts)"%>  |
     When I stop masquerading
     And I search partner by newly created partner company name
     And I view partner details by newly created partner company name
     Then New Partner internal billing should be:
       | Account Type:   | Net Terms 30 | Current Period: | Yearly  |
-      | Unpaid Balance: | <%=@partner.billing_info.billing[:last_total]%>      | Collect On:     | N/A     |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:total_str]%>      | Collect On:     | N/A     |
       | Renewal Date:   | after 1 year | Renewal Period: | Monthly |
       | Next Charge:    | after 1 year |                 |         |
     And I search and delete partner account by newly created partner company name
