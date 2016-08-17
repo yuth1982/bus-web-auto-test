@@ -10,3 +10,5 @@ chromedriver.log
 .tags
 logs/
 html-report/
+report.json
+test_data/

@@ -20,7 +20,7 @@ module SSHTDSGrowQuota
         create_file (i)
       else
         #Create a 1M file to upload
-        create_file (0.001)
+        create_file (0.001) unless File.exist?("test_data/" + @filename)
       end
       file_path = File.new("test_data/" + @filename)
       file_content = File.read("test_data/" + @filename)
@@ -47,7 +47,7 @@ module SSHTDSGrowQuota
     http_conn = http_connect(QA_ENV['tds_host'])
     result = http_conn.start { |http| http.request(request) }
     Log.debug result
-    DBHelper.update_machine_info(machine_id, i) if upload_file == 'false'
+    DBHelper.update_machine_info(machine_id, i) unless upload_file == 'true'
     return result
   end
 
