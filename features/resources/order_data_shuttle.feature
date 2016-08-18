@@ -744,7 +744,7 @@ Feature:
     And I refresh process data shuttle section
     When I click finish button
     Then Data shuttle order should be created
-    And I wait for 100 seconds
+    And I wait for 200 seconds
     When I view data shuttle order details
     Then the shipping tracking table of data shuttle order should be
       | Drive # | Status |
