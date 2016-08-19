@@ -65,15 +65,22 @@ Feature: Show warning message for depleted resources when used = total
     Then I should not see any device error in resource summary
     And I add new user(s):
       | user_group           | storage_type | devices |
-      | (default user group) | Server       | 0       |
+      | (default user group) | Server       | 1       |
     Then 1 new user should be created
-    And I activate the new user's 200 Server device(s) and update used quota to 1 GB
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And I use keyless activation to activate devices
+      | user_email  | machine_name  | machine_type |
+      | @user_email | M_20832       | Server       |
+    And I update <%=@clients[0].machine_id%> used quota to 1 GB
+    And I activate the new user's 199 Server device(s) and update used quota to 1 GB
     And I navigate to Resource Summary section from bus admin console page
     Then I should see Server Device error in resource summary
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by newly created user email
     And I view the user's product keys
-    And I delete device by name: AUTOTEST
+    And I delete device by name: M_20832
     And I navigate to Resource Summary section from bus admin console page
     Then I should not see any device error in resource summary
 
