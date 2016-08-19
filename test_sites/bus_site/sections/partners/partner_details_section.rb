@@ -169,6 +169,11 @@ module Bus
         :name => find(:xpath, "//div[starts-with(@id,'partner-show-')]/div[2]/div/h3").text }
     end
 
+    def click_bill_info_link
+      wait_until {billing_info_link.visible?}
+      billing_info_link.click
+    end
+
     # Public: General information hash
     #
     # @param [none]

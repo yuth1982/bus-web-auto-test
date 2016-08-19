@@ -14,7 +14,7 @@ module Bus
     element(:continue_btn, css: "input[value=Submit]")
     element(:submit_purchase_btn, id: "btn-purchase_resource_submit")
     element(:message_span, css: "div#resource-purchase_resources-content div span")
-    element(:error_message_p, xpath: "//div[@id='error_input']/p")
+    element(:error_message_p, xpath: "//div[@id='resource-purchase_resources-errors']/ul/li")
 
     # Public: Purchase resources
     #
@@ -34,7 +34,11 @@ module Bus
       desktop_quota_tb.type_text(desktop_quota) unless desktop_quota.nil?
       generic_quota_tb.type_text(generic_gb.to_s) unless generic_gb.nil?
       continue_btn.click
-      submit_purchase_btn.click
+      begin
+        submit_purchase_btn.click
+      rescue => e
+        puts e
+      end
       # Not necessary need to wait, work around for TC.19871, TC.19872
       wait_until_bus_section_load
     end

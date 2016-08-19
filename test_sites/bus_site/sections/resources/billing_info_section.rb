@@ -18,6 +18,7 @@ module Bus
 
     # All tables in Billing Information section, including Next Renewal, Supplemental Plan, Autogrow
     elements(:tables, css: 'div#resource-billing-content table')
+    elements(:tables_alias, css: "div[id^=resource-billing] table")
 
     #vat_message
     element(:vat_message_div, xpath: "//div[contains(@id,'partner-billing-info-vat-msg')]")
@@ -78,6 +79,11 @@ module Bus
     def supp_plan_hashes(index = 2)
       wait_until_bus_section_load
       tables[index].hashes
+    end
+
+    def quota_info_hashes
+      wait_until{!locate(:css,"div[id^=resource-billing] table.info-table.shade-table").nil?}
+      tables_alias.last.hashes
     end
 
     # Public: VAT info hashes

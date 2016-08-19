@@ -443,9 +443,17 @@ Then /^I delete partner and verify pending delete$/ do
   })
 end
 
-Then /^I open partner details by partner name in header$/ do
-  @bus_site.admin_console_page.open_partner_details_from_header(@partner)
-  @bus_site.admin_console_page.partner_details_section.expand_contact_info
+Then /^I open partner details by (sub)*partner name in header$/ do |sub|
+  if sub
+    @bus_site.admin_console_page.open_partner_details_from_header(@subpartner)
+  else
+    @bus_site.admin_console_page.open_partner_details_from_header(@partner)
+    @bus_site.admin_console_page.partner_details_section.expand_contact_info
+  end
+end
+
+Then /^I click Billing Info link to show the details$/ do
+  @bus_site.admin_console_page.partner_details_section.click_bill_info_link
 end
 
 Then /(contact info|pooled resource) shouldn't be changed and the error message should be:$/ do  |section,message|

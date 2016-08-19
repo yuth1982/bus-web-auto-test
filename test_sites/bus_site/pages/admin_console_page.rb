@@ -51,7 +51,7 @@ module Bus
     section(:change_plan_section, ChangePlanSection, id: "resource-change_billing_plan")
     section(:change_payment_info_section, ChangePaymentInfoSection, id: "resource-change_credit_card")
     section(:billing_history_section, BillingHistorySection, id: "resource-all_charges")
-    section(:billing_info_section, BillingInfoSection, id: "resource-billing")
+    section(:billing_info_section, BillingInfoSection, css: "div[id^=resource-billing]")#id: "resource-billing"
     section(:change_period_section, ChangePeriodSection, id: "resource-change_billing_period")
     section(:manage_resources_section, ManageResourcesSection, id: "resource-available_key_list")
     section(:manage_user_group_resources_section, ManageUserGroupResourcesSection , css: "div[id^=resource-group_available_keys-]")
@@ -304,11 +304,20 @@ module Bus
     def partner_created(partner)
       page.driver.browser.switch_to().window(page.driver.browser.window_handles.last)
       dimiss_start_using_mozy
-      find_link(partner.company_info.name).present?
+      if defined?(partner.company_info)
+        find_link(partner.company_info.name).present?
+      else
+        find_link(partner.company_name).present?
+      end
+
     end
 
     def go_to_partner_info(partner)
-      find_link(partner.company_info.name).click
+      if defined?(partner.company_info)
+        find_link(partner.company_info.name).click
+      else
+        find_link(partner.company_name).click
+      end
     end
 
     def visit_skeletor_url

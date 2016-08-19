@@ -14,6 +14,10 @@ Then /^Resources should be purchased$/ do
   @bus_site.admin_console_page.purchase_resources_section.messages.should == "Resources have been added to your account."
 end
 
+When /^I refresh purchase resource section$/ do
+  @bus_site.admin_console_page.purchase_resources_section.refresh_bus_section
+end
+
 When /^I save current purchased resources$/ do
   @current_purchased_resources = @bus_site.admin_console_page.purchase_resources_section.current_purchased_resources
 end
@@ -42,6 +46,6 @@ Then /^Current purchased resources should (increase|be):$/ do |how, resources_ta
   end
 end
 
-Then /^the storage error message of purchase resource section should be:$/ do |message|
+Then /^the storage error message of purchase resource section should be: (.+)$/ do |message|
   @bus_site.admin_console_page.purchase_resources_section.error_message.should == message
 end

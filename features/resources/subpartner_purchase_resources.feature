@@ -147,24 +147,20 @@ Feature: Sub partners can purchase resources
       | storage add-on | server plan |
       | 5              | yes         |
 
-#   @TC.19871 @need_test_account @not_implemented    @bus @subpartner_purchase_resources @env_dependent
-#   Scenario: 19871 Reseller Metallic partner with subparnter whose subparnter buy resources will raise error message
-#    When I act as partner by:
-#      | email                          |
-#      | qa1+tc+19871+reserved@mozy.com |
-#    When I act as partner by:
-#      | email                          |
-#      | qa1+sub+admin+19871@mozy.com   |
-#    And I navigate to Purchase Resources section from bus admin console page
-#    And I purchase resources:
-#      | desktop license | desktop quota |
-#      | 1               | 10            |
-#    # Suppose to check resource NOT purchased message, but not implemented yet, refactor later
-#    And I navigate to Manage Resources section from bus admin console page
-#    # Bug 92091
-#    Then Partner resources general information should be:
-#      | Total Account Storage: | Unallocated Storage: | Server Enabled: |
-#      | 0 GB                   | 0 GB                 | No              |
+  @TC.19871 @need_test_account @not_implemented  @bus @subpartner_purchase_resources @env_dependent @tasks_p3 @regression
+  Scenario: 19871 Reseller Metallic partner with subparnter whose subparnter buy resources will raise error message
+    When I act as partner by:
+      | email                          |
+      | qa1+tc+19871+reserved@mozy.com |
+    When I act as partner by:
+      | email                          |
+      | qa1+sub+admin+19871@mozy.com   |
+    And I navigate to Purchase Resources section from bus admin console page
+    And I purchase resources:
+      | generic quota |
+      | 0             |
+    Then the storage error message of purchase resource section should be: Please specify a quantity of resources to purchase.
+    # Suppose to check resource NOT purchased message, but not implemented yet, refactor later
 
   @TC.19868 @need_test_account @bus @subpartner_purchase_resources @env_dependent @regression
   Scenario: 19868 Existing Reseller itemized partner without subpartners can purchase resources
@@ -246,3 +242,115 @@ Feature: Sub partners can purchase resources
     And Current purchased resources should increase:
       | desktop license | desktop quota | server license | server quota |
       | 1               | 10            | 1              | 5            |
+
+
+  @TC.21281 @bus @subpartner_purchase_resources @tasks_p3 @regression
+  Scenario: 21281 Enterprise sub partner is able to purchase resources
+    When I add a new MozyEnterprise partner:
+      | company name           | period | users |  server plan | root role  |
+      |TC.21281_mozyent_partner| 12     | 15    |  10 GB       | FedID role |
+    Then New partner should be created
+    And I act as newly created partner account
+    When I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          | Parent     |
+      | subrole | Partner admin | FedID role |
+    And I check all the capabilities for the new role
+    When I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for MozyEnterprise partner:
+      | Name    | Company Type | Root Role | Enabled | Public | Currency                        | Periods | Tax Percentage | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
+      | subplan | business     | subrole   | Yes     | No     | $ — US Dollar (Partner Default) | yearly  | 10             | test     | false            | 1                          | 1                     |
+    Then add new pro plan success message should be displayed
+    And I add a new sub partner:
+      | Company Name                   | Pricing Plan | Admin Name |
+      | TC.21281_mozyent_sub_partner   | subplan      | subadmin   |
+    Then New partner should be created
+    And I act as newly created partner account
+    And I navigate to Purchase Resources section from bus admin console page
+    And I save current purchased resources
+    And I purchase resources:
+      | desktop license | desktop quota | server license | server quota |
+      | 10              | 25            | 10             | 10           |
+    Then Resources should be purchased
+    And Current purchased resources should increase:
+      | desktop license | desktop quota | server license | server quota |
+      | 10              | 25            | 10             | 10           |
+    When I refresh purchase resource section
+    And I purchase resources:
+      | desktop license | desktop quota | server license | server quota |
+      | 10              | 360           | 200            | 10           |
+    Then the storage error message of purchase resource section should be: Resources should be purchased There are not enough available resources.  Please contact your System Administrator.
+    #bugs #144887
+    And I stop masquerading as sub partner
+    When I stop masquerading
+    And I search and delete partner account by TC.21281_mozyent_sub_partner
+    And I search and delete partner account by TC.21281_mozyent_partner
+
+
+  @TC.21286 @bus @subpartner_purchase_resources @tasks_p3 @regression
+  Scenario: 21286 MozyPro Itemized sub partner is able to purchase resources
+    When I act as partner by:
+      |email|
+      |qa1+tc+19872+reserved@mozy.com|
+    And I add a new sub partner:
+      | Company Name           | Pricing Plan | Admin Name |
+      | TC.21286_sub_partner   | subplan      | subadmin   |
+    Then New partner should be created
+    And I act as newly created partner account
+    And I navigate to Purchase Resources section from bus admin console page
+    And I save current purchased resources
+    And I purchase resources:
+      | desktop license| desktop quota| server license| server quota|
+      | 1              | 1            | 1             | 1           |
+    Then Resources should be purchased
+    And Current purchased resources should increase:
+      | desktop license| desktop quota| server license| server quota|
+      | 1              | 1            | 1             | 1           |
+    When I refresh purchase resource section
+    And I purchase resources:
+      | desktop license | desktop quota  | server license| server quota  |
+      | 40              | 400            | 40            | 400           |
+    Then Resources should be purchased
+    And I stop masquerading as sub partner
+    When I stop masquerading
+    And I search and delete partner account by TC.21286_sub_partner
+
+  @TC.21285 @bus @subpartner_purchase_resources @tasks_p3 @regression
+  Scenario: 21285 Metallic Reseller Enterprise sub partner is able to purchase resources
+    When I add a new Reseller partner:
+      | company name              | period | reseller type | reseller quota |
+      | TC.21285_reseller_partner | 12     | Silver        | 100            |
+    Then New partner should be created
+    And I act as newly created partner account
+    And I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          | Parent        |
+      | subrole | Partner admin | Reseller Root |
+    And I check all the capabilities for the new role
+    When I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for Reseller partner:
+      | Name    | Company Type | Root Role | Enabled | Public | Currency                        | Periods | Tax Percentage | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
+      | subplan | business     | subrole   | Yes     | No     | $ — US Dollar (Partner Default) | yearly  | 10             | test     | false            | 1                          | 1                     |
+    Then add new pro plan success message should be displayed
+    And I stop masquerading
+    When I act as partner by:
+      | name     |
+      |TC.21285_reseller_partner|
+    When I add a new sub partner:
+      | Company Name                  |
+      | TC.21285_reseller_sub_partner |
+    And New partner should be created
+    And I act as newly created partner account
+    And I purchase resources:
+      | generic quota   |
+      | 50              |
+    Then Resources should be purchased
+    When I refresh purchase resource section
+    And I purchase resources:
+      | generic quota   |
+      | 100             |
+    Then the storage error message of purchase resource section should be: There are not enough available resources. Please contact your System Administrator.
+    And I stop masquerading as sub partner
+    When I stop masquerading
+    And I search and delete partner account by TC.21285_reseller_sub_partner
+    And I search and delete partner account by TC.21285_reseller_partner
