@@ -467,24 +467,6 @@ Feature: view edit machine details
 
   @TC.122435 @bus @machines_sync @tasks_p2
   Scenario: 122435: Linux client version updates correctly in the machine's details after replace
-    When I navigate to List Versions section from bus admin console page
-    And I list versions for:
-      | platform | show disabled |
-      | linux    | false         |
-    And I get 2 enabled linux version
-    When I act as partner by:
-      | name           | including sub-partners |
-      | MozyEnterprise | no                     |
-    And I navigate to Upgrade Rules section from bus admin console page
-    And I delete rule for version @version_name if it exists
-    And I delete rule for version @version_name2 if it exists
-    Then I add a new upgrade rule:
-      | version name       | Req? | On? | min version | max version |
-      | <%=@version_name%> | N    | Y   | 0.0.0.1111  | 1.0.0.1111  |
-    Then I add a new upgrade rule:
-      | version name        | Req? | On? | min version | max version |
-      | <%=@version_name2%> | N    | Y   | 0.0.0.1111  | 1.0.0.1111  |
-    And I stop masquerading as sub partner
     When I add a new MozyEnterprise partner:
       | period | users | server plan |
       | 12     | 10    | 250 GB      |
@@ -505,17 +487,19 @@ Feature: view edit machine details
     Then I use keyless activation to activate devices newly
       | machine_name    | user_name                   | machine_type |
       | Machine1_122435 | <%=@new_users.first.email%> | Server       |
+    And I upload data to device by batch
+      | machine_id                         |  user_email              | user_agent         | upload_file  |
+      | <%=@new_clients.first.machine_id%> | <%=@new_users[0].email%> | kalypso/2.28.0.421 | true         |
     And I update newly created machine encryption value to Default
-    And I got client config for the user machine:
-      | user_name                | machine                   | platform | arch   | codename       | version       |
-      | <%=@new_users[0].email%> | <%=@client.machine_hash%> | linux    | deb-64 | MozyEnterprise | <%=@version%> |
+
     Then I use keyless activation to activate devices
-      | machine_name    | user_name                | machine_type |
+      | machine_name    |  user_name               | machine_type |
       | Machine2_122435 | <%=@new_users[1].email%> | Server       |
+    And I upload data to device by batch
+      | machine_id                         |  user_email              | user_agent         | upload_file  |
+      | <%=@new_clients.first.machine_id%> | <%=@new_users[1].email%> | kalypso/2.30.0.442 | true         |
     And I update newly created machine encryption value to Default
-    And I got client config for the user machine:
-      | user_name                | machine                   | platform | arch   | codename       | version        |
-      | <%=@new_users[1].email%> | <%=@client.machine_hash%> | linux    | deb-64 | MozyEnterprise | <%=@version2%> |
+
     And I navigate to Search / List Machines section from bus admin console page
     And I view machine details for Machine2_122435
     And I click on the replace machine link
@@ -530,9 +514,10 @@ Feature: view edit machine details
       | machine_name    |
       | Machine2_122435 |
     And I view machine details for Machine2_122435
+    # the version should have client_branding for MozyEnterprise in this qa env. Otherwise the version will be displayed as '2.28.0.421'
     Then machine details should be:
-      | Client Version:              |
-      | MozyEnterprise @version_name |
+      | Client Version:                     |
+      | MozyEnterprise Windows 2.28.0.421   |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -592,21 +577,7 @@ Feature: view edit machine details
       | 81309978 | qiezidesktoppro1@emc.com | 953.5 MB    | Default     | MozyPro win sync 1.3.0.4679 | user_303028272_sync | qa6          |
 
   @TC.122569 @bus @machines_sync @tasks_p2
-  Scenario: 122569: Sync client version update from unknown to correct one in the machines details
-    When I navigate to List Versions section from bus admin console page
-    And I list versions for:
-      | platform | show disabled |
-      | linux    | false         |
-    And I get 1 enabled win-sync version
-    When I act as partner by:
-      | name    | including sub-partners |
-      | MozyPro | no                     |
-    And I navigate to Upgrade Rules section from bus admin console page
-    And I delete rule for version @version_name if it exists
-    Then I add a new upgrade rule:
-      | version name       | Req? | On? | min version | max version | Install CMD  |
-      | <%=@version_name%> | N    | Y   | 0.0.0.1111  | 1.0.0.1111  | "%1" /silent |
-    And I stop masquerading as sub partner
+  Scenario: 122569: Sync client version update from unknown to correct one in the machines details after it backup file through trogdor api
     When I add a new MozyPro partner:
       | period | base plan | net terms |
       | 12     | 8 TB      | yes       |
@@ -620,17 +591,19 @@ Feature: view edit machine details
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by newly created user email
     And I update the user password to default password
-    When I view Sync details
+    When I navigate to Search / List Machines section from bus admin console page
+    And I view machine details for Sync
+    And I get machine details info
     Then machine details should be:
       | Client Version: |
       | unknown         |
-    And I got client config for the user machine:
-      | user_name                   | machine    | platform | codename | version       | arch |
-      | <%=@new_users.first.email%> | plop000001 | win      | mozypro  | <%=@version%> | x86  |
-    When I refresh Machine Details section
+    And I upload data to device by batch
+      | machine_id                | user_agent                      | upload_file  |
+      | <%=@machine_info['ID:']%> | msync_windows_client/1.3.0.4710 | true         |
+    And I refresh Machine Details section
     Then machine details should be:
-      | Client Version:       |
-      | MozyPro @version_name |
+      | Client Version: |
+      | 1.3.0.4710      |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 

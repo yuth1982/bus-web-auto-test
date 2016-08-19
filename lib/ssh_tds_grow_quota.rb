@@ -12,7 +12,7 @@ module SSHTDSGrowQuota
   #  SSHTDSGrowQuota.grow_quota('qa1+andrea+fisher+1417@decho.com', 'test1234', '4903844', '1')
   #
   # @return [String] "Partner 12345 is using autogrow and is overdrafted on its Generic license by 5 GB"
-  def grow_quota(username, password, machine_id, i, filename = nil, upload_file = 'false')
+  def grow_quota(username, password, machine_id, i, filename = nil, upload_file = 'false', user_agent = nil)
     if TEST_ENV == 'qa12h'
       @filename = filename.nil? ? 'upload_file.txt' : filename
       if upload_file == 'true'
@@ -28,7 +28,7 @@ module SSHTDSGrowQuota
       url = "/namedObjects/#{machine_id}/#{uri_escape(file_path.to_path)}"
       request = Net::HTTP::Put.new(url)
       request.basic_auth(username, password)
-      request["User-agent"] = "kalypso/2.26.4.395"
+      request["User-agent"] = user_agent || "kalypso/2.26.4.395"
       request.body = file_content
     else
       encrypted_file_size = (("1073741824".to_f)*(i.to_f)).to_i.to_s
@@ -42,6 +42,7 @@ module SSHTDSGrowQuota
       request["X-Eventual-Content-Encoding"] = "x-ciphertext"
       request["X-Eventual-Content-Length"] = encrypted_file_size
       request["Content-Length"] = 0
+      request["User-agent"] = user_agent unless user_agent.nil?
     end
 
     http_conn = http_connect(QA_ENV['tds_host'])
