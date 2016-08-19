@@ -31,6 +31,8 @@ Feature: Corporate Invoices
     When I act as newly created partner account
     And I change account subscription to annual billing period!
     Then Subscription changed message should be Your account has been changed to yearly billing.
+    #QA12's billing email will delay many minutes
+    And I wait for 1200 seconds
     When I search emails by keywords:
       | from        | subject                    | content          |
       | ar@mozy.com | Mozy Inc Account Statement | @company_address |
@@ -60,6 +62,8 @@ Feature: Corporate Invoices
     When I act as newly created partner account
     And I change account subscription to biennial billing period!
     Then Subscription changed message should be Your account has been changed to biennial billing.
+    #QA12's billing email will delay many minutes
+    And I wait for 1200 seconds
     When I search emails by keywords:
       | from        | subject                    | content          |
       | ar@mozy.com | Mozy Inc Account Statement | @company_address |
