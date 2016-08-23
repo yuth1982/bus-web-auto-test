@@ -651,6 +651,7 @@ Feature: Scheduled Reports
       | to                        | content                                             |
       | <%=@recipients_array[0]%> | Your machine over quota tc7329 - Machine Over Quota |
     Then I should see 1 email(s)
+    # legacy bug 144781 for Resources Added report when partner has no machine.
     And I build a new report:
       | type            | name                   |
       | Resources Added | resources added tc7329 |
@@ -740,6 +741,7 @@ Feature: Scheduled Reports
       | to                        | content                                             |
       | <%=@recipients_array[1]%> | Your machine over quota tc7330 - Machine Over Quota |
     Then I should see 1 email(s)
+    # legacy bug 144781 for Resources Added report when partner has no machine.
     And I build a new report:
       | type            | name                   | multiple recipients                            |
       | Resources Added | resources added tc7330 | <%=create_user_email%>; <%=create_user_email%> |

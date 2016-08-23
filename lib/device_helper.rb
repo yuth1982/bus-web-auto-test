@@ -114,8 +114,12 @@ module KeylessDeviceActivation
       @region = region || 'qa'
     end
 
-    def activate_client_devices(access_token = nil)
-      get_codename(@company_type)
+    def activate_client_devices(access_token = nil, codename = nil)
+      if codename
+        @codename = codename
+      else
+        get_codename(@company_type)
+      end
       enable_partner_to_sso(@partner_id, @partner_name)
       create_oauth_client
       sso_auth(@partner_id)
@@ -244,6 +248,7 @@ module KeylessDeviceActivation
         request.basic_auth(@client_id, @client_secret)
         response = http.request request
         @access_token = JSON.parse(response.body)
+        Log.debug @access_token
       end
     end
 

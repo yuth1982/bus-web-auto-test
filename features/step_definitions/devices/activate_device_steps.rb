@@ -99,7 +99,7 @@ And /^I use keyless activation to activate same devices twice$/ do | table |
   @clients << client
 end
 
-When /^I use keyless activation to activate devices with (none machine hash|invalid machine hash|none access token|error access token)$/  do |error_type, table|
+When /^I use keyless activation to activate devices with (none machine hash|invalid machine hash|blank machine hash|none access token|error access token|wrong codename)$/  do |error_type, table|
   attr = table.hashes.first.each do |_, v|
     v.replace ERB.new(v).result(binding)
     v.gsub!(" ", "_")
@@ -111,6 +111,8 @@ When /^I use keyless activation to activate devices with (none machine hash|inva
 
   machine_hash = nil
   if error_type == 'none machine hash'
+    machine_hash = ''
+  elsif error_type == 'blank machine hash'
     machine_hash = ' '
     #invalid machine hash with length > 40
   elsif error_type == 'invalid machine hash'
@@ -122,7 +124,10 @@ When /^I use keyless activation to activate devices with (none machine hash|inva
   elsif error_type == 'error access token'
     access_token = '{"access_token", "NzUwNjk0NDI4NGZkYWI1OGMzOTVlMzViNTlmMzNmN2M1YmExMjI3YzpwYXNzd29yZA=="}'
   end
-  client.activate_client_devices(access_token)
+  if error_type == 'wrong codename'
+    codename = 'BrandingClient'
+  end
+  client.activate_client_devices(access_token, codename)
   @new_clients =[]
   @clients =[] if @clients.nil?
   @new_clients << client
@@ -143,10 +148,11 @@ Then /^activate machine result should be$/ do |table|
     (@clients.last.response.to_s).match(/\d+/)[0].should == expected_code
   end
 
+
   actual_body = @clients.last.response.body
-  if expected_body.include?('machine license key')
+  if expected_body && expected_body.include?('machine license key')
     ((actual_body.match(/^\{"license_key":"(\w)+"\}$/)).nil?).should == false
-  else
+  elsif expected_body
     actual_body.should == expected_body
   end
 end
