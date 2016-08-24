@@ -17,6 +17,7 @@ module SSHTDSGrowQuota
       @filename = filename.nil? ? 'upload_file.txt' : filename
       if upload_file == 'true'
         #Create a file in customized size (GB)
+        @filename = 'upload_file1.txt'
         create_file (i)
       else
         #Create a 1M file to upload
