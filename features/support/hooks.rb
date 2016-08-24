@@ -11,7 +11,7 @@ def testcase_id(scenario)
   caseId = ''
   scenario.source_tag_names.each { |name|
     if name.length > 2 && name[1..2].downcase.eql?('tc')
-      caseId = name[1..name.length]
+      caseId = name[4..name.length]
       break
     end
   }
@@ -63,6 +63,17 @@ end
 =end
 
 After do |scenario|
+  TEST_PLAN = 635702  # "BUS2.5 Automated Cases Test Pass"
+  BUILD_ID = 6456
+  PROJECT_PREFIX = "Mozy"
+  PROJECT_ID = 2      # 2 - 'Mozy'
+  CLIENT = TestlinkHelper::TestlinkAPIClient.new
+
+  id = testcase_id scenario
+  id = scenario.__id__ if id.nil? || id.length == 0
+  tc = id.to_i
+  test_case = CLIENT.run_api("getTestCase", {:testcaseexternalid => "#{PROJECT_PREFIX}-#{tc}"}).first
+
   if scenario.failed?
     #Dismiss alert dialog if it exists to prevent Selenium::WebDriver::Error::UnhandledAlertError from happening in all the following scenarios
     begin
@@ -72,12 +83,18 @@ After do |scenario|
       Log.debug 'No alert needs to be dismissed'
     end
 
-    id = testcase_id scenario
-    id = scenario.__id__ if id.nil? || id.length == 0
-    name = "screenshot_#{id}_line#{scenario.location.line.to_s}.png"
+    name = "screenshot_TC.#{id}_line#{scenario.location.line.to_s}.png"
     #page.driver.browser.save_screenshot("html-report/#{name}")
     encoded_img =  page.driver.browser.screenshot_as(:base64)
     embed("#{encoded_img}", "image/png", "#{name}")
     page.execute_script "window.onbeforeunload = function() {};"
+
+    arg = {:status => 'f', :testcaseid => test_case["testcase_id"].to_i, :testplanid => TEST_PLAN, :buildid => BUILD_ID, :testprojectid => PROJECT_ID}
+  else
+    arg = {:status => 'p', :testcaseid => test_case["testcase_id"].to_i, :testplanid => TEST_PLAN, :buildid => BUILD_ID, :testprojectid => PROJECT_ID}
   end
+
+  result = CLIENT.run_api("reportTCResult", arg)
+  Log.debug result
+
 end
