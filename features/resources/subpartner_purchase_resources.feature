@@ -232,11 +232,11 @@ Feature: Sub partners can purchase resources
   @TC.19370 @need_test_account @bus @subpartner_purchase_resources @env_dependent @regression
   Scenario: 19370 Existing Reseller itemized partner with subpartners whose subpartner can purchase resources
     When I act as partner by:
-      | email                          |
-      | qa1+tc+19370+reserved@mozy.com |
+      | email                           |
+      | mozyautotest+ona1s8qlqt@emc.com |
     And I act as partner by:
-      | email                          |
-      | qa1+sub+admin+19370@mozy.com   |
+      | email                             |
+      | mozyautotest+kysdtufbkj9x@emc.com |
     And I navigate to Purchase Resources section from bus admin console page
     And I save current purchased resources
     And I purchase resources:
