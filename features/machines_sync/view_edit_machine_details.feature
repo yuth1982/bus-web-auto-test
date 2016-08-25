@@ -710,7 +710,7 @@ Feature: view edit machine details
     When I search machine by:
       | machine_name                  |
       | jeff2-loki.mozyclientqa.local |
-    And I view machine details for vmbu_test_user_5@mozy.com
+    And I view machine details for jefft+qa12loki@mozy.com
     Then the data shuttle machine details should be:
       | Order ID      | Data Shuttle Device ID | Phase   | % Complete | GB Transferred | GB Remaining | Start | Elapsed |
       | <%=@seed_id%> |                        | Ordered |            |                |              |       |         |
