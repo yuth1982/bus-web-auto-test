@@ -15,7 +15,6 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Pre-tax Subtotal  |          |            | $9.99       |
       | Total Charges     |          |            | $9.99       |
     And New partner should be created
-    And New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan |
