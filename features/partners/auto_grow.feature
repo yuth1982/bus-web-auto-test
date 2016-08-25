@@ -215,7 +215,7 @@ Feature: Auto Grow
     And I view details of <%=@users[1].email%>'s user group
     Then User group details should be:
       | Available Quota: |
-      | 11 GB(Shared)    |
+      | 12 GB(Shared)    |
     And I close the user group detail page
     And I close the user detail page
     And I view details of <%=@users.first.email%>'s user group
@@ -266,14 +266,14 @@ Feature: Auto Grow
     And I close the user detail page
     And I view details of <%=@users[2].email%>'s user group
     Then User group details should be:
-      | Available Quota:    |
-      | 0 GB(Limited: 3 GB) |
+      | Available Quota:     |
+      | -6 GB(Limited: 3 GB) |
     And I close the user group detail page
     And I close the user detail page
     And I navigate to Resource Summary section from bus admin console page
     Then Bundled storage summary should be:
       | Available | Used  |
-      | 0         | 27 GB |
+      | 0         | 26 GB |
     When I stop masquerading
     And I search partner by:
       | name          | filter |
@@ -281,7 +281,7 @@ Feature: Auto Grow
     And I view partner details by newly created partner company name
     And Partner pooled storage information should be:
       | Used  | Available | Assigned | Used | Available | Assigned  |
-      | 27 GB | 0         | 20 GB    | 3    | Unlimited | Unlimited |
+      | 26 GB | 0         | 20 GB    | 3    | Unlimited | Unlimited |
     And the overdraft script should report:
     """
     Partner <%=@current_partner[:id]%> is using autogrow and is overdrafted on its Generic license by 6 GB
@@ -498,7 +498,7 @@ Feature: Auto Grow
     #server
     And I add new user(s):
       | user_group           | storage_type | devices |
-      | (default user group) | Server       | 101     |
+      | (default user group) | Server       | 1       |
     Then 1 new user should be created
     And I search user by:
       | keywords   |
@@ -521,7 +521,7 @@ Feature: Auto Grow
     Then change plan section shouldn't have any storage errors
     And I upload data to device by batch
       | machine_id                         | GB  |
-      | <%=@new_clients.first.machine_id%> | 1   |
+      | <%=@new_clients.first.machine_id%> | 101 |
     And I refresh Resource Summary section
     Then the storage error message of resource summary section should be:
     """
