@@ -9,6 +9,7 @@ When /^I search partner by:$/ do |search_key_table|
   keywords = (attributes['name'] || attributes['email'])
   keywords.replace ERB.new(keywords).result(binding)
   keywords = keywords.gsub(/@company_name/,@partner.company_info.name).gsub(/@admin_email/,@partner.admin_info.email) unless @partner.nil?
+  keywords = keywords.gsub(/@company_name/,@subpartner.company_name) unless @subpartner.nil?
   filter = attributes['filter'] || 'None'
   including_sub_partners = (attributes['including sub-partners'] || 'yes').eql?('yes')
   @bus_site.admin_console_page.search_list_partner_section.search_partner(keywords, filter, including_sub_partners)
@@ -75,6 +76,7 @@ Then /^Partner search results (should|should not) be:$/ do |match, results_table
           v.gsub!(/@external_id/, @new_p_external_id) unless @new_p_external_id.nil?
         when 'Partner'
           v.gsub!(/@company_name/, @partner.company_info.name) unless @partner.nil?
+          v.gsub!(/@company_name/, @subpartner.company_name) unless @subpartner.nil?
         when 'Created'
           v.replace(Chronic.parse(v).strftime('%m/%d/%y'))
         when "Root Admin"

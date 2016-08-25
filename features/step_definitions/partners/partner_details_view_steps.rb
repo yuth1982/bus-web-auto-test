@@ -106,9 +106,16 @@ Then /^(Partner|SubPartner) general information should be:$/ do |status,details_
         v.gsub!(/@external_id/, @new_p_external_id) unless @new_p_external_id.nil?
       when 'Root Admin:'
         v.gsub!(/@root_admin/, @partner.admin_info.full_name) unless @partner.nil?
+        v.gsub!(/@root_admin/, @subpartner.admin_name) unless @subpartner.nil?
       when 'Marketing Referrals:'
         v.gsub!(/@login_admin_email/,@admin_username)
         v.gsub!(/@bus01_admin/, QA_ENV['bus01_admin'])
+      when 'Approved:'
+        v.replace(Chronic.parse(v).strftime('%m/%d/%y'))
+      when 'Pending'
+        v.replace(Chronic.parse(v).strftime('%m/%d/%y'))
+      when 'Deleted:'
+        v.replace(Chronic.parse(v).strftime('%m/%d/%y'))
       else
         # do nothing
     end
