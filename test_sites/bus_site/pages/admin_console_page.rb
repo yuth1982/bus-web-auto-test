@@ -103,6 +103,8 @@ module Bus
     # internal tools
     section(:manage_vatfx_rates_section, ManageVATTXRatesSection, id: "internal-add_vat_rate")
     section(:manage_pending_deletes_section, ManagePendingDeletesSection, id: "internal-manage_pending_deletes")
+    section(:manage_ldap_connectors_section, ManageLDAPConnectorsSection, id: "internal-manage_ldap_connectors")
+    section(:add_new_version_section, AddNewVersionSection, id: "internal-create_ldap_connector")
 
     #news
     section(:news_section, NewsSection, id: "controller-news")
