@@ -28,6 +28,7 @@ Then /^Partners in (pending-delete not available to purge|pending-delete availab
           v.replace(Chronic.parse(v).strftime('%a %b %d %Y'))
         when "Root Admin"
           v.gsub!(/@admin_email/, @partner.admin_info.email) unless @partner.nil?
+          v.gsub!(/@admin_email/, @subpartner.admin_email_address) unless @subpartner.nil?
         else
           # do nothing
       end
