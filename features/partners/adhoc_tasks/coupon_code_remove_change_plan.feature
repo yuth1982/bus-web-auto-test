@@ -1,5 +1,10 @@
 Feature: Requirement #143134 Aria coupon code remove: change period and change plan
 
+  account with coupon not in exception list, change to new plan, confirmation page without coupon price, delete coupon.
+  other account, confirmation page with coupon price, not delete coupon.
+  new plan: 250&500*1&2&4 yearly and biennially base and server plan, reseller monthly*yearly exclude monthly server plan.
+  coupon exception list: Nonprofit10, 100pctOffInternalTestCustomer, 30pctultdpro.
+
   Background:
     Given I log in bus admin console as administrator
 
@@ -70,6 +75,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Server Plan       | 1        | €210.79    | €210.79     |
       | Total Charges     |          |            | €0.00       |
     And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be 100pctOffInternalTestCustomer
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan |
@@ -81,6 +88,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     And MozyPro new plan should be:
       | base plan |
       | 8 TB      |
+    Then API* Aria account coupon code info should be 100pctOffInternalTestCustomer
 
   @TC.143134_49 @add_new_partner @mozypro
   Scenario: MozyPro 500 GB Plan yearly GBP VAT 500 GB yearly to 8 TB yearly
@@ -152,6 +160,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Taxes             |          |            | €25.00      |
       | Total Charges     |          |            | €133.70     |
     And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be Nonprofit10
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | server plan |
@@ -166,6 +176,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     And MozyPro new plan should be:
       | base plan | server plan |
       | 250 GB    | Yes         |
+    Then API* Aria account coupon code info should be Nonprofit10
 
   @TC.143134_502 @add_new_partner @mozypro @bus
   Scenario: MozyPro 10 GB Plan yearly USD 10 gb yearly to 500 gb yearly
@@ -180,6 +191,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Pre-tax Subtotal  |          |            | $98.90      |
       | Total Charges     |          |            | $98.90      |
     And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be Nonprofit10
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan |
@@ -194,6 +207,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     And MozyPro new plan should be:
       | base plan |
       | 500 GB    |
+    Then API* Aria account coupon code info should be Nonprofit10
 
   @TC.143134_503 @add_new_partner @mozypro @bus
   Scenario: MozyPro 10 GB Plan yearly USD 10 gb yearly to 1 tb yearly
@@ -209,6 +223,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Taxes             |          |            | £13.84      |
       | Total Charges     |          |            | £83.04      |
     And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be Nonprofit10
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | server plan | storage add-on |
@@ -223,6 +239,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     And MozyPro new plan should be:
       | base plan | server plan | storage add-on |
       | 1 TB      | Yes         | 1              |
+    Then API* Aria account coupon code info should be Nonprofit10
 
   @TC.143134_504 @add_new_partner @mozypro @bus
   Scenario: MozyPro 10 GB Plan yearly Ireland 10 gb yearly to 2 tb yearly
@@ -238,6 +255,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Taxes             |          |            | €15.82      |
       | Total Charges     |          |            | €94.92      |
     And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be Nonprofit10
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | storage add-on |
@@ -252,6 +271,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     And MozyPro new plan should be:
       | base plan | storage add-on |
       | 2 TB      | 2              |
+    Then API* Aria account coupon code info should be Nonprofit10
 
   @TC.143134_505 @add_new_partner @mozypro @bus
   Scenario: MozyPro 10 GB Plan yearly Ireland 10 gb yearly to 4 tb yearly
@@ -266,6 +286,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Pre-tax Subtotal  |          |            | €79.10      |
       | Total Charges     |          |            | €79.10      |
     And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be Nonprofit10
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | server plan |
@@ -280,6 +302,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     And MozyPro new plan should be:
       | base plan | server plan |
       | 4 TB      | Yes         |
+    Then API* Aria account coupon code info should be Nonprofit10
 
   @TC.143134_506 @add_new_partner @mozypro @bus
   Scenario: MozyPro 10 GB Plan yearly USD 10 gb yearly to server plan
@@ -294,6 +317,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Pre-tax Subtotal  |          |            | $98.90      |
       | Total Charges     |          |            | $98.90      |
     And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be Nonprofit10
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | server plan |
@@ -305,6 +330,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     And MozyPro new plan should be:
       | base plan | server plan |
       | 10 GB     | Yes         |
+    Then API* Aria account coupon code info should be Nonprofit10
 
   @TC.143134_507 @add_new_partner @mozypro @bus
   Scenario: MozyPro 10 GB Plan yearly Ireland 10 gb yearly to 100 gb yearly
@@ -319,6 +345,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Pre-tax Subtotal  |          |            | €79.10      |
       | Total Charges     |          |            | €79.10      |
     And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be Nonprofit10
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | server plan |
@@ -333,6 +361,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     And MozyPro new plan should be:
       | base plan | server plan |
       | 100 GB    | Yes         |
+    Then API* Aria account coupon code info should be Nonprofit10
 
   @TC.143134_601 @add_new_partner @mozypro @bus
   Scenario: MozyPro 10 GB Plan monthly USD 10 GB monthly to 250 gb monthly
@@ -347,6 +376,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Pre-tax Subtotal  |          |            | $8.99       |
       | Total Charges     |          |            | $8.99       |
     And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be Nonprofit10
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan |
@@ -361,6 +392,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     And MozyPro new plan should be:
       | base plan |
       | 250 GB    |
+    Then API* Aria account coupon code info should be Nonprofit10
 
   @TC.143134_602 @add_new_partner @mozypro @bus
   Scenario: MozyPro 10 GB monthly to 250 GB monthly
@@ -376,6 +408,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Taxes             |          |            | £1.26     |
       | Total Charges     |          |            | £7.55       |
     And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be Nonprofit10
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | server plan |
@@ -387,6 +421,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     And MozyPro new plan should be:
       | base plan | server plan |
       | 10 GB     | Yes         |
+    Then API* Aria account coupon code info should be Nonprofit10
 
   @TC.143134_603 @add_new_partner @mozypro @bus
   Scenario: MozyPro 10 GB monthly to 250 GB monthly
@@ -402,6 +437,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Taxes             |          |            | €1.44       |
       | Total Charges     |          |            | €8.63       |
     And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be Nonprofit10
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | server plan |
@@ -416,6 +453,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     And MozyPro new plan should be:
       | base plan | server plan |
       | 50 GB     | Yes         |
+    Then API* Aria account coupon code info should be Nonprofit10
 
   @TC.143134_701 @add_new_partner @mozypro @bus
   Scenario: MozyPro 250 gb yearly to 4 tb yearly
@@ -430,6 +468,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Pre-tax Subtotal  |          |            | $656.90     |
       | Total Charges     |          |            | $656.90     |
     And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be Nonprofit10
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan |
@@ -444,6 +484,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     And MozyPro new plan should be:
       | base plan |
       | 4 TB      |
+    Then API* Aria account coupon code info should be Nonprofit10
 
   @TC.143134_702 @add_new_partner @mozypro @bus
   Scenario: MozyPro 250 gb yearly to server plan
@@ -459,6 +500,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Taxes             |          |            | €137.43     |
       | Total Charges     |          |            | €734.93     |
     And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be Nonprofit10
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | server plan |
@@ -470,6 +513,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     And MozyPro new plan should be:
       | base plan | server plan |
       | 250 GB    | Yes         |
+    Then API* Aria account coupon code info should be Nonprofit10
 
   @TC.143134_703 @add_new_partner @mozypro @bus
   Scenario: MozyPro 250 gb yearly to 500 gb yearly
@@ -484,6 +528,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Pre-tax Subtotal  |          |            | £430.10     |
       | Total Charges     |          |            | £430.10     |
     And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be Nonprofit10
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | server plan |
@@ -498,6 +544,4 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     And MozyPro new plan should be:
       | base plan | server plan |
       | 500 GB    | Yes         |
-
-
-
+    Then API* Aria account coupon code info should be Nonprofit10

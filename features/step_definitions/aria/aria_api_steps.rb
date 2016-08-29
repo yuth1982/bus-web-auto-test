@@ -366,6 +366,7 @@ And /^API\* I change account schedule price for (.+)$/ do |aria_id, info_table|
 end
 
 Then /^API\* Aria account coupon code info should be (.+)$/ do |coupon|
+  coupon.replace ERB.new(coupon).result(binding)
   coupon_details = Aria_SDK.call('get_coupon_details', {:acct_no=> @aria_id.to_i})
   coupons = coupon_details['coupons']
 

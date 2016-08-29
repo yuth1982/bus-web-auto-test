@@ -1,5 +1,10 @@
 Feature: Requirement #143134 Aria coupon code remove: change period and change plan
 
+  account with coupon not in exception list, change to new plan, confirmation page without coupon price, delete coupon.
+  other account, confirmation page with coupon price, not delete coupon.
+  new plan: 250&500*1&2&4 yearly and biennially base and server plan, reseller monthly*yearly exclude monthly server plan.
+  coupon exception list: Nonprofit10, 100pctOffInternalTestCustomer, 30pctultdpro.
+
   Background:
     Given I log in bus admin console as administrator
 
@@ -133,7 +138,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
   Scenario: MozyPro 10 GB monthly to 250 GB monthly
     When I add a new MozyPro partner:
       | company name                                     | period | base plan | country       | coupon                |
-      | DONOT EDIT MozyPro 10 GB Plan monthly USD coupon | 1      | 10 GB     | United States | <%=QA_ENV['coupon10pc']%> |
+      | DONOT EDIT MozyPro 10 GB Plan monthly USD coupon | 1      | 10 GB     | United States | catherine10pctultdpro |
     Then Sub-total before taxes or discounts should be $9.99
     And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
@@ -163,7 +168,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
   Scenario: MozyPro 10 GB Plan yearly Ireland 10 gb yearly to 250 gb yearly
     When I add a new MozyPro partner:
       | company name                                | period | base plan | server plan | create under    | country | coupon                | cc number        |
-      | DONOT MozyPro 10 gb yearly to 250 gb yearly | 12     | 10 GB     | yes         | MozyPro Ireland | Ireland | <%=QA_ENV['coupon10pc']%> | 4319402211111113 |
+      | DONOT MozyPro 10 gb yearly to 250 gb yearly | 12     | 10 GB     | yes         | MozyPro Ireland | Ireland | catherine10pctultdpro | 4319402211111113 |
     Then Sub-total before taxes or discounts should be €120.78
     And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
@@ -195,7 +200,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
   Scenario: MozyPro 250 gb yearly to 8 tb yearly
     When I add a new MozyPro partner:
       | company name                                      | period | base plan | create under | country        | coupon                | cc number        | vat number  |
-      | DONOT EDIT MozyPro 250 gb yearly to 500 gb yearly | 12     | 250 GB    | MozyPro UK   | United Kingdom | <%=QA_ENV['coupon10pc']%> | 4916783606275713 | GB117223643 |
+      | DONOT EDIT MozyPro 250 gb yearly to 500 gb yearly | 12     | 250 GB    | MozyPro UK   | United Kingdom | catherine10pctultdpro | 4916783606275713 | GB117223643 |
     Then Sub-total before taxes or discounts should be £477.89
     And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
@@ -225,7 +230,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
   Scenario: MozyPro 250 gb yearly to 4 tb yearly
     When I add a new MozyPro partner:
       | company name                                     | period | base plan | country       | coupon                |
-      | DONOT EDIT MozyPro  250 gb yearly to 4 tb yearly | 12     | 250 GB    | United States | <%=QA_ENV['coupon10pc']%> |
+      | DONOT EDIT MozyPro  250 gb yearly to 4 tb yearly | 12     | 250 GB    | United States | catherine10pctultdpro |
     Then Sub-total before taxes or discounts should be $729.89
     And Order summary table should be:
       | Description       | Quantity | Price Each | Total Price |
@@ -267,7 +272,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | €133.70     |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 10percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['10percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | server plan |
@@ -300,7 +305,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | €133.70     |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 10percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['10percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | server plan |
@@ -333,7 +338,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | €133.70     |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 10percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['10percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan |
@@ -366,7 +371,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | €133.70     |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 10percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['10percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | server plan |
@@ -397,7 +402,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | $620.41     |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 15percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | server plan |
@@ -425,7 +430,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | $620.41     |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 15percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan |
@@ -456,7 +461,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | $620.41     |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 15percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | server plan |
@@ -487,7 +492,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | $620.41     |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 15percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | server plan |
@@ -511,7 +516,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | DONOT EDIT MozyPro 8 TB Plan yearly to 250 gb yearly | 12     | 8 TB      | MozyPro UK   | United Kingdom | <%=QA_ENV['15percentcoupon']%> | 4916783606275713 |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 15percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan |
@@ -533,7 +538,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | DONOT EDIT MozyPro 8 TB Plan yearly to 250 gb yearly | 12     | 8 TB      | MozyPro UK   | United Kingdom | <%=QA_ENV['15percentcoupon']%> | 4916783606275713 |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 15percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | server plan |
@@ -554,7 +559,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | DONOT EDIT MozyPro 8 TB Plan yearly to 1 tb yearly | 12     | 8 TB      | MozyPro UK   | United Kingdom | <%=QA_ENV['15percentcoupon']%> | 4916783606275713 |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 15percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | server plan |
@@ -576,7 +581,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | DONOT EDIT MozyPro 8 TB Plan yearly to 2 tb yearly | 12     | 8 TB      | MozyPro UK   | United Kingdom | <%=QA_ENV['15percentcoupon']%> | yes       | GB117223643 |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 15percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | server plan |
@@ -597,7 +602,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | DONOT EDIT MozyPro 8 TB Plan yearly to 4 tb yearly | 12     | 8 TB      | MozyPro UK   | United Kingdom | <%=QA_ENV['15percentcoupon']%> | 4916783606275713 |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 15percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | server plan |
@@ -627,7 +632,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | €207.52     |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 10percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['10percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | server plan |
@@ -658,7 +663,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | €151.01     |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 10percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['10percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan |
@@ -690,7 +695,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | €181.21     |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 10percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['10percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | server plan |
@@ -723,7 +728,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | €249.02     |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 10percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['10percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | server plan |
@@ -756,7 +761,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | €249.02     |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 10percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['10percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | server plan |
@@ -780,7 +785,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | DONOT EDIT MozyPro 250 gb biennially to server plan | 24     | 250 GB    | United States | <%=QA_ENV['15percentcoupon']%> |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 15percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | server plan |
@@ -801,7 +806,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | DONOT EDIT MozyPro 250 gb biennially to 500 gb biennially | 24     | 250 GB    | United States | <%=QA_ENV['15percentcoupon']%> |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 15percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan |
@@ -825,7 +830,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | DONOT EDIT MozyPro 250 gb biennially to 1 tb biennially | 24     | 250 GB    | United States | <%=QA_ENV['15percentcoupon']%> |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 15percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | server plan |
@@ -849,7 +854,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | DONOT EDIT MozyPro 250 gb biennially to 2 tb biennially | 24     | 250 GB    | United States | <%=QA_ENV['15percentcoupon']%> |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 15percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | server plan |
@@ -873,7 +878,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | DONOT EDIT MozyPro 250 gb biennially to 4 tb biennially | 24     | 250 GB    | United States | <%=QA_ENV['15percentcoupon']%> |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 15percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan |
@@ -897,7 +902,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | DONOT EDIT MozyPro 8 TB Plan biennially to 250 gb biennially | 24     | 8 TB      | MozyPro UK   | United Kingdom | <%=QA_ENV['15percentcoupon']%> | 4916783606275713 |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 15percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan |
@@ -919,7 +924,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | DONOT EDIT MozyPro 8 TB Plan biennially to 250 gb biennially | 24     | 8 TB      | MozyPro UK   | United Kingdom | <%=QA_ENV['15percentcoupon']%> | 4916783606275713 |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 15percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | server plan |
@@ -940,7 +945,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | DONOT EDIT MozyPro 8 TB Plan biennially to 1 tb biennially | 24     | 8 TB      | MozyPro UK   | United Kingdom | <%=QA_ENV['15percentcoupon']%> | 4916783606275713 |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 15percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | server plan |
@@ -962,7 +967,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | DONOT EDIT MozyPro 8 TB Plan biennially to 2 tb biennially | 24     | 8 TB      | MozyPro UK   | United Kingdom | <%=QA_ENV['15percentcoupon']%> | yes       | GB117223643 |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 15percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | server plan |
@@ -983,7 +988,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | DONOT EDIT MozyPro 8 TB Plan biennially to 4 tb biennially | 24     | 8 TB      | MozyPro UK   | United Kingdom | <%=QA_ENV['15percentcoupon']%> | 4916783606275713 |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be 15percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | server plan |
@@ -1014,7 +1019,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | €508.50     |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be catherine20percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['20multiple']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan |
@@ -1047,7 +1052,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | €508.50     |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be catherine20percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['20multiple']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | server plan |
@@ -1081,7 +1086,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | €616.63     |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be catherine20percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['20multiple']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan |
@@ -1115,7 +1120,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | €616.63     |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be catherine20percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['20multiple']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan | server plan |
@@ -1149,7 +1154,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | €17,751.14  |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be catherine20percentoffoutline
+    Then API* Aria account coupon code info should be <%=QA_ENV['20multiple']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan |
@@ -1176,13 +1181,13 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Description       | Quantity | Price Each | Total Price |
       | 100 GB            | 1        | €340.89    | €340.89     |
       | 50GB Add-on       | 1        | €175.89    | €175.89     |
-#      | Discounts Applied |          |            | -€103.36    |
+      | Discounts Applied |          |            | -€103.36    |
       | Pre-tax Subtotal  |          |            | €413.42     |
       | Taxes             |          |            | €95.08      |
       | Total Charges     |          |            | €508.50     |
     And New partner should be created
     And I get partner aria id
-    Then API* Aria account coupon code info should be catherine20reduce
+    Then API* Aria account coupon code info should be <%=QA_ENV['coupon20pc']%>
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan |
@@ -1197,4 +1202,60 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     And MozyPro new plan should be:
       | base plan | storage add-on | server plan |
       | 250 GB    | 1              | No          |
+    Then API* Aria account coupon code info should be nil
+
+  @TC.143134_fake_3706 @add_new_partner @mozypro @bus
+  Scenario: MozyPro 10 GB Plan yearly USD 100 gb yearly to 250 gb yearly
+    When I add a new MozyPro partner:
+      | company name                                 | period | base plan | server plan | coupon              | net terms |
+      | DONOT MozyPro 100 gb yearly to 250 gb yearly | 12     | 100 GB    | yes         | 10percentoffoutline | yes       |
+    And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be 10percentoffoutline
+    When I act as newly created partner account
+    And I change MozyPro account plan to:
+      | base plan |
+      | 250 GB    |
+    Then Change plan charge summary should be:
+      | Description                    | Amount   |
+      | Credit for remainder of 100 GB | -$395.90 |
+      | Charge for new 250 GB          | $729.89  |
+      |                                |          |
+      | Total amount to be charged     | $333.99  |
+    And the MozyPro account plan should be changed
+    And MozyPro new plan should be:
+      | base plan | server plan |
+      | 250 GB    | Yes         |
+    Then API* Aria account coupon code info should be nil
+
+  @TC.143134_fake_50120719 @add_new_partner @mozypro @bus
+  Scenario: MozyPro 10 GB Plan yearly Ireland 10 gb yearly to 250 gb yearly
+    When I add a new MozyPro partner:
+      | company name                                | period | base plan | server plan | create under    | country | coupon                | cc number        |
+      | DONOT MozyPro 10 gb yearly to 250 gb yearly | 12     | 10 GB     | yes         | MozyPro Ireland | Ireland | catherine15pctultdpro | 4319402211111113 |
+    Then Sub-total before taxes or discounts should be €120.78
+    And Order summary table should be:
+      | Description       | Quantity | Price Each | Total Price |
+      | 10 GB             | 1        | €87.89     | €87.89      |
+      | Server Plan       | 1        | €32.89     | €32.89      |
+      | Pre-tax Subtotal  |          |            | €102.67     |
+      | Taxes             |          |            | €23.61      |
+      | Total Charges     |          |            | €126.28     |
+    And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be catherine15pctultdpro
+    When I act as newly created partner account
+    And I change MozyPro account plan to:
+      | base plan |
+      | 250 GB    |
+    Then Change plan charge summary should be:
+      | Description                   | Amount   |
+      | Credit for remainder of plans | -€126.28 |
+      | Charge for upgraded plans     | €956.66  |
+      |                               |          |
+      | Total amount to be charged    | €830.38  |
+    And the MozyPro account plan should be changed
+    And MozyPro new plan should be:
+      | base plan | server plan |
+      | 250 GB    | Yes         |
     Then API* Aria account coupon code info should be nil
