@@ -15,6 +15,7 @@ module Bus
     element(:submit_purchase_btn, id: "btn-purchase_resource_submit")
     element(:message_span, css: "div#resource-purchase_resources-content div span")
     element(:error_message_p, xpath: "//div[@id='resource-purchase_resources-errors']/ul/li")
+    element(:pay_error_message, xpath: "//div[@id='resource-purchase_resources_pay-errors']/ul/li")
 
     # Public: Purchase resources
     #
@@ -58,6 +59,9 @@ module Bus
       error_message_p.text
     end
 
+    def pay_error_msg
+      pay_error_message.text
+    end
     # Public: Current purchased resources
     #
     # Example

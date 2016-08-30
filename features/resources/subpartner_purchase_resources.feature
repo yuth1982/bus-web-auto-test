@@ -354,3 +354,206 @@ Feature: Sub partners can purchase resources
     When I stop masquerading
     And I search and delete partner account by TC.21285_reseller_sub_partner
     And I search and delete partner account by TC.21285_reseller_partner
+
+  @TC.334 @bus @subpartner_purchase_resources @tasks_p3 @regression
+  Scenario: 334 Purchase resources ensure that displayed value is correct
+    When I add a new OEM partner:
+      | Company Name       | Root role         | Security | Company Type     |
+      | TC.334_oem_partner | OEM Partner Admin | HIPAA    | Service Provider |
+    Then New partner should be created
+    Then I stop masquerading as sub partner
+    And I stop masquerading
+    And I search partner by TC.334_oem_partner
+    And I view partner details by TC.334_oem_partner
+    And I change account type to Internal Test
+    Then account type should be changed to Internal Test successfully
+    When I act as newly created partner account
+    And I navigate to Purchase Resources section from bus admin console page
+    And I save current purchased resources
+    And I purchase resources:
+      | desktop license | desktop quota | server license | server quota |
+      | 200             | 200           | 200            | 200          |
+    Then Resources should be purchased
+    And Current purchased resources should increase:
+      | desktop license | desktop quota | server license | server quota |
+      | 200             | 200           | 200            | 200          |
+    And I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name         | Type          | Parent            |
+      | new OEM role | Partner admin | OEM Partner Admin |
+    And I check all the capabilities for the new role
+    When I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for OEM partner:
+      | Name    | Company Type | Root Role    | Enabled | Public | Currency | Periods | Tax Percentage | Tax Name | Auto-include tax | Server Price per key | Server Min keys | Server key volume|Server key discount|Server Price per gigabyte | Server Min gigabytes | Server quota volume|Server quota discount|Desktop Price per key | Desktop Min keys | Desktop key volume|Desktop key discount|Desktop Price per gigabyte | Desktop Min gigabytes |Desktop quota volume|Desktop quota discount| Grandfathered Price per key | Grandfathered Min keys | Grandfathered Price per gigabyte | Grandfathered Min gigabytes |
+      | subplan | business     | new OEM role | Yes     | No     |          | yearly  | 10             | test     | false            | 6.95                 | 1               |        100       | 50                |1.75                      | 1                    |    100             |       50            |3.95                  | 1                |   100             |       50           |0.5                        | 1                     |     100            |    50                |               1             | 1                      | 1                                | 1                           |
+    And I add a new sub partner:
+      | Company Name           | Pricing Plan | Admin Name |
+      | TC.334_oem_subpartner  | subplan      | subadmin1  |
+    Then New partner should be created
+    And I act as newly created partner account
+    And I add a new user group for an itemized partner:
+      | name | server_assigned_quota | desktop_assigned_quota |
+      | test | 2                     | 2                      |
+    Then Itemized partner user group test should be created
+    And I navigate to Purchase Resources section from bus admin console page
+    And I save current purchased resources
+    And I purchase resources:
+      | desktop license | desktop quota | server license | server quota |user group|
+      | 120             | 120           | 110            | 110          |test      |
+    Then Resources should be purchased
+    And Current purchased resources should increase:
+      | desktop license | desktop quota | server license | server quota |
+      | 120             | 120           | 110            | 110          |
+    # should check discount, There is a bug here, Current Resources: Server Keys: xx @ $xx each
+    # Desktop Keys: xx @ $xx each;Server Storage: xx GB @ $xx / GB; Desktop Storage: xx GB @ $xx / GB
+
+  @TC.132196 @bus @subpartner_purchase_resources @tasks_p3 @regression
+  Scenario: Mozy-132196:Pooled business subpartner purchase resources from Pooled root partner
+    When I add a new OEM partner:
+      | company name       | Root role      | Company Type     |
+      | TC.132196_partner  | OEM Root Trial | Service Provider |
+    Then New partner should be created
+    And I get the subpartner_id
+    Then I migrate the partner to pooled storage
+    And I act as newly created partner account
+    And I purchase resources:
+      | desktop license | desktop quota | server license | server quota |
+      | 99              | 99            | 99             | 99           |
+    And I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          | Parent         |
+      | subrole | Partner admin | OEM Root Trial |
+    And I check all the capabilities for the new role
+    And I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for OEM partner:
+      | Name    | Company Type | Root Role | Enabled | Public | Currency                        | Periods | Tax Percentage | Tax Name | Auto-include tax | Server Price per key | Server Min keys | Server Price per gigabyte | Server Min gigabytes | Desktop Price per key | Desktop Min keys | Desktop Price per gigabyte | Desktop Min gigabytes |pooled|
+      | subplan | business     | subrole   | Yes     | No     | $ — US Dollar (Partner Default) | yearly  | 10             | test     | false            | 1                    | 1               | 1                         | 1                    | 1                     | 1                | 1                          | 1                     |yes   |
+    Then add new pro plan success message should be displayed
+    When I add a new sub partner:
+      | Company Name           | Pricing Plan | Admin Name |
+      | TC.132196_sub_partner  | subplan      | subadmin   |
+    Then New partner should be created
+    And I act as newly created partner account
+    And I navigate to Purchase Resources section from bus admin console page
+    And I save current purchased resources
+    And I purchase resources:
+      | desktop license | desktop quota | server license | server quota |
+      | 2               | 20            | 2              | 10           |
+    Then Resources should be purchased
+    And Current purchased resources should increase:
+      | desktop license | desktop quota | server license | server quota |
+      | 2               | 20            | 2              | 10           |
+    And I stop masquerading as sub partner
+    And I search and delete partner account by TC.132196_sub_partner
+    And I stop masquerading as sub partner
+    And I search and delete partner account by TC.132196_partner
+
+
+  @TC.132192 @bus @subpartner_purchase_resources @tasks_p3 @regression
+  Scenario: Mozy-132192:Pooled OEM partner with Pooled business subpartner purchase resources from mozyoem
+    When I add a new OEM partner:
+      | company name       | Root role      | Company Type     |
+      | TC.132192_partner  | OEM Root Trial | Service Provider |
+    Then New partner should be created
+    And I act as newly created partner account
+    And I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          | Parent         |
+      | subrole | Partner admin | OEM Root Trial |
+    And I check all the capabilities for the new role
+    And I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for OEM partner:
+      | Name    | Company Type | Root Role | Enabled | Public | Currency                        | Periods | Tax Percentage | Tax Name | Auto-include tax | Server Price per key | Server Min keys | Server Price per gigabyte | Server Min gigabytes | Desktop Price per key | Desktop Min keys | Desktop Price per gigabyte | Desktop Min gigabytes |Grandfathered Price per key | Grandfathered Min keys | Grandfathered Price per gigabyte | Grandfathered Min gigabytes |
+      | subplan | business     | subrole   | Yes     | No     | $ — US Dollar (Partner Default) | yearly  | 10             | test     | false            | 1                    | 1               | 1                         | 1                    | 1                     | 1                | 1                          | 1                     |1                           |1                       |1                                 |1                            |
+    Then add new pro plan success message should be displayed
+    When I add a new sub partner:
+      | Company Name           | Pricing Plan | Admin Name |
+      | TC.132192_sub_partner  | subplan      | subadmin   |
+    Then New partner should be created
+    And I stop masquerading as sub partner
+    And I stop masquerading as sub partner
+    When I act as partner by:
+      |name             |
+      |TC.132192_partner|
+    Then I migrate the partner to pooled storage
+    And I navigate to Purchase Resources section from bus admin console page
+    And I save current purchased resources
+    And I purchase resources:
+      | desktop license | desktop quota | server license | server quota |
+      | 2               | 20            | 2              | 10           |
+    Then Resources should be purchased
+    And Current purchased resources should increase:
+      | desktop license | desktop quota | server license | server quota |
+      | 2               | 20            | 2              | 10           |
+    And I stop masquerading as sub partner
+    And I search and delete partner account by TC.132192_sub_partner
+    And I search and delete partner account by TC.132192_partner
+
+
+  @TC.133999 @bus @subpartner_purchase_resources @tasks_p3 @regression
+  Scenario: Mozy-133999:Pooled business subpartner purchase more resource than parent pooled OEM partner
+    When I add a new OEM partner:
+      | company name       | Root role      | Company Type     |
+      | TC.133999_partner  | OEM Root Trial | Service Provider |
+    Then New partner should be created
+    And I get the subpartner_id
+    Then I migrate the partner to pooled storage
+    And I act as newly created partner account
+    And I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          | Parent         |
+      | subrole | Partner admin | OEM Root Trial |
+    And I check all the capabilities for the new role
+    And I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for OEM partner:
+      | Name    | Company Type | Root Role | Enabled | Public | Currency                        | Periods | Tax Percentage | Tax Name | Auto-include tax | Server Price per key | Server Min keys | Server Price per gigabyte | Server Min gigabytes | Desktop Price per key | Desktop Min keys | Desktop Price per gigabyte | Desktop Min gigabytes |pooled|
+      | subplan | business     | subrole   | Yes     | No     | $ — US Dollar (Partner Default) | yearly  | 10             | test     | false            | 1                    | 1               | 1                         | 1                    | 1                     | 1                | 1                          | 1                     |yes   |
+    Then add new pro plan success message should be displayed
+    When I add a new sub partner:
+      | Company Name           | Pricing Plan | Admin Name |
+      | TC.133999_sub_partner  | subplan      | subadmin   |
+    Then New partner should be created
+    And I act as newly created partner account
+    And I navigate to Purchase Resources section from bus admin console page
+    And I save current purchased resources
+    And I purchase resources:
+      | desktop license | desktop quota | server license | server quota |
+      | 100             | 100           | 100            | 100          |
+    Then the pay error message of purchase resource section should be: Insufficient resources available on parent
+    And I stop masquerading as sub partner
+    And I search and delete partner account by TC.133999_sub_partner
+    And I stop masquerading as sub partner
+    And I search and delete partner account by TC.133999_partner
+
+  @TC.133375 @bus @subpartner_purchase_resources @tasks_p3 @regression
+  Scenario: Mozy-133375:MozyOEM partner with subpartner whose subpartner buy resource will raise error message
+    When I add a new OEM partner:
+      | company name       | Root role      | Company Type     |
+      | TC.133375_partner  | OEM Root Trial | Service Provider |
+    Then New partner should be created
+    And I act as newly created partner account
+    And I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          | Parent         |
+      | subrole | Partner admin | OEM Root Trial |
+    And I check all the capabilities for the new role
+    And I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for OEM partner:
+      | Name    | Company Type | Root Role | Enabled | Public | Currency                        | Periods | Tax Percentage | Tax Name | Auto-include tax | Server Price per key | Server Min keys | Server Price per gigabyte | Server Min gigabytes | Desktop Price per key | Desktop Min keys | Desktop Price per gigabyte | Desktop Min gigabytes |Grandfathered Price per key | Grandfathered Min keys | Grandfathered Price per gigabyte | Grandfathered Min gigabytes |
+      | subplan | business     | subrole   | Yes     | No     | $ — US Dollar (Partner Default) | yearly  | 10             | test     | false            | 1                    | 1               | 1                         | 1                    | 1                     | 1                | 1                          | 1                     |1                           |1                       |1                                 |1                            |
+    Then add new pro plan success message should be displayed
+    When I add a new sub partner:
+      | Company Name           | Pricing Plan | Admin Name |
+      | TC.133375_sub_partner  | subplan      | subadmin   |
+    Then New partner should be created
+    And I act as newly created partner account
+    And I navigate to Purchase Resources section from bus admin console page
+    And I save current purchased resources
+    And I purchase resources:
+      | desktop license | desktop quota | server license | server quota |
+      | 0               | 0             | 0              | 0            |
+    Then the storage error message of purchase resource section should be: Please specify a quantity of resources to purchase.
+    And I stop masquerading as sub partner
+    And I search and delete partner account by TC.133375_sub_partner
+    And I stop masquerading as sub partner
+    And I search and delete partner account by TC.133375_partner
