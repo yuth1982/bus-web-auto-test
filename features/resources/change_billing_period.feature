@@ -318,7 +318,7 @@ Feature: Change subscription period
     Then Change subscription confirmation message should be:
       """
       Are you sure that you want to change your subscription period from monthly to yearly billing?
-      If you choose to continue, your account will be credited for the remainder of your monthly Subscription, then charged for a new yearly subscription beginning today. By choosing yearly billing, you will receive 1 free month(s) of Mozy service.
+      If you choose to continue, your account will be credited for the remainder of your monthly Subscription, then charged for a new yearly subscription beginning today.
       Any resources you scheduled for return in your next subscription have been deducted from the new subscription total.
       """
     And Change subscription price table should be:

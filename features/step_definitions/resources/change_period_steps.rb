@@ -55,3 +55,12 @@ When /^I change account subscription to (.+) period!$/ do |link_text|
   step "I change account subscription to #{link_text} period"
   step "I continue to change account subscription"
 end
+
+When /^I go to change billing period section$/ do
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['billing_information'])
+  @bus_site.admin_console_page.billing_info_section.go_to_change_period_section
+end
+
+Then /^change billing period table should be:$/ do |change_billing_table|
+  @bus_site.admin_console_page.change_period_section.change_billing_table_rows.should == change_billing_table.raw
+end
