@@ -26,26 +26,25 @@ module Bus
       attach_file(choose_file_button.id, file_path)
 
       save_change_button.click
-      wait_until_bus_section_load
     end
 
     def edit_client_version_by_installation_file(version, file)
       # close_section.click
+      wait_until_bus_section_load
       find(:xpath, "//a[text()='" + version + "']").click
       file_path = File.dirname(Pathname.new(File.dirname(__FILE__)).parent.parent.parent) + "/test_data/" + file
       file_path.gsub!('/', '\\') if OS.windows?
       attach_file(edit_choose_file_button.id, file_path)
 
       edit_save_change_button.click
-      wait_until_bus_section_load
     end
 
     def edit_client_version_by_status(version, status)
+      wait_until_bus_section_load
       find(:xpath, "//a[text()='" + version + "']").click
       edit_status_select.select(status)
 
       edit_save_change_button.click
-      wait_until_bus_section_load
     end
 
   end

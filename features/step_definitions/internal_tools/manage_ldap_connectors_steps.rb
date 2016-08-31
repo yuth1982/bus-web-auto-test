@@ -40,23 +40,28 @@ end
 When /^I should see the new added client version$/ do
   version_convert = @version.gsub('.', '_')
   installation_file = 'LDAPConnector-' + version_convert + '-' + @platform + '_' + @os + '.' + @installation_file.split(".")[1]
+  @bus_site.admin_console_page.manage_ldap_connectors_section.wait_until_bus_section_load
   @bus_site.admin_console_page.manage_ldap_connectors_section.get_client_info(@version, 'Installation File').should == installation_file
 end
 
 When /^I should see the installation file is updated successfully$/ do
   version_convert = @version.gsub('.', '_')
   installation_file = 'LDAPConnector-' + version_convert + '-' + @platform + '_' + @os + '.' + @installation_file.split(".")[1]
+  @bus_site.admin_console_page.manage_ldap_connectors_section.wait_until_bus_section_load
   @bus_site.admin_console_page.manage_ldap_connectors_section.get_client_info(@version, 'Installation File').should == installation_file
 end
 
 When /^I should see the new client version status is updated successfully$/ do
+  @bus_site.admin_console_page.manage_ldap_connectors_section.wait_until_bus_section_load
   @bus_site.admin_console_page.manage_ldap_connectors_section.get_client_info(@version, 'Status').should == @status
 end
 
 When /^I delete the new added LDAP Connector version$/ do
+  @bus_site.admin_console_page.manage_ldap_connectors_section.wait_until_bus_section_load
   @bus_site.admin_console_page.manage_ldap_connectors_section.delete_version(@version)
 end
 
 When /^the new added version should be removed$/ do
+  @bus_site.admin_console_page.manage_ldap_connectors_section.wait_until_bus_section_load
   @bus_site.admin_console_page.manage_ldap_connectors_section.check_version_existence(@version).should == false
 end
