@@ -416,3 +416,9 @@ When /^API\* I assign aria supp plan multi for (.+)$/ do |aria_id, info_table|
     }
   }
 end
+
+When /^API\* I assign coupon code (.+) to (.+)$/ do |coupon, aria_id|
+  coupon.replace ERB.new(coupon).result(binding)
+  response = Aria_SDK.call('apply_coupon_to_acct', {:acct_no => @aria_id.to_i, :coupon_code => coupon})
+  Log.debug response.body.inspect
+end
