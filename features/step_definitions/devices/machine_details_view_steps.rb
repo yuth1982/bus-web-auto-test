@@ -221,7 +221,30 @@ Then /^I click (.+) from machines details section$/ do |link_name|
 end
 
 And /^(Backups|Restores|Virtual Machines) table will display as:$/ do |type, table|
-  @bus_site.admin_console_page.machine_details_section.get_backup_restore_table(type).should == table.raw
+  actual = @bus_site.admin_console_page.machine_details_section.get_backup_restore_table_hashes(type)
+  expected = table.hashes
+  expected.each_with_index do |record_hash, line|
+    record_hash.each do |k,v|
+      v.replace ERB.new(v).result(binding)
+      case k
+        when 'Start Time'
+          if v == 'today'
+            v.replace(Chronic.parse(v).strftime('%m/%d/%y'))
+            actual[line][k].should include(v)
+            v.replace actual[line][k]
+          end
+        else
+          if v == 'any'
+            v.replace actual[line][k]
+          end
+      end
+    end
+  end
+
+  Log.debug "expected: #{expected}"
+  Log.debug "actual: #{actual}"
+  expected.each{ |key| (actual.include?(key)).should be_true}
+
 end
 
 And /^(Backups|Restores|Virtual Machines) table first record will display as:$/ do |type, table|

@@ -33,6 +33,14 @@ module SSHHelper
     user, password = QA_ENV['ssh_login'], QA_ENV['ssh_password']
     Net::SSH.start(host, user , :password => password ) {|ssh|  ssh.exec!(cmd)}
   end
+
+  def ssh_linux_machine(cmd)
+    host = CONFIGS['linux']['host']
+    user, password = CONFIGS['linux']['user'], CONFIGS['linux']['password']
+    result = []
+    Net::SSH.start(host, user , :password => password ) {|ssh|  result = ssh.exec!(cmd)}
+    result
+  end
 end
 
 module SSHRecordOverdraft
@@ -145,4 +153,99 @@ module SSHKalypsoE2E
       output = session.exec!("cd /cygdrive/c/kalypso-automation/endtoend/ && #{script}")
     end
   end
+end
+
+module SSHLinuxE2E
+  HOST = CONFIGS['linux']['host']
+  USER = CONFIGS['linux']['user']
+  PASSWORD = CONFIGS['linux']['password']
+  PATH = CONFIGS['linux']['path']
+
+  # Public: upload the file to remote server
+  #
+  def upload(local_path, remote_path)
+    Net::SCP.start(HOST, USER, :password => PASSWORD) do |scp|
+      scp.upload(local_path, remote_path)
+    end
+  end
+
+  # Public: check if the linux machine is reachable and linux client is installed
+  #
+  def check_client_status
+    cmd = 'sudo service mozybackup start'
+    cmd += '; sudo service mozybackup status'
+    begin
+      ssh_linux_machine(cmd)
+    rescue Exception => ex
+      puts ex.to_s
+    end
+  end
+
+  # clean up linux client env, set up new client env according to qa env and partner codename
+  #
+  def setup_env(env, codename)
+    cmd = 'sudo mozyutil stop'
+    cmd += '; sudo mozyutil unlink'
+    cmd += "; cd #{PATH}"
+    cmd += '; rm -r LinuxTestFiles'
+    cmd += '; sudo mozyutil clearbackupdirs'
+    cmd += "; sudo sh changenetwork.sh -n #{env} -c #{codename} -x"
+    cmd += '; sudo service mozybackup restart'
+    ssh_linux_machine(cmd)
+  end
+
+
+  def activate_machine(username, password)
+    cmd = "cd #{PATH}"
+    cmd += "; sudo mozyutil activate --email #{username} --pass #{password}"
+    ssh_linux_machine(cmd)
+  end
+
+  # Public: add files in backup dir
+  # default type is true, means use fixed file upload_file.txt
+  # if type is false, then use dd command to generate random files according to file_size and file_num
+  #
+  def add_files(file_size = nil, file_num = nil, type = true)
+    cmd = "cd #{PATH}"
+    cmd += '; mkdir LinuxTestFiles'
+    cmd += "; sudo mozyutil addbackupdirs --path #{PATH}/LinuxTestFiles"
+    if type
+      cmd += '; cp upload_file.txt ./LinuxTestFiles'
+    else
+      cmd += "; dd if=/dev/urandom of=./LinuxTestFiles/output.dat  bs=#{file_size}  count=#{file_num}"
+    end
+    ssh_linux_machine(cmd)
+  end
+
+  def start_backup
+    cmd = 'sudo mozyutil start'
+    ssh_linux_machine(cmd)
+  end
+
+  def stop_backup
+    cmd = 'sudo mozyutil stop'
+    ssh_linux_machine(cmd)
+  end
+
+  def get_backup_status
+    cmd = 'sudo mozyutil state'
+    ssh_linux_machine(cmd)
+  end
+
+  def get_codename(company_type)
+    return @codename unless @codename.nil?
+    @codename = case company_type
+                  when 'MozyEnterprise'
+                    "MozyEnterprise"
+                  when 'MozyEnterprise DPS'
+                    "MozyEnterprise"
+                  when 'MozyPro'
+                    "mozypro"
+                  when 'MozyHome'
+                    'mozy'
+                  when "Reseller"
+                    'mozypro'
+                end
+  end
+
 end

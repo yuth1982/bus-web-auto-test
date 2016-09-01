@@ -8,43 +8,81 @@ Feature: view edit machine details
   ###############################################################################
 
   # view backup restores history
-  # using fixed data, company Dont Edit_backup_restore_history  ID: 3431834
+
   ###############################################################################
 
   @TC.122155 @bus @machines_sync @tasks_p2
-  Scenario: 122155:View Backup History
-    When I navigate to bus admin console login page
-    And I log in bus admin console with user name mozybus+backupsrestores@gmail.com and password default password
-    When I search machine by:
-      | machine_name   |
-      | CNENCHENC33L1C |
-    And I view machine details for mozybus+backup+restore@emc.com
-    And Backups table will display as:
+  Scenario: 122155 : View Backup History
+    When I check that linux client service is available
+    And I upload change linux client env script to remote machine
+    And I add a new MozyPro partner:
+      | period | base plan | server plan |
+      | 1      | 50 GB     | yes         |
+    And New partner should be created
+    And I activate new partner admin with default password
+    And I log in bus admin console as new partner admin
+    And I add new user(s):
+      | name            | storage_type | storage_limit | devices |
+      | TC.122155.User  | Server       | 10            | 3       |
+    Then 1 new user should be created
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    And I update the user password to default password
+    When I backup file using linux client for user newly created user email password default password
+    And I backup files again with no new files added
+    And I cancel backup when I add a large file
+    And I wait for 5 seconds
+    And I refresh User Details section
+    And I view machine BUS-Auto-03-Zoe details from user details section
+    Then Backups table will display as:
       | Start Time     | Type                | Duration | Result            | Files | Size | Files Encoded | Size Encoded | Files Transferred | Size Transferred |
-      | 10/08/15 17:53 | Local Manual Backup | 00:00:08 | LocalBackupError0 | 1     | 284  | 0            | 0             | 0                 | 0                |
-      | 10/08/15 17:52 | Manual Backup       | 00:01:37 | Success           | 1     | 284  | 1            | 288 bytes     | 1                 | 288 bytes        |
-      | 10/08/15 17:52 | Manual Backup       | 00:00:14 | CancelError0      | 0     | 0    | 0            | 0             | 0                 | 0                |
-      | 08/04/15 11:29 | Local Manual Backup | 00:00:06 | LocalBackupError0 | 41    | 6904 | 0            | 0             | 0                 | 0                |
-      | 08/04/15 11:28 | Manual Backup       | 00:01:19 | Success           | 41    | 6904 | 1            | 24 bytes      | 1                 | 24 bytes         |
-      | 08/04/15 11:27 | Local Manual Backup | 00:00:10 | LocalBackupError0 | 41    | 6901 | 0            | 0             | 0                 | 0                |
-      | 08/04/15 11:26 | Manual Backup       | 00:01:40 | Success           | 41    | 6901 | 1            | 16 bytes      | 1                 | 16 bytes         |
-      | 08/03/15 18:40 | Local Manual Backup | 00:00:12 | LocalBackupError0 | 40    | 6887 | 0            | 0             | 0                 | 0                |
-      | 08/03/15 18:38 | Manual Backup       | 00:01:59 | Success           | 40    | 6887 | 40           | 6.9 KB        | 40                | 6.9 KB           |
+      | today          | Manual Backup       | any      | CancelError0      | any   | any  | any           | any          | 0                 | any              |
+      | today          | Manual Backup       | any      | Success           | 1     | 20   | 0             | 0            | 0                 | 0                |
+      | today          | Manual Backup       | any      | Success           | 1     | 20   | 1             | 74 bytes     | 1                 | 74 bytes         |
+    And I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
 
   @TC.122156 @bus @machines_sync @tasks_p2
   Scenario: 122156:View Restore History
-    When I navigate to bus admin console login page
-    And I log in bus admin console with user name mozybus+backupsrestores@gmail.com and password default password
-    When I search machine by:
-      | machine_name   |
-      | CNENCHENC33L1C |
-    And I view machine details for mozybus+backup+restore@emc.com
-    And Restores table will display as:
-      | ID    | Date/Time Requested | Date/Time Finished | Files Retrieved | Size  | Status / Downloads                       |
-      | 30247 | 12/17/15 15:08      | 12/17/15 15:08     | 1 / 1           | 1 DVD | Retrieved files; preparing to burn DVDs. |
-      | 30246 | 12/17/15 14:57      | 12/17/15 14:57     | 1 / 1           | 1 DVD | Retrieved files; preparing to burn DVDs. |
-      | 21284 | 08/11/15 05:05      | 08/10/15 15:07     | 41 / 41         | 1 DVD | Retrieved files; preparing to burn DVDs. |
-      | 20707 | 08/07/15 00:52      | 08/06/15 10:54     | 41 / 41         | 1 DVD | Retrieved files; preparing to burn DVDs. |
+    When I check that linux client service is available
+    And I upload change linux client env script to remote machine
+    And I add a new MozyPro partner:
+      | period | base plan | server plan |
+      | 1      | 50 GB     | yes         |
+    And New partner should be created
+    And I activate new partner admin with default password
+    And I log in bus admin console as new partner admin
+    And I add new user(s):
+      | name            | storage_type | storage_limit | devices |
+      | TC.122156.User  | Server       | 10            | 3       |
+    Then 1 new user should be created
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    When I update the user password to default password
+    And I backup file using linux client for user newly created user email password default password
+    And I wait for 5 seconds
+    # Perform a media restore for this machine
+    When I refresh User Details section
+    And I click restore Files folder icon for device BUS-Auto-03-Zoe
+    And I navigate to new window
+    Then I have login freyja from BUS
+    When I select the Devices tab
+    And I choose one device
+    And I click restore all files in the detail panel
+    And I fill out the restore all files wizard
+      | restore_name     | restore_type |
+      | archive_all_file | media        |
+    When I select options menu
+    And I select event history
+    Then this restore is In Progress
+    When I close new window
+    And I wait for 50 seconds
+    And I view machine BUS-Auto-03-Zoe details from user details section
+    Then Restores table first record will display as:
+      | ID                       | Date/Time Requested | Date/Time Finished | Files Retrieved | Size  | Status / Downloads                       |
+      | <%=@restore.restore_id%> | today               | today              | 4 / 4           | 1 DVD | Retrieved files; preparing to burn DVDs. |
+    And I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
 
 
   ###############################################################################

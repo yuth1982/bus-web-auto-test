@@ -164,17 +164,28 @@ Then /^Quick report (.+) csv file details should be:$/ do |report_type, report_t
 end
 
 Then /^(Quick|Scheduled) report (.+) csv file details should include$/ do |type, report_type, report_table|
-  attributes = report_table.hashes
-  attributes.each { |v|
-    v.each{ |_,value|
-      value.replace ERB.new(value).result(binding) unless value.match(/^<%=@.+%>$/).nil?
-    }
-  }
   if type == 'Scheduled'
     actual = @bus_site.admin_console_page.scheduled_reports_section.read_scheduled_report(report_type)
   else
     actual = @bus_site.admin_console_page.quick_reports_section.read_quick_report(report_type)
   end
+
+  Log.debug "actual: #{actual}"
+
+  attributes = report_table.hashes
+  attributes.each { |v|
+    v.each{ |_,value|
+      value.replace ERB.new(value).result(binding) unless value.match(/^<%=@.+%>$/).nil?
+      if value == 'today'
+          value.replace (Chronic.parse(value).strftime('%m/%d/%y'))
+      elsif value == 'minute'
+        value.replace actual[1][7]
+      end
+    }
+  }
+
+  Log.debug "report_table: #{report_table}"
+
   report_table.rows.each { |row|
     (actual.include?(row)).should == true
   }
