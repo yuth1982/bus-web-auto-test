@@ -63,16 +63,16 @@ end
 =end
 
 After do |scenario|
-  TEST_PLAN = 635702  # "BUS2.5 Automated Cases Test Pass"
-  BUILD_ID = 6456
-  PROJECT_PREFIX = "Mozy"
-  PROJECT_ID = 2      # 2 - 'Mozy'
-  CLIENT = TestlinkHelper::TestlinkAPIClient.new
+  test_plan = 635702  # "BUS 2016 automation test cases"
+  build_id = 6456 # "20160822"
+  project_prefix = "Mozy"
+  project_id = 2      # 2 - 'Mozy'
+  client = TestlinkHelper::TestlinkAPIClient.new
 
   id = testcase_id scenario
   id = scenario.__id__ if id.nil? || id.length == 0
   tc = id.to_i
-  test_case = CLIENT.run_api("getTestCase", {:testcaseexternalid => "#{PROJECT_PREFIX}-#{tc}"}).first
+  test_case = client.run_api("getTestCase", {:testcaseexternalid => "#{project_prefix}-#{tc}"}).first
 
   if scenario.failed?
     #Dismiss alert dialog if it exists to prevent Selenium::WebDriver::Error::UnhandledAlertError from happening in all the following scenarios
@@ -89,12 +89,12 @@ After do |scenario|
     embed("#{encoded_img}", "image/png", "#{name}")
     page.execute_script "window.onbeforeunload = function() {};"
 
-    arg = {:status => 'f', :testcaseid => test_case["testcase_id"].to_i, :testplanid => TEST_PLAN, :buildid => BUILD_ID, :testprojectid => PROJECT_ID}
+    arg = {:status => 'f', :testcaseid => test_case["testcase_id"].to_i, :testplanid => test_plan, :buildid => build_id, :testprojectid => project_id}
   else
-    arg = {:status => 'p', :testcaseid => test_case["testcase_id"].to_i, :testplanid => TEST_PLAN, :buildid => BUILD_ID, :testprojectid => PROJECT_ID}
+    arg = {:status => 'p', :testcaseid => test_case["testcase_id"].to_i, :testplanid => test_plan, :buildid => build_id, :testprojectid => project_id}
   end
 
-  result = CLIENT.run_api("reportTCResult", arg)
+  result = client.run_api("reportTCResult", arg)
   Log.debug result
 
 end
