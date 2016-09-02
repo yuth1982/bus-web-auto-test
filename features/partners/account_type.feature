@@ -68,3 +68,12 @@ Feature: Account Type
       | Account Type | Sales Origin | Sales Channel |
       | N/A (change) | Sales        | N/A (change)  |
     And I delete partner account
+
+  @TC.20702
+  Scenario: Mozy-20702: Create a New Mozypro Internal Test Partner
+    When I add a new MozyPro partner:
+      | period | base plan | account type  | sales channel |
+      | 1      | 10 GB     | Internal Test | Inside Sales  |
+    Then New partner should be created
+    And I check partner's root role should be SMB Bundle Limited
+    And I search and delete partner account by newly created partner company name

@@ -389,3 +389,7 @@ end
 When /^I refresh Add New Partner section$/ do
   @bus_site.admin_console_page.add_new_partner_section.refresh_bus_section
 end
+
+When /^I check partner's root role should be (.+)$/ do |root_role|
+  @bus_site.admin_console_page.partner_details_section.check_root_role.should == root_role
+end

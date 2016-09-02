@@ -40,6 +40,7 @@ module Bus
     element(:partner_root_role_type_select, xpath: "//span[contains(@id,'partner-change-root-role')]/select")
     element(:partner_root_role_submit_btn, xpath: "//span[contains(@id,'partner-change-root-role')]/input")
     element(:partner_root_role_cancel_btn, xpath: "//span[contains(@id,'partner-change-root-role')]/a")
+    element(:partner_root_role_name, xpath: "//span[contains(@id, 'partner-display-root-role')]")
 
     # Change partner account type
     element(:account_type_change_link, xpath: "//a[contains(@onclick,'-acct-type-')][contains(text(),'change')]")
@@ -542,6 +543,10 @@ module Bus
       partner_root_role_type_select.select(root_role)
       partner_root_role_submit_btn.click
       wait_until_bus_section_load
+    end
+
+    def check_root_role
+      partner_root_role_name.text.split(" (change)")[0]
     end
 
     # Public: Create API Key
