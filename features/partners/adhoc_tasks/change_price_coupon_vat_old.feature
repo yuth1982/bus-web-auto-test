@@ -3,7 +3,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.141405_coupon_1 @add_new_partner @mozypro @bus
+  @TC.141405_coupon_1 @add_new_partner @mozypro @bus @price_changed
   Scenario: MozyPro 250 GB Plan (Annual) USD coupon
     When I add a new MozyPro partner:
       | company name                                       | period | base plan | country       | net terms | coupon              |
@@ -17,7 +17,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
       | Total Charges     |          |            | $940.40     |
     And New partner should be created
 
-  @TC.141405_coupon_2 @add_new_partner @mozypro @bus
+  @TC.141405_coupon_2 @add_new_partner @mozypro @bus @price_changed
   Scenario: MozyPro250 Server Add-on for MozyPro Plan( Annual) USD coupon
     When I add a new MozyPro partner:
       | company name                                                             | period | base plan | server plan | country       | net terms | coupon              |
@@ -32,7 +32,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
       | Total Charges     |          |            | $976.62     |
     And New partner should be created
 
-  @TC.141405_coupon_3 @add_new_partner @mozypro @bus
+  @TC.141405_coupon_3 @add_new_partner @mozypro @bus @price_changed
   Scenario: MozyPro250 Server Add-on for MozyPro Plan( Annual) USD coupon 100
     When I add a new MozyPro partner:
       | company name                                                                 | period | base plan | server plan | country       | net terms | coupon               |
@@ -46,7 +46,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
       | Total Charges     |          |            | $0.00       |
     And New partner should be created
 
-  @TC.141405_coupon_4 @add_new_partner @mozypro @bus
+  @TC.141405_coupon_4 @add_new_partner @mozypro @bus @price_changed
   Scenario: MozyPro 250 GB Plan (Annual) EUR France coupon
     When I add a new MozyPro partner:
       | company name                                              | period | base plan | create under   | country | net terms | coupon               |
@@ -59,7 +59,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
       | Total Charges     |          |            | €0.00       |
     And New partner should be created
 
-  @TC.141405_coupon_5 @add_new_partner @mozypro @bus
+  @TC.141405_coupon_5 @add_new_partner @mozypro @bus @price_changed
   Scenario: MozyPro250 Server Add-on for MozyPro Plan( Annual) EUR Germany coupon
     When I add a new MozyPro partner:
       | company name                                                                     | period | base plan | server plan | create under    | country | net terms | coupon              |
@@ -75,7 +75,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
       | Total Charges     |          |            | €1,036.49   |
     And New partner should be created
 
-  @TC.141405_coupon_6 @add_new_partner @mozypro @bus
+  @TC.141405_coupon_6 @add_new_partner @mozypro @bus @price_changed
   Scenario: MozyPro250 Server Add-on for MozyPro Plan( Annual) EUR Ireland coupon VAT
     When I add a new MozyPro partner:
       | company name                                                                         | period | base plan | server plan | create under    | country | net terms | coupon              | vat number |
@@ -91,7 +91,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
       | Total Charges     |          |            | €952.29     |
     And New partner should be created
 
-  @TC.141405_coupon_7 @add_new_partner @mozypro @bus
+  @TC.141405_coupon_7 @add_new_partner @mozypro @bus @price_changed
   Scenario: MozyPro 250 GB Plan (Annual) EUR Germany VAT
     When I add a new MozyPro partner:
       | company name                                            | period | base plan | create under    | country | net terms | vat number  |
@@ -104,7 +104,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
       | Total Charges     |          |            | €824.89     |
     And New partner should be created
 
-  @TC.141405_coupon_8 @add_new_partner @mozypro @bus
+  @TC.141405_coupon_8 @add_new_partner @mozypro @bus @price_changed
   Scenario: MozyPro 250 GB Plan (Annual) GBP coupon
     When I add a new MozyPro partner:
       | company name                                       | period | base plan | create under | country        | net terms | coupon              |
@@ -119,7 +119,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
       | Total Charges     |          |            | £675.73     |
     And New partner should be created
 
-  @TC.141405_coupon_9 @add_new_partner @mozypro @bus
+  @TC.141405_coupon_9 @add_new_partner @mozypro @bus @price_changed
   Scenario: MozyPro250 Server Add-on for MozyPro Plan( Annual) GBP VAT
     When I add a new MozyPro partner:
       | company name                                                          | period | base plan | server plan | create under | country        | net terms | vat number  |
@@ -133,7 +133,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
       | Total Charges     |          |            | £824.78     |
     And New partner should be created
 
-  @TC.141405_coupon_10 @add_new_partner @mozypro @bus
+  @TC.141405_coupon_10 @add_new_partner @mozypro @bus @price_changed
   Scenario: MozyPro 250 GB Plan (Annual) GBP coupon VAT
     When I add a new MozyPro partner:
       | company name                                           | period | base plan | create under | country        | net terms | coupon              | vat number  |
@@ -147,7 +147,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
       | Total Charges     |          |            | £633.50     |
     And New partner should be created
 
-  @TC.141405_coupon_11 @add_new_partner @mozypro @bus
+  @TC.141405_coupon_11 @add_new_partner @mozypro @bus @price_changed
   Scenario: MozyPro 250 GB Plan (Biennial) USD coupon
     When I add a new MozyPro partner:
       | company name                                         | period | base plan | country       | net terms | coupon               |
@@ -160,7 +160,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
       | Total Charges     |          |            | $0.00       |
     And New partner should be created
 
-  @TC.141405_coupon_12 @add_new_partner @mozypro @bus
+  @TC.141405_coupon_12 @add_new_partner @mozypro @bus @price_changed
   Scenario: MozyPro Server Add-on for 250 GB Plan (Biennial) USD coupon
     When I add a new MozyPro partner:
       | company name                                                           | period | base plan | server plan | country       | net terms | coupon              |
@@ -175,7 +175,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
       | Total Charges     |          |            | $2,097.52   |
     And New partner should be created
 
-  @TC.141405_coupon_13 @add_new_partner @mozypro @bus
+  @TC.141405_coupon_13 @add_new_partner @mozypro @bus @price_changed
   Scenario: MozyPro 250 GB Plan (Biennial) EUR Ireland coupon
     When I add a new MozyPro partner:
       | company name                                                 | period | base plan | create under    | country | net terms | coupon               |
@@ -188,7 +188,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
       | Total Charges     |          |            | €0.00       |
     And New partner should be created
 
-  @TC.141405_coupon_14 @add_new_partner @mozypro @bus
+  @TC.141405_coupon_14 @add_new_partner @mozypro @bus @price_changed
   Scenario: MozyPro Server Add-on for 250 GB Plan (Biennial) EUR France VAT
     When I add a new MozyPro partner:
       | company name                                                               | period | base plan | server plan | create under   | country | net terms | vat number    |
@@ -202,7 +202,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
       | Total Charges     |          |            | €1,847.58   |
     And New partner should be created
 
-  @TC.141405_coupon_15 @add_new_partner @mozypro @bus
+  @TC.141405_coupon_15 @add_new_partner @mozypro @bus @price_changed
   Scenario: MozyPro Server Add-on for 250 GB Plan (Biennial) EUR Germany Coupon VAT
     When I add a new MozyPro partner:
       | company name                                                                       | period | base plan | server plan | create under    | country | net terms | coupon              | vat number  |
@@ -217,7 +217,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
       | Total Charges     |          |            | €1,478.06   |
     And New partner should be created
 
-  @TC.141405_coupon_16 @add_new_partner @mozypro @bus
+  @TC.141405_coupon_16 @add_new_partner @mozypro @bus @price_changed
   Scenario: MozyPro 250 GB Plan (Biennial) GBP VAT
     When I add a new MozyPro partner:
       | company name                                      | period | base plan | create under | country        | net terms | vat number  |
@@ -230,7 +230,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
       | Total Charges     |          |            | £1,343.79   |
     And New partner should be created
 
-  @TC.141405_coupon_17 @add_new_partner @mozypro @bus
+  @TC.141405_coupon_17 @add_new_partner @mozypro @bus @price_changed
   Scenario: MozyPro Server Add-on for 250 GB Plan (Biennial) GBP Coupon
     When I add a new MozyPro partner:
       | company name                                                           | period | base plan | server plan | create under | country        | net terms | coupon              |
@@ -247,7 +247,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
     And New partner should be created
 
 
-  @TC.141405_coupon_us1 @add_new_partner @mozypro
+  @TC.141405_coupon_us1 @add_new_partner @mozypro @price_changed
   Scenario: MozyPro 500 GB Plan (Annual) USD coupon
     When I add a new MozyPro partner:
       | company name                                      | period | base plan | country      | net terms | coupon              |
@@ -261,7 +261,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
       | Total Charges    |          |            | $1,880.90    |
     And New partner should be created
 
-  @TC.141405_coupon_us2 @add_new_partner @mozypro
+  @TC.141405_coupon_us2 @add_new_partner @mozypro @price_changed
   Scenario: MozyPro500 Server Add-on for MozyPro Plan( Annual) USD coupon
     When I add a new MozyPro partner:
       | company name                                                            | period | base plan | server plan | country      | net terms | coupon              |
@@ -276,7 +276,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
       | Total Charges    |    |            | $1,847.82   |
     And New partner should be created
 
-  @TC.141405_coupon_us3 @add_new_partner @mozypro
+  @TC.141405_coupon_us3 @add_new_partner @mozypro @price_changed
   Scenario: MozyPro500 Server Add-on for MozyPro Plan( Annual) USD coupon 100
     When I add a new MozyPro partner:
       | company name                                                                | period | base plan | server plan | country      | net terms | coupon              |
@@ -291,7 +291,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
     And New partner should be created
 
 
-  @TC.141405_coupon_EUR1 @add_new_partner @mozypro
+  @TC.141405_coupon_EUR1 @add_new_partner @mozypro @price_changed
   Scenario: MozyPro 500 GB Plan (Annual) EUR coupon - VAT - server plan
     When I add a new MozyPro partner:
       | company name                                                        | period | base plan | server plan|create under  |country       | net terms | coupon              |vat number|
@@ -306,7 +306,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
       | Total Charges    |          |            | €1,643.20   |
     And New partner should be created
 
-  @TC.141405_coupon_EUR2 @add_new_partner @mozypro
+  @TC.141405_coupon_EUR2 @add_new_partner @mozypro @price_changed
   Scenario: MozyPro 500 GB Plan (Annual) EUR coupon - server plan
     When I add a new MozyPro partner:
       | company name                                                        | period | base plan | server plan|create under  |country       | net terms | coupon              |
@@ -323,7 +323,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
     And New partner should be created
 
 
-  @TC.141405_coupon_EUR3 @add_new_partner @mozypro
+  @TC.141405_coupon_EUR3 @add_new_partner @mozypro @price_changed
   Scenario: MozyPro 500 GB Plan (Annual) EUR VAT - server plan
     When I add a new MozyPro partner:
       | company name                                                        | period | base plan | server plan|create under  |country       | net terms | vat number              |
@@ -339,7 +339,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
 
 
 
-  @TC.141405_coupon_EUR4 @add_new_partner @mozypro
+  @TC.141405_coupon_EUR4 @add_new_partner @mozypro @price_changed
   Scenario: MozyPro 500 GB Plan (Annual) EUR VAT only
     When I add a new MozyPro partner:
       | company name                                         | period | base plan | create under      |country       | net terms | vat number  |
@@ -353,7 +353,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
     And New partner should be created
 
 
-  @TC.141405_coupon_EUR5 @add_new_partner @mozypro
+  @TC.141405_coupon_EUR5 @add_new_partner @mozypro @price_changed
   Scenario: MozyPro 500 GB Plan (Annual) EUR coupon only
     When I add a new MozyPro partner:
       | company name                                             | period | base plan | create under    |country       | net terms | coupon              |
@@ -369,7 +369,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
     And New partner should be created
 
 
-  @TC.141405_coupon_GBP @add_new_partner @mozypro
+  @TC.141405_coupon_GBP @add_new_partner @mozypro @price_changed
   Scenario: MozyPro 500 GB Plan (Annual) GBP VAT - coupon
     When I add a new MozyPro partner:
       | company name                                                        | period | base plan | create under  |country       | net terms | vat number  |coupon|
@@ -383,7 +383,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
     And New partner should be created
 
 
-  @TC.141405_coupon_GBP1 @add_new_partner @mozypro
+  @TC.141405_coupon_GBP1 @add_new_partner @mozypro @price_changed
   Scenario: MozyPro 500 GB Plan (Annual) GBP VAT - server plan
     When I add a new MozyPro partner:
       | company name                                                        | period | base plan | server plan|create under  |country       | net terms | vat number  |
@@ -398,7 +398,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
     And New partner should be created
 
 
-  @TC.141405_coupon_us11 @add_new_partner @mozypro
+  @TC.141405_coupon_us11 @add_new_partner @mozypro @price_changed
   Scenario: MozyPro 500 GB Plan (Biennial) USD coupon
     When I add a new MozyPro partner:
       | company name                                      | period | base plan | country      | net terms | coupon              |
@@ -412,7 +412,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
       | Total Charges    |          |            | $3,590.81   |
     And New partner should be created
 
-  @TC.141405_coupon_us21 @add_new_partner @mozypro
+  @TC.141405_coupon_us21 @add_new_partner @mozypro @price_changed
   Scenario: MozyPro500 Server Add-on for MozyPro Plan( Biennial) USD coupon
     When I add a new MozyPro partner:
       | company name                                                            | period | base plan | server plan | country      | net terms | coupon              |
@@ -427,7 +427,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
       | Total Charges    |          |            | $3,527.66   |
     And New partner should be created
 
-  @TC.141405_coupon_us31 @add_new_partner @mozypro
+  @TC.141405_coupon_us31 @add_new_partner @mozypro @price_changed
   Scenario: MozyPro500 Server Add-on for MozyPro Plan( Biennial) USD coupon 100
     When I add a new MozyPro partner:
       | company name                                                                | period | base plan | server plan | country      | net terms | coupon              |
@@ -442,7 +442,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
     And New partner should be created
 
 
-  @TC.141405_coupon_EUR11 @add_new_partner @mozypro
+  @TC.141405_coupon_EUR11 @add_new_partner @mozypro @price_changed
   Scenario: MozyPro 500 GB Plan (Biennial) EUR coupon - VAT - server plan
     When I add a new MozyPro partner:
       | company name                                                        | period | base plan | server plan|create under  |country       | net terms | coupon              |vat number|
@@ -457,7 +457,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
       | Total Charges    |          |            | €3,137.02   |
     And New partner should be created
 
-  @TC.141405_coupon_EUR21 @add_new_partner @mozypro
+  @TC.141405_coupon_EUR21 @add_new_partner @mozypro @price_changed
   Scenario: MozyPro 500 GB Plan (Biennial) EUR coupon - server plan
     When I add a new MozyPro partner:
       | company name                                                        | period | base plan | server plan|create under  |country       | net terms | coupon              |
@@ -474,7 +474,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
     And New partner should be created
 
 
-  @TC.141405_coupon_EUR31 @add_new_partner @mozypro
+  @TC.141405_coupon_EUR31 @add_new_partner @mozypro @price_changed
   Scenario: MozyPro 500 GB Plan (Biennial) EUR VAT - server plan
     When I add a new MozyPro partner:
       | company name                                                        | period | base plan | server plan|create under  |country       | net terms | vat number              |
@@ -489,7 +489,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
     And New partner should be created
 
 
-  @TC.141405_coupon_EUR41 @add_new_partner @mozypro
+  @TC.141405_coupon_EUR41 @add_new_partner @mozypro @price_changed
   Scenario: MozyPro 500 GB Plan (Biennial) EUR VAT - coupon
     When I add a new MozyPro partner:
       | company name                                                | period | base plan | create under  |country       | net terms | vat number     |coupon              |
@@ -503,7 +503,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
       | Total Charges    |          |            | €2,834.81   |
     And New partner should be created
 
-  @TC.141405_coupon_GBP2 @add_new_partner @mozypro
+  @TC.141405_coupon_GBP2 @add_new_partner @mozypro @price_changed
   Scenario: MozyPro 500 GB Plan (Biennial) GBP VAT - coupon
     When I add a new MozyPro partner:
       | company name                                                        | period | base plan | create under  |country       | net terms | vat number  |coupon|
@@ -516,7 +516,7 @@ Feature: Requirement #141405 Changing price schedules in Aria, and how this is r
       | Total Charges     |          |            |    £0.00    |
     And New partner should be created
 
-  @TC.141405_coupon_GBP3 @add_new_partner @mozypro
+  @TC.141405_coupon_GBP3 @add_new_partner @mozypro @price_changed
   Scenario: MozyPro 500 GB Plan (Biennial) GBP  coupon- server plan
     When I add a new MozyPro partner:
       | company name                                                        | period | base plan | server plan|create under  |country       | net terms | coupon|
