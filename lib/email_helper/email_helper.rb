@@ -82,15 +82,15 @@ module Email
           items.each {  |item|
             email = @client.get_item item.id
             query.each_index {|index| query[index]=query[index].downcase if index%2 == 0}
-            Log.info("=====================================================")
-            Log.info("From: " + email.from.email_address)
-            Log.info("To: " + (email.to_recipients.collect {|recipient| recipient.email_address}).join(', '))
+            # Log.info("=====================================================")
+            # Log.info("From: " + email.from.email_address)
+            # Log.info("To: " + (email.to_recipients.collect {|recipient| recipient.email_address}).join(', '))
             subject = email.subject
-            Log.info("Subject: " + email.subject)
-            first_name = "N/A"
-            first_name = email.body.to_s.split("Dear ")[1].split(" ")[0] if !email.body.to_s.match("Dear ").nil?
-            first_name = email.body.to_s.split("Hi, ")[1].split(":<")[0] if !email.body.to_s.match("Hi, ").nil?
-            Log.info("First Name: " + first_name)
+            # Log.info("Subject: " + email.subject)
+            # first_name = "N/A"
+            # first_name = email.body.to_s.split("Dear ")[1].split(" ")[0] if !email.body.to_s.match("Dear ").nil?
+            # first_name = email.body.to_s.split("Hi, ")[1].split(":<")[0] if !email.body.to_s.match("Hi, ").nil?
+            # Log.info("First Name: " + first_name)
 
             to_match = from_match = content_match = subject_match = true
 

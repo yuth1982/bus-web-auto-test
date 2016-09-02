@@ -171,6 +171,19 @@ module DBHelper
     end
   end
 
+  def get_mh_cybersource_id(user_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select cybersource_id from user_payment_infos where user_id = #{user_id};"
+      c = conn.exec(sql)
+      c.values[0][0]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
   def get_suspended_user_email
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
@@ -255,6 +268,19 @@ module DBHelper
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
       sql = "select id from users where username = '#{email}' limit 1;"
+      c = conn.exec sql
+      c.values[0][0].to_i
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_admin_id_by_email(email)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select id from admins where username = '#{email}' limit 1;"
       c = conn.exec sql
       c.values[0][0].to_i
     rescue PG::Error => e
@@ -590,6 +616,18 @@ module DBHelper
     end
   end
 
+  def get_partner_admin_ip(partner_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select requesting_ip from pro_partners where id = #{partner_id};"
+      Log.debug sql
+      c = conn.exec(sql)
+      c.values[0][0]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
 end
-
-

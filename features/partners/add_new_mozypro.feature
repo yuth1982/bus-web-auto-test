@@ -657,5 +657,36 @@ Feature: Add a new partner
 #      | ckey_server2    | ckey_group           | Server       |               | 2       |
 #    Then 2 new user should be created
 
-
+  @TC.125448
+  Scenario: 125448: Info is stored when signup MozyPro/Home user
+    When I add a new MozyPro partner:
+      | period | base plan |
+      | 1      | 250 GB    |
+    And New partner should be created
+    And I get partner aria id
+    And the partner has activated the admin account with default password
+    And I navigate to bus admin console login page
+    Then I log in bus admin console as new partner admin
+    And The admin's IP address should be stored in demeter
+    When API* I get Aria account details by newly created partner aria id
+    Then API* Aria account country info should be:
+      | account country                    | billing country                    |
+      | <%=@partner.company_info.country%> | <%=@partner.billing_info.country%> |
+    And I log out bus admin console
+    And I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
+    When I am at dom selection point:
+    And I maximize the automation browser
+    And I add a phoenix Home user:
+      | period | base plan | country       |
+      | 1      | 50 GB     | United States |
+    Then the user is successfully added.
+    And the user has activated their account
+    When I get the current user id from the database
+    And I get user cybersource id from database
+    Then I am able to retrieve information from CyberSource:
+      | last four digits                           | BIN country                        |
+      | <%=@partner.credit_card.last_four_digits%> | <%=@partner.billing_info.country%> |
+    And I log in bus admin console as administrator
+    And I search and delete user account by new created user name
 

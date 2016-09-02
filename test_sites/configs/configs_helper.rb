@@ -9,7 +9,7 @@ CONFIGS = YAML.load_file("#{File.dirname(__FILE__)}/configs.yaml")
 LANG = YAML.load_file("#{File.dirname(__FILE__)}/lang.yaml")
 
 # Active QA test environment, for example qa5, qa6
-TEST_ENV = ENV['BUS_ENV'] || 'qa6_busclient04'
+TEST_ENV = ENV['BUS_ENV'] || 'qa12h'
 QA_ENV = ALL_ENV[TEST_ENV]
 
 # used for billing price info
@@ -24,6 +24,7 @@ case TEST_ENV
     ARIA_ENV = ALL_ENV[ENV['ARIA_ENV'] || 'aria_qa']
     # Active AD connection test environment, for example ad_connection_qa
     AD_CONNECTION_ENV = ALL_ENV[ENV['AD_CONNECTION_ENV'] || 'ad_connection_qa']
+    CYBERSOURCE_API_ENV = ALL_ENV[ENV['ARIA_API_ENV'] || 'cybersource_api_qa']
   when /std*/
     ARIA_API_ENV = ALL_ENV[ENV['ARIA_API_ENV'] || 'aria_api_std']
     ARIA_ENV = ALL_ENV[ENV['ARIA_ENV'] || 'aria_std']

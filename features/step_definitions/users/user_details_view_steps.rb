@@ -429,6 +429,17 @@ When /^I search and delete user account if it exists by (.+)/ do |account_name|
   end
 end
 
+When /^I search and delete user account by new created user name/ do
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_users'])
+  @bus_site.admin_console_page.search_list_users_section.search_user(@user_name)
+  @bus_site.admin_console_page.search_list_users_section.wait_until_bus_section_load
+  rows = @bus_site.admin_console_page.search_list_users_section.search_results_table_rows
+  unless rows.to_s.include?('No results found.')
+    @bus_site.admin_console_page.search_list_users_section.view_user_details(@user_name)
+    @bus_site.admin_console_page.user_details_section.delete_user
+  end
+end
+
 When /^I change user install override region to (.+)/ do |region|
   @bus_site.admin_console_page.user_details_section.change_region(region)
 end

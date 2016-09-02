@@ -24,6 +24,7 @@ require 'capybara/cucumber'
 #require 'capybara-webkit'
 
 require 'aria_api/lib/aria_api'
+require 'cybersource_api_helper'
 require 'file_helper'
 require 'bill_helper'
 require 'db_helper'
@@ -57,6 +58,7 @@ include SSHRecordOverdraft
 include SSHPushConnector
 include SSHKalypsoE2E
 include AriaApi
+include CybersourceApi
 include Utility
 include KeylessDeviceActivation
 include Activation
