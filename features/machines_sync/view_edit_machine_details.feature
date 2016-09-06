@@ -505,6 +505,11 @@ Feature: view edit machine details
 
   @TC.122435 @bus @machines_sync @tasks_p2
   Scenario: 122435: Linux client version updates correctly in the machine's details after replace
+    When I navigate to List Versions section from bus admin console page
+    And I list versions for:
+      | platform | show disabled |
+      | linux    | false         |
+    And I get 2 enabled linux version for deb-64
     When I add a new MozyEnterprise partner:
       | period | users | server plan |
       | 12     | 10    | 250 GB      |
@@ -525,19 +530,17 @@ Feature: view edit machine details
     Then I use keyless activation to activate devices newly
       | machine_name    | user_name                   | machine_type |
       | Machine1_122435 | <%=@new_users.first.email%> | Server       |
-    And I upload data to device by batch
-      | machine_id                         |  user_email              | user_agent         | upload_file  |
-      | <%=@new_clients.first.machine_id%> | <%=@new_users[0].email%> | kalypso/2.28.0.421 | true         |
     And I update newly created machine encryption value to Default
-
+    And I got client config for the user machine:
+      | user_name                | machine                   | platform | arch   | codename       | version       |
+      | <%=@new_users[0].email%> | <%=@client.machine_hash%> | linux    | deb-64 | MozyEnterprise | <%=@version%> |
     Then I use keyless activation to activate devices
-      | machine_name    |  user_name               | machine_type |
+      | machine_name    | user_name                | machine_type |
       | Machine2_122435 | <%=@new_users[1].email%> | Server       |
-    And I upload data to device by batch
-      | machine_id                         |  user_email              | user_agent         | upload_file  |
-      | <%=@new_clients.first.machine_id%> | <%=@new_users[1].email%> | kalypso/2.30.0.442 | true         |
     And I update newly created machine encryption value to Default
-
+    And I got client config for the user machine:
+      | user_name                | machine                   | platform | arch   | codename       | version        |
+      | <%=@new_users[1].email%> | <%=@client.machine_hash%> | linux    | deb-64 | MozyEnterprise | <%=@version2%> |
     And I navigate to Search / List Machines section from bus admin console page
     And I view machine details for Machine2_122435
     And I click on the replace machine link
@@ -552,70 +555,129 @@ Feature: view edit machine details
       | machine_name    |
       | Machine2_122435 |
     And I view machine details for Machine2_122435
-    # the version should have client_branding for MozyEnterprise in this qa env. Otherwise the version will be displayed as '2.28.0.421'
     Then machine details should be:
-      | Client Version:                     |
-      | MozyEnterprise Windows 2.28.0.421   |
+      | Client Version:              |
+      | MozyEnterprise @version_name |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
   @TC.122537 @TC.122540 @bus @machines_sync @tasks_p2
   Scenario: 122537 122540:Mac Sync machines and client version displayed correctly in the machine details and list view
-    # Use external id to search
-    When I search machine by:
-      | keywords |
-      | 81310305 |
-    Then Machine search results should be:
-      | External ID | Machine  | User                                 | User Group           | Data Center | Storage Used | Backed Up |
-      | 81310305    | Sync     | mozybus+linuxgaserversync1@gmail.com | (default user group) | qa6         | 68 MB        | N/A       |
+    When I navigate to List Versions section from bus admin console page
+    And I list versions for:
+      | platform | show disabled |
+      | mac-sync | false         |
+    And I get 1 enabled mac-sync version
+    When I add a new MozyPro partner:
+      | period | base plan |
+      | 1      | 50 GB     |
+    And New partner should be created
+    And I get the admin id from partner details
+    When I act as newly created partner account
+    And I add new user(s):
+      | name            | storage_type | storage_limit | devices | enable_stash |
+      | TC.122537.User  | Desktop      | 10            | 2       | yes          |
+    Then 1 new user should be created
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    And I get the user id
+    And I update the user password to default password
+    When I navigate to Search / List Machines section from bus admin console page
     And I view machine details for Sync
+    And I get machine details info
+    And I got client config for the user machine:
+      | user_name                   | machine    | platform | arch   | codename  | version       |
+      | <%=@new_users.first.email%> | plop000001 | mac      | x86_64 | mozypro   | <%=@version%> |
+    And I upload data to device by batch
+      | machine_id                | user_agent                        |
+      | <%=@machine_info['ID:']%> | <%='msync_mac_client/'+@version%> |
+    And I refresh Machine Details section
     Then machine details should be:
-      | ID:      | External ID:      | Owner:                               | Space Used: | Encryption: | Client Version:             | Hash:               | Data Center: |
-      | 81310305 | 81310305 (change) | mozybus+linuxgaserversync1@gmail.com | 68 MB       | Default     | MozyPro mac sync 1.3.0.4667 | user_303028902_sync | qa6          |
-    And I log out bus admin console
-    And I navigate to bus admin console login page
-    And I log in bus admin console with user name admin+catherine@mozy.com and password default password
+      | ID:                       | Owner:                      | Space Used: | Encryption: | Client Version:       |
+      | <%=@machine_info['ID:']%> | <%=@new_users.first.email%> | 1 GB        | Default     | MozyPro @version_name |
     When I search machine by:
       | machine_name |
       | Sync         |
-    Then Machine search results for user mozybus+linuxgaserversync1@gmail.com should be:
-      | Machine  | User                                 | User Group           | Data Center | Storage Used | Backed Up | MTM/SN |
-      | Sync     | mozybus+linuxgaserversync1@gmail.com | (default user group) | qa6         | 68 MB        | N/A       |        |
-    And I view machine details for mozybus+linuxgaserversync1@gmail.com
+    Then Machine search results should be:
+      | Machine  | User                        | User Group           | Storage Used |
+      | Sync     | <%=@new_users.first.email%> | (default user group) | 1 GB         |
+    And I add machine external id
+    When I log in bus admin console as administrator
+    And I search machine by:
+      | keywords                  |
+      | <%=@machine_external_id%> |
+    Then Machine search results should be:
+      | External ID                  | Machine  | User                        | User Group           | Storage Used | Created |
+      | <%=@machine_external_id%>    | Sync     | <%=@new_users.first.email%> | (default user group) | 1 GB         | today   |
+    And I view machine details for Sync
     Then machine details should be:
-      | ID:      | Owner:                               | Space Used: | Encryption: | Client Version:             | Hash:               | Data Center: |
-      | 81310305 | mozybus+linuxgaserversync1@gmail.com | 68 MB       | Default     | MozyPro mac sync 1.3.0.4667 | user_303028902_sync | qa6          |
+      | ID:                       | External ID:                           | Owner:                      | Space Used: | Encryption: | Client Version:       | Hash:                         |
+      | <%=@machine_info['ID:']%> | <%=@machine_external_id+' (change)'%>  | <%=@new_users.first.email%> | 1 GB        | Default     | MozyPro @version_name | <%='user_'+@user_id+'_sync'%> |
+    And I search and delete partner account by newly created partner company name
 
-  # using fixed data, partner: Linux GA Test
+
   @TC.122455 @TC.122456 @bus @machines_sync @tasks_p2
   Scenario: 122455 122456:Windows Sync machines and client version displayed correctly in the machine details and list view
-    # Use external id to search
-    When I search machine by:
-      | keywords |
-      | 81309978 |
-    Then Machine search results should be:
-      | External ID | Machine  | User                     | User Group           | Data Center | Storage Used | Backed Up |
-      | 81309978    | Sync     | qiezidesktoppro1@emc.com | (default user group) | qa6         | 953.5 MB     | N/A       |
+    When I navigate to List Versions section from bus admin console page
+    And I list versions for:
+      | platform | show disabled |
+      | win-sync | false         |
+    And I get 1 enabled win-sync version
+    When I add a new MozyPro partner:
+      | period | base plan |
+      | 1      | 50 GB     |
+    And New partner should be created
+    And I get the admin id from partner details
+    When I act as newly created partner account
+    And I add new user(s):
+      | name            | storage_type | storage_limit | devices | enable_stash |
+      | TC.122455.User  | Desktop      | 10            | 2       | yes          |
+    Then 1 new user should be created
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    And I get the user id
+    And I update the user password to default password
+    When I navigate to Search / List Machines section from bus admin console page
     And I view machine details for Sync
+    And I get machine details info
+    And I got client config for the user machine:
+      | user_name                   | machine    | platform | arch   | codename  | version       |
+      | <%=@new_users.first.email%> | plop000001 | win      | x86_64 | mozypro   | <%=@version%> |
+    And I upload data to device by batch
+      | machine_id                | user_agent                            |
+      | <%=@machine_info['ID:']%> | <%='msync_windows_client/'+@version%> |
+    And I refresh Machine Details section
     Then machine details should be:
-      | ID:      | External ID:      | Owner:                   | Space Used: | Encryption: | Client Version:             | Hash:               | Data Center: |
-      | 81309978 | 81309978 (change) | qiezidesktoppro1@emc.com | 953.5 MB    | Default     | MozyPro win sync 1.3.0.4679 | user_303028272_sync | qa6          |
-    And I log out bus admin console
-    And I navigate to bus admin console login page
-    And I log in bus admin console with user name mozybus+catherine+0401@gmail.com and password default password
+      | ID:                       | Owner:                      | Space Used: | Encryption: | Client Version:       |
+      | <%=@machine_info['ID:']%> | <%=@new_users.first.email%> | 1 GB        | Default     | MozyPro @version_name |
     When I search machine by:
       | machine_name |
       | Sync         |
-    Then Machine search results for user qiezidesktoppro1@emc.com should be:
-      | Machine  | User                     | User Group           | Data Center | Storage Used | Backed Up | MTM/SN |
-      | Sync     | qiezidesktoppro1@emc.com | (default user group) | qa6         | 953.5 MB     | N/A       |        |
-    And I view machine details for qiezidesktoppro1@emc.com
+    Then Machine search results should be:
+      | Machine  | User                        | User Group           | Storage Used |
+      | Sync     | <%=@new_users.first.email%> | (default user group) | 1 GB         |
+    And I add machine external id
+    When I log in bus admin console as administrator
+    And I search machine by:
+      | keywords                  |
+      | <%=@machine_external_id%> |
+    Then Machine search results should be:
+      | External ID                  | Machine  | User                        | User Group           | Storage Used | Created |
+      | <%=@machine_external_id%>    | Sync     | <%=@new_users.first.email%> | (default user group) | 1 GB         | today   |
+    And I view machine details for Sync
     Then machine details should be:
-      | ID:      | Owner:                   | Space Used: | Encryption: | Client Version:             | Hash:               | Data Center: |
-      | 81309978 | qiezidesktoppro1@emc.com | 953.5 MB    | Default     | MozyPro win sync 1.3.0.4679 | user_303028272_sync | qa6          |
+      | ID:                       | External ID:                           | Owner:                      | Space Used: | Encryption: | Client Version:       | Hash:                         |
+      | <%=@machine_info['ID:']%> | <%=@machine_external_id+' (change)'%>  | <%=@new_users.first.email%> | 1 GB        | Default     | MozyPro @version_name | <%='user_'+@user_id+'_sync'%> |
+
+    And I search and delete partner account by newly created partner company name
 
   @TC.122569 @bus @machines_sync @tasks_p2
-  Scenario: 122569: Sync client version update from unknown to correct one in the machines details after it backup file through trogdor api
+  Scenario: 122569: Sync client version update from unknown to correct one in the machines details
+    When I navigate to List Versions section from bus admin console page
+    And I list versions for:
+      | platform | show disabled |
+      | win-sync | false         |
+    And I get 1 enabled win-sync version
     When I add a new MozyPro partner:
       | period | base plan | net terms |
       | 12     | 8 TB      | yes       |
@@ -629,19 +691,17 @@ Feature: view edit machine details
     When I navigate to Search / List Users section from bus admin console page
     And I view user details by newly created user email
     And I update the user password to default password
-    When I navigate to Search / List Machines section from bus admin console page
-    And I view machine details for Sync
-    And I get machine details info
+    When I view Sync details
     Then machine details should be:
       | Client Version: |
       | unknown         |
-    And I upload data to device by batch
-      | machine_id                | user_agent                      | upload_file  |
-      | <%=@machine_info['ID:']%> | msync_windows_client/1.3.0.4710 | true         |
-    And I refresh Machine Details section
+    And I got client config for the user machine:
+      | user_name                   | machine    | platform | codename | version       | arch   |
+      | <%=@new_users.first.email%> | plop000001 | win      | mozypro  | <%=@version%> | x86_64 |
+    When I refresh Machine Details section
     Then machine details should be:
-      | Client Version: |
-      | 1.3.0.4710      |
+      | Client Version:       |
+      | MozyPro @version_name |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 

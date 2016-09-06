@@ -54,6 +54,7 @@ end
 
 And /^I get machine details info$/ do
   @machine_info = @bus_site.admin_console_page.machine_details_section.machine_info_hash
+  Log.debug @machine_info
 end
 
 And /^I view machine (.+) details from user details section$/ do  |device_name|
