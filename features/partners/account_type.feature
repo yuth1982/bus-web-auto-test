@@ -77,3 +77,83 @@ Feature: Account Type
     Then New partner should be created
     And I check partner's root role should be SMB Bundle Limited
     And I search and delete partner account by newly created partner company name
+
+  @TC.20703
+  Scenario: Mozy-20703: Create a New MozyPro Trial Partner
+    When I add a new MozyPro partner:
+      | period | base plan | account type | sales channel |
+      | 1      | 10 GB     | Trial        | Inside Sales  |
+    Then New partner should be created
+    And I check partner's root role should be SMB Bundle Limited
+    And I search and delete partner account by newly created partner company name
+
+  @TC.20705
+  Scenario: Mozy-20705: Create a New Enterprise Internal Velocity Test Partner
+    When I add a new MozyEnterprise partner:
+      | period | account type  | sales channel | Root role     |
+      | 12     | Internal Test | Inside Sales  | Velocity Root |
+    Then New partner should be created
+    And I check partner's root role should be Enterprise
+    And I search and delete partner account by newly created partner company name
+
+  @TC.20922
+  Scenario: Mozy-20922: Create a New Reseller Trial Partner
+    When I add a new Reseller partner:
+      | period | base plan | account type | sales channel |
+      | 1      | 10 GB     | Trial        | Reseller      |
+    Then New partner should be created
+    And I check partner's root role should be Reseller Root
+    And I search and delete partner account by newly created partner company name
+
+  @TC.20924
+  Scenario: Mozy-20924: Create a New Reseller Live Partner
+    When I add a new Reseller partner:
+      | period | base plan | account type | sales channel |
+      | 1      | 10 GB     | Live         | Reseller      |
+    Then New partner should be created
+    And I check partner's root role should be Reseller Root
+    And I search and delete partner account by newly created partner company name
+
+  @TC.20926
+  Scenario: Mozy-20926: Create a New Enterprise Internal Test Partner
+    When I add a new MozyEnterprise partner:
+      | period | users | account type  | sales channel |
+      | 12     | 5     | Internal Test | Inside Sales  |
+    Then New partner should be created
+    And I check partner's root role should be Enterprise
+    And I search and delete partner account by newly created partner company name
+
+  @TC.20927
+  Scenario: Mozy-20927: Create a New Enterprise Live Partner
+    When I add a new MozyEnterprise partner:
+      | period | users | account type  | sales channel |
+      | 12     | 5     | Live          | Inside Sales  |
+    Then New partner should be created
+    And I check partner's root role should be Enterprise
+    And I search and delete partner account by newly created partner company name
+
+  @TC.22138
+  Scenario: Mozy-22138: Order Summary for Enterprise Velocity partner
+    When I add a new MozyEnterprise partner:
+      | period | users | account type  | sales channel |
+      | 12     | 5     | Live          | Velocity      |
+    Then New partner should be created
+    And I get partner aria id
+    When API* I get Aria account details by newly created partner aria id
+    Then API* Aria account should be:
+      | balance |
+      | 0       |
+    And I search and delete partner account by newly created partner company name
+
+  @TC.131834
+  Scenario: Mozy-131834: Add Value Lifetime Free to Account Type Picklist
+    When I add a new MozyPro partner:
+      | period | base plan | account type  | sales channel |
+      | 1      | 10 GB     | Internal Test | Inside Sales  |
+    Then New partner should be created
+    When I log in bus admin console as administrator
+    And I search partner by newly created partner company name
+    And I view partner details by newly created partner company name
+    Then I change account type to Lifetime Free
+    Then account type should be changed to Lifetime Free successfully
+    And I search and delete partner account by newly created partner company name
