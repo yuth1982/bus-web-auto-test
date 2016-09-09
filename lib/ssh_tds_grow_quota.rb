@@ -13,7 +13,7 @@ module SSHTDSGrowQuota
   #
   # @return [String] "Partner 12345 is using autogrow and is overdrafted on its Generic license by 5 GB"
   def grow_quota(username, password, machine_id, i, filename = nil, upload_file = 'false', user_agent = nil)
-    if TEST_ENV == 'qa12h'
+    if TEST_ENV.include?('qa12')
       @filename = filename.nil? ? 'upload_file.txt' : filename
       if upload_file == 'true'
         #Create a file in customized size (GB)
