@@ -265,8 +265,8 @@ module KeylessDeviceActivation
         url =  "/client/devices/#{@machine_hash}/activate?alias=#{@machine_alias}&mac_hash=#{@mac}&sid_hash=#{@sid}&country=US&type=#{@device_type}&codename=#{@codename}&region=#{@region}"
         request = Net::HTTP::Put.new( url )
         Log.debug url
-        Log.debug Base64.strict_encode64(@access_token["access_token"])
-        request.add_field("Authorization", "Bearer #{Base64.strict_encode64(@access_token["access_token"])}")
+        Log.debug Base64.strict_encode64(@access_token["access_token"]) unless @access_token["access_token"].nil?
+        request.add_field("Authorization", "Bearer #{Base64.strict_encode64(@access_token["access_token"])}") unless @access_token["access_token"].nil?
         response = http.request request
         @response = response
         Log.debug response.body

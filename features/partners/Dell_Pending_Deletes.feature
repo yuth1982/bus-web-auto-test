@@ -87,7 +87,7 @@ Feature: delete partner without setting, Mozy Inc --> Fortress (BDS) --> MozyOEM
       | machine_144460_01 | Desktop      |
     Then activate machine result should be
       | code | body                      |
-      | 401  | ERROR: COULD NOT FIND KEY |
+      | 401  | ERROR: authorization required |
 
 #    When I navigate to user login page with partner ID oem.partners.com
 #    And I log in bus admin console with user name @new_users[0].email and password reset password
