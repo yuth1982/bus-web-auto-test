@@ -6,8 +6,8 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
   @TC.144460_01 @bus @delete_partner
   Scenario: Mozy-144460_01: Delete MozyPro Partner Root, check Partner Root information
     When I add a new MozyPro partner:
-      | period  | base plan |
-      | 24      | 250 GB    |
+      | period | base plan |
+      | 1      | 250 GB    |
     And New partner should be created
     And Partner general information should be:
       | Status:         |
@@ -93,14 +93,15 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
     When I log in bus admin console as new partner admin
     Then Login page error message should be Your account has been suspended and cannot currently be accessed.
 
-    And I move backwards account billing dates 2 years for newly created partner aria id
+    When I log in bus admin console as administrator
+    And I move backwards account billing dates 1 month for newly created partner aria id
     When I search partner by:
       | name          | filter         |
       | @company_name | Pending Delete |
     And I view partner details by newly created partner company name
     And Partner billing history should be:
       | Date  | Amount    | Total Paid | Balance Due |
-      | today | $1,399.79 | $1,399.79  | $0.00       |
+      | today | $94.99    | $94.99     | $0.00       |
 
 #    When I wait for 86460 seconds
 #    And I search emails by keywords:
@@ -186,10 +187,10 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
       | Pending | Root Admin: |
       | today   | @root_admin |
 
-    When I use key activation to activate devices
-      | machine_name      |
-      | machine_144460_02 |
-    Then Activate key response should be ERROR: invalid token
+#    When I use key activation to activate devices
+#      | machine_name      |
+#      | machine_144460_02 |
+#    Then Activate key response should be ERROR: invalid token
 
     When I navigate to user login page with partner ID oem.partners.com
     And I log in bus admin console with user name @new_users[0].email and password reset password
@@ -218,7 +219,7 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
     And I view partner details by newly created partner company name
     And Partner billing history should be:
       | Date  | Amount    | Total Paid | Balance Due |
-      | today | $1,399.79 | $1,399.79  | $0.00       |
+      | today | $94.99    | $94.99     | $0.00       |
 
   @TC.144460_04 @bus @delete_partner
   Scenario: Mozy-144460_04: Delete OEM Partner Root, check Partner L1 information
@@ -322,10 +323,10 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
 #      | Pending | Root Admin: |
 #      | today   | @root_admin |
 
-    When I use key activation to activate devices
-      | machine_name      |
-      | machine_144460_04 |
-    Then Activate key response should be ERROR: invalid token
+#    When I use key activation to activate devices
+#      | machine_name      |
+#      | machine_144460_04 |
+#    Then Activate key response should be ERROR: invalid token
 
     When I navigate to user login page with partner ID oem.partners.com
     And I log in bus admin console with user name @new_users[0].email and password reset password
@@ -353,7 +354,6 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
     And I search partner by newly created subpartner company name
     And I view partner details by newly created subpartner company name
 
-    When I act as newly created subpartner account
     When I act as newly created subpartner account
     And I navigate to Purchase Resources section from bus admin console page
     And I purchase resources:
@@ -445,7 +445,7 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
     When I use key activation to activate devices
       | machine_name      |
       | machine_144460_05 |
-    Then Activate key response should be ERROR: invalid token
+    Then Activate key response should be ERROR: COULD NOT FIND KEY
 
 #    When I navigate to user login page with partner ID oem.partners.com
 #    And I log in bus admin console with user name @new_users[0].email and password reset password
@@ -785,7 +785,7 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
     When I use key activation to activate devices
       | machine_name      |
       | machine_144460_09 |
-    Then Activate key response should be ERROR: invalid token
+    Then Activate key response should be ERROR: COULD NOT FIND KEY
 
     When I navigate to user login page with partner ID oem.partners.com
     And I log in bus admin console with user name @new_users[0].email and password reset password
@@ -906,7 +906,7 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
     When I use key activation to activate devices
       | machine_name      |
       | machine_144460_10 |
-    Then Activate key response should be ERROR: invalid token
+    Then Activate key response should be ERROR: COULD NOT FIND KEY
 
     When I navigate to user login page with partner ID oem.partners.com
     And I log in bus admin console with user name @new_users[0].email and password reset password
