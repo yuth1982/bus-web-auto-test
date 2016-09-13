@@ -27,6 +27,8 @@ When /^I use keyless activation to activate devices(| unsuccessful| newly)$/  do
   end
   @user_password = CONFIGS['global']['test_pwd'] unless !@user_password.nil?
   region = attr['user_region'] || attr['ug_region'] || attr['partner_region'] || 'qa'
+  company_type = @partner.partner_info.type unless @partner.nil?
+  company_type = @subpartner.company_type unless @subpartner.nil?
 
   @new_clients =[]
   @clients =[] if @clients.nil?
@@ -35,7 +37,7 @@ When /^I use keyless activation to activate devices(| unsuccessful| newly)$/  do
 
   machine_name = attr['machine_name']
   machine_name = "machine#{Time.now.strftime("%m%d%H%M%S")}" if attr['machine_name'] == 'auto_generate'
-  @client = KeylessClient.new(user_email, @user_password, current_partner_id, partner_name, attr['machine_type'], @partner.partner_info.type, nil, nil, nil, machine_name, region)
+  @client = KeylessClient.new(user_email, @user_password, current_partner_id, partner_name, attr['machine_type'], company_type, nil, nil, nil, machine_name, region)
   @client.activate_client_devices
   @license_key = @client.license_key
   if type.include?('unsuccessful')
