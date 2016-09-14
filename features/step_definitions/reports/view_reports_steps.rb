@@ -280,7 +280,11 @@ When /^I inactive (.+) scheduled report$/ do |report_name|
   @bus_site.admin_console_page.edit_report_section.inactive_report
 end
 
-And /^no report is scheduled for this partner$/ do
+And /^(.+) report is scheduled for this partner$/ do |num|
   delayed_job_count = DBHelper.get_count_delayed_job @partner_id
-  delayed_job_count.should == '0'
+  if num == 'no'
+    delayed_job_count.should == '0'
+  else
+    delayed_job_count.should == num
+  end
 end

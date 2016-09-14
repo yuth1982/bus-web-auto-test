@@ -13,6 +13,15 @@ And /^I upload change linux client env script to remote machine$/ do
   SSHLinuxE2E.upload(local_path,CONFIGS['linux']['path'])
 end
 
+And /^I activate linux machine using username (.+) and password (.+)$/ do |username, password|
+  Log.debug SSHLinuxE2E.setup_env(TEST_ENV, SSHLinuxE2E.get_codename(@partner.partner_info.type))
+  @activate_result = SSHLinuxE2E.activate_machine(username, password)
+end
+
+Then /^linux machine activation message should be (.+)$/ do |messages|
+  Log.debug @activate_result
+  @activate_result.include?(messages).should be_true
+end
 
 And /^I backup file using linux client for user (.+) password (.+)$/ do |username, password|
   Log.debug SSHLinuxE2E.setup_env(TEST_ENV, SSHLinuxE2E.get_codename(@partner.partner_info.type))

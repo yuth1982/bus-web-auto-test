@@ -6,8 +6,8 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
   @TC.144460_01 @bus @delete_partner
   Scenario: Mozy-144460_01: Delete MozyPro Partner Root, check Partner Root information
     When I add a new MozyPro partner:
-      | period | base plan |
-      | 1      | 250 GB    |
+      | period | base plan | server plan |
+      | 1      | 250 GB    | yes         |
     And New partner should be created
     And Partner general information should be:
       | Status:         |
@@ -22,26 +22,31 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
 
     And I add new user(s):
       | name              | user_group           | storage_type | storage_limit | devices |
-      | tc_144460_01_user | (default user group) | Desktop      | 100           | 3       |
+      | tc_144460_01_user | (default user group) | Server       | 100           | 3       |
     Then 1 new user should be created
     When I search user by:
       | keywords   |
       | @user_name |
     And I view user details by tc_144460_01_user
     And I update the user password to default password
-    And I use keyless activation to activate devices
-      | machine_name      | machine_type |
-      | machine_144460_01 | Desktop      |
-    Then activate machine result should be
-      | code | body                                  |
-      | 200  | {"license_key":"machine license key"} |
+    And I activate linux machine using username newly created user email and password default password
+    Then linux machine activation message should be AUTHENTICATED
+    #And I use keyless activation to activate devices
+    #  | machine_name      | machine_type |
+    #  | machine_144460_01 | Desktop      |
+    #Then activate machine result should be
+    #  | code | body                                  |
+    #  | 200  | {"license_key":"machine license key"} |
     And I build a new report:
       | type            | name                  | frequency |
       | Billing Summary | billing summary test  | Daily     |
     Then Billing summary report should be created
+    And 1 report is scheduled for this partner
 
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
+
+    And no report is scheduled for this partner
 
     When I navigate to Manage Pending Deletes section from bus admin console page
     And I make sure pending deletes setting is 60 days
@@ -51,13 +56,14 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
     Then Partners in pending-delete not available to purge search results should be:
       | Partner       |
       | @company_name |
-
-    When I use keyless activation to activate devices unsuccessful
-      | machine_name      | machine_type |
-      | machine_144460_01 | Desktop      |
-    Then activate machine result should be
-      | code | body                 |
-      | 401  | ERROR: invalid token |
+    And I activate linux machine using username newly created user email and password default password
+    Then linux machine activation message should be Invalid credentials.  Re-enter your account information.
+    #When I use keyless activation to activate devices unsuccessful
+    #  | machine_name      | machine_type |
+    #  | machine_144460_01 | Desktop      |
+    #Then activate machine result should be
+    #  | code | body                 |
+    #  | 401  | ERROR: invalid token |
 
     When API* I get Aria account details by newly created partner aria id
     Then API* Aria account should be:
@@ -103,11 +109,6 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
       | Date  | Amount    | Total Paid | Balance Due |
       | today | $94.99    | $94.99     | $0.00       |
 
-#    When I wait for 86460 seconds
-#    And I search emails by keywords:
-#      | to               | content           |
-#      | @new_admin_email | <%=@report.name%> |
-#    Then I should see 0 email(s)
 
   @TC.144460_02 @bus @delete_partner
   Scenario: Mozy-144460_02: Delete OEM Partner Root, check Partner Root information
