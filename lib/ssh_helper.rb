@@ -245,6 +245,8 @@ module SSHLinuxE2E
                     'mozy'
                   when "Reseller"
                     'mozypro'
+                  else
+                    company_type
                 end
   end
 

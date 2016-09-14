@@ -7,7 +7,7 @@ module SiteHelper
     def initialize
       if page.driver.is_a?(Capybara::Selenium::Driver)
         page.driver.browser.switch_to.default_content
-        # page.driver.browser.manage.window.maximize
+        page.driver.browser.manage.window.maximize
       else
         raise('Error: Selenium WebDriver Required.')
       end

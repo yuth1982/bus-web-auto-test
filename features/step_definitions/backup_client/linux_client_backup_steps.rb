@@ -14,7 +14,9 @@ And /^I upload change linux client env script to remote machine$/ do
 end
 
 And /^I activate linux machine using username (.+) and password (.+)$/ do |username, password|
-  Log.debug SSHLinuxE2E.setup_env(TEST_ENV, SSHLinuxE2E.get_codename(@partner.partner_info.type))
+  company_type = @partner.partner_info.type unless @partner.nil?
+  company_type = @subpartner.company_type unless @subpartner.nil?
+  Log.debug SSHLinuxE2E.setup_env(TEST_ENV, SSHLinuxE2E.get_codename(company_type))
   @activate_result = SSHLinuxE2E.activate_machine(username, password)
 end
 
