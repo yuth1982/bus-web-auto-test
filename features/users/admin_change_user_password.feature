@@ -44,7 +44,7 @@ Feature: Password change policy enforcement
       | <%=@new_users[0].email%> | <%=CONFIGS['global']['test_pwd'] %> |
     Then I will see the user account page
 
-  @TC.132342 @bus @qa6 @temp_password @regression
+  @TC.132342 @bus @qa6 @temp_password @regression @subdomain
   Scenario: 132342: MozyPro partner (has subdomain) admin change user password with "temporary password"
     When I use a existing partner:
       | company name                      | admin email                               | partner type | partner id |
@@ -302,7 +302,7 @@ Feature: Password change policy enforcement
       | <%=@new_users[0].email%> | <%=CONFIGS['global']['test_hipaa_pwd'] %> |
     Then I will see the user account page
 
-  @TC.132439 @bus @qa6 @regression
+  @TC.132439 @bus @qa6 @regression @subdomain
   Scenario: 132439: MozyPro partner (has subdomain) admin change user password without "temporary password"
     When I use a existing partner:
       | company name                      | admin email                               | partner type | partner id |

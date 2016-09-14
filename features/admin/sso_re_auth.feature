@@ -85,7 +85,7 @@ Feature: login as admins
     And I delete a user tc121959.user2 in the AD
     And I delete a user tc121959.user1 in the AD
 
-  @TC.121965 @bus @admin @tasks_p1 @ldap_sequence
+  @TC.121965 @bus @admin @tasks_p1 @ldap_sequence @subdomain
   Scenario: 121965 LDAP admin changing auth type should require AD re-auth
     When I add a user to the AD
       | user name      | mail                               |
@@ -216,7 +216,7 @@ Feature: login as admins
     And I delete a user tc121965.user2 in the AD
     And I delete a user tc121965.user1 in the AD
 
-  @TC.121966 @bus @admin @tasks_p1 @ldap_sequence @smoke
+  @TC.121966 @bus @admin @tasks_p1 @ldap_sequence @smoke @subdomain
   Scenario: 121966 LDAP admin deleting admin should require AD re-auth
     When I add a user to the AD
       | user name      | mail                               |
@@ -277,7 +277,7 @@ Feature: login as admins
       | email                              |
       | tc121966.user3@mtdev.mozypro.local |
 
-  @TC.121967 @bus @admin @tasks_p1 @ldap_sequence
+  @TC.121967 @bus @admin @tasks_p1 @ldap_sequence @subdomain
   Scenario: 121967 LDAP admin deleting partner should require AD re-auth
     When I add a user to the AD
       | user name      | mail                               |
@@ -343,7 +343,7 @@ Feature: login as admins
       | email                              |
       | tc121967.user1@mtdev.mozypro.local |
 
-  @TC.121961 @bus @admin @tasks_p1 @ldap_sequence
+  @TC.121961 @bus @admin @tasks_p1 @ldap_sequence @subdomain
   Scenario: 121961 Root admin deleting partner should not require AD re-auth
     When I search partner by:
       | email                        |
@@ -378,7 +378,7 @@ Feature: login as admins
     And I refresh Search List Partners section
     Then Partner search results should be empty
 
-  @TC.121962 @bus @admin @tasks_p1 @ldap_sequence
+  @TC.121962 @bus @admin @tasks_p1 @ldap_sequence @subdomain
   Scenario: 121962 Root admin changing auth type should not require AD re-auth
     When I search partner by:
       | email                        |
@@ -420,7 +420,7 @@ Feature: login as admins
 
 ############################################################################
 
-  @TC.122047 @bus @admin @tasks_p1 @ldap_sequence
+  @TC.122047 @bus @admin @tasks_p1 @ldap_sequence @subdomain
   Scenario: 122047 LDAP Push admin deleting partner should require AD re-auth
     When I add a user to the AD
       | user name      | mail                               |
@@ -486,7 +486,7 @@ Feature: login as admins
       | email                              |
       | tc122047.user1@mtdev.mozypro.local |
 
-  @TC.122048 @bus @admin @tasks_p1 @ldap_sequence
+  @TC.122048 @bus @admin @tasks_p1 @ldap_sequence @subdomain
   Scenario: 122048 LDAP Push admin deleting admin should require AD re-auth
     When I add a user to the AD
       | user name      | mail                               |
@@ -547,7 +547,7 @@ Feature: login as admins
       | email                              |
       | tc122048.user3@mtdev.mozypro.local |
 
-  @TC.122049 @bus @admin @tasks_p1 @ldap_sequence
+  @TC.122049 @bus @admin @tasks_p1 @ldap_sequence @subdomain
   Scenario: 122049 LDAP Push admin changing auth type should require AD re-auth
     When I add a user to the AD
       | user name      | mail                               |

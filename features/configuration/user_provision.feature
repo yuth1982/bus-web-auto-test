@@ -597,7 +597,7 @@ Feature: User sync
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.17592 @firefox_profile @bus @2.1 @direct_ldap_integration @use_provision @qa8 @regression
+  @TC.17592 @firefox_profile @bus @2.1 @direct_ldap_integration @use_provision @qa8 @regression @subdomain
   Scenario: 17592 UserProvision - Deleted users in BUS can be resumed
     When I search partner by:
       | email                        |
@@ -712,7 +712,7 @@ Feature: User sync
     And I delete 1 deprovision rules
     And I save the changes
 
-  @TC.17593 @firefox_profile  @bus @2.1 @direct_ldap_integration @use_provision @qa8 @regression
+  @TC.17593 @firefox_profile  @bus @2.1 @direct_ldap_integration @use_provision @qa8 @regression @subdomain
   Scenario: 17593 UserProvision - Suspended users in BUS can't be resumed
     When I search partner by:
       | email                        |
@@ -834,7 +834,7 @@ Feature: User sync
     And I delete 1 deprovision rules
     And I save the changes
 
-  @TC.17594 @firefox_profile @bus @2.1 @direct_ldap_integration @use_provision @qa8 @regression
+  @TC.17594 @firefox_profile @bus @2.1 @direct_ldap_integration @use_provision @qa8 @regression @subdomain
   Scenario: 17594 UserProvision - Delete user after several days of not synced
     When I search partner by:
       | email                        |
@@ -897,7 +897,7 @@ Feature: User sync
     When I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
     Then I will see the Authentication Failed page
 
-  @TC.17595 @firefox_profile @bus @2.1 @direct_ldap_integration @use_provision @qa8 @regression
+  @TC.17595 @firefox_profile @bus @2.1 @direct_ldap_integration @use_provision @qa8 @regression @subdomain
   Scenario: 17595 UserProvision - Suspend user after several days of not synced
     When I search partner by:
       | email                        |
