@@ -25,12 +25,12 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
     And I change MozyPro account plan to:
       | base plan |
       | 250 GB    |
-#    Then Change plan charge summary should be:
-#      | Description                    | Amount   |
-#      | Credit for remainder of 100 GB | -$439.89 |
-#      | Charge for new 250 GB          | $729.89  |
-#      |                                |          |
-#      | Total amount to be charged     | $290.00  |
+    Then Change plan charge summary should be:
+      | Description                    | Amount    |
+      | Credit for remainder of 100 GB | -$839.79  |
+      | Charge for new 250 GB          | $1,399.79 |
+      |                                |           |
+      | Total amount to be charged     | $560.00   |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -47,12 +47,12 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
     And I change MozyPro account plan to:
       | base plan |
       | 100 GB    |
-#    Then Change plan charge summary should be:
-#      | Description                         | Amount   |
-#      | Credit for remainder of Server Plan | -$124.89 |
-#      | Charge for new Server Plan          | $142.89  |
-#      |                                     |          |
-#      | Total amount to be charged          | $18.00   |
+    Then Change plan charge summary should be:
+      | Description                         | Amount   |
+      | Credit for remainder of Server Plan | -$231.79 |
+      | Charge for new Server Plan          | $272.79  |
+      |                                     |          |
+      | Total amount to be charged          | $41.00   |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -66,40 +66,40 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
     And New partner should be created
     And I get partner aria id
     When API* I assign aria supp plan multi for newly created partner aria id
-      | plan_name                                      | rate_schedule_name  | schedule_currency | num_plan_units |
-      | MozyPro 250 GB Plan (Biennial)                   | Custom Old Standard | usd               | 1              |
+      | plan_name                      | rate_schedule_name  | schedule_currency | num_plan_units |
+      | MozyPro 250 GB Plan (Biennial) | Custom Old Standard | usd               | 1              |
     When API* I assign aria supp plan multi for newly created partner aria id
-      | plan_name                                      | rate_schedule_name  | schedule_currency | num_plan_units |
+      | plan_name                                        | rate_schedule_name  | schedule_currency | num_plan_units |
       | MozyPro Server Add-on for 250 GB Plan (Biennial) | Custom Old Standard | usd               | 1              |
     When I act as newly created partner account
     And I navigate to Change Plan section from bus admin console page
-#    Then MozyPro available base plans and price should be:
-#      | plan                               |
-#      | 10 GB, $109.89                     |
-#      | 50 GB, $219.89                     |
-#      | 100 GB, $439.89                    |
-#      | 250 GB, $1,044.89 (current purchase) |
-#      | 500 GB, $1,459.89                  |
-#      | 1 TB, $2,919.89                    |
-#      | 2 TB, $5,769.89                    |
-#      | 4 TB, $11,089.89                   |
-#      | 8 TB, $31,679.78                   |
-#      | 12 TB, $47,519.67                  |
-#      | 16 TB, $63,359.56                  |
-#      | 20 TB, $79,199.45                  |
-#      | 24 TB, $95,039.34                  |
-#      | 28 TB, $110,879.23                 |
-#      | 32 TB, $126,719.12                 |
-#    And Add-ons price should be Server Plan, $175.89
+    Then MozyPro available base plans and price should be:
+      | plan                                 |
+      | 10 GB, $209.79                       |
+      | 50 GB, $419.79                       |
+      | 100 GB, $839.79                      |
+      | 250 GB, $1,994.79 (current purchase) |
+      | 500 GB, $2,789.79                    |
+      | 1 TB, $5,579.79                      |
+      | 2 TB, $11,019.79                     |
+      | 4 TB, $21,169.79                     |
+      | 8 TB, $60,479.58                     |
+      | 12 TB, $90,719.37                    |
+      | 16 TB, $120,959.16                   |
+      | 20 TB, $151,198.95                   |
+      | 24 TB, $181,438.74                   |
+      | 28 TB, $211,678.53                   |
+      | 32 TB, $241,918.32                   |
+    And Add-ons price should be Server Plan, $335.79
     And I change MozyPro account plan to:
       | base plan |
       | 100 GB    |
-#    Then Change plan charge summary should be:
-#      | Description                         | Amount   |
-#      | Credit for remainder of Server Plan | -$175.89 |
-#      | Charge for new Server Plan          | $142.89  |
-#      |                                     |          |
-#      | Total amount to be charged          | $0.00    |
+    Then Change plan charge summary should be:
+      | Description                         | Amount   |
+      | Credit for remainder of Server Plan | -$335.79 |
+      | Charge for new Server Plan          | $272.79  |
+      |                                     |          |
+      | Total amount to be charged          | $0.00    |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -108,7 +108,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
   @TC.144165_fake_02_0102 @add_new_partner @mozypro @bus
   Scenario: MozyPro UK 100 gb Biennial to 250 gb Biennial
     When I add a new MozyPro partner:
-      | company name                                    | period | base plan | server plan | create under | country        | vat number  | net terms |
+      | company name                                        | period | base plan | server plan | create under | country        | vat number  | net terms |
       | DONOT MozyPro UK 100 gb Biennial to 250 gb Biennial | 24     | 100 GB    | yes         | MozyPro UK   | United Kingdom | GB117223643 | yes       |
     And New partner should be created
     And I get partner aria id
@@ -116,12 +116,12 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
     And I change MozyPro account plan to:
       | base plan |
       | 250 GB    |
-#    Then Change plan charge summary should be:
-#      | Description                    | Amount   |
-#      | Credit for remainder of 100 GB | -£296.89 |
-#      | Charge for new 250 GB          | £477.89  |
-#      |                                |          |
-#      | Total amount to be charged     | £181.00  |
+    Then Change plan charge summary should be:
+      | Description                    | Amount   |
+      | Credit for remainder of 100 GB | -£566.79 |
+      | Charge for new 250 GB          | £914.79  |
+      |                                |          |
+      | Total amount to be charged     | £348.00  |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -130,7 +130,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
   @TC.144165_fake_02_010202 @add_new_partner @mozypro @bus
   Scenario: MozyPro UK 250 gb Biennial to 100 gb Biennial
     When I add a new MozyPro partner:
-      | company name                                    | period | base plan | server plan | create under | country        | vat number  | net terms |
+      | company name                                        | period | base plan | server plan | create under | country        | vat number  | net terms |
       | DONOT MozyPro UK 250 gb Biennial to 100 gb Biennial | 24     | 250 GB    | yes         | MozyPro UK   | United Kingdom | GB117223643 | yes       |
     And New partner should be created
     And I get partner aria id
@@ -138,12 +138,12 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
     And I change MozyPro account plan to:
       | base plan |
       | 100 GB    |
-#    Then Change plan charge summary should be:
-#      | Description                         | Amount  |
-#      | Credit for remainder of Server Plan | -£80.89 |
-#      | Charge for new Server Plan          | £98.89  |
-#      |                                     |         |
-#      | Total amount to be charged          | £18.00  |
+    Then Change plan charge summary should be:
+      | Description                         | Amount   |
+      | Credit for remainder of Server Plan | -£151.79 |
+      | Charge for new Server Plan          | £188.79  |
+      |                                     |          |
+      | Total amount to be charged          | £37.00   |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -152,67 +152,67 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
   @TC.144165_fake_02_010203 @add_new_partner @mozypro @bus
   Scenario: MozyPro UK 250 gb Biennial to 100 GB Biennial
     When I add a new MozyPro partner:
-      | company name                                             | period | create under | country        | cc number        |
+      | company name                                                 | period | create under | country        | cc number        |
       | DONOT EDIT MozyPro UK old 250 gb Biennial to 100 GB Biennial | 24     | MozyPro UK   | United Kingdom | 4916783606275713 |
     And New partner should be created
     And I get partner aria id
     When API* I assign aria supp plan multi for newly created partner aria id
-      | plan_name                                      | rate_schedule_name  | schedule_currency | num_plan_units |
-      | MozyPro 250 GB Plan (Biennial)                   | Custom Old Standard | gbp               | 1              |
+      | plan_name                      | rate_schedule_name  | schedule_currency | num_plan_units |
+      | MozyPro 250 GB Plan (Biennial) | Custom Old Standard | gbp               | 1              |
     When API* I assign aria supp plan multi for newly created partner aria id
-      | plan_name                                      | rate_schedule_name  | schedule_currency | num_plan_units |
+      | plan_name                                        | rate_schedule_name  | schedule_currency | num_plan_units |
       | MozyPro Server Add-on for 250 GB Plan (Biennial) | Custom Old Standard | gbp               | 1              |
     When I act as newly created partner account
     And I navigate to Change Plan section from bus admin console page
-#    Then MozyPro available base plans and price should be:
-#      | plan                               |
-#      | 10 GB, £76.89                      |
-#      | 50 GB, £153.89                     |
-#      | 100 GB, £296.89                    |
-#      | 250 GB, £703.89 (current purchase) |
-#      | 500 GB, £954.89                    |
-#      | 1 TB, £1,908.89                    |
-#      | 2 TB, £3,771.89                    |
-#      | 4 TB, £7,248.89                    |
-#      | 8 TB, £20,041.78                   |
-#      | 12 TB, £30,062.67                  |
-#      | 16 TB, £40,083.56                  |
-#      | 20 TB, £50,104.45                  |
-#      | 24 TB, £60,125.34                  |
-#      | 28 TB, £70,146.23                  |
-#      | 32 TB, £80,167.12                  |
-#    And Add-ons price should be Server Plan, £120.89
+    Then MozyPro available base plans and price should be:
+      | plan                                 |
+      | 10 GB, £146.79                       |
+      | 50 GB, £293.79                       |
+      | 100 GB, £566.79                      |
+      | 250 GB, £1,343.79 (current purchase) |
+      | 500 GB, £1,823.79                    |
+      | 1 TB, £3,646.79                      |
+      | 2 TB, £7,202.79                      |
+      | 4 TB, £13,836.79                     |
+      | 8 TB, £38,261.58                     |
+      | 12 TB, £57,392.37                    |
+      | 16 TB, £76,523.16                    |
+      | 20 TB, £95,653.95                    |
+      | 24 TB, £114,784.74                   |
+      | 28 TB, £133,915.53                   |
+      | 32 TB, £153,046.32                   |
+    And Add-ons price should be Server Plan, £230.79
     And I change MozyPro account plan to:
       | base plan |
       | 100 GB    |
-#    Then Change plan charge summary should be:
-#      | Description                         | Amount   |
-#      | Credit for remainder of Server Plan | -£145.07 |
-#      | Charge for new Server Plan          | £118.67  |
-#      |                                     |          |
-#      | Total amount to be charged          | £0.00    |
+    Then Change plan charge summary should be:
+      | Description                         | Amount   |
+      | Credit for remainder of Server Plan | -£276.95 |
+      | Charge for new Server Plan          | £226.55  |
+      |                                     |          |
+      | Total amount to be charged          | £0.00    |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
       | 100 GB    | Yes         |
 
   @TC.144165_fake_02_0103 @add_new_partner @mozypro @bus
-  Scenario: MozyPro UK 100 gb Biennial to 250 gb Biennial
+  Scenario: MozyPro Germany 100 gb Biennial to 250 gb Biennial
     When I add a new MozyPro partner:
-      | company name                                    | period | base plan | server plan | create under    | country | vat number  | net terms |
-      | DONOT MozyPro UK 100 gb Biennial to 250 gb Biennial | 24     | 100 GB    | yes         | MozyPro Germany | Germany | DE812321109 | yes       |
+      | company name                                             | period | base plan | server plan | create under    | country | vat number  | net terms |
+      | DONOT MozyPro Germany 100 gb Biennial to 250 gb Biennial | 24     | 100 GB    | yes         | MozyPro Germany | Germany | DE812321109 | yes       |
     And New partner should be created
     And I get partner aria id
     When I act as newly created partner account
     And I change MozyPro account plan to:
       | base plan |
       | 250 GB    |
-#    Then Change plan charge summary should be:
-#      | Description                    | Amount   |
-#      | Credit for remainder of 100 GB | -€340.89 |
-#      | Charge for new 250 GB          | €663.89  |
-#      |                                |          |
-#      | Total amount to be charged     | €323.00  |
+    Then Change plan charge summary should be:
+      | Description                    | Amount    |
+      | Credit for remainder of 100 GB | -€650.79  |
+      | Charge for new 250 GB          | €1,272.79 |
+      |                                |           |
+      | Total amount to be charged     | €622.00   |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -221,7 +221,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
   @TC.144165_fake_02_010302 @add_new_partner @mozypro @bus
   Scenario: MozyPro Germany 250 gb Biennial to 100 gb Biennial
     When I add a new MozyPro partner:
-      | company name                                         | period | base plan | server plan | create under    | country | vat number  | net terms |
+      | company name                                             | period | base plan | server plan | create under    | country | vat number  | net terms |
       | DONOT MozyPro Germany 250 gb Biennial to 100 gb Biennial | 24     | 250 GB    | yes         | MozyPro Germany | Germany | DE812321109 | yes       |
     And New partner should be created
     And I get partner aria id
@@ -229,12 +229,12 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
     And I change MozyPro account plan to:
       | base plan |
       | 100 GB    |
-#    Then Change plan charge summary should be:
-#      | Description                         | Amount   |
-#      | Credit for remainder of Server Plan | -€113.89 |
-#      | Charge for new Server Plan          | €109.89  |
-#      |                                     |          |
-#      | Total amount to be charged          | €0.00    |
+    Then Change plan charge summary should be:
+      | Description                         | Amount   |
+      | Credit for remainder of Server Plan | -€210.79 |
+      | Charge for new Server Plan          | €209.79  |
+      |                                     |          |
+      | Total amount to be charged          | €0.00    |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -243,45 +243,45 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
   @TC.144165_fake_02_010303 @add_new_partner @mozypro @bus
   Scenario: MozyPro Germany 250 gb Biennial to 100 gb Biennial
     When I add a new MozyPro partner:
-      | company name                                             | period | create under    | country | cc number        |
+      | company name                                                 | period | create under    | country | cc number        |
       | DONOT MozyPro Germany old 250 gb Biennial to 100 gb Biennial | 24     | MozyPro Germany | Germany | 4188181111111112 |
     And New partner should be created
     And I get partner aria id
     When API* I assign aria supp plan multi for newly created partner aria id
-      | plan_name                                      | rate_schedule_name  | schedule_currency | num_plan_units |
-      | MozyPro 250 GB Plan (Biennial)                   | Custom Old Standard | eur               | 1              |
+      | plan_name                      | rate_schedule_name  | schedule_currency | num_plan_units |
+      | MozyPro 250 GB Plan (Biennial) | Custom Old Standard | eur               | 1              |
     When API* I assign aria supp plan multi for newly created partner aria id
-      | plan_name                                      | rate_schedule_name  | schedule_currency | num_plan_units |
+      | plan_name                                        | rate_schedule_name  | schedule_currency | num_plan_units |
       | MozyPro Server Add-on for 250 GB Plan (Biennial) | Custom Old Standard | eur               | 1              |
     When I act as newly created partner account
     And I navigate to Change Plan section from bus admin console page
-#    Then MozyPro available base plans and price should be:
-#      | plan                               |
-#      | 10 GB, €87.89                      |
-#      | 50 GB, €175.89                     |
-#      | 100 GB, €340.89                    |
-#      | 250 GB, €824.89 (current purchase) |
-#      | 500 GB, €1,327.89                  |
-#      | 1 TB, €2,654.89                    |
-#      | 2 TB, €5,245.89                    |
-#      | 4 TB, €10,081.89                   |
-#      | 8 TB, €24,419.78                   |
-#      | 12 TB, €36,629.67                  |
-#      | 16 TB, €48,839.56                  |
-#      | 20 TB, €61,049.45                  |
-#      | 24 TB, €73,259.34                  |
-#      | 28 TB, €85,469.23                  |
-#      | 32 TB, €97,679.12                  |
-#    And Add-ons price should be Server Plan, €142.89
+    Then MozyPro available base plans and price should be:
+      | plan                                 |
+      | 10 GB, €167.79                       |
+      | 50 GB, €335.79                       |
+      | 100 GB, €650.79                      |
+      | 250 GB, €1,574.79 (current purchase) |
+      | 500 GB, €2,536.79                    |
+      | 1 TB, €5,072.79                      |
+      | 2 TB, €10,017.79                     |
+      | 4 TB, €19,245.79                     |
+      | 8 TB, €46,619.58                     |
+      | 12 TB, €69,929.37                    |
+      | 16 TB, €93,239.16                    |
+      | 20 TB, €116,548.95                   |
+      | 24 TB, €139,858.74                   |
+      | 28 TB, €163,168.53                   |
+      | 32 TB, €186,478.32                   |
+    And Add-ons price should be Server Plan, €272.79
     And I change MozyPro account plan to:
       | base plan |
       | 100 GB    |
-#    Then Change plan charge summary should be:
-#      | Description                         | Amount   |
-#      | Credit for remainder of Server Plan | -€170.04 |
-#      | Charge for new Server Plan          | €130.77  |
-#      |                                     |          |
-#      | Total amount to be charged          | €0.00    |
+    Then Change plan charge summary should be:
+      | Description                         | Amount   |
+      | Credit for remainder of Server Plan | -€324.62 |
+      | Charge for new Server Plan          | €249.65  |
+      |                                     |          |
+      | Total amount to be charged          | €0.00    |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -290,45 +290,45 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
   @TC.144165_fake_02_0201 @add_new_partner @mozypro @bus
   Scenario: MozyPro USD 250 gb Biennial to 500 GB Biennial
     When I add a new MozyPro partner:
-      | company name                                          | period | country       |
+      | company name                                              | period | country       |
       | DONOT EDIT MozyPro USD 250 gb Biennial to 500 GB Biennial | 24     | United States |
     And New partner should be created
     And I get partner aria id
     When API* I assign aria supp plan multi for newly created partner aria id
-      | plan_name                                      | rate_schedule_name  | schedule_currency | num_plan_units |
-      | MozyPro 250 GB Plan (Biennial)                   | Custom Old Standard | usd               | 1              |
+      | plan_name                      | rate_schedule_name  | schedule_currency | num_plan_units |
+      | MozyPro 250 GB Plan (Biennial) | Custom Old Standard | usd               | 1              |
     When API* I assign aria supp plan multi for newly created partner aria id
-      | plan_name                                      | rate_schedule_name  | schedule_currency | num_plan_units |
+      | plan_name                                        | rate_schedule_name  | schedule_currency | num_plan_units |
       | MozyPro Server Add-on for 250 GB Plan (Biennial) | Custom Old Standard | usd               | 1              |
     When I act as newly created partner account
     And I navigate to Change Plan section from bus admin console page
-#    Then MozyPro available base plans and price should be:
-#      | plan                               |
-#      | 10 GB, $109.89                     |
-#      | 50 GB, $219.89                     |
-#      | 100 GB, $439.89                    |
-#      | 250 GB, $1,044.89 (current purchase) |
-#      | 500 GB, $1,459.89                  |
-#      | 1 TB, $2,919.89                    |
-#      | 2 TB, $5,769.89                    |
-#      | 4 TB, $11,089.89                   |
-#      | 8 TB, $31,679.78                   |
-#      | 12 TB, $47,519.67                  |
-#      | 16 TB, $63,359.56                  |
-#      | 20 TB, $79,199.45                  |
-#      | 24 TB, $95,039.34                  |
-#      | 28 TB, $110,879.23                 |
-#      | 32 TB, $126,719.12                 |
-#    And Add-ons price should be Server Plan, $175.89
+    Then MozyPro available base plans and price should be:
+      | plan                                 |
+      | 10 GB, $209.79                       |
+      | 50 GB, $419.79                       |
+      | 100 GB, $839.79                      |
+      | 250 GB, $1,994.79 (current purchase) |
+      | 500 GB, $2,789.79                    |
+      | 1 TB, $5,579.79                      |
+      | 2 TB, $11,019.79                     |
+      | 4 TB, $21,169.79                     |
+      | 8 TB, $60,479.58                     |
+      | 12 TB, $90,719.37                    |
+      | 16 TB, $120,959.16                   |
+      | 20 TB, $151,198.95                   |
+      | 24 TB, $181,438.74                   |
+      | 28 TB, $211,678.53                   |
+      | 32 TB, $241,918.32                   |
+    And Add-ons price should be Server Plan, $335.79
     And I change MozyPro account plan to:
       | base plan | server plan |
       | 500 GB    | Yes         |
-#    Then Change plan charge summary should be:
-#      | Description                   | Amount     |
-#      | Credit for remainder of plans | -$1,220.78 |
-#      | Charge for upgraded plans     | $1,616.78  |
-#      |                               |            |
-#      | Total amount to be charged    | $396.00    |
+    Then Change plan charge summary should be:
+      | Description                   | Amount     |
+      | Credit for remainder of plans | -$2,330.58 |
+      | Charge for upgraded plans     | $3,086.58  |
+      |                               |            |
+      | Total amount to be charged    | $756.00    |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -342,40 +342,40 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
     And New partner should be created
     And I get partner aria id
     When API* I assign aria supp plan multi for newly created partner aria id
-      | plan_name                                      | rate_schedule_name  | schedule_currency | num_plan_units |
-      | MozyPro 250 GB Plan (Biennial)                   | Custom Old Standard | eur               | 1              |
+      | plan_name                      | rate_schedule_name  | schedule_currency | num_plan_units |
+      | MozyPro 250 GB Plan (Biennial) | Custom Old Standard | eur               | 1              |
     When API* I assign aria supp plan multi for newly created partner aria id
-      | plan_name                                      | rate_schedule_name  | schedule_currency | num_plan_units |
+      | plan_name                                        | rate_schedule_name  | schedule_currency | num_plan_units |
       | MozyPro Server Add-on for 250 GB Plan (Biennial) | Custom Old Standard | eur               | 1              |
     When I act as newly created partner account
     And I navigate to Change Plan section from bus admin console page
-#    Then MozyPro available base plans and price should be:
-#      | plan                               |
-#      | 10 GB, €87.89                      |
-#      | 50 GB, €175.89                     |
-#      | 100 GB, €340.89                    |
-#      | 250 GB, €824.89 (current purchase) |
-#      | 500 GB, €1,327.89                  |
-#      | 1 TB, €2,654.89                    |
-#      | 2 TB, €5,245.89                    |
-#      | 4 TB, €10,081.89                   |
-#      | 8 TB, €24,419.78                   |
-#      | 12 TB, €36,629.67                  |
-#      | 16 TB, €48,839.56                  |
-#      | 20 TB, €61,049.45                  |
-#      | 24 TB, €73,259.34                  |
-#      | 28 TB, €85,469.23                  |
-#      | 32 TB, €97,679.12                  |
-#    And Add-ons price should be Server Plan, €142.89
+    Then MozyPro available base plans and price should be:
+      | plan                                 |
+      | 10 GB, €167.79                       |
+      | 50 GB, €335.79                       |
+      | 100 GB, €650.79                      |
+      | 250 GB, €1,574.79 (current purchase) |
+      | 500 GB, €2,536.79                    |
+      | 1 TB, €5,072.79                      |
+      | 2 TB, €10,017.79                     |
+      | 4 TB, €19,245.79                     |
+      | 8 TB, €46,619.58                     |
+      | 12 TB, €69,929.37                    |
+      | 16 TB, €93,239.16                    |
+      | 20 TB, €116,548.95                   |
+      | 24 TB, €139,858.74                   |
+      | 28 TB, €163,168.53                   |
+      | 32 TB, €186,478.32                   |
+    And Add-ons price should be Server Plan, €272.79
     And I change MozyPro account plan to:
       | base plan | server plan |
       | 500 GB    | Yes         |
-#    Then Change plan charge summary should be:
-#      | Description                   | Amount     |
-#      | Credit for remainder of plans | -€1,151.66 |
-#      | Charge for upgraded plans     | €1,749.04  |
-#      |                               |            |
-#      | Total amount to be charged    | €597.38    |
+    Then Change plan charge summary should be:
+      | Description                   | Amount     |
+      | Credit for remainder of plans | -€2,198.62 |
+      | Charge for upgraded plans     | €3,338.64  |
+      |                               |            |
+      | Total amount to be charged    | €1,140.02  |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -396,33 +396,33 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | MozyPro Server Add-on for 250 GB Plan (Biennial) | Custom Old Standard | gbp               | 1              |
     When I act as newly created partner account
     And I navigate to Change Plan section from bus admin console page
-#    Then MozyPro available base plans and price should be:
-#      | plan                               |
-#      | 10 GB, £76.89                      |
-#      | 50 GB, £153.89                     |
-#      | 100 GB, £296.89                    |
-#      | 250 GB, £703.89 (current purchase) |
-#      | 500 GB, £954.89                    |
-#      | 1 TB, £1,908.89                    |
-#      | 2 TB, £3,771.89                    |
-#      | 4 TB, £7,248.89                    |
-#      | 8 TB, £20,041.78                   |
-#      | 12 TB, £30,062.67                  |
-#      | 16 TB, £40,083.56                  |
-#      | 20 TB, £50,104.45                  |
-#      | 24 TB, £60,125.34                  |
-#      | 28 TB, £70,146.23                  |
-#      | 32 TB, £80,167.12                  |
-#    And Add-ons price should be Server Plan, £120.89
+    Then MozyPro available base plans and price should be:
+      | plan                                 |
+      | 10 GB, £146.79                       |
+      | 50 GB, £293.79                       |
+      | 100 GB, £566.79                      |
+      | 250 GB, £1,343.79 (current purchase) |
+      | 500 GB, £1,823.79                    |
+      | 1 TB, £3,646.79                      |
+      | 2 TB, £7,202.79                      |
+      | 4 TB, £13,836.79                     |
+      | 8 TB, £38,261.58                     |
+      | 12 TB, £57,392.37                    |
+      | 16 TB, £76,523.16                    |
+      | 20 TB, £95,653.95                    |
+      | 24 TB, £114,784.74                   |
+      | 28 TB, £133,915.53                   |
+      | 32 TB, £153,046.32                   |
+    And Add-ons price should be Server Plan, £230.79
     And I change MozyPro account plan to:
       | base plan | server plan |
       | 500 GB    | Yes         |
-#    Then Change plan charge summary should be:
-#      | Description                   | Amount    |
-#      | Credit for remainder of plans | -£989.74  |
-#      | Charge for upgraded plans     | £1,268.14 |
-#      |                               |           |
-#      | Total amount to be charged    | £278.40   |
+    Then Change plan charge summary should be:
+      | Description                   | Amount     |
+      | Credit for remainder of plans | -£1,889.50 |
+      | Charge for upgraded plans     | £2,421.10  |
+      |                               |            |
+      | Total amount to be charged    | £531.60    |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -431,45 +431,45 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
   @TC.144165_fake_02_0301 @add_new_partner @mozypro @bus
   Scenario: MozyPro USD 1 TB Biennial to 2 TB Biennial
     When I add a new MozyPro partner:
-      | company name                                      | period | country       |
+      | company name                                          | period | country       |
       | DONOT EDIT MozyPro USD 1 TB Biennial to 2 TB Biennial | 24     | United States |
     And New partner should be created
     And I get partner aria id
     When API* I assign aria supp plan multi for newly created partner aria id
-      | plan_name                  | rate_schedule_name  | schedule_currency | num_plan_units |
+      | plan_name                    | rate_schedule_name  | schedule_currency | num_plan_units |
       | MozyPro 1 TB Plan (Biennial) | Custom Old Standard | usd               | 1              |
     When API* I assign aria supp plan multi for newly created partner aria id
-      | plan_name                                    | rate_schedule_name  | schedule_currency | num_plan_units |
+      | plan_name                                      | rate_schedule_name  | schedule_currency | num_plan_units |
       | MozyPro Server Add-on for 1 TB Plan (Biennial) | Custom Old Standard | usd               | 1              |
     When I act as newly created partner account
     And I navigate to Change Plan section from bus admin console page
-#    Then MozyPro available base plans and price should be:
-#      | plan                               |
-#      | 10 GB, $109.89                     |
-#      | 50 GB, $219.89                     |
-#      | 100 GB, $439.89                    |
-#      | 250 GB, $729.89                   |
-#      | 500 GB, $1,459.89                  |
-#      | 1 TB, $4,179.89 (current purchase) |
-#      | 2 TB, $5,769.89                    |
-#      | 4 TB, $11,089.89                   |
-#      | 8 TB, $31,679.78                   |
-#      | 12 TB, $47,519.67                  |
-#      | 16 TB, $63,359.56                  |
-#      | 20 TB, $79,199.45                  |
-#      | 24 TB, $95,039.34                  |
-#      | 28 TB, $110,879.23                 |
-#      | 32 TB, $126,719.12                 |
-#    And Add-ons price should be Server Plan, $329.89
+    Then MozyPro available base plans and price should be:
+      | plan                                 |
+      | 10 GB, $209.79                       |
+      | 50 GB, $419.79                       |
+      | 100 GB, $839.79                      |
+      | 250 GB, $1,399.79                    |
+      | 500 GB, $2,789.79                    |
+      | 1 TB, $7,979.79 (current purchase)   |
+      | 2 TB, $11,019.79                     |
+      | 4 TB, $21,169.79                     |
+      | 8 TB, $60,479.58                     |
+      | 12 TB, $90,719.37                    |
+      | 16 TB, $120,959.16                   |
+      | 20 TB, $151,198.95                   |
+      | 24 TB, $181,438.74                   |
+      | 28 TB, $211,678.53                   |
+      | 32 TB, $241,918.32                   |
+#    And Add-ons price should be Server Plan, $629.79
     And I change MozyPro account plan to:
       | base plan | server plan |
       | 2 TB      | Yes         |
-#    Then Change plan charge summary should be:
-#      | Description                   | Amount     |
-#      | Credit for remainder of plans | -$4,509.78 |
-#      | Charge for upgraded plans     | $6,082.78  |
-#      |                               |            |
-#      | Total amount to be charged    | $1,573.00  |
+    Then Change plan charge summary should be:
+      | Description                   | Amount     |
+      | Credit for remainder of plans | -$8,609.58 |
+      | Charge for upgraded plans     | $11,612.58 |
+      |                               |            |
+      | Total amount to be charged    | $3,003.00  |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -483,40 +483,40 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
     And New partner should be created
     And I get partner aria id
     When API* I assign aria supp plan multi for newly created partner aria id
-      | plan_name                  | rate_schedule_name  | schedule_currency | num_plan_units |
+      | plan_name                    | rate_schedule_name  | schedule_currency | num_plan_units |
       | MozyPro 1 TB Plan (Biennial) | Custom Old Standard | eur               | 1              |
     When API* I assign aria supp plan multi for newly created partner aria id
-      | plan_name                                    | rate_schedule_name  | schedule_currency | num_plan_units |
+      | plan_name                                      | rate_schedule_name  | schedule_currency | num_plan_units |
       | MozyPro Server Add-on for 1 TB Plan (Biennial) | Custom Old Standard | eur               | 1              |
     When I act as newly created partner account
     And I navigate to Change Plan section from bus admin console page
-#    Then MozyPro available base plans and price should be:
-#      | plan                               |
-#      | 10 GB, €87.89                      |
-#      | 50 GB, €175.89                     |
-#      | 100 GB, €340.89                    |
-#      | 250 GB, €663.89                    |
-#      | 500 GB, €1,327.89                  |
-#      | 1 TB, €3,299.89 (current purchase) |
-#      | 2 TB, €5,245.89                    |
-#      | 4 TB, €10,081.89                   |
-#      | 8 TB, €24,419.78                   |
-#      | 12 TB, €36,629.67                  |
-#      | 16 TB, €48,839.56                  |
-#      | 20 TB, €61,049.45                  |
-#      | 24 TB, €73,259.34                  |
-#      | 28 TB, €85,469.23                  |
-#      | 32 TB, €97,679.12                  |
-#    And Add-ons price should be Server Plan, €219.89
+    Then MozyPro available base plans and price should be:
+      | plan                                 |
+      | 10 GB, €167.79                       |
+      | 50 GB, €335.79                       |
+      | 100 GB, €650.79                      |
+      | 250 GB, €1,272.79                    |
+      | 500 GB, €2,536.79                    |
+      | 1 TB, €6,299.79 (current purchase)   |
+      | 2 TB, €10,017.79                     |
+      | 4 TB, €19,245.79                     |
+      | 8 TB, €46,619.58                     |
+      | 12 TB, €69,929.37                    |
+      | 16 TB, €93,239.16                    |
+      | 20 TB, €116,548.95                   |
+      | 24 TB, €139,858.74                   |
+      | 28 TB, €163,168.53                   |
+      | 32 TB, €186,478.32                   |
+#    And Add-ons price should be Server Plan, €419.79
     And I change MozyPro account plan to:
       | base plan | server plan |
       | 2 TB      | Yes         |
-#    Then Change plan charge summary should be:
-#      | Description                   | Amount     |
-#      | Credit for remainder of plans | -€4,223.74 |
-#      | Charge for upgraded plans     | €6,635.74  |
-#      |                               |            |
-#      | Total amount to be charged    | €2,412.00  |
+    Then Change plan charge summary should be:
+      | Description                   | Amount     |
+      | Credit for remainder of plans | -€8,063.50 |
+      | Charge for upgraded plans     | €12,667.90 |
+      |                               |            |
+      | Total amount to be charged    | €4,604.40  |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -525,45 +525,45 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
   @TC.144165_fake_02_0303 @add_new_partner @mozypro @bus
   Scenario: MozyPro UK 1 TB Biennial to 2 TB Biennial
     When I add a new MozyPro partner:
-      | company name                                     | period | create under | country        | cc number        |
+      | company name                                         | period | create under | country        | cc number        |
       | DONOT EDIT MozyPro UK 1 TB Biennial to 2 TB Biennial | 24     | MozyPro UK   | United Kingdom | 4916783606275713 |
     And New partner should be created
     And I get partner aria id
     When API* I assign aria supp plan multi for newly created partner aria id
-      | plan_name                  | rate_schedule_name  | schedule_currency | num_plan_units |
+      | plan_name                    | rate_schedule_name  | schedule_currency | num_plan_units |
       | MozyPro 1 TB Plan (Biennial) | Custom Old Standard | gbp               | 1              |
     When API* I assign aria supp plan multi for newly created partner aria id
-      | plan_name                                    | rate_schedule_name  | schedule_currency | num_plan_units |
+      | plan_name                                      | rate_schedule_name  | schedule_currency | num_plan_units |
       | MozyPro Server Add-on for 1 TB Plan (Biennial) | Custom Old Standard | gbp               | 1              |
     When I act as newly created partner account
     And I navigate to Change Plan section from bus admin console page
-#    Then MozyPro available base plans and price should be:
-#      | plan                               |
-#      | 10 GB, £76.89                      |
-#      | 50 GB, £153.89                     |
-#      | 100 GB, £296.89                    |
-#      | 250 GB, £477.89                    |
-#      | 500 GB, £954.89                    |
-#      | 1 TB, £2,694.89 (current purchase) |
-#      | 2 TB, £3,771.89                    |
-#      | 4 TB, £7,248.89                    |
-#      | 8 TB, £20,041.78                   |
-#      | 12 TB, £30,062.67                  |
-#      | 16 TB, £40,083.56                  |
-#      | 20 TB, £50,104.45                  |
-#      | 24 TB, £60,125.34                  |
-#      | 28 TB, £70,146.23                  |
-#      | 32 TB, £80,167.12                  |
-#    And Add-ons price should be Server Plan, £219.89
+    Then MozyPro available base plans and price should be:
+      | plan                                 |
+      | 10 GB, £146.79                       |
+      | 50 GB, £293.79                       |
+      | 100 GB, £566.79                      |
+      | 250 GB, £914.79                      |
+      | 500 GB, £1,823.79                    |
+      | 1 TB, £5,144.79 (current purchase)   |
+      | 2 TB, £7,202.79                      |
+      | 4 TB, £13,836.79                     |
+      | 8 TB, £38,261.58                     |
+      | 12 TB, £57,392.37                    |
+      | 16 TB, £76,523.16                    |
+      | 20 TB, £95,653.95                    |
+      | 24 TB, £114,784.74                   |
+      | 28 TB, £133,915.53                   |
+      | 32 TB, £153,046.32                   |
+#    And Add-ons price should be Server Plan, £419.79
     And I change MozyPro account plan to:
       | base plan | server plan |
       | 2 TB      | Yes         |
-#    Then Change plan charge summary should be:
-#      | Description                   | Amount     |
-#      | Credit for remainder of plans | -£3,497.74 |
-#      | Charge for upgraded plans     | £4,770.94  |
-#      |                               |            |
-#      | Total amount to be charged    | £1,273.20  |
+    Then Change plan charge summary should be:
+      | Description                   | Amount     |
+      | Credit for remainder of plans | -£6,677.50 |
+      | Charge for upgraded plans     | £9,107.50  |
+      |                               |            |
+      | Total amount to be charged    | £2,430.00  |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -572,45 +572,45 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
   @TC.144165_fake_02_0401 @add_new_partner @mozypro @bus
   Scenario: MozyPro USD 2 TB Biennial to 4 TB Biennial
     When I add a new MozyPro partner:
-      | company name                                      | period | country       |
+      | company name                                          | period | country       |
       | DONOT EDIT MozyPro USD 2 TB Biennial to 4 TB Biennial | 24     | United States |
     And New partner should be created
     And I get partner aria id
     When API* I assign aria supp plan multi for newly created partner aria id
-      | plan_name                  | rate_schedule_name  | schedule_currency | num_plan_units |
+      | plan_name                    | rate_schedule_name  | schedule_currency | num_plan_units |
       | MozyPro 2 TB Plan (Biennial) | Custom Old Standard | usd               | 1              |
     When API* I assign aria supp plan multi for newly created partner aria id
-      | plan_name                                    | rate_schedule_name  | schedule_currency | num_plan_units |
+      | plan_name                                      | rate_schedule_name  | schedule_currency | num_plan_units |
       | MozyPro Server Add-on for 2 TB Plan (Biennial) | Custom Old Standard | usd               | 1              |
     When I act as newly created partner account
     And I navigate to Change Plan section from bus admin console page
-#    Then MozyPro available base plans and price should be:
-#      | plan                               |
-#      | 10 GB, $109.89                     |
-#      | 50 GB, $219.89                     |
-#      | 100 GB, $439.89                    |
-#      | 250 GB, $729.89                    |
-#      | 500 GB, $1,459.89                  |
-#      | 1 TB, $2,919.89                    |
-#      | 2 TB, $8,249.89 (current purchase) |
-#      | 4 TB, $11,089.89                   |
-#      | 8 TB, $31,679.78                   |
-#      | 12 TB, $47,519.67                  |
-#      | 16 TB, $63,359.56                  |
-#      | 20 TB, $79,199.45                  |
-#      | 24 TB, $95,039.34                  |
-#      | 28 TB, $110,879.23                 |
-#      | 32 TB, $126,719.12                 |
-#    And Add-ons price should be Server Plan, $439.89
+    Then MozyPro available base plans and price should be:
+      | plan                                 |
+      | 10 GB, $209.79                       |
+      | 50 GB, $419.79                       |
+      | 100 GB, $839.79                      |
+      | 250 GB, $1,399.79                    |
+      | 500 GB, $2,789.79                    |
+      | 1 TB, $5,579.79                      |
+      | 2 TB, $15,749.79 (current purchase)  |
+      | 4 TB, $21,169.79                     |
+      | 8 TB, $60,479.58                     |
+      | 12 TB, $90,719.37                    |
+      | 16 TB, $120,959.16                   |
+      | 20 TB, $151,198.95                   |
+      | 24 TB, $181,438.74                   |
+      | 28 TB, $211,678.53                   |
+      | 32 TB, $241,918.32                   |
+#    And Add-ons price should be Server Plan, $839.79
     And I change MozyPro account plan to:
       | base plan | server plan |
       | 4 TB      | Yes         |
-#    Then Change plan charge summary should be:
-#      | Description                   | Amount     |
-#      | Credit for remainder of plans | -$8,689.78 |
-#      | Charge for upgraded plans     | $11,472.78 |
-#      |                               |            |
-#      | Total amount to be charged    | $2,783.00  |
+    Then Change plan charge summary should be:
+      | Description                   | Amount      |
+      | Credit for remainder of plans | -$16,589.58 |
+      | Charge for upgraded plans     | $21,902.58  |
+      |                               |             |
+      | Total amount to be charged    | $5,313.00   |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -619,45 +619,45 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
   @TC.144165_fake_02_0402 @add_new_partner @mozypro @bus
   Scenario: MozyPro Ireland 2 TB Biennial to 4 TB Biennial
     When I add a new MozyPro partner:
-      | company name                                          | period | create under    | country | cc number        |
+      | company name                                              | period | create under    | country | cc number        |
       | DONOT EDIT MozyPro Ireland 2 TB Biennial to 4 TB Biennial | 24     | MozyPro Ireland | Ireland | 4319402211111113 |
     And New partner should be created
     And I get partner aria id
     When API* I assign aria supp plan multi for newly created partner aria id
-      | plan_name                  | rate_schedule_name  | schedule_currency | num_plan_units |
+      | plan_name                    | rate_schedule_name  | schedule_currency | num_plan_units |
       | MozyPro 2 TB Plan (Biennial) | Custom Old Standard | eur               | 1              |
     When API* I assign aria supp plan multi for newly created partner aria id
-      | plan_name                                    | rate_schedule_name  | schedule_currency | num_plan_units |
+      | plan_name                                      | rate_schedule_name  | schedule_currency | num_plan_units |
       | MozyPro Server Add-on for 2 TB Plan (Biennial) | Custom Old Standard | eur               | 1              |
     When I act as newly created partner account
     And I navigate to Change Plan section from bus admin console page
-#    Then MozyPro available base plans and price should be:
-#      | plan                               |
-#      | 10 GB, €87.89                      |
-#      | 50 GB, €175.89                     |
-#      | 100 GB, €340.89                    |
-#      | 250 GB, €663.89                    |
-#      | 500 GB, €1,327.89                  |
-#      | 1 TB, €2,654.89                    |
-#      | 2 TB, €6,379.89 (current purchase) |
-#      | 4 TB, €10,081.89                   |
-#      | 8 TB, €24,419.78                   |
-#      | 12 TB, €36,629.67                  |
-#      | 16 TB, €48,839.56                  |
-#      | 20 TB, €61,049.45                  |
-#      | 24 TB, €73,259.34                  |
-#      | 28 TB, €85,469.23                  |
-#      | 32 TB, €97,679.12                  |
-#    And Add-ons price should be Server Plan, €329.89
+    Then MozyPro available base plans and price should be:
+      | plan                                 |
+      | 10 GB, €167.79                       |
+      | 50 GB, €335.79                       |
+      | 100 GB, €650.79                      |
+      | 250 GB, €1,272.79                    |
+      | 500 GB, €2,536.79                    |
+      | 1 TB, €5,072.79                      |
+      | 2 TB, €12,179.79 (current purchase)  |
+      | 4 TB, €19,245.79                     |
+      | 8 TB, €46,619.58                     |
+      | 12 TB, €69,929.37                    |
+      | 16 TB, €93,239.16                    |
+      | 20 TB, €116,548.95                   |
+      | 24 TB, €139,858.74                   |
+      | 28 TB, €163,168.53                   |
+      | 32 TB, €186,478.32                   |
+#    And Add-ons price should be Server Plan, €629.79
     And I change MozyPro account plan to:
       | base plan | server plan |
       | 4 TB      | Yes         |
-#    Then Change plan charge summary should be:
-#      | Description                   | Amount     |
-#      | Credit for remainder of plans | -€8,253.02 |
-#      | Charge for upgraded plans     | €12,828.62 |
-#      |                               |            |
-#      | Total amount to be charged    | €4,575.60  |
+    Then Change plan charge summary should be:
+      | Description                   | Amount      |
+      | Credit for remainder of plans | -€15,755.78 |
+      | Charge for upgraded plans     | €24,491.24  |
+      |                               |             |
+      | Total amount to be charged    | €8,735.46   |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -666,46 +666,74 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
   @TC.144165_fake_02_0403 @add_new_partner @mozypro @bus
   Scenario: MozyPro UK 2 TB Biennial to 4 TB Biennial
     When I add a new MozyPro partner:
-      | company name                                     | period | create under | country        | net terms |
+      | company name                                         | period | create under | country        | net terms |
       | DONOT EDIT MozyPro UK 2 TB Biennial to 4 TB Biennial | 24     | MozyPro UK   | United Kingdom | yes       |
     And New partner should be created
     And I get partner aria id
     When API* I assign aria supp plan multi for newly created partner aria id
-      | plan_name                  | rate_schedule_name  | schedule_currency | num_plan_units |
+      | plan_name                    | rate_schedule_name  | schedule_currency | num_plan_units |
       | MozyPro 2 TB Plan (Biennial) | Custom Old Standard | gbp               | 1              |
     When API* I assign aria supp plan multi for newly created partner aria id
-      | plan_name                                    | rate_schedule_name  | schedule_currency | num_plan_units |
+      | plan_name                                      | rate_schedule_name  | schedule_currency | num_plan_units |
       | MozyPro Server Add-on for 2 TB Plan (Biennial) | Custom Old Standard | gbp               | 1              |
     When I act as newly created partner account
     And I navigate to Change Plan section from bus admin console page
-#    Then MozyPro available base plans and price should be:
-#      | plan                               |
-#      | 10 GB, £76.89                      |
-#      | 50 GB, £153.89                     |
-#      | 100 GB, £296.89                    |
-#      | 250 GB, £477.89                    |
-#      | 500 GB, £954.89                    |
-#      | 1 TB, £1,908.89                    |
-#      | 2 TB, £5,224.89 (current purchase) |
-#      | 4 TB, £7,248.89                    |
-#      | 8 TB, £20,041.78                   |
-#      | 12 TB, £30,062.67                  |
-#      | 16 TB, £40,083.56                  |
-#      | 20 TB, £50,104.45                  |
-#      | 24 TB, £60,125.34                  |
-#      | 28 TB, £70,146.23                  |
-#      | 32 TB, £80,167.12                  |
-#    And Add-ons price should be Server Plan, £329.89
+    Then MozyPro available base plans and price should be:
+      | plan                                 |
+      | 10 GB, £146.79                       |
+      | 50 GB, £293.79                       |
+      | 100 GB, £566.79                      |
+      | 250 GB, £914.79                      |
+      | 500 GB, £1,823.79                    |
+      | 1 TB, £3,646.79                      |
+      | 2 TB, £9,974.79 (current purchase)   |
+      | 4 TB, £13,836.79                     |
+      | 8 TB, £38,261.58                     |
+      | 12 TB, £57,392.37                    |
+      | 16 TB, £76,523.16                    |
+      | 20 TB, £95,653.95                    |
+      | 24 TB, £114,784.74                   |
+      | 28 TB, £133,915.53                   |
+      | 32 TB, £153,046.32                   |
+#    And Add-ons price should be Server Plan, £629.79
     And I change MozyPro account plan to:
       | base plan | server plan |
       | 4 TB      | Yes         |
-#    Then Change plan charge summary should be:
-#      | Description                   | Amount     |
-#      | Credit for remainder of plans | -£6,665.74 |
-#      | Charge for upgraded plans     | £8,998.54  |
-#      |                               |            |
-#      | Total amount to be charged    | £2,332.80  |
+    Then Change plan charge summary should be:
+      | Description                   | Amount      |
+      | Credit for remainder of plans | -£12,725.50 |
+      | Charge for upgraded plans     | £17,178.70  |
+      |                               |             |
+      | Total amount to be charged    | £4,453.20   |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
       | 4 TB      | Yes         |
+
+  @TC.144165_fake_02_0501 @add_new_partner @mozypro @bus
+  Scenario: MozyPro US old 500 gb Biennial to 1 tb Biennial
+    When I add a new MozyPro partner:
+      | company name                                          | period | country       |
+      | DONOT MozyPro US old 500 gb Biennial to 1 tb Biennial | 24     | United States |
+    And New partner should be created
+    And I get partner aria id
+    When API* I assign aria supp plan multi for newly created partner aria id
+      | plan_name                      | rate_schedule_name  | schedule_currency | num_plan_units |
+      | MozyPro 500 GB Plan (Biennial) | Custom Old Standard | usd               | 1              |
+    When API* I assign aria supp plan multi for newly created partner aria id
+      | plan_name                                        | rate_schedule_name  | schedule_currency | num_plan_units |
+      | MozyPro Server Add-on for 500 GB Plan (Biennial) | Custom Old Standard | usd               | 1              |
+    When I act as newly created partner account
+    And I change MozyPro account plan to:
+      | base plan |
+      | 1 TB      |
+    Then Change plan charge summary should be:
+      | Description                   | Amount     |
+      | Credit for remainder of plans | -$4,409.58 |
+      | Charge for upgraded plans     | $6,026.58  |
+      |                               |            |
+      | Total amount to be charged    | $1,617.00  |
+    And the MozyPro account plan should be changed
+    And MozyPro new plan should be:
+      | base plan | server plan |
+      | 1 TB      | Yes         |

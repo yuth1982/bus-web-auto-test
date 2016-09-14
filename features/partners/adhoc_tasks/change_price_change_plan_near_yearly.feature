@@ -709,3 +709,31 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
     And MozyPro new plan should be:
       | base plan | server plan |
       | 4 TB      | Yes         |
+
+  @TC.144165_fake_0501 @add_new_partner @mozypro @bus
+  Scenario: MozyPro US old 500 gb yearly to 1 tb yearly
+    When I add a new MozyPro partner:
+      | company name                                      | period | country       |
+      | DONOT MozyPro US old 500 gb yearly to 1 tb yearly | 12     | United States |
+    And New partner should be created
+    And I get partner aria id
+    When API* I assign aria supp plan multi for newly created partner aria id
+      | plan_name                    | rate_schedule_name  | schedule_currency | num_plan_units |
+      | MozyPro 500 GB Plan (Annual) | Custom Old Standard | usd               | 1              |
+    When API* I assign aria supp plan multi for newly created partner aria id
+      | plan_name                                      | rate_schedule_name  | schedule_currency | num_plan_units |
+      | MozyPro Server Add-on for 500 GB Plan (Annual) | Custom Old Standard | usd               | 1              |
+    When I act as newly created partner account
+    And I change MozyPro account plan to:
+      | base plan |
+      | 1 TB      |
+    Then Change plan charge summary should be:
+      | Description                   | Amount     |
+      | Credit for remainder of plans | -$2,309.78 |
+      | Charge for upgraded plans     | $3,156.78  |
+      |                               |            |
+      | Total amount to be charged    | $847.00    |
+    And the MozyPro account plan should be changed
+    And MozyPro new plan should be:
+      | base plan | server plan |
+      | 1 TB      | Yes         |
