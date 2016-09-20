@@ -10,7 +10,7 @@ module LDAPHelper
 
   # Public: Add user to the AD server with username (cn) and email
   #
-  def add_user(user_name, mail = nil, host=nil, user=nil, password=nil, treebase=nil, email_postfix=nil)
+  def add_user(user_name, mail = nil, host=nil, user=nil, password=nil, treebase=nil, email_postfix=nil, uid=nil)
     user_name = check_for_random(user_name)
     @ldap_user_mail = check_for_random_mail(mail, user_name, email_postfix)
     dn = "CN=#{user_name}, #{treebase || TREEBASE}"
@@ -27,6 +27,7 @@ module LDAPHelper
         :useraccountcontrol => '66080',
         :samaccountname => "#{user_name}",
     }
+    attr[:uid] = "#{uid.to_s}_#{Time.now.strftime("%Y%m%d%H%M")}" if uid
     ldap = Net::LDAP.new :host => host || HOST,
                          :port => PORT,
                          :auth => {
