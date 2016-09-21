@@ -23,6 +23,6 @@ Then /^I reset password with (.+)$/ do |password|
   @bus_site.login_page.reset_password_enter(password)
 end
 
-And /^I will see reset password massage (.+)$/ do |msg|
+And /^I will see reset password message (.+)$/ do |msg|
   @bus_site.login_page.reset_password_msg.include?(msg).should == true
 end
