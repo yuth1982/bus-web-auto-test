@@ -18,7 +18,7 @@ module Bus
     element(:throttle_amount_tb, id: 'throttle_kbps')
     element(:windows_backup_sets, xpath: "//div[@id='setting-edit_client_config-tabs']/ul/li[4]")
     element(:mac_backup_sets, xpath: "//div[@id='setting-edit_client_config-tabs']/ul/li[5]")
-    element(:user_groups, xpath: "//div[@id='setting-edit_client_config-tabs']/ul/li[7]")
+    element(:user_groups, xpath: "//div[@id='setting-edit_client_config-tabs']/ul/li[text()='User Groups']")
     element(:add_user_groups, xpath: "//div[@id='config-user-groups']/p[2]/a")
     element(:choose_user_groups, xpath: "//div[@id='config-user-groups']/table/tbody/tr[3]/td/label/input")
 
