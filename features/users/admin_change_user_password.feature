@@ -45,7 +45,7 @@ Feature: Password change policy enforcement
     Then I will see the user account page
 
   @TC.132342 @bus @qa6 @temp_password @regression @subdomain
-  Scenario: 132342: MozyPro partner (has subdomain) admin change user password with temporary password
+  Scenario: 132342: MozyPro partner (has subdomain) admin change user password with "temporary password"
     When I use a existing partner:
       | company name                      | admin email                               | partner type | partner id |
       | #141759 mozypro subdomain partner | mozyautotest+ralph+fernandez+1036@emc.com | MozyPro      | 3492087    |
@@ -80,8 +80,7 @@ Feature: Password change policy enforcement
       | username                 | password                                  |
       | <%=@new_users[0].email%> | <%=CONFIGS['global']['test_hipaa_pwd'] %> |
     And I reset password with default password
-    And I will see reset password message The password for TC.132342.User has been changed.
-    And I click login link from the email
+    And I will see reset password massage Your password has been changed.
     And I log in bus pid console with:
       | username                 | password                            |
       | <%=@new_users[0].email%> | <%=CONFIGS['global']['test_pwd'] %> |
@@ -304,7 +303,7 @@ Feature: Password change policy enforcement
     Then I will see the user account page
 
   @TC.132439 @bus @qa6 @regression @subdomain
-  Scenario: 132439: MozyPro partner (has subdomain) admin change user password without temporary password
+  Scenario: 132439: MozyPro partner (has subdomain) admin change user password without "temporary password"
     When I use a existing partner:
       | company name                      | admin email                               | partner type | partner id |
       | #141759 mozypro subdomain partner | mozyautotest+ralph+fernandez+1036@emc.com | MozyPro      | 3492087    |

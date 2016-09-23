@@ -7,7 +7,6 @@ module Bus
 
     # Private elements
     #
-    element(:change_password_link, xpath: "//a[text()='Change Password']")
     element(:username_tb, id: "username")
     element(:password_tb, id: "password")
     element(:login_btn, css: "span.login_button")
@@ -17,7 +16,7 @@ module Bus
     element(:phoenix_login_error_msg, xpath:"//div[@id='main']//p[@class='error']")
     element(:forget_password_link, xpath:"//a[text()='Forgot your password?']")
     element(:captcha_input, id: "captcha")
-    element(:reset_password_continue_btn, xpath: "//input[@value='Save Changes']")
+    element(:reset_password_continue_btn, xpath: "//input[@value='Continue']")
     element(:reset_password_msg_div, xpath: "//div[@id='main']//p")
     element(:start_using_mozy_btn, id: "start_using_mozy")
 
@@ -118,15 +117,12 @@ module Bus
     end
 
     def reset_password_enter(password)
-      change_password_link.click
-      password_tb.type_text(CONFIGS['global']['test_hipaa_pwd'])
-      find(:id, 'new_password').type_text(password)
-      find(:id, 'new_password_confirmation').type_text(password)
-      # if all(:id, 'password2').size>0
-      #   find(:id, 'password2').type_text(password)
-      # else
-      #   find(:id, 'password_confirmation').type_text(password)
-      # end
+      password_tb.type_text(password)
+      if all(:id, 'password2').size>0
+        find(:id, 'password2').type_text(password)
+      else
+        find(:id, 'password_confirmation').type_text(password)
+      end
       reset_password_continue_btn.click
     end
 
