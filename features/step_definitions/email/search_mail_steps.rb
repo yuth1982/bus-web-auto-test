@@ -47,7 +47,11 @@ When /^I search emails by keywords:$/ do |keywords_table|
   sleep 15
 
   Log.info(@email_search_query)
-  @found_emails = find_emails(@email_search_query)
+  30.times do
+    @found_emails = find_emails(@email_search_query)
+    sleep 60 if @found_emails.size == 0
+    break if @found_emails.size > 0
+  end
 end
 
 Then /^I should see (\d+) email\(s\)$/ do |num_emails|

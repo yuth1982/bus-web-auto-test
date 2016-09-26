@@ -115,11 +115,12 @@ module KeylessDeviceActivation
     end
 
     def activate_client_devices(access_token = nil, codename = nil)
-      if codename
-        @codename = codename
-      else
-        get_codename(@company_type)
-      end
+      # if codename
+      #   @codename = codename
+      # else
+      #   get_codename(@company_type)
+      # end
+      get_codename(@company_type)
       enable_partner_to_sso(@partner_id, @partner_name)
       create_oauth_client
       sso_auth(@partner_id)
