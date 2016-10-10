@@ -214,5 +214,29 @@ When /^Activate key response should be (.+)$/  do |msg|
   @clients[0].resp.should include(msg)
 end
 
-
-
+#==============================
+#Author : Thomas Yu
+#Comment: When beginning a scenario from searching partner instead of creating a partner, call this method to create some fake instance variables
+#         which are required by the keyless devices activate API.
+#Scope  : So far, work on mozyPro.
+#==============================
+And /^do preparation before using keyless activation to activate (MozyPro|MozyEnterprise|Reseller|MozyEnterprise DPS|OEM) devices$/ do |type|
+  #======print the required parameter or objects required by the KeylessClient.new() method======
+  Log.debug "current_partner info: #{@current_partner}"
+  Log.debug "partner info: #{@partner}" unless @partner.nil?;
+  Log.debug "partner.company_info.name info: #{@partner.company_info.name}" unless @partner.nil?;
+  Log.debug "password : #{@user_password}"
+  Log.debug "type : #{@partner.partner_info.type}" unless @partner.nil?;
+  Log.debug "============================before/after============================"
+  #==============================================================================================
+  @partner = Bus::DataObj::MozyPro.new
+  @partner.company_info.name = @current_partner[:name]
+  @partner.partner_info.type = type
+  #======print the required parameter or objects required by the KeylessClient.new() method======
+  Log.debug "current_partner info: #{@current_partner}"
+  Log.debug "partner info: #{@partner}"
+  Log.debug "partner.company_info.name info: #{@partner.company_info.name}"
+  Log.debug "password : #{@user_password}"
+  Log.debug "type : #{@partner.partner_info.type}"
+  #==============================================================================================
+end

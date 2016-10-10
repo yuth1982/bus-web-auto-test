@@ -229,3 +229,70 @@ Then /^I get mail domain from dea_services$/ do
   @domain_name = DBHelper.get_mail_domain_form_dea_services
 end
 
+#================================================
+#Author : Thomas Yu
+#Comment: 1. If machine_count < devices, then machine_count.
+#         2. When there is sub partner invovled, search user requires <partner_filter> filter so that the user could be serached. Otherwise, pass "nil".
+#Scope  : Used in mozyPro now.
+#Example: And I add multiple users and use keyless activation to activate 3 device on each user and select nil on partner filter:
+#            | name                 | user_group            | storage_type | storage_limit | devices | enable_stash |
+#            | 90002_PA_UG0_User1 | (default user group) |  Desktop     |  1              |  2       | Yes          |  <-- create 2 machines
+#            | 90002_PA_UG1_User1 | 90002_PA_group1       |  Desktop     |  1              |  4       | Yes          |  <-- create 3 machines
+#Notice : If the scenario begins at searching partner instead of creating partner, see below example -
+#           When do preparation before using keyless activation to activate MozyPro devices
+#           And I add multiple users and use keyless activation to activate 3 device on each user and select nil on partner filter:
+#              | name                 | user_group            | storage_type | storage_limit | devices | enable_stash |
+#              | 90002_PA_UG0_User1 | (default user group) |  Desktop     |  1              |  2       | Yes          |
+#================================================
+When /^I add multiple users and use keyless activation to activate (.+) device on each user and select (.+) on partner filter:$/ do |machine_count, partner_filter, user_table|
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_user'])
+  #======loop table to create each user and activate its machine======
+  user_table.hashes.each do |hash|
+    @new_users =[]
+    @users =[]
+    Log.debug "======create user " + hash["name"] + "======"
+    hash['email'].replace ERB.new(hash['email']).result(binding) unless hash['email'].nil?
+    hash['email'] = @existing_user_email if hash['email'] == '@existing_user_email'
+    hash['email'] = @existing_admin_email if hash['email'] == '@existing_admin_email'
+    user = Bus::DataObj::User.new
+    hash_to_object(hash, user)
+    @new_users << user
+    @users << user
+    @bus_site.admin_console_page.add_new_user_section.add_new_users(@new_users)
+
+    #======search the user by the user name======
+    @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_users'])
+    if partner_filter == "nil"
+      @bus_site.admin_console_page.search_list_users_section.search_user(@new_users.first.name)
+    else
+      @bus_site.admin_console_page.search_list_users_section.search_user(@new_users.first.name, '', partner_filter)
+    end
+    @bus_site.admin_console_page.search_list_users_section.wait_until_bus_section_load
+    @bus_site.admin_console_page.search_list_users_section.view_user_details(@new_users.first.email[0..26])
+    @current_user = @bus_site.admin_console_page.user_details_section.user #this is a required instance variable by API calling to activate device.
+
+    #======update user password======
+    Log.debug "Update the password with 'P@ssW0rD'"
+    @user_password = "P@ssW0rD" #this is a required instances variable by API calling to activate device.
+    @bus_site.admin_console_page.user_details_section.edit_password(@user_password)
+
+    #======use keyless activation to activate devices======
+    j = 0
+    hash['deivces'].to_i < machine_count.to_i ? (j = hash['devices'].to_i) : (j = machine_count.to_i)
+    Log.debug "=============="
+    Log.debug j
+    Log.debug "=============="
+    for i in 1..j
+      Log.debug "creating machine under #{@new_users.first.name}..."
+      step %{I use keyless activation to activate devices}, table(%{
+      | machine_name    | machine_type    | user_name  |
+      | #{@new_users.first.name}_machine_#{i} | #{@new_users.first.storage_type} | #{@new_users.first.email} |
+      })
+      #======Update <Ecrtyption> option on machine, otherwise, the replace is not allowed between machines======
+      machine_id = @new_clients[0].machine_id
+      @client.set_machine_encryption("Default", machine_id)
+    end
+    #this step is required to close the user detail section, otherwise, duplicated name UI elem make execution failed.
+    @bus_site.admin_console_page.user_details_section.close_bus_section
+  end
+end
