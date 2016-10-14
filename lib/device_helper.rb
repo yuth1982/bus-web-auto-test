@@ -114,7 +114,12 @@ module KeylessDeviceActivation
       @region = region || 'qa'
     end
 
-    def activate_client_devices(access_token = nil)
+    def activate_client_devices(access_token = nil, codename = nil)
+      # if codename
+      #   @codename = codename
+      # else
+      #   get_codename(@company_type)
+      # end
       get_codename(@company_type)
       enable_partner_to_sso(@partner_id, @partner_name)
       create_oauth_client
@@ -145,7 +150,6 @@ module KeylessDeviceActivation
       Net::HTTP.start(uri.host, uri.port,
                       :use_ssl => uri.scheme == 'https') do |http|
         partner_name = CGI::escape (partner_name)
-        partner_name = partner_name.gsub(/\+/, ' ')
         string = "/enabled_partners"\
           +"?pro_partner_id="+partner_id\
           +"&pro_partner_name="+partner_name
@@ -245,6 +249,7 @@ module KeylessDeviceActivation
         request.basic_auth(@client_id, @client_secret)
         response = http.request request
         @access_token = JSON.parse(response.body)
+        Log.debug @access_token
       end
     end
 
@@ -261,7 +266,8 @@ module KeylessDeviceActivation
         url =  "/client/devices/#{@machine_hash}/activate?alias=#{@machine_alias}&mac_hash=#{@mac}&sid_hash=#{@sid}&country=US&type=#{@device_type}&codename=#{@codename}&region=#{@region}"
         request = Net::HTTP::Put.new( url )
         Log.debug url
-        request.add_field("Authorization", "Bearer #{Base64.strict_encode64(@access_token["access_token"])}")
+        Log.debug Base64.strict_encode64(@access_token["access_token"]) unless @access_token["access_token"].nil?
+        request.add_field("Authorization", "Bearer #{Base64.strict_encode64(@access_token["access_token"])}") unless @access_token["access_token"].nil?
         response = http.request request
         @response = response
         Log.debug response.body
@@ -308,6 +314,8 @@ module KeylessDeviceActivation
                       'mozy'
                     when "Reseller"
                       'mozypro'
+                    else
+                      company_type
                   end
     end
   end

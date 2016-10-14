@@ -3,23 +3,43 @@ Feature: Quick Report
   Background:
     Given I log in bus admin console as administrator
 
-  # using fixed data Linux GA Test
+
+
   @TC.124057 @bus @tasks_p2 @reports
   Scenario: 124057 Linux - Machine of Quick Reports
-    When I navigate to bus admin console login page
-    And I log in bus admin console with user name mozybus+catherine+0401@gmail.com and password default password
+    When I check that linux client service is available
+    And I upload change linux client env script to remote machine
+    And I add a new MozyPro partner:
+      | period | base plan | server plan |
+      | 1      | 50 GB     | yes         |
+    And New partner should be created
+    And I change root role to Business Root
+    And I activate new partner admin with default password
+    And I log in bus admin console as new partner admin
+    And I add new user(s):
+      | name            | storage_type | storage_limit | devices | user_group           |
+      | TC.124057.User  | Server       | 10            | 3       | (default user group) |
+    Then 1 new user should be created
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    When I update the user password to default password
+    And I backup file using linux client for user newly created user email password default password
     When I search machine by:
-      | machine_name                  |
-      | ubuntu10-x86.bif.mozycorp.com |
-    When I view machine details for ubuntu10-x86.bif.mozycorp.com
+      | machine_name    |
+      | BUS-Auto-03-Zoe |
+    When I view machine details for BUS-Auto-03-Zoe
     And I get machine details info
     And I clear downloads folder machines*.csv file
     When I download Machines (CSV) quick report
     Then Quick report Machines csv file details should include
-      | Column A                      | Column B             | Column C             | Column D    | Column E           | Column F | Column G    | Column H                           | Column I |
-      | Machine                       | User                 | User Group           | Data Center | Storage Used       | Created  | Last Update | Backed Up                          | MTM/SN   |
-      | ubuntu10-x86.bif.mozycorp.com | chris.qa6.1@mozy.com | (default user group) | qa6         | 107 bytes / Shared | 08/21/14 | 08/22/14   | <%=@machine_info['Last Update:']%> |          |
+      | Column A        | Column B                 | Column C             | Column D          | Column E                                      | Column F  | Column G        | Column H    |
+      | Machine         | User                     | User Group           | Data Center       | Storage Used                                  | Created   | Last Update     | Backed Up   |
+      | BUS-Auto-03-Zoe | <%=@new_users[0].email%> | (default user group) | <%=@data_center%> | <%=@machine_info['Space Used:']+' / Shared'%> | today     | today           | minute      |
     And I clear downloads folder machines*.csv file
+    And I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
+
+
 
   @TC.21160 @bus @tasks_p2 @reports
   Scenario: 21160 [Quick Reports] Verify User Group CSV

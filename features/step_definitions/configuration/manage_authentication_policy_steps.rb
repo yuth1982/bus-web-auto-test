@@ -288,7 +288,7 @@ Then /^The sync status result should like:$/ do |table|
   end
   expected_next_sync = expected[2]
   # verify Sync Result
-  actual[1].should == expected[1]
+  expected[1].include?(actual[1]).should == true
   # verify Next Sync
   unless expected_next_sync.nil?
     if expected_next_sync == 'Not Scheduled(Set)'

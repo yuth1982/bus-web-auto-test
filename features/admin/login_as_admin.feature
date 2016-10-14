@@ -37,7 +37,7 @@ Feature: login as admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.126043 @bus @admin @tasks_p1 @ldap_sequence
+  @TC.126043 @bus @admin @tasks_p1 @ldap_sequence @subdomain
   Scenario: 126043 Reset Admin Password from subdomain.mozypro.com
     When I act as partner by:
       | email                        |
@@ -119,7 +119,7 @@ Feature: login as admins
  #  Test Suite : LDAP admin login
 
 ########################################################################
-  @TC.121831 @bus @admin @tasks_p1 @ldap_sequence
+  @TC.121831 @bus @admin @tasks_p1 @ldap_sequence @subdomain
   Scenario: 121831 Old admins which AD does not have can not login
     When I act as partner by:
       | email                        |
@@ -181,7 +181,7 @@ Feature: login as admins
       | email             |
       | <%=@admin.email%> |
 
-  @TC.121833 @bus @admin @tasks_p1 @ldap_sequence @smoke
+  @TC.121833 @bus @admin @tasks_p1 @ldap_sequence @smoke @subdomain
   Scenario: 121833 New LDAP login through LDAP process
     When I act as partner by:
       | email                        |
@@ -238,7 +238,7 @@ Feature: login as admins
       | <%=@admin.email%> |
     And I delete a user @admin.name in the AD
 
-  @TC.121837 @bus @admin @tasks_p1 @ldap_sequence
+  @TC.121837 @bus @admin @tasks_p1 @ldap_sequence @subdomain
   Scenario: 121837 New non LDAP admins can not login
     When I act as partner by:
       | email                        |
@@ -288,7 +288,7 @@ Feature: login as admins
       | email             |
       | <%=@admin.email%> |
 
-  @TC.121838 @bus @admin @tasks_p1 @ldap_sequence
+  @TC.121838 @bus @admin @tasks_p1 @ldap_sequence @subdomain
   Scenario: 121838 Old admins which AD has login through LDAP process
     When I act as partner by:
       | email                        |
@@ -385,7 +385,7 @@ Feature: login as admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.121921 @bus @admin @tasks_p1 @ldap_sequence
+  @TC.121921 @bus @admin @tasks_p1 @ldap_sequence @subdomain
   Scenario: 121921 Root admin can login BUS Root admin can login BUS using https://subdomain.mozypro.com/login/admin?authtype=mozy
     When I search partner by:
       | email                        |
@@ -462,7 +462,7 @@ Feature: login as admins
 
 ##########################################################################
 
-  @TC.121916 @bus @admin @tasks_p1 @ldap_sequence
+  @TC.121916 @bus @admin @tasks_p1 @ldap_sequence @subdomain
   Scenario: 121916 Push Old admins which AD does not have can not login
     When I act as partner by:
       | email                        |
@@ -525,7 +525,7 @@ Feature: login as admins
       | email             |
       | <%=@admin.email%> |
 
-  @TC.121917 @bus @admin @tasks_p1 @ldap_sequence
+  @TC.121917 @bus @admin @tasks_p1 @ldap_sequence @subdomain
   Scenario: 121917 Push New LDAP login through LDAP process
     When I act as partner by:
       | email                        |
@@ -585,7 +585,7 @@ Feature: login as admins
       | <%=@admin.email%> |
     And I delete a user @admin.name in the AD
 
-  @TC.121918 @bus @admin @tasks_p1 @ldap_sequence
+  @TC.121918 @bus @admin @tasks_p1 @ldap_sequence @subdomain
   Scenario: 121918 Push New non LDAP admins can not login
     When I act as partner by:
       | email                        |
@@ -638,7 +638,7 @@ Feature: login as admins
       | email                   |
       | <%=@admins.last.email%> |
 
-  @TC.121919 @bus @admin @tasks_p1 @ldap_sequence
+  @TC.121919 @bus @admin @tasks_p1 @ldap_sequence @subdomain
   Scenario: 121919 Push Old admins which AD has can login
     When I act as partner by:
       | email                        |
@@ -736,7 +736,7 @@ Feature: login as admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.121924 @bus @admin @tasks_p1 @ldap_sequence
+  @TC.121924 @bus @admin @tasks_p1 @ldap_sequence @subdomain
   Scenario: 121924 Push Root admin can login BUS Root admin can login BUS using https://subdomain.mozypro.com/login/admin?authtype=mozy
     When I search partner by:
       | email                        |

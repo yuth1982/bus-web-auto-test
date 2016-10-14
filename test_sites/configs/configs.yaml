@@ -153,3 +153,10 @@ rsa:
   public_key:                   lib/rsa/appsqa.publickey
   private_key:                  appsqa.privatekey
 
+linux:
+  host: 10.5.96.131
+  machine_name: BUS-Auto-03-Zoe
+  user: user
+  password: QAP@SSw0rd
+  path: /home/user
+

@@ -145,7 +145,7 @@ Feature: View billing information
     Then I should see Archived billing history part in partner details
     When I expand the account details section
     Then I should see Partner Details part in partner details
-    And I should see Discounts part in partner details
+#    And I should see Discounts part in partner details
     And I should see Account Attributes part in partner details
     And I should see Key Types part in partner details
     And I collapse the billing information section
@@ -156,7 +156,7 @@ Feature: View billing information
     And I should see Archived billing history part in partner details
     When I expand the account details section
     Then I should see Partner Details part in partner details
-    And I should see Discounts part in partner details
+#    And I should see Discounts part in partner details
     And I should see Account Attributes part in partner details
     And I should see Key Types part in partner details
 

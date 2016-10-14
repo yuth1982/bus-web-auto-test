@@ -156,6 +156,7 @@ module Bus
         when 'pending-delete available to purge'
           undelete_available_to_purge_btn.click
       end
+      wait_until { locate(:xpath, "//a[text()='#{partner_name}']//..//../td[1]//input").nil? }
       wait_until_bus_section_load
     end
 

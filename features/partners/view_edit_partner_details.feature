@@ -3,7 +3,7 @@ Feature: BUS Regression partner test
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.1649 @selenium @bus @others @regression
+  @TC.1649 @selenium @bus @others @regression @subdomain
   Scenario: 1649 Set a partners subdomain
     When I add a new MozyPro partner:
     | period | base plan |

@@ -4,7 +4,7 @@ Feature: User Details
     Given I log in bus admin console as administrator
 
   @TC.20986 @bus @2.5 @user_view @last_update @need_test_account @env_dependent @regression
-  Scenario: 20986 "Last Update" shows the time for the 3 device whose last backup time is 5 days ago
+  Scenario: 20986 Last Update shows the time for the 3 device whose last backup time is 5 days ago
     When I act as partner by:
       | email                |
       | last_update@auto.com |
@@ -13,7 +13,7 @@ Feature: User Details
       | last_update@test.com |
     Then User search results should be:
       | User                 | Name        | Sync    | Machines | Storage | Storage Used |
-      | last_update@test.com | last_update | Enabled | 3        | Shared  | 60 GB        |
+      | last_update@test.com | last_update | Enabled | 3        | 100 GB (Limited) | 60 GB        |
     When I view user details by last_update@test.com
     Then device table in user details should be:
       | Device   | Used/Available | Device Storage Limit | Last Update      | Action |

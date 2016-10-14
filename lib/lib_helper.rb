@@ -57,6 +57,7 @@ include SSHTDSGrowQuota
 include SSHRecordOverdraft
 include SSHPushConnector
 include SSHKalypsoE2E
+include SSHLinuxE2E
 include AriaApi
 include CybersourceApi
 include Utility

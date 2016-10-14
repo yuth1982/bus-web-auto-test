@@ -1,5 +1,10 @@
 Feature: Requirement #143134 Aria coupon code remove: change period and change plan
 
+  account with coupon not in exception list, change to new plan, confirmation page without coupon price, delete coupon.
+  other account, confirmation page with coupon price, not delete coupon.
+  new plan: 250&500*1&2&4 yearly and biennially base and server plan, reseller monthly*yearly exclude monthly server plan.
+  coupon exception list: Nonprofit10, 100pctOffInternalTestCustomer, 30pctultdpro.
+
   Background:
     Given I log in bus admin console as administrator
 
@@ -15,6 +20,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
 #      | Pre-tax Subtotal     |          |            | $28.05      |
 #      | Total Charges        |          |            | $28.05      |
     And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     When I change Reseller account plan to:
       | storage add-on |
@@ -26,6 +33,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     And Reseller new plan should be:
       | reseller quota | storage add-on | server plan |
       | 100            | 2              | No          |
+    Then API* Aria account coupon code info should be nil
 
   @TC.143134_fake_6702 @add_new_partner @mozypro @bus
   Scenario: silver monthly to server plan
@@ -39,6 +47,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
 #      | Pre-tax Subtotal     |          |            | €127.50     |
 #      | Total Charges        |          |            | €127.50     |
     And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     When I change Reseller account plan to:
       | server plan |
@@ -50,6 +60,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     And Reseller new plan should be:
       | reseller quota | storage add-on | server plan |
       | 500            | 0              | Yes         |
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
 
   @TC.143134_fake_6703 @add_new_partner @mozypro @bus
   Scenario: silver monthly to 20 GB add-on&server plan
@@ -64,6 +75,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
 #      | Taxes                |          |            | £7.48       |
 #      | Total Charges        |          |            | £44.88      |
     And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     When I change Reseller account plan to:
       | storage add-on | server plan |
@@ -75,6 +88,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     And Reseller new plan should be:
       | reseller quota | storage add-on | server plan |
       | 200            | 1              | Yes         |
+    Then API* Aria account coupon code info should be nil
 
   @TC.143134_fake_6801 @add_new_partner @mozypro @bus
   Scenario: silver yearly to 20 GB add on
@@ -90,6 +104,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
 #      | Taxes                |          |            | €422.28     |
 #      | Total Charges        |          |            | €2,258.28   |
     And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be <%=QA_ENV['10percentcoupon']%>
     When I act as newly created partner account
     When I change Reseller account plan to:
       | storage add-on |
@@ -101,6 +117,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     And Reseller new plan should be:
       | reseller quota | storage add-on | server plan |
       | 500            | 1              | Yes         |
+    Then API* Aria account coupon code info should be nil
 
   @TC.143134_fake_6802 @add_new_partner @mozypro @bus
   Scenario: silver yearly to server plan
@@ -115,6 +132,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
 #      | Pre-tax Subtotal     |          |            | £1,663.20   |
 #      | Total Charges        |          |            | £1,663.20   |
     And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be <%=QA_ENV['10percentcoupon']%>
     When I act as newly created partner account
     When I change Reseller account plan to:
       | server plan |
@@ -126,6 +145,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     And Reseller new plan should be:
       | reseller quota | storage add-on | server plan |
       | 500            | 10             | Yes         |
+    Then API* Aria account coupon code info should be nil
 
   @TC.143134_fake_6803 @add_new_partner @mozypro @bus
   Scenario: silver yearly to 20 GB add-on&server plan
@@ -139,6 +159,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
 #      | Pre-tax Subtotal     |          |            | $178.20     |
 #      | Total Charges        |          |            | $178.20     |
     And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be <%=QA_ENV['10percentcoupon']%>
     When I act as newly created partner account
     When I change Reseller account plan to:
       | storage add-on | server plan |
@@ -150,6 +172,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     And Reseller new plan should be:
       | reseller quota | storage add-on | server plan |
       | 50             | 5              | Yes         |
+    Then API* Aria account coupon code info should be nil
 
   @TC.143134_fake_7101 @add_new_partner @mozypro @bus
   Scenario: gold monthly to 20 GB add on
@@ -164,6 +187,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
 #      | Pre-tax Subtotal   |          |            | £131.75     |
 #      | Total Charges      |          |            | £131.75     |
     And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     When I change Reseller account plan to:
       | storage add-on |
@@ -175,6 +200,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     And Reseller new plan should be:
       | reseller quota | storage add-on | server plan |
       | 500            | 3              | Yes         |
+    Then API* Aria account coupon code info should be nil
 
   @TC.143134_fake_7102 @add_new_partner @mozypro @bus
   Scenario: gold monthly to server plan
@@ -189,6 +215,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
 #      | Taxes              |          |            | €0.81       |
 #      | Total Charges      |          |            | €5.06       |
     And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     When I change Reseller account plan to:
       | server plan |
@@ -200,6 +228,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     And Reseller new plan should be:
       | reseller quota | storage add-on | server plan |
       | 20             | 0              | Yes         |
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
 
   @TC.143134_fake_7103 @add_new_partner @mozypro @bus
   Scenario: gold monthly to 20 GB add-on&server plan
@@ -213,6 +242,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
 #      | Pre-tax Subtotal   |          |            | $2.38       |
 #      | Total Charges      |          |            | $2.38       |
     And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     When I change Reseller account plan to:
       | storage add-on | server plan |
@@ -224,6 +255,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     And Reseller new plan should be:
       | reseller quota | storage add-on | server plan |
       | 10             | 4              | Yes         |
+    Then API* Aria account coupon code info should be nil
 
   @TC.143134_fake_7501 @add_new_partner @mozypro @bus
   Scenario: platinum yearly to 20 GB add on
@@ -237,6 +269,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
 #      | Pre-tax Subtotal       |          |            | $1,224.00   |
 #      | Total Charges          |          |            | $1,224.00   |
     And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     When I change Reseller account plan to:
       | storage add-on |
@@ -248,6 +282,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     And Reseller new plan should be:
       | reseller quota | storage add-on | server plan |
       | 500            | 6              | No          |
+    Then API* Aria account coupon code info should be nil
 
   @TC.143134_fake_7502 @add_new_partner @mozypro @bus
   Scenario: platinum yearly to server plan
@@ -262,6 +297,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
 #      | Taxes                  |          |            | €12.79      |
 #      | Total Charges          |          |            | €80.11      |
     And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     When I change Reseller account plan to:
       | server plan |
@@ -273,6 +310,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     And Reseller new plan should be:
       | reseller quota | storage add-on | server plan |
       | 30             | 0              | Yes         |
+    Then API* Aria account coupon code info should be nil
 
   @TC.143134_fake_7503 @add_new_partner @mozypro @bus
   Scenario: platinum yearly to 20 GB add-on&server plan
@@ -287,6 +325,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
 #      | Taxes                  |          |            | £13.06      |
 #      | Total Charges          |          |            | £78.34      |
     And New partner should be created
+    And I get partner aria id
+    Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
     When I act as newly created partner account
     When I change Reseller account plan to:
       | storage add-on | server plan |
@@ -298,3 +338,4 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     And Reseller new plan should be:
       | reseller quota | storage add-on | server plan |
       | 40             | 7              | Yes         |
+    Then API* Aria account coupon code info should be nil

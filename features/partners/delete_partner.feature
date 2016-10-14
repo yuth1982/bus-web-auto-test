@@ -10,11 +10,11 @@ Feature: delete partner
       | period  | base plan | coupon              | country       |
       | 12      | 10 GB     | 10PERCENTOFFOUTLINE | United States |
     And New partner should be created
-    Then I get partner aria id
+    When I get partner aria id
     And Partner general information should be:
       | Status:         |
       | Active (change) |
-    And I search and delete partner account by newly created partner company name
+    And I delete partner account
     And API* I get Aria account details by newly created partner aria id
     Then API* Aria account should be:
       | status_label |
@@ -62,6 +62,14 @@ Feature: delete partner
       | CANCELLED    |
     Then API* There is no refunds for aria account newly created partner aria id
     Then API* The Aria account newly created partner aria id payment amount should be 1980
+    And Partner internal billing should be:
+      | Account Type:   | Credit Card           | Current Period: | Yearly             |
+      | Unpaid Balance: | $0.00                 | Collect On:     | N/A                |
+      | Renewal Date:   | after 1 year          | Renewal Period: | Use Current Period |
+      | Next Charge:    | after 1 year          |                 |                    |
+    And Partner billing history should be:
+      | Date  | Amount    | Total Paid | Balance Due |
+      | today | $1,980.00 | $1,980.00  | $0.00       |
 
   @TC.13862 @bus @delete_partner @tasks_p1
   Scenario: Mozy-13862:can not automatically refund or credit a deleted partner Mozypro DE, reseller, yearly
@@ -70,9 +78,7 @@ Feature: delete partner
       | 12     | Platinum      | 500            | yes         | MozyPro Germany | DE812321109 | 10PERCENTOFFOUTLINE | Germany | 4188181111111112 |
     And New partner should be created
     Then I get partner aria id
-    Then API* The Aria account newly created partner aria id payment amount should be 2700
-    And API* I change the Aria account status by newly created partner aria id to -2
-    And I wait for 30 seconds
+    And I delete partner account
     And API* I get Aria account details by newly created partner aria id
     Then API* Aria account should be:
       | status_label |
@@ -86,25 +92,33 @@ Feature: delete partner
       | period | base plan |
       | 12     | 100 GB    |
     And New partner should be created
-    Then I get the partner_id
-    Then I change root role to FedID role
+    When I view the newly created partner admin details
+    And I active admin in admin details default password
+    And I get the partner_id
     And I act as newly created partner
     And I add new user(s):
-      | name          | user_group           | storage_type | storage_limit | devices |
-      | TC.13865.User | (default user group) | Desktop      | 100           | 3       |
+      | name          | storage_type | storage_limit | devices |
+      | TC.13865.User | Desktop      | 100           | 3       |
     Then 1 new user should be created
-    And I search user by:
+    When I search user by:
       | keywords   |
       | @user_name |
     And I view user details by TC.13865.User
     And I update the user password to default password
-    Then I stop masquerading
-    Then I search and delete partner account by newly created partner company name
-    Then I navigate to user login page with partner ID
-    Then I log in bus pid console with:
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name
+    And I navigate to user login page with partner ID
+    And I log in bus pid console with:
       | username                 | password                            |
       | <%=@new_users[0].email%> | <%=CONFIGS['global']['test_pwd'] %> |
     Then Login page error message should be Your account has been suspended and cannot currently be accessed.
+    When I log in bus admin console as new partner admin
+    Then Login page error message should be Your account has been suspended and cannot currently be accessed.
+    When I log into phoenix with username @partner.admin_info.email and password default password
+    And user log in failed, error message is:
+    """
+     Your account has been suspended and cannot currently be accessed.
+    """
 
   @TC.13867 @bus @delete_partner @tasks_p1
   Scenario: 13867:can not log in if account has been deleted Mozypro FR, business, biennially
@@ -112,24 +126,28 @@ Feature: delete partner
       | period | base plan | create under   | vat number    | coupon              | country | cc number        |
       | 12     | 50 GB     | MozyPro France | FR08410091490 | 10PERCENTOFFOUTLINE | France  | 4485393141463880 |
     And New partner should be created
-    Then I get the partner_id
-    Then I change root role to FedID role
+    When I view the newly created partner admin details
+    And I active admin in admin details Hipaa password
+    And I get the partner_id
     And I act as newly created partner
     And I add new user(s):
-      | name          | user_group           | storage_type | storage_limit | devices |
-      | TC.13867.User | (default user group) | Desktop      | 50            | 3       |
+      | name          | storage_type | storage_limit | devices |
+      | TC.13867.User | Desktop      | 50            | 3       |
     Then 1 new user should be created
     And I search user by:
       | keywords   |
       | @user_name |
     And I view user details by TC.13867.User
     And I update the user password to default password
-    Then I stop masquerading
-    Then I search and delete partner account by newly created partner company name
-    Then I navigate to user login page with partner ID
-    Then I log in bus pid console with:
+    And I stop masquerading
+    And I search and delete partner account by newly created partner company name
+    And I navigate to user login page with partner ID
+    And I log in bus pid console with:
       | username                 | password                            |
       | <%=@new_users[0].email%> | <%=CONFIGS['global']['test_pwd'] %> |
+    Then Login page error message should be Your account has been suspended and cannot currently be accessed.
+    When I navigate to bus admin console login page
+    And I log in bus admin console with user name @partner.admin_info.email and password Hipaa password
     Then Login page error message should be Your account has been suspended and cannot currently be accessed.
 
   @TC.13870 @bus @delete_partner @tasks_p1
@@ -216,9 +234,8 @@ Feature: delete partner
       | period  | base plan |
       | 12      | 10 GB     |
     And New partner should be created
-    Then I search partner by newly created partner company name
-    And I delete partner account with password xxx
-    Then I search and delete partner account by newly created partner company name
+    When I delete partner account with password xxx
+    Then I delete partner account
 
   @TC.123515 @bus @delete_partner @tasks_p1
   Scenario: Mozy-123515:Delete a existing partner
@@ -226,11 +243,9 @@ Feature: delete partner
       | period  | base plan |
       | 12      | 10 GB     |
     And New partner should be created
-    Then I search partner by newly created partner company name
-    Then I view partner details by newly created partner company name
-    Then I delete partner account
-    Then I navigate to Manage Pending Deletes section from bus admin console page
-    Then I make sure pending deletes setting is 60 days
+    When I delete partner account
+    And I navigate to Manage Pending Deletes section from bus admin console page
+    And I make sure pending deletes setting is 60 days
     And I search partners in pending-delete not available to purge by:
       | email        | full search |
       | @admin_email | yes         |

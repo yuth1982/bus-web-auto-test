@@ -75,7 +75,7 @@ module DBHelper
   def update_machine_info(machine_id, quota, time = 'now()')
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "UPDATE machines SET space_used = #{quota}::bigint*1024*1024*1024 , pending_space_used = 0, patches = 0, files = 1, last_client_version = null,last_backup_at = #{time}, last_successful_backup_at = #{time} WHERE id = #{machine_id};;"
+      sql = "UPDATE machines SET space_used = #{quota}::bigint*1024*1024*1024 , pending_space_used = 0, patches = 0, files = 1, last_backup_at = #{time}, last_successful_backup_at = #{time} WHERE id = #{machine_id};;"
       c = conn.exec(sql)
     rescue PG::Error => e
       puts "postgres error: #{e}"

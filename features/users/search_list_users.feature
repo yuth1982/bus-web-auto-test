@@ -299,8 +299,8 @@ Feature: Search and list user
       | email                                 |
       | redacted-303@notarealdomain.mozy.com  |
     When I search user by:
-      | keywords                                |
-      | redacted-899929@notarealdomain.mozy.com |
+      | keywords                                | user type                             |
+      | redacted-899929@notarealdomain.mozy.com | Professional Software Solutions Users |
     And Itemized user search results should be:
       | Name     | Machines | Storage                         | Storage Used                |
       | TC210171 | 0        | Desktop: Shared\nServer: Shared | Desktop: None\nServer: None |

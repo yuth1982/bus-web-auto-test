@@ -8,43 +8,81 @@ Feature: view edit machine details
   ###############################################################################
 
   # view backup restores history
-  # using fixed data, company Dont Edit_backup_restore_history  ID: 3431834
+
   ###############################################################################
 
   @TC.122155 @bus @machines_sync @tasks_p2
-  Scenario: 122155:View Backup History
-    When I navigate to bus admin console login page
-    And I log in bus admin console with user name mozybus+backupsrestores@gmail.com and password default password
-    When I search machine by:
-      | machine_name   |
-      | CNENCHENC33L1C |
-    And I view machine details for mozybus+backup+restore@emc.com
-    And Backups table will display as:
+  Scenario: 122155 : View Backup History
+    When I check that linux client service is available
+    And I upload change linux client env script to remote machine
+    And I add a new MozyPro partner:
+      | period | base plan | server plan |
+      | 1      | 50 GB     | yes         |
+    And New partner should be created
+    And I activate new partner admin with default password
+    And I log in bus admin console as new partner admin
+    And I add new user(s):
+      | name            | storage_type | storage_limit | devices |
+      | TC.122155.User  | Server       | 10            | 3       |
+    Then 1 new user should be created
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    And I update the user password to default password
+    When I backup file using linux client for user newly created user email password default password
+    And I backup files again with no new files added
+    And I cancel backup when I add a large file
+    And I wait for 5 seconds
+    And I refresh User Details section
+    And I view machine BUS-Auto-03-Zoe details from user details section
+    Then Backups table will display as:
       | Start Time     | Type                | Duration | Result            | Files | Size | Files Encoded | Size Encoded | Files Transferred | Size Transferred |
-      | 10/08/15 17:53 | Local Manual Backup | 00:00:08 | LocalBackupError0 | 1     | 284  | 0            | 0             | 0                 | 0                |
-      | 10/08/15 17:52 | Manual Backup       | 00:01:37 | Success           | 1     | 284  | 1            | 288 bytes     | 1                 | 288 bytes        |
-      | 10/08/15 17:52 | Manual Backup       | 00:00:14 | CancelError0      | 0     | 0    | 0            | 0             | 0                 | 0                |
-      | 08/04/15 11:29 | Local Manual Backup | 00:00:06 | LocalBackupError0 | 41    | 6904 | 0            | 0             | 0                 | 0                |
-      | 08/04/15 11:28 | Manual Backup       | 00:01:19 | Success           | 41    | 6904 | 1            | 24 bytes      | 1                 | 24 bytes         |
-      | 08/04/15 11:27 | Local Manual Backup | 00:00:10 | LocalBackupError0 | 41    | 6901 | 0            | 0             | 0                 | 0                |
-      | 08/04/15 11:26 | Manual Backup       | 00:01:40 | Success           | 41    | 6901 | 1            | 16 bytes      | 1                 | 16 bytes         |
-      | 08/03/15 18:40 | Local Manual Backup | 00:00:12 | LocalBackupError0 | 40    | 6887 | 0            | 0             | 0                 | 0                |
-      | 08/03/15 18:38 | Manual Backup       | 00:01:59 | Success           | 40    | 6887 | 40           | 6.9 KB        | 40                | 6.9 KB           |
+      | today          | Manual Backup       | any      | CancelError0      | any   | any  | any           | any          | 0                 | any              |
+      | today          | Manual Backup       | any      | Success           | 1     | 20   | 0             | 0            | 0                 | 0                |
+      | today          | Manual Backup       | any      | Success           | 1     | 20   | 1             | 74 bytes     | 1                 | 74 bytes         |
+    And I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
 
   @TC.122156 @bus @machines_sync @tasks_p2
   Scenario: 122156:View Restore History
-    When I navigate to bus admin console login page
-    And I log in bus admin console with user name mozybus+backupsrestores@gmail.com and password default password
-    When I search machine by:
-      | machine_name   |
-      | CNENCHENC33L1C |
-    And I view machine details for mozybus+backup+restore@emc.com
-    And Restores table will display as:
-      | ID    | Date/Time Requested | Date/Time Finished | Files Retrieved | Size  | Status / Downloads                       |
-      | 30247 | 12/17/15 15:08      | 12/17/15 15:08     | 1 / 1           | 1 DVD | Retrieved files; preparing to burn DVDs. |
-      | 30246 | 12/17/15 14:57      | 12/17/15 14:57     | 1 / 1           | 1 DVD | Retrieved files; preparing to burn DVDs. |
-      | 21284 | 08/11/15 05:05      | 08/10/15 15:07     | 41 / 41         | 1 DVD | Retrieved files; preparing to burn DVDs. |
-      | 20707 | 08/07/15 00:52      | 08/06/15 10:54     | 41 / 41         | 1 DVD | Retrieved files; preparing to burn DVDs. |
+    When I check that linux client service is available
+    And I upload change linux client env script to remote machine
+    And I add a new MozyPro partner:
+      | period | base plan | server plan |
+      | 1      | 50 GB     | yes         |
+    And New partner should be created
+    And I activate new partner admin with default password
+    And I log in bus admin console as new partner admin
+    And I add new user(s):
+      | name            | storage_type | storage_limit | devices |
+      | TC.122156.User  | Server       | 10            | 3       |
+    Then 1 new user should be created
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    When I update the user password to default password
+    And I backup file using linux client for user newly created user email password default password
+    And I wait for 5 seconds
+    # Perform a media restore for this machine
+    When I refresh User Details section
+    And I click restore Files folder icon for device BUS-Auto-03-Zoe
+    And I navigate to new window
+    Then I have login freyja from BUS
+    When I select the Devices tab
+    And I choose one device
+    And I click restore all files in the detail panel
+    And I fill out the restore all files wizard
+      | restore_name     | restore_type |
+      | archive_all_file | media        |
+    When I select options menu
+    And I select event history
+    Then this restore is In Progress
+    When I close new window
+    And I wait for 50 seconds
+    And I view machine BUS-Auto-03-Zoe details from user details section
+    Then Restores table first record will display as:
+      | ID                       | Date/Time Requested | Date/Time Finished | Files Retrieved | Size  | Status / Downloads                       |
+      | <%=@restore.restore_id%> | today               | today              | 4 / 4           | 1 DVD | Retrieved files; preparing to burn DVDs. |
+    And I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
 
 
   ###############################################################################
@@ -471,20 +509,7 @@ Feature: view edit machine details
     And I list versions for:
       | platform | show disabled |
       | linux    | false         |
-    And I get 2 enabled linux version
-    When I act as partner by:
-      | name           | including sub-partners |
-      | MozyEnterprise | no                     |
-    And I navigate to Upgrade Rules section from bus admin console page
-    And I delete rule for version @version_name if it exists
-    And I delete rule for version @version_name2 if it exists
-    Then I add a new upgrade rule:
-      | version name       | Req? | On? | min version | max version |
-      | <%=@version_name%> | N    | Y   | 0.0.0.1111  | 1.0.0.1111  |
-    Then I add a new upgrade rule:
-      | version name        | Req? | On? | min version | max version |
-      | <%=@version_name2%> | N    | Y   | 0.0.0.1111  | 1.0.0.1111  |
-    And I stop masquerading as sub partner
+    And I get 2 enabled linux version for deb-64
     When I add a new MozyEnterprise partner:
       | period | users | server plan |
       | 12     | 10    | 250 GB      |
@@ -538,75 +563,121 @@ Feature: view edit machine details
 
   @TC.122537 @TC.122540 @bus @machines_sync @tasks_p2
   Scenario: 122537 122540:Mac Sync machines and client version displayed correctly in the machine details and list view
-    # Use external id to search
-    When I search machine by:
-      | keywords |
-      | 81310305 |
-    Then Machine search results should be:
-      | External ID | Machine  | User                                 | User Group           | Data Center | Storage Used | Backed Up |
-      | 81310305    | Sync     | mozybus+linuxgaserversync1@gmail.com | (default user group) | qa6         | 68 MB        | N/A       |
+    When I navigate to List Versions section from bus admin console page
+    And I list versions for:
+      | platform | show disabled |
+      | mac-sync | false         |
+    And I get 1 enabled mac-sync version
+    When I add a new MozyPro partner:
+      | period | base plan |
+      | 1      | 50 GB     |
+    And New partner should be created
+    And I get the admin id from partner details
+    When I act as newly created partner account
+    And I add new user(s):
+      | name            | storage_type | storage_limit | devices | enable_stash |
+      | TC.122537.User  | Desktop      | 10            | 2       | yes          |
+    Then 1 new user should be created
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    And I get the user id
+    And I update the user password to default password
+    When I navigate to Search / List Machines section from bus admin console page
     And I view machine details for Sync
+    And I get machine details info
+    And I got client config for the user machine:
+      | user_name                   | machine    | platform | arch   | codename  | version       |
+      | <%=@new_users.first.email%> | plop000001 | mac      | x86_64 | mozypro   | <%=@version%> |
+    And I upload data to device by batch
+      | machine_id                | user_agent                        |
+      | <%=@machine_info['ID:']%> | <%='msync_mac_client/'+@version%> |
+    And I refresh Machine Details section
     Then machine details should be:
-      | ID:      | External ID:      | Owner:                               | Space Used: | Encryption: | Client Version:             | Hash:               | Data Center: |
-      | 81310305 | 81310305 (change) | mozybus+linuxgaserversync1@gmail.com | 68 MB       | Default     | MozyPro mac sync 1.3.0.4667 | user_303028902_sync | qa6          |
-    And I log out bus admin console
-    And I navigate to bus admin console login page
-    And I log in bus admin console with user name admin+catherine@mozy.com and password default password
+      | ID:                       | Owner:                      | Space Used: | Encryption: | Client Version:       |
+      | <%=@machine_info['ID:']%> | <%=@new_users.first.email%> | 1 GB        | Default     | MozyPro @version_name |
     When I search machine by:
       | machine_name |
       | Sync         |
-    Then Machine search results for user mozybus+linuxgaserversync1@gmail.com should be:
-      | Machine  | User                                 | User Group           | Data Center | Storage Used | Backed Up | MTM/SN |
-      | Sync     | mozybus+linuxgaserversync1@gmail.com | (default user group) | qa6         | 68 MB        | N/A       |        |
-    And I view machine details for mozybus+linuxgaserversync1@gmail.com
+    Then Machine search results should be:
+      | Machine  | User                        | User Group           | Storage Used |
+      | Sync     | <%=@new_users.first.email%> | (default user group) | 1 GB         |
+    And I add machine external id
+    When I log in bus admin console as administrator
+    And I search machine by:
+      | keywords                  |
+      | <%=@machine_external_id%> |
+    Then Machine search results should be:
+      | External ID                  | Machine  | User                        | User Group           | Storage Used | Created |
+      | <%=@machine_external_id%>    | Sync     | <%=@new_users.first.email%> | (default user group) | 1 GB         | today   |
+    And I view machine details for Sync
     Then machine details should be:
-      | ID:      | Owner:                               | Space Used: | Encryption: | Client Version:             | Hash:               | Data Center: |
-      | 81310305 | mozybus+linuxgaserversync1@gmail.com | 68 MB       | Default     | MozyPro mac sync 1.3.0.4667 | user_303028902_sync | qa6          |
+      | ID:                       | External ID:                           | Owner:                      | Space Used: | Encryption: | Client Version:       | Hash:                         |
+      | <%=@machine_info['ID:']%> | <%=@machine_external_id+' (change)'%>  | <%=@new_users.first.email%> | 1 GB        | Default     | MozyPro @version_name | <%='user_'+@user_id+'_sync'%> |
+    And I search and delete partner account by newly created partner company name
 
-  # using fixed data, partner: Linux GA Test
+
   @TC.122455 @TC.122456 @bus @machines_sync @tasks_p2
   Scenario: 122455 122456:Windows Sync machines and client version displayed correctly in the machine details and list view
-    # Use external id to search
-    When I search machine by:
-      | keywords |
-      | 81309978 |
-    Then Machine search results should be:
-      | External ID | Machine  | User                     | User Group           | Data Center | Storage Used | Backed Up |
-      | 81309978    | Sync     | qiezidesktoppro1@emc.com | (default user group) | qa6         | 953.5 MB     | N/A       |
+    When I navigate to List Versions section from bus admin console page
+    And I list versions for:
+      | platform | show disabled |
+      | win-sync | false         |
+    And I get 1 enabled win-sync version
+    When I add a new MozyPro partner:
+      | period | base plan |
+      | 1      | 50 GB     |
+    And New partner should be created
+    And I get the admin id from partner details
+    When I act as newly created partner account
+    And I add new user(s):
+      | name            | storage_type | storage_limit | devices | enable_stash |
+      | TC.122455.User  | Desktop      | 10            | 2       | yes          |
+    Then 1 new user should be created
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    And I get the user id
+    And I update the user password to default password
+    When I navigate to Search / List Machines section from bus admin console page
     And I view machine details for Sync
+    And I get machine details info
+    And I got client config for the user machine:
+      | user_name                   | machine    | platform | arch   | codename  | version       |
+      | <%=@new_users.first.email%> | plop000001 | win      | x86_64 | mozypro   | <%=@version%> |
+    And I upload data to device by batch
+      | machine_id                | user_agent                            |
+      | <%=@machine_info['ID:']%> | <%='msync_windows_client/'+@version%> |
+    And I refresh Machine Details section
     Then machine details should be:
-      | ID:      | External ID:      | Owner:                   | Space Used: | Encryption: | Client Version:             | Hash:               | Data Center: |
-      | 81309978 | 81309978 (change) | qiezidesktoppro1@emc.com | 953.5 MB    | Default     | MozyPro win sync 1.3.0.4679 | user_303028272_sync | qa6          |
-    And I log out bus admin console
-    And I navigate to bus admin console login page
-    And I log in bus admin console with user name mozybus+catherine+0401@gmail.com and password default password
+      | ID:                       | Owner:                      | Space Used: | Encryption: | Client Version:       |
+      | <%=@machine_info['ID:']%> | <%=@new_users.first.email%> | 1 GB        | Default     | MozyPro @version_name |
     When I search machine by:
       | machine_name |
       | Sync         |
-    Then Machine search results for user qiezidesktoppro1@emc.com should be:
-      | Machine  | User                     | User Group           | Data Center | Storage Used | Backed Up | MTM/SN |
-      | Sync     | qiezidesktoppro1@emc.com | (default user group) | qa6         | 953.5 MB     | N/A       |        |
-    And I view machine details for qiezidesktoppro1@emc.com
+    Then Machine search results should be:
+      | Machine  | User                        | User Group           | Storage Used |
+      | Sync     | <%=@new_users.first.email%> | (default user group) | 1 GB         |
+    And I add machine external id
+    When I log in bus admin console as administrator
+    And I search machine by:
+      | keywords                  |
+      | <%=@machine_external_id%> |
+    Then Machine search results should be:
+      | External ID                  | Machine  | User                        | User Group           | Storage Used | Created |
+      | <%=@machine_external_id%>    | Sync     | <%=@new_users.first.email%> | (default user group) | 1 GB         | today   |
+    And I view machine details for Sync
     Then machine details should be:
-      | ID:      | Owner:                   | Space Used: | Encryption: | Client Version:             | Hash:               | Data Center: |
-      | 81309978 | qiezidesktoppro1@emc.com | 953.5 MB    | Default     | MozyPro win sync 1.3.0.4679 | user_303028272_sync | qa6          |
+      | ID:                       | External ID:                           | Owner:                      | Space Used: | Encryption: | Client Version:       | Hash:                         |
+      | <%=@machine_info['ID:']%> | <%=@machine_external_id+' (change)'%>  | <%=@new_users.first.email%> | 1 GB        | Default     | MozyPro @version_name | <%='user_'+@user_id+'_sync'%> |
+
+    And I search and delete partner account by newly created partner company name
 
   @TC.122569 @bus @machines_sync @tasks_p2
   Scenario: 122569: Sync client version update from unknown to correct one in the machines details
     When I navigate to List Versions section from bus admin console page
     And I list versions for:
       | platform | show disabled |
-      | linux    | false         |
+      | win-sync | false         |
     And I get 1 enabled win-sync version
-    When I act as partner by:
-      | name    | including sub-partners |
-      | MozyPro | no                     |
-    And I navigate to Upgrade Rules section from bus admin console page
-    And I delete rule for version @version_name if it exists
-    Then I add a new upgrade rule:
-      | version name       | Req? | On? | min version | max version | Install CMD  |
-      | <%=@version_name%> | N    | Y   | 0.0.0.1111  | 1.0.0.1111  | "%1" /silent |
-    And I stop masquerading as sub partner
     When I add a new MozyPro partner:
       | period | base plan | net terms |
       | 12     | 8 TB      | yes       |
@@ -625,8 +696,8 @@ Feature: view edit machine details
       | Client Version: |
       | unknown         |
     And I got client config for the user machine:
-      | user_name                   | machine    | platform | codename | version       | arch |
-      | <%=@new_users.first.email%> | plop000001 | win      | mozypro  | <%=@version%> | x86  |
+      | user_name                   | machine    | platform | codename | version       | arch   |
+      | <%=@new_users.first.email%> | plop000001 | win      | mozypro  | <%=@version%> | x86_64 |
     When I refresh Machine Details section
     Then machine details should be:
       | Client Version:       |
@@ -737,7 +808,7 @@ Feature: view edit machine details
     When I search machine by:
       | machine_name                  |
       | jeff2-loki.mozyclientqa.local |
-    And I view machine details for vmbu_test_user_5@mozy.com
+    And I view machine details for jefft+qa12loki@mozy.com
     Then the data shuttle machine details should be:
       | Order ID      | Data Shuttle Device ID | Phase   | % Complete | GB Transferred | GB Remaining | Start | Elapsed |
       | <%=@seed_id%> |                        | Ordered |            |                |              |       |         |

@@ -75,7 +75,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | £96.09      |
     And New partner should be created
 
-  @TC.143134_26 @add_new_partner @mozypro @bus
+  @TC.143134_26 @add_new_partner @mozypro @bus @price_changed
   Scenario: MozyPro 250 GB Plan yearly USD exception coupon
     When I add a new MozyPro partner:
       | company name                                               | period | base plan | country       | coupon      |
@@ -89,7 +89,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | $940.40     |
     And New partner should be created
 
-  @TC.143134_27 @add_new_partner @mozypro @bus
+  @TC.143134_27 @add_new_partner @mozypro @bus @price_changed
   Scenario: MozyPro 250 GB Plan Biennially EUR Germany exception coupon
     When I add a new MozyPro partner:
       | company name                                                           | period | base plan | server plan | create under    | country | cc number        | coupon                        |
@@ -116,7 +116,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | €134.99     |
     And New partner should be created
 
-  @TC.143134_29 @add_new_partner @mozypro
+  @TC.143134_29 @add_new_partner @mozypro @price_changed
   Scenario: MozyPro 500 GB Plan yearly GBP VAT exception coupon NOT execute successfully
     When I add a new MozyPro partner:
       | company name                                                   | period | base plan | server plan | create under | country        | vat number  | coupon      | cc number        |
@@ -131,7 +131,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | £1,375.90   |
     And New partner should be created
 
-  @TC.143134_210 @add_new_partner @mozypro
+  @TC.143134_210 @add_new_partner @mozypro @price_changed
   Scenario: MozyPro 500 GB Plan Biennially USD exception coupon
     When I add a new MozyPro partner:
       | company name                                                   | period | base plan | country       | coupon                        |
@@ -159,7 +159,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | $539.96     |
     And New partner should be created
 
-  @TC.143134_212 @add_new_partner @mozypro
+  @TC.143134_212 @add_new_partner @mozypro @price_changed
   Scenario: MozyPro 1 TB Plan yearly Ireland exception coupon
     When I add a new MozyPro partner:
       | company name                                                 | period | base plan | create under     | country | coupon      | vat number | cc number        |
@@ -174,7 +174,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | €3,652.98   |
     And New partner should be created
 
-  @TC.143134_213 @add_new_partner @mozypro
+  @TC.143134_213 @add_new_partner @mozypro @price_changed
   Scenario: MozyPro 1 TB Plan Biennially GBP exception coupon
     When I add a new MozyPro partner:
       | company name                                            | period | base plan | server plan | create under | country        | coupon                        | cc number        |
@@ -202,7 +202,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | £512.99     |
     And New partner should be created
 
-  @TC.143134_215 @add_new_partner @mozypro @bus
+  @TC.143134_215 @add_new_partner @mozypro @bus @price_changed
   Scenario: MozyPro 2 TB Plan yearly USD exception coupon
     When I add a new MozyPro partner:
       | company name                                        | period | base plan | server plan | country       | coupon      |
@@ -217,7 +217,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | $7,820.80   |
     And New partner should be created
 
-  @TC.143134_216 @add_new_partner @mozypro @bus
+  @TC.143134_216 @add_new_partner @mozypro @bus @price_changed
   Scenario: MozyPro 2 TB Plan Biennially EUR Germany exception coupon
     When I add a new MozyPro partner:
       | company name                                                    | period | base plan | create under    | country | cc number        | coupon                        |
@@ -245,7 +245,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | €1,241.98   |
     And New partner should be created
 
-  @TC.143134_218 @add_new_partner @mozypro
+  @TC.143134_218 @add_new_partner @mozypro @price_changed
   Scenario: MozyPro 4 TB Plan yearly GBP exception coupon
     When I add a new MozyPro partner:
       | company name                                        | period | base plan | create under | country        | coupon       | cc number        |
@@ -260,7 +260,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | £10,822.56  |
     And New partner should be created
 
-  @TC.143134_219 @add_new_partner @mozypro @bus
+  @TC.143134_219 @add_new_partner @mozypro @bus @price_changed
   Scenario: MozyPro 4 TB Plan Biennially USD exception coupon
     When I add a new MozyPro partner:
       | company name                                            | period | base plan | server plan | country       | coupon                        |
@@ -288,7 +288,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | €97.29      |
     And New partner should be created
 
-  @TC.143134_221 @add_new_partner @mozypro @bus
+  @TC.143134_221 @add_new_partner @mozypro @bus @price_changed
   Scenario: MozyPro 250 GB Plan Biennially EUR Germany exception coupon change plan
     When I add a new MozyPro partner:
       | company name                                                                       | period | base plan | create under    | country | cc number        | coupon                        |
@@ -300,7 +300,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges     |          |            | €0.00       |
     And New partner should be created
 
-  @TC.143134_222 @add_new_partner @mozypro @bus
+  @TC.143134_222 @add_new_partner @mozypro @bus @price_changed
   Scenario: Reseller silver monthly France exception coupon
     When I add a new Reseller partner:
       | company name                                               | period | reseller type | reseller quota | create under   | country | cc number        | coupon      |
@@ -315,7 +315,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges        |          |            | €35.64      |
     And New partner should be created
 
-  @TC.143134_223 @add_new_partner @mozypro @bus
+  @TC.143134_223 @add_new_partner @mozypro @bus @price_changed
   Scenario: Reseller silver yearly EUR Ireland exception coupon
     When I add a new Reseller partner:
       | company name                                                   | period | reseller type | reseller quota | server plan | storage add on | create under    | vat number | coupon      | country | cc number        |
@@ -332,7 +332,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges        |          |            | €3,056.43   |
     And New partner should be created
 
-  @TC.143134_224 @add_new_partner @mozypro @bus
+  @TC.143134_224 @add_new_partner @mozypro @bus @price_changed
   Scenario: Reseller gold monthly GBP exception coupon execute manually as wrong sequence of gold and platinum
     When I add a new Reseller partner:
       | company name                                          | period | reseller type | reseller quota | create under | vat number  | coupon                        | country        | cc number        |
@@ -344,7 +344,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges      |          |            | £0.00       |
     And New partner should be created
 
-  @TC.143134_225 @add_new_partner @mozypro @bus
+  @TC.143134_225 @add_new_partner @mozypro @bus @price_changed
   Scenario: Reseller gold yearly GBP exception coupon
     When I add a new Reseller partner:
       | company name                                         | period | reseller type | reseller quota | server plan | storage add on | create under | coupon      | country        | cc number        |
@@ -361,7 +361,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges      |          |            | £1,591.92   |
     And New partner should be created
 
-  @TC.143134_226 @add_new_partner @mozypro @bus
+  @TC.143134_226 @add_new_partner @mozypro @bus @price_changed
   Scenario: Reseller platinum monthly USD exception coupon execute manually as wrong sequence of gold and platinum
     When I add a new Reseller partner:
       | company name                                              | period | reseller type | reseller quota | coupon      | country       |
@@ -375,7 +375,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges          |          |            | $27.00      |
     And New partner should be created
 
-  @TC.143134_227 @add_new_partner @mozypro @bus
+  @TC.143134_227 @add_new_partner @mozypro @bus @price_changed
   Scenario: Reseller platinum yearly USD exception coupon
     When I add a new Reseller partner:
       | company name                                             | period | reseller type | reseller quota | server plan | storage add on | coupon                        | country       |
@@ -389,7 +389,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges          |          |            | $0.00       |
     And New partner should be created
 
-  @TC.143134_228 @add_new_partner @mozypro @bus
+  @TC.143134_228 @add_new_partner @mozypro @bus @price_changed
   Scenario: Reseller silver yearly EUR Ireland exception coupon
     When I add a new Reseller partner:
       | company name                                                               | period | reseller type | reseller quota | create under    | vat number | coupon      | country | cc number        |
@@ -404,7 +404,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges        |          |            | €2,009.21   |
     And New partner should be created
 
-  @TC.143134_229 @add_new_partner @mozypro @bus
+  @TC.143134_229 @add_new_partner @mozypro @bus @price_changed
   Scenario: Reseller gold yearly GBP exception coupon
     When I add a new Reseller partner:
       | company name                                                     | period | reseller type | reseller quota | create under | coupon      | country        | cc number        |
@@ -419,7 +419,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | Total Charges      |          |            | £273.24     |
     And New partner should be created
 
-  @TC.143134_230 @add_new_partner @mozypro @bus
+  @TC.143134_230 @add_new_partner @mozypro @bus @price_changed
   Scenario: Reseller platinum yearly USD exception coupon
     When I add a new Reseller partner:
       | company name                                                         | period | reseller type | reseller quota | coupon                        | country       |

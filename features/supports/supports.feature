@@ -62,7 +62,7 @@ Feature: Supports on BUS
     Then I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.122153 @bus @support @tasks_p1 @ldap_sequence
+  @TC.122153 @bus @support @tasks_p1 @ldap_sequence @subdomain
   Scenario: 122153:Push SSO admin stay logged in when go to support and community
     When I act as partner by:
       | email                        |
@@ -124,7 +124,7 @@ Feature: Supports on BUS
       | email             |
       | <%=@admin.email%> |
 
-  @TC.122154 @bus @support @tasks_p1 @ldap_sequence
+  @TC.122154 @bus @support @tasks_p1 @ldap_sequence @subdomain
   Scenario: 122154 Pull SSO admin stay logged in when go to support and community
     When I act as partner by:
       | email                        |

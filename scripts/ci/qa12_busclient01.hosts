@@ -1,0 +1,16 @@
+#qa12 busclient02
+10.29.136.124 auth.mozy.com auth2.mozy.com
+10.29.136.103 www.mozypro.com mozypro.com secure.mozypro.com www.mozyenterprise.com mozyenterprise.com mozyoem.mozypro.com
+10.29.136.105 secure.mozy.com secure.mozy.ie secure.mozy.fr secure.mozy.co.uk secure.mozy.de
+10.29.136.106 mozy.com mozy.ie mozy.de mozy.fr mozy.co.uk
+10.29.136.103 client.mozy.com emcfortress.mozypro.com resetpassword.mozypro.com oem.partners.com partners.mozy.com
+10.29.136.149 triton.mozy.com
+10.29.136.103 backupclient.mozyenterprise.com
+
+#AD server
+10.29.99.120 win-ko2af9k2doa.mtdev.mozypro.local
+
+#BUS Automation
+10.29.136.103 hipaa01.mozypro.com nohipaa01.mozypro.com qa8saml.mozypro.com
+10.29.136.103 fedidga.mozypro.com adminsso.mozypro.com pulladminsso.mozypro.com
+10.29.136.103 qa6freyja.mozyenterprise.com qa8pull.mozypro.com
