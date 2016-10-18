@@ -1145,3 +1145,46 @@ Feature: Change VAT Number
     Then I log in bus admin console as administrator
     And I view partner details by newly created partner company name
     And I delete partner account
+
+  @TC.126158 @bus @vat @tasks_p3
+  Scenario: 126158 Create data shuttle to see if any VAT is applied or not
+    When I add a new MozyPro partner:
+      | period | base plan | create under   | country | cc number        |
+      | 24     | 50 GB     | MozyPro France | France  | 4485393141463880 |
+    Then New partner should be created
+    And I activate new partner admin with default password
+    And I act as newly created partner
+    And I add new user(s):
+      | name           | storage_type | storage_limit | devices |
+      | TC.126158.User | Desktop      | 10            | 2       |
+    Then 1 new user should be created
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    When I update the user password to default password
+    And I use keyless activation to activate devices
+      | user_email  | machine_name    | machine_type |
+      | @user_email | Machine1_126158 | Desktop      |
+    And I upload data to device by batch
+      | machine_id                         | GB |
+      | <%=@new_clients.first.machine_id%> | 1  |
+    Then I stop masquerading
+    When I order data shuttle for newly created partner company name
+      | power adapter   | key from  | quota |
+      | Data Shuttle US | available | 1     |
+    And Data shuttle order should be created
+    And Data shuttle order should have VAT fee
+    Then I cancel the latest data shuttle order for newly created partner company name
+    When I search partner by newly created partner company name
+    And I open partner details by partner name in header
+    And I change the partner contact information to:
+      | VAT Number:      |
+      | FR08410091490    |
+    Then Partner contact information is changed
+    When I order data shuttle for newly created partner company name
+      | power adapter   | key from  | quota |
+      | Data Shuttle US | available | 1     |
+    And Data shuttle order should be created
+    And Data shuttle order should not have VAT fee
+    And I search partner by newly created partner company name
+    And I open partner details by partner name in header
+    And I delete partner account

@@ -28,12 +28,11 @@ Then /^I am able to retrieve information from CyberSource:$/ do |info_table|
   response = CybersourceApi.build_retrieve_request(CYBERSOURCE_API_ENV, user_info)
   expected = info_table.hashes.first
   expected.keys.each do |header|
+    expected[header].replace ERB.new(expected[header]).result(binding)
     case header
       when 'last four digits'
-        expected[header] = @partner.credit_card.last_four_digits if expected[header].include?('credit_card.last_four_digits') == true
         response['Envelope']['Body']['replyMessage']['paySubscriptionRetrieveReply']['cardAccountNumber'].split('XXXXXX')[1].should == expected[header]
       when 'BIN country'
-        expected[header] = @partner.billing_info.country if expected[header].include?('billing_info.country') == true
         expected[header] = 'US' if expected[header] == 'United States'
         response['Envelope']['Body']['replyMessage']['paySubscriptionRetrieveReply']['country'].should == expected[header]
       else

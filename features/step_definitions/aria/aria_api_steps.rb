@@ -48,24 +48,6 @@ Then /^API\* Aria account credit card info should be:$/ do |info_table|
   end
 end
 
-Then /^API\* Aria account country info should be:$/ do |info_table|
-  expected = info_table.hashes.first
-  expected.keys.each do |header|
-    case header
-      when 'account country'
-        expected[header] = @partner.company_info.country if expected[header].include?('company_info.country') == true
-        expected[header] = 'US' if expected[header] == 'United States'
-        @aria_acc_details['country'].should == expected[header]
-      when 'billing country'
-        expected[header] = @partner.billing_info.country if expected[header].include?('billing_info.country') == true
-        expected[header] = 'US' if expected[header] == 'United States'
-        @aria_acc_details['billing_country'].should == expected[header]
-      else
-        raise 'Unknown credit card information'
-    end
-  end
-end
-
 #This is a universal Aria API Checker
 Then /API\* Aria account should be:/ do |info_table|
   step "API* I get Aria account details by newly created partner aria id"

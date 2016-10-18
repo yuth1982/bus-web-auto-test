@@ -43,6 +43,7 @@ module Bus
     element(:num_mac_drivers_tb, id: "seed_device_order_mac_drive_num")
     element(:is_ship_driver_cb, id: "seed_device_order_skip_order_fulfillment")
     element(:submit_order_btn, id: "seed_wizard_finish_button")
+    element(:vat_fee_amount, id: "vat_amount")
 
     def address_desc_columns
       verify_shipping_address_table.rows_text.map{ |row| row[0] }
@@ -219,6 +220,14 @@ module Bus
 
     def num_mac_driver_ordered
       num_mac_drivers_tb.value
+    end
+
+    def get_vat_fee_amount
+      vat_fee_amount.text
+    end
+
+    def get_vat_fee_field
+      page.has_xpath?("//*[@id='vat_amount']")
     end
 
     private

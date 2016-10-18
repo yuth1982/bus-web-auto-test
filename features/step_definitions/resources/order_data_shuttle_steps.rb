@@ -117,6 +117,14 @@ Then /^Data shuttle order should be created$/ do
   @bus_site.admin_console_page.process_order_section.messages.should match(/Data Shuttle Device for Pro Partner (.+) created./)
 end
 
+Then /^Data shuttle order should (|not )have VAT fee$/ do |boolean|
+  if (boolean == 'not ')
+    @bus_site.admin_console_page.process_order_section.get_vat_fee_field.should be_false
+  else
+    @bus_site.admin_console_page.process_order_section.get_vat_fee_amount.gsub(/€/, '').to_f.should > 0
+  end
+end
+
 Then /^Data shuttle order summary should be:$/ do |summary_table|
   (@bus_site.admin_console_page.process_order_section.order_summary_table_rows.sort).should == (summary_table.rows).sort
 end

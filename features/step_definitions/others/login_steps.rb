@@ -214,5 +214,7 @@ When /^I click login link from the email$/ do
   @bus_site.login_page.go_to_url(login_url)
 end
 
-
+When /^The login action should be restricted by IP whitelist$/ do
+  @bus_site.login_page.get_error_msg.should == "Administrative access to the Admin Console is restricted to specified networks (physical and VPN)."
+end
 

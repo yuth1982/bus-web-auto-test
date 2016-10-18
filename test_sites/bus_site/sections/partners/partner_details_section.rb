@@ -97,6 +97,10 @@ module Bus
     element(:api_key_div, css: 'div[id^=api-key-box-] fieldset div:nth-child(1)')
     element(:create_or_delete_api_key_link, css: 'div[id^=api-key-box-] fieldset div:nth-child(1) a')
     element(:ip_whitelist_div, css: 'div[id^=api-key-box-] fieldset div:nth-child(2)')
+    element(:ip_whitelist_icon, xpath: "//i[contains(@id, 'ip-whitelist-icon')]")
+    element(:add_ip_whitelist_tab, xpath: "//li[text()='Add IP Whitelist']")
+    element(:ip_address_range, xpath: "//input[@name='auth_ip_whitelist[ip_address]']")
+    element(:save_ip_whitelist, xpath: "//input[contains(@onclick, 'auth_ip_whitelist')]")
 
     # Account attribute table
     element(:account_attributes_table, css: 'form[id^=account_attributes_form] table')
@@ -545,10 +549,6 @@ module Bus
       wait_until_bus_section_load
     end
 
-    def check_root_role
-      partner_root_role_name.text.split(" (change)")[0]
-    end
-
     # Public: Create API Key
     # Skipped, ff API key existed
     #
@@ -587,6 +587,23 @@ module Bus
       ip_whitelist_div.find(:css, 'a:first-child').click
       ip_whitelist_div.find(:css, 'input#api_allowed_ips').type_text(ip.to_s)
       ip_whitelist_div.find(:css, 'input[value=Submit]').click
+    end
+
+    def add_ip_whitelist_none_api(ip)
+      if (ip == 'local IP')
+        ip_list = Socket.ip_address_list.detect{|intf| intf.ipv4_private?}
+        ip = ip_list.ip_address
+      end
+      ip_whitelist_icon.click
+      add_ip_whitelist_tab.click
+      ip_address_range.type_text(ip.to_s)
+      save_ip_whitelist.click
+    end
+
+    def remove_ip_whitelist_none_api(ip)
+      ip_whitelist_icon.click
+      ip_whitelist_div.find(:xpath, "//td[text()='" + ip + "']/following-sibling::td/a[text()='Delete']").click
+      alert_accept
     end
 
     # Public: Close partner details frame
@@ -1006,6 +1023,15 @@ module Bus
 
     def billing_history_visible?
       !locate(:xpath,"//a[contains(@onclick,'billing-history')]").nil?
+    end
+
+    def find_rollback_link
+      page.has_xpath?("//*[text()='Rollback to pooled storage']")
+    end
+
+    def find_view_in_aria_link
+      expand(billing_information_icon)
+      page.has_xpath?("//a[text()='View in Aria']")
     end
 
     private

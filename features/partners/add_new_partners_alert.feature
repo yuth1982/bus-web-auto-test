@@ -40,3 +40,39 @@ Feature: Add a new partner
       | 1      | 10 GB     | @existing_user_email |
     Then New partner should be created
     And I delete partner account
+
+  @TC.13026 @bus @partner_alert @tasks_p3
+  Scenario: 13026: Create new US partner (business) with invalid credit card number
+    When I add a new MozyPro partner:
+      | period | base plan | cc number        |
+      | 24     | 50 GB     | 4485393141463880 |
+    And Aria payment error message should be Could not validate payment information.
+
+  @TC.13028 @bus @partner_alert @tasks_p3
+  Scenario: 13028: Create new US Partner (business) with invalid expire date
+    When I add a new MozyPro partner:
+      | period | base plan | expire month | expire year |
+      | 24     | 50 GB     | 1            | 16          |
+    And Aria payment error message should be Credit card has expired.
+
+  @TC.13029 @bus @partner_alert @tasks_p3
+  Scenario: 13029: Create new US Partner (business) with invalid admin email
+    When I add a new MozyPro partner:
+      | period | base plan | admin email |
+      | 24     | 50 GB     | test123     |
+    And Add account error message should be Please enter a valid email address
+
+  @TC.13030 @bus @partner_alert @tasks_p3
+  Scenario: 13030: Create new US Partner (business) with no phone number
+    When I add a new MozyPro partner:
+      | period | base plan | phone |
+      | 24     | 50 GB     | empty |
+    And Add account error message should be Phone number cannot be blank
+
+  @TC.13047 @bus @partner_alert @tasks_p3
+  Scenario: 13047: Create new US partner (business) - cvv2 what is this link
+    When I add a new MozyPro partner:
+      | period | base plan | check cvv2 |
+      | 12     | 50 GB     | true       |
+    Then New partner should be created
+    And I delete partner account

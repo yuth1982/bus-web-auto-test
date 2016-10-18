@@ -163,6 +163,16 @@ When /^I add a new ip whitelist (.+)$/ do |ip|
   @bus_site.admin_console_page.partner_details_section.add_ip_whitelist(ip)
 end
 
+When /^I add a none-api ip whitelist (.+)$/ do |ip|
+  @bus_site.admin_console_page.partner_details_section.add_ip_whitelist_none_api(ip)
+  @bus_site.admin_console_page.partner_details_section.wait_until_bus_section_load
+end
+
+When /^I remove a none-api ip whitelist (.+)$/ do |ip|
+  @bus_site.admin_console_page.partner_details_section.remove_ip_whitelist_none_api(ip)
+  @bus_site.admin_console_page.partner_details_section.wait_until_bus_section_load
+end
+
 Then /^Partner ip whitelist should be (.+)$/ do |ip|
   @bus_site.admin_console_page.partner_details_section.wait_until_bus_section_load
   @bus_site.admin_console_page.partner_details_section.ip_whitelist.should == ip
@@ -603,5 +613,13 @@ Then /^billing history section should (not )?visible$/ do |visible|
     @bus_site.admin_console_page.partner_details_section.billing_history_visible?.should == true
   else
     @bus_site.admin_console_page.partner_details_section.billing_history_visible?.should == false
+  end
+end
+
+Then /^view in aria link should (not )?be visible$/ do |visible|
+  if visible.nil?
+    @bus_site.admin_console_page.partner_details_section.find_view_in_aria_link.should == true
+  else
+    @bus_site.admin_console_page.partner_details_section.find_view_in_aria_link.should == false
   end
 end

@@ -268,6 +268,11 @@ And /^There is no model audits record for this action_audits action$/ do
   model_record.size.should == 0
 end
 
-
+When /^I search and delete admin (.+)$/ do |admin_name|
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_admin'])
+  @bus_site.admin_console_page.search_admins_section.search_admin(admin_name)
+  @bus_site.admin_console_page.search_admins_section.view_admin_detail(admin_name)
+  @bus_site.admin_console_page.admin_details_section.delete_admin(QA_ENV['bus_password'])
+end
 
 
