@@ -39,9 +39,10 @@ Feature: login as admins
 
   @TC.126043 @bus @admin @tasks_p1 @ldap_sequence @subdomain
   Scenario: 126043 Reset Admin Password from subdomain.mozypro.com
-    When I act as partner by:
-      | email                        |
-      | qa8+saml+test+admin@mozy.com |
+    When I use a existing partner:
+      | admin email                   | partner type |
+      | qa8+saml+test+admin@mozy.com  | MozyPro      |
+    And I log in bus admin console as new partner admin
     And I navigate to Authentication Policy section from bus admin console page
     And I uncheck enable sso for admins to log in with their network credentials
     And I save the changes
@@ -60,14 +61,12 @@ Feature: login as admins
     Then I should see 1 email(s)
     When I click reset password link from the email
     Then I reset password with default password
-    And I will see reset password massage Your password has been changed.
-    And I navigate to bus admin console login page
+    And I will see reset password full massage Your password has been changed.
+    When I navigate to the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
     And I log in bus admin console with user name @admin.email and password default password
     Then I login as @admin.name admin successfully
-    And I log in bus admin console as administrator
-    And I act as partner by:
-      | email                        |
-      | qa8+saml+test+admin@mozy.com |
+    When I navigate to bus admin console login page
+    And I log in bus admin console as new partner admin
     And I delete admin by:
       | email             |
       | <%=@admin.email%> |

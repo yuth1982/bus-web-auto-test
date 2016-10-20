@@ -57,6 +57,7 @@ end
 Then /^I should see (\d+) email\(s\)$/ do |num_emails|
   @found_emails = [] if @found_emails.nil?
   @found_emails.size.should == num_emails.to_i
+  #Log.debug @found_emails[0].body if @found_emails.size > 0
 end
 
 When /^I (retrieve email content|download email attachment) by keywords:$/ do |type, keywords_table|
