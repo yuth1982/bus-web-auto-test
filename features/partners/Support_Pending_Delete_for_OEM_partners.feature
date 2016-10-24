@@ -46,8 +46,6 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-    And no report is scheduled for this partner
-
     When I navigate to Manage Pending Deletes section from bus admin console page
     And I make sure pending deletes setting is 60 days
     And I search partners in pending-delete not available to purge by:
@@ -71,14 +69,14 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
       | CANCELLED    |
     When I search partner by newly created partner company name
     Then Partner search results should not be:
-      | Partner            |
-      | <%=@company_name%> |
+      | Partner       |
+      | @company_name |
     When I search partner by:
       | name          | filter  |
       | @company_name | Deleted |
     Then Partner search results should not be:
-      | Partner            |
-      | <%=@company_name%> |
+      | Partner       |
+      | @company_name |
     When I search partner by:
       | name          | filter         |
       | @company_name | Pending Delete |
@@ -106,9 +104,10 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
       | @company_name | Pending Delete |
     And I view partner details by newly created partner company name
     And Partner billing history should be:
-      | Date  | Amount    | Total Paid | Balance Due |
-      | today | $94.99    | $94.99     | $0.00       |
+      | Date  | Amount  | Total Paid | Balance Due |
+      | today | $110.98 | $110.98    | $0.00       |
 
+    Then no report is scheduled for this partner
 
   @TC.144460_02 @bus @delete_partner
   Scenario: Mozy-144460_02: Delete OEM Partner Root, check Partner Root information
@@ -155,6 +154,7 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
       | type            | name                  | frequency |
       | Billing Summary | billing summary test  | Daily     |
     Then Billing summary report should be created
+    And 1 report is scheduled for this partner
 
     When I stop masquerading
     And I search and delete partner account by newly created subpartner company name
@@ -200,6 +200,8 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
     When I navigate to bus admin console login page
     And I log in bus admin console with user name @subpartner.admin_email_address and password default password
     Then Login page error message should be Your account has been suspended and cannot currently be accessed.
+
+    Then no report is scheduled for this partner
 
 #    When I wait for 86460 seconds
 #    And I search emails by keywords:
@@ -289,40 +291,39 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
       | type            | name                  | frequency |
       | Billing Summary | billing summary test  | Daily     |
     Then Billing summary report should be created
+    And 1 report is scheduled for this partner
 
     When I stop masquerading
     And I search partner by TC.144460_04 parent partner
     And I view partner details by TC.144460_04 parent partner
     And I delete partner account
 
-#    When I navigate to Manage Pending Deletes section from bus admin console page
-#    And I search partners in pending-delete not available to purge by:
-#      | name          | full search |
-#      | @company_name | yes         |
-#    Then Partners in pending-delete not available to purge search results should be:
-#      | Partner       |
-#      | @company_name |
+    When I navigate to Manage Pending Deletes section from bus admin console page
+    And I search partners in pending-delete not available to purge by:
+      | name          | full search |
+      | @company_name | yes         |
+    Then I should see No results found in pending-delete not available to purge table
 
-#    When I search partner by newly created subpartner company name
-#    Then Partner search results should not be:
-#      | Partner       |
-#      | @company_name |
-#    When I search partner by:
-#      | name          | filter  |
-#      | @company_name | Deleted |
-#    Then Partner search results should not be:
-#      | Partner       |
-#      | @company_name |
-#    When I search partner by:
-#      | name          | filter         |
-#      | @company_name | Pending Delete |
-#    Then Partner search results should be:
-#      | Partner       |
-#      | @company_name |
-#    When I view partner details by newly created subpartner company name
-#    Then Partner general information should be:
-#      | Pending | Root Admin: |
-#      | today   | @root_admin |
+    When I search partner by:
+      | name          | filter         |
+      | @company_name | Pending Delete |
+    Then Partner search results should not be:
+      | Partner       |
+      | @company_name |
+    When I search partner by:
+      | name          | filter  |
+      | @company_name | Deleted |
+    Then Partner search results should not be:
+      | Partner       |
+      | @company_name |
+    When I search partner by newly created subpartner company name
+    Then Partner search results should be:
+      | Partner       |
+      | @company_name |
+    When I view partner details by newly created subpartner company name
+    Then Partner general information should be:
+      | Status:         |
+      | Active (change) |
 
 #    When I use key activation to activate devices
 #      | machine_name      |
@@ -336,6 +337,8 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
     When I navigate to bus admin console login page
     And I log in bus admin console with user name @subpartner.admin_email_address and password reset password
     Then Login page error message should be Your account has been suspended and cannot currently be accessed.
+
+    Then no report is scheduled for this partner
 
 #    When I wait for 86460 seconds
 #    And I search emails by keywords:
@@ -410,17 +413,16 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
       | type            | name                  | frequency |
       | Billing Summary | billing summary test  | Daily     |
     Then Billing summary report should be created
+    And 1 report is scheduled for this partner
 
     When I stop masquerading
     And I search and delete partner account by newly created subpartner company name
 
-#    When I navigate to Manage Pending Deletes section from bus admin console page
-#    And I search partners in pending-delete not available to purge by:
-#      | name          |
-#      | @company_name |
-#    Then Partners in pending-delete not available to purge search results should be:
-#      | Partner       |
-#      | @company_name |
+    When I navigate to Manage Pending Deletes section from bus admin console page
+    And I search partners in pending-delete not available to purge by:
+      | name          |
+      | @company_name |
+    Then I should see No results found in pending-delete not available to purge table
 
     When I search partner by newly created subpartner company name
     Then Partner search results should not be:
@@ -439,7 +441,7 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
       | Partner       |
       | @company_name |
     When I view partner details by newly created subpartner company name
-    Then Partner general information should be:
+    And Partner general information should be:
       | Deleted: | Root Admin: |
       | today    | @root_admin |
 
@@ -448,21 +450,15 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
       | machine_144460_05 |
     Then Activate key response should be ERROR: COULD NOT FIND KEY
 
-#    When I navigate to user login page with partner ID oem.partners.com
-#    And I log in bus admin console with user name @new_users[0].email and password reset password
-#    Then Login page error message should be Your account has been suspended and cannot currently be accessed.
-
     When I navigate to user login page with partner ID oem.partners.com
     And I log in bus admin console with user name @new_users[0].email and password reset password
     Then Login page error message should be Incorrect email or password.
 
-#    When I navigate to bus admin console login page
-#    And I log in bus admin console with user name @subpartner.admin_email_address and password reset password
-#    Then Login page error message should be Your account has been suspended and cannot currently be accessed.
-
     When I navigate to bus admin console login page
     And I log in bus admin console with user name @subpartner.admin_email_address and password reset password
     Then Login page error message should be Incorrect email or password.
+
+    Then no report is scheduled for this partner
 
 #    When I wait for 86460 seconds
 #    And I search emails by keywords:
@@ -512,6 +508,7 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
       | type            | name                  | frequency |
       | Billing Summary | billing summary test  | Daily     |
     Then Billing summary report should be created
+    And 1 report is scheduled for this partner
 
     When I stop masquerading
     And I search and delete partner account by newly created subpartner company name
@@ -561,6 +558,8 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
     When I navigate to bus admin console login page
     And I log in bus admin console with user name @subpartner.admin_email_address and password default password
     Then I login as @subpartner.company_name admin successfully
+
+    Then 1 report is scheduled for this partner
 
 #    bugs: delete partner will suspend jobs, but undelete will not unsuspend jobs, no email was sent
 #    When I wait for 86460 seconds
@@ -636,6 +635,7 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
       | type            | name                  | frequency |
       | Billing Summary | billing summary test  | Daily     |
     Then Billing summary report should be created
+    And 1 report is scheduled for this partner
 
     When I stop masquerading
     And I search partner by TC.144460_07 parent partner
@@ -687,6 +687,8 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
     When I navigate to bus admin console login page
     And I log in bus admin console with user name @subpartner.admin_email_address and password reset password
     Then I login as @subpartner.company_name admin successfully
+
+    Then 1 report is scheduled for this partner
 
 #    bugs: delete partner will suspend jobs, but undelete will not unsuspend jobs, no email was sent
 #    When I wait for 86460 seconds
@@ -741,6 +743,7 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
       | type            | name                  | frequency |
       | Billing Summary | billing summary test  | Daily     |
     Then Billing summary report should be created
+    And 1 report is scheduled for this partner
 
     When I stop masquerading
     And I search and delete partner account by newly created subpartner company name
@@ -795,6 +798,8 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
     When I navigate to bus admin console login page
     And I log in bus admin console with user name @subpartner.admin_email_address and password default password
     Then Login page error message should be Incorrect email or password.
+
+    Then no report is scheduled for this partner
 
 #    When I wait for 86460 seconds
 #    And I search emails by keywords:
@@ -869,6 +874,7 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
       | type            | name                  | frequency |
       | Billing Summary | billing summary test  | Daily     |
     Then Billing summary report should be created
+    And 1 report is scheduled for this partner
 
     When I stop masquerading
     And I search partner by TC.144460_10 parent partner
@@ -887,12 +893,12 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
     Then Partner search results should not be:
       | Partner       |
       | @company_name |
-    When I search partner by:
-      | name          | filter         |
-      | @company_name | Pending Delete |
-    Then Partner search results should not be:
-      | Partner       |
-      | @company_name |
+#    When I search partner by:
+#      | name          | filter         |
+#      | @company_name | Pending Delete |
+#    Then Partner search results should not be:
+#      | Partner       |
+#      | @company_name |
     When I search partner by:
       | name          | filter  |
       | @company_name | Deleted |
@@ -914,8 +920,10 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
     Then Login page error message should be Incorrect email or password.
 
     When I navigate to bus admin console login page
-    And I log in bus admin console with user name @subpartner.admin_email_address and password default password
+    And I log in bus admin console with user name @subpartner.admin_email_address and password reset password
     Then Login page error message should be Incorrect email or password.
+
+    Then no report is scheduled for this partner
 
 #    When I wait for 86460 seconds
 #    And I search emails by keywords:
