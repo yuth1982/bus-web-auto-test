@@ -128,10 +128,10 @@ Feature: Scheduled Reports
       | qa1+bundled+report+80@decho.com | Report Test 002 | Server       | 463VEQ4ZT753D2QA9CB4   | Limited: 15        | 12.00           |                        |
       | qa1+bundled+report+70@decho.com | Report Test 004 | Desktop      | B9ATEQQWXV8VXS7FEVWT   | Shared             | 6.00            |                        |
       | qa1+bundled+report+70@decho.com | Report Test 005 | Desktop      | VF9V7CSDDG2T36T4DSF8   | Limited: 4         | 1.00            |                        |
-      | qa1+bundled+report+60@decho.com | Report Test 008 | Desktop      | 55G9X2WWZ6VBBW9AQ6R5   | Limited: 10        | 1.00            |                        |
-      | qa1+bundled+report+60@decho.com | Report Test 006 | Desktop      | TZ3X7DWDERX7RQ766ZAD   | Limited: 10        | 7.00            |                        |
       | qa1+bundled+report+60@decho.com | Report Test 007 | Desktop      | T4WDF6RGWW4776GVADQS   | Limited: 10        | 1.00            |                        |
-    And I delete machine status bundle TC21200 scheduled report
+      | qa1+bundled+report+60@decho.com | Report Test 006 | Desktop      | TZ3X7DWDERX7RQ766ZAD   | Limited: 10        | 7.00            |                        |
+      | qa1+bundled+report+60@decho.com | Report Test 008 | Desktop      | 55G9X2WWZ6VBBW9AQ6R5   | Limited: 10        | 1.00            |                        |
+       And I delete machine status bundle TC21200 scheduled report
     And I clear downloads folder machine-status*.csv file
     When I stop masquerading
     When I act as partner by:
