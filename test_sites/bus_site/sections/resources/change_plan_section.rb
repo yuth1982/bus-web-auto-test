@@ -33,7 +33,7 @@ module Bus
     element(:message_div, css: "div#resource-change_billing_plan-errors ul")
     element(:error_input_div, xpath: "//div[@id='error_input']/p")
     element(:confirm_msg, xpath: "//div[@id='change_plan_confirmation']//p")
-
+    
     # Public: Reseller Supplemental Plans Hashes
     #
     #
@@ -114,6 +114,16 @@ module Bus
       wait_until{enterprise_dps_baseplan_input.visible?}
       enterprise_dps_baseplan_input.type_text(value)
       confirm_change
+    end
+
+    def cancel_mozyenterprise_dps_plan(base_plan)
+      value = base_plan.match(/\d+/)[0]
+      wait_until{enterprise_dps_baseplan_input.visible?}
+      enterprise_dps_baseplan_input.type_text(value)
+      wait_until{ submit_btn['disabled'] != 'true' }
+      submit_btn.click
+      wait_until { !locate(:css, "div#change_plan_confirmation input[value=Continue]").nil? }
+      cancel_btn.click
     end
 
     # Public: Change reseller plan
@@ -248,6 +258,10 @@ module Bus
       current_plan_table.headers_text
     end
 
+    def current_plan_table_hashes
+      current_plan_table.rows_text.map{ |row| Hash[*current_plan_table.headers_text.zip(row).flatten] }
+    end
+
     # Public:
     #
     # Example
@@ -265,6 +279,10 @@ module Bus
 
     def mozypro_server_plan_price
       mozypro_server_plan_lable.text
+    end
+
+    def enterprise_dps_baseplan
+      enterprise_dps_baseplan_input.value
     end
 
     # Public: MozyPro current purchase
@@ -349,6 +367,7 @@ module Bus
       wait_until{ submit_btn['disabled'] != 'true' }
       submit_btn.click
 
+      begin
       wait_until { !locate(:css, "div#change_plan_confirmation input[value=Continue]").nil? }
       message = confirm_msg.text
       change_plan_info.push(message)
@@ -359,6 +378,9 @@ module Bus
         change_plan_info.push(@charge_summary_rows)
       end
       continue_btn.click
+      rescue => e
+        puts e
+      end
 
       wait_until{ !locate(:id, "submit_new_resources_btn").nil? }
       change_plan_info
