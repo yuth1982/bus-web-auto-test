@@ -779,3 +779,346 @@ Feature:
       | Your Key @license_key for MozyPro Now Activated for Data Shuttle | <%=@new_users.first.email%> |
     Then I should see 1 email(s)
     And I search and delete partner account by newly created partner company name
+
+  @bus @TC.16208 @resources @tasks_p3
+  Scenario: Test Case Mozy-16208: BUS US -- Order Data Shuttle for MozyEnterprise
+    When I add a new MozyEnterprise partner:
+      |company name                                          | period | users | coupon              | country       | address           | city      | state abbrev | zip   | phone          |
+      |Internal Mozy - MozyEnterprise Test Data Shuttle 16208| 12     | 100   | 20PERCENTOFFOUTLINE | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
+    Then New partner should be created
+    When I act as newly created partner account
+    And I add new user(s):
+      | name              | user_group           | storage_type | storage_limit | devices |
+      | user with machine | (default user group) | Desktop      | 20            | 1       |
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    Then I stop masquerading
+    When I order data shuttle for Internal Mozy - MozyEnterprise Test Data Shuttle 16208
+      | power adapter   | key from  | quota  |
+      | Data Shuttle US | available | 20     |
+    Then Data shuttle order should be created
+
+  @bus @TC.12480 @resources @tasks_p3
+  Scenario: Test Case Mozy-12480:Turn On Data Seeding on Partner
+    When I add a new MozyPro partner:
+      | period | base plan | coupon              | country       | address           | city      | state abbrev | zip   | phone          |
+      | 1      | 10 GB     | 10PERCENTOFFOUTLINE | United States | 3401 Hillview Ave | Palo Alto | CA           | 94304 | 1-877-486-9273 |
+    Then New partner should be created
+    And I act as newly created partner account
+    Then Navigation item Order Data Shuttle should be unavailable
+    When I navigate to bus admin console login page
+    And I log in bus admin console with user name qa1+automation+nosuperadmin@mozy.com and password Test1234
+    Then Navigation item Order Data Shuttle should be unavailable
+
+
+  @bus @TC.126313 @resources @tasks_p3
+  Scenario: Test Case Mozy-126313:Linux Data shuttle can be created successfully
+    When I check that linux client service is available
+    And I upload change linux client env script to remote machine
+    When I add a new MozyPro partner:
+      |company name                                    | period | base plan | server plan |
+      |Internal Mozy - MozyPro Test Data Shuttle 126313| 1      | 250 GB    | yes         |
+    And New partner should be created
+    And I view the newly created partner admin details
+    And I active admin in admin details default password
+    And I change root role to FedID role
+    And I act as newly created partner
+    And I add new user(s):
+      | name              | user_group           | storage_type | storage_limit | devices |
+      | tc_126313_01_user | (default user group) | Server       | 100           | 3       |
+    Then 1 new user should be created
+    When I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And I activate linux machine using username newly created user email and password default password
+    Then linux machine activation message should be AUTHENTICATED
+    Then I stop masquerading
+    When I order data shuttle for Internal Mozy - MozyPro Test Data Shuttle 126313
+      | name            | address 1     | city         | state | zip    | country         | phone        | power adapter    | key from  | quota | os  |
+      | tc.126313_order | 151 S Morgan  | Shelbyville  | IL    | 62565  | United States   | 3127584030   | Data Shuttle US  | available | 1     |Linux|
+    Then Data shuttle order should be created
+
+  @bus @TC.126314 @resources @tasks_p3
+  Scenario: Test Case Mozy-126314:Linux Data shuttle status is correct - Precondition:@TC.126313
+    And I search order in view data shuttle orders section by Internal Mozy - MozyPro Test Data Shuttle 126313
+    Then order search results in data shuttle orders section should be:
+      | Pro Partner Name                                | # of Drives | Drives Ordered |
+      | Internal Mozy - MozyPro Test Data Shuttle 126313| 1           | Yes            |
+    And I view data shuttle order details
+    Then data shuttle order info should be
+      | Partner                                          | Name              | Address                                         | Phone      | Target Data Center         |
+      | Internal Mozy - MozyPro Test Data Shuttle 126313 | tc.126313_order   | 151 S Morgan,Shelbyville,IL,62565,United States | 3127584030 | <%=QA_ENV['data_center']%> |
+
+  @bus @TC.12381 @resources @tasks_p3
+  Scenario: Test Case Mozy-12381:Verify Filtering (All Field Options)
+    When I add a new MozyPro partner:
+      |company name                                    | period | base plan | server plan |
+      |Internal Mozy - MozyPro Test Data Shuttle 12381 | 1      | 250 GB    | yes         |
+    Then New partner should be created
+    And I view the newly created partner admin details
+    And I active admin in admin details default password
+    And I change root role to FedID role
+    When I act as newly created partner account
+    And I add new user(s):
+      | name              | user_group           | storage_type | storage_limit | devices |
+      | TC.12381_user_01  | (default user group) | Desktop      | 20            | 2       |
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    And I add a new Bundled user group:
+      | name            | storage_type |server_support|enable_stash|
+      | TC.12381-Shared | Shared       | yes          |  yes       |
+    Then TC.12381-Shared user group should be created
+    And I add new user(s):
+      | name              | user_group           | storage_type | storage_limit | devices |
+      | TC.12381_user_02  | TC.12381-Shared      | Server       | 20            | 2       |
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Server device without a key and with the default password
+    Then I stop masquerading
+    When I navigate to process data shuttle order section for Internal Mozy - MozyPro Test Data Shuttle 12381
+    When I fill in shipping address table and proceed to next section
+      |  power adapter   |
+      |  Data Shuttle US |
+    Then The size of available key search results in order data shuttle section should be 2
+    And Verify all the options in create order tab
+      | user group          |license type|
+      | (default user group)|Desktop     |
+    Then The size of available key search results in order data shuttle section should be 1
+    And Verify all the options in create order tab
+      | user group          |license type|
+      | TC.12381-Shared     |Server      |
+    Then The size of available key search results in order data shuttle section should be 1
+    And Verify all the options in create order tab
+      | user group          |license type|
+      | TC.12381-Shared     |Desktop     |
+    Then The size of available key search results in order data shuttle section should be 0
+    And I clear all the field options
+    Then The size of available key search results in order data shuttle section should be 2
+
+  @bus @TC.12382 @resources @tasks_p3
+  Scenario: Test Case Mozy-12382:Adding Keys (Server, Desktop, Grandfathered)
+    When I add a new MozyPro partner:
+      |company name                                    | period | base plan | server plan |
+      |Internal Mozy - MozyPro Test Data Shuttle 12382 | 1      | 250 GB    | yes         |
+    Then New partner should be created
+    And I view the newly created partner admin details
+    And I active admin in admin details default password
+    And I change root role to FedID role
+    When I act as newly created partner account
+    And I add new user(s):
+      | name              | user_group           | storage_type | storage_limit | devices |
+      | TC.12382_user_01  | (default user group) | Desktop      | 20            | 2       |
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    And I add a new Bundled user group:
+      | name            | storage_type |server_support|enable_stash|
+      | TC.12382-Shared | Shared       | yes          |  yes       |
+    Then TC.12382-Shared user group should be created
+    And I add new user(s):
+      | name              | user_group           | storage_type | storage_limit | devices |
+      | TC.12382_user_02  | TC.12382-Shared      | Server       | 20            | 2       |
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Server device without a key and with the default password
+    Then I stop masquerading
+    When I navigate to process data shuttle order section for Internal Mozy - MozyPro Test Data Shuttle 12382
+    When I fill in shipping address table and proceed to next section
+      |  power adapter   |
+      |  Data Shuttle US |
+    Then The size of available key search results in order data shuttle section should be 2
+    And Verify all the options in create order tab
+      | user group          |license type|
+      | (default user group)|Desktop     |
+    Then The size of available key search results in order data shuttle section should be 1
+    And I add available key to order key table
+    And I clear all the field options
+    Then The size of available key search results in order data shuttle section should be 1
+    And I remove available key from order key table
+    Then The size of available key search results in order data shuttle section should be 2
+    And Verify all the options in create order tab
+      | user group          |license type|
+      | TC.12382-Shared     |Server      |
+    Then The size of available key search results in order data shuttle section should be 1
+    And I add available key to order key table
+    And I clear all the field options
+    Then The size of available key search results in order data shuttle section should be 1
+    And I remove available key from order key table
+    Then The size of available key search results in order data shuttle section should be 2
+
+  @bus @TC.130971 @resources @tasks_p3
+  Scenario: Test Case Mozy-130971:Order a data shuttle order for a subpartner
+    When I add a new MozyPro partner:
+      | company name      | period | base plan| server plan | storage add on |
+      | TC.130971_partner | 12     | 1 TB     | yes         | 10             |
+    Then New partner should be created
+    And I view the newly created partner admin details
+    And I active admin in admin details default password
+    And I change root role to FedID role
+    When I act as newly created partner account
+    And I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          | Parent     |
+      | newrole | Partner admin | FedID role |
+    And I check all the capabilities for the new role
+    And I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for Mozypro partner:
+      | Name    | Company Type | Root Role | Enabled | Public | Currency | Periods | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
+      | newplan | business     | newrole   | Yes     | No     |          | yearly  | test     | false            | 1                          | 1                     |
+    Then add new pro plan success message should be displayed
+    When I add a new sub partner:
+      | Company Name          |
+      | TC.130971_sub_partner |
+    Then New partner should be created
+    And I act as newly created subpartner account
+    And I navigate to Purchase Resources section from bus admin console page
+    And I purchase resources:
+      | generic quota |
+      | 20            |
+    And I add new user(s):
+      | name               | user_group           | storage_type | storage_limit | devices |
+      | TC.130971_user_01  | (default user group) | Desktop      | 20            | 1       |
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    Then I stop masquerading as sub partner
+    Then I stop masquerading
+    When I order data shuttle for TC.130971_sub_partner
+      | address 1     | city         | state | zip    | country         | phone        | power adapter   | key from  |quota  |
+      | 151 S Morgan  | Shelbyville  | IL    | 62565  | United States   | 3127584030   | Data Shuttle US | available |20     |
+    Then Data shuttle order should be created
+
+  @bus @TC.130978 @resources @tasks_p3
+  Scenario: Test Case Mozy-130978:Cancel data shuttle order for Reseller subpartner
+    When I add a new Reseller partner:
+      | company name      | period | reseller type | reseller quota | net terms |
+      | TC.130978_partner | 12     | Gold          | 500            | yes       |
+    Then New partner should be created
+    When I act as newly created partner account
+    And I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          | Parent        |
+      | subrole | Partner admin | Reseller Root |
+    And I check all the capabilities for the new role
+#    And I act as partner by:
+#    |email|
+#    | mozyautotest+virginia+smith+1631@emc.com    |
+    And I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for Reseller partner:
+      | Name    | Company Type | Root Role | Enabled | Public | Currency | Periods | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
+      | newplan | business     | subrole   | Yes     | No     |          | yearly  | test     | false            | 1                          | 1                     |
+    Then add new pro plan success message should be displayed
+    When I add a new sub partner:
+      | Company Name          |
+      | TC.130978_sub_partner |
+    Then New partner should be created
+    And I act as newly created subpartner account
+    And I add new user(s):
+      | name               | user_group           | storage_type | storage_limit | devices |
+      | TC.130978_user_01  | (default user group) | Desktop      | 20            | 1       |
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And activate the user's Desktop device without a key and with the default password
+    Then I stop masquerading as sub partner
+    Then I stop masquerading
+    When I order data shuttle for TC.130978_sub_partner
+      | address 1     | city         | state | zip    | country         | phone        | power adapter   | key from  |quota  |
+      | 151 S Morgan  | Shelbyville  | IL    | 62565  | United States   | 3127584030   | Data Shuttle US | available |20     |
+    Then Data shuttle order should be created
+    When I cancel the latest data shuttle order for TC.130978_sub_partner
+    Then The order should be Cancelled
+
+
+  @bus @TC.22001 @resources @tasks_p3
+  Scenario: Test Case Mozy-22001:Enable Data Shuttle for OEM
+    When I add a new OEM partner:
+      |Company Name            | Root role      | Company Type     |
+      |TC.22001_fordatashuttle | OEM Root Trial | Service Provider |
+    Then New partner should be created
+    And I act as newly created partner account
+    And I purchase resources:
+      | desktop license| desktop quota | server license | server quota |
+      | 2              | 2             | 2              |  2           |
+    Then Resources should be purchased
+    And I add new itemized user(s):
+      | name           | devices_server | quota_server | devices_desktop | quota_desktop |
+      | oem_user_22001 | 1              | 1            | 1               | 1             |
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And I activate the new user's 1 Desktop device(s) and update used quota to 4096 GB
+    And I activate the new user's 1 Server device(s) and update used quota to 4096 GB
+    Then I stop masquerading from subpartner
+    Then I stop masquerading from subpartner
+    Then I stop masquerading
+    When I order data shuttle for TC.22001_fordatashuttle
+      | address 1     | city         | state | zip    | country         | phone        | power adapter   | key from    |
+      | 151 S Morgan  | Shelbyville  | IL    | 62565  | United States   | 3127584030   | Data Shuttle US | 2 available |
+    Then Data shuttle order should be created
+    And I search order in view data shuttle orders section by TC.22001_fordatashuttle
+    Then order search results in data shuttle orders section should be:
+      | Pro Partner Name       | # of Drives | Drives Ordered |
+      | TC.22001_fordatashuttle| 0           | Yes            |
+
+  @bus @TC.13793 @resources @tasks_p3
+  Scenario: Test Case Mozy-13793:Purchase quota for multiple keys of different license type and different user group with data shuttl
+    When I add a new MozyPro partner:
+      | company name            | period | base plan | coupon                | net terms | server plan | root role               |
+      | TC.13793_fordatashuttle | 24     | 50 GB     | <%=QA_ENV['coupon']%> | yes       | yes         | Bundle Pro Partner Root |
+    Then New partner should be created
+    And I change root role to FedID role
+    When I act as newly created partner account
+    And I add new user(s):
+      | name            | user_group           | storage_type | storage_limit | devices |
+      | oem_user1_13793 | (default user group) | Desktop      | 15            | 3       |
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And I activate the new user's 3 Desktop device(s) and update used quota to 5 GB
+    And I add a new Bundled user group:
+      | name            | storage_type |server_support|enable_stash|
+      | TC.13793-Shared | Shared       | yes          |  yes       |
+    Then TC.13793-Shared user group should be created
+    And I add new user(s):
+      | name             | user_group           | storage_type | storage_limit | devices |
+      | oem_user2_13793  | TC.13793-Shared      | Server       | 15            | 3       |
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    And I update the user password to default password
+    And I activate the new user's 3 Server device(s) and update used quota to 5 GB
+    Then I stop masquerading
+    When I navigate to process data shuttle order section for TC.13793_fordatashuttle
+    When I fill in shipping address table and proceed to next section
+      |name          | address 1     | city         | state | zip    | country         | phone        | power adapter   |
+      |tc.13793_order| 151 S Morgan  | Shelbyville  | IL    | 62565  | United States   | 3127584030   | Data Shuttle US |
+    And I add 6 available Licenses
+    Then The size of available key search results in order data shuttle section should be 0
+    And I proceed to next section from Create order section
+    Then Data shuttle order summary should be:
+      | Description         | Quantity | Total    |
+      | Data Shuttle 1.8 TB | 6        | $1,650.00|
+      | Total Price         |          | $1,650.00|
+    When I click finish button
+    Then Data shuttle order should be created
+    And I search order in view data shuttle orders section by TC.13793_fordatashuttle
+    Then order search results in data shuttle orders section should be:
+      | Pro Partner Name       | # of Drives | Drives Ordered |
+      | TC.13793_fordatashuttle| 1           | Yes            |
+    And I view data shuttle order details
+    Then data shuttle order info should be
+      | Partner                 | Name             | Address      | Phone      | Target Data Center         |
+      | TC.13793_fordatashuttle | tc.13793_order   | 151 S Morgan | 3127584030 | <%=QA_ENV['data_center']%> |
+    And I search and delete partner account by TC.13793_fordatashuttle
+
+

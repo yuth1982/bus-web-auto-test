@@ -213,18 +213,52 @@ module DBHelper
   def create_machines(user_id, license_name, count, quota)
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "select license_types.id from license_types where
-                license_types.name = '#{license_name}' and
-                license_types.pro_partner_id = (select pro_partners.parent_pro_partner_id from pro_partners where
+      current = Time.now
+      license_type_id = 0
+      pro_partner_id = 0
+      pro_partner_name = ""
+      pro_partner_id_sql = "select pro_partners.parent_pro_partner_id from pro_partners where
                   pro_partners.id = (select user_groups.pro_partner_id from user_groups where
                     user_groups.id = (select users.user_group_id from users where
                       users.id = #{user_id} limit 1)
                   limit 1)
-                limit 1)
-              limit 1;"
-      c = conn.exec sql
-      Log.debug sql
-      license_type_id = c.values[0][0].to_i
+                limit 1;"
+      c = conn.exec pro_partner_id_sql
+      Log.debug pro_partner_id_sql
+      pro_partner_id = c.values[0][0].to_i
+      while Time.now < current + CONFIGS['global']['default_wait_time']
+        sql = "select license_types.id from license_types where
+                license_types.name = '#{license_name}' and
+                license_types.pro_partner_id = #{pro_partner_id} limit 1;"
+        c = conn.exec sql
+        Log.debug sql
+        if !c.values.empty?
+          license_type_id = c.values[0][0].to_i
+          break
+        else
+          pro_partner_id_sql = "select pro_partners.parent_pro_partner_id, pro_partners.name from pro_partners where
+                  pro_partners.id = '#{pro_partner_id}' limit 1;"
+          c = conn.exec pro_partner_id_sql
+          Log.debug pro_partner_id_sql
+          pro_partner_id = c.values[0][0].to_i
+          pro_partner_name = c.values[0][1].to_s
+        end
+      end
+
+
+
+      # sql = "select license_types.id from license_types where
+      #           license_types.name = '#{license_name}' and
+      #           license_types.pro_partner_id = (select pro_partners.parent_pro_partner_id from pro_partners where
+      #             pro_partners.id = (select user_groups.pro_partner_id from user_groups where
+      #               user_groups.id = (select users.user_group_id from users where
+      #                 users.id = #{user_id} limit 1)
+      #             limit 1)
+      #           limit 1)
+      #         limit 1;"
+      # c = conn.exec sql
+      # Log.debug sql
+      # license_type_id = c.values[0][0].to_i
 
       sql = "select id from mozy_pro_keys where
               activated_at is null and
@@ -244,7 +278,9 @@ module DBHelper
         Log.debug sql
         machine_id = c.values[0][0].to_i
 
-        sql = "update machines set space_used = #{quota}::bigint*1024*1024*1024, pending_space_used = 1024, patches = 0, files = 1, last_client_version = null,last_backup_at = now() where id = #{machine_id};"
+        quota_string = ""
+        quota_string = "quota = 0, quota_purchased = 0," if pro_partner_name == "MozyOEM"
+        sql = "update machines set space_used = #{quota}::bigint*1024*1024*1024, "+ quota_string +"pending_space_used = 1024, patches = 0, files = 1, last_client_version = null,last_backup_at = now() where id = #{machine_id};"
         conn.exec sql
         Log.debug sql
 

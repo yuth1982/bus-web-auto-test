@@ -78,6 +78,66 @@ When /^I (order|fill in) data shuttle for (.+)$/ do |type, company_name, order_t
   @bus_site.admin_console_page.process_order_section.create_order(@order, save)
 end
 
+And /^I add (.+ available) Licenses$/ do |keywords|
+  @order = Bus::DataObj::DataShuttleOrder.new
+  @order.key_from = keywords
+  @bus_site.admin_console_page.process_order_section.add_keys(@order)
+end
+
+And /^I proceed to next section from (Verify shipping address|Create order) section$/ do |type|
+  position = (type == 'Verify shipping address'? 0 : 1)
+  @bus_site.admin_console_page.process_order_section.proceed_to_next(position)
+end
+
+When /^I fill in shipping address table and proceed to next section$/ do |order_table|
+  cell = order_table.hashes.first
+  @order = Bus::DataObj::DataShuttleOrder.new
+  @order.name = cell['name'] || 'keep the same'
+  @order.address_1 = cell['address 1'] || 'keep the same'
+  @order.address_2 = cell['address 2'] || ''
+  @order.city = cell['city'] || 'keep the same'
+  @order.state = cell['state'] || 'keep the same'
+  @order.country = cell['country']
+  @order.zip = cell['zip'] || 'keep the same'
+  @order.phone = cell['phone'] || 'keep the same'
+
+  @order.adapter_type = cell['power adapter']
+  @order.key_from = cell['key from']
+
+  @bus_site.admin_console_page.process_order_section.fill_in_shipping_address(@order)
+end
+
+Then /^The size of available key search results in order data shuttle section should be (.+)$/ do |size|
+  rows = @bus_site.admin_console_page.process_order_section.available_keys_rows
+  if size.to_i == 0
+    rows.to_s.include?('No results found.').should be_true
+  else
+    rows.size.should == size.to_i
+  end
+end
+
+And /^Verify all the options in create order tab$/ do |options_table|
+  cell = options_table.hashes.first
+  user_group = cell['user group']
+  license_type = cell['license type']
+  key = cell['key']
+  assign_to = cell['assign to']
+
+  @bus_site.admin_console_page.process_order_section.verify_all_field_options(user_group, license_type, key, assign_to)
+end
+
+And /^I clear all the field options$/ do
+  @bus_site.admin_console_page.process_order_section.clear_all_field_options
+end
+
+And /^I add available key to order key table$/ do
+  @bus_site.admin_console_page.process_order_section.add_available_key_to
+end
+
+And /^I remove available key from order key table$/ do
+  @bus_site.admin_console_page.process_order_section.remove_available_key
+end
+
 And /^I input discount percentage value (\d+)$/ do |value|
   @bus_site.admin_console_page.process_order_section.input_discount(value)
 end
