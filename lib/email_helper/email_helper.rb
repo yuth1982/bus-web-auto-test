@@ -67,7 +67,7 @@ module Email
       f.close
       cipher = Gibberish::RSA.new(private_key)
       pass = cipher.decrypt(encrypted)
-      @client = Viewpoint::EWSClient.new endpoint, user, pass, server_version: SOAP::ExchangeWebService::VERSION_2007, http_opts: {ssl_verify_mode: 0}
+      @client = Viewpoint::EWSClient.new endpoint, user, pass, server_version: SOAP::ExchangeWebService::VERSION_2010_SP1, http_opts: {ssl_verify_mode: 0}
       @inbox = @client.get_folder_by_name 'Inbox', :act_as => CONFIGS['outlook']['mailbox']
       @found = nil
     end
@@ -159,7 +159,24 @@ module Email
       else
         return filename
       end
-     end
+    end
+
+    def empty_folder
+      resp = @client.ews.empty_folder(
+        opts = {
+            :folder_ids   => [:id => @inbox.id],
+            :delete_type  => 'HardDelete',
+            :delete_sub_folders => true
+        }
+      )
+
+      if resp.success?
+        true
+      else
+        raise EwsError, "Could not empty folder. #{resp.code}: #{resp.message}"
+      end
+
+    end
   end
 
   def create_user_email
