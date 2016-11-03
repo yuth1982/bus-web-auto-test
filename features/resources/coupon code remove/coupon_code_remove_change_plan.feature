@@ -262,14 +262,14 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | company name                                | period | base plan | server plan | create under    | country | coupon                | cc number        |
       | DONOT MozyPro 10 gb yearly to 500 gb yearly | 12     | 10 GB     | yes         | MozyPro Ireland | Ireland | <%=QA_ENV['10percentcoupon']%> | 4319402211111113 |
     Then Sub-total before taxes or discounts should be €120.78
-    And Order summary table should be:
-      | Description       | Quantity | Price Each | Total Price |
-      | 10 GB             | 1        | €87.89     | €87.89      |
-      | Server Plan       | 1        | €32.89     | €32.89      |
-      | Discounts Applied |          |            | -€12.08     |
-      | Pre-tax Subtotal  |          |            | €108.70     |
-      | Taxes             |          |            | €25.00      |
-      | Total Charges     |          |            | €133.70     |
+#    And Order summary table should be:
+#      | Description       | Quantity | Price Each | Total Price |
+#      | 10 GB             | 1        | €87.89     | €87.89      |
+#      | Server Plan       | 1        | €32.89     | €32.89      |
+#      | Discounts Applied |          |            | -€12.08     |
+#      | Pre-tax Subtotal  |          |            | €108.70     |
+#      | Taxes             |          |            | €25.00      |
+#      | Total Charges     |          |            | €133.70     |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account coupon code info should be <%=QA_ENV['10percentcoupon']%>
@@ -295,14 +295,14 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | company name                              | period | base plan | server plan | create under    | country | coupon                | cc number        |
       | DONOT MozyPro 10 gb yearly to 1 tb yearly | 12     | 10 GB     | yes         | MozyPro Ireland | Ireland | <%=QA_ENV['10percentcoupon']%> | 4319402211111113 |
     Then Sub-total before taxes or discounts should be €120.78
-    And Order summary table should be:
-      | Description       | Quantity | Price Each | Total Price |
-      | 10 GB             | 1        | €87.89     | €87.89      |
-      | Server Plan       | 1        | €32.89     | €32.89      |
-      | Discounts Applied |          |            | -€12.08     |
-      | Pre-tax Subtotal  |          |            | €108.70     |
-      | Taxes             |          |            | €25.00      |
-      | Total Charges     |          |            | €133.70     |
+#    And Order summary table should be:
+#      | Description       | Quantity | Price Each | Total Price |
+#      | 10 GB             | 1        | €87.89     | €87.89      |
+#      | Server Plan       | 1        | €32.89     | €32.89      |
+#      | Discounts Applied |          |            | -€12.08     |
+#      | Pre-tax Subtotal  |          |            | €108.70     |
+#      | Taxes             |          |            | €25.00      |
+#      | Total Charges     |          |            | €133.70     |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account coupon code info should be <%=QA_ENV['10percentcoupon']%>
@@ -328,14 +328,14 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | company name                              | period | base plan | server plan | create under    | country | coupon                | cc number        |
       | DONOT MozyPro 10 gb yearly to 2 tb yearly | 12     | 10 GB     | yes         | MozyPro Ireland | Ireland | <%=QA_ENV['10percentcoupon']%> | 4319402211111113 |
     Then Sub-total before taxes or discounts should be €120.78
-    And Order summary table should be:
-      | Description       | Quantity | Price Each | Total Price |
-      | 10 GB             | 1        | €87.89     | €87.89      |
-      | Server Plan       | 1        | €32.89     | €32.89      |
-      | Discounts Applied |          |            | -€12.08     |
-      | Pre-tax Subtotal  |          |            | €108.70     |
-      | Taxes             |          |            | €25.00      |
-      | Total Charges     |          |            | €133.70     |
+#    And Order summary table should be:
+#      | Description       | Quantity | Price Each | Total Price |
+#      | 10 GB             | 1        | €87.89     | €87.89      |
+#      | Server Plan       | 1        | €32.89     | €32.89      |
+#      | Discounts Applied |          |            | -€12.08     |
+#      | Pre-tax Subtotal  |          |            | €108.70     |
+#      | Taxes             |          |            | €25.00      |
+#      | Total Charges     |          |            | €133.70     |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account coupon code info should be <%=QA_ENV['10percentcoupon']%>
@@ -361,14 +361,14 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | company name                              | period | base plan | server plan | create under    | country | coupon                | cc number        |
       | DONOT MozyPro 10 gb yearly to 4 tb yearly | 12     | 10 GB     | yes         | MozyPro Ireland | Ireland | <%=QA_ENV['10percentcoupon']%> | 4319402211111113 |
     Then Sub-total before taxes or discounts should be €120.78
-    And Order summary table should be:
-      | Description       | Quantity | Price Each | Total Price |
-      | 10 GB             | 1        | €87.89     | €87.89      |
-      | Server Plan       | 1        | €32.89     | €32.89      |
-      | Discounts Applied |          |            | -€12.08     |
-      | Pre-tax Subtotal  |          |            | €108.70     |
-      | Taxes             |          |            | €25.00      |
-      | Total Charges     |          |            | €133.70     |
+#    And Order summary table should be:
+#      | Description       | Quantity | Price Each | Total Price |
+#      | 10 GB             | 1        | €87.89     | €87.89      |
+#      | Server Plan       | 1        | €32.89     | €32.89      |
+#      | Discounts Applied |          |            | -€12.08     |
+#      | Pre-tax Subtotal  |          |            | €108.70     |
+#      | Taxes             |          |            | €25.00      |
+#      | Total Charges     |          |            | €133.70     |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account coupon code info should be <%=QA_ENV['10percentcoupon']%>
@@ -394,12 +394,12 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | company name                                    | period | base plan | country       | coupon              |
       | DONOT EDIT MozyPro 250 gb yearly to server plan | 12     | 250 GB    | United States | <%=QA_ENV['15percentcoupon']%> |
     Then Sub-total before taxes or discounts should be $729.89
-    And Order summary table should be:
-      | Description       | Quantity | Price Each | Total Price |
-      | 250 GB            | 1        | $729.89    | $729.89     |
-      | Discounts Applied |          |            | -$109.48    |
-      | Pre-tax Subtotal  |          |            | $620.41     |
-      | Total Charges     |          |            | $620.41     |
+#    And Order summary table should be:
+#      | Description       | Quantity | Price Each | Total Price |
+#      | 250 GB            | 1        | $729.89    | $729.89     |
+#      | Discounts Applied |          |            | -$109.48    |
+#      | Pre-tax Subtotal  |          |            | $620.41     |
+#      | Total Charges     |          |            | $620.41     |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
@@ -422,12 +422,12 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | company name                                      | period | base plan | country       | coupon              |
       | DONOT EDIT MozyPro 250 gb yearly to 500 gb yearly | 12     | 250 GB    | United States | <%=QA_ENV['15percentcoupon']%> |
     Then Sub-total before taxes or discounts should be $729.89
-    And Order summary table should be:
-      | Description       | Quantity | Price Each | Total Price |
-      | 250 GB            | 1        | $729.89    | $729.89     |
-      | Discounts Applied |          |            | -$109.48    |
-      | Pre-tax Subtotal  |          |            | $620.41     |
-      | Total Charges     |          |            | $620.41     |
+#    And Order summary table should be:
+#      | Description       | Quantity | Price Each | Total Price |
+#      | 250 GB            | 1        | $729.89    | $729.89     |
+#      | Discounts Applied |          |            | -$109.48    |
+#      | Pre-tax Subtotal  |          |            | $620.41     |
+#      | Total Charges     |          |            | $620.41     |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
@@ -453,12 +453,12 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | company name                                    | period | base plan | country       | coupon              |
       | DONOT EDIT MozyPro 250 gb yearly to 1 tb yearly | 12     | 250 GB    | United States | <%=QA_ENV['15percentcoupon']%> |
     Then Sub-total before taxes or discounts should be $729.89
-    And Order summary table should be:
-      | Description       | Quantity | Price Each | Total Price |
-      | 250 GB            | 1        | $729.89    | $729.89     |
-      | Discounts Applied |          |            | -$109.48    |
-      | Pre-tax Subtotal  |          |            | $620.41     |
-      | Total Charges     |          |            | $620.41     |
+#    And Order summary table should be:
+#      | Description       | Quantity | Price Each | Total Price |
+#      | 250 GB            | 1        | $729.89    | $729.89     |
+#      | Discounts Applied |          |            | -$109.48    |
+#      | Pre-tax Subtotal  |          |            | $620.41     |
+#      | Total Charges     |          |            | $620.41     |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
@@ -484,12 +484,12 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | company name                                    | period | base plan | country       | coupon              |
       | DONOT EDIT MozyPro 250 gb yearly to 2 tb yearly | 12     | 250 GB    | United States | <%=QA_ENV['15percentcoupon']%> |
     Then Sub-total before taxes or discounts should be $729.89
-    And Order summary table should be:
-      | Description       | Quantity | Price Each | Total Price |
-      | 250 GB            | 1        | $729.89    | $729.89     |
-      | Discounts Applied |          |            | -$109.48    |
-      | Pre-tax Subtotal  |          |            | $620.41     |
-      | Total Charges     |          |            | $620.41     |
+#    And Order summary table should be:
+#      | Description       | Quantity | Price Each | Total Price |
+#      | 250 GB            | 1        | $729.89    | $729.89     |
+#      | Discounts Applied |          |            | -$109.48    |
+#      | Pre-tax Subtotal  |          |            | $620.41     |
+#      | Total Charges     |          |            | $620.41     |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
@@ -623,13 +623,13 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | company name                                        | period | base plan | server plan | create under   | country | coupon | net terms | vat number    |
       | DONOT MozyPro 10 gb biennially to 250 gb biennially | 24     | 10 GB     | yes         | MozyPro France | France  | <%=QA_ENV['10percentcoupon']%> | yes       | FR08410091490 |
     Then Sub-total before taxes or discounts should be €230.58
-    And Order summary table should be:
-      | Description       | Quantity | Price Each | Total Price |
-      | 10 GB             | 1        | €167.79    | €167.79     |
-      | Server Plan       | 1        | €62.79     | €62.79      |
-      | Discounts Applied |          |            | -€23.06     |
-      | Pre-tax Subtotal  |          |            | €207.52     |
-      | Total Charges     |          |            | €207.52     |
+#    And Order summary table should be:
+#      | Description       | Quantity | Price Each | Total Price |
+#      | 10 GB             | 1        | €167.79    | €167.79     |
+#      | Server Plan       | 1        | €62.79     | €62.79      |
+#      | Discounts Applied |          |            | -€23.06     |
+#      | Pre-tax Subtotal  |          |            | €207.52     |
+#      | Total Charges     |          |            | €207.52     |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account coupon code info should be <%=QA_ENV['10percentcoupon']%>
@@ -655,12 +655,12 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | company name                                        | period | base plan | create under   | country | coupon | net terms | vat number    |
       | DONOT MozyPro 10 gb biennially to 500 gb biennially | 24     | 10 GB     | MozyPro France | France  | <%=QA_ENV['10percentcoupon']%> | yes       | FR08410091490 |
     Then Sub-total before taxes or discounts should be €167.79
-    And Order summary table should be:
-      | Description       | Quantity | Price Each | Total Price |
-      | 10 GB             | 1        | €167.79    | €167.79     |
-      | Discounts Applied |          |            | -€16.78     |
-      | Pre-tax Subtotal  |          |            | €151.01     |
-      | Total Charges     |          |            | €151.01     |
+#    And Order summary table should be:
+#      | Description       | Quantity | Price Each | Total Price |
+#      | 10 GB             | 1        | €167.79    | €167.79     |
+#      | Discounts Applied |          |            | -€16.78     |
+#      | Pre-tax Subtotal  |          |            | €151.01     |
+#      | Total Charges     |          |            | €151.01     |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account coupon code info should be <%=QA_ENV['10percentcoupon']%>
@@ -686,13 +686,13 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | company name                                      | period | base plan | create under   | country | coupon | net terms |
       | DONOT MozyPro 10 gb biennially to 1 tb biennially | 24     | 10 GB     | MozyPro France | France  | <%=QA_ENV['10percentcoupon']%> | yes       |
     Then Sub-total before taxes or discounts should be €167.79
-    And Order summary table should be:
-      | Description       | Quantity | Price Each | Total Price |
-      | 10 GB             | 1        | €167.79    | €167.79     |
-      | Discounts Applied |          |            | -€16.78     |
-      | Pre-tax Subtotal  |          |            | €151.01     |
-      | Taxes             |          |            | €30.20      |
-      | Total Charges     |          |            | €181.21     |
+#    And Order summary table should be:
+#      | Description       | Quantity | Price Each | Total Price |
+#      | 10 GB             | 1        | €167.79    | €167.79     |
+#      | Discounts Applied |          |            | -€16.78     |
+#      | Pre-tax Subtotal  |          |            | €151.01     |
+#      | Taxes             |          |            | €30.20      |
+#      | Total Charges     |          |            | €181.21     |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account coupon code info should be <%=QA_ENV['10percentcoupon']%>
@@ -718,14 +718,14 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | company name                                      | period | base plan | server plan | create under   | country | coupon | net terms |
       | DONOT MozyPro 10 gb biennially to 2 tb biennially | 24     | 10 GB     | yes         | MozyPro France | France  | <%=QA_ENV['10percentcoupon']%> | yes       |
     Then Sub-total before taxes or discounts should be €230.58
-    And Order summary table should be:
-      | Description       | Quantity | Price Each | Total Price |
-      | 10 GB             | 1        | €167.79    | €167.79     |
-      | Server Plan       | 1        | €62.79     | €62.79      |
-      | Discounts Applied |          |            | -€23.06     |
-      | Pre-tax Subtotal  |          |            | €207.52     |
-      | Taxes             |          |            | €41.50      |
-      | Total Charges     |          |            | €249.02     |
+#    And Order summary table should be:
+#      | Description       | Quantity | Price Each | Total Price |
+#      | 10 GB             | 1        | €167.79    | €167.79     |
+#      | Server Plan       | 1        | €62.79     | €62.79      |
+#      | Discounts Applied |          |            | -€23.06     |
+#      | Pre-tax Subtotal  |          |            | €207.52     |
+#      | Taxes             |          |            | €41.50      |
+#      | Total Charges     |          |            | €249.02     |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account coupon code info should be <%=QA_ENV['10percentcoupon']%>
@@ -751,14 +751,14 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | company name                                      | period | base plan | server plan | create under   | country | coupon | net terms |
       | DONOT MozyPro 10 gb biennially to 4 tb biennially | 24     | 10 GB     | yes         | MozyPro France | France  | <%=QA_ENV['10percentcoupon']%> | yes       |
     Then Sub-total before taxes or discounts should be €230.58
-    And Order summary table should be:
-      | Description       | Quantity | Price Each | Total Price |
-      | 10 GB             | 1        | €167.79    | €167.79     |
-      | Server Plan       | 1        | €62.79     | €62.79      |
-      | Discounts Applied |          |            | -€23.06     |
-      | Pre-tax Subtotal  |          |            | €207.52     |
-      | Taxes             |          |            | €41.50      |
-      | Total Charges     |          |            | €249.02     |
+#    And Order summary table should be:
+#      | Description       | Quantity | Price Each | Total Price |
+#      | 10 GB             | 1        | €167.79    | €167.79     |
+#      | Server Plan       | 1        | €62.79     | €62.79      |
+#      | Discounts Applied |          |            | -€23.06     |
+#      | Pre-tax Subtotal  |          |            | €207.52     |
+#      | Taxes             |          |            | €41.50      |
+#      | Total Charges     |          |            | €249.02     |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account coupon code info should be <%=QA_ENV['10percentcoupon']%>
@@ -1009,14 +1009,14 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | company name                                 | period | base plan | storage add on 50 gb | create under    | country | coupon                    | net terms |
       | DONOT MozyPro 100 gb yearly to 250 gb yearly | 12     | 100 GB    | 1                    | MozyPro Ireland | Ireland | <%=QA_ENV['20multiple']%> | yes       |
     Then Sub-total before taxes or discounts should be €516.78
-    And Order summary table should be:
-      | Description       | Quantity | Price Each | Total Price |
-      | 100 GB            | 1        | €340.89    | €340.89     |
-      | 50GB Add-on       | 1        | €175.89    | €175.89     |
-      | Discounts Applied |          |            | -€103.36    |
-      | Pre-tax Subtotal  |          |            | €413.42     |
-      | Taxes             |          |            | €95.08      |
-      | Total Charges     |          |            | €508.50     |
+#    And Order summary table should be:
+#      | Description       | Quantity | Price Each | Total Price |
+#      | 100 GB            | 1        | €340.89    | €340.89     |
+#      | 50GB Add-on       | 1        | €175.89    | €175.89     |
+#      | Discounts Applied |          |            | -€103.36    |
+#      | Pre-tax Subtotal  |          |            | €413.42     |
+#      | Taxes             |          |            | €95.08      |
+#      | Total Charges     |          |            | €508.50     |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account coupon code info should be <%=QA_ENV['20multiple']%>
@@ -1042,14 +1042,14 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | company name                                 | period | base plan | storage add on 50 gb | create under    | country | coupon                    | net terms |
       | DONOT MozyPro 100 gb yearly to 500 gb yearly | 12     | 100 GB    | 1                    | MozyPro Ireland | Ireland | <%=QA_ENV['20multiple']%> | yes       |
     Then Sub-total before taxes or discounts should be €516.78
-    And Order summary table should be:
-      | Description       | Quantity | Price Each | Total Price |
-      | 100 GB            | 1        | €340.89    | €340.89     |
-      | 50GB Add-on       | 1        | €175.89    | €175.89     |
-      | Discounts Applied |          |            | -€103.36    |
-      | Pre-tax Subtotal  |          |            | €413.42     |
-      | Taxes             |          |            | €95.08      |
-      | Total Charges     |          |            | €508.50     |
+#    And Order summary table should be:
+#      | Description       | Quantity | Price Each | Total Price |
+#      | 100 GB            | 1        | €340.89    | €340.89     |
+#      | 50GB Add-on       | 1        | €175.89    | €175.89     |
+#      | Discounts Applied |          |            | -€103.36    |
+#      | Pre-tax Subtotal  |          |            | €413.42     |
+#      | Taxes             |          |            | €95.08      |
+#      | Total Charges     |          |            | €508.50     |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account coupon code info should be <%=QA_ENV['20multiple']%>
@@ -1075,15 +1075,15 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | company name                               | period | base plan | server plan | storage add on 50 gb | create under    | country | coupon                    | net terms |
       | DONOT MozyPro 100 gb yearly to 1 tb yearly | 12     | 100 GB    | yes         | 1                    | MozyPro Ireland | Ireland | <%=QA_ENV['20multiple']%> | yes       |
     Then Sub-total before taxes or discounts should be €626.67
-    And Order summary table should be:
-      | Description       | Quantity | Price Each | Total Price |
-      | 100 GB            | 1        | €340.89    | €340.89     |
-      | Server Plan       | 1        | €109.89    | €109.89     |
-      | 50GB Add-on       | 1        | €175.89    | €175.89     |
-      | Discounts Applied |          |            | -€125.34    |
-      | Pre-tax Subtotal  |          |            | €501.33     |
-      | Taxes             |          |            | €115.30     |
-      | Total Charges     |          |            | €616.63     |
+#    And Order summary table should be:
+#      | Description       | Quantity | Price Each | Total Price |
+#      | 100 GB            | 1        | €340.89    | €340.89     |
+#      | Server Plan       | 1        | €109.89    | €109.89     |
+#      | 50GB Add-on       | 1        | €175.89    | €175.89     |
+#      | Discounts Applied |          |            | -€125.34    |
+#      | Pre-tax Subtotal  |          |            | €501.33     |
+#      | Taxes             |          |            | €115.30     |
+#      | Total Charges     |          |            | €616.63     |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account coupon code info should be <%=QA_ENV['20multiple']%>
@@ -1109,15 +1109,15 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | company name                               | period | base plan | server plan | storage add on 50 gb | create under    | country | coupon                    | net terms |
       | DONOT MozyPro 100 gb yearly to 2 tb yearly | 12     | 100 GB    | yes         | 1                    | MozyPro Ireland | Ireland | <%=QA_ENV['20multiple']%> | yes       |
     Then Sub-total before taxes or discounts should be €626.67
-    And Order summary table should be:
-      | Description       | Quantity | Price Each | Total Price |
-      | 100 GB            | 1        | €340.89    | €340.89     |
-      | Server Plan       | 1        | €109.89    | €109.89     |
-      | 50GB Add-on       | 1        | €175.89    | €175.89     |
-      | Discounts Applied |          |            | -€125.34    |
-      | Pre-tax Subtotal  |          |            | €501.33     |
-      | Taxes             |          |            | €115.30     |
-      | Total Charges     |          |            | €616.63     |
+#    And Order summary table should be:
+#      | Description       | Quantity | Price Each | Total Price |
+#      | 100 GB            | 1        | €340.89    | €340.89     |
+#      | Server Plan       | 1        | €109.89    | €109.89     |
+#      | 50GB Add-on       | 1        | €175.89    | €175.89     |
+#      | Discounts Applied |          |            | -€125.34    |
+#      | Pre-tax Subtotal  |          |            | €501.33     |
+#      | Taxes             |          |            | €115.30     |
+#      | Total Charges     |          |            | €616.63     |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account coupon code info should be <%=QA_ENV['20multiple']%>
@@ -1143,15 +1143,15 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | company name                               | period | base plan | server plan | storage add on 50 gb | create under    | country | coupon                    | net terms |
       | DONOT MozyPro 100 gb yearly to 4 tb yearly | 12     | 100 GB    | yes         | 100                  | MozyPro Ireland | Ireland | <%=QA_ENV['20multiple']%> | yes       |
     Then Sub-total before taxes or discounts should be €18,039.78
-    And Order summary table should be:
-      | Description       | Quantity | Price Each | Total Price |
-      | 100 GB            | 1        | €340.89    | €340.89     |
-      | Server Plan       | 1        | €109.89    | €109.89     |
-      | 50GB Add-on       | 100      | €175.89    | €17,589.00  |
-      | Discounts Applied |          |            | -€3,607.96  |
-      | Pre-tax Subtotal  |          |            | €14,431.82  |
-      | Taxes             |          |            | €3,319.32   |
-      | Total Charges     |          |            | €17,751.14  |
+#    And Order summary table should be:
+#      | Description       | Quantity | Price Each | Total Price |
+#      | 100 GB            | 1        | €340.89    | €340.89     |
+#      | Server Plan       | 1        | €109.89    | €109.89     |
+#      | 50GB Add-on       | 100      | €175.89    | €17,589.00  |
+#      | Discounts Applied |          |            | -€3,607.96  |
+#      | Pre-tax Subtotal  |          |            | €14,431.82  |
+#      | Taxes             |          |            | €3,319.32   |
+#      | Total Charges     |          |            | €17,751.14  |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account coupon code info should be <%=QA_ENV['20multiple']%>
@@ -1177,14 +1177,14 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | company name                                 | period | base plan | storage add on 50 gb | create under    | country | coupon                    | net terms |
       | DONOT MozyPro 100 gb yearly to 250 gb yearly | 12     | 100 GB    | 1                    | MozyPro Ireland | Ireland | <%=QA_ENV['coupon20pc']%> | yes       |
     Then Sub-total before taxes or discounts should be €516.78
-    And Order summary table should be:
-      | Description       | Quantity | Price Each | Total Price |
-      | 100 GB            | 1        | €340.89    | €340.89     |
-      | 50GB Add-on       | 1        | €175.89    | €175.89     |
-      | Discounts Applied |          |            | -€103.36    |
-      | Pre-tax Subtotal  |          |            | €413.42     |
-      | Taxes             |          |            | €95.08      |
-      | Total Charges     |          |            | €508.50     |
+#    And Order summary table should be:
+#      | Description       | Quantity | Price Each | Total Price |
+#      | 100 GB            | 1        | €340.89    | €340.89     |
+#      | 50GB Add-on       | 1        | €175.89    | €175.89     |
+##      | Discounts Applied |          |            | -€103.36    |
+#      | Pre-tax Subtotal  |          |            | €413.42     |
+#      | Taxes             |          |            | €95.08      |
+#      | Total Charges     |          |            | €508.50     |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account coupon code info should be <%=QA_ENV['coupon20pc']%>
@@ -1234,13 +1234,13 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | company name                                | period | base plan | server plan | create under    | country | coupon                | cc number        |
       | DONOT MozyPro 10 gb yearly to 250 gb yearly | 12     | 10 GB     | yes         | MozyPro Ireland | Ireland | catherine15pctultdpro | 4319402211111113 |
     Then Sub-total before taxes or discounts should be €120.78
-    And Order summary table should be:
-      | Description       | Quantity | Price Each | Total Price |
-      | 10 GB             | 1        | €87.89     | €87.89      |
-      | Server Plan       | 1        | €32.89     | €32.89      |
-      | Pre-tax Subtotal  |          |            | €102.67     |
-      | Taxes             |          |            | €23.61      |
-      | Total Charges     |          |            | €126.28     |
+#    And Order summary table should be:
+#      | Description       | Quantity | Price Each | Total Price |
+#      | 10 GB             | 1        | €87.89     | €87.89      |
+#      | Server Plan       | 1        | €32.89     | €32.89      |
+#      | Pre-tax Subtotal  |          |            | €102.67     |
+#      | Taxes             |          |            | €23.61      |
+#      | Total Charges     |          |            | €126.28     |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account coupon code info should be catherine15pctultdpro
