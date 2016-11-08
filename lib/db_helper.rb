@@ -110,7 +110,7 @@ module DBHelper
     end
   end
 
-  def get_user_username(parent)
+  def get_user_username(parent, username_prefix = nil)
     partner_id = case parent
                               when 'ME'
                                 "mozy_enterprise_partner_id"
@@ -133,7 +133,9 @@ module DBHelper
                   select tree_sortkey from pro_partners p where p.id in (
                     select cast(value as integer) from global_settings where key = '#{partner_id}')) as key
               where sub_pt.tree_sortkey between key.tree_sortkey and tree_right(key.tree_sortkey)))
-            and u.enforce_unique_username = true and u.userhash is not null and u.username is not null and u.creation_time is not null and deleted = false limit 1;"
+            and u.enforce_unique_username = true and u.userhash is not null and u.username is not null and u.creation_time is not null"
+      sql += " and username like '#{username_prefix}%'" unless username_prefix.nil?
+      sql += ' and deleted = false limit 1;'
       c = conn.exec(sql)
       Log.debug("Email from tree #{parent} = #{c.values[0][0]}")
       c.values[0][0]
@@ -264,6 +266,19 @@ module DBHelper
     end
   end
 
+  def delete_upi_by_id(id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "delete from user_payment_infos where user_id = '#{id}';"
+      c = conn.exec sql
+      c.values.to_s
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
   def get_db_password_config(partner_id, type='user')
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
@@ -296,10 +311,11 @@ module DBHelper
     end
   end
 
+  # The date is set according to server time, MST
   def set_expiration_time(user_id,days_ago)
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "UPDATE subscriptions SET expiration_time='#{Date.today - days_ago.to_i} 12:12:12' WHERE user_id = #{user_id};"
+      sql = "UPDATE subscriptions SET expiration_time='#{DateTime.now.new_offset('-07:00').to_date - days_ago.to_i} 12:12:12' WHERE user_id = #{user_id} and pending is false;" #and cancelled_at is null;
       puts sql
       conn.exec sql
     rescue PG::Error => e

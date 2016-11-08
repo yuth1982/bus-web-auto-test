@@ -47,7 +47,7 @@ When /^I search emails by keywords:$/ do |keywords_table|
   sleep 15
 
   Log.info(@email_search_query)
-  30.times do
+  3.times do
     @found_emails = find_emails(@email_search_query)
     sleep 60 if @found_emails.size == 0
     break if @found_emails.size > 0
@@ -89,6 +89,7 @@ And /^I get verify email address from email content for mozyhome change email ad
 end
 
 Then /^I check the email content should include:$/ do |msg|
+  msg.replace ERB.new(msg).result(binding)
   @mail_content.should include (msg)
 end
 

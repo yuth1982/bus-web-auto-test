@@ -25,7 +25,7 @@ module SSHHelper
   def ssh_phoenix(cmd)
     host = QA_ENV['phoenix01_host']
     user, password = QA_ENV['ssh_login'], QA_ENV['ssh_password']
-    Net::SSH.start(host, user , :password => password ) {|ssh|  ssh.exec!(cmd)}
+    Net::SSH.start(host, user , :password => password ) {|ssh|  return ssh.exec!(cmd)}
   end
 
   def ssh_bus(cmd)
@@ -88,6 +88,12 @@ module SSHReap
   def run_phoenix_process_subscription_script(user_id)
     cmd = 'cd /var/www/phoenix'
     cmd += "; script/process_subscriptions -e production -u #{user_id}"
+    ssh_phoenix(cmd)
+  end
+
+  def run_phoenix_send_notification_script(user_id)
+    cmd = 'cd /var/www/phoenix'
+    cmd += "; script/send_initial_renewal_notification -e production -u #{user_id}"
     ssh_phoenix(cmd)
   end
 

@@ -113,7 +113,8 @@ module Phoenix
   # cc changed successfully
   def cc_changed?(partner)
     cc_type = (partner.credit_card.type == 'Maestro UK')? 'credit card' : partner.credit_card.type
-    message_text.text.should == " Your card has been successfully filed. All future payments will be charged to your #{cc_type} ending in #{partner.credit_card.last_four_digits}."
+    Log.debug message_text.text
+    message_text.text.include?("#{partner.credit_card.last_four_digits}").should == true
   end
 
   # change profile country in account/profile page
@@ -186,7 +187,7 @@ module Phoenix
   end
 
   # change plan - future
-  def change_plan_future(new_base_plan, new_additional_storage, total_computers, new_subscription)
+  def change_plan_future(new_base_plan, new_additional_storage, total_computers, new_subscription, submit = false)
     click_my_plan_link
     find(:xpath, "//a[contains(@href,'/plan/edit_renewal')]").click
     if !new_base_plan.nil?
@@ -195,7 +196,7 @@ module Phoenix
     fill_addl_quota(new_additional_storage) unless new_additional_storage.nil?
     fill_addl_mach(total_computers) unless total_computers.nil?
     period_fill_out(new_subscription)
-    #upgrade_submit_btn.click
+    renewal_plan_submit_btn.click if submit
   end
 
   # click 'Submit' button during renewal plan
