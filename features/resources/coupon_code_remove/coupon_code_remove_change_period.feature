@@ -8,7 +8,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.143134_0701 @bus @change_period @mozypro
+  @TC.133536 @bus @change_period @mozypro
   Scenario: MozyPro 10 GB monthly to 10 GB yearly with coupon not in exception list, not delete coupon
     When I add a new MozyPro partner:
       | period | base plan | coupon                         | create under   | country | cc number        |
@@ -50,7 +50,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | today | €86.29 | €86.29     | €0.00       |
       | today | €8.63  | €8.63      | €0.00       |
 
-  @TC.143134_0702 @bus @change_period @mozypro
+  @TC.133537 @bus @change_period @mozypro
   Scenario: MozyPro USD 250 gb monthly to 250 gb yearly with coupon not in exception list, delete coupon
     When I add a new MozyPro partner:
       | period | base plan | country       | coupon                         |
@@ -92,7 +92,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | today | $644.40 | $644.40    | $0.00       |
       | today | $85.49  | $85.49     | $0.00       |
 
-  @TC.143134_0801 @bus @change_period @mozypro
+  @TC.133538 @bus @change_period @mozypro
   Scenario: MozyPro 10 GB monthly to 10 GB yearly with coupon in exception list, not delete coupon
     When I add a new MozyPro partner:
       | period | base plan | coupon                        | create under   | country | cc number        |
@@ -134,7 +134,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | today | €86.29 | €86.29     | €0.00       |
       | today | €8.63  | €8.63      | €0.00       |
 
-  @TC.143134_0802 @bus @change_period @mozypro
+  @TC.133539 @bus @change_period @mozypro
   Scenario: MozyPro USD 250 gb monthly to 250 gb yearly with coupon in exception list, not delete coupon
     When I add a new MozyPro partner:
       | period | base plan | country       | coupon                        |
@@ -176,7 +176,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | today | $571.41 | $571.41    | $0.00       |
       | today | $85.49  | $85.49     | $0.00       |
 
-  @TC.143134_0901 @bus @change_period @mozypro
+  @TC.133540 @bus @change_period @mozypro
   Scenario: MozyPro USD old 250 gb yearly to 250 GB monthly with coupon not in exception list, not delete coupon
     When I add a new MozyPro partner:
       | period | country       |
@@ -233,7 +233,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | today | $940.40 | $0.00      | $940.40     |
       | today | $0.00   | $0.00      | $0.00       |
 
-  @TC.143134_0902 @bus @change_period @mozypro
+  @TC.133541 @bus @change_period @mozypro
   Scenario: MozyPro USD old 250 gb yearly to 250 GB biennial with coupon not in exception list, delete coupon
     When I add a new MozyPro partner:
       | period | country       |
@@ -304,7 +304,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | today | $940.40 | $0.00      | $940.40     |
       | today | $0.00   | $0.00      | $0.00       |
 
-  @TC.143134_1001 @bus @change_period @mozypro
+  @TC.133542 @bus @change_period @mozypro
   Scenario: MozyPro USD old 250 gb yearly to 250 GB monthly with coupon in exception list, not delete coupon
     When I add a new MozyPro partner:
       | period | country       |
@@ -361,7 +361,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | today | $940.40 | $0.00      | $940.40     |
       | today | $0.00   | $0.00      | $0.00       |
 
-  @TC.143134_1002 @bus @change_period @mozypro
+  @TC.133543 @bus @change_period @mozypro
   Scenario: MozyPro USD old 250 gb yearly to 250 GB biennial with coupon in exception list, not delete coupon, max 2 times nonprofit10
     When I add a new MozyPro partner:
       | period | country       |

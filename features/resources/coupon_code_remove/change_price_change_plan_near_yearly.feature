@@ -14,7 +14,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.144165_fake_0101 @add_new_partner @mozypro @bus
+  @TC.133654 @add_new_partner @mozypro @bus
   Scenario: MozyPro USD 100 gb yearly to 250 gb yearly
     When I add a new MozyPro partner:
       | company name                                     | period | base plan | server plan | net terms |
@@ -36,8 +36,8 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 250 GB    | Yes         |
 
-  @TC.144165_fake_010102 @add_new_partner @mozypro @bus
-  Scenario: MozyPro USD 250 gb yearly to 100 gb yearly
+  @TC.133655 @add_new_partner @mozypro @bus
+  Scenario: MozyPro new USD 250 gb yearly to 100 gb yearly
     When I add a new MozyPro partner:
       | company name                                         | period | base plan | server plan | net terms |
       | DONOT MozyPro USD new 250 gb yearly to 100 gb yearly | 12     | 250 GB    | yes         | yes       |
@@ -58,8 +58,8 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 100 GB    | Yes         |
 
-  @TC.144165_fake_010103 @add_new_partner @mozypro @bus
-  Scenario: MozyPro USD 250 gb yearly to 100 GB yearly
+  @TC.133656 @add_new_partner @mozypro @bus
+  Scenario: MozyPro custom old USD 250 gb yearly to 100 GB yearly
     When I add a new MozyPro partner:
       | company name                                              | period | country       |
       | DONOT EDIT MozyPro USD old 250 gb yearly to 100 GB yearly | 12     | United States |
@@ -105,7 +105,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 100 GB    | Yes         |
 
-  @TC.144165_fake_0102 @add_new_partner @mozypro @bus
+  @TC.133657 @add_new_partner @mozypro @bus
   Scenario: MozyPro UK 100 gb yearly to 250 gb yearly
     When I add a new MozyPro partner:
       | company name                                    | period | base plan | server plan | create under | country        | vat number  | net terms |
@@ -127,7 +127,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 250 GB    | Yes         |
 
-  @TC.144165_fake_010202 @add_new_partner @mozypro @bus
+  @TC.133658 @add_new_partner @mozypro @bus
   Scenario: MozyPro UK 250 gb yearly to 100 gb yearly
     When I add a new MozyPro partner:
       | company name                                    | period | base plan | server plan | create under | country        | vat number  | net terms |
@@ -149,8 +149,8 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 100 GB    | Yes         |
 
-  @TC.144165_fake_010203 @add_new_partner @mozypro @bus
-  Scenario: MozyPro UK 250 gb yearly to 100 GB yearly
+  @TC.133659 @add_new_partner @mozypro @bus
+  Scenario: MozyPro custom old UK 250 gb yearly to 100 GB yearly
     When I add a new MozyPro partner:
       | company name                                             | period | create under | country        | net terms |
       | DONOT EDIT MozyPro UK old 250 gb yearly to 100 GB yearly | 12     | MozyPro UK   | United Kingdom | yes       |
@@ -196,7 +196,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 100 GB    | Yes         |
 
-  @TC.144165_fake_0103 @add_new_partner @mozypro @bus
+  @TC.133660 @add_new_partner @mozypro @bus
   Scenario: MozyPro Germany 100 gb yearly to 250 gb yearly
     When I add a new MozyPro partner:
       | company name                                         | period | base plan | server plan | create under    | country | vat number  | net terms |
@@ -218,8 +218,8 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 250 GB    | Yes         |
 
-  @TC.144165_fake_010302 @add_new_partner @mozypro @bus
-  Scenario: MozyPro Germany 250 gb yearly to 100 gb yearly
+  @TC.133661 @add_new_partner @mozypro @bus
+  Scenario: MozyPro new Germany 250 gb yearly to 100 gb yearly
     When I add a new MozyPro partner:
       | company name                                         | period | base plan | server plan | create under    | country | vat number  | net terms |
       | DONOT MozyPro Germany 250 gb yearly to 100 gb yearly | 12     | 250 GB    | yes         | MozyPro Germany | Germany | DE812321109 | yes       |
@@ -240,8 +240,8 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 100 GB    | Yes         |
 
-  @TC.144165_fake_010303 @add_new_partner @mozypro @bus
-  Scenario: MozyPro Germany 250 gb yearly to 100 gb yearly
+  @TC.133662 @add_new_partner @mozypro @bus
+  Scenario: MozyPro custom old Germany 250 gb yearly to 100 gb yearly
     When I add a new MozyPro partner:
       | company name                                             | period | create under    | country | net terms |
       | DONOT MozyPro Germany old 250 gb yearly to 100 gb yearly | 12     | MozyPro Germany | Germany | yes       |
@@ -287,7 +287,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 100 GB    | Yes         |
 
-  @TC.144165_fake_0201 @add_new_partner @mozypro @bus
+  @TC.133663 @add_new_partner @mozypro @bus
   Scenario: MozyPro USD 250 gb yearly to 500 GB yearly
     When I add a new MozyPro partner:
       | company name                                          | period | country       |
@@ -334,7 +334,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 500 GB    | Yes         |
 
-  @TC.144165_fake_0202 @add_new_partner @mozypro @bus
+  @TC.133664 @add_new_partner @mozypro @bus
   Scenario: MozyPro Germany 250 gb yearly to 500 GB yearly
     When I add a new MozyPro partner:
       | company name                                              | period | create under    | country | net terms |
@@ -381,7 +381,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 500 GB    | Yes         |
 
-  @TC.144165_fake_0203 @add_new_partner @mozypro @bus
+  @TC.133665 @add_new_partner @mozypro @bus
   Scenario: MozyPro UK 250 gb yearly to 500 GB yearly
     When I add a new MozyPro partner:
       | company name                                         | period | create under | country        | net terms |
@@ -428,7 +428,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 500 GB    | Yes         |
 
-  @TC.144165_fake_0301 @add_new_partner @mozypro @bus
+  @TC.133666 @add_new_partner @mozypro @bus
   Scenario: MozyPro USD 1 TB yearly to 2 TB yearly
     When I add a new MozyPro partner:
       | company name                                      | period | country       |
@@ -475,7 +475,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 2 TB      | Yes         |
 
-  @TC.144165_fake_0302 @add_new_partner @mozypro @bus
+  @TC.133667 @add_new_partner @mozypro @bus
   Scenario: MozyPro France 1 TB yearly to 2 TB yearly
     When I add a new MozyPro partner:
       | company name                                         | period | create under   | country | net terms |
@@ -522,7 +522,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 2 TB      | Yes         |
 
-  @TC.144165_fake_0303 @add_new_partner @mozypro @bus
+  @TC.133668 @add_new_partner @mozypro @bus
   Scenario: MozyPro UK 1 TB yearly to 2 TB yearly
     When I add a new MozyPro partner:
       | company name                                     | period | create under | country        | cc number        |
@@ -569,7 +569,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 2 TB      | Yes         |
 
-  @TC.144165_fake_0401 @add_new_partner @mozypro @bus
+  @TC.133669 @add_new_partner @mozypro @bus
   Scenario: MozyPro USD 2 TB yearly to 4 TB yearly
     When I add a new MozyPro partner:
       | company name                                      | period | country       |
@@ -616,7 +616,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 4 TB      | Yes         |
 
-  @TC.144165_fake_0402 @add_new_partner @mozypro @bus
+  @TC.133670 @add_new_partner @mozypro @bus
   Scenario: MozyPro Ireland 2 TB yearly to 4 TB yearly
     When I add a new MozyPro partner:
       | company name                                          | period | create under    | country | cc number        |
@@ -663,7 +663,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 4 TB      | Yes         |
 
-  @TC.144165_fake_0403 @add_new_partner @mozypro @bus
+  @TC.133671 @add_new_partner @mozypro @bus
   Scenario: MozyPro UK 2 TB yearly to 4 TB yearly
     When I add a new MozyPro partner:
       | company name                                     | period | create under | country        | cc number        |
@@ -710,7 +710,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 4 TB      | Yes         |
 
-  @TC.144165_fake_0501 @add_new_partner @mozypro @bus
+  @TC.133672 @add_new_partner @mozypro @bus
   Scenario: MozyPro US old 500 gb yearly to 1 tb yearly
     When I add a new MozyPro partner:
       | company name                                      | period | country       |
@@ -738,7 +738,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 1 TB      | Yes         |
 
-  @TC.144165_real_0101 @add_new_partner @mozypro @bus
+  @TC.133640 @add_new_partner @mozypro @bus
   Scenario: MozyPro USD 10 gb yearly to 50 gb yearly with server
     When I add a new MozyPro partner:
       | company name                                   | period | base plan | server plan | net terms |
@@ -760,7 +760,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 50 GB     | Yes         |
 
-  @TC.144165_real_010102 @add_new_partner @mozypro @bus
+  @TC.133641 @add_new_partner @mozypro @bus
   Scenario: MozyPro USD 50 gb yearly to 10 gb yearly
     When I add a new MozyPro partner:
       | company name                                   | period | base plan | server plan | net terms |
@@ -780,7 +780,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 10 GB     | Yes         |
 
-  @TC.144165_real_0201 @add_new_partner @mozypro @bus
+  @TC.133642 @add_new_partner @mozypro @bus
   Scenario: MozyPro USD 50 gb yearly to 100 gb yearly
     When I add a new MozyPro partner:
       | company name                                    | period | base plan | server plan | net terms |
@@ -802,7 +802,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 100 GB    | Yes         |
 
-  @TC.144165_real_0202 @add_new_partner @mozypro @bus
+  @TC.133643 @add_new_partner @mozypro @bus
   Scenario: MozyPro France 50 gb yearly to 100 gb yearly
     When I add a new MozyPro partner:
       | company name                                       | period | base plan | server plan | create under   | country | cc number        |
@@ -824,7 +824,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 100 GB    | Yes         |
 
-  @TC.144165_real_020202 @add_new_partner @mozypro @bus
+  @TC.133644 @add_new_partner @mozypro @bus
   Scenario: MozyPro France 100 gb yearly to 50 gb yearly
     When I add a new MozyPro partner:
       | company name                                       | period | base plan | server plan | create under   | country | cc number        |
@@ -844,7 +844,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 50 GB     | Yes         |
 
-  @TC.144165_real_0203 @add_new_partner @mozypro @bus
+  @TC.133645 @add_new_partner @mozypro @bus
   Scenario: MozyPro UK 50 gb yearly to 100 gb yearly
     When I add a new MozyPro partner:
       | company name                                   | period | base plan | server plan | create under | country        | cc number        |
@@ -866,7 +866,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 100 GB    | Yes         |
 
-  @TC.144165_real_0301 @add_new_partner @mozypro @bus
+  @TC.133646 @add_new_partner @mozypro @bus
   Scenario: MozyPro UK 500 gb yearly to 1 tb yearly
     When I add a new MozyPro partner:
       | company name                                  | period | base plan | server plan | create under | country        | cc number        |
@@ -888,7 +888,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 1 TB      | Yes         |
 
-  @TC.144165_real_030102 @add_new_partner @mozypro @bus
+  @TC.133647 @add_new_partner @mozypro @bus
   Scenario: MozyPro UK 1 tb yearly to 500 gb yearly
     When I add a new MozyPro partner:
       | company name                                  | period | base plan | server plan | create under | country        | cc number        |
@@ -908,7 +908,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 500 GB    | Yes         |
 
-  @TC.144165_real_0302 @add_new_partner @mozypro @bus
+  @TC.133648 @add_new_partner @mozypro @bus
   Scenario: MozyPro Germany 500 gb yearly to 1 tb yearly
     When I add a new MozyPro partner:
       | company name                                       | period | base plan | server plan | create under    | country | cc number        |
@@ -930,7 +930,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 1 TB      | Yes         |
 
-  @TC.144165_real_0303 @add_new_partner @mozypro @bus
+  @TC.133649 @add_new_partner @mozypro @bus
   Scenario: MozyPro US 500 gb yearly to 1 tb yearly
     When I add a new MozyPro partner:
       | company name                                  | period | base plan | server plan |
@@ -952,7 +952,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 1 TB      | Yes         |
 
-  @TC.144165_real_0401 @add_new_partner @mozypro @bus
+  @TC.133650 @add_new_partner @mozypro @bus
   Scenario: MozyPro US 4 tb yearly to 8 tb yearly
     When I add a new MozyPro partner:
       | company name                                | period | base plan | server plan |
@@ -974,7 +974,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 8 TB      | Yes         |
 
-  @TC.144165_real_040102 @add_new_partner @mozypro @bus
+  @TC.133651 @add_new_partner @mozypro @bus
   Scenario: MozyPro US 8 tb yearly to 4 tb yearly
     When I add a new MozyPro partner:
       | company name                                | period | base plan | server plan |
@@ -994,7 +994,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 4 TB      | Yes         |
 
-  @TC.144165_real_0402 @add_new_partner @mozypro @bus
+  @TC.133652 @add_new_partner @mozypro @bus
   Scenario: MozyPro Ireland 4 tb yearly to 8 tb yearly
     When I add a new MozyPro partner:
       | company name                                     | period | base plan | server plan | create under    | country | cc number        |
@@ -1016,7 +1016,7 @@ Feature: Bugs #144165 Cannot increase resources in BUS, when we compare plans by
       | base plan | server plan |
       | 8 TB      | Yes         |
 
-  @TC.144165_real_0403 @add_new_partner @mozypro @bus
+  @TC.133653 @add_new_partner @mozypro @bus
   Scenario: MozyPro UK 4 tb yearly to 8 tb yearly
     When I add a new MozyPro partner:
       | company name                                | period | base plan | server plan | create under | country        | cc number        |

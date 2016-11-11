@@ -8,8 +8,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.143134_fake_601 @add_new_partner @mozypro @bus
-  Scenario: MozyPro 10 GB monthly to 250 GB monthly
+  @TC.133462 @add_new_partner @mozypro @bus
+  Scenario: MozyPro usd with add new line coupon 10 GB monthly to 250 GB monthly
     When I add a new MozyPro partner:
       | company name                                     | period | base plan | country       | coupon              |
       | DONOT EDIT MozyPro 10 GB Plan monthly USD coupon | 1      | 10 GB     | United States | 10percentoffoutline |
@@ -39,8 +39,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 250 GB    |
     Then API* Aria account coupon code info should be 10percentoffoutline
 
-  @TC.143134_fake_501 @add_new_partner @mozypro @bus
-  Scenario: MozyPro 10 GB Plan yearly Ireland 10 gb yearly to 250 gb yearly
+  @TC.133463 @add_new_partner @mozypro @bus
+  Scenario: MozyPro Ireland with add new line coupon 10 gb yearly to 250 gb yearly
     When I add a new MozyPro partner:
       | company name                                | period | base plan | server plan | create under    | country | coupon              | cc number        |
       | DONOT MozyPro 10 gb yearly to 250 gb yearly | 12     | 10 GB     | yes         | MozyPro Ireland | Ireland | 10percentoffoutline | 4319402211111113 |
@@ -72,8 +72,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 250 GB    | Yes         |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_703 @add_new_partner @mozypro @bus
-  Scenario: MozyPro 250 gb yearly to 8 tb yearly
+  @TC.133464 @add_new_partner @mozypro @bus
+  Scenario: MozyPro UK with add new line coupon 250 gb yearly to 8 tb yearly
     When I add a new MozyPro partner:
       | company name                                      | period | base plan | create under | country        | coupon              | cc number        | vat number  |
       | DONOT EDIT MozyPro 250 gb yearly to 500 gb yearly | 12     | 250 GB    | MozyPro UK   | United Kingdom | 10percentoffoutline | 4916783606275713 | GB117223643 |
@@ -103,8 +103,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 8 TB      |
     Then API* Aria account coupon code info should be 10percentoffoutline
 
-  @TC.143134_fake_701 @add_new_partner @mozypro @bus
-  Scenario: MozyPro 250 gb yearly to 4 tb yearly
+  @TC.133465 @add_new_partner @mozypro @bus
+  Scenario: MozyPro USD with add new line coupon 250 gb yearly to 4 tb yearly
     When I add a new MozyPro partner:
       | company name                                     | period | base plan | country       | coupon              |
       | DONOT EDIT MozyPro  250 gb yearly to 4 tb yearly | 12     | 250 GB    | United States | 10percentoffoutline |
@@ -134,8 +134,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 4 TB      |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_6012 @add_new_partner @mozypro @bus
-  Scenario: MozyPro 10 GB monthly to 250 GB monthly
+  @TC.133466 @add_new_partner @mozypro @bus
+  Scenario: MozyPro usd with reduce line coupon 10 GB monthly to 250 GB monthly
     When I add a new MozyPro partner:
       | company name                                     | period | base plan | country       | coupon                |
       | DONOT EDIT MozyPro 10 GB Plan monthly USD coupon | 1      | 10 GB     | United States | catherine10pctultdpro |
@@ -164,8 +164,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 250 GB    |
     Then API* Aria account coupon code info should be catherine10pctultdpro
 
-  @TC.143134_fake_5012 @add_new_partner @mozypro @bus
-  Scenario: MozyPro 10 GB Plan yearly Ireland 10 gb yearly to 250 gb yearly
+  @TC.133467 @add_new_partner @mozypro @bus
+  Scenario: MozyPro Ireland with reduce line coupon 10 gb yearly to 250 gb yearly
     When I add a new MozyPro partner:
       | company name                                | period | base plan | server plan | create under    | country | coupon                | cc number        |
       | DONOT MozyPro 10 gb yearly to 250 gb yearly | 12     | 10 GB     | yes         | MozyPro Ireland | Ireland | catherine10pctultdpro | 4319402211111113 |
@@ -196,8 +196,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 250 GB    | Yes         |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_7032 @add_new_partner @mozypro @bus
-  Scenario: MozyPro 250 gb yearly to 8 tb yearly
+  @TC.133468 @add_new_partner @mozypro @bus
+  Scenario: MozyPro UK with reduce line coupon 250 gb yearly to 8 tb yearly
     When I add a new MozyPro partner:
       | company name                                      | period | base plan | create under | country        | coupon                | cc number        | vat number  |
       | DONOT EDIT MozyPro 250 gb yearly to 500 gb yearly | 12     | 250 GB    | MozyPro UK   | United Kingdom | catherine10pctultdpro | 4916783606275713 | GB117223643 |
@@ -226,8 +226,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 8 TB      |
     Then API* Aria account coupon code info should be catherine10pctultdpro
 
-  @TC.143134_fake_7012 @add_new_partner @mozypro @bus
-  Scenario: MozyPro 250 gb yearly to 4 tb yearly
+  @TC.133469 @add_new_partner @mozypro @bus
+  Scenario: MozyPro usd with reduce line coupon 250 gb yearly to 4 tb yearly
     When I add a new MozyPro partner:
       | company name                                     | period | base plan | country       | coupon                |
       | DONOT EDIT MozyPro  250 gb yearly to 4 tb yearly | 12     | 250 GB    | United States | catherine10pctultdpro |
@@ -256,7 +256,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 4 TB      |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_4902 @add_new_partner @mozypro @bus
+  @TC.133470 @add_new_partner @mozypro @bus
   Scenario: MozyPro 10 GB Plan yearly Ireland 10 gb yearly to 500 gb yearly
     When I add a new MozyPro partner:
       | company name                                | period | base plan | server plan | create under    | country | coupon                | cc number        |
@@ -289,7 +289,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 500 GB    | No          |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_4903 @add_new_partner @mozypro @bus
+  @TC.133471 @add_new_partner @mozypro @bus
   Scenario: MozyPro 10 GB Plan yearly Ireland 10 gb yearly to 1 tb yearly
     When I add a new MozyPro partner:
       | company name                              | period | base plan | server plan | create under    | country | coupon                | cc number        |
@@ -322,7 +322,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 1 TB      | No          |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_4904 @add_new_partner @mozypro @bus
+  @TC.133472 @add_new_partner @mozypro @bus
   Scenario: MozyPro 10 GB Plan yearly Ireland 10 gb yearly to 2 tb yearly
     When I add a new MozyPro partner:
       | company name                              | period | base plan | server plan | create under    | country | coupon                | cc number        |
@@ -355,7 +355,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 2 TB      | Yes         |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_4905 @add_new_partner @mozypro @bus
+  @TC.133473 @add_new_partner @mozypro @bus
   Scenario: MozyPro 10 GB Plan yearly Ireland 10 gb yearly to 4 tb yearly
     When I add a new MozyPro partner:
       | company name                              | period | base plan | server plan | create under    | country | coupon                | cc number        |
@@ -388,7 +388,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 4 TB      | Yes         |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_5101 @add_new_partner @mozypro @bus
+  @TC.133474 @add_new_partner @mozypro @bus
   Scenario: MozyPro 250 gb yearly to server plan
     When I add a new MozyPro partner:
       | company name                                    | period | base plan | country       | coupon              |
@@ -416,7 +416,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 250 GB    | Yes         |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_5102 @add_new_partner @mozypro @bus
+  @TC.133475 @add_new_partner @mozypro @bus
   Scenario: MozyPro 250 gb yearly to 500 gb yearly
     When I add a new MozyPro partner:
       | company name                                      | period | base plan | country       | coupon              |
@@ -447,7 +447,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 500 GB    | No          |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_5103 @add_new_partner @mozypro @bus
+  @TC.133476 @add_new_partner @mozypro @bus
   Scenario: MozyPro 250 gb yearly to 1 tb yearly
     When I add a new MozyPro partner:
       | company name                                    | period | base plan | country       | coupon              |
@@ -478,7 +478,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 1 TB      | Yes         |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_5104 @add_new_partner @mozypro @bus
+  @TC.133477 @add_new_partner @mozypro @bus
   Scenario: MozyPro 250 gb yearly to 2 tb yearly
     When I add a new MozyPro partner:
       | company name                                    | period | base plan | country       | coupon              |
@@ -509,7 +509,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 2 TB      | No          |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_5701 @add_new_partner @mozypro
+  @TC.133478 @add_new_partner @mozypro
   Scenario: MozyPro 8 TB Plan yearly to 250 gb yearly
     When I add a new MozyPro partner:
       | company name                                         | period | base plan | create under | country        | coupon               | cc number        |
@@ -531,7 +531,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 250 GB    | No          |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_5702 @add_new_partner @mozypro
+  @TC.133479 @add_new_partner @mozypro
   Scenario: MozyPro 8 TB Plan yearly to 500 gb yearly
     When I add a new MozyPro partner:
       | company name                                         | period | base plan | create under | country        | coupon               | cc number        |
@@ -552,7 +552,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 500 GB    | Yes         |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_5703 @add_new_partner @mozypro
+  @TC.133480 @add_new_partner @mozypro
   Scenario: MozyPro 8 TB Plan yearly to 1 tb yearly
     When I add a new MozyPro partner:
       | company name                                       | period | base plan | create under | country        | coupon               | cc number        |
@@ -574,7 +574,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 1 TB      | No          |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_5704 @add_new_partner @mozypro
+  @TC.133481 @add_new_partner @mozypro
   Scenario: MozyPro 8 TB Plan yearly to 2 tb yearly
     When I add a new MozyPro partner:
       | company name                                       | period | base plan | create under | country        | coupon                         | net terms | vat number  |
@@ -595,7 +595,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 2 TB      | Yes         |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_5705 @add_new_partner @mozypro
+  @TC.133482 @add_new_partner @mozypro
   Scenario: MozyPro 8 TB Plan yearly to 4 tb yearly
     When I add a new MozyPro partner:
       | company name                                       | period | base plan | create under | country        | coupon               | cc number        |
@@ -617,7 +617,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 4 TB      | No          |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_5901 @add_new_partner @mozypro @bus
+  @TC.133483 @add_new_partner @mozypro @bus
   Scenario: MozyPro 10 GB Plan biennially France 10 gb biennially to 250 gb biennially
     When I add a new MozyPro partner:
       | company name                                        | period | base plan | server plan | create under   | country | coupon | net terms | vat number    |
@@ -649,7 +649,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 250 GB    | No          |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_5902 @add_new_partner @mozypro @bus
+  @TC.133484 @add_new_partner @mozypro @bus
   Scenario: MozyPro 10 GB Plan biennially France 10 gb biennially to 500 gb biennially
     When I add a new MozyPro partner:
       | company name                                        | period | base plan | create under   | country | coupon | net terms | vat number    |
@@ -680,7 +680,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 500 GB    | No          |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_5903 @add_new_partner @mozypro @bus
+  @TC.133485 @add_new_partner @mozypro @bus
   Scenario: MozyPro 10 GB Plan biennially France 10 gb biennially to 1 tb biennially
     When I add a new MozyPro partner:
       | company name                                      | period | base plan | create under   | country | coupon | net terms |
@@ -712,7 +712,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 1 TB      | Yes         |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_5904 @add_new_partner @mozypro @bus
+  @TC.133486 @add_new_partner @mozypro @bus
   Scenario: MozyPro 10 GB Plan biennially France 10 gb biennially to 2 tb biennially
     When I add a new MozyPro partner:
       | company name                                      | period | base plan | server plan | create under   | country | coupon | net terms |
@@ -745,7 +745,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 2 TB      | Yes         |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_5905 @add_new_partner @mozypro @bus
+  @TC.133487 @add_new_partner @mozypro @bus
   Scenario: MozyPro 10 GB Plan biennially France 10 gb biennially to 4 tb biennially
     When I add a new MozyPro partner:
       | company name                                      | period | base plan | server plan | create under   | country | coupon | net terms |
@@ -778,7 +778,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 4 TB      | Yes         |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_6101 @add_new_partner @mozypro @bus
+  @TC.133488 @add_new_partner @mozypro @bus
   Scenario: MozyPro 250 gb biennially to server plan
     When I add a new MozyPro partner:
       | company name                                        | period | base plan | country       | coupon              |
@@ -799,7 +799,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 250 GB    | Yes         |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_6102 @add_new_partner @mozypro @bus
+  @TC.133489 @add_new_partner @mozypro @bus
   Scenario: MozyPro 250 gb biennially to 500 gb biennially
     When I add a new MozyPro partner:
       | company name                                      | period | base plan | country       | coupon              |
@@ -823,7 +823,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 500 GB    | No          |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_6103 @add_new_partner @mozypro @bus
+  @TC.133490 @add_new_partner @mozypro @bus
   Scenario: MozyPro 250 gb biennially to 1 tb biennially
     When I add a new MozyPro partner:
       | company name                                    | period | base plan | country       | coupon              |
@@ -847,7 +847,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 1 TB      | Yes         |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_6104 @add_new_partner @mozypro @bus
+  @TC.133491 @add_new_partner @mozypro @bus
   Scenario: MozyPro 250 gb biennially to 2 tb biennially
     When I add a new MozyPro partner:
       | company name                                    | period | base plan | country       | coupon              |
@@ -871,7 +871,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 2 TB      | No          |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_6105 @add_new_partner @mozypro @bus
+  @TC.133492 @add_new_partner @mozypro @bus
   Scenario: MozyPro 250 gb biennially to 4 tb biennially
     When I add a new MozyPro partner:
       | company name                                     | period | base plan | country       | coupon              |
@@ -895,7 +895,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 4 TB      |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_6301 @add_new_partner @mozypro
+  @TC.133493 @add_new_partner @mozypro
   Scenario: MozyPro 8 TB Plan biennially to 250 gb biennially
     When I add a new MozyPro partner:
       | company name                                         | period | base plan | create under | country        | coupon               | cc number        |
@@ -917,7 +917,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 250 GB    | No          |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_6302 @add_new_partner @mozypro
+  @TC.133494 @add_new_partner @mozypro
   Scenario: MozyPro 8 TB Plan biennially to 500 gb biennially
     When I add a new MozyPro partner:
       | company name                                         | period | base plan | create under | country        | coupon               | cc number        |
@@ -938,7 +938,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 500 GB    | Yes         |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_6303 @add_new_partner @mozypro
+  @TC.133495 @add_new_partner @mozypro
   Scenario: MozyPro 8 TB Plan biennially to 1 tb biennially
     When I add a new MozyPro partner:
       | company name                                       | period | base plan | create under | country        | coupon               | cc number        |
@@ -960,7 +960,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 1 TB      | No          |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_6304 @add_new_partner @mozypro
+  @TC.133496 @add_new_partner @mozypro
   Scenario: MozyPro 8 TB Plan biennially to 2 tb biennially
     When I add a new MozyPro partner:
       | company name                                       | period | base plan | create under | country        | coupon                         | net terms | vat number  |
@@ -981,7 +981,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 2 TB      | Yes         |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_6305 @add_new_partner @mozypro
+  @TC.133497 @add_new_partner @mozypro
   Scenario: MozyPro 8 TB Plan biennially to 4 tb biennially
     When I add a new MozyPro partner:
       | company name                                       | period | base plan | create under | country        | coupon               | cc number        |
@@ -1003,8 +1003,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 4 TB      | No          |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_3701 @add_new_partner @mozypro @bus
-  Scenario: MozyPro 10 GB Plan yearly Ireland 100 gb yearly to 250 gb yearly
+  @TC.133498 @add_new_partner @mozypro @bus
+  Scenario: MozyPro Ireland with storage addon and multiple discount rule coupon 100 gb yearly to 250 gb yearly
     When I add a new MozyPro partner:
       | company name                                 | period | base plan | storage add on 50 gb | create under    | country | coupon                    | net terms |
       | DONOT MozyPro 100 gb yearly to 250 gb yearly | 12     | 100 GB    | 1                    | MozyPro Ireland | Ireland | <%=QA_ENV['20multiple']%> | yes       |
@@ -1036,8 +1036,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 250 GB    | 1              | No          |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_3702 @add_new_partner @mozypro @bus
-  Scenario: MozyPro 10 GB Plan yearly Ireland 100 gb yearly to 500 gb yearly
+  @TC.133499 @add_new_partner @mozypro @bus
+  Scenario: MozyPro Ireland with storage addon 100 gb yearly to 500 gb yearly
     When I add a new MozyPro partner:
       | company name                                 | period | base plan | storage add on 50 gb | create under    | country | coupon                    | net terms |
       | DONOT MozyPro 100 gb yearly to 500 gb yearly | 12     | 100 GB    | 1                    | MozyPro Ireland | Ireland | <%=QA_ENV['20multiple']%> | yes       |
@@ -1069,8 +1069,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 500 GB    | 1              | Yes         |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_3703 @add_new_partner @mozypro @bus
-  Scenario: MozyPro 10 GB Plan yearly Ireland 100 gb yearly to 1 tb yearly
+  @TC.133500 @add_new_partner @mozypro @bus
+  Scenario: MozyPro Ireland with server plan and storage addon 100 gb yearly to 1 tb yearly
     When I add a new MozyPro partner:
       | company name                               | period | base plan | server plan | storage add on 50 gb | create under    | country | coupon                    | net terms |
       | DONOT MozyPro 100 gb yearly to 1 tb yearly | 12     | 100 GB    | yes         | 1                    | MozyPro Ireland | Ireland | <%=QA_ENV['20multiple']%> | yes       |
@@ -1103,8 +1103,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 1 TB      | 1              | Yes         |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_3704 @add_new_partner @mozypro @bus
-  Scenario: MozyPro 10 GB Plan yearly Ireland 100 gb yearly to 2 tb yearly
+  @TC.133501 @add_new_partner @mozypro @bus
+  Scenario: MozyPro Ireland with server plan and storage addon 100 gb yearly to 2 tb yearly
     When I add a new MozyPro partner:
       | company name                               | period | base plan | server plan | storage add on 50 gb | create under    | country | coupon                    | net terms |
       | DONOT MozyPro 100 gb yearly to 2 tb yearly | 12     | 100 GB    | yes         | 1                    | MozyPro Ireland | Ireland | <%=QA_ENV['20multiple']%> | yes       |
@@ -1137,8 +1137,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 2 TB      | 1              | No          |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_3705 @add_new_partner @mozypro @bus
-  Scenario: MozyPro 10 GB Plan yearly Ireland 100 gb yearly to 4 tb yearly
+  @TC.133502 @add_new_partner @mozypro @bus
+  Scenario: MozyPro Ireland with server plan and storage addon 100 gb yearly to 4 tb yearly
     When I add a new MozyPro partner:
       | company name                               | period | base plan | server plan | storage add on 50 gb | create under    | country | coupon                    | net terms |
       | DONOT MozyPro 100 gb yearly to 4 tb yearly | 12     | 100 GB    | yes         | 100                  | MozyPro Ireland | Ireland | <%=QA_ENV['20multiple']%> | yes       |
@@ -1171,8 +1171,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 4 TB      | 100            | Yes         |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_3801 @add_new_partner @mozypro @bus
-  Scenario: MozyPro 10 GB Plan yearly Ireland 100 gb yearly to 250 gb yearly
+  @TC.133503 @add_new_partner @mozypro @bus
+  Scenario: MozyPro Ireland 100 gb yearly to 250 gb yearly
     When I add a new MozyPro partner:
       | company name                                 | period | base plan | storage add on 50 gb | create under    | country | coupon                    | net terms |
       | DONOT MozyPro 100 gb yearly to 250 gb yearly | 12     | 100 GB    | 1                    | MozyPro Ireland | Ireland | <%=QA_ENV['coupon20pc']%> | yes       |
@@ -1204,8 +1204,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 250 GB    | 1              | No          |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_3706 @add_new_partner @mozypro @bus
-  Scenario: MozyPro 10 GB Plan yearly USD 100 gb yearly to 250 gb yearly
+  @TC.133504 @add_new_partner @mozypro @bus
+  Scenario: MozyPro USD with server plan 100 gb yearly to 250 gb yearly
     When I add a new MozyPro partner:
       | company name                                 | period | base plan | server plan | coupon              | net terms |
       | DONOT MozyPro 100 gb yearly to 250 gb yearly | 12     | 100 GB    | yes         | 10percentoffoutline | yes       |
@@ -1228,8 +1228,8 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 250 GB    | Yes         |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_50120719 @add_new_partner @mozypro @bus
-  Scenario: MozyPro 10 GB Plan yearly Ireland 10 gb yearly to 250 gb yearly
+  @TC.133505 @add_new_partner @mozypro @bus
+  Scenario: MozyPro Ireland with server plan 10 gb yearly to 250 gb yearly
     When I add a new MozyPro partner:
       | company name                                | period | base plan | server plan | create under    | country | coupon                | cc number        |
       | DONOT MozyPro 10 gb yearly to 250 gb yearly | 12     | 10 GB     | yes         | MozyPro Ireland | Ireland | catherine15pctultdpro | 4319402211111113 |

@@ -8,7 +8,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.143134_fake_6701 @add_new_partner @mozypro @bus
+  @TC.133506 @add_new_partner @mozypro @bus
   Scenario: silver monthly to 20 GB add on
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | coupon                | country       |
@@ -35,7 +35,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 100            | 2              | No          |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_6702 @add_new_partner @mozypro @bus
+  @TC.133507 @add_new_partner @mozypro @bus
   Scenario: silver monthly to server plan
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | create under   | vat number    | coupon                | country | cc number        |
@@ -62,7 +62,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 500            | 0              | Yes         |
     Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
 
-  @TC.143134_fake_6703 @add_new_partner @mozypro @bus
+  @TC.133508 @add_new_partner @mozypro @bus
   Scenario: silver monthly to 20 GB add-on&server plan
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | create under | coupon                | country        | cc number        |
@@ -90,7 +90,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 200            | 1              | Yes         |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_6801 @add_new_partner @mozypro @bus
+  @TC.133509 @add_new_partner @mozypro @bus
   Scenario: silver yearly to 20 GB add on
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | create under    | vat number | coupon                | country | cc number        |
@@ -119,7 +119,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 500            | 1              | Yes         |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_6802 @add_new_partner @mozypro @bus
+  @TC.133510 @add_new_partner @mozypro @bus
   Scenario: silver yearly to server plan
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | storage add on | coupon                | create under | country        | vat number  | net terms |
@@ -147,7 +147,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 500            | 10             | Yes         |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_6803 @add_new_partner @mozypro @bus
+  @TC.133511 @add_new_partner @mozypro @bus
   Scenario: silver yearly to 20 GB add-on&server plan
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | coupon                | country       |
@@ -174,7 +174,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 50             | 5              | Yes         |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_7101 @add_new_partner @mozypro @bus
+  @TC.133512 @add_new_partner @mozypro @bus
   Scenario: gold monthly to 20 GB add on
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | create under | vat number  | coupon                | country        | cc number        |
@@ -202,7 +202,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 500            | 3              | Yes         |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_7102 @add_new_partner @mozypro @bus
+  @TC.133513 @add_new_partner @mozypro @bus
   Scenario: gold monthly to server plan
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | create under    | coupon                | country | net terms |
@@ -230,7 +230,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 20             | 0              | Yes         |
     Then API* Aria account coupon code info should be <%=QA_ENV['15percentcoupon']%>
 
-  @TC.143134_fake_7103 @add_new_partner @mozypro @bus
+  @TC.133514 @add_new_partner @mozypro @bus
   Scenario: gold monthly to 20 GB add-on&server plan
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | coupon                | country       |
@@ -257,7 +257,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 10             | 4              | Yes         |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_7501 @add_new_partner @mozypro @bus
+  @TC.133515 @add_new_partner @mozypro @bus
   Scenario: platinum yearly to 20 GB add on
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms | country       | coupon                |
@@ -284,7 +284,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 500            | 6              | No          |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_7502 @add_new_partner @mozypro @bus
+  @TC.133516 @add_new_partner @mozypro @bus
   Scenario: platinum yearly to server plan
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | create under    | coupon                | country | net terms |
@@ -312,7 +312,7 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
       | 30             | 0              | Yes         |
     Then API* Aria account coupon code info should be nil
 
-  @TC.143134_fake_7503 @add_new_partner @mozypro @bus
+  @TC.133517 @add_new_partner @mozypro @bus
   Scenario: platinum yearly to 20 GB add-on&server plan
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | create under | coupon                | country        | cc number        |

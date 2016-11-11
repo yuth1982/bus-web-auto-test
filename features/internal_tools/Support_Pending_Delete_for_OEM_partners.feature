@@ -3,7 +3,7 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.144460_01 @bus @delete_partner
+  @TC.133692 @bus @delete_partner
   Scenario: Mozy-144460_01: Delete MozyPro Partner Root, check Partner Root information
     When I add a new MozyPro partner:
       | period | base plan | server plan |
@@ -109,7 +109,7 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
 
     Then no report is scheduled for this partner
 
-  @TC.144460_02 @bus @delete_partner
+  @TC.133693 @bus @delete_partner
   Scenario: Mozy-144460_02: Delete OEM Partner Root, check Partner Root information
     When I add a new OEM partner:
       | Root role         | Security | Company Type     |
@@ -209,8 +209,8 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
 #      | @new_admin_email | <%=@report.name%> |
 #    Then I should see 0 email(s)
 
-  @TC.144460_03 @bus @delete_partner
-  Scenario: Mozy-144460_03: Delete OEM Partner
+  @TC.133694 @bus @delete_partner
+  Scenario: Mozy-144460_03: Delete OEM Partner, check next renewal
     When I add a new MozyPro partner:
       | period | base plan |
       | 1      | 250 GB    |
@@ -224,7 +224,7 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
       | Date  | Amount    | Total Paid | Balance Due |
       | today | $94.99    | $94.99     | $0.00       |
 
-  @TC.144460_04 @bus @delete_partner
+  @TC.133695 @bus @delete_partner
   Scenario: Mozy-144460_04: Delete OEM Partner Root, check Partner L1 information
     When I add a new OEM partner:
       | Company Name                | Root role         | Security | Company Type     |
@@ -346,7 +346,7 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
 #      | @new_admin_email | <%=@report.name%> |
 #    Then I should see 0 email(s)
 
-  @TC.144460_05 @bus @delete_partner
+  @TC.133696 @bus @delete_partner
   Scenario: Mozy-144460_05: delete OEM Partner L1, check Partner L1 information
     When I add a new OEM partner:
       | Root role         | Security | Company Type     |
@@ -466,7 +466,7 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
 #      | @new_admin_email | <%=@report.name%> |
 #    Then I should see 0 email(s)
 
-  @TC.144460_06 @bus @delete_partner
+  @TC.133697 @bus @delete_partner
   Scenario: Mozy-144460_06: Undelete OEM Partner Root, check Partner Root information, undelete not ready to purge, ready to purge
     When I add a new OEM partner:
       | Root role         | Security | Company Type     |
@@ -568,7 +568,7 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
 #      | @new_admin_email | <%=@report.name%> |
 #    Then I should see 1 email(s)
 
-  @TC.144460_07 @bus @delete_partner
+  @TC.133698 @bus @delete_partner
   Scenario: Mozy-144460_07: Undelete OEM Partner Root, check Partner L1 information
     When I add a new OEM partner:
       | Company Name                | Root role         | Security | Company Type     |
@@ -697,11 +697,7 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
 #      | @new_admin_email | <%=@report.name%> |
 #    Then I should see 1 email(s)
 
-  @TC.144460_08 @bus @delete_partner
-  Scenario: Mozy-144460_08: Undelete OEM Partner L1, check Partner L1 information
-#    currently because delete OEM subparnter is acting as purge, so cannot undelete
-
-  @TC.144460_09 @bus @delete_partner
+  @TC.133700 @bus @delete_partner
   Scenario: Mozy-144460_09: Purge OEM Partner Root, check Partner Root information
     When I add a new OEM partner:
       | Root role         | Security | Company Type     |
@@ -807,7 +803,7 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
 #      | @new_admin_email | <%=@report.name%> |
 #    Then I should see 0 email(s)
 
-  @TC.144460_10 @bus @delete_partner
+  @TC.133701 @bus @delete_partner
   Scenario: Mozy-144460_10: Purge OEM Partner Root, check Partner L1 information
     When I add a new OEM partner:
       | Company Name                | Root role         | Security | Company Type     |
@@ -930,7 +926,3 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
 #      | to               | content           |
 #      | @new_admin_email | <%=@report.name%> |
 #    Then I should see 0 email(s)
-
-  @TC.144460_11 @bus @delete_partner
-  Scenario: Mozy-144460_11: Purge OEM Partner L1, check Partner L1 information
-#    currently because delete OEM subparnter is acting as purge, so cannot purge again
