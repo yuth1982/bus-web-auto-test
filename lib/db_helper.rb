@@ -590,6 +590,173 @@ module DBHelper
     end
   end
 
+
+  # delete reports that created by automation by email prefix
+  def delete_reports_by_email_prefix(admin_email_prefix = CONFIGS['global']['email_prefix'])
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      # delete scheduled delayed_jobs
+      sql = "delete from delayed_jobs where id in (select jr.delayed_job_id from jobs j left join job_results jr on jr.job_id = j.id where j.subscribers like '#{admin_email_prefix}' and j.deleted_at is null);"
+      c = conn.exec(sql)
+      puts "#{c.cmd_tuples} delayed_jobs records of #{admin_email_prefix} is deleted successfully"
+      # delete job_results
+      sql = "update job_results set deleted_at = now() where id in (select jr.id from jobs j left join job_results jr on jr.job_id = j.id where j.subscribers like '#{admin_email_prefix}' and j.deleted_at is null);"
+      c = conn.exec(sql)
+      puts "#{c.cmd_tuples} job_results records of #{admin_email_prefix} is updated successfully"
+      # delete jobs
+      sql = "update jobs set deleted_at = now() where subscribers like '#{admin_email_prefix}' and deleted_at is null;"
+      c = conn.exec(sql)
+      puts "#{c.cmd_tuples} jobs records of #{admin_email_prefix} is updated successfully"
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  # delete reports that created by automation by partner id
+  def delete_reports_by_partner_id(partner_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      # delete scheduled delayed_jobs
+      sql = "delete from delayed_jobs where id in (select jr.delayed_job_id from jobs j left join job_results jr on jr.job_id = j.id where j.pro_partner_id=#{partner_id} and j.deleted_at is null);"
+      c = conn.exec(sql)
+      puts "#{c.cmd_tuples} delayed_jobs records of partner #{partner_id} is deleted successfully"
+      # delete job_results
+      sql = "update job_results set deleted_at = now() where id in (select jr.id from jobs j left join job_results jr on jr.job_id = j.id where j.pro_partner_id=#{partner_id} and j.deleted_at is null);"
+      c = conn.exec(sql)
+      puts "#{c.cmd_tuples} job_results records of partner #{partner_id} is updated successfully"
+      # delete jobs
+      sql = "update jobs set deleted_at = now() where pro_partner_id=#{partner_id} and deleted_at is null;"
+      c = conn.exec(sql)
+      puts "#{c.cmd_tuples} jobs records of partner #{partner_id} is updated successfully"
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def delete_user_by_email(email)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "UPDATE users SET deleted = 't', deleted_time = now(), userhash = null WHERE username = '#{email}' and deleted_time is null;"
+      c = conn.exec sql
+      c.check
+      puts sql
+      if c.cmd_tuples >= 1
+        puts "#{c.cmd_tuples} records of #{email} is updated successfully"
+      else
+        puts "Nothing updated for #{email}"
+      end
+    rescue PGError => e
+      puts 'postgres error'
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def delete_users_by_email(email)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "UPDATE users SET deleted = 't', deleted_time = now(), userhash = null WHERE username like '#{email}' and deleted_time is null;"
+      c = conn.exec sql
+      c.check
+      puts sql
+      if c.cmd_tuples >= 1
+        puts "#{c.cmd_tuples} records of #{email} is updated successfully"
+      else
+        puts "Nothing updated for #{email}"
+      end
+    rescue PGError => e
+      puts 'postgres error'
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def purge_user_by_email(email)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "SELECT id FROM users WHERE username = '#{email}';"
+      puts sql
+      c = conn.exec sql
+      if c.ntuples >= 1
+        puts "#{c.ntuples} users named #{email} to be purged"
+      else
+        puts "No user named #{email} to be purged"
+        return
+      end
+
+      # to do: delete all machines include sync of this user, and return quota to user group
+      # as there is no machines for automation created fedid users, the delete machine sql is not needed now
+
+      # delete user_storage_pools
+      sql = "DELETE FROM user_storage_pools WHERE owner_id in (#{c.column_values(0).join(',')});"
+      puts sql
+      usp = conn.exec sql
+      puts "#{usp.cmd_tuples} records deleted in table user_storage_pools"
+
+      # delete user_sync_details
+      sql = "DELETE FROM user_sync_details WHERE user_id in (#{c.column_values(0).join(',')});"
+      puts sql
+      usd = conn.exec sql
+      puts "#{usd.cmd_tuples} records deleted in table user_sync_details"
+
+      # delete users
+      sql = "DELETE FROM users WHERE id in (#{c.column_values(0).join(',')});"
+      puts sql
+      u = conn.exec sql
+      puts "#{u.cmd_tuples} records deleted in table users"
+
+    rescue PGError => e
+      puts 'postgres error'
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def purge_users_by_email(email)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "SELECT id FROM users WHERE username like '#{email}';"
+      puts sql
+      c = conn.exec sql
+      if c.ntuples >= 1
+        puts "#{c.ntuples} users named #{email} to be purged"
+      else
+        puts "No user named #{email} to be purged"
+        return
+      end
+
+      # to do: delete all machines include sync of this user, and return quota to user group
+      # as there is no machines for automation created fedid users, the delete machine sql is not needed now
+
+      # delete user_storage_pools
+      sql = "DELETE FROM user_storage_pools WHERE owner_id in (#{c.column_values(0).join(',')});"
+      puts sql
+      usp = conn.exec sql
+      puts "#{usp.cmd_tuples} records deleted in table user_storage_pools"
+
+      # delete user_sync_details
+      sql = "DELETE FROM user_sync_details WHERE user_id in (#{c.column_values(0).join(',')});"
+      puts sql
+      usd = conn.exec sql
+      puts "#{usd.cmd_tuples} records deleted in table user_sync_details"
+
+      # delete users
+      sql = "DELETE FROM users WHERE id in (#{c.column_values(0).join(',')});"
+      puts sql
+      u = conn.exec sql
+      puts "#{u.cmd_tuples} records deleted in table users"
+    rescue PGError => e
+      puts 'postgres error'
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+
 end
 
 
