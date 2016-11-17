@@ -227,18 +227,18 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     Then API* Aria account coupon code info should be nonprofit10
     When I act as newly created partner account
     And I change MozyPro account plan to:
-      | base plan | server plan | storage add-on |
-      | 1 TB      | Yes         | 1              |
+      | base plan | server plan |
+      | 1 TB      | Yes         |
     Then Change plan charge summary should be:
       | Description                   | Amount    |
       | Credit for remainder of 10 GB | -£83.04   |
-      | Charge for upgraded plans     | £2,989.08 |
+      | Charge for upgraded plans     | £2,228.88 |
       |                               |           |
-      | Total amount to be charged    | £2,906.04 |
+      | Total amount to be charged    | £2,145.84 |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
-      | base plan | server plan | storage add-on |
-      | 1 TB      | Yes         | 1              |
+      | base plan | server plan |
+      | 1 TB      | Yes         |
     Then API* Aria account coupon code info should be nonprofit10
 
   @TC.133526 @add_new_partner @mozypro @bus
@@ -259,18 +259,18 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     Then API* Aria account coupon code info should be nonprofit10
     When I act as newly created partner account
     And I change MozyPro account plan to:
-      | base plan | storage add-on |
-      | 2 TB      | 2              |
+      | base plan |
+      | 2 TB      |
     Then Change plan charge summary should be:
       | Description                   | Amount    |
       | Credit for remainder of 10 GB | -€94.92   |
-      | Charge for upgraded plans     | €7,447.32 |
+      | Charge for new 2 TB           | €5,665.56 |
       |                               |           |
-      | Total amount to be charged    | €7,352.40 |
+      | Total amount to be charged    | €5,570.64 |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
-      | base plan | storage add-on |
-      | 2 TB      | 2              |
+      | base plan |
+      | 2 TB      |
     Then API* Aria account coupon code info should be nonprofit10
 
   @TC.133527 @add_new_partner @mozypro @bus
