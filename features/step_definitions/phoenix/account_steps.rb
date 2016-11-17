@@ -134,3 +134,11 @@ And /^I access freyja from phoenix$/ do
   @phoenix_site.user_account.access_freyja
 end
 
+And /^I click Restore Files link beside device (.+)$/ do |device|
+  @phoenix_site.user_account.click_restore_file_link(device)
+  @freyja_site = FreyjaSite.new
+  @user = Freyja::DataObj::User.new
+  @user.backup_file = @filename unless @filename.nil?
+  @user.backup_machineID = @new_clients.first.machine_id unless @new_clients.nil?
+end
+

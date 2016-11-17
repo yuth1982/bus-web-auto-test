@@ -229,6 +229,7 @@ Then /^I get mail domain from dea_services$/ do
   @domain_name = DBHelper.get_mail_domain_form_dea_services
 end
 
+
 #================================================
 #Author : Thomas Yu
 #Comment: 1. If machine_count < devices, then machine_count.
@@ -295,4 +296,20 @@ When /^I add multiple users and use keyless activation to activate (.+) device o
     #this step is required to close the user detail section, otherwise, duplicated name UI elem make execution failed.
     @bus_site.admin_console_page.user_details_section.close_bus_section
   end
+end
+
+And /^the new (MozyPro|MozyEnterPrise) user's default values should be:$/ do |type, default_value_tables|
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_user'])
+  expected = default_value_tables.hashes.first
+  expected.each do |_,v|
+    v.replace ERB.new(v).result(binding)
+  end
+  actual = @bus_site.admin_console_page.add_new_user_section.get_new_user_default_values(type, expected["user_group"])
+  expected.keys.each{ |key| actual[key].to_s.should == expected[key].to_s if key != "user_group" }
+end
+
+Then /^sync checkbox should be (visible|invisible) when creating a new itemized user$/ do |visible|
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_user'])
+  @bus_site.admin_console_page.add_new_itemized_user_section.sync_checkbox_visible == true if visible == "visible"
+  @bus_site.admin_console_page.add_new_itemized_user_section.sync_checkbox_visible == false if visible == "invisible"
 end

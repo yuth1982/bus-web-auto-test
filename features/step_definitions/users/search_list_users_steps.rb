@@ -139,3 +139,59 @@ Then /^The exported users csv file should be like$/ do |report_table|
   actual_csv = FileHelper.read_csv_file("users")
   actual_csv.should == report_table.rows
 end
+
+#============================================================
+#call the method <search_results_hashes> from search_list_users_section.rb
+#============================================================
+And /^Search \/ List Users table should be:$/ do | user_table |
+  expected = user_table.hashes
+  actual = @bus_site.admin_console_page.search_list_users_section.search_results_hashes
+  #======Construct a new array based on existing "actual" array, so that both new_actual and expected have the same keys======
+  expected_keys = expected[0].keys
+  new_actual = []
+  for i in 0..actual.size - 1
+    new_actual_array = {}
+    for j in 0..expected_keys.size - 1
+      new_actual_array[expected_keys[j]] = actual[i][expected_keys[j]]
+    end
+    new_actual << new_actual_array
+  end
+  puts "========expected table array======"
+  puts expected
+  puts "========actual table array======"
+  puts new_actual
+  #======two arrays should be exactly identical======
+  (new_actual - expected).should == []
+end
+
+#============================================================
+#call the method <search_results_hashes> from search_list_itemized_users_section.rb
+#============================================================
+And /^Search \/ List Users \(itemized\) table should be:$/ do | user_table |
+  expected = user_table.hashes
+  actual = @bus_site.admin_console_page.search_list_itemized_users_section.search_results_hashes
+  #======Construct a new array based on existing "actual" array, so that both new_actual and expected have the same keys======
+  expected_keys = expected[0].keys
+  new_actual = []
+  for i in 0..actual.size - 1
+    new_actual_array = {}
+    for j in 0..expected_keys.size - 1
+      new_actual_array[expected_keys[j]] = actual[i][expected_keys[j]]
+    end
+    new_actual << new_actual_array
+  end
+  puts "========expected table array======"
+  puts expected
+  puts "========actual table array======"
+  puts new_actual
+  #======two arrays should be exactly identical======
+  (new_actual - expected).should == []
+end
+
+
+#============================================================
+#call the method <search_results_table_headers> from search_list_itemized_users_section.rb
+#============================================================
+Then /^Search \/ List Users \(itemized\) table header should be:$/ do |search_list_user_table|
+  @bus_site.admin_console_page.search_list_itemized_users_section.search_results_table_headers.should == search_list_user_table.raw.first
+end

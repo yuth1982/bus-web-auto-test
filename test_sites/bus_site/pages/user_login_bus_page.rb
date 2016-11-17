@@ -17,6 +17,9 @@ module Bus
     element(:change_passsword_message, xpath: "//div[starts-with(@id,'user-pass-change')]//li")
     element(:log_out_a, xpath: "//a[text()='LOG OUT']")
 
+    #Restores
+    element(:download_restore, xpath: "//table[@class='table-view']//a[text()='Download Restore']")
+
 
     def access_freyja_user_login_bus(vms)
       if vms.nil?
@@ -48,6 +51,17 @@ module Bus
 
     def get_restore_vms_hints(type)
       all(:xpath, "//a[@title='#{type}']").size
+    end
+
+    def click_computer(computer)
+      find(:xpath, "//table[@class='mini-table']//a[text()='#{computer}']").click
+    end
+
+    def click_machine_download_item(item)
+      case item
+        when "Download Restore"
+          download_restore.click
+      end
     end
 
   end

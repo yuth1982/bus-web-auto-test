@@ -1,6 +1,8 @@
 When /^I purchase resources:$/ do |resources_table|
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['purchase_resources'])
   cells = resources_table.hashes.first
+  puts "=============="
+  puts cells
   user_group = cells["user group"]
   d_license = cells["desktop license"]
   d_quota = cells["desktop quota"]

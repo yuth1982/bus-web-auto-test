@@ -348,5 +348,7 @@ module Bus
       page.driver.browser.title
     end
 
+
+
   end
 end

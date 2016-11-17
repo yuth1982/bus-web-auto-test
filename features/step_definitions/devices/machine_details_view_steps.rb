@@ -308,3 +308,7 @@ Then /^I will see (.+) in machine details$/ do |text|
   text.gsub!(/today/,Chronic.parse('today').strftime('%m/%d/%y'))
   @bus_site.admin_console_page.machine_details_section.get_replace_machine_text.should include(text)
 end
+
+Then /^click item (Download Restore|others) to download restore file$/ do |downloadItem|
+  @bus_site.admin_console_page.machine_details_section.click_machine_download_item(downloadItem)
+end

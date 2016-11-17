@@ -282,5 +282,9 @@ module Phoenix
       password_changed_txt.text
     end
 
+    def click_restore_file_link(device)
+      find(:xpath, "//td[contains(text(), '#{device}')]")
+      find(:xpath, "//td[contains(text(), '#{device}')]/..//a[contains(text(), 'Restore Files')]").click
+    end
   end
 end
