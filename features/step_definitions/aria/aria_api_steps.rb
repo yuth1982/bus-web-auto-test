@@ -422,3 +422,17 @@ When /^API\* I assign coupon code (.+) to (.+)$/ do |coupon, aria_id|
   response = Aria_SDK.call('apply_coupon_to_acct', {:acct_no => @aria_id.to_i, :coupon_code => coupon})
   Log.debug response.body.inspect
 end
+
+Then /^API\* Aria account notification details should be (.+)$/ do |notify_tmplt_grp|
+  notification_details = Aria_SDK.call('get_acct_notification_details', {:acct_no=> @aria_id.to_i})
+  notification = notification_details['acct_notification_details']
+  Log.debug notification
+
+  if !notification.nil?
+    notification_template_group = notification[0]['notify_tmplt_grp_id']
+    notification_template_group.should == notify_tmplt_grp
+  else
+    notification.should == nil
+  end
+
+end

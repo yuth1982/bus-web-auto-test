@@ -99,3 +99,8 @@ Then /^Fail to change VAT number:$/ do |message|
   @bus_site.admin_console_page.billing_info_section.vat_message.should eq(message)
 end
 
+Then /^Account Status table should be:$/ do |account_status_table|
+  actual = @bus_site.admin_console_page.billing_info_section.account_status_hashes
+  expected = account_status_table.hashes
+  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
+end

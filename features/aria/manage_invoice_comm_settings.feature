@@ -60,6 +60,7 @@ Feature:
     And API* Aria account should be:
       | notify_method_name   |
       | HTML Email           |
+    And API* Aria account notification details should be Dunning_Emails_Only_EN
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
@@ -102,7 +103,25 @@ Feature:
       | HTML Email         |
     Then I search and delete partner account by newly created partner company name
 
-
-
-
-
+  @TC.15448 @bus @manage_invoice_communication_settings @tasks_p3
+  Scenario: Mozy-15448:Verify notification methods have HTML email and Printable (no email)
+    When I add a new MozyEnterprise partner:
+      | period | users |
+      | 24     | 10    |
+    Then New partner should be created
+    And I get partner aria id
+    And API* Aria account should be:
+      | notify_method_name |
+      | HTML Email         |
+    And API* Aria account notification details should be nil
+    And API* I set newly created partner aria id account notification method to 8
+    Then API* Aria account should be:
+      | notify_method_name |
+      | Printable          |
+    And API* Aria account notification details should be nil
+    When API* I set newly created partner aria id account notification method to 1
+    Then API* Aria account should be:
+      | notify_method_name   |
+      | HTML Email           |
+    And API* Aria account notification details should be nil
+    Then I search and delete partner account by newly created partner company name
