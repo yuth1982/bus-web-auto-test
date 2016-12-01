@@ -72,7 +72,7 @@ Feature: Initial renewal notification email negative cases and user change plan 
       | @new_admin_email | MozyHome Initial Renewal Notification |
     Then I check the email content should include:
     """
-    Your MozyHome 125 GB monthly subscription will renew on <%=Chronic.parse(DateTime.now.new_offset('-07:00').to_date.next_month).strftime('%m/%d/%y')%>, and your credit card ending in 1113 will then be charged €8.99 to keep your MozyHome 125 GB subscription current.
+    Your MozyHome 125 GB monthly subscription will renew on <%=Chronic.parse(DateTime.now.new_offset('-07:00').to_date + 30).strftime('%m/%d/%y')%>, and your credit card ending in 1113 will then be charged €8.99 to keep your MozyHome 125 GB subscription current.
     """
     When I set current MozyHome account to be expired 0 days later
     And I run process_subscription script for the user

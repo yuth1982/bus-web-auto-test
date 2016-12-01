@@ -22,7 +22,7 @@ Feature: Initial renewal notification email for US yealy home user
       | @new_admin_email | MozyHome Initial Renewal Notification |
     Then I should see 0 email(s)
 
-  @TC.133854  @regression_test @phoenix @mozyhome @email
+  @TC.133854  @TC.133863 @TC.133864 @regression_test @phoenix @mozyhome @email
   Scenario: yearly user in grace period/deliquent state update credit card will not receive initial notification
     When I am at dom selection point:
     When I use a existing partner:
@@ -36,6 +36,7 @@ Feature: Initial renewal notification email for US yealy home user
       | 4707588795547209 | Visa        | United States   |
     And user credit card updated successfully
     And I force current MozyHome account to grace period
+    # user in grace period should not receive initial notification
     And I run send_initial_renewal_notification for the user
     And I login as the user on the account.
     And I change my profile attributes to:
@@ -43,6 +44,7 @@ Feature: Initial renewal notification email for US yealy home user
       | 4707588795547209 | Visa        |  United States   |
     Then user credit card updated successfully
     When I force current MozyHome account to delinquent state
+    # user in backup suspended state should not receive initial notification
     And I run send_initial_renewal_notification for the user
     And I login as the user on the account.
     And I change my profile attributes to:
@@ -111,7 +113,7 @@ Feature: Initial renewal notification email for US yealy home user
       | @new_admin_email | MozyHome Initial Renewal Notification |
     Then I check the email content should include:
     """
-    Your MozyHome 125 GB yearly subscription will renew on <%=Chronic.parse(DateTime.now.new_offset('-07:00').to_date.next_month).strftime('%m/%d/%y')%>, and your credit card ending in 7209 will then be charged $109.89 to keep your MozyHome 125 GB subscription current.
+    Your MozyHome 125 GB yearly subscription will renew on <%=Chronic.parse(DateTime.now.new_offset('-07:00').to_date + 30).strftime('%m/%d/%y')%>, and your credit card ending in 7209 will then be charged $109.89 to keep your MozyHome 125 GB subscription current.
     """
     When I set current MozyHome account to be expired 0 days later
     And I run process_subscription script for the user
@@ -146,7 +148,7 @@ Feature: Initial renewal notification email for US yealy home user
       | @new_admin_email | MozyHome Initial Renewal Notification |
     Then I check the email content should include:
     """
-    Your MozyHome 125 GB yearly subscription will renew on <%=Chronic.parse(DateTime.now.new_offset('-07:00').to_date.next_month).strftime('%m/%d/%y')%>, and your credit card ending in 7209 will then be charged $109.89 to keep your MozyHome 125 GB subscription current.
+    Your MozyHome 125 GB yearly subscription will renew on <%=Chronic.parse(DateTime.now.new_offset('-07:00').to_date + 30).strftime('%m/%d/%y')%>, and your credit card ending in 7209 will then be charged $109.89 to keep your MozyHome 125 GB subscription current.
     """
     When I set current MozyHome account to be expired 0 days later
     And I run process_subscription script for the user
