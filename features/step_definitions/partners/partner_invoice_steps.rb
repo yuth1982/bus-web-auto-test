@@ -4,20 +4,30 @@ end
 
 And /^Billing details of partner invoice should be:$/ do |billing_detail_table|
   actual = @bus_site.partner_invoice_page.billing_detail_table_rows
+  actual.should_not == nil
   expected = billing_detail_table.raw
-  expected_arr = expected[3...-1]
-  expected_arr.each_index { |i|
-    Log.debug expected_arr
-    with_timezone(ARIA_ENV['timezone']) do
-      expected_arr[i][0].replace(Chronic.parse(expected_arr[i][0]).strftime('%-m/%-d/%Y')) unless expected_arr[i][0].size == 0
-      if expected_arr[i][1] == 'after 1 year yesterday'
-        date = Chronic.parse("after 1 year")
-        expected_arr[i][1] = date.month.to_s+"/"+(date.day-1).to_s+"/"+date.year.to_s
+  expected.each { |k|
+    k.each_index { |x|
+      if k[x] == 'today'
+        with_timezone(ARIA_ENV['timezone']) do
+          k[x].replace(Chronic.parse(k[x]).strftime("%-m/%-d/%Y"))
+        end
+      elsif k[x] == 'after 1 year yesterday'
+        k[x] = 'after 1 year'
+        with_timezone(ARIA_ENV['timezone']) do
+          k[x].replace((Chronic.parse(k[x]).to_datetime - 1).strftime("%-m/%-d/%Y"))
+        end
       else
-        expected_arr[i][1].replace(Chronic.parse(expected_arr[i][1]).strftime('%-m/%-d/%Y')) unless expected_arr[i][1].size == 0
+        k[x].replace ERB.new(k[x]).result(binding)
       end
-    end
+    }
   }
-  expected[3...-1] = expected_arr
-  (actual.flatten.select { |item| item != '' }).should == expected.flatten.select { |item| item != '' }
+  actual.flatten.select { |item| item != '' }.should == expected.flatten.select { |item| item != '' }
+end
+
+And /^Exchange rate of partner invoice should be:$/ do |exchange_rate_table|
+  actual = @bus_site.partner_invoice_page.exchange_rates_table_rows
+  actual.should_not == nil
+  expected =  exchange_rate_table.raw
+  actual.should == expected
 end
