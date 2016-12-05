@@ -646,13 +646,25 @@ module DBHelper
     end
   end
 
+
+  #====================================
+  # public      : get id (main job id) from adr_jobs table by given partner id
+  #
+  # @partner_id : partner id
+  #
+  # @return     : return the id of the adr job record. return nil if no result found.
+  #
+  # example     : DBHelper.get_main_job_id("426024")
+  #====================================
   def get_main_job_id(partner_id)
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
       sql = "select id from adr_jobs where object_id = #{partner_id};"
       Log.debug sql
       c = conn.exec(sql)
-      c.values[0][0]
+      #if no result found, c.ntuples == 0
+      if c.ntuples > 0 then c.values[0][0] else nil end
+      #c.values[0][0]
     rescue PG::Error => e
       puts "postgres error: #{e}"
     ensure
@@ -660,6 +672,85 @@ module DBHelper
     end
   end
 
+
+  #====================================
+  # public         : get device record with specified columns from machine table
+  #
+  # @query_columns : column table on machine table
+  # @device_id     : device id
+  #
+  # @return : return specified column values of the given device id
+  #
+  # example : DBHelper.get_machine_record(["id", "machine", "vc_policy_name", "vc_policy_grace_period", "vc_status"], "426024")
+  #====================================
+  def get_machine_record(query_columns, device_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      str = ""
+      query_columns.each do |col|
+        str = str + ', ' + col
+      end
+      #======replace the first comma(,) with empty
+      str.sub!(/,/, '')
+      sql = "select" + str + " from machines where id = #{device_id};"
+      Log.debug sql
+      c = conn.exec(sql)
+      #if no result found, c.ntuples == 0
+      if c.ntuples > 0 then c.values else nil end
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+
+  #====================================
+  # public     : get device adr policy name from machine table in db
+  #
+  # @device_id : device id
+  #
+  # @return    : return device adr policy name or nil
+  #
+  # example    : DBHelper.get_device_adr_policy_name_by_device_id("7707388")
+  #====================================
+  def get_device_adr_policy_name_by_device_id(device_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select vc_policy_name from machines where id = #{device_id};"
+      Log.debug sql
+      c = conn.exec(sql)
+      if c.ntuples > 0 then c.values[0][0] else nil end
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+
+  #====================================
+  # public     : get device adr policy name from machine table in db
+  #
+  # @device_id : device id
+  #
+  # @return    : return device adr policy name or nil
+  #
+  # example    : DBHelper.get_device_adr_policy_name_by_device_id("7707388")
+  #====================================
+  def get_deleted_device_adr_policy_name_by_user_id_and_device_name(user_id, device_name)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select vc_policy_name from machines where user_id = #{user_id} and alias = '#{device_name}';"
+      Log.debug sql
+      c = conn.exec(sql)
+      if c.ntuples > 0 then c.values[0][0] else nil end
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+
 end
-
-

@@ -276,4 +276,3 @@ end
 Then /^Navigation item (.+) should be (un)?available$/ do |link, t|
   @bus_site.admin_console_page.has_navigation?(link).should == t.nil?
 end
-

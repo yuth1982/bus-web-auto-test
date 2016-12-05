@@ -21,6 +21,7 @@ module Bus
     section(:edit_client_version_section, EditClientVersionSection, id: 'setting-edit_client_version')
     section(:network_domain_section, NetworkDomainSection, id: 'setting-netdomains_list-content')
     section(:data_retention_section, DataRetentionSection, id: 'setting-adr_status')
+    section(:data_retention_section_popup, DataRetentionSectionPopup, id: 'popup-body')
 
     # Users section
     section(:search_list_users_section, SearchListUsersSection, id: 'user-list')

@@ -612,8 +612,26 @@ Then /^MozyHome user billing info should be:$/ do |billing_table|
           actual[index][header].should == expected[index][header]
       end
     end
-
-
   }
+end
 
+Then /^device (.+) detail info in db should be:$/ do |device_name, device_table|
+  machine_table_headers = device_table.hashes.first
+  query_columns = []
+  machine_table_headers.each_key do |key|
+    query_columns << key
+  end
+  #=====this is for the scenario: delete the device on UI, after that, check the device details in mahine table======
+  @device_id = @bus_site.admin_console_page.user_details_section.get_machine_id(device_name) if @old_device_name != device_name
+  Log.debugger "======old device name is: #{@old_device_name}, device name is: #{device_name}, device id is: #{@device_id}======"
+  @old_device_name = device_name
+  device_record = DBHelper.get_machine_record(query_columns, @device_id)
+  result_in_hash = Hash.new
+  Log.debugger query_columns.size
+  for i in 0..query_columns.size-1
+    result_in_hash.merge!({query_columns[i] => device_record[0][i]})
+  end
+  Log.debugger result_in_hash
+  Log.debugger machine_table_headers
+  result_in_hash.should == machine_table_headers
 end
