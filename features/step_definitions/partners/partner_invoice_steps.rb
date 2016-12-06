@@ -12,6 +12,11 @@ And /^Billing details of partner invoice should be:$/ do |billing_detail_table|
         with_timezone(ARIA_ENV['timezone']) do
           k[x].replace(Chronic.parse(k[x]).strftime("%-m/%-d/%Y"))
         end
+      elsif k[x] == 'after 1 month yesterday'
+        k[x] = 'after 1 month'
+        with_timezone(ARIA_ENV['timezone']) do
+          k[x].replace((Chronic.parse(k[x]).to_datetime - 1).strftime("%-m/%-d/%Y"))
+        end
       elsif k[x] == 'after 1 year yesterday'
         k[x] = 'after 1 year'
         with_timezone(ARIA_ENV['timezone']) do
