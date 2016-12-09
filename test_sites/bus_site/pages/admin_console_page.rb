@@ -111,6 +111,7 @@ module Bus
 
 
     # Private element
+    element(:message_div, xpath: "//div[@class='dunning_msg'][@style='']")
     element(:current_admin_div, id: 'identify-me')
     element(:current_admin_name_link, xpath: "//div[@id='identify-me']/a[last()]")
     element(:stop_masquerading_link, xpath: "//a[text()='stop masquerading']")
@@ -357,6 +358,22 @@ module Bus
     def get_new_window_page_title()
       page.execute_multiline_script('return window.stop')
       page.driver.browser.title
+    end
+
+    # Public: Dunning Messages
+    #
+    # Example
+    #   admin_console_page.messages
+    #   # => "Your account is past due - Please update your billing information to avoid any interruption in service."
+    #
+    # Returns true
+    def dunning_message(t, msg)
+      if t.nil?
+        wait_until {message_div.visible?}
+        message_div.text.strip.match msg
+      else
+        all(:xpath, "//div[@class='dunning_msg'][@style='']").empty?
+      end
     end
 
   end

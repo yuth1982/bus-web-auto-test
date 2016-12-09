@@ -423,7 +423,7 @@ When /^API\* I assign coupon code (.+) to (.+)$/ do |coupon, aria_id|
   Log.debug response.body.inspect
 end
 
-Then /^API\* Aria account notification details should be (.+)$/ do |notify_tmplt_grp|
+Then /^API\* Aria account notification template group should be (.+)$/ do |notify_tmplt_grp|
   notification_details = Aria_SDK.call('get_acct_notification_details', {:acct_no=> @aria_id.to_i})
   notification = notification_details['acct_notification_details']
   Log.debug notification
@@ -435,4 +435,21 @@ Then /^API\* Aria account notification details should be (.+)$/ do |notify_tmplt
     notification.should == nil
   end
 
+end
+
+Then /^API\* Aria account payment is (.+)/ do |status|
+  payment_details = Aria_SDK.call('get_acct_payment_history', {:acct_no=> @aria_id.to_i})
+  payment = payment_details['payment_history']
+  payment[0]['payment_status'].should == status
+end
+
+When /^API\* I update payment information to:/ do |info_table|
+  attributes = info_table.hashes.first
+  payment_method = attributes["payment method"]
+  cc_number = attributes["cc number"]
+  cc_expire_month = attributes["expire month"]
+  cc_expire_year = attributes["expire year"]
+
+  response = Aria_SDK.call('update_payment_method', {:account_number=> @aria_id.to_i, :pay_method => payment_method, :cc_number => cc_number, :cc_expire_mm => cc_expire_month, :cc_expire_yyyy => cc_expire_year})
+  Log.debug response.body.inspect
 end
