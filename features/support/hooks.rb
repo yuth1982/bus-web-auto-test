@@ -63,8 +63,8 @@ end
 =end
 
 After do |scenario|
-  test_plan = 635702  # "BUS 2016 automation test cases"
-  build_id = 6456 # "20160822"
+  test_plan = 641427  # "BUS Ruby on Rails upgrade "
+  build_id = 6577 # "20160822"
   project_prefix = "Mozy"
   project_id = 2      # 2 - 'Mozy'
   client = TestlinkHelper::TestlinkAPIClient.new

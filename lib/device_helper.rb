@@ -150,9 +150,11 @@ module KeylessDeviceActivation
       Net::HTTP.start(uri.host, uri.port,
                       :use_ssl => uri.scheme == 'https') do |http|
         partner_name = CGI::escape (partner_name)
+        partner_name = partner_name.gsub(/\+/, ' ')
         string = "/enabled_partners"\
           +"?pro_partner_id="+partner_id\
           +"&pro_partner_name="+partner_name
+        Log.debug string
         request = Net::HTTP::Get.new( string )
         response = http.request request
         result = JSON.parse(response.body)
