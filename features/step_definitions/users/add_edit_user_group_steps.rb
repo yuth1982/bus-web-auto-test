@@ -37,7 +37,7 @@ When /^I (add|edit) (.+) (Bundled|Itemized) user group:$/ do |action, group_name
       hash_to_object(cells, @new_itemized_ug)
       case action
         when 'add'
-          @bus_site.admin_console_page.add_new_user_group_section.add_edit_itemized_user_group('@new_itemized_ug')
+          @bus_site.admin_console_page.add_new_user_group_section.add_edit_itemized_user_group(@new_itemized_ug)
         when 'edit'
           @bus_site.admin_console_page.edit_user_group_section.add_edit_itemized_user_group(@new_itemized_ug)
         else
