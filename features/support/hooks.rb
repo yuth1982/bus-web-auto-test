@@ -64,7 +64,7 @@ end
 
 After do |scenario|
   test_plan = 641427  # "BUS Ruby on Rails upgrade "
-  build_id = 6577 # "20160822"
+  build_id = 6585 # "3.0.0.2-trusty1 "
   project_prefix = "Mozy"
   project_id = 2      # 2 - 'Mozy'
   client = TestlinkHelper::TestlinkAPIClient.new
