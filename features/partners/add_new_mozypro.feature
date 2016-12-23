@@ -1,4 +1,4 @@
-Feature: Add a new partner
+Feature: Add a new MozyPro partner
 
   As a Mozy Administrator
   I want to create MozyPro partners

@@ -1,4 +1,4 @@
-Feature: Add a new partner
+Feature: Add a new partner alert
 
 
   Background:

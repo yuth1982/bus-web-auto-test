@@ -1,4 +1,4 @@
-Feature: Change User Status
+Feature: Change Partner Status
 
   Background:
   Given I log in bus admin console as administrator

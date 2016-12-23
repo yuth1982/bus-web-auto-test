@@ -1,4 +1,4 @@
-Feature: Add a new partner
+Feature: Add a new Reseller partner
 
   As a Mozy Administrator
   I want to create Reseller partners

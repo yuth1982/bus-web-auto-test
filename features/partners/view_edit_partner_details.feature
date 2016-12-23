@@ -1,4 +1,4 @@
-Feature: BUS Regression partner test
+Feature: View Edit Partner Details
 
   Background:
     Given I log in bus admin console as administrator

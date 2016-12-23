@@ -1,4 +1,4 @@
-Feature:
+Feature: Tax exempt status
   As a Mozy Administrator
   I want provide tax-exempt information to Mozy
   so that I am not charged taxes if they should not apply to my business
