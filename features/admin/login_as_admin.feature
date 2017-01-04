@@ -8,69 +8,6 @@ Feature: login as admins
  #  Test Suite : Log In Screen
 
 ##########################################################################
-  @TC.126033 @bus @admin @tasks_p1 @smoke
-  Scenario: 126033 Reset Admin Password from www.mozypro.com
-    When I add a new MozyPro partner:
-      | period | base plan |
-      | 12     | 24 TB     |
-    Then New partner should be created
-    And I view the newly created partner admin details
-    Then I active admin in admin details Hipaa password
-    And I log out bus admin console
-    When I go to page QA_ENV['bus_host']/login
-    And I click forget your password link
-    And I input email @partner.admin_info.email in reset password panel to reset password
-    When I search emails by keywords:
-      | subject                   | to                             |
-      | MozyPro password recovery | <%=@partner.admin_info.email%> |
-    Then I should see 1 email(s)
-    When I click reset password link from the email
-    Then I reset password with reset password
-    And I will see reset password massage Your password has been changed.
-    And I navigate to bus admin console login page
-    And I log in bus admin console with user name @partner.admin_info.email and password reset password
-    Then I login as mozypro admin successfully
-    And I log out bus admin console
-    And I log into phoenix with username @partner.admin_info.email and password reset password
-    Then I login as mozypro admin successfully
-    And I log out bus admin console
-    And I log in bus admin console as administrator
-    And I search and delete partner account by newly created partner company name
-
-  @TC.126043 @bus @admin @tasks_p1 @ldap_sequence @subdomain
-  Scenario: 126043 Reset Admin Password from subdomain.mozypro.com
-    When I use a existing partner:
-      | admin email                   | partner type |
-      | qa8+saml+test+admin@mozy.com  | MozyPro      |
-    And I log in bus admin console as new partner admin
-    And I navigate to Authentication Policy section from bus admin console page
-    And I uncheck enable sso for admins to log in with their network credentials
-    And I save the changes
-    Then Authentication Policy has been updated successfully
-    And I navigate to Add New Admin section from bus admin console page
-    And I add a new admin newly:
-      | User Group           |
-      | (default user group) |
-    Then Add New Admin success message should be displayed
-    When I navigate to the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
-    And I click forget your password link
-    And I input email @admin.email in reset password panel to reset password
-    When I search emails by keywords:
-      | subject                   | to                |
-      | MozyPro password recovery | <%=@admin.email%> |
-    Then I should see 1 email(s)
-    When I click reset password link from the email
-    Then I reset password with default password
-    And I will see reset password full massage Your password has been changed.
-    When I navigate to the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
-    And I log in bus admin console with user name @admin.email and password default password
-    Then I login as @admin.name admin successfully
-    When I navigate to bus admin console login page
-    And I log in bus admin console as new partner admin
-    And I delete admin by:
-      | email             |
-      | <%=@admin.email%> |
-
   @TC.2134 @bus @log_in_screen @regression
   Scenario: 2134 Attempt to log into BUS with a invalid username
     When I navigate to bus admin console login page
