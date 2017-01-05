@@ -738,10 +738,14 @@ module DBHelper
   #
   # example    : DBHelper.get_device_adr_policy_name_by_device_id("7707388")
   #====================================
-  def get_deleted_device_adr_policy_name_by_user_id_and_device_name(user_id, device_name)
+  def get_device_adr_policy_name_by_user_id_and_device_name(del_ex, user_id, device_name)
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "select vc_policy_name from machines where user_id = #{user_id} and alias = '#{device_name}';"
+      if del_ex == "deleted"
+        sql = "select vc_policy_name from machines where user_id = #{user_id} and alias = '#{device_name}' and deleted = 't';"
+      else
+        sql = "select vc_policy_name from machines where user_id = #{user_id} and alias = '#{device_name}' and deleted = 'f';"
+      end
       Log.debug sql
       c = conn.exec(sql)
       if c.ntuples > 0 then c.values[0][0] else nil end

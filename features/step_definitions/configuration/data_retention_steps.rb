@@ -246,8 +246,8 @@ end
 #====================================
 # Call: And I get the user id
 #====================================
-Then /^ADR policy in DB for deleted device (.+) is (.+)$/ do |device_name, adr_policy_name|
-  user_groups_adr = DBHelper.get_deleted_device_adr_policy_name_by_user_id_and_device_name(@user_id, device_name)
+Then /^ADR policy in DB for (deleted|existing) device (.+) is (.+)$/ do |del_ex, device_name, adr_policy_name|
+  user_groups_adr = DBHelper.get_device_adr_policy_name_by_user_id_and_device_name(del_ex, @user_id, device_name)
 
   if adr_policy_name == "nil"
     user_groups_adr.should == nil

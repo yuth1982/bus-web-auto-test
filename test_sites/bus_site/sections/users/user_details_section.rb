@@ -920,6 +920,10 @@ module Bus
       user_billing_table.hashes
     end
 
+    def click_device_link(device)
+      find(:xpath, "//a[text()='#{device}']").click
+    end
+
     private
     def device_stash_divide_row_index
       device_table.rows_text.index{ |row| row.first == ''}

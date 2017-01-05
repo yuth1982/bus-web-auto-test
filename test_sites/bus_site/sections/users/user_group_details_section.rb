@@ -222,5 +222,14 @@ module Bus
       !(locate(:xpath, "//div[contains(text(),'= Data Shuttle')]").nil?)
     end
 
+    #==============================
+    # Public  : click user link on the user group list section to access user details section
+    #
+    # @user_name  : user name
+    #==============================
+    def click_user(user_name)
+      find(:xpath, "//td[text()='#{user_name}']/..//td[2]/a").click
+    end
+
   end
 end
