@@ -7,6 +7,7 @@ module Bus
     element(:replace_password_input, id: "passwd_check")
     elements(:replace_machine_list_td, xpath: "//form[@id='replace-machine-list']//table//tr/td[2]/a")
     element(:replace_back_btn, xpath:"//input[@value='Back']")
+    element(:replace_machine_error_msg, xpath: "//ul[@class='flash errors']/li")
 
     #==========================================
     # Public  :   replace machine with specified machine. If replaced with a unqualified machine, click back to the previous machine list page.
@@ -29,6 +30,10 @@ module Bus
 
     def get_replace_machine_list
       replace_machine_list_td.map{|td|td.text}
+    end
+
+    def get_replace_machine_error_msg
+      replace_machine_error_msg.text
     end
 
   end

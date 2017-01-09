@@ -252,6 +252,6 @@ Then /^ADR policy in DB for (deleted|existing) device (.+) is (.+)$/ do |del_ex,
   if adr_policy_name == "nil"
     user_groups_adr.should == nil
   else
-    user_groups_adr.should == adr_policy_name
+    (user_groups_adr == adr_policy_name || user_groups_adr == nil).should be_true
   end
 end

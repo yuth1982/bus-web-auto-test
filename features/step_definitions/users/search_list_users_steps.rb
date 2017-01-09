@@ -108,6 +108,8 @@ When /^I view user details by (.+)$/ do |user|
     @bus_site.admin_console_page.search_list_users_section.view_user_details(user.gsub(/@user_email/,@new_users.first.email).slice!(0..26))
   end
   @current_user = @bus_site.admin_console_page.user_details_section.user
+  @user_id = @bus_site.admin_console_page.user_details_section.user_id
+  Log.debug("user id is #{@user_id}")
 end
 
 When /^I view MozyHome user details by (.+)$/ do |user|

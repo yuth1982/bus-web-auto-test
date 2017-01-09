@@ -1602,8 +1602,8 @@ Feature: Adjustable retention at the partner and user group level
     Then I view partner details by sub_partner_133109_layer1
     And I act as newly created partner
     And I purchase resources:
-    | generic quota |
-    | 50            |
+      | generic quota |
+      | 50            |
     #======step8: create multiple users with backup deivces======
     When I add a new Bundled user group:
       | name | storage_type | install_region_override | enable_stash |
@@ -1796,3 +1796,489 @@ Feature: Adjustable retention at the partner and user group level
       | sub_partner_133109_layer1 |
     Then I view partner details by sub_partner_133109_layer1
     And I delete partner account
+
+
+  @TC.133222 @TC.133223 @TC.133224 @TC.133225 @TC.133226 @TC.133227 @TC.133228 @TC.133229 @TC.133230 @TC.133231 @TC.133232 @TC.133233 @TC.133234 @bus @data_retention @bus-2.27
+  Scenario: 133222 update policy at layer 2 sub-partner level to grandpa's partner level
+  #======Create Partner======
+    When I add a new MozyPro partner:
+      | company name      | period |  base plan | server plan | net terms |
+      | TC.133222_partner | 1      |  100 GB    | yes         | yes       |
+    And I change root role to FedID role
+    And I get the partner_id
+    And I get the admin id from partner details
+    #======Create Role and Plan======
+    When I act as newly created partner account
+    And I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          | Parent     |
+      | subrole | Partner admin | FedID role |
+    And I check all the capabilities for the new role
+    And I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for Mozypro partner:
+      | Name    | Company Type | Root Role | Perisods | Tax Percentage | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
+      | subplan | business     | subrole   | yearly   | 10             | test     | false            | 1                          | 1                     |
+    Then add new pro plan success message should be displayed
+    #======Create Sub-Partner Level 1======
+    When I add a new sub partner:
+      | Company Name              |
+      | sub_partner_133222_level1 |
+    Then New partner should be created
+    And I change pooled resource for the subpartner:
+      | generic_storage |
+      | 80              |
+    But I stop masquerading
+    #======Create Role and Plan for Sub-Partner Level 1======
+    When I navigate to Search / List Partners section from bus admin console page
+    And I search partner by:
+      | name                      |
+      | sub_partner_133222_level1 |
+    Then I view partner details by sub_partner_133222_level1
+    And I act as newly created partner
+    And I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name        | Type          | Parent  |
+      | subrole2    | Partner admin | subrole |
+    And I check all the capabilities for the new role
+    And I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for Mozypro partner:
+      | Name    | Company Type | Root Role  | Perisods | Tax Percentage | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
+      | subplan | business     | subrole2   | yearly   | 10             | test     | false            | 1                          | 1                     |
+    Then add new pro plan success message should be displayed
+    #======Create Sub-Partner Level 2======
+    When I add a new sub partner:
+      | Company Name              |
+      | sub_partner_133222_level2_partner1 |
+    Then New partner should be created
+    And I change pooled resource for the subpartner:
+      | generic_storage |
+      | 10              |
+    When I search partner by sub_partner_133222_level2_partner1
+    And I view partner details by sub_partner_133222_level2_partner1
+    And I get the partner_id
+    Then I act as newly created partner
+    #======Create 1 user with 2 machines under Sub-Partner Level 2======
+    Given I get the partners name sub_partner_133222_level2_partner1 and type MozyPro
+    When I act as MozyPro and create multiple users with 2 device on each user by selecting nil on partner filter:
+      | name                | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | 133222_level2_user1 | (default user group) | Desktop      | 1             | 2       | Yes          |
+    Then I stop masquerading from subpartner
+    Then I stop masquerading
+    #======Setup ADR Policy for Parent Partner======
+    When I act as partner by:
+      | name              |
+      | TC.133222_partner |
+    And I navigate to Data Retention section from bus admin console page
+    When I click partner adr policy
+    And I set adr policy to 1 Month (daily)
+    #======Delete 1 machine under Sub-Partner level 2======
+    Then I stop masquerading
+    When I act as partner by:
+      | name                               |
+      | sub_partner_133222_level2_partner1 |
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by 133222_level2_user1
+    Then I view machine 133222_level2_user1_machine_2 details from user details section
+    Then I delete device by name: 133222_level2_user1_machine_2
+    And I close User Details section
+    #======Setup ADR Policy for Sub-Partner level 2======
+    And I navigate to Data Retention section from bus admin console page
+    When I click partner adr policy
+    And I set adr policy to 2 Months (weekly)
+    And I wait for 300 seconds
+    #======Checkpoints for existing machine======
+    Then I search machine by:
+      | machine_name                  |
+      | 133222_level2_user1_machine_1 |
+    And I view machine details for 133222_level2_user1_machine_1
+    Then I get machine details info
+    And ADR policy in DB for device is Mozy2Month_weekly
+    #======Checkpoints for deleted machine======
+    And ADR policy in DB for deleted device 133222_level2_user1_machine_2 is Mozy1Month_daily
+    #======Checkpoints for new machine======
+    Then I use keyless activation to activate devices newly
+      | machine_name                  | user_name                   | machine_type |
+      | 133222_level2_user1_machine_3 | <%=@new_users.first.email%> | Desktop      |
+    Then I search machine by:
+      | machine_name                  |
+      | 133222_level2_user1_machine_3 |
+    And I view machine details for 133222_level2_user1_machine_3
+    Then I get machine details info
+    And ADR policy in DB for device is Mozy2Month_weekly
+    #======Delete the new machine and check its vc_policy_name======
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by 133222_level2_user1
+    Then I view machine 133222_level2_user1_machine_3 details from user details section
+    Then I delete device by name: 133222_level2_user1_machine_3
+    And ADR policy in DB for deleted device 133222_level2_user1_machine_3 is Mozy2Month_weekly
+    #======Create a machine to be replaced within the same sub-partner, then replace machines======
+    Then I stop masquerading
+    And I act as partner by:
+      | name                               |
+      | sub_partner_133222_level2_partner1 |
+    Given I get the partners name sub_partner_133222_level2_partner1 and type MozyPro
+    When I act as MozyPro and create multiple users with 1 device on each user by selecting nil on partner filter:
+      | name                | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | 133222_level2_user2 | (default user group) | Desktop      | 1             | 1       | Yes          |
+    And I navigate to Search / List Machines section from bus admin console page
+    And I view machine details for 133222_level2_user1_machine_1
+    And I click on the replace machine link
+    And I select 133222_level2_user2_machine_1 to be replaced
+    And I navigate to Search / List Machines section from bus admin console page
+    Then replace machine message should be Replace operation was successful.
+    Then I search machine by:
+      | machine_name                  |
+      | 133222_level2_user1_machine_1 |
+    And I view machine details for 133222_level2_user1_machine_1
+    Then I get machine details info
+    And ADR policy in DB for device is Mozy2Month_weekly
+    #======Create a machine to be replaced in the parent partner, then replace machines======
+    Then I stop masquerading
+    And I act as partner by:
+      | name                      |
+      | sub_partner_133222_level1 |
+    Given I get the partners name sub_partner_133222_level2_partner1 and type MozyPro
+    When I act as MozyPro and create multiple users with 1 device on each user by selecting sub_partner_133222_level1 Users on partner filter:
+      | name                | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | 133222_level1_user1 | (default user group) | Desktop      | 1             | 1       | Yes          |
+    And I navigate to Search / List Machines section from bus admin console page
+    And I view machine details for 133222_level1_user1_machine_1
+    And I click on the replace machine link
+    And Error message for replace machine should be Error: There are no eligible source machines to choose from.
+    #======Create a machine to be replaced in another sub-partner, then replace machines======
+    When I add a new sub partner:
+      | Company Name                       |
+      | sub_partner_133222_level2_partner2 |
+    Then New partner should be created
+    And I change pooled resource for the subpartner:
+      | generic_storage |
+      | 10              |
+    When I search partner by sub_partner_133222_level2_partner2
+    And I view partner details by sub_partner_133222_level2_partner2
+    And I get the partner_id
+    Then I act as newly created partner
+    Given I get the partners name sub_partner_133222_level2_partner2 and type MozyPro
+    When I act as MozyPro and create multiple users with 1 device on each user by selecting nil on partner filter:
+      | name                | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | 133222_level2_user3 | (default user group) | Desktop      | 1             | 1       | Yes          |
+    And I navigate to Search / List Machines section from bus admin console page
+    And I view machine details for 133222_level2_user3_machine_1
+    And I click on the replace machine link
+    And Error message for replace machine should be Error: There are no eligible source machines to choose from.
+    #======Delete the partners======
+    And I stop masquerading from subpartner
+    Then I stop masquerading
+    And I search and delete partner account by TC.133222_partner
+    And I search and delete partner account by sub_partner_133222_level1
+
+  @TC.133200 @TC.133201 @TC.133202 @TC.133203 @TC.133204 @TC.133205 @TC.133206 @TC.133207 @TC.133208 @bus @data_retention @bus-2.27
+  Scenario: 133200 update policy at layer 2 sub-partner level to grandpa's partner level
+  #======Create Partner======
+    When I add a new MozyPro partner:
+      | company name      | period |  base plan | server plan | net terms |
+      | TC.133200_partner | 1      |  100 GB    | yes         | yes       |
+    And I change root role to FedID role
+    And I get the partner_id
+    And I get the admin id from partner details
+    #======Create Role and Plan======
+    When I act as newly created partner account
+    And I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          | Parent     |
+      | subrole | Partner admin | FedID role |
+    And I check all the capabilities for the new role
+    And I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for Mozypro partner:
+      | Name    | Company Type | Root Role | Perisods | Tax Percentage | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
+      | subplan | business     | subrole   | yearly   | 10             | test     | false            | 1                          | 1                     |
+    Then add new pro plan success message should be displayed
+    #======Create Sub-Partner Level 1======
+    When I add a new sub partner:
+      | Company Name              |
+      | sub_partner_133200_level1 |
+    Then New partner should be created
+    And I change pooled resource for the subpartner:
+      | generic_storage |
+      | 80              |
+    But I stop masquerading
+    #======Create Role and Plan for Sub-Partner Level 1======
+    When I navigate to Search / List Partners section from bus admin console page
+    And I search partner by:
+      | name                      |
+      | sub_partner_133200_level1 |
+    Then I view partner details by sub_partner_133200_level1
+    And I act as newly created partner
+    And I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name        | Type          | Parent  |
+      | subrole2    | Partner admin | subrole |
+    And I check all the capabilities for the new role
+    And I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for Mozypro partner:
+      | Name    | Company Type | Root Role  | Perisods | Tax Percentage | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
+      | subplan | business     | subrole2   | yearly   | 10             | test     | false            | 1                          | 1                     |
+    Then add new pro plan success message should be displayed
+    #======Create Sub-Partner Level 2======
+    When I add a new sub partner:
+      | Company Name              |
+      | sub_partner_133200_level2_partner1 |
+    Then New partner should be created
+    And I change pooled resource for the subpartner:
+      | generic_storage |
+      | 10              |
+    When I search partner by sub_partner_133200_level2_partner1
+    And I view partner details by sub_partner_133200_level2_partner1
+    And I get the partner_id
+    Then I act as newly created partner
+    #======Create 1 user with 2 machines under Sub-Partner Level 2======
+    Given I get the partners name sub_partner_133200_level2_partner1 and type MozyPro
+    When I act as MozyPro and create multiple users with 2 device on each user by selecting nil on partner filter:
+      | name                | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | 133200_level2_user1 | (default user group) | Desktop      | 1             | 2       | Yes          |
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by 133200_level2_user1
+    Then I view machine 133200_level2_user1_machine_2 details from user details section
+    Then I delete device by name: 133200_level2_user1_machine_2
+    And I close User Details section
+    #======Setup ADR Policy for Sub-Partner level 2======
+    And I navigate to Data Retention section from bus admin console page
+    When I click partner adr policy
+    And I set adr policy to 14 Days
+    And I wait for 300 seconds
+    #======Checkpoints for existing machine======
+    Then I search machine by:
+      | machine_name                  |
+      | 133200_level2_user1_machine_1 |
+    And I view machine details for 133200_level2_user1_machine_1
+    Then I get machine details info
+    And ADR policy in DB for device is Mozy2Week_daily
+    #======Checkpoints for deleted machine======
+    And ADR policy in DB for deleted device 133200_level2_user1_machine_2 is nil
+    #======Checkpoints for new machine======
+    Then I use keyless activation to activate devices newly
+      | machine_name                  | user_name                   | machine_type |
+      | 133200_level2_user1_machine_3 | <%=@new_users.first.email%> | Desktop      |
+    Then I search machine by:
+      | machine_name                  |
+      | 133200_level2_user1_machine_3 |
+    And I view machine details for 133200_level2_user1_machine_3
+    Then I get machine details info
+    And ADR policy in DB for device is Mozy2Week_daily
+    #======Delete the new machine and check its vc_policy_name======
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by 133200_level2_user1
+    Then I view machine 133200_level2_user1_machine_3 details from user details section
+    Then I delete device by name: 133200_level2_user1_machine_3
+    And ADR policy in DB for deleted device 133200_level2_user1_machine_3 is Mozy2Week_daily
+    #======Create a machine to be replaced within the same sub-partner, then replace machines======
+    Then I stop masquerading from subpartner
+    Then I stop masquerading
+    And I act as partner by:
+      | name                               |
+      | sub_partner_133200_level2_partner1 |
+    Given I get the partners name sub_partner_133200_level2_partner1 and type MozyPro
+    When I act as MozyPro and create multiple users with 1 device on each user by selecting nil on partner filter:
+      | name                | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | 133200_level2_user2 | (default user group) | Desktop      | 1             | 1       | Yes          |
+    And I navigate to Search / List Machines section from bus admin console page
+    And I view machine details for 133200_level2_user1_machine_1
+    And I click on the replace machine link
+    And I select 133200_level2_user2_machine_1 to be replaced
+    And I navigate to Search / List Machines section from bus admin console page
+    Then replace machine message should be Replace operation was successful.
+    Then I search machine by:
+      | machine_name                  |
+      | 133200_level2_user1_machine_1 |
+    And I view machine details for 133200_level2_user1_machine_1
+    Then I get machine details info
+    And ADR policy in DB for device is Mozy2Week_daily
+    #======Create a machine to be replaced in the parent partner, then replace machines======
+    Then I stop masquerading
+    And I act as partner by:
+      | name                      |
+      | sub_partner_133200_level1 |
+    Given I get the partners name sub_partner_133200_level2_partner1 and type MozyPro
+    When I act as MozyPro and create multiple users with 1 device on each user by selecting sub_partner_133200_level1 Users on partner filter:
+      | name                | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | 133200_level1_user1 | (default user group) | Desktop      | 1             | 1       | Yes          |
+    And I navigate to Search / List Machines section from bus admin console page
+    And I view machine details for 133200_level1_user1_machine_1
+    And I click on the replace machine link
+    And Error message for replace machine should be Error: There are no eligible source machines to choose from.
+    #======Create a machine to be replaced in another sub-partner, then replace machines======
+    When I add a new sub partner:
+      | Company Name                       |
+      | sub_partner_133200_level2_partner2 |
+    Then New partner should be created
+    And I change pooled resource for the subpartner:
+      | generic_storage |
+      | 10              |
+    When I search partner by sub_partner_133200_level2_partner2
+    And I view partner details by sub_partner_133200_level2_partner2
+    And I get the partner_id
+    Then I act as newly created partner
+    Given I get the partners name sub_partner_133200_level2_partner2 and type MozyPro
+    When I act as MozyPro and create multiple users with 1 device on each user by selecting nil on partner filter:
+      | name                | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | 133200_level2_user3 | (default user group) | Desktop      | 1             | 1       | Yes          |
+    And I navigate to Search / List Machines section from bus admin console page
+    And I view machine details for 133200_level2_user3_machine_1
+    And I click on the replace machine link
+    And Error message for replace machine should be Error: There are no eligible source machines to choose from.
+    #======Delete the partners======
+    And I stop masquerading from subpartner
+    Then I stop masquerading
+    And I search and delete partner account by TC.133200_partner
+    And I search and delete partner account by sub_partner_133200_level1
+
+  @TC.133209 @TC.133210 @TC.133211 @TC.133212 @TC.133213 @TC.133214 @TC.133215 @TC.133216 @TC.133217 @TC.133218 @TC.133219 @TC.133220 @TC.133221 @bus @data_retention @bus-2.27
+  Scenario: 133209 update policy at layer 2 sub-partner level to grandpa's partner level
+    #======Create Partner======
+    When I add a new MozyPro partner:
+      | company name      | period |  base plan | server plan | net terms |
+      | TC.133209_partner | 1      |  100 GB    | yes         | yes       |
+    And I change root role to FedID role
+    And I get the partner_id
+    And I get the admin id from partner details
+    #======Create Role and Plan======
+    When I act as newly created partner account
+    And I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          | Parent     |
+      | subrole | Partner admin | FedID role |
+    And I check all the capabilities for the new role
+    And I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for Mozypro partner:
+      | Name    | Company Type | Root Role | Perisods | Tax Percentage | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
+      | subplan | business     | subrole   | yearly   | 10             | test     | false            | 1                          | 1                     |
+    Then add new pro plan success message should be displayed
+    #======Create Sub-Partner Level 1======
+    When I add a new sub partner:
+      | Company Name                       |
+      | sub_partner_133209_level1_partner1 |
+    Then New partner should be created
+    And I change pooled resource for the subpartner:
+      | generic_storage |
+      | 80              |
+    But I stop masquerading
+    #======Create Role and Plan for Sub-Partner Level 1======
+    When I navigate to Search / List Partners section from bus admin console page
+    And I search partner by:
+      | name                               |
+      | sub_partner_133209_level1_partner1 |
+    Then I view partner details by sub_partner_133209_level1_partner1
+    And I act as newly created partner
+    #======Create 1 user with 2 machines under Sub-Partner Level 2======
+    Given I get the partners name sub_partner_133209_level1_partner1 and type MozyPro
+    When I act as MozyPro and create multiple users with 2 device on each user by selecting nil on partner filter:
+      | name                | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | 133209_level1_user1 | (default user group) | Desktop      | 1             | 2       | Yes          |
+#    Then I stop masquerading from subpartner
+    Then I stop masquerading
+      #======Setup ADR Policy for Parent Partner======
+    When I act as partner by:
+      | name              |
+      | TC.133209_partner |
+    And I navigate to Data Retention section from bus admin console page
+    When I click partner adr policy
+    And I set adr policy to 1 Month (daily)
+    #======Delete 1 machine under Sub-Partner level 1======
+    Then I stop masquerading
+    When I act as partner by:
+      | name                               |
+      | sub_partner_133209_level1_partner1 |
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by 133209_level1_user1
+    Then I view machine 133209_level1_user1_machine_2 details from user details section
+    Then I delete device by name: 133209_level1_user1_machine_2
+    And I close User Details section
+    #======Setup ADR Policy for Sub-Partner level 1======
+    And I navigate to Data Retention section from bus admin console page
+    When I click partner adr policy
+    And I set adr policy to 2 Months (weekly)
+    And I wait for 300 seconds
+    #======Checkpoints for existing machine======
+    Then I search machine by:
+      | machine_name                  |
+      | 133209_level1_user1_machine_1 |
+    And I view machine details for 133209_level1_user1_machine_1
+    Then I get machine details info
+    And ADR policy in DB for device is Mozy2Month_weekly
+    #======Checkpoints for deleted machine======
+    And ADR policy in DB for deleted device 133209_level1_user1_machine_2 is Mozy1Month_daily
+    #======Checkpoints for new machine======
+    Then I use keyless activation to activate devices newly
+      | machine_name                  | user_name                   | machine_type |
+      | 133209_level1_user1_machine_3 | <%=@new_users.first.email%> | Desktop      |
+    Then I search machine by:
+      | machine_name                  |
+      | 133209_level1_user1_machine_3 |
+    And I view machine details for 133209_level1_user1_machine_3
+    Then I get machine details info
+    And ADR policy in DB for device is Mozy2Month_weekly
+    #======Delete the new machine and check its vc_policy_name======
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by 133209_level1_user1
+    Then I view machine 133209_level1_user1_machine_3 details from user details section
+    Then I delete device by name: 133209_level1_user1_machine_3
+    And ADR policy in DB for deleted device 133209_level1_user1_machine_3 is Mozy2Month_weekly
+    #======Create a machine to be replaced within the same sub-partner, then replace machines======
+    Then I stop masquerading
+    And I act as partner by:
+      | name                               |
+      | sub_partner_133209_level1_partner1 |
+    Given I get the partners name sub_partner_133209_level1_partner1 and type MozyPro
+    When I act as MozyPro and create multiple users with 1 device on each user by selecting nil on partner filter:
+      | name                | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | 133209_level1_user2 | (default user group) | Desktop      | 1             | 1       | Yes          |
+    And I navigate to Search / List Machines section from bus admin console page
+    And I view machine details for 133209_level1_user1_machine_1
+    And I click on the replace machine link
+    And I select 133209_level1_user2_machine_1 to be replaced
+    And I navigate to Search / List Machines section from bus admin console page
+    Then replace machine message should be Replace operation was successful.
+    Then I search machine by:
+      | machine_name                  |
+      | 133209_level1_user1_machine_1 |
+    And I view machine details for 133209_level1_user1_machine_1
+    Then I get machine details info
+    And ADR policy in DB for device is Mozy2Month_weekly
+    #======Create a machine to be replaced in the parent partner, then replace machines======
+    Then I stop masquerading
+    And I act as partner by:
+      | name              |
+      | TC.133209_partner |
+    Given I get the partners name TC.133209_partner and type MozyPro
+    When I act as MozyPro and create multiple users with 1 device on each user by selecting TC.133209_partner Users on partner filter:
+      | name         | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | 133209_user1 | (default user group) | Desktop      | 1             | 1       | Yes          |
+    And I navigate to Search / List Machines section from bus admin console page
+    And I view machine details for 133209_user1_machine_1
+    And I click on the replace machine link
+    And Error message for replace machine should be Error: There are no eligible source machines to choose from.
+    #======Create a machine to be replaced in another sub-partner, then replace machines======
+    When I add a new sub partner:
+      | Company Name                       |
+      | sub_partner_133209_level1_partner2 |
+    Then New partner should be created
+    And I change pooled resource for the subpartner:
+      | generic_storage |
+      | 10              |
+    When I search partner by sub_partner_133209_level1_partner2
+    And I view partner details by sub_partner_133209_level1_partner2
+    And I get the partner_id
+    Then I act as newly created partner
+    Given I get the partners name sub_partner_133209_level1_partner2 and type MozyPro
+    When I act as MozyPro and create multiple users with 1 device on each user by selecting nil on partner filter:
+      | name                | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | 133209_level1_user3 | (default user group) | Desktop      | 1             | 1       | Yes          |
+    And I navigate to Search / List Machines section from bus admin console page
+    And I view machine details for 133209_level1_user3_machine_1
+    And I click on the replace machine link
+    And Error message for replace machine should be Error: There are no eligible source machines to choose from.
+    #======Delete the partners======
+    And I stop masquerading from subpartner
+    Then I stop masquerading
+    And I search and delete partner account by TC.133209_partner
+    And I search and delete partner account by sub_partner_133209_level1_partner1
+    And I search and delete partner account by sub_partner_133209_level1_partner2
