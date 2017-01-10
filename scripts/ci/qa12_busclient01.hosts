@@ -6,6 +6,10 @@
 10.29.136.103 client.mozy.com emcfortress.mozypro.com resetpassword.mozypro.com oem.partners.com partners.mozy.com
 10.29.136.149 triton.mozy.com
 10.29.136.103 backupclient.mozyenterprise.com
+10.29.136.103 dell.mozypro.com dell.mozy.com qa12autotestsubdomain.mozypro.com qa12autotestsubdomain.mozy.com qa12subdomainsub.mozypro.com qa12subdomainsub.mozy.com
+10.29.136.103 qa12subdomainsub1.mozy.com qa12subdomainsub1.mozypro.com qa12oemdellpull.mozy.com qa12oemdellpull.mozypro.com
+10.29.136.103 autotestsubdomainpro.mozypro.com autotestsubdomainpro.mozy.com autotestsubdomainprosub.mozypro.com autotestsubdomainprosub.mozy.com
+10.29.136.103 autotestsubdomainent.mozyenterprise.com autotestsubdomainent.mozy.com autotestsubdomaindell.mozy.com
 
 #AD server
 10.29.99.120 win-ko2af9k2doa.mtdev.mozypro.local
