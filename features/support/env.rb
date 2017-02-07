@@ -10,7 +10,7 @@ def firefox_profile
   profile['browser.download.manager.showWhenStarting'] = false
   profile['browser.download.manager.closeWhenDone'] = true
   profile['browser.startup.homepage_override.mstone'] = 'ignore'
-  profile['browser.helperApps.neverAsk.saveToDisk'] = "text/plain;application/csv;text/csv;application/vnd.ms-excel;application/octet-stream;application/x-msdos-program;application/x-apple-diskimage;application/x-debian-package;application/x-redhat-package-manager"
+  profile['browser.helperApps.neverAsk.saveToDisk'] = "text/plain;application/csv;text/csv;application/vnd.ms-excel;application/octet-stream;application/x-msdos-program;application/x-apple-diskimage;application/x-debian-package;application/x-redhat-package-manager;image/png"
   profile.assume_untrusted_certificate_issuer = false
   #profile.native_events = true
   profile

@@ -299,6 +299,22 @@ When /^I disable stash for the partner$/ do
   @bus_site.admin_console_page.click_submit
 end
 
+When /^I (enable|disable) co-branding for the partner$/ do |option|
+  if option == 'enable'
+    @bus_site.admin_console_page.partner_details_section.enable_cobranding
+  else
+    @bus_site.admin_console_page.partner_details_section.disable_cobranding
+  end
+end
+
+When /^I (enable|disable) require ingredient for the partner$/ do |option|
+  if option == 'enable'
+    @bus_site.admin_console_page.partner_details_section.enable_require_ingredient
+  else
+    @bus_site.admin_console_page.partner_details_section.disable_require_ingredient
+  end
+end
+
 When /^I add stash to all users for the partner$/ do
   step 'I try to add stash to all users for the partner'
   @bus_site.admin_console_page.click_yes
@@ -574,6 +590,8 @@ When /I click the latest date link to view the invoice$/ do
 end
 
 And /^I click admin name (.+) in partner details section$/ do |admin_name|
+  admin_name.gsub!(/@partner.admin_info.full_name/,@partner.admin_info.full_name) if @partner
+  admin_name.gsub!(/@subpartner.admin_name/,@subpartner.admin_name) if @subpartner
   @bus_site.admin_console_page.partner_details_section.click_admin_name(admin_name)
 end
 

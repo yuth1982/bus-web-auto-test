@@ -160,6 +160,9 @@ module Bus
     # partner name in the right top corner
     element(:partner_top_link, xpath: "//div[@id='identify-me']/a[1]")
 
+    # partner co-branding image in left top corner
+    element(:top_img, xpath: "//div[@id='top']//img")
+
     # list capabilities section
     element(:list_capabilities_table, xpath: "//div[@id='capabilities-list-content']//table")
 
@@ -340,6 +343,23 @@ module Bus
       using_wait_time 2 do
         fail('Skeletor not working') if page.has_css?('div#dashboard-e-content')
       end
+    end
+
+    def get_top_image_url
+      find('#top a img')[:src]
+    end
+
+    def download_top_image(download_file_name)
+      page.execute_script(
+          "(function(name){
+               link=$$('#top a')[0];
+               img=$$('#top a img')[0];
+               link.writeAttribute('href', img.readAttribute('src'));
+               link.writeAttribute('download',name);
+               link.click();
+            }
+           )('"+download_file_name+"')"
+      )
     end
 
     def open_admin_activate_page(admin_link)
