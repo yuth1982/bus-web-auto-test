@@ -154,6 +154,9 @@ module Bus
     element(:continue_activate_btn, xpath: "//input[@name='commit']")
     element(:go_to_account_link, xpath: "//a[text()='Go To Account']")
 
+    # global navigate links
+    element(:dashboard_link, xpath: "//ul[@id='global-nav-links']//a[@href='/dashboard']")
+
     # partner name in the right top corner
     element(:partner_top_link, xpath: "//div[@id='identify-me']/a[1]")
 
@@ -397,6 +400,14 @@ module Bus
     #=======================
     def get_welcome_page_title
       welcome_page_title.text
+    end
+
+    def click_dashboad_link
+      dashboard_link.click
+    end
+
+    def get_dashboard_link_text
+      dashboard_link.text
     end
 
   end
