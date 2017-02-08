@@ -115,4 +115,8 @@ Transform /^Hipaa user$/ do |step_arg|
   QA_ENV['hipaa_user']
 end
 
+Transform /^newly created partner id$/ do |step_arg|
+  @partner_id
+end
+
 

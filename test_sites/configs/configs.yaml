@@ -57,6 +57,10 @@ bus:
     download_enterprise:        Download MozyEnterprise Client
     download_client:            Download MozyPro Client
     manage_vatfx_rates:         Manage VAT/FX Rates
+    add_new_promotion:          Add New Promotion
+    list_promotions:            List Promotions
+    add_account_attribute_key:   Add Account Attribute Key
+    list_account_attribute_keys: List Account Attribute Keys
 
     # Partners
     add_new_partner:            Add New Partner

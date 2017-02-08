@@ -156,6 +156,7 @@ module Bus
     element(:secuirty_field, xpath: "//span[contains(@id,'partner-display-hipaa-compliance-status')]")
 
     element(:ldap_delete_confirm_btn, xpath: "//input[@value='Confirm']")
+
     # Public: Partner Id
     #
     # Return string
@@ -1012,6 +1013,14 @@ module Bus
       !locate(:xpath,"//a[contains(@onclick,'billing-history')]").nil?
     end
 
+    #===========================
+    # Public : click <act as> link
+    #===========================
+    def click_act_as_link
+      act_as_link.click
+      sleep(10)
+    end
+
     private
     def expanded?(element)
       element['class'] == 'icon-chevron-down'
@@ -1029,5 +1038,6 @@ module Bus
     def collapse(element)
       element.click if expanded?(element)
     end
+
   end
 end
