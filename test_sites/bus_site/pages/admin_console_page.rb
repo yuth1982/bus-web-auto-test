@@ -98,6 +98,8 @@ module Bus
     section(:branding_section, BrandingSection, xpath: "//li[@id='nav-cat-site_branding']/ul/li[4]/a")
     #section(:footer_branding_section, BrandingSection, xpath: "//*[@id='site_branding-webrestore_site-tabs']/ul[1]/li[3]")
     #iframe(:css_iframe, CSSIframe, :id, 'site_branding-webrestore_site-content')
+    section(:dialect_section, DialectListSection, id: 'dialect-list')
+    section(:smtp_settings_section, SMTPSettingsSection, id: 'email_template-smtp')
 
     # support section
     section(:contact_section, ContactSection, xpath: "//a[text()='Contact']")

@@ -215,5 +215,17 @@ When /^I click login link from the email$/ do
   @bus_site.login_page.go_to_url(login_url)
 end
 
+Then /^I (should|should not) see language select field$/ do |option|
+  if option == 'should'
+    @bus_site.login_page.has_language_select?.should be_true
+  else
+    @bus_site.login_page.has_language_select?.should be_false
+  end
+end
+
+And /^language select filed should include option (.+)$/ do |dialect|
+  @bus_site.login_page.language_has_option?(dialect).should be_true
+end
+
 
 

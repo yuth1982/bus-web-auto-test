@@ -100,6 +100,20 @@ module Bus
       end
     end
 
+    # Public: check whether language select field exists in log in page
+    #
+    # return boolean value
+    def has_language_select?
+      has_set_dialect_select?
+    end
+
+    # Public: check whether language select field contains specific option
+    #
+    # return boolean value
+    def language_has_option?(dialect)
+      set_dialect_select.options_text.include?(dialect)
+    end
+
     def go_to_url(url)
       visit(url)
     end

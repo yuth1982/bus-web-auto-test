@@ -989,6 +989,35 @@ module DBHelper
     $logFile.puts("======[DB Log]:" + text.to_s + "======\n")
   end
 
+  # delete dialects by partner id
+  def delete_dialects_by_partner_id(partner_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "delete from dialects where pro_partner_id=#{partner_id};"
+      c = conn.exec(sql)
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+
+  # return one record of pro_partners table as a hash
+  def get_pro_partner_table(partner_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select * from pro_partners where id = #{partner_id};"
+      c = conn.exec sql
+      c.[](0)
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+
   #======this method is to help for some sql clauses having date updated directly in db which ignores time zone======
   #======different time zone will cause some casue failed due to not in the same day======
   #======this method will convert date to the date align with the db time zone======

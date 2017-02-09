@@ -83,3 +83,9 @@ And /^I get admin id of current partner from the database$/ do
   Log.debug("admin id is #{@admin_id}")
 end
 
+And /^I delete dialects of current partner from database$/ do
+  # check if current partner is bds. Dialects of bds partner should not be deleted
+  (DBHelper.get_pro_partner_table(@partner_id)['company_type'] != 'bds').should be_true
+  DBHelper.delete_dialects_by_partner_id @partner_id
+end
+
