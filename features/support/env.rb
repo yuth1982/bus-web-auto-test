@@ -113,3 +113,19 @@ AriaApi::Configuration.url = ARIA_API_ENV['url']
 
 # Setup Aria REST API through aria_sdk
 Aria_SDK = AriaCoreRestClient.new(ARIA_API_ENV['client_no'], ARIA_API_ENV['auth_key'], TEST_ENV == "prod")
+
+if TEST_ENV == 'prod'
+  if PROD_CONFIRM == 'true'
+    puts "Auto continue"
+  else
+    puts "Are you sure to execute on \033[31m#{TEST_ENV}  \033[37m? (Yes/No)"
+    answer = STDIN.gets.chomp
+    puts "answer is " + answer
+    if 'Yes'.casecmp(answer).zero?
+      puts "Manual continue"
+    else
+      exit(1)
+    end
+  end
+
+end
