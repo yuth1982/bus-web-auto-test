@@ -1,17 +1,17 @@
 #QA6
-10.29.29.209 auth.mozy.com auth2.mozy.com
-10.29.29.166 www.mozypro.com mozypro.com secure.mozypro.com www.mozyenterprise.com mozyenterprise.com client.mozy.com mozyoem.mozypro.com
-10.29.29.175 secure.mozy.com secure.mozy.ie secure.mozy.fr secure.mozy.co.uk secure.mozy.de
-10.29.29.166 fedidga.mozypro.com adminsso.mozypro.com pulladminsso.mozypro.com backupclient.mozyenterprise.com
-10.29.29.200 mozy.com mozy.ie mozy.de mozy.fr mozy.co.uk
-10.29.29.166 emcfortress.mozypro.com 141759mozyprosubdomain.mozypro.com mozyoem.mozypro.com qa6freyja.mozyenterprise.com qa8pull.mozypro.com resetpassword.mozypro.com oem.partners.com partners.mozy.com osngbedo.mozypro.com
-10.29.29.133 rainbow.mozy.com
+10.237.11.209 auth.mozy.com auth2.mozy.com
+10.237.11.166 www.mozypro.com mozypro.com secure.mozypro.com www.mozyenterprise.com mozyenterprise.com client.mozy.com mozyoem.mozypro.com
+10.237.11.175 secure.mozy.com secure.mozy.ie secure.mozy.fr secure.mozy.co.uk secure.mozy.de
+10.237.11.166 fedidga.mozypro.com adminsso.mozypro.com pulladminsso.mozypro.com backupclient.mozyenterprise.com
+10.237.11.200 mozy.com mozy.ie mozy.de mozy.fr mozy.co.uk
+10.237.11.166 emcfortress.mozypro.com 141759mozyprosubdomain.mozypro.com mozyoem.mozypro.com qa6freyja.mozyenterprise.com qa8pull.mozypro.com resetpassword.mozypro.com oem.partners.com partners.mozy.com osngbedo.mozypro.com
+10.237.11.133 rainbow.mozy.com
 
 #AD server
 10.29.99.120 win-ko2af9k2doa.mtdev.mozypro.local
 
 #BUS Automation
-10.29.29.166 hipaa01.mozypro.com nohipaa01.mozypro.com qa8saml.mozypro.com
+10.237.11.166 hipaa01.mozypro.com nohipaa01.mozypro.com qa8saml.mozypro.com
 
 #google
 127.0.0.1 ssl.google-analytics.com www.google-analytics.com
