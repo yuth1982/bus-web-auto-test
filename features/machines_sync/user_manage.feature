@@ -216,7 +216,7 @@ Feature: User stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19122 @BSA.2070 @bus @stash @regression
+  @TC.19122 @BSA.2070 @bus @stash @regression @ROR_smoke
   Scenario: 19122 Add new user with stash enabled and send stash invite email
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -243,7 +243,7 @@ Feature: User stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19114 @BSA.3040 @bus @2.5 @user_stories @US @enterprise @partner @stash @regression
+  @TC.19114 @BSA.3040 @bus @2.5 @user_stories @US @enterprise @partner @stash @regression @ROR_smoke
   Scenario: 19114 19115 Enterprise Partner View User storage usage
     When I add a new MozyEnterprise partner:
       | period | users |

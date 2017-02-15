@@ -207,7 +207,7 @@ Feature:
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.18913 @BSA.6000 @bus @stash @partner_manage @regression
+  @TC.18913 @BSA.6000 @bus @stash @partner_manage @regression @ROR_smoke
   Scenario: 18913 Root admin disable Sync for a new MozyPro partner
     When I add a new MozyPro partner:
       | period | base plan |
@@ -222,7 +222,7 @@ Feature:
       | No (change)   |
     When I delete partner account
 
-  @TC.22080 @2.7 @bus @stash @partner_manage @need_test_account @env_dependent @regression
+  @TC.22080 @2.7 @bus @stash @partner_manage @need_test_account @env_dependent @regression @ROR_smoke
   Scenario: 22080 MozyEnterprise(Fortress tree) admin view stash details in partner detail section
     When I act as partner by:
       | email                                   | including sub-partners |

@@ -8,7 +8,7 @@ Feature: Change subscription period
     Given I log in bus admin console as administrator
 
   # This case will fail due to #108559 session is wriong when I stop masqerading
-  @TC.15231 @bus @change_period @regression
+  @TC.15231 @bus @change_period @regression @ROR_smoke
   Scenario: 15231 MozyPro US - Change Period from Monthly to Yearly - CC
     When I add a new MozyPro partner:
       | period | base plan |

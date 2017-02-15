@@ -8,7 +8,7 @@ Feature: BUS smoke test
     Given I log in bus admin console as administrator
 
   #================== partner 'Internal Mozy - Reseller BUS Smoke Test 3849-7653-73' related scenarios ===================
-  @bus_us @TC.125938
+  @bus_us @TC.125938 @ROR_smoke
   Scenario: Test Case Mozy-125938: BUS US -- Activate partner in email
     When I add a new Reseller partner:
       | company name                                         | period | base plan | coupon                | net terms | server plan |
@@ -23,7 +23,7 @@ Feature: BUS smoke test
     And I delete partner account
 
   #================== partner 'Internal Mozy - OEM BUS Smoke Test 4863-2704-60' related scenarios ===================
-  @bus_us @TC.125945
+  @bus_us @TC.125945 @ROR_smoke
   Scenario: Test Case Mozy-125945: BUS US -- User Details - Change Partners
     When I add a new OEM partner:
       | Company Name                                    | Root role         | Security | Company Type     |
@@ -99,7 +99,7 @@ Feature: BUS smoke test
     And I delete partner account
 
   #================== partner 'Internal Mozy - MozyPro BUS Smoke Storage Test 1543-8769-22' related scenarios ===================
-  @bus_us @TC.125951
+  @bus_us @TC.125951 @ROR_smoke
   Scenario: Test Case Mozy-125951: BUS US -- Change plan for the partner
     When I add a new MozyPro partner:
       | company name                                                | period | base plan | coupon                | net terms | server plan | root role               |
@@ -127,7 +127,7 @@ Feature: BUS smoke test
     Then I delete partner account
 
   #================== partner 'Internal Mozy - MozyEnterprise BUS Smoke Test Report 5062-7291-02' related scenarios ===================
-  @bus_us @TC.125952
+  @bus_us @TC.125952 @ROR_smoke
   Scenario: Test Case Mozy-125952: BUS US -- Run a report
     When I add a new MozyEnterprise partner:
       | company name                                                      | period | users  | coupon                |  server plan | net terms |

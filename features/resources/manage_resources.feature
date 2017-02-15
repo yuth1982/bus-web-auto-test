@@ -118,7 +118,7 @@ Feature: Manage resources
 #      | qa1+mozyenterprise+assign+key+test2@mozy.com |
 #      | qa1+mozyenterprise+assign+key+test3@mozy.com |
 
-  @TC.18735 @Bug.84691 @regression @bus @2.0 @manage_resources @need_test_account
+  @TC.18735 @Bug.84691 @regression @bus @2.0 @manage_resources @need_test_account @ROR_smoke
   Scenario: 18735 Verify unallocated storage auto refreshed when allocated storage changed
     When I act as partner by:
       | email                                     |

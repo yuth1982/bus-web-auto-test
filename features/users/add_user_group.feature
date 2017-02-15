@@ -3,7 +3,7 @@ Feature: Add a new user group
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.849 @bus2.4 @tasks_p2
+  @TC.849 @bus2.4 @tasks_p2 @ROR_smoke
   Scenario: 849 Add a new user group
     When I add a new OEM partner:
       | Company Name | Root role         | Security | Company Type     |

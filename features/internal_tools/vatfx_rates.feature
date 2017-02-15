@@ -3,7 +3,7 @@ Feature: Manage VAT/FX Rates in Internal Tools in Admin Console
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.124714 @bus @vat_fx_rates_manage
+  @TC.124714 @bus @vat_fx_rates_manage @ROR_smoke
   Scenario: 124714 Add a VAT Rate successfully
      When I add a VAT Rate:
       | Country  | Rate   | Effective Date |
@@ -228,7 +228,7 @@ Feature: Manage VAT/FX Rates in Internal Tools in Admin Console
       | United Kingdom     | 0.2    | today          |
     Then New VAT Rate should be created
 
-  @TC.124725 @bus @vat_fx_rates_manage
+  @TC.124725 @bus @vat_fx_rates_manage @ROR_smoke
   Scenario: 124725 Add a FX Rate successfully
     When I add a FX Rate:
       | From Currency | To Currency  | Rate | Effective Date  |

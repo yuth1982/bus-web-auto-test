@@ -8,7 +8,7 @@ Feature: BUS smoke test
     Given I log in bus admin console as administrator
 
   #================== partner 'Internal Mozy - MozyPro BUS Smoke Test Data Shuttle 6201-2851-04' related scenarios ===================
-  @bus_us @TC.125954 @qa
+  @bus_us @TC.125954 @qa @ROR_smoke
   Scenario: Test Case Mozy-125954: BUS US -- Order Data Shuttle
     When I add a new MozyPro partner:
       | company name                                                     | period | base plan | coupon                | net terms | server plan | root role               |
@@ -28,7 +28,7 @@ Feature: BUS smoke test
       | Data Shuttle US | available | 5     |
     Then Data shuttle order should be created
 
-  @bus_us @TC.125955 @qa
+  @bus_us @TC.125955 @qa @ROR_smoke
   Scenario: Test Case Mozy-125955: BUS US -- Update Data Shuttle - Precondition:@TC.125954
     When I search order in view data shuttle orders section by Internal Mozy - MozyPro BUS Smoke Test Data Shuttle 6201-2851-04
     And I view data shuttle order details
@@ -104,7 +104,7 @@ Feature: BUS smoke test
     Then account type should be changed to Internal Test successfully
     And I delete partner account
 
-  @bus_us @TC.125983 @qa
+  @bus_us @TC.125983 @qa @ROR_smoke
   Scenario: Test Case Mozy-125983: LDAP Pull - Precondition:@TC.125960
     When I search partner by:
       | name                                                       |

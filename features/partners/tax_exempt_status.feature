@@ -20,7 +20,7 @@ Feature: Tax exempt status
     And API* Aria tax exempt status for newly created partner aria id should be State/Province and Federal/National Tax Exempt
     Then I search and delete partner account by newly created partner company name
 
-  @TC.17527 @firefox @bus @2.0 @enter_tax-exempt_status @regression
+  @TC.17527 @firefox @bus @2.0 @enter_tax-exempt_status @regression @ROR_smoke
   Scenario: 17527 Verify default tax-exemtp status of a new Biennially MozyEnterprise partner
     When I add a new MozyEnterprise partner:
       | period | users | country | vat number   | net terms |

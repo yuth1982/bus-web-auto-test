@@ -131,7 +131,7 @@ Feature: Remove a device
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21080 @bus @2.5 @user_view @delete_device @mozypro @regression
+  @TC.21080 @bus @2.5 @user_view @delete_device @mozypro @regression @ROR_smoke
   Scenario: 21080 [MozyPro] Delete device
     When I add a new MozyPro partner:
       | period | base plan | server plan | net terms |

@@ -117,7 +117,7 @@ Feature: login as admins
       | email             |
       | <%=@admin.email%> |
 
-  @TC.121833 @bus @admin @tasks_p1 @ldap_sequence @smoke @subdomain
+  @TC.121833 @bus @admin @tasks_p1 @ldap_sequence @smoke @subdomain @ROR_smoke
   Scenario: 121833 New LDAP login through LDAP process
     When I act as partner by:
       | email                        |

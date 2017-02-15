@@ -6,7 +6,7 @@ Feature:
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.15229 @bus @2.0 @manage_invoice_communication_settings @regression
+  @TC.15229 @bus @2.0 @manage_invoice_communication_settings @regression @ROR_smoke
   Scenario: 15229 Verify Receive Mozy Account Statements set to Yes for new partner in Bus
     When I add a new MozyPro partner:
       | period | base plan |

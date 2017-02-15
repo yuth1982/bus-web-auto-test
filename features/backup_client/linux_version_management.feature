@@ -5,7 +5,7 @@ Feature: As a Mozy Admin, I should be able to add new linux version and manage t
 
   # It takes about 51s in qa6 if the version is not existed
   # It takes about 13m25s in qa6 if the version has executable uploaded (It will iterate all product partner when deleting a version with executable)
-  @TC.122460 @bus @linux_version_management @tasks_p1
+  @TC.122460 @bus @linux_version_management @tasks_p1 @ROR_smoke
   Scenario: 122460 create a new linux version in Mozy Inc
     When I navigate to List Versions section from bus admin console page
     And I list versions for:
@@ -19,7 +19,7 @@ Feature: As a Mozy Admin, I should be able to add new linux version and manage t
     Then the client version should be created successfully
 
   #It takes about 2m16s in qa6
-  @TC.122465 @bus @linux_version_management @tasks_p1
+  @TC.122465 @bus @linux_version_management @tasks_p1 @ROR_smoke
   Scenario: 122465 Linux client version can be listed in List Version view
     When I navigate to List Versions section from bus admin console page
     And I list versions for:
@@ -35,7 +35,7 @@ Feature: As a Mozy Admin, I should be able to add new linux version and manage t
 
   #It sometimes fail in qa6, bus will return 500 error (timeout) in this section, while the client is uploaded successfully
   #It takes 2m3s in staging
-  @TC.123296 @bus @linux_version_management @tasks_p1
+  @TC.123296 @bus @linux_version_management @tasks_p1 @ROR_smoke
   Scenario: 123296 Linux client can be uploaded successfully for Mozy, Inc.
     When I navigate to List Versions section from bus admin console page
     And I list versions for:
@@ -54,7 +54,7 @@ Feature: As a Mozy Admin, I should be able to add new linux version and manage t
 
   #It sometimes fails in qa6, bus will return 500 error (timeout) in this section, while the version status will changed to enabled
   #It takes 2m3s in staging
-  @TC.122462 @bus @linux_version_management @tasks_p1
+  @TC.122462 @bus @linux_version_management @tasks_p1 @ROR_smoke
   Scenario: 122462 Linux client version can be enabled
     When I navigate to List Versions section from bus admin console page
     And I list versions for:
@@ -71,7 +71,7 @@ Feature: As a Mozy Admin, I should be able to add new linux version and manage t
       | Version     | Platform  | Name             | Status  |
       | 10.10.10.10 | linux     | LinuxTestVersion | enabled |
 
-  @TC.122544 @bus @linux_version_management @tasks_p1
+  @TC.122544 @bus @linux_version_management @tasks_p1 @ROR_smoke
   Scenario: 122544 Create Auto upgrade rule for Linux client
     When I act as partner by:
       | name    | including sub-partners |
@@ -180,7 +180,7 @@ Feature: As a Mozy Admin, I should be able to add new linux version and manage t
 
 
 
-  @TC.122553 @bus @linux_version_management @tasks_p1
+  @TC.122553 @bus @linux_version_management @tasks_p1 @ROR_smoke
   Scenario: 122553 Client Version Rules: Create Auto update client version rule for Linux client
     When I search partner by Internal Mozy - MozyEnterprise with edit user group capability
     And I view partner details by Internal Mozy - MozyEnterprise with edit user group capability
@@ -219,7 +219,7 @@ Feature: As a Mozy Admin, I should be able to add new linux version and manage t
 
   # Precondition: (@TC.122544) No auto rule or auto rule defined in MozyPro is 10.10.10.10
   #
-  @TC.123298 @bus @linux_version_management @tasks_p1
+  @TC.123298 @bus @linux_version_management @tasks_p1 @ROR_smoke
   Scenario: 123298 Linux client can be downloaded successfully for none product partner
     When I act as partner by:
       | name                                                    | including sub-partners |
@@ -289,7 +289,7 @@ Feature: As a Mozy Admin, I should be able to add new linux version and manage t
     And I click download link for Download MozyPro vSphere Backup Software
     Then client started downloading successfully
 
-  @clean_up
+  @clean_up @ROR_smoke
   Scenario: clean up all linux test versions and rules
     When I navigate to List Versions section from bus admin console page
     And I list versions for:

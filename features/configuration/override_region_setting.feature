@@ -89,7 +89,7 @@ Feature: Override Region Setting
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.131176 @tasks_p1 @override_region_setting @bus
+  @TC.131176 @tasks_p1 @override_region_setting @bus @ROR_smoke
   Scenario: 131176 Regional User - Change
     When I add a new MozyPro partner:
       | period | base plan  | server plan | net terms |

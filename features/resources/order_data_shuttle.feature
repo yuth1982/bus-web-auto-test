@@ -114,7 +114,7 @@ Feature:
     And Order data shuttle message should include Please select the power adapter type.
     And I search and delete partner account by newly created partner company name
 
-  @TC.12184 @bus @data_shuttle @status @device_status @regression
+  @TC.12184 @bus @data_shuttle @status @device_status @regression @ROR_smoke
   Scenario: 12184 Verify Data Shuttle Device Status report
     When I navigate to Data Shuttle Status section from bus admin console page
     Then Data shuttle device status summary table header should be:
@@ -751,7 +751,7 @@ Feature:
       | 1       | Burned |
     And I search and delete partner account by newly created partner company name
 
-  @bus @TC.12342 @resources @tasks_p2
+  @bus @TC.12342 @resources @tasks_p2 @ROR_smoke
   Scenario: 12342 data_shuttle_ordered_active: (Data Shuttle ordered for activated machine phase III - to user)
     And I add a new Reseller partner:
       | company name    | period | reseller type | reseller quota | server plan | net terms |

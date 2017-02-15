@@ -3,7 +3,7 @@ Feature: Push Channel To Aria
   Background:
    Given I log in bus admin console as administrator
 
-  @TC.22130 @bus @aria @tasks_p2
+  @TC.22130 @bus @aria @tasks_p2 @ROR_smoke
   Scenario: 22130 Script Migrate - push channel to aria
     When I add a new MozyPro partner:
       | period | base plan | net terms |

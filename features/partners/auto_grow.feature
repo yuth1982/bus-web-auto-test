@@ -391,7 +391,7 @@ Feature: Auto Grow
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15728 @bus @auto_grow @tasks_p2
+  @TC.15728 @bus @auto_grow @tasks_p2 @ROR_smoke
   Scenario: 15728 BILL.9000 Autogrow may be enabled or disabled OEM
     When I add a new OEM partner:
       | company name        | Root role   |

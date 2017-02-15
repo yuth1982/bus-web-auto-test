@@ -465,7 +465,7 @@ Feature:
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.22194 @stash @email @bus @regression
+  @TC.22194 @stash @email @bus @regression @ROR_smoke
   Scenario: 22194 MozyEnterprise Partner Enable and Disable cycle by add sync with single user
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -703,7 +703,7 @@ Feature:
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.22022 @stash @email @bus @regression
+  @TC.22022 @stash @email @bus @regression @ROR_smoke
   Scenario: 22022 MozyPro Partner Enable and Disable cycle by adding sync to all users
     When I add a new MozyPro partner:
       | period | base plan | net terms | root role |

@@ -597,7 +597,7 @@ Feature: User sync
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.17592 @firefox_profile @bus @2.1 @direct_ldap_integration @use_provision @qa8 @regression @subdomain
+  @TC.17592 @firefox_profile @bus @2.1 @direct_ldap_integration @use_provision @qa8 @regression @subdomain @ROR_smoke
   Scenario: 17592 UserProvision - Deleted users in BUS can be resumed
     When I search partner by:
       | email                        |

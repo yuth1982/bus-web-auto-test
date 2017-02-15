@@ -5,7 +5,7 @@ Feature: Add delete suspend reactive machines
    Given I log in bus admin console as administrator
 
 
-  @TC.129694 @bus @machines_sync @tasks_p2
+  @TC.129694 @bus @machines_sync @tasks_p2 @ROR_smoke
   Scenario: 129694 Undelete machine time limit
     When I add a new MozyPro partner:
       | period | base plan | root role               |

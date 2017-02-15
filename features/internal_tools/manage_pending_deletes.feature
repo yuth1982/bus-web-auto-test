@@ -3,7 +3,7 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.120569 @bus @pending_deletes @tasks_p1 @smoke
+  @TC.120569 @bus @pending_deletes @tasks_p1 @smoke @ROR_smoke
   Scenario: 120569:Pending delete for Enterprise partner
     When I add a new MozyEnterprise partner:
       | period | users | net terms |
@@ -35,7 +35,7 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
       | Pending | Root Admin: |
       | today   | @root_admin |
 
-  @TC.119214 @bus @pending_deletes @tasks_p1 @smoke
+  @TC.119214 @bus @pending_deletes @tasks_p1 @smoke @ROR_smoke
   Scenario: 119214:Verify that purged partners appear in the "Partners who have been purged" table
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -294,7 +294,7 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
       | @partner_id | @aria_id | @company_name | today   | @admin_email | MozyEnterprise  | today        | today       |
     Then I change to 60 days to purge account after delete
 
-  @TC.119257 @bus @pending_deletes @tasks_p1 @smoke
+  @TC.119257 @bus @pending_deletes @tasks_p1 @smoke @ROR_smoke
   Scenario: 119257:Undelete MozyPro Partner
     When I add a new MozyPro partner:
       | period | base plan | server plan | net terms |
@@ -390,7 +390,7 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
       | Partner       |
       | @company_name |
 
-  @TC.119255 @bus @pending_deletes @tasks_p1
+  @TC.119255 @bus @pending_deletes @tasks_p1 @ROR_smoke
   Scenario: 119255:MozyPro Metalic Reseller with Sub, Undelete
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | storage add on | coupon              | country       | security |

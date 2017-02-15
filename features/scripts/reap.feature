@@ -1,12 +1,12 @@
 Feature: Reap Script Verification
   As a Mozy employee, I verify the reap script is working
 
-  @TC.10491 @bus @reap @email @env_dependent @regression
+  @TC.10491 @bus @reap @email @env_dependent @regression @ROR_smoke
   Scenario: 10491:MozyHome delinquent payment.
     Given I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country       |
-      | 1      | 50 GB     | United States |
+      | 1      | 50 GB`     | United States |
     Then the user is successfully added.
     And the user has activated their account
     And I log in bus admin console as administrator

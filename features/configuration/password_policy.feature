@@ -221,7 +221,7 @@ Feature: Password policy is saved successfully to db
     Then I stop masquerading from subpartner
     And I search and delete partner account by newly created subpartner company name
 
-  @TC.120553 @tasks_p1 @password_policy @bus
+  @TC.120553 @tasks_p1 @password_policy @bus @ROR_smoke
   Scenario: 120553 Setting up a Password policy
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  |

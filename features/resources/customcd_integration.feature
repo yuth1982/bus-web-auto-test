@@ -32,7 +32,7 @@ Feature:
     Then API* data shuttle order status should be Cancelled
     And I search and delete partner account by newly created partner company name
 
-  @bus @TC.12924 @resources @tasks_p2
+  @bus @TC.12924 @resources @tasks_p2 @ROR_smoke
   Scenario: 12924:Verify shipped orders
     When I add a new MozyEnterprise partner:
       | period | users | server plan |

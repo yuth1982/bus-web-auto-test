@@ -3,7 +3,7 @@ Feature: View machine manifest, logfile
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.869 @bus @machines_sync @tasks_p2 @smoke
+  @TC.869 @bus @machines_sync @tasks_p2 @smoke @ROR_smoke
   Scenario: 869 View a manifest normal
     When I add a new MozyPro partner:
       | period | base plan | net terms | root role               |
@@ -110,7 +110,7 @@ Feature: View machine manifest, logfile
     Then I delete the newly downloaded file
 
   # using fixed data partner id: 3431128,  partner: freyatest01[Do Not Edit]
-  @TC.122221 @bus @machines_sync @tasks_p2 @smoke
+  @TC.122221 @bus @machines_sync @tasks_p2 @smoke @ROR_smoke
   Scenario: 122221 Order Restore dvd
     When I search user by:
      | keywords                    |

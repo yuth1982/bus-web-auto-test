@@ -19,7 +19,7 @@ Feature: Configurable Retention Partner Setting (111550)
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.120809 @retention @environment_dependent @partner_setting @bus @regression
+  @TC.120809 @retention @environment_dependent @partner_setting @bus @regression @ROR_smoke
   Scenario: 120809 Configurable Retention - MozyPro
     When I add a new MozyPro partner:
       | period |

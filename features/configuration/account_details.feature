@@ -4,7 +4,7 @@ Feature: Configurations: Account Details
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.880 @tasks_p1 @smoke @account_details @bus
+  @TC.880 @tasks_p1 @smoke @account_details @bus @ROR_smoke
   Scenario: 880 Edit the name on an account
     When I add a new MozyPro partner:
       | period | base plan | net terms |

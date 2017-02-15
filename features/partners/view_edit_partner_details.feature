@@ -66,7 +66,7 @@ Feature: View Edit Partner Details
 
   # Todo: this case need to check create ip white list successful message
   # Todo: This test cases could be failed because no ui for api creating if partner uses pooled storage
-  @TC.644 @bus @2.5 @partner @ip_white_list_visibility @regression
+  @TC.644 @bus @2.5 @partner @ip_white_list_visibility @regression @ROR_smoke
   Scenario: 644 Verify White List visibility for a Corp partner with an API Key
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -110,7 +110,7 @@ Feature: View Edit Partner Details
       | mobile_access_enabled_external | t     | false   |
     Then I delete partner account
 
-  @TC.122226 @bus @partners_setting @tasks_p1
+  @TC.122226 @bus @partners_setting @tasks_p1 @ROR_smoke
   Scenario: Mozy-122226:Edit partner settings
     When I add a new MozyPro partner:
       | period | base plan | net terms |

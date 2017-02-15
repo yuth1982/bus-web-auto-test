@@ -17,7 +17,7 @@ Feature: Modify credit card information and billing contact information
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15286 @bus @2.5 @modify @cc @billing_contact_info @regression
+  @TC.15286 @bus @2.5 @modify @cc @billing_contact_info @regression @ROR_smoke
   Scenario: 15286 Change Payment Information With Credit Card
     When I add a new MozyEnterprise partner:
       | period | users |
