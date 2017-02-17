@@ -769,6 +769,10 @@ module Bus
       contact_vat_tb.type_text vat
     end
 
+    def clear_vat_number
+      contact_vat_tb.type_text ""
+    end
+
     def vat_number_visible?
       find(:xpath, "//input[@id='vat_info_vat_number']").visible?
     end

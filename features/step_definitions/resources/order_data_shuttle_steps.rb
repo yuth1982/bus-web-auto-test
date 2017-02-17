@@ -118,10 +118,11 @@ Then /^Data shuttle order should be created$/ do
 end
 
 Then /^Data shuttle order should (|not )have VAT fee$/ do |boolean|
+  @bus_site.admin_console_page.process_order_section.wait_until_bus_section_load
   if (boolean == 'not ')
     @bus_site.admin_console_page.process_order_section.get_vat_fee_field.should be_false
   else
-    @bus_site.admin_console_page.process_order_section.get_vat_fee_amount.gsub(/€/, '').to_f.should > 0
+    @bus_site.admin_console_page.process_order_section.get_vat_fee_amount[1..-1].to_f.should > 0
   end
 end
 

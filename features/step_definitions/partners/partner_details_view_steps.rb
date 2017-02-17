@@ -402,6 +402,11 @@ When /^I change the partner contact information (to:|default password)$/ do |pas
   @bus_site.admin_console_page.partner_details_section.save_changes(password)
 end
 
+When /^I clear VAT number for the partner contact information$/ do
+  @bus_site.admin_console_page.partner_details_section.clear_vat_number
+  @bus_site.admin_console_page.partner_details_section.save_changes(QA_ENV['bus_password'])
+end
+
 Then /^Partner contact information is changed$/ do
   @bus_site.admin_console_page.partner_details_section.wait_until_bus_section_load
 end

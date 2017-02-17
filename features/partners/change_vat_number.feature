@@ -1188,3 +1188,58 @@ Feature: Change VAT Number
     And I search partner by newly created partner company name
     And I open partner details by partner name in header
     And I delete partner account
+
+  @TC.126159 @bus @vat @tasks_p3
+  Scenario: 126159 a partner with or without VAT number, set renewal to see if VAT works
+    When I add a new MozyPro partner:
+      | period | base plan | create under | server plan | net terms | country        | coupon                | vat number  |
+      | 1      | 10 GB     | MozyPro UK   | yes         | yes       | United Kingdom | <%=QA_ENV['coupon']%> | GB117223643 |
+    And New partner should be created
+    And I activate new partner admin with default password
+    And I act as newly created partner
+    And I add new user(s):
+      | name            | storage_type | storage_limit | devices |
+      | TC.126159.User1 | Desktop      | 10            | 2       |
+    Then 1 new user should be created
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    When I update the user password to default password
+    And I use keyless activation to activate devices
+      | user_email  | machine_name      | machine_type |
+      | @user_email | Machine1_126159_1 | Desktop      |
+    And I upload data to device by batch
+      | machine_id                         | GB |
+      | <%=@new_clients.first.machine_id%> | 1  |
+    Then I stop masquerading
+    When I order data shuttle for newly created partner company name
+      | power adapter   | key from  | quota |
+      | Data Shuttle US | available | 1     |
+    And Data shuttle order should be created
+    And Data shuttle order should not have VAT fee
+    When I search partner by newly created partner company name
+    And I open partner details by partner name in header
+    And I clear VAT number for the partner contact information
+    Then Partner contact information is changed
+    And I act as newly created partner
+    And I add new user(s):
+      | name            | storage_type | storage_limit | devices |
+      | TC.126159.User2 | Desktop      | 10            | 2       |
+    Then 1 new user should be created
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    When I update the user password to default password
+    And I use keyless activation to activate devices
+      | user_email  | machine_name      | machine_type |
+      | @user_email | Machine1_126159_2 | Desktop      |
+    And I upload data to device by batch
+      | machine_id                         | GB |
+      | <%=@new_clients.first.machine_id%> | 1  |
+    Then I stop masquerading
+    When I order data shuttle for newly created partner company name
+      | power adapter   | key from  | quota |
+      | Data Shuttle US | available | 1     |
+    And Data shuttle order should be created
+    And Data shuttle order should have VAT fee
+    And I search partner by newly created partner company name
+    And I open partner details by partner name in header
+    And I delete partner account
