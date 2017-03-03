@@ -194,6 +194,10 @@ Then /^I reassign the user to partner (.+)$/ do |new_partner|
   @bus_site.admin_console_page.user_details_section.update_partner(new_partner)
 end
 
+Then /^Partner count shows up with (.+) should be (.+)$/ do |key_word, quota|
+  @bus_site.admin_console_page.user_details_section.find_match_partners(key_word).should == quota.to_i
+end
+
 Then /^the user's partner should be (.+)$/ do |partner|
   @bus_site.admin_console_page.user_details_section.user_partner(partner).should be_true
 end
@@ -201,6 +205,10 @@ end
 Then /^the user's user group should be (.+)$/ do |user_group|
   next if ENV['BUS_ENV'] == 'qa3'
   @bus_site.admin_console_page.user_details_section.users_user_group(user_group).should be_true
+end
+
+Then /^the user's user name should be (.+)$/ do |user_name|
+  @bus_site.admin_console_page.user_details_section.users_user_name.should == user_name
 end
 
 Then /^device table in user details should be:$/ do |table|

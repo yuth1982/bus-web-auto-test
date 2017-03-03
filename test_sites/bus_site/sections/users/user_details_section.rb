@@ -19,6 +19,7 @@ module Bus
     element(:user_group_search_img, css: "img[alt='Search-button-icon']")
     element(:user_group_details_link, xpath: "//span[starts-with(@id,'user-display-usergroup-')]//a[starts-with(@href, '/user_groups/show/')]")
     element(:change_partner_link, xpath: "//span[starts-with(@id,'user-display-partner-')]//a[text()='(change)']")
+    element(:partner_name_text, xpath: "//input[@name='partner_name']")
     element(:change_partner_submit_button, xpath: "//span[starts-with(@id,'user-change-partner-')]//input[@name='commit']")
     element(:view_product_keys_link, xpath: "//a[text()='(View Product Keys)']")
     element(:product_key_lbl, xpath: "//div[starts-with(@id, 'all-license-keys-')]//div/div/div[2]/table[2]/tbody/tr/td")
@@ -433,6 +434,16 @@ module Bus
       find(:xpath, "//a[text()='#{user_group}']")
     end
 
+    # Public: Returns user's user name
+    #
+    # Example
+    #    @bus_admin_console_page.user_details_section.users_user_name("User name 1")
+    #
+    # @return [String]
+    def users_user_name
+      find(:xpath, "//form[contains(@action, 'change_name')]/span[@class='view']").text
+    end
+
     # Public: Click change link
     #    Select new user group
     #    Click submit button
@@ -460,6 +471,15 @@ module Bus
       find(:xpath, new_partner_xpath).click
       change_partner_submit_button.click
       wait_until{ !change_partner_submit_button.visible? }
+    end
+
+    def find_match_partners(key_input)
+      change_partner_link.click
+      partner_name_text.type_text(key_input)
+      user_group_search_img.click
+      sleep 2
+      element_list = page.driver.browser.find_elements(:xpath, "//li[contains(text(), '#{key_input}')]")
+      element_list.map{|element|element.text.strip}.size
     end
 
     # Public: Returns user's partner
@@ -672,7 +692,7 @@ module Bus
     end
 
     def set_user_name(name)
-      find(:xpath, "//div[contains(@id, 'user-show-')]//a[contains(text(),'(change)')]").click
+      find(:xpath, "//form[contains(@action, 'change_name')]//a[contains(text(),'(change)')]").click
       find(:id, "name").type_text name
       e = find(:xpath, "//div[contains(@id, 'user-show-')]//input[@name='commit']")
       e.click
