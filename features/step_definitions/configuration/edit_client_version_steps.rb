@@ -143,3 +143,7 @@ Then /^User Group selector should include:$/ do |table|
   expected = table.headers
   expected.each{ |key| (actual.include?(key)).should be_true}
 end
+
+And /^I refresh Edit Client Version section$/ do
+  @bus_site.admin_console_page.edit_client_version_section.refresh_bus_section
+end

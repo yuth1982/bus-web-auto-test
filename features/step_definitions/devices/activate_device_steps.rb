@@ -25,6 +25,7 @@ When /^I use keyless activation to activate devices(| unsuccessful| newly)$/  do
     @current_partner[:id] ||= @bus_site.admin_console_page.partner_id
     current_partner_id = @current_partner[:id]
   end
+  current_partner_id = attr['partner_id'] || current_partner_id
   @user_password = CONFIGS['global']['test_pwd'] unless !@user_password.nil?
   region = attr['user_region'] || attr['ug_region'] || attr['partner_region'] || 'qa'
   # company_type = @partner.partner_info.type unless @partner.nil?

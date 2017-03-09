@@ -10,13 +10,17 @@ module Bus
     element(:version_min_input, xpath: "//input[@name='rn_check_requesting_ver_min[]']")
     element(:version_max_input, xpath: "//input[@name='rn_check_requesting_ver_max[]']")
     element(:version_required_select, xpath: "//select[@name='rn_install_required[]']")
+    element(:os_min_input, xpath: "//input[@name='rn_check_os_ver_min[]']")
+    element(:os_max_input, xpath: "//input[@name='rn_check_os_ver_max[]']")
+    element(:arch_input, xpath: "//input[@name='rn_check_architecture[]']")
     element(:rule_enabled_select, xpath: "//select[@name='rn_is_enabled[]']")
     element(:install_command_input, xpath: "//input[@name='rn_install_command[]']")
     # element for confirm window when creating force rule
     element(:admin_password_input, xpath: "//div[@class='popup-window-content']//input[@name='password']")
     element(:admin_password_confirm_btn, xpath: "//div[@class='popup-window-footer']//input[@value='Submit']")
 
-
+    # element for save upgrade rules website error in qa6
+    element(:website_error_div, id: 'dashboard-e-content')
 
     # Public: input admin password to confirm creating force rule
     #
@@ -36,6 +40,9 @@ module Bus
       rule_version_select.select(rule['version name'])
       version_min_input.type_text(rule['min version']) if rule.has_key?('min version')
       version_max_input.type_text(rule['max version']) if rule.has_key?('max version')
+      os_min_input.type_text(rule['min os']) if rule.has_key?('min os')
+      os_max_input.type_text(rule['max os']) if rule.has_key?('max os')
+      arch_input.type_text(rule['Arch']) if rule.has_key?('Arch')
       install_command_input.type_text(rule['Install CMD']) if rule.has_key?('Install CMD')
       version_required_select.select(rule['Req?']) if rule.has_key?('Req?')
       rule_enabled_select.select(rule['On?']) if rule.has_key?('On?')

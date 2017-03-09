@@ -78,3 +78,8 @@ When /^I delete the current user_payment_infos from the database$/ do
   Log.debug DBHelper.delete_upi_by_id @user_id
 end
 
+And /^I get admin id of current partner from the database$/ do
+  @admin_id = (DBHelper.get_info_from_admins(@partner.admin_info.email))[0]
+  Log.debug("admin id is #{@admin_id}")
+end
+
