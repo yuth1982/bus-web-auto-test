@@ -13,7 +13,7 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
     And I get partner aria id
     And I delete partner account
     When I navigate to Manage Pending Deletes section from bus admin console page
-    And I make sure pending deletes setting is 60 days
+    And I make sure pending deletes setting is 65 days
     And I search partners in pending-delete not available to purge by:
       | email        |
       | @admin_email |

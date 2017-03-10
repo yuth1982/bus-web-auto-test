@@ -74,11 +74,13 @@ When /^I get the (partner_id|subpartner_id)$/ do |type|
     @partner_id = @bus_site.admin_console_page.partner_details_section.subpartner.partner_id()
   end
   Log.debug("partner id is #{@partner_id}")
+  @bus_site.log("partner id is #{@partner_id}")
 end
 
 When /^I get partner aria id$/ do
   @aria_id = @bus_site.admin_console_page.partner_details_section.general_info_hash['Aria ID:']
   Log.debug @aria_id
+  @bus_site.log("aria id is #{@aria_id}")
 end
 
 And /^Partner details (shouldn't|should) have (.+)/ do |type,field|

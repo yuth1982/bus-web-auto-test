@@ -25,13 +25,13 @@ module SSHHelper
   def ssh_phoenix(cmd)
     host = QA_ENV['phoenix01_host']
     user, password = QA_ENV['ssh_login'], QA_ENV['ssh_password']
-    Net::SSH.start(host, user , :password => password ) {|ssh|  return ssh.exec!(cmd)}
+    Net::SSH.start(host, user , :password => password, :host_key => "ssh-rsa" ) {|ssh|  return ssh.exec!(cmd)}
   end
 
   def ssh_bus(cmd)
     host = QA_ENV['client_host']
     user, password = QA_ENV['ssh_login'], QA_ENV['ssh_password']
-    Net::SSH.start(host, user , :password => password ) {|ssh|  ssh.exec!(cmd)}
+    Net::SSH.start(host, user , :password => password, :host_key => "ssh-rsa") {|ssh|  ssh.exec!(cmd)}
   end
 
   def ssh_linux_machine(cmd)

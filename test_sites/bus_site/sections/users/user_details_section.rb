@@ -536,17 +536,35 @@ module Bus
       Hash[*stash_table_headers.zip(stash_table_rows).flatten]
     end
 
-    def delete_device(device_name)
-      msg = ''
-      device_table.rows.each do |row|
-        if row[0].text == device_name
-          row[-1].find(:css, 'form[id^=machine-delete] a.action').click
-          msg = alert_text
-          alert_accept
-          break;
+    # Delete a device. Accept multiple arguments to support following scenarios
+    # To delete a device only by device name, don't care keeping data or not, provide one argument. e.g.,
+    #   - delete_device("machine001")
+    # To delete a device and require to keep data, or not keep data, provide two arguments. e.g,
+    #   - keep data: delete_device("machine001", "with")
+    #   - not keep data: delete_device("machine001", "without")
+    def delete_device(*args)
+      if args.size == 1
+        msg = ''
+        device_name = args[0]
+        device_table.rows.each do |row|
+          if row[0].text == device_name
+            row[-1].find(:css, 'form[id^=machine-delete] a.action').click
+            msg = alert_text
+            alert_accept
+            break;
+          end
         end
+        msg
+      else
+        device_name = args[0]
+        data_keep = args[1]
+        #click on the set input textbox
+        find(:xpath, "//a[text()='#{device_name}']/../../td[5]//a[contains(@onclick, 'show_delete_stash_popup')]").click
+        wait_until{ delete_device_dlg }
+        puts "Find Delete dialog"
+        delete_device_yes.click if data_keep == "with"
+        delete_device_no.click if data_keep == "without"
       end
-      msg
     end
 
     def delete_sync
@@ -1068,15 +1086,15 @@ module Bus
     #
     #Return : [] None
     #==============================
-    def delete_device(device_name, data_keep)
+    #def delete_device(device_name, data_keep)
       #click on the set input textbox
-      find(:xpath, "//a[text()='#{device_name}']/../../td[5]//a[contains(@onclick, 'show_delete_stash_popup')]").click
-      wait_until{ delete_device_dlg }
-      puts "Find Delete dialog"
-      delete_device_yes.click if data_keep == "with"
-      delete_device_no.click if data_keep == "without"
+      #find(:xpath, "//a[text()='#{device_name}']/../../td[5]//a[contains(@onclick, 'show_delete_stash_popup')]").click
+      #wait_until{ delete_device_dlg }
+      #puts "Find Delete dialog"
+      #delete_device_yes.click if data_keep == "with"
+      #delete_device_no.click if data_keep == "without"
       #wait_until{ !delete_device_dlg.nil? }
-    end
+    #end
 
     #==============================
     #Public : Delete device by the given device name with or without keeping data

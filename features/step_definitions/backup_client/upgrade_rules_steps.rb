@@ -27,7 +27,7 @@ When /^I add a new upgrade rule:$/ do |table|
 end
 
 And /^I delete rule for version (.+) if it exists$/ do |version_name|
-  version_name.gsub!(/@version_name/,@version_name) if @version_name
+  version_name.gsub!(/@version_name/,@version_name) if !@version_name.nil?
   has_rule, rules = @bus_site.admin_console_page.upgrade_rules_section.ur_iframe.rule_exists?(version_name)
   @bus_site.admin_console_page.upgrade_rules_section.ur_iframe.delete_rule(version_name, rules) if has_rule
   sleep 30

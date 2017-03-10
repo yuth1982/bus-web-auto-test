@@ -181,6 +181,7 @@ module Bus
     #
     # @return [nothing]
     def navigate_to_menu(link_name, use_quick_link = false)
+      log("Dimiss <Start User Mozy> dialog if exists.")
       dimiss_start_using_mozy
       # Looking for link in navigation menu
       find(:xpath, "//ul//a[text()='#{link_name}']")

@@ -33,7 +33,7 @@ Feature: Phoenix smoke test
     Then the user is successfully added.
     And the user has activated their account
 
-  @TC.126132 @bus @regression_test @phoenix @mozyhome @us
+  @TC.126132 @bus @regression_test @phoenix @mozyhome @us @ROR_smoke
   Scenario: 126132 Log into the MozyHome paid user - Precondition:@TC.126120
     When I get previous partner info
     And I login as the user on the account.

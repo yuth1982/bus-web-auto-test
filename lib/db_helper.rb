@@ -150,7 +150,8 @@ module DBHelper
   def get_admin_email
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "select username from public.admins where username like '%@gmail.com%' and deleted_at IS NULL and passwordhash IS NOT NULL and username not in (select username from users where username like '%@gmail.com%' and deleted = false) order by id DESC limit 1;"
+      #sql = "select username from public.admins where username like '%@gmail.com%' and deleted_at IS NULL and passwordhash IS NOT NULL and username not in (select username from users where username like '%@gmail.com%' and deleted = false) order by id DESC limit 1;"
+      sql = "select username from public.admins where username like 'mozyautotest%@emc.com%' and deleted_at IS NULL and passwordhash IS NOT NULL and username not in (select username from users where username like 'mozyautotest%@emc.com%' and deleted = false) order by id DESC limit 1;"
       c = conn.exec(sql)
       c.values[0][0]
     rescue PG::Error => e
@@ -326,11 +327,20 @@ module DBHelper
     end
   end
 
+  # QA is investigating the time zone issue which causes the case failed - BUS-9621.
   def set_backup_suspended_at(user_id,weeks_ago)
 
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "UPDATE users SET backup_suspended_at = '#{Date.today - (weeks_ago * 7)}' WHERE id = #{user_id};"
+      #same_date = (Time.new.hour - 15 >= 0)
+      if time_zone_in_same_day
+        dblog("backup_suspended_at - local date and ruby script execution date are the same day")
+        sql = "UPDATE users SET backup_suspended_at = '#{Date.today - (weeks_ago * 7)}' WHERE id = #{user_id};"
+      else
+        dblog("backup_suspended_at - local date and ruby script execution date are NOT the same day")
+        sql = "UPDATE users SET backup_suspended_at = '#{Date.today - 1 - (weeks_ago * 7)}' WHERE id = #{user_id};"
+      end
+      dblog(sql)
       conn.exec sql
     rescue PG::Error => e
       puts "postgres error: #{e}"
@@ -343,7 +353,15 @@ module DBHelper
   def set_gc_notify_at(user_id,weeks_ago)
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "UPDATE users SET gc_notify_at = '#{Date.today - (weeks_ago * 7)}' WHERE id = #{user_id};"
+      #same_date = (Time.new.hour - 15 >= 0)
+      if time_zone_in_same_day
+        dblog("gc_notify_at - local date and ruby script execution date are the same day")
+        sql = "UPDATE users SET gc_notify_at = '#{Date.today - (weeks_ago * 7)}' WHERE id = #{user_id};"
+      else
+        dblog("gc_notify_at - local date and ruby script execution date are NOT the same day")
+        sql = "UPDATE users SET gc_notify_at = '#{Date.today - 1 - (weeks_ago * 7)}' WHERE id = #{user_id};"
+      end
+      dblog(sql)
       conn.exec sql
     rescue PG::Error => e
       puts "postgres error: #{e}"
@@ -772,7 +790,21 @@ module DBHelper
     end
   end
 
+  #======puts customized comment into the single test case execution log======
+  def dblog(text)
+    $logFile.puts("======[DB Log]:" + text.to_s + "======\n")
+  end
+
+  #======this method is to help for some sql clauses having date updated directly in db which ignores time zone======
+  #======different time zone will cause some casue failed due to not in the same day======
+  #======this method will convert date to the date align with the db time zone======
+  def time_zone_in_same_day
+    local_time_utc_offset = Time.new.strftime("%:z").to_i
+    dblog("local machine date time zone utc offset is #{local_time_utc_offset.to_s}")
+    time_difference = local_time_utc_offset + 7
+    same_date = (Time.new.hour - time_difference >= 0)
+    #timezone_array=[same_date, time_difference]
+    return same_date
+  end
 
 end
-
-

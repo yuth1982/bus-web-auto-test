@@ -23,7 +23,9 @@
 #   click create
 
 When /^I add a new (MozyPro|MozyEnterprise|Reseller|MozyEnterprise DPS|OEM) partner:$/ do |type, partner_table|
+  @bus_site.log("navigate to the bus/menu/add new partner")
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_partner']) unless type == "OEM"
+  @bus_site.log("parse the partner_table parameter to identify the info for partner creation.")
   attributes = partner_table.hashes.first
 
   attributes.each do |header,attribute| #can use variable inside <%= %>

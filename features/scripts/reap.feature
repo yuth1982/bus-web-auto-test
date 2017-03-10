@@ -6,7 +6,7 @@ Feature: Reap Script Verification
     Given I am at dom selection point:
     And I add a phoenix Home user:
       | period | base plan | country       |
-      | 1      | 50 GB`     | United States |
+      | 1      | 50 GB     | United States |
     Then the user is successfully added.
     And the user has activated their account
     And I log in bus admin console as administrator
