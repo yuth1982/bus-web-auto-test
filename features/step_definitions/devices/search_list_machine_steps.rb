@@ -38,3 +38,7 @@ Then /^replace machine message should be (.+)$/ do |msg|
   @bus_site.admin_console_page.search_list_machines_section.get_replace_machine_message.strip.should == msg
 end
 
+Then /^I clear machine search results$/ do
+  @bus_site.admin_console_page.search_list_machines_section.click_clear_search
+end
+

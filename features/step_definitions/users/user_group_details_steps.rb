@@ -168,3 +168,7 @@ Then /^there (is|is not) data shuttle text in the user group keys section$/ do |
     @bus_site.admin_console_page.user_group_details_section.data_shuttle_text_visible?.should == false
   end
 end
+
+Then /^I click user (.+) on user group list section's user table$/ do |user_name|
+  @bus_site.admin_console_page.user_group_details_section.click_user(user_name)
+end

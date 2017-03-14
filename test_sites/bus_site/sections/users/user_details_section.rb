@@ -953,6 +953,9 @@ module Bus
       user_billing_table.hashes
     end
 
+    def click_device_link(device)
+      find(:xpath, "//a[text()='#{device}']").click
+    end
 
     #==============================
     #Public : Get the sync device detail storage info from user detail section and compare with the given table.
