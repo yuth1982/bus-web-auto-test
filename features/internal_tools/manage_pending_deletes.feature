@@ -294,7 +294,7 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
       | @partner_id | @aria_id | @company_name | today   | @admin_email | MozyEnterprise  | today        | today       |
     Then I change to 60 days to purge account after delete
 
-  @TC.119257 @bus @pending_deletes @tasks_p1 @smoke @ROR_smoke
+  @TC.119257 @bus @pending_deletes @tasks_p1 @smoke @ROR_smoke @qa12
   Scenario: 119257:Undelete MozyPro Partner
     When I add a new MozyPro partner:
       | period | base plan | server plan | net terms |

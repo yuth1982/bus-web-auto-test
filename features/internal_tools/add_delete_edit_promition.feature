@@ -3,7 +3,7 @@ Feature:Add New Promition in Internal Tools in Admin Console
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.122197 @122199 @bus @internal_tools @smoke @ROR @ROR_smoke
+  @TC.122197 @122199 @bus @internal_tools @smoke @ROR_smoke
   Scenario: 122197 Add New Promtion
     #======step1 : create a promotion======
     When I add a new promotion:
@@ -31,7 +31,7 @@ Feature:Add New Promition in Internal Tools in Admin Console
     Then I delete promotion
 
 
-  @TC.122198 @TC.122199 @bus @internal_tools @smoke @ROR @ROR_smoke
+  @TC.122198 @TC.122199 @bus @internal_tools @smoke @ROR_smoke
   Scenario: 122198 122199 Edit Promtion
     #======step1: create a promotion======
     When I add a new promotion:

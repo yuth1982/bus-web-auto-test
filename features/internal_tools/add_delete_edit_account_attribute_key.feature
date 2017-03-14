@@ -3,7 +3,7 @@ Feature:Add/Delete/Edit acount attribute key in Internal Tools in Admin Console
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.122211 @TC.122212 @TC.122213 @bus @internal_tools @smoke @ROR @ROR_smoke
+  @TC.122211 @TC.122212 @TC.122213 @bus @internal_tools @smoke @ROR_smoke
   Scenario: 122211 Add New Account Attribute Key
     #======step1: create a account attribute key======
     When I add a account attribute key:

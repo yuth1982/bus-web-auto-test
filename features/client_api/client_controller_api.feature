@@ -3,7 +3,7 @@ Feature: 97636 Client Controller API
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.20948 @bus @client_api @smoke @tasks_p1 @ROR_smoke
+  @TC.20948 @bus @client_api @smoke @tasks_p1 @ROR_smoke @qa12
   Scenario: 20948 machine_get_info when 0<m.used_quota<u.total_quota
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |

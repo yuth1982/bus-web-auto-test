@@ -3,7 +3,7 @@ Feature: Adjustable retention at the partner and user group level
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.133059-133064 @bus @data_retention @bus-2.27 @P1
+  @TC.133059-133064 @bus @data_retention @bus-2.27 @P1 @ROR_smoke @qa12
   Scenario: check machine's adr_policy_name when no adr policy set
   #======6 test cases======
     #======step1: create MozyPro partner======

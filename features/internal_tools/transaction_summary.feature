@@ -3,7 +3,7 @@ Feature:Transaction Summary in Internal Tools in Admin Console
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.122195 @bus @internal_tools @smoke @ROR @ROR_smoke
+  @TC.122195 @bus @internal_tools @smoke @ROR_smoke
   Scenario: 122195 Open Transaction Summary
     #======step1: check the header on Transaction Summary table======
     Given I wait for 30 seconds
