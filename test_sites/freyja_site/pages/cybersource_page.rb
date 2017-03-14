@@ -5,7 +5,7 @@ module Freyja
     # To change this template use File | Settings | File Templates.
     element(:next_btn, xpath: "//*[@id='wizard_buttons']//*[@id='button-next']")
     element(:close_btn, xpath: "//*[@id='restore_complete_buttons']//*[@id='button-close']")
-    element(:upper_close_btn, xpath: "html/body/div[30]/span")
+    element(:upper_close_btn, xpath: "//div[@aria-labelledby='ui-dialog-title-restore_wizard_dialog']/span")
     #Billing info
     element(:first_name, xpath: "//*[@id='bill_to_forename']")
     element(:last_name, xpath: "//*[@id='bill_to_surname']")

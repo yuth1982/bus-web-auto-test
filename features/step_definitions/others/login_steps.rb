@@ -193,6 +193,7 @@ end
 When /^I go to page (.+)$/ do |url|
   url = url.gsub(/CONFIGS\['fedid'\]\['subdomain'\]/,CONFIGS['fedid']['subdomain'])
   url = url.gsub(/QA_ENV\['bus_host'\]/,QA_ENV['bus_host'])
+  url = url.gsub(/@partner_id/, @partner_id) if @partner_id
   @bus_site.login_page.go_to_url(url)
 end
 

@@ -228,6 +228,7 @@ Feature: User Details
       | Server Host  | Protocol   | SSL Cert | Port   | Base DN  | Bind Username   | Bind Password   |
       | @server_host | @protocol  |          | @port  | @base_dn | @bind_user      | @bind_password  |
     And I click Sync Rules tab
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I add 1 new provision rules:
       | rule                | group |
       | cn=dev-121960-test* | dev   |

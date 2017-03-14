@@ -137,8 +137,8 @@ module Bus
     element(:billing_history_table, xpath: "//div[contains(@id,'partner-aria-txn-history-')]/div[1]/table")
 
     # Stash section
-    element(:change_stash_link, css: 'a[onclick*=change_stash]')
-    element(:cancel_stash_link, css: 'a[onclick*=cancel_change]')
+    element(:change_stash_link, {css: 'a[onclick*=change_stash]'}, true)
+    element(:cancel_stash_link, {css: 'a[onclick*=cancel_change]'}, true)
     element(:stash_status_select, css: 'select[id^=partner-stash-status-]')
     element(:submit_stash_status_btn, css: 'input[onclick*=submit_stash_status]')
     element(:add_stash_to_all_users_link, css: 'a[onclick*=enable_stash_for_all_confirm]')
@@ -156,6 +156,7 @@ module Bus
     element(:secuirty_field, xpath: "//span[contains(@id,'partner-display-hipaa-compliance-status')]")
 
     element(:ldap_delete_confirm_btn, xpath: "//input[@value='Confirm']")
+
     # Public: Partner Id
     #
     # Return string
@@ -416,7 +417,7 @@ module Bus
       view_in_aria_link.click
     end
 
-    # Public: Click act as partner link
+    # Public: Click act as partner link. Do a three try loop in case the time delay which causes the Act As action failed.
     #
     # Example
     #   @bus_site.admin_console_page.partner_details_section.act_as_partner
@@ -424,7 +425,21 @@ module Bus
     # Returns nothing
     def act_as_partner
       act_as_link.click
-      alert_accept if alert_present?
+      #alert_accept if alert_present?
+      init = false
+      i = 0
+      sleep(5)
+      while init == false && i < 3
+        if alert_present?
+          puts "======Find the <Start using Mozy> dialog======"
+          alert_accept
+          init = true  #Get the alert dialog
+        else
+          puts "======Not found, wait for 5 second and try again.======"
+          i = i + 1
+          sleep(5)
+        end
+      end
     end
 
     def click_admin_name admin_name
@@ -998,6 +1013,14 @@ module Bus
       !locate(:xpath,"//a[contains(@onclick,'billing-history')]").nil?
     end
 
+    #===========================
+    # Public : click <act as> link
+    #===========================
+    def click_act_as_link
+      act_as_link.click
+      sleep(10)
+    end
+
     private
     def expanded?(element)
       element['class'] == 'icon-chevron-down'
@@ -1015,5 +1038,6 @@ module Bus
     def collapse(element)
       element.click if expanded?(element)
     end
+
   end
 end

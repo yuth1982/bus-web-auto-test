@@ -90,7 +90,7 @@ Feature: Change Plan for MozyPro Partners
   When I stop masquerading
   Then I search and delete partner account by newly created partner company name
 
-  @TC.16485 @Smoke @bus @2.5 @change_plan @mozypro
+  @TC.16485 @Smoke @bus @2.5 @change_plan @mozypro @regression
   Scenario: 16485 MozyPro monthly US partner 10 GB moves to 50 GB plan
     When I add a new MozyPro partner:
       | period | base plan |
@@ -113,7 +113,7 @@ Feature: Change Plan for MozyPro Partners
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.18424 @Smoke @bus @2.5 @change_plan @mozypro
+  @TC.18424 @Smoke @bus @2.5 @change_plan @mozypro @regression
   Scenario: 18424 MozyPro monthly US partner 1 TB moves to 250 GB plan
     When I add a new MozyPro partner:
       | period | base plan |
@@ -130,7 +130,7 @@ Feature: Change Plan for MozyPro Partners
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.18336 @Smoke @bus @2.5 @change_plan @mozypro
+  @TC.18336 @Smoke @bus @2.5 @change_plan @mozypro @regression
   Scenario: 18336 MozyPro yearly UK partner 500 GB moves to 1 TB plan
     When I add a new MozyPro partner:
       | period | base plan | country        | net terms |
@@ -153,7 +153,7 @@ Feature: Change Plan for MozyPro Partners
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.18443 @Smoke @bus @2.5 @change_plan @mozypro
+  @TC.18443 @Smoke @bus @2.5 @change_plan @mozypro @regression
   Scenario: 18443 MozyPro yearly UK partner 500 GB moves to 250 GB plan
     When I add a new MozyPro partner:
       | period | base plan | country        | net terms |
@@ -170,7 +170,7 @@ Feature: Change Plan for MozyPro Partners
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.18248 @Smoke @Bug.84931 @bus @2.5 @change_plan @mozypro
+  @TC.18248 @Smoke @Bug.84931 @bus @2.5 @change_plan @mozypro @regression
   Scenario: 18248 MozyPro biennially Ireland partner 1 TB moves to 2 TB plan
     When I add a new MozyPro partner:
       | period | base plan | country | cc number        |
@@ -193,7 +193,7 @@ Feature: Change Plan for MozyPro Partners
   When I stop masquerading
   Then I search and delete partner account by newly created partner company name
 
-  @TC.18407 @bus @2.5 @change_plan @mozypro
+  @TC.18407 @bus @2.5 @change_plan @mozypro @regression
   Scenario: 18407 MozyPro biennially Ireland partner 2 TB moves to 1 TB plan
     When I add a new MozyPro partner:
       | period | base plan | country | cc number        |
@@ -210,7 +210,7 @@ Feature: Change Plan for MozyPro Partners
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.17104 @Smoke @bus @2.5 @change_plan @mozypro
+  @TC.17104 @Smoke @bus @2.5 @change_plan @mozypro @regression
   Scenario: 17104 Add server plan option to MozyPro monthly US partner
     When I add a new MozyPro partner:
       | period | base plan |
@@ -230,7 +230,7 @@ Feature: Change Plan for MozyPro Partners
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.17105 @Smoke @bus @2.5 @change_plan @mozypro
+  @TC.17105 @Smoke @bus @2.5 @change_plan @mozypro @regression
   Scenario: 17105 Add server storage add on to MozyPro monthly US partner
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -250,7 +250,7 @@ Feature: Change Plan for MozyPro Partners
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.17274 @Smoke @bus @2.5 @change_plan @mozypro
+  @TC.17274 @Smoke @bus @2.5 @change_plan @mozypro @regression
   Scenario: 17274 Add server plan option to MozyPro yearly UK partner
     When I add a new MozyPro partner:
       | period | base plan | country        | net terms |
@@ -270,7 +270,7 @@ Feature: Change Plan for MozyPro Partners
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.17275 @Smoke @bus @2.5 @change_plan @mozypro
+  @TC.17275 @Smoke @bus @2.5 @change_plan @mozypro @regression
   Scenario: 17275 Add server storage add on to MozyPro yearly UK partner
     When I add a new MozyPro partner:
       | period | base plan | country        | net terms |
@@ -290,7 +290,7 @@ Feature: Change Plan for MozyPro Partners
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.17276 @Smoke @bus @2.5 @change_plan @mozypro
+  @TC.17276 @Smoke @bus @2.5 @change_plan @mozypro @regression
   Scenario: 17276 Add server plan option to MozyPro biennially Ireland partner
     When I add a new MozyPro partner:
       | period | base plan | country | cc number        |
@@ -310,7 +310,7 @@ Feature: Change Plan for MozyPro Partners
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.17277 @Smoke @bus @2.5 @change_plan @mozypro
+  @TC.17277 @Smoke @bus @2.5 @change_plan @mozypro @regression
   Scenario: 17277 Add server storage add on to MozyPro biennially Ireland partner
     When I add a new MozyPro partner:
       | period | base plan | country | cc number        |

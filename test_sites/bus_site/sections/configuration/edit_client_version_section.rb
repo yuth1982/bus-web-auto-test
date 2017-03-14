@@ -110,12 +110,12 @@ module Bus
     #
     def delete_rule(version)
       rule_size = all(:xpath, "//table[@class='table-view']//tbody//tr").size
-      row = 1
-      while row <= rule_size do
+      row = rule_size
+      while row >= 1 do
         if find(:xpath, "//table[@class='table-view']//tbody//tr[#{row}]//td[1]").text == version && locate(:xpath, "//table[@class='table-view']//tbody//tr[#{row}]//td[last()]//a[text()='Remove']")
           find(:xpath, "//table[@class='table-view']//tbody//tr[#{row}]//td[last()]//a[text()='Remove']").click
         end
-        row = row + 1
+        row = row - 1
       end
     end
 

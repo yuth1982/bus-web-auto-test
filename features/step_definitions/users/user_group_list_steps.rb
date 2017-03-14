@@ -13,6 +13,7 @@ When /^I edit user group details by name: (.+)$/ do |group_name|
 end
 
 Then /^(Bundled|Itemized) user groups table should be:$/ do |type, ug_table|
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['user_group_list'])
   case type
     when 'Bundled'
       actual = @bus_site.admin_console_page.user_group_list_section.bundled_ug_list_rows

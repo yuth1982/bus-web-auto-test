@@ -8,7 +8,7 @@ Feature: BUS smoke test
     Given I log in bus admin console as administrator
 
   #================== partner 'Internal Mozy - MozyPro BUS Smoke Test Data Shuttle 6201-2851-04' related scenarios ===================
-  @bus_us @TC.125954 @qa
+  @bus_us @TC.125954 @qa @ROR_smoke
   Scenario: Test Case Mozy-125954: BUS US -- Order Data Shuttle
     When I add a new MozyPro partner:
       | company name                                                     | period | base plan | coupon                | net terms | server plan | root role               |
@@ -28,7 +28,7 @@ Feature: BUS smoke test
       | Data Shuttle US | available | 5     |
     Then Data shuttle order should be created
 
-  @bus_us @TC.125955 @qa
+  @bus_us @TC.125955 @qa @ROR_smoke
   Scenario: Test Case Mozy-125955: BUS US -- Update Data Shuttle - Precondition:@TC.125954
     When I search order in view data shuttle orders section by Internal Mozy - MozyPro BUS Smoke Test Data Shuttle 6201-2851-04
     And I view data shuttle order details
@@ -79,7 +79,7 @@ Feature: BUS smoke test
   Scenario: Test Case Mozy-125960: BUS US -- Create a Enterprise partner and verify Partner creation in BUS and Aria
     When I add a new MozyEnterprise partner:
       | company name                                               | period | users  | coupon                |  server plan | net terms |
-      | Internal Mozy - MozyEnterprise BUS Smoke Test 1704-3692-83 | 36     | 10     | <%=QA_ENV['coupon']%> |  100 GB      | yes       |
+      | Internal Mozy - MozyEnterprise BUS Smoke Test 1704-3692-83 | 36     | 90     | <%=QA_ENV['coupon']%> |  100 GB      | yes       |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account should be:
@@ -104,7 +104,7 @@ Feature: BUS smoke test
     Then account type should be changed to Internal Test successfully
     And I delete partner account
 
-  @bus_us @TC.125983 @qa
+  @bus_us @TC.125983 @qa @ROR_smoke
   Scenario: Test Case Mozy-125983: LDAP Pull - Precondition:@TC.125960
     When I search partner by:
       | name                                                       |
@@ -128,6 +128,7 @@ Feature: BUS smoke test
     When I Test Connection for AD
     Then test connection message should be Test passed
     And I click Sync Rules tab
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I add 1 new provision rules:
       | rule               | group |
       | cn=dev-17538-test* | dev   |
@@ -137,8 +138,8 @@ Feature: BUS smoke test
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 3 succeeded, 0 failed \| Users Deprovisioned: 0 Blocked Deprovision |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 3 succeeded, 0 failed \| Users Deprovisioned: 0  |
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by User desc
   #    Then User search results should be:
@@ -158,8 +159,8 @@ Feature: BUS smoke test
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 3 succeeded, 0 failed Blocked Deprovision |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 0 \| Users Deprovisioned: 3 succeeded, 0 failed  |
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
 
@@ -187,6 +188,7 @@ Feature: BUS smoke test
     When I Test Connection for AD
     Then test connection message should be Test passed
     And I click Sync Rules tab
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I add 1 new provision rules:
       | rule           | group |
       | cn=pullpostqa* | dev   |
@@ -196,8 +198,8 @@ Feature: BUS smoke test
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 4 succeeded, 0 failed \| Users Deprovisioned: 0 |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 4 succeeded, 0 failed \| Users Deprovisioned: 0  |
     When I navigate to Search / List Users section from bus admin console page
     And I sort user search results by User desc
   #    Then User search results should be:
@@ -238,6 +240,7 @@ Feature: BUS smoke test
     When I Test Connection for AD
     Then test connection message should be Test passed
     And I click Sync Rules tab
+    And I uncheck enable synchronization safeguards in Sync Rules tab
     And I add 1 new provision rules:
       | rule            | group |
       | cn=pullpostqa4* | qa    |
@@ -247,8 +250,8 @@ Feature: BUS smoke test
     And I save the changes
     And I click Connection Settings tab
     Then The sync status result should like:
-      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\)  |
-      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0 |
+      | Sync Status | Finished at %m/%d/%y %H:%M %:z \(duration about \d+\.\d+ seconds*\) |
+      | Sync Result | Users Provisioned: 1 succeeded, 0 failed \| Users Deprovisioned: 0  |
     When I navigate to Search / List Users section from bus admin console page
     And I search user by:
       | keywords                  |

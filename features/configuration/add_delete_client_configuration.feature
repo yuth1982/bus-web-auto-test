@@ -171,7 +171,7 @@ Feature: Add/Delete Client Configuration
     And I stop masquerading
     And I search and delete partner account by TC.489_partner
 
-  @TC.501 @tasks_p1 @smoke @client_configuration @bus
+  @TC.501 @tasks_p1 @smoke @client_configuration @bus @ROR_smoke
   Scenario: 501 Delete client configuration
     When I add a new Reseller partner:
       | period |  reseller type  | reseller quota |  server plan |  net terms |
@@ -194,8 +194,8 @@ Feature: Add/Delete Client Configuration
       | 12     | 500 GB     | yes         |
     Then New partner should be created
     And I add partner settings
-      | Name             | Value     |
-      | enable_vmbu_beta | t         |
+      | Name             | Value | Locked |
+      | enable_vmbu_beta | t     | false  |
     When I act as newly created partner account
     When I create a new client config:
       | name                     | type   |

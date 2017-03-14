@@ -74,11 +74,13 @@ When /^I get the (partner_id|subpartner_id)$/ do |type|
     @partner_id = @bus_site.admin_console_page.partner_details_section.subpartner.partner_id()
   end
   Log.debug("partner id is #{@partner_id}")
+  @bus_site.log("partner id is #{@partner_id}")
 end
 
 When /^I get partner aria id$/ do
   @aria_id = @bus_site.admin_console_page.partner_details_section.general_info_hash['Aria ID:']
   Log.debug @aria_id
+  @bus_site.log("aria id is #{@aria_id}")
 end
 
 And /^Partner details (shouldn't|should) have (.+)/ do |type,field|
@@ -106,9 +108,16 @@ Then /^(Partner|SubPartner) general information should be:$/ do |status,details_
         v.gsub!(/@external_id/, @new_p_external_id) unless @new_p_external_id.nil?
       when 'Root Admin:'
         v.gsub!(/@root_admin/, @partner.admin_info.full_name) unless @partner.nil?
+        v.gsub!(/@root_admin/, @subpartner.admin_name) unless @subpartner.nil?
       when 'Marketing Referrals:'
         v.gsub!(/@login_admin_email/,@admin_username)
         v.gsub!(/@bus01_admin/, QA_ENV['bus01_admin'])
+      when 'Approved:'
+        v.replace(Chronic.parse(v).strftime('%m/%d/%y'))
+      when 'Pending'
+        v.replace(Chronic.parse(v).strftime('%m/%d/%y'))
+      when 'Deleted:'
+        v.replace(Chronic.parse(v).strftime('%m/%d/%y'))
       else
         # do nothing
     end

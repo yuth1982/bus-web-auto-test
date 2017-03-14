@@ -9,7 +9,7 @@ Feature: Auto Grow
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.14115 @bus @env_dependent
+  @TC.14115 @bus @env_dependent @regression
   Scenario: Mozy-14115::Enable autogrow partner admin
 #    When I log in to legacy bus01 as administrator
 #    And I successfully add an itemized Reseller partner:
@@ -52,7 +52,7 @@ Feature: Auto Grow
     Then tds returns successful upload
     And I delete user
 
-  @TC.14116 @bus
+  @TC.14116 @bus @regression
   Scenario: Mozy-14116::Autogrow enabled billing
     And I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan |
@@ -78,11 +78,11 @@ Feature: Auto Grow
     And activate the user's Server device without a key and with the default password
     And I get the machine_id by license_key
     And I upload data to device by batch
-      | machine_id                  | GB  |
-      | <%=@clients[0].machine_id%> | 0.8 |
+      | machine_id                  | GB  | upload_file |
+      | <%=@clients[0].machine_id%> | 1.1 | false       |
     And I upload data to device by batch
-      | machine_id                  | GB  |
-      | <%=@clients[0].machine_id%> | 0.8 |
+      | machine_id                  | GB    | upload_file |
+      | <%=@clients[0].machine_id%> | 0.001 | true        |
     Then tds return message should be:
     """
     Account or container quota has been exceeded
@@ -111,7 +111,7 @@ Feature: Auto Grow
     And I view partner details by newly created partner company name
     And I search and delete partner account by newly created partner company name
 
-  @TC.21963 @bus @slow @env_dependent
+  @TC.21963 @bus @slow @env_dependent @regression
   Scenario: 21963 - Autogrow Smoke - A Partner with Autogrow Enabled Can Overdraft Resources on Shared Usergroups
     When an Auto Grow Org is created
     And I navigate to Search / List Users section from bus admin console page
@@ -152,7 +152,10 @@ Feature: Auto Grow
     And I upload data to device
       | machine_id                     | GB | user_email              |
       | <%=@clients.first.machine_id%> | 6  | <%=@users.first.email%> |
-    Then tds return message should be:
+    And I upload data to device by batch
+      | machine_id                     | GB    | user_email              | upload_file |
+      | <%=@clients.first.machine_id%> | 0.001 | <%=@users.first.email%> | true        |
+    Then tds return first message should be:
     """
     Account or container quota has been exceeded
     """
@@ -160,7 +163,7 @@ Feature: Auto Grow
     And I clear user search results
     Then User search results should be:
       | User                    | Name          | User Group  | Machines | Storage | Storage Used |
-      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 1        | Shared  | 5 GB         |
+      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 1        | Shared  | 6 GB         |
       | <%=@users[2].email%>    | Jane Limited  | Limited UG  | 0        | Shared  | None         |
       | <%=@users[1].email%>    | John Shared   | Shared UG   | 0        | Shared  | None         |
     And I view details of <%=@users[1].email%>'s user group
@@ -171,8 +174,8 @@ Feature: Auto Grow
     And I close the user detail page
     And I view details of <%=@users.first.email%>'s user group
     Then User group details should be:
-      | Available Quota:     |
-      | 0 GB(Assigned: 5 GB) |
+      | Available Quota:      |
+      | -1 GB(Assigned: 5 GB) |
     And I close the user group detail page
     And I close the user detail page
     And I view details of <%=@users[2].email%>'s user group
@@ -194,8 +197,11 @@ Feature: Auto Grow
     And I get the machine id for client 1 by license key <%=@clients[1].license_key%>
     And I upload data to device
       | machine_id                  | GB | user_email           |
-      | <%=@clients[1].machine_id%> | 4  | <%=@users[2].email%> |
-    Then tds return message should be:
+      | <%=@clients[1].machine_id%> | 3  | <%=@users[2].email%> |
+    And I upload data to device by batch
+      | machine_id                     | GB    | user_email              | upload_file |
+      | <%=@clients.first.machine_id%> | 0.001 | <%=@users.first.email%> | true        |
+    Then tds return first message should be:
     """
     Account or container quota has been exceeded
     """
@@ -203,7 +209,7 @@ Feature: Auto Grow
     And I clear user search results
     Then User search results should be:
       | User                    | Name          | User Group  | Machines | Storage | Storage Used |
-      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 1        | Shared  | 5 GB         |
+      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 1        | Shared  | 6 GB         |
       | <%=@users[2].email%>    | Jane Limited  | Limited UG  | 1        | Shared  | 3 GB         |
       | <%=@users[1].email%>    | John Shared   | Shared UG   | 0        | Shared  | None         |
     And I view details of <%=@users[1].email%>'s user group
@@ -214,8 +220,8 @@ Feature: Auto Grow
     And I close the user detail page
     And I view details of <%=@users.first.email%>'s user group
     Then User group details should be:
-      | Available Quota:     |
-      | 0 GB(Assigned: 5 GB) |
+      | Available Quota:      |
+      | -1 GB(Assigned: 5 GB) |
     And I close the user group detail page
     And I close the user detail page
     And I view details of <%=@users[2].email%>'s user group
@@ -243,7 +249,7 @@ Feature: Auto Grow
     And I clear user search results
     Then User search results should be:
       | User                    | Name          | User Group  | Machines | Storage | Storage Used |
-      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 1        | Shared  | 5 GB         |
+      | <%=@users.first.email%> | Jane Assigned | Assigned UG | 1        | Shared  | 6 GB         |
       | <%=@users[2].email%>    | Jane Limited  | Limited UG  | 1        | Shared  | 3 GB         |
       | <%=@users[1].email%>    | John Shared   | Shared UG   | 1        | Shared  | 18 GB        |
     And I view details of <%=@users[1].email%>'s user group
@@ -254,8 +260,8 @@ Feature: Auto Grow
     And I close the user detail page
     And I view details of <%=@users.first.email%>'s user group
     Then User group details should be:
-      | Available Quota:     |
-      | 0 GB(Assigned: 5 GB) |
+      | Available Quota:      |
+      | -1 GB(Assigned: 5 GB) |
     And I close the user group detail page
     And I close the user detail page
     And I view details of <%=@users[2].email%>'s user group
@@ -351,7 +357,7 @@ Feature: Auto Grow
     Then change plan section shouldn't have any storage errors
     And I upload data to device by batch
       | machine_id                         | GB  |
-      | <%=@new_clients.first.machine_id%> | 1   |
+      | <%=@new_clients.first.machine_id%> | 101 |
     And I refresh Resource Summary section
     Then the storage error message of resource summary section should be:
     """
@@ -371,7 +377,7 @@ Feature: Auto Grow
     Then change plan section shouldn't have any storage errors
     And I upload data to device by batch
       | machine_id                         | GB  |
-      | <%=@new_clients.first.machine_id%> | 20  |
+      | <%=@new_clients.first.machine_id%> | 121 |
     And I refresh Resource Summary section
     Then the storage error message of resource summary section should be:
     """
@@ -385,7 +391,7 @@ Feature: Auto Grow
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15728 @bus @auto_grow @tasks_p2
+  @TC.15728 @bus @auto_grow @tasks_p2 @ROR_smoke
   Scenario: 15728 BILL.9000 Autogrow may be enabled or disabled OEM
     When I add a new OEM partner:
       | company name        | Root role   |
@@ -475,7 +481,7 @@ Feature: Auto Grow
     Then change plan section shouldn't have any storage errors
     And I upload data to device by batch
       | machine_id                         | GB  |
-      | <%=@new_clients.first.machine_id%> | 2   |
+      | <%=@new_clients.first.machine_id%> | 202 |
     And I refresh Resource Summary section
     Then the storage error message of resource summary section should be:
     """
@@ -515,7 +521,7 @@ Feature: Auto Grow
     Then change plan section shouldn't have any storage errors
     And I upload data to device by batch
       | machine_id                         | GB  |
-      | <%=@new_clients.first.machine_id%> | 1   |
+      | <%=@new_clients.first.machine_id%> | 101 |
     And I refresh Resource Summary section
     Then the storage error message of resource summary section should be:
     """
@@ -579,7 +585,7 @@ Feature: Auto Grow
       | 50              | 1               |
     And I upload data to device by batch
       | machine_id                         | GB  |
-      | <%=@new_clients.first.machine_id%> | 1   |
+      | <%=@new_clients.first.machine_id%> | 151 |
     And I act as newly created partner account
     And I add new user(s):
       | user_group           | storage_type | devices |
@@ -610,7 +616,10 @@ Feature: Auto Grow
     """
     And I upload data to device by batch
       | machine_id                         | GB |
-      | <%=@new_clients.first.machine_id%> | 41 |
+      | <%=@new_clients.first.machine_id%> | 51 |
+    And I upload data to device by batch
+      | machine_id                         | GB    | upload_file |
+      | <%=@new_clients.first.machine_id%> | 0.001 | true        |
     Then tds return message should be:
     """
     Account or container quota has been exceeded
@@ -621,7 +630,7 @@ Feature: Auto Grow
     And I Enable partner details autogrow
     And I upload data to device by batch
       | machine_id                         | GB |
-      | <%=@new_clients.first.machine_id%> | 41 |
+      | <%=@new_clients.first.machine_id%> | 51 |
     Then tds returns successful upload
     And I act as partner by:
       | name                            |

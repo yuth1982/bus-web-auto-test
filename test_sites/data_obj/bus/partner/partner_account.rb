@@ -38,6 +38,22 @@ module Bus
         has initial purchase: #@has_initial_purchase
         net term payment: #@net_term_payment}
       end
+
+      # Public: deep clone the partner with its own copy of BillingInfo.billing info
+      #
+      # Return the new object copy
+      def deep_clone
+        copy = self.clone
+        copy.company_info = self.company_info.clone
+        copy.partner_info = self.partner_info.clone
+        copy.admin_info = self.admin_info.clone
+        copy.credit_card = self.credit_card.clone
+        copy.account_detail = self.account_detail.clone
+        copy.order_summary = self.order_summary.clone
+        copy.billing_info = self.billing_info.clone
+        copy.billing_info.billing = self.billing_info.billing.clone
+        copy
+      end
     end
   end
 end

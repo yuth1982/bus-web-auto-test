@@ -8,6 +8,7 @@ module Bus
     element(:price_table, xpath: "//div[@id='billing_change_confirmation']/table")
     element(:message_div, xpath: "//div[@id='resource-change_billing_period-errors']/ul")
     elements(:confirmation_p, xpath: "//div[@id='billing_change_confirmation']/p")
+    element(:change_billing_table, xpath: "//div[@id='billing_change']/table")
 
     # Public: Move with subscription period
     #
@@ -75,5 +76,21 @@ module Bus
       rows = price_table.all(:xpath, "./tbody/tr").map{ |row| row.child }
       rows.map { |row| row.map { |cell| cell.text } }
     end
+
+    # Public: Change billing period table rows
+    #
+    # Example
+    #   @bus_admin_console_page.change_period_section.change_billing_table_rows
+    #   # => [["Monthly Cost", "$94.99 *", "You are currently using this plan."],
+    #         ["Annual Cost", "$729.89 *", "Switch to annual billing (includes 1 free month!)"]
+    #         ["Biennial Cost", "$1,399.79 *", "Switch to biennial billing (includes 5 free months!)"]]
+    #
+    # Returns price table rows text
+    def change_billing_table_rows
+      wait_until { !locate(:xpath, "//div[@id='billing_change']/table").nil? }
+      rows = change_billing_table.all(:xpath, "./tbody/tr").map{ |row| row.child }
+      rows.map { |row| row.map { |cell| cell.text.strip } }
+    end
+
   end
 end

@@ -3,7 +3,7 @@ Feature: Hipaa user Login
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.120660 @bus @log_in_screen @need_test_account @env_dependent
+  @TC.120660 @bus @log_in_screen @need_test_account @env_dependent @regression @subdomain
   Scenario: 120660 Hipaa user log into BUS with lower/mixed case username
     When I navigate to Hipaa subdomain user login page
     Then I log into Hipaa subdomain with lowercase username Hipaa user and Hipaa password
@@ -11,7 +11,7 @@ Feature: Hipaa user Login
     Then I log into Hipaa subdomain with mixed case username Hipaa user and Hipaa password
     And I log out user
 
-  @TC.120661 @bus @log_in_screen @need_test_account @env_dependents
+  @TC.120661 @bus @log_in_screen @need_test_account @env_dependents @regression @subdomain
   Scenario: 120661 Hipaa user log into BUS with upper/mixed case username
     When I navigate to Hipaa subdomain user login page
     Then I log into Hipaa subdomain with uppercase username Hipaa user and Hipaa password

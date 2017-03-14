@@ -164,17 +164,28 @@ Then /^Quick report (.+) csv file details should be:$/ do |report_type, report_t
 end
 
 Then /^(Quick|Scheduled) report (.+) csv file details should include$/ do |type, report_type, report_table|
-  attributes = report_table.hashes
-  attributes.each { |v|
-    v.each{ |_,value|
-      value.replace ERB.new(value).result(binding) unless value.match(/^<%=@.+%>$/).nil?
-    }
-  }
   if type == 'Scheduled'
     actual = @bus_site.admin_console_page.scheduled_reports_section.read_scheduled_report(report_type)
   else
     actual = @bus_site.admin_console_page.quick_reports_section.read_quick_report(report_type)
   end
+
+  Log.debug "actual: #{actual}"
+
+  attributes = report_table.hashes
+  attributes.each { |v|
+    v.each{ |_,value|
+      value.replace ERB.new(value).result(binding) unless value.match(/^<%=@.+%>$/).nil?
+      if value == 'today'
+          value.replace (Chronic.parse(value).strftime('%m/%d/%y'))
+      elsif value == 'minute'
+        value.replace actual[1][7]
+      end
+    }
+  }
+
+  Log.debug "report_table: #{report_table}"
+
   report_table.rows.each { |row|
     (actual.include?(row)).should == true
   }
@@ -267,4 +278,13 @@ end
 When /^I inactive (.+) scheduled report$/ do |report_name|
   @bus_site.admin_console_page.scheduled_reports_section.click_report(report_name)
   @bus_site.admin_console_page.edit_report_section.inactive_report
+end
+
+And /^(.+) report is scheduled for this partner$/ do |num|
+  delayed_job_count = DBHelper.get_count_delayed_job @partner_id
+  if num == 'no'
+    delayed_job_count.should == '0'
+  else
+    delayed_job_count.should == num
+  end
 end

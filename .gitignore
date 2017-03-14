@@ -1,6 +1,6 @@
 .DS_Store
 Gemfile.lock
-download/*.csv
+downloads/
 .idea/
 .yardoc/
 rerun.txt
@@ -10,3 +10,5 @@ chromedriver.log
 .tags
 logs/
 html-report/
+report*
+test_data/

@@ -38,6 +38,7 @@ module Phoenix
     element(:password_input, id:  "password")
     element(:password_again_input, id:  "password2")
     element(:continue_btn, xpath:  "//input[@value='Continue']")
+    element(:password_changed_txt, css: "div.inner-center-form-box > p")
 
     # this method verifies that the acct logged into belongs to this specific user
     # the banner should match the users email address
@@ -277,5 +278,13 @@ module Phoenix
       continue_btn.click
     end
 
+    def password_changed_message
+      password_changed_txt.text
+    end
+
+    def click_restore_file_link(device)
+      find(:xpath, "//td[contains(text(), '#{device}')]")
+      find(:xpath, "//td[contains(text(), '#{device}')]/..//a[contains(text(), 'Restore Files')]").click
+    end
   end
 end

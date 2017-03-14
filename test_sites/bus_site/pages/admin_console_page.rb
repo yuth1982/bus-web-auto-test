@@ -105,6 +105,17 @@ module Bus
     # internal tools
     section(:manage_vatfx_rates_section, ManageVATTXRatesSection, id: "internal-add_vat_rate")
     section(:manage_pending_deletes_section, ManagePendingDeletesSection, id: "internal-manage_pending_deletes")
+    section(:transaction_summary_section, TransactionSummarySection, id: "internal-revenue")
+    section(:add_new_promotion_section, AddNewPromotionSection, id: "promotion-new")
+    section(:list_promotions_section, ListPromotionsSection, id: "promotion-list")
+    section(:promotion_details_view_section, PromotionDetailsViewSection, css: 'div[id^=promotion-show-]')
+    section(:add_account_attribute_key_section, AddAccountAttributeKeySection, id: 'internal-add_attribute')
+    section(:list_account_attribute_keys_section, ListAccountAttributeKeysSection, id: 'internal-list_attributes')
+    section(:account_attribute_key_details_section, AccountAttributeKeyDetailsSection, id: 'internal-edit_attribute')
+    section(:partner_signups_report_section, PartnerSignupsReportSection, id: 'internal-partner_signups')
+    section(:manage_internal_jobs_section, ManageInternalJobsSection, id: 'internal-manage_jobs')
+
+
 
     #news
     section(:news_section, NewsSection, id: "controller-news")
@@ -118,6 +129,10 @@ module Bus
 
     # Popup window
     element(:start_using_mozy_btn, id: "start_using_mozy")
+    element(:quick_start_guide, xpath:"//p[text()='Quick Start Guide']")
+    #element(:download_mozy_software, xpath:"//p[text()='             Download Mozy Software           ']")
+    element(:download_mozy_software, xpath:"//p[contains(text(), 'Download Mozy Software')]")
+    element(:release_notes, xpath:"//p[text()='Release Notes']")
     element(:popup_content_div, css: "div.popup-window-content")
     element(:close_popup_link, css: "div.close_bar a")
     element(:close_btn, css: "div.popup-window-footer input[value=Close]")
@@ -131,6 +146,8 @@ module Bus
     element(:no_btn, css: "div.popup-window-footer input[value=No]")
     element(:msg_popup_text, css: "div.popup-window-content")
     elements(:delete_popup_btns, css: "div.popup-window-footer input")
+    element(:welcome_page_title, xpath: "//div[@class='headlinePositionDiv']")
+
     # Activate element
     element(:password_set_text, id: 'admin_password')
     element(:password_set_again_text, id: 'admin_password_confirmation')
@@ -166,6 +183,7 @@ module Bus
     #
     # @return [nothing]
     def navigate_to_menu(link_name, use_quick_link = false)
+      log("Dimiss <Start User Mozy> dialog if exists.")
       dimiss_start_using_mozy
       # Looking for link in navigation menu
       find(:xpath, "//ul//a[text()='#{link_name}']")
@@ -348,6 +366,37 @@ module Bus
     def get_new_window_page_title()
       page.execute_multiline_script('return window.stop')
       page.driver.browser.title
+    end
+
+    #================================================
+    # Public : click Download Mozy Software link when acting as a partner, should navigator to Mozy Software Download section automatically.
+    #================================================
+    def click_download_link_on_welcome_page
+      Log.debug "LogQA : click Download Mozy Software link on welcome page"
+      download_mozy_software.click
+      page.driver.browser.switch_to().window(page.driver.browser.window_handles.last)
+      init = false
+      i = 0
+      while init == false && i < 3
+        begin
+          find(:id, "resource-downloads")
+          init = true
+          Log.debug "LogQA : =======find Mozy Download section"
+        rescue
+          Log.debug "LogQA : =======doesn't find Mozy Download section"
+        end
+        i = i + 1
+        sleep(10)
+      end
+    end
+
+    #=======================
+    # Public : return the welcome page titile, which usual should be "What's New"
+    # Others : in the current code, we use alert_accept as a workaround to close the pop-up window. Find method won't work since the element in cache
+    #          has been locked before the pop-up window appears. Add the method.
+    #=======================
+    def get_welcome_page_title
+      welcome_page_title.text
     end
 
   end

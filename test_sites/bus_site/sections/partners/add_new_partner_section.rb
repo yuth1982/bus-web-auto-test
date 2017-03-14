@@ -75,12 +75,11 @@ module Bus
 
     element(:message_div, css: 'div#partner-new-errors ul')
     element(:aria_errors_div, css: 'ul.errorExplanation')
-    # element(:create_partner_btn, css: 'div#cc-details input#submit_button')
-    element(:create_partner_btn, css: "input[value='Create Partner']")
+    element(:create_partner_btn, css: 'div#cc-details input#submit_button')
     element(:back_btn, id: 'back_button')
 
     # sub partner
-    element(:create_sub_partner_btn, css: 'input[type="submit"]')
+    element(:create_sub_partner_btn, id: 'non_aria_billing_partner_create')
     element(:pricing_plan_select, id: 'pro_plan_id')
 
     # Public: Add a new partner account
@@ -117,10 +116,11 @@ module Bus
           fill_credit_card_info(partner.credit_card)
         end
         set_order_summary(partner)
-        #Sometimes automation is too fast that the page doest not response to the click event on the button "Create Partner"
-        #Pause for 3 seconds as a workaround
-        sleep 3
+
+        wait_until { !locate(:css, "div#cc-details input#submit_button").nil? && create_partner_btn.visible? && create_partner_btn['disabled'] != 'true' }
         create_partner_btn.click
+        wait_until { create_partner_btn['disabled'] == 'true' }
+        wait_until { create_partner_btn['disabled'] != 'true' }
       else
         include_initial_purchase_cb.uncheck
         set_pre_sub_total(partner)
@@ -488,7 +488,7 @@ module Bus
       partner.company_type && subpartner_company_type_select.select(partner.company_type) unless all(:id, 'company_type').empty?
       new_admin_display_name_tb.type_text(partner.admin_name)
       new_admin_username_tb.type_text(partner.admin_email_address)
-      create_partner_btn.click
+      create_sub_partner_btn.click
     end
   end
 end

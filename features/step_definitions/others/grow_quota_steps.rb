@@ -13,7 +13,9 @@ When /^I upload data to device(| by batch)$/ do |upload_type, grow_quota_table|
   user_email = attr['user_email'] || @current_user[:email]
   machine_id = attr['machine_id'] || @machine_id
   filename = attr['file_name']
+  upload_file = attr['upload_file']
   amount = attr['GB'] || 1
+  user_agent = attr['user_agent']
   @grow_quota_response = [] if @grow_quota_response.nil?
   if attr['password'].nil?
     password = CONFIGS['global']['test_pwd']
@@ -23,10 +25,10 @@ When /^I upload data to device(| by batch)$/ do |upload_type, grow_quota_table|
   @filename =filename
 
   if upload_type == ' by batch'
-    @grow_quota_response[0] = SSHTDSGrowQuota.grow_quota(user_email, password, machine_id, amount, filename)
+    @grow_quota_response[0] = SSHTDSGrowQuota.grow_quota(user_email, password, machine_id, amount, filename, upload_file, user_agent)
   else
     amount.to_i.times do |i|
-      @grow_quota_response[i] = SSHTDSGrowQuota.grow_quota(user_email, password, machine_id, '1', filename)
+      @grow_quota_response[i] = SSHTDSGrowQuota.grow_quota(user_email, password, machine_id, i + 1, filename, user_agent)
     end
   end
 end
@@ -35,7 +37,11 @@ When /^tds returns successful upload$/ do
   @grow_quota_response.last.code.should == '200'
 end
 
-When /^tds return message should be:$/ do |message|
-  @grow_quota_response.last.body.should == message
+When /^tds return(| first) message should be:$/ do |return_index, message|
+  if return_index == ' first'
+    @grow_quota_response.first.body.should == message
+  else
+    @grow_quota_response.last.body.should == message
+  end
 end
 

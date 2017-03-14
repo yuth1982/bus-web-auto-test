@@ -47,12 +47,17 @@ When /^I search emails by keywords:$/ do |keywords_table|
   sleep 15
 
   Log.info(@email_search_query)
-  @found_emails = find_emails(@email_search_query)
+  3.times do
+    @found_emails = find_emails(@email_search_query)
+    sleep 60 if @found_emails.size == 0
+    break if @found_emails.size > 0
+  end
 end
 
 Then /^I should see (\d+) email\(s\)$/ do |num_emails|
   @found_emails = [] if @found_emails.nil?
   @found_emails.size.should == num_emails.to_i
+  #Log.debug @found_emails[0].body if @found_emails.size > 0
 end
 
 When /^I (retrieve email content|download email attachment) by keywords:$/ do |type, keywords_table|
@@ -84,6 +89,7 @@ And /^I get verify email address from email content for mozyhome change email ad
 end
 
 Then /^I check the email content should include:$/ do |msg|
+  msg.replace ERB.new(msg).result(binding)
   @mail_content.should include (msg)
 end
 

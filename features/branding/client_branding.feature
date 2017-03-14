@@ -4,7 +4,7 @@ Feature: As a Mozy OEM partner Admin, I should be brand my own windows client
     Given I log in bus admin console as administrator
 
 
-  @TC.131667 @bus @regression
+  @TC.131667 @bus @tasks_p1
   Scenario: 131667 Client branding for newly created OEM partner
     When I add a new OEM partner:
       | Company Name                                    | Root role         | Company Type     |

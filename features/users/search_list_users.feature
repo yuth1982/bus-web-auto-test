@@ -24,7 +24,7 @@ Feature: Search and list user
   #   in refactor-to come, will change "And I navigate to Contact section from bus admin console page"
   #   to "And I refresh Add New User section"
   #
-  @TC.21012 @bus @2.5 @pooled_storage
+  @TC.21012 @bus @2.5 @pooled_storage @regression
   Scenario: 21012 Pooled Storage - User List View change - removal of assigned/used quota from Storage column
     And I add a new MozyPro partner:
       | period | base plan | server plan | net terms |
@@ -55,7 +55,7 @@ Feature: Search and list user
   #   all references to contact section will be changed once refresh section is running properly
   #   this is also only partners through busclient04/2.5 instance - itemized need to still be done
   #
-  @TC.21014 @bus @2.5 @pooled_storage
+  @TC.21014 @bus @2.5 @pooled_storage @regression
   Scenario: 21014 Pooled Storage - Pro SMB - User List View - removal of assigned/used quota
     And I add a new MozyPro partner:
       | period | base plan | server plan | net terms |
@@ -105,7 +105,7 @@ Feature: Search and list user
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21016 @bus @2.5 @pooled_storage @metallic
+  @TC.21016 @bus @2.5 @pooled_storage @metallic @regression
   Scenario: 21016 Pool Storage - Reseller Metal - User List View change - removal of assigned/used quota
     And I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | net terms |
@@ -155,7 +155,7 @@ Feature: Search and list user
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21015 @bus @2.5 @pooled_storage @enterprise
+  @TC.21015 @bus @2.5 @pooled_storage @enterprise @regression
   Scenario: 21015 - Pool Storage - Enterprise - User List View change - removal of assigned/used quota
     And I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -208,7 +208,7 @@ Feature: Search and list user
   # creation itemized (pro) partner to pooled storage w/ user
   #   & adding machine, quota to accts will be in future commits
   #   all as setup steps for verification of migration of itemized partners to pooled storage
-  @TC.21013 @itemized @bus @2.5 @pooled_storage @env_dependent
+  @TC.21013 @itemized @bus @2.5 @pooled_storage @env_dependent @regression
   Scenario: 21013 Pooled Storage - Pro Itemized - User List View - removal of assigned/used quota
 #    When I log in to legacy bus01 as administrator
 #    And I successfully add an itemized MozyPro partner:
@@ -261,7 +261,7 @@ Feature: Search and list user
   # creation itemized (reseller) partner to pooled storage w/ user
   #   & adding machine, quota to accts will be in future commits
   #   all as setup steps for verification of migration of itemized partners to pooled storage
-  @TC.21017 @itemized @bus @2.5 @pooled_storage @env_dependent
+  @TC.21017 @itemized @bus @2.5 @pooled_storage @env_dependent @regression
   Scenario: 21017 Pooled Storage - Reseller Itemized - User List View - removal of assigned/used quota
 #    When I log in to legacy bus01 as administrator
 #    And I successfully add an itemized Reseller partner:
@@ -299,8 +299,8 @@ Feature: Search and list user
       | email                                 |
       | redacted-303@notarealdomain.mozy.com  |
     When I search user by:
-      | keywords                                |
-      | redacted-899929@notarealdomain.mozy.com |
+      | keywords                                | user type                             |
+      | redacted-899929@notarealdomain.mozy.com | Professional Software Solutions Users |
     And Itemized user search results should be:
       | Name     | Machines | Storage                         | Storage Used                |
       | TC210171 | 0        | Desktop: Shared\nServer: Shared | Desktop: None\nServer: None |
@@ -310,7 +310,7 @@ Feature: Search and list user
     #   This is also the banner case for integration of pooled storage with phoenix
     #   Redmine: 98385
     #
-    @TC.21317 @bus @phoenix @2.5 @pooled_storage
+    @TC.21317 @bus @phoenix @2.5 @pooled_storage @regression
     Scenario: 21317 - Pooled Storage - Pro SMB - Phoenix Integration - User List View - removal of assigned/used quota
       When I am at dom selection point:
       And I add a phoenix Pro partner:

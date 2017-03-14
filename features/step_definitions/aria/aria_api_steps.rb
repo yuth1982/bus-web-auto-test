@@ -364,3 +364,61 @@ And /^API\* I change account schedule price for (.+)$/ do |aria_id, info_table|
   }
 
 end
+
+Then /^API\* Aria account coupon code info should be (.+)$/ do |coupon|
+  coupon.replace ERB.new(coupon).result(binding)
+  coupon_details = Aria_SDK.call('get_coupon_details', {:acct_no=> @aria_id.to_i})
+  coupons = coupon_details['coupons']
+
+  if !coupons.nil?
+    coupon_code = coupons[0]['out_coupon_cd']
+    Log.debug coupon_code
+    coupon_code.should == coupon
+  else
+    Log.debug coupons
+    coupons.should == nil
+  end
+
+end
+
+When /^API\* I assign aria supp plan multi for (.+)$/ do |aria_id, info_table|
+  new_plan_rate = info_table.hashes
+
+  all_child_plans = Aria_SDK.call('get_avail_child_plans_for_acct_all', {:acct_no=> @aria_id.to_i})
+  all_plan = all_child_plans['all_plans']
+
+  new_plan_rate.each {|v|
+    plan_name = v['plan_name']
+    new_rate_schedule = v['rate_schedule_name']
+    new_currency = v['schedule_currency']
+    num_plan_units = v['num_plan_units']
+
+    # find plan num based on given plan name
+    all_plan.each { |value|
+      flag = false
+      if value['plan_name'] == plan_name
+        plan_no = value['plan_no']
+        Log.debug plan_no.inspect
+        rate_schedules = Aria_SDK.call('get_rate_schedules_for_plan', {:plan_no=> plan_no.to_i})
+
+        # find matching schedule rate and assign
+        rate_schedules['rate_sched'].each { |rate|
+          if rate['schedule_name'] == new_rate_schedule && rate['schedule_currency'] == new_currency
+            rate_schedule_no = rate['schedule_no']
+            Log.debug rate_schedule_no.inspect
+
+            Aria_SDK.call('assign_supp_plan_multi', {:acct_no=> aria_id.to_i, :supp_plan_no => plan_no, :alt_rate_schedule_no=> rate_schedule_no, :num_plan_units=> num_plan_units.to_i, :assignment_directive => 5, :auto_offset_months_option => 1, :do_write => true})
+            flag = true
+          end
+        }
+      end
+      break if flag
+    }
+  }
+end
+
+When /^API\* I assign coupon code (.+) to (.+)$/ do |coupon, aria_id|
+  coupon.replace ERB.new(coupon).result(binding)
+  response = Aria_SDK.call('apply_coupon_to_acct', {:acct_no => @aria_id.to_i, :coupon_code => coupon})
+  Log.debug response.body.inspect
+end

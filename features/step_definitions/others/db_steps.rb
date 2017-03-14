@@ -3,8 +3,8 @@ When /^I get a user email from the database$/ do
   Log.debug("user email from database = #{@existing_user_email}")
 end
 
-When /^I get a (MH|MP|ME|MEO|MC) user username from the database$/ do |parent|
-  @existing_user_email = DBHelper.get_user_username(parent)
+When /^I get a (MH|MP|ME|MEO|MC) user username (|(.+) )from the database$/ do |parent,_,prefix|
+  @existing_user_email = DBHelper.get_user_username(parent, prefix)
 end
 
 When /^I get an admin email from the database$/ do
@@ -63,3 +63,23 @@ end
 And /^I set customcd order id to (.+) for just created data shuttle order$/ do |change_to_id|
   DBHelper.update_customcd_order_id(@seed_id,change_to_id)
 end
+
+And /^I get partner id by admin email from database$/ do
+  @partner_id = DBHelper.get_partner_id_by_admin_email @partner.admin_info.email
+  Log.debug("partner id is #{@partner_id}")
+end
+
+When /^I get the current user id from the database$/ do
+  user_name = @partner.admin_info.email    #need to determine other var that can use email
+  @user_id = DBHelper.get_user_id_by_email user_name
+end
+
+When /^I delete the current user_payment_infos from the database$/ do
+  Log.debug DBHelper.delete_upi_by_id @user_id
+end
+
+And /^I get admin id of current partner from the database$/ do
+  @admin_id = (DBHelper.get_info_from_admins(@partner.admin_info.email))[0]
+  Log.debug("admin id is #{@admin_id}")
+end
+

@@ -106,14 +106,14 @@ Then /^the status of shipping tracking table should have Submitted and Processin
   arr_status = ['Submitted','Processing','Burned']
   flag = true
   index = -1
+  index1 = -1
   times = 0
   actual_status = 'Submitted'
   while flag == true && index < 2
-    index1 = -1
     if index == -1
       actual_status1 = @bus_site.admin_console_page.view_data_shuttle_orders_section.get_shipping_tracking_table_hashes.first['Status']
     else index > -1
-      while index == index1 && times < 3
+      while index == index1 && times < 10
         @bus_site.admin_console_page.view_data_shuttle_orders_section.refresh_view_data_shuttle_order_section
         actual_status1 = @bus_site.admin_console_page.view_data_shuttle_orders_section.get_shipping_tracking_table_hashes.first['Status']
         break if actual_status1 != actual_status

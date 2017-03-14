@@ -22,6 +22,8 @@ module Bus
     element(:rebuild_btn, css: "input[@name='rebrand_executables']")
     element(:version_oem_label, css: "label[for='oem_db_file']")
     element(:delete_version_link, xpath: "//a[text()='Delete Version']")
+    element(:reset_building_link, xpath: "//fieldset[contains(@id,'version_general_fragment')]//a[contains(text(),'reset')]")
+    element(:recreate_bds_exe_cb, id: 'brand_executables')
     # Brandings info table of version details
     element(:version_branding_table, css: "table.table-view")
     # version saved success message
@@ -110,9 +112,10 @@ module Bus
 
     # Public: upload a db3 file for windows client
     #
-    def upload_db3(file)
+    def upload_db3(file, rebuild_option = true)
       replace_db3_link.click unless version_oem_input.visible?
       upload_file(file, version_oem_input.id)
+      rebuild_option ? recreate_bds_exe_cb.check : recreate_bds_exe_cb.uncheck
     end
 
 
@@ -128,6 +131,12 @@ module Bus
     def save_changes
       version_save_btn.click
     end
+
+    # Public: click (reset) link in version status area to stop building new client
+    def reset_building
+      reset_building_link.click if has_reset_building_link? && reset_building_link.visible?
+    end
+
 
     # Public: check whether the download link for a partner exists in Brandings tab
     #

@@ -75,5 +75,9 @@ class BusSite
   def fedex_page
     Bus::FedEXPage.new
   end
+
+  def log(text)
+    $logFile.puts("======[Step]:" + text.to_s + "======\n")
+  end
 end
 

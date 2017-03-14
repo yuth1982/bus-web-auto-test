@@ -91,6 +91,12 @@ Feature: unique user install w/o key client dependant on BUS
       | user_email  | machine_name | machine_type |
       | @user_email | M_20268_user | Desktop      |
     Then activate machine result should be
+      | code |
+      | 404  |
+    And I use keyless activation to activate devices with wrong codename
+      | user_email  | machine_name | machine_type |
+      | @user_email | M_20268_user | Desktop      |
+    Then activate machine result should be
       | code | body                                                        |
       | 400  | {"error_description":"Wrong Client","error":"wrong-client"} |
     When I stop masquerading
@@ -241,8 +247,22 @@ Feature: unique user install w/o key client dependant on BUS
       | user_email  | machine_name | machine_type |
       | @user_email | M_20374_user | Desktop      |
     Then activate machine result should be
+      | code |
+      | 404  |
+    And I use keyless activation to activate devices with wrong codename
+      | user_email  | machine_name | machine_type |
+      | @user_email | M_20374_user | Desktop      |
+    Then activate machine result should be
       | code | body                                                        |
       | 400  | {"error_description":"Wrong Client","error":"wrong-client"} |
+    # leave a case here for bug #144905
+    # that bus can not parse API devices/:device_hash/activate correctly when device hash is blankspace
+    And I use keyless activation to activate devices with blank machine hash
+      | user_email  | machine_name | machine_type |
+      | @user_email | M_20374_user | Desktop      |
+    Then activate machine result should be
+      | code | body                                                                        |
+      | 400  | {"error_description":"Invalid machine hash","error":"invalid-machine-hash"} |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 

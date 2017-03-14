@@ -67,7 +67,7 @@ module Email
       f.close
       cipher = Gibberish::RSA.new(private_key)
       pass = cipher.decrypt(encrypted)
-      @client = Viewpoint::EWSClient.new endpoint, user, pass, server_version: SOAP::ExchangeWebService::VERSION_2007, http_opts: {ssl_verify_mode: 0}
+      @client = Viewpoint::EWSClient.new endpoint, user, pass, server_version: SOAP::ExchangeWebService::VERSION_2010_SP1, http_opts: {ssl_verify_mode: 0}
       @inbox = @client.get_folder_by_name 'Inbox', :act_as => CONFIGS['outlook']['mailbox']
       @found = nil
     end
@@ -82,6 +82,15 @@ module Email
           items.each {  |item|
             email = @client.get_item item.id
             query.each_index {|index| query[index]=query[index].downcase if index%2 == 0}
+            # Log.info("=====================================================")
+            # Log.info("From: " + email.from.email_address)
+            # Log.info("To: " + (email.to_recipients.collect {|recipient| recipient.email_address}).join(', '))
+            subject = email.subject
+            # Log.info("Subject: " + email.subject)
+            # first_name = "N/A"
+            # first_name = email.body.to_s.split("Dear ")[1].split(" ")[0] if !email.body.to_s.match("Dear ").nil?
+            # first_name = email.body.to_s.split("Hi, ")[1].split(":<")[0] if !email.body.to_s.match("Hi, ").nil?
+            # Log.info("First Name: " + first_name)
 
             to_match = from_match = content_match = subject_match = true
 
@@ -93,20 +102,20 @@ module Email
                    break
                 end
               }
-            to_match = flag
+              to_match = flag
             end
             next if !to_match
 
             from_match = false if query.include?('from') && !(email.from.email_address.eql? query[query.index('from')+1])
             next if !from_match
 
-            subject_match = false if query.include?('subject') && !(email.subject.eql? query[query.index('subject')+1])
+            subject_match = false if query.include?('subject') && !(subject.include? query[query.index('subject')+1])
             next if !subject_match
 
             if query.include?('body')
               content = email.body
               body_pattern = query[query.index('body')+1]
-              if body_pattern.include?('@') || body_pattern.include?(' ') # if the search pattern is email address or full name
+              if body_pattern.split(/,/).length == 1 # if the search pattern is email address or full name
                 content_match &&= !content.match(body_pattern.gsub('+','\\\+')).nil?
               else                           # else the search patter should be license key array
                 query_arr = eval body_pattern
@@ -117,6 +126,7 @@ module Email
             end
             next if !content_match
             @found << email
+            Log.info("Email Count: " + @found.size.to_s)
          }
         rescue Exception => ex
           Log.debug ex
@@ -149,7 +159,24 @@ module Email
       else
         return filename
       end
-     end
+    end
+
+    def empty_folder
+      resp = @client.ews.empty_folder(
+        opts = {
+            :folder_ids   => [:id => @inbox.id],
+            :delete_type  => 'HardDelete',
+            :delete_sub_folders => true
+        }
+      )
+
+      if resp.success?
+        true
+      else
+        raise EwsError, "Could not empty folder. #{resp.code}: #{resp.message}"
+      end
+
+    end
   end
 
   def create_user_email
@@ -169,7 +196,7 @@ module Email
     email.find_emails(query)
   end
 
-  def find_email_content(query, attach=nil)
+  def find_email_content(query, attach = nil)
     if MAILBOX.eql? 'outlook'
       email = Outlook.instance
     else
@@ -182,7 +209,7 @@ module Email
     #pu = past unactivated, d = desktop, s = server, u = unactivated, a = activated
     pu,du,da,su,sa = false,0,0,0,0
     email_body.to_s.each_line do |line|
-      pu = true if line.include?(">Activated</span></div>")
+      pu = true if line.include?("<span class=\"label\">Activated</span></div>")
       if line.include?("<td>Desktop</td>")
         (pu ? da += line.scan('Desktop').length : du += line.scan('Desktop').length )
       elsif line.include?("<td>Server</td>")

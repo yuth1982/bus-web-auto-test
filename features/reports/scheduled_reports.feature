@@ -128,10 +128,10 @@ Feature: Scheduled Reports
       | qa1+bundled+report+80@decho.com | Report Test 002 | Server       | 463VEQ4ZT753D2QA9CB4   | Limited: 15        | 12.00           |                        |
       | qa1+bundled+report+70@decho.com | Report Test 004 | Desktop      | B9ATEQQWXV8VXS7FEVWT   | Shared             | 6.00            |                        |
       | qa1+bundled+report+70@decho.com | Report Test 005 | Desktop      | VF9V7CSDDG2T36T4DSF8   | Limited: 4         | 1.00            |                        |
-      | qa1+bundled+report+60@decho.com | Report Test 008 | Desktop      | 55G9X2WWZ6VBBW9AQ6R5   | Limited: 10        | 1.00            |                        |
-      | qa1+bundled+report+60@decho.com | Report Test 006 | Desktop      | TZ3X7DWDERX7RQ766ZAD   | Limited: 10        | 7.00            |                        |
       | qa1+bundled+report+60@decho.com | Report Test 007 | Desktop      | T4WDF6RGWW4776GVADQS   | Limited: 10        | 1.00            |                        |
-    And I delete machine status bundle TC21200 scheduled report
+      | qa1+bundled+report+60@decho.com | Report Test 006 | Desktop      | TZ3X7DWDERX7RQ766ZAD   | Limited: 10        | 7.00            |                        |
+      | qa1+bundled+report+60@decho.com | Report Test 008 | Desktop      | 55G9X2WWZ6VBBW9AQ6R5   | Limited: 10        | 1.00            |                        |
+       And I delete machine status bundle TC21200 scheduled report
     And I clear downloads folder machine-status*.csv file
     When I stop masquerading
     When I act as partner by:
@@ -643,15 +643,6 @@ Feature: Scheduled Reports
       | <%=@recipients_array[0]%> | Your machine status tc7329 - Machine Status |
     Then I should see 1 email(s)
     And I build a new report:
-      | type            | name                   |
-      | Resources Added | resources added tc7329 |
-    Then Report created successful message should be Created Resources Added Report.
-    And I wait for 60 seconds
-    And I search emails by keywords:
-      | to               | content                                       |
-      | @new_admin_email | Your resources added tc7329 - Resources Added |
-    Then I should see 1 email(s)
-    And I build a new report:
       | type               | name                      | recipients             |
       | Machine Over Quota | machine over quota tc7329 | <%=create_user_email%> |
     Then Report created successful message should be Created Machine Over Quota Report.
@@ -659,6 +650,16 @@ Feature: Scheduled Reports
     And I search emails by keywords:
       | to                        | content                                             |
       | <%=@recipients_array[0]%> | Your machine over quota tc7329 - Machine Over Quota |
+    Then I should see 1 email(s)
+    # legacy bug 144781 for Resources Added report when partner has no machine.
+    And I build a new report:
+      | type            | name                   |
+      | Resources Added | resources added tc7329 |
+    Then Report created successful message should be Created Resources Added Report.
+    And I wait for 60 seconds
+    And I search emails by keywords:
+      | to               | content                                       |
+      | @new_admin_email | Your resources added tc7329 - Resources Added |
     Then I should see 1 email(s)
     And I log out bus admin console
     And I log in bus admin console as administrator
@@ -728,19 +729,6 @@ Feature: Scheduled Reports
       | <%=@recipients_array[1]%> | Your machine status tc7330 - Machine Status |
     Then I should see 1 email(s)
     And I build a new report:
-      | type            | name                   | multiple recipients                            |
-      | Resources Added | resources added tc7330 | <%=create_user_email%>; <%=create_user_email%> |
-    Then Report created successful message should be Created Resources Added Report.
-    And I wait for 50 seconds
-    And I search emails by keywords:
-      | to                        | content                                       |
-      | <%=@recipients_array[0]%> | Your resources added tc7330 - Resources Added |
-    Then I should see 1 email(s)
-    And I search emails by keywords:
-      | to                        | content                                       |
-      | <%=@recipients_array[1]%> | Your resources added tc7330 - Resources Added |
-    Then I should see 1 email(s)
-    And I build a new report:
       | type               | name                      | multiple recipients                            |
       | Machine Over Quota | machine over quota tc7330 | <%=create_user_email%>; <%=create_user_email%> |
     Then Report created successful message should be Created Machine Over Quota Report.
@@ -752,6 +740,20 @@ Feature: Scheduled Reports
     And I search emails by keywords:
       | to                        | content                                             |
       | <%=@recipients_array[1]%> | Your machine over quota tc7330 - Machine Over Quota |
+    Then I should see 1 email(s)
+    # legacy bug 144781 for Resources Added report when partner has no machine.
+    And I build a new report:
+      | type            | name                   | multiple recipients                            |
+      | Resources Added | resources added tc7330 | <%=create_user_email%>; <%=create_user_email%> |
+    Then Report created successful message should be Created Resources Added Report.
+    And I wait for 50 seconds
+    And I search emails by keywords:
+      | to                        | content                                       |
+      | <%=@recipients_array[0]%> | Your resources added tc7330 - Resources Added |
+    Then I should see 1 email(s)
+    And I search emails by keywords:
+      | to                        | content                                       |
+      | <%=@recipients_array[1]%> | Your resources added tc7330 - Resources Added |
     Then I should see 1 email(s)
     And I log out bus admin console
     And I log in bus admin console as administrator
@@ -786,7 +788,7 @@ Feature: Scheduled Reports
     And I search emails by keywords:
       | to                        | content                                         | after |
       | <%=@recipients_array[2]%> | Your billing summary test7345 - Billing Summary | today |
-    Then I should see 1 email(s)
+    Then I should see 2 email(s)
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -796,6 +798,7 @@ Feature: Scheduled Reports
       | period | users |
       | 12     | 1     |
     Then New partner should be created
+    And I get partner id by admin email from database
     When I act as newly created partner account
     And I build a new report:
       | type            | name                     | frequency |
@@ -813,21 +816,24 @@ Feature: Scheduled Reports
     Then billing summary test7352 scheduled report Next Run value should be Inactive
     And billing summary test7352 scheduled report History value should be 2 reports
     # wait for 1 day and 1 min
-    And I wait for 86460 seconds
-    And I search emails by keywords:
-      | to               | content                                         | after |
-      | @new_admin_email | Your billing summary test7352 - Billing Summary | today |
-    Then I should see 0 email(s)
-    And I navigate to bus admin console login page
+    #And I wait for 86460 seconds
+    #And I search emails by keywords:
+    #  | to               | content                                         | after |
+    #  | @new_admin_email | Your billing summary test7352 - Billing Summary | today |
+    #Then I should see 0 email(s)
+    #And I navigate to bus admin console login page
+    Then no report is scheduled for this partner
+    And I log out bus admin console
     When I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.7356 @bus @tasks_p2 @reports
+  @TC.7356 @bus @tasks_p2 @reports @24hours
   Scenario: 7356 Delete a report
     When I add a new MozyEnterprise partner:
       | period | users |
       | 12     | 1     |
     Then New partner should be created
+    And I get partner id by admin email from database
     When I act as newly created partner account
     And I build a new report:
       | type            | name                     | frequency |
@@ -836,11 +842,13 @@ Feature: Scheduled Reports
     And I delete billing summary test7356 scheduled report
     Then I should see No results found in scheduled reports list
     # wait for 1 day and 1 min
-    And I wait for 86460 seconds
-    And I search emails by keywords:
-      | to               | content                                         | after |
-      | @new_admin_email | Your billing summary test7352 - Billing Summary | today |
-    Then I should see 0 email(s)
-    And I navigate to bus admin console login page
+    #And I wait for 86460 seconds
+    #And I search emails by keywords:
+    #  | to               | content                                         | after |
+    #  | @new_admin_email | Your billing summary test7352 - Billing Summary | today |
+    #Then I should see 0 email(s)
+    #And I navigate to bus admin console login page
+    And no report is scheduled for this partner
+    And I log out bus admin console
     When I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name

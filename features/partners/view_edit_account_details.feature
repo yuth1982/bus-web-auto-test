@@ -4,7 +4,7 @@ Feature: View/Edit Details: Account Details
     Given I log in bus admin console as administrator
 
 # Edit partner info
-  @TC.122386 @edit_account_details @tasks_p2 @bus
+  @TC.122386 @edit_account_details @tasks_p2 @bus @ROR_smoke
   Scenario: 122386 Edit a partners contact info
     When I add a new MozyPro partner:
       | period | base plan | net terms |

@@ -2,6 +2,7 @@ When /^I search partners in (pending-delete not available to purge|pending-delet
   attributes = search_key_table.hashes.first
   keywords = (attributes['name'] || attributes['email'])
   keywords = keywords.gsub(/@company_name/,@partner.company_info.name).gsub(/@admin_email/,@partner.admin_info.email) unless @partner.nil?
+  keywords = keywords.gsub(/@company_name/,@subpartner.company_name).gsub(/@admin_email/,@subpartner.admin_email_address) unless @subpartner.nil?
   full_search = (attributes['full search'] || 'no').eql?('yes')
   @bus_site.admin_console_page.manage_pending_deletes_section.search_partners(match, keywords, full_search)
 end
@@ -18,6 +19,7 @@ Then /^Partners in (pending-delete not available to purge|pending-delete availab
           v.gsub!(/@aria_id/, @aria_id) unless @aria_id.nil?
         when 'Partner'
           v.gsub!(/@company_name/, @partner.company_info.name) unless @partner.nil?
+          v.gsub!(/@company_name/, @subpartner.company_name) unless @subpartner.nil?
         when 'Created'
           v.replace(Chronic.parse(v).strftime('%m/%d/%y'))
         when 'Request Date'
@@ -26,6 +28,7 @@ Then /^Partners in (pending-delete not available to purge|pending-delete availab
           v.replace(Chronic.parse(v).strftime('%a %b %d %Y'))
         when "Root Admin"
           v.gsub!(/@admin_email/, @partner.admin_info.email) unless @partner.nil?
+          v.gsub!(/@admin_email/, @subpartner.admin_email_address) unless @subpartner.nil?
         else
           # do nothing
       end

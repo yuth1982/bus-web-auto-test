@@ -3,7 +3,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.126168 @bus @regression
+  @TC.126168 @bus @windows_version_management @tasks_p1
   Scenario: 126168 Create a windows client version in Mozy Inc
     When I navigate to List Versions section from bus admin console page
     And I list versions for:
@@ -16,7 +16,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
       | WinTestVersion 10.10.10.10 | win      | 10.10.10.10    | This is a test version for BUS version management. |
     Then the client version should be created successfully
 
-  @TC.126172 @bus @regression
+  @TC.126172 @bus @windows_version_management @tasks_p1
   Scenario: 126172 Windows Backup client version can be listed in List Version view
     When I navigate to List Versions section from bus admin console page
     And I list versions for:
@@ -30,18 +30,20 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
       | Version     | Platform  | Name                       | Status     |
       | 10.10.10.10 | win       | WinTestVersion 10.10.10.10 | incomplete |
 
-  @TC.132025 @bus @regression
+  @TC.132025 @bus @windows_version_management @tasks_p1
   Scenario: 132025 Backup client version can only be managed by BDS partner
-    When I act as partner by:
-      | name                                                    | including sub-partners |
-      | Internal Mozy - MozyPro with edit user group capability | yes                    |
+    When I use a existing partner:
+      | company name                                            | admin email                         | admin name       | partner type |
+      | Internal Mozy - MozyPro with edit user group capability | mozybus+bonnie+perez+0110@gmail.com | Admin Automation | MozyPro      |
+    And I navigate to bus admin console login page
+    And I log in bus admin console as new partner admin
     Then I will not see the Create New Versions link from navigation links
     And I will not see the List Versions link from navigation links
     When I navigate to Edit Client Version section from bus admin console page
     Then there is no field for Create New Version in edit client version section
     Then there is no field for List Versions in edit client version section
 
-  @TC.122205 @bus @regression
+  @TC.122205 @bus @windows_version_management @tasks_p1
   Scenario: 122205 Upload an oem.db3 for windows version
     When I navigate to List Versions section from bus admin console page
     And I list versions for:
@@ -51,6 +53,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
     And I click General tab of version details
     And I upload file objects_2.30.0.466.db3 for the windows version
     And I save changes for the version
+    And I wait for 120 seconds
     Then version info should be changed successfully
     And I refresh version details section
     And I change version status to enabled
@@ -70,7 +73,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
     And the download link for partner MozyPro should be generated
     And the download link for partner MozyEnterprise should be generated
 
-  @TC.126170 @bus @regression
+  @TC.126170 @bus @windows_version_management @tasks_p1
   Scenario: 126170 Backup client version can be disabled
     When I navigate to List Versions section from bus admin console page
     And I list versions for:
@@ -88,7 +91,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
 
   # Upgrade Rules
 
-  @TC.126183 @bus @regression
+  @TC.126183 @bus @windows_version_management @tasks_p1
   Scenario: 126183 "Upgrade Version" selector should include enabled Backup client versions
     When I navigate to Upgrade Rules section from bus admin console page
     Then there is no version WinTestVersion 10.10.10.10 in Upgrade Version list
@@ -107,7 +110,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
     Then there is version WinTestVersion 10.10.10.10 in Upgrade Version list
 
 
-  @TC.124042 @bus @regression
+  @TC.124042 @bus @windows_version_management @tasks_p1
   Scenario: 124042 Create Manual upgrade rule for Backup client in Mozypro partner
     When I act as partner by:
       | name    | including sub-partners |
@@ -117,12 +120,14 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
     Then I add a new upgrade rule:
       | version name                | Req? | On? | min version | max version | Install CMD  |
       | WinTestVersion 10.10.10.10  | N    | N   | 0.0.0.1     | 0.0.0.2     | "%1" /silent |
-    And I stop masquerading as sub partner
-    When I search partner by Internal Mozy - MozyPro with edit user group capability
-    And I view partner details by Internal Mozy - MozyPro with edit user group capability
-    And I record the MozyPro partner name Internal Mozy - MozyPro with edit user group capability and admin name Admin Automation
-    And I get the admin id from partner details
-    And I act as newly created partner
+
+    When I use a existing partner:
+      | company name                                            | admin email                         | admin name       | partner type |
+      | Internal Mozy - MozyPro with edit user group capability | mozybus+bonnie+perez+0110@gmail.com | Admin Automation | MozyPro      |
+    And I get admin id of current partner from the database
+    And I get partner id by admin email from database
+    When I navigate to bus admin console login page
+    And I log in bus admin console as new partner admin
     And I navigate to Edit Client Version section from bus admin console page
     Then Client Version Rules should include rule:
       | Update To           | User Group      | Current Version         | OS  | Required | Install Command | Options |
@@ -138,8 +143,8 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
     And I view user details by TC.124042.User
     And I update the user password to default password
     Then I use keyless activation to activate devices
-      | machine_name    | user_name                   | machine_type |
-      | Machine1_124042 | <%=@new_users.first.email%> | Desktop      |
+      | machine_name    | user_name                   | machine_type | partner_id       |
+      | Machine1_124042 | <%=@new_users.first.email%> | Desktop      | <%=@partner_id%> |
     When I got client config for the user machine:
       | user_name                   | machine                       | platform | arch   | codename | version |
       | <%=@new_users.first.email%> | <%=@clients[0].machine_hash%> | win      | x86    | mozypro  | 0.0.0.2 |
@@ -148,7 +153,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
       | /downloads/mozypro-10_10_10_10-XXXXX.exe |
     And I delete user
 
-  @TC.124044 @bus @regression
+  @TC.124044 @bus @windows_version_management @tasks_p1
   Scenario: 124044 Create Force upgrade rule for Backup client in MozyEnterprise partner
     When I act as partner by:
       | name           | including sub-partners |
@@ -158,12 +163,14 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
     Then I add a new upgrade rule:
       | version name                | Req? | On? | min version | max version | Install CMD  |
       | WinTestVersion 10.10.10.10  | Y    | Y   | 0.0.0.1     | 0.0.0.2     | "%1" /silent |
-    And I stop masquerading as sub partner
-    When I search partner by Internal Mozy - MozyEnterprise with edit user group capability
-    And I view partner details by Internal Mozy - MozyEnterprise with edit user group capability
-    And I record the MozyEnterprise partner name Internal Mozy - MozyEnterprise with edit user group capability and admin name Admin Automation
-    And I get the admin id from partner details
-    And I act as newly created partner
+
+    When I use a existing partner:
+      | company name                                                   | admin email                           | admin name       | partner type   |
+      | Internal Mozy - MozyEnterprise with edit user group capability | mozyautotest+sean+walker+1513@emc.com | Admin Automation | MozyEnterprise |
+    And I get admin id of current partner from the database
+    And I get partner id by admin email from database
+    When I navigate to bus admin console login page
+    And I log in bus admin console as new partner admin
     And I navigate to Edit Client Version section from bus admin console page
     Then Client Version Rules should include rule:
       | Update To           | User Group      | Current Version         | OS  | Required | Install Command | Options |
@@ -179,8 +186,8 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
     And I view user details by TC.124044.User
     And I update the user password to default password
     Then I use keyless activation to activate devices
-      | machine_name    | user_name                   | machine_type |
-      | Machine1_124044 | <%=@new_users.first.email%> | Desktop      |
+      | machine_name    | user_name                   | machine_type | partner_id       |
+      | Machine1_124044 | <%=@new_users.first.email%> | Desktop      | <%=@partner_id%> |
     When I got client config for the user machine:
       | user_name                   | machine                       | platform | arch   | codename | version |
       | <%=@new_users.first.email%> | <%=@clients[0].machine_hash%> | win      | x86    | mozypro  | 0.0.0.2 |
@@ -188,14 +195,15 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
       | update-url                                      | required-client-version | update-required | update-command |
       | /downloads/MozyEnterprise-10_10_10_10-XXXXX.exe | 10.10.10.10             | 1               | "%1" /silent   |
     And I delete user
-    And I stop masquerading as sub partner
+
+    When I log in bus admin console as administrator
     And I act as partner by:
       | name           | including sub-partners |
       | MozyEnterprise | no                     |
     And I navigate to Upgrade Rules section from bus admin console page
     And I delete rule for version WinTestVersion 10.10.10.10 if it exists
 
-  @TC.126184 @bus @regression
+  @TC.126184 @bus @windows_version_management @tasks_p1
   Scenario: 126184 Remove the client upgrade rule in BDS partner
     When I act as partner by:
       | name           | including sub-partners |
@@ -211,7 +219,7 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
     Then there is no rule for WinTestVersion 10.10.10.10 in Upgrade Rules
 
 
-  @TC.124041 @bus @regression
+  @TC.124041 @bus @windows_version_management @tasks_p1
   Scenario: 124041 bds partner can update the client upgrade rule successfully
     When I act as partner by:
       | name    | including sub-partners |
@@ -232,20 +240,23 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
     Then Upgrade Rule for version WinTestVersion 10.10.10.10 should be:
       | version name                | Req? | On? | min version | max version | Install CMD   |
       | WinTestVersion 10.10.10.10  | N    | Y   | 0.0.0.1     | 0.0.0.2     | "%1" /silent  |
-    And I delete rule for version WinTestVersion 10.10.10.10 if it exists
+    #And I delete rule for version WinTestVersion 10.10.10.10 if it exists
 
 
   # Edit Client Version
 
-  @TC.126189 @bus @regression
+  @TC.126189 @bus @windows_version_management @tasks_p1
   Scenario: 126189 Upgrade to: Product partner can't list the inherited version if not branded
-    When I act as partner by:
-      | name                                           | including sub-partners |
-      | Internal Mozy - MozyEnterprise product partner | yes                    |
-    And I navigate to Edit Client Version section from bus admin console page
+    When I use a existing partner:
+      | company name                                   | admin email                           | admin name       | partner type |
+      | Internal Mozy - MozyEnterprise product partner | mozyautotest+maria+white+0139@emc.com | Admin Automation | OEM          |
+    And I get partner id by admin email from database
+    And I navigate to bus admin console login page
+    Then I log in bus admin console as new partner admin
+    When I navigate to Edit Client Version section from bus admin console page
     Then there is no version Windows 10.10.10.10 in Update to list
 
-  @TC.126188 @bus @regression
+  @TC.126188 @bus @windows_version_management @tasks_p1
   Scenario: 126188 Upgrade to: Product partner can list the Branding version if branded
     When I navigate to List Versions section from bus admin console page
     And I list versions for:
@@ -258,27 +269,34 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
     Then version info should be changed successfully
     And the download link for partner Internal Mozy - MozyEnterprise product partner should be generated
 
-    When I act as partner by:
-      | name                                           | including sub-partners |
-      | Internal Mozy - MozyEnterprise product partner | yes                    |
-    And I navigate to Edit Client Version section from bus admin console page
+    When I use a existing partner:
+      | company name                                   | admin email                           | admin name       | partner type |
+      | Internal Mozy - MozyEnterprise product partner | mozyautotest+maria+white+0139@emc.com | Admin Automation | OEM          |
+    And I get partner id by admin email from database
+    And I navigate to bus admin console login page
+    Then I log in bus admin console as new partner admin
+    When I navigate to Edit Client Version section from bus admin console page
     Then there is version Windows 10.10.10.10 in Update to list
 
-  @TC.131322 @bus @regression
+  @TC.131322 @bus @windows_version_management @tasks_p1
   Scenario: 131322 Operating System: Operating System should list all the required windows os
-    When I act as partner by:
-      | name                                                           | including sub-partners |
-      | Internal Mozy - MozyEnterprise with edit user group capability | yes                    |
+    When I use a existing partner:
+      | company name                                                   | admin email                           | admin name       | partner type   |
+      | Internal Mozy - MozyEnterprise with edit user group capability | mozyautotest+sean+walker+1513@emc.com | Admin Automation | MozyEnterprise |
+    And I navigate to bus admin console login page
+    And I log in bus admin console as new partner admin
     And I navigate to Edit Client Version section from bus admin console page
     And I select version Windows 10.10.10.10 in Update To list
     Then Operating System should include OS:
       | Any | Windows 2000 (NT 5.0) | Windows XP (NT 5.1) | Windows XP(x64)/Windows Server 2003/2003R2 (NT 5.2) | Windows Vista/Windows Server 2008 (NT 6.0) | Windows 7/Windows Server 2008 R2 (NT 6.1) | Windows 8/Windows Server 2012 (NT 6.2) | Windows 8.1/Windows Server 2012 R2 (NT 6.3) |
 
-  @TC.126194 @bus @regression
+  @TC.126194 @bus @windows_version_management @tasks_p1
   Scenario: 126194 User Group: User groups selector will list "All User Groups" and each user group of the partner
-    When I act as partner by:
-      | name                                                    | including sub-partners |
-      | Internal Mozy - MozyPro with edit user group capability | yes                    |
+    When I use a existing partner:
+      | company name                                            | admin email                         | admin name       | partner type |
+      | Internal Mozy - MozyPro with edit user group capability | mozybus+bonnie+perez+0110@gmail.com | Admin Automation | MozyPro      |
+    And I navigate to bus admin console login page
+    And I log in bus admin console as new partner admin
     And I add a new Bundled user group:
       | name             | storage_type |
       | TC.126194-Shared | Shared       |
@@ -288,15 +306,15 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
     And I navigate to User Group List section from bus admin console page
     And I delete user group details by name: TC.126194-Shared
 
-  @TC.126191 @TC.126192 @bus @regression
+  @TC.126191 @TC.126192 @bus @windows_version_management @tasks_p1
   Scenario: 126191 126192 Client Version Rules: Create Force update client version rule for Backup client. Client Version Rules: Remove the client version rules in non-BDS partner
-    When I search partner by Internal Mozy - MozyEnterprise with edit user group capability
-    And I view partner details by Internal Mozy - MozyEnterprise with edit user group capability
-    And I record the MozyEnterprise partner name Internal Mozy - MozyEnterprise with edit user group capability and admin name Admin Automation
-    And I get the admin id from partner details
-    When I act as partner by:
-      | name                                                           | including sub-partners |
-      | Internal Mozy - MozyEnterprise with edit user group capability | yes                    |
+    When I use a existing partner:
+      | company name                                                   | admin email                           | admin name       | partner type   |
+      | Internal Mozy - MozyEnterprise with edit user group capability | mozyautotest+sean+walker+1513@emc.com | Admin Automation | MozyEnterprise |
+    And I get admin id of current partner from the database
+    And I get partner id by admin email from database
+    When I navigate to bus admin console login page
+    And I log in bus admin console as new partner admin
     And I navigate to Edit Client Version section from bus admin console page
     And I delete client version rule for Windows 10.10.10.10 if it exists
 
@@ -317,8 +335,8 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
     And I view user details by TC.126191.User
     And I update the user password to default password
     Then I use keyless activation to activate devices
-      | machine_name    | user_name                   | machine_type |
-      | Machine1_126191 | <%=@new_users.first.email%> | Server       |
+      | machine_name    | user_name                   | machine_type | partner_id       |
+      | Machine1_126191 | <%=@new_users.first.email%> | Server       | <%=@partner_id%> |
     And I got client config for the user machine:
       | user_name                   | machine                       | platform | arch   | codename       | version |
       | <%=@new_users.first.email%> | <%=@clients[0].machine_hash%> | win      | x86_64 | MozyEnterprise | 0.0.0.2 |
@@ -345,13 +363,25 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
 
   # Download * Client
 
-  # qa12 download permission bug
-  @TC.126176 @bus @regression
+  # qa12,qa6busclient01 download permission bug
+  @TC.126176 @bus @windows_version_management @tasks_p1
   Scenario: 126176 backup client can be downloaded successfully for none product partner
     When I act as partner by:
-      | name                                                           | including sub-partners |
-      | Internal Mozy - MozyEnterprise with edit user group capability | yes                    |
-    And I navigate to Download * Client section from bus admin console page
+      | name           | including sub-partners |
+      | MozyEnterprise | no                     |
+    And I navigate to Upgrade Rules section from bus admin console page
+    And I delete rule for version WinTestVersion 10.10.10.10 if it exists
+    And I add a new upgrade rule:
+      | version name                | Req? | On? | min version | max version | Install CMD  |
+      | WinTestVersion 10.10.10.10  | N    | Y   | 0.0.0.1     | 0.0.0.2     | "%1" /silent |
+    Then there is rule for WinTestVersion 10.10.10.10 in Upgrade Rules
+
+    When I use a existing partner:
+      | company name                                                   | admin email                           | admin name       | partner type   |
+      | Internal Mozy - MozyEnterprise with edit user group capability | mozyautotest+sean+walker+1513@emc.com | Admin Automation | MozyEnterprise |
+    And I navigate to bus admin console login page
+    And I log in bus admin console as new partner admin
+    And I navigate to Download MozyEnterprise Client section from bus admin console page
     Then I can find client download info of platform Windows in Backup Clients part:
       | MozyEnterprise WinTestVersion 10.10.10.10 |
     When I view Details for client MozyEnterprise WinTestVersion 10.10.10.10
@@ -363,12 +393,14 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
     Then the downloaded client should be same as the uploaded file FakeWinClient.exe
 
   # precondition: TC.126188
-  # qa12 download permission bug
-  @TC.126177 @bus @regression
+  # qa12,qa6busclient01 download permission bug
+  @TC.126177 @bus @windows_version_management @tasks_p1
   Scenario: 126177 backup client can be downloaded successfully for product partner
-    When I act as partner by:
-      | name                                           | including sub-partners |
-      | Internal Mozy - MozyEnterprise product partner | yes                    |
+    When I use a existing partner:
+      | company name                                   | admin email                           | admin name       | partner type |
+      | Internal Mozy - MozyEnterprise product partner | mozyautotest+maria+white+0139@emc.com | Admin Automation | OEM          |
+    And I navigate to bus admin console login page
+    Then I log in bus admin console as new partner admin
     And I navigate to Download * Client section from bus admin console page
     Then I can find client download info of platform Windows in Backup Clients part:
       | WinTestVersion 10.10.10.10 |
@@ -380,24 +412,28 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
     When I wait for client fully downloaded
     Then the downloaded client should be same as the uploaded file FakeWinSyncClient.exe
 
-  @TC.126178 @bus @regression
+  @TC.126178 @bus @windows_version_management @tasks_p1
   Scenario: 126178 "Windows Crypto Utility" link of windows client should work correctly
-    When I act as partner by:
-      | name                                                  | including sub-partners |
-      | Internal Mozy - MozyEnterprise without server license | yes                    |
-    And I navigate to Download * Client section from bus admin console page
+    When I use a existing partner:
+      | company name                                          | admin email                      | admin name       | partner type   |
+      | Internal Mozy - MozyEnterprise without server license | automation_test_partner@test.com | Admin Automation | MozyEnterprise |
+    And I navigate to bus admin console login page
+    And I log in bus admin console as new partner admin
+    And I navigate to Download MozyEnterprise Client section from bus admin console page
     Then I can find client download info of platform Windows in Backup Clients part:
       | Other: Windows Crypto Utility |
     When I clear downloads folder
     And I click download link for Windows Crypto Utility
     Then client started downloading successfully
 
-  @TC.126180 @bus @regression
+  @TC.126180 @bus @windows_version_management @tasks_p1
   Scenario: 126180 Details link of backup client should work correctly
-    When I act as partner by:
-      | name                                                    | including sub-partners |
-      | Internal Mozy - MozyPro with edit user group capability | yes                    |
-    And I navigate to Download * Client section from bus admin console page
+    When I use a existing partner:
+      | company name                                            | admin email                         | admin name       | partner type |
+      | Internal Mozy - MozyPro with edit user group capability | mozybus+bonnie+perez+0110@gmail.com | Admin Automation | MozyPro      |
+    And I navigate to bus admin console login page
+    And I log in bus admin console as new partner admin
+    And I navigate to Download MozyPro Client section from bus admin console page
     Then I can find client download info of platform Windows in Backup Clients part:
       | MozyPro WinTestVersion 10.10.10.10 |
     And I view Details for client MozyPro WinTestVersion 10.10.10.10
@@ -405,12 +441,14 @@ Feature: As a Mozy Admin, I should be able to add new windows version and manage
       | Download:                     | MD5:               | Date:  |
       | mozypro-10_10_10_10-XXXXX.exe | FakeWinClient.exe  | @today |
 
-  @TC.505 @bus @regression
+  @TC.505 @bus @windows_version_management @tasks_p1
   Scenario: 505 Verify md5 checksum explanation links are functional
-    When I act as partner by:
-      | name                                                    | including sub-partners |
-      | Internal Mozy - MozyPro with edit user group capability | yes                    |
-    And I navigate to Download * Client section from bus admin console page
+    When I use a existing partner:
+      | company name                                            | admin email                         | admin name       | partner type |
+      | Internal Mozy - MozyPro with edit user group capability | mozybus+bonnie+perez+0110@gmail.com | Admin Automation | MozyPro      |
+    When I navigate to bus admin console login page
+    And I log in bus admin console as new partner admin
+    And I navigate to Download MozyPro Client section from bus admin console page
     Then I can find client download info of platform Windows in Backup Clients part:
       | MozyPro WinTestVersion 10.10.10.10 |
     When I view Details for client MozyPro WinTestVersion 10.10.10.10

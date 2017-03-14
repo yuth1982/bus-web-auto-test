@@ -54,6 +54,7 @@ end
 
 And /^I get machine details info$/ do
   @machine_info = @bus_site.admin_console_page.machine_details_section.machine_info_hash
+  Log.debug @machine_info
 end
 
 And /^I view machine (.+) details from user details section$/ do  |device_name|
@@ -74,6 +75,10 @@ end
 
 Then /^the manifest window title should be (.+)$/ do |title|
   @bus_site.admin_console_page.get_new_window_page_title.should == title
+end
+
+Then /^the manifest window title should include (.+)$/ do |title|
+  @bus_site.admin_console_page.get_new_window_page_title.include?(title).should == true
 end
 
 And /^I click manifest raw link to download the manifest file$/ do
@@ -102,6 +107,18 @@ end
 
 And /^I delete file (.+) if exist$/ do |file_name|
   FileHelper.delete_file(file_name)
+end
+
+And /^I delete the manifest file belongs to (.+)$/ do |machine_name|
+  @manifest_file_name = "manifest-" + @new_users.first.email.to_s + "-" + machine_name + ".txt"
+  @manifest_file_name = @manifest_file_name.gsub("+", "")
+  FileHelper.delete_file(@manifest_file_name)
+end
+
+And /^I delete the client log belongs to (.+)$/ do |machine_name|
+  @log_file_name = "client-" + @new_users.first.email.to_s + "-" + machine_name + ".log"
+  @log_file_name = @log_file_name.gsub("+", "")
+  FileHelper.delete_file(@log_file_name)
 end
 
 Then /^I (delete|undelete) the machine$/ do |action|
@@ -205,7 +222,30 @@ Then /^I click (.+) from machines details section$/ do |link_name|
 end
 
 And /^(Backups|Restores|Virtual Machines) table will display as:$/ do |type, table|
-  @bus_site.admin_console_page.machine_details_section.get_backup_restore_table(type).should == table.raw
+  actual = @bus_site.admin_console_page.machine_details_section.get_backup_restore_table_hashes(type)
+  expected = table.hashes
+  expected.each_with_index do |record_hash, line|
+    record_hash.each do |k,v|
+      v.replace ERB.new(v).result(binding)
+      case k
+        when 'Start Time'
+          if v == 'today'
+            v.replace(Chronic.parse(v).strftime('%m/%d/%y'))
+            actual[line][k].should include(v)
+            v.replace actual[line][k]
+          end
+        else
+          if v == 'any'
+            v.replace actual[line][k]
+          end
+      end
+    end
+  end
+
+  Log.debug "expected: #{expected}"
+  Log.debug "actual: #{actual}"
+  expected.each{ |key| (actual.include?(key)).should be_true}
+
 end
 
 And /^(Backups|Restores|Virtual Machines) table first record will display as:$/ do |type, table|
@@ -249,6 +289,11 @@ And /^manifest (.+) txt file should include:$/ do |file, text|
  FileHelper.read_file(file, "txt").include?(text).should == true
 end
 
+And /^manifest file should have valid manifest$/ do
+  file_prefix = @manifest_file_name.split(".txt")[0]
+  FileHelper.read_file(file_prefix, "txt").split("_hash|")[1].split("\n")[0].length.should == 40
+end
+
 And /^the machine (.+) available quota should be (.+)$/ do |machine_id,quota|
   machine_id.replace ERB.new(machine_id).result(binding)
   DBHelper.get_machine_available_quota(machine_id.to_i).should == quota
@@ -266,4 +311,8 @@ end
 
 And /^Error message for replace machine should be (.+)$/ do |message|
   @bus_site.admin_console_page.replace_machine_section.get_replace_machine_error_msg.should == message
+end
+
+Then /^click item (Download Restore|others) to download restore file$/ do |downloadItem|
+  @bus_site.admin_console_page.machine_details_section.click_machine_download_item(downloadItem)
 end

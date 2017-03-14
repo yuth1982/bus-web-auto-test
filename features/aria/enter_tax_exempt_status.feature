@@ -8,7 +8,7 @@
 
 
 
-  @TC.17533 @firefox  @bus @2.0 @enter_tax-exempt_status
+  @TC.17533 @firefox  @bus @2.0 @enter_tax-exempt_status @regression
   Scenario: 17533 Set both Exempt from State and Federal taxes to false for a new Biennially Mozypro partner
     When I add a new MozyPro partner:
       | period | base plan | server plan | country | vat number   | cc number         |
@@ -23,7 +23,7 @@
     And API* Aria tax exempt status for newly created partner aria id should be No tax exemption
     Then I search and delete partner account by newly created partner company name
 
-  @TC.17537 @firefox @bus @2.0 @enter_tax-exempt_status
+  @TC.17537 @firefox @bus @2.0 @enter_tax-exempt_status @regression
   Scenario: 17537 Set Exempt from State taxes to false for a new 3-years MozyEnterprise partner
     When I add a new MozyEnterprise partner:
       | period | users | country | vat number   | cc number         |
@@ -38,7 +38,7 @@
     And API* Aria tax exempt status for newly created partner aria id should be Federal/National Tax Exempt
     Then I search and delete partner account by newly created partner company name
 
-  @TC.17539 @firefox  @bus @2.0 @enter_tax-exempt_status
+  @TC.17539 @firefox  @bus @2.0 @enter_tax-exempt_status @regression
   Scenario: 17539 Set Exempt from Federal taxes to false for a new Yearly Reseller partner
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | country | vat number    | cc number         |
@@ -53,7 +53,7 @@
     And API* Aria tax exempt status for newly created partner aria id should be State/Province Tax Exempt
     Then I search and delete partner account by newly created partner company name
 
-   @TC.18897 @bus @others
+   @TC.18897 @bus @others @regression
    Scenario: 18897 Deletion is triggered by admins in the bus(Mozypro,business,yearly)
      When I add a new MozyPro partner:
        | period | users | server plan | server add on |

@@ -16,9 +16,13 @@ module Bus
     element(:record_table, xpath: "//div[@id='setting-netdomains_list-content']/table")
     element(:loading_img, xpath: "//img[@alt='Suggestions loading...']")
 
+    #There are 1 second delay that the alias is visible but disabled, which causes the entire steps failed.
+    #Add code to identify whether the alias_input has empty value or not, if not empty, which means the element is at editable status.
+    #Update for TC.122224.
     def add_update_network_domain(network_domain, save, action)
       key_type_select.select(network_domain.key_type) unless network_domain.key_type.nil?
       wait_until{alias_input.visible?}
+      wait_until{alias_input.value != ""} if action == "update"
       alias_input.type_text(network_domain.nd_alias)
       guid_input.type_text(network_domain.guid)
       ou_input.type_text(network_domain.ou)

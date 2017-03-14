@@ -98,6 +98,7 @@ And /^I (upgrade|change|downgrade) my (partner|user|free) account to:$/ do |chan
           total_computers = attributes['computers'] unless attributes['computers'].nil?
           new_additional_storage = attributes['addl storage'] unless attributes['addl storage'].nil?
           new_subscription_period = attributes['period'] unless attributes['period'].nil?
+          submit = (attributes["submit change"] || "no").eql?("yes")
           case
             when attributes["period"].eql?("1")
               new_subscription_period = "M"
@@ -109,7 +110,7 @@ And /^I (upgrade|change|downgrade) my (partner|user|free) account to:$/ do |chan
           @phoenix_site.user_account.go_to_plan(@partner)
           #find(:xpath, "//a[contains(@href,'/plan/edit_renewal')]").click
           #@phoenix_site.update_profile.change_plan_future(@partner)
-          @phoenix_site.update_profile.change_plan_future(new_base_plan, new_additional_storage, total_computers, new_subscription_period)
+          @phoenix_site.update_profile.change_plan_future(new_base_plan, new_additional_storage, total_computers, new_subscription_period, submit)
        end
    end
 end

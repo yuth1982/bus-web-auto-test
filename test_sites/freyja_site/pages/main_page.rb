@@ -63,7 +63,7 @@ module Freyja
 
     # Public: choose one file in sync
     #
-    # Example
+    # Exampl
     #   @freyja_site.main_page.Drillin_sync_file
     #
     # Returns nothing
@@ -130,7 +130,7 @@ module Freyja
         sleep 2
         pathLength += 1
       end
-      find(:xpath, "//tr[@id='#{machineID}:File:#{filePath}']/td/div/span").click
+      find(:xpath, "//tr[@id='#{machineID}:File:test_data/#{filePath}']/td/div/span").click
       sleep 2
     end
 
@@ -199,6 +199,7 @@ module Freyja
     def set_user_password (password)
       user_password_set_text.type_text(password)
       user_password_set_again_text.type_text(password)
+      wait_until {user_continue_activate_btn.visible?}
       user_continue_activate_btn.click
     end
 
@@ -218,6 +219,41 @@ module Freyja
       page.driver.browser.action.context_click(el.native).perform
       wait_until{restores_vm_in_queue.visible?}
       restores_vm_in_queue.click
+    end
+
+    # Public: choose one folder in backup (new)
+    #
+    # Example
+    #   @freyja_site.main_page.Drillin_win_backup_folder
+    #
+    # Returns nothing
+    def Drillin_win_backup_file_slash(machineID, filePath)
+      puts 'split path by slash, not back slash'
+      pathArray = filePath.to_s.split('/')
+      pathLength = 0
+      folderPath = ""
+      find(:xpath, "//tr[@id='#{machineID}:Folder:']/td[2]/div/span[2]/span").click
+      (pathArray.size-1).times do
+        if pathLength == 0
+          #======tell whether the root is "/" or a directory======
+          if pathArray[pathLength] = ""
+            folderPath = "/"
+          else
+            folderPath = folderPath + pathArray[pathLength]
+          end
+        else
+          if folderPath == '/'
+            folderPath = folderPath + pathArray[pathLength]
+          else
+            folderPath = folderPath + '/' + pathArray[pathLength]
+          end
+        end
+        find(:xpath, "//tr[@id='#{machineID}:Folder:#{folderPath}']/td[2]/div/span[2]/span").click
+        sleep 2
+        pathLength += 1
+      end
+      find(:xpath, "//tr[@id='#{machineID}:File:#{filePath}']/td/div/span").click
+      sleep 2
     end
 
   end

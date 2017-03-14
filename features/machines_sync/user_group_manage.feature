@@ -7,7 +7,7 @@ Feature: User group stash setting management
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.19001 @BSA.2000 @bus @stash
+  @TC.19001 @BSA.2000 @bus @stash @regression
   Scenario: 19001 Add default stash storage for a new user group when stash is enabled for partner
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -32,7 +32,7 @@ Feature: User group stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19004 @BSA.2000 @bus @stash
+  @TC.19004 @BSA.2000 @bus @stash @regression
   Scenario: 19004 Add custom stash storage for a new user group when stash is enabled for partner
     When I add a new MozyEnterprise partner:
       | period | users | net terms |
@@ -61,7 +61,7 @@ Feature: User group stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19005 @BSA.2010 @bus @stash
+  @TC.19005 @BSA.2010 @bus @stash @regression
   Scenario: 19005 No Enable sync for all users settings in user group edit page when stash is disabled for partner
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -82,7 +82,7 @@ Feature: User group stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19006 @BSA.2010 @bus @stash
+  @TC.19006 @BSA.2010 @bus @stash @regression
   Scenario: 19006 Existing user groups are enabled when stash is enabled for partner
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -99,7 +99,7 @@ Feature: User group stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19007 @BSA.2010 @bus @stash
+  @TC.19007 @BSA.2010 @bus @stash @regression
   Scenario: 19007 22054 Modify default stash storage quota for a user group in user group edit page when stash is enabled for partner
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -125,7 +125,7 @@ Feature: User group stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19008 @BSA.2020 @bus @stash
+  @TC.19008 @BSA.2020 @bus @stash @regression
   Scenario: 19008 Disable stash for a user group in user group detail section
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -160,7 +160,7 @@ Feature: User group stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19009 @BSA.2020 @bus @stash
+  @TC.19009 @BSA.2020 @bus @stash @regression
   Scenario: 19009 Cancel disable stash for a user group in user group detail section
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -195,7 +195,7 @@ Feature: User group stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19010 @BSA.2020 @bus @stash
+  @TC.19010 @BSA.2020 @bus @stash @regression
   Scenario: 19010 User has not stash when disable stash for a user group in user group detail section
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -220,7 +220,7 @@ Feature: User group stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19011 @BSA.2030 @bus @stash
+  @TC.19011 @BSA.2030 @bus @stash @regression
   Scenario: 19011 Add stash to all users for 0 user in the user group when stash is enabled for partner
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -234,7 +234,7 @@ Feature: User group stash setting management
     And I click Close button on popup window
     And I search and delete partner account by newly created partner company name
 
-  @TC.19012 @BSA.2030 @bus @stash
+  @TC.19012 @BSA.2030 @bus @stash @regression
   Scenario: 19012 A user is enabled with stash I can enable stash for other 2 users in the user group at once
     When I add a new MozyEnterprise partner:
       | period | users |

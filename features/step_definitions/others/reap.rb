@@ -6,7 +6,7 @@
 
 
 
-And /^I force current MozyHome account to delinquent state$/ do
+And /^I force current MozyHome account to (delinquent state|grace period)$/ do |state|
 
   fail('User ID needed for setting account to delinquent state')  if @user_id.nil?
 
@@ -15,8 +15,10 @@ And /^I force current MozyHome account to delinquent state$/ do
   DBHelper.set_expiration_time(@user_id,1)
   run_phoenix_process_subscription_script(@user_id)
 
-  DBHelper.set_expiration_time(@user_id,1)
-  run_phoenix_process_subscription_script(@user_id)
+  if state == "delinquent state"
+    DBHelper.set_expiration_time(@user_id,1)
+    run_phoenix_process_subscription_script(@user_id)
+  end
 
   disable_cybersoure_payment_force_failure
 
@@ -116,7 +118,19 @@ end
 
 And /^I force current MozyHome account to billed$/ do
   DBHelper.set_expiration_time(@user_id,1)
-  run_phoenix_process_subscription_script(@user_id)
+  Log.debug run_phoenix_process_subscription_script(@user_id)
+end
+
+And /^I set current MozyHome account to be expired (\d+) days later$/ do |days|
+  DBHelper.set_expiration_time(@user_id,-days.to_i)
+end
+
+And /^I run process_subscription script for the user$/ do
+  Log.debug run_phoenix_process_subscription_script(@user_id)
+end
+
+And /^I run send_initial_renewal_notification for the user$/ do
+  Log.debug run_phoenix_send_notification_script(@user_id)
 end
 
 

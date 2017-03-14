@@ -6,7 +6,7 @@ Feature: Email Alerts
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.1980 @bus @email_alerts @tasks_p1 @smoke
+  @TC.1980 @bus @email_alerts @tasks_p1 @smoke @ROR_smoke
   Scenario: 1980:Create New Daily Alert
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -228,7 +228,7 @@ Feature: Email Alerts
       | @new_admin_email  | Backup Summary |
     Then I should see 1 email(s)
     Then I get text for user group (default user group) from email content
-    Then The email content should include Machine1_122441 (never)
+    Then The email content should include Machine1_122441
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
@@ -270,7 +270,7 @@ Feature: Email Alerts
       | @new_admin_email  | Machines that haven't been backed up |
     Then I should see 1 email(s)
     Then I get text for user group (default user group) from email content
-    Then The email content should include Machine1_122442 (never)
+    Then The email content should include No machines.
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 

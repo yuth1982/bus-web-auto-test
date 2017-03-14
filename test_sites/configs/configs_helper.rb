@@ -11,6 +11,7 @@ LANG = YAML.load_file("#{File.dirname(__FILE__)}/lang.yaml")
 # Active QA test environment, for example qa5, qa6
 TEST_ENV = ENV['BUS_ENV'] || 'qa12h'
 QA_ENV = ALL_ENV[TEST_ENV]
+PROD_CONFIRM = (ENV['PROD_CONFIRM'] || 'false')
 
 # used for billing price info
 BILLING = YAML.load_file("#{File.dirname(__FILE__)}/billing.yaml")
@@ -44,13 +45,7 @@ BROWSER = (ENV['br'] || 'firefox').downcase
 
 SCREEN_SHOT = (ENV["SCREEN_SHOT"] || "no").eql?("yes")
 
-#when the platform is US machine Linux will use gmail, other platforms will use outlook
-if RUBY_PLATFORM.include?('linux')
-  MAILBOX = 'gmail'
-else
-  MAILBOX = 'outlook'
-end
-MAILBOX = ENV['BUS_MAILBOX'] unless ENV['BUS_MAILBOX'].nil?
+MAILBOX = ENV['BUS_MAILBOX'] || 'outlook'
 if MAILBOX.eql? 'outlook'
   CONFIGS['global']['email_prefix'] = CONFIGS['global']['email_prefix_outlook']
   CONFIGS['global']['email_domain'] = CONFIGS['global']['email_domain_outlook']

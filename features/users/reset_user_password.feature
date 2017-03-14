@@ -3,6 +3,7 @@ Feature: reset user password
   Background:
     Given I log in bus admin console as administrator
 
+  # forget password email in QA12 can not be received, need to investigate
   @TC.126029 @bus @user_login @tasks_p1
   Scenario: Mozy-126029:Reset Password from oem.partners.com
     When I act as partner by:
@@ -17,12 +18,12 @@ Feature: reset user password
     And I input email @new_users[0].email in reset password panel to reset password
     Then I wait for 30 seconds
     When I search emails by keywords:
-      | subject                             | to                       |
-      | BDS Online Backup password recovery | <%=@new_users[0].email%> |
+      | subject                | to                       |
+      | Mozy password recovery | <%=@new_users[0].email%> |
     Then I should see 1 email(s)
     When I click reset password link from the email
     Then I reset password with reset password
-    And I will see reset password massage Your password has been changed.
+    And I will see reset password massage Your password has been changed. Please be sure to start Mozy Configuration on each computer on the account in order to enter the new password.
     Then I log in bus admin console with user name @new_users[0].email and password reset password
     And the user log out bus
     When I log in bus admin console as administrator
@@ -58,7 +59,7 @@ Feature: reset user password
     Then I should see 1 email(s)
     When I click reset password link from the email
     Then I reset password with reset password
-    And I will see reset password massage Your password has been changed.
+    And I will see reset password massage Your password has been changed. Please be sure to start MozyPro Configuration on each computer on the account in order to enter the new password.
     Then I log in bus pid console with:
       | username                 | password                                  |
       | <%=@new_users[0].email%> | <%=CONFIGS['global']['test_hipaa_pwd'] %> |
@@ -66,7 +67,7 @@ Feature: reset user password
     When I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.126031 @bus @user_login @tasks_p1
+  @TC.126031 @bus @user_login @tasks_p1 @ROR_smoke
   Scenario: 126031:Reset Password from secure.mozy.com
     When I am at dom selection point:
     And I add a phoenix Free user:
@@ -83,7 +84,7 @@ Feature: reset user password
     Then I should see 1 email(s)
     When I click reset password link from the email
     Then I reset password with reset password
-    And I will see reset password massage Your password has been changed.
+    And I will see reset password massage Your password has been changed. Please start MozyHome Configuration on each computer on the account in order to enter the new password.
     And I log into phoenix with username newly created MozyHome username and password reset password
     And I access freyja from phoenix
     And I select options menu
@@ -95,7 +96,7 @@ Feature: reset user password
     And I view user details by newly created MozyHome username
     And I delete user
 
-  @TC.126032 @bus @user_login @tasks_p1
+  @TC.126032 @bus @user_login @tasks_p1 @subdomain
   Scenario: 126032:Reset User Password from subdomain.mozypro.com
     Then I act as partner by:
       | name                      |
@@ -118,7 +119,7 @@ Feature: reset user password
     Then I should see 1 email(s)
     When I click reset password link from the email
     Then I reset password with reset password
-    And I will see reset password massage Your password has been changed.
+    And I will see reset password massage Your password has been changed. Please be sure to start MozyPro Configuration on each computer on the account in order to enter the new password.
     Then I navigate to resetpassword user login page
     Then I log in bus admin console with user name @new_users[0].email and password reset password
     And the user log out bus
@@ -160,7 +161,7 @@ Feature: reset user password
     Then I should see 1 email(s)
     When I click reset password link from the email
     Then I reset password with reset password
-    And I will see reset password massage Your password has been changed.
+    And I will see reset password massage Your password has been changed. Please be sure to start MozyPro Configuration on each computer on the account in order to enter the new password.
     Then I navigate to user login page with partner ID
     Then I log in bus pid console with:
       | username                 | password                                  |

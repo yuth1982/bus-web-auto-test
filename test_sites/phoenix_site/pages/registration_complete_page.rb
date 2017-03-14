@@ -103,6 +103,8 @@ module Phoenix
 
     # home registration complete
     def home_success(partner)
+      # There is a workaround, only maximize window can make automation continue (Windows machine only)
+      page.driver.browser.manage.window.maximize
       wait_until { !first(:css, "div.center-form-box > h2").nil? }
       wait_until { !first(:xpath, "//input[@type='button']").nil? }
       check_url

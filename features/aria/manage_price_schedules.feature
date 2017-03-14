@@ -256,7 +256,7 @@ Feature: manage price schedules - billed partner
     And I delete partner account
 
 
-  @TC.18752 @bus @aria @tasks_p2
+  @TC.18752 @bus @aria @tasks_p2 @ROR_smoke
   Scenario: 18752 Change plan will reflect the price schedule for a partner
     When I add a new MozyPro partner:
       | period | base plan | server plan |
@@ -430,15 +430,13 @@ Feature: manage price schedules - billed partner
       | MozyPro 250 GB Plan (Monthly)                   | Non-profit Discount | usd               | 2              |
       | MozyPro Server Add-on for 250 GB Plan (Monthly) | Non-profit Discount | usd               | 3              |
     And I move backwards account billing dates 1 month for newly created partner aria id
-    Then I wait for 86400 seconds
-    When I navigate to bus admin console login page
-    And I log in bus admin console as administrator
-    When I act as newly created partner account
+    And I act as newly created partner account
     And I navigate to Billing History section from bus admin console page
     And Billing history table should be:
       | Date      | Amount  | Total Paid | Balance Due |
-      | today     | $214.15 | $214.15    | $0.00       |
-      | yesterday | $110.98 | $110.98    | $0.00       |
+      | today     | $27.18  | $27.18     | $0.00       |
+      | today     | $75.99  | $75.99     | $0.00       |
+      | today     | $110.98 | $110.98    | $0.00       |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 

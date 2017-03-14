@@ -89,6 +89,10 @@ module Bus
     # device section
     element(:device_details_link, xpath: "//table[@class='mini-table']/tbody/tr[1]/td[1]/a")
     element(:device_details_td, xpath: "//table[@class='mini-table']/tbody/tr[1]/td[1]")
+    elements(:device_info_hash, xpath: "//table[@class='mini-table']//a[text()='Sync']/../../td")
+    element(:error_message, xpath: "//ul[@class='flash errors']/li")
+    element(:no_computer_msg, xpath:  "//table[@class='mini-table']//tr/td")
+
     # Change User Password
     element(:new_password_tb, id: 'new_password')
     element(:new_password_confirm_tb, id: 'new_password_confirmation')
@@ -132,11 +136,22 @@ module Bus
     #delete sync container
     element(:delete_sync_i, xpath: "//i[@class='icon-trash icon-2x']")
     element(:delete_sync_yes, xpath: "//input[@value='Yes']")
+    element(:delete_device_yes, xpath: "//div[@class='popup-window']//input[@value='Yes' and @type='button']")
+    element(:delete_device_no, xpath: "//div[@class='popup-window']//input[@value='No' and @type='button']")
+    element(:delete_device_dlg, xpath: "//div[@class='popup-window']")
 
     # Change Machine Quota under user details for OEM partners
     element(:change_machine_quota_link, css: "a[id^=edit_quota_for_user_show]")
     element(:change_machine_quota_tb, css: "input[id^=quota_in_gb_for_user_show_]")
     element(:change_machine_quota_btn, css: "div[id^=change_quota_for_user_show_] input[value='Save']")
+
+
+    #elements(:sync_device_info_hash, xpath: "//a[text()='Sync']/../../td")
+    #element(:error_message, xpath: "//ul[@class='flash errors']/li")
+    #element(:delete_device_dlg, xpath: "//div[@class='popup-window']")
+    #element(:delete_device_dlg_Yes, xpath: "//div[@class='popup-window']//input[@value='Yes' and @type='button']")
+    #element(:delete_device_dlg_No, xpath: "//div[@class='popup-window']//input[@value='No' and @type='button']")
+
 
     # Public: User details storage, devices, storage limit hash
     #
@@ -521,17 +536,35 @@ module Bus
       Hash[*stash_table_headers.zip(stash_table_rows).flatten]
     end
 
-    def delete_device(device_name)
-      msg = ''
-      device_table.rows.each do |row|
-        if row[0].text == device_name
-          row[-1].find(:css, 'form[id^=machine-delete] a.action').click
-          msg = alert_text
-          alert_accept
-          break;
+    # Delete a device. Accept multiple arguments to support following scenarios
+    # To delete a device only by device name, don't care keeping data or not, provide one argument. e.g.,
+    #   - delete_device("machine001")
+    # To delete a device and require to keep data, or not keep data, provide two arguments. e.g,
+    #   - keep data: delete_device("machine001", "with")
+    #   - not keep data: delete_device("machine001", "without")
+    def delete_device(*args)
+      if args.size == 1
+        msg = ''
+        device_name = args[0]
+        device_table.rows.each do |row|
+          if row[0].text == device_name
+            row[-1].find(:css, 'form[id^=machine-delete] a.action').click
+            msg = alert_text
+            alert_accept
+            break;
+          end
         end
+        msg
+      else
+        device_name = args[0]
+        data_keep = args[1]
+        #click on the set input textbox
+        find(:xpath, "//a[text()='#{device_name}']/../../td[5]//a[contains(@onclick, 'show_delete_stash_popup')]").click
+        wait_until{ delete_device_dlg }
+        puts "Find Delete dialog"
+        delete_device_yes.click if data_keep == "with"
+        delete_device_no.click if data_keep == "without"
       end
-      msg
     end
 
     def delete_sync
@@ -922,6 +955,181 @@ module Bus
 
     def click_device_link(device)
       find(:xpath, "//a[text()='#{device}']").click
+    end
+
+    #==============================
+    #Public : Get the sync device detail storage info from user detail section and compare with the given table.
+    #
+    #@param : [] None
+    #
+    #Example:
+    #       @bus_site.admin_console_page.search_list_machines_section.sync_device_storage_info_hash
+    #
+    #@return:
+    #       [Hash] device storage detail info in hash format.
+    #==============================
+    def sync_device_storage_info_hash
+      @device_details = {}
+      i = 1
+      device_info_hash.each do |td|
+        puts "======" + i.to_s + "/" + td.text + "======"
+        @device_details["Sync Container"] =  td.text if i == 1
+        @device_details["Used/Available"] =  td.text if i == 2
+        @device_details["Device Storage Limit"] =  td.text if i == 3
+        @device_details["Last Update"] =  td.text if i == 4
+        i = i + 1
+      end
+      puts @device_details
+      return @device_details
+    end
+
+
+    #==============================
+    #Public : Get the sync device detail storage info from user detail section and compare with the given table.
+    #
+    #@param : [] None
+    #
+    #Example:
+    #       @bus_site.admin_console_page.search_list_machines_section.sync_device_storage_info_hash
+    #
+    #@Return:
+    #       [Hash] device storage detail info in hash format -
+    #         {"Computer"=>"Sync", "Encryption"=>"Default", "Storage Used"=>"0 / 2 GB (change)", "Last Update"=>"N/A"}
+    #==============================
+    def sync_device_itemized_storage_info_hash
+      @device_details = {}
+      i = 1
+      device_info_hash.each do |td|
+        puts "======" + i.to_s + "/" + td.text + "======"
+        @device_details["Computer"] =  td.text if i == 1
+        @device_details["Encryption"] =  td.text if i == 2
+        @device_details["Storage Used"] =  td.text if i == 3
+        @device_details["Last Update"] =  td.text if i == 4
+        i = i + 1
+      end
+      puts @device_details
+      return @device_details
+    end
+
+
+    #==============================
+    #Public : Update <Device Storage Limit> on the specified device with the given vailid | invalid number
+    #
+    #@param : [String] device name
+    #         [String] storage quota you would like to input
+    #
+    #Example:
+    #       @bus_site.admin_console_page.search_list_machines_section.update_device_storage_limit("Sync", "10")
+    #
+    #@Return:
+    #       None
+    #==============================
+    def update_device_storage_limit(device_name, amount)
+      find(:xpath, "//a[text()='#{device_name}']/../../td[3]//a[@href='#' and text()='Set']").click
+      wait_until {!(find(:xpath, "//a[text()='#{device_name}']/../../td[3]//div[@style='position:relative']//input[@type='text']").nil?)}
+      find(:xpath, "//a[text()='#{device_name}']/../../td[3]//div[@style='position:relative']//input[@type='text']").type_text(amount)
+      find(:xpath, "//a[text()='#{device_name}']/../../td[3]//div[@style='position:relative']//a[text()='Save']").click
+      sleep(5)
+      #======In case user input a negative number, accept the alert dlg and click <Cancel> button
+      alert_accept if amount.to_i < 0
+      find(:xpath, "//a[text()='#{device_name}']/../../td[3]//div[@style='position:relative']//a[text()='Cancel']").click if amount.to_i < 0
+    end
+
+
+    #==============================
+    #Public : Get <Device Storage Limit> tooltip of the specified device.
+    #
+    #@param : [String] device name
+    #
+    #Example:
+    #       @bus_site.admin_console_page.search_list_machines_section.get_device_Device_Storage_Limit_tooltip("Sync")
+    #
+    #@Return:
+    #       [String] <Device Storage Limit> tooltip. e.g., "Min: 0 GB, Max: 1024 GB"
+    #==============================
+    def get_device_Device_Storage_Limit_tooltip(device_name)
+      #Click the set to get the textbox object.
+      find(:xpath, "//table[@class='mini-table']//a[text()='#{device_name}']/../../td[3]//a[@href='#' and text()='Set']").click
+      #wait till the set textbox appear
+      wait_until {!(find(:xpath, "//table[@class='mini-table']//a[text()='#{device_name}']/../../td[3]//div[@style='position:relative']//input[@type='text']").nil?)}
+      sleep(1)
+      #click on the set input textbox
+      find(:xpath, "//table[@class='mini-table']//a[text()='#{device_name}']/../../td[3]//div[@style='position:relative']//input[@type='text']").click
+      sleep(1)
+      tooltip = find(:xpath, "//table[@class='mini-table']//a[text()='#{device_name}']/../../td[3]//div[@style='position:relative']//span[@class='storage_pool_quota_tooltip']").text
+      #click Cancel button
+      find(:xpath, "//table[@class='mini-table']//a[text()='#{device_name}']/../../td[3]//div[@style='position:relative']//a[text()='Cancel']").click
+      return tooltip
+    end
+
+    #==============================
+    #Public : Get device returned error message
+    #
+    #@param : [] None
+    #
+    #Example:
+    #
+    #
+    #Return : [String] Error message returned on the device detail section. e.g.,
+    #           "The Sync Storage limit cannot be more than what is available for this user."
+    #==============================
+    def get_error_message
+      puts error_message.text
+      error_message.text
+    end
+
+
+    #==============================
+    #Public : Delete device by the given device name with or without keeping data
+    #
+    #@param : [] None
+    #
+    #Example:
+    #       @bus_site.admin_console_page.user_details_section.delete_device("Sync", false)
+    #
+    #Return : [] None
+    #==============================
+    #def delete_device(device_name, data_keep)
+      #click on the set input textbox
+      #find(:xpath, "//a[text()='#{device_name}']/../../td[5]//a[contains(@onclick, 'show_delete_stash_popup')]").click
+      #wait_until{ delete_device_dlg }
+      #puts "Find Delete dialog"
+      #delete_device_yes.click if data_keep == "with"
+      #delete_device_no.click if data_keep == "without"
+      #wait_until{ !delete_device_dlg.nil? }
+    #end
+
+    #==============================
+    #Public : Delete device by the given device name with or without keeping data
+    #
+    #@param : [] None
+    #
+    #Example:
+    #       @bus_site.admin_console_page.user_details_section.delete_itemized_device("Sync", false)
+    #
+    #Return : [] None
+    #==============================
+    def delete_itemized_device(device_name, data_keep)
+      #click on the set input textbox
+      find(:xpath, "//a[text()='#{device_name}']/../../td[6]//a[contains(@onclick, 'show_delete_stash_popup')]").click
+      wait_until{ delete_device_dlg }
+      puts "Find Delete dialog"
+      delete_device_yes.click if data_keep == "with"
+      delete_device_no.click if data_keep == "without"
+      #wait_until{ !delete_device_dlg.nil? }
+    end
+
+    def change_stash_quota_for_itemized_user(quota)
+      change_stash_quota_tb.type_text(quota)
+      change_stash_quota_btn.click
+    end
+
+    def get_sync_disabled_message
+      no_computer_msg.text
+    end
+
+    def click_computer(computer)
+      find(:xpath, "//table[@class='mini-table']//a[text()='#{computer}']").click
     end
 
     private

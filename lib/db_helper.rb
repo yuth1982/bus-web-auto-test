@@ -75,7 +75,7 @@ module DBHelper
   def update_machine_info(machine_id, quota, time = 'now()')
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "UPDATE machines SET space_used = #{quota}::bigint*1024*1024*1024 , pending_space_used = 0, patches = 0, files = 1, last_client_version = null,last_backup_at = #{time}, last_successful_backup_at = #{time} WHERE id = #{machine_id};;"
+      sql = "UPDATE machines SET space_used = #{quota}::bigint*1024*1024*1024 , pending_space_used = 0, patches = 0, files = 1, last_backup_at = #{time}, last_successful_backup_at = #{time} WHERE id = #{machine_id};;"
       c = conn.exec(sql)
     rescue PG::Error => e
       puts "postgres error: #{e}"
@@ -110,7 +110,7 @@ module DBHelper
     end
   end
 
-  def get_user_username(parent)
+  def get_user_username(parent, username_prefix = nil)
     partner_id = case parent
                               when 'ME'
                                 "mozy_enterprise_partner_id"
@@ -133,7 +133,9 @@ module DBHelper
                   select tree_sortkey from pro_partners p where p.id in (
                     select cast(value as integer) from global_settings where key = '#{partner_id}')) as key
               where sub_pt.tree_sortkey between key.tree_sortkey and tree_right(key.tree_sortkey)))
-            and u.enforce_unique_username = true and u.userhash is not null and u.username is not null and u.creation_time is not null and deleted = false limit 1;"
+            and u.enforce_unique_username = true and u.userhash is not null and u.username is not null and u.creation_time is not null"
+      sql += " and username like '#{username_prefix}%'" unless username_prefix.nil?
+      sql += ' and deleted = false limit 1;'
       c = conn.exec(sql)
       Log.debug("Email from tree #{parent} = #{c.values[0][0]}")
       c.values[0][0]
@@ -148,7 +150,8 @@ module DBHelper
   def get_admin_email
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "select username from public.admins where username like '%@gmail.com%' and deleted_at IS NULL and passwordhash IS NOT NULL and username not in (select username from users where username like '%@gmail.com%' and deleted = false) order by id DESC limit 1;"
+      #sql = "select username from public.admins where username like '%@gmail.com%' and deleted_at IS NULL and passwordhash IS NOT NULL and username not in (select username from users where username like '%@gmail.com%' and deleted = false) order by id DESC limit 1;"
+      sql = "select username from public.admins where username like 'mozyautotest%@emc.com%' and deleted_at IS NULL and passwordhash IS NOT NULL and username not in (select username from users where username like 'mozyautotest%@emc.com%' and deleted = false) order by id DESC limit 1;"
       c = conn.exec(sql)
       c.values[0][0]
     rescue PG::Error => e
@@ -264,6 +267,19 @@ module DBHelper
     end
   end
 
+  def delete_upi_by_id(id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "delete from user_payment_infos where user_id = '#{id}';"
+      c = conn.exec sql
+      c.values.to_s
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
   def get_db_password_config(partner_id, type='user')
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
@@ -296,10 +312,11 @@ module DBHelper
     end
   end
 
+  # The date is set according to server time, MST
   def set_expiration_time(user_id,days_ago)
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "UPDATE subscriptions SET expiration_time='#{Date.today - days_ago.to_i} 12:12:12' WHERE user_id = #{user_id};"
+      sql = "UPDATE subscriptions SET expiration_time='#{DateTime.now.new_offset('-07:00').to_date - days_ago.to_i} 12:12:12' WHERE user_id = #{user_id} and pending is false;" #and cancelled_at is null;
       puts sql
       conn.exec sql
     rescue PG::Error => e
@@ -310,11 +327,20 @@ module DBHelper
     end
   end
 
+  # QA is investigating the time zone issue which causes the case failed - BUS-9621.
   def set_backup_suspended_at(user_id,weeks_ago)
 
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "UPDATE users SET backup_suspended_at = '#{Date.today - (weeks_ago * 7)}' WHERE id = #{user_id};"
+      #same_date = (Time.new.hour - 15 >= 0)
+      if time_zone_in_same_day
+        dblog("backup_suspended_at - local date and ruby script execution date are the same day")
+        sql = "UPDATE users SET backup_suspended_at = '#{Date.today - (weeks_ago * 7)}' WHERE id = #{user_id};"
+      else
+        dblog("backup_suspended_at - local date and ruby script execution date are NOT the same day")
+        sql = "UPDATE users SET backup_suspended_at = '#{Date.today - 1 - (weeks_ago * 7)}' WHERE id = #{user_id};"
+      end
+      dblog(sql)
       conn.exec sql
     rescue PG::Error => e
       puts "postgres error: #{e}"
@@ -327,7 +353,15 @@ module DBHelper
   def set_gc_notify_at(user_id,weeks_ago)
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "UPDATE users SET gc_notify_at = '#{Date.today - (weeks_ago * 7)}' WHERE id = #{user_id};"
+      #same_date = (Time.new.hour - 15 >= 0)
+      if time_zone_in_same_day
+        dblog("gc_notify_at - local date and ruby script execution date are the same day")
+        sql = "UPDATE users SET gc_notify_at = '#{Date.today - (weeks_ago * 7)}' WHERE id = #{user_id};"
+      else
+        dblog("gc_notify_at - local date and ruby script execution date are NOT the same day")
+        sql = "UPDATE users SET gc_notify_at = '#{Date.today - 1 - (weeks_ago * 7)}' WHERE id = #{user_id};"
+      end
+      dblog(sql)
       conn.exec sql
     rescue PG::Error => e
       puts "postgres error: #{e}"
@@ -562,6 +596,7 @@ module DBHelper
     end
   end
 
+
   def get_partner_adr_policy_name(partner_id)
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
@@ -756,5 +791,214 @@ module DBHelper
     end
   end
 
+  def get_partner_id_by_admin_email(admin_email)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select pp.id from pro_partners pp left join admins a on pp.root_admin_id = a.id where a.username = '#{admin_email}' order by pp.id desc limit 1;"
+      c = conn.exec(sql)
+      c.values[0][0]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_count_delayed_job(partner_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select count(*) from jobs j left join job_results jr on j.id=jr.job_id left join delayed_jobs dj on jr.delayed_job_id=dj.id where j.pro_partner_id=#{partner_id} and dj.run_at > now();"
+      Log.debug sql
+      c = conn.exec(sql)
+      c.values[0][0]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+
+  # delete reports that created by automation by email prefix
+  def delete_reports_by_email_prefix(admin_email_prefix = CONFIGS['global']['email_prefix'])
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      # delete scheduled delayed_jobs
+      sql = "delete from delayed_jobs where id in (select jr.delayed_job_id from jobs j left join job_results jr on jr.job_id = j.id where j.subscribers like '#{admin_email_prefix}' and j.deleted_at is null);"
+      c = conn.exec(sql)
+      puts "#{c.cmd_tuples} delayed_jobs records of #{admin_email_prefix} is deleted successfully"
+      # delete job_results
+      sql = "update job_results set deleted_at = now() where id in (select jr.id from jobs j left join job_results jr on jr.job_id = j.id where j.subscribers like '#{admin_email_prefix}' and j.deleted_at is null);"
+      c = conn.exec(sql)
+      puts "#{c.cmd_tuples} job_results records of #{admin_email_prefix} is updated successfully"
+      # delete jobs
+      sql = "update jobs set deleted_at = now() where subscribers like '#{admin_email_prefix}' and deleted_at is null;"
+      c = conn.exec(sql)
+      puts "#{c.cmd_tuples} jobs records of #{admin_email_prefix} is updated successfully"
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  # delete reports that created by automation by partner id
+  def delete_reports_by_partner_id(partner_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      # delete scheduled delayed_jobs
+      sql = "delete from delayed_jobs where id in (select jr.delayed_job_id from jobs j left join job_results jr on jr.job_id = j.id where j.pro_partner_id=#{partner_id} and j.deleted_at is null);"
+      c = conn.exec(sql)
+      puts "#{c.cmd_tuples} delayed_jobs records of partner #{partner_id} is deleted successfully"
+      # delete job_results
+      sql = "update job_results set deleted_at = now() where id in (select jr.id from jobs j left join job_results jr on jr.job_id = j.id where j.pro_partner_id=#{partner_id} and j.deleted_at is null);"
+      c = conn.exec(sql)
+      puts "#{c.cmd_tuples} job_results records of partner #{partner_id} is updated successfully"
+      # delete jobs
+      sql = "update jobs set deleted_at = now() where pro_partner_id=#{partner_id} and deleted_at is null;"
+      c = conn.exec(sql)
+      puts "#{c.cmd_tuples} jobs records of partner #{partner_id} is updated successfully"
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def delete_user_by_email(email)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "UPDATE users SET deleted = 't', deleted_time = now(), userhash = null WHERE username = '#{email}' and deleted_time is null;"
+      c = conn.exec sql
+      c.check
+      puts sql
+      if c.cmd_tuples >= 1
+        puts "#{c.cmd_tuples} records of #{email} is updated successfully"
+      else
+        puts "Nothing updated for #{email}"
+      end
+    rescue PGError => e
+      puts 'postgres error'
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def delete_users_by_email(email)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "UPDATE users SET deleted = 't', deleted_time = now(), userhash = null WHERE username like '#{email}' and deleted_time is null;"
+      c = conn.exec sql
+      c.check
+      puts sql
+      if c.cmd_tuples >= 1
+        puts "#{c.cmd_tuples} records of #{email} is updated successfully"
+      else
+        puts "Nothing updated for #{email}"
+      end
+    rescue PGError => e
+      puts 'postgres error'
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def purge_user_by_email(email)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "SELECT id FROM users WHERE username = '#{email}';"
+      puts sql
+      c = conn.exec sql
+      if c.ntuples >= 1
+        puts "#{c.ntuples} users named #{email} to be purged"
+      else
+        puts "No user named #{email} to be purged"
+        return
+      end
+
+      # to do: delete all machines include sync of this user, and return quota to user group
+      # as there is no machines for automation created fedid users, the delete machine sql is not needed now
+
+      # delete user_storage_pools
+      sql = "DELETE FROM user_storage_pools WHERE owner_id in (#{c.column_values(0).join(',')});"
+      puts sql
+      usp = conn.exec sql
+      puts "#{usp.cmd_tuples} records deleted in table user_storage_pools"
+
+      # delete user_sync_details
+      sql = "DELETE FROM user_sync_details WHERE user_id in (#{c.column_values(0).join(',')});"
+      puts sql
+      usd = conn.exec sql
+      puts "#{usd.cmd_tuples} records deleted in table user_sync_details"
+
+      # delete users
+      sql = "DELETE FROM users WHERE id in (#{c.column_values(0).join(',')});"
+      puts sql
+      u = conn.exec sql
+      puts "#{u.cmd_tuples} records deleted in table users"
+
+    rescue PGError => e
+      puts 'postgres error'
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def purge_users_by_email(email)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "SELECT id FROM users WHERE username like '#{email}';"
+      puts sql
+      c = conn.exec sql
+      if c.ntuples >= 1
+        puts "#{c.ntuples} users named #{email} to be purged"
+      else
+        puts "No user named #{email} to be purged"
+        return
+      end
+
+      # to do: delete all machines include sync of this user, and return quota to user group
+      # as there is no machines for automation created fedid users, the delete machine sql is not needed now
+
+      # delete user_storage_pools
+      sql = "DELETE FROM user_storage_pools WHERE owner_id in (#{c.column_values(0).join(',')});"
+      puts sql
+      usp = conn.exec sql
+      puts "#{usp.cmd_tuples} records deleted in table user_storage_pools"
+
+      # delete user_sync_details
+      sql = "DELETE FROM user_sync_details WHERE user_id in (#{c.column_values(0).join(',')});"
+      puts sql
+      usd = conn.exec sql
+      puts "#{usd.cmd_tuples} records deleted in table user_sync_details"
+
+      # delete users
+      sql = "DELETE FROM users WHERE id in (#{c.column_values(0).join(',')});"
+      puts sql
+      u = conn.exec sql
+      puts "#{u.cmd_tuples} records deleted in table users"
+    rescue PGError => e
+      puts 'postgres error'
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  #======puts customized comment into the single test case execution log======
+  def dblog(text)
+    $logFile.puts("======[DB Log]:" + text.to_s + "======\n")
+  end
+
+  #======this method is to help for some sql clauses having date updated directly in db which ignores time zone======
+  #======different time zone will cause some casue failed due to not in the same day======
+  #======this method will convert date to the date align with the db time zone======
+  def time_zone_in_same_day
+    local_time_utc_offset = Time.new.strftime("%:z").to_i
+    dblog("local machine date time zone utc offset is #{local_time_utc_offset.to_s}")
+    time_difference = local_time_utc_offset + 7
+    same_date = (Time.new.hour - time_difference >= 0)
+    #timezone_array=[same_date, time_difference]
+    return same_date
+  end
 
 end

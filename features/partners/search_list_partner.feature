@@ -3,7 +3,7 @@ Feature: Search and list partner
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.789  @bus @2.5 @partner @partner_search
+  @TC.789  @bus @2.5 @partner @partner_search @regression
   Scenario: 789 Search partner by company name
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -18,7 +18,7 @@ Feature: Search and list partner
   # This test cases requires an OEM partner
   # Test account Charter Business Trial - Reserved is in QA6 only
   #
-  @TC.790 @need_test_account @bus @2.5 @partner @partner_search @env_dependent
+  @TC.790 @need_test_account @bus @2.5 @partner @partner_search @env_dependent @regression
   Scenario: 790 Do a search for all partners
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -38,7 +38,7 @@ Feature: Search and list partner
       | @company_name | today   |
     And I search and delete partner account by newly created partner company name
 
-  @TC.791 @bus @2.5 @partner @partner_search
+  @TC.791 @bus @2.5 @partner @partner_search @regression
   Scenario: 791 Do a regular expression search for a partner
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -58,7 +58,7 @@ Feature: Search and list partner
       | @external_id | @company_name | @admin_email |
     And I search and delete partner account by newly created partner company name
 
-  @TC.792 @bus @2.5 @partner @partner_search
+  @TC.792 @bus @2.5 @partner @partner_search @regression
   Scenario: 792 Do a search on all deleted partners
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -72,7 +72,7 @@ Feature: Search and list partner
       | Partner       |
       | @company_name |
 
-  @TC.795 @bus @2.5 @partner @partner_search
+  @TC.795 @bus @2.5 @partner @partner_search @regression
   Scenario: 795 Search for partners with the business type
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -89,7 +89,7 @@ Feature: Search and list partner
   # This test cases requires an incompleted partner
   # Test account Quigley-Effertz - Reserved is in QA6 only
   #
-  @TC.794 @need_test_account @bus @2.5 @partner @partner_search @env_dependent
+  @TC.794 @need_test_account @bus @2.5 @partner @partner_search @env_dependent @regression
   Scenario: 794 Search incomplete all partners
     When I search partner by:
       | name                       | filter           |
@@ -98,7 +98,7 @@ Feature: Search and list partner
       | Partner                    | Type             |
       | Quigley-Effertz - Reserved | MozyPro Itemized |
 
-  @TC.796 @bus @2.5 @partner @partner_search
+  @TC.796 @bus @2.5 @partner @partner_search @regression
   Scenario: 796 Search for partners with the reseller type
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -115,7 +115,7 @@ Feature: Search and list partner
   # This test cases requires an OEM partner
   # Test account Charter Business Trial - Reserved is in QA6 only
   #
-  @TC.797 @need_test_account @bus @2.5 @partner @partner_search @env_dependent
+  @TC.797 @need_test_account @bus @2.5 @partner @partner_search @env_dependent @regression
   Scenario: 797 Search for partners with the OEMs type
     When I search partner by:
       | name                              | filter |
@@ -127,7 +127,7 @@ Feature: Search and list partner
   # This test cases requires any existing partner
   # Test account Charter Business Trial - Reserved is in QA6 only
   #
-  @TC.799 @need_test_account @bus @2.5 @partner @partner_search @env_dependent
+  @TC.799 @need_test_account @bus @2.5 @partner @partner_search @env_dependent @regression
   Scenario: 799 Uncheck the include sub-partners
     When I search partner by:
       | name                              | including sub-partners |
@@ -137,7 +137,7 @@ Feature: Search and list partner
   # This test cases requires any existing partner
   # Test account Charter Business Trial - Reserved is in QA6 only
   #
-  @TC.800 @need_test_account @bus @2.5 @partner @partner_search @env_dependents
+  @TC.800 @need_test_account @bus @2.5 @partner @partner_search @env_dependents @regression
   Scenario: 800 Clear the search results for a partner
     When I search partner by:
       | name                              | filter |
@@ -150,7 +150,7 @@ Feature: Search and list partner
       | Partner                           | Type |
       | Charter Business Trial - Reserved | oem  |
 
-  @TC.2188 @bus @others
+  @TC.2188 @bus @others @regression
   Scenario: 2188 XXS issues and input validation
     When I search partner by <script>alert('foo')</script>
     Then I will see alert('foo') in the search partner input box

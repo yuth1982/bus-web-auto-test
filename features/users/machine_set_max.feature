@@ -14,7 +14,7 @@ Feature: Set/Remove Max at Machine
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.21074 @bus @2.5 @user_view @max_at_machine @itemized
+  @TC.21074 @bus @2.5 @user_view @max_at_machine @itemized @regression
   Scenario: 21074 [Itemized]Desktop machine and stash stop backing up when max is hit
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -65,7 +65,7 @@ Feature: Set/Remove Max at Machine
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21075 @bus @2.5 @user_view @max_at_machine @bundled
+  @TC.21075 @bus @2.5 @user_view @max_at_machine @bundled @regression
   Scenario: 21075 [Bundled]Server machine can Set/Edit/Remove max
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan |
@@ -108,7 +108,7 @@ Feature: Set/Remove Max at Machine
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21078 @bus @2.5 @user_view @max_at_machine @bundled
+  @TC.21078 @bus @2.5 @user_view @max_at_machine @bundled @regression
   Scenario: 21078 [Bundled]Desktop machine and stash stop backing up when max is hit
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan |

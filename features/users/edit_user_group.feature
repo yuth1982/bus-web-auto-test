@@ -3,7 +3,7 @@ Feature: Edit existing user group
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.20894 @bus @2.5 @manage_storage @edit_existing_group @bundled
+  @TC.20894 @bus @2.5 @manage_storage @edit_existing_group @bundled @regression
   Scenario: 20894 [Bundled] Edit User Group
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | net terms | company name              |
@@ -53,7 +53,7 @@ Feature: Edit existing user group
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.20818 @bus @2.5 @manage_storage @edit_existing_group @itemized
+  @TC.20818 @bus @2.5 @manage_storage @edit_existing_group @itemized @regression
   Scenario: 20818 [Itemized] Edit User Group
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | company name               |
@@ -104,7 +104,7 @@ Feature: Edit existing user group
     And I search and delete partner account by newly created partner company name
 
   # Error messages are not final version, they will be change in the future
-  @TC.20881  @bus @2.5 @manage_storage @edit_existing_group @bundled @negatice
+  @TC.20881  @bus @2.5 @manage_storage @edit_existing_group @bundled @negatice @regression
   Scenario: 20881 [Bundled][Negative] Edit User Group
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | net terms | company name                        |
@@ -196,7 +196,7 @@ Feature: Edit existing user group
     And I search and delete partner account by newly created partner company name
 
   # Error messages are not final version, they will be change in the future
-  @TC.20829 @bus @2.5 @manage_storage @edit_existing_group @itemized @negative
+  @TC.20829 @bus @2.5 @manage_storage @edit_existing_group @itemized @negative @regression
   Scenario: 20829 [Itemized][Negative] Edit User Group
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | company name                       |

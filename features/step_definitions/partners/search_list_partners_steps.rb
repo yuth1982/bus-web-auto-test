@@ -9,6 +9,7 @@ When /^I search partner by:$/ do |search_key_table|
   keywords = (attributes['name'] || attributes['email'])
   keywords.replace ERB.new(keywords).result(binding)
   keywords = keywords.gsub(/@company_name/,@partner.company_info.name).gsub(/@admin_email/,@partner.admin_info.email) unless @partner.nil?
+  keywords = keywords.gsub(/@company_name/,@subpartner.company_name) unless @subpartner.nil?
   filter = attributes['filter'] || 'None'
   including_sub_partners = (attributes['including sub-partners'] || 'yes').eql?('yes')
   @bus_site.admin_console_page.search_list_partner_section.search_partner(keywords, filter, including_sub_partners)
@@ -75,6 +76,7 @@ Then /^Partner search results (should|should not) be:$/ do |match, results_table
           v.gsub!(/@external_id/, @new_p_external_id) unless @new_p_external_id.nil?
         when 'Partner'
           v.gsub!(/@company_name/, @partner.company_info.name) unless @partner.nil?
+          v.gsub!(/@company_name/, @subpartner.company_name) unless @subpartner.nil?
         when 'Created'
           v.replace(Chronic.parse(v).strftime('%m/%d/%y'))
         when "Root Admin"
@@ -132,11 +134,14 @@ When /^I use a existing partner:$/ do |partner_table|
       @partner = Bus::DataObj::MozyEnterpriseDPS.new
     when CONFIGS['bus']['company_type']['reseller']
       @partner = Bus::DataObj::Reseller.new
+    when CONFIGS['phoenix']['company_type']['mozyhome']
+      @partner = Bus::DataObj::MozyHome.new
     else
       raise "Error: Company type #{type} does not exist."
   end
   @partner.partner_info.type = attributes['partner type']
   @partner.company_info.name = attributes['company name'] unless attributes['company name'].nil?
+  @partner.company_info.country = attributes['country'] unless attributes['country'].nil?
   @partner.partner_info.parent = attributes['create under'] || CONFIGS['bus']['mozy_root_partner']['mozypro'] # to be changed according to partner type
   @partner.admin_info.email = attributes['admin email'] unless attributes['admin email'].nil?
   @partner.admin_info.full_name = attributes['admin name'] unless attributes['admin name'].nil?

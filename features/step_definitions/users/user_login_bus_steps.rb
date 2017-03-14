@@ -23,3 +23,11 @@ Then /^I check restore icon with hints message (.+) under (user details|user log
   end
 
 end
+
+And /^after acting as user then clicks computer (.+)$/ do |computer|
+  @bus_site.user_login_bus_page.click_computer(computer)
+end
+
+Then /^after acting as user then click item (Download Restore|others) to download restore file$/ do |downloadItem|
+  @bus_site.user_login_bus_page.click_machine_download_item(downloadItem)
+end

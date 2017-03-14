@@ -3,7 +3,7 @@ Feature: Sort user group list
   Background:
     Given I log in bus admin console as administrator
 
-    @TC.20932 @bus @2.5 @manage_storage @sort_columns @bundled
+    @TC.20932 @bus @2.5 @manage_storage @sort_columns @bundled @regression
     Scenario: 20932 [Bundled] Sort Columns
 
       When I add a new Reseller partner:
@@ -176,7 +176,7 @@ Feature: Sort user group list
         | User Group A          | false | false  | Shared       |            | 0            | 0            |
 
 
-  @TC.20933 @bus @2.5 @manage_storage @sort_columns @itemized
+  @TC.20933 @bus @2.5 @manage_storage @sort_columns @itemized @regression
 Scenario: 20933 [Itemized] Sort Columns
 
     When I add a new MozyEnterprise partner:

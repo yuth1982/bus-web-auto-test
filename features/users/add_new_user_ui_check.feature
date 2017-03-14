@@ -26,8 +26,8 @@ Feature: Add a new user
       | External ID | User                          |Name        | User Group            | Machines     | Storage        | Storage Used | Created | Backed Up |
       |             | <%=@new_users.first.email%>   |oem user    |  (default user group) | 0            | 0              | None         | today   | never     |
     When I search emails by keywords:
-      | subject                             | to                       |
-      | BDS Online Backup Activation Key    | <%=@new_users[0].email%> |
+      | subject                | to                       |
+      | Mozy Activation Key    | <%=@new_users[0].email%> |
     Then I should see 1 email(s)
     Then I stop masquerading from subpartner
     And I search and delete partner account by newly created subpartner company name
