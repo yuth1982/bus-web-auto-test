@@ -336,6 +336,32 @@ module DBHelper
     end
   end
 
+  def set_last_backup_attempt(user_id,weeks_ago)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "UPDATE machines SET last_backup_attempt = '#{Date.today - (weeks_ago * 7)}' WHERE user_id = #{user_id};"
+      conn.exec sql
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+      fail e
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def set_last_backup_at(user_id,days_ago)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "UPDATE machines SET last_backup_at = '#{Date.today - days_ago}' WHERE user_id = #{user_id};"
+      conn.exec sql
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+      fail e
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
   def set_backup_suspended_at(user_id,weeks_ago)
 
     begin

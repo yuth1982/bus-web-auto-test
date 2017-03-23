@@ -129,6 +129,41 @@ module KeylessDeviceActivation
       client_devices_activate
     end
 
+    def simple_activate_devices
+      get_machines
+      machine_get_info
+    end
+
+    def get_machines
+      uri = URI.parse("#{QA_ENV['bus_host']}")
+      Net::HTTP.start(uri.host, uri.port,
+                      :use_ssl => uri.scheme == 'https', :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
+        url =  "/client/get_machines?alias=#{@machine_alias}&mac=#{@mac}&machineid=#{@machine_hash}&sid=#{@sid}"
+        request = Net::HTTP::Get.new( url )
+        user_hash = Digest::SHA1.hexdigest(@username)
+        request.basic_auth(user_hash, @password)
+        Log.debug url
+        response = http.request request
+        @response = response
+        Log.debug response.body
+      end
+    end
+
+    def machine_get_info
+      uri = URI.parse("#{QA_ENV['bus_host']}")
+      Net::HTTP.start(uri.host, uri.port,
+                      :use_ssl => uri.scheme == 'https', :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
+        url =  "/client/machine_get_info?alias=#{@machine_alias}&country=US&mac=#{@mac}&machineid=#{@machine_hash}&sid=#{@sid}"
+        request = Net::HTTP::Get.new( url )
+        user_hash = Digest::SHA1.hexdigest(@username)
+        request.basic_auth(user_hash, @password)
+        Log.debug url
+        response = http.request request
+        @response = response
+        Log.debug response.body
+      end
+    end
+
     def get_sso_auth_code(access_token = nil)
       get_codename(@company_type)
       enable_partner_to_sso(@partner_id, @partner_name)

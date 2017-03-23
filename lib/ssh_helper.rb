@@ -124,6 +124,12 @@ module SSHReap
     ssh_bus(cmd)
   end
 
+  def start_reap_free
+    cmd = 'cd /var/www/bus'
+    cmd += '; script/reap -d -v -f -e production free_inactive'
+    ssh_bus(cmd)
+  end
+
 end
 
 
