@@ -161,6 +161,11 @@ module Bus
     element(:secuirty_field, xpath: "//span[contains(@id,'partner-display-hipaa-compliance-status')]")
 
     element(:ldap_delete_confirm_btn, xpath: "//input[@value='Confirm']")
+
+    # change partner name
+    element(:partner_name_tb, id: 'name')
+    element(:save_changes_partnername, xpath: ".//*[contains(@id,'partner-name-change')]/form/table/tbody/tr/td[2]/input")
+
     # Public: Partner Id
     #
     # Return string
@@ -664,6 +669,19 @@ module Bus
       change_external_id_link.click
       external_id_tb.type_text(id)
       submit_external_id_btn.click
+      wait_until_bus_section_load
+    end
+
+    # Public: Change Partner Name
+    #    #
+    # Example pooled_resource_edit_link
+    #  @bus_site.admin_console_page.partner_details_section.change_partner_name('Test_patnername_12345')
+    #
+    # Return nothing
+    def change_partner_name(name)
+      change_name_link.click
+      partner_name_tb.type_text(name)
+      save_changes_partnername.click
       wait_until_bus_section_load
     end
 

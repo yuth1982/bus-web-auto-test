@@ -24,6 +24,8 @@ Then /^API\* Aria account billing info should be:$/ do |info_table|
         @aria_acc_details['billing_intl_phone'].should == expected[header]
       when 'email'
         @aria_acc_details['billing_email'].should == expected[header]
+      when 'partner name'
+        @aria_acc_details['company_name'].should == expected[header]
       else
         raise 'Unknown billing information'
     end

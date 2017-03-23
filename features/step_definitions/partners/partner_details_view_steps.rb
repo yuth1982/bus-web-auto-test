@@ -335,6 +335,10 @@ When /^I change partner external id to (.+)$/ do |external_id|
   @bus_site.admin_console_page.partner_details_section.change_external_id(external_id)
 end
 
+And /^I change partner name to (.+)$/ do |new_name|
+  @bus_site.admin_console_page.partner_details_section.change_partner_name(new_name)
+end
+
 When /^I add a new partner external id$/ do
   @new_p_external_id = "#{Time.now.strftime('%m%d-%H%M-%S')}"
   @bus_site.admin_console_page.partner_details_section.change_external_id(@new_p_external_id)
