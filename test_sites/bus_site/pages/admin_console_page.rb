@@ -119,6 +119,7 @@ module Bus
 
     # Popup window
     element(:start_using_mozy_btn, id: "start_using_mozy")
+    element(:chk_show_welcome_chkbox, id: "chk_show_welcome")
     element(:popup_content_div, css: "div.popup-window-content")
     element(:close_popup_link, css: "div.close_bar a")
     element(:close_btn, css: "div.popup-window-footer input[value=Close]")
@@ -159,6 +160,54 @@ module Bus
       alert_accept if alert_present?
     end
 
+    def click_start_using_mozy
+      wait_until { popup_content_div.visible? }
+      start_using_mozy_btn.click if has_start_using_mozy_btn?
+      alert_accept if alert_present?
+    end
+
+    def check_show_welcome_chkbox
+      wait_until { chk_show_welcome_chkbox.visible? }
+      chk_show_welcome_chkbox.check unless chk_show_welcome_chkbox.checked?
+    end
+
+    def poped_up_window
+      found = false
+      current = Time.now
+      begin
+        while Time.now < current + CONFIGS['global']['default_wait_time']
+          found = popup_content_div.visible?
+          if !found
+            break
+          end
+          sleep 3
+        end
+      rescue => e
+        puts e
+        found = false
+      end
+    end
+
+    def check_specific_element(type)
+      wait_until { popup_content_div.visible? }
+      case type
+        when 'Admin Features'
+          find(:xpath, "//a[contains(text(),'Admin Features')]")[:href] == 'http://support.mozy.com/AdminConsoleNewFeatures?type=Itemized'
+          Log.debug 'check Admin Features'
+        when 'File Sync'
+          find(:xpath, "//a[contains(text(),'File Sync')]")[:href] == 'http://support.mozy.com/articles/en_US/New_Feature/MozyEnterprise-Sync'
+          Log.debug 'check File Sync'
+        when 'Quick Start Guide'
+          all(:css, "p.firstRunFooterSpans")[0].element_parent[:href] == 'http://support.mozy.com/articles/en_US/documentation/admin-quickstart-a-en'
+          Log.debug 'check Quick Start Guide'
+        when 'Download Mozy Software'
+          all(:css, "p.firstRunFooterSpans")[1].element_parent[:href] == '/resource?module=resource-downloads'
+          Log.debug 'check Download Mozy Software'
+        when 'Release Notes'
+          all(:css, "p.firstRunFooterSpans")[2].element_parent[:href] == 'http://support.mozy.com/articles/en_US/documentation/admin-release-notes-current-admin-en'
+          Log.debug 'check Release Notes'
+      end
+    end
     # Public: Navigate to menu item on admin console page
     # Note: if bus module is opened, menu will not be clicked
     #

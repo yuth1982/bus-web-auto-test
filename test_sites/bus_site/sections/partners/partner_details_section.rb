@@ -442,6 +442,10 @@ module Bus
       alert_accept if alert_present?
     end
 
+    def act_as_partner_with_alert
+      act_as_link.click
+    end
+
     def click_admin_name admin_name
       find(:xpath, "//a[text()='#{admin_name}']").click
 

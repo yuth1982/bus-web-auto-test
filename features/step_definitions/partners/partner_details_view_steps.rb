@@ -11,6 +11,33 @@ When /^I act as newly created (sub)*partner( account)?$/ do |type, account|
   @partner_id = @bus_site.admin_console_page.current_partner_id
 end
 
+When /^I act as newly created (sub)*partner( account)? with welcome page poped up$/ do |type, account|
+  if type.nil?
+    @current_partner = @bus_site.admin_console_page.partner_details_section.partner
+    @bus_site.admin_console_page.partner_details_section.act_as_partner_with_alert
+  else
+    @current_partner = @bus_site.admin_console_page.partner_details_section.subpartner.partner
+    @bus_site.admin_console_page.partner_details_section.subpartner.act_as_partner_with_alert
+  end
+  @partner_id = @bus_site.admin_console_page.current_partner_id
+end
+
+And /^I check welcome page for (.+) link$/ do |type|
+  @bus_site.admin_console_page.check_specific_element(type)
+end
+
+And /^I click start using mozy button$/ do
+  @bus_site.admin_console_page.click_start_using_mozy
+end
+
+And /^I check show welcome checkbox$/ do
+  @bus_site.admin_console_page.check_show_welcome_chkbox
+end
+
+Then /^No welcome page poped up$/ do
+  @bus_site.admin_console_page.poped_up_window.should be_false
+end
+
 When /^I add partner settings$/ do |table|
   #    | Name                    | Value | Locked |
   #    | allow_ad_authentication | t     | yes    |
