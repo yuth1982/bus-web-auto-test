@@ -1,5 +1,5 @@
-Feature:
-   CustomCD integration
+Feature: CustomCD integration
+
 
   Background:
     Given I log in bus admin console as administrator

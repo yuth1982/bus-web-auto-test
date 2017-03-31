@@ -1,5 +1,4 @@
-Feature: As a Mozy partner Admin,
-  I should be able to upload images that appears in my web portal and within the Windows and Mac clients.
+Feature: As a Mozy partner Admin, I should be able to upload images that appears in my web portal and within the Windows and Mac clients.
 
   Background:
     Given I log in bus admin console as administrator

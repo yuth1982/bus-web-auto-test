@@ -1,4 +1,4 @@
-Feature:
+Feature: general requirements
   Provision a Sync container for each user when the admin gives Sync to the user via:
   allocating/assigning Sync storage to the user, or through a bulk add for the user group.
 

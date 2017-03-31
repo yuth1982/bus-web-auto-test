@@ -37,10 +37,15 @@ module LDAPHelper
                          }
 
     ldap.open do |ldap|
+      ldapLog("Begin to create AD user")
+      ldapLog("dn is:" + dn.to_s)
+      ldapLog("attributes are:" + attr.to_s)
       ldap.add(:dn => dn, :attributes => attr)
-      Log.debug ldap.get_operation_result
+      ldapLog("LDAP User creation result is:" + ldap.get_operation_result.to_s)
+      #Log.debug ldap.get_operation_result)
     end
-    Log.debug("add a user #{user_name} to AD")
+    #Log.debug("add a user #{user_name} to AD")
+    ldapLog("add a user #{user_name} to AD")
   end
 
   # Public: delete a user in AD by username
@@ -55,6 +60,8 @@ module LDAPHelper
                              :password => PASSWORD
                          }
     ldap.open do |ldap|
+      ldapLog("Begin to delete AD user")
+      ldapLog("dn is:" + dn.to_s)
       ldap.delete :dn => dn
       Log.debug ldap.get_operation_result
     end
@@ -144,6 +151,10 @@ module LDAPHelper
 
   def ldap_user_mail
     @ldap_user_mail
+  end
+
+  def ldapLog(text)
+    $logFile.puts("======[LDAP Log] " + text.to_s + "======\n")
   end
 
 end

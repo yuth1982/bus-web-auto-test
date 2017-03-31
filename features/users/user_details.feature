@@ -309,8 +309,8 @@ Feature: User Details
     And I use Directory Service as authentication provider
     When I click Connection Settings tab
     And I input server connection settings
-      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
-      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+      | Server Host   | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.103.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I click Sync Rules tab
     And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
@@ -476,8 +476,8 @@ Feature: User Details
     And I use Directory Service as authentication provider
     When I click Connection Settings tab
     And I input server connection settings
-      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
-      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+      | Server Host   | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.103.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I click Sync Rules tab
     And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes

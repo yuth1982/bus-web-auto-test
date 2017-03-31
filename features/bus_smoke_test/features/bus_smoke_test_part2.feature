@@ -1,4 +1,4 @@
-Feature: BUS smoke test
+Feature: BUS smoke test 2
   pre-condition
   update environment:
   option 1: TEST_ENV = ENV['BUS_ENV'] || 'qa6' in test_sites/configs/configs_helper.rb

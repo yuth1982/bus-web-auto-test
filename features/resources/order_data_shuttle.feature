@@ -1,5 +1,5 @@
-Feature:
-  Order data shuttle
+Feature: Order data shuttle
+
 
   Background:
     Given I log in bus admin console as administrator

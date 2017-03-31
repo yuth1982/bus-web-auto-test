@@ -185,11 +185,20 @@ Then /^The layout of attribute should:$/ do |table|
   @bus_site.admin_console_page.authentication_policy_section.attribute_layout.should == table.raw
 end
 
+# If AD user has an unique and dynamic email address, which means the @AD_User_Emails instance variable exists,
+# go to the else logic part.
+# See "When /^I add a user to the AD$/ do |table|" step code in this .rb file.
 When /^I add (\d+) new (.+) rules:$/ do |num, type, table|
   table.hashes.first.each do |k,v|
     v.replace ERB.new(v).result(binding)
   end
-  @bus_site.admin_console_page.authentication_policy_section.add_rules(type, num.to_i, table.transpose.raw[0], table.transpose.raw[1])
+  if @AD_User_Emails.nil?
+    @bus_site.log("The AD user has a predefined email address.")
+    @bus_site.admin_console_page.authentication_policy_section.add_rules(type, num.to_i, table.transpose.raw[0], table.transpose.raw[1])
+  else
+    @bus_site.log("The AD user has a dynamic email address.")
+    @bus_site.admin_console_page.authentication_policy_section.add_rules(type, num.to_i, table.transpose.raw[0], table.transpose.raw[1], @AD_User_Emails)
+  end
 end
 
 Then /^The (.+) order icon should be correct$/ do |type, table|
@@ -346,12 +355,35 @@ When /^I add a user (.+) to the AD$/ do |username|
   LDAPHelper.add_user(username)
 end
 
+# The step also allows you to create a AD user with a dynamic email to meet the scenario or similar scenario like -
+#    create AD user -> privision user in Bus Console -> Get 1 welcome email
+# You could only provide the user name in "table" hash parameter as:
+#     When I add a user to the AD
+#        | user name      |
+#        | tc131019.user1 |
+# an unique email address will be created automatically, which has prefix "mozyautotest" such as "mozyautotest+tc131019.user120170330025334utc@emc.com"
+# You could see code below for more details.
 When /^I add a user to the AD$/ do |table|
+  @bus_site.log("Begin to add a user to AD")
+  @AD_User_Emails = Hash.new if @AD_User_Emails.nil?
   table.hashes.first.each do |k,v|
     v.replace ERB.new(v).result(binding)
   end
   ldap_hash = table.hashes.first
+  @bus_site.log("AD user's name:" + ldap_hash['user name'].to_s)
+  # if user's mail is empty in table hash parameter, method will help you to create an unique and dynamic email
+  ldap_hash['mail'] = "mozyautotest+" + ldap_hash['user name'] + Time.now.utc.to_s.gsub!("-", "").gsub!(" ", "").gsub!(":", "") + "@emc.com" if ldap_hash['mail'].nil?
+  ldap_hash['mail'].downcase!
+  @AD_User_Emails[ldap_hash['user name'].to_s] = ldap_hash['mail']
+  @bus_site.log("AD user's mail:" + ldap_hash['mail'].to_s)
+  @bus_site.log("AD user's host:" + ldap_hash['host'].to_s)
+  @bus_site.log("AD user's user:" + ldap_hash['user'].to_s)
+  @bus_site.log("AD user's password:" + ldap_hash['password'].to_s)
+  @bus_site.log("AD user's treebase:" + ldap_hash['treebase'].to_s)
+  @bus_site.log("AD user's email_postfix:" + ldap_hash['email_postfix'].to_s)
+  @bus_site.log("Call LDAPHelper.add_user method to create AD user")
   LDAPHelper.add_user(ldap_hash['user name'], ldap_hash['mail'], ldap_hash['host'], ldap_hash['user'],ldap_hash['password'], ldap_hash['treebase'], ldap_hash['email_postfix'])
+  @bus_site.log("In current thread, AD user emails are: " + @AD_User_Emails.to_s)
 end
 
 When /^I delete a user (.+) in the AD$/ do |username|
@@ -448,4 +480,47 @@ end
 When /^I refresh the authentication policy section$/ do
   @bus_site.admin_console_page.authentication_policy_section.refresh_bus_section
   @bus_site.admin_console_page.authentication_policy_section.wait_until_bus_section_load
+end
+
+And /^sso for admins to log in with their network credentials is (checked|unchecked)$/ do |type|
+  checked = (type == 'checked'? true:false)
+  @bus_site.admin_console_page.authentication_policy_section.sso_admin_checked? == checked
+end
+
+And /^I (check|uncheck) Send Welcome email to new users checkbox$/ do |action|
+  @bus_site.admin_console_page.authentication_policy_section.check_send_welcome_email if action == "check"
+  @bus_site.admin_console_page.authentication_policy_section.uncheck_send_welcome_email if action == "uncheck"
+end
+
+And /^I delete a user (.+) in the demeter db$/ do |username|
+  @bus_site.log("Delete user #{username} in demeter db.")
+  SSHHelper.delete_users_by_email(username)
+end
+
+# Monitor the sync result, restart bds-boot service in case the sync failed.
+And /I monitor the sync result and restart bds-boot service if sync failed/ do
+  # step1 - click Connection Settings tab and wait for the sync result
+  step %{I click Connection Settings tab}
+  @bus_site.admin_console_page.authentication_policy_section.refresh_bus_section
+  @bus_site.admin_console_page.authentication_policy_section.wait_until_bus_section_load
+  actual = @bus_site.admin_console_page.authentication_policy_section.sync_result
+  @bus_site.log("Get Sync info: #{actual}")
+  @bus_site.log("Sync Result is: #{actual[1]}")
+  # step2 - check the sync status, if failed, restart bds-botts service on authproxy01.qa12h.mozyops.com
+  if actual[1].include?("An unknown error occurred")
+    @bus_site.log("Sync failed, no user is provisoned. Restart bds-boots service.")
+    SSHHelper.restart_bds_boots_service
+    step %{I click Sync Rules tab}
+    step %{I click the sync now button}
+    step %{I wait for 60 seconds}
+    step %{I click Connection Settings tab}
+    @bus_site.admin_console_page.authentication_policy_section.refresh_bus_section
+    @bus_site.admin_console_page.authentication_policy_section.wait_until_bus_section_load
+    actual = @bus_site.admin_console_page.authentication_policy_section.sync_result
+    @bus_site.log("Get Sync info: #{actual}")
+    @bus_site.log("Sync Result is: #{actual[1]}")
+    actual[1].should =~ /0 failed/
+    @bus_site.log("Provisioned succeeds after 1st failed.")
+  end
+
 end

@@ -1,5 +1,5 @@
-Feature: As a Mozy partner Admin,
-  I should be able to brand areas in my admin console page.
+Feature: Admin Console Branding
+  As a Mozy partner Admin, I should be able to brand areas in my admin console page
 
   Background:
     Given I log in bus admin console as administrator

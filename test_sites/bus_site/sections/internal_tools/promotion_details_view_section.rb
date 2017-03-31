@@ -192,5 +192,9 @@ module Bus
       sleep(2)
     end
 
+    def delete_promtion_btn_visible
+      return delete_promotion_btn.visible?
+    end
+
   end
 end

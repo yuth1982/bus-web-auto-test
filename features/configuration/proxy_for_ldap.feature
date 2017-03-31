@@ -33,8 +33,8 @@ Feature: Proxy for LDAP queries
     And I use Directory Service as authentication provider
     And I click Connection Settings tab
     And I input server connection settings
-      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password  |
-      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | wrong password |
+      | Server Host   | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password  |
+      | 10.29.103.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | wrong password |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD

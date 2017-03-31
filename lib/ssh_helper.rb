@@ -256,4 +256,25 @@ module SSHLinuxE2E
                 end
   end
 
+  # Have bds-boots service restart after deleting a AD user, otherwise, fail to privision a user on Bus Console
+  def restart_bds_boots_service
+    cmd = "/etc/init.d/bds-boots stop"
+    cmd += "; /etc/init.d/bds-boots start"
+    host = QA_ENV['authproxy01_host']
+    user, password = QA_ENV['authproxy01_user'], QA_ENV['authproxy01_pass']
+    sshHelperLog("host: " + host)
+    sshHelperLog("user: " + user)
+    sshHelperLog("password: " + password)
+    sshHelperLog("cmd" + cmd)
+    result = []
+    Net::SSH.start(host, user , :password => password, :host_key => "ssh-rsa" ) {|ssh|  result = ssh.exec!(cmd)}
+    sshHelperLog("result: " + result.to_s)
+    result
+  end
+
+  #======puts customized comment into the single test case execution log======
+  def sshHelperLog(text)
+    $logFile.puts("======[ssh_helper Log] " + text.to_s + "======\n")
+  end
+
 end

@@ -39,8 +39,8 @@ Feature: User sync
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I input server connection settings
-      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
-      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+      | Server Host   | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.103.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I click Sync Rules tab
     And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
@@ -89,8 +89,8 @@ Feature: User sync
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I input server connection settings
-      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
-      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+      | Server Host   | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.103.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I click Sync Rules tab
     And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
@@ -227,8 +227,8 @@ Feature: User sync
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I input server connection settings
-      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
-      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+      | Server Host   | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.103.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I click Sync Rules tab
     And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
@@ -301,8 +301,8 @@ Feature: User sync
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I input server connection settings
-      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
-      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+      | Server Host   | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.103.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I click Sync Rules tab
     And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
@@ -572,8 +572,8 @@ Feature: User sync
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I input server connection settings
-      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
-      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+      | Server Host   | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.103.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     And I click Connection Settings tab
@@ -1015,8 +1015,8 @@ Feature: User sync
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I input server connection settings
-      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
-      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+      | Server Host   | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.103.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I click Sync Rules tab
     And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
@@ -1215,8 +1215,8 @@ Feature: User sync
     And I navigate to Authentication Policy section from bus admin console page
     And I use Directory Service as authentication provider
     And I input server connection settings
-      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
-      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+      | Server Host   | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.103.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I click Sync Rules tab
     And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes

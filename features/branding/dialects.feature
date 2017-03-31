@@ -1,5 +1,5 @@
-Feature: As a Mozy partner Admin,
-  I should be able to set up my own dialects
+Feature: Dialect
+  As a Mozy partner Admin, I should be able to set up my own dialects
 
   @TC.122139 @bus @ROR_smoke
   Scenario: 122139 Add a dialect

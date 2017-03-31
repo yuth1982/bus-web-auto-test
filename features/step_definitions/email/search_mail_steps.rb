@@ -1,3 +1,8 @@
+# If use qa code to create a AD user with dynamic email, @AD_User_Emails hash instance variable will be created.
+# See below example for how to check email for a unique and dynamic AD user email
+# And I search emails by keywords:
+#     | to                                | subject                               |
+#     | @AD_User_Emails["tc131019.user1"] | New Account Created on MozyEnterprise |
 When /^I search emails by keywords:$/ do |keywords_table|
   @email_search_query = []
   expected = keywords_table.hashes
@@ -9,6 +14,16 @@ When /^I search emails by keywords:$/ do |keywords_table|
           v.gsub!(/@new_admin_email/, @partner.admin_info.email) unless @partner.nil?
           v.gsub!(/@existing_admin_email/, @existing_admin_email) unless @existing_admin_email.nil?
           v.gsub!(/@existing_user_email/, @existing_user_email) unless @existing_user_email.nil?
+          # scenario - check the AD user email which is a dynamic email address with prefix as mozyautotest+xxx@emc.com
+          if v.include?("@AD_User_Emails")
+            @bus_site.log("AD user's email requies converted.")
+            match = v.scan(/".*"/)
+            puts match[0]
+            puts match[0].length
+            puts match[0][1..match[0].length-2]
+            v = @AD_User_Emails[match[0][1..match[0].length-2]]
+            puts v
+          end
         when 'content'
           unless @partner.nil?
             v.gsub!(/@new_admin_email/, @partner.admin_info.email)

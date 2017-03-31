@@ -1,4 +1,4 @@
-Feature: 97636 Client Controller API
+Feature: Client Controller API
 
   Background:
     Given I log in bus admin console as administrator

@@ -1,4 +1,4 @@
-Feature:
+Feature: manage invoice comm settings
   As a Mozy Administrator
   I want to configure whether or not I want to receive account statements by email
   so that I'm not bothered by extra email

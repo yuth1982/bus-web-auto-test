@@ -14,7 +14,8 @@
 #    secret: 5NDOVgE2OpdpZc5IPBEA8ZuQ6t2Ch7094MGoHg8nElxK6geBlpCFSSRxAt028Qa5
 #    group_id: 129736
 
-Feature: Machine migration (This is only for QA5 environment, This file will be replaced by machine_mapping.feature)
+Feature: Machine migration
+  (This is only for QA5 environment, This file will be replaced by machine_mapping.feature)
 
   As an admin
   I want to migrate machines from current owners to new owners

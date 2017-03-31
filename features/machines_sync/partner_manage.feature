@@ -1,4 +1,4 @@
-Feature:
+Feature: partner manage
 
   As partner administrator
   I want to view a MozyPro or MozyEnterprise customers plan details

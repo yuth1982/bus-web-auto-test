@@ -334,13 +334,13 @@ module DBHelper
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
       #same_date = (Time.new.hour - 15 >= 0)
       if time_zone_in_same_day
-        dblog("backup_suspended_at - local date and ruby script execution date are the same day")
+        dbLog("backup_suspended_at - local date and ruby script execution date are the same day")
         sql = "UPDATE users SET backup_suspended_at = '#{Date.today - (weeks_ago * 7)}' WHERE id = #{user_id};"
       else
-        dblog("backup_suspended_at - local date and ruby script execution date are NOT the same day")
+        dbLog("backup_suspended_at - local date and ruby script execution date are NOT the same day")
         sql = "UPDATE users SET backup_suspended_at = '#{Date.today - 1 - (weeks_ago * 7)}' WHERE id = #{user_id};"
       end
-      dblog(sql)
+      dbLog(sql)
       conn.exec sql
     rescue PG::Error => e
       puts "postgres error: #{e}"
@@ -355,13 +355,13 @@ module DBHelper
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
       #same_date = (Time.new.hour - 15 >= 0)
       if time_zone_in_same_day
-        dblog("gc_notify_at - local date and ruby script execution date are the same day")
+        dbLog("gc_notify_at - local date and ruby script execution date are the same day")
         sql = "UPDATE users SET gc_notify_at = '#{Date.today - (weeks_ago * 7)}' WHERE id = #{user_id};"
       else
-        dblog("gc_notify_at - local date and ruby script execution date are NOT the same day")
+        dbLog("gc_notify_at - local date and ruby script execution date are NOT the same day")
         sql = "UPDATE users SET gc_notify_at = '#{Date.today - 1 - (weeks_ago * 7)}' WHERE id = #{user_id};"
       end
-      dblog(sql)
+      dbLog(sql)
       conn.exec sql
     rescue PG::Error => e
       puts "postgres error: #{e}"
@@ -885,9 +885,17 @@ module DBHelper
   end
 
   def delete_users_by_email(email)
+    dbLog("Begin to delete user by email")
     begin
+      dbLog("host: " + @host.to_s)
+      dbLog("port: " + @port.to_s)
+      dbLog("db user: " + @db_user.to_s)
+      dbLog("db name: " + @db_name.to_s)
+      dbLog("begin to connect to the PG")
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      dbLog("connection succeed")
       sql = "UPDATE users SET deleted = 't', deleted_time = now(), userhash = null WHERE username like '#{email}' and deleted_time is null;"
+      dbLog("sql clause is: " + sql)
       c = conn.exec sql
       c.check
       puts sql
@@ -898,6 +906,8 @@ module DBHelper
       end
     rescue PGError => e
       puts 'postgres error'
+      puts e
+      dbLog(e.to_s)
     ensure
       conn.close unless conn.nil?
     end
@@ -985,8 +995,8 @@ module DBHelper
   end
 
   #======puts customized comment into the single test case execution log======
-  def dblog(text)
-    $logFile.puts("======[DB Log]:" + text.to_s + "======\n")
+  def dbLog(text)
+    $logFile.puts("======[DB Log] " + text.to_s + "======\n")
   end
 
   # delete dialects by partner id
@@ -1002,6 +1012,38 @@ module DBHelper
     end
   end
 
+  # Public: delete promot from plsql
+  def delete_promo(promo)
+    dbLog("delete promption from promotions table")
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "UPDATE promotions SET deleted_at = now() WHERE code = '#{promo}' and deleted_at is null;"
+      dbLog("delete promotion from promotions table by the plsql clause: " + sql)
+      c = conn.exec(sql)
+      dbLog("result: " + c.to_s)
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+
+    dbLog("delete promption from pro_promotions table")
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "UPDATE pro_promotions SET deleted_at = now() WHERE code = '#{promo}' and deleted_at is null;"
+      dbLog("delete promotion from pro_promitions table by the plsql clause: " + sql)
+      c = conn.exec(sql)
+      dbLog("result: " + c.to_s)
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+
+
+
+
+  end
 
   # return one record of pro_partners table as a hash
   def get_pro_partner_table(partner_id)
@@ -1023,7 +1065,7 @@ module DBHelper
   #======this method will convert date to the date align with the db time zone======
   def time_zone_in_same_day
     local_time_utc_offset = Time.new.strftime("%:z").to_i
-    dblog("local machine date time zone utc offset is #{local_time_utc_offset.to_s}")
+    dbLog("local machine date time zone utc offset is #{local_time_utc_offset.to_s}")
     time_difference = local_time_utc_offset + 7
     same_date = (Time.new.hour - time_difference >= 0)
     #timezone_array=[same_date, time_difference]

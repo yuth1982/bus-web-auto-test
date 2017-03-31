@@ -1,5 +1,5 @@
-Feature: As a Mozy partner Admin,
-  I should be able to use my own smtp server to send mozy related emails
+Feature: SMTP Settings
+  As a Mozy partner Admin, I should be able to use my own smtp server to send mozy related emails
 
   @TC.122178 @bus @ROR_smoke
   Scenario: 122178 Add New SMTP Setting
