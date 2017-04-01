@@ -2,7 +2,7 @@ require 'net-ldap'
 module LDAPHelper
   USER = 'admin@mtdev.mozypro.local'
   PASSWORD = 'abc!@#123'
-  HOST = '10.29.99.120'
+  HOST = '10.29.103.120'
   PORT = 389
   TREEBASE = 'dc=mtdev,dc=mozypro,dc=local'
   EMAIL_POSTFIX = '@test.com'
