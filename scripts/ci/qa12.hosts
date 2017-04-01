@@ -8,7 +8,7 @@
 10.237.13.40 backupclient.mozyenterprise.com
 
 #AD server
-10.29.99.120 win-ko2af9k2doa.mtdev.mozypro.local
+10.29.103.120 win-ko2af9k2doa.mtdev.mozypro.local
 
 #BUS Automation
 10.237.13.40 hipaa01.mozypro.com nohipaa01.mozypro.com qa8saml.mozypro.com

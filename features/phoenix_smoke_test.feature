@@ -19,7 +19,7 @@ Feature: Phoenix smoke test
 
 
 
-  @TC.126120 @bus @regression_test @phoenix @mozyhome @us
+  @TC.126120 @bus @regression_test @phoenix @mozyhome @us @ROR_smoke
   Scenario: 126120 Create a MozyHome paid user
     When I am at dom selection point:
     And I add a phoenix Home user:
