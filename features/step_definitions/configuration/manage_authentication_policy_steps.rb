@@ -498,7 +498,7 @@ And /^I delete a user (.+) in the demeter db$/ do |username|
 end
 
 # Monitor the sync result, restart bds-boot service in case the sync failed.
-And /I monitor the sync result and restart bds-boot service if sync failed/ do
+And /^I monitor the sync result and restart bds-boot service if sync failed$/ do
   # step1 - click Connection Settings tab and wait for the sync result
   step %{I click Connection Settings tab}
   @bus_site.admin_console_page.authentication_policy_section.refresh_bus_section
@@ -522,5 +522,9 @@ And /I monitor the sync result and restart bds-boot service if sync failed/ do
     actual[1].should =~ /0 failed/
     @bus_site.log("Provisioned succeeds after 1st failed.")
   end
+end
 
+Then /^sync hourly checkbox is (visible|invisible)$/ do | visibility |
+  @bus_site.admin_console_page.authentication_policy_section.sync_hourly_visible.should == true if visibility == 'visible'
+  @bus_site.admin_console_page.authentication_policy_section.sync_hourly_visible.should == false if visibility == 'invisible'
 end

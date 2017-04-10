@@ -17,6 +17,8 @@ def login(environment)
     end
   rescue Exception => ex
     Log.debug(ex.to_s)
+    @bus_site.log("fail to log in the bus console.")
+    @bus_site.log(ex.to_s)
     success = false
   end
   success

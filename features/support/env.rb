@@ -16,8 +16,14 @@ def firefox_profile
   profile
 end
 
+#Capybara.register_driver :firefox do |app|
+#  Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => firefox_profile)
+#end
+
 Capybara.register_driver :firefox do |app|
-  Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => firefox_profile)
+  client = Selenium::WebDriver::Remote::Http::Default.new
+  client.timeout = 120
+  Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => firefox_profile, :http_client => client)
 end
 
 Capybara.register_driver :firefox_profile do |app|

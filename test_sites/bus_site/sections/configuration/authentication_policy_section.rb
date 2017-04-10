@@ -39,6 +39,7 @@ module Bus
     element(:options_delete_missing_users, id: 'options_delete_missing_users')
     element(:options_suspend_missing_users, id: 'options_suspend_missing_users')
     element(:scheduled_sync_options, id: 'options_daily')
+    element(:scheduled_sync_hourly, id: 'options_hourly')
     element(:data_sync_options_suspend_after_miss, id: 'data_sync_options_suspend_after_miss')
     element(:data_sync_options_delete_after_miss, id: 'data_sync_options_delete_after_miss')
     element(:scheduled_sync_time, id: 'data_sync_options_schedule')
@@ -701,6 +702,11 @@ module Bus
     def uncheck_send_welcome_email
       log("uncheck <Send Welcome email to new users> checkbox")
       send_welcome_email.uncheck
+    end
+
+    def sync_hourly_visible
+      log("Verify the sync hourly checkbox is visible or invisible")
+      return scheduled_sync_hourly.visible?
     end
 
   end

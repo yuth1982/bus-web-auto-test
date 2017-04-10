@@ -147,15 +147,17 @@ module KeylessDeviceActivation
 
     def enable_partner_to_sso(partner_id, partner_name)
       uri = URI.parse("http://#{QA_ENV['sso_host']}")
+      Log.debug uri
       Net::HTTP.start(uri.host, uri.port,
-                      :use_ssl => uri.scheme == 'https') do |http|
+                        :use_ssl => uri.scheme == 'https') do |http|
         partner_name = CGI::escape (partner_name)
         partner_name = partner_name.gsub(/\+/, ' ')
         string = "/enabled_partners"\
           +"?pro_partner_id="+partner_id\
           +"&pro_partner_name="+partner_name
         Log.debug string
-        request = Net::HTTP::Get.new( string )
+        #request = Net::HTTP::Get.new( string )
+        request = Net::HTTP::Get.new( URI.encode(string) )
         response = http.request request
         result = JSON.parse(response.body)
         result.each do |hash|

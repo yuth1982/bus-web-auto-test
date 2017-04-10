@@ -105,7 +105,7 @@ After do |scenario|
   hh,mm = mm.divmod(60)
   dd,hh = hh.divmod(60)
 
-  $logFile.puts("[Exception Message]-#{scenario.exception.message}") if scenario.failed?
+  $logFile.puts("[Exception Message]:#{scenario.exception.message}") if scenario.failed?
   if scenario.failed?
     backtraceStrings = scenario.exception.backtrace
     for i in 0..backtraceStrings.size
