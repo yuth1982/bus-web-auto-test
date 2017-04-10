@@ -140,6 +140,8 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller|MozyEnterprise DPS|OEM) part
     @partner.net_term_payment = (attributes['net terms'] || 'no').eql?('yes')
 
     Log.debug(@partner.to_s)
+    @bus_site.log('begin to create partner')
+    @bus_site.log(@partner.to_s)
     @bus_site.admin_console_page.add_new_partner_section.add_new_account(@partner)
   end
 end

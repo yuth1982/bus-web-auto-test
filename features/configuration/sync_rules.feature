@@ -267,3 +267,31 @@ Feature: sync rules
       | rule                                   | group                |
       | cn=tc131012.user1                      | (default user group) |
     And I save the changes with password default password
+
+  @TC.131043 @131057 @bus @admin @ldap_sequence @regression @qa12
+  Scenario: Check whether the safeguard option presents; approve safeguard warnings and validate the results
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | root role  |
+      | 24     | 18    | 500 GB      | FedID role |
+    Then New partner should be created
+    # step3 - partner setting
+    When I add partner settings
+      | Name                    | Value | Locked |
+      | allow_ad_authentication | t     | true   |
+    And I view the newly created partner admin details
+    Then I active admin in admin details default password
+    And I log out bus admin console
+    # step4 - relog in as new user
+    When I navigate to bus admin console login page
+    And I log in bus admin console with user name @partner.admin_info.email and password default password
+    # step5 - Authentication Ploicy/Connection Settings
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider without saving
+    And I choose LDAP Pull as Directory Service provider without saving
+    # step6 - verify the sync safeguard is visible
+    And I click Sync Rules tab
+    Then sync safeguards checkbox is visible
+    And I save the changes with password default password
+    Then Authentication Policy has been updated successfully
+
+

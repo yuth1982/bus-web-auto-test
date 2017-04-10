@@ -528,3 +528,8 @@ Then /^sync hourly checkbox is (visible|invisible)$/ do | visibility |
   @bus_site.admin_console_page.authentication_policy_section.sync_hourly_visible.should == true if visibility == 'visible'
   @bus_site.admin_console_page.authentication_policy_section.sync_hourly_visible.should == false if visibility == 'invisible'
 end
+
+Then /^sync safeguards checkbox is (visible|invisible)$/ do | visibility |
+  @bus_site.admin_console_page.authentication_policy_section.sync_safeguard_visible.should == true if visibility == 'visible'
+  @bus_site.admin_console_page.authentication_policy_section.sync_safeguard_visible.should == false if visibility == 'invisible'
+end

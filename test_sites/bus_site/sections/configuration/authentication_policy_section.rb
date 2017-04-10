@@ -709,6 +709,11 @@ module Bus
       return scheduled_sync_hourly.visible?
     end
 
+    def sync_safeguard_visible
+      log("Verify the synchronization safeguards checkbox is visible or invisible")
+      return sync_safeguards_checkbox.visible?
+    end
+
   end
 end
 
