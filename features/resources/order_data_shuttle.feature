@@ -755,7 +755,7 @@ Feature: Order data shuttle
   Scenario: 12342 data_shuttle_ordered_active: (Data Shuttle ordered for activated machine phase III - to user)
     And I add a new Reseller partner:
       | company name    | period | reseller type | reseller quota | server plan | net terms |
-      | tc12342_partner | 1      | Silver        | 50             | yes         | yes       |
+      | tc12342 partner | 1      | Silver        | 50             | yes         | yes       |
     Then New partner should be created
     And I get the partner_id
     And I act as newly created partner
