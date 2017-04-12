@@ -428,7 +428,7 @@ module Bus
       view_in_aria_link.click
     end
 
-    # Public: Click act as partner link. Do a three try loop in case the time delay which causes the Act As action failed.
+    # Public: Click act as partner link
     #
     # Example
     #   @bus_site.admin_console_page.partner_details_section.act_as_partner
@@ -436,21 +436,7 @@ module Bus
     # Returns nothing
     def act_as_partner
       act_as_link.click
-      #alert_accept if alert_present?
-      init = false
-      i = 0
-      sleep(5)
-      while init == false && i < 3
-        if alert_present?
-          puts "======Find the <Start using Mozy> dialog======"
-          alert_accept
-          init = true  #Get the alert dialog
-        else
-          puts "======Not found, wait for 5 second and try again.======"
-          i = i + 1
-          sleep(5)
-        end
-      end
+      alert_accept if alert_present?
     end
 
     def click_admin_name admin_name
