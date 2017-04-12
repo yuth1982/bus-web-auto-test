@@ -18,6 +18,7 @@ Feature: Change subscription period
     And I change account subscription to annual billing period!
     Then Subscription changed message should be Your account has been changed to yearly billing.
     When I stop masquerading
+    And I search partner by newly created partner company name
     And I view partner details by newly created partner company name
     Then Partner internal billing should be:
       | Account Type:   | Credit Card  | Current Period: | Yearly             |
