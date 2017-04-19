@@ -58,6 +58,7 @@ Feature: general requirements
     Then 1 new user should be created
     When I stop masquerading
     And I navigate to Search / List Partners section from bus admin console page
+    And I search partner by newly created partner company name
     And I view partner details by newly created partner company name
     And I act as newly created partner account
     And I navigate to Search / List Users section from bus admin console page
