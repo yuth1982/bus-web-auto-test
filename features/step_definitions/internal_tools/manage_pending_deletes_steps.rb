@@ -99,4 +99,31 @@ Then /^I verify can not undelete a purged partner$/ do
   @bus_site.admin_console_page.manage_pending_deletes_section.undelete_button_on_purged_table.should == 0
 end
 
+When /^I purge multiple partners from csv file$/ do
+  # csv file with root admin email of partners
+  # column header: Root Admin
+  csv_file = File.expand_path(File.dirname(__FILE__) + '../../../internal_tools/pro_partner_available_to_purge.csv')
 
+  Log.debug "Loading partners Root Admin email from #{csv_file}"
+  CSV.foreach(csv_file, headers: true) do |row|
+    begin
+      admin_email = row["Root Admin"]
+      Log.debug admin_email
+      step %{I search partners in pending-delete available to purge by:}, table(%{
+      | email          |
+      | #{admin_email} |})
+      step %{Partners in pending-delete available to purge search results should be:}, table(%{
+      | Root Admin     |
+      | #{admin_email} |})
+      step %{I purge partner by #{admin_email}}
+      step %{I search partners in who have been purged by:}, table(%{
+      | email          |
+      | #{admin_email} |})
+      step %{Partners in who have been purged search results should be:}, table(%{
+      | Root Admin     |
+      | #{admin_email} |})
+    rescue Exception => ex
+      Log.debug ex.to_s
+    end
+  end
+end
