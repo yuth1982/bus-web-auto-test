@@ -714,6 +714,31 @@ module Bus
       return sync_safeguards_checkbox.visible?
     end
 
+    def help_link_visibility
+      begin
+        find(:xpath, "//a[text()='Help']")
+        log("help link found")
+        return true
+      rescue
+        log("help link not found")
+        return false
+      end
+    end
+
+    def click_help_link
+      find(:xpath, "//a[text()='Help']").click
+    end
+
+    def click_details_link
+      find(:xpath, "//a[text()='Details']").click
+    end
+
+    def click_blocked_deprovision_link
+      find(:xpath, "//a[text()='Blocked Deprovision']").click
+      wait_until_bus_section_load
+    end
+
+
   end
 end
 

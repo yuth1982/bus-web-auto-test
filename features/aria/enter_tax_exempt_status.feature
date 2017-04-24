@@ -1,12 +1,10 @@
- Feature:
+ Feature: enter_tax_exempt_status
   As a Mozy Administrator
   I want provide tax-exempt information to Mozy
   so that I am not charged taxes if they should not apply to my business
 
   Background:
     Given I log in bus admin console as administrator
-
-
 
   @TC.17533 @firefox  @bus @2.0 @enter_tax-exempt_status @regression
   Scenario: 17533 Set both Exempt from State and Federal taxes to false for a new Biennially Mozypro partner

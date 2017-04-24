@@ -534,3 +534,52 @@ Then /^sync safeguards checkbox is (visible|invisible)$/ do | visibility |
   @bus_site.admin_console_page.authentication_policy_section.sync_safeguard_visible.should == true if visibility == 'visible'
   @bus_site.admin_console_page.authentication_policy_section.sync_safeguard_visible.should == false if visibility == 'invisible'
 end
+
+Then /^help link is (visible|invisible)$/ do |visibility|
+  @bus_site.admin_console_page.authentication_policy_section.help_link_visibility.should == true if visibility == 'visible'
+  @bus_site.admin_console_page.authentication_policy_section.help_link_visibility.should == false if visibility == 'invisible'
+end
+
+Then /^I click help link$/ do
+  @bus_site.admin_console_page.authentication_policy_section.click_help_link
+end
+
+Then /^I access help page successfully$/ do
+  sleep(20)
+  @bus_site.helplink_page.access
+end
+
+# Monitor the sync result, restart bds-boot service in case the sync failed.
+And /^I restart bds-boot service$/ do
+  SSHHelper.restart_bds_boots_service
+end
+
+Then /^I click Details link to download csv file$/ do
+  @bus_site.admin_console_page.authentication_policy_section.click_details_link
+end
+
+Then /^the download LDAP_object_list csv file should be like:$/ do |report_table|
+  report_table.map_column!('Column B') do |value|
+    #p value
+    if value.include? "AD_User_Emails"
+      /(\[.+\])/ =~ value
+      hash_key = $1
+      hask_key1 = hash_key.gsub!(/(\[)|(\])|(")/, '')
+      email = @AD_User_Emails[hask_key1]
+      value.gsub!(/<.*>/, email)
+    end
+    value
+  end
+
+  actual_csv = FileHelper.read_csv_file("LDAP_object_list.csv")
+  actual_csv.should == report_table.rows
+end
+
+And /^I click Blocked Deprovision link$/ do
+  @bus_site.admin_console_page.authentication_policy_section.click_blocked_deprovision_link
+end
+
+Then /^I (approve|ignore) rule (.+)$/ do |action, rule|
+  @bus_site.admin_console_page.blocked_deprovision.blocked_deprovision_rule_check(rule)
+  @bus_site.admin_console_page.blocked_deprovision.blocked_deprovision_rule_action(action)
+end
