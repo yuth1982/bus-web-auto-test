@@ -267,7 +267,8 @@ When /^The selected (.+) option is (.+)$/ do |type, option|
 end
 
 When /^The save error message should be:$/ do |table|
-  @bus_site.admin_console_page.authentication_policy_section.result_message.should include "#{table.raw[0][0]}\n#{table.raw[1][0]}"
+  @bus_site.admin_console_page.authentication_policy_section.result_message.should include "#{table.raw[0][0]}"
+  @bus_site.admin_console_page.authentication_policy_section.result_message.should include "#{table.raw[1][0]}"
 end
 
 When /^I click the sync now button$/ do
@@ -494,7 +495,7 @@ end
 
 And /^I delete a user (.+) in the demeter db$/ do |username|
   @bus_site.log("Delete user #{username} in demeter db.")
-  SSHHelper.delete_users_by_email(username)
+  DBHelper.delete_users_by_email(username)
 end
 
 # Monitor the sync result, restart bds-boot service in case the sync failed.

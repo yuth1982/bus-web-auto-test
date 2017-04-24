@@ -17,6 +17,7 @@ Feature: Corporate Invoices
       | to               | subject                  |
       | @new_admin_email | MozyPro Account Created! |
     Then I should see 1 email(s)
+    And I wait for 1200 seconds
     When I search emails by keywords:
       | from        | subject                    | content          |
       | ar@mozy.com | Mozy Inc Account Statement | @company_address |
@@ -48,6 +49,7 @@ Feature: Corporate Invoices
       | to               | subject                         |
       | @new_admin_email | MozyEnterprise Account Created! |
     Then I should see 1 email(s)
+    And I wait for 1200 seconds
     When I search emails by keywords:
       | from        | subject                    | content          |
       | ar@mozy.com | Mozy Inc Account Statement | @company_address |

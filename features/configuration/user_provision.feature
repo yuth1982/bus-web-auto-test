@@ -210,6 +210,7 @@ Feature: User sync
 
   @TC.17538  @smoke @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction @regression
   Scenario: 17538 17551 Provision and Deprovision Users with One Rule/Match All/Multiple
+    Given I delete a user %17538-test% in the demeter db
     # Scenario: 17538 17551 One Rule/Match All/Multiple Users
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -276,6 +277,7 @@ Feature: User sync
 
   @TC.17540 @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction @regression
   Scenario: 17540 17552 17542 17554 17543 17557 17554 User sync with different conditions
+    Given I delete a user %17540-test% in the demeter db
     # Scenario: 17540 One Rule/Multiple Rules
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -990,6 +992,7 @@ Feature: User sync
 
   @TC.17546 @bus @2.1 @direct_ldap_integration @use_provision @regression
   Scenario: 17546 17548 17549 18723 UserProvision/Sync - Add(Delete, Modify) a new user in AD
+    Given I delete a user %17546-test% in the demeter db
     # Scenario: 17546 UserProvision/Sync - Add(Delete, Modify) a new user in AD
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -1127,6 +1130,7 @@ Feature: User sync
     And I delete a user dev-17546-test2 in the AD
 
     # Scenario: 18723 UserProvision-Fixed Attribute
+    And I wait for 300 seconds
     And I navigate to Authentication Policy section from bus admin console page
     And I click Attribute Mapping tab
     And I set the fixed attribute to uid
@@ -1290,6 +1294,7 @@ Feature: User sync
 
   @TC.121744 @firefox @direct_ldap_integration @qa8 @bus @env_dependent @regression
   Scenario: 121744 non-ASCII in cn can be synced
+    Given I delete a user %fedid_encoding% in the demeter db
     When I act as partner by:
       | email                   |
       | encoding_fedid@auto.com |

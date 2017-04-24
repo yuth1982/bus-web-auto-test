@@ -156,25 +156,25 @@ Feature: Modify credit card information and billing contact information
     # Visa
     And I update credit card information to:
       | cc name   | cc number        | expire month | expire year | cvv |
-      | newcard a | 4018121111111122 | 12           | 16          | 824 |
+      | newcard a | 4018121111111122 | 12           | 32          | 824 |
     And I save payment information changes
     Then Payment information should be updated
     # MasterCard
     And I update credit card information to:
       | cc name   | cc number        | expire month | expire year | cvv |
-      | newcard b | 5111991111111121 | 12           | 17          | 404 |
+      | newcard b | 5111991111111121 | 12           | 32          | 404 |
     And I save payment information changes
     Then Payment information should be updated
     # American EXpress
     And I update credit card information to:
       | cc name   | cc number        | expire month | expire year | cvv |
-      | newcard c | 372478273181824  | 12           | 17          | 295 |
+      | newcard c | 372478273181824  | 12           | 32          | 295 |
     And I save payment information changes
     Then Payment information should be updated
     # Discover
     And I update credit card information to:
       | cc name   | cc number         | expire month | expire year | cvv |
-      | newcard d | 6011868815065127  | 12           | 17          | 731 |
+      | newcard d | 6011868815065127  | 12           | 32          | 731 |
     And I save payment information changes
     Then Payment information should be updated
     When I stop masquerading

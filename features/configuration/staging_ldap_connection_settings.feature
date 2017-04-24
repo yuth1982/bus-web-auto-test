@@ -7,7 +7,7 @@ Feature: Manage Horizon related settings
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.17476 @bus @2.1 @direct_ldap_integration @authentication_migration @regression
+  @TC.17476 @bus @2.1 @direct_ldap_integration @authentication_migration
   Scenario: 17476 17477 17825 17478 17479 17480 17482 17484 17487 Verify manage ldap settings works
     # Scenario: 17476 Successfully verify 'Test Connection' button should work with valid host
     When I add a new MozyEnterprise partner:

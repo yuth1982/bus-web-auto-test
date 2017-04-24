@@ -22,7 +22,7 @@ Feature: Proxy for LDAP queries
     And I save the changes
     Then The save error message should be:
       | Save failed  |
-      | Invalid data.|
+      | Invalid hosts|
 
   @FID11.1006 @TC.19196 @bus @2.3 @direct_ldap_integration @proxy @adfs @qa5 @need_test_account @env_dependent @regression
   Scenario: 19196 [Test connection][UI][N]Test failed with 200 when I input valid data but meet with other failure
@@ -59,11 +59,11 @@ Feature: Proxy for LDAP queries
       | @host_address        | No SSL   |          | @port  | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com| QAP@SSw0rd    |
     And I save the changes
     And I get the full whitelist into new_whitelist
-    Then 1 Server Host and Port are added to the whitelist according to old_whitelist and new_whitelist
+    Then 3 Server Host and Port are added to the whitelist according to old_whitelist and new_whitelist
     And The new Server Host and Port should be the same as input according to old_whitelist and new_whitelist
     When I input server connection settings
-      | Server Host          | Protocol | SSL Cert | Port | Base DN                   | Bind Username         | Bind Password |
-      | ad01.qa5.mozyops.com | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com| QAP@SSw0rd    |
+      | Server Host          | Protocol | SSL Cert | Port | Base DN                     | Bind Username            | Bind Password |
+      | 10.29.103.120        | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local| admin@mtdev.mozypro.local| abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
@@ -89,10 +89,10 @@ Feature: Proxy for LDAP queries
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I get the full whitelist into new_whitelist
-    Then 1 Server Host and Port are deleted to the whitelist according to old_whitelist and new_whitelist
+    Then 3 Server Host and Port are deleted to the whitelist according to old_whitelist and new_whitelist
     When I input server connection settings
-      | Server Host          | Protocol | SSL Cert | Port | Base DN                   | Bind Username         | Bind Password |
-      | ad01.qa5.mozyops.com | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com| QAP@SSw0rd    |
+      | Server Host          | Protocol | SSL Cert | Port | Base DN                     | Bind Username            | Bind Password |
+      | 10.29.103.120        | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local| admin@mtdev.mozypro.local| abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
@@ -118,11 +118,11 @@ Feature: Proxy for LDAP queries
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I get the full whitelist into new_whitelist
-    Then 1 Server Host and Port are updated to the whitelist according to old_whitelist and new_whitelist
+    Then 0 Server Host and Port are updated to the whitelist according to old_whitelist and new_whitelist
     And The new Server Host and Port should be the same as input according to old_whitelist and new_whitelist
     When I input server connection settings
-      | Server Host          | Protocol | SSL Cert | Port | Base DN                   | Bind Username         | Bind Password |
-      | ad01.qa5.mozyops.com | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com| QAP@SSw0rd    |
+      | Server Host          | Protocol | SSL Cert | Port | Base DN                     | Bind Username            | Bind Password |
+      | 10.29.103.120        | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local| admin@mtdev.mozypro.local| abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
@@ -137,8 +137,8 @@ Feature: Proxy for LDAP queries
     And I use Directory Service as authentication provider
     And I click Connection Settings tab
     When I input server connection settings
-      | Server Host          | Protocol | SSL Cert | Port | Base DN                   | Bind Username         | Bind Password |
-      | ad01.qa5.mozyops.com | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com| QAP@SSw0rd    |
+      | Server Host          | Protocol | SSL Cert | Port | Base DN                     | Bind Username            | Bind Password |
+      | 10.29.103.120        | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local| admin@mtdev.mozypro.local| abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     And I get the full whitelist into old_whitelist
@@ -186,10 +186,10 @@ Feature: Proxy for LDAP queries
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I get the full whitelist into new_whitelist
-    Then 2 Server Host and Port are added to the whitelist according to old_whitelist and new_whitelist
+    Then 0 Server Host and Port are added to the whitelist according to old_whitelist and new_whitelist
     When I input server connection settings
       | Server Host          | Protocol | SSL Cert | Port | Base DN                   | Bind Username         | Bind Password |
-      | ad01.qa5.mozyops.com | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com| QAP@SSw0rd    |
+      | 10.29.103.120        | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local| admin@mtdev.mozypro.local| abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
@@ -232,10 +232,10 @@ Feature: Proxy for LDAP queries
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I get the full whitelist into new_whitelist
-    Then 1 Server Host and Port are added to the whitelist according to old_whitelist and new_whitelist
+    Then 0 Server Host and Port are added to the whitelist according to old_whitelist and new_whitelist
     When I input server connection settings
       | Server Host          | Protocol | SSL Cert | Port | Base DN                   | Bind Username         | Bind Password |
-      | ad01.qa5.mozyops.com | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com| QAP@SSw0rd    |
+      | 10.29.103.120        | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local| admin@mtdev.mozypro.local| abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
@@ -276,7 +276,7 @@ Feature: Proxy for LDAP queries
     Then 0 Server Host and Port are deleted to the whitelist according to old_whitelist and new_whitelist
     When I input server connection settings
       | Server Host          | Protocol | SSL Cert | Port | Base DN                   | Bind Username         | Bind Password |
-      | ad01.qa5.mozyops.com | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com| QAP@SSw0rd    |
+      | 10.29.103.120        | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local| admin@mtdev.mozypro.local| abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
@@ -326,10 +326,10 @@ Feature: Proxy for LDAP queries
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I get the full whitelist into new_whitelist
-    Then 1 Server Host and Port are deleted to the whitelist according to old_whitelist and new_whitelist
+    Then 0 Server Host and Port are deleted to the whitelist according to old_whitelist and new_whitelist
     When I input server connection settings
       | Server Host          | Protocol | SSL Cert | Port | Base DN                   | Bind Username         | Bind Password |
-      | ad01.qa5.mozyops.com | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com| QAP@SSw0rd    |
+      | 10.29.103.120        | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local| admin@mtdev.mozypro.local| abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
@@ -367,10 +367,10 @@ Feature: Proxy for LDAP queries
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I get the full whitelist into new_whitelist
-    Then 1 Server Host and Port are deleted to the whitelist according to old_whitelist and new_whitelist
+    Then 0 Server Host and Port are deleted to the whitelist according to old_whitelist and new_whitelist
     When I input server connection settings
       | Server Host          | Protocol | SSL Cert | Port | Base DN                   | Bind Username         | Bind Password |
-      | ad01.qa5.mozyops.com | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com| QAP@SSw0rd    |
+      | 10.29.103.120        | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local| admin@mtdev.mozypro.local| abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
@@ -408,10 +408,10 @@ Feature: Proxy for LDAP queries
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I get the full whitelist into new_whitelist
-    Then 1 Server Host and Port are added to the whitelist according to old_whitelist and new_whitelist
+    Then 0 Server Host and Port are added to the whitelist according to old_whitelist and new_whitelist
     When I input server connection settings
       | Server Host          | Protocol | SSL Cert | Port | Base DN                   | Bind Username         | Bind Password |
-      | ad01.qa5.mozyops.com | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com| QAP@SSw0rd    |
+      | 10.29.103.120        | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local| admin@mtdev.mozypro.local| abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
@@ -437,12 +437,12 @@ Feature: Proxy for LDAP queries
     And I save the changes
     Then The save error message should be:
       | Save failed  |
-      | Invalid data.|
+      | Invalid hosts|
     And I get the full whitelist into new_whitelist
     Then 0 Server Host and Port are added to the whitelist according to old_whitelist and new_whitelist
     When I input server connection settings
       | Server Host          | Protocol | SSL Cert | Port | Base DN                   | Bind Username         | Bind Password |
-      | ad01.qa5.mozyops.com | No SSL   |          | 389  | dc=qa5, dc=mozyops, dc=com| leongh@qa5.mozyops.com| QAP@SSw0rd    |
+      | 10.29.103.120        | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local| admin@mtdev.mozypro.local| abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD

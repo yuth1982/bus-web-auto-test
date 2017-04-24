@@ -12,7 +12,7 @@ Feature: Manage Horizon related settings
       | mikeg+fedid@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
 
-  @TC.17470 @bus @2.1 @direct_ldap_integration @authentication_migration @qa5 @env_dependent @regression
+  @TC.17470 @bus @2.1 @direct_ldap_integration @authentication_migration @qa5 @env_dependent
   Scenario: 17470 Successfully verify 'Test Connection' button should work with valid organization name
     When I use Directory Service as authentication provider
     And I select Horizon Manager with organization name mozyqa2
@@ -26,7 +26,7 @@ Feature: Manage Horizon related settings
     And I Test Connection for Horizon Manager
     Then Horizon Manager test connection message should be Test failed.
 
-  @TC.17472 @bus @2.1 @direct_ldap_integration @authentication_migration @qa5 @env_dependent @regression
+  @TC.17472 @bus @2.1 @direct_ldap_integration @authentication_migration @qa5 @env_dependent
   Scenario: 17472 Can successfully load Horizon Manager's attributes with valid organization name
     When I use Directory Service as authentication provider
     And I select Horizon Manager with organization name mozyqa2

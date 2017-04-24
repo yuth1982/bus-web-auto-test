@@ -78,6 +78,7 @@ Feature: Notify about and collect past-due balances
     Then API* Aria account should be:
       | status_label     |
       | ACTIVE DUNNING 1 |
+    And I wait for 1200 seconds
     When I search emails by keywords:
       | from                    | subject                                          | after | content                             |
       | AccountManager@mozy.com | [Mozy] Your credit card payment was unsuccessful | today |<%=@partner.credit_card.first_name%> |
@@ -98,6 +99,7 @@ Feature: Notify about and collect past-due balances
     Then API* Aria account should be:
       | status_label     |
       | ACTIVE DUNNING 2 |
+    And I wait for 1200 seconds
     When I search emails by keywords:
       | from                    | subject                                                          | after | content                             |
       | AccountManager@mozy.com | [Mozy] SECOND NOTICE - Your credit card payment was unsuccessful | today |<%=@partner.credit_card.first_name%> |
@@ -118,6 +120,7 @@ Feature: Notify about and collect past-due balances
     Then API* Aria account should be:
       | status_label     |
       | ACTIVE DUNNING 3 |
+    And I wait for 1200 seconds
     When I search emails by keywords:
       | from                    | subject                                         | after | content                              |
       | AccountManager@mozy.com | [Mozy] Your account will be suspended in 7 days | today | <%=@partner.credit_card.first_name%> |
@@ -138,6 +141,7 @@ Feature: Notify about and collect past-due balances
     Then API* Aria account should be:
       | status_label |
       | SUSPENDED    |
+    And I wait for 1200 seconds
     When I search emails by keywords:
       | from        | subject                   | after | content                             |
       | ar@mozy.com | Account Suspension Notice | today |<%=@partner.credit_card.first_name%> |
@@ -158,6 +162,7 @@ Feature: Notify about and collect past-due balances
     Then API* Aria account should be:
       | status_label     |
       | ACTIVE DUNNING 1 |
+    And I wait for 1200 seconds
     When I search emails by keywords:
       | from                    | subject                                          | after | content                             |
       | AccountManager@mozy.com | [Mozy] Your credit card payment was unsuccessful | today | <%=@partner.admin_info.first_name%> |
@@ -198,6 +203,7 @@ Feature: Notify about and collect past-due balances
     Then API* Aria account should be:
       | status_label     |
       | ACTIVE DUNNING 3 |
+    And I wait for 1200 seconds
     When I search emails by keywords:
       | from                    | subject                                         | after | content                             |
       | AccountManager@mozy.com | [Mozy] Your account will be suspended in 7 days | today | <%=@partner.admin_info.first_name%> |
@@ -218,6 +224,7 @@ Feature: Notify about and collect past-due balances
     Then API* Aria account should be:
       | status_label |
       | SUSPENDED    |
+    And I wait for 1200 seconds
     When I search emails by keywords:
       | from        | subject                   | after | content                            |
       | ar@mozy.com | Account Suspension Notice | today | <%=@partner.admin_info.full_name%> |

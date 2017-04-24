@@ -68,5 +68,8 @@ module CMS
       return (File.size?(file_name).to_i+File.size?(file_name+'.part').to_i) > 0
     end
 
+    def download_check_verification
+      backup_download_link.visible? && sync_download_link.visible? && mobile_download_link.visible?
+    end
   end
 end
