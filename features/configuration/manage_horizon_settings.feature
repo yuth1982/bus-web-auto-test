@@ -12,12 +12,12 @@ Feature: Manage Horizon related settings
       | mikeg+fedid@mozy.com |
     And I navigate to Authentication Policy section from bus admin console page
 
-  @TC.17470 @bus @2.1 @direct_ldap_integration @authentication_migration @qa5 @env_dependent
-  Scenario: 17470 Successfully verify 'Test Connection' button should work with valid organization name
-    When I use Directory Service as authentication provider
-    And I select Horizon Manager with organization name mozyqa2
-    And I Test Connection for Horizon Manager
-    Then Horizon Manager test connection message should be Test passed.
+#  @TC.17470 @bus @2.1 @direct_ldap_integration @authentication_migration @qa5 @env_dependent
+#  Scenario: 17470 Successfully verify 'Test Connection' button should work with valid organization name
+#    When I use Directory Service as authentication provider
+#    And I select Horizon Manager with organization name mozyqa2
+#    And I Test Connection for Horizon Manager
+#    Then Horizon Manager test connection message should be Test passed.
 
   @TC.17471 @bus @2.1 @direct_ldap_integration @authentication_migration @qa5 @env_dependent @regression
   Scenario: 17471 Verify 'Test Connection' button should work with invalid organization name given
@@ -26,20 +26,20 @@ Feature: Manage Horizon related settings
     And I Test Connection for Horizon Manager
     Then Horizon Manager test connection message should be Test failed.
 
-  @TC.17472 @bus @2.1 @direct_ldap_integration @authentication_migration @qa5 @env_dependent
-  Scenario: 17472 Can successfully load Horizon Manager's attributes with valid organization name
-    When I use Directory Service as authentication provider
-    And I select Horizon Manager with organization name mozyqa2
-    And I click SAML Authentication tab
-    And I clear SAML Authentication information exists
-    And I load attributes
-    Then SAML authentication information should include
-      | URL                                                                   | Endpoint          | Certificate           |
-      | mozyqa2.horizonmanager.com/SAAS/API/1.0/GET/federation/request?s=1876 | horizonmanager.com| glbv7YsYBdLHAtbX2Geg==|
-    And I save the SAML Authentication information
-    Then SAML authentication information should include
-      | URL                                                                   | Endpoint          | Certificate           |
-      | mozyqa2.horizonmanager.com/SAAS/API/1.0/GET/federation/request?s=1876 | horizonmanager.com| glbv7YsYBdLHAtbX2Geg==|
+#  @TC.17472 @bus @2.1 @direct_ldap_integration @authentication_migration @qa5 @env_dependent
+#  Scenario: 17472 Can successfully load Horizon Manager's attributes with valid organization name
+#    When I use Directory Service as authentication provider
+#    And I select Horizon Manager with organization name mozyqa2
+#    And I click SAML Authentication tab
+#    And I clear SAML Authentication information exists
+#    And I load attributes
+#    Then SAML authentication information should include
+#      | URL                                                                   | Endpoint          | Certificate           |
+#      | mozyqa2.horizonmanager.com/SAAS/API/1.0/GET/federation/request?s=1876 | horizonmanager.com| glbv7YsYBdLHAtbX2Geg==|
+#    And I save the SAML Authentication information
+#    Then SAML authentication information should include
+#      | URL                                                                   | Endpoint          | Certificate           |
+#      | mozyqa2.horizonmanager.com/SAAS/API/1.0/GET/federation/request?s=1876 | horizonmanager.com| glbv7YsYBdLHAtbX2Geg==|
 
   @TC.17473 @bus @2.1 @direct_ldap_integration @authentication_migration @qa5 @env_dependent @regression
   Scenario: 17473 Failure will occur in a reasonable time loading attributes with invalid organization name

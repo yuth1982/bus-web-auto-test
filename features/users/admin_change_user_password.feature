@@ -37,8 +37,9 @@ Feature: Password change policy enforcement
     Then I log in bus pid console with:
       | username                 | password                                  |
       | <%=@new_users[0].email%> | <%=CONFIGS['global']['test_hipaa_pwd'] %> |
-    And I reset password with default password
-    And I will see reset password massage Your password has been changed.
+    Then I change password from reset password to default password in user login bus page
+    Then Change password should be successfully
+    Then I navigate to user login page with partner ID
     And I log in bus pid console with:
       | username                 | password                            |
       | <%=@new_users[0].email%> | <%=CONFIGS['global']['test_pwd'] %> |
@@ -79,8 +80,9 @@ Feature: Password change policy enforcement
     Then I log in bus pid console with:
       | username                 | password                                  |
       | <%=@new_users[0].email%> | <%=CONFIGS['global']['test_hipaa_pwd'] %> |
-    And I reset password with default password
-    And I will see reset password massage Your password has been changed.
+    Then I change password from reset password to default password in user login bus page
+    Then Change password should be successfully
+    Then I navigate to 141759mozyprosubdomain user login page
     And I log in bus pid console with:
       | username                 | password                            |
       | <%=@new_users[0].email%> | <%=CONFIGS['global']['test_pwd'] %> |
@@ -120,8 +122,9 @@ Feature: Password change policy enforcement
     Then I log in bus pid console with:
       | username                 | password                      |
       | <%=@new_users[0].email%> | <%=QA_ENV['hipaa_password']%> |
-    And I reset password with reset password
-    And I will see reset password massage Your password has been changed.
+    Then I change password from Hipaa password to reset password in user login bus page
+    Then Change password should be successfully
+    Then I navigate to user login page with partner ID
     And I log in bus pid console with:
       | username                 | password                                  |
       | <%=@new_users[0].email%> | <%=CONFIGS['global']['test_hipaa_pwd'] %> |
@@ -151,8 +154,8 @@ Feature: Password change policy enforcement
     # add oem.mozypro.com in hosts
     And I click login link from the email
     Then I log in bus admin console with user name @new_users[0].email and password default password
-    And I reset password with reset password
-    And I will see reset password massage Your password has been changed.
+    Then I change password from default password to reset password in user login bus page
+    Then Change password should be successfully
     And I click login link from the email
     And I log in bus admin console with user name @new_users[0].email and password reset password
     Then I will see the user account page
@@ -192,13 +195,16 @@ Feature: Password change policy enforcement
     Then I log in bus pid console with:
       | username                 | password   |
       | <%=@new_users[0].email%> | `12Aa\Test |
-    And I reset password with Test12!!
-    And I will see reset password massage Your password has been changed.
+    Then I change password from `12Aa\Test to Test12!! in user login bus page
+    Then Change password should be successfully
+    Then I navigate to user login page with partner ID
     And I log in bus pid console with:
       | username                 | password |
       | <%=@new_users[0].email%> | Test12!! |
     Then I will see the user account page
 
+  @TC.132343 @bus @qa6 @temp_password @regression
+  Scenario: 132343: Reseller partner admin/subadmin change user password with "temporary password"
     When I use a existing partner:
       | company name                 | admin email                              | partner type | partner id |
       | #141759 reseller sub partner | zoe.zeng+qa6+resellersubpartner@emc.com  | Reseller     | 3495253    |
@@ -232,8 +238,9 @@ Feature: Password change policy enforcement
     Then I log in bus pid console with:
       | username                 | password |
       | <%=@new_users[0].email%> | `12`Aa   |
-    And I reset password with `12Aatest
-    And I will see reset password massage Your password has been changed.
+    Then I change password from `12`Aa to `12Aatest in user login bus page
+    Then Change password should be successfully
+    Then I navigate to user login page with partner ID
     And I log in bus pid console with:
       | username                 | password  |
       | <%=@new_users[0].email%> | `12Aatest |
@@ -257,8 +264,9 @@ Feature: Password change policy enforcement
     Then I log in bus pid console with:
       | username                 | password   |
       | <%=@new_users[0].email%> | `12Aa\Test |
-    And I reset password with Test12!!
-    And I will see reset password massage Your password has been changed.
+    Then I change password from `12Aa\Test to Test12!! in user login bus page
+    Then Change password should be successfully
+    Then I navigate to user login page with partner ID
     And I log in bus pid console with:
       | username                 | password |
       | <%=@new_users[0].email%> | Test12!! |
@@ -425,8 +433,8 @@ Feature: Password change policy enforcement
     # add oem.mozypro.com in hosts
     And I click login link from the email
     Then I log in bus admin console with user name @new_users[0].email and password default password
-    And I reset password with reset password
-    And I will see reset password massage Your password has been changed.
+    Then I change password from default password to reset password in user login bus page
+    Then Change password should be successfully
     And I click login link from the email
     And I log in bus admin console with user name @new_users[0].email and password reset password
     Then I will see the user account page

@@ -230,25 +230,25 @@ Feature: Change Plan for MozyPro Partners
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.17105 @Smoke @bus @2.5 @change_plan @mozypro @regression
-  Scenario: 17105 Add server storage add on to MozyPro monthly US partner
-    When I add a new MozyPro partner:
-      | period | base plan | net terms |
-      | 1      | 1 TB      | yes       |
-    Then New partner should be created
-    When I act as newly created partner account
-    And I change MozyPro account plan to:
-      | storage add-on |
-      | 10             |
-    Then Change plan charge summary should be:
-      | Description                  | Amount   |
-      | Charge for new 250 GB Add-on | $949.90  |
-    And the MozyPro account plan should be changed
-    And MozyPro new plan should be:
-      | base plan | storage add-on |
-      | 1 TB      | 10             |
-    When I stop masquerading
-    Then I search and delete partner account by newly created partner company name
+#  @TC.17105 @Smoke @bus @2.5 @change_plan @mozypro @regression
+#  Scenario: 17105 Add server storage add on to MozyPro monthly US partner
+#    When I add a new MozyPro partner:
+#      | period | base plan | net terms |
+#      | 1      | 1 TB      | yes       |
+#    Then New partner should be created
+#    When I act as newly created partner account
+#    And I change MozyPro account plan to:
+#      | storage add-on |
+#      | 10             |
+#    Then Change plan charge summary should be:
+#      | Description                  | Amount   |
+#      | Charge for new 250 GB Add-on | $949.90  |
+#    And the MozyPro account plan should be changed
+#    And MozyPro new plan should be:
+#      | base plan | storage add-on |
+#      | 1 TB      | 10             |
+#    When I stop masquerading
+#    Then I search and delete partner account by newly created partner company name
 
   @TC.17274 @Smoke @bus @2.5 @change_plan @mozypro @regression
   Scenario: 17274 Add server plan option to MozyPro yearly UK partner
@@ -270,25 +270,25 @@ Feature: Change Plan for MozyPro Partners
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.17275 @Smoke @bus @2.5 @change_plan @mozypro @regression
-  Scenario: 17275 Add server storage add on to MozyPro yearly UK partner
-    When I add a new MozyPro partner:
-      | period | base plan | country        | net terms |
-      | 12     | 1 TB      | United Kingdom | yes       |
-    Then New partner should be created
-    When I act as newly created partner account
-    And I change MozyPro account plan to:
-      | storage add-on |
-      | 10             |
-    Then Change plan charge summary should be:
-      | Description                  | Amount     |
-      | Charge for new 250 GB Add-on | $12,538.68 |
-    And the MozyPro account plan should be changed
-    And MozyPro new plan should be:
-      | base plan | storage add-on |
-      | 1 TB      | 10             |
-    When I stop masquerading
-    Then I search and delete partner account by newly created partner company name
+#  @TC.17275 @Smoke @bus @2.5 @change_plan @mozypro @regression
+#  Scenario: 17275 Add server storage add on to MozyPro yearly UK partner
+#    When I add a new MozyPro partner:
+#      | period | base plan | country        | net terms |
+#      | 12     | 1 TB      | United Kingdom | yes       |
+#    Then New partner should be created
+#    When I act as newly created partner account
+#    And I change MozyPro account plan to:
+#      | storage add-on |
+#      | 10             |
+#    Then Change plan charge summary should be:
+#      | Description                  | Amount     |
+#      | Charge for new 250 GB Add-on | $12,538.68 |
+#    And the MozyPro account plan should be changed
+#    And MozyPro new plan should be:
+#      | base plan | storage add-on |
+#      | 1 TB      | 10             |
+#    When I stop masquerading
+#    Then I search and delete partner account by newly created partner company name
 
   @TC.17276 @Smoke @bus @2.5 @change_plan @mozypro @regression
   Scenario: 17276 Add server plan option to MozyPro biennially Ireland partner
@@ -310,25 +310,25 @@ Feature: Change Plan for MozyPro Partners
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.17277 @Smoke @bus @2.5 @change_plan @mozypro @regression
-  Scenario: 17277 Add server storage add on to MozyPro biennially Ireland partner
-    When I add a new MozyPro partner:
-      | period | base plan | country | cc number        |
-      | 24     | 1 TB      | Ireland | 4319402211111113 |
-    Then New partner should be created
-    When I act as newly created partner account
-    And I change MozyPro account plan to:
-      | storage add-on |
-      | 10             |
-    Then Change plan charge summary should be:
-      | Description                  | Amount     |
-      | Charge for new 250 GB Add-on | $24,535.92 |
-    And the MozyPro account plan should be changed
-    And MozyPro new plan should be:
-      | base plan | storage add-on |
-      | 1 TB      | 10             |
-    When I stop masquerading
-    Then I search and delete partner account by newly created partner company name
+#  @TC.17277 @Smoke @bus @2.5 @change_plan @mozypro @regression
+#  Scenario: 17277 Add server storage add on to MozyPro biennially Ireland partner
+#    When I add a new MozyPro partner:
+#      | period | base plan | country | cc number        |
+#      | 24     | 1 TB      | Ireland | 4319402211111113 |
+#    Then New partner should be created
+#    When I act as newly created partner account
+#    And I change MozyPro account plan to:
+#      | storage add-on |
+#      | 10             |
+#    Then Change plan charge summary should be:
+#      | Description                  | Amount     |
+#      | Charge for new 250 GB Add-on | $24,535.92 |
+#    And the MozyPro account plan should be changed
+#    And MozyPro new plan should be:
+#      | base plan | storage add-on |
+#      | 1 TB      | 10             |
+#    When I stop masquerading
+#    Then I search and delete partner account by newly created partner company name
 
 #  @test_coupon @Bug.85011 @regression @2.0 @env_dependent
 #  Scenario: MozyPro monthly US partner 10 GB moves to 1T GB plan with 10 percent inline coupon
