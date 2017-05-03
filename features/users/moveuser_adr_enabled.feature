@@ -4,8 +4,8 @@ Feature: Move a user between two groups or partners when ADR is enabled/disabled
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.133734 @bus @ADR @user @bus-2.29 @P1
-  Scenario: 133734 - Move user to empty policy group under same partner. 1Y -> Null
+  @TC.133734 @bus @data_retention @user @bus2.29 @P1 @qa12
+  Scenario: 133734 - Move user to a new user group, 1Y -> Null but which inherits the default policy from the partner.
     #======step1: create a MozyPro partner======
     When I add a new MozyPro partner:
       | company name | period |  base plan | server plan | net terms |
@@ -37,18 +37,22 @@ Feature: Move a user between two groups or partners when ADR is enabled/disabled
       | ugdf_user1 |
     And I view user details by ugdf_user1
     Then I reassign the user to user group ug1
-    And Show error: The user has enabled Data Retention policy. Can not move to the user group without policy.
+    And I wait for 300 seconds
+    And the user's user group should be ug1
+    When I get the user id
+    Then ADR policy in DB for existing device ugdf_user1_machine_1 is Mozy6Month_monthly
+    #And Show error: The user has enabled Data Retention policy. Can not move to the user group without policy.
     And I stop masquerading
     #======step6: delete partner======
-    When I search partner by:
-      | name      |
-      | TC.133734 |
-    Then I view partner details by TC.133734
-    And I delete partner account
+    #When I search partner by:
+      #| name      |
+      #| TC.133734 |
+    #Then I view partner details by TC.133734
+    #And I delete partner account
 
 
-  @TC.133735 @bus @ADR @user @bus-2.29 @P1
-  Scenario: 133735 - Move user to empty policy group cross partners. 1Y -> Null
+  @TC.133735 @bus @data_retention @user @bus2.29 @P1 @qa12
+  Scenario: 133735 - Move user to empty policy group cross partners. 1Y -> Null but which inherits the default policy from the partner.
     #======step1: create a MozyPro partner======
     When I add a new MozyPro partner:
       | company name | period |  base plan | server plan | net terms |
@@ -106,27 +110,31 @@ Feature: Move a user between two groups or partners when ADR is enabled/disabled
       | ugdf_user1 |
     And I view user details by ugdf_user1
     Then I reassign the user to partner sub_partner_133735_PB
-    And Show error: The user has enabled Data Retention policy. Can not move to the user group without policy.
+    #And Show error: The user has enabled Data Retention policy. Can not move to the user group without policy.
+    And I wait for 300 seconds
+    And the user's user group should be sub_partner_133735_PB
+    When I get the user id
+    Then ADR policy in DB for existing device ugdf_user1_machine_1 is Mozy6Month_monthly
     #======step12: stop masquerading, return to the root level======
     And I stop masquerading
     #======step13: delete all partners=======
-    When I search partner by:
-      | name                  |
-      | sub_partner_133735_PB |
-    Then I view partner details by sub_partner_133735_PB
-    And I delete partner account
-    When I search partner by:
-      | name                  |
-      | sub_partner_133735_PA |
-    Then I view partner details by sub_partner_133735_PA
-    And I delete partner account
-    When I search partner by:
-      | name      |
-      | TC_133735 |
-    Then I view partner details by TC_133735
-    And I delete partner account
+    #When I search partner by:
+      #| name                  |
+      #| sub_partner_133735_PB |
+    #Then I view partner details by sub_partner_133735_PB
+    #And I delete partner account
+    #When I search partner by:
+      #| name                  |
+      #| sub_partner_133735_PA |
+    #Then I view partner details by sub_partner_133735_PA
+    #And I delete partner account
+    #When I search partner by:
+      #| name      |
+      #| TC_133735 |
+    #Then I view partner details by TC_133735
+    #And I delete partner account
 
-  @TC.133736 @bus @ADR @user @bus-2.29 @P1
+  @TC.133736 @bus @data_retention @user @bus2.29 @P1 @qa12
   Scenario: 133736 - Move user to empty policy group cross partners. 1Y -> Null but has default policy at ug's partner
     #======step1: create a MozyPro partner======
     When I add a new MozyPro partner:
@@ -196,27 +204,31 @@ Feature: Move a user between two groups or partners when ADR is enabled/disabled
       | ugdf_user1 |
     And I view user details by ugdf_user1
     Then I reassign the user to partner sub_partner_133736_PB
-    And Show error: The user has enabled Data Retention policy. Can not move to the user group without policy.
+    And I wait for 300 seconds
+    #And the user's user group should be sub_partner_133736_PB
+    When I get the user id
+    Then ADR policy in DB for existing device ugdf_user1_machine_1 is Mozy3Year_quarterly
+    #And Show error: The user has enabled Data Retention policy. Can not move to the user group without policy.
     #======step12: stop masquerading, return to the root level======
     And I stop masquerading
     #======step13: delete all partners=======
-    When I search partner by:
-      | name                  |
-      | sub_partner_133736_PB |
-    Then I view partner details by sub_partner_133736_PB
-    And I delete partner account
-    When I search partner by:
-      | name                  |
-      | sub_partner_133736_PA |
-    Then I view partner details by sub_partner_133736_PA
-    And I delete partner account
-    When I search partner by:
-      | name      |
-      | TC_133736 |
-    Then I view partner details by TC_133736
-    And I delete partner account
+    #When I search partner by:
+      #| name                  |
+      #| sub_partner_133736_PB |
+    #Then I view partner details by sub_partner_133736_PB
+    #And I delete partner account
+    #When I search partner by:
+      #| name                  |
+      #| sub_partner_133736_PA |
+    #Then I view partner details by sub_partner_133736_PA
+    #And I delete partner account
+    #When I search partner by:
+      #| name      |
+      #| TC_133736 |
+    #Then I view partner details by TC_133736
+    #And I delete partner account
 
-  @TC.133737 @bus @ADR @user @bus-2.29 @P1
+  @TC.133737 @bus @data_retention @user @bus2.29 @P1 @qa12
   Scenario: 133737 - Move user to same policy group under the same partner. 1Y -> 1Y
     #======step1: create a MozyPro partner======
     When I add a new MozyPro partner:
@@ -257,7 +269,7 @@ Feature: Move a user between two groups or partners when ADR is enabled/disabled
     And I view user details by ugdf_user1
     Then I reassign the user to user group ug1
     #======step7: verify user's user group after reassigning======
-    And I wait for 60 seconds
+    And I wait for 300 seconds
     And the user's user group should be ug1
     #======step8: query user machine's vc policy in demeter======
     When I get the user id
@@ -265,13 +277,13 @@ Feature: Move a user between two groups or partners when ADR is enabled/disabled
     #======step9: stop masquerading, return to root level======
     And I stop masquerading
     #======step10: delete partner======
-    When I search partner by:
-      | name      |
-      | TC_133737 |
-    Then I view partner details by TC_133737
-    And I delete partner account
+    #When I search partner by:
+      #| name      |
+      #| TC_133737 |
+    #Then I view partner details by TC_133737
+    #And I delete partner account
 
-  @TC.133738 @bus @ADR @user @bus-2.29 @P1
+  @TC.133738 @bus @data_retention @user @bus2.29 @P1 @qa12
   Scenario: 133736 - Move user to same policy group but crossing partners. 1Y -> 1Y
     #======step1: create a MozyPro partner======
     When I add a new MozyPro partner:
@@ -341,30 +353,30 @@ Feature: Move a user between two groups or partners when ADR is enabled/disabled
       | ugdf_user1 |
     And I view user details by ugdf_user1
     Then I reassign the user to partner sub_partner_133738_PB
-    And I wait for 60 seconds
+    And I wait for 300 seconds
     When I get the user id
     Then ADR policy in DB for existing device ugdf_user1_machine_1 is Mozy1Year_monthly
     Then ADR policy in DB for existing device ugdf_user1_machine_2 is Mozy1Year_monthly
     #======step15: stop masquerading, return to the root level======
     And I stop masquerading
     #======step16: delete all partners=======
-    When I search partner by:
-      | name                  |
-      | sub_partner_133738_PB |
-    Then I view partner details by sub_partner_133738_PB
-    And I delete partner account
-    When I search partner by:
-      | name                  |
-      | sub_partner_133738_PA |
-    Then I view partner details by sub_partner_133738_PA
-    And I delete partner account
-    When I search partner by:
-      | name      |
-      | TC_133738 |
-    Then I view partner details by TC_133738
-    And I delete partner account
+    #When I search partner by:
+      #| name                  |
+      #| sub_partner_133738_PB |
+    #Then I view partner details by sub_partner_133738_PB
+    #And I delete partner account
+    #When I search partner by:
+      #| name                  |
+      #| sub_partner_133738_PA |
+    #Then I view partner details by sub_partner_133738_PA
+    #And I delete partner account
+    #When I search partner by:
+      #| name      |
+      #| TC_133738 |
+    #Then I view partner details by TC_133738
+    #And I delete partner account
 
-  @TC.133739 @bus @ADR @user @bus-2.29 @P1
+  @TC.133739 @bus @data_retention @user @bus2.29 @P1 @qa12
   Scenario: 133739 - Move empty policy group user to A policy group under same partner. Null -> 1Y
   #======step1: create a MozyPro partner======
     When I add a new MozyPro partner:
@@ -398,20 +410,20 @@ Feature: Move a user between two groups or partners when ADR is enabled/disabled
     And I view user details by ugdf_user1
     Then I reassign the user to user group ug1
     #======step6: check moved user's machine vc policy in demeter db======
-    And I wait for 60 seconds
+    And I wait for 300 seconds
     When I get the user id
     Then ADR policy in DB for existing device ugdf_user1_machine_1 is Mozy3Year_quarterly
     Then ADR policy in DB for existing device ugdf_user1_machine_2 is Mozy3Year_quarterly
     #======step8: stop masquerading, return to root layer======
     And I stop masquerading
     #======step9: delete partner======
-    When I search partner by:
-      | name      |
-      | TC_133739 |
-    Then I view partner details by TC_133739
-    And I delete partner account
+    #When I search partner by:
+      #| name      |
+      #| TC_133739 |
+    #Then I view partner details by TC_133739
+    #And I delete partner account
 
-  @TC.133740 @bus @ADR @user @bus-2.29 @P1
+  @TC.133740 @bus @data_retention @user @bus2.29 @P1 @qa12
   Scenario: 133740 - Move empty policy group user to A policy group 1 cross partners. Null -> 1Y
     #======step1: create a MozyPro partner======
     When I add a new MozyPro partner:
@@ -465,7 +477,7 @@ Feature: Move a user between two groups or partners when ADR is enabled/disabled
     And I set adr policy to 7 Years (quarterly)
     Then I refresh Data Retention section
     And I close opened data retention section
-    And I wait for 60 seconds
+    And I wait for 120 seconds
     #======step12: stop masquerading, go back to the partner partner======
     And I stop masquerading from subpartner
     #======step13: at partner partner level, reassign user from PA to PB======
@@ -474,30 +486,30 @@ Feature: Move a user between two groups or partners when ADR is enabled/disabled
       | ugdf_user1 |
     And I view user details by ugdf_user1
     Then I reassign the user to partner sub_partner_133740_PB
-    And I wait for 60 seconds
+    And I wait for 420 seconds
     When I get the user id
     Then ADR policy in DB for existing device ugdf_user1_machine_1 is Mozy7Year_quarterly
     Then ADR policy in DB for existing device ugdf_user1_machine_2 is Mozy7Year_quarterly
     #======step14: stop masquerading, return to the root level======
     And I stop masquerading
     #======step15: delete all partners=======
-    When I search partner by:
-      | name                  |
-      | sub_partner_133740_PB |
-    Then I view partner details by sub_partner_133740_PB
-    And I delete partner account
-    When I search partner by:
-      | name                  |
-      | sub_partner_133740_PA |
-    Then I view partner details by sub_partner_133740_PA
-    And I delete partner account
-    When I search partner by:
-      | name      |
-      | TC_133740 |
-    Then I view partner details by TC_133740
-    And I delete partner account
+    #When I search partner by:
+      #| name                  |
+      #| sub_partner_133740_PB |
+    #Then I view partner details by sub_partner_133740_PB
+    #And I delete partner account
+    #When I search partner by:
+      #| name                  |
+      #| sub_partner_133740_PA |
+    #Then I view partner details by sub_partner_133740_PA
+    #And I delete partner account
+    #When I search partner by:
+      #| name      |
+      #| TC_133740 |
+    #Then I view partner details by TC_133740
+    #And I delete partner account
 
-  @TC.133741 @bus @ADR @user @bus-2.29 @P1
+  @TC.133741 @bus @data_retention @user @bus2.29 @P1 @qa12
   Scenario: 133741 - Move empty but inheritting default policy group user to A policy group under the same partner, case1
   #======step1: create a MozyPro partner======
     When I add a new MozyPro partner:
@@ -537,19 +549,19 @@ Feature: Move a user between two groups or partners when ADR is enabled/disabled
       | ugdf_user1 |
     And I view user details by ugdf_user1
     Then I reassign the user to user group ug1
-    And I wait for 60 seconds
+    And I wait for 300 seconds
     When I get the user id
     Then ADR policy in DB for existing device ugdf_user1_machine_1 is Mozy1Year_monthly
   #======step7: stop masquerading, return to root layer======
     And I stop masquerading
   #======step8: delete partner======
-    When I search partner by:
-      | name      |
-      | TC_133741 |
-    Then I view partner details by TC_133741
-    And I delete partner account
+    #When I search partner by:
+      #| name      |
+      #| TC_133741 |
+    #Then I view partner details by TC_133741
+    #And I delete partner account
 
-  @TC.133742 @bus @ADR @user @bus-2.29 @P1
+  @TC.133742 @bus @data_retention @user @bus2.29 @P1 @qa12
   Scenario: 133742 - Move empty but inheritting default policy group user to A policy group under the same partner, case2
   #======step1: create a MozyPro partner======
     When I add a new MozyPro partner:
@@ -589,19 +601,19 @@ Feature: Move a user between two groups or partners when ADR is enabled/disabled
       | ugdf_user1 |
     And I view user details by ugdf_user1
     Then I reassign the user to user group ug1
-    And I wait for 60 seconds
+    And I wait for 300 seconds
     When I get the user id
-    Then ADR policy in DB for existing device ugdf_user1_machine_1 is Mozy3Year_quarterly
+    Then ADR policy in DB for existing device ugdf_user1_machine_1 is Mozy1Year_monthly
   #======step7: stop masquerading, return to root layer======
     And I stop masquerading
   #======step8: delete partner======
-    When I search partner by:
-      | name      |
-      | TC_133742 |
-    Then I view partner details by TC_133742
-    And I delete partner account
+    #When I search partner by:
+      #| name      |
+      #| TC_133742 |
+    #Then I view partner details by TC_133742
+    #And I delete partner account
 
-  @TC.133743 @bus @ADR @user @bus-2.29 @P1
+  @TC.133743 @bus @data_retention @user @bus2.29 @P1 @qa12
   Scenario: 133743 - Move A policy group user to B policy group under same parnter. 1Y -> 3Y
   #======step1: create a MozyPro partner======
     When I add a new MozyPro partner:
@@ -641,19 +653,19 @@ Feature: Move a user between two groups or partners when ADR is enabled/disabled
       | ugdf_user1 |
     And I view user details by ugdf_user1
     Then I reassign the user to user group ug1
-    And I wait for 60 seconds
+    And I wait for 300 seconds
     When I get the user id
     Then ADR policy in DB for existing device ugdf_user1_machine_1 is Mozy3Year_quarterly
   #======step7: stop masquerading, return to root layer======
     And I stop masquerading
   #======step8: delete partner======
-    When I search partner by:
-      | name      |
-      | TC_133743 |
-    Then I view partner details by TC_133743
-    And I delete partner account
+    #When I search partner by:
+      #| name      |
+      #| TC_133743 |
+    #Then I view partner details by TC_133743
+    #And I delete partner account
 
-  @TC.133744 @bus @ADR @user @bus-2.29 @P1
+  @TC.133744 @bus @data_retention @user @bus2.29 @P1 @qa12
   Scenario: 133744 - Move A policy group user to B policy group 1 cross partners. 1M -> 1Y
     #======step1: create a MozyPro partner======
     When I add a new MozyPro partner:
@@ -723,30 +735,30 @@ Feature: Move a user between two groups or partners when ADR is enabled/disabled
       | ugdf_user1 |
     And I view user details by ugdf_user1
     Then I reassign the user to partner sub_partner_133744_PB
-    And I wait for 60 seconds
+    And I wait for 300 seconds
     When I get the user id
     Then ADR policy in DB for existing device ugdf_user1_machine_1 is Mozy1Year_monthly
     Then ADR policy in DB for existing device ugdf_user1_machine_2 is Mozy1Year_monthly
     #======step15: stop masquerading, return to the root level======
     And I stop masquerading
     #======step16: delete all partners=======
-    When I search partner by:
-      | name                  |
-      | sub_partner_133744_PB |
-    Then I view partner details by sub_partner_133744_PB
-    And I delete partner account
-    When I search partner by:
-      | name                  |
-      | sub_partner_133744_PA |
-    Then I view partner details by sub_partner_133744_PA
-    And I delete partner account
-    When I search partner by:
-      | name      |
-      | TC_133744 |
-    Then I view partner details by TC_133744
-    And I delete partner account
+    #When I search partner by:
+      #| name                  |
+      #| sub_partner_133744_PB |
+    #Then I view partner details by sub_partner_133744_PB
+    #And I delete partner account
+    #When I search partner by:
+      #| name                  |
+      #| sub_partner_133744_PA |
+    #Then I view partner details by sub_partner_133744_PA
+    #And I delete partner account
+    #When I search partner by:
+      #| name      |
+      #| TC_133744 |
+    #Then I view partner details by TC_133744
+    #And I delete partner account
 
-  @TC.133760 @bus @ADR @user @bus-2.29 @P1
+  @TC.133760 @bus @data_retention @user @bus2.29 @P1 @qa12
   Scenario: 133760 - Move multiple A policy group users to C policy group, all in same partner. 1M -> 1Y
   #======step1: create a MozyPro partner======
     When I add a new MozyPro partner:
@@ -795,33 +807,33 @@ Feature: Move a user between two groups or partners when ADR is enabled/disabled
     Then I reassign the user to user group ug1
     And I close user details section
   #======step7: check the vc policy name in demeter db======
-    Given I wait for 60 seconds
+    Given I wait for 300 seconds
     When I search user by:
       | keywords   |
       | ugdf_user1 |
     And I view user details by ugdf_user1
     When I get the user id
-    Then ADR policy in DB for existing device ugdf_user1_machine_1 is Mozy1Year_weekly
-    And ADR policy in DB for existing device ugdf_user1_machine_2 is Mozy1Year_weekly
+    Then ADR policy in DB for existing device ugdf_user1_machine_1 is Mozy1Year_monthly
+    And ADR policy in DB for existing device ugdf_user1_machine_2 is Mozy1Year_monthly
     And I close user details section
     When I search user by:
       | keywords   |
       | ugdf_user2 |
     And I view user details by ugdf_user2
     When I get the user id
-    Then ADR policy in DB for existing device ugdf_user2_machine_1 is Mozy1Year_weekly
-    And ADR policy in DB for existing device ugdf_user2_machine_2 is Mozy1Year_weekly
+    Then ADR policy in DB for existing device ugdf_user2_machine_1 is Mozy1Year_monthly
+    And ADR policy in DB for existing device ugdf_user2_machine_2 is Mozy1Year_monthly
     And I close user details section
   #======step8: stop masquerading, return to root layer======
     And I stop masquerading
   #======step9: delete partner======
-    When I search partner by:
-      | name      |
-      | TC_133760 |
-    Then I view partner details by TC_133760
-    And I delete partner account
+    #When I search partner by:
+      #| name      |
+      #| TC_133760 |
+    #Then I view partner details by TC_133760
+    #And I delete partner account
 
-  @TC.133761 @bus @ADR @user @bus-2.29 @P1
+  @TC.133761 @bus @data_retention @user @bus2.29 @P1 @qa12
   Scenario: 133761 - Move multiple different policy group users to C policy group, no two of which are in same partner. 1M/2M -> 1Y
   #======step1: create a MozyPro partner======
     When I add a new MozyPro partner:
@@ -923,7 +935,7 @@ Feature: Move a user between two groups or partners when ADR is enabled/disabled
       | pb_ugdf_user1 |
     And I view user details by pb_ugdf_user1
     Then I reassign the user to partner sub_partner_133761_PC
-    And I wait for 60 seconds
+    And I wait for 300 seconds
     And I close User Details section
   #======step22: check vc policy in detmer db======
     When I search user by:
@@ -945,29 +957,29 @@ Feature: Move a user between two groups or partners when ADR is enabled/disabled
   #======step23: stop masquerading, return to the root level======
     And I stop masquerading
   #======step24: delete all partners=======
-    When I search partner by:
-      | name                  |
-      | sub_partner_133761_PC |
-    Then I view partner details by sub_partner_133761_PC
-    And I delete partner account
-    When I search partner by:
-      | name                  |
-      | sub_partner_133761_PB |
-    Then I view partner details by sub_partner_133761_PB
-    And I delete partner account
-    When I search partner by:
-      | name                  |
-      | sub_partner_133761_PA |
-    Then I view partner details by sub_partner_133761_PA
-    And I delete partner account
-    When I search partner by:
-      | name      |
-      | TC_133761 |
-    Then I view partner details by TC_133761
-    And I delete partner account
+    #When I search partner by:
+      #| name                  |
+      #| sub_partner_133761_PC |
+    #Then I view partner details by sub_partner_133761_PC
+    #And I delete partner account
+    #When I search partner by:
+      #| name                  |
+      #| sub_partner_133761_PB |
+    #Then I view partner details by sub_partner_133761_PB
+    #And I delete partner account
+    #When I search partner by:
+      #| name                  |
+      #| sub_partner_133761_PA |
+    #Then I view partner details by sub_partner_133761_PA
+    #And I delete partner account
+    #When I search partner by:
+      #| name      |
+      #| TC_133761 |
+    #Then I view partner details by TC_133761
+    #And I delete partner account
 
 
-  @TC.133768 @bus @ADR @user @bus-2.29 @P3
+  @TC.133768 @bus @data_retention @user @bus2.29 @P1 @qa12
   Scenario: 133768 - Move a user twice, all groups at "Done" status.
   #======step1: create a MozyPro partner======
     When I add a new MozyPro partner:
@@ -1052,7 +1064,7 @@ Feature: Move a user between two groups or partners when ADR is enabled/disabled
       | ugdf_user1 |
     And I view user details by ugdf_user1
     Then I reassign the user to user group ug1
-    And I wait for 60 seconds
+    And I wait for 180 seconds
     And I close User Details section
   #======step17: at partner partner level, reassign user from PA to PB======
     When I search user by:
@@ -1060,7 +1072,7 @@ Feature: Move a user between two groups or partners when ADR is enabled/disabled
       | ugdf_user1 |
     And I view user details by ugdf_user1
     Then I reassign the user to partner sub_partner_133768_PB
-    And I wait for 60 seconds
+    And I wait for 180 seconds
     And I close User Details section
   #======step18: check vc policy in detmer db======
     When I search user by:
@@ -1074,18 +1086,18 @@ Feature: Move a user between two groups or partners when ADR is enabled/disabled
   #======step19: stop masquerading, return to the root level======
     And I stop masquerading
   #======step20: delete all partners=======
-    When I search partner by:
-      | name                  |
-      | sub_partner_133768_PB |
-    Then I view partner details by sub_partner_133768_PB
-    And I delete partner account
-    When I search partner by:
-      | name                  |
-      | sub_partner_133768_PA |
-    Then I view partner details by sub_partner_133768_PA
-    And I delete partner account
-    When I search partner by:
-      | name      |
-      | TC_133768 |
-    Then I view partner details by TC_133768
-    And I delete partner account
+    #When I search partner by:
+      #| name                  |
+      #| sub_partner_133768_PB |
+    #Then I view partner details by sub_partner_133768_PB
+    #And I delete partner account
+    #When I search partner by:
+      #| name                  |
+      #| sub_partner_133768_PA |
+    #Then I view partner details by sub_partner_133768_PA
+    #And I delete partner account
+    #When I search partner by:
+      #| name      |
+      #| TC_133768 |
+    #Then I view partner details by TC_133768
+    #And I delete partner account

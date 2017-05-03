@@ -1,13 +1,12 @@
-Feature: Adjustable retention at the partner and user group level
-
+Feature: data retention ui
   As a Mozy Administrator. I have the ability to enable/disable the data retention capability to different Roles.
 
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.132819 @bus @data_retention @bus-2.27 @P1
+  @TC.132819 @bus @data_retention @bus2.27 @P1 @qa12
   Scenario: As a mozyPro admin, click Data Retention, go to Data Retention section, check default info here. create data retention for partner with subpartner.
-    #======1 test cases======
+    #======step1: create MozyPro partner and assign role======
     When I add a new MozyPro partner:
       | period |  base plan | server plan | net terms |
       |   1    |  100 GB    | yes         | yes       |
@@ -24,6 +23,7 @@ Feature: Adjustable retention at the partner and user group level
       | Name    | Type          | Parent     |
       | subrole | Partner admin | FedID role |
     And I check all the capabilities for the new role
+    #======step2: create a subpartner======
     And I navigate to Add New Pro Plan section from bus admin console page
     And I add a new pro plan for Mozypro partner:
       | Name    | Company Type | Root Role | Perisods | Tax Percentage | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
@@ -37,21 +37,22 @@ Feature: Adjustable retention at the partner and user group level
       | Used | Available | Assigned | Used | Available | Assigned |
       | 0    | 0         | 0        | 0    | Unlimited | Unlimited|
     Then the pooled resource section of subpartner should have edit link
+    #======step3: partner / (default user group) / subpartner all have 6 Months (monthly) policy======
     When I navigate to Data Retention section from bus admin console page
-    Then partner adr policy should be None
+    Then partner adr policy should be 6 Months (monthly)
     And user group adr policy should be:
-      | Name                 | Policy |
-      | (default user group) | None   |
+      | Name                 | Policy             |
+      | (default user group) | 6 Months (monthly) |
     And sub partner adr policy should be:
-      | Name              | Policy |
-      | adr_sub_partner_1 | None   |
+      | Name              | Policy             |
+      | adr_sub_partner_1 | 6 Months (monthly) |
 
 
-  @TC.132820-132831 @bus @data_retention @bus-2.27 @P1
+  @TC.132820 @TC.132821 @TC.132822 @TC.132823 @TC.132829 @TC.132830 @TC.132831 @bus @data_retention @bus2.27 @P1 @qa12
   Scenario: Admin creates ADR policy on user group.
-  #======9 test cases======
-  #======two groups, set policy to (default user group) on main page, set policy to group1 on popup======
-  #======create a MozyPro partner======
+  #======Contains 7 test cases======
+  #======two groups, set policy to (default user group) on main page, specify policy to group1 on popup======
+  #======step1: create a MozyPro partner======
     When I add a new MozyPro partner:
       | period |  base plan | server plan | net terms |
       |   1    |  50 GB    | yes         | yes       |
@@ -63,11 +64,11 @@ Feature: Adjustable retention at the partner and user group level
       | qa-test-group | Shared       | qa                      | yes          | yes            |
     Then Bundled user group should be created
     When I navigate to Data Retention section from bus admin console page
-    Then partner adr policy should be None
+    Then partner adr policy should be 6 Months (monthly)
     And user group adr policy should be:
-      | Name                 | Policy |
-      | (default user group) | None   |
-      | qa-test-group        | None   |
+      | Name                 | Policy               |
+      | (default user group) | 6 Months (monthly)   |
+      | qa-test-group        | 6 Months (monthly)   |
     When I click user group (default user group) adr policy
     Then available adr policy names should be:
       | policy              |
@@ -84,21 +85,21 @@ Feature: Adjustable retention at the partner and user group level
       | 5 Years (quarterly) |
       | 6 Years (quarterly) |
       | 7 Years (quarterly) |
-    #TC.132820 - create a policy but clicking Cancel button
+    #======step2: TC.132820 - create a policy but clicking Cancel button======
     When I set adr policy 1 Month (daily) but click cancel
     Then user group adr policy should be:
-      | Name                 | Policy |
-      | (default user group) | None   |
-      | qa-test-group        | None   |
-    #TC.132821 - input invalid password when creating new ADR policy, error message returned.
+      | Name                 | Policy               |
+      | (default user group) | 6 Months (monthly)   |
+      | qa-test-group        | 6 Months (monthly)   |
+    #======step3: TC.132821 - input invalid password when creating new ADR policy, error message returned======
     When I click user group (default user group) adr policy
     And I try to set adr policy to 1 Month (daily) but input invalid password h@llo0WOrld
     Then user group adr policy should be:
-      | Name                 | Policy |
-      | (default user group) | None   |
-      | qa-test-group        | None   |
-    #TC.132822 - create ADR policy for (default user group)and verify the result on both UI and on db.
-    And ADR policy in DB for user group (default user group) is nil
+      | Name                 | Policy               |
+      | (default user group) | 6 Months (monthly)   |
+      | qa-test-group        | 6 Months (monthly)   |
+    #======step4: TC.132822 - create ADR policy for (default user group)and verify the result on both UI and on db======
+    When ADR policy in DB for user group (default user group) is nil
     And I close opened data retention section
     When I click user group (default user group) adr policy
     And I set adr policy to 3 Months (weekly)
@@ -107,20 +108,20 @@ Feature: Adjustable retention at the partner and user group level
     Then user group adr policy should be:
       | Name                 | Policy             |
       | (default user group) | 3 Months (weekly)  |
-      | qa-test-group        | None               |
-    #TC.132823/132829 - Click on user group policy and select policy, click <Cancel> button to cancel the creation.
+      | qa-test-group        | 6 Months (monthly) |
+    #======step5: TC.132823/132829 - Click on user group policy and select policy, click <Cancel> button to cancel the creation======
     When I click user group qa-test-group adr policy
     And I click button to invoke adr popup dialog
     And I navigate to new window
-    And default adr policy name on popup dialog should be 7 Days
+    And default adr policy name on popup dialog should be 6 Months (monthly)
     And I select adr policy on popup dialog to 3 Months (weekly) but click cancel button
     And I close new window
     Then I refresh Data Retention section
     And user group adr policy should be:
       | Name                 | Policy             |
       | (default user group) | 3 Months (weekly)  |
-      | qa-test-group        | None               |
-    #TC.`132830 - create policy from the Data Retention popup dialog, input invalid password
+      | qa-test-group        | 6 Months (monthly) |
+    #======step6: TC.132830 - create policy from the Data Retention popup dialog, input invalid password
     When I click user group qa-test-group adr policy
     And I click button to invoke adr popup dialog
     And I navigate to new window
@@ -130,8 +131,8 @@ Feature: Adjustable retention at the partner and user group level
     And user group adr policy should be:
       | Name                 | Policy             |
       | (default user group) | 3 Months (weekly)  |
-      | qa-test-group        | None               |
-    #TC132831 - create policy from the Data Retention popup dialog, input correct password
+      | qa-test-group        | 6 Months (monthly) |
+    #=======step7: TC.132831 - create policy from the Data Retention popup dialog, input correct password======
     When I click user group qa-test-group adr policy
     And I click button to invoke adr popup dialog
     And I navigate to new window
@@ -144,10 +145,10 @@ Feature: Adjustable retention at the partner and user group level
       | qa-test-group        | 1 Month (daily)    |
 
 
-  @TC.132841-132849 @bus @data_retention @bus-2.27 @P1
+  @TC.132841 @132842 @132843 @132844 @132846 @132847 @132848 @132849 @bus @data_retention @bus2.27 @P1 @qa12
   Scenario: Admin creates ADR policy on user group
   #======two groups, set policy to group1 on main page, set policy to (default user group) on popup======
-  #======create a MozyPro partner======
+  #======step1: create a MozyPro partner======
     When I add a new MozyPro partner:
       | period |  base plan | server plan | net terms |
       |   1    |  50 GB    | yes         | yes       |
@@ -159,11 +160,11 @@ Feature: Adjustable retention at the partner and user group level
       | qa-test-group | Shared       | qa                      | yes          | yes            |
     Then Bundled user group should be created
     When I navigate to Data Retention section from bus admin console page
-    Then partner adr policy should be None
+    Then partner adr policy should be 6 Months (monthly)
     And user group adr policy should be:
       | Name                 | Policy |
-      | (default user group) | None   |
-      | qa-test-group        | None   |
+      | (default user group) | 6 Months (monthly)   |
+      | qa-test-group        | 6 Months (monthly)   |
     When I click user group (default user group) adr policy
     Then available adr policy names should be:
       | policy              |
@@ -180,22 +181,22 @@ Feature: Adjustable retention at the partner and user group level
       | 5 Years (quarterly) |
       | 6 Years (quarterly) |
       | 7 Years (quarterly) |
-   #TC.132842 - create a policy but clicking Cancel button
+   #======step2: TC.132842 - create a policy but clicking Cancel button======
     When I set adr policy 1 Month (daily) but click cancel
     Then user group adr policy should be:
       | Name                 | Policy |
-      | (default user group) | None   |
-      | qa-test-group        | None   |
+      | (default user group) | 6 Months (monthly)   |
+      | qa-test-group        | 6 Months (monthly)   |
     And I close opened data retention section
-   #TC.132843 - input invalid password when creating new ADR policy, error message returned.
+   #======step3: TC.132843 - input invalid password when creating new ADR policy, error message returned======
     When I click user group qa-test-group adr policy
     And I try to set adr policy to 1 Month (daily) but input invalid password h@llo0WOrld
     Then user group adr policy should be:
       | Name                 | Policy |
-      | (default user group) | None   |
-      | qa-test-group        | None   |
-   #TC.132844 - create ADR policy for (default user group)and verify the result on both UI and on db.
-    And ADR policy in DB for user group qa-test-group is nil
+      | (default user group) | 6 Months (monthly)   |
+      | qa-test-group        | 6 Months (monthly)   |
+   #======step4: TC.132844 - create ADR policy for (default user group)and verify the result on both UI and on db======
+    Given ADR policy in DB for user group qa-test-group is nil
     And I close opened data retention section
     When I click user group qa-test-group adr policy
     And I set adr policy to 3 Months (weekly)
@@ -203,21 +204,21 @@ Feature: Adjustable retention at the partner and user group level
     When I refresh Data Retention section
     Then user group adr policy should be:
       | Name                 | Policy             |
-      | (default user group) | None               |
+      | (default user group) | 6 Months (monthly) |
       | qa-test-group        | 3 Months (weekly)  |
-   #TC.132846/132847 - Click on user group policy and select policy, click <Cancel> button to cancel the creation.
+   #====step5: TC.132846/132847 - Click on user group policy and select policy, click <Cancel> button to cancel the creation.======
     When I click user group (default user group) adr policy
     And I click button to invoke adr popup dialog
     And I navigate to new window
-    And default adr policy name on popup dialog should be 7 Days
+    And default adr policy name on popup dialog should be 6 Months (monthly)
     And I select adr policy on popup dialog to 3 Months (weekly) but click cancel button
     And I close new window
     Then I refresh Data Retention section
     And user group adr policy should be:
       | Name                 | Policy             |
-      | (default user group) | None               |
+      | (default user group) | 6 Months (monthly) |
       | qa-test-group        | 3 Months (weekly)  |
-    #TC.132848 - create policy from the Data Retention popup dialog, input invalid password
+    #======step6: TC.132848 - create policy from the Data Retention popup dialog, input invalid password======
     When I click user group (default user group) adr policy
     And I click button to invoke adr popup dialog
     And I navigate to new window
@@ -226,9 +227,9 @@ Feature: Adjustable retention at the partner and user group level
     Then I refresh Data Retention section
     And user group adr policy should be:
       | Name                 | Policy             |
-      | (default user group) | None               |
+      | (default user group) | 6 Months (monthly) |
       | qa-test-group        | 3 Months (weekly)  |
-    #TC.132849 - create policy from the Data Retention popup dialog, input correct password
+    #======step9: TC.132849 - create policy from the Data Retention popup dialog, input correct password======
     When I click user group (default user group) adr policy
     And I click button to invoke adr popup dialog
     And I navigate to new window
@@ -241,11 +242,10 @@ Feature: Adjustable retention at the partner and user group level
       | qa-test-group        | 3 Months (weekly)  |
 
 
-  @TC.132859-132867 @bus @data_retention @bus-2.27 @P1
+  @TC.132859 @TC.132860 @132861 @132862 @132864 @132865 @132866 @132867 @bus @data_retention @bus2.27 @P1 @qa12
   Scenario: change adr policy for antother user group with an existing ADR policy
-  #======9 test cases======
   #======three groups, all have adr policy set======
-  #======create a MozyPro partner======
+  #======step1: create a MozyPro partner======
     When I add a new MozyPro partner:
       | period |  base plan | server plan | net terms |
       |   1    |  50 GB    | yes         | yes       |
@@ -261,12 +261,12 @@ Feature: Adjustable retention at the partner and user group level
       | qa-test-group2 | Shared       | qa                      | yes          | yes            |
     Then Bundled user group should be created
     When I navigate to Data Retention section from bus admin console page
-    Then partner adr policy should be None
+    Then partner adr policy should be 6 Months (monthly)
     And user group adr policy should be:
       | Name                 | Policy |
-      | (default user group) | None   |
-      | qa-test-group1       | None   |
-      | qa-test-group2       | None   |
+      | (default user group) | 6 Months (monthly)   |
+      | qa-test-group1       | 6 Months (monthly)   |
+      | qa-test-group2       | 6 Months (monthly)   |
     When I click user group (default user group) adr policy
     Then available adr policy names should be:
       | policy              |
@@ -283,18 +283,18 @@ Feature: Adjustable retention at the partner and user group level
       | 5 Years (quarterly) |
       | 6 Years (quarterly) |
       | 7 Years (quarterly) |
-  #======create policy on three user groups======
-  #======(default user group) adr policy = 1 Month (daily)======
+  #======step2: create policy on three user groups======
+  #======step3: (default user group) adr policy = 1 Month (daily)======
     When I click user group (default user group) adr policy
     And I set adr policy to 1 Month (daily)
     Then Change ADR Policy section message should be Update data retention policy successfully.
     And I close opened data retention section
-  #======qa-test-group1 adr policy = 3 Months (weekly)======
+  #======step4: qa-test-group1 adr policy = 3 Months (weekly)======
     When I click user group qa-test-group1 adr policy
     And I set adr policy to 3 Months (weekly)
     Then Change ADR Policy section message should be Update data retention policy successfully.
     And I close opened data retention section
-  #======qa-test-group2 adr policy = 6 Months (monthly)======
+  #======step5: qa-test-group2 adr policy = 6 Months (monthly)======
     When I click user group qa-test-group2 adr policy
     And I set adr policy to 6 Months (monthly)
     Then Change ADR Policy section message should be Update data retention policy successfully.
@@ -304,7 +304,7 @@ Feature: Adjustable retention at the partner and user group level
       | (default user group) | 1 Month (daily)   |
       | qa-test-group1       | 3 Months (weekly) |
       | qa-test-group2       | 6 Months (monthly)|
-  #TC.132860 - create a policy on qa-test-troup1 but clicking Cancel button
+  #======step6: TC.132860 - create a policy on qa-test-troup1 but clicking Cancel button======
     Given I click user group qa-test-group1 adr policy
     When I set adr policy 1 Year (monthly) but click cancel
     Then user group adr policy should be:
@@ -313,7 +313,7 @@ Feature: Adjustable retention at the partner and user group level
       | qa-test-group1       | 3 Months (weekly) |
       | qa-test-group2       | 6 Months (monthly)|
     And I close opened data retention section
-  #TC.132861 - input invalid password when creating new ADR policy, error message returned.
+  #======step7: TC.132861 - input invalid password when creating new ADR policy, error message returned======
     When I click user group qa-test-group1 adr policy
     And I try to set adr policy to 1 Year (monthly) but input invalid password h@llo0WOrld
     Then user group adr policy should be:
@@ -322,7 +322,7 @@ Feature: Adjustable retention at the partner and user group level
       | qa-test-group1       | 3 Months (weekly) |
       | qa-test-group2       | 6 Months (monthly)|
     And I close opened data retention section
-  #TC132862 - create ADR policy for qa-test-group1 and verify the result on both UI and on db.
+  #======step8: TC.132862 - create ADR policy for qa-test-group1 and verify the result on both UI and on db======
     Given ADR policy in DB for user group qa-test-group1 is Mozy3Month_weekly
     When I click user group qa-test-group1 adr policy
     And I set adr policy to 1 Year (monthly)
@@ -334,7 +334,7 @@ Feature: Adjustable retention at the partner and user group level
       | qa-test-group1       | 1 Year (monthly)  |
       | qa-test-group2       | 6 Months (monthly)|
     And I close opened data retention section
-   #TC.132864/132865 - Click on user group policy and select policy, click <Cancel> button to cancel the creation.
+   #======step9: TC.132864/132865 - Click on user group policy and select policy, click <Cancel> button to cancel the creation======
     Given ADR policy in DB for user group qa-test-group2 is Mozy6Month_monthly
     When I click user group qa-test-group2 adr policy
     And I click button to invoke adr popup dialog
@@ -347,7 +347,7 @@ Feature: Adjustable retention at the partner and user group level
       | (default user group) | 1 Month (daily)   |
       | qa-test-group1       | 1 Year (monthly)  |
       | qa-test-group2       | 6 Months (monthly)|
-    #TC132866 - create policy from the Data Retention popup dialog, input incorrect password
+    #======step10: TC.132866 - create policy from the Data Retention popup dialog, input incorrect password======
     When I click user group qa-test-group2 adr policy
     And I click button to invoke adr popup dialog
     And I navigate to new window
@@ -359,7 +359,7 @@ Feature: Adjustable retention at the partner and user group level
       | (default user group) | 1 Month (daily)   |
       | qa-test-group1       | 1 Year (monthly)  |
       | qa-test-group2       | 6 Months (monthly)|
-    #TC.132867 - create policy from the Data Retention popup dialog, input correct password
+    #======step11: TC.132867 - create policy from the Data Retention popup dialog, input correct password======
     When I click user group qa-test-group2 adr policy
     And I click button to invoke adr popup dialog
     And I navigate to new window
@@ -373,53 +373,52 @@ Feature: Adjustable retention at the partner and user group level
       | qa-test-group2       | 3 Years (quarterly)|
 
 
-  @TC.133015-133020 @bus @data_retention @bus-2.27 @P1
+  @TC.133015 @133016 @133017 @133018 @133019 @133020 @bus @data_retention @bus2.27 @P1 @qa12
   Scenario: create and update ADR policy for partner
-    #======6 test cases======
-    #======create a MozyPro partner======
+    #======step1: create a MozyPro partner======
     When I add a new MozyPro partner:
       | period |  base plan | server plan | net terms |
       |   1    |  50 GB    | yes         | yes       |
     And I change root role to FedID role
     And I get the admin id from partner details
-    When I act as newly created partner account
-  #TC.133015 - Act as parnter, create adr policy on partner buc clicking cancel======
+    Then I act as newly created partner account
+    #======step2: TC.133015 - Act as parnter, create adr policy on partner buc clicking cancel======
     When I navigate to Data Retention section from bus admin console page
-    Then partner adr policy should be None
+    Then partner adr policy should be 6 Months (monthly)
     When I click partner adr policy
     And I set adr policy 7 Days but click cancel
     Then I refresh Data Retention section
-    And partner adr policy should be None
+    And partner adr policy should be 6 Months (monthly)
     And I close opened data retention section
-  #TC.133016 - create ADR policy on partner with incorrect password======
+    #======step2: TC.133016 - create ADR policy on partner with incorrect password======
     When I click partner adr policy
-    And partner adr policy should be None
+    And partner adr policy should be 6 Months (monthly)
     And I try to set adr policy to 7 Days but input invalid password h@llo0WOrld
     Then I refresh Data Retention section
-    And partner adr policy should be None
+    And partner adr policy should be 6 Months (monthly)
     And I close opened data retention section
-  #TC.133017 - create ADR policy on partner with correct password======
+    #======step3: TC.133017 - create ADR policy on partner with correct password======
     When I click partner adr policy
-    And partner adr policy should be None
+    And partner adr policy should be 6 Months (monthly)
     And I set adr policy to 7 Days
     Then I refresh Data Retention section
     And partner adr policy should be 7 Days
     And I close opened data retention section
-  #TC.133018 - update ADR policy on parnter but click Cancel======
+    #======step4: TC.133018 - update ADR policy on parnter but click Cancel======
     When I click partner adr policy
     And partner adr policy should be 7 Days
     And I set adr policy 14 Days but click cancel
     Then I refresh Data Retention section
     And partner adr policy should be 7 Days
     And I close opened data retention section
-  #TC.133019 -  update ADR policy on partner but with incorrect passwrod======
+    #======step5: TC.133019 - update ADR policy on partner but with incorrect passwrod======
     When I click partner adr policy
     And partner adr policy should be 7 Days
     And I try to set adr policy to 14 Days but input invalid password h@llo0WOrld
     Then I refresh Data Retention section
     And partner adr policy should be 7 Days
     And I close opened data retention section
-  #TC.133020 -  update ADR policy on partner with correct passwrod======
+    #======step6: TC.133020 - update ADR policy on partner with correct passwrod======
     When I click partner adr policy
     And partner adr policy should be 7 Days
     And I set adr policy to 14 Days
@@ -428,17 +427,16 @@ Feature: Adjustable retention at the partner and user group level
     And I close opened data retention section
 
 
-  @TC.132883-132884 @bus @data_retention @bus-2.27 @P1
+  @TC.132883 @132884 @bus @data_retention @bus2.27 @P1 @qa12
   Scenario: search sub-partner for partner
-    #======2 test cases======
-    #======create a MozyPro partner======
+    #======step1: create a MozyPro partner======
     When I add a new MozyPro partner:
       | period |  base plan | server plan | net terms |
       |   1    |  100 GB    | yes         | yes       |
     And I change root role to FedID role
     And I get the partner_id
     And I get the admin id from partner details
-    #======act as the newly created partner, create subplan and subrole======
+    #======step2: act as the newly created partner, create subplan and subrole======
     When I act as newly created partner account
     And I add new user(s):
       | user_group           | storage_type | storage_limit | devices |
@@ -454,18 +452,18 @@ Feature: Adjustable retention at the partner and user group level
       | Name    | Company Type | Root Role | Perisods | Tax Percentage | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
       | subplan | business     | subrole   | yearly   | 10             | test     | false            | 1                          | 1                     |
     Then add new pro plan success message should be displayed
-    #======create a new sub partner======
+    #======step3: create a new sub partner======
     When I add a new sub partner:
       | Company Name       |
       | sub_partner_132883 |
     Then New partner should be created
-    #TC.132883 - Search the sub partner with keyword "partner_132883"======
+    #======step4: TC.132883 - Search the sub partner with keyword "partner_132883"======
     When I navigate to Search / List Partners section from bus admin console page
     And I search partner by:
       | name               |
       | sub_partner_132883 |
     Then I view partner details by sub_partner_132883
-    #TC.132884 - Search the sub partner with keyword "partner_132883_invalid"======
+    #======step4: TC.132884 - Search the sub partner with keyword "partner_132883_invalid"======
     Given I clear partner search results
     When I search partner by:
       | name                   |
@@ -484,20 +482,19 @@ Feature: Adjustable retention at the partner and user group level
       | sub_partner_132883 |
     Then I view partner details by sub_partner_132883
     #======Delete the subpartner======
-    And I delete partner account
+    #And I delete partner account
 
 
-  @TC.132997-132999 @TC.133024-026 @133030-133032 @bus @data_retention @bus-2.27 @P1
+  @TC.132997 @132998 @132999 @133024 @133025 @133026 @133030 @133031 @133032 @bus @data_retention @bus2.27 @P1 @qa12
   Scenario: search sub-partner for partner
-    #======9 test cases======
-    #======create a MozyPro partner======
+    #======step1: create a MozyPro partner======
     When I add a new MozyPro partner:
       | period |  base plan | server plan | net terms |
       |   1    |  100 GB    | yes         | yes       |
     And I change root role to FedID role
     And I get the partner_id
     And I get the admin id from partner details
-    #======act as the newly created partner, create subplan and subrole======
+    #======step2: act as the newly created partner, create subplan and subrole======
     When I act as newly created partner account
     And I add new user(s):
       | user_group           | storage_type | storage_limit | devices |
@@ -513,30 +510,30 @@ Feature: Adjustable retention at the partner and user group level
       | Name    | Company Type | Root Role | Perisods | Tax Percentage | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
       | subplan | business     | subrole   | yearly   | 10             | test     | false            | 1                          | 1                     |
     Then add new pro plan success message should be displayed
-    #======create a new sub partner======
+    #======step3: create a new sub partner======
     When I add a new sub partner:
       | Company Name       |
       | sub_partner_132997 |
     Then New partner should be created
-    #======TC.132997 - TC.132999, create ADR policy for sub partner======
-    #TC.132997 - cancel create ADR policy for sub partner======
+    #======step4: TC.132997, TC.132998 TC.132999, create ADR policy for sub partner======
+    #======step5: TC.132997 - cancel create ADR policy for sub partner======
     Given I navigate to Data Retention section from bus admin console page
     When I click sub partner sub_partner_132997 adr policy
     And I set adr policy 2 Years (quarterly) but click cancel
     Then I refresh Data Retention section
     And sub partner adr policy should be:
       | sub parnter name   | policy |
-      | sub_partner_132997 | None   |
+      | sub_partner_132997 | 6 Months (monthly)   |
     And I close opened data retention section
-    #TC.132998 - create ADR policy with wrong password======
+    #======step6: TC.132998 - create ADR policy with wrong password======
     When I click sub partner sub_partner_132997 adr policy
     And I try to set adr policy to 2 Years (quarterly) but input invalid password h@llo0WOrld
     Then I refresh Data Retention section
     And sub partner adr policy should be:
       | sub parnter name   | policy |
-      | sub_partner_132997 | None   |
+      | sub_partner_132997 | 6 Months (monthly)   |
     And I close opened data retention section
-    #TC.132999 - create ADR policy with correct password======
+    #======step7: TC.132999 - create ADR policy with correct password======
     When I click sub partner sub_partner_132997 adr policy
     And I set adr policy to 2 Years (quarterly)
     Then I refresh Data Retention section
@@ -544,8 +541,8 @@ Feature: Adjustable retention at the partner and user group level
       | sub parnter name   | policy               |
       | sub_partner_132997 | 2 Years (quarterly)  |
     And I close opened data retention section
-    #======TC.133024 - TC.133026, update ADR policy for sub partner======
-    #TC.133024 - cancel update ADR policy for sub partner======
+    #======step8: TC.133024 - TC.133026, update ADR policy for sub partner======
+    #======step9: TC.133024 - cancel update ADR policy for sub partner======
     When I click sub partner sub_partner_132997 adr policy
     And I set adr policy 4 Years (quarterly) but click cancel
     Then I refresh Data Retention section
@@ -553,7 +550,7 @@ Feature: Adjustable retention at the partner and user group level
       | sub parnter name   | policy               |
       | sub_partner_132997 | 2 Years (quarterly)  |
     And I close opened data retention section
-    #TC.133025 - update ADR policy with wrong password======
+    #======step10: TC.133025 - update ADR policy with wrong password======
     When I click sub partner sub_partner_132997 adr policy
     And I try to set adr policy to 4 Years (quarterly) but input invalid password h@llo0WOrld
     Then I refresh Data Retention section
@@ -561,7 +558,7 @@ Feature: Adjustable retention at the partner and user group level
       | sub parnter name   | policy               |
       | sub_partner_132997 | 2 Years (quarterly)  |
     And I close opened data retention section
-    #TC.133026 - update ADR policy with correct password======
+    #======step11: TC.133026 - update ADR policy with correct password======
     When I click sub partner sub_partner_132997 adr policy
     And I set adr policy to 4 Years (quarterly)
     Then I refresh Data Retention section
@@ -569,26 +566,26 @@ Feature: Adjustable retention at the partner and user group level
       | sub parnter name   | policy               |
       | sub_partner_132997 | 4 Years (quarterly)  |
     And I close opened data retention section
-   #======TC.133030 - TC.133032, update ADR policy for sub partner======
-   #TC.133030 - cancel create adr policy from parent partner======
+   #======step12: TC.133030 - TC.133032, update ADR policy for sub partner======
+   #======step13: TC.133030 - cancel create adr policy from parent partner======
     When I click partner adr policy
     And I set adr policy 5 Years (quarterly) but click cancel
     And I refresh Data Retention section
-    Then partner adr policy should be None
+    Then partner adr policy should be 6 Months (monthly)
     And sub partner adr policy should be:
       | sub parnter name   | policy               |
       | sub_partner_132997 | 4 Years (quarterly)  |
     And I close opened data retention section
-    #TC.133031 - create ADR policy from parent partner with incorrect password======
+    #======step14: TC.133031 - create ADR policy from parent partner with incorrect password======
     When I click partner adr policy
     And I try to set adr policy to 5 Years (quarterly) but input invalid password h@llo0WOrld
     And I refresh Data Retention section
-    Then partner adr policy should be None
+    Then partner adr policy should be 6 Months (monthly)
     And sub partner adr policy should be:
       | sub parnter name   | policy               |
       | sub_partner_132997 | 4 Years (quarterly)  |
     And I close opened data retention section
-    #TC.133032 - create ADR policy from parent partner with correct password======
+    #======step15: TC.133032 - create ADR policy from parent partner with correct password======
     When I click partner adr policy
     And I set adr policy to 5 Years (quarterly)
     And I refresh Data Retention section
@@ -598,26 +595,25 @@ Feature: Adjustable retention at the partner and user group level
       | sub_partner_132997 | 4 Years (quarterly)  |
     And I close opened data retention section
     And I stop masquerading
-    #======Delete the sub partner======
-    When I navigate to Search / List Partners section from bus admin console page
-    And I search partner by:
-      | name               |
-      | sub_partner_132997 |
-    Then I view partner details by sub_partner_132997
-    And I delete partner account
+    #======step16: Delete the sub partner======
+    #When I navigate to Search / List Partners section from bus admin console page
+    #And I search partner by:
+      #| name               |
+      #| sub_partner_132997 |
+    #Then I view partner details by sub_partner_132997
+    #And I delete partner account
 
 
-  @TC.133012-133014 @TC.133036-133038 @TC.133033-133035 @bus @data_retention @bus-2.27 @P1
+  @TC.133012 @TC.133013 @TC.132999 @TC.1330136 @TC.133037 @TC.133038 @TC.133034 @TC.133035 @TC.133038 @bus @data_retention @bus2.27 @P1 @qa12
   Scenario: create ADR policy for a layer 2 sub partner
-    #======9 test cases======
-    #======TC.133012-014, TC.133036-038, TC.133033-035======
+    #======step1: create a MozyPro partner======
     When I add a new MozyPro partner:
       | name     | period |  base plan | server plan | net terms |
       | TC133012 |   1    |  100 GB    | yes         | yes       |
     And I change root role to FedID role
     And I get the partner_id
     And I get the admin id from partner details
-    #======act as the newly created partner, create subplan and subrole/layer 1======
+    #======step2: act as the newly created partner, create subplan and subrole/layer 1======
     When I act as newly created partner account
     And I navigate to Add New Role section from bus admin console page
     And I add a new role:
@@ -629,13 +625,13 @@ Feature: Adjustable retention at the partner and user group level
       | Name    | Company Type | Root Role | Perisods | Tax Percentage | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
       | subplan | business     | subrole   | yearly   | 10             | test     | false            | 1                          | 1                     |
     Then add new pro plan success message should be displayed
-    #======create a new sub partner/level 1======
+    #======step3: create a new sub partner/level 1======
     When I add a new sub partner:
       | Company Name              |
       | sub_partner_133012_level1 |
     Then New partner should be created
     But I stop masquerading
-    #======act as the newly created sub partner, create subplan and subrole/layer 2======
+    #======step4: act as the newly created sub partner, create subplan and subrole/layer 2======
     When I navigate to Search / List Partners section from bus admin console page
     And I search partner by:
       | name                      |
@@ -652,30 +648,30 @@ Feature: Adjustable retention at the partner and user group level
       | Name    | Company Type | Root Role  | Perisods | Tax Percentage | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
       | subplan | business     | subrole2   | yearly   | 10             | test     | false            | 1                          | 1                     |
     Then add new pro plan success message should be displayed
-    #======create a new sub partner/level 1======
+    #======step5: create a new sub partner/level 1======
     When I add a new sub partner:
       | Company Name              |
       | sub_partner_133012_level2 |
     Then New partner should be created
-    #======TC.133012-014, create adr policy for a layer 2 sub partner======
-    #TC.133012 - cancel create ADR policy at layer2 sub partner
+    #======step6: TC.133012-014, create adr policy for a layer 2 sub partner======
+    #======step7: TC.133012 - cancel create ADR policy at layer2 sub partner======
     Given I navigate to Data Retention section from bus admin console page
     When I click sub partner sub_partner_133012_level2 adr policy
     And I set adr policy 6 Years (quarterly) but click cancel
     Then I refresh Data Retention section
     And sub partner adr policy should be:
-      | sub parnter name          | policy |
-      | sub_partner_133012_level2 | None   |
+      | sub parnter name          | policy               |
+      | sub_partner_133012_level2 | 6 Months (monthly)   |
     And I close opened data retention section
-    #TC.133013 - create ADR policy with wrong password======
+    #======step8: TC.133013 - create ADR policy with wrong password======
     When I click sub partner sub_partner_133012_level2 adr policy
     And I try to set adr policy to 6 Years (quarterly) but input invalid password h@llo0WOrld
     Then I refresh Data Retention section
     And sub partner adr policy should be:
       | sub parnter name          | policy |
-      | sub_partner_133012_level2 | None   |
+      | sub_partner_133012_level2 | 6 Months (monthly)   |
     And I close opened data retention section
-    #TC.132999 - create ADR policy with correct password======
+    #======step9: TC.132999 - create ADR policy with correct password======
     When I click sub partner sub_partner_133012_level2 adr policy
     And I set adr policy to 6 Years (quarterly)
     Then I refresh Data Retention section
@@ -683,8 +679,8 @@ Feature: Adjustable retention at the partner and user group level
       | sub parnter name          | policy               |
       | sub_partner_133012_level2 | 6 Years (quarterly)  |
     And I close opened data retention section
-    #======TC.133036-038, update existing adr policy for a layer 2 sub partner======
-    #TC.1330136 - cancel create ADR policy at layer2 sub partner
+    #======step10: TC.133036-038, update existing adr policy for a layer 2 sub partner======
+    #======step11: TC.1330136 - cancel create ADR policy at layer2 sub partner
     When I click sub partner sub_partner_133012_level2 adr policy
     And I set adr policy 7 Years (quarterly) but click cancel
     Then I refresh Data Retention section
@@ -692,7 +688,7 @@ Feature: Adjustable retention at the partner and user group level
       | sub parnter name          | policy               |
       | sub_partner_133012_level2 | 6 Years (quarterly)  |
     And I close opened data retention section
-    #TC.133037 - update ADR policy with wrong password======
+    #======step12: TC.133037 - update ADR policy with wrong password======
     When I click sub partner sub_partner_133012_level2 adr policy
     And I try to set adr policy to 7 Years (quarterly) but input invalid password h@llo0WOrld
     Then I refresh Data Retention section
@@ -700,7 +696,7 @@ Feature: Adjustable retention at the partner and user group level
       | sub parnter name          | policy               |
       | sub_partner_133012_level2 | 6 Years (quarterly)  |
     And I close opened data retention section
-    #TC.133028 - update ADR policy with correct password======
+    #======step13: TC.133038 - update ADR policy with correct password======
     When I click sub partner sub_partner_133012_level2 adr policy
     And I set adr policy to 7 Years (quarterly)
     Then I refresh Data Retention section
@@ -708,26 +704,26 @@ Feature: Adjustable retention at the partner and user group level
       | sub parnter name          | policy               |
       | sub_partner_133012_level2 | 7 Years (quarterly)  |
     And I close opened data retention section
-   #======TC.133033 - TC.133035, update ADR policy for sub partner======
-   #TC.133035 - cancel create adr policy from parent partner======
+   #======step14: TC.133033 - TC.133035, update ADR policy for sub partner======
+   #======step15: TC.133035 - cancel create adr policy from parent partner======
     When I click partner adr policy
     And I set adr policy 7 Days but click cancel
     And I refresh Data Retention section
-    Then partner adr policy should be None
+    Then partner adr policy should be 6 Months (monthly)
     And sub partner adr policy should be:
       | sub parnter name          | policy               |
       | sub_partner_133012_level2 | 7 Years (quarterly)  |
     And I close opened data retention section
-    #TC.133034 - create ADR policy from parent partner with incorrect password======
+    #======step16: TC.133034 - create ADR policy from parent partner with incorrect password======
     When I click partner adr policy
     And I try to set adr policy to 7 Days but input invalid password h@llo0WOrld
     And I refresh Data Retention section
-    Then partner adr policy should be None
+    Then partner adr policy should be 6 Months (monthly)
     And sub partner adr policy should be:
       | sub parnter name          | policy               |
       | sub_partner_133012_level2 | 7 Years (quarterly)  |
     And I close opened data retention section
-    #TC.133038 - create ADR policy from parent partner with correct password======
+    #======step17: TC.133038 - create ADR policy from parent partner with correct password======
     When I click partner adr policy
     And I set adr policy to 7 Days
     And I refresh Data Retention section
@@ -737,23 +733,22 @@ Feature: Adjustable retention at the partner and user group level
       | sub_partner_133012_level2 | 7 Years (quarterly)  |
     And I close opened data retention section
     But I stop masquerading
-  #======Delete the sub partner======
-    When I navigate to Search / List Partners section from bus admin console page
-    And I search partner by:
-      | name                      |
-      | sub_partner_133012_level2 |
-    Then I view partner details by sub_partner_133012_level2
-    And I delete partner account
-    When I search partner by:
-      | name                      |
-      | sub_partner_133012_level1 |
-    Then I view partner details by sub_partner_133012_level1
-    And I delete partner account
+    #======step18: Delete the sub partner======
+    #When I navigate to Search / List Partners section from bus admin console page
+    #And I search partner by:
+      #| name                      |
+      #| sub_partner_133012_level2 |
+    #Then I view partner details by sub_partner_133012_level2
+    #And I delete partner account
+    #When I search partner by:
+      #| name                      |
+      #| sub_partner_133012_level1 |
+    #Then I view partner details by sub_partner_133012_level1
+    #And I delete partner account
 
 
-  @TC.132990-96 @bus @data_retention @bus-2.27 @P1
+  @TC.132990 @TC.132991 @TC.132992 @TC.132993 @TC.132994 @TC.132995 @TC.132996 @bus @data_retention @bus2.27 @P1 @qa12
   Scenario: add sub-partner2 under suspended sub-partner1
-  #======7 test cases======
     #TC.132990 - add sub-partner2 under suspended sub-partner1
     #======step1: create MozyPro partner======
     When I add a new MozyPro partner:
@@ -903,7 +898,7 @@ Feature: Adjustable retention at the partner and user group level
     #======step22: search partner type for create backup machine at back-end purpose======
     When I search partner by TC.132990-96
     And I get current partner type
- But I navigate to Search Admins section from bus admin console page
+    But I navigate to Search Admins section from bus admin console page
     #======step23: act as sub partner layer 1======
     When I search partner by sub_partner_132990_level1
     Then I view partner details by sub_partner_132990_level1
@@ -1005,59 +1000,14 @@ Feature: Adjustable retention at the partner and user group level
     #======Step36: stop masquerading from sub partner layer 2======
     And I stop masquerading
     #======Step37: delete all partners======
-    When I navigate to Search / List Partners section from bus admin console page
-    And I search partner by:
-      | name                      |
-      | sub_partner_132990_level1 |
-    Then I view partner details by sub_partner_132990_level1
-    And I delete partner account
-    When I search partner by:
-      | name         |
-      | TC.132990-96 |
-    Then I view partner details by TC.132990-96
-    And I delete partner account
-
-
-
-
-  @TCdebugger @bus @data_retention @bus-2.27 @P1
-  Scenario: add sub-partner2 under suspended sub-partner1
-  #======7 test cases======
-    #TC.132990 - add sub-partner2 under suspended sub-partner1
-    #======step1: create MozyPro partner======
-    When I add a new MozyPro partner:
-      | company name | period |  base plan | server plan | net terms |
-      | TC.132990-96 |   1    |  100 GB    | yes         | yes       |
-    And I change root role to FedID role
-    And I get the partner_id
-    And I get the admin id from partner details
-    And I change root role to FedID role
-    And I get the partner_id
-    When I act as newly created partner account
-    #======step2: act as parnter, and new sub partner layer1(include role and plan)======
-    And I navigate to Add New Role section from bus admin console page
-    And I add a new role:
-      | Name    | Type          | Parent     |
-      | subrole | Partner admin | FedID role |
-    And I check all the capabilities for the new role
-    And I navigate to Add New Pro Plan section from bus admin console page
-    And I add a new pro plan for Mozypro partner:
-      | Name    | Company Type | Root Role | Perisods | Tax Percentage | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
-      | subplan | business     | subrole   | yearly   | 10             | test     | false            | 1                          | 1                     |
-    Then add new pro plan success message should be displayed
-    When I add a new sub partner:
-      | Company Name              |
-      | sub_partner_132990_level1 |
-    Then New partner should be created
-    #======step3: stop masquerading from partner======
-    But I stop masquerading
-    #======step4: act as sub partner layer 1, purchase resource======
-    When I navigate to Search / List Partners section from bus admin console page
-    And I search partner by:
-      | name                      |
-      | sub_partner_132990_level1 |
-    Then I view partner details by sub_partner_132990_level1
-    And I act as newly created partner
-    And I purchase resources:
-      | generic quota |
-      | 80            |
+    #When I navigate to Search / List Partners section from bus admin console page
+    #And I search partner by:
+      #| name                      |
+      #| sub_partner_132990_level1 |
+    #Then I view partner details by sub_partner_132990_level1
+    #And I delete partner account
+    #When I search partner by:
+      #| name         |
+      #| TC.132990-96 |
+    #Then I view partner details by TC.132990-96
+    #And I delete partner account

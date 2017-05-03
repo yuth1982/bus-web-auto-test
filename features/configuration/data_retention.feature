@@ -7,7 +7,7 @@ Feature: Adjustable retention at the partner and user group level
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.143307_01 @bus @data_retention
+  @TC.143307_01 @bus @data_retention @qa12
   Scenario: click Data Retention, go to Data Retention section, check default info here. create data retention for partner with subpartner.
     When I add a new MozyEnterprise partner:
       | period | users | server plan  |
@@ -39,36 +39,36 @@ Feature: Adjustable retention at the partner and user group level
     Then the pooled resource section of subpartner should have edit link
     Then the Server and Desktop pooled resource should be editable for the subpartner
     When I navigate to Data Retention section from bus admin console page
-    Then partner adr policy should be None
+    Then partner adr policy should be 1 Year (monthly)
     And user group adr policy should be:
-      | Name                 | Policy |
-      | (default user group) | None   |
+      | Name                 | Policy             |
+      | (default user group) | 1 Year (monthly)   |
     And sub partner adr policy should be:
-      | Name              | Policy |
-      | adr_sub_partner_1 | None   |
-    And ADR policy in DB for partner is nil
+      | Name              | Policy             |
+      | adr_sub_partner_1 | 1 Year (monthly)   |
+    And ADR policy in DB for partner is Mozy1Year_monthly
     And ADR policy in DB for user group (default user group) is nil
     When I click partner adr policy
-    Then adr policy name should be 7 Days
-    When I set adr policy to 1 Year (monthly)
+    Then adr policy name should be 1 Year (monthly)
+    When I set adr policy to 2 Years (quarterly)
     Then Change ADR Policy section message should be Update data retention policy successfully.
-    And adr policy name should be 1 Year (monthly)
+    And adr policy name should be 2 Years (quarterly)
     When I refresh Data Retention section
-    And partner adr policy should be 1 Year (monthly)
+    And partner adr policy should be 2 Years (quarterly)
     And user group adr policy should be:
-      | Name                 | Policy           |
-      | (default user group) | 1 Year (monthly) |
+      | Name                 | Policy             |
+      | (default user group) | 2 Years (quarterly) |
     And sub partner adr policy should be:
-      | Name              | Policy           |
-      | adr_sub_partner_1 | 1 Year (monthly) |
-    And ADR policy in DB for partner is Mozy1Year_monthly
+      | Name              | Policy             |
+      | adr_sub_partner_1 | 2 Years (quarterly) |
+    And ADR policy in DB for partner is Mozy2Year_quarterly
     And ADR policy in DB for user group (default user group) is nil
     When I search partner by adr_sub_partner_1
     And I view partner details by adr_sub_partner_1
     When I get the partner_id
     And ADR policy in DB for partner is nil
 
-  @TC.143307_02 @bus @data_retention
+  @TC.143307_02 @bus @data_retention @qa12
   Scenario: create data retention for partner with more than 1 user group
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -80,23 +80,23 @@ Feature: Adjustable retention at the partner and user group level
       | qa-test-group | Shared               | 1               |
     Then Itemized user group should be created
     When I navigate to Data Retention section from bus admin console page
-    Then partner adr policy should be None
+    Then partner adr policy should be 1 Year (monthly)
     And user group adr policy should be:
-      | Name                 | Policy |
-      | (default user group) | None   |
-      | qa-test-group        | None   |
+      | Name                 | Policy             |
+      | (default user group) | 1 Year (monthly)   |
+      | qa-test-group        | 1 Year (monthly)   |
     And I should see No results found. in sub partner adr policy list
     When I click partner adr policy
-    And I set adr policy to 1 Year (monthly)
+    And I set adr policy to 2 Years (quarterly)
     Then Change ADR Policy section message should be Update data retention policy successfully.
     When I refresh Data Retention section
-    And partner adr policy should be 1 Year (monthly)
+    And partner adr policy should be 2 Years (quarterly)
     And user group adr policy should be:
-      | Name                 | Policy           |
-      | (default user group) | 1 Year (monthly) |
-      | qa-test-group        | 1 Year (monthly) |
+      | Name                 | Policy              |
+      | (default user group) | 2 Years (quarterly) |
+      | qa-test-group        | 2 Years (quarterly) |
     And I should see No results found. in sub partner adr policy list
-    And ADR policy in DB for partner is Mozy1Year_monthly
+    And ADR policy in DB for partner is Mozy2Year_quarterly
     And ADR policy in DB for all user groups are nil
     And ADR policy in DB for user group (default user group) is nil
     And ADR policy in DB for user group qa-test-group is nil
@@ -110,7 +110,7 @@ Feature: Adjustable retention at the partner and user group level
     When I act as newly created partner account
     And I navigate to Data Retention section from bus admin console page
     And I click partner adr policy
-    Then adr policy name should be 7 Days
+    Then adr policy name should be 1 Year (monthly)
     And available adr policy names should be:
     | policy              |
     | 7 Days              |
@@ -162,7 +162,7 @@ Feature: Adjustable retention at the partner and user group level
     And ADR policy in DB for partner is Mozy2Month_weekly
     And ADR policy in DB for user group (default user group) is nil
 
-  @TC.143307_001 @bus @data_retention
+  @TC.143307_001 @bus @data_retention @qa12
   Scenario: click None to create ADR policy for user group, eg."qa-group-1"
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -174,13 +174,13 @@ Feature: Adjustable retention at the partner and user group level
     And I set adr policy to 7 Days
     Then Change ADR Policy section message should be Update data retention policy successfully.
     When I refresh Data Retention section
-    And partner adr policy should be None
+    And partner adr policy should be 1 Year (monthly)
     And user group adr policy should be:
       | Name                 | Policy |
       | (default user group) | 7 Days |
     And I should see No results found. in sub partner adr policy list
     Then ADR policy in DB for user group (default user group) is Mozy1Week_daily
-    And ADR policy in DB for partner is nil
+    And ADR policy in DB for partner is Mozy1Year_monthly
     When I get user group id for user group (default user group)
     And the record from adr_jobs table for main job user group should be:
 #      | id | object_type | object_id        | policy_name        | grace_period | main_job_id | status      | priority | created_at | updated_at | locked_at | progress |
@@ -193,17 +193,17 @@ Feature: Adjustable retention at the partner and user group level
       | qa-test-group | Shared               | 1               |
     Then Itemized user group should be created
     When I navigate to Data Retention section from bus admin console page
-    And partner adr policy should be None
+    And partner adr policy should be 1 Year (monthly)
     And user group adr policy should be:
       | Name                 | Policy |
       | (default user group) | 7 Days |
-      | qa-test-group        | None   |
+      | qa-test-group        | 1 Year (monthly) |
     And I should see No results found. in sub partner adr policy list
     When I click user group qa-test-group adr policy
     And I set adr policy to 14 Days
     Then Change ADR Policy section message should be Update data retention policy successfully.
     When I refresh Data Retention section
-    And partner adr policy should be None
+    And partner adr policy should be 1 Year (monthly)
     And user group adr policy should be:
       | Name                 | Policy  |
       | (default user group) | 7 Days  |
@@ -211,7 +211,7 @@ Feature: Adjustable retention at the partner and user group level
     And I should see No results found. in sub partner adr policy list
     Then ADR policy in DB for user group (default user group) is Mozy1Week_daily
     And ADR policy in DB for user group qa-test-group is Mozy2Week_daily
-    And ADR policy in DB for partner is nil
+    And ADR policy in DB for partner is Mozy1Year_monthly
     When I get user group id for user group (default user group)
     And the record from adr_jobs table for main job user group should be:
 #      | id | object_type | object_id        | policy_name        | grace_period | main_job_id | status      | priority | created_at | updated_at | locked_at | progress |
@@ -224,7 +224,7 @@ Feature: Adjustable retention at the partner and user group level
 #      | id | object_type | object_id        | policy_name        | grace_period | main_job_id | status      | priority | created_at | updated_at | locked_at | progress |
       |  | UserGroup | <%=@user_group_id%> | Mozy2Week_daily | today | <%=@main_job_id%> | IN_PROGRESS | 1 | today | today |  |  |
 
-  @TC.143307_003 @bus @data_retention
+  @TC.143307_003 @bus @data_retention @qa12
   Scenario: adr jobs table check
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -254,7 +254,7 @@ Feature: Adjustable retention at the partner and user group level
 #      | id | object_type | object_id        | policy_name        | grace_period | main_job_id | status      | priority | created_at | updated_at | locked_at | progress |
       |  | UserGroup | <%=@user_group_id%> | Mozy6Month_monthly | today | <%=@main_job_id%> | IN_PROGRESS | 1 | today | today |  |  |
 
-  @TC.143307_600 @bus @data_retention
+  @TC.143307_600 @bus @data_retention @qa12
   Scenario: create many machines here, to be done, refer to features/users/adhoc_tasks/add_multiple_machines.feature
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -291,7 +291,7 @@ Feature: Adjustable retention at the partner and user group level
     And activate the user's Server device without a key and with the default password
 
 
-  @TC.143307_500 @bus @data_retention
+  @TC.143307_500 @bus @data_retention @qa12
   Scenario: create many machines here, to be done, refer to features/users/adhoc_tasks/add_multiple_machines.feature
     When I add a new MozyEnterprise partner:
       | company name                  | period | users | server plan | net terms |
@@ -304,9 +304,3 @@ Feature: Adjustable retention at the partner and user group level
     And I add multiple users:
       | name             | user_group           | storage_type | storage_limit | devices |
       | test-server-user | (default user group) | Server       | 10            | 2       |
-
-
-
-
-
-

@@ -715,14 +715,15 @@ module Bus
     end
 
     def help_link_visibility
-      begin
-        find(:xpath, "//a[text()='Help']")
-        log("help link found")
-        return true
-      rescue
-        log("help link not found")
-        return false
-      end
+      !locate(:xpath, "//a[text()='Help']").nil?
+      #begin
+        #find(:xpath, "//a[text()='Help']")
+        #log("help link found")
+        #return true
+      #rescue
+        #log("help link not found")
+        #return false
+      #end
     end
 
     def click_help_link

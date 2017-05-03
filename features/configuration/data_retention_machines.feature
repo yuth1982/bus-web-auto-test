@@ -1,11 +1,12 @@
-Feature: Adjustable retention at the partner and user group level
+Feature: data retention machines
+
   As a Mozy Administrator. I have the ability to enable/disable the data retention capability to different Roles.
+
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.133059-133064 @bus @data_retention @bus-2.27 @P1 @ROR_smoke @qa12
+  @TC.133059 @TC.133060 @TC.133061 @TC.133062 @TC.133063 @TC.133064 @bus @data_retention @bus2.27 @P1 @ROR_smoke @qa12
   Scenario: check machine's adr_policy_name when no adr policy set
-  #======6 test cases======
     #======step1: create MozyPro partner======
     When I add a new MozyPro partner:
       | company name | period |  base plan | server plan | net terms |
@@ -55,7 +56,7 @@ Feature: Adjustable retention at the partner and user group level
       | ugdf_user1_machine_1 |
     And I view machine details for ugdf_user1_machine_1
     Then I get machine details info
-    And ADR policy in DB for device is nil
+    And ADR policy in DB for device is Mozy6Month_monthly
     And I close machine details section
     And I clear machine search results
     #TC.133061 - check adr_policy_name if machine is a deleted one======
@@ -65,7 +66,7 @@ Feature: Adjustable retention at the partner and user group level
       | ugdf_user2 |
     And I view user details by ugdf_user2
     And I get the user id
-    Then ADR policy in DB for deleted device ugdf_user2_machine_1 is nil
+    Then ADR policy in DB for deleted device ugdf_user2_machine_1 is Mozy6Month_monthly
     And I clear user search results
     And I close User Details section
     #======step11: stop masquerading from current partner======
@@ -89,7 +90,7 @@ Feature: Adjustable retention at the partner and user group level
       | ugdf_user5_machine_1 |
     And I view machine details for ugdf_user5_machine_1
     Then I get machine details info
-    And ADR policy in DB for device is nil
+    And ADR policy in DB for device is Mozy6Month_monthly
     And I close machine details section
     And I clear machine search results
     #TC.133062 - check adr_policy_name column when delete machine======
@@ -105,7 +106,7 @@ Feature: Adjustable retention at the partner and user group level
       | ugdf_user3 |
     And I view user details by ugdf_user3
     And I get the user id
-    Then ADR policy in DB for deleted device ugdf_user3_machine_1 is nil
+    Then ADR policy in DB for deleted device ugdf_user3_machine_1 is Mozy6Month_monthly
     And I clear user search results
     And I close User Details section
     #TC.133061 - check adr_policy_name column when replace machine======
@@ -122,23 +123,22 @@ Feature: Adjustable retention at the partner and user group level
       | ugdf_user4 |
     And I view user details by ugdf_user4
     And I get the user id
-    Then ADR policy in DB for deleted device ugdf_user4_machine_1 is nil
-    Then ADR policy in DB for existing device ugdf_user4_machine_1 is nil
+    Then ADR policy in DB for deleted device ugdf_user4_machine_1 is Mozy6Month_monthly
+    Then ADR policy in DB for existing device ugdf_user4_machine_1 is Mozy6Month_monthly
     And I clear user search results
     And I close User Details section
     #======step20: stop masquerading======
     And I stop masquerading
     #======step21: delete partner======
-    When I search partner by:
-      | name      |
-      | TC.133059 |
-    Then I view partner details by TC.133059
-    And I delete partner account
+    #When I search partner by:
+      #| name      |
+      #| TC.133059 |
+    #Then I view partner details by TC.133059
+    #And I delete partner account
 
 
-  @TC.133058-133072 @bus @data_retention @bus-2.27 @P1
+  @TC.133058 @TC.133059 @TC.133065 @TC.133066 @TC.133067 @TC.133068 @TC.133069 @TC.133070 @TC.133071 @133072 @bus @data_retention @bus2.27 @P1 @qa12
   Scenario: create policy at user group level only
-    #======9 test cases======
     #======step1: create MozyPro partner======
     When I add a new MozyPro partner:
       | company name | period |  base plan | server plan | net terms |
@@ -150,7 +150,7 @@ Feature: Adjustable retention at the partner and user group level
     And I get the admin id from partner details
     #======step3: act as partner=====
     Then I act as newly created partner account
-   #======step4: create multiple users with backup deivces======
+    #======step4: create multiple users with backup deivces======
     When I add a new Bundled user group:
       | name | storage_type | install_region_override | enable_stash | server_support |
       | ug1  | Shared       | qa                      | yes          | yes            |
@@ -265,8 +265,8 @@ Feature: Adjustable retention at the partner and user group level
       | ugdf_user2 |
     And I view user details by ugdf_user2
     Then device ugdf_user2_machine_1 detail info in db should be:
-      | alias                | vc_policy_name    |
-      | ugdf_user2_machine_1 |                   |
+      | alias                | vc_policy_name     |
+      | ugdf_user2_machine_1 | Mozy6Month_monthly |
     And I close User Details section
     And I clear user search results
     #TC.133068 - check adr_policy_name colume when delete machine under this user group======
@@ -387,16 +387,30 @@ Feature: Adjustable retention at the partner and user group level
     #======step42: stop masquerading from current partner======
     And I stop masquerading
     #======step43: delete partner======
-    When I search partner by:
-      | name      |
-      | TC.133065 |
-    Then I view partner details by TC.133065
-    And I delete partner account
+    #When I search partner by:
+      #| name      |
+      #| TC.133065 |
+    #Then I view partner details by TC.133065
+    #And I delete partner account
 
 
-  @TC.133073-133081 @bus @data_retention @bus-2.27 @P1
+  # Testing data -
+  # partner(mozypro) - Mozy 6 Months (monthly)
+  #   - default user group (ADR=3 Months (weekly))
+  #         ugdf_user1
+  #   - ug1
+  #         ug1_user1
+  #         ug1_user2 (machine=ug1_user2_machine_1:deleted, before ADR assigned on ug1 user group)
+  #         ug1_user3
+  #         ug1_user4
+  #         ug1_user5 (new user)
+  #   - ug2 (ADR=3 Months (weekly))
+  #         ug2_user1
+  #         ug2_user2
+  #   - ug3 (ADR=3 Years (quarterly))
+  #         ug3_user1
+  @TC.133073 @TC.133074-x @TC.133080 @TC.133081 @bus @data_retention @bus2.27 @P1 @qa12
   Scenario: existing machine under other user group
-    #======7 test cases======
     #======step1: create MozyPro partner======
     When I add a new MozyPro partner:
       | company name | period |  base plan | server plan | net terms |
@@ -407,7 +421,7 @@ Feature: Adjustable retention at the partner and user group level
     And I get the admin id from partner details
     #======step3: act as partner=====
     Then I act as newly created partner account
-   #======step4: create multiple users with backup deivces======
+    #======step4: create multiple users with backup deivces======
     When I add a new Bundled user group:
       | name | storage_type | install_region_override | enable_stash | server_support |
       | ug1  | Shared       | qa                      | yes          | yes            |
@@ -430,7 +444,6 @@ Feature: Adjustable retention at the partner and user group level
       | ug2_user1  | ug2                  |  Desktop     |  1            |  1      | Yes          |
       | ug2_user2  | ug2                  |  Desktop     |  1            |  1      | Yes          |
       | ug3_user1  | ug3                  |  Desktop     |  1            |  1      | Yes          |
-    #======step5: delete machine ugdf_user2_machine_1======
     #======step6: delete machine ugdf_user2_machine_1======
     When I navigate to Search / List Users section from bus admin console page
     When I search user by:
@@ -479,7 +492,7 @@ Feature: Adjustable retention at the partner and user group level
       | ug1_user1 |
     And I view user details by ug1_user1
     And I get the user id
-    Then ADR policy in DB for existing device ug1_user1_machine_1 is nil
+    Then ADR policy in DB for existing device ug1_user1_machine_1 is Mozy6Month_monthly
     And I clear user search results
     And I close User Details section
     #TC.133075 - check adr_policy_name colume for new machine under other user group
@@ -494,8 +507,8 @@ Feature: Adjustable retention at the partner and user group level
       | ug1_user5 |
     And I view user details by ug1_user5
     Then device ug1_user5_machine_1 detail info in db should be:
-      | alias               | vc_policy_name    |
-      | ug1_user5_machine_1 |                   |
+      | alias               | vc_policy_name     |
+      | ug1_user5_machine_1 | Mozy6Month_monthly |
     And I close User Details section
     And I clear user search results
     #TC.13306 - check adr_policy_name colume for deleted machine under other user group
@@ -505,7 +518,7 @@ Feature: Adjustable retention at the partner and user group level
       | ug1_user2 |
     And I view user details by ug1_user2
     And I get the user id
-    Then ADR policy in DB for deleted device ug1_user2_machine_1 is nil
+    Then ADR policy in DB for deleted device ug1_user2_machine_1 is Mozy6Month_monthly
     And I clear user search results
     And I close User Details section
     #TC.133017 - check adr_policy_name colume when delete machine under other user group
@@ -524,7 +537,7 @@ Feature: Adjustable retention at the partner and user group level
     Then Device ug1_user4_machine_1 should not show
     And I close User Details section
     #======step20: check machine's vc policy in db belonging to the deleted user======
-    Then ADR policy in DB for deleted device ug1_user4_machine_1 is nil
+    Then ADR policy in DB for deleted device ug1_user4_machine_1 is Mozy6Month_monthly
     #TC.133078 - replace machine with a machine in the same user group
     #======step21: search machine and do replacement, empty policy======
     When I navigate to User Group List section from bus admin console page
@@ -541,8 +554,8 @@ Feature: Adjustable retention at the partner and user group level
       | ug1_user1 |
     And I view user details by ug1_user1
     And I get the user id
-    Then ADR policy in DB for deleted device ug1_user1_machine_1 is nil
-    Then ADR policy in DB for existing device ug1_user1_machine_1 is nil
+    Then ADR policy in DB for deleted device ug1_user1_machine_1 is Mozy6Month_monthly
+    Then ADR policy in DB for existing device ug1_user1_machine_1 is Mozy6Month_monthly
     And I clear user search results
     And I close User Details section
     #TC.133079 - replace machine with a machine in this user group
@@ -568,21 +581,20 @@ Feature: Adjustable retention at the partner and user group level
     #======step25: delete user======
     When I delete user
     #======step26: check machine's vc policy in db belonging to the deleted user======
-    Then ADR policy in DB for deleted device ug1_delete_machine_1 is nil
+    Then ADR policy in DB for deleted device ug1_delete_machine_1 is Mozy6Month_monthly
     And I clear user search results
     #======step27: stop masquerading from current partner======
-    And I stop masquerading
+    #And I stop masquerading
     #======step28: delete partner======
-    When I search partner by:
-      | name      |
-      | TC.133073 |
-    Then I view partner details by TC.133073
-    And I delete partner account
+    #When I search partner by:
+      #| name      |
+      #| TC.133073 |
+    #Then I view partner details by TC.133073
+    #And I delete partner account
 
 
-  @TC.133082-133090 @bus @data_retention @bus-2.27 @P1
+  @TC.133082 @TC.133084 @TC.133085 @TC.133086 @TC.133087 @TC.133088 @TC.133089 @TC.133090 @bus @data_retention @bus2.27 @P1 @qa12
   Scenario: create policy at partner level only
-    #======9 test cases======
     #======step1: create MozyPro partner======
     When I add a new MozyPro partner:
       | company name | period |  base plan | server plan | net terms |
@@ -679,7 +691,7 @@ Feature: Adjustable retention at the partner and user group level
     And I view user details by ugdf_user2
     Then device ugdf_user2_machine_1 detail info in db should be:
       | alias                | vc_policy_name |
-      | ugdf_user2_machine_1 |                |
+      | ugdf_user2_machine_1 | Mozy6Month_monthly  |
     And I close User Details section
     And I clear user search results
     #TC.133086 - check adr_policy_name colume when delete machine under any user grou
@@ -774,18 +786,17 @@ Feature: Adjustable retention at the partner and user group level
     Then ADR policy in DB for deleted device ug1_user3_machine_1 is Mozy3Month_weekly
     And I clear user search results
     #======step30: stop masquerading from current partner======
-    And I stop masquerading
+    #And I stop masquerading
     #======step31: delete partner======
-    When I search partner by:
-      | name      |
-      | TC.133082 |
-    Then I view partner details by TC.133082
-    And I delete partner account
+    #When I search partner by:
+      #| name      |
+      #| TC.133082 |
+    #Then I view partner details by TC.133082
+    #And I delete partner account
 
 
-  @TC.133091-133099 @bus @data_retention @bus-2.27 @P1
+  @TC.133091 @TC.133092 @TC.133093 @TC.133094 @TC.133095 @TC.133096 @TC.133097 @TC.133098 @TC.133099 @bus @data_retention @bus2.27 @P1 @qa12
   Scenario: update policy at partner level to user group level
-    #======9 test cases======
     #======step1: create MozyPro partner======
     When I add a new MozyPro partner:
       | company name | period |  base plan | server plan | net terms |
@@ -974,20 +985,19 @@ Feature: Adjustable retention at the partner and user group level
     When I delete user
     #======step32: check machine's vc policy in db belonging to the deleted user======
     Then ADR policy in DB for deleted device ug1_user3_machine_1 is Mozy1Month_daily
-    And I clear user search results
+    #And I clear user search results
     #======step33: stop masquerading from current partner======
-    And I stop masquerading
+    #And I stop masquerading
     #======step34: delete partner======
-    When I search partner by:
-      | name      |
-      | TC.133091 |
-    Then I view partner details by TC.133091
-    And I delete partner account
+    #When I search partner by:
+      #| name      |
+      #| TC.133091 |
+    #Then I view partner details by TC.133091
+    #And I delete partner account
 
 
-  @TC.133100-133149 @bus @data_retention @bus-2.27 @P2
+  @TC.133100 @TC.133101 @TC.133102 @TC.133103 @TC.133145 @TC.133146 @TC.133147 @TC.133148 @133149 @bus @data_retention @bus2.27 @P2 @qa12
   Scenario: update policy at user group level to partner level
-    #======9 test cases======
     #======step1: create MozyPro partner======
     When I add a new MozyPro partner:
       | company name | period |  base plan | server plan | net terms |
@@ -1151,16 +1161,15 @@ Feature: Adjustable retention at the partner and user group level
     #======step27: stop masquerading from current partner======
     And I stop masquerading
     #======step28: delete partner======
-    When I search partner by:
-      | name      |
-      | TC.133100 |
-    Then I view partner details by TC.133100
-    And I delete partner account
+    #When I search partner by:
+      #| name      |
+      #| TC.133100 |
+    #Then I view partner details by TC.133100
+    #And I delete partner account
 
 
-  @TC.133161-133167 @bus @data_retention @bus-2.27 @P2
+  @TC.133161 @TC.133162 @TC.133163 @TC.133164 @TC.133165 @TC.133166 @TC.133167 @bus @data_retention @bus2.27 @P2 @qa12
   Scenario: update policy at user group level to partner level
-    #======7 test cases======
     #======step1: create MozyPro partner======
     When I add a new MozyPro partner:
       | company name | period |  base plan | server plan | net terms |
@@ -1211,7 +1220,7 @@ Feature: Adjustable retention at the partner and user group level
     And I set adr policy to 3 Months (weekly)
     Then I refresh Data Retention section
     And I close opened data retention section
-    And I wait for 180 seconds
+    And I wait for 240 seconds
     #======step8: check adr policy in db for partner and user group======
     And ADR policy in DB for partner is Mozy3Month_weekly
     And ADR policy in DB for user group (default user group) is Mozy1Month_daily
@@ -1251,7 +1260,7 @@ Feature: Adjustable retention at the partner and user group level
     And I view user details by ug1_user2
     Then device ug1_user2_machine_1 detail info in db should be:
       | alias               | vc_policy_name |
-      | ug1_user2_machine_1 |                |
+      | ug1_user2_machine_1 | Mozy6Month_monthly |
     And I close User Details section
     And I clear user search results
     #TC.133164 - check adr_policy_name colume when delete machine under other user group
@@ -1313,18 +1322,17 @@ Feature: Adjustable retention at the partner and user group level
     Then ADR policy in DB for deleted device ug1_user5_machine_1 is Mozy3Month_weekly
     And I clear user search results
     #======step27: stop masquerading from current partner======
-    And I stop masquerading
+    #And I stop masquerading
     #======step28: delete partner======
-    When I search partner by:
-      | name      |
-      | TC.133161 |
-    Then I view partner details by TC.133161
-    And I delete partner account
+    #When I search partner by:
+      #| name      |
+      #| TC.133161 |
+    #Then I view partner details by TC.133161
+    #And I delete partner account
 
 
-  @TC.133170-133178 @bus @data_retention @bus-2.27 @P2
+  @TC.133170 @TC.133171 @TC.133172 @TC.133173 @TC.133174 @TC.133175 @TC.133176 @TC.133177 @TC.133178 @bus @data_retention @bus2.27 @P2 @qa12
   Scenario: create adr policy by vc util at machine level
-    #======9 test cases======
     #======step1: create MozyPro partner======
     When I add a new MozyPro partner:
       | company name | period |  base plan | server plan | net terms |
@@ -1336,7 +1344,7 @@ Feature: Adjustable retention at the partner and user group level
     And I get the admin id from partner details
     #======step3: act as partner=====
     Then I act as newly created partner account
-   #======step4: create multiple users with backup deivces======
+    #======step4: create multiple users with backup deivces======
     When I add a new Bundled user group:
       | name | storage_type | install_region_override | enable_stash | server_support |
       | ug1  | Shared       | qa                      | yes          | yes            |
@@ -1380,7 +1388,7 @@ Feature: Adjustable retention at the partner and user group level
       | ugdf_del |
     And I view user details by ugdf_del
     And I get the user id
-    Then ADR policy in DB for deleted device ugdf_del_machine_1 is nil
+    Then ADR policy in DB for deleted device ugdf_del_machine_1 is Mozy6Month_monthly
     And I clear user search results
     And I close User Details section
     #TC.133170 - update adr policy for the machine's user group
@@ -1402,7 +1410,7 @@ Feature: Adjustable retention at the partner and user group level
     And I set adr policy to 3 Months (weekly)
     Then I refresh Data Retention section
     And I close opened data retention section
-    And I wait for 180 seconds
+    And I wait for 240 seconds
     #======step10: check the machine vc policy in db======
     When I search user by:
       | keywords   |
@@ -1551,20 +1559,19 @@ Feature: Adjustable retention at the partner and user group level
     When I delete user
     #======step30: check machine's vc policy in db belonging to the deleted user======
     Then ADR policy in DB for deleted device ug2_user2_machine_1 is Mozy3Month_weekly
-    And I clear user search results
+    #And I clear user search results
     #======step31: stop masquerading from current partner======
-    And I stop masquerading
+    #And I stop masquerading
     #======step28: delete partner======
-    When I search partner by:
-      | name      |
-      | TC.133170 |
-    Then I view partner details by TC.133170
-    And I delete partner account
+    #When I search partner by:
+      #| name      |
+      #| TC.133170 |
+    #Then I view partner details by TC.133170
+    #And I delete partner account
 
 
-  @TC.133109-133190 @bus @data_retention @bus-2.27 @P2
+  @TC.133109 @TC.133183 @TC.133184 @TC.133185 @TC.133186 @TC.133187 @TC.133188 @TC.133189 @TC.133190 @bus @data_retention @bus2.27 @P2 @qa12
   Scenario: create policy at layer 1 sub-partner level
-    #======9 test cases======
     #======step1: create MozyPro partner======
     When I add a new MozyPro partner:
       | company name | period |  base plan | server plan | net terms |
@@ -1643,7 +1650,7 @@ Feature: Adjustable retention at the partner and user group level
     And I set adr policy to 3 Months (weekly)
     Then I refresh Data Retention section
     And I close opened data retention section
-    And I wait for 180 seconds
+    And I wait for 240 seconds
     #TC.133183 - check adr_policy_name colume for existing machine under any user group
     #======step11: check vc policy name in db======
     When I search user by:
@@ -1677,7 +1684,7 @@ Feature: Adjustable retention at the partner and user group level
       | ugdf_user2 |
     And I view user details by ugdf_user2
     And I get the user id
-    Then ADR policy in DB for deleted device ugdf_user2_machine_1 is nil
+    Then ADR policy in DB for deleted device ugdf_user2_machine_1 is Mozy6Month_monthly
     And I clear user search results
     And I close User Details section
     #TC.133186 - check adr_policy_name colume when delete machine under any user group
@@ -1781,24 +1788,24 @@ Feature: Adjustable retention at the partner and user group level
     When I delete user
     #======step30: check machine's vc policy in db belonging to the deleted user======
     Then ADR policy in DB for deleted device ugdf_user1_machine_1 is Mozy3Month_weekly
-    And I clear user search results
+    #And I clear user search results
     #======step31: stop masquerading from current partner======
-    And I stop masquerading
+    #And I stop masquerading
     #======step32: delete partner======
-    When I search partner by:
-      | name      |
-      | TC.133109 |
-    Then I view partner details by TC.133109
-    And I delete partner account
+    #When I search partner by:
+      #| name      |
+      #| TC.133109 |
+    #Then I view partner details by TC.133109
+    #And I delete partner account
     #======step33: delete sub partner======
-    When I search partner by:
-      | name                      |
-      | sub_partner_133109_layer1 |
-    Then I view partner details by sub_partner_133109_layer1
-    And I delete partner account
+    #When I search partner by:
+      #| name                      |
+      #| sub_partner_133109_layer1 |
+    #Then I view partner details by sub_partner_133109_layer1
+    #And I delete partner account
 
 
-  @TC.133222 @TC.133223 @TC.133224 @TC.133225 @TC.133226 @TC.133227 @TC.133228 @TC.133229 @TC.133230 @TC.133231 @TC.133232 @TC.133233 @TC.133234 @bus @data_retention @bus-2.27
+  @TC.133222 @TC.133223 @TC.133224 @TC.133225 @TC.133226 @TC.133227 @TC.133228 @TC.133229 @TC.133230 @TC.133231 @TC.133232 @TC.133233 @TC.133234 @bus @data_retention @bus2.27 @qa12
   Scenario: 133222 update policy at layer 2 sub-partner level to grandpa's partner level
   #======Create Partner======
     When I add a new MozyPro partner:
@@ -1966,12 +1973,12 @@ Feature: Adjustable retention at the partner and user group level
     And I click on the replace machine link
     And Error message for replace machine should be Error: There are no eligible source machines to choose from.
     #======Delete the partners======
-    And I stop masquerading from subpartner
-    Then I stop masquerading
-    And I search and delete partner account by TC.133222_partner
-    And I search and delete partner account by sub_partner_133222_level1
+    #And I stop masquerading from subpartner
+    #Then I stop masquerading
+    #And I search and delete partner account by TC.133222_partner
+    #And I search and delete partner account by sub_partner_133222_level1
 
-  @TC.133200 @TC.133201 @TC.133202 @TC.133203 @TC.133204 @TC.133205 @TC.133206 @TC.133207 @TC.133208 @bus @data_retention @bus-2.27
+  @TC.133200 @TC.133201 @TC.133202 @TC.133203 @TC.133204 @TC.133205 @TC.133206 @TC.133207 @TC.133208 @bus @data_retention @bus2.27 @qa12
   Scenario: 133200 update policy at layer 2 sub-partner level to grandpa's partner level
   #======Create Partner======
     When I add a new MozyPro partner:
@@ -2053,7 +2060,7 @@ Feature: Adjustable retention at the partner and user group level
     Then I get machine details info
     And ADR policy in DB for device is Mozy2Week_daily
     #======Checkpoints for deleted machine======
-    And ADR policy in DB for deleted device 133200_level2_user1_machine_2 is nil
+    And ADR policy in DB for deleted device 133200_level2_user1_machine_2 is Mozy6Month_monthly
     #======Checkpoints for new machine======
     Then I use keyless activation to activate devices newly
       | machine_name                  | user_name                   | machine_type |
@@ -2126,10 +2133,11 @@ Feature: Adjustable retention at the partner and user group level
     And I click on the replace machine link
     And Error message for replace machine should be Error: There are no eligible source machines to choose from.
     #======Delete the partners======
-    And I stop masquerading from subpartner
-    Then I stop masquerading
-    And I search and delete partner account by TC.133200_partner
-    And I search and delete partner account by sub_partner_133200_level1
+    #And I stop masquerading from subpartner
+    #Then I stop masquerading
+    #And I search and delete partner account by TC.133200_partner
+    #And I search and delete partner account by sub_partner_133200_level1
+
 
   @TC.133209 @TC.133210 @TC.133211 @TC.133212 @TC.133213 @TC.133214 @TC.133215 @TC.133216 @TC.133217 @TC.133218 @TC.133219 @TC.133220 @TC.133221 @bus @data_retention @bus-2.27
   Scenario: 133209 update policy at layer 2 sub-partner level to grandpa's partner level
@@ -2277,8 +2285,8 @@ Feature: Adjustable retention at the partner and user group level
     And I click on the replace machine link
     And Error message for replace machine should be Error: There are no eligible source machines to choose from.
     #======Delete the partners======
-    And I stop masquerading from subpartner
-    Then I stop masquerading
-    And I search and delete partner account by TC.133209_partner
-    And I search and delete partner account by sub_partner_133209_level1_partner1
-    And I search and delete partner account by sub_partner_133209_level1_partner2
+    #And I stop masquerading from subpartner
+    #Then I stop masquerading
+    #And I search and delete partner account by TC.133209_partner
+    #And I search and delete partner account by sub_partner_133209_level1_partner1
+    #And I search and delete partner account by sub_partner_133209_level1_partner2
