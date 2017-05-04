@@ -87,8 +87,8 @@ end
 =end
 
 After do |scenario|
-  test_plan = 641427  # "BUS Ruby on Rails upgrade "
-  build_id = 6585 # "3.0.0.2-trusty1 "
+  test_plan = 641427  # "BUS Ruby on Rails upgrade"
+  build_id = 6734 # "2.26.1.1-trusty1" for ruby 1.9.3 and os upgrade
   project_prefix = "Mozy"
   project_id = 2      # 2 - 'Mozy'
   client = TestlinkHelper::TestlinkAPIClient.new
