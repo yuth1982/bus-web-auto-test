@@ -23,14 +23,16 @@ Feature: MozyHome user update credit card in phoenix
       | 5555555555554444 | MasterCard  |
     And user credit card updated successfully
 
+    # American Express card requires 4 digit cvv
     And I change my profile attributes to:
-      | new_cc_num       | new_cc_type      |
-      | 378282246310005  | American Express |
+      | new_cc_num       | new_cc_type      | cvv  |
+      | 378282246310005  | American Express | 8372 |
     And user credit card updated successfully
 
+    # update cvv to 3 digits so that Discover and Visa use the 3 digits cvv
     And I change my profile attributes to:
-      | new_cc_num       | new_cc_type |
-      | 6011111111111117 | Discover    |
+      | new_cc_num       | new_cc_type | cvv  |
+      | 6011111111111117 | Discover    | 736  |
     And user credit card updated successfully
 
     And I change my profile attributes to:

@@ -103,7 +103,7 @@ Feature: Phoenix smoke test
     Then I should see 1 email(s)
     When I click reset password link from the email
     Then I reset password with reset password
-    And I will see reset password massage Your password has been changed.
+    And I will see reset password massage Your password has been changed. Please start MozyHome Configuration on each computer on the account in order to enter the new password.
     And I log into phoenix with username @new_admin_email and password reset password
     And I save the partner info
 
