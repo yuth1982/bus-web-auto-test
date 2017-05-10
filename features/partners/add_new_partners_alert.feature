@@ -4,7 +4,7 @@ Feature: Add a new partner alert
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.120167 @bus @regression
+  @TC.120167 @bus @regression @core_function
   Scenario: 120167 Error will occur if no 'Security' option is selected during partner creation
     When I add a new MozyPro partner:
       | period | security |
@@ -21,7 +21,7 @@ Feature: Add a new partner alert
       Security field cannot be blank
       """
 
-  @TC.21339 @bus @2.5 @add_new_partner @existing_email @regression
+  @TC.21339 @bus @2.5 @add_new_partner @existing_email @regression @core_function
   Scenario: 21339 : Add New Partner With Non Unique Admin Email
     When I get an admin email from the database
     And I add a new MozyPro partner:
@@ -32,7 +32,7 @@ Feature: Add a new partner alert
     An account with that email address already exists
     """
 
-  @TC.21343 @bus @2.5 @add_new_partner @existing_email @regression
+  @TC.21343 @bus @2.5 @add_new_partner @existing_email @regression @core_function
   Scenario: 21343:Add New Partner with Existing User Email as Admin Email
     When I get a user email from the database
     And I add a new MozyPro partner:

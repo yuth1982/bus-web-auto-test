@@ -25,7 +25,7 @@ Feature: User sync
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.17519 @ui @bus @2.1 @direct_ldap_integration @use_provision @regression
+  @TC.17519 @ui @bus @2.1 @direct_ldap_integration @use_provision @regression @core_function
   Scenario: 17519 Sync Now
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -62,7 +62,7 @@ Feature: User sync
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.17518 @ui @bus @2.1 @direct_ldap_integration @use_provision @regression
+  @TC.17518 @ui @bus @2.1 @direct_ldap_integration @use_provision @regression @core_function
   Scenario: 17518 17529 17530 17531 17532 17534 17535 17536 Check the user sync UI
     # Scenario: 17518 Check the UI when the partner has never synced(all the UI check)
     When I add a new MozyEnterprise partner:
@@ -208,7 +208,7 @@ Feature: User sync
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.17538  @smoke @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction @regression
+  @TC.17538  @smoke @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction @regression @core_function
   Scenario: 17538 17551 Provision and Deprovision Users with One Rule/Match All/Multiple
     Given I delete a user %17538-test% in the demeter db
     # Scenario: 17538 17551 One Rule/Match All/Multiple Users
@@ -275,7 +275,7 @@ Feature: User sync
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.17540 @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction @regression
+  @TC.17540 @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction @regression @core_function
   Scenario: 17540 17552 17542 17554 17543 17557 17554 User sync with different conditions
     Given I delete a user %17540-test% in the demeter db
     # Scenario: 17540 One Rule/Multiple Rules
@@ -555,7 +555,7 @@ Feature: User sync
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.17559 @function @bus @2.1 @direct_ldap_integration @user_deconstruction @regression
+  @TC.17559 @function @bus @2.1 @direct_ldap_integration @user_deconstruction @regression @core_function
   Scenario: 17559 17560 Error cases for user sync
     # Scenario: 17559 Empty rules will be filtered
     When I add a new MozyEnterprise partner:
@@ -599,7 +599,7 @@ Feature: User sync
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.17592 @firefox_profile @bus @2.1 @direct_ldap_integration @use_provision @qa8 @regression @subdomain @ROR_smoke
+  @TC.17592 @firefox_profile @bus @2.1 @direct_ldap_integration @use_provision @qa8 @regression @core_function @subdomain @ROR_smoke
   Scenario: 17592 UserProvision - Deleted users in BUS can be resumed
     When I search partner by:
       | email                        |
@@ -714,7 +714,7 @@ Feature: User sync
     And I delete 1 deprovision rules
     And I save the changes
 
-  @TC.17593 @firefox_profile  @bus @2.1 @direct_ldap_integration @use_provision @qa8 @regression @subdomain
+  @TC.17593 @firefox_profile  @bus @2.1 @direct_ldap_integration @use_provision @qa8 @regression @core_function @subdomain
   Scenario: 17593 UserProvision - Suspended users in BUS can't be resumed
     When I search partner by:
       | email                        |
@@ -836,7 +836,7 @@ Feature: User sync
     And I delete 1 deprovision rules
     And I save the changes
 
-  @TC.17594 @firefox_profile @bus @2.1 @direct_ldap_integration @use_provision @qa8 @regression @subdomain
+  @TC.17594 @firefox_profile @bus @2.1 @direct_ldap_integration @use_provision @qa8 @regression @core_function @subdomain
   Scenario: 17594 UserProvision - Delete user after several days of not synced
     When I search partner by:
       | email                        |
@@ -899,7 +899,7 @@ Feature: User sync
     When I login the subdomain <%=CONFIGS['fedid']['subdomain']%>
     Then I will see the Authentication Failed page
 
-  @TC.17595 @firefox_profile @bus @2.1 @direct_ldap_integration @use_provision @qa8 @regression @subdomain
+  @TC.17595 @firefox_profile @bus @2.1 @direct_ldap_integration @use_provision @qa8 @regression @core_function @subdomain
   Scenario: 17595 UserProvision - Suspend user after several days of not synced
     When I search partner by:
       | email                        |
@@ -990,7 +990,7 @@ Feature: User sync
     And I delete 1 deprovision rules
     And I save the changes
 
-  @TC.17546 @bus @2.1 @direct_ldap_integration @use_provision @regression
+  @TC.17546 @bus @2.1 @direct_ldap_integration @use_provision @regression @core_function
   Scenario: 17546 17548 17549 18723 UserProvision/Sync - Add(Delete, Modify) a new user in AD
     Given I delete a user %17546-test% in the demeter db
     # Scenario: 17546 UserProvision/Sync - Add(Delete, Modify) a new user in AD
@@ -1204,7 +1204,7 @@ Feature: User sync
     And I search and delete partner account by newly created partner company name
 
 
-  @TC.17521 @scheduled_sync  @bus @2.1 @direct_ldap_integration @use_provision @regression
+  @TC.17521 @scheduled_sync  @bus @2.1 @direct_ldap_integration @use_provision @regression @core_function
   Scenario: 17521 17522 17523 17520 Scheduled Sync (UI, cancel)
     # Scenario: 17521 Scheduled Sync (UI, cancel)
     When I add a new MozyEnterprise partner:
@@ -1263,7 +1263,7 @@ Feature: User sync
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.121745 @firefox @direct_ldap_integration @qa8 @bus @env_dependent @regression
+  @TC.121745 @firefox @direct_ldap_integration @qa8 @bus @env_dependent @regression @core_function
   Scenario: 121745 Error during ssosync will reflect in the UI
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -1292,7 +1292,7 @@ Feature: User sync
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.121744 @firefox @direct_ldap_integration @qa8 @bus @env_dependent @regression
+  @TC.121744 @firefox @direct_ldap_integration @qa8 @bus @env_dependent @regression @core_function
   Scenario: 121744 non-ASCII in cn can be synced
     Given I delete a user %fedid_encoding% in the demeter db
     When I act as partner by:

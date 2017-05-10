@@ -7,7 +7,7 @@ Feature: Add a new MozyEnterprise DPS partner
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.22365 @bus @2.7 @add_new_partner @mozyenterprisedps @regression
+  @TC.22365 @bus @2.7 @add_new_partner @mozyenterprisedps @regression @core_function
 Scenario: 22365 Add New MozyEnterprise DPS Partner - US - Yearly - 2 TB
   When I add a new MozyEnterprise DPS partner:
     | period | base plan | country       | address           | city      | state abbrev | zip   | phone          | sales channel |

@@ -365,6 +365,21 @@ module Bus
       )
     end
 
+    def download_backup_image(download_file_name)
+      dimiss_start_using_mozy
+      page.execute_script(
+          "(function(name){
+              var link=document.createElement('a');
+              document.getElementsByClassName('pie-chart')[0].appendChild(link);
+              img=$$('.pie-chart img')[0];
+              link.writeAttribute('href', img.readAttribute('src'));
+              link.writeAttribute('download',name);
+              link.click();
+            }
+           )('"+download_file_name+"')"
+      )
+    end
+
     def open_admin_activate_page(admin_link)
       visit admin_link
     end

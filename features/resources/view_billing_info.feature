@@ -3,7 +3,7 @@ Feature: View billing information
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.15253 @bus @2.0 @billing_information @regression
+  @TC.15253 @bus @2.0 @billing_information @regression @core_function
   Scenario: 15253 Verify MozyPro partner master plan section details
     When I add a new MozyPro partner:
       | period | base plan |
@@ -17,7 +17,7 @@ Feature: View billing information
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.17976 @bus @2.0 @billing_information @regression
+  @TC.17976 @bus @2.0 @billing_information @regression @core_function
   Scenario: 17976 Verify Reseller partner master plan section details
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -31,7 +31,7 @@ Feature: View billing information
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15254 @bus @2.0 @billing_information @regression
+  @TC.15254 @bus @2.0 @billing_information @regression @core_function
   Scenario: 15254 Verify MozyEnterprise partner master plan section details
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -45,7 +45,7 @@ Feature: View billing information
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.16658 @bus @2.0 @billing_information @regression
+  @TC.16658 @bus @2.0 @billing_information @regression @core_function
   Scenario: 16658 Verify MozyPro partner supplemental plan section details
     When I add a new MozyPro partner:
       | period | base plan |
@@ -59,7 +59,7 @@ Feature: View billing information
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15359 @bus @2.0 @billing_information @env_dependent @regression
+  @TC.15359 @bus @2.0 @billing_information @env_dependent @regression @core_function
   Scenario: 15359 Verify MozyEnterprise Autogrow status is set to disabled by default
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -73,7 +73,7 @@ Feature: View billing information
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15360 @bus @2.0 @billing_information @regression
+  @TC.15360 @bus @2.0 @billing_information @regression @core_function
   Scenario: 15360 Verify Reseller Autogrow status is set to disabled by default
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -87,7 +87,7 @@ Feature: View billing information
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.16659 @bus @2.0 @billing_information @regression
+  @TC.16659 @bus @2.0 @billing_information @regression @core_function
   Scenario: 16659 Verify MozyEnterprise partner supplemental plan section details
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -101,7 +101,7 @@ Feature: View billing information
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.16660 @bus @2.0 @billing_information @regression
+  @TC.16660 @bus @2.0 @billing_information @regression @core_function
   Scenario: 16660 Verify Reseller partner supplemental plan section details
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -115,7 +115,7 @@ Feature: View billing information
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.17517 @bus @2.0 @billing_information @regression
+  @TC.17517 @bus @2.0 @billing_information @regression @core_function
   Scenario: 17517 Verify MozyPro VAT information in the billing information view
     When I add a new MozyPro partner:
       | period | base plan | server plan | country | vat number    | cc number        |

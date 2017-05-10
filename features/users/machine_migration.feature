@@ -24,7 +24,7 @@ Feature: Machine migration
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.16266 @regression @smoke @bus @2.5 @machine_migration
+  @TC.16266 @regression @core_function @smoke @bus @2.5 @machine_migration
   Scenario: 16266 Export the machine-user mapping csv file
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -49,7 +49,7 @@ Feature: Machine migration
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.16270 @bus @2.5 @machine_migration @regression
+  @TC.16270 @bus @2.5 @machine_migration @regression @core_function
   Scenario: 16270 16271 Export a CSV file in Synchronized way after adding/deleting one user-machine mapping
     # Scenario: 16270 Export a CSV file in Synchronized way after adding/deleting one user-machine mapping
     When I add a new MozyEnterprise partner:
@@ -89,7 +89,7 @@ Feature: Machine migration
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.16272 @bus @2.5 @machine_migration @qa5 @env_dependent @regression
+  @TC.16272 @bus @2.5 @machine_migration @qa5 @env_dependent @regression @core_function
   Scenario: 16272 Export a CSV file in Synchronized way while the partner has 10000 machines before
     When I act as partner by:
       | email                  |
@@ -101,7 +101,7 @@ Feature: Machine migration
       | Machine Name  | Machine Hash                             | Current Owner     | New Owner |
       | @machine_name | 87f9fa5583e952cf76fe53e1eab0123923dc92e4 | new_user@test.com |           |
 
-  @TC.16273 @bus @2.5 @machine_migration @regression
+  @TC.16273 @bus @2.5 @machine_migration @regression @core_function
   Scenario: 16273 16279 Export a CSV file in Synchronized way while the partner has no Mozy users before; Import a CSV file whose type is not CSV in non-passive way
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -119,7 +119,7 @@ Feature: Machine migration
       | column 1      |  column 2        |  column 3                    | column 4                                   | column 5  |   column 6                                                 |
       |Import Results:| -1 rows imported |0 machines moved to new users | 0 machines skipped (no new user specified) | 1 Errors: |   Invalid file. The uploaded file was an invalid CSV file. |
 
-  @TC.16275 @positive @regression @smoke @bus @2.5 @machine_migration @ROR_smoke
+  @TC.16275 @positive @regression @core_function @smoke @bus @2.5 @machine_migration @ROR_smoke
   Scenario: 16275 Import a valid CSV file in non-passive way
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -141,7 +141,7 @@ Feature: Machine migration
       | column 1      |  column 2       |  column 3                    | column 4                                   |
       |Import Results:| 3 rows imported |3 machines moved to new users | 0 machines skipped (no new user specified) |
 
-  @TC.16280 @bus @2.5 @machine_migration @regression
+  @TC.16280 @bus @2.5 @machine_migration @regression @core_function
   Scenario: 16280 16281 16282 16283 Import a CSV file with a column absent
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -184,7 +184,7 @@ Feature: Machine migration
       | column 1      |  column 2       |  column 3                    | column 4                                   |
       |Import Results:| 3 rows imported |0 machines moved to new users | 3 machines skipped (no new user specified) |
 
-  @TC.16284 @bus @2.5 @machine_migration @regression
+  @TC.16284 @bus @2.5 @machine_migration @regression @core_function
   Scenario: 16284 16285 16286 16287 Import a CSV file whose one column has unknown value
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -227,7 +227,7 @@ Feature: Machine migration
       | column 1      |  column 2       |  column 3                    | column 4                                   | column 5  | column 6          |
       |Import Results:| 3 rows imported |0 machines moved to new users | 0 machines skipped (no new user specified) | 3 Errors: | Unknown new owner |
 
-  @TC.16288 @bus @bug @2.5 @machine_migration @regression
+  @TC.16288 @bus @bug @2.5 @machine_migration @regression @core_function
   Scenario: 16288 16289 16290 16291 Import a CSV file with current owners invalid format
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -272,7 +272,7 @@ Feature: Machine migration
       | column 1      |  column 2       |  column 3                    | column 4                                   |
       |Import Results:| 3 rows imported |0 machines moved to new users | 3 machines skipped (no new user specified) |
 
-  @TC.16343 @bus @bug @2.5 @machine_migration @regression
+  @TC.16343 @bus @bug @2.5 @machine_migration @regression @core_function
   Scenario: 16343 Export a CSV file when the partner has subpartners
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | root role  |
@@ -319,7 +319,7 @@ Feature: Machine migration
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.17936 @bug @2.2 @machine_migration @qa5 @env_dependent @regression
+  @TC.17936 @bug @2.2 @machine_migration @qa5 @env_dependent @regression @core_function
   Scenario: 17936 Import a CSV file while two users have same machine
     When I act as partner by:
       | email                             |
@@ -332,7 +332,7 @@ Feature: Machine migration
       | column 1      |  column 2       |  column 3                    | column 4                                   |
       |Import Results:| 2 rows imported |2 machines moved to new users | 0 machines skipped (no new user specified) |
 
-  @TC.16276 @slow @bug @2.5 @machine_migration @qa5 @env_dependent @regression
+  @TC.16276 @slow @bug @2.5 @machine_migration @qa5 @env_dependent @regression @core_function
   Scenario: 16276 Import a CSV file in no passive way while the partner has 10000 machines before
     When I act as partner by:
       | email                  |
@@ -345,7 +345,7 @@ Feature: Machine migration
       | column 1      |  column 2          |  column 3                       | column 4                                   |
       |Import Results:| 9793 rows imported |9793 machines moved to new users | 0 machines skipped (no new user specified) |
 
-  @TC.2168 @bus @others @regression @ROR_smoke
+  @TC.2168 @bus @others @regression @core_function @ROR_smoke
   Scenario: 2168 Export to CSV
     When I act as partner by:
       | name                     |

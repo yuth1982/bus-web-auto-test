@@ -91,7 +91,7 @@
 #      | column 1      |  column 2                              |  column 3       | column 4  |
 #      | Machine Name  | Machine Hash                           | Current Owner   | New Owner |
 #
-#  @TC.16275- @positive @regression
+#  @TC.16275- @positive @regression @core_function
 #  Scenario: 16275 Import a valid CSV file in non-passive way
 #    When I add a new MozyPro partner if not exist:
 #      | company name | period | base plan |

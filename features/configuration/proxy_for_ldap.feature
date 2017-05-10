@@ -8,7 +8,7 @@ Feature: Proxy for LDAP queries
   Background:
     Given I log in bus admin console as administrator
 
-  @FID11.1006 @TC.19194 @bus @2.3 @direct_ldap_integration @proxy @adfs @qa5 @need_test_account @env_dependent @regression
+  @FID11.1006 @TC.19194 @bus @2.3 @direct_ldap_integration @proxy @adfs @qa5 @need_test_account @env_dependent @regression @core_function
   Scenario: 19194 [Test connection][UI][N]Test failed with 400 when I input invalid data
     When I act as partner by:
       | email                          |
@@ -24,7 +24,7 @@ Feature: Proxy for LDAP queries
       | Save failed  |
       | Invalid hosts|
 
-  @FID11.1006 @TC.19196 @bus @2.3 @direct_ldap_integration @proxy @adfs @qa5 @need_test_account @env_dependent @regression
+  @FID11.1006 @TC.19196 @bus @2.3 @direct_ldap_integration @proxy @adfs @qa5 @need_test_account @env_dependent @regression @core_function
   Scenario: 19196 [Test connection][UI][N]Test failed with 200 when I input valid data but meet with other failure
     When I act as partner by:
       | email                          |

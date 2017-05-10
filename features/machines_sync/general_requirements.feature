@@ -5,7 +5,7 @@ Feature: general requirements
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.19040 @BSA.1000 @bus @stash @general_requirements @email @regression
+  @TC.19040 @BSA.1000 @bus @stash @general_requirements @email @regression @core_function
   Scenario: 19040 MozyPro Partner Provision Sync Container - Default User Group no email invite
     When I add a new MozyPro partner:
       | period | base plan | net terms | root role               |
@@ -43,7 +43,7 @@ Feature: general requirements
       | Storage Usage:      | 0 |
     And I delete partner account
 
-  @TC.19078 @BSA.1000 @bus @stash @regression
+  @TC.19078 @BSA.1000 @bus @stash @regression @core_function
   Scenario: 19078 MozyPro Partner Add Sync to existing partner
     When I add a new MozyPro partner:
       | period | base plan | net terms | root role |
@@ -72,7 +72,7 @@ Feature: general requirements
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19080 @BSA.1000 @bus @stash @email @regression
+  @TC.19080 @BSA.1000 @bus @stash @email @regression @core_function
   Scenario: 19080 MozyPro Partner Add Sync Container Default User Group No Email
     When I add a new MozyPro partner:
       | period | base plan | net terms | root role |
@@ -108,7 +108,7 @@ Feature: general requirements
       | Storage Usage: | 0 |
     And I delete partner account
 
-  @TC.19022 @BSA.1000 @bus @stash @regression
+  @TC.19022 @BSA.1000 @bus @stash @regression @core_function
   Scenario: 19022 Reseller Partner Provision Sync Container - Custom User Group
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -146,7 +146,7 @@ Feature: general requirements
       | Storage Usage: | 0 |
     And I delete partner account
 
-  @TC.18967 @BSA.1000 @bus @stash @regression
+  @TC.18967 @BSA.1000 @bus @stash @regression @core_function
   Scenario: 18967 Reseller Partner Add Sync to existing partner
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -176,7 +176,7 @@ Feature: general requirements
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19063 @BSA.1000 @bus @stash @regression
+  @TC.19063 @BSA.1000 @bus @stash @regression @core_function
   Scenario: 19063 Reseller Partner Edit Sync Container - Custom User Group No Email
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -215,7 +215,7 @@ Feature: general requirements
       | Storage Usage: | 0 |
     And I delete partner account
 
-  @TC.19035 @BSA.1000 @bus @stash @email @regression
+  @TC.19035 @BSA.1000 @bus @stash @email @regression @core_function
   Scenario: 19035 MozyEnterprise Partner Provision Sync Container - Default User Group no email invite
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -253,7 +253,7 @@ Feature: general requirements
       | Storage Usage: | 0 |
     And I delete partner account
 
-  @TC.19102 @BSA.1000 @bus @stash @regression
+  @TC.19102 @BSA.1000 @bus @stash @regression @core_function
   Scenario: 19102 MozyEnterprise Partner Add Sync to existing partner
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -283,7 +283,7 @@ Feature: general requirements
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19106 @BSA.1000 @bus @stash @regression
+  @TC.19106 @BSA.1000 @bus @stash @regression @core_function
   Scenario: 19106 MozyEnterprise Partner Edit Sync Container - Default User Group No Email
     When I add a new MozyEnterprise partner:
       | period | users | net terms |
@@ -318,7 +318,7 @@ Feature: general requirements
       | Storage Usage: | 0 |
     And I delete partner account
 
-  @TC.19109 @BSA.1000 @bus @stash @email @regression
+  @TC.19109 @BSA.1000 @bus @stash @email @regression @core_function
   Scenario: 19109 MozyEnterprise Partner Add Sync Container - Custom User Group with Email
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -361,7 +361,7 @@ Feature: general requirements
       | Storage Usage: | 0 |
     And I delete partner account
 
-  @TC.19111 @BSA.1000 @bus @stash @email @regression
+  @TC.19111 @BSA.1000 @bus @stash @email @regression @core_function
   Scenario: 19111 MozyEnterprise Partner Edit Sync Container - Custom User Group No Email
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -403,7 +403,7 @@ Feature: general requirements
       | Storage Usage: | 0 |
     And I delete partner account
 
-  @TC.22189 @stash @email @bus @regression
+  @TC.22189 @stash @email @bus @regression @core_function
   Scenario: 22189 MozyEnterprise Partner Enable and Disable cycle by adding sync to all users
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -466,7 +466,7 @@ Feature: general requirements
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.22194 @stash @email @bus @regression @ROR_smoke
+  @TC.22194 @stash @email @bus @regression @core_function @ROR_smoke
   Scenario: 22194 MozyEnterprise Partner Enable and Disable cycle by add sync with single user
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -533,7 +533,7 @@ Feature: general requirements
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.22186 @stash @bus @regression
+  @TC.22186 @stash @bus @regression @core_function
   Scenario: 22186 MozyPro Partner Enable and Disable cycle by add sync with single user
     When I add a new MozyPro partner:
       | period | base plan | net terms | root role |
@@ -587,7 +587,7 @@ Feature: general requirements
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.22187 @bus @stash @regression
+  @TC.22187 @bus @stash @regression @core_function
   Scenario: 22187 Reseller Partner Enable and Disable cycle by add sync with single user
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -641,7 +641,7 @@ Feature: general requirements
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.22188 @stash @email @bus @regression
+  @TC.22188 @stash @email @bus @regression @core_function
   Scenario: 22188 Reseller Partner Enable and Disable cycle by add sync with single user
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -704,7 +704,7 @@ Feature: general requirements
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.22022 @stash @email @bus @regression @ROR_smoke
+  @TC.22022 @stash @email @bus @regression @core_function @ROR_smoke
   Scenario: 22022 MozyPro Partner Enable and Disable cycle by adding sync to all users
     When I add a new MozyPro partner:
       | period | base plan | net terms | root role |

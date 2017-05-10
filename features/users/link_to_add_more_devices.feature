@@ -11,7 +11,7 @@ Feature: Link to More Devices
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.19977 @bus @2.5 @user_centric_storage @bundled @1UG @regression
+  @TC.19977 @bus @2.5 @user_centric_storage @bundled @1UG @regression @core_function
   Scenario: 19977 Bundled (1UG) Verify Buy More Link in Add New User
     When I add a new MozyPro partner:
       | period | base plan | server plan |
@@ -40,7 +40,7 @@ Feature: Link to More Devices
 #    Then I stop masquerading
 #    And I search and delete partner account by newly created partner company name
 
-  @TC.19951 @bus @2.5 @user_centric_storage @1UG @metallic_reseller @regression
+  @TC.19951 @bus @2.5 @user_centric_storage @1UG @metallic_reseller @regression @core_function
   Scenario: 19951 Metallic Reseller (1UG) Verify Buy More Link in Add New User
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -65,7 +65,7 @@ Feature: Link to More Devices
 #    Then the Add More link should be visible
 #    And the Add More link should open the Manage Resources module
 
-  @TC.19948 @bus @2.5 @user_centric_storage @1UG @enterprise @regression
+  @TC.19948 @bus @2.5 @user_centric_storage @1UG @enterprise @regression @core_function
 Scenario: 19948 Enterprise (2UG) Verify Buy More Link in Add New User
     When I add a new MozyEnterprise partner:
       | period | users | server plan |
@@ -83,7 +83,7 @@ Scenario: 19948 Enterprise (2UG) Verify Buy More Link in Add New User
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19947 @bus @2.5 @user_centric_storage @1UG @emea @IE @bundled @regression
+  @TC.19947 @bus @2.5 @user_centric_storage @1UG @emea @IE @bundled @regression @core_function
 Scenario: 19947 EMEA (1UG) Ireland Bundled Verify Buy More Link in Add New User
     When I add a new MozyPro partner:
       | period | base plan | server plan | country | create under    | cc number        |
@@ -96,7 +96,7 @@ Scenario: 19947 EMEA (1UG) Ireland Bundled Verify Buy More Link in Add New User
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19946 @bus @2.5 @user_centric_storage @1UG @emea @UK @enterprise @regression
+  @TC.19946 @bus @2.5 @user_centric_storage @1UG @emea @UK @enterprise @regression @core_function
 Scenario: 19946 EMEA (1UG) UK Enterprise Verify Buy More Link in Add New User
     When I add a new MozyEnterprise partner:
       | period | users | server plan | country        | cc number        |
@@ -110,7 +110,7 @@ Scenario: 19946 EMEA (1UG) UK Enterprise Verify Buy More Link in Add New User
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19945 @bus @2.5 @user_centric_storage @1UG @emea @FR @metallic_reseller @regression
+  @TC.19945 @bus @2.5 @user_centric_storage @1UG @emea @FR @metallic_reseller @regression @core_function
 Scenario: 19945 EMEA (1UG) France Metallic Reseller Verify Buy More Link in Add New User
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | country | create under   | cc number        |
@@ -124,7 +124,7 @@ Scenario: 19945 EMEA (1UG) France Metallic Reseller Verify Buy More Link in Add 
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19952 @bus @2.5 @user_centric_storage @1UG @emea @DE @mozypro @itemzied @need_test_account @env_dependent @regression
+  @TC.19952 @bus @2.5 @user_centric_storage @1UG @emea @DE @mozypro @itemzied @need_test_account @env_dependent @regression @core_function
   Scenario: Mozy-19952:EMEA(1UG), Germany, MozyPro Itemized, Verify Add More Link in Add New User
     When I act as partner by:
       | email                                |

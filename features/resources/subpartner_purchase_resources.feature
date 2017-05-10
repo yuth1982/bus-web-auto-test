@@ -6,7 +6,7 @@ Feature: Sub partners can purchase resources
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.19864 @need_test_account @bus @subpartner_purchase_resources @env_dependent @regression
+  @TC.19864 @need_test_account @bus @subpartner_purchase_resources @env_dependent @regression @core_function
   Scenario: 19864 Existing OEM partner with sub partners whose sub partners can purchase resources
     When I act as partner by:
       | email                          | filter |
@@ -24,7 +24,7 @@ Feature: Sub partners can purchase resources
       | desktop license | desktop quota | server license | server quota |
       | 2               | 20            | 2              | 10           |
 
-  @TC.19865 @need_test_account @bus @subpartner_purchase_resources @env_dependent @regression
+  @TC.19865 @need_test_account @bus @subpartner_purchase_resources @env_dependent @regression @core_function
   Scenario: 19865 Existing OEM partner with sub partners whose OEM partner can purchase resources
     When I act as partner by:
       | email                          | filter |
@@ -39,7 +39,7 @@ Feature: Sub partners can purchase resources
       | desktop license | desktop quota | server license | server quota |
       | 1               | 10            | 1              | 5            |
 
-  @TC.19867 @need_test_account @bus @subpartner_purchase_resources @env_dependent @regression
+  @TC.19867 @need_test_account @bus @subpartner_purchase_resources @env_dependent @regression @core_function
   Scenario: 19867 Existing OEM partner without subpartners can purchase resources
     When I act as partner by:
       | email                                   | filter |
@@ -54,7 +54,7 @@ Feature: Sub partners can purchase resources
       | desktop license | desktop quota | server license | server quota |
       | 1               | 10            | 1              | 5            |
 
-  @TC.19869 @bus @subpartner_purchase_resources @regression
+  @TC.19869 @bus @subpartner_purchase_resources @regression @core_function
   Scenario: 19869 New MozyPro bundle partner without sub partner can purchase resource
     When I add a new MozyPro partner:
       | period | base plan |
@@ -71,7 +71,7 @@ Feature: Sub partners can purchase resources
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19870 @bus @subpartner_purchase_resources @regression
+  @TC.19870 @bus @subpartner_purchase_resources @regression @core_function
   Scenario: 19870 New Reseller Metallic partner without sub partner can purchase resources
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -88,7 +88,7 @@ Feature: Sub partners can purchase resources
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19873 @bus @subpartner_purchase_resources @regression
+  @TC.19873 @bus @subpartner_purchase_resources @regression @core_function
   Scenario: 19873 New Enterprise partner without subpartner can purchase resources
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -105,7 +105,7 @@ Feature: Sub partners can purchase resources
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19953 @need_test_account @bus @subpartner_purchase_resources @env_dependent @regression
+  @TC.19953 @need_test_account @bus @subpartner_purchase_resources @env_dependent @regression @core_function
   Scenario: 19953 Existing MozyPro bundle partner without sub partner can purchase resource
     When I act as partner by:
       | email                          |
@@ -126,7 +126,7 @@ Feature: Sub partners can purchase resources
       | base plan | server plan |
       | 50 GB     | no          |
 
-  @TC.19954 @need_test_account @bus @subpartner_purchase_resources @env_dependent @regression
+  @TC.19954 @need_test_account @bus @subpartner_purchase_resources @env_dependent @regression @core_function
   Scenario: 19954 Existing Reseller Metallic partner without sub partner can purchase resource
     When I act as partner by:
       | email                          |

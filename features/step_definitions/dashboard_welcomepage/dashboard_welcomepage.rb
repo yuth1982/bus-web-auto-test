@@ -13,3 +13,7 @@ end
 When /^act as partner and click Download Mozy Software link on welcome page$/ do
   @bus_site.admin_console_page.partner_details_section.click_act_as_link
 end
+
+And /^I download the partner backup overview img as file (.+)$/ do |file_name|
+  @bus_site.admin_console_page.download_backup_image(file_name)
+end

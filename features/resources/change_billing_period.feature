@@ -8,7 +8,7 @@ Feature: Change subscription period
     Given I log in bus admin console as administrator
 
   # This case will fail due to #108559 session is wriong when I stop masqerading
-  @TC.15231 @bus @change_period @regression @ROR_smoke
+  @TC.15231 @bus @change_period @regression @core_function @ROR_smoke
   Scenario: 15231 MozyPro US - Change Period from Monthly to Yearly - CC
     When I add a new MozyPro partner:
       | period | base plan |
@@ -27,7 +27,7 @@ Feature: Change subscription period
       | Next Charge:    | after 1 year |                 |                    |
     And I delete partner account
 
-  @TC.15232 @bus @change_period @regression
+  @TC.15232 @bus @change_period @regression @core_function
   Scenario: 15232 MozyPro FR - Change Period from Yearly to Biennially - CC
     When I add a new MozyPro partner:
       | period | base plan | create under   | country | cc number        |
@@ -49,7 +49,7 @@ Feature: Change subscription period
       | Next Charge:    | after 2 years |                 |                    |
     And I delete partner account
 
-  @TC.15233 @bus @change_period @regression
+  @TC.15233 @bus @change_period @regression @core_function
   Scenario: 15233 MozyPro PT - Change Period from Monthly to Biennially - CC
     When I add a new MozyPro partner:
       | period | base plan | create under    | country  | cc number        |
@@ -71,7 +71,7 @@ Feature: Change subscription period
       | Next Charge:    | after 2 years |                 |                     |
     And I delete partner account
 
-  @TC.15234 @bus @change_period @regression
+  @TC.15234 @bus @change_period @regression @core_function
   Scenario: 15234 MozyPro IE - Change Period from Biennially to Yearly - Net Terms
     When I add a new MozyPro partner:
       | period | base plan | create under    | country | net terms |
@@ -93,7 +93,7 @@ Feature: Change subscription period
       | Next Charge:    | after 2 years |                 |           |
     And I delete partner account
 
-  @TC.15235 @bus @change_period @regression
+  @TC.15235 @bus @change_period @regression @core_function
   Scenario: 15235 MozyPro UK - Change Period from Yearly to Monthly - Net Terms
     When I add a new MozyPro partner:
       | period | base plan | create under | country        | net terms |
@@ -115,7 +115,7 @@ Feature: Change subscription period
         | Next Charge:    | after 1 year |                 |         |
     And I delete partner account
 
-  @TC.15236 @bus @change_period @regression
+  @TC.15236 @bus @change_period @regression @core_function
   Scenario: 15236 MozyPro US - Change Period from Biennially to Monthly - Net Terms
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -137,7 +137,7 @@ Feature: Change subscription period
       | Next Charge:    | after 2 years |                 |          |
     And I delete partner account
 
-  @TC.15238 @bus @change_period @regression
+  @TC.15238 @bus @change_period @regression @core_function
   Scenario: 15238 MozyEnterprise - Change Period from Yearly to Biennially - CC
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -158,7 +158,7 @@ Feature: Change subscription period
       | Next Charge:    | after 2 years |                 |                     |
     And I delete partner account
 
-  @TC.15239 @bus @change_period @regression
+  @TC.15239 @bus @change_period @regression @core_function
   Scenario: 15239 MozyEnterprise - Change Period from Biennially to 3 Years - CC
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -179,7 +179,7 @@ Feature: Change subscription period
       | Next Charge:    | after 3 years |                 |                     |
     And I delete partner account
 
-  @TC.15240 @bus @change_period @regression
+  @TC.15240 @bus @change_period @regression @core_function
   Scenario: 15240 MozyEnterprise - Change Period from Yearly to 3 Years - CC
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -200,7 +200,7 @@ Feature: Change subscription period
       | Next Charge:    | after 3 years |                 |                     |
     And I delete partner account
 
-  @TC.15241 @bus @change_period @regression
+  @TC.15241 @bus @change_period @regression @core_function
   Scenario: 15241 MozyEnterprise - Change Period from Biennially to Yearly - Net Terms
     When I add a new MozyEnterprise partner:
       | period | users | net terms |
@@ -221,7 +221,7 @@ Feature: Change subscription period
       | Next Charge:    | after 2 years |                 |           |
     And I delete partner account
 
-  @TC.15243 @bus @change_period @regression
+  @TC.15243 @bus @change_period @regression @core_function
   Scenario: 15243 MozyEnterprise - Change Period from 3 Years to Biennially - Net Terms
     When I add a new MozyEnterprise partner:
       | period | users | net terms |
@@ -242,7 +242,7 @@ Feature: Change subscription period
       | Next Charge:    | after 3 years |                 |            |
     And I delete partner account
 
-  @TC.15244 @bus @change_period @regression
+  @TC.15244 @bus @change_period @regression @core_function
   Scenario: 15244 MozyEnterprise - Change Period from 3 Years to Yearly - Net Terms
     When I add a new MozyEnterprise partner:
       | period | users | net terms |
@@ -263,7 +263,7 @@ Feature: Change subscription period
       | Next Charge:    | after 3 years |                 |        |
     And I delete partner account
 
-  @TC.15245 @bus @change_period @regression
+  @TC.15245 @bus @change_period @regression @core_function
   Scenario: 15245 Reseller US - Change Period from Monthly to Yearly - CC
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -285,7 +285,7 @@ Feature: Change subscription period
       | Next Charge:    | after 1 year |                 |                    |
     And I delete partner account
 
-  @TC.15246 @bus @change_period @regression
+  @TC.15246 @bus @change_period @regression @core_function
   Scenario: 15246 Reseller US - Change Period from Yearly to Monthly - Net Terms
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -307,7 +307,7 @@ Feature: Change subscription period
       | Next Charge:    | after 1 year |                 |         |
     And I delete partner account
 
-  @TC.15383 @bus @change_period @regression
+  @TC.15383 @bus @change_period @regression @core_function
   Scenario: 15383 Verify Reseller confirmation message when change period to yearly
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -335,7 +335,7 @@ Feature: Change subscription period
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15384 @bus @change_period @regression
+  @TC.15384 @bus @change_period @regression @core_function
   Scenario: 15384 Verify MozyPro confirmation message when change period to biennially
     When I add a new MozyPro partner:
       | period | base plan |
@@ -363,7 +363,7 @@ Feature: Change subscription period
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15385 @bus @change_period @regression
+  @TC.15385 @bus @change_period @regression @core_function
   Scenario: 15385 Verify MozyEnterprise confirmation message when change period to 3 years
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -391,7 +391,7 @@ Feature: Change subscription period
     And I search and delete partner account by newly created partner company name
 
 
-  @TC.124561 @bus @change_period @regression
+  @TC.124561 @bus @change_period @regression @core_function
   Scenario: 124561 Reseller UK - Change Period from Yearly to Monthly - CC
     When I add a new Reseller partner:
       | period | create under | country        | reseller type | reseller quota | cc number        |
@@ -419,7 +419,7 @@ Feature: Change subscription period
     And I search and delete partner account by newly created partner company name
 
 
-  @TC.124562 @bus @change_period @regression
+  @TC.124562 @bus @change_period @regression @core_function
   Scenario: 124562 Reseller DE - Change Period from Monthly to Yearly - Net Terms
     When I add a new Reseller partner:
       | period | create under    | country | reseller type | reseller quota | server plan | net terms |
@@ -447,7 +447,7 @@ Feature: Change subscription period
     And I search and delete partner account by newly created partner company name
 
 
-  @TC.124709 @TC.124563 @bus @change_period @regression
+  @TC.124709 @TC.124563 @bus @change_period @regression @core_function
   Scenario: 124709 124563 Reseller FR - Change Period from Monthly to Yearly - VAT - CC
     When I add a new Reseller partner:
       | period | create under   | country | reseller type | reseller quota | server plan |    vat number   | cc number        |
@@ -474,7 +474,7 @@ Feature: Change subscription period
       | Next Charge:    | after 1 year |                 |                    |
     And I search and delete partner account by newly created partner company name
 
-  @TC.124564 @bus @change_period @regression
+  @TC.124564 @bus @change_period @regression @core_function
   Scenario: 124564 Reseller BE - Change Period from Yearly to Monthly - VAT - Net Terms
     When I add a new Reseller partner:
       | period | create under    | country | reseller type | reseller quota | server plan |    vat number  |  net terms |
@@ -503,7 +503,7 @@ Feature: Change subscription period
 
 
 
-  @TC.124565 @bus @change_period @regression
+  @TC.124565 @bus @change_period @regression @core_function
   Scenario: 124565 MozyPro FR - Change Period from Monthly to Yearly - VAT - CC
     When I add a new MozyPro partner:
       | period | create under   | country | base plan | server plan |    vat number   | cc number        |
@@ -530,7 +530,7 @@ Feature: Change subscription period
       | Next Charge:    | after 1 year |                 |                    |
     And I search and delete partner account by newly created partner company name
 
-  @TC.124710 @TC.124566 @bus @change_period @regression
+  @TC.124710 @TC.124566 @bus @change_period @regression @core_function
   Scenario: 124710 124566 MozyPro IT - Change Period from Yearly to Monthly - VAT - Net Terms
     When I add a new MozyPro partner:
       | period | create under    | country | base plan | server plan |    vat number   |  net terms |

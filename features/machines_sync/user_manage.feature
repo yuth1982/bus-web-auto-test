@@ -7,7 +7,7 @@ Feature: User stash setting management
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.18972 @BSA.2040 @bus @stash @regression
+  @TC.18972 @BSA.2040 @bus @stash @regression @core_function
   Scenario: 18972 Add Sync link is not available in user view when stash is not enabled for the user
     When I add a new MozyPro partner:
       | period | base plan |
@@ -22,7 +22,7 @@ Feature: User stash setting management
     And I view user details by newly created user email
     Then I should not see Enable Sync setting on user details section
 
-  @TC.18973 @BSA.2040 @bus @stash @regression
+  @TC.18973 @BSA.2040 @bus @stash @regression @core_function
   Scenario: 18973 Add Sync link is available in user view when stash is enabled for the user
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -44,7 +44,7 @@ Feature: User stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.18974 @BSA.2040 @bus @stash @regression
+  @TC.18974 @BSA.2040 @bus @stash @regression @core_function
   Scenario: 18974 Click Add Sync link in user details section to enable stash
     When I add a new MozyPro partner:
       | period | base plan | root role               |
@@ -67,7 +67,7 @@ Feature: User stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19017 @BSA.2040 @bus @stash @regression
+  @TC.19017 @BSA.2040 @bus @stash @regression @core_function
   Scenario: 19017 User click Cancel will not enable stash
     When I add a new MozyPro partner:
       | period | base plan | root role               |
@@ -90,7 +90,7 @@ Feature: User stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.18978 @BSA.2050 @bus @stash @regression
+  @TC.18978 @BSA.2050 @bus @stash @regression @core_function
   Scenario: 18978 Sync options are not available in Add New User view when Sync is disabled
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -106,7 +106,7 @@ Feature: User stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.18979 @BSA.2050 @bus @stash @regression
+  @TC.18979 @BSA.2050 @bus @stash @regression @core_function
   Scenario: 18979 Sync options are available in Add New User view when Sync is enabled
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -121,7 +121,7 @@ Feature: User stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.18981 @BSA.2050 @bus @stash @regression
+  @TC.18981 @BSA.2050 @bus @stash @regression @core_function
   Scenario: 18981 Add a new user with stash enabled
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -143,7 +143,7 @@ Feature: User stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19019 @BSA.2050 @bus @stash @regression
+  @TC.19019 @BSA.2050 @bus @stash @regression @core_function
   Scenario: 19019 Add new user with stash not enabled
     When I add a new MozyPro partner:
       | period | base plan | root role               |
@@ -165,7 +165,7 @@ Feature: User stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.18990 @BSA.2070 @bus @stash @email @regression
+  @TC.18990 @BSA.2070 @bus @stash @email @regression @core_function
   Scenario: 18990 Send stash invitation email in user details section
     When I add a new MozyPro partner:
       | period | base plan | root role               |
@@ -189,7 +189,7 @@ Feature: User stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19121 @BSA.2070 @bus @stash @email @regression
+  @TC.19121 @BSA.2070 @bus @stash @email @regression @core_function
   Scenario: 19121 Click Add Sync link with default quota and send email
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -216,7 +216,7 @@ Feature: User stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19122 @BSA.2070 @bus @stash @regression @ROR_smoke
+  @TC.19122 @BSA.2070 @bus @stash @regression @core_function @ROR_smoke
   Scenario: 19122 Add new user with stash enabled and send stash invite email
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -243,7 +243,7 @@ Feature: User stash setting management
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.19114 @BSA.3040 @bus @2.5 @user_stories @US @enterprise @partner @stash @regression @ROR_smoke
+  @TC.19114 @BSA.3040 @bus @2.5 @user_stories @US @enterprise @partner @stash @regression @core_function @ROR_smoke
   Scenario: 19114 19115 Enterprise Partner View User storage usage
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -295,7 +295,7 @@ Feature: User stash setting management
       | <%=@users[1].email%> | TC.19115.stash-user  | Enabled  | 0        | Desktop: Shared | Desktop: 20 GB         | today   | 1 minute ago  |
       | <%=@users[0].email%> | TC.19115.backup-user | Disabled | 1        | Desktop: Shared | Desktop: 10 GB         | today   | 2 minutes ago |
 
-  @TC.19116  @BSA.3040 @bus @2.5 @user_stories @US @mozypro @partner @stash @regression
+  @TC.19116  @BSA.3040 @bus @2.5 @user_stories @US @mozypro @partner @stash @regression @core_function
   Scenario: 19116 19117 Mozypro Partner View Sync status
     When I add a new MozyPro partner:
       | period | base plan | net terms | root role               |
@@ -347,7 +347,7 @@ Feature: User stash setting management
       | <%=@users[1].email%> | TC.19116.stash-user  | Enabled  | 0        |  Shared  | 20 GB        | today   |
       | <%=@users[0].email%> | TC.19116.backup-user | Disabled | 1        |  Shared  | 10 GB        | today   |
 
-  @TC.120694 @TC.120695 @2.10 @bus @stash @regression
+  @TC.120694 @TC.120695 @2.10 @bus @stash @regression @core_function
   Scenario: 120694 120695 Check existing/new sync container's encryption type
     When I act as partner by:
       | email                |

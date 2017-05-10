@@ -6,7 +6,7 @@
 #
 #  #
 #  # base creation cases for itemized pro
-#  @TC.20843 @itemized @bus @2.5 @create_partner @env_dependent @regression
+#  @TC.20843 @itemized @bus @2.5 @create_partner @env_dependent @regression @core_function
 #  Scenario: 20843 Add New MozyPro Itemized Partner - US - Monthly - 10 GB
 #    When I log in to legacy bus01 as administrator
 #    And I successfully add an itemized MozyPro partner:
@@ -53,7 +53,7 @@
 #
 #  # RESELLERS HERE
 #  # base creation case for itemized reseller
-#  @TC.20846 @itemized @bus @2.5 @env_dependent @regression
+#  @TC.20846 @itemized @bus @2.5 @env_dependent @regression @core_function
 #  Scenario: 20846 Add New Reseller Itemized Partner - US - Monthly - 10 GB
 #    When I log in to legacy bus01 as administrator
 #    And I successfully add an itemized Reseller partner:

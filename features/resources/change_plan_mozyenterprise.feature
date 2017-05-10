@@ -3,7 +3,7 @@ Feature: Change Plan for MozyEnterprise Partners
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.19239 @bus @2.5 @change_plan @mozyenterprise @regression
+  @TC.19239 @bus @2.5 @change_plan @mozyenterprise @regression @core_function
   Scenario: 19239 MozyEnterprise 250 GB storage add-on yearly to 500 GB add-on
     When I add a new MozyEnterprise partner:
       | period | users | server plan |
@@ -26,7 +26,7 @@ Feature: Change Plan for MozyEnterprise Partners
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19262  @bus @2.5 @change_plan @mozyenterprise @regression
+  @TC.19262  @bus @2.5 @change_plan @mozyenterprise @regression @core_function
   Scenario: 19262 MozyEnterprise 500 GB storage add-on biennially to 1 TB add-on
     When I add a new MozyEnterprise partner:
       | period | users | server plan |
@@ -49,7 +49,7 @@ Feature: Change Plan for MozyEnterprise Partners
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19263 @Bug.84933 @regression @bus @2.5 @change_plan @mozyenterprise @regression
+  @TC.19263 @Bug.84933 @regression @core_function @bus @2.5 @change_plan @mozyenterprise @regression @core_function
 Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
   When I add a new MozyEnterprise partner:
     | period | users | server plan |
@@ -72,7 +72,7 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
   When I stop masquerading
   Then I search and delete partner account by newly created partner company name
 
-@TC.19265 @bus @2.5 @change_plan @mozyenterprise @regression
+@TC.19265 @bus @2.5 @change_plan @mozyenterprise @regression @core_function
   Scenario: 19265 MozyEnterprise 16 TB storage add-on yearly to 8 TB add-on
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add on |
@@ -89,7 +89,7 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19266 @bus @2.5 @change_plan @mozyenterprise @regression
+  @TC.19266 @bus @2.5 @change_plan @mozyenterprise @regression @core_function
   Scenario: 19266 MozyEnterprise 32 TB storage add-on yearly to 28 TB add-on
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add on |
@@ -106,7 +106,7 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19267 @bus @2.5 @change_plan @mozyenterprise @regression
+  @TC.19267 @bus @2.5 @change_plan @mozyenterprise @regression @core_function
   Scenario: 19267 MozyEnterprise 28 TB storage add-on yearly to 24 TB add-on
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add on |
@@ -123,7 +123,7 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19268 @bus @2.5 @change_plan @mozyenterprise @regression
+  @TC.19268 @bus @2.5 @change_plan @mozyenterprise @regression @core_function
   Scenario: 19268 MozyEnterprise VAT no storage add-on yearly to 10 GB add-on
     When I add a new MozyEnterprise partner:
       | period | users | vat number    | country | net terms |
@@ -143,7 +143,7 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19269 @bus @2.5 @change_plan @mozyenterprise @regression
+  @TC.19269 @bus @2.5 @change_plan @mozyenterprise @regression @core_function
   Scenario: 19269 MozyEnterprise no VAT 10gb storage add-on biennially to 50 GB add-on
     When I add a new MozyEnterprise partner:
       | period | users | server plan | country | cc number        |
@@ -166,7 +166,7 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19270 @bus @2.5 @change_plan @mozyenterprise @regression
+  @TC.19270 @bus @2.5 @change_plan @mozyenterprise @regression @core_function
   Scenario: 19270 MozyEnterprise VAT IE 50 gbs storage add-on triennially to 100 GB add-on
     When I add a new MozyEnterprise partner:
       | period | users | server plan | vat number | country | cc number        |
@@ -189,7 +189,7 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19271 @bus @2.5 @change_plan @mozyenterprise @env_dependent @regression
+  @TC.19271 @bus @2.5 @change_plan @mozyenterprise @env_dependent @regression @core_function
   Scenario: 19271 MozyEnterprise initial purchase coupon 100 gbs storage add-on yearly to 250 GB add-on
     When I add a new MozyEnterprise partner:
       | period | users | server plan  | coupon              |
@@ -212,7 +212,7 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19272 @bus @2.5 @change_plan @mozyenterprise @regression
+  @TC.19272 @bus @2.5 @change_plan @mozyenterprise @regression @core_function
   Scenario: 19272 MozyEnterprise VAT yearly to 20 TB add-on
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add on | vat number    | country | cc number        |
@@ -229,7 +229,7 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19273 @bus @2.5 @change_plan @mozyenterprise @regression
+  @TC.19273 @bus @2.5 @change_plan @mozyenterprise @regression @core_function
   Scenario: 19273 MozyEnterprise no VAT biennially to 16 TB add-on
     When I add a new MozyEnterprise partner:
       | period | users | server plan | country | cc number        |
@@ -246,7 +246,7 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19274 @bus @2.5 @change_plan @mozyenterprise @regression
+  @TC.19274 @bus @2.5 @change_plan @mozyenterprise @regression @core_function
   Scenario: 19274 MozyEnterprise VAT IE triennially to 12 TB add-on
     When I add a new MozyEnterprise partner:
       | period | users | server plan | vat number | country | cc number        |
@@ -263,7 +263,7 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19275 @bus @2.5 @change_plan @mozyenterprise @env_dependent @regression
+  @TC.19275 @bus @2.5 @change_plan @mozyenterprise @env_dependent @regression @core_function
   Scenario: 19275 MozyEnterprise initial purchase coupon 100 gbs storage add-on yearly to 250 GB add-on
     When I add a new MozyEnterprise partner:
       | period | users | server plan  | coupon              |
@@ -280,7 +280,7 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19392 @bus @2.5 @change_plan @mozyenterprise @env_dependent @regression
+  @TC.19392 @bus @2.5 @change_plan @mozyenterprise @env_dependent @regression @core_function
   Scenario: 19392 MozyEnterprise initial purchase coupon no server add on to 10gb server add on
     When I add a new MozyEnterprise partner:
       | period | users | coupon              | country       | address           | city      | state abbrev | zip   | phone          | cc number        |
@@ -300,7 +300,7 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19393 @bus @2.5 @change_plan @mozyenterprise @regression
+  @TC.19393 @bus @2.5 @change_plan @mozyenterprise @regression @core_function
   Scenario: 19393 MozyEnterprise initial purchase coupon 250gb server add on to 250gb server add on
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add on | country       | address           | city      | state abbrev | zip   | phone          | cc number        |
@@ -323,7 +323,7 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19394 @bus @2.5 @change_plan @mozyenterprise @env_dependent @regression
+  @TC.19394 @bus @2.5 @change_plan @mozyenterprise @env_dependent @regression @core_function
   Scenario: 19394 MozyEnterprise initial purchase coupon 500gb server add on to 1tb server add on
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add on | coupon              | country       | address           | city      | state abbrev | zip   | phone          | cc number        |
@@ -346,7 +346,7 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19396 @bus @2.5 @change_plan @mozyenterprise @regression
+  @TC.19396 @bus @2.5 @change_plan @mozyenterprise @regression @core_function
   Scenario: 19396 MozyEnterprise 1 TB server add on to 100gbs server add on
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add on | country       | address           | city      | state abbrev | zip   | phone          | cc number        |
@@ -363,7 +363,7 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19397 @bus @2.5 @change_plan @mozyenterprise @env_dependent @regression
+  @TC.19397 @bus @2.5 @change_plan @mozyenterprise @env_dependent @regression @core_function
   Scenario: 19397 MozyEnterprise initial purchase coupon and net terms 2tb server add on to no server add on
     When I add a new MozyEnterprise partner:
       | period | users | server plan | coupon              | net terms | country       | address           | city      | state abbrev | zip   | phone          |
@@ -380,7 +380,7 @@ Scenario: 19263 MozyEnterprise 1 TB storage add-on 3 years to 2 TB add-on
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.19398 @bus @2.5 @change_plan @mozyenterprise @regression
+  @TC.19398 @bus @2.5 @change_plan @mozyenterprise @regression @core_function
   Scenario: 19398 MozyEnterprise Net Terms 4 TB server add on to 2 TB server add on
     When I add a new MozyEnterprise partner:
       | period | users | server plan  | server add on | net terms | country       | address           | city      | state abbrev | zip   | phone          |
