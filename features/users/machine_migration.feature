@@ -89,7 +89,7 @@ Feature: Machine migration
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.16272 @bus @2.5 @machine_migration @qa5 @env_dependent @regression @core_function
+  @TC.16272 @bus @2.5 @machine_migration @qa5 @env_dependent @regression
   Scenario: 16272 Export a CSV file in Synchronized way while the partner has 10000 machines before
     When I act as partner by:
       | email                  |
@@ -319,7 +319,7 @@ Feature: Machine migration
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.17936 @bug @2.2 @machine_migration @qa5 @env_dependent @regression @core_function
+  @TC.17936 @bug @2.2 @machine_migration @qa5 @env_dependent @regression
   Scenario: 17936 Import a CSV file while two users have same machine
     When I act as partner by:
       | email                             |
@@ -332,7 +332,7 @@ Feature: Machine migration
       | column 1      |  column 2       |  column 3                    | column 4                                   |
       |Import Results:| 2 rows imported |2 machines moved to new users | 0 machines skipped (no new user specified) |
 
-  @TC.16276 @slow @bug @2.5 @machine_migration @qa5 @env_dependent @regression @core_function
+  @TC.16276 @slow @bug @2.5 @machine_migration @qa5 @env_dependent @regression
   Scenario: 16276 Import a CSV file in no passive way while the partner has 10000 machines before
     When I act as partner by:
       | email                  |
