@@ -174,6 +174,19 @@ module DBHelper
     end
   end
 
+  def get_mh_cybersource_id(user_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select cybersource_id from user_payment_infos where user_id = #{user_id};"
+      c = conn.exec(sql)
+      c.values[0][0]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
   def get_suspended_user_email
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
@@ -203,18 +216,52 @@ module DBHelper
   def create_machines(user_id, license_name, count, quota)
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "select license_types.id from license_types where
-                license_types.name = '#{license_name}' and
-                license_types.pro_partner_id = (select pro_partners.parent_pro_partner_id from pro_partners where
+      current = Time.now
+      license_type_id = 0
+      pro_partner_id = 0
+      pro_partner_name = ""
+      pro_partner_id_sql = "select pro_partners.parent_pro_partner_id from pro_partners where
                   pro_partners.id = (select user_groups.pro_partner_id from user_groups where
                     user_groups.id = (select users.user_group_id from users where
                       users.id = #{user_id} limit 1)
                   limit 1)
-                limit 1)
-              limit 1;"
-      c = conn.exec sql
-      Log.debug sql
-      license_type_id = c.values[0][0].to_i
+                limit 1;"
+      c = conn.exec pro_partner_id_sql
+      Log.debug pro_partner_id_sql
+      pro_partner_id = c.values[0][0].to_i
+      while Time.now < current + CONFIGS['global']['default_wait_time']
+        sql = "select license_types.id from license_types where
+                license_types.name = '#{license_name}' and
+                license_types.pro_partner_id = #{pro_partner_id} limit 1;"
+        c = conn.exec sql
+        Log.debug sql
+        if !c.values.empty?
+          license_type_id = c.values[0][0].to_i
+          break
+        else
+          pro_partner_id_sql = "select pro_partners.parent_pro_partner_id, pro_partners.name from pro_partners where
+                  pro_partners.id = '#{pro_partner_id}' limit 1;"
+          c = conn.exec pro_partner_id_sql
+          Log.debug pro_partner_id_sql
+          pro_partner_id = c.values[0][0].to_i
+          pro_partner_name = c.values[0][1].to_s
+        end
+      end
+
+
+
+      # sql = "select license_types.id from license_types where
+      #           license_types.name = '#{license_name}' and
+      #           license_types.pro_partner_id = (select pro_partners.parent_pro_partner_id from pro_partners where
+      #             pro_partners.id = (select user_groups.pro_partner_id from user_groups where
+      #               user_groups.id = (select users.user_group_id from users where
+      #                 users.id = #{user_id} limit 1)
+      #             limit 1)
+      #           limit 1)
+      #         limit 1;"
+      # c = conn.exec sql
+      # Log.debug sql
+      # license_type_id = c.values[0][0].to_i
 
       sql = "select id from mozy_pro_keys where
               activated_at is null and
@@ -234,7 +281,9 @@ module DBHelper
         Log.debug sql
         machine_id = c.values[0][0].to_i
 
-        sql = "update machines set space_used = #{quota}::bigint*1024*1024*1024, pending_space_used = 1024, patches = 0, files = 1, last_client_version = null,last_backup_at = now() where id = #{machine_id};"
+        quota_string = ""
+        quota_string = "quota = 0, quota_purchased = 0," if pro_partner_name == "MozyOEM"
+        sql = "update machines set space_used = #{quota}::bigint*1024*1024*1024, "+ quota_string +"pending_space_used = 1024, patches = 0, files = 1, last_client_version = null,last_backup_at = now() where id = #{machine_id};"
         conn.exec sql
         Log.debug sql
 
@@ -258,6 +307,19 @@ module DBHelper
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
       sql = "select id from users where username = '#{email}' limit 1;"
+      c = conn.exec sql
+      c.values[0][0].to_i
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_admin_id_by_email(email)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select id from admins where username = '#{email}' limit 1;"
       c = conn.exec sql
       c.values[0][0].to_i
     rescue PG::Error => e
@@ -318,6 +380,32 @@ module DBHelper
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
       sql = "UPDATE subscriptions SET expiration_time='#{DateTime.now.new_offset('-07:00').to_date - days_ago.to_i} 12:12:12' WHERE user_id = #{user_id} and pending is false;" #and cancelled_at is null;
       puts sql
+      conn.exec sql
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+      fail e
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def set_last_backup_attempt(user_id,weeks_ago)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "UPDATE machines SET last_backup_attempt = '#{Date.today - (weeks_ago * 7)}' WHERE user_id = #{user_id};"
+      conn.exec sql
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+      fail e
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def set_last_backup_at(user_id,days_ago)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "UPDATE machines SET last_backup_at = '#{Date.today - days_ago}' WHERE user_id = #{user_id};"
       conn.exec sql
     rescue PG::Error => e
       puts "postgres error: #{e}"
@@ -818,6 +906,19 @@ module DBHelper
     end
   end
 
+  def get_partner_admin_ip(partner_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select requesting_ip from pro_partners where id = #{partner_id};"
+      Log.debug sql
+      c = conn.exec(sql)
+      c.values[0][0]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
 
   # delete reports that created by automation by email prefix
   def delete_reports_by_email_prefix(admin_email_prefix = CONFIGS['global']['email_prefix'])

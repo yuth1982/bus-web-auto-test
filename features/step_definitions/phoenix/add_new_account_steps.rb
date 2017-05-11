@@ -388,3 +388,10 @@ When /^user log in phoenix failed$/ do
   @phoenix_site.user_account.check_logout_link.should == false
 end
 
+When /^I select to add a phoenix (MozyPro|MozyHome) partner:/ do |type|
+  @phoenix_site.select_dom.register_partner(type)
+end
+
+When /^I verify that the default country is (.+)$/ do |country|
+  @phoenix_site.select_dom.get_selected_country.should == country.to_s
+end

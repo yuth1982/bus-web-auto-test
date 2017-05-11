@@ -35,6 +35,20 @@ When /^I change (MozyPro|MozyEnterprise|Reseller|Itemized|MozyEnterprise DPS) ac
   end
 end
 
+When /^I cancel (MozyPro|MozyEnterprise|Reseller|Itemized|MozyEnterprise DPS) account plan to:$/ do |type, plan_table|
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['change_plan'])
+
+  cells = plan_table.hashes.first
+  base_plan = cells['base plan'] # MozyPro
+
+  case type
+    when 'MozyEnterprise DPS'
+      @bus_site.admin_console_page.change_plan_section.cancel_mozyenterprise_dps_plan(base_plan)
+    else
+      raise "#{type} Company type not exist"
+  end
+end
+
 When /^I increase Itemized account plan by:$/ do |resources_table|
   cells = resources_table.hashes.first
   @current_itemized_resources = @bus_site.admin_console_page.change_plan_section.current_itemized_resources
@@ -87,6 +101,12 @@ Then /^the (MozyPro|MozyEnterprise|Reseller|Itemized|MozyEnterprise DPS) account
   end
 end
 
+Then /^Current plan table should be:$/ do |resource_table|
+  expected = resource_table.hashes
+  actual = @bus_site.admin_console_page.change_plan_section.current_plan_table_hashes
+  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
+end
+
 Then /^(MozyPro|MozyEnterprise|Reseller|Itemized) new plan should be:$/ do |type, new_plan_table|
   expected = new_plan_table.hashes.first
   base_plan = expected["base plan"]
@@ -124,6 +144,10 @@ end
 Then /^Change plan charge summary should be:$/ do |charge_table|
   @change_plan_info.at(1).should == charge_table.headers
   @change_plan_info.at(2).should == charge_table.rows
+end
+
+And /^MozyEnterpriseDPS new plan should be (.+)$/ do |text|
+  @bus_site.admin_console_page.change_plan_section.enterprise_dps_baseplan.should == text
 end
 
 Then /^Change plan charge message should be:$/ do |message|

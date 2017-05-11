@@ -352,3 +352,25 @@ Feature: Change Plan for MozyPro Partners
 #      | 1 TB      | yes         | 1              |
 #  When I stop masquerading
 #  Then I search and delete partner account by newly created partner company name
+
+  @TC.131841 @bus @change_plan @tasks_p3 @regression
+  Scenario: 131841 Change plan from plan with 50 GB add on to a plan with 250 add on or vise vessa
+    When I add a new MozyPro partner:
+      | period | base plan | net terms |storage add on 50 gb|
+      | 1      | 250 GB    | yes       |    1               |
+    Then New partner should be created
+    When I act as newly created partner account
+    And I change MozyPro account plan to:
+      | base plan |
+      | 1 TB      |
+    Then Change plan charge summary should be:
+      | Description                    | Amount   |
+      |Credit for remainder of 250 GB  |  -$94.99 |
+      |Charge for upgraded plans       |$474.98   |
+      | Total amount to be charged     | $379.99  |
+    And the MozyPro account plan should be changed
+    And MozyPro new plan should be:
+      | base plan |
+      | 1 TB      |
+    When I stop masquerading
+    Then I search and delete partner account by newly created partner company name

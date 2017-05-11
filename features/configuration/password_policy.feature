@@ -294,8 +294,8 @@ Feature: Password policy is saved successfully to db
     And I navigate to Add New Admin section from bus admin console page
     And I view the admin details of TC.120555_admin
     And I change admin password to pass!
-    Then Fail to update admin password and the message should be Please enter a password at least 6 characters long
-    And I change admin password to testps
+    Then Fail to update admin password and the message should be Please enter a password at least 8 characters long
+    And I change admin password to testps12!
     Then Succeed to update admin password and the message should be The password for TC.120555_admin has been changed.
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
@@ -395,10 +395,10 @@ Feature: Password policy is saved successfully to db
     And I view user details by newly created user email
     Then I update user password to incorrect password pass! and get the error message:
     """
-    Please enter a password at least 6 characters long
+    Please enter a password at least 8 characters long
     """
     And I update the user password to testps1.
-    And I update the user password to testps
+#    And I update the user password to testps
     And I navigate to Add New Admin section from bus admin console page
     And I view the admin details of TC.120557_admin
     And I change admin password to wrongpass

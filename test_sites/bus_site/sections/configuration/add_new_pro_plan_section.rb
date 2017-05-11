@@ -28,6 +28,12 @@ module Bus
     element(:anpp_message_li, css: "ul.flash.successes > li")
     element(:proplan_record_table, xpath: "//div[@id='plan-pro_list-content']/div[1]/table")
 
+    element(:key_discount_btn,xpath: "//div[@id='plan-pro_new-tabs']/ul[2]/li[@class='selected']/fieldset[1]/div[3]/div/input")
+    element(:quota_discount_btn,xpath: "//div[@id='plan-pro_new-tabs']/ul[2]/li[@class='selected']/fieldset[2]/div[3]/div/input")
+    element(:key_volumn, xpath: "//*[contains(@id,'license_discounts')]/li/input[1]")
+    element(:key_discount, xpath: "//*[contains(@id,'license_discounts')]/li/input[2]")
+    element(:quota_volumn, xpath: "//*[contains(@id,'quota_discounts')]/li/input[1]")
+    element(:quota_discount, xpath: "//*[contains(@id,'quota_discounts')]/li/input[2]")
     # Public: Add a new pro plan
     #
     # @param [Object] pro_plan
@@ -52,15 +58,25 @@ module Bus
       %w(server desktop grandfathered).each do |type|
         if pro_plan.instance_variable_defined?("@#{type}")
           self.send("#{type}_tab").first.click
-          price_per_key_input.type_text(pro_plan.send(type)[:price_per_key])
-          min_keys_input.type_text(pro_plan.send(type)[:min_keys])
-          price_per_gigabyte_input.type_text(pro_plan.send(type)[:price_per_gigabyte])
-          min_gigabytes_input.type_text(pro_plan.send(type)[:min_gigabytes])
+          price_per_key_input.type_text(pro_plan.send(type)['price_per_key'])
+          min_keys_input.type_text(pro_plan.send(type)['min_keys'])
+          price_per_gigabyte_input.type_text(pro_plan.send(type)['price_per_gigabyte'])
+          min_gigabytes_input.type_text(pro_plan.send(type)['min_gigabytes'])
+
+          isDiscount = pro_plan.send(type)['key_discount']
+          if isDiscount
+            key_discount_btn.click
+            key_volumn.type_text(pro_plan.send(type)['key_volume'])
+            key_discount.type_text(pro_plan.send(type)['key_discount'])
+            quota_discount_btn.click
+            quota_volumn.type_text(pro_plan.send(type)['quota_volume'])
+            quota_discount.type_text(pro_plan.send(type)['quota_discount'])
+          end
         end
       end
       if pro_plan.instance_variable_defined?('@generic')
-        price_per_gigabyte_input.type_text(pro_plan.generic[:price_per_gigabyte])
-        min_gigabytes_input.type_text(pro_plan.generic[:min_gigabytes])
+        price_per_gigabyte_input.type_text(pro_plan.generic['price_per_gigabyte'])
+        min_gigabytes_input.type_text(pro_plan.generic['min_gigabytes'])
       end
       #quota_price_tb.type_text(pro_plan.price_per_gb.to_s)
       #minimum_quota_tb.type_text(pro_plan.min_gb.to_s)

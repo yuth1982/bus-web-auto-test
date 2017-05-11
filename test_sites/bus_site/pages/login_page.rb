@@ -19,6 +19,7 @@ module Bus
     element(:reset_password_continue_btn, xpath: "//input[@value='Continue']")
     element(:reset_password_msg_div, xpath: "//div[@id='main']//p")
     element(:start_using_mozy_btn, id: "start_using_mozy")
+    element(:login_error_msg, xpath: "//ul[@class='flash errors']/li")
 
     # Public: Login bus admin console
     #
@@ -146,6 +147,10 @@ module Bus
       else
         find(:xpath, "//ul[@class='flash successes']/li").text
       end
+    end
+
+    def get_error_msg
+      login_error_msg.text
     end
   end
 end

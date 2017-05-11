@@ -578,6 +578,181 @@ Feature: Users Storage/Device/Product Key Section
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
+  @TC.19641 @bus @tasks_p3 @change_user_storage
+  Scenario: Mozy-19641:Update User Storage Logged In as Partner Admin
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan |
+      | 12     | 10    | 100 GB      |
+    And New partner should be created
+    And I view the newly created partner admin details
+    And I active admin in admin details default password
+    Then I log in bus admin console as new partner admin
+    And I add new user(s):
+      | name          | user_group           | storage_type | storage_limit | devices |
+      | TC.19641.User | (default user group) | Desktop      | 10            | 3       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    Then user resources details rows should be:
+      | Storage                            | Devices                            |
+      | Desktop: 0 Used / 10 GB Available  | Desktop: 0 Used / 3 Available Edit |
+    And I edit user storage limit to 20 GB
+    And I refresh User Details section
+    Then user resources details rows should be:
+      | Storage                            | Devices                            |
+      | Desktop: 0 Used / 20 GB Available  | Desktop: 0 Used / 3 Available Edit |
 
+  @TC.19836 @bus @tasks_p3 @change_user_storage
+  Scenario: Mozy-19836:Reduce User Storage Logged In as Busroot Admin
+    When I add a new Reseller partner:
+      | period | reseller type | reseller quota |
+      | 12     | Silver        | 100            |
+    And New partner should be created
+    Then I get the partner_id
+    And I act as newly created partner
+    And I add new user(s):
+      | name          | user_group           | storage_type | storage_limit | devices |
+      | TC.19836.User | (default user group) | Desktop      | 10            | 3       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    Then user resources details rows should be:
+      | Storage                  | Devices                            |
+      | 0 Used / 10 GB Available | Desktop: 0 Used / 3 Available Edit |
+    And I edit user storage limit to 5 GB
+    And I refresh User Details section
+    Then user resources details rows should be:
+      | Storage                 | Devices                            |
+      | 0 Used / 5 GB Available | Desktop: 0 Used / 3 Available Edit |
 
+  @TC.19840 @bus @tasks_p3 @change_user_storage
+  Scenario: Mozy-19840:Reduce User Storage Logged In as Partner Admin
+    When I add a new Reseller partner:
+      | period | reseller type | reseller quota |
+      | 12     | Silver        | 100            |
+    And New partner should be created
+    And I view the newly created partner admin details
+    And I active admin in admin details default password
+    Then I log in bus admin console as new partner admin
+    And I add new user(s):
+      | name          | user_group           | storage_type | storage_limit | devices |
+      | TC.19840.User | (default user group) | Desktop      | 10            | 3       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    Then user resources details rows should be:
+      | Storage                  | Devices                            |
+      | 0 Used / 10 GB Available | Desktop: 0 Used / 3 Available Edit |
+    And I edit user storage limit to 5 GB
+    And I refresh User Details section
+    Then user resources details rows should be:
+      | Storage                 | Devices                            |
+      | 0 Used / 5 GB Available | Desktop: 0 Used / 3 Available Edit |
 
+  @TC.19842 @bus @tasks_p3 @change_user_storage
+  Scenario: Mozy-19842:Update User Storage Logged In as Busroot Admin
+    When I add a new MozyPro partner:
+      | period | base plan | net terms |
+      | 1      | 50 GB     | yes       |
+    And New partner should be created
+    Then I get the partner_id
+    And I act as newly created partner account
+    And I add new user(s):
+      | name          | storage_type | storage_limit | devices |
+      | TC.19842.User | Desktop      | 10            | 3       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    Then user resources details rows should be:
+      | Storage                   | Devices                            |
+      | 0 Used / 10 GB Available  | Desktop: 0 Used / 3 Available Edit |
+    And I edit user storage limit to 20 GB
+    And I refresh User Details section
+    Then user resources details rows should be:
+      | Storage                  | Devices                            |
+      | 0 Used / 20 GB Available | Desktop: 0 Used / 3 Available Edit |
+
+  @TC.19846 @bus @tasks_p3 @change_user_storage
+  Scenario: Mozy-19846:Reduce User Storage Logged In as Partner Admin
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan |
+      | 12     | 10    | 100 GB      |
+    And New partner should be created
+    And I view the newly created partner admin details
+    And I active admin in admin details default password
+    Then I log in bus admin console as new partner admin
+    And I add new user(s):
+      | name          | user_group           | storage_type | storage_limit | devices |
+      | TC.19846.User | (default user group) | Desktop      | 10            | 3       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    Then user resources details rows should be:
+      | Storage                           | Devices                            |
+      | Desktop: 0 Used / 10 GB Available | Desktop: 0 Used / 3 Available Edit |
+    And I edit user storage limit to 8 GB
+    And I refresh User Details section
+    Then user resources details rows should be:
+      | Storage                          | Devices                            |
+      | Desktop: 0 Used / 8 GB Available | Desktop: 0 Used / 3 Available Edit |
+
+  @TC.19854 @bus @tasks_p3 @change_user_storage
+  Scenario: Mozy-19854:[Enterprise] Update User Storage Logged In as Partner Admin
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | country        | net terms |
+      | 12     | 10    | 250 GB      | United Kingdom | yes       |
+    And New partner should be created
+    And I view the newly created partner admin details
+    And I active admin in admin details default password
+    Then I log in bus admin console as new partner admin
+    And I add new user(s):
+      | name          | user_group           | storage_type | storage_limit | devices |
+      | TC.19854.User | (default user group) | Desktop      | 10            | 3       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    Then user resources details rows should be:
+      | Storage                           | Devices                            |
+      | Desktop: 0 Used / 10 GB Available | Desktop: 0 Used / 3 Available Edit |
+    And I edit user storage limit to 7 GB
+    And I refresh User Details section
+    Then user resources details rows should be:
+      | Storage                          | Devices                            |
+      | Desktop: 0 Used / 7 GB Available | Desktop: 0 Used / 3 Available Edit |
+
+  @TC.19857 @bus @tasks_p3 @change_user_storage
+  Scenario: Mozy-19857:[Metallic Reseller] Update User Storage Logged In as Busroot Admin
+    When I add a new Reseller partner:
+      | period | reseller type | reseller quota |
+      | 12     | Silver        | 100            |
+    And New partner should be created
+    Then I get the partner_id
+    And I act as newly created partner account
+    And I add new user(s):
+      | name          | user_group           | storage_type | storage_limit | devices |
+      | TC.19857.User | (default user group) | Desktop      | 10            | 3       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    Then user resources details rows should be:
+      | Storage                  | Devices                            |
+      | 0 Used / 10 GB Available | Desktop: 0 Used / 3 Available Edit |
+    And I edit user storage limit to 4 GB
+    And I refresh User Details section
+    Then user resources details rows should be:
+      | Storage                 | Devices                            |
+      | 0 Used / 4 GB Available | Desktop: 0 Used / 3 Available Edit |

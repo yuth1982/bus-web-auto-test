@@ -2,8 +2,8 @@ require File.expand_path('../../lib/testlink_helper', __FILE__)
 
 CLIENT = TestlinkHelper::TestlinkAPIClient.new
 PROJECT_ID = 2                                    # project Mozy
-AUTHOR_LOGIN = 'freya.chen'                       # Test Link account
-TEST_SUITE_PARENT_ID = '494387'                   # parent test suite folder id in tesklink: BUS -> BUS 2.17
+AUTHOR_LOGIN = 'catherinel'                       # Test Link account
+TEST_SUITE_PARENT_ID = '17'                       # parent test suite folder id in tesklink: Mozy -> BUS
 TEST_STEP_EXECUTION_TYPE = 2                      # MANUAL(1), AUTOMATED(2);
 
 # create a test suite

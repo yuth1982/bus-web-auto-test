@@ -17,6 +17,21 @@ When /^I get a Mozy Home user email from the database$/ do
   Log.debug("Mozy Home user email from database = #{@existing_user_email}")
 end
 
+When /^I get the current user id from the database$/ do
+  @user_name = @partner.admin_info.email    #need to determine other var that can use email
+  @user_id = DBHelper.get_user_id_by_email @user_name
+end
+
+When /^I get the current admin id from the database$/ do
+  @user_name = @partner.admin_info.email
+  @user_id = DBHelper.get_admin_id_by_email @user_name
+end
+
+When /^I get user cybersource id from database$/ do
+  @cybersource_id = DBHelper.get_mh_cybersource_id(@user_id)
+  Log.debug("Currently the cybersource id of the user is = #{@cybersource_id}")
+end
+
 When /^I get a suspended user email from the database$/ do
   @existing_user_email = DBHelper.get_suspended_user_email
   Log.debug("Mozy Home suspended user email from database = #{@existing_user_email}")
@@ -69,6 +84,11 @@ And /^I get partner id by admin email from database$/ do
   Log.debug("partner id is #{@partner_id}")
 end
 
+And /^The admin's IP address should be stored in demeter$/ do
+  @partner_id = DBHelper.get_partner_id_by_admin_email @partner.admin_info.email
+  DBHelper.get_partner_admin_ip(@partner_id).nil?.should == false
+end
+
 When /^I get the current user id from the database$/ do
   user_name = @partner.admin_info.email    #need to determine other var that can use email
   @user_id = DBHelper.get_user_id_by_email user_name
@@ -88,4 +108,3 @@ And /^I delete dialects of current partner from database$/ do
   (DBHelper.get_pro_partner_table(@partner_id)['company_type'] != 'bds').should be_true
   DBHelper.delete_dialects_by_partner_id @partner_id
 end
-

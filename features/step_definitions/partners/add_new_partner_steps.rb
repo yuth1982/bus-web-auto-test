@@ -93,6 +93,7 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller|MozyEnterprise DPS|OEM) part
     @partner.company_info.country = attributes["country"] unless attributes['country'].nil?
     @partner.company_info.zip = attributes['zip'] unless attributes['zip'].nil?
     @partner.company_info.phone = attributes['phone'] unless attributes['phone'].nil?
+    @partner.company_info.phone = '' if attributes['phone'] == 'empty'
     @partner.company_info.vat_num = attributes['vat number'] unless attributes["vat number"].nil?
     @partner.company_info.security = attributes['security'] unless attributes["security"].nil?
 
@@ -140,6 +141,7 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller|MozyEnterprise DPS|OEM) part
     @partner.net_term_payment = (attributes['net terms'] || 'no').eql?('yes')
 
     Log.debug(@partner.to_s)
+    @partner.credit_card.cvv2 = attributes['check cvv2'] unless attributes['check cvv2'].nil?
     @bus_site.log('begin to create partner')
     @bus_site.log(@partner.to_s)
     @bus_site.admin_console_page.add_new_partner_section.add_new_account(@partner)
@@ -174,6 +176,10 @@ end
 
 Then /^Aria payment error message should be (.+)$/ do |message|
   @bus_site.admin_console_page.add_new_partner_section.aria_errors.should == message
+end
+
+Then /^Add account error message should be (.+)$/ do |message|
+  @bus_site.admin_console_page.add_new_partner_section.add_account_errors.should == message
 end
 
 Then /^the billing country alert is (.+)$/ do |alert|
@@ -392,4 +398,16 @@ end
 
 When /^I refresh Add New Partner section$/ do
   @bus_site.admin_console_page.add_new_partner_section.refresh_bus_section
+end
+
+When /^I navigate to Add New Partner section$/ do
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_partner'])
+end
+
+When /^I select (.+) as the company type$/ do |company_type|
+  @bus_site.admin_console_page.add_new_partner_section.select_company_type(company_type)
+end
+
+When /^I verify default country in Add New Partner page should be (.+)/ do |country|
+  @bus_site.admin_console_page.add_new_partner_section.verify_default_country.should == country.to_s
 end

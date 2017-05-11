@@ -18,6 +18,7 @@ module Bus
 
     # All tables in Billing Information section, including Next Renewal, Supplemental Plan, Autogrow
     elements(:tables, css: 'div#resource-billing-content table')
+    elements(:tables_alias, css: "div[id^=resource-billing] table")
 
     #vat_message
     element(:vat_message_div, xpath: "//div[contains(@id,'partner-billing-info-vat-msg')]")
@@ -42,7 +43,8 @@ module Bus
     end
 
     # Public: Next renewal hashes
-    #         Converts results table into an Array of Hash where the keys of each Hash are the headers in the table.                                                                                               # Example
+    #         Converts results table into an Array of Hash where the keys of each Hash are the headers in the table.
+    # Example
     #
     #  @bus_admin_console_page.billing_info_section.next_renewal_hashes
     #
@@ -70,7 +72,8 @@ module Bus
     end
 
     # Public: Supplemental plan hashes
-    #         Converts results table into an Array of Hash where the keys of each Hash are the headers in the table.                                                                                               # Example
+    #         Converts results table into an Array of Hash where the keys of each Hash are the headers in the table.
+    # Example
     #
     #  @bus_admin_console_page.billing_info_section.supp_plan_hashes
     #
@@ -80,8 +83,14 @@ module Bus
       tables[index].hashes
     end
 
+    def quota_info_hashes
+      wait_until{!locate(:css,"div[id^=resource-billing] table.info-table.shade-table").nil?}
+      tables_alias.last.hashes
+    end
+
     # Public: VAT info hashes
-    #         Converts results table into an Array of Hash where the keys of each Hash are the headers in the table.                                                                                               # Example
+    #         Converts results table into an Array of Hash where the keys of each Hash are the headers in the table.
+    # Example
     #
     #  @bus_admin_console_page.billing_info_section.vat_hashes
     #
@@ -133,7 +142,8 @@ module Bus
     end
 
     # Public: Autogrow hashes
-    #         Converts results table into an Array of Hash where the keys of each Hash are the headers in the table.                                                                                               # Example
+    #         Converts results table into an Array of Hash where the keys of each Hash are the headers in the table.
+    # Example
     #
     #  @bus_admin_console_page.billing_info_section.autogrow_hashes
     #
@@ -154,6 +164,18 @@ module Bus
       disable_autogrow_link.click
       commit_autogrow_btn.click
       wait_until{ !commit_autogrow_btn.visible? }
+    end
+
+    # Public: Account Status hashes
+    #         Converts results table into an Array of Hash where the keys of each Hash are the headers in the table.
+    # Example
+    #
+    #  @bus_admin_console_page.billing_info_section.account_status_hashes
+    #
+    # Returns hash array
+    def account_status_hashes
+      wait_until {!locate(:css,"div[id^=resource-billing] table").nil?}
+      tables_alias[0].hashes
     end
   end
 end

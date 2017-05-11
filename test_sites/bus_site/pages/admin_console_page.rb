@@ -54,7 +54,7 @@ module Bus
     section(:change_plan_section, ChangePlanSection, id: "resource-change_billing_plan")
     section(:change_payment_info_section, ChangePaymentInfoSection, id: "resource-change_credit_card")
     section(:billing_history_section, BillingHistorySection, id: "resource-all_charges")
-    section(:billing_info_section, BillingInfoSection, id: "resource-billing")
+    section(:billing_info_section, BillingInfoSection, css: "div[id^=resource-billing]")#id: "resource-billing"
     section(:change_period_section, ChangePeriodSection, id: "resource-change_billing_period")
     section(:manage_resources_section, ManageResourcesSection, id: "resource-available_key_list")
     section(:manage_user_group_resources_section, ManageUserGroupResourcesSection , css: "div[id^=resource-group_available_keys-]")
@@ -108,6 +108,8 @@ module Bus
     # internal tools
     section(:manage_vatfx_rates_section, ManageVATTXRatesSection, id: "internal-add_vat_rate")
     section(:manage_pending_deletes_section, ManagePendingDeletesSection, id: "internal-manage_pending_deletes")
+    section(:manage_ldap_connectors_section, ManageLDAPConnectorsSection, id: "internal-manage_ldap_connectors")
+    section(:add_new_version_section, AddNewVersionSection, id: "internal-create_ldap_connector")
     section(:transaction_summary_section, TransactionSummarySection, id: "internal-revenue")
     section(:add_new_promotion_section, AddNewPromotionSection, id: "promotion-new")
     section(:list_promotions_section, ListPromotionsSection, id: "promotion-list")
@@ -118,13 +120,12 @@ module Bus
     section(:partner_signups_report_section, PartnerSignupsReportSection, id: 'internal-partner_signups')
     section(:manage_internal_jobs_section, ManageInternalJobsSection, id: 'internal-manage_jobs')
 
-
-
     #news
     section(:news_section, NewsSection, id: "controller-news")
 
 
     # Private element
+    element(:message_div, xpath: "//div[@class='dunning_msg'][@style='']")
     element(:current_admin_div, id: 'identify-me')
     element(:current_admin_name_link, xpath: "//div[@id='identify-me']/a[last()]")
     element(:stop_masquerading_link, xpath: "//a[text()='stop masquerading']")
@@ -132,6 +133,7 @@ module Bus
 
     # Popup window
     element(:start_using_mozy_btn, id: "start_using_mozy")
+    element(:chk_show_welcome_chkbox, id: "chk_show_welcome")
     element(:quick_start_guide, xpath:"//p[text()='Quick Start Guide']")
     #element(:download_mozy_software, xpath:"//p[text()='             Download Mozy Software           ']")
     element(:download_mozy_software, xpath:"//p[contains(text(), 'Download Mozy Software')]")
@@ -184,6 +186,54 @@ module Bus
       alert_accept if alert_present?
     end
 
+    def click_start_using_mozy
+      wait_until { popup_content_div.visible? }
+      start_using_mozy_btn.click if has_start_using_mozy_btn?
+      alert_accept if alert_present?
+    end
+
+    def check_show_welcome_chkbox
+      wait_until { chk_show_welcome_chkbox.visible? }
+      chk_show_welcome_chkbox.check unless chk_show_welcome_chkbox.checked?
+    end
+
+    def poped_up_window
+      found = false
+      current = Time.now
+      begin
+        while Time.now < current + CONFIGS['global']['default_wait_time']
+          found = popup_content_div.visible?
+          if !found
+            break
+          end
+          sleep 3
+        end
+      rescue => e
+        puts e
+        found = false
+      end
+    end
+
+    def check_specific_element(type)
+      wait_until { popup_content_div.visible? }
+      case type
+        when 'Admin Features'
+          find(:xpath, "//a[contains(text(),'Admin Features')]")[:href] == 'http://support.mozy.com/AdminConsoleNewFeatures?type=Itemized'
+          Log.debug 'check Admin Features'
+        when 'File Sync'
+          find(:xpath, "//a[contains(text(),'File Sync')]")[:href] == 'http://support.mozy.com/articles/en_US/New_Feature/MozyEnterprise-Sync'
+          Log.debug 'check File Sync'
+        when 'Quick Start Guide'
+          all(:css, "p.firstRunFooterSpans")[0].element_parent[:href] == 'http://support.mozy.com/articles/en_US/documentation/admin-quickstart-a-en'
+          Log.debug 'check Quick Start Guide'
+        when 'Download Mozy Software'
+          all(:css, "p.firstRunFooterSpans")[1].element_parent[:href] == '/resource?module=resource-downloads'
+          Log.debug 'check Download Mozy Software'
+        when 'Release Notes'
+          all(:css, "p.firstRunFooterSpans")[2].element_parent[:href] == 'http://support.mozy.com/articles/en_US/documentation/admin-release-notes-current-admin-en'
+          Log.debug 'check Release Notes'
+      end
+    end
     # Public: Navigate to menu item on admin console page
     # Note: if bus module is opened, menu will not be clicked
     #
@@ -333,11 +383,20 @@ module Bus
     def partner_created(partner)
       page.driver.browser.switch_to().window(page.driver.browser.window_handles.last)
       dimiss_start_using_mozy
-      find_link(partner.company_info.name).present?
+      if defined?(partner.company_info)
+        find_link(partner.company_info.name).present?
+      else
+        find_link(partner.company_name).present?
+      end
+
     end
 
     def go_to_partner_info(partner)
-      find_link(partner.company_info.name).click
+      if defined?(partner.company_info)
+        find_link(partner.company_info.name).click
+      else
+        find_link(partner.company_name).click
+      end
     end
 
     def visit_skeletor_url
@@ -407,6 +466,22 @@ module Bus
     def get_new_window_page_title()
       page.execute_multiline_script('return window.stop')
       page.driver.browser.title
+    end
+
+    # Public: Dunning Messages
+    #
+    # Example
+    #   admin_console_page.messages
+    #   # => "Your account is past due - Please update your billing information to avoid any interruption in service."
+    #
+    # Returns true
+    def dunning_message(t, msg)
+      if t.nil?
+        wait_until {message_div.visible?}
+        message_div.text.strip.match msg
+      else
+        all(:xpath, "//div[@class='dunning_msg'][@style='']").empty?
+      end
     end
 
     #================================================

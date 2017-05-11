@@ -25,6 +25,7 @@ case TEST_ENV
     ARIA_ENV = ALL_ENV[ENV['ARIA_ENV'] || 'aria_qa']
     # Active AD connection test environment, for example ad_connection_qa
     AD_CONNECTION_ENV = ALL_ENV[ENV['AD_CONNECTION_ENV'] || 'ad_connection_qa']
+    CYBERSOURCE_API_ENV = ALL_ENV[ENV['ARIA_API_ENV'] || 'cybersource_api_qa']
   when /std*/
     ARIA_API_ENV = ALL_ENV[ENV['ARIA_API_ENV'] || 'aria_api_std']
     ARIA_ENV = ALL_ENV[ENV['ARIA_ENV'] || 'aria_std']

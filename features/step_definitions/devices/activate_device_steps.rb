@@ -11,6 +11,15 @@ And /^activate the user's (Server|Desktop) device without a key and with the def
   @clients << client
 end
 
+And /^activate the mozyhome user's (Desktop) device with the default password$/ do  |device_type|
+  @new_clients =[]
+  @clients =[] if @clients.nil?
+  client = KeylessClient.new(@partner.admin_info.email, CONFIGS['global']['test_pwd'], @partner_id, @partner.company_info.name, device_type, @partner.partner_info.type)
+  client.simple_activate_devices
+  @new_clients << client
+  @clients << client
+end
+
 When /^I use keyless activation to activate devices(| unsuccessful| newly)$/  do | type, table|
   attr = table.hashes.first.each do |_, v|
     v.replace ERB.new(v).result(binding)

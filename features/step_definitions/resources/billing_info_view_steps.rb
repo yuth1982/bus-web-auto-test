@@ -18,6 +18,12 @@ Then /^Next renewal supplemental plan server plan details should be:$/ do |plan_
   expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
 end
 
+Then /^purchased plan details should be:$/ do |quota_table|
+  actual = @bus_site.admin_console_page.billing_info_section.quota_info_hashes
+  expected = quota_table.hashes
+  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
+end
+
 Then /^VAT info should be:$/ do |vat_table|
   actual = @bus_site.admin_console_page.billing_info_section.vat_hashes
   expected = vat_table.hashes
@@ -93,3 +99,8 @@ Then /^Fail to change VAT number:$/ do |message|
   @bus_site.admin_console_page.billing_info_section.vat_message.should eq(message)
 end
 
+Then /^Account Status table should be:$/ do |account_status_table|
+  actual = @bus_site.admin_console_page.billing_info_section.account_status_hashes
+  expected = account_status_table.hashes
+  expected.each_index{ |index| expected[index].keys.each{ |key| actual[index][key].should == expected[index][key]} }
+end

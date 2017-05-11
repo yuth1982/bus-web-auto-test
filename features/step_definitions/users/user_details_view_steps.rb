@@ -194,6 +194,10 @@ Then /^I reassign the user to partner (.+)$/ do |new_partner|
   @bus_site.admin_console_page.user_details_section.update_partner(new_partner)
 end
 
+Then /^Partner count shows up with (.+) should be (.+)$/ do |key_word, quota|
+  @bus_site.admin_console_page.user_details_section.find_match_partners(key_word).should == quota.to_i
+end
+
 Then /^the user's partner should be (.+)$/ do |partner|
   @bus_site.admin_console_page.user_details_section.user_partner(partner).should be_true
 end
@@ -201,6 +205,10 @@ end
 Then /^the user's user group should be (.+)$/ do |user_group|
   next if ENV['BUS_ENV'] == 'qa3'
   @bus_site.admin_console_page.user_details_section.users_user_group(user_group).should be_true
+end
+
+Then /^the user's user name should be (.+)$/ do |user_name|
+  @bus_site.admin_console_page.user_details_section.users_user_name.should == user_name
 end
 
 Then /^device table in user details should be:$/ do |table|
@@ -425,6 +433,17 @@ When /^I search and delete user account if it exists by (.+)/ do |account_name|
   rows = @bus_site.admin_console_page.search_list_users_section.search_results_table_rows
   unless rows.to_s.include?('No results found.')
     @bus_site.admin_console_page.search_list_users_section.view_user_details(account_name)
+    @bus_site.admin_console_page.user_details_section.delete_user
+  end
+end
+
+When /^I search and delete user account by new created user name/ do
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_users'])
+  @bus_site.admin_console_page.search_list_users_section.search_user(@user_name)
+  @bus_site.admin_console_page.search_list_users_section.wait_until_bus_section_load
+  rows = @bus_site.admin_console_page.search_list_users_section.search_results_table_rows
+  unless rows.to_s.include?('No results found.')
+    @bus_site.admin_console_page.search_list_users_section.view_user_details(@user_name)
     @bus_site.admin_console_page.user_details_section.delete_user
   end
 end
