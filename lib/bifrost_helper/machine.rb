@@ -6,7 +6,7 @@ module BifrostHelper
       @api_key = api_key
       @auth = get_auth(api_key)
       @base_url = BASE_URL
-      @add_url = 'accounts/machines'
+      @add_url = 'accounts/containers'
       @get_put_delete_url = 'accounts/machine/'
       @begin_time = Time.now
     end
@@ -29,10 +29,15 @@ module BifrostHelper
       if expired?(@begin_time)
         @auth = get_auth(@api_key)
       end
-      body['alias'] = body['alias'] || 'MachineName'
-      key_string = get_keystring(auth)
-      body['keystring'] = get_keystring(auth)
+      #body['alias'] = body['alias'] || 'MachineName'
+      #key_string = get_keystring(auth)
+      #body['keystring'] = get_keystring(auth)
+      #body['keystring'] = 'DV4BSDG44D8TQAD97A3D'
+      Log.debug "==============================="
+      Log.debug "#{@base_url}#{@add_url}"
       Log.debug body.to_json
+      Log.debug header
+      Log.debug "==============================="
       machine = RestClient.post "#{@base_url}#{@add_url}", body.to_json, header
       Log.debug('add 1 machine')
       machine_id = JSON.parse(machine.body)['items'][0]['data']['id']

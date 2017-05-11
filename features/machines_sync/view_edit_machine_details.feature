@@ -165,7 +165,7 @@ Feature: view edit machine details
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21059 @bus @machines_sync @tasks_p2
+  @TC.21059 @bus @machines_sync @tasks_p2 @ROR_smoke
   Scenario: 21059 Verify retention period for MozyEnterprise UK
     When I add a new MozyEnterprise partner:
       | period | users | server plan | country        | net terms |

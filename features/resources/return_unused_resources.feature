@@ -3,7 +3,7 @@ Feature: Return unused resources
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.146 @bus @resources @tasks_p1
+  @TC.146 @bus @resources @tasks_p1 @ROR_smoke
   Scenario: 146 #7206 - returning resources from partner with custom license types results
     When I add a new OEM partner:
       | Root role      | Company Type     |

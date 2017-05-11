@@ -59,6 +59,14 @@ When /^I view partner details by (.+)$/ do |search_key|
   @bus_site.admin_console_page.partner_details_section.wait_until_bus_section_load
 end
 
+When /^Rollback to pooled storage link should (|not )be there$/ do |boolean|
+  if (boolean.to_s == '')
+    @bus_site.admin_console_page.partner_details_section.find_rollback_link.should be_true
+  else
+    @bus_site.admin_console_page.partner_details_section.find_rollback_link.should be_false
+  end
+end
+
 # Public: View admin details by click email in search partner results
 # Required: search list partner section must be visible
 When /^I view admin details by (.+)$/ do |partner_email|

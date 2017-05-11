@@ -3,7 +3,7 @@ Feature: Password policy is saved successfully to db
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.120092 @password_policy @bus @regression
+  @TC.120092 @password_policy @bus @regression @core_function
   Scenario: 120092 [MozyEnterprise]Hipaa partner password policy settings should be saved to database correctly
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | root role  | security |
@@ -50,7 +50,7 @@ Feature: Password policy is saved successfully to db
     And I search and delete partner account by newly created partner company name
 
 
-  @TC.120103 @password_policy @bus @regression
+  @TC.120103 @password_policy @bus @regression @core_function
   Scenario: 120103 [Reseller]Hipaa partner password policy settings should be saved to database correctly
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms | security |
@@ -96,7 +96,7 @@ Feature: Password policy is saved successfully to db
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120104 @password_policy @bus @regression
+  @TC.120104 @password_policy @bus @regression @core_function
   Scenario: 120104 [OEM]Hipaa partner password policy settings should be saved to database correctly
     When I act as partner by:
       | name     | including sub-partners |
@@ -142,7 +142,7 @@ Feature: Password policy is saved successfully to db
     Then I stop masquerading from subpartner
     And I search and delete partner account by newly created subpartner company name
 
-  @TC.120088  @password_policy @bus @regression
+  @TC.120088  @password_policy @bus @regression @core_function
   Scenario: 120088 [MozyEnterprise]Hipaa admin cannot see the password policy link in admin console
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | root role  | security |
@@ -170,7 +170,7 @@ Feature: Password policy is saved successfully to db
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120089  @password_policy @bus @regression
+  @TC.120089  @password_policy @bus @regression @core_function
   Scenario: [Reseller]120089 Hipaa admin cannot see the password policy link in admin console
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms | security |
@@ -198,7 +198,7 @@ Feature: Password policy is saved successfully to db
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120090 @password_policy @bus @regression
+  @TC.120090 @password_policy @bus @regression @core_function
   Scenario: 120090 [OEM]Hippa admin cannot see the password policy link in admin console
     When I add a new OEM partner:
       | Security |
@@ -221,7 +221,7 @@ Feature: Password policy is saved successfully to db
     Then I stop masquerading from subpartner
     And I search and delete partner account by newly created subpartner company name
 
-  @TC.120553 @tasks_p1 @password_policy @bus
+  @TC.120553 @tasks_p1 @password_policy @bus @ROR_smoke
   Scenario: 120553 Setting up a Password policy
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  |
@@ -294,8 +294,8 @@ Feature: Password policy is saved successfully to db
     And I navigate to Add New Admin section from bus admin console page
     And I view the admin details of TC.120555_admin
     And I change admin password to pass!
-    Then Fail to update admin password and the message should be Please enter a password at least 6 characters long
-    And I change admin password to testps
+    Then Fail to update admin password and the message should be Please enter a password at least 8 characters long
+    And I change admin password to testps12!
     Then Succeed to update admin password and the message should be The password for TC.120555_admin has been changed.
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
@@ -395,10 +395,10 @@ Feature: Password policy is saved successfully to db
     And I view user details by newly created user email
     Then I update user password to incorrect password pass! and get the error message:
     """
-    Please enter a password at least 6 characters long
+    Please enter a password at least 8 characters long
     """
     And I update the user password to testps1.
-    And I update the user password to testps
+#    And I update the user password to testps
     And I navigate to Add New Admin section from bus admin console page
     And I view the admin details of TC.120557_admin
     And I change admin password to wrongpass

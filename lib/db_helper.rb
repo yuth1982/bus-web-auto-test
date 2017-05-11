@@ -150,7 +150,8 @@ module DBHelper
   def get_admin_email
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "select username from public.admins where username like '%@gmail.com%' and deleted_at IS NULL and passwordhash IS NOT NULL and username not in (select username from users where username like '%@gmail.com%' and deleted = false) order by id DESC limit 1;"
+      #sql = "select username from public.admins where username like '%@gmail.com%' and deleted_at IS NULL and passwordhash IS NOT NULL and username not in (select username from users where username like '%@gmail.com%' and deleted = false) order by id DESC limit 1;"
+      sql = "select username from public.admins where username like 'mozyautotest%@emc.com%' and deleted_at IS NULL and passwordhash IS NOT NULL and username not in (select username from users where username like 'mozyautotest%@emc.com%' and deleted = false) order by id DESC limit 1;"
       c = conn.exec(sql)
       c.values[0][0]
     rescue PG::Error => e
@@ -164,6 +165,19 @@ module DBHelper
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
       sql = "select username from users where username like '%@decho.com%' and deleted = false and user_group_id = 4151 order by id DESC limit 1;"
+      c = conn.exec(sql)
+      c.values[0][0]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_mh_cybersource_id(user_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select cybersource_id from user_payment_infos where user_id = #{user_id};"
       c = conn.exec(sql)
       c.values[0][0]
     rescue PG::Error => e
@@ -202,18 +216,52 @@ module DBHelper
   def create_machines(user_id, license_name, count, quota)
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "select license_types.id from license_types where
-                license_types.name = '#{license_name}' and
-                license_types.pro_partner_id = (select pro_partners.parent_pro_partner_id from pro_partners where
+      current = Time.now
+      license_type_id = 0
+      pro_partner_id = 0
+      pro_partner_name = ""
+      pro_partner_id_sql = "select pro_partners.parent_pro_partner_id from pro_partners where
                   pro_partners.id = (select user_groups.pro_partner_id from user_groups where
                     user_groups.id = (select users.user_group_id from users where
                       users.id = #{user_id} limit 1)
                   limit 1)
-                limit 1)
-              limit 1;"
-      c = conn.exec sql
-      Log.debug sql
-      license_type_id = c.values[0][0].to_i
+                limit 1;"
+      c = conn.exec pro_partner_id_sql
+      Log.debug pro_partner_id_sql
+      pro_partner_id = c.values[0][0].to_i
+      while Time.now < current + CONFIGS['global']['default_wait_time']
+        sql = "select license_types.id from license_types where
+                license_types.name = '#{license_name}' and
+                license_types.pro_partner_id = #{pro_partner_id} limit 1;"
+        c = conn.exec sql
+        Log.debug sql
+        if !c.values.empty?
+          license_type_id = c.values[0][0].to_i
+          break
+        else
+          pro_partner_id_sql = "select pro_partners.parent_pro_partner_id, pro_partners.name from pro_partners where
+                  pro_partners.id = '#{pro_partner_id}' limit 1;"
+          c = conn.exec pro_partner_id_sql
+          Log.debug pro_partner_id_sql
+          pro_partner_id = c.values[0][0].to_i
+          pro_partner_name = c.values[0][1].to_s
+        end
+      end
+
+
+
+      # sql = "select license_types.id from license_types where
+      #           license_types.name = '#{license_name}' and
+      #           license_types.pro_partner_id = (select pro_partners.parent_pro_partner_id from pro_partners where
+      #             pro_partners.id = (select user_groups.pro_partner_id from user_groups where
+      #               user_groups.id = (select users.user_group_id from users where
+      #                 users.id = #{user_id} limit 1)
+      #             limit 1)
+      #           limit 1)
+      #         limit 1;"
+      # c = conn.exec sql
+      # Log.debug sql
+      # license_type_id = c.values[0][0].to_i
 
       sql = "select id from mozy_pro_keys where
               activated_at is null and
@@ -233,7 +281,9 @@ module DBHelper
         Log.debug sql
         machine_id = c.values[0][0].to_i
 
-        sql = "update machines set space_used = #{quota}::bigint*1024*1024*1024, pending_space_used = 1024, patches = 0, files = 1, last_client_version = null,last_backup_at = now() where id = #{machine_id};"
+        quota_string = ""
+        quota_string = "quota = 0, quota_purchased = 0," if pro_partner_name == "MozyOEM"
+        sql = "update machines set space_used = #{quota}::bigint*1024*1024*1024, "+ quota_string +"pending_space_used = 1024, patches = 0, files = 1, last_client_version = null,last_backup_at = now() where id = #{machine_id};"
         conn.exec sql
         Log.debug sql
 
@@ -257,6 +307,19 @@ module DBHelper
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
       sql = "select id from users where username = '#{email}' limit 1;"
+      c = conn.exec sql
+      c.values[0][0].to_i
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_admin_id_by_email(email)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select id from admins where username = '#{email}' limit 1;"
       c = conn.exec sql
       c.values[0][0].to_i
     rescue PG::Error => e
@@ -326,11 +389,46 @@ module DBHelper
     end
   end
 
+  def set_last_backup_attempt(user_id,weeks_ago)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "UPDATE machines SET last_backup_attempt = '#{Date.today - (weeks_ago * 7)}' WHERE user_id = #{user_id};"
+      conn.exec sql
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+      fail e
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def set_last_backup_at(user_id,days_ago)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "UPDATE machines SET last_backup_at = '#{Date.today - days_ago}' WHERE user_id = #{user_id};"
+      conn.exec sql
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+      fail e
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  # QA is investigating the time zone issue which causes the case failed - BUS-9621.
   def set_backup_suspended_at(user_id,weeks_ago)
 
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "UPDATE users SET backup_suspended_at = '#{Date.today - (weeks_ago * 7)}' WHERE id = #{user_id};"
+      #same_date = (Time.new.hour - 15 >= 0)
+      if time_zone_in_same_day
+        dbLog("backup_suspended_at - local date and ruby script execution date are the same day")
+        sql = "UPDATE users SET backup_suspended_at = '#{Date.today - (weeks_ago * 7)}' WHERE id = #{user_id};"
+      else
+        dbLog("backup_suspended_at - local date and ruby script execution date are NOT the same day")
+        sql = "UPDATE users SET backup_suspended_at = '#{Date.today - 1 - (weeks_ago * 7)}' WHERE id = #{user_id};"
+      end
+      dbLog(sql)
       conn.exec sql
     rescue PG::Error => e
       puts "postgres error: #{e}"
@@ -343,7 +441,15 @@ module DBHelper
   def set_gc_notify_at(user_id,weeks_ago)
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
-      sql = "UPDATE users SET gc_notify_at = '#{Date.today - (weeks_ago * 7)}' WHERE id = #{user_id};"
+      #same_date = (Time.new.hour - 15 >= 0)
+      if time_zone_in_same_day
+        dbLog("gc_notify_at - local date and ruby script execution date are the same day")
+        sql = "UPDATE users SET gc_notify_at = '#{Date.today - (weeks_ago * 7)}' WHERE id = #{user_id};"
+      else
+        dbLog("gc_notify_at - local date and ruby script execution date are NOT the same day")
+        sql = "UPDATE users SET gc_notify_at = '#{Date.today - 1 - (weeks_ago * 7)}' WHERE id = #{user_id};"
+      end
+      dbLog(sql)
       conn.exec sql
     rescue PG::Error => e
       puts "postgres error: #{e}"
@@ -579,6 +685,200 @@ module DBHelper
   end
 
 
+  def get_partner_adr_policy_name(partner_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select adr_policy_name from pro_partners where id = #{partner_id};"
+      Log.debug sql
+      c = conn.exec(sql)
+      c.values[0][0]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_user_groups_adr_from_partner(partner_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select adr_policy_name from user_groups where pro_partner_id = #{partner_id};"
+      Log.debug sql
+      c = conn.exec(sql)
+      c.field_values('adr_policy_name')
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_user_group_adr_policy_name(partner_id, user_group_name)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select adr_policy_name from user_groups where pro_partner_id = #{partner_id} and name = '#{user_group_name}';"
+      Log.debug sql
+      c = conn.exec(sql)
+      c.values[0][0]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_main_adr_jobs(object_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select * from adr_jobs where object_id = #{object_id} and main_job_id is null;"
+      Log.debug sql
+      c = conn.exec(sql)
+      c.values
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_sub_adr_jobs(main_job_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select * from adr_jobs where main_job_id = #{main_job_id};"
+      Log.debug sql
+      c = conn.exec(sql)
+      c.values
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  def get_user_group_id(partner_id, user_group_name)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select id from user_groups where pro_partner_id = #{partner_id} and name = '#{user_group_name}';"
+      Log.debug sql
+      c = conn.exec(sql)
+      c.values[0][0]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+
+  #====================================
+  # public      : get id (main job id) from adr_jobs table by given partner id
+  #
+  # @partner_id : partner id
+  #
+  # @return     : return the id of the adr job record. return nil if no result found.
+  #
+  # example     : DBHelper.get_main_job_id("426024")
+  #====================================
+  def get_main_job_id(partner_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select id from adr_jobs where object_id = #{partner_id};"
+      Log.debug sql
+      c = conn.exec(sql)
+      #if no result found, c.ntuples == 0
+      if c.ntuples > 0 then c.values[0][0] else nil end
+      #c.values[0][0]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+
+  #====================================
+  # public         : get device record with specified columns from machine table
+  #
+  # @query_columns : column table on machine table
+  # @device_id     : device id
+  #
+  # @return : return specified column values of the given device id
+  #
+  # example : DBHelper.get_machine_record(["id", "machine", "vc_policy_name", "vc_policy_grace_period", "vc_status"], "426024")
+  #====================================
+  def get_machine_record(query_columns, device_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      str = ""
+      query_columns.each do |col|
+        str = str + ', ' + col
+      end
+      #======replace the first comma(,) with empty
+      str.sub!(/,/, '')
+      sql = "select" + str + " from machines where id = #{device_id};"
+      Log.debug sql
+      c = conn.exec(sql)
+      #if no result found, c.ntuples == 0
+      if c.ntuples > 0 then c.values else nil end
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+
+  #====================================
+  # public     : get device adr policy name from machine table in db
+  #
+  # @device_id : device id
+  #
+  # @return    : return device adr policy name or nil
+  #
+  # example    : DBHelper.get_device_adr_policy_name_by_device_id("7707388")
+  #====================================
+  def get_device_adr_policy_name_by_device_id(device_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select vc_policy_name from machines where id = #{device_id};"
+      Log.debug sql
+      c = conn.exec(sql)
+      if c.ntuples > 0 then c.values[0][0] else nil end
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+
+  #====================================
+  # public     : get device adr policy name from machine table in db
+  #
+  # @device_id : device id
+  #
+  # @return    : return device adr policy name or nil
+  #
+  # example    : DBHelper.get_device_adr_policy_name_by_device_id("7707388")
+  #====================================
+  def get_device_adr_policy_name_by_user_id_and_device_name(del_ex, user_id, device_name)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      if del_ex == "deleted"
+        sql = "select vc_policy_name from machines where user_id = #{user_id} and alias = '#{device_name}' and deleted = 't';"
+      else
+        sql = "select vc_policy_name from machines where user_id = #{user_id} and alias = '#{device_name}' and deleted = 'f';"
+      end
+      Log.debug sql
+      c = conn.exec(sql)
+      if c.ntuples > 0 then c.values[0][0] else nil end
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
   def get_partner_id_by_admin_email(admin_email)
     begin
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
@@ -606,6 +906,19 @@ module DBHelper
     end
   end
 
+  def get_partner_admin_ip(partner_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select requesting_ip from pro_partners where id = #{partner_id};"
+      Log.debug sql
+      c = conn.exec(sql)
+      c.values[0][0]
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
 
   # delete reports that created by automation by email prefix
   def delete_reports_by_email_prefix(admin_email_prefix = CONFIGS['global']['email_prefix'])
@@ -673,9 +986,17 @@ module DBHelper
   end
 
   def delete_users_by_email(email)
+    dbLog("Begin to delete user by email")
     begin
+      dbLog("host: " + @host.to_s)
+      dbLog("port: " + @port.to_s)
+      dbLog("db user: " + @db_user.to_s)
+      dbLog("db name: " + @db_name.to_s)
+      dbLog("begin to connect to the PG")
       conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      dbLog("connection succeed")
       sql = "UPDATE users SET deleted = 't', deleted_time = now(), userhash = null WHERE username like '#{email}' and deleted_time is null;"
+      dbLog("sql clause is: " + sql)
       c = conn.exec sql
       c.check
       puts sql
@@ -686,6 +1007,8 @@ module DBHelper
       end
     rescue PGError => e
       puts 'postgres error'
+      puts e
+      dbLog(e.to_s)
     ensure
       conn.close unless conn.nil?
     end
@@ -772,7 +1095,82 @@ module DBHelper
     end
   end
 
+  #======puts customized comment into the single test case execution log======
+  def dbLog(text)
+    $logFile.puts("======[DB Log] " + text.to_s + "======\n")
+  end
+
+  # delete dialects by partner id
+  def delete_dialects_by_partner_id(partner_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "delete from dialects where pro_partner_id=#{partner_id};"
+      c = conn.exec(sql)
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+  # Public: delete promot from plsql
+  def delete_promo(promo)
+    dbLog("delete promption from promotions table")
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "UPDATE promotions SET deleted_at = now() WHERE code = '#{promo}' and deleted_at is null;"
+      dbLog("delete promotion from promotions table by the plsql clause: " + sql)
+      c = conn.exec(sql)
+      dbLog("result: " + c.to_s)
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+
+    dbLog("delete promption from pro_promotions table")
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "UPDATE pro_promotions SET deleted_at = now() WHERE code = '#{promo}' and deleted_at is null;"
+      dbLog("delete promotion from pro_promitions table by the plsql clause: " + sql)
+      c = conn.exec(sql)
+      dbLog("result: " + c.to_s)
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+
+
+
+
+  end
+
+  # return one record of pro_partners table as a hash
+  def get_pro_partner_table(partner_id)
+    begin
+      conn = PG::Connection.open(:host => @host, :port=> @port, :user => @db_user, :dbname => @db_name)
+      sql = "select * from pro_partners where id = #{partner_id};"
+      c = conn.exec sql
+      c.[](0)
+    rescue PG::Error => e
+      puts "postgres error: #{e}"
+    ensure
+      conn.close unless conn.nil?
+    end
+  end
+
+
+  #======this method is to help for some sql clauses having date updated directly in db which ignores time zone======
+  #======different time zone will cause some casue failed due to not in the same day======
+  #======this method will convert date to the date align with the db time zone======
+  def time_zone_in_same_day
+    local_time_utc_offset = Time.new.strftime("%:z").to_i
+    dbLog("local machine date time zone utc offset is #{local_time_utc_offset.to_s}")
+    time_difference = local_time_utc_offset + 7
+    same_date = (Time.new.hour - time_difference >= 0)
+    #timezone_array=[same_date, time_difference]
+    return same_date
+  end
 
 end
-
-

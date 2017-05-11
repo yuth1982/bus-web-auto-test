@@ -194,6 +194,10 @@ Then /^I reassign the user to partner (.+)$/ do |new_partner|
   @bus_site.admin_console_page.user_details_section.update_partner(new_partner)
 end
 
+Then /^Partner count shows up with (.+) should be (.+)$/ do |key_word, quota|
+  @bus_site.admin_console_page.user_details_section.find_match_partners(key_word).should == quota.to_i
+end
+
 Then /^the user's partner should be (.+)$/ do |partner|
   @bus_site.admin_console_page.user_details_section.user_partner(partner).should be_true
 end
@@ -201,6 +205,10 @@ end
 Then /^the user's user group should be (.+)$/ do |user_group|
   next if ENV['BUS_ENV'] == 'qa3'
   @bus_site.admin_console_page.user_details_section.users_user_group(user_group).should be_true
+end
+
+Then /^the user's user name should be (.+)$/ do |user_name|
+  @bus_site.admin_console_page.user_details_section.users_user_name.should == user_name
 end
 
 Then /^device table in user details should be:$/ do |table|
@@ -429,6 +437,17 @@ When /^I search and delete user account if it exists by (.+)/ do |account_name|
   end
 end
 
+When /^I search and delete user account by new created user name/ do
+  @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['search_list_users'])
+  @bus_site.admin_console_page.search_list_users_section.search_user(@user_name)
+  @bus_site.admin_console_page.search_list_users_section.wait_until_bus_section_load
+  rows = @bus_site.admin_console_page.search_list_users_section.search_results_table_rows
+  unless rows.to_s.include?('No results found.')
+    @bus_site.admin_console_page.search_list_users_section.view_user_details(@user_name)
+    @bus_site.admin_console_page.user_details_section.delete_user
+  end
+end
+
 When /^I change user install override region to (.+)/ do |region|
   @bus_site.admin_console_page.user_details_section.change_region(region)
 end
@@ -613,6 +632,35 @@ Then /^MozyHome user billing info should be:$/ do |billing_table|
       end
     end
   }
+end
+
+Then /^device (.+) detail info in db should be:$/ do |device_name, device_table|
+  machine_table_headers = device_table.hashes.first
+  query_columns = []
+  machine_table_headers.each_key do |key|
+    query_columns << key
+  end
+  #=====this is for the scenario: delete the device on UI, after that, check the device details in mahine table======
+  @device_id = @bus_site.admin_console_page.user_details_section.get_machine_id(device_name) if @old_device_name != device_name
+  Log.debug "======old device name is: #{@old_device_name}, device name is: #{device_name}, device id is: #{@device_id}======"
+  @old_device_name = device_name
+  device_record = DBHelper.get_machine_record(query_columns, @device_id)
+  result_in_hash = Hash.new
+  Log.debug query_columns.size
+  for i in 0..query_columns.size-1
+    if device_record[0][i].nil?
+      Log.debug "======vc policy name is empty======"
+      device_record[0][i] = ""
+    end
+    result_in_hash.merge!({query_columns[i] => device_record[0][i]})
+  end
+  Log.debug result_in_hash
+  Log.debug machine_table_headers
+  result_in_hash.should == machine_table_headers
+end
+
+Then /^I click device (.+) link$/ do |device|
+  @bus_site.admin_console_page.user_details_section.click_device_link(device)
 end
 
 Then /^sync device info should be:$/ do | sync_device_table |

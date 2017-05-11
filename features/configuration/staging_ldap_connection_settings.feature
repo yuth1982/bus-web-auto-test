@@ -7,7 +7,7 @@ Feature: Manage Horizon related settings
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.17476 @bus @2.1 @direct_ldap_integration @authentication_migration @regression
+  @TC.17476 @bus @2.1 @direct_ldap_integration @authentication_migration
   Scenario: 17476 17477 17825 17478 17479 17480 17482 17484 17487 Verify manage ldap settings works
     # Scenario: 17476 Successfully verify 'Test Connection' button should work with valid host
     When I add a new MozyEnterprise partner:
@@ -115,3 +115,43 @@ Feature: Manage Horizon related settings
       |sso.connect.pingidentity.com|sso.connect.pingidentity.com | abcdefghijkl     |
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
+
+
+  @TC.121828 @TC.121830 @bus @admin @ldap_sequence @regression @core_function
+  Scenario: 121828 - Admin SSO setting in LDAP Push
+    # Scenario: 121828 Admin SSO setting in LDAP Push
+    # step1 - create a parnter
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan | net terms |
+      | 12     | 8     | 100 GB      | yes       |
+    Then New partner should be created
+    # step2 - on partner detail section, set allow_ad_authentication to "t"
+    When I add partner settings
+      | Name                    | Value | Locked |
+      | allow_ad_authentication | t     | true   |
+    And I act as newly created partner account
+    # step3 - navigator to Authentication Policy section
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
+    # step4 - choose LDAP Push, check / uncheck the SSO and check the UI after refresh
+    And I choose LDAP Push as Directory Service provider
+    And I check enable sso for admins to log in with their network credentials
+    And I save the changes
+    Then I refresh the authentication policy section
+    And sso for admins to log in with their network credentials is checked
+    And I uncheck enable sso for admins to log in with their network credentials
+    And I save the changes
+    Then I refresh the authentication policy section
+    And sso for admins to log in with their network credentials is unchecked
+
+    # @TC.121830 - Admin SSO setting in LDAP Pull
+    # step5 - choose LDAP Pull, check / uncheck the SSO and check the UI after refresh
+    And I choose LDAP Pull as Directory Service provider
+    And I check enable sso for admins to log in with their network credentials
+    And I save the changes
+    Then I refresh the authentication policy section
+    And sso for admins to log in with their network credentials is checked
+    And I uncheck enable sso for admins to log in with their network credentials
+    And I save the changes
+    Then I refresh the authentication policy section
+    And sso for admins to log in with their network credentials is unchecked

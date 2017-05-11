@@ -7,7 +7,7 @@ Feature: Add a new MozyEnterprise DPS partner
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.22365 @bus @2.7 @add_new_partner @mozyenterprisedps @regression
+  @TC.22365 @bus @2.7 @add_new_partner @mozyenterprisedps @regression @core_function
 Scenario: 22365 Add New MozyEnterprise DPS Partner - US - Yearly - 2 TB
   When I add a new MozyEnterprise DPS partner:
     | period | base plan | country       | address           | city      | state abbrev | zip   | phone          | sales channel |
@@ -158,4 +158,100 @@ Scenario: 22365 Add New MozyEnterprise DPS Partner - US - Yearly - 2 TB
 #    Then 2 new user should be created
 #
 
+  @TC.22481 @bus @dps_partner @tasks_p3
+  Scenario: Mozy-22481: Verify that general functions work for DPS admin.
+    When I add a new MozyEnterprise DPS partner:
+      | period | base plan | country       |
+      | 12     | 2         | United States |
+    And New partner should be created
+    Then I act as newly created partner account
+    And I add new user(s):
+      | name          | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | TC.22481 user | (default user group) | Desktop      | 10            | 1       | yes          |
+    Then 1 new user should be created
+    When I navigate to Search / List Users section from bus admin console page
+    And I view user details by newly created user email
+    Then user details should be:
+      | Name:                  | Enable Sync:                |
+      | TC.22481 user (change) | Yes (Send Invitation Email) |
+    When I navigate to Add New Role section from bus admin console page
+    And I add a new role:
+      | Name    | Type          | Parent     |
+      | subrole | Partner admin | Enterprise |
+    And I check all the capabilities for the new role
+    When I navigate to Add New Pro Plan section from bus admin console page
+    And I add a new pro plan for MozyEnterprise DPS partner:
+      | Name    | Company Type | Root Role | Enabled | Public | Currency | Periods | Tax Percentage | Tax Name | Auto-include tax |
+      | subplan | business     | subrole   | Yes     | No     |          | yearly  | 10             | test     | false            |
+    Then add new pro plan success message should be displayed
+    And I add a new sub partner:
+      | Company Name | Pricing Plan | Admin Name |
+      | subpartner   | subplan      | subadmin   |
+    Then New partner should be created
+    When I navigate to Billing Information section from bus admin console page
+    Then Next renewal info table should be:
+      | Period          | Date         |
+      | Yearly (change) | after 1 year |
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name
+
+  @TC.22482 @bus @dps_partner @tasks_p3
+  Scenario: Mozy-22482: Verify that general functions work for DPS user.
+    When I add a new MozyEnterprise DPS partner:
+      | period | base plan | country       |
+      | 12     | 2         | United States |
+    And New partner should be created
+    Then I get the partner_id
+    Then I act as newly created partner account
+    And I add new user(s):
+      | name          | user_group           | storage_type | storage_limit | devices | enable_stash |
+      | TC.22481 user | (default user group) | Desktop      | 10            | 1       | yes          |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    When I navigate to user login page with partner ID
+    Then I log in bus pid console with:
+      | username                 | password                            |
+      | <%=@new_users[0].email%> | <%=CONFIGS['global']['test_pwd'] %> |
+    Then the user log out bus
+    When I log in bus admin console as administrator
+    And I search and delete partner account by newly created partner company name
+
+  @TC.22484 @bus @dps_partner @tasks_p3
+  Scenario: Mozy-22484: Verify that server can configure client when working as DPS admin.
+    When I add a new MozyEnterprise DPS partner:
+      | period | base plan | country       |
+      | 12     | 2         | United States |
+    And New partner should be created
+    Then I act as newly created partner account
+    And I navigate to Download MozyEnterprise Client section from bus admin console page
+    Then I can find client download info of platform Windows in Backup Clients part:
+      | MozyEnterprise Windows |
+    When I clear downloads folder
+    And I click download link for MozyEnterprise Windows
+    Then client started downloading successfully
+    When I create a new client config:
+      | name                         | type    | automatic max load | automatic min idle | automatic interval |
+      | TC22484-server-client-config | Server  | 10                 | 10                 | 7:lock             |
+    Then client configuration section message should be Your configuration was saved.
+    And I add new user(s):
+      | name          | user_group           | storage_type | storage_limit | devices |
+      | TC.22484.User | (default user group) | Server       | 40            | 1       |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords   |
+      | @user_name |
+    And I view user details by newly created user email
+    And I update the user password to default password
+    Then I use keyless activation to activate devices
+      | machine_name   | user_name                   | machine_type |
+      | Machine1_22484 | <%=@new_users.first.email%> | Server       |
+    When I got client config for the user machine:
+      | user_name                   | machine                   | platform | arch | codename       | version |
+      | <%=@new_users.first.email%> | <%=@client.machine_hash%> | windows  | x64  | MozyEnterprise | 0.0.0.1 |
+    When I stop masquerading
+    And I search and delete partner account by newly created partner company name
 

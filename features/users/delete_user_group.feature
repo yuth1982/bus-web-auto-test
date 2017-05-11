@@ -3,7 +3,7 @@ Feature: Edit existing user group
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.21003 @bus @2.5 @manage_storage @delete_user_group @bundled @regression
+  @TC.21003 @bus @2.5 @manage_storage @delete_user_group @bundled @regression @core_function
   Scenario: 21003 [Bundled] Delete User Group with No users
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | net terms | company name              |
@@ -66,7 +66,7 @@ Feature: Edit existing user group
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21007 @bus @2.5 @manage_storage @delete_user_group @bundled @regression
+  @TC.21007 @bus @2.5 @manage_storage @delete_user_group @bundled @regression @core_function
   Scenario: 21007 [Bundled] Delete User Group with users in it
 
     When I add a new Reseller partner:
@@ -130,7 +130,7 @@ Feature: Edit existing user group
     And I search and delete partner account by newly created partner company name
 
 
-  @TC.21008 @bus @2.5 @manage_storage @delete_user_group @itemized @regression
+  @TC.21008 @bus @2.5 @manage_storage @delete_user_group @itemized @regression @core_function
   Scenario: 21008 [Itemized] Delete User Group with No users
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | company name                       |
@@ -192,7 +192,7 @@ Feature: Edit existing user group
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21009 @bus @2.5 @manage_storage @delete_user_group @itemized @regression
+  @TC.21009 @bus @2.5 @manage_storage @delete_user_group @itemized @regression @core_function
   Scenario: 21009 [Itemized] Delete User Group with users in it
       When I add a new MozyEnterprise partner:
         | period | users | server plan | net terms | company name                       |

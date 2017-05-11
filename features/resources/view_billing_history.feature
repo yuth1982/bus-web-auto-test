@@ -7,7 +7,7 @@ Feature: View billing history
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.18898 @smoke @bus @2.0 @view_billing_history @regression
+  @TC.18898 @smoke @bus @2.0 @view_billing_history @regression @core_function
   Scenario: 18898 Verify billing history after create MozyPro partner
     When I add a new MozyPro partner:
       | period | base plan |

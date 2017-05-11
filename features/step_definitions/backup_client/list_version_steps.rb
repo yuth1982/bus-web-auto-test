@@ -1,6 +1,6 @@
 When /^I list versions for:$/ do |table|
-  list_version_condition = table.hashes.first
-  @bus_site.admin_console_page.list_versions_section.list_version(list_version_condition)
+  @list_version_condition = table.hashes.first
+  @bus_site.admin_console_page.list_versions_section.list_version(@list_version_condition)
 end
 
 Then /^I can find the version info in versions list:$/ do |table|
@@ -17,10 +17,12 @@ And /^I delete version (.+) if it exists$/ do |version_number|
   if @bus_site.admin_console_page.list_versions_section.version_listed?(version_number)
     @bus_site.admin_console_page.list_versions_section.view_version(version_number)
     @bus_site.admin_console_page.version_show_section.delete_version
+    time_begin_delete = Time.now
     100.times do
-      @bus_site.admin_console_page.list_versions_section.refresh_bus_section
+      Log.debug "version delete begins at #{time_begin_delete}, now is #{Time.now}"
+      @bus_site.admin_console_page.list_versions_section.list_version(@list_version_condition)
       break unless @bus_site.admin_console_page.list_versions_section.version_listed?(version_number)
-      sleep(5)
+      sleep(30)
     end
   end
 end

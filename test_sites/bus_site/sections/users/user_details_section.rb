@@ -19,6 +19,7 @@ module Bus
     element(:user_group_search_img, css: "img[alt='Search-button-icon']")
     element(:user_group_details_link, xpath: "//span[starts-with(@id,'user-display-usergroup-')]//a[starts-with(@href, '/user_groups/show/')]")
     element(:change_partner_link, xpath: "//span[starts-with(@id,'user-display-partner-')]//a[text()='(change)']")
+    element(:partner_name_text, xpath: "//input[@name='partner_name']")
     element(:change_partner_submit_button, xpath: "//span[starts-with(@id,'user-change-partner-')]//input[@name='commit']")
     element(:view_product_keys_link, xpath: "//a[text()='(View Product Keys)']")
     element(:product_key_lbl, xpath: "//div[starts-with(@id, 'all-license-keys-')]//div/div/div[2]/table[2]/tbody/tr/td")
@@ -448,6 +449,16 @@ module Bus
       find(:xpath, "//a[text()='#{user_group}']")
     end
 
+    # Public: Returns user's user name
+    #
+    # Example
+    #    @bus_admin_console_page.user_details_section.users_user_name("User name 1")
+    #
+    # @return [String]
+    def users_user_name
+      find(:xpath, "//form[contains(@action, 'change_name')]/span[@class='view']").text
+    end
+
     # Public: Click change link
     #    Select new user group
     #    Click submit button
@@ -475,6 +486,15 @@ module Bus
       find(:xpath, new_partner_xpath).click
       change_partner_submit_button.click
       wait_until{ !change_partner_submit_button.visible? }
+    end
+
+    def find_match_partners(key_input)
+      change_partner_link.click
+      partner_name_text.type_text(key_input)
+      user_group_search_img.click
+      sleep 2
+      element_list = page.driver.browser.find_elements(:xpath, "//li[contains(text(), '#{key_input}')]")
+      element_list.map{|element|element.text.strip}.size
     end
 
     # Public: Returns user's partner
@@ -536,17 +556,35 @@ module Bus
       Hash[*stash_table_headers.zip(stash_table_rows).flatten]
     end
 
-    def delete_device(device_name)
-      msg = ''
-      device_table.rows.each do |row|
-        if row[0].text == device_name
-          row[-1].find(:css, 'form[id^=machine-delete] a.action').click
-          msg = alert_text
-          alert_accept
-          break;
+    # Delete a device. Accept multiple arguments to support following scenarios
+    # To delete a device only by device name, don't care keeping data or not, provide one argument. e.g.,
+    #   - delete_device("machine001")
+    # To delete a device and require to keep data, or not keep data, provide two arguments. e.g,
+    #   - keep data: delete_device("machine001", "with")
+    #   - not keep data: delete_device("machine001", "without")
+    def delete_device(*args)
+      if args.size == 1
+        msg = ''
+        device_name = args[0]
+        device_table.rows.each do |row|
+          if row[0].text == device_name
+            row[-1].find(:css, 'form[id^=machine-delete] a.action').click
+            msg = alert_text
+            alert_accept
+            break;
+          end
         end
+        msg
+      else
+        device_name = args[0]
+        data_keep = args[1]
+        #click on the set input textbox
+        find(:xpath, "//a[text()='#{device_name}']/../../td[5]//a[contains(@onclick, 'show_delete_stash_popup')]").click
+        wait_until{ delete_device_dlg }
+        puts "Find Delete dialog"
+        delete_device_yes.click if data_keep == "with"
+        delete_device_no.click if data_keep == "without"
       end
-      msg
     end
 
     def delete_sync
@@ -687,7 +725,7 @@ module Bus
     end
 
     def set_user_name(name)
-      find(:xpath, "//div[contains(@id, 'user-show-')]//a[contains(text(),'(change)')]").click
+      find(:xpath, "//form[contains(@action, 'change_name')]//a[contains(text(),'(change)')]").click
       find(:id, "name").type_text name
       e = find(:xpath, "//div[contains(@id, 'user-show-')]//input[@name='commit']")
       e.click
@@ -935,6 +973,9 @@ module Bus
       user_billing_table.hashes
     end
 
+    def click_device_link(device)
+      find(:xpath, "//a[text()='#{device}']").click
+    end
 
     #==============================
     #Public : Get the sync device detail storage info from user detail section and compare with the given table.
@@ -1068,15 +1109,15 @@ module Bus
     #
     #Return : [] None
     #==============================
-    def delete_device(device_name, data_keep)
+    #def delete_device(device_name, data_keep)
       #click on the set input textbox
-      find(:xpath, "//a[text()='#{device_name}']/../../td[5]//a[contains(@onclick, 'show_delete_stash_popup')]").click
-      wait_until{ delete_device_dlg }
-      puts "Find Delete dialog"
-      delete_device_yes.click if data_keep == "with"
-      delete_device_no.click if data_keep == "without"
+      #find(:xpath, "//a[text()='#{device_name}']/../../td[5]//a[contains(@onclick, 'show_delete_stash_popup')]").click
+      #wait_until{ delete_device_dlg }
+      #puts "Find Delete dialog"
+      #delete_device_yes.click if data_keep == "with"
+      #delete_device_no.click if data_keep == "without"
       #wait_until{ !delete_device_dlg.nil? }
-    end
+    #end
 
     #==============================
     #Public : Delete device by the given device name with or without keeping data

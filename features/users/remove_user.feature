@@ -3,7 +3,7 @@ Feature: Remove a user
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.20938 @bus @2.5 @manage_storage @remove_user @bundled @reseller @regression
+  @TC.20938 @bus @2.5 @manage_storage @remove_user @bundled @reseller @regression @core_function
   Scenario: 20938 [Bundled][Reseller] Delete user from new user group
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | net terms |
@@ -118,7 +118,7 @@ Feature: Remove a user
     When I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.20945 @bus @2.5 @manage_storage @remove_user @itemized @enterprise @regression
+  @TC.20945 @bus @2.5 @manage_storage @remove_user @itemized @enterprise @regression @core_function
   Scenario: 20945 [Itemized][Enterprise] Delete user from new user group
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -173,7 +173,7 @@ Feature: Remove a user
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.20946 @bus @2.5 @manage_storage @remove_user @mozypro @regression
+  @TC.20946 @bus @2.5 @manage_storage @remove_user @mozypro @regression @core_function
   Scenario: 20946 [MozyPro] Delete device
     When I add a new MozyPro partner:
       | period | base plan | server plan | net terms |

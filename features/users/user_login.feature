@@ -3,7 +3,7 @@ Feature: User Login
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.123409 @bus @user_login @tasks_p1 @smoke
+  @TC.123409 @bus @user_login @tasks_p1 @smoke @ROR_smoke @qa12
   Scenario: 123409:New created activated admin update user password and log in as user to verify
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |

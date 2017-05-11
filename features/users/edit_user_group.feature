@@ -3,7 +3,7 @@ Feature: Edit existing user group
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.20894 @bus @2.5 @manage_storage @edit_existing_group @bundled @regression
+  @TC.20894 @bus @2.5 @manage_storage @edit_existing_group @bundled @regression @core_function
   Scenario: 20894 [Bundled] Edit User Group
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | net terms | company name              |
@@ -53,7 +53,7 @@ Feature: Edit existing user group
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.20818 @bus @2.5 @manage_storage @edit_existing_group @itemized @regression
+  @TC.20818 @bus @2.5 @manage_storage @edit_existing_group @itemized @regression @core_function
   Scenario: 20818 [Itemized] Edit User Group
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | company name               |
@@ -104,7 +104,7 @@ Feature: Edit existing user group
     And I search and delete partner account by newly created partner company name
 
   # Error messages are not final version, they will be change in the future
-  @TC.20881  @bus @2.5 @manage_storage @edit_existing_group @bundled @negatice @regression
+  @TC.20881  @bus @2.5 @manage_storage @edit_existing_group @bundled @negatice @regression @core_function
   Scenario: 20881 [Bundled][Negative] Edit User Group
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | net terms | company name                        |
@@ -196,7 +196,7 @@ Feature: Edit existing user group
     And I search and delete partner account by newly created partner company name
 
   # Error messages are not final version, they will be change in the future
-  @TC.20829 @bus @2.5 @manage_storage @edit_existing_group @itemized @negative @regression
+  @TC.20829 @bus @2.5 @manage_storage @edit_existing_group @itemized @negative @regression @core_function
   Scenario: 20829 [Itemized][Negative] Edit User Group
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | company name                       |
@@ -212,40 +212,40 @@ Feature: Edit existing user group
       | TC.20829 UG | Shared               | 11              | Shared              | 201            |
     Then Edit user group error messages should be:
       """
-      Not enough Desktop devices available
       Not enough Server devices available
+      Not enough Desktop devices available
       """
     When I edit TC.20829 UG Itemized user group:
       | name        | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
       | TC.20829 UG | Shared               |                 | Shared              |                |
     Then Edit user group error messages should be:
       """
-      Desktop device count required
       Server device count required
+      Desktop device count required
       """
     When I edit TC.20829 UG Itemized user group:
       | name        | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
       | TC.20829 UG | Shared               | -1              | Shared              | -1             |
     Then Edit user group error messages should be:
       """
-      Whole positive integer required for Desktop device count
       Whole positive integer required for Server device count
+      Whole positive integer required for Desktop device count
       """
     When I edit TC.20829 UG Itemized user group:
       | name        | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
       | TC.20829 UG | Shared               | hello           | Shared              | hello          |
     Then Edit user group error messages should be:
       """
-      Whole positive integer required for Desktop device count
       Whole positive integer required for Server device count
+      Whole positive integer required for Desktop device count
       """
     When I edit TC.20829 UG Itemized user group:
       | name        | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
       | TC.20829 UG | Shared               | 1.5             | Shared              | 1.5            |
     Then Edit user group error messages should be:
       """
-      Whole positive integer required for Desktop device count
       Whole positive integer required for Server device count
+      Whole positive integer required for Desktop device count
       """
     When I edit TC.20829 UG Itemized user group:
       | name        | desktop_storage_type | desktop_limited_quota | desktop_devices | server_storage_type | server_limited_quota | server_devices |
@@ -254,8 +254,8 @@ Feature: Edit existing user group
       """
       Use between 0 and 100 GB for Server limited storage.
       Use between 0 and 250 GB for Desktop limited storage.
-      Not enough Desktop devices available
       Not enough Server devices available
+      Not enough Desktop devices available
       """
     When I edit TC.20829 UG Itemized user group:
       | name        | desktop_storage_type | desktop_limited_quota | desktop_devices | server_storage_type | server_limited_quota | server_devices |
@@ -264,8 +264,8 @@ Feature: Edit existing user group
       """
       Server Limited Storage required
       Desktop Limited Storage required
-      Desktop device count required
       Server device count required
+      Desktop device count required
       """
     When I edit TC.20829 UG Itemized user group:
       | name        | desktop_storage_type | desktop_limited_quota | desktop_devices | server_storage_type | server_limited_quota | server_devices |
@@ -274,8 +274,8 @@ Feature: Edit existing user group
       """
       Whole positive integer required for Server Limited Storage
       Whole positive integer required for Desktop Limited Storage
-      Whole positive integer required for Desktop device count
       Whole positive integer required for Server device count
+      Whole positive integer required for Desktop device count
       """
     When I edit TC.20829 UG Itemized user group:
       | name        | desktop_storage_type | desktop_limited_quota | desktop_devices | server_storage_type | server_limited_quota | server_devices |
@@ -284,8 +284,8 @@ Feature: Edit existing user group
       """
       Whole positive integer required for Server Limited Storage
       Whole positive integer required for Desktop Limited Storage
-      Whole positive integer required for Desktop device count
       Whole positive integer required for Server device count
+      Whole positive integer required for Desktop device count
       """
     When I edit TC.20829 UG Itemized user group:
       | name        | desktop_storage_type | desktop_limited_quota | desktop_devices | server_storage_type | server_limited_quota | server_devices |
@@ -294,8 +294,8 @@ Feature: Edit existing user group
       """
       Whole positive integer required for Server Limited Storage
       Whole positive integer required for Desktop Limited Storage
-      Whole positive integer required for Desktop device count
       Whole positive integer required for Server device count
+      Whole positive integer required for Desktop device count
       """
     When I edit TC.20829 UG Itemized user group:
       | name        | desktop_storage_type | desktop_assigned_quota | desktop_devices | server_storage_type | server_assigned_quota | server_devices |
@@ -304,8 +304,8 @@ Feature: Edit existing user group
       """
       Server storage can only be assigned between 0 and 100 GB.
       Desktop storage can only be assigned between 0 and 250 GB.
-      Not enough Desktop devices available
       Not enough Server devices available
+      Not enough Desktop devices available
       """
     When I edit TC.20829 UG Itemized user group:
       | name        | desktop_storage_type | desktop_assigned_quota | desktop_devices | server_storage_type | server_assigned_quota | server_devices |
@@ -314,8 +314,8 @@ Feature: Edit existing user group
       """
       Server Assigned Storage Required
       Desktop Assigned Storage Required
-      Desktop device count required
       Server device count required
+      Desktop device count required
       """
     When I edit TC.20829 UG Itemized user group:
       | name        | desktop_storage_type | desktop_assigned_quota | desktop_devices | server_storage_type | server_assigned_quota | server_devices |
@@ -324,8 +324,8 @@ Feature: Edit existing user group
       """
       Whole positive integer required for Server Assigned Storage
       Whole positive integer required for Desktop Assigned Storage
-      Whole positive integer required for Desktop device count
       Whole positive integer required for Server device count
+      Whole positive integer required for Desktop device count
       """
     When I edit TC.20829 UG Itemized user group:
       | name        | desktop_storage_type | desktop_assigned_quota | desktop_devices | server_storage_type | server_assigned_quota | server_devices |
@@ -334,8 +334,8 @@ Feature: Edit existing user group
       """
       Whole positive integer required for Server Assigned Storage
       Whole positive integer required for Desktop Assigned Storage
-      Whole positive integer required for Desktop device count
       Whole positive integer required for Server device count
+      Whole positive integer required for Desktop device count
       """
     When I edit TC.20829 UG Itemized user group:
       | name        | desktop_storage_type | desktop_assigned_quota | desktop_devices | server_storage_type | server_assigned_quota | server_devices |
@@ -344,8 +344,8 @@ Feature: Edit existing user group
       """
       Whole positive integer required for Server Assigned Storage
       Whole positive integer required for Desktop Assigned Storage
-      Whole positive integer required for Desktop device count
       Whole positive integer required for Server device count
+      Whole positive integer required for Desktop device count
       """
     When I edit TC.20829 UG Itemized user group:
       | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices |

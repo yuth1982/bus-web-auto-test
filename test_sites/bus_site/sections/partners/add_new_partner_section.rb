@@ -4,10 +4,16 @@ module Bus
 
     # Private elements
     #
+    elements(:flash_errors, xpath: "//div[@id='partner-new-errors']/ul/li")
+    element(:cvv2_what_is_this, xpath: "//a[contains(@onclick, 'cvv2help')]")
+    element(:cvv2_help, xpath: "//div[@id='cvv2help']/h3")
+    element(:cvv2_close, xpath: "//a[text()='(click to close)']")
+
     # Company Info
     #
     element(:new_partner_name_tb, id: 'new_partner_name')
     element(:contact_country_select, id: 'partner_new_contact_country')
+    element(:contact_country_selected, xpath: "//select[@id='partner_new_contact_country']/option[@selected='selected']")
     element(:contact_state_tb, id: 'partner_new_contact_state')
     element(:contact_state_us_select, id: 'partner_new_contact_state_us')
     element(:contact_state_ca_select, id: 'partner_new_contact_state_ca')
@@ -101,6 +107,10 @@ module Bus
         fill_initial_purchase(partner)
         set_pre_sub_total(partner)
         next_btn.click
+        if !flash_errors[0].nil?
+          Log.info "Error when adding a new partner: " + flash_errors[0].text
+          return
+        end
         wait_time = CONFIGS['global']['max_wait_time']
         wait_until(wait_time) do
           back_btn.visible?  # wait for fill credit card info
@@ -116,6 +126,11 @@ module Bus
           fill_credit_card_info(partner.credit_card)
         end
         set_order_summary(partner)
+        if partner.credit_card.cvv2 == 'true'
+          cvv2_what_is_this.click
+          cvv2_help.text.should == 'What is the CVV2 code?'
+          cvv2_close.click
+        end
 
         wait_until { !locate(:css, "div#cc-details input#submit_button").nil? && create_partner_btn.visible? && create_partner_btn['disabled'] != 'true' }
         create_partner_btn.click
@@ -153,6 +168,17 @@ module Bus
     # Returns error message text
     def aria_errors
       aria_errors_div.text
+    end
+
+    # Public: Messages for adding new account errors
+    #
+    # Example
+    #   add_new_partner_section.aria_errors
+    #   # => "Could not validate payment information"
+    #
+    # Returns error message text
+    def add_account_errors
+      flash_errors[0].text
     end
 
     # Public: Order Summary Hashes
@@ -243,7 +269,7 @@ module Bus
         else
           raise "Unable to find partner type of #{partner.partner_info.type}"
       end
-     end
+    end
 
     def check_mozyenterprise_dps_plan
       user_plan = !(locate(:xpath,"//label[contains(text(),'MozyEnterprise User')]").nil?)
@@ -489,6 +515,10 @@ module Bus
       new_admin_display_name_tb.type_text(partner.admin_name)
       new_admin_username_tb.type_text(partner.admin_email_address)
       create_sub_partner_btn.click
+    end
+
+    def verify_default_country
+      contact_country_selected.text
     end
   end
 end

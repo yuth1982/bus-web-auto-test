@@ -3,7 +3,7 @@ Feature: The capabilities that govern the HIPAA compliant root admin role should
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.120082  @bus @regression
+  @TC.120082  @bus @regression @core_function
   Scenario: 120082 [MozyEnterprise]Hipaa sub admin cannot see the activate admin link in admin console
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | root role  | security |
@@ -60,7 +60,7 @@ Feature: The capabilities that govern the HIPAA compliant root admin role should
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120087  @bus @regression
+  @TC.120087  @bus @regression @core_function
   Scenario: [Reseller]120087 Hipaa sub admin cannot see the activate admin link in admin console
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms | security |
@@ -117,7 +117,7 @@ Feature: The capabilities that govern the HIPAA compliant root admin role should
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
     
-  @TC.120085 @bus @regression
+  @TC.120085 @bus @regression @core_function
   Scenario: 120085 [OEM]Hippa admin cannot see the activate admin link in admin console
     When I add a new OEM partner:
       | Root role     | Security | Company Type     |
@@ -172,7 +172,7 @@ Feature: The capabilities that govern the HIPAA compliant root admin role should
     Then I stop masquerading from subpartner
     And I search and delete partner account by newly created subpartner company name
 
-  @TC.120069 @bus  @need_test_account @env_dependent @regression
+  @TC.120069 @bus  @need_test_account @env_dependent @regression @core_function
   Scenario: 120069 HIPAA for MozyPro US partner and sub-partners
     When I add a new MozyPro partner:
       | period | base plan | security | net terms |
@@ -208,7 +208,7 @@ Feature: The capabilities that govern the HIPAA compliant root admin role should
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120077 @bus @regression
+  @TC.120077 @bus @regression @core_function
   Scenario: 120077 HIPAA for Mozy Reseller US partner and sub-partners
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms | security |
@@ -243,7 +243,7 @@ Feature: The capabilities that govern the HIPAA compliant root admin role should
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120079 @bus @regression
+  @TC.120079 @bus @regression @core_function
   Scenario: 120079 HIPAA for Mozy Enterprize and sub-partners
     When I add a new MozyEnterprise partner:
       | period | users  | net terms | security |
@@ -278,7 +278,7 @@ Feature: The capabilities that govern the HIPAA compliant root admin role should
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120080 @bus @regression
+  @TC.120080 @bus @regression @core_function
   Scenario: 120080 HIPAA for Mozy OEM and sub-partners
     When I add a new OEM partner:
       | company_name  | security |

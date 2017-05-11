@@ -277,3 +277,10 @@ Then /^Navigation item (.+) should be (un)?available$/ do |link, t|
   @bus_site.admin_console_page.has_navigation?(link).should == t.nil?
 end
 
+And /^I maximize the automation browser$/ do
+  page.driver.browser.manage.window.maximize
+end
+
+And /^I should( not)* see message (.+) on the top$/ do |t, msg|
+  @bus_site.admin_console_page.dunning_message(t, msg).should be_true
+end

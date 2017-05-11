@@ -7,6 +7,7 @@ module Bus
     element(:search_admin_btn, xpath: "//table[@id='search_box']//input[@value='Submit']")
     element(:search_results_table, xpath: "//div[@id='admin-search-content']/div/div/table")
     element(:clear_search_link, link: "Clear search")
+    element(:delete_admin, xpath: "//a[text()='Delete Admin']")
 
     def search_admin(search_key)
       search_admin_tb.type_text(search_key)
@@ -16,6 +17,10 @@ module Bus
 
     def search_admin_table_empty
       !(locate(:xpath,"//td[contains(text(),'No results')]").nil?)
+    end
+
+    def view_admin_detail(admin_name)
+      find(:xpath, "//a[contains(text(), '" + admin_name + "')]").click
     end
 
   end

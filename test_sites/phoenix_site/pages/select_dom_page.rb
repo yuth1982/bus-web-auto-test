@@ -10,6 +10,7 @@ module Phoenix
     # Select dom page
     #
     element(:country_select, id: "person_country")
+    element(:country_selected, xpath: "//select[@id='person_country']/option[@selected='selected']")
     #
     # Various elements
     #
@@ -17,6 +18,8 @@ module Phoenix
     element(:continue_btn, css: "input.img-button")
     element(:back_btn, id: "back_button")
     element(:submit_btn, id: "submit_button")
+    element(:mozypro_radio_btn, id: "product_mozypro")
+    element(:mozyhome_radio_btn, id: "product_mozyhome")
     #
     # Public : verify dom elements
     #
@@ -115,5 +118,21 @@ module Phoenix
           end
       end
     end
+
+    def register_partner(type)
+      continue_btn.click
+      wait_until { !first(:xpath, "//input[contains(@id,'username')]").nil? }
+      case type
+        when 'MozyPro'
+          mozypro_radio_btn.click
+        when 'MozyHome'
+          mozyhome_radio_btn.click
+      end
+    end
+
+    def get_selected_country
+      country_selected.text
+    end
+
   end
 end

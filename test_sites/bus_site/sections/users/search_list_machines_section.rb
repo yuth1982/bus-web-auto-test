@@ -109,5 +109,9 @@ module Bus
       replace_message.text
     end
 
+    def click_clear_search
+      clear_search_link.click
+    end
+
   end
 end

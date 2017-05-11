@@ -3,7 +3,7 @@ Feature: Transfer Resources
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.428 @tasks_p1 @resuorces @bus
+  @TC.428 @tasks_p1 @resuorces @bus @ROR_smoke
   Scenario: 428 Transfer Resources
     When I add a new OEM partner:
       | Root role      | Company Type     |

@@ -6,7 +6,7 @@ Feature: Tax exempt status
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.17526 @firefox @bus @2.0 @enter_tax-exempt_status @regression
+  @TC.17526 @firefox @bus @2.0 @enter_tax-exempt_status @regression @core_function
   Scenario: 17526 Verify default tax-exempt status of a new Yearly MozyPro partner
     When I add a new MozyPro partner:
       | period | base plan | server plan | country | vat number   | net terms |
@@ -20,7 +20,7 @@ Feature: Tax exempt status
     And API* Aria tax exempt status for newly created partner aria id should be State/Province and Federal/National Tax Exempt
     Then I search and delete partner account by newly created partner company name
 
-  @TC.17527 @firefox @bus @2.0 @enter_tax-exempt_status @regression
+  @TC.17527 @firefox @bus @2.0 @enter_tax-exempt_status @regression @core_function @ROR_smoke
   Scenario: 17527 Verify default tax-exemtp status of a new Biennially MozyEnterprise partner
     When I add a new MozyEnterprise partner:
       | period | users | country | vat number   | net terms |
@@ -34,7 +34,7 @@ Feature: Tax exempt status
     And API* Aria tax exempt status for newly created partner aria id should be State/Province and Federal/National Tax Exempt
     Then I search and delete partner account by newly created partner company name
 
-  @TC.17528 @firefox @bus @2.0 @enter_tax-exempt_status @regression
+  @TC.17528 @firefox @bus @2.0 @enter_tax-exempt_status @regression @core_function
   Scenario: 17528 Verify default tax-exemtp status of a new Monthly Reseller partner
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | country | vat number    | net terms |
@@ -47,7 +47,7 @@ Feature: Tax exempt status
       | IT03018900245 |
     And API* Aria tax exempt status for newly created partner aria id should be State/Province and Federal/National Tax Exempt
     Then I search and delete partner account by newly created partner company name
-  @TC.17547 @bus @2.0 @enter_tax-exempt_status @regression
+  @TC.17547 @bus @2.0 @enter_tax-exempt_status @regression @core_function
     Scenario: 17547 No taxes charged when create a new Monthly MozyPro partner
       When I add a new MozyPro partner:
         | period | base plan | country | vat number   | net terms |
@@ -59,7 +59,7 @@ Feature: Tax exempt status
         | Total Charges     |          |            | $19.99      |
       And New partner should be created
 
-  @TC.17555 @bus @2.0 @enter_tax-exempt_status @regression
+  @TC.17555 @bus @2.0 @enter_tax-exempt_status @regression @core_function
   Scenario: 17555 No taxes charged when create a new Yearly MozyEnterprise partner
     When I add a new MozyEnterprise partner:
       | period | users | country | vat number   | net terms |
@@ -71,7 +71,7 @@ Feature: Tax exempt status
       | Total Charges         |          |            | $95.00      |
     And New partner should be created
 
-  @TC.17556 @bus @2.0 @enter_tax-exempt_status @regression
+  @TC.17556 @bus @2.0 @enter_tax-exempt_status @regression @core_function
   Scenario: 17556 No taxes charged when create a new Monthly Reseller partner
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | country | vat number    | net terms |

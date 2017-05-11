@@ -20,6 +20,9 @@ module Bus
     section(:edit_password_policy_section, EditPasswordPolicySection, id: 'setting-edit_password_policy')
     section(:edit_client_version_section, EditClientVersionSection, id: 'setting-edit_client_version')
     section(:network_domain_section, NetworkDomainSection, id: 'setting-netdomains_list-content')
+    section(:data_retention_section, DataRetentionSection, id: 'setting-adr_status')
+    section(:data_retention_section_popup, DataRetentionSectionPopup, id: 'popup-body')
+    section(:blocked_deprovision, BlockedDeprovision, id: 'authentication_policies-blocked_deprovisions')
 
     # Users section
     section(:search_list_users_section, SearchListUsersSection, id: 'user-list')
@@ -51,7 +54,7 @@ module Bus
     section(:change_plan_section, ChangePlanSection, id: "resource-change_billing_plan")
     section(:change_payment_info_section, ChangePaymentInfoSection, id: "resource-change_credit_card")
     section(:billing_history_section, BillingHistorySection, id: "resource-all_charges")
-    section(:billing_info_section, BillingInfoSection, id: "resource-billing")
+    section(:billing_info_section, BillingInfoSection, css: "div[id^=resource-billing]")#id: "resource-billing"
     section(:change_period_section, ChangePeriodSection, id: "resource-change_billing_period")
     section(:manage_resources_section, ManageResourcesSection, id: "resource-available_key_list")
     section(:manage_user_group_resources_section, ManageUserGroupResourcesSection , css: "div[id^=resource-group_available_keys-]")
@@ -96,6 +99,8 @@ module Bus
     section(:branding_section, BrandingSection, xpath: "//li[@id='nav-cat-site_branding']/ul/li[4]/a")
     #section(:footer_branding_section, BrandingSection, xpath: "//*[@id='site_branding-webrestore_site-tabs']/ul[1]/li[3]")
     #iframe(:css_iframe, CSSIframe, :id, 'site_branding-webrestore_site-content')
+    section(:dialect_section, DialectListSection, id: 'dialect-list')
+    section(:smtp_settings_section, SMTPSettingsSection, id: 'email_template-smtp')
 
     # support section
     section(:contact_section, ContactSection, xpath: "//a[text()='Contact']")
@@ -103,12 +108,24 @@ module Bus
     # internal tools
     section(:manage_vatfx_rates_section, ManageVATTXRatesSection, id: "internal-add_vat_rate")
     section(:manage_pending_deletes_section, ManagePendingDeletesSection, id: "internal-manage_pending_deletes")
+    section(:manage_ldap_connectors_section, ManageLDAPConnectorsSection, id: "internal-manage_ldap_connectors")
+    section(:add_new_version_section, AddNewVersionSection, id: "internal-create_ldap_connector")
+    section(:transaction_summary_section, TransactionSummarySection, id: "internal-revenue")
+    section(:add_new_promotion_section, AddNewPromotionSection, id: "promotion-new")
+    section(:list_promotions_section, ListPromotionsSection, id: "promotion-list")
+    section(:promotion_details_view_section, PromotionDetailsViewSection, css: 'div[id^=promotion-show-]')
+    section(:add_account_attribute_key_section, AddAccountAttributeKeySection, id: 'internal-add_attribute')
+    section(:list_account_attribute_keys_section, ListAccountAttributeKeysSection, id: 'internal-list_attributes')
+    section(:account_attribute_key_details_section, AccountAttributeKeyDetailsSection, id: 'internal-edit_attribute')
+    section(:partner_signups_report_section, PartnerSignupsReportSection, id: 'internal-partner_signups')
+    section(:manage_internal_jobs_section, ManageInternalJobsSection, id: 'internal-manage_jobs')
 
     #news
     section(:news_section, NewsSection, id: "controller-news")
 
 
     # Private element
+    element(:message_div, xpath: "//div[@class='dunning_msg'][@style='']")
     element(:current_admin_div, id: 'identify-me')
     element(:current_admin_name_link, xpath: "//div[@id='identify-me']/a[last()]")
     element(:stop_masquerading_link, xpath: "//a[text()='stop masquerading']")
@@ -116,6 +133,11 @@ module Bus
 
     # Popup window
     element(:start_using_mozy_btn, id: "start_using_mozy")
+    element(:chk_show_welcome_chkbox, id: "chk_show_welcome")
+    element(:quick_start_guide, xpath:"//p[text()='Quick Start Guide']")
+    #element(:download_mozy_software, xpath:"//p[text()='             Download Mozy Software           ']")
+    element(:download_mozy_software, xpath:"//p[contains(text(), 'Download Mozy Software')]")
+    element(:release_notes, xpath:"//p[text()='Release Notes']")
     element(:popup_content_div, css: "div.popup-window-content")
     element(:close_popup_link, css: "div.close_bar a")
     element(:close_btn, css: "div.popup-window-footer input[value=Close]")
@@ -129,14 +151,22 @@ module Bus
     element(:no_btn, css: "div.popup-window-footer input[value=No]")
     element(:msg_popup_text, css: "div.popup-window-content")
     elements(:delete_popup_btns, css: "div.popup-window-footer input")
+    element(:welcome_page_title, xpath: "//div[@class='headlinePositionDiv']")
+
     # Activate element
     element(:password_set_text, id: 'admin_password')
     element(:password_set_again_text, id: 'admin_password_confirmation')
     element(:continue_activate_btn, xpath: "//input[@name='commit']")
     element(:go_to_account_link, xpath: "//a[text()='Go To Account']")
 
+    # global navigate links
+    element(:dashboard_link, xpath: "//ul[@id='global-nav-links']//a[@href='/dashboard']")
+
     # partner name in the right top corner
     element(:partner_top_link, xpath: "//div[@id='identify-me']/a[1]")
+
+    # partner co-branding image in left top corner
+    element(:top_img, xpath: "//div[@id='top']//img")
 
     # list capabilities section
     element(:list_capabilities_table, xpath: "//div[@id='capabilities-list-content']//table")
@@ -156,6 +186,54 @@ module Bus
       alert_accept if alert_present?
     end
 
+    def click_start_using_mozy
+      wait_until { popup_content_div.visible? }
+      start_using_mozy_btn.click if has_start_using_mozy_btn?
+      alert_accept if alert_present?
+    end
+
+    def check_show_welcome_chkbox
+      wait_until { chk_show_welcome_chkbox.visible? }
+      chk_show_welcome_chkbox.check unless chk_show_welcome_chkbox.checked?
+    end
+
+    def poped_up_window
+      found = false
+      current = Time.now
+      begin
+        while Time.now < current + CONFIGS['global']['default_wait_time']
+          found = popup_content_div.visible?
+          if !found
+            break
+          end
+          sleep 3
+        end
+      rescue => e
+        puts e
+        found = false
+      end
+    end
+
+    def check_specific_element(type)
+      wait_until { popup_content_div.visible? }
+      case type
+        when 'Admin Features'
+          find(:xpath, "//a[contains(text(),'Admin Features')]")[:href] == 'http://support.mozy.com/AdminConsoleNewFeatures?type=Itemized'
+          Log.debug 'check Admin Features'
+        when 'File Sync'
+          find(:xpath, "//a[contains(text(),'File Sync')]")[:href] == 'http://support.mozy.com/articles/en_US/New_Feature/MozyEnterprise-Sync'
+          Log.debug 'check File Sync'
+        when 'Quick Start Guide'
+          all(:css, "p.firstRunFooterSpans")[0].element_parent[:href] == 'http://support.mozy.com/articles/en_US/documentation/admin-quickstart-a-en'
+          Log.debug 'check Quick Start Guide'
+        when 'Download Mozy Software'
+          all(:css, "p.firstRunFooterSpans")[1].element_parent[:href] == '/resource?module=resource-downloads'
+          Log.debug 'check Download Mozy Software'
+        when 'Release Notes'
+          all(:css, "p.firstRunFooterSpans")[2].element_parent[:href] == 'http://support.mozy.com/articles/en_US/documentation/admin-release-notes-current-admin-en'
+          Log.debug 'check Release Notes'
+      end
+    end
     # Public: Navigate to menu item on admin console page
     # Note: if bus module is opened, menu will not be clicked
     #
@@ -164,6 +242,7 @@ module Bus
     #
     # @return [nothing]
     def navigate_to_menu(link_name, use_quick_link = false)
+      log("Dimiss <Start User Mozy> dialog if exists.")
       dimiss_start_using_mozy
       # Looking for link in navigation menu
       find(:xpath, "//ul//a[text()='#{link_name}']")
@@ -304,11 +383,20 @@ module Bus
     def partner_created(partner)
       page.driver.browser.switch_to().window(page.driver.browser.window_handles.last)
       dimiss_start_using_mozy
-      find_link(partner.company_info.name).present?
+      if defined?(partner.company_info)
+        find_link(partner.company_info.name).present?
+      else
+        find_link(partner.company_name).present?
+      end
+
     end
 
     def go_to_partner_info(partner)
-      find_link(partner.company_info.name).click
+      if defined?(partner.company_info)
+        find_link(partner.company_info.name).click
+      else
+        find_link(partner.company_name).click
+      end
     end
 
     def visit_skeletor_url
@@ -317,6 +405,38 @@ module Bus
       using_wait_time 2 do
         fail('Skeletor not working') if page.has_css?('div#dashboard-e-content')
       end
+    end
+
+    def get_top_image_url
+      find('#top a img')[:src]
+    end
+
+    def download_top_image(download_file_name)
+      page.execute_script(
+          "(function(name){
+               link=$$('#top a')[0];
+               img=$$('#top a img')[0];
+               link.writeAttribute('href', img.readAttribute('src'));
+               link.writeAttribute('download',name);
+               link.click();
+            }
+           )('"+download_file_name+"')"
+      )
+    end
+
+    def download_backup_image(download_file_name)
+      dimiss_start_using_mozy
+      page.execute_script(
+          "(function(name){
+              var link=document.createElement('a');
+              document.getElementsByClassName('pie-chart')[0].appendChild(link);
+              img=$$('.pie-chart img')[0];
+              link.writeAttribute('href', img.readAttribute('src'));
+              link.writeAttribute('download',name);
+              link.click();
+            }
+           )('"+download_file_name+"')"
+      )
     end
 
     def open_admin_activate_page(admin_link)
@@ -348,7 +468,60 @@ module Bus
       page.driver.browser.title
     end
 
+    # Public: Dunning Messages
+    #
+    # Example
+    #   admin_console_page.messages
+    #   # => "Your account is past due - Please update your billing information to avoid any interruption in service."
+    #
+    # Returns true
+    def dunning_message(t, msg)
+      if t.nil?
+        wait_until {message_div.visible?}
+        message_div.text.strip.match msg
+      else
+        all(:xpath, "//div[@class='dunning_msg'][@style='']").empty?
+      end
+    end
 
+    #================================================
+    # Public : click Download Mozy Software link when acting as a partner, should navigator to Mozy Software Download section automatically.
+    #================================================
+    def click_download_link_on_welcome_page
+      Log.debug "LogQA : click Download Mozy Software link on welcome page"
+      download_mozy_software.click
+      page.driver.browser.switch_to().window(page.driver.browser.window_handles.last)
+      init = false
+      i = 0
+      while init == false && i < 3
+        begin
+          find(:id, "resource-downloads")
+          init = true
+          Log.debug "LogQA : =======find Mozy Download section"
+        rescue
+          Log.debug "LogQA : =======doesn't find Mozy Download section"
+        end
+        i = i + 1
+        sleep(10)
+      end
+    end
+
+    #=======================
+    # Public : return the welcome page titile, which usual should be "What's New"
+    # Others : in the current code, we use alert_accept as a workaround to close the pop-up window. Find method won't work since the element in cache
+    #          has been locked before the pop-up window appears. Add the method.
+    #=======================
+    def get_welcome_page_title
+      welcome_page_title.text
+    end
+
+    def click_dashboad_link
+      dashboard_link.click
+    end
+
+    def get_dashboard_link_text
+      dashboard_link.text
+    end
 
   end
 end

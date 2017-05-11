@@ -3,11 +3,11 @@ Feature: Bus Smoke Test
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.18361 @slow @bus @2.5 @smoke @enterprise @email @regression
+  @TC.18361 @slow @bus @2.5 @smoke @enterprise @email @regression @core_function
   Scenario: 18361 Mozy Enterprise Smoke Test
     When I add a new MozyEnterprise partner:
       | period | users | server plan | server add on | company name | address           | city      | state abbrev | zip   | country       | phone          | admin name   | cc number        | expire month | expire year | cvv |
-      | 24     | 10    | 100 GB      | 1             | Smoke Test   | 3401 Hillview Ave | Palo Alto | CA           | 94304 | United States | 1-877-486-9273 | vmware admin | 4111111111111111 | 12           | 15          | 123 |
+      | 24     | 10    | 100 GB      | 1             | Smoke Test   | 3401 Hillview Ave | Palo Alto | CA           | 94304 | United States | 1-877-486-9273 | vmware admin | 4111111111111111 | 12           | 32          | 123 |
     Then Sub-total before taxes or discounts should be $4,917.37
     And Order summary table should be:
       | Description           | Quantity | Price Each | Total Price |
@@ -79,6 +79,7 @@ Feature: Bus Smoke Test
       | ACTIVE       |
     When I stop masquerading
     Then I search and delete partner account by Smoke Test
+    And I wait for 1200 seconds
     When I search emails by keywords:
       | content                             |
       | <%=@partner.credit_card.full_name%> |
@@ -88,7 +89,7 @@ Feature: Bus Smoke Test
       | <%=@partner.admin_info.email%>     |
     Then I should see 1 email(s)
 
-  @TC.112 @regression
+  @TC.112 @regression @core_function
   Scenario: 112 MozyPro France
     When I add a new MozyPro partner:
       | period | base plan | create under   | country | vat number    |
@@ -101,6 +102,6 @@ Feature: Bus Smoke Test
     And New partner should be created
     And I delete partner account
 
-  @TC.120711 @prod_206 @regression
+  @TC.120711 @prod_206 @regression @core_function
   Scenario: Verify Skeletor
     Given I verify Skeletor by visiting url

@@ -3,7 +3,7 @@ Feature: Change Partner Status
   Background:
   Given I log in bus admin console as administrator
 
-  @TC.461 @bus @partner @suspend @cancel @regression
+  @TC.461 @bus @partner @suspend @cancel @regression @core_function
   Scenario: 461 - Suspend a partner
     When I add a new MozyPro partner:
       | period | base plan |
@@ -18,7 +18,7 @@ Feature: Change Partner Status
     And I view partner details by newly created partner company name
     And I delete partner account
 
-  @TC.462 @bus @partner @suspend @cancel @regression
+  @TC.462 @bus @partner @suspend @cancel @regression @core_function @ROR_smoke
   Scenario: 462 - Activate a partner
     When I add a new MozyPro partner:
       | period | base plan |

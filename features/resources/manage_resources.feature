@@ -118,7 +118,7 @@ Feature: Manage resources
 #      | qa1+mozyenterprise+assign+key+test2@mozy.com |
 #      | qa1+mozyenterprise+assign+key+test3@mozy.com |
 
-  @TC.18735 @Bug.84691 @regression @bus @2.0 @manage_resources @need_test_account
+  @TC.18735 @Bug.84691 @regression @core_function @bus @2.0 @manage_resources @need_test_account @ROR_smoke
   Scenario: 18735 Verify unallocated storage auto refreshed when allocated storage changed
     When I act as partner by:
       | email                                     |
@@ -136,7 +136,7 @@ Feature: Manage resources
     # Restore partner status
     And I allocate 0 GB Desktop quota to MozyPro partner
 
-  @TC.19165 @BSA.3010 @bus @2.5 @user_stories @stash @need_test_account @env_dependent @regression
+  @TC.19165 @BSA.3010 @bus @2.5 @user_stories @stash @need_test_account @env_dependent @regression @core_function
   Scenario: 19165 US Pro admin can see stash details in manage resources
     When I act as partner by:
       | email                 |

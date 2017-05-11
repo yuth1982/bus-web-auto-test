@@ -19,6 +19,7 @@ module Bus
     element(:reset_password_continue_btn, xpath: "//input[@value='Continue']")
     element(:reset_password_msg_div, xpath: "//div[@id='main']//p")
     element(:start_using_mozy_btn, id: "start_using_mozy")
+    element(:login_error_msg, xpath: "//ul[@class='flash errors']/li")
 
     # Public: Login bus admin console
     #
@@ -100,6 +101,20 @@ module Bus
       end
     end
 
+    # Public: check whether language select field exists in log in page
+    #
+    # return boolean value
+    def has_language_select?
+      has_set_dialect_select?
+    end
+
+    # Public: check whether language select field contains specific option
+    #
+    # return boolean value
+    def language_has_option?(dialect)
+      set_dialect_select.options_text.include?(dialect)
+    end
+
     def go_to_url(url)
       visit(url)
     end
@@ -132,6 +147,10 @@ module Bus
       else
         find(:xpath, "//ul[@class='flash successes']/li").text
       end
+    end
+
+    def get_error_msg
+      login_error_msg.text
     end
   end
 end

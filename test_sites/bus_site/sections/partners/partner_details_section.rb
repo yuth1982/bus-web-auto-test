@@ -40,6 +40,7 @@ module Bus
     element(:partner_root_role_type_select, xpath: "//span[contains(@id,'partner-change-root-role')]/select")
     element(:partner_root_role_submit_btn, xpath: "//span[contains(@id,'partner-change-root-role')]/input")
     element(:partner_root_role_cancel_btn, xpath: "//span[contains(@id,'partner-change-root-role')]/a")
+    element(:partner_root_role_name, xpath: "//span[contains(@id, 'partner-display-root-role')]")
 
     # Change partner account type
     element(:account_type_change_link, xpath: "//a[contains(@onclick,'-acct-type-')][contains(text(),'change')]")
@@ -96,6 +97,10 @@ module Bus
     element(:api_key_div, css: 'div[id^=api-key-box-] fieldset div:nth-child(1)')
     element(:create_or_delete_api_key_link, css: 'div[id^=api-key-box-] fieldset div:nth-child(1) a')
     element(:ip_whitelist_div, css: 'div[id^=api-key-box-] fieldset div:nth-child(2)')
+    element(:ip_whitelist_icon, xpath: "//i[contains(@id, 'ip-whitelist-icon')]")
+    element(:add_ip_whitelist_tab, xpath: "//li[text()='Add IP Whitelist']")
+    element(:ip_address_range, xpath: "//input[@name='auth_ip_whitelist[ip_address]']")
+    element(:save_ip_whitelist, xpath: "//input[contains(@onclick, 'auth_ip_whitelist')]")
 
     # Account attribute table
     element(:account_attributes_table, css: 'form[id^=account_attributes_form] table')
@@ -148,6 +153,17 @@ module Bus
     element(:autogrow_status_select, css: 'select[id^=overdraft_status]')
     element(:submit_autogrow_status_btn, css: 'span[id^=partner-change-overdraft-status-] input[value=Submit]')
 
+    # Co-branding section
+    element(:change_cobranding_status_link, css: 'a[onclick*=partner-display-cobranding-status]')
+    element(:cobranding_status_select, css: 'select[id^=cobranding_status]')
+    element(:submit_cobranding_status_btn, css: 'span[id^=partner-change-cobranding-status-] input[value=Submit]')
+
+    # Ingredient section
+    element(:change_ingredient_status_link, css: 'a[onclick*=partner-display-ingredient-status]')
+    element(:ingredient_status_select, css: 'select[id^=ingredient_status]')
+    element(:submit_ingredient_status_btn, css: 'span[id^=partner-change-ingredient-status-] input[value=Submit]')
+
+
     # Subdomain
     element(:change_subdomain_link, xpath: "//a[text()='(learn more and set up)']")
     element(:h3_section, css: "h3")
@@ -156,6 +172,11 @@ module Bus
     element(:secuirty_field, xpath: "//span[contains(@id,'partner-display-hipaa-compliance-status')]")
 
     element(:ldap_delete_confirm_btn, xpath: "//input[@value='Confirm']")
+
+    # change partner name
+    element(:partner_name_tb, id: 'name')
+    element(:save_changes_partnername, xpath: ".//*[contains(@id,'partner-name-change')]/form/table/tbody/tr/td[2]/input")
+
     # Public: Partner Id
     #
     # Return string
@@ -167,6 +188,11 @@ module Bus
       wait_until_bus_section_load
       { :id => general_info_hash['ID:'],
         :name => find(:xpath, "//div[starts-with(@id,'partner-show-')]/div[2]/div/h3").text }
+    end
+
+    def click_bill_info_link
+      wait_until {billing_info_link.visible?}
+      billing_info_link.click
     end
 
     # Public: General information hash
@@ -416,7 +442,7 @@ module Bus
       view_in_aria_link.click
     end
 
-    # Public: Click act as partner link. Do a three try loop in case the time delay which causes the Act As action failed.
+    # Public: Click act as partner link
     #
     # Example
     #   @bus_site.admin_console_page.partner_details_section.act_as_partner
@@ -424,21 +450,11 @@ module Bus
     # Returns nothing
     def act_as_partner
       act_as_link.click
-      #alert_accept if alert_present?
-      init = false
-      i = 0
-      sleep(5)
-      while init == false && i < 3
-        if alert_present?
-          puts "======Find the <Start using Mozy> dialog======"
-          alert_accept
-          init = true  #Get the alert dialog
-        else
-          puts "======Not found, wait for 5 second and try again.======"
-          i = i + 1
-          sleep(5)
-        end
-      end
+      alert_accept if alert_present?
+    end
+
+    def act_as_partner_with_alert
+      act_as_link.click
     end
 
     def click_admin_name admin_name
@@ -540,6 +556,58 @@ module Bus
       add_stash_to_all_users_link.click
     end
 
+    # Public: Enable co-branding for a partner
+    #
+    # Example:
+    #   @bus_site.admin_console_page.partner_details_section.enable_cobranding
+    #
+    # Returns nothing
+    def enable_cobranding
+      change_cobranding_status_link.click
+      cobranding_status_select.select('Yes')
+      submit_cobranding_status_btn.click
+      wait_until{ !submit_cobranding_status_btn.visible? }
+    end
+
+    # Public: Disable co-branding for a partner
+    #
+    # Example:
+    #   @bus_site.admin_console_page.partner_details_section.disable_cobranding
+    #
+    # Returns nothing
+    def disable_cobranding
+      change_cobranding_status_link.click
+      cobranding_status_select.select('No')
+      submit_cobranding_status_btn.click
+      wait_until{ !submit_cobranding_status_btn.visible? }
+    end
+
+    # Public: Enable require ingredient for a partner
+    #
+    # Example:
+    #   @bus_site.admin_console_page.partner_details_section.enable_require_ingredient
+    #
+    # Returns nothing
+    def enable_require_ingredient
+      change_ingredient_status_link.click
+      ingredient_status_select.select('Yes')
+      submit_ingredient_status_btn.click
+      wait_until{ !submit_ingredient_status_btn.visible? }
+    end
+
+    # Public: Disable require ingredient for a partner
+    #
+    # Example:
+    #   @bus_site.admin_console_page.partner_details_section.disable_require_ingredient
+    #
+    # Returns nothing
+    def disable_require_ingredient
+      change_ingredient_status_link.click
+      ingredient_status_select.select('No')
+      submit_ingredient_status_btn.click
+      wait_until{ !submit_ingredient_status_btn.visible? }
+    end
+
     # Public: Change partner root role
     #
     # Example:
@@ -591,6 +659,23 @@ module Bus
       ip_whitelist_div.find(:css, 'a:first-child').click
       ip_whitelist_div.find(:css, 'input#api_allowed_ips').type_text(ip.to_s)
       ip_whitelist_div.find(:css, 'input[value=Submit]').click
+    end
+
+    def add_ip_whitelist_none_api(ip)
+      if (ip == 'local IP')
+        ip_list = Socket.ip_address_list.detect{|intf| intf.ipv4_private?}
+        ip = ip_list.ip_address
+      end
+      ip_whitelist_icon.click
+      add_ip_whitelist_tab.click
+      ip_address_range.type_text(ip.to_s)
+      save_ip_whitelist.click
+    end
+
+    def remove_ip_whitelist_none_api(ip)
+      ip_whitelist_icon.click
+      ip_whitelist_div.find(:xpath, "//td[text()='" + ip + "']/following-sibling::td/a[text()='Delete']").click
+      alert_accept
     end
 
     # Public: Close partner details frame
@@ -651,6 +736,19 @@ module Bus
       change_external_id_link.click
       external_id_tb.type_text(id)
       submit_external_id_btn.click
+      wait_until_bus_section_load
+    end
+
+    # Public: Change Partner Name
+    #    #
+    # Example pooled_resource_edit_link
+    #  @bus_site.admin_console_page.partner_details_section.change_partner_name('Test_patnername_12345')
+    #
+    # Return nothing
+    def change_partner_name(name)
+      change_name_link.click
+      partner_name_tb.type_text(name)
+      save_changes_partnername.click
       wait_until_bus_section_load
     end
 
@@ -754,6 +852,10 @@ module Bus
 
     def set_vat_number vat
       contact_vat_tb.type_text vat
+    end
+
+    def clear_vat_number
+      contact_vat_tb.type_text ""
     end
 
     def vat_number_visible?
@@ -1012,6 +1114,22 @@ module Bus
       !locate(:xpath,"//a[contains(@onclick,'billing-history')]").nil?
     end
 
+    def find_rollback_link
+      page.has_xpath?("//*[text()='Rollback to pooled storage']")
+    end
+
+    def find_view_in_aria_link
+      expand(billing_information_icon)
+      page.has_xpath?("//a[text()='View in Aria']")
+    end
+    #===========================
+    # Public : click <act as> link
+    #===========================
+    def click_act_as_link
+      act_as_link.click
+      sleep(10)
+    end
+
     private
     def expanded?(element)
       element['class'] == 'icon-chevron-down'
@@ -1029,5 +1147,6 @@ module Bus
     def collapse(element)
       element.click if expanded?(element)
     end
+
   end
 end

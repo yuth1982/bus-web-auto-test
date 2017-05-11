@@ -98,7 +98,7 @@ Feature: view user group details
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.847 @bus @tasks_p2 @user_group_details
+  @TC.847 @bus @tasks_p2 @user_group_details @ROR_smoke
   Scenario: Mozy-847:Change the name on a user group
     When I add a new MozyPro partner:
       | period | base plan | net terms | server plan | root role               |

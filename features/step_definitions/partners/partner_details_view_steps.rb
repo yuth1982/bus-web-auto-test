@@ -11,6 +11,33 @@ When /^I act as newly created (sub)*partner( account)?$/ do |type, account|
   @partner_id = @bus_site.admin_console_page.current_partner_id
 end
 
+When /^I act as newly created (sub)*partner( account)? with welcome page poped up$/ do |type, account|
+  if type.nil?
+    @current_partner = @bus_site.admin_console_page.partner_details_section.partner
+    @bus_site.admin_console_page.partner_details_section.act_as_partner_with_alert
+  else
+    @current_partner = @bus_site.admin_console_page.partner_details_section.subpartner.partner
+    @bus_site.admin_console_page.partner_details_section.subpartner.act_as_partner_with_alert
+  end
+  @partner_id = @bus_site.admin_console_page.current_partner_id
+end
+
+And /^I check welcome page for (.+) link$/ do |type|
+  @bus_site.admin_console_page.check_specific_element(type)
+end
+
+And /^I click start using mozy button$/ do
+  @bus_site.admin_console_page.click_start_using_mozy
+end
+
+And /^I check show welcome checkbox$/ do
+  @bus_site.admin_console_page.check_show_welcome_chkbox
+end
+
+Then /^No welcome page poped up$/ do
+  @bus_site.admin_console_page.poped_up_window.should be_false
+end
+
 When /^I add partner settings$/ do |table|
   #    | Name                    | Value | Locked |
   #    | allow_ad_authentication | t     | yes    |
@@ -74,11 +101,13 @@ When /^I get the (partner_id|subpartner_id)$/ do |type|
     @partner_id = @bus_site.admin_console_page.partner_details_section.subpartner.partner_id()
   end
   Log.debug("partner id is #{@partner_id}")
+  @bus_site.log("partner id is #{@partner_id}")
 end
 
 When /^I get partner aria id$/ do
   @aria_id = @bus_site.admin_console_page.partner_details_section.general_info_hash['Aria ID:']
   Log.debug @aria_id
+  @bus_site.log("aria id is #{@aria_id}")
 end
 
 And /^Partner details (shouldn't|should) have (.+)/ do |type,field|
@@ -161,6 +190,16 @@ end
 
 When /^I add a new ip whitelist (.+)$/ do |ip|
   @bus_site.admin_console_page.partner_details_section.add_ip_whitelist(ip)
+end
+
+When /^I add a none-api ip whitelist (.+)$/ do |ip|
+  @bus_site.admin_console_page.partner_details_section.add_ip_whitelist_none_api(ip)
+  @bus_site.admin_console_page.partner_details_section.wait_until_bus_section_load
+end
+
+When /^I remove a none-api ip whitelist (.+)$/ do |ip|
+  @bus_site.admin_console_page.partner_details_section.remove_ip_whitelist_none_api(ip)
+  @bus_site.admin_console_page.partner_details_section.wait_until_bus_section_load
 end
 
 Then /^Partner ip whitelist should be (.+)$/ do |ip|
@@ -297,6 +336,22 @@ When /^I disable stash for the partner$/ do
   @bus_site.admin_console_page.click_submit
 end
 
+When /^I (enable|disable) co-branding for the partner$/ do |option|
+  if option == 'enable'
+    @bus_site.admin_console_page.partner_details_section.enable_cobranding
+  else
+    @bus_site.admin_console_page.partner_details_section.disable_cobranding
+  end
+end
+
+When /^I (enable|disable) require ingredient for the partner$/ do |option|
+  if option == 'enable'
+    @bus_site.admin_console_page.partner_details_section.enable_require_ingredient
+  else
+    @bus_site.admin_console_page.partner_details_section.disable_require_ingredient
+  end
+end
+
 When /^I add stash to all users for the partner$/ do
   step 'I try to add stash to all users for the partner'
   @bus_site.admin_console_page.click_yes
@@ -323,6 +378,10 @@ end
 
 When /^I change partner external id to (.+)$/ do |external_id|
   @bus_site.admin_console_page.partner_details_section.change_external_id(external_id)
+end
+
+And /^I change partner name to (.+)$/ do |new_name|
+  @bus_site.admin_console_page.partner_details_section.change_partner_name(new_name)
 end
 
 When /^I add a new partner external id$/ do
@@ -392,6 +451,11 @@ When /^I change the partner contact information (to:|default password)$/ do |pas
   @bus_site.admin_console_page.partner_details_section.save_changes(password)
 end
 
+When /^I clear VAT number for the partner contact information$/ do
+  @bus_site.admin_console_page.partner_details_section.clear_vat_number
+  @bus_site.admin_console_page.partner_details_section.save_changes(QA_ENV['bus_password'])
+end
+
 Then /^Partner contact information is changed$/ do
   @bus_site.admin_console_page.partner_details_section.wait_until_bus_section_load
 end
@@ -450,9 +514,17 @@ Then /^I delete partner and verify pending delete$/ do
   })
 end
 
-Then /^I open partner details by partner name in header$/ do
-  @bus_site.admin_console_page.open_partner_details_from_header(@partner)
-  @bus_site.admin_console_page.partner_details_section.expand_contact_info
+Then /^I open partner details by (sub)*partner name in header$/ do |sub|
+  if sub
+    @bus_site.admin_console_page.open_partner_details_from_header(@subpartner)
+  else
+    @bus_site.admin_console_page.open_partner_details_from_header(@partner)
+    @bus_site.admin_console_page.partner_details_section.expand_contact_info
+  end
+end
+
+Then /^I click Billing Info link to show the details$/ do
+  @bus_site.admin_console_page.partner_details_section.click_bill_info_link
 end
 
 Then /(contact info|pooled resource) shouldn't be changed and the error message should be:$/ do  |section,message|
@@ -572,6 +644,8 @@ When /I click the latest date link to view the invoice$/ do
 end
 
 And /^I click admin name (.+) in partner details section$/ do |admin_name|
+  admin_name.gsub!(/@partner.admin_info.full_name/,@partner.admin_info.full_name) if @partner
+  admin_name.gsub!(/@subpartner.admin_name/,@subpartner.admin_name) if @subpartner
   @bus_site.admin_console_page.partner_details_section.click_admin_name(admin_name)
 end
 
@@ -595,5 +669,13 @@ Then /^billing history section should (not )?visible$/ do |visible|
     @bus_site.admin_console_page.partner_details_section.billing_history_visible?.should == true
   else
     @bus_site.admin_console_page.partner_details_section.billing_history_visible?.should == false
+  end
+end
+
+Then /^view in aria link should (not )?be visible$/ do |visible|
+  if visible.nil?
+    @bus_site.admin_console_page.partner_details_section.find_view_in_aria_link.should == true
+  else
+    @bus_site.admin_console_page.partner_details_section.find_view_in_aria_link.should == false
   end
 end

@@ -3,7 +3,7 @@ Feature: Add a new user
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.20934 @bus @active_user @tasks_p2
+  @TC.20934 @bus @active_user @tasks_p2 @ROR_smoke
   Scenario: Mozy-20934:Activation email sent to newly created user
     When I add a new MozyPro partner:
       | period | base plan | root role               |

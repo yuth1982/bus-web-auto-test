@@ -5,7 +5,7 @@ Feature: CMS Content Verification
   Background:
   # Prod-188 : verification of DL content links on pro/home CMS pages
 
-  @TC.188 @phoenix @regression
+  @TC.188 @phoenix @regression @core_function
   Scenario: 188 Verification of download link items in CMS content download section
     When I am at dom selection point:
     And I verify download page contents

@@ -67,7 +67,7 @@ Feature: reset user password
     When I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.126031 @bus @user_login @tasks_p1
+  @TC.126031 @bus @user_login @tasks_p1 @ROR_smoke
   Scenario: 126031:Reset Password from secure.mozy.com
     When I am at dom selection point:
     And I add a phoenix Free user:

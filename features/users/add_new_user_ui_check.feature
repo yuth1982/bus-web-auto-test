@@ -257,3 +257,25 @@ Feature: Add a new user
     And I log in bus admin console as administrator
     Then I search and delete partner account by newly created partner company name
 
+  @TC.22103 @bus @tasks_p3
+  Scenario: Mozy-22103:Create a new user - Special Characters
+    When I add a new MozyPro partner:
+      | period | base plan | server plan | net terms |
+      | 1      | 100 GB    | yes         | yes       |
+    And New partner should be created
+    When I enable stash for the partner
+    And I act as newly created partner
+    And I add new user(s):
+      | name                       | storage_type | storage_limit | devices | enable_stash |
+      | test~!#$%^&*(){}[]:";'`<>? | Desktop      | 10            | 1       | yes          |
+    Then 1 new user should be created
+    And I search user by:
+      | keywords    |
+      | @user_email |
+    And I view user details by @user_email
+    And user resources details rows should be:
+      | Storage                  | Devices                             |
+      | 0 Used / 10 GB Available | Desktop: 0 Used / 1 Available Edit  |
+    Then I delete user
+    And I log in bus admin console as administrator
+    Then I search and delete partner account by newly created partner company name

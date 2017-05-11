@@ -7,7 +7,7 @@ Feature: Manage Horizon related settings
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.17476 @bus @2.1 @direct_ldap_integration @authentication_migration @regression
+  @TC.17476 @bus @2.1 @direct_ldap_integration @authentication_migration @regression @core_function
   Scenario: 17476 17477 17825 17478 17479 17480 17482 17484 17487 Verify manage ldap settings works
     # Scenario: 17476 Successfully verify 'Test Connection' button should work with valid host
     When I add a new MozyEnterprise partner:
@@ -24,23 +24,23 @@ Feature: Manage Horizon related settings
     And I de-select Horizon Manager
     And I click Connection Settings tab
     And I input server connection settings
-      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
-      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+      | Server Host   | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.103.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
-    Then AD server test connection message should be Test passed. Successfully connected to 10.29.99.120 on port 389 using No SSL.
+    Then AD server test connection message should be Test passed. Successfully connected to 10.29.103.120 on port 389 using No SSL.
     And I save the Connection Settings information
     Then server connection settings information should include
-      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
-      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+      | Server Host   | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.103.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     # Scenario: 17825 'Test Connection' should report invalid credentials error
     When I use Directory Service as authentication provider
     And I de-select Horizon Manager
     And I click Connection Settings tab
     And I input server connection settings
-      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username            | Bind Password |
-      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | fake@mtdev.mozypro.local | daf145gvi     |
+      | Server Host   | Protocol | SSL Cert | Port | Base DN                      | Bind Username            | Bind Password |
+      | 10.29.103.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | fake@mtdev.mozypro.local | daf145gvi     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
@@ -50,16 +50,16 @@ Feature: Manage Horizon related settings
     And I de-select Horizon Manager
     And I click Connection Settings tab
     And I input server connection settings
-      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
-      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+      | Server Host   | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.103.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I save the changes
     Then Authentication Policy has been updated successfully
     When I Test Connection for AD
-    Then AD server test connection message should be Test passed. Successfully connected to 10.29.99.120 on port 389 using No SSL.
+    Then AD server test connection message should be Test passed. Successfully connected to 10.29.103.120 on port 389 using No SSL.
     And I save the Connection Settings information
     Then server connection settings information should include
-      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
-      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+      | Server Host   | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.103.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     # Scenario: 17479 Host input should reject invalid parameters
     When I use Directory Service as authentication provider
     And I de-select Horizon Manager

@@ -10,14 +10,14 @@ def firefox_profile
   profile['browser.download.manager.showWhenStarting'] = false
   profile['browser.download.manager.closeWhenDone'] = true
   profile['browser.startup.homepage_override.mstone'] = 'ignore'
-  profile['browser.helperApps.neverAsk.saveToDisk'] = "text/plain;application/csv;text/csv;application/vnd.ms-excel;application/octet-stream;application/x-msdos-program;application/x-apple-diskimage;application/x-debian-package;application/x-redhat-package-manager"
+  profile['browser.helperApps.neverAsk.saveToDisk'] = "text/plain;application/csv;text/csv;application/vnd.ms-excel;application/octet-stream;application/x-msdos-program;application/x-apple-diskimage;application/x-debian-package;application/x-redhat-package-manager;image/png"
   profile.assume_untrusted_certificate_issuer = false
   #profile.native_events = true
   profile
 end
 
 Capybara.register_driver :firefox do |app|
-  Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => firefox_profile)
+ Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => firefox_profile)
 end
 
 Capybara.register_driver :firefox_profile do |app|
@@ -113,3 +113,19 @@ AriaApi::Configuration.url = ARIA_API_ENV['url']
 
 # Setup Aria REST API through aria_sdk
 Aria_SDK = AriaCoreRestClient.new(ARIA_API_ENV['client_no'], ARIA_API_ENV['auth_key'], TEST_ENV == "prod")
+
+if TEST_ENV == 'prod'
+  if PROD_CONFIRM == 'true'
+    puts "Auto continue"
+  else
+    puts "Are you sure to execute on \033[31m#{TEST_ENV}  \033[37m? (Yes/No)"
+    answer = STDIN.gets.chomp
+    puts "answer is " + answer
+    if 'Yes'.casecmp(answer).zero?
+      puts "Manual continue"
+    else
+      exit(1)
+    end
+  end
+
+end

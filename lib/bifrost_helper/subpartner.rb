@@ -54,25 +54,26 @@ module BifrostHelper
           "parent_partner_id": #{body['partner_id']},
           "admin":
           {
-              "username": #{body['username']},
-              "full_name": #{body['full_name']},
+              "username": "#{body['username']}",
+              "full_name": "#{body['full_name']}",
               "external_id": "external id 1",
-              "password": "test123",
-              "language": "en",
-          } ,
-          "name": #{body['name']},
+              "password": "Test1234",
+              "language": "en"
+          },
+          "name": "#{body['name']}",
           "external_id": "external id 2",
           "company_type": "business",
-          "pro_plan_id": 3,
+          "pro_plan_id": #{body['pro_plan_id']},
           "phone": "123-456-7890",
           "billing_address": "123 bifrost blvd",
           "billing_city": "thorsville",
           "billing_state": "utah",
           "billing_country": "iceland",
-          "billing_zip": 12345
+          "billing_zip": "12345",
+          "root_role_id": #{body['root_role_id']}
       }
 HERE
-
+      Log.debug body_
       partner = RestClient.post "#{@base_url}#{@add_url}", body_, header
       Log.debug('add 1 subpartner')
       partner_id = JSON.parse(partner.body)["items"][0]["data"]["id"]

@@ -8,7 +8,7 @@ Feature: View edit admins details
   # Change Password Standard Hipaa
 
   ################################################################################
-  @TC.12435 @bus @admin @tasks_p1 @smoke
+  @TC.12435 @bus @admin @tasks_p1 @smoke @ROR_smoke
   Scenario: 12435 Standard Login admin change sub-admins password successfully
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  |

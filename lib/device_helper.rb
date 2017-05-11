@@ -72,6 +72,13 @@ end
 
 module KeylessDeviceActivation
   include Activation
+
+  #======puts customized comment into the single test case execution log======
+  def KLDALog(text)
+    $logFile.puts("======[KLDA Log] " + text.to_s + "======\n")
+  end
+
+
   # As a user,
   # I want to install a Mozy client in my device, and activate it with my credentials (username and password) and without a license key,
   # then I can enjoy the awesome Mozy services.
@@ -129,6 +136,41 @@ module KeylessDeviceActivation
       client_devices_activate
     end
 
+    def simple_activate_devices
+      get_machines
+      machine_get_info
+    end
+
+    def get_machines
+      uri = URI.parse("#{QA_ENV['bus_host']}")
+      Net::HTTP.start(uri.host, uri.port,
+                      :use_ssl => uri.scheme == 'https', :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
+        url =  "/client/get_machines?alias=#{@machine_alias}&mac=#{@mac}&machineid=#{@machine_hash}&sid=#{@sid}"
+        request = Net::HTTP::Get.new( url )
+        user_hash = Digest::SHA1.hexdigest(@username)
+        request.basic_auth(user_hash, @password)
+        Log.debug url
+        response = http.request request
+        @response = response
+        Log.debug response.body
+      end
+    end
+
+    def machine_get_info
+      uri = URI.parse("#{QA_ENV['bus_host']}")
+      Net::HTTP.start(uri.host, uri.port,
+                      :use_ssl => uri.scheme == 'https', :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
+        url =  "/client/machine_get_info?alias=#{@machine_alias}&country=US&mac=#{@mac}&machineid=#{@machine_hash}&sid=#{@sid}"
+        request = Net::HTTP::Get.new( url )
+        user_hash = Digest::SHA1.hexdigest(@username)
+        request.basic_auth(user_hash, @password)
+        Log.debug url
+        response = http.request request
+        @response = response
+        Log.debug response.body
+      end
+    end
+
     def get_sso_auth_code(access_token = nil)
       get_codename(@company_type)
       enable_partner_to_sso(@partner_id, @partner_name)
@@ -147,15 +189,20 @@ module KeylessDeviceActivation
 
     def enable_partner_to_sso(partner_id, partner_name)
       uri = URI.parse("http://#{QA_ENV['sso_host']}")
+      Log.debug uri
       Net::HTTP.start(uri.host, uri.port,
-                      :use_ssl => uri.scheme == 'https') do |http|
+                        :use_ssl => uri.scheme == 'https') do |http|
         partner_name = CGI::escape (partner_name)
         partner_name = partner_name.gsub(/\+/, ' ')
         string = "/enabled_partners"\
           +"?pro_partner_id="+partner_id\
           +"&pro_partner_name="+partner_name
         Log.debug string
+        Log.debug URI.encode(string)
+        KLDALog("uri is #{string}")
+        KLDALog("uri encode is #{URI.encode(string)}")
         request = Net::HTTP::Get.new( string )
+        #request = Net::HTTP::Get.new( URI.encode(string) )
         response = http.request request
         result = JSON.parse(response.body)
         result.each do |hash|

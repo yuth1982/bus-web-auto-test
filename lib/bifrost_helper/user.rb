@@ -1,5 +1,4 @@
-module BifrostHelper
-  class User
+module BifrostHelper  class User
     include BifrostHelper::Utils
     attr_accessor :auth
     def initialize(api_key)
@@ -12,7 +11,8 @@ module BifrostHelper
     end
 
     def header
-      @header = {'Authorization' => @auth, 'Content-Type' => 'application/json', 'Accept' => 'application/vnd.mozy.bifrost+json;v=1'}
+      #@header = {'Authorization' => @auth, 'Content-Type' => 'application/json', 'Accept' => 'application/vnd.mozy.bifrost+json;v=1'}
+      @header = {'Authorization' => @auth, 'Content-Type' => 'application/json', 'Accept' => VERSION}
     end
 
     # Public: Get the user details
@@ -47,11 +47,16 @@ module BifrostHelper
       if expired?(@begin_time)
         @auth = get_auth(@api_key)
       end
-      body['password'] = body['password'] || 'test123'
-      body['name'] = body['name'] || 'TestUser'
+      #body['password'] = body['password'] || 'test123'
+      #body['name'] = body['name'] || 'TestUser'
+      Log.debug body
+      Log.debug "#{@base_url}#{@add_show_url}"
+      Log.debug body.to_json
+      Log.debug header
       user = RestClient.post "#{@base_url}#{@add_show_url}", body.to_json, header
       Log.debug('add 1 user')
       user_id = JSON.parse(user.body)['items'][0]['data']['id']
+      Log.debug user_id
     end
 
     # Public: Remove a user to the default group of the partner

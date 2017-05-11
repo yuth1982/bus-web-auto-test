@@ -11,7 +11,8 @@ module SSHMigration
 #	detail UI that will do the same thing as this script
   def migrate_to_pooled_storage(partner_id)
 
-    Net::SSH.start(BUS_HOST, USER, :password => PASSWORD) do |session|
+    Net::SSH.start(BUS_HOST, USER, :password => PASSWORD, :host_key => "ssh-rsa") do |session|
+      Log.debug "LogQA: ssh-rsa is the default ssh host key======"
       succ_msg = "1 partners have been migrated successfully, 0 failed"
       script = "script/migrate_to_pooled_storage.rb -e production -p #{partner_id}"
       output = session.exec!("cd /var/www/bus && #{script}")

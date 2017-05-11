@@ -6,7 +6,7 @@ Feature: Manage admin capability change
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.700 @bus @admin @partner_capability_changes @regression
+  @TC.700 @bus @admin @partner_capability_changes @regression @core_function
   Scenario: 700 Check partners list/view check to make sure you can't change the name
 #    When I navigate to List Roles section from bus admin console page
 #    And I clean all roles with name which started with "$AUTOTEST$"
@@ -31,7 +31,7 @@ Feature: Manage admin capability change
     And I delete lastest created admin
     And I delete role @role_name
 
-  @TC.699 @bus @admin @partner_capability_changes @regression
+  @TC.699 @bus @admin @partner_capability_changes @regression @core_function
   Scenario: 699 Check Delete a partner with invalid password
     When I navigate to List Roles section from bus admin console page
     And I clean all roles with name which started with "$AUTOTEST$"
@@ -59,7 +59,7 @@ Feature: Manage admin capability change
     And I delete lastest created admin
     And I delete role @role_name
 
-  @TC.698 @bus @admin @partner_capability_changes @regression
+  @TC.698 @bus @admin @partner_capability_changes @regression @core_function
   Scenario: 698 Check Delete a partner works
     When I navigate to Add New Role section from bus admin console page
     And I add a new role
@@ -84,7 +84,7 @@ Feature: Manage admin capability change
     And I delete lastest created admin
     And I delete role @role_name
 
-  @TC.697 @bus @admin @partner_capability_changes @regression
+  @TC.697 @bus @admin @partner_capability_changes @regression @core_function
   Scenario: 697 Check partners Delete, List/View capability
     When I navigate to Add New Role section from bus admin console page
     And I add a new role
@@ -108,7 +108,7 @@ Feature: Manage admin capability change
     And I delete lastest created admin
     And I delete role @role_name
 
-  @TC.696 @bus @admin @partner_capability_changes @regression
+  @TC.696 @bus @admin @partner_capability_changes @regression @core_function
   Scenario: 696 Check partners Edit, List/View capability
     When I navigate to Add New Role section from bus admin console page
     And I add a new role
@@ -141,7 +141,7 @@ Feature: Manage admin capability change
     And I delete lastest created admin
     And I delete role @role_name
 
-  @TC.695 @bus @admin @partner_capability_changes @regression
+  @TC.695 @bus @admin @partner_capability_changes @regression @core_function
   Scenario: 695 Check partners Add, List/View capability
     When I navigate to Add New Role section from bus admin console page
     And I add a new role
