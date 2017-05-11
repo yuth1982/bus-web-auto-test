@@ -8,83 +8,19 @@ Feature: login as admins
  #  Test Suite : Log In Screen
 
 ##########################################################################
-  @TC.126033 @bus @admin @tasks_p1 @smoke
-  Scenario: 126033 Reset Admin Password from www.mozypro.com
-    When I add a new MozyPro partner:
-      | period | base plan |
-      | 12     | 24 TB     |
-    Then New partner should be created
-    And I view the newly created partner admin details
-    Then I active admin in admin details Hipaa password
-    And I log out bus admin console
-    When I go to page QA_ENV['bus_host']/login
-    And I click forget your password link
-    And I input email @partner.admin_info.email in reset password panel to reset password
-    When I search emails by keywords:
-      | subject                   | to                             |
-      | MozyPro password recovery | <%=@partner.admin_info.email%> |
-    Then I should see 1 email(s)
-    When I click reset password link from the email
-    Then I reset password with reset password
-    And I will see reset password massage Your password has been changed.
-    And I navigate to bus admin console login page
-    And I log in bus admin console with user name @partner.admin_info.email and password reset password
-    Then I login as mozypro admin successfully
-    And I log out bus admin console
-    And I log into phoenix with username @partner.admin_info.email and password reset password
-    Then I login as mozypro admin successfully
-    And I log out bus admin console
-    And I log in bus admin console as administrator
-    And I search and delete partner account by newly created partner company name
-
-  @TC.126043 @bus @admin @tasks_p1 @ldap_sequence @subdomain
-  Scenario: 126043 Reset Admin Password from subdomain.mozypro.com
-    When I act as partner by:
-      | email                        |
-      | qa8+saml+test+admin@mozy.com |
-    And I navigate to Authentication Policy section from bus admin console page
-    And I uncheck enable sso for admins to log in with their network credentials
-    And I save the changes
-    Then Authentication Policy has been updated successfully
-    And I navigate to Add New Admin section from bus admin console page
-    And I add a new admin newly:
-      | User Group           |
-      | (default user group) |
-    Then Add New Admin success message should be displayed
-    When I navigate to the admin subdomain <%=CONFIGS['fedid']['subdomain']%>
-    And I click forget your password link
-    And I input email @admin.email in reset password panel to reset password
-    When I search emails by keywords:
-      | subject                   | to                |
-      | MozyPro password recovery | <%=@admin.email%> |
-    Then I should see 1 email(s)
-    When I click reset password link from the email
-    Then I reset password with default password
-    And I will see reset password massage Your password has been changed.
-    And I navigate to bus admin console login page
-    And I log in bus admin console with user name @admin.email and password default password
-    Then I login as @admin.name admin successfully
-    And I log in bus admin console as administrator
-    And I act as partner by:
-      | email                        |
-      | qa8+saml+test+admin@mozy.com |
-    And I delete admin by:
-      | email             |
-      | <%=@admin.email%> |
-
-  @TC.2134 @bus @log_in_screen @regression
+  @TC.2134 @bus @log_in_screen @regression @core_function
   Scenario: 2134 Attempt to log into BUS with a invalid username
     When I navigate to bus admin console login page
     And I log in bus admin console with user name invalid_name@mozy.com and password Naich4yei8
     Then Login page error message should be Incorrect email or password.
 
-  @TC.2135 @bus @log_in_screen @regression
+  @TC.2135 @bus @log_in_screen @regression @core_function
   Scenario: 2135 Attempt to log into BUS with a invalid password
     When I navigate to bus admin console login page
     And I log in bus admin console with user name qa1+automation+admin@mozy.com and password wrong_password
     Then Login page error message should be Incorrect email or password.
 
-  @TC.2187 @bus @log_in_screen @regression
+  @TC.2187 @bus @log_in_screen @regression @core_function
   Scenario: 2187 Prevent Session Fixation
     When I navigate to bus admin console login page
     And I save login page cookies _session_id value
@@ -96,7 +32,7 @@ Feature: login as admins
       | mozy  |
     And Admin console page cookies _session_id value should not changed
 
-  @TC.120658 @bus @log_in_screen @need_test_account @env_dependent @regression
+  @TC.120658 @bus @log_in_screen @need_test_account @env_dependent @regression @core_function
   Scenario: 120658 Standard admin log into BUS with upper/mixed case username
     When I navigate to bus admin console login page
     Then I log into bus admin console with uppercase Standard admin and Standard password
@@ -105,7 +41,7 @@ Feature: login as admins
     And I log into bus admin console with mixed case Standard admin and Standard password
     And I log out bus admin console
 
-  @TC.120659 @bus @log_in_screen @need_test_account @env_dependent @regression
+  @TC.120659 @bus @log_in_screen @need_test_account @env_dependent @regression @core_function
   Scenario: 120659 Hipaa admin log into BUS with upper/mixed case username
     When I navigate to bus admin console login page
     Then I log into bus admin console with uppercase Hipaa admin and Hipaa password
@@ -181,7 +117,7 @@ Feature: login as admins
       | email             |
       | <%=@admin.email%> |
 
-  @TC.121833 @bus @admin @tasks_p1 @ldap_sequence @smoke @subdomain
+  @TC.121833 @bus @admin @tasks_p1 @ldap_sequence @smoke @subdomain @ROR_smoke
   Scenario: 121833 New LDAP login through LDAP process
     When I act as partner by:
       | email                        |

@@ -16,6 +16,7 @@ module Bus
     element(:message_span, css: "div#resource-purchase_resources-content div span")
     element(:error_message_p, xpath: "//div[@id='resource-purchase_resources-errors']/ul/li")
     element(:pay_error_message, xpath: "//div[@id='resource-purchase_resources_pay-errors']/ul/li")
+    element(:submit_purchase_mozypro_btn, xpath: "//td[@class='form-box-submit']/input[@class='button']")
 
     # Public: Purchase resources
     #
@@ -78,5 +79,9 @@ module Bus
       desktop_quota = resources_labels[3].text.match(/\d+/)[0].to_i
       resources.new(server_license, server_quota, desktop_license, desktop_quota)
     end
+
+
+
+
   end
 end

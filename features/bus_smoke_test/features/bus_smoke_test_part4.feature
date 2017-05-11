@@ -1,4 +1,4 @@
-Feature: BUS smoke test
+Feature: BUS smoke test 4
   pre-condition
   update environment:
   option 1: TEST_ENV = ENV['BUS_ENV'] || 'qa6' in test_sites/configs/configs_helper.rb
@@ -36,7 +36,7 @@ Feature: BUS smoke test
       | name                                                       |
       | Internal Mozy - MozyPro France BUS Smoke Test 3061-0518-27 |
 
-  @bus_emea @TC.125968
+  @bus_emea @TC.125968 @ROR_smoke
   Scenario: Test Case Mozy-125968: BUS EMEA -- Create a user group - Precondition:@TC.125964
     When I act as partner by:
       | name                                                       |
@@ -46,7 +46,7 @@ Feature: BUS smoke test
       | test-group-1 | Shared       |
     Then test-group-1 user group should be created
 
-  @bus_emea @TC.125969
+  @bus_emea @TC.125969 @ROR_smoke
   Scenario: Test Case Mozy-125969: BUS EMEA -- Create a user - Precondition:@TC.125968
     When I act as partner by:
       | name                                                       |
@@ -89,7 +89,7 @@ Feature: BUS smoke test
     Then I navigate to Change Payment Information section from bus admin console page
     When I navigate to Download * Client section from bus admin console page
 
-  @bus_us @TC.125974 @support
+  @bus_us @TC.125974 @support @ROR_smoke
   Scenario: Test Case Mozy-125974: BUS EMEA -- Check the support link - Precondition:@TC.125964
     When I act as partner by:
       | name                                                       |
@@ -98,7 +98,7 @@ Feature: BUS smoke test
     And I click My Support on contact section
     Then I login my support successfully
 
-  @bus_emea @TC.125977
+  @bus_emea @TC.125977 @ROR_smoke
   Scenario: Test Case Mozy-125977: BUS EMEA -- Delete test user - Precondition:@TC.125969
     When I act as partner by:
       | name                                                        |
@@ -107,7 +107,7 @@ Feature: BUS smoke test
     And I view user details by EMEA-user-1
     And I delete user
 
-  @bus_emea @TC.125978
+  @bus_emea @TC.125978 @ROR_smoke
   Scenario: Test Case Mozy-125978: BUS EMEA -- Delete test user group - Precondition:@TC.125964
     When I act as partner by:
       | name                                                       |
@@ -119,7 +119,7 @@ Feature: BUS smoke test
     When I delete user group details by name: test-group-2
 
   #================== partner 'Internal Mozy - MozyPro France BUS Smoke Test Report 4170-3928-56' related scenarios ===================
-  @bus_emea @TC.125973
+  @bus_emea @TC.125973 @ROR_smoke
   Scenario: Test Case Mozy-125973: BUS EMEA -- Run a report
     When I add a new MozyPro partner:
       | company name                                                      | period  | base plan | create under   | net terms | country | coupon                |

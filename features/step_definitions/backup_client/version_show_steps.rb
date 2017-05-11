@@ -9,7 +9,7 @@ Then /^the version general info should be:$/ do |version_details|
 end
 
 And /^I upload file (.+) for the windows version$/ do |file|
-  @bus_site.admin_console_page.version_show_section.upload_db3(file)
+  @bus_site.admin_console_page.version_show_section.upload_db3(file, !TEST_ENV.include?('qa6'))
 end
 
 Then /^I can find the version branding info:$/ do |table|
@@ -44,11 +44,23 @@ Then /^the download link for partner (.+) should be generated$/ do |partner|
 end
 
 And /^I change version status to (enabled|disabled|limited)$/ do |status|
+
+  if TEST_ENV.include?('qa')
+    @bus_site.admin_console_page.version_show_section.reset_building
+    @bus_site.admin_console_page.version_show_section.wait_until_bus_section_load
+#    @bus_site.admin_console_page.version_show_section.refresh_bus_section
+  end
+
   @bus_site.admin_console_page.version_show_section.change_status(status)
 end
 
 Then /^version info should be changed successfully$/ do
-  @bus_site.admin_console_page.version_show_section.version_saved_success_message.should == "Changes saved successfully"
+  if TEST_ENV.include?('qa6')
+    sleep 60
+    @bus_site.admin_console_page.version_show_section.refresh_bus_section
+  else
+    @bus_site.admin_console_page.version_show_section.version_saved_success_message.should == "Changes saved successfully"
+  end
 end
 
 When /^I close version details section$/ do
@@ -57,4 +69,11 @@ end
 
 When /^I refresh version details section$/ do
   @bus_site.admin_console_page.version_show_section.refresh_bus_section
+end
+
+# The step is not a valid step for normal process of client branding
+# just for qa environment with not stable brandy server
+And /^I click reset link in version building status$/ do
+  @bus_site.admin_console_page.version_show_section.reset_building
+  @bus_site.admin_console_page.version_show_section.wait_until_bus_section_load
 end

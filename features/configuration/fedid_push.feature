@@ -8,7 +8,7 @@ Feature: FedID push
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.121644 @ui @bus @2.11 @ldap_push_integration @connection_settings @sync_rules @regression
+  @TC.121644 @ui @bus @2.11 @ldap_push_integration @connection_settings @sync_rules @regression @core_function
   Scenario: ETS 439979 440012 Check UI for connection settings and sync_rules
     When I add a new MozyEnterprise partner:
       | period | users | server plan |
@@ -72,11 +72,11 @@ Feature: FedID push
 
     And I input server connection settings
       | Server Host          | Protocol |   SSL Cert   | Port | Base DN                        |
-      | 10.29.99.120         |  LDAPS   | abcdefghijkl | 389  | dc=mtdev, dc=mozyops, dc=local |
+      | 10.29.103.120        |  LDAPS   | abcdefghijkl | 389  | dc=mtdev, dc=mozyops, dc=local |
     And I save the changes
     Then server connection settings information should include
       | Server Host          | Protocol |   SSL Cert   | Port | Base DN                        |
-      | 10.29.99.120         |  LDAPS   | abcdefghijkl | 389  | dc=mtdev, dc=mozyops, dc=local |
+      | 10.29.103.120        |  LDAPS   | abcdefghijkl | 389  | dc=mtdev, dc=mozyops, dc=local |
 
     When I click Sync Rules tab
     And Scheduled Sync should be invisible
@@ -206,7 +206,7 @@ Feature: FedID push
     And I search and delete partner account by newly created partner company name
 
 
-  @TC.121630 @ui @bus @2.11 @ldap_push_integration @attribute_mapping @SAML_Authentication @sync_rules @regression
+  @TC.121630 @ui @bus @2.11 @ldap_push_integration @attribute_mapping @SAML_Authentication @sync_rules @regression @core_function
   Scenario: 121630 121631 121645 121646 121647 121648 120740 120744 Check UI for attribute mapping, SAML Authentication, sync rules
   # Scenario: 121630 Happy Path: Initial values for SAML Authentication for a clean partner
     When I add a new MozyEnterprise partner:
@@ -285,6 +285,61 @@ Feature: FedID push
     And I search and delete partner account by newly created partner company name
 
 
+  @TC.121635 @121640 @121643 @ui @bus @ldap_push_integration @connection_settings @sync_rules @regression @core_function
+  Scenario: 121635 - Invalid Port can not be saved in Connection Settings
+    When I add a new MozyEnterprise partner:
+      | period | users | server plan |
+      | 12     | 18    | 100 GB      |
+    Then New partner should be created
+    When I add partner settings
+      | Name                    | Value | Locked |
+      | allow_ad_authentication | t     | true   |
+    And I change root role to FedID role
+    And I act as newly created partner account
+    And I navigate to User Group List section from bus admin console page
+    And I add a new Itemized user group:
+      | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
+      | dev  | Shared               | 5               | Shared              | 10             |
+    Then dev user group should be created
+    And I add a new Itemized user group:
+      | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
+      | pm   | Shared               | 5               | Shared              | 10             |
+    Then pm user group should be created
+    And I add a new Itemized user group:
+      | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
+      | qa   | Shared               | 5               | Shared              | 10             |
+    Then qa user group should be created
 
+    And I navigate to Authentication Policy section from bus admin console page
+    And I use Directory Service as authentication provider
+    And I choose LDAP Push as Directory Service provider
+    And I save the changes
+    Then Authentication Policy has been updated successfully
+
+    When I click Connection Settings tab
+    # Scenario: 121635 Invalid Port can not be saved in Connection Settings
+    And I input server connection settings
+      | Server Host          | Protocol | SSL Cert | Port | Base DN                    |
+      | ad01.qa5.mozyops.com | No SSL   |          | 0    | dc=qa5, dc=mozyops, dc=com |
+    And I save the changes
+    Then The save error message should be:
+      | Save failed                |
+      | 400 ERROR: Invalid port: 0 |
+    # Scenario: 121640 Invalid Server Host can not be saved in Connection Settings
+    And I input server connection settings
+      | Server Host | Protocol | SSL Cert | Port | Base DN                    |
+      | 10.34.9.    | No SSL   |          | 389    | dc=qa5, dc=mozyops, dc=com |
+    And I save the changes
+    Then The save error message should be:
+      | Save failed                         |
+      | 400 ERROR: Invalid hosts : 10.34.9. |
+    # Scenario: 121643 Invalid Base DN can be saved in Connection Settings
+    And I input server connection settings
+      | Server Host          | Protocol | SSL Cert | Port | Base DN              |
+      | ad01.qa5.mozyops.com | No SSL   |          | 389  | "basedntest", "1234" |
+    And I save the changes
+    Then server connection settings information should include
+      | Server Host          | Protocol | SSL Cert | Port | Base DN              |
+      | ad01.qa5.mozyops.com | No SSL   |          | 389  | "basedntest", "1234" |
 
 

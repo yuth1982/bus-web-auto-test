@@ -9,8 +9,9 @@ CONFIGS = YAML.load_file("#{File.dirname(__FILE__)}/configs.yaml")
 LANG = YAML.load_file("#{File.dirname(__FILE__)}/lang.yaml")
 
 # Active QA test environment, for example qa5, qa6
-TEST_ENV = ENV['BUS_ENV'] || 'qa12h'
+TEST_ENV = ENV['BUS_ENV'] || 'qa6_busclient06'
 QA_ENV = ALL_ENV[TEST_ENV]
+PROD_CONFIRM = (ENV['PROD_CONFIRM'] || 'false')
 
 # used for billing price info
 BILLING = YAML.load_file("#{File.dirname(__FILE__)}/billing.yaml")

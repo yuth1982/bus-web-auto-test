@@ -44,12 +44,22 @@ module BifrostHelper
     #  user_group.add('partner_id' => 3241234432, 'name' => 'TestGroup')
     #
     # Returns user_group_id
-    def add(body)
+    def add(type, body)
       if expired?(@begin_time)
         @auth = get_auth(@api_key)
       end
-      body['name'] ||= 'New group'
-      body = <<HERE
+      if type == "MozyPro"
+        body['name'] ||= 'New group'
+        body =<<HERE
+        {
+          "name": "#{body['name']}",
+          "partner_id": #{body['partner_id']}
+          "enable_stash": "Yes"
+        }
+HERE
+      else
+        body['name'] ||= 'New group'
+        body = <<HERE
       {
         "default_quotas": [{
         "type": "GrandFathered",
@@ -63,10 +73,14 @@ module BifrostHelper
           "type": "Server",
           "quota": -1
       }],
-        "name": #{body['name']},
+        "name": "#{body['name']}",
         "partner_id": #{body['partner_id']}
       }
 HERE
+      end
+
+      Log.debug body
+
       user_group = RestClient.post "#{@base_url}#{@add_url}", body, header
       Log.debug('add 1 user_group')
       user_group_id = JSON.parse(user_group.body)['items'][0]['data']['id']

@@ -3,7 +3,7 @@ Feature: Modify credit card information and billing contact information
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.15266 @bus @2.5 @modify @cc @billing_contact_info @regression
+  @TC.15266 @bus @2.5 @modify @cc @billing_contact_info @regression @core_function
   Scenario: 15266 Verify Change Payment Information Contact Info
     When I add a new MozyPro partner:
       | period | base plan | country       | address           | city      | state abbrev | zip   | phone          |
@@ -17,7 +17,7 @@ Feature: Modify credit card information and billing contact information
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15286 @bus @2.5 @modify @cc @billing_contact_info @regression
+  @TC.15286 @bus @2.5 @modify @cc @billing_contact_info @regression @core_function @ROR_smoke
   Scenario: 15286 Change Payment Information With Credit Card
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -44,7 +44,7 @@ Feature: Modify credit card information and billing contact information
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15272 @bus @2.5 @modify @cc @billing_contact_info @regression
+  @TC.15272 @bus @2.5 @modify @cc @billing_contact_info @regression @core_function
   Scenario: 15272 Verify Modify Credit Card Checkbox
     When I add a new MozyPro partner:
       | period | base plan |
@@ -58,7 +58,7 @@ Feature: Modify credit card information and billing contact information
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15273  @bus @2.5 @modify @cc @billing_contact_info @regression
+  @TC.15273  @bus @2.5 @modify @cc @billing_contact_info @regression @core_function
   Scenario: 15273 Change Payment Information Without Credit Card
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -80,7 +80,7 @@ Feature: Modify credit card information and billing contact information
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15275 @bus @2.5 @modify @cc @billing_contact_info @BUG.96359 @regression
+  @TC.15275 @bus @2.5 @modify @cc @billing_contact_info @BUG.96359 @regression @core_function
   Scenario: 15275 Verify Credit Card Required Fields
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -107,7 +107,7 @@ Feature: Modify credit card information and billing contact information
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15459 @bus @2.5 @modify @cc @billing_contact_info @regression
+  @TC.15459 @bus @2.5 @modify @cc @billing_contact_info @regression @core_function
   Scenario: 15459 Verify Net Terms Customers Cannot Enter a Credit Card Number
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -119,7 +119,7 @@ Feature: Modify credit card information and billing contact information
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15458 @bus @2.5 @modify @cc @billing_contact_info @regression
+  @TC.15458 @bus @2.5 @modify @cc @billing_contact_info @regression @core_function
   Scenario: 15458 Verify Only the Last Four Digits of Credit Card Number Visible
     When I add a new MozyPro partner:
       | period | base plan | cc number        |
@@ -131,21 +131,21 @@ Feature: Modify credit card information and billing contact information
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.15376 @bus @2.5 @modify @cc @billing_contact_info @need_test_account @regression
+  @TC.15376 @bus @2.5 @modify @cc @billing_contact_info @need_test_account @regression @core_function
   Scenario: 15376 Verify OEM Do Not Keep Credit Card
     When I act as partner by:
       | name            | filter  |
       | Muskadel Backup | OEMs    |
     Then I should not see Change Payment Information link
 
-  @TC.19276 @bus @2.5 @modify @cc @billing_contact_info @need_test_account @regression
+  @TC.19276 @bus @2.5 @modify @cc @billing_contact_info @need_test_account @regression @core_function
   Scenario: 19276 Velocity Partner Do Not Keep Credit Card
     When I act as partner by:
       | name                |
       | Velocity Consulting |
     Then I should not see Change Payment Information link
 
-  @TC.131843 @tasks_p1 @smoke @resources @bus @regression
+  @TC.131843 @tasks_p1 @smoke @resources @bus @regression @core_function
   Scenario: 131843 Change credit card using credit card of Visa, MasterCard, American Express, Discover
     When I add a new MozyEnterprise partner:
       | period | users | server add on |
@@ -156,25 +156,25 @@ Feature: Modify credit card information and billing contact information
     # Visa
     And I update credit card information to:
       | cc name   | cc number        | expire month | expire year | cvv |
-      | newcard a | 4018121111111122 | 12           | 16          | 824 |
+      | newcard a | 4018121111111122 | 12           | 32          | 824 |
     And I save payment information changes
     Then Payment information should be updated
     # MasterCard
     And I update credit card information to:
       | cc name   | cc number        | expire month | expire year | cvv |
-      | newcard b | 5111991111111121 | 12           | 17          | 404 |
+      | newcard b | 5111991111111121 | 12           | 32          | 404 |
     And I save payment information changes
     Then Payment information should be updated
     # American EXpress
     And I update credit card information to:
       | cc name   | cc number        | expire month | expire year | cvv |
-      | newcard c | 372478273181824  | 12           | 17          | 295 |
+      | newcard c | 372478273181824  | 12           | 32          | 295 |
     And I save payment information changes
     Then Payment information should be updated
     # Discover
     And I update credit card information to:
       | cc name   | cc number         | expire month | expire year | cvv |
-      | newcard d | 6011868815065127  | 12           | 17          | 731 |
+      | newcard d | 6011868815065127  | 12           | 32          | 731 |
     And I save payment information changes
     Then Payment information should be updated
     When I stop masquerading

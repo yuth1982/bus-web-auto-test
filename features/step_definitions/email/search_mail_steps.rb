@@ -1,3 +1,8 @@
+# If use qa code to create a AD user with dynamic email, @AD_User_Emails hash instance variable will be created.
+# See below example for how to check email for a unique and dynamic AD user email
+# And I search emails by keywords:
+#     | to                                | subject                               |
+#     | @AD_User_Emails["tc131019.user1"] | New Account Created on MozyEnterprise |
 When /^I search emails by keywords:$/ do |keywords_table|
   @email_search_query = []
   expected = keywords_table.hashes
@@ -9,6 +14,16 @@ When /^I search emails by keywords:$/ do |keywords_table|
           v.gsub!(/@new_admin_email/, @partner.admin_info.email) unless @partner.nil?
           v.gsub!(/@existing_admin_email/, @existing_admin_email) unless @existing_admin_email.nil?
           v.gsub!(/@existing_user_email/, @existing_user_email) unless @existing_user_email.nil?
+          # scenario - check the AD user email which is a dynamic email address with prefix as mozyautotest+xxx@emc.com
+          if v.include?("@AD_User_Emails")
+            @bus_site.log("AD user's email requies converted.")
+            match = v.scan(/".*"/)
+            puts match[0]
+            puts match[0].length
+            puts match[0][1..match[0].length-2]
+            v = @AD_User_Emails[match[0][1..match[0].length-2]]
+            puts v
+          end
         when 'content'
           unless @partner.nil?
             v.gsub!(/@new_admin_email/, @partner.admin_info.email)
@@ -47,7 +62,7 @@ When /^I search emails by keywords:$/ do |keywords_table|
   sleep 15
 
   Log.info(@email_search_query)
-  30.times do
+  3.times do
     @found_emails = find_emails(@email_search_query)
     sleep 60 if @found_emails.size == 0
     break if @found_emails.size > 0
@@ -57,6 +72,7 @@ end
 Then /^I should see (\d+) email\(s\)$/ do |num_emails|
   @found_emails = [] if @found_emails.nil?
   @found_emails.size.should == num_emails.to_i
+  #Log.debug @found_emails[0].body if @found_emails.size > 0
 end
 
 When /^I (retrieve email content|download email attachment) by keywords:$/ do |type, keywords_table|
@@ -88,6 +104,7 @@ And /^I get verify email address from email content for mozyhome change email ad
 end
 
 Then /^I check the email content should include:$/ do |msg|
+  msg.replace ERB.new(msg).result(binding)
   @mail_content.should include (msg)
 end
 

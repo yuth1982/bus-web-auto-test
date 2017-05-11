@@ -1,4 +1,4 @@
-#QA6
+#QA6 busclient06
 10.237.11.209 auth.mozy.com auth2.mozy.com
 10.237.11.214 www.mozypro.com mozypro.com secure.mozypro.com www.mozyenterprise.com mozyenterprise.com client.mozy.com mozyoem.mozypro.com
 10.237.11.175 secure.mozy.com secure.mozy.ie secure.mozy.fr secure.mozy.co.uk secure.mozy.de
@@ -8,10 +8,10 @@
 10.237.11.133 rainbow.mozy.com
 
 #AD server
-10.29.99.120 win-ko2af9k2doa.mtdev.mozypro.local
+10.29.103.120 win-ko2af9k2doa.mtdev.mozypro.local
 
 #BUS Automation
-10.237.11.214 hipaa01.mozypro.com nohipaa01.mozypro.com qa8saml.mozypro.com
+10.237.11.214 hipaa01.mozypro.com nohipaa01.mozypro.com qa8saml.mozypro.com 141759mozyprosubdomain.mozypro.com
 
 #google
 127.0.0.1 ssl.google-analytics.com www.google-analytics.com

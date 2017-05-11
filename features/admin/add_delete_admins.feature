@@ -162,7 +162,7 @@ Feature: Add admins, delete admins
     And I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.121550 @bus @admin @tasks_p1
+  @TC.121550 @bus @admin @tasks_p1 @ROR_smoke
   Scenario: 121550 New JS popup window appears for delete admin
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | root role     |

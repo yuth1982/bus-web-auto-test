@@ -17,6 +17,8 @@ def login(environment)
     end
   rescue Exception => ex
     Log.debug(ex.to_s)
+    @bus_site.log("fail to log in the bus console.")
+    @bus_site.log(ex.to_s)
     success = false
   end
   success
@@ -193,6 +195,7 @@ end
 When /^I go to page (.+)$/ do |url|
   url = url.gsub(/CONFIGS\['fedid'\]\['subdomain'\]/,CONFIGS['fedid']['subdomain'])
   url = url.gsub(/QA_ENV\['bus_host'\]/,QA_ENV['bus_host'])
+  url = url.gsub(/@partner_id/, @partner_id) if @partner_id
   @bus_site.login_page.go_to_url(url)
 end
 
@@ -218,3 +221,14 @@ When /^The login action should be restricted by IP whitelist$/ do
   @bus_site.login_page.get_error_msg.should == "Administrative access to the Admin Console is restricted to specified networks (physical and VPN)."
 end
 
+Then /^I (should|should not) see language select field$/ do |option|
+  if option == 'should'
+    @bus_site.login_page.has_language_select?.should be_true
+  else
+    @bus_site.login_page.has_language_select?.should be_false
+  end
+end
+
+And /^language select filed should include option (.+)$/ do |dialect|
+  @bus_site.login_page.language_has_option?(dialect).should be_true
+end

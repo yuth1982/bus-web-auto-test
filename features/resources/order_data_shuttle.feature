@@ -1,10 +1,10 @@
-Feature:
-  Order data shuttle
+Feature: Order data shuttle
+
 
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.12355 @bus @data_shuttle @order @regression
+  @TC.12355 @bus @data_shuttle @order @regression @core_function
   Scenario: 12355 Add a new partner and verify it appears in the module
     When I add a new MozyPro partner:
       | period | base plan | address           | city      | state abbrev | zip   | phone          |
@@ -16,7 +16,7 @@ Feature:
       | @partner_name  | @admin_email  | MozyPro |
     Then I search and delete partner account by newly created partner company name
 
-  @TC.12659 @bus @data_shuttle @order @regression
+  @TC.12659 @bus @data_shuttle @order @regression @core_function
   Scenario: 12659 Delete a partner and verify the module updates correctly
     When I add a new MozyPro partner:
       | period | base plan | address           | city      | state abbrev | zip   | phone          |
@@ -27,7 +27,7 @@ Feature:
     And I search partner in order data shuttle section by newly created partner company name
     Then Partner search results in order data shuttle section should be empty
 
-  @TC.12354 @bus @data_shuttle @order @regression
+  @TC.12354 @bus @data_shuttle @order @regression @core_function
   Scenario: 12354 Verify Module - General UI Controls
     When I navigate to Order Data Shuttle section from bus admin console page
     And I search partner in order data shuttle section by this is a really long text this is a really long text this is a really long text
@@ -38,7 +38,7 @@ Feature:
     When I collapse order data shuttle section
     And Partner search results in order data shuttle section should be invisible
 
-  @TC.12662 @bus @data_shuttle @order @regression
+  @TC.12662 @bus @data_shuttle @order @regression @core_function
   Scenario: 12662 Verify Partners Appear - Search
     When I add a new MozyPro partner:
       | period | base plan | address           | city      | state abbrev | zip   | phone          |
@@ -51,7 +51,7 @@ Feature:
       | @partner_name  | @admin_email  | MozyPro |
     Then I search and delete partner account by newly created partner company name
 
-  @TC.12661 @bus @data_shuttle @order @regression
+  @TC.12661 @bus @data_shuttle @order @regression @core_function
   Scenario: 12661 Verify EMEA Pro Partners Appear - Search
     When I add a new MozyPro partner:
       | period | base plan | create under    | country  | cc number        |
@@ -64,7 +64,7 @@ Feature:
       | @partner_name  | @admin_email  | MozyPro |
     Then I search and delete partner account by newly created partner company name
 
-  @TC.12942 @bus @data_shuttle @order @regression
+  @TC.12942 @bus @data_shuttle @order @regression @core_function
   Scenario: 12942 Suspended partner order data shuttle
     When I add a new MozyPro partner:
       | period | base plan |
@@ -76,7 +76,7 @@ Feature:
     Then Partner search results in order data shuttle section should be empty
     Then I search and delete partner account by newly created partner company name
 
-  @TC.12368 @bus @data_shuttle @process @verify_shipping_address_tab @regression
+  @TC.12368 @bus @data_shuttle @process @verify_shipping_address_tab @regression @core_function
   Scenario: 12368 Verify Shipping Address Section - Populated Fields Correctly
     When I add a new MozyPro partner:
       | period | base plan | admin name     | country       | address           | city      | state abbrev | zip   | phone          |
@@ -96,7 +96,7 @@ Feature:
       | Power Adapter:         |                   |
     And I search and delete partner account by newly created partner company name
 
-  @TC.12370 @bus @data_shuttle @process @verify_shipping_address_tab @regression
+  @TC.12370 @bus @data_shuttle @process @verify_shipping_address_tab @regression @core_function
   Scenario: 12370 Verify shipping address - field validate
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -114,110 +114,110 @@ Feature:
     And Order data shuttle message should include Please select the power adapter type.
     And I search and delete partner account by newly created partner company name
 
-  @TC.12184 @bus @data_shuttle @status @device_status @regression
+  @TC.12184 @bus @data_shuttle @status @device_status @regression @core_function @ROR_smoke
   Scenario: 12184 Verify Data Shuttle Device Status report
     When I navigate to Data Shuttle Status section from bus admin console page
     Then Data shuttle device status summary table header should be:
       | Ordered | Not Started | Seeding | Seed Complete | Seed Error | Loading  | Load Complete | Load Error | Cancelled |
 
-  @TC.12197 @bus @data_shuttle @status @device_status @regression
+  @TC.12197 @bus @data_shuttle @status @device_status @regression @core_function
   Scenario: 12197 Verify clicking Seeding
     When I navigate to Data Shuttle Status section from bus admin console page
     And I view data shuttle seeding status table
     Then Data shuttle device seeding status table header should be:
       |Order # | Partner | Created | Key | Machine | Data Shuttle Device ID | Phase | Status | % Complete | GB Transferred | Seed Size | Start | Elapsed |
 
-  @TC.12198 @bus @data_shuttle @status @device_status @regression
+  @TC.12198 @bus @data_shuttle @status @device_status @regression @core_function
   Scenario: 12198 Verify clicking Seed Complete
     When I navigate to Data Shuttle Status section from bus admin console page
     And I view data shuttle seed complete status table
     Then Data shuttle device seed complete status table header should be:
       |Order # | Partner | Created | Key | Machine | Data Shuttle Device ID | Phase | Status | % Complete | GB Transferred | Seed Size | Start | Elapsed |
 
-  @TC.12199 @bus @data_shuttle @status @device_status @regression
+  @TC.12199 @bus @data_shuttle @status @device_status @regression @core_function
   Scenario: 12199 Verify clicking Seed Error
     When I navigate to Data Shuttle Status section from bus admin console page
     And I view data shuttle seed error status table
     Then Data shuttle device seed error status table header should be:
       |Order # | Partner | Created | Key | Machine | Data Shuttle Device ID | Phase | Status | % Complete | GB Transferred | Seed Size | Start | Elapsed |
 
-  @TC.12200 @bus @data_shuttle @status @device_status @regression
+  @TC.12200 @bus @data_shuttle @status @device_status @regression @core_function
   Scenario: 12200 Verify clicking Loading
     When I navigate to Data Shuttle Status section from bus admin console page
     And I view data shuttle loading status table
     Then Data shuttle device loading status table header should be:
       |Order # | Partner | Created | Key | Machine | Data Shuttle Device ID | Phase | Status | % Complete | GB Transferred | Seed Size | Start | Elapsed |
 
-  @TC.12201 @bus @data_shuttle @status @device_status @regression
+  @TC.12201 @bus @data_shuttle @status @device_status @regression @core_function
   Scenario: 12201 Verify clicking Load Complete
     When I navigate to Data Shuttle Status section from bus admin console page
     And I view data shuttle load complete status table
     Then Data shuttle device load complete status table header should be:
       |Order # | Partner | Created | Key | Machine | Data Shuttle Device ID | Phase | Status | % Complete | GB Transferred | Seed Size | Start | Elapsed |
 
-  @TC.12203 @bus @data_shuttle @status @device_status @regression
+  @TC.12203 @bus @data_shuttle @status @device_status @regression @core_function
   Scenario: 12203 Verify clicking Load Error
     When I navigate to Data Shuttle Status section from bus admin console page
     And I view data shuttle load error status table
     Then Data shuttle device load error status table header should be:
       |Order # | Partner | Created | Key | Machine | Data Shuttle Device ID | Phase | Status | % Complete | GB Transferred | Seed Size | Start | Elapsed |
 
-  @TC.12202 @bus @data_shuttle @status @device_status @regression
+  @TC.12202 @bus @data_shuttle @status @device_status @regression @core_function
   Scenario: 12202 Verify clicking Cancelled
     When I navigate to Data Shuttle Status section from bus admin console page
     And I view data shuttle cancelled status table
     Then Data shuttle device cancelled status table header should be:
       | Order # | Partner | Created | Key | Machine | Data Shuttle Device ID | Phase | Status | % Complete | GB Transferred | Seed Size | Start | Elapsed | Cancelled |
 
-  @TC.12185 @bus @data_shuttle @status @device_stuck @regression
+  @TC.12185 @bus @data_shuttle @status @device_stuck @regression @core_function
   Scenario: 12185 Verify Data Shuttle Stuck report
     When I navigate to Data Shuttle Status section from bus admin console page
     Then Data shuttle device stuck summary table header should be:
       | > 7 days | > 14 days | > 30 days |
 
-  @TC.12204 @bus @data_shuttle @status @device_stuck @regression
+  @TC.12204 @bus @data_shuttle @status @device_stuck @regression @core_function
   Scenario: 12204 Verify Data Shuttle Stuck > 7 days
     When I navigate to Data Shuttle Status section from bus admin console page
     Then Data shuttle device stuck over 7 days table header should be:
       | Order # | Partner | Created | Key | Machine | Data Shuttle Device ID | Phase | Status | % Complete | GB Transferred | Seed Size | Start | Elapsed |
 
-  @TC.12922 @bus @data_shuttle @status @device_stuck @regression
+  @TC.12922 @bus @data_shuttle @status @device_stuck @regression @core_function
   Scenario: 12922 Verify Data Shuttle Stuck > 14 days
     When I navigate to Data Shuttle Status section from bus admin console page
     Then Data shuttle device stuck over 14 days table header should be:
       | Order # | Partner | Created | Key | Machine | Data Shuttle Device ID | Phase | Status | % Complete | GB Transferred | Seed Size | Start | Elapsed |
 
-  @TC.12923 @bus @data_shuttle @status @device_stuck @regression
+  @TC.12923 @bus @data_shuttle @status @device_stuck @regression @core_function
   Scenario: 12923 Verify Data Shuttle Stuck > 30 days
     When I navigate to Data Shuttle Status section from bus admin console page
     Then Data shuttle device stuck over 30 days table header should be:
       | Order # | Partner | Created | Key | Machine | Data Shuttle Device ID | Phase | Status | % Complete | GB Transferred | Seed Size | Start | Elapsed |
 
-  @TC.12186 @bus @data_shuttle @status @data_inventory_status @regression
+  @TC.12186 @bus @data_shuttle @status @data_inventory_status @regression @core_function
   Scenario: 12186 Verify Data Inventory Status report
     When I navigate to Data Shuttle Status section from bus admin console page
     Then Data shuttle inventory status summary table header should be:
       | Drives @ 3PL Site | Active Drives | Drives at 80% Life | Dead Drives (100%+) |
 
-  @TC.12216 @bus @data_shuttle @status @data_inventory_status @regression
+  @TC.12216 @bus @data_shuttle @status @data_inventory_status @regression @core_function
   Scenario: 12216 Verify the Active Drives #
     When I navigate to Data Shuttle Status section from bus admin console page
     Then Data shuttle inventory active drivers status table header should be:
       | Drive SN | % Life Used | Current Location | Order | Phase |
 
-  @TC.12295 @bus @data_shuttle @status @data_inventory_status @regression
+  @TC.12295 @bus @data_shuttle @status @data_inventory_status @regression @core_function
   Scenario: 12295 Verify the # of drives at 80%
     When I navigate to Data Shuttle Status section from bus admin console page
     Then Data shuttle inventory drivers at 80% life status table header should be:
       | Drive SN | % Life Used | Current Location | Order | Phase |
 
-  @TC.12296 @bus @data_shuttle @status @data_inventory_status @regression
+  @TC.12296 @bus @data_shuttle @status @data_inventory_status @regression @core_function
   Scenario: 12296 Verify the Dead Drives #
     When I navigate to Data Shuttle Status section from bus admin console page
     Then Data shuttle inventory dead drivers status table header should be:
       | Drive SN | % Life Used | Current Location | Order | Phase |
 
-  @TC.16183 @bus @data_shuttle @regression
+  @TC.16183 @bus @data_shuttle @regression @core_function
   Scenario: 16183 Verify ordering data shuttle exceed partner available resources
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -244,7 +244,7 @@ Feature:
     """
     And I search and delete partner account by newly created partner company name
 
-  @TC.16325 @bus @data_shuttle @regression
+  @TC.16325 @bus @data_shuttle @regression @core_function
   Scenario: 16325 Ordering data shuttle with 110% Discount
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -271,7 +271,7 @@ Feature:
     """
     And I search and delete partner account by newly created partner company name
 
-  @TC.21985 @bus @slow @regression
+  @TC.21985 @bus @slow @regression @core_function
   Scenario: 21985 Ordering data shuttle for MozyPro
     When I add a new MozyPro partner:
       | period | base plan |
@@ -295,7 +295,7 @@ Feature:
     Then Data shuttle order should be created
     And I search and delete partner account by newly created partner company name
 
-  @TC.16324 @slow @bus @data_shuttle @regression
+  @TC.16324 @slow @bus @data_shuttle @regression @core_function
   Scenario: 16324 Ordering data shuttle with 50% discount
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -323,7 +323,7 @@ Feature:
     Then Data shuttle order should be created
     And I search and delete partner account by newly created partner company name
 
-  @TC.16323 @slow @bus @data_shuttle @regression
+  @TC.16323 @slow @bus @data_shuttle @regression @core_function
   Scenario: 16323 Ordering data shuttle with 100% discount
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -351,7 +351,7 @@ Feature:
     Then Data shuttle order should be created
     And I search and delete partner account by newly created partner company name
 
-  @TC.16211 @bus @data_shuttle @regression
+  @TC.16211 @bus @data_shuttle @regression @core_function
   Scenario: 16211 Canceling orders that were created using the Add Link
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -377,7 +377,7 @@ Feature:
     Then The order should be Cancelled
     And I search and delete partner account by newly created partner company name
 
-  @TC.17879 @bus @data_shuttle @regression
+  @TC.17879 @bus @data_shuttle @regression @core_function
   Scenario: 17879 Ordering data shuttle over 1.8T for Reseller
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -406,7 +406,7 @@ Feature:
     Then Data shuttle order should be created
     And I search and delete partner account by newly created partner company name
 
-  @TC.16320 @bus @data_shuttle @regression
+  @TC.16320 @bus @data_shuttle @regression @core_function
   Scenario: 16320 Ordering data shuttle over 3.6T for MozyPro
     When I add a new MozyPro partner:
       | period | base plan |
@@ -435,7 +435,7 @@ Feature:
     Then Data shuttle order should be created
     And I search and delete partner account by newly created partner company name
 
-  @TC.16340 @bus @data_shuttle @regression
+  @TC.16340 @bus @data_shuttle @regression @core_function
   Scenario: 16340 Manually change number of windows drives ordered
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -460,7 +460,7 @@ Feature:
     Then Data shuttle order should be created
     And I search and delete partner account by newly created partner company name
 
-  @TC.16342 @bus @data_shuttle @regression
+  @TC.16342 @bus @data_shuttle @regression @core_function
   Scenario: 16342 Manually change number of mac drives ordered
     When I add a new MozyPro partner:
       | period | base plan |
@@ -485,7 +485,7 @@ Feature:
     Then Data shuttle order should be created
     And I search and delete partner account by newly created partner company name
 
-  @TC.17881 @bus @data_shuttle @regression
+  @TC.17881 @bus @data_shuttle @regression @core_function
   Scenario: 17881 Verify billing statements when order a data shuttle
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -519,7 +519,7 @@ Feature:
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21978 @bus @data_shuttle @status @BUG.91049 @regression
+  @TC.21978 @bus @data_shuttle @status @BUG.91049 @regression @core_function
   Scenario: 21978 Data shuttle backed up til load complete, then second data shuttle seeded for same user/key/machine
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -601,7 +601,7 @@ Feature:
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.119234 @bus @data_shuttle @regression
+  @TC.119234 @bus @data_shuttle @regression @core_function
   Scenario: 119234 order a data shuttle for DPS partner when drive type is 2TB
     When I add a new MozyEnterprise DPS partner:
       | period | base plan | sales channel |
@@ -644,7 +644,7 @@ Feature:
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.119235 @bus @data_shuttle @regression
+  @TC.119235 @bus @data_shuttle @regression @core_function
   Scenario: 119235 order a data shuttle for DPS partner when driver type is 1TB
     When I add a new MozyEnterprise DPS partner:
       | period | base plan | sales channel |
@@ -688,7 +688,7 @@ Feature:
     And I search and delete partner account by newly created partner company name
 
 
-  @TC.119990 @bus @data_shuttle @regression
+  @TC.119990 @bus @data_shuttle @regression @core_function
   Scenario: 119990 Order Data Shuttle for Invoiced Customer
     When I add a new MozyEnterprise partner:
       | period | users | net terms |
@@ -716,7 +716,7 @@ Feature:
     And I search and delete partner account by newly created partner company name
 
 
-  @TC.120693 @bus @data_shuttle @Bug.116986 @need_test_account @regression
+  @TC.120693 @bus @data_shuttle @Bug.116986 @need_test_account @regression @core_function
   Scenario: 120693 Verify shipped drive has inbound number
 #    When I search order in view data shuttle orders section by Jabberstorm Company 0311-1822-21
 #    Then order search results in data shuttle orders section should be:
@@ -751,11 +751,11 @@ Feature:
       | 1       | Burned |
     And I search and delete partner account by newly created partner company name
 
-  @bus @TC.12342 @resources @tasks_p2
+  @bus @TC.12342 @resources @tasks_p2 @ROR_smoke
   Scenario: 12342 data_shuttle_ordered_active: (Data Shuttle ordered for activated machine phase III - to user)
     And I add a new Reseller partner:
       | company name    | period | reseller type | reseller quota | server plan | net terms |
-      | tc12342_partner | 1      | Silver        | 50             | yes         | yes       |
+      | tc12342 partner | 1      | Silver        | 50             | yes         | yes       |
     Then New partner should be created
     And I get the partner_id
     And I act as newly created partner

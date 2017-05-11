@@ -3,7 +3,7 @@ Feature: view user group
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.18995 @BSA.3030 @bus @2.5 @user_stories @stash @need_test_account @env_dependent @regression
+  @TC.18995 @BSA.3030 @bus @2.5 @user_stories @stash @need_test_account @env_dependent @regression @core_function
   Scenario: 18995 [Search/List Users View][P]"Sync" column shows and has valid value
     When I act as partner by:
       | email                        |
@@ -17,7 +17,7 @@ Feature: view user group
       | stash19045@test.com    | stash19045     | (default user group) | Enabled  |
       | stash@test.com         | stash          | stash                | Enabled  |
 
-  @TC.18996 @BSA.3030 @bus @2.5 @user_stories @stash @need_test_account @env_dependents @regression
+  @TC.18996 @BSA.3030 @bus @2.5 @user_stories @stash @need_test_account @env_dependents @regression @core_function
   Scenario: 18996 [Search/List Users View][P]"Storage" and "Storage Used" column includes backup and stash
     When I act as partner by:
       | email                       |
@@ -31,7 +31,7 @@ Feature: view user group
       | stash19045@test.com    | stash19045     | (default user group) | Enabled  | 0        | 2 GB    | 20 MB        |
       | stash@test.com         | stash          | stash                | Enabled  | 0        | 2 GB    | 20 MB        |
 
-  @TC.18997 @BSA.3030 @bus @2.5 @user_stories @need_test_account @env_dependent @regression
+  @TC.18997 @BSA.3030 @bus @2.5 @user_stories @need_test_account @env_dependent @regression @core_function
   Scenario: 18997 [List User Groups View][P]"Sync Users" column shows and has valid values
   When I act as partner by:
   | email                        |
@@ -43,7 +43,7 @@ Feature: view user group
   | backup                 | 1     | 1      | 0           |
   | stash                  | 1     | 1      | 1           |
 
-  @TC.18998 @BSA.3030 @bus @2.5 @user_stories @need_test_account @env_dependent @regression
+  @TC.18998 @BSA.3030 @bus @2.5 @user_stories @need_test_account @env_dependent @regression @core_function
   Scenario: 18998 [List User Groups View][P]"Desktop Quota" column includes backup and stash
   When I act as partner by:
   | email                        |
@@ -55,7 +55,7 @@ Feature: view user group
   | backup                 | 1     | 1      | 0           | 0 / 0       | 0.0 (0.0 active) / 0.0 | 1 / 10       | 0.01 (1.0 active) / 10.0  |
   | stash                  | 1     | 1      | 1           | 0 / 0       | 0.0 (0.0 active) / 0.0 | 0 / 0        | 0.02 (2.0 active) / 10.0  |
 
-  @TC.18999 @BSA.3030 @bus @2.5 @user_stories @need_test_account @env_dependent @regression
+  @TC.18999 @BSA.3030 @bus @2.5 @user_stories @need_test_account @env_dependent @regression @core_function
   Scenario: 18999 [Group Detail View][P]"Sync" column shows and has valid value
   When I act as partner by:
   | email                        |
@@ -82,7 +82,7 @@ Feature: view user group
   | User            | Name   | Sync    |
   | backup@test.com | backup | Disabled |
 
-  @TC.19000 @BSA.3030 @bus @2.5 @user_stories @need_test_account @env_dependent @regression
+  @TC.19000 @BSA.3030 @bus @2.5 @user_stories @need_test_account @env_dependent @regression @core_function
   Scenario: 19000 [Group Detail View][P]"Storage" and "Storage Used" column includes backup and stash
   When I act as partner by:
   | email                        |

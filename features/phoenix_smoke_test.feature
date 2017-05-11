@@ -19,7 +19,7 @@ Feature: Phoenix smoke test
 
 
 
-  @TC.126120 @bus @regression_test @phoenix @mozyhome @us
+  @TC.126120 @bus @regression_test @phoenix @mozyhome @us @ROR_smoke
   Scenario: 126120 Create a MozyHome paid user
     When I am at dom selection point:
     And I add a phoenix Home user:
@@ -33,7 +33,7 @@ Feature: Phoenix smoke test
     Then the user is successfully added.
     And the user has activated their account
 
-  @TC.126132 @bus @regression_test @phoenix @mozyhome @us
+  @TC.126132 @bus @regression_test @phoenix @mozyhome @us @ROR_smoke
   Scenario: 126132 Log into the MozyHome paid user - Precondition:@TC.126120
     When I get previous partner info
     And I login as the user on the account.
@@ -103,7 +103,7 @@ Feature: Phoenix smoke test
     Then I should see 1 email(s)
     When I click reset password link from the email
     Then I reset password with reset password
-    And I will see reset password massage Your password has been changed.
+    And I will see reset password massage Your password has been changed. Please start MozyHome Configuration on each computer on the account in order to enter the new password.
     And I log into phoenix with username @new_admin_email and password reset password
     And I save the partner info
 

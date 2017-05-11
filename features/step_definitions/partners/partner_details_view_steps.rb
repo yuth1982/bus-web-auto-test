@@ -101,11 +101,13 @@ When /^I get the (partner_id|subpartner_id)$/ do |type|
     @partner_id = @bus_site.admin_console_page.partner_details_section.subpartner.partner_id()
   end
   Log.debug("partner id is #{@partner_id}")
+  @bus_site.log("partner id is #{@partner_id}")
 end
 
 When /^I get partner aria id$/ do
   @aria_id = @bus_site.admin_console_page.partner_details_section.general_info_hash['Aria ID:']
   Log.debug @aria_id
+  @bus_site.log("aria id is #{@aria_id}")
 end
 
 And /^Partner details (shouldn't|should) have (.+)/ do |type,field|
@@ -332,6 +334,22 @@ end
 When /^I disable stash for the partner$/ do
   @bus_site.admin_console_page.partner_details_section.disable_stash
   @bus_site.admin_console_page.click_submit
+end
+
+When /^I (enable|disable) co-branding for the partner$/ do |option|
+  if option == 'enable'
+    @bus_site.admin_console_page.partner_details_section.enable_cobranding
+  else
+    @bus_site.admin_console_page.partner_details_section.disable_cobranding
+  end
+end
+
+When /^I (enable|disable) require ingredient for the partner$/ do |option|
+  if option == 'enable'
+    @bus_site.admin_console_page.partner_details_section.enable_require_ingredient
+  else
+    @bus_site.admin_console_page.partner_details_section.disable_require_ingredient
+  end
 end
 
 When /^I add stash to all users for the partner$/ do
@@ -626,6 +644,8 @@ When /I click the latest date link to view the invoice$/ do
 end
 
 And /^I click admin name (.+) in partner details section$/ do |admin_name|
+  admin_name.gsub!(/@partner.admin_info.full_name/,@partner.admin_info.full_name) if @partner
+  admin_name.gsub!(/@subpartner.admin_name/,@subpartner.admin_name) if @subpartner
   @bus_site.admin_console_page.partner_details_section.click_admin_name(admin_name)
 end
 

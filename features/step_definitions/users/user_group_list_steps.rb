@@ -4,6 +4,11 @@ When /^I navigate to Add User Group section$/ do
 end
 
 When /^I view user group details by name: (.+)$/ do |group_name|
+  #@bus_site.admin_console_page.user_group_list_section.edit_user_group(group_name)
+  @bus_site.admin_console_page.user_group_list_section.view_user_group(group_name)
+end
+
+When /^I edit user group details by name: (.+)$/ do |group_name|
   @bus_site.admin_console_page.user_group_list_section.edit_user_group(group_name)
 end
 

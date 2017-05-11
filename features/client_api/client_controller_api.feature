@@ -1,9 +1,9 @@
-Feature: 97636 Client Controller API
+Feature: Client Controller API
 
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.20948 @bus @client_api @smoke @tasks_p1
+  @TC.20948 @bus @client_api @smoke @tasks_p1 @ROR_smoke @qa12
   Scenario: 20948 machine_get_info when 0<m.used_quota<u.total_quota
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -535,7 +535,7 @@ Feature: 97636 Client Controller API
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.21212 @bus @client_api @smoke @tasks_p1
+  @TC.21212 @bus @client_api @smoke @tasks_p1 @ROR_smoke
   Scenario: 21212 [Itemized]GET /client/user/resources API for desktop user with stash and machines
     When I add a new MozyEnterprise partner:
       | period | users | server plan |

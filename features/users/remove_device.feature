@@ -3,7 +3,7 @@ Feature: Remove a device
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.21070 @bus @2.5 @user_view @delete_device @bundled @reseller @regression
+  @TC.21070 @bus @2.5 @user_view @delete_device @bundled @reseller @regression @core_function
   Scenario: 21070 [Bundled][Reseller] Delete device
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | net terms | company name                      |
@@ -67,7 +67,7 @@ Feature: Remove a device
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21079 @bus @2.5 @user_view @delete_device @itemized @enterprise @regression
+  @TC.21079 @bus @2.5 @user_view @delete_device @itemized @enterprise @regression @core_function
   Scenario: 21079 [Itemized][MozyEnterprise] Delete device
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | company name                             |
@@ -131,7 +131,7 @@ Feature: Remove a device
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21080 @bus @2.5 @user_view @delete_device @mozypro @regression
+  @TC.21080 @bus @2.5 @user_view @delete_device @mozypro @regression @core_function @ROR_smoke
   Scenario: 21080 [MozyPro] Delete device
     When I add a new MozyPro partner:
       | period | base plan | server plan | net terms |

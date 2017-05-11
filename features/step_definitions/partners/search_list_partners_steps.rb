@@ -149,6 +149,7 @@ When /^I use a existing partner:$/ do |partner_table|
   end
   @partner.partner_info.type = attributes['partner type']
   @partner.company_info.name = attributes['company name'] unless attributes['company name'].nil?
+  @partner.company_info.country = attributes['country'] unless attributes['country'].nil?
   @partner.partner_info.parent = attributes['create under'] || CONFIGS['bus']['mozy_root_partner']['mozypro'] # to be changed according to partner type
   @partner.admin_info.email = attributes['admin email'] unless attributes['admin email'].nil?
   @partner.admin_info.full_name = attributes['admin name'] unless attributes['admin name'].nil?

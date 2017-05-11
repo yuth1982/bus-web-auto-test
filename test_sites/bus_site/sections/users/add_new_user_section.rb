@@ -116,12 +116,19 @@ module Bus
       end
 
       submit_btn.click
-      page.driver.browser.switch_to.alert.text
-      alert = page.driver.browser.switch_to.alert
-      msg =alert.text
-      alert.accept
+      #======Two scenarios: 1. alert dialog. 2. No alert dialog, but error message <ul class="flash errors">
+      sleep(5)
+      if alert_present?
+        page.driver.browser.switch_to.alert.text
+        alert = page.driver.browser.switch_to.alert
+        msg =alert.text
+        alert.accept
+        puts "Get error message from alert dialog: " + msg
+      else
+        msg = error_messages
+        puts "Get error message from new user detail section: " + msg.strip
+      end
       msg
-
     end
 
 
@@ -218,6 +225,38 @@ module Bus
         wait_until{storage_warning_message_span.visible?}
         storage_warning_message_span.text
       end
+    end
+
+    #====================================
+    # Public  : get default values when create a new user
+    #
+    # @params : [mozy_type]   MozyPro, MozyEnterprise (so far)
+    #           [group_name]  user group name
+    #
+    # Example :
+    #   @bus_site.admin_console_page.add_new_user_section.get_new_user_default_values("MozyPro", "(default user group)")
+    #
+    # @return : [hash] new user default values.
+    #                  e.g., {"enable_stash_cb_checked"=>true, "enable_stash_cb_exist"=> true, "send_emails_cb_checked"=> false}
+    #====================================
+    def get_new_user_default_values(mozy_type, group_name)
+      @new_user_default_values = {}
+      if mozy_type == "MozyPro"
+        user_group_select.select(group_name)
+        #======<Enable Sync> exists or not======
+        begin find(:id, "user_enable_stash")
+        #======<Enable Sync> is checked or not======
+          @new_user_default_values["enable_stash_cb_checked"] = enable_stash_cb.checked?
+          @new_user_default_values["enable_stash_cb_exist"] = true
+        rescue
+          @new_user_default_values["enable_stash_cb_exist"] = false
+        end
+        #======<send emails invitation to user> chexked or not======
+        @new_user_default_values["send_emails_cb_checked"] = send_emails_cb.checked?
+      end
+        puts @new_user_default_values
+      #TODO
+      return @new_user_default_values
     end
 
   end

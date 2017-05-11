@@ -6,7 +6,9 @@ module SiteHelper
 
     def initialize
       if page.driver.is_a?(Capybara::Selenium::Driver)
+        log('browser, switch to the first frame on the page')
         page.driver.browser.switch_to.default_content
+        log('maximize the browser')
         page.driver.browser.manage.window.maximize
       else
         raise('Error: Selenium WebDriver Required.')
@@ -26,6 +28,8 @@ module SiteHelper
     end
 
     def load
+      Log.debug "load page and visit #{url.to_s}"
+      log("load page and visit #{url.to_s}")
       raise "NoUrlForPage" if url.nil?
       page.reset_session!
       visit(url)

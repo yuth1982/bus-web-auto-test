@@ -142,8 +142,8 @@ module Bus
     element(:billing_history_table, xpath: "//div[contains(@id,'partner-aria-txn-history-')]/div[1]/table")
 
     # Stash section
-    element(:change_stash_link, css: 'a[onclick*=change_stash]')
-    element(:cancel_stash_link, css: 'a[onclick*=cancel_change]')
+    element(:change_stash_link, {css: 'a[onclick*=change_stash]'}, true)
+    element(:cancel_stash_link, {css: 'a[onclick*=cancel_change]'}, true)
     element(:stash_status_select, css: 'select[id^=partner-stash-status-]')
     element(:submit_stash_status_btn, css: 'input[onclick*=submit_stash_status]')
     element(:add_stash_to_all_users_link, css: 'a[onclick*=enable_stash_for_all_confirm]')
@@ -152,6 +152,17 @@ module Bus
     element(:change_autogrow_status_link, css: 'a[onclick*=partner-display-overdraft-status]')
     element(:autogrow_status_select, css: 'select[id^=overdraft_status]')
     element(:submit_autogrow_status_btn, css: 'span[id^=partner-change-overdraft-status-] input[value=Submit]')
+
+    # Co-branding section
+    element(:change_cobranding_status_link, css: 'a[onclick*=partner-display-cobranding-status]')
+    element(:cobranding_status_select, css: 'select[id^=cobranding_status]')
+    element(:submit_cobranding_status_btn, css: 'span[id^=partner-change-cobranding-status-] input[value=Submit]')
+
+    # Ingredient section
+    element(:change_ingredient_status_link, css: 'a[onclick*=partner-display-ingredient-status]')
+    element(:ingredient_status_select, css: 'select[id^=ingredient_status]')
+    element(:submit_ingredient_status_btn, css: 'span[id^=partner-change-ingredient-status-] input[value=Submit]')
+
 
     # Subdomain
     element(:change_subdomain_link, xpath: "//a[text()='(learn more and set up)']")
@@ -543,6 +554,58 @@ module Bus
     # Returns nothing
     def add_stash_to_all_users
       add_stash_to_all_users_link.click
+    end
+
+    # Public: Enable co-branding for a partner
+    #
+    # Example:
+    #   @bus_site.admin_console_page.partner_details_section.enable_cobranding
+    #
+    # Returns nothing
+    def enable_cobranding
+      change_cobranding_status_link.click
+      cobranding_status_select.select('Yes')
+      submit_cobranding_status_btn.click
+      wait_until{ !submit_cobranding_status_btn.visible? }
+    end
+
+    # Public: Disable co-branding for a partner
+    #
+    # Example:
+    #   @bus_site.admin_console_page.partner_details_section.disable_cobranding
+    #
+    # Returns nothing
+    def disable_cobranding
+      change_cobranding_status_link.click
+      cobranding_status_select.select('No')
+      submit_cobranding_status_btn.click
+      wait_until{ !submit_cobranding_status_btn.visible? }
+    end
+
+    # Public: Enable require ingredient for a partner
+    #
+    # Example:
+    #   @bus_site.admin_console_page.partner_details_section.enable_require_ingredient
+    #
+    # Returns nothing
+    def enable_require_ingredient
+      change_ingredient_status_link.click
+      ingredient_status_select.select('Yes')
+      submit_ingredient_status_btn.click
+      wait_until{ !submit_ingredient_status_btn.visible? }
+    end
+
+    # Public: Disable require ingredient for a partner
+    #
+    # Example:
+    #   @bus_site.admin_console_page.partner_details_section.disable_require_ingredient
+    #
+    # Returns nothing
+    def disable_require_ingredient
+      change_ingredient_status_link.click
+      ingredient_status_select.select('No')
+      submit_ingredient_status_btn.click
+      wait_until{ !submit_ingredient_status_btn.visible? }
     end
 
     # Public: Change partner root role
@@ -1059,6 +1122,13 @@ module Bus
       expand(billing_information_icon)
       page.has_xpath?("//a[text()='View in Aria']")
     end
+    #===========================
+    # Public : click <act as> link
+    #===========================
+    def click_act_as_link
+      act_as_link.click
+      sleep(10)
+    end
 
     private
     def expanded?(element)
@@ -1077,5 +1147,6 @@ module Bus
     def collapse(element)
       element.click if expanded?(element)
     end
+
   end
 end

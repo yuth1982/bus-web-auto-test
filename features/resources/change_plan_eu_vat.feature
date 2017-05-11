@@ -55,15 +55,15 @@ Feature: Mozypro customers from 28 EU countries change plan
     Then New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
-      | base plan | server plan | storage add-on |
-      | 1 TB      | yes         | 10             |
+      | base plan | server plan |
+      | 1 TB      | yes         |
     Then Change plan charge summary should be:
       | Description                   | Amount     |
-      | Charge for upgraded plans     | $12,822.95 |
+      | Charge for new Server Plan    | $284.27    |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
-      | base plan | server plan | storage add-on |
-      | 1 TB      | yes         | 10             |
+      | base plan | server plan |
+      | 1 TB      | yes         |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
@@ -148,18 +148,18 @@ Feature: Mozypro customers from 28 EU countries change plan
     Then New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
-      | base plan | storage add-on |
-      | 4 TB      | 2              |
+      | base plan |
+      | 4 TB      |
     Then Change plan charge summary should be:
       | Description                  | Amount      |
       | Credit for remainder of 2 TB | -€12,522.24 |
-      | Charge for upgraded plans    | €27,994.22  |
+      | Charge for new 4 TB          | €24,057.24  |
       |                              |             |
-      | Total amount to be charged   | €15,471.98  |
+      | Total amount to be charged   | €11,535.00  |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
-      | base plan | storage add-on |
-      | 4 TB      | 2              |
+      | base plan |
+      | 4 TB      |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
@@ -193,8 +193,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     Then New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
-      | base plan | server plan | storage add-on |
-      | 12 TB     | no          | 0              |
+      | base plan | server plan |
+      | 12 TB     | no          |
     Then Change plan charge summary should be:
       | Description                  | Amount      |
       | Credit for remainder of 8 TB | -€30,280.53 |
@@ -203,8 +203,8 @@ Feature: Mozypro customers from 28 EU countries change plan
       | Total amount to be charged   | €15,140.26  |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
-      | base plan | server plan | storage add-on |
-      | 12 TB     | no          | 0              |
+      | base plan | server plan |
+      | 12 TB     | no          |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
@@ -309,18 +309,18 @@ Feature: Mozypro customers from 28 EU countries change plan
       | email        |
       | @admin_email |
     And I change MozyPro account plan to:
-      | base plan | storage add-on |
-      | 28 TB     | 10             |
+      | base plan |
+      | 28 TB     |
     Then Change plan charge summary should be:
       | Description                   | Amount      |
       | Credit for remainder of plans | -€300.08    |
-      | Charge for upgraded plans     | €122,932.64 |
+      | Charge for upgraded plans     | €112,456.54 |
       |                               |             |
-      | Total amount to be charged    | €122,632.56 |
+      | Total amount to be charged    | €112,156.46 |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
-      | base plan | server plan | storage add-on |
-      | 28 TB     | yes         | 10             |
+      | base plan | server plan |
+      | 28 TB     | yes         |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
@@ -440,14 +440,14 @@ Feature: Mozypro customers from 28 EU countries change plan
       | email        |
       | @admin_email |
     And I change MozyPro account plan to:
-      | base plan | storage add-on |
-      | 16 TB     | 2              |
+      | base plan |
+      | 16 TB     |
     Then Change plan charge summary should be:
       | Description                    | Amount      |
       | Credit for remainder of plans  | -€6,629.09  |
-      | Charge for upgraded plans      | €120,694.95 |
+      | Charge for upgraded plans      | €116,883.96 |
       |                                |             |
-      | Total amount to be charged     | €114,065.86 |
+      | Total amount to be charged     | €110,254.87 |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -536,14 +536,14 @@ Feature: Mozypro customers from 28 EU countries change plan
       | email        |
       | @admin_email |
     And I change MozyPro account plan to:
-      | base plan | server plan | storage add-on |
-      | 20 TB     | no          | 10             |
+      | base plan | server plan |
+      | 20 TB     | no          |
     Then Change plan charge summary should be:
       | Description                    | Amount      |
       | Credit for remainder of 500 GB | -€3,069.52  |
-      | Charge for upgraded plans      | €160,079.19 |
+      | Charge for new 20 TB           | €141,024.23 |
       |                                |             |
-      | Total amount to be charged     | €157,009.67 |
+      | Total amount to be charged     | €137,954.71 |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -584,16 +584,16 @@ Feature: Mozypro customers from 28 EU countries change plan
     Then New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
-      | base plan | storage add-on |
-      | 16 TB     | 0              |
+      | base plan |
+      | 16 TB     |
     Then Change plan charge message should be:
     """
       Are you sure that you want to downgrade your Mozy plan? When you return resources, they are no longer available for use and your next charge will be reduced to renew only the remaining resources.
     """
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
-      | base plan | server plan | storage add-on |
-      | 16 TB     | yes         | 0              |
+      | base plan | server plan |
+      | 16 TB     | yes         |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
@@ -606,8 +606,8 @@ Feature: Mozypro customers from 28 EU countries change plan
     Then New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
-      | base plan | server plan | storage add-on |
-      | 28 TB     | yes         | 5              |
+      | base plan | server plan |
+      | 28 TB     | yes         |
     Then Change plan charge summary should be:
       | Description                   | Amount       |
       | Credit for remainder of 20 TB | -€144,520.70 |
@@ -616,8 +616,8 @@ Feature: Mozypro customers from 28 EU countries change plan
       | Total amount to be charged    | €65,097.66   |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
-      | base plan | server plan | storage add-on |
-      | 28 TB     | yes         | 5              |
+      | base plan | server plan |
+      | 28 TB     | yes         |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
@@ -652,18 +652,18 @@ Feature: Mozypro customers from 28 EU countries change plan
     Then New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
-      | base plan | storage add-on |
-      | 4 TB      | 1              |
+      | base plan |
+      | 4 TB      |
     Then Change plan charge summary should be:
       | Description                   | Amount     |
       | Credit for remainder of plans | -€549.96   |
-      | Charge for upgraded plans     | €13,730.71 |
+      | Charge for upgraded plans     | €12,724.34 |
       |                               |            |
-      | Total amount to be charged    | €13,180.75 |
+      | Total amount to be charged    | €12,174.38 |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
-      | base plan | server plan | storage add-on |
-      | 4 TB      | yes         | 1              |
+      | base plan | server plan |
+      | 4 TB      | yes         |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
@@ -676,18 +676,18 @@ Feature: Mozypro customers from 28 EU countries change plan
     Then New partner should be created
     When I act as newly created partner account
     And I change MozyPro account plan to:
-      | base plan | storage add-on |
-      | 20 TB     | 15             |
+      | base plan |
+      | 20 TB     |
     Then Change plan charge summary should be:
       | Description                   | Amount       |
       | Credit for remainder of plans | -€116,883.96 |
-      | Charge for upgraded plans     | €155,632.44  |
+      | Charge for upgraded plans     | €146,104.96  |
       |                               |              |
-      | Total amount to be charged    | €38,748.48   |
+      | Total amount to be charged    | €29,221.00   |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
-      | base plan | server plan | storage add-on |
-      | 20 TB     | yes         | 15             |
+      | base plan | server plan |
+      | 20 TB     | yes         |
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 

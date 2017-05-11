@@ -3,7 +3,7 @@ Feature: network domain
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.2826 @TC.2836 @TC.122224 @bus @configurations @tasks_p2
+  @TC.2826 @TC.2836 @TC.122224 @bus @configurations @tasks_p2 @ROR_smoke
   Scenario: 2826 2836 122224:Create Edit a new network domain click search button with nothing input
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan | net terms |

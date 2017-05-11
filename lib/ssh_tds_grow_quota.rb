@@ -60,8 +60,13 @@ module SSHTDSGrowQuota
 
   def create_file (size)
     real_size = (Float(size) * 1024 * 1024 * 1024).to_i
-    delete_string = ('del ' + File.dirname(__FILE__) + '/../test_data/' + @filename).gsub!('/', '\\').to_s
-    create_string = ('fsutil file createnew ' + File.dirname(__FILE__) + '/../test_data/' + @filename + ' ' + real_size.to_s).gsub!('/', '\\').to_s
+    if OS.windows?
+      delete_string = ('del ' + File.dirname(__FILE__) + '/../test_data/' + @filename).gsub!('/', '\\').to_s
+      create_string = ('fsutil file createnew ' + File.dirname(__FILE__) + '/../test_data/' + @filename + ' ' + real_size.to_s).gsub!('/', '\\').to_s
+    else
+      delete_string = ('rm ' + File.dirname(__FILE__) + '/../test_data/' + @filename).to_s
+      create_string = ('dd if=/dev/urandom of=' + File.dirname(__FILE__) + '/../test_data/' + @filename + ' bs=' + real_size.to_s+ ' count=1').to_s
+    end
     system(delete_string)
     system(create_string)
   end

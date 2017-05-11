@@ -25,6 +25,9 @@ module Bus
     element(:backups_section_text, xpath: "//div[contains(@id,'machine-show-')]//h4[text()='Backups']/following-sibling::P")
     element(:restores_section_text, xpath: "//div[contains(@id,'machine-show-')]//h4[text()='Restores']/following-sibling::P")
 
+    #Restores
+    element(:download_restore, xpath: "//table[@class='table-view']//a[text()='Download Restore']")
+
 
     # Public: General information hash
     #
@@ -123,6 +126,13 @@ module Bus
 
     def get_replace_machine_text
       replace_machine_li.text.strip
+    end
+
+    def click_machine_download_item(item)
+      case item
+        when "Download Restore"
+          download_restore.click
+      end
     end
   end
 end

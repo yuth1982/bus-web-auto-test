@@ -1,4 +1,4 @@
-Feature: BUS smoke test
+Feature: BUS smoke test part 5
   pre-condition
   update environment:
   option 1: TEST_ENV = ENV['BUS_ENV'] || 'qa6' in test_sites/configs/configs_helper.rb
@@ -8,7 +8,7 @@ Feature: BUS smoke test
     Given I log in bus admin console as administrator
 
   #================== partner 'Internal Mozy - Reseller Ireland BUS Smoke Test 7531-8642-90' related scenarios ===================
-  @bus_emea @TC.125966
+  @bus_emea @TC.125966 @ROR_smoke
   Scenario: Test Case Mozy-125966: BUS EMEA -- Activate partner in email
     When I add a new Reseller partner:
       | company name                                                 | period | base plan | create under    | server plan | net terms | country | coupon                |
@@ -42,7 +42,7 @@ Feature: BUS smoke test
       | Data Shuttle EMEA | available | 10    |
     Then Data shuttle order should be created
 
-  @bus_emea @TC.125976 @qa
+  @bus_emea @TC.125976 @qa @ROR_smoke
   Scenario: Test Case Mozy-125976: BUS EMEA -- Update Data Shuttle - Precondition:@TC.125975
     When I search order in view data shuttle orders section by Internal Mozy - MozyPro France BUS Smoke Test Data Shuttle 2468-1359-07
     And I view data shuttle order details

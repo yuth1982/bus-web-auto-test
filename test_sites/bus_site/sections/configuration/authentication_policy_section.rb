@@ -31,6 +31,7 @@ module Bus
     element(:saml_save_btn, xpath: "//div[@id='authentication_policies-edit-content']//input[@class='button']")
     element(:connection_settings_tab, "//div[@id='authentication_policies-edit-tabs']/ul[1]/li[1]")
     element(:sync_rules_tab, xpath: "//div[@id='authentication_policies-edit-tabs']/ul[1]/li[2]")
+    element(:send_welcome_email, id:"options_send_notification")
     element(:attribute_mapping_tab, xpath: "//div[@id='authentication_policies-edit-tabs']/ul[1]/li[3]")
     element(:saml_authentication_tab, xpath: "//div[@id='authentication_policies-edit-tabs']/ul[1]/li[4]")
     element(:save_changes_button, xpath: "//input[@value='Save Changes']")
@@ -38,6 +39,7 @@ module Bus
     element(:options_delete_missing_users, id: 'options_delete_missing_users')
     element(:options_suspend_missing_users, id: 'options_suspend_missing_users')
     element(:scheduled_sync_options, id: 'options_daily')
+    element(:scheduled_sync_hourly, id: 'options_hourly')
     element(:data_sync_options_suspend_after_miss, id: 'data_sync_options_suspend_after_miss')
     element(:data_sync_options_delete_after_miss, id: 'data_sync_options_delete_after_miss')
     element(:scheduled_sync_time, id: 'data_sync_options_schedule')
@@ -247,11 +249,33 @@ module Bus
     # Example
     #   @bus_site.admin_console_page.authentication_policy_section.add_rules('provision', 2, ['dev_test*', 'qa_test*'], ['dev', 'qa'])
     #
+    # Example (for "email" created automatically by ruby code)
+    #   @bus_site.admin_console_page.authentication_policy_section.add_rules('provision', 2, ['mail=@AD_User_Emails["tc131019.user2"]'], ['(default user group)'], @AD_User_Emails)
     # Returns nothing
-    def add_rules(type, number, rule, drop_down_content)
+    def add_rules(type, number, rule, drop_down_content, ad_user_email=nil)
       (1..number).each do |num|
+        log("click <Add Rule> buton")
         find(:id, "add-#{type}-rule").click
-        find(:xpath, "//ol[@id='#{type}-rules']//li[#{num}]//input").set(rule[num])
+        # if we create a AD user with a dynamic email with prefix format, such as
+        # | user name      | email                         |
+        # | tc131019.user1 | mozyautotest+xx+..+zz@emc.com |
+        # we set sync rule as mail=@AD_User_Emails["tc131019.user1"]
+        # then the below if logic part code will convert the rule into the correct format such as -
+        # mail=mozyautotest+tc131019.user120170330025334utc@emc.com since
+        # @AD_User_Emails={"tc131019.user1"=>"mozyautotest+tc131019.user120170330025334utc@emc.com"}
+        if rule[num].include?("@AD_User_Emails")
+          log("LDAP query rule requires converted: " + rule[num].to_s)
+          log("@AD_User_emails instance variable: " + ad_user_email.to_s)
+          match = rule[num].scan(/".*"/)
+          log("AD user email address is:" + match.to_s)
+          log(ad_user_email[match[0][1..match[0].length-2]])
+          rule_converted = "mail=" + ad_user_email[match[0][1..match[0].length-2]]
+          log("LDAP query after converted: " + rule_converted)
+          find(:xpath, "//ol[@id='#{type}-rules']//li[#{num}]//input").set(rule_converted)
+        else
+          log("no need to convert LDAP query:" + rule[num].to_s)
+          find(:xpath, "//ol[@id='#{type}-rules']//li[#{num}]//input").set(rule[num])
+        end
         if (!drop_down_content.nil?) && drop_down_content[num] != ''
           find(:xpath, "//ol[@id='#{type}-rules']//select[@name='data[rules][#{type}][#{num}][#{type_action_hash[type]}]']").select(drop_down_content[num])
         end
@@ -663,5 +687,60 @@ module Bus
       r
     end
 
+    # Public : return ture or false for SSO for admin is checked or not
+    def sso_admin_checked?
+      return enable_sso_admin_chexkbox.checked?
+    end
+
+    # Public: check Send Welcome email to new user
+    def check_send_welcome_email
+      log("check <Send Welcome email to new users> checkbox")
+      send_welcome_email.check
+    end
+
+    # Public: uncheck Send Welcome email to new user
+    def uncheck_send_welcome_email
+      log("uncheck <Send Welcome email to new users> checkbox")
+      send_welcome_email.uncheck
+    end
+
+    def sync_hourly_visible
+      log("Verify the sync hourly checkbox is visible or invisible")
+      return scheduled_sync_hourly.visible?
+    end
+
+    def sync_safeguard_visible
+      log("Verify the synchronization safeguards checkbox is visible or invisible")
+      return sync_safeguards_checkbox.visible?
+    end
+
+    def help_link_visibility
+      !locate(:xpath, "//a[text()='Help']").nil?
+      #begin
+        #find(:xpath, "//a[text()='Help']")
+        #log("help link found")
+        #return true
+      #rescue
+        #log("help link not found")
+        #return false
+      #end
+    end
+
+    def click_help_link
+      find(:xpath, "//a[text()='Help']").click
+    end
+
+    def click_details_link
+      find(:xpath, "//a[text()='Details']").click
+    end
+
+    def click_blocked_deprovision_link
+      find(:xpath, "//a[text()='Blocked Deprovision']").click
+      wait_until_bus_section_load
+    end
+
+
   end
 end
+
+

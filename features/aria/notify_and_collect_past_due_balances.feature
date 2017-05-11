@@ -7,7 +7,7 @@ Feature: Notify about and collect past-due balances
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.16107 @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @regression
+  @TC.16107 @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @regression @core_function
   Scenario: 16107 MozyPro account deleted in bus but history will remain in aria
     When I add a new MozyPro partner:
       | period | base plan |
@@ -22,7 +22,7 @@ Feature: Notify about and collect past-due balances
       | status_label |
       | CANCELLED    |
 
-  @TC.16108 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @regression
+  @TC.16108 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @regression @core_function
   Scenario: 16108 MozyPro account without server plan suspended in aria should be backup-suspended in bus
     When I add a new MozyPro partner:
       | period | base plan |
@@ -43,7 +43,7 @@ Feature: Notify about and collect past-due balances
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.17877 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @regression
+  @TC.17877 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @regression @core_function
   Scenario: 17877 MozyPro account with server plan suspended in aria should be backup-suspended in bus
     When I add a new MozyPro partner:
       | period | base plan | server plan |
@@ -64,7 +64,7 @@ Feature: Notify about and collect past-due balances
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.16147 @TC.22129 @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers @email @regression
+  @TC.16147 @TC.22129 @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers @email @regression @core_function
   Scenario: 16147 Verify aria sends email when change MozyEnterprise account status to Active Dunning 1 22129 Partner with Aria Status Acitve Dunning 1-3 Will See Dunning Notification
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -78,6 +78,7 @@ Feature: Notify about and collect past-due balances
     Then API* Aria account should be:
       | status_label     |
       | ACTIVE DUNNING 1 |
+    And I wait for 1200 seconds
     When I search emails by keywords:
       | from                    | subject                                          | after | content                             |
       | AccountManager@mozy.com | [Mozy] Your credit card payment was unsuccessful | today |<%=@partner.credit_card.first_name%> |
@@ -91,7 +92,7 @@ Feature: Notify about and collect past-due balances
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.16148 @TC.22129 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers @email @regression
+  @TC.16148 @TC.22129 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers @email @regression @core_function
   Scenario: 16148 Verify aria sends email when change Reseller account status to Active Dunning 2 22129 Partner with Aria Status Acitve Dunning 1-3 Will See Dunning Notification
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -105,6 +106,7 @@ Feature: Notify about and collect past-due balances
     Then API* Aria account should be:
       | status_label     |
       | ACTIVE DUNNING 2 |
+    And I wait for 1200 seconds
     When I search emails by keywords:
       | from                    | subject                                                          | after | content                             |
       | AccountManager@mozy.com | [Mozy] SECOND NOTICE - Your credit card payment was unsuccessful | today |<%=@partner.credit_card.first_name%> |
@@ -118,7 +120,7 @@ Feature: Notify about and collect past-due balances
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.16149 @TC.22129 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers @email @regression
+  @TC.16149 @TC.22129 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers @email @regression @core_function
   Scenario: 16149 Verify aria sends email when change MozyPro account status to Active Dunning 3 22129 Partner with Aria Status Acitve Dunning 1-3 Will See Dunning Notification
     When I add a new MozyPro partner:
       | period | base plan |
@@ -132,6 +134,7 @@ Feature: Notify about and collect past-due balances
     Then API* Aria account should be:
       | status_label     |
       | ACTIVE DUNNING 3 |
+    And I wait for 1200 seconds
     When I search emails by keywords:
       | from                    | subject                                         | after | content                              |
       | AccountManager@mozy.com | [Mozy] Your account will be suspended in 7 days | today | <%=@partner.credit_card.first_name%> |
@@ -145,7 +148,7 @@ Feature: Notify about and collect past-due balances
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.16243 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers @email @regression
+  @TC.16243 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers @email @regression @core_function
   Scenario: 16243 Verify aria sends email when MozyPro account status sets to suspended
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -159,13 +162,14 @@ Feature: Notify about and collect past-due balances
     Then API* Aria account should be:
       | status_label |
       | SUSPENDED    |
+    And I wait for 1200 seconds
     When I search emails by keywords:
       | from        | subject                   | after | content                             |
       | ar@mozy.com | Account Suspension Notice | today |<%=@partner.credit_card.first_name%> |
     Then I should see 1 email(s)
     Then I search and delete partner account by newly created partner company name
 
-  @TC.16165 @TC.22129 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @net_terms_customers @email @regression
+  @TC.16165 @TC.22129 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @net_terms_customers @email @regression @core_function
   Scenario: 16165 Verify aria sends email when change MozyPro account status to Active Dunning 1 net terms 22129 Partner with Aria Status Acitve Dunning 1-3 Will See Dunning Notification
     When I add a new MozyPro partner:
     | period | base plan | net terms |
@@ -179,6 +183,7 @@ Feature: Notify about and collect past-due balances
     Then API* Aria account should be:
       | status_label     |
       | ACTIVE DUNNING 1 |
+    And I wait for 1200 seconds
     When I search emails by keywords:
       | from                    | subject                                          | after | content                             |
       | AccountManager@mozy.com | [Mozy] Your credit card payment was unsuccessful | today | <%=@partner.admin_info.first_name%> |
@@ -192,7 +197,7 @@ Feature: Notify about and collect past-due balances
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.16166 @TC.22129 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @net_terms_customers @email @regression
+  @TC.16166 @TC.22129 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @net_terms_customers @email @regression @core_function
   Scenario: 16166 Verify aria sends email when change MozyEnterprise account status to Active Dunning 2 net terms 22129 Partner with Aria Status Acitve Dunning 1-3 Will See Dunning Notification
     When I add a new MozyEnterprise partner:
       | period | users    | net terms |
@@ -219,7 +224,7 @@ Feature: Notify about and collect past-due balances
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.16244 @TC.22129 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @net_terms_customers @email @regression
+  @TC.16244 @TC.22129 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @net_terms_customers @email @regression @core_function
   Scenario: 16244 Verify aria sends email when change Reseller account status to Active Dunning 3 net terms 22129 Partner with Aria Status Acitve Dunning 1-3 Will See Dunning Notification
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -233,6 +238,7 @@ Feature: Notify about and collect past-due balances
     Then API* Aria account should be:
       | status_label     |
       | ACTIVE DUNNING 3 |
+    And I wait for 1200 seconds
     When I search emails by keywords:
       | from                    | subject                                         | after | content                             |
       | AccountManager@mozy.com | [Mozy] Your account will be suspended in 7 days | today | <%=@partner.admin_info.first_name%> |
@@ -246,7 +252,7 @@ Feature: Notify about and collect past-due balances
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.17978 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @net_terms_customers @email @regression
+  @TC.17978 @slow @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @net_terms_customers @email @regression @core_function
   Scenario: 17978 Verify aria sends email when MozyPro account status sets to suspended net terms
     When I add a new MozyPro partner:
       | period | base plan | net terms |
@@ -260,6 +266,7 @@ Feature: Notify about and collect past-due balances
     Then API* Aria account should be:
       | status_label |
       | SUSPENDED    |
+    And I wait for 1200 seconds
     When I search emails by keywords:
       | from        | subject                   | after | content                            |
       | ar@mozy.com | Account Suspension Notice | today | <%=@partner.admin_info.full_name%> |
@@ -286,7 +293,7 @@ Feature: Notify about and collect past-due balances
 #    #And I update partner credit card information with new test info
 #    #Then Message displayed on change payment information view should match Your billing information has been successfully updated.
 
-  @TC.16151 @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers @regression
+  @TC.16151 @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers @regression @core_function
   Scenario: 16151 Verify account reinstate from active dunning 1 state if charge goes through
     When I add a new MozyPro partner:
       | period | base plan |
@@ -321,7 +328,7 @@ Feature: Notify about and collect past-due balances
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.16152 @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers @regression
+  @TC.16152 @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers @regression @core_function
   Scenario: 16152 Verify account reinstate from active dunning 2 state if charge goes through
     When I add a new MozyPro partner:
       | period | base plan |
@@ -356,7 +363,7 @@ Feature: Notify about and collect past-due balances
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.16153 @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers @regression
+  @TC.16153 @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers @regression @core_function
   Scenario: 16153 Verify account reinstate from active dunning 3 state if charge goes through
     When I add a new MozyPro partner:
       | period | base plan |
@@ -391,7 +398,7 @@ Feature: Notify about and collect past-due balances
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.120030 @BUG.113148 @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers @regression
+  @TC.120030 @BUG.113148 @firefox @bus @2.0 @notify_about_and_collect_past-due_balances @credit_card_customers @regression @core_function
   Scenario: 120030 Verify account reinstate from suspended state if charge goes through
     When I add a new MozyPro partner:
       | period | base plan |

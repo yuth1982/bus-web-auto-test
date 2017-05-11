@@ -3,7 +3,7 @@ Feature: User Details
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.20986 @bus @2.5 @user_view @last_update @need_test_account @env_dependent @regression
+  @TC.20986 @bus @2.5 @user_view @last_update @need_test_account @env_dependent @regression @core_function
   Scenario: 20986 Last Update shows the time for the 3 device whose last backup time is 5 days ago
     When I act as partner by:
       | email                |
@@ -24,7 +24,7 @@ Feature: User Details
       | Sync Container | Used/Available | Device Storage Limit | Last Update | Action |
       | Sync           | 0 / 40 GB      | Set                  | N/A         |        |
 
-  @TC.20987 @bus @2.5 @user_view @last_update @dynamic_create @regression
+  @TC.20987 @bus @2.5 @user_view @last_update @dynamic_create @regression @core_function
   Scenario: 20987 "Last Update" shows "N/A" if never backup
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -51,7 +51,7 @@ Feature: User Details
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.20988 @bus @2.5 @user_view @last_update @dynamic_create @regression
+  @TC.20988 @bus @2.5 @user_view @last_update @dynamic_create @regression @core_function
   Scenario: 20988 "Last Update" shows "< a minute ago" if last backup time is less than 1minutes
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -80,7 +80,7 @@ Feature: User Details
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21020 @bus @2.5 @user_view @itemized @list_active_devices @regression
+  @TC.21020 @bus @2.5 @user_view @itemized @list_active_devices @regression @core_function
   Scenario: 21020 [Itemized]List all the active devices including stash
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | company name             |
@@ -113,7 +113,7 @@ Feature: User Details
       | Sync Container | Used/Available     | Device Storage Limit | Last Update      | Action |
       | Sync           | 0 / 140 GB         | Set                  | N/A              |        |
 
-  @TC.21096 @bus @2.5 @user_view @itemized @regression
+  @TC.21096 @bus @2.5 @user_view @itemized @regression @core_function
   Scenario: 21096 [Itemized]Edit the number of Desktop Device
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | company name             |
@@ -155,7 +155,7 @@ Feature: User Details
     Then Number of Desktop activated keys should be 2
     And Number of Desktop unactivated keys should be 0
 
-  @TC.21097 @bus @2.5 @itemized @user_view @list_active_devices @regression
+  @TC.21097 @bus @2.5 @itemized @user_view @list_active_devices @regression @core_function
   Scenario: 21097 [Itemized]Error shows when I add more Server devices than available in UG
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | company name             |
@@ -182,7 +182,7 @@ Feature: User Details
     When I edit user device quota to 8
     Then Show error: Invalid number of Server devices
 
-  @TC.21102 @bus @2.5 @user_view @list_active_devices @itemized @regression
+  @TC.21102 @bus @2.5 @user_view @list_active_devices @itemized @regression @core_function
   Scenario: 21102 [Bundled]Removed Device is returned to UG
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | company name             |
@@ -235,7 +235,7 @@ Feature: User Details
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.21103 @bus @2.5 @user_view @list_active_devices @itemized @regression
+  @TC.21103 @bus @2.5 @user_view @list_active_devices @itemized @regression @core_function
   Scenario: 21103 [Bundled]Error shows when I remove more Desktop devices than not activated
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | server plan |
@@ -264,7 +264,7 @@ Feature: User Details
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120019 @bus @edit_device_limit @regression
+  @TC.120019 @bus @edit_device_limit @regression @core_function
   Scenario: 120019:[Bundled]newly synced FedID users can edit device limit
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms | server plan |
@@ -309,8 +309,8 @@ Feature: User Details
     And I use Directory Service as authentication provider
     When I click Connection Settings tab
     And I input server connection settings
-      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
-      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+      | Server Host   | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.103.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I click Sync Rules tab
     And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
@@ -374,7 +374,7 @@ Feature: User Details
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120020 @bus @edit_device_limit @regression
+  @TC.120020 @bus @edit_device_limit @regression @core_function
   Scenario: 120020 [Bundled]user moved from subpartner to partner can edit device limit
     When I add a new Reseller partner:
       | period | reseller type | reseller quota | net terms |
@@ -431,7 +431,7 @@ Feature: User Details
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120021 @bus @edit_device_limit @regression
+  @TC.120021 @bus @edit_device_limit @regression @core_function
   Scenario: 120021 [Enterprise]newly synced FedID users can edit device limit
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
@@ -476,8 +476,8 @@ Feature: User Details
     And I use Directory Service as authentication provider
     When I click Connection Settings tab
     And I input server connection settings
-      | Server Host  | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
-      | 10.29.99.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
+      | Server Host   | Protocol | SSL Cert | Port | Base DN                      | Bind Username             | Bind Password |
+      | 10.29.103.120 | No SSL   |          | 389  | dc=mtdev,dc=mozypro,dc=local | admin@mtdev.mozypro.local | abc!@#123     |
     And I click Sync Rules tab
     And I uncheck enable synchronization safeguards in Sync Rules tab
     And I save the changes
@@ -551,7 +551,7 @@ Feature: User Details
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.120022 @bus @edit_device_limit @env_dependent @regression
+  @TC.120022 @bus @edit_device_limit @env_dependent @regression @core_function
   Scenario: 120022 [Enterprisde]user moved from subpartner to partner can edit device limit
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | root role  |
@@ -643,7 +643,7 @@ Feature: User Details
     Then I delete user
 
 
-  @TC.21071 @bus @2.5 @user_view @max_at_machine @itemized @regression
+  @TC.21071 @bus @2.5 @user_view @max_at_machine @itemized @regression @core_function
   Scenario: 21071 [Itemized]Desktop machine and Sync can Set/Edit/Remove max
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms | company name             |

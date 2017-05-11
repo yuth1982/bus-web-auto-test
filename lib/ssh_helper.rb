@@ -1,6 +1,6 @@
 require 'net/scp'
 module SSHHelper
-  PROXY_HOST = 'authproxy01.qa5.mozyops.com'
+  PROXY_HOST = 'authproxy01.qa12h.mozyops.com'
   SOCKD_CONF = '/etc/sockd.conf'
   BUS_HOST = QA_ENV['bus_host'].gsub("https://", '')
   USER = QA_ENV['ssh_login']
@@ -25,13 +25,13 @@ module SSHHelper
   def ssh_phoenix(cmd)
     host = QA_ENV['phoenix01_host']
     user, password = QA_ENV['ssh_login'], QA_ENV['ssh_password']
-    Net::SSH.start(host, user , :password => password ) {|ssh|  ssh.exec!(cmd)}
+    Net::SSH.start(host, user , :password => password, :host_key => "ssh-rsa" ) {|ssh|  return ssh.exec!(cmd)}
   end
 
   def ssh_bus(cmd)
     host = QA_ENV['client_host']
     user, password = QA_ENV['ssh_login'], QA_ENV['ssh_password']
-    Net::SSH.start(host, user , :password => password ) {|ssh|  ssh.exec!(cmd)}
+    Net::SSH.start(host, user , :password => password, :host_key => "ssh-rsa") {|ssh|  ssh.exec!(cmd)}
   end
 
   def ssh_linux_machine(cmd)
@@ -88,6 +88,12 @@ module SSHReap
   def run_phoenix_process_subscription_script(user_id)
     cmd = 'cd /var/www/phoenix'
     cmd += "; script/process_subscriptions -e production -u #{user_id}"
+    ssh_phoenix(cmd)
+  end
+
+  def run_phoenix_send_notification_script(user_id)
+    cmd = 'cd /var/www/phoenix'
+    cmd += "; script/send_initial_renewal_notification -e production -u #{user_id}"
     ssh_phoenix(cmd)
   end
 
@@ -254,6 +260,27 @@ module SSHLinuxE2E
                   else
                     company_type
                 end
+  end
+
+  # Have bds-boots service restart after deleting a AD user, otherwise, fail to privision a user on Bus Console
+  def restart_bds_boots_service
+    cmd = "/etc/init.d/bds-boots stop"
+    cmd += "; /etc/init.d/bds-boots start"
+    host = QA_ENV['authproxy01_host']
+    user, password = QA_ENV['authproxy01_user'], QA_ENV['authproxy01_pass']
+    sshHelperLog("host: " + host)
+    sshHelperLog("user: " + user)
+    sshHelperLog("password: " + password)
+    sshHelperLog("cmd" + cmd)
+    result = []
+    Net::SSH.start(host, user , :password => password, :host_key => "ssh-rsa" ) {|ssh|  result = ssh.exec!(cmd)}
+    sshHelperLog("result: " + result.to_s)
+    result
+  end
+
+  #======puts customized comment into the single test case execution log======
+  def sshHelperLog(text)
+    $logFile.puts("======[ssh_helper Log] " + text.to_s + "======\n")
   end
 
 end

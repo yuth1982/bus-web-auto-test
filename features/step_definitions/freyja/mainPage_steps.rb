@@ -99,3 +99,14 @@ And /^I right click VM (.+) to add to restore queue and then restore$/ do |vm|
   @restore.type = 'vms'
   @freyja_site.main_page.restore_vm(vm)
 end
+
+# choose one file in Sync or Backup devices
+#And /^I download file (.+) on machine\(ID\) (.+) from its (Synced|Devices) device$/ do |full_path, machineID, type|
+And /^I download file (.+) on machine from its (Synced|Devices) device$/ do |full_path, type|
+  case type
+    when 'Synced'
+      @freyja_site.main_page.Drillin_sync_file(@machine_info['ID:'], full_path)
+    when 'Devices'
+      @freyja_site.main_page.Drillin_win_backup_file_slash(@machine_info['ID:'], full_path)
+  end
+end

@@ -256,7 +256,7 @@ Feature: manage price schedules - billed partner
     And I delete partner account
 
 
-  @TC.18752 @bus @aria @tasks_p2
+  @TC.18752 @bus @aria @tasks_p2 @ROR_smoke
   Scenario: 18752 Change plan will reflect the price schedule for a partner
     When I add a new MozyPro partner:
       | period | base plan | server plan |

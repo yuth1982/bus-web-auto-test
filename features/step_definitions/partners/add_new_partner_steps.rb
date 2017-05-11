@@ -23,7 +23,9 @@
 #   click create
 
 When /^I add a new (MozyPro|MozyEnterprise|Reseller|MozyEnterprise DPS|OEM) partner:$/ do |type, partner_table|
+  @bus_site.log("navigate to the bus/menu/add new partner")
   @bus_site.admin_console_page.navigate_to_menu(CONFIGS['bus']['menu']['add_new_partner']) unless type == "OEM"
+  @bus_site.log("parse the partner_table parameter to identify the info for partner creation.")
   attributes = partner_table.hashes.first
 
   attributes.each do |header,attribute| #can use variable inside <%= %>
@@ -140,6 +142,8 @@ When /^I add a new (MozyPro|MozyEnterprise|Reseller|MozyEnterprise DPS|OEM) part
 
     Log.debug(@partner.to_s)
     @partner.credit_card.cvv2 = attributes['check cvv2'] unless attributes['check cvv2'].nil?
+    @bus_site.log('begin to create partner')
+    @bus_site.log(@partner.to_s)
     @bus_site.admin_console_page.add_new_partner_section.add_new_account(@partner)
   end
 end

@@ -32,13 +32,37 @@ Before do |scenario|
   file = File.new("logs/#{sName}.#{caseId}.line#{scenario.location.line.to_s}.log", 'w')
   file.puts "Scenario: #{scenario.name}"
   CapybaraHelper::Extension::Context.instance.log.dest = file
-  @logFile = file
+  #@logFile = file
+  $logFile = file
+  @scenario_start_time = Time.now
 end
 
+=begin
 After do |scenario|
-  @logFile.close
+  @scenario_end_time = Time.now
+  d = (@scenario_end_time - @scenario_start_time).to_i
+  mm,ss = d.divmod(60)
+  hh,mm = mm.divmod(60)
+  dd,hh = hh.divmod(60)
+
+  $logFile.puts("[Exception Message]-#{scenario.exception.message}") if scenario.failed?
+  if scenario.failed?
+    backtraceStrings = scenario.exception.backtrace
+    for i in 0..backtraceStrings.size
+      $logFile.puts("     " + backtraceStrings[i].to_s)
+    end
+  end
+  $logFile.puts("====================================================================")
+  $logFile.puts("[Test Case Result]:#{scenario.passed? ? "Succeed" : "Failed"}")
+  $logFile.puts("[Test Case Start Time]:#{@scenario_start_time.to_s}")
+  $logFile.puts("[Test Case End Time]:#{@scenario_end_time.to_s}")
+  $logFile.puts("[Test Case Execution Time]:%d days, %d hours, %d minutes and %d seconds" % [dd, hh, mm, ss])
+  $logFile.puts("[Test Case Elapsed]:#{d}s")
+  #@logFile.close
+  $logFile.close
   CapybaraHelper::Extension::Context.instance.log.dest = nil
 end
+=end
 
 =begin
 Before('@chrome') do
@@ -63,8 +87,8 @@ end
 =end
 
 After do |scenario|
-  test_plan = 635702  # "BUS 2016 automation test cases"
-  build_id = 6456 # "20160822"
+  test_plan = 641427  # "BUS Ruby on Rails upgrade"
+  build_id = 6744 # "2.26.1.3-trusty1" for ruby 1.9.3 and os upgrade
   project_prefix = "Mozy"
   project_id = 2      # 2 - 'Mozy'
   client = TestlinkHelper::TestlinkAPIClient.new
@@ -74,7 +98,20 @@ After do |scenario|
   tc = id.to_i
   test_case = client.run_api("getTestCase", {:testcaseexternalid => "#{project_prefix}-#{tc}"}).first
 
+  # Combine two After scenario methods into one
+  @scenario_end_time = Time.now
+  d = (@scenario_end_time - @scenario_start_time).to_i
+  mm,ss = d.divmod(60)
+  hh,mm = mm.divmod(60)
+  dd,hh = hh.divmod(60)
+
+  $logFile.puts("[Exception Message]:#{scenario.exception.message}") if scenario.failed?
   if scenario.failed?
+    backtraceStrings = scenario.exception.backtrace
+    for i in 0..backtraceStrings.size
+      $logFile.puts("     " + backtraceStrings[i].to_s)
+    end
+
     #Dismiss alert dialog if it exists to prevent Selenium::WebDriver::Error::UnhandledAlertError from happening in all the following scenarios
     begin
       Log.debug page.driver.browser.switch_to.alert.text
@@ -96,5 +133,15 @@ After do |scenario|
 
   result = client.run_api("reportTCResult", arg)
   Log.debug result
+
+  $logFile.puts("====================================================================")
+  $logFile.puts("[Test Case Result]:#{scenario.passed? ? "Succeed" : "Failed"}")
+  $logFile.puts("[Test Case Start Time]:#{@scenario_start_time.to_s}")
+  $logFile.puts("[Test Case End Time]:#{@scenario_end_time.to_s}")
+  $logFile.puts("[Test Case Execution Time]:%d days, %d hours, %d minutes and %d seconds" % [dd, hh, mm, ss])
+  $logFile.puts("[Test Case Elapsed]:#{d}s")
+  #@logFile.close
+  $logFile.close
+  CapybaraHelper::Extension::Context.instance.log.dest = nil
 
 end

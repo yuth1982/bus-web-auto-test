@@ -1,4 +1,4 @@
-Feature: BUS smoke test
+Feature: BUS smoke test 1
   pre-condition
   update environment:
   option 1: TEST_ENV = ENV['BUS_ENV'] || 'qa6' in test_sites/configs/configs_helper.rb
@@ -12,14 +12,14 @@ Feature: BUS smoke test
     Given I log in bus admin console as administrator
 
   #================== partner 'Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32 ' related scenarios ===================
-  @bus_us @TC.125935
+  @bus_us @TC.125935 @ROR_smoke
   Scenario: Test Case Mozy-125935: BUS US -- Create a new partner
     When I add a new MozyPro partner:
       | company name                                        | period | base plan | coupon                | net terms | server plan | root role               |
       | Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32 | 24     | 10 GB     | <%=QA_ENV['coupon']%> | yes       | yes         | Bundle Pro Partner Root |
     Then New partner should be created
 
-  @bus_us @TC.125936
+  @bus_us @TC.125936 @ROR_smoke
   Scenario: Test Case Mozy-125936: BUS US -- Partner Details - License Keys - Precondition:@TC.125935
     When I search partner by Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32
     And I view partner details by Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32
@@ -42,7 +42,7 @@ Feature: BUS smoke test
       | name                                                |
       | Internal Mozy - MozyPro BUS Smoke Test 0123-2015-32 |
 
-  @bus_us @TC.125940
+  @bus_us @TC.125940 @ROR_smoke
   Scenario: Test Case Mozy-125940: BUS US -- Create a user group - Precondition:@TC.125935
     When I act as partner by:
       | name                                                |
@@ -52,7 +52,7 @@ Feature: BUS smoke test
       | alpha | Shared       |
     Then alpha user group should be created
 
-  @bus_us @TC.125941
+  @bus_us @TC.125941 @ROR_smoke
   Scenario: Test Case Mozy-125941: BUS US -- Create a user - Precondition:@TC.125940
     When I act as partner by:
       | name                                                |
@@ -67,7 +67,7 @@ Feature: BUS smoke test
       | Name:                       |
       | user without stash (change) |
 
-  @bus_us @TC.125942
+  @bus_us @TC.125942 @ROR_smoke
   Scenario: Test Case Mozy-125942: BUS US -- Update a username & password - Precondition:@TC.125941
     When I act as partner by:
       | name                                                |
@@ -79,7 +79,7 @@ Feature: BUS smoke test
       | <%=create_user_email%> |
     Then I update the user password to Test1234
 
-  @bus_us @TC.125943
+  @bus_us @TC.125943 @ROR_smoke
   Scenario: Test Case Mozy-125943: BUS US -- Move the user from one user group to a different user group - Precondition:@TC.125941
     When I act as partner by:
       | name                                                |
@@ -94,7 +94,7 @@ Feature: BUS smoke test
     Then the user's user group should be omega
     When I close user details section
 
-  @bus_us @TC.125944
+  @bus_us @TC.125944 @ROR_smoke
   Scenario: Test Case Mozy-125944: BUS US -- User Details - Send Keys - Precondition:@TC.125935
     When I act as partner by:
       | name                                                |
@@ -125,7 +125,7 @@ Feature: BUS smoke test
     When I navigate to Search / List Machines section from bus admin console page
     Then Search list machines section is opened
 
-  @bus_us @TC.125947
+  @bus_us @TC.125947 @ROR_smoke
   Scenario: Test Case Mozy-125947: BUS US -- Create an admin - Precondition:@TC.125935
     When I act as partner by:
       | name                                                |
@@ -136,7 +136,7 @@ Feature: BUS smoke test
       | sub admin | (default user group) | Bundle Pro Partner Root |
     Then Add New Admin success message should be displayed
 
-  @bus_us @TC.125948
+  @bus_us @TC.125948 @ROR_smoke
   Scenario: Test Case Mozy-125948: BUS US -- Create a role - Precondition:@TC.125935
     When I act as partner by:
       | name                                                |
@@ -163,7 +163,7 @@ Feature: BUS smoke test
       | deploy_client_config | Server |
     Then client configuration section message should be Your configuration was saved.
 
-  @bus_us @TC.125950
+  @bus_us @TC.125950 @ROR_smoke
   Scenario: Test Case Mozy-125950: BUS US -- Open all of the Resources header to open all of the modules - Precondition:@TC.125935
     When I act as partner by:
       | name                                                |
@@ -176,7 +176,7 @@ Feature: BUS smoke test
     Then I navigate to Change Payment Information section from bus admin console page
     When I navigate to Download * Client section from bus admin console page
 
-  @bus_us @TC.125953 @support
+  @bus_us @TC.125953 @support @ROR_smoke
   Scenario: Test Case Mozy-125953: BUS US -- Check the support link - Precondition:@TC.125935
     When I act as partner by:
       | name                                                |
@@ -185,7 +185,7 @@ Feature: BUS smoke test
     And I click My Support on contact section
     Then I login my support successfully
 
-  @bus_us @TC.125956
+  @bus_us @TC.125956 @ROR_smoke
   Scenario: Test Case Mozy-125956: BUS US -- Delete test user - Precondition:@TC.125943
     When I act as partner by:
       | name                                                |
@@ -201,7 +201,7 @@ Feature: BUS smoke test
       | user to delete (change) |
     And I delete user
 
-  @bus_us @TC.125957
+  @bus_us @TC.125957 @ROR_smoke
   Scenario: Test Case Mozy-125957: BUS US -- Delete test user group - Precondition:@TC.125935
     When I act as partner by:
       | name                                                |

@@ -136,5 +136,24 @@ module Bus
       sleep 2 # wait for ajax call back
     end
 
+
+    #==============================
+    # Public : check the sync checkbox exist or not
+    #
+    # Example: @bus_site.admin_console_page.add_new_itemized_user_section.sync_checkbox_visible == true if visible == "visible"
+    #
+    # Return : ture if find the sync checkbox, otherwisem returns false
+    #==============================
+    def sync_checkbox_visible
+      begin
+        find(:id, 'user_enable_stash')
+        puts "======find the sync checkbox======"
+        return true
+      rescue
+        puts "======sync checkbox is not found======"
+        return false
+      end
+    end
+
   end
 end

@@ -19,7 +19,7 @@ Feature: Configurable Retention Partner Setting (111550)
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.120809 @retention @environment_dependent @partner_setting @bus @regression
+  @TC.120809 @retention @environment_dependent @partner_setting @bus @regression @core_function @ROR_smoke
   Scenario: 120809 Configurable Retention - MozyPro
     When I add a new MozyPro partner:
       | period |
@@ -32,7 +32,7 @@ Feature: Configurable Retention Partner Setting (111550)
     #Delete partner when done with validating retention period
     Then I delete partner account
 
-  @TC.120810 @retention @environment_dependent @partner_setting @bus @regression
+  @TC.120810 @retention @environment_dependent @partner_setting @bus @regression @core_function
   Scenario: 120810 Configurable Retention - MozyEnterprise
     When I add a new MozyEnterprise partner:
       | period |
@@ -45,7 +45,7 @@ Feature: Configurable Retention Partner Setting (111550)
     #Delete partner when done with validating retention period
     Then I delete partner account
 
-  @TC.120811 @retention @environment_dependent @partner_setting @bus @regression
+  @TC.120811 @retention @environment_dependent @partner_setting @bus @regression @core_function
   Scenario: 120811 Configurable Retention - OEM
     When I add a new OEM partner:
       | period |

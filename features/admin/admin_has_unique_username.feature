@@ -8,7 +8,7 @@ Feature: Admin Has Unique Username
   when I change a user email address (username) across MH, MP, ME, MEO, MCI want to be told if the name already exists,
   So that I can choose a unique one.
 
-  @TC.21342 @bus @2.5 @existing_email @regression
+  @TC.21342 @bus @2.5 @existing_email @regression @core_function
   Scenario: 21342:Add New Admin Role with Existing Admin Email
     When I get an admin email from the database
     And I log in bus admin console as administrator
@@ -20,7 +20,7 @@ Feature: Admin Has Unique Username
     """
     An account with that email address already exists
     """
-  @TC.21341 @bus @2.5 @existing_email @regression
+  @TC.21341 @bus @2.5 @existing_email @regression @core_function
   Scenario: 21341:Add New Admin Role with Existing User Email
     When I get a user email from the database
     And I log in bus admin console as administrator
@@ -33,7 +33,7 @@ Feature: Admin Has Unique Username
       | email                |
       | @existing_user_email |
 
-  @TC.21351 @bus @2.5 @existing_email @mozyhome @phoenix @regression
+  @TC.21351 @bus @2.5 @existing_email @mozyhome @phoenix @regression @core_function
   Scenario: Mozy-21351:Edit Admin Email With Existing User Email(MH)
     When I get a Mozy Home user email from the database
     And I log in bus admin console as administrator
@@ -43,7 +43,7 @@ Feature: Admin Has Unique Username
     When I change the username to automation admin email
     Then username changed success message should be displayed
 
-  @TC.21348 @bus @2.5 @existing_email @regression
+  @TC.21348 @bus @2.5 @existing_email @regression @core_function
   Scenario: 21348:Edit Sub Admin with Existing Admin Email
     When I get an admin email from the database
     And I log in bus admin console as administrator
@@ -66,7 +66,7 @@ Feature: Admin Has Unique Username
       | email        |
       | @admin_email |
 
-  @TC.21340 @bus @2.5 @existing_email @regression
+  @TC.21340 @bus @2.5 @existing_email @regression @core_function
   Scenario: 21340:Edit Admin Email With Admin Email That Is Already in Use
     When I log in bus admin console as administrator
     And I navigate to Add New Admin section from bus admin console page
@@ -85,7 +85,7 @@ Feature: Admin Has Unique Username
       | email                 |
       | @existing_admin_email |
 
-  @TC.21346 @bus @2.5 @existing_email @regression
+  @TC.21346 @bus @2.5 @existing_email @regression @core_function
   Scenario:  21346:Edit Admin Email With User Email That Is Already in Use
     When I get a user email from the database
     And I log in bus admin console as administrator
@@ -95,7 +95,7 @@ Feature: Admin Has Unique Username
     When I change the username to automation admin email
     Then username changed success message should be displayed
 
-  @TC.21347 @bus @2.5 @existing_email @regression
+  @TC.21347 @bus @2.5 @existing_email @regression @core_function
   Scenario: 21347:Edit Sub Admin with Existing User Email
     When I get a user email from the database
     And I log in bus admin console as administrator

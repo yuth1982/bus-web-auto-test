@@ -2,7 +2,7 @@ require 'net-ldap'
 module LDAPHelper
   USER = 'admin@mtdev.mozypro.local'
   PASSWORD = 'abc!@#123'
-  HOST = '10.29.99.120'
+  HOST = '10.29.103.120'
   PORT = 389
   TREEBASE = 'dc=mtdev,dc=mozypro,dc=local'
   EMAIL_POSTFIX = '@test.com'
@@ -10,7 +10,7 @@ module LDAPHelper
 
   # Public: Add user to the AD server with username (cn) and email
   #
-  def add_user(user_name, mail = nil, host=nil, user=nil, password=nil, treebase=nil, email_postfix=nil, uid=nil)
+  def add_user(user_name, mail = nil, host=nil, user=nil, password=nil, treebase=nil, email_postfix=nil)
     user_name = check_for_random(user_name)
     @ldap_user_mail = check_for_random_mail(mail, user_name, email_postfix)
     dn = "CN=#{user_name}, #{treebase || TREEBASE}"
@@ -27,7 +27,7 @@ module LDAPHelper
         :useraccountcontrol => '66080',
         :samaccountname => "#{user_name}",
     }
-    attr[:uid] = "#{uid.to_s}_#{Time.now.strftime("%Y%m%d%H%M")}" if uid
+    attr[:uid] = "123_#{Time.now.strftime("%Y%m%d%H%M")}"
     ldap = Net::LDAP.new :host => host || HOST,
                          :port => PORT,
                          :auth => {
@@ -37,10 +37,15 @@ module LDAPHelper
                          }
 
     ldap.open do |ldap|
+      ldapLog("Begin to create AD user")
+      ldapLog("dn is:" + dn.to_s)
+      ldapLog("attributes are:" + attr.to_s)
       ldap.add(:dn => dn, :attributes => attr)
-      Log.debug ldap.get_operation_result
+      ldapLog("LDAP User creation result is:" + ldap.get_operation_result.to_s)
+      #Log.debug ldap.get_operation_result)
     end
-    Log.debug("add a user #{user_name} to AD")
+    #Log.debug("add a user #{user_name} to AD")
+    ldapLog("add a user #{user_name} to AD")
   end
 
   # Public: delete a user in AD by username
@@ -55,6 +60,8 @@ module LDAPHelper
                              :password => PASSWORD
                          }
     ldap.open do |ldap|
+      ldapLog("Begin to delete AD user")
+      ldapLog("dn is:" + dn.to_s)
       ldap.delete :dn => dn
       Log.debug ldap.get_operation_result
     end
@@ -144,6 +151,10 @@ module LDAPHelper
 
   def ldap_user_mail
     @ldap_user_mail
+  end
+
+  def ldapLog(text)
+    $logFile.puts("======[LDAP Log] " + text.to_s + "======\n")
   end
 
 end

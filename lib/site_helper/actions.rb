@@ -183,5 +183,10 @@ module SiteHelper
     def view_partner_info
       find(:xpath, "//div[@id='identify-me']/a[1]").click
     end
+
+    def log(text)
+      $logFile.puts("======[Action]:" + text.to_s + "======\n")
+    end
+
   end
 end

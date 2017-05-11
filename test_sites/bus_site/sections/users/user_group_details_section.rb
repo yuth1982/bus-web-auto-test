@@ -49,6 +49,11 @@ module Bus
     element(:keys_table, xpath: "//th[text()='Product Key']/../../..")
     element(:admins_table, xpath: "//div[starts-with(@id,'user_groups-show')]/ul[2]/li[3]/div/table")
 
+    #confirmation_dialog
+    element(:confirmation_dialog, xpath: "//div[@class='popup-window']")
+    element(:confirmation_yes_bt, xpath: "//div[@class='popup-window-footer']/input[@value='Yes' and @type='button']")
+    element(:confirmation_cancel_bt, xpath: "//div[@class='popup-window-footer']/input[@value='Cancel' and @type='button']")
+
     # Public: User group details information
     #
     # Example:
@@ -132,8 +137,21 @@ module Bus
       submit_stash_status_btn.click
     end
 
+    # Public: add sync to all users belonging to the current group
+    #
+    # Example:
+    #   @bus_site.admin_console_page.user_group_details_section.add_stash_to_all_user
+    #
+    # Returns nothing
     def add_stash_to_all_user
       add_stash_to_all_link.click
+    #======sleep 5 seconds, if confirmation dialog appears, click Yes button. Otherwise, nothing happens.
+      begin
+        sleep(5)
+        confirmation_yes_bt.click if find(:xpath, "//div[@class='popup-window']")
+      rescue
+        puts "No confirmation dialog found, testing move formard."
+      end
     end
 
     def users_list_table_hashes
@@ -220,6 +238,15 @@ module Bus
 
     def data_shuttle_text_visible?
       !(locate(:xpath, "//div[contains(text(),'= Data Shuttle')]").nil?)
+    end
+
+    #==============================
+    # Public  : click user link on the user group list section to access user details section
+    #
+    # @user_name  : user name
+    #==============================
+    def click_user(user_name)
+      find(:xpath, "//td[text()='#{user_name}']/..//td[2]/a").click
     end
 
   end

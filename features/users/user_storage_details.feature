@@ -4,7 +4,7 @@ Feature: User Resources
   I can drill down to the user and see what storage he is using as well as his storage allocation
   so that I can quickly understand if I need to make a storage adjustment.
 
-  @TC.19640 @bus @user_storage_details @bundled @desktop @regression
+  @TC.19640 @bus @user_storage_details @bundled @desktop @regression @core_function
   Scenario: Mozy-19640:Access Partner as Partner Admin
     Given I log in bus admin console as administrator
     When I add a new MozyPro partner:
@@ -35,7 +35,7 @@ Feature: User Resources
     Then I log in bus admin console as administrator
     And I search and delete partner account by newly created partner company name
 
-  @TC.19646 @bus @user_storage_details @metallic_resellers @desktop @regression
+  @TC.19646 @bus @user_storage_details @metallic_resellers @desktop @regression @core_function
 Scenario: Mozy-19646:Access Partner as Bus Admin
   Given I log in bus admin console as administrator
   When I add a new Reseller partner:
@@ -63,7 +63,7 @@ Scenario: Mozy-19646:Access Partner as Bus Admin
   When I stop masquerading
   Then I search and delete partner account by newly created partner company name
 
-  @TC.19839 @bus @user_storage_details @itemized @reseller @desktop @env_dependent @regression
+  @TC.19839 @bus @user_storage_details @itemized @reseller @desktop @env_dependent @regression @core_function
   Scenario: Mozy-19839:Access Reseller Itemized Partner as Partner Admin
   #    Given I navigate to bus admin console login page
   #    When I log in to legacy bus01 as administrator
@@ -102,7 +102,7 @@ Scenario: Mozy-19646:Access Partner as Bus Admin
       | Desktop: 0 Used / 2 GB Available | Desktop: 0 Used / 1 Available Edit |
     When I delete user
 
-  @TC.19841 @bus @user_storage_details @mozypro @itemized @desktop @env_dependent @regression
+  @TC.19841 @bus @user_storage_details @mozypro @itemized @desktop @env_dependent @regression @core_function
   Scenario: Mozy-19841: Access an MozyPro Itemized Partner's User's details as Bus Admin
 #    When I log in to legacy bus01 as administrator
 #    And I successfully add an itemized MozyPro partner:
@@ -263,7 +263,7 @@ Scenario: Mozy-19646:Access Partner as Bus Admin
       When I stop masquerading
       Then I search and delete partner account by newly created partner company name
 
-  @TC.19859 @bus @user_storage_details @emea @DE @mozypro @itemized @server @env_dependent @regression
+  @TC.19859 @bus @user_storage_details @emea @DE @mozypro @itemized @server @env_dependent @regression @core_function
 Scenario: Mozy-19859:Access German Partner's User's details as Bus Admin
 #  When I log in to legacy bus01 as administrator
 #  And I successfully add an itemized MozyPro partner:

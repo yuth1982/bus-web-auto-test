@@ -1,4 +1,4 @@
-Feature:
+Feature: manage invoice comm settings
   As a Mozy Administrator
   I want to configure whether or not I want to receive account statements by email
   so that I'm not bothered by extra email
@@ -6,7 +6,7 @@ Feature:
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.15229 @bus @2.0 @manage_invoice_communication_settings @regression
+  @TC.15229 @bus @2.0 @manage_invoice_communication_settings @regression @core_function @ROR_smoke
   Scenario: 15229 Verify Receive Mozy Account Statements set to Yes for new partner in Bus
     When I add a new MozyPro partner:
       | period | base plan |
@@ -25,7 +25,7 @@ Feature:
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.15230 @firefox @bus @2.0 @manage_invoice_communication_settings @regression
+  @TC.15230 @firefox @bus @2.0 @manage_invoice_communication_settings @regression @core_function
   Scenario: 15230 Alter notification method between HTML email and Printable no email in Aria
     When I add a new MozyPro partner:
       | period | base plan |
@@ -45,7 +45,7 @@ Feature:
       | HTML Email           |
     Then I search and delete partner account by newly created partner company name
 
-  @TC.15495 @firefox @bus @2.0 @manage_invoice_communication_settings @regression
+  @TC.15495 @firefox @bus @2.0 @manage_invoice_communication_settings @regression @core_function
   Scenario: 15495 Verify aria notification method when set Receive Mozy Account Statements to No
     When I add a new MozyPro partner:
       | period | base plan |
@@ -64,7 +64,7 @@ Feature:
     When I stop masquerading
     Then I search and delete partner account by newly created partner company name
 
-  @TC.15718 @firefox @bus @2.0 @manage_invoice_communication_settings @regression
+  @TC.15718 @firefox @bus @2.0 @manage_invoice_communication_settings @regression @core_function
   Scenario: 15718 Verify notification method set to HTML Email for new Monthly MozyPro partner
     When I add a new MozyPro partner:
       | period | base plan |
@@ -77,7 +77,7 @@ Feature:
       | HTML Email         |
     Then I search and delete partner account by newly created partner company name
 
-  @TC.17590 @firefox @bus @2.0 @manage_invoice_communication_settings @regression
+  @TC.17590 @firefox @bus @2.0 @manage_invoice_communication_settings @regression @core_function
   Scenario: 17590 Verify notification method set to HTML Email for new Monthly MozyEnterprise partner
     When I add a new MozyEnterprise partner:
       | period | users |
@@ -90,7 +90,7 @@ Feature:
       | HTML Email         |
     Then I search and delete partner account by newly created partner company name
 
-  @TC.17591 @firefox  @bus @2.0 @manage_invoice_communication_settings @regression
+  @TC.17591 @firefox  @bus @2.0 @manage_invoice_communication_settings @regression @core_function
   Scenario: 17591 Verify notification method set to HTML Email for new Monthly Reseller partner
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |

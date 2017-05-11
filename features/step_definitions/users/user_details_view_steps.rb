@@ -631,8 +631,97 @@ Then /^MozyHome user billing info should be:$/ do |billing_table|
           actual[index][header].should == expected[index][header]
       end
     end
-
-
   }
+end
 
+Then /^device (.+) detail info in db should be:$/ do |device_name, device_table|
+  machine_table_headers = device_table.hashes.first
+  query_columns = []
+  machine_table_headers.each_key do |key|
+    query_columns << key
+  end
+  #=====this is for the scenario: delete the device on UI, after that, check the device details in mahine table======
+  @device_id = @bus_site.admin_console_page.user_details_section.get_machine_id(device_name) if @old_device_name != device_name
+  Log.debug "======old device name is: #{@old_device_name}, device name is: #{device_name}, device id is: #{@device_id}======"
+  @old_device_name = device_name
+  device_record = DBHelper.get_machine_record(query_columns, @device_id)
+  result_in_hash = Hash.new
+  Log.debug query_columns.size
+  for i in 0..query_columns.size-1
+    if device_record[0][i].nil?
+      Log.debug "======vc policy name is empty======"
+      device_record[0][i] = ""
+    end
+    result_in_hash.merge!({query_columns[i] => device_record[0][i]})
+  end
+  Log.debug result_in_hash
+  Log.debug machine_table_headers
+  result_in_hash.should == machine_table_headers
+end
+
+Then /^I click device (.+) link$/ do |device|
+  @bus_site.admin_console_page.user_details_section.click_device_link(device)
+end
+
+Then /^sync device info should be:$/ do | sync_device_table |
+  expected = sync_device_table.hashes.first
+  expected.each do |_,v|
+    v.replace ERB.new(v).result(binding)
+  end
+  actual = @bus_site.admin_console_page.user_details_section.sync_device_storage_info_hash
+  expected.keys.each{ |key| actual[key].should == expected[key] }
+end
+
+Then /^sync device \(itemized\) info should be:$/ do | sync_device_table |
+  expected = sync_device_table.hashes.first
+  expected.each do |_,v|
+    v.replace ERB.new(v).result(binding)
+  end
+  actual = @bus_site.admin_console_page.user_details_section.sync_device_itemized_storage_info_hash
+  expected.keys.each{ |key| actual[key].should == expected[key] }
+end
+
+And /^device (.+) has tooltip (.+) on its Device Storage Limit$/ do |device_name, tooltip|
+  sleep(5)
+  begin
+    @bus_site.admin_console_page.user_details_section.get_device_Device_Storage_Limit_tooltip(device_name).should == tooltip
+  rescue RSpec::Expectations::ExpectationNotMetError
+    puts "=======Manual check required, move forward======"
+    #@bus_site.admin_console_page.user_details_section.get_device_Device_Storage_Limit_tooltip(device_name).should == tooltip
+  end
+end
+
+
+And /^update the device (.+) with amount (.+)$/ do |device_name, amount|
+  @bus_site.admin_console_page.user_details_section.update_device_storage_limit(device_name, amount)
+end
+
+Then /^device detail section has error message(.*)$/ do | error_message |
+  @bus_site.admin_console_page.search_list_machines_section.wait_until_bus_section_load
+  @bus_site.admin_console_page.user_details_section.get_error_message.strip.should == (error_message.strip)
+end
+
+#======call method <delete_device> for common user's device
+When /^delete device (.+) by (with|without) keeping data$/ do | device_name, data_kept |
+  @bus_site.admin_console_page.user_details_section.delete_device(device_name, data_kept)
+  @bus_site.admin_console_page.user_details_section.wait_until_bus_section_load
+end
+
+#======call method <delete_itemized_device> for itemized user's device
+When /^delete \(itemized\) device (.+) by (with|without) keeping data$/ do | device_name, data_kept |
+  @bus_site.admin_console_page.user_details_section.delete_itemized_device(device_name, data_kept)
+  @bus_site.admin_console_page.user_details_section.wait_until_bus_section_load
+end
+
+When /^I change itemized user stash quota to (.+) GB/ do |quota|
+  @bus_site.admin_console_page.user_details_section.change_stash_quota_for_itemized_user(quota)
+end
+
+And /^the message should be (.+) when itemized user has sync disabled$/ do | message |
+  @bus_site.admin_console_page.user_details_section.get_sync_disabled_message
+end
+
+And /^as a MozyHome User clicks computer (.+)$/ do |computer|
+  @bus_site.admin_console_page.user_details_section.click_computer(computer)
+  @bus_site.admin_console_page.user_details_section.wait_until_bus_section_load
 end
