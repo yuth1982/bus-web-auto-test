@@ -22,9 +22,7 @@ module Bus
 
     def add_all_available_capabilities
       wait_until_bus_section_load
-      all(:css, 'input[id^=capability]').each do |ch|
-        ch.check
-      end
+      page.execute_script("jQuery('input[id^=capability_]').each(function() { if (!this.checked) {this.click()} })")
       find(:css, 'div[id^=roles-show] input[class=button]').click
       wait_until_bus_section_load
     end
