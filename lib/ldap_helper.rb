@@ -1,10 +1,10 @@
 require 'net-ldap'
 module LDAPHelper
-  USER = 'admin@mtdev.mozypro.local'
-  PASSWORD = 'abc!@#123'
-  HOST = '10.29.103.120'
-  PORT = 389
-  TREEBASE = 'dc=mtdev,dc=mozypro,dc=local'
+  USER = AD_CONNECTION_ENV['bind_username']
+  PASSWORD = AD_CONNECTION_ENV['bind_password']
+  HOST = AD_CONNECTION_ENV['server_host']
+  PORT = AD_CONNECTION_ENV['port']
+  TREEBASE = AD_CONNECTION_ENV['base_dn']
   EMAIL_POSTFIX = '@test.com'
   @ldap_user_mail = ''
 
@@ -88,9 +88,11 @@ module LDAPHelper
   end
 
   # Public: show a user's detail
+  # Return: return nil if no user found; return the user entry array if found user match the user_name if ADFS server
   #
   def show_user(user_name)
     dn = "cn=#{user_name}, #{TREEBASE}"
+    user_entry = []
     ldap = Net::LDAP.new :host => HOST,
                          :port => PORT,
                          :auth => {
@@ -101,6 +103,7 @@ module LDAPHelper
     ldap.open do |ldap|
       ldap.search(:base => TREEBASE, :filter => Net::LDAP::Filter.eq('cn', "#{user_name}")) do |entry|
         puts "DN: #{entry.dn}"
+        user_entry << entry
         entry.each do |attribute, values|
           puts "   #{attribute}:"
           values.each do |value|
@@ -110,6 +113,7 @@ module LDAPHelper
       end
     end
     Log.debug("show a user #{user_name} in AD")
+    (user_entry.empty?)? nil : user_entry
   end
 
   # Public: modify a rdn
@@ -154,7 +158,7 @@ module LDAPHelper
   end
 
   def ldapLog(text)
-    $logFile.puts("======[LDAP Log] " + text.to_s + "======\n")
+    $logFile.puts("======[LDAP Log] " + text.to_s + "======\n") if $logFile
   end
 
 end

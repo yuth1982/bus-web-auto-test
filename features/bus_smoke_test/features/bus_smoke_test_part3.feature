@@ -164,6 +164,7 @@ Feature: BUS smoke test 3
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
 
+  # precondition:  4 users (matched pullpostqa*) has been created in production ADFS server. Run ruby script/add_new_ldap_user.rb if user not created yet
   @bus_us @TC.125983 @std
   Scenario: Test Case Mozy-125983: LDAP Pull - Precondition:@TC.125960
     When I search partner by:
@@ -225,6 +226,7 @@ Feature: BUS smoke test 3
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
 
+  # precondition:  pullpostqa4@adfs.mozy.com has been created in production ADFS server. Run ruby script/add_new_ldap_user.rb if user not created yet
   @bus_us @TC.125983 @prod
   Scenario: Test Case Mozy-125983: LDAP Pull
     When I act as partner by:
