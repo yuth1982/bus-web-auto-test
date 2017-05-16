@@ -47,7 +47,11 @@ Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https', :verify_m
   build_number = response.body
 end
 
-doc = Nokogiri::HTML(open("http://jenkins01.tools.mozyops.com/view/apps-automation/job/#{job_name}/#{build_id}/cucumber-html-reports/overview-features.html", http_basic_authentication: ["hongyc", "happyLHY2@"]))
+doc = Nokogiri::HTML(open("http://jenkins01.tools.mozyops.com/view/apps-automation/job/#{job_name}/#{build_id}/cucumber-html-reports/overview-features.html", http_basic_authentication: ["hongyc", "QAP@SSw0rd1!"]))
+
+doc.xpath("//table[@id='build-info']/tbody/tr/td[2]").each do |link|
+  build_id = link.content
+end
 
 doc.xpath("//table[@id='tablesorter']//tfoot/tr[1]/td[10]").each do |link|
   total = link.content
