@@ -6,8 +6,9 @@ require 'open-uri'
 require 'net/https'
 
 help = false
-job_name = ""
+job_name = "bus_smoke_test_qa6.busclient01"
 build_id = 1
+jenkins = false
 build_number = 'Release'
 
 total = 0
@@ -16,8 +17,9 @@ failed = 0
 
 opts = GetoptLong.new(
     [ "--help",            "-h", GetoptLong::NO_ARGUMENT       ],
-    [ "--job_name",        "-j", GetoptLong::REQUIRED_ARGUMENT ],
+    [ "--job_name",        "-n", GetoptLong::REQUIRED_ARGUMENT ],
     [ "--build_id",        "-i", GetoptLong::REQUIRED_ARGUMENT ],
+    [ "--jenkins",         "-j", GetoptLong::NO_ARGUMENT       ]
 )
 
 opts.each do |opt, arg|
@@ -26,7 +28,9 @@ opts.each do |opt, arg|
       puts <<-EOF
 usage
   `ruby scripts/ci/jenkins_html_report.rb --job_name "bus_smoke_test_qa6.busclient01" --build_id 3`
-  `ruby scripts/ci/jenkins_html_report.rb -j "bus_smoke_test_qa6.busclient01" -i 3`
+  `ruby scripts/ci/jenkins_html_report.rb -n "bus_smoke_test_qa6.busclient01" -i 3`
+  `ruby scripts/ci/jenkins_html_report.rb --job_name "bus_smoke_test_qa6.busclient05" --build_id lastCompletedBuild`
+  `ruby scripts/ci/jenkins_html_report.rb --job_name "bus_smoke_test_qa6.busclient05" --build_id lastCompletedBuild --jenkins`
       EOF
       help = true
       break
@@ -34,6 +38,8 @@ usage
       job_name = arg
     when '--build_id'
       build_id = arg
+    when '--jenkins'
+      jenkins = true
   end
 end
 
@@ -47,11 +53,17 @@ Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https', :verify_m
   build_number = response.body
 end
 
-if build_id == 'lastCompletedBuild'
+doc = Nokogiri::HTML(open("http://jenkins01.tools.mozyops.com/view/apps-automation/job/#{job_name}/#{build_id}/cucumber-html-reports/overview-features.html", http_basic_authentication: ["hongyc", "QAP@SSw0rd1!"]))
+
+if jenkins
   doc.xpath("//table[@id='build-info']/tbody/tr/td[2]").each do |link|
     build_id = link.content
     build_id = build_id.to_i + 1
     build_id.to_s
+  end
+elsif build_id == 'lastCompletedBuild'
+  doc.xpath("//table[@id='build-info']/tbody/tr/td[2]").each do |link|
+    build_id = link.content
   end
 end
 
