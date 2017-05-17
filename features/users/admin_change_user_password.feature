@@ -3,7 +3,7 @@ Feature: Password change policy enforcement
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.132341 @bus @qa6 @temp_password @regression @core_function
+  @TC.132341 @bus @qa6 @temp_password @regression
   Scenario: 132341: MozyPro partner admin change user password with "temporary password"
     When I use a existing partner:
       | company name            | admin email                           | partner type | partner id |
@@ -45,7 +45,7 @@ Feature: Password change policy enforcement
       | <%=@new_users[0].email%> | <%=CONFIGS['global']['test_pwd'] %> |
     Then I will see the user account page
 
-  @TC.132342 @bus @qa6 @temp_password @regression @core_function @subdomain
+  @TC.132342 @bus @qa6 @temp_password @regression @subdomain
   Scenario: 132342: MozyPro partner (has subdomain) admin change user password with "temporary password"
     When I use a existing partner:
       | company name                      | admin email                               | partner type | partner id |
@@ -88,7 +88,7 @@ Feature: Password change policy enforcement
       | <%=@new_users[0].email%> | <%=CONFIGS['global']['test_pwd'] %> |
     Then I will see the user account page
 
-  @TC.132340 @bus @qa6 @temp_password @regression @core_function
+  @TC.132340 @bus @qa6 @temp_password @regression
   Scenario: 132340: MozyEnterprise HIPAA partner admin change user password with "temporary password"
     When I use a existing partner:
       | company name                     | admin email                                   | partner type   | partner id |
@@ -130,7 +130,7 @@ Feature: Password change policy enforcement
       | <%=@new_users[0].email%> | <%=CONFIGS['global']['test_hipaa_pwd'] %> |
     Then I will see the user account page
 
-  @TC.132338 @bus @qa6 @temp_password @regression @core_function
+  @TC.132338 @bus @qa6 @temp_password @regression
   Scenario: 132338: OEM partner admin change user password with "temporary password"
     When I use a existing partner:
       | company name        | admin email                    | partner type | partner id |
@@ -160,7 +160,7 @@ Feature: Password change policy enforcement
     And I log in bus admin console with user name @new_users[0].email and password reset password
     Then I will see the user account page
 
-  @TC.132343 @bus @qa6 @temp_password @regression @core_function
+  @TC.132343 @bus @qa6 @temp_password @regression
   Scenario: 132343: Reseller partner admin/subadmin change user password with "temporary password"
     # Reseller admin change user temporary password
     When I use a existing partner:
@@ -203,7 +203,7 @@ Feature: Password change policy enforcement
       | <%=@new_users[0].email%> | Test12!! |
     Then I will see the user account page
 
-  @TC.132343 @bus @qa6 @temp_password @regression @core_function
+  @TC.132343 @bus @qa6 @temp_password @regression
   Scenario: 132343: Reseller partner admin/subadmin change user password with "temporary password"
     When I use a existing partner:
       | company name                 | admin email                              | partner type | partner id |
@@ -274,7 +274,7 @@ Feature: Password change policy enforcement
 
 
 
-  @TC.132438 @bus @qa6 @regression @core_function
+  @TC.132438 @bus @qa6 @regression
   Scenario: 132438: MozyPro partner admin change user password without "temporary password"
     When I use a existing partner:
       | company name            | admin email                           | partner type | partner id |
@@ -310,7 +310,7 @@ Feature: Password change policy enforcement
       | <%=@new_users[0].email%> | <%=CONFIGS['global']['test_hipaa_pwd'] %> |
     Then I will see the user account page
 
-  @TC.132439 @bus @qa6 @regression @core_function @subdomain
+  @TC.132439 @bus @qa6 @regression @subdomain
   Scenario: 132439: MozyPro partner (has subdomain) admin change user password without "temporary password"
     When I use a existing partner:
       | company name                      | admin email                               | partner type | partner id |
@@ -347,7 +347,7 @@ Feature: Password change policy enforcement
       | <%=@new_users[0].email%> | <%=CONFIGS['global']['test_hipaa_pwd'] %> |
     Then I will see the user account page
 
-  @TC.132435 @bus @qa6 @regression @core_function
+  @TC.132435 @bus @qa6 @regression
   Scenario: 132435: MozyEnterprise HIPAA partner admin change user password without "temporary password"
     When I use a existing partner:
       | company name                     | admin email                                   | partner type   | partner id |
@@ -383,7 +383,7 @@ Feature: Password change policy enforcement
       | <%=@new_users[0].email%> | <%=QA_ENV['hipaa_password']%> |
     Then I will see the user account page
 
-  @TC.132434 @bus @qa6 @regression @core_function
+  @TC.132434 @bus @qa6 @regression
   Scenario: 132434: OEM partner admin change user password without "temporary password"
     When I use a existing partner:
       | company name        | admin email                    | partner type | partner id |
@@ -409,7 +409,7 @@ Feature: Password change policy enforcement
     And I log in bus admin console with user name @new_users[0].email and password default password
     Then I will see the user account page
 
-  @TC.132338 @bus @qa6 @temp_password @regression @core_function
+  @TC.132338 @bus @qa6 @temp_password @regression
   Scenario: 132338: OEM partner admin change user password with "temporary password"
     When I use a existing partner:
       | company name        | admin email                    | partner type | partner id |
@@ -439,7 +439,7 @@ Feature: Password change policy enforcement
     And I log in bus admin console with user name @new_users[0].email and password reset password
     Then I will see the user account page
 
-  @TC.132437 @bus @qa6 @regression @core_function
+  @TC.132437 @bus @qa6 @regression
   Scenario: 132437: Reseller partner admin/subadmin change user password with "temporary password"
     # Reseller admin change user password
     When I use a existing partner:
