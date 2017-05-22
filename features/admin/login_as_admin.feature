@@ -1366,8 +1366,8 @@ Feature: login as admins
       | subrole | Partner admin |
     When I navigate to Add New Pro Plan section from bus admin console page
     And I add a new pro plan for Reseller partner:
-      | Name    | Company Type | Root Role | Enabled | Public | Currency                             | Periods | Tax Percentage | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
-      | subplan | business     | subrole   | Yes     | No     | £ — Pound Sterling (Partner Default) | yearly  | 10             | test     | false            | 1                          | 1                     |
+      | Name    | Company Type | Root Role | Enabled | Public | Currency           | Periods | Tax Percentage | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
+      | subplan | business     | subrole   | Yes     | No     | £ — Pound Sterling | yearly  | 10             | test     | false            | 1                          | 1                     |
     Then add new pro plan success message should be displayed
     And I add a new sub partner:
       | Company Name          | Pricing Plan | Admin Name |

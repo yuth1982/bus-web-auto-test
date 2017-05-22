@@ -441,8 +441,8 @@ Feature: Manage Pending Deletes in Internal Tools in Admin Console
       | newrole | Partner admin |
     When I navigate to Add New Pro Plan section from bus admin console page
     Then I add a new pro plan for MozyEnterprise partner:
-      | Name    | Company Type | Root Role | Enabled | Public | Currency                        | Periods | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
-      | newplan | business     | newrole   | Yes     | No     | $ — US Dollar (Partner Default) | yearly  | test     | false            | 1                          | 1                     |
+      | Name    | Company Type | Root Role | Periods | Tax Percentage | Tax Name | Auto-include tax | Server Price per key | Server Min keys | Server Price per gigabyte | Server Min gigabytes |
+      | subplan | business     | newrole   | yearly  | 10             | test     | false            | 1                    | 1               | 1                         | 1                    |
     And I add a new sub partner:
       | Company Name |
       | test1   |

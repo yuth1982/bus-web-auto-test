@@ -317,8 +317,8 @@ Feature:
     And I check all the capabilities for the new role
     And I navigate to Add New Pro Plan section from bus admin console page
     And I add a new pro plan for MozyEnterprise partner:
-      | Name    | Company Type | Root Role | Periods | Tax Percentage | Tax Name | Auto-include tax | Generic Price per gigabyte | Generic Min gigabytes |
-      | subplan | business     | subrole   | yearly  | 10             | test     | false            | 1                          | 1                     |
+      | Name    | Company Type | Root Role | Periods | Tax Percentage | Tax Name | Auto-include tax | Server Price per key | Server Min keys | Server Price per gigabyte | Server Min gigabytes | Desktop Price per key | Desktop Min keys | Desktop Price per gigabyte | Desktop Min gigabytes |
+      | subplan | business     | subrole   | yearly  | 10             | test     | false            | 1                    | 1               | 1                         | 1                    | 1                     | 1                | 1                          | 1                     |
     Then add new pro plan success message should be displayed
     When I add a new sub partner:
       | Company Name         |
@@ -342,6 +342,7 @@ Feature:
     And activate the user's Desktop device without a key and with the default password
     And I stop masquerading as sub partner
     And I stop masquerading
+    And I log in bus admin console as administrator
     When I order data shuttle for TC.12712_sub_partner
       | address 1     | city         | state | zip    | country         | phone        | power adapter   | key from  |
       | 151 S Morgan  | Shelbyville  | IL    | 62565  | United States   | 3127584030   | Data Shuttle US | available |

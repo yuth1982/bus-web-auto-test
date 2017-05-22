@@ -187,9 +187,9 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     Then Change plan charge summary should be:
       | Description                   | Amount   |
       | Credit for remainder of plans | -€133.70 |
-      | Charge for upgraded plans     | €956.66  |
+      | Charge for upgraded plans     | €956.68  |
       |                               |          |
-      | Total amount to be charged    | €822.96  |
+      | Total amount to be charged    | €822.98  |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |
@@ -1195,9 +1195,9 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     Then Change plan charge summary should be:
       | Description                    | Amount   |
       | Credit for remainder of 100 GB | -€335.43 |
-      | Charge for new 250 GB          | €816.58  |
+      | Charge for new 250 GB          | €816.59  |
       |                                |          |
-      | Total amount to be charged     | €481.15  |
+      | Total amount to be charged     | €481.16  |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | storage add-on | server plan |
@@ -1251,9 +1251,9 @@ Feature: Requirement #143134 Aria coupon code remove: change period and change p
     Then Change plan charge summary should be:
       | Description                   | Amount   |
       | Credit for remainder of plans | -€126.28 |
-      | Charge for upgraded plans     | €956.66  |
+      | Charge for upgraded plans     | €956.67  |
       |                               |          |
-      | Total amount to be charged    | €830.38  |
+      | Total amount to be charged    | €830.39  |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan | server plan |

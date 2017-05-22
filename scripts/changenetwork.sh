@@ -133,6 +133,12 @@ case $(echo $NETWORK | tr [:upper:] [:lower:]) in
         BUS=busclient04.qa6.mozyops.com
         VERIFY_SSL=0
         ;;
+    "qa6_busclient06" )
+        AUTH=auth01.qa6.mozyops.com
+        TRITON=tds01.qa6.mozyops.com
+        BUS=busclient06.qa6.mozyops.com
+        VERIFY_SSL=0
+        ;;
     "qa6_busclient01" )
         AUTH=auth01.qa6.mozyops.com
         TRITON=tds01.qa6.mozyops.com

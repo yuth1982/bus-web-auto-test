@@ -5,6 +5,8 @@ Feature: delete partner, Mozy Inc --> Fortress (BDS) --> MozyOEM --> Partner Roo
 
   @TC.133692 @bus @delete_partner
   Scenario: Mozy-144460_01: Delete MozyPro Partner Root, check Partner Root information
+    When I check that linux client service is available
+    And I upload change linux client env script to remote machine
     When I add a new MozyPro partner:
       | period | base plan | server plan |
       | 1      | 250 GB    | yes         |
