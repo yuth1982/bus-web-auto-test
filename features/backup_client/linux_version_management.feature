@@ -296,18 +296,18 @@ Feature: As a Mozy Admin, I should be able to add new linux version and manage t
     And I wait for client fully downloaded
     Then the downloaded client should be same as the uploaded file FakeLinuxClient.deb
 
-  @TC.124097 @bus @linux_version_management @tasks_p1 @qa12
-  Scenario: 124097 VMBU Client can be downloaded
-    When I use a existing partner:
-      | company name                                            | admin email                         | admin name       | partner type |
-      | Internal Mozy - MozyPro with edit user group capability | mozybus+bonnie+perez+0110@gmail.com | Admin Automation | MozyPro      |
-    And I navigate to bus admin console login page
-    And I log in bus admin console as new partner admin
-    And I navigate to Download MozyPro Client section from bus admin console page
-    Then I should see download link for Download MozyPro vSphere Backup Software
-    When I clear downloads folder
-    And I click download link for Download MozyPro vSphere Backup Software
-    Then client started downloading successfully
+  #@TC.124097 @bus @linux_version_management @tasks_p1 @qa12
+  #Scenario: 124097 VMBU Client can be downloaded
+  #  When I use a existing partner:
+  #    | company name                                            | admin email                         | admin name       | partner type |
+  #    | Internal Mozy - MozyPro with edit user group capability | mozybus+bonnie+perez+0110@gmail.com | Admin Automation | MozyPro      |
+  #  And I navigate to bus admin console login page
+  #  And I log in bus admin console as new partner admin
+  #  And I navigate to Download MozyPro Client section from bus admin console page
+  #  Then I should see download link for Download MozyPro vSphere Backup Software
+  #  When I clear downloads folder
+  #  And I click download link for Download MozyPro vSphere Backup Software
+  #  Then client started downloading successfully
 
   @clean_up @ROR_smoke
   Scenario: clean up all linux test versions and rules
