@@ -23,7 +23,4 @@ Feature: BUS smoke test 3
     And I update the user password to default password
     And activate the user's Desktop device without a key and with the default password
     Then I stop masquerading
-    When I order data shuttle for Internal Mozy - MozyPro BUS Smoke Test Data Shuttle 6201-2851-04
-      | power adapter   | key from  | quota |
-      | Data Shuttle US | available | 5     |
-    Then Data shuttle order should be created
+
