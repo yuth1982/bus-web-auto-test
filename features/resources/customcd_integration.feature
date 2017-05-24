@@ -106,19 +106,19 @@ Feature: CustomCD integration
       | 1       |          |         | Cancelled  |
     And I search and delete partner account by newly created partner company name
 
-  @bus @TC.125785 @qa12 @env_dependent @resources @tasks_p2
-  Scenario: 125785 VMBU data shuttle is reflected correctly in CustomCD
-    When I order data shuttle for ClientQA-VMBU
-      | address 1     | city         | state | zip    | country         | phone        | power adapter   | key from             | os         |
-      | 151 S Morgan  | Shelbyville  | IL    | 62565  | United States   | 3127584030   | Data Shuttle US | 9X37WGFV58DBXBC7TSS2 | vSphere    |
-    Then Data shuttle order should be created
-    And I search order in view data shuttle orders section by ClientQA-VMBU
-    And I view data shuttle order details
-    Then the status of shipping tracking table should have Submitted and Processing and Burned
-    And I get the data shuttle seed id for ClientQA-VMBU
-    And I get customcd order id from database for data shuttle order
-    Then API* data shuttle order status should be Burned
-    And I cancel the latest data shuttle order for ClientQA-VMBU
-    And I wait for 60 seconds
-    Then API* data shuttle order status should be Cancelled
+#  @bus @TC.125785 @qa12 @env_dependent @resources @tasks_p2
+#  Scenario: 125785 VMBU data shuttle is reflected correctly in CustomCD
+#    When I order data shuttle for ClientQA-VMBU
+#      | address 1     | city         | state | zip    | country         | phone        | power adapter   | key from             | os         |
+#      | 151 S Morgan  | Shelbyville  | IL    | 62565  | United States   | 3127584030   | Data Shuttle US | 9X37WGFV58DBXBC7TSS2 | vSphere    |
+#    Then Data shuttle order should be created
+#    And I search order in view data shuttle orders section by ClientQA-VMBU
+#    And I view data shuttle order details
+#    Then the status of shipping tracking table should have Submitted and Processing and Burned
+#    And I get the data shuttle seed id for ClientQA-VMBU
+#    And I get customcd order id from database for data shuttle order
+#    Then API* data shuttle order status should be Burned
+#    And I cancel the latest data shuttle order for ClientQA-VMBU
+#    And I wait for 60 seconds
+#    Then API* data shuttle order status should be Cancelled
 

@@ -2,7 +2,7 @@ Feature: login admins via subdomain
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.133719 @bus @admin @login_via_subdomain @regression @smoke
+  @TC.133719 @bus @admin @login_via_subdomain @regression @smoke @qa12
   Scenario: 133719:Not set subdomain and Not set value for root partner, root partner admin login via dell.mozy.com
     # existing partner is under Enterprise(Mozy dell) as root partner(QAP@SSw0rd), allow_mozy_com_domain is 't' inherited by mozy dell 't'
     When I use a existing partner:
@@ -45,7 +45,7 @@ Feature: login admins via subdomain
     And I log in bus admin console with user name @partner.admin_info.email and password QAP@SSw0rd
     Then I login as @partner.company_info.name admin successfully
 
-  @TC.133721 @bus @admin @login_via_subdomain @regression
+  @TC.133721 @bus @admin @login_via_subdomain @regression @qa12
   Scenario: 133721:Set subdomain and Not set value for root partner, root partner admin login via *.mozy.com of root
 # existing partner is under Enterprise(Mozy dell) as root partner with subdomain(qa12autotestsubdomain), allow_mozy_com_domain is 't' inherited by mozy dell 't'
     When I use a existing partner:
@@ -55,7 +55,7 @@ Feature: login admins via subdomain
     And I log in bus admin console with user name @partner.admin_info.email and password QAP@SSw0rd
     Then I login as @partner.company_info.name admin successfully
 
-  @TC.133723 @bus @admin @login_via_subdomain @regression
+  @TC.133723 @bus @admin @login_via_subdomain @regression @qa12
   Scenario: 133723:Set 'f' for root, Set 'f' for L1, set subdomain Not for root/Not for L1, check bus_domain for L1
     # existing partner is under Enterprise(Mozy dell) as root partner(QAP@SSw0rd), allow_mozy_com_domain is 'f'
    # existing partner (DONOT EDIT NoSubdomainSub) is under 'DONOT EDIT AutoTestNoSubdomain' as L1 partner(QAP@SSw0rd), allow_mozy_com_domain is 'f'
@@ -117,7 +117,7 @@ Feature: login admins via subdomain
       | allow_mozy_com_domain | t     | false  |
 
 
-  @TC.133724 @bus @admin @login_via_subdomain @regression
+  @TC.133724 @bus @admin @login_via_subdomain @regression @qa12
   Scenario: 133724:Set 'f' for root, Set 'f' for L1, set subdomain Not for root/for L1, check bus_domain for L1
   # existing partner is under Enterprise(Mozy dell) as root partner(QAP@SSw0rd), allow_mozy_com_domain is 'f'
  # existing partner (DONOT EDIT SubdomainSub) with 'qa12subdomainsub' is under 'DONOT EDIT AutoTestNoSubdomain' as L1 partner(QAP@SSw0rd), allow_mozy_com_domain is 'f'
@@ -185,7 +185,7 @@ Feature: login admins via subdomain
       | Name                  | Value | Locked |
       | allow_mozy_com_domain | t     | false  |
 
-  @TC.133828 @bus @admin @login_via_subdomain @regression
+  @TC.133828 @bus @admin @login_via_subdomain @regression @qa12
   Scenario: 133828:Set 'f' for root, Set 'f' for L1, set subdomain for root/for L1, check bus_domain for L1
 # existing partner is under Enterprise(Mozy dell) as root partner(QAP@SSw0rd), allow_mozy_com_domain is 'f'
 # existing partner (DONOT EDIT SubdomainSub1) with 'qa12subdomainsub1' is under 'DONOT EDIT AutoTestSubdomain' as L1 partner(QAP@SSw0rd), allow_mozy_com_domain is 'f'
@@ -258,7 +258,7 @@ Feature: login admins via subdomain
       | Name                  | Value | Locked |
       | allow_mozy_com_domain | t     | false  |
 
-  @TC.133831 @bus @admin @login_via_subdomain @regression
+  @TC.133831 @bus @admin @login_via_subdomain @regression @qa12
   Scenario: 133831:Set 't' for root, Set 'f' for L1, set subdomain for root/Not for L1, check bus_domain for L1
 # existing partner is under Enterprise(Mozy dell) as root partner(QAP@SSw0rd), allow_mozy_com_domain is 't'
 # existing partner (DONOT EDIT NoSubdomainSub1) is under 'DONOT EDIT AutoTestSubdomain' as L1 partner(QAP@SSw0rd), allow_mozy_com_domain is 'f'
@@ -299,7 +299,7 @@ Feature: login admins via subdomain
       | Name                  | Value | Locked |
       | allow_mozy_com_domain | t     | false  |
 
-  @TC.133720 @bus @admin @login_via_subdomain @regression
+  @TC.133720 @bus @admin @login_via_subdomain @regression @qa12
   Scenario: 133720:Set subdomain and Not set value for root partner, root partner admin login via dell.mozy.com
 # existing partner is under Enterprise(Mozy dell) as root partner with subdomain(qa12autotestsubdomain), allow_mozy_com_domain is 't' inherited by mozy dell 't'
     When I use a existing partner:
@@ -309,7 +309,7 @@ Feature: login admins via subdomain
     And I log in bus admin console with user name @partner.admin_info.email and password QAP@SSw0rd
     Then I login as @partner.company_info.name admin successfully
 
-  @TC.133722 @bus @admin @login_via_subdomain @regression
+  @TC.133722 @bus @admin @login_via_subdomain @regression @qa12
   Scenario: 133722:Set subdomain and Set 'f' for root partner, root partner admin login via *.mozy.com of root
 # existing partner is under Enterprise(Mozy dell) as root partner with subdomain(qa12autotestsubdomain), allow_mozy_com_domain is 'f'
     When I use a existing partner:
@@ -350,7 +350,7 @@ Feature: login admins via subdomain
       | Name                  | Value | Locked |
       | allow_mozy_com_domain | t     | false  |
 
-  @TC.133725 @bus @admin @login_via_subdomain @regression
+  @TC.133725 @bus @admin @login_via_subdomain @regression @qa12
   Scenario: 133725:Set 'f' for root, Set 't' for L1, set subdomain Not for root/for L1, check bus_domain for L1
 # existing partner is under Enterprise(Mozy dell) as root partner(QAP@SSw0rd), allow_mozy_com_domain is 'f'
 # existing partner (DONOT EDIT SubdomainSub) with 'qa12subdomainsub' is under 'DONOT EDIT AutoTestNoSubdomain' as L1 partner(QAP@SSw0rd), allow_mozy_com_domain is 't'
@@ -408,7 +408,7 @@ Feature: login admins via subdomain
       | Name                  | Value | Locked |
       | allow_mozy_com_domain | t     | false  |
 
-  @TC.133826 @bus @admin @login_via_subdomain @regression
+  @TC.133826 @bus @admin @login_via_subdomain @regression @qa12
   Scenario: 133826:Set 't' for root, Set 'f' for L1, set subdomain Not for root/for L1, check bus_domain for L1
 # existing partner is under Enterprise(Mozy dell) as root partner(QAP@SSw0rd), allow_mozy_com_domain is 't'
 # existing partner (DONOT EDIT SubdomainSub) with 'qa12subdomainsub' is under 'DONOT EDIT AutoTestNoSubdomain' as L1 partner(QAP@SSw0rd), allow_mozy_com_domain is 'f'
@@ -448,7 +448,7 @@ Feature: login admins via subdomain
       | Name                  | Value | Locked |
       | allow_mozy_com_domain | t     | false  |
 
-  @TC.133827 @bus @admin @login_via_subdomain @regression
+  @TC.133827 @bus @admin @login_via_subdomain @regression @qa12
   Scenario: 133827:Set 't' for root, Set 't' for L1, set subdomain Not for root/for L1, check bus_domain for L1
 # existing partner is under Enterprise(Mozy dell) as root partner(QAP@SSw0rd), allow_mozy_com_domain is 't'
 # existing partner (DONOT EDIT SubdomainSub) with 'qa12subdomainsub' is under 'DONOT EDIT AutoTestNoSubdomain' as L1 partner(QAP@SSw0rd), allow_mozy_com_domain is 't'
@@ -469,7 +469,7 @@ Feature: login admins via subdomain
     And I log in bus admin console with user name @partner.admin_info.email and password QAP@SSw0rd
     Then I login as @partner.company_info.name admin successfully
 
-  @TC.133829 @bus @admin @login_via_subdomain @regression
+  @TC.133829 @bus @admin @login_via_subdomain @regression @qa12
   Scenario: 133829:Set 'f' for root, Set 't' for L1, set subdomain for root/for L1, check bus_domain for L1
 # existing partner is under Enterprise(Mozy dell) as root partner(QAP@SSw0rd), allow_mozy_com_domain is 'f'
 # existing partner (DONOT EDIT SubdomainSub1) with 'qa12subdomainsub1' is under 'DONOT EDIT AutoTestSubdomain' as L1 partner(QAP@SSw0rd), allow_mozy_com_domain is 't'
@@ -540,7 +540,7 @@ Feature: login admins via subdomain
       | allow_mozy_com_domain | t     | false  |
 
 
-  @TC.133830 @bus @admin @login_via_subdomain @regression
+  @TC.133830 @bus @admin @login_via_subdomain @regression @qa12
   Scenario: 133830:Set 't' for root, Set 'f' for L1, set subdomain for root/for L1, check bus_domain for L1
 # existing partner is under Enterprise(Mozy dell) as root partner(QAP@SSw0rd), allow_mozy_com_domain is 't'
 # existing partner (DONOT EDIT SubdomainSub1) with 'qa12subdomainsub1' is under 'DONOT EDIT AutoTestSubdomain' as L1 partner(QAP@SSw0rd), allow_mozy_com_domain is 'f'
@@ -592,7 +592,7 @@ Feature: login admins via subdomain
       | Name                  | Value | Locked |
       | allow_mozy_com_domain | t     | false  |
 
-  @TC.133832 @bus @admin @login_via_subdomain @regression
+  @TC.133832 @bus @admin @login_via_subdomain @regression @qa12
   Scenario: 133832:Set 't' for root, Set 'f' for L1, set subdomain Not for root/Not for L1, check bus_domain for L1
 # existing partner is under Enterprise(Mozy dell) as root partner(QAP@SSw0rd), allow_mozy_com_domain is 't'
 # existing partner (DONOT EDIT NoSubdomainSub) is under 'DONOT EDIT AutoTestNoSubdomain' as L1 partner(QAP@SSw0rd), allow_mozy_com_domain is 'f'
@@ -632,7 +632,7 @@ Feature: login admins via subdomain
       | Name                  | Value | Locked |
       | allow_mozy_com_domain | t     | false  |
 
-  @TC.133833 @bus @admin @login_via_subdomain @regression
+  @TC.133833 @bus @admin @login_via_subdomain @regression @qa12
   Scenario: 133833:Set 'f' for root, Set 'f' for L1, set subdomain for root/Not for L1, check bus_domain for L1
 # existing partner is under Enterprise(Mozy dell) as root partner(QAP@SSw0rd), allow_mozy_com_domain is 'f'
 # existing partner (DONOT EDIT NoSubdomainSub1) is under 'DONOT EDIT AutoTestSubdomain' as L1 partner(QAP@SSw0rd), allow_mozy_com_domain is 'f'

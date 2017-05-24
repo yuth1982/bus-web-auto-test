@@ -3,7 +3,7 @@ Feature: delete partner without setting, Mozy Inc --> Fortress (BDS) --> MozyOEM
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.133703 @bus @delete_partner
+  @TC.133703 @bus @delete_partner @qa12
   Scenario: Mozy-144460_02_01: Delete Dell MozyPro Customer Tenant L1, check Customer Tenant L1 information
     When I act as partner by:
       | email                            |
@@ -84,7 +84,7 @@ Feature: delete partner without setting, Mozy Inc --> Fortress (BDS) --> MozyOEM
     And I log in bus admin console with user name @subpartner.admin_email_address and password reset password
     Then Login page error message should be Your account has been suspended and cannot currently be accessed.
 
-  @TC.133704 @bus @delete_partner
+  @TC.133704 @bus @delete_partner @qa12
   Scenario: Mozy-144460_02_02: Delete Dell MozyEnterprise Customer Tenant L1, check Customer Tenant L1 information
     When I act as partner by:
       | email                                   |
@@ -172,7 +172,7 @@ Feature: delete partner without setting, Mozy Inc --> Fortress (BDS) --> MozyOEM
 
     Then no report is scheduled for this partner
 
-  @TC.133705 @bus @delete_partner
+  @TC.133705 @bus @delete_partner @qa12
   Scenario: Mozy-144460_02_03: Delete Dell MozyEnterprise Customer Tenant L1, check Customer Tenant L2 information
     When I act as partner by:
       | email                                   |
@@ -282,7 +282,7 @@ Feature: delete partner without setting, Mozy Inc --> Fortress (BDS) --> MozyOEM
 #Bugs #145101: Subpartner jobs is still active when pending delete a partner
     Then 0 report is scheduled for this partner
 
-  @TC.133706 @bus @delete_partner
+  @TC.133706 @bus @delete_partner @qa12
   Scenario: Mozy-144460_02_04: Delete Dell MozyEnterprise Customer Tenant L2, check Customer Tenant L2 information
     When I act as partner by:
       | email                                   |
@@ -397,7 +397,7 @@ Feature: delete partner without setting, Mozy Inc --> Fortress (BDS) --> MozyOEM
 
     Then no report is scheduled for this partner
 
-  @TC.133707 @bus @delete_partner
+  @TC.133707 @bus @delete_partner @qa12
   Scenario: Mozy-144460_02_05: Undelete Dell MozyPro Customer Tenant L1, check Customer Tenant L1 information
     When I act as partner by:
       | email                            |
@@ -481,7 +481,7 @@ Feature: delete partner without setting, Mozy Inc --> Fortress (BDS) --> MozyOEM
     And I log in bus admin console with user name @subpartner.admin_email_address and password reset password
     Then I login as @subpartner.company_name admin successfully
 
-  @TC.133708 @bus @delete_partner
+  @TC.133708 @bus @delete_partner @qa12
   Scenario: Mozy-144460_02_06: Undelete Dell MozyEnterprise Customer Tenant L1, check Customer Tenant L1 information
     When I act as partner by:
       | email                                   |
@@ -574,7 +574,7 @@ Feature: delete partner without setting, Mozy Inc --> Fortress (BDS) --> MozyOEM
 # Bugs #145100: Undelete partner not active jobs
     Then 1 report is scheduled for this partner
 
-  @TC.133709 @bus @delete_partner
+  @TC.133709 @bus @delete_partner @qa12
   Scenario: Mozy-144460_02_07: Undelete Dell MozyEnterprise Customer Tenant L1, check Customer Tenant L2 information
     When I act as partner by:
       | email                                   |
@@ -689,7 +689,7 @@ Feature: delete partner without setting, Mozy Inc --> Fortress (BDS) --> MozyOEM
 
     Then 1 report is scheduled for this partner
 
-  @TC.133711 @bus @delete_partner
+  @TC.133711 @bus @delete_partner @qa12
   Scenario: Mozy-144460_02_09: Purge Dell MozyPro Customer Tenant L1, check Customer Tenant L1 information
     When I act as partner by:
       | email                            |
@@ -778,7 +778,7 @@ Feature: delete partner without setting, Mozy Inc --> Fortress (BDS) --> MozyOEM
     And I log in bus admin console with user name @subpartner.admin_email_address and password default password
     Then Login page error message should be Incorrect email or password.
 
-  @TC.133712 @bus @delete_partner
+  @TC.133712 @bus @delete_partner @qa12
   Scenario: Mozy-144460_02_10: Purge Dell MozyEnterprise Customer Tenant L1, check Customer Tenant L1 information
     When I act as partner by:
       | email                                   |
@@ -875,7 +875,7 @@ Feature: delete partner without setting, Mozy Inc --> Fortress (BDS) --> MozyOEM
 
     Then no report is scheduled for this partner
 
-  @TC.133713 @bus @delete_partner
+  @TC.133713 @bus @delete_partner @qa12
   Scenario: Mozy-144460_02_11: Purge Dell MozyEnterprise Customer Tenant L1, check Customer Tenant L2 information
     When I act as partner by:
       | email                                   |
