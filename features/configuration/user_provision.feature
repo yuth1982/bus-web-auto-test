@@ -275,7 +275,7 @@ Feature: User sync
     When I stop masquerading
     And I search and delete partner account by newly created partner company name
 
-  @TC.17540 @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction @regression @core_function
+  @TC.17540 @TC.17552 @TC.17542 @TC.17554 @TC.17543 @TC.17557  @function @bus @2.1 @direct_ldap_integration @use_provision @user_deconstruction @regression @core_function
   Scenario: 17540 17552 17542 17554 17543 17557 17554 User sync with different conditions
     Given I delete a user %17540-test% in the demeter db
     # Scenario: 17540 One Rule/Multiple Rules
@@ -354,6 +354,7 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
     # Scenario: 17542 17554 Multiple Ruls/Multiple Users
+    Given I delete a user %17542-test% in the demeter db
     When I navigate to Authentication Policy section from bus admin console page
     And I click Sync Rules tab
     And I add 3 new provision rules:
@@ -401,6 +402,7 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
     # Scenario: 17543 17557 17558 Multiple Ruls/Multiple Users/Rule order matters
+    Given I delete a user %17543-test% in the demeter db
     When I navigate to Authentication Policy section from bus admin console page
     And I click Sync Rules tab
     And I add 4 new provision rules:
@@ -477,6 +479,7 @@ Feature: User sync
     When I navigate to Search / List Users section from bus admin console page
     Then The users table should be empty
     # Scenario: 17544 UserProvision - Multiple Ruls/Multiple Users/Change Rules
+    Given I delete a user %17544-test% in the demeter db
     When I navigate to Authentication Policy section from bus admin console page
     When I click Sync Rules tab
     And I add 3 new provision rules:

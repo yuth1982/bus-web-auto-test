@@ -9,13 +9,13 @@ module SSHHelper
   # Public: get the file from a server
   #
   def download(remote_path, local_path)
-    Net::SCP.start(PROXY_HOST, USER, :password => PASSWORD) do |scp|
+    Net::SCP.start(PROXY_HOST, USER, :password => PASSWORD, :host_key => "ssh-rsa") do |scp|
       scp.download(remote_path, local_path)
     end
   end
 
   def get_ssh_password_config(partner_id, type)
-    Net::SSH.start(BUS_HOST, USER, :password => PASSWORD) do |session|
+    Net::SSH.start(BUS_HOST, USER, :password => PASSWORD, :host_key => "ssh-rsa") do |session|
       script = "ruby script/get_password_policy.rb -e production -p #{partner_id} -t #{type}"
       output = session.exec!("cd /var/www/bus && #{script}")
       result = Hash[*output.match(/#<PasswordPolicy (.+)>/)[1].split(/(,|:) /).delete_if{|d| d.match(/,|:/)}.map {|d|d.gsub('true', 't').gsub('false', 'f')}]
@@ -38,7 +38,7 @@ module SSHHelper
     host = CONFIGS['linux']['host']
     user, password = CONFIGS['linux']['user'], CONFIGS['linux']['password']
     result = []
-    Net::SSH.start(host, user , :password => password ) {|ssh|  result = ssh.exec!(cmd)}
+    Net::SSH.start(host, user , :password => password, :host_key => "ssh-rsa" ) {|ssh|  result = ssh.exec!(cmd)}
     result
   end
 end
@@ -176,7 +176,7 @@ module SSHLinuxE2E
   # Public: upload the file to remote server
   #
   def upload(local_path, remote_path)
-    Net::SCP.start(HOST, USER, :password => PASSWORD) do |scp|
+    Net::SCP.start(HOST, USER, :password => PASSWORD, :host_key => "ssh-rsa") do |scp|
       scp.upload(local_path, remote_path)
     end
   end

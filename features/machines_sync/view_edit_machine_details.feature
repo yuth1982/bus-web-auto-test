@@ -373,7 +373,13 @@ Feature: view edit machine details
       | Machine1_119220 | Desktop      |
     And I upload data to device by batch
       | machine_id                         | GB |
-      | <%=@new_clients.first.machine_id%> | 2  |
+      | <%=@new_clients.first.machine_id%> | 1  |
+      # error about failing to upload a big file returne dif upload a 2 GB file
+      # workaround: update machine quota in db with 1GB, then upload a small real file
+      #| <%=@new_clients.first.machine_id%> | 2  |
+    And I upload data to device by batch
+      | machine_id                         | GB    | upload_file |
+      | <%=@new_clients.first.machine_id%> | 0.005 | true        |
     Then tds return message should be:
       """
       Account or container quota has been exceeded
@@ -381,7 +387,8 @@ Feature: view edit machine details
     And I refresh User Details section
     Then device table in user details should be:
       | Device          | Used/Available | Device Storage Limit | Last Update | Action |
-      | Machine1_119220 | 0 / 1 GB       | Set                  | N/A         |        |
+      | Machine1_119220 | 1 GB / 0       | Set                  | < a minute ago |        |
+      #| Machine1_119220 | 0 / 1 GB       | Set                  | N/A         |        |
     When I set machine max for Machine1_119220
     And I input the machine max value for Machine1_119220 to 2 GB
     And The range of machine max for Machine1_119220 by tooltips should be:
@@ -402,12 +409,15 @@ Feature: view edit machine details
     And I cancel machine max for Machine1_119220
     And stash device table in user details should be:
       | Sync Container | Used/Available | Device Storage Limit | Last Update      | Action |
-      | Sync           | 0 / 1 GB       | Set                  | N/A              |        |
+      | Sync           | 0 / 0          | Set                  | N/A              |        |
+      #| Sync           | 0 / 1 GB       | Set                  | N/A              |        |
     When I view Sync details
     And I get machine details info
     When I upload data to device by batch
-      | machine_id                | GB |
-      | <%=@machine_info['ID:']%> | 2  |
+      | machine_id                | GB    | upload_file |
+      | <%=@machine_info['ID:']%> | 0.005 | true        |
+      #| machine_id                | GB |
+      #| <%=@machine_info['ID:']%> | 2  |
     Then tds return message should be:
       """
       Account or container quota has been exceeded
@@ -446,7 +456,11 @@ Feature: view edit machine details
       | Machine2_119220 | Server       |
     And I upload data to device by batch
       | machine_id                         | GB |
-      | <%=@new_clients.first.machine_id%> | 2  |
+      | <%=@new_clients.first.machine_id%> | 1  |
+      #| <%=@new_clients.first.machine_id%> | 2  |
+    And I upload data to device by batch
+      | machine_id                         | GB    | upload_file |
+      | <%=@new_clients.first.machine_id%> | 0.005 | true        |
     Then tds return message should be:
       """
       Account or container quota has been exceeded
@@ -454,7 +468,8 @@ Feature: view edit machine details
     And I refresh User Details section
     Then device table in user details should be:
       | Device          | Used/Available | Device Storage Limit | Last Update | Action |
-      | Machine2_119220 | 0 / 1 GB       | Set                  | N/A         |        |
+      | Machine2_119220 | 1 GB / 0       | Set                  | < a minute ago |        |
+      #| Machine2_119220 | 0 / 1 GB       | Set                  | N/A         |        |
     When I set machine max for Machine2_119220
     And I input the machine max value for Machine2_119220 to 2 GB
     And The range of machine max for Machine2_119220 by tooltips should be:
@@ -710,154 +725,154 @@ Feature: view edit machine details
   ## VMBU View Search
 
   #######################################################################
-  @TC.124098 @bus @machines_sync @tasks_p2 @qa12 @env_dependent
-  Scenario: 124098 VMBU container details
-    When I act as partner by:
-      | name                       |
-      | VMBU Enterprise_DONOT_EDIT |
-    When I search machine by:
-      | machine_name              |
-      | sh-loki4.mozy.lab.emc.com |
-    And I view machine details for sh-loki4.mozy.lab.emc.com
-    Then machine details should be:
-      | ID:     | External ID: | Suspended:              | Owner:                   | Space Used: | Last Update: | Encryption: | Client Version: | Product Key:                  | Data Center: |
-      | 7692271 | (change)     | Not Suspended (suspend) | vmbu_freyja_ent1@emc.com | 214.1 GB    | N/A          | Default     | unknown         | 4GAXEDSARDTGZZTWSZXF (Server) | q12a         |
-    And Virtual Machines table will display as:
-      | Name              | Type      | Created At | Backed Up | View Logfile |
-      | VMBU_windows_200  | vmware-vm | 08/07/15   | N/A       | View Logfile |
-      | VMBU_CentOS_test  | vmware-vm | 08/07/15   | N/A       | View Logfile |
-      | VMBU_ubuntu       | vmware-vm | 08/07/15   | N/A       | View Logfile |
-      | VMBU_windows_test | vmware-vm | 08/07/15   | N/A       | View Logfile |
+#  @TC.124098 @bus @machines_sync @tasks_p2 @qa12 @env_dependent
+#  Scenario: 124098 VMBU container details
+#    When I act as partner by:
+#      | name                       |
+#      | VMBU Enterprise_DONOT_EDIT |
+#    When I search machine by:
+#      | machine_name              |
+#      | sh-loki4.mozy.lab.emc.com |
+#    And I view machine details for sh-loki4.mozy.lab.emc.com
+#    Then machine details should be:
+#      | ID:     | External ID: | Suspended:              | Owner:                   | Space Used: | Last Update: | Encryption: | Client Version: | Product Key:                  | Data Center: |
+#      | 7692271 | (change)     | Not Suspended (suspend) | vmbu_freyja_ent1@emc.com | 214.1 GB    | N/A          | Default     | unknown         | 4GAXEDSARDTGZZTWSZXF (Server) | q12a         |
+#    And Virtual Machines table will display as:
+#      | Name              | Type      | Created At | Backed Up | View Logfile |
+#      | VMBU_windows_200  | vmware-vm | 08/07/15   | N/A       | View Logfile |
+#      | VMBU_CentOS_test  | vmware-vm | 08/07/15   | N/A       | View Logfile |
+#      | VMBU_ubuntu       | vmware-vm | 08/07/15   | N/A       | View Logfile |
+#      | VMBU_windows_test | vmware-vm | 08/07/15   | N/A       | View Logfile |
 
-  # fixed data, partner: vmbu_emea
-  @TC.125782 @bus @machines_sync @tasks_p2 @qa12 @env_dependent
-  Scenario: 125782:VMBU restore status is reflected correctly in BUS
-    When I search user by:
-      | keywords               |
-      | jaden+vmbutest@emc.com |
-    And I view user details by jaden+vmbutest@emc.com
-    When I click restore VMs folder icon for device sh-loki4.mozy.lab.emc.com
-    And I navigate to new window
-    Then I have login freyja from BUS
-    When I select the vSphere VMs tab
-    And I click VM container sh-loki4.mozy.lab.emc.com
-    And I right click VM VMBU_windows_test to add to restore queue and then restore
-    And I fill out the restore VMs wizard
-      | restore_name | restore_type |
-      | archive_vm   | media        |
-    When I select options menu
-    And I select event history
-    Then this restore is In Progress
-    When I close new window
-    And I view machine sh-loki4.mozy.lab.emc.com details from user details section
-    Then Restores table first record will display as:
-      | ID                       | Date/Time Requested | Date/Time Finished | Files Retrieved | Size   | Status / Downloads                                                |
-      | <%=@restore.restore_id%> | today               | —                  | 0 / 4           | 0 DVDs | Restore building - you will receive an email when it is complete. |
-    When I wait for 850 seconds
-    And I refresh Machine Details section
-    Then Restores table first record will display as:
-      | ID                       | Date/Time Requested | Date/Time Finished | Files Retrieved | Size  | Status / Downloads                       |
-      | <%=@restore.restore_id%> | today               | today              | 4 / 4           | 1 DVD | Retrieved files; preparing to burn DVDs. |
-    When I set the restore dvd burned at time
-    And I refresh Machine Details section
-    Then Restores table first record will display as:
-      | ID                       | Date/Time Requested | Date/Time Finished | Files Retrieved | Size  | Status / Downloads |
-      | <%=@restore.restore_id%> | today               | today              | 4 / 4           | 1 DVD | Burned on today    |
-    When I set the restore dvd mailed at time
-    And I refresh Machine Details section
-    Then Restores table first record will display as:
-      | ID                       | Date/Time Requested | Date/Time Finished | Files Retrieved | Size  | Status / Downloads |
-      | <%=@restore.restore_id%> | today               | today              | 4 / 4           | 1 DVD | Mailed on today    |
+#  # fixed data, partner: vmbu_emea
+#  @TC.125782 @bus @machines_sync @tasks_p2 @qa12 @env_dependent
+#  Scenario: 125782:VMBU restore status is reflected correctly in BUS
+#    When I search user by:
+#      | keywords               |
+#      | jaden+vmbutest@emc.com |
+#    And I view user details by jaden+vmbutest@emc.com
+#    When I click restore VMs folder icon for device sh-loki4.mozy.lab.emc.com
+#    And I navigate to new window
+#    Then I have login freyja from BUS
+#    When I select the vSphere VMs tab
+#    And I click VM container sh-loki4.mozy.lab.emc.com
+#    And I right click VM VMBU_windows_test to add to restore queue and then restore
+#    And I fill out the restore VMs wizard
+#      | restore_name | restore_type |
+#      | archive_vm   | media        |
+#    When I select options menu
+#    And I select event history
+#    Then this restore is In Progress
+#    When I close new window
+#    And I view machine sh-loki4.mozy.lab.emc.com details from user details section
+#    Then Restores table first record will display as:
+#      | ID                       | Date/Time Requested | Date/Time Finished | Files Retrieved | Size   | Status / Downloads                                                |
+#      | <%=@restore.restore_id%> | today               | —                  | 0 / 4           | 0 DVDs | Restore building - you will receive an email when it is complete. |
+#    When I wait for 850 seconds
+#    And I refresh Machine Details section
+#    Then Restores table first record will display as:
+#      | ID                       | Date/Time Requested | Date/Time Finished | Files Retrieved | Size  | Status / Downloads                       |
+#      | <%=@restore.restore_id%> | today               | today              | 4 / 4           | 1 DVD | Retrieved files; preparing to burn DVDs. |
+#    When I set the restore dvd burned at time
+#    And I refresh Machine Details section
+#    Then Restores table first record will display as:
+#      | ID                       | Date/Time Requested | Date/Time Finished | Files Retrieved | Size  | Status / Downloads |
+#      | <%=@restore.restore_id%> | today               | today              | 4 / 4           | 1 DVD | Burned on today    |
+#    When I set the restore dvd mailed at time
+#    And I refresh Machine Details section
+#    Then Restores table first record will display as:
+#      | ID                       | Date/Time Requested | Date/Time Finished | Files Retrieved | Size  | Status / Downloads |
+#      | <%=@restore.restore_id%> | today               | today              | 4 / 4           | 1 DVD | Mailed on today    |
 
 
-  @TC.124099 @bus @machines_sync @tasks_p2 @qa12 @env_dependent
-  Scenario: 124099:Server storage used for VMBU container
-    When I act as partner by:
-      | name                       |
-      | VMBU Enterprise_DONOT_EDIT |
-    When I navigate to Search / List Users section from bus admin console page
-    And I view user details by vmbu_freyja_ent1@emc.com
-    And user resources details rows should be:
-      | Storage                                  | Devices                           | Server User Storage Limit:     |
-      | Server: 214.1 GB Used / 1.3 TB Available | Server: 3 Used / 7 Available Edit | Server User Storage Limit: Set |
-    And I view machine sh-loki4.mozy.lab.emc.com details from user details section
-    Then machine details should be:
-      | ID:     | External ID: | Suspended:              | Owner:                   | Space Used: | Last Update: | Encryption: | Client Version: | Product Key:                  | Data Center: |
-      | 7692271 | (change)     | Not Suspended (suspend) | vmbu_freyja_ent1@emc.com | 214.1 GB    | N/A          | Default     | unknown         | 4GAXEDSARDTGZZTWSZXF (Server) | q12a         |
-    When I navigate to Resource Summary section from bus admin console page
-    Then Itemized storage summary should be:
-      | Desktop Used | Desktop Total | Server Used | Server Total | Available | Used     |
-      | 0            | 125 GB        | 214.1 GB    | 1.5 TB       | 1.4 TB    | 214.1 GB |
-    When I download Machine Details (CSV) quick report
-    And I get record for column Machine with value sh-loki4.mozy.lab.emc.com from Quick report machines csv file should be
-      | Machine                   | Key Type | Quota Used |
-      | sh-loki4.mozy.lab.emc.com | Server   | 214.1      |
+#  @TC.124099 @bus @machines_sync @tasks_p2 @qa12 @env_dependent
+#  Scenario: 124099:Server storage used for VMBU container
+#    When I act as partner by:
+#      | name                       |
+#      | VMBU Enterprise_DONOT_EDIT |
+#    When I navigate to Search / List Users section from bus admin console page
+#    And I view user details by vmbu_freyja_ent1@emc.com
+#    And user resources details rows should be:
+#      | Storage                                  | Devices                           | Server User Storage Limit:     |
+#      | Server: 214.1 GB Used / 1.3 TB Available | Server: 3 Used / 7 Available Edit | Server User Storage Limit: Set |
+#    And I view machine sh-loki4.mozy.lab.emc.com details from user details section
+#    Then machine details should be:
+#      | ID:     | External ID: | Suspended:              | Owner:                   | Space Used: | Last Update: | Encryption: | Client Version: | Product Key:                  | Data Center: |
+#      | 7692271 | (change)     | Not Suspended (suspend) | vmbu_freyja_ent1@emc.com | 214.1 GB    | N/A          | Default     | unknown         | 4GAXEDSARDTGZZTWSZXF (Server) | q12a         |
+#    When I navigate to Resource Summary section from bus admin console page
+#    Then Itemized storage summary should be:
+#      | Desktop Used | Desktop Total | Server Used | Server Total | Available | Used     |
+#      | 0            | 125 GB        | 214.1 GB    | 1.5 TB       | 1.4 TB    | 214.1 GB |
+#    When I download Machine Details (CSV) quick report
+#    And I get record for column Machine with value sh-loki4.mozy.lab.emc.com from Quick report machines csv file should be
+#      | Machine                   | Key Type | Quota Used |
+#      | sh-loki4.mozy.lab.emc.com | Server   | 214.1      |
 
-  @TC.125784 @bus @machines_sync @tasks_p2 @qa12 @env_dependent
-  Scenario: 125784 VMBU data shuttle status is reflected correctly in BUS
-    When I search partner by:
-      | name          |
-      | ClientQA-VMBU |
-    And I view admin details by jasona+clientvmbu@mozy.com
-    And I get the admin id from admin details
-    When I order data shuttle for ClientQA-VMBU
-      | power adapter   | key from             | os      |
-      | Data Shuttle US | 9X37WGFV58DBXBC7TSS2 | vSphere |
-    Then Data shuttle order should be created
-    Then I get the data shuttle seed id by partner ClientQA-VMBU
-    When I search machine by:
-      | machine_name                  |
-      | jeff2-loki.mozyclientqa.local |
-    And I view machine details for jefft+qa12loki@mozy.com
-    Then the data shuttle machine details should be:
-      | Order ID      | Data Shuttle Device ID | Phase   | % Complete | GB Transferred | GB Remaining | Start | Elapsed |
-      | <%=@seed_id%> |                        | Ordered |            |                |              |       |         |
-    And I set the data shuttle seed status:
-      | status  | username                | password                           | machine_hash                             |
-      | seeding | jefft+qa12loki@mozy.com | <%=CONFIGS['global']['test_pwd']%> | 45f3e4287416ace3b94a6d372c6329f9315d7974 |
-    When I refresh Machines Details section
-    Then the data shuttle machine details should be:
-      | Order ID      | Data Shuttle Device ID | Phase   | % Complete | GB Transferred | GB Remaining | Elapsed  |
-      | <%=@seed_id%> | <%=@seed_id%>          | Seeding | 0%         | 0              | 0            | 1 minute |
-    And I set the data shuttle seed status:
-      | status        | username                | password                           | total files | total bytes | machine_hash                             |
-      | seed_complete | jefft+qa12loki@mozy.com | <%=CONFIGS['global']['test_pwd']%> | 1000        | 2097152     | 45f3e4287416ace3b94a6d372c6329f9315d7974 |
-    When I refresh Machines Details section
-    Then the data shuttle machine details should be:
-      | Order ID      | Data Shuttle Device ID | Phase         | % Complete | GB Transferred | GB Remaining | Elapsed  |
-      | <%=@seed_id%> | <%=@seed_id%>          | Seed Complete | 0%         | 0              | 0            | 1 minute |
-    And I set the data shuttle seed status:
-      | status     | username                | password                            | machine_hash                             |
-      | seed_error | jefft+qa12loki@mozy.com | <%=CONFIGS['global']['test_pwd'] %> | 45f3e4287416ace3b94a6d372c6329f9315d7974 |
-    When I refresh Machines Details section
-    Then the data shuttle machine details should be:
-      | Order ID      | Data Shuttle Device ID | Phase      | % Complete | GB Transferred | GB Remaining | Elapsed  |
-      | <%=@seed_id%> | <%=@seed_id%>          | Seed Error | 0%         | 0              | 0            | 1 minute |
-    And I set the data shuttle seed status:
-      | status  | username                | password                           | total files seeded | total bytes seeded | machine_hash                             |
-      | loading | jefft+qa12loki@mozy.com | <%=CONFIGS['global']['test_pwd']%> | 100                | 2000000            | 45f3e4287416ace3b94a6d372c6329f9315d7974 |
-    When I refresh Machines Details section
-    Then the data shuttle machine details should be:
-      | Order ID      | Data Shuttle Device ID | Phase   | % Complete | GB Transferred | GB Remaining | Elapsed  |
-      | <%=@seed_id%> | <%=@seed_id%>          | Loading | 0%         | 0              | 0            | 1 minute |
-    And I set the data shuttle seed status:
-      | status        | username                | password                            | total files | total bytes | total files seeded | total bytes seeded | machine_hash                             |
-      | load_complete | jefft+qa12loki@mozy.com |  <%=CONFIGS['global']['test_pwd']%> | 1000        | 2097152     | 1000               | 2097152            | 45f3e4287416ace3b94a6d372c6329f9315d7974 |
-    When I refresh Machines Details section
-    Then the data shuttle machine details should be:
-      | Order ID      | Data Shuttle Device ID | Phase         | % Complete | GB Transferred | GB Remaining | Elapsed  |
-      | <%=@seed_id%> | <%=@seed_id%>          | Load Complete |  0%        | 0              | 0            | 1 minute |
-    And I set the data shuttle seed status:
-      | status     | username                | password                           | machine_hash                             |
-      | load_error | jefft+qa12loki@mozy.com | <%=CONFIGS['global']['test_pwd']%> | 45f3e4287416ace3b94a6d372c6329f9315d7974 |
-    When I refresh Machines Details section
-    Then the data shuttle machine details should be:
-      | Order ID      | Data Shuttle Device ID | Phase      | % Complete | GB Transferred | GB Remaining | Elapsed  |
-      | <%=@seed_id%> | <%=@seed_id%>          | Load Error | 0%         | 0              | 0            | 1 minute |
-    And I set the data shuttle seed status:
-      | status    | username                | password                           | machine_hash                             |
-      | cancelled | jefft+qa12loki@mozy.com | <%=CONFIGS['global']['test_pwd']%> | 45f3e4287416ace3b94a6d372c6329f9315d7974 |
-    When I refresh Machines Details section
-    Then the data shuttle machine details should be:
-      | Order ID      | Data Shuttle Device ID | Phase     | % Complete | GB Transferred | GB Remaining | Elapsed  |
-      | <%=@seed_id%> | <%=@seed_id%>          | Cancelled |            |                |              | 1 minute |
+#  @TC.125784 @bus @machines_sync @tasks_p2 @qa12 @env_dependent
+#  Scenario: 125784 VMBU data shuttle status is reflected correctly in BUS
+#    When I search partner by:
+#      | name          |
+#      | ClientQA-VMBU |
+#    And I view admin details by jasona+clientvmbu@mozy.com
+#    And I get the admin id from admin details
+#    When I order data shuttle for ClientQA-VMBU
+#      | power adapter   | key from             | os      |
+#      | Data Shuttle US | 9X37WGFV58DBXBC7TSS2 | vSphere |
+#    Then Data shuttle order should be created
+#    Then I get the data shuttle seed id by partner ClientQA-VMBU
+#    When I search machine by:
+#      | machine_name                  |
+#      | jeff2-loki.mozyclientqa.local |
+#    And I view machine details for jefft+qa12loki@mozy.com
+#    Then the data shuttle machine details should be:
+#      | Order ID      | Data Shuttle Device ID | Phase   | % Complete | GB Transferred | GB Remaining | Start | Elapsed |
+#      | <%=@seed_id%> |                        | Ordered |            |                |              |       |         |
+#    And I set the data shuttle seed status:
+#      | status  | username                | password                           | machine_hash                             |
+#      | seeding | jefft+qa12loki@mozy.com | <%=CONFIGS['global']['test_pwd']%> | 45f3e4287416ace3b94a6d372c6329f9315d7974 |
+#    When I refresh Machines Details section
+#    Then the data shuttle machine details should be:
+#      | Order ID      | Data Shuttle Device ID | Phase   | % Complete | GB Transferred | GB Remaining | Elapsed  |
+#      | <%=@seed_id%> | <%=@seed_id%>          | Seeding | 0%         | 0              | 0            | 1 minute |
+#    And I set the data shuttle seed status:
+#      | status        | username                | password                           | total files | total bytes | machine_hash                             |
+#      | seed_complete | jefft+qa12loki@mozy.com | <%=CONFIGS['global']['test_pwd']%> | 1000        | 2097152     | 45f3e4287416ace3b94a6d372c6329f9315d7974 |
+#    When I refresh Machines Details section
+#    Then the data shuttle machine details should be:
+#      | Order ID      | Data Shuttle Device ID | Phase         | % Complete | GB Transferred | GB Remaining | Elapsed  |
+#      | <%=@seed_id%> | <%=@seed_id%>          | Seed Complete | 0%         | 0              | 0            | 1 minute |
+#    And I set the data shuttle seed status:
+#      | status     | username                | password                            | machine_hash                             |
+#      | seed_error | jefft+qa12loki@mozy.com | <%=CONFIGS['global']['test_pwd'] %> | 45f3e4287416ace3b94a6d372c6329f9315d7974 |
+#    When I refresh Machines Details section
+#    Then the data shuttle machine details should be:
+#      | Order ID      | Data Shuttle Device ID | Phase      | % Complete | GB Transferred | GB Remaining | Elapsed  |
+#      | <%=@seed_id%> | <%=@seed_id%>          | Seed Error | 0%         | 0              | 0            | 1 minute |
+#    And I set the data shuttle seed status:
+#      | status  | username                | password                           | total files seeded | total bytes seeded | machine_hash                             |
+#      | loading | jefft+qa12loki@mozy.com | <%=CONFIGS['global']['test_pwd']%> | 100                | 2000000            | 45f3e4287416ace3b94a6d372c6329f9315d7974 |
+#    When I refresh Machines Details section
+#    Then the data shuttle machine details should be:
+#      | Order ID      | Data Shuttle Device ID | Phase   | % Complete | GB Transferred | GB Remaining | Elapsed  |
+#      | <%=@seed_id%> | <%=@seed_id%>          | Loading | 0%         | 0              | 0            | 1 minute |
+#    And I set the data shuttle seed status:
+#      | status        | username                | password                            | total files | total bytes | total files seeded | total bytes seeded | machine_hash                             |
+#      | load_complete | jefft+qa12loki@mozy.com |  <%=CONFIGS['global']['test_pwd']%> | 1000        | 2097152     | 1000               | 2097152            | 45f3e4287416ace3b94a6d372c6329f9315d7974 |
+#    When I refresh Machines Details section
+#    Then the data shuttle machine details should be:
+#      | Order ID      | Data Shuttle Device ID | Phase         | % Complete | GB Transferred | GB Remaining | Elapsed  |
+#      | <%=@seed_id%> | <%=@seed_id%>          | Load Complete |  0%        | 0              | 0            | 1 minute |
+#    And I set the data shuttle seed status:
+#      | status     | username                | password                           | machine_hash                             |
+#      | load_error | jefft+qa12loki@mozy.com | <%=CONFIGS['global']['test_pwd']%> | 45f3e4287416ace3b94a6d372c6329f9315d7974 |
+#    When I refresh Machines Details section
+#    Then the data shuttle machine details should be:
+#      | Order ID      | Data Shuttle Device ID | Phase      | % Complete | GB Transferred | GB Remaining | Elapsed  |
+#      | <%=@seed_id%> | <%=@seed_id%>          | Load Error | 0%         | 0              | 0            | 1 minute |
+#    And I set the data shuttle seed status:
+#      | status    | username                | password                           | machine_hash                             |
+#      | cancelled | jefft+qa12loki@mozy.com | <%=CONFIGS['global']['test_pwd']%> | 45f3e4287416ace3b94a6d372c6329f9315d7974 |
+#    When I refresh Machines Details section
+#    Then the data shuttle machine details should be:
+#      | Order ID      | Data Shuttle Device ID | Phase     | % Complete | GB Transferred | GB Remaining | Elapsed  |
+#      | <%=@seed_id%> | <%=@seed_id%>          | Cancelled |            |                |              | 1 minute |
