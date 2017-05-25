@@ -38,6 +38,9 @@ module Bus
     #send now button
     element(:send_now_a, xpath: "//a[text()='Send Now']")
 
+    #updated message
+    element(:updated_message_li, xpath: "//div[starts-with(@id,'alerts-show')]/ul[@class='flash successes']/li")
+
     def email_alerts_hashes
       email_alerts = {
           "subject line" => subject_line_span.text,
@@ -60,7 +63,6 @@ module Bus
     end
 
     def modify_email_alert(email_alerts)
-      add_email_alert_a.click
       reports_hash = {
           "Backup summary" => "backup_summary",
           "Users without recent backups" =>"recent_backups",
@@ -103,8 +105,9 @@ module Bus
       delete_alert_a.click
     end
 
-
-
+    def updated_messages
+      updated_message_li.text
+    end
 
   end
 end

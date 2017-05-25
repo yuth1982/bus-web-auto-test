@@ -24,7 +24,7 @@ Then /^email alerts section message should be (.+)/ do |message|
 end
 
 Then /^I view email alert details by (.+)/ do |email_alert|
-  @bus_site.admin_console_page.new_email_alerts_section.view_alert_details(email_alert)
+  @bus_site.admin_console_page.list_email_alerts_section.view_alert_details(email_alert)
 end
 
 Then /^I Send Now the email alert$/ do
@@ -62,7 +62,7 @@ Then /^I delete the email alert$/ do
 end
 
 Then /^The email alert (.+) should be deleted$/ do |email_alert|
-  @bus_site.admin_console_page.new_email_alerts_section.find_email_alert(email_alert).should == 0
+  @bus_site.admin_console_page.list_email_alerts_section.find_email_alert(email_alert).should == 0
 end
 
 Then /^I get text for user group (.+) from email content$/ do |user_group|
@@ -82,5 +82,6 @@ Then /^I close the show email alert section$/ do
   @bus_site.admin_console_page.show_email_alerts_section.close_bus_section
 end
 
-
-
+Then /^show email alerts section message should be (.+)/ do |message|
+  @bus_site.admin_console_page.show_email_alerts_section.updated_messages.should include message
+end

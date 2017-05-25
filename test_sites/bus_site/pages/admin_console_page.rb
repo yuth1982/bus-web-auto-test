@@ -85,6 +85,7 @@ module Bus
     section(:edit_report_section, EditReportSection, xpath: "//div[starts-with(@module_url,'/jobs/edit')]")
     section(:scheduled_reports_section, ScheduledReportsSection, id: "jobs-index")
     section(:quick_reports_section, QuickReportsSection, id: "jobs-quick_reports")
+    section(:list_email_alerts_section, ListEmailAlertsSection, xpath: "//div[@id='alerts-list']")
     section(:new_email_alerts_section, NewEmailAlertsSection, xpath: "//div[@id='alerts-new']")
     section(:show_email_alerts_section, ShowEmailAlertsSection, xpath: "//div[starts-with(@id,'alerts-show')]")
 

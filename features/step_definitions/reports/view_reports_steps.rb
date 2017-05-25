@@ -108,6 +108,7 @@ Then /^Report updated successful message should be (.+)$/ do |message|
 end
 
 When /^I delete (.+) scheduled report$/ do |report_name|
+  @bus_site.admin_console_page.scheduled_reports_section.wait_until_bus_section_load
   @bus_site.admin_console_page.scheduled_reports_section.click_report(report_name)
   @bus_site.admin_console_page.edit_report_section.delete_report(report_name)
   @bus_site.admin_console_page.scheduled_reports_section.wait_until_bus_section_load

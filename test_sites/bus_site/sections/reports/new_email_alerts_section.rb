@@ -50,21 +50,9 @@ module Bus
       finished_input.click
     end
 
-    def view_alert_details(subject)
-      find(:xpath, "//a[text()='#{subject}']").click
-      if all(:xpath, "//a[text()='Send Now']").size==0
-        find(:xpath, "//a[text()='#{subject}']").click
-      end
-    end
-
     def alerts_messages
       alerts_message_li.text
     end
-
-    def find_email_alert(email_alert)
-      all(:xpath, "//a[text()='#{email_alert}']").size
-    end
-
 
   end
 

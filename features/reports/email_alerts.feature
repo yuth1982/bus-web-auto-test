@@ -19,12 +19,11 @@ Feature: Email Alerts
       | subject line       | frequency | report modules                             | recipients                         |
       | email_alerts_test  | daily     | Backup summary;Users without recent backups| <%=@partner.admin_info.full_name%> |
     Then email alerts section message should be New alert created
-#    Then I view email alert details by email_alerts_test
+    When I expand the add email alert
     And The email alert details should be:
       | subject line       | frequency | report modules                               | recipients                         |
       | email_alerts_test  | daily     | Backup summary;Users without recent backups  | <%=@partner.admin_info.full_name%> |
     Then I Send Now the email alert
-    And I wait for 10 seconds
     And I search emails by keywords:
       | to               | content       |
       | @new_admin_email | Backup Summary|
@@ -50,16 +49,16 @@ Feature: Email Alerts
       | subject line       | frequency | report modules                              | recipients                         |
       | email_alerts_test  | daily     | Backup summary;Users without recent backups | <%=@partner.admin_info.full_name%> |
     Then email alerts section message should be New alert created
-#    Then I view email alert details by email_alerts_test
-    Then I modify email alert to:
+
+    When I expand the add email alert
+    And I modify email alert to:
       | subject line        | frequency | report modules                                  | scope                |recipients |
       | email_alerts_modify | weekly    | Users/Machines nearing max;Storage pool summary | (default user group) |alert_admin |
-#    Then I view email alert details by email_alerts_modify
+    Then show email alerts section message should be The alert has been updated.
     And The email alert details should be:
       | subject line         | frequency | report modules                                  | recipients  |
       | email_alerts_modify  | weekly    | Users/Machines nearing max;Storage pool summary | alert_admin |
     Then I Send Now the email alert
-    And I wait for 15 seconds
     And I search emails by keywords:
       | to                | content                 |
       | <%=@admin.email%> | Machines using over 90% |
@@ -80,12 +79,11 @@ Feature: Email Alerts
       | subject line       | frequency | report modules                              | recipients                         |
       | email_alerts_test  | weekly    | Backup summary;Users without recent backups | <%=@partner.admin_info.full_name%> |
     Then email alerts section message should be New alert created
-#    Then I view email alert details by email_alerts_test
+    When I expand the add email alert
     And The email alert details should be:
       | subject line       | frequency | report modules                               | recipients                         |
       | email_alerts_test  | weekly    | Backup summary;Users without recent backups  | <%=@partner.admin_info.full_name%> |
     Then I Send Now the email alert
-    And I wait for 15 seconds
     And I search emails by keywords:
       | to               | content        |
       | @new_admin_email | Backup Summary |
@@ -106,8 +104,8 @@ Feature: Email Alerts
       | subject line       | frequency | report modules |
       | email_alerts_test  | weekly    | Backup summary |
     Then email alerts section message should be New alert created
-#    Then I view email alert details by email_alerts_test
-    Then I delete the email alert
+    When I expand the add email alert
+    And I delete the email alert
     And I wait for 2 seconds
     And The email alert email_alerts_test should be deleted
     Then I stop masquerading
@@ -131,16 +129,15 @@ Feature: Email Alerts
       | subject line       | frequency | report modules                              | recipients                         |
       | email_alerts_test  | daily     | Backup summary;Users without recent backups | <%=@partner.admin_info.full_name%> |
     Then email alerts section message should be New alert created
-#    Then I view email alert details by email_alerts_test
-    Then I modify email alert to:
+    When I expand the add email alert
+    And I modify email alert to:
       | recipients        |
       | email_alert_admin |
-#    Then I view email alert details by email_alerts_test
+    Then show email alerts section message should be The alert has been updated.
     And The email alert details should be:
       | recipients        |
       | email_alert_admin |
     Then I Send Now the email alert
-    And I wait for 15 seconds
     And I search emails by keywords:
       | to                | content          |
       | <%=@admin.email%> | Backup Summary   |
@@ -178,9 +175,8 @@ Feature: Email Alerts
       | subject line                 | frequency | report modules       | recipients                         |
       | alerts_test_storage_summary  | daily     | Storage pool summary | <%=@partner.admin_info.full_name%> |
     Then email alerts section message should be New alert created
-#    Then I view email alert details by alerts_test_storage_summary
+    When I expand the add email alert
     Then I Send Now the email alert
-    And I wait for 15 seconds
     And I retrieve email content by keywords:
       | to                | content         |
       | @new_admin_email  | Storage Summary |
@@ -220,9 +216,8 @@ Feature: Email Alerts
       | subject line                | frequency | report modules | recipients                         |
       | alerts_test_backup_summary  | daily     | Backup summary | <%=@partner.admin_info.full_name%> |
     Then email alerts section message should be New alert created
-#    Then I view email alert details by alerts_test_backup_summary
+    When I expand the add email alert
     Then I Send Now the email alert
-    And I wait for 15 seconds
     And I retrieve email content by keywords:
       | to                | content        |
       | @new_admin_email  | Backup Summary |
@@ -262,9 +257,8 @@ Feature: Email Alerts
       | subject line                        | frequency | report modules               | recipients                         |
       | alerts_test_without_backup_summary  | daily     | Users without recent backups | <%=@partner.admin_info.full_name%> |
     Then email alerts section message should be New alert created
-#    Then I view email alert details by alerts_test_without_backup_summary
+    When I expand the add email alert
     Then I Send Now the email alert
-    And I wait for 15 seconds
     And I retrieve email content by keywords:
       | to                | content                              |
       | @new_admin_email  | Machines that haven't been backed up |
@@ -304,9 +298,8 @@ Feature: Email Alerts
       | subject line               | frequency | report modules               | recipients                         |
       | alerts_test_without_backup | daily     | Users without recent backups | <%=@partner.admin_info.full_name%> |
     Then email alerts section message should be New alert created
-#    Then I view email alert details by alerts_test_without_backup
+    When I expand the add email alert
     Then I Send Now the email alert
-    And I wait for 15 seconds
     And I retrieve email content by keywords:
       | to                | content                                                |
       | @new_admin_email  | Machines that haven't been backed up in the last 1 day |
@@ -365,9 +358,8 @@ Feature: Email Alerts
       | subject line                | frequency | report modules             | Percent quota used |
       | alerts_test_nearing_max_90% | daily     | Users/Machines nearing max | 90%                |
     Then email alerts section message should be New alert created
-#    Then I view email alert details by alerts_test_nearing_max_90%
+    When I expand the add email alert
     Then I Send Now the email alert
-    And I wait for 15 seconds
     And I retrieve email content by keywords:
       | to                | content                 |
       | @new_admin_email  | Machines using over 90% |
@@ -375,13 +367,13 @@ Feature: Email Alerts
     Then I get text for user group (default user group) from email content
     Then The email content should include Machine1_90 (90% quota used)
     Then I close the show email alert section
-    Then I add a new email alert:
+    When I expand the add email alert
+    And I add a new email alert:
       | subject line                | frequency | report modules             | Percent quota used |
       | alerts_test_nearing_max_80% | daily     | Users/Machines nearing max | 80%                |
     Then email alerts section message should be New alert created
-#    Then I view email alert details by alerts_test_nearing_max_80%
+    When I expand the add email alert
     Then I Send Now the email alert
-    Then I wait for 15 seconds
     And I retrieve email content by keywords:
       | to                | content                     |
       | @new_admin_email  | Machines using over 80% |
@@ -444,9 +436,8 @@ Feature: Email Alerts
       | subject line                | frequency | report modules             | Percent quota used |
       | alerts_test_nearing_max_70% | daily     | Users/Machines nearing max | 70%                |
     Then email alerts section message should be New alert created
-#    Then I view email alert details by alerts_test_nearing_max_70%
+    When I expand the add email alert
     Then I Send Now the email alert
-    Then I wait for 15 seconds
     And I retrieve email content by keywords:
       | to                | content                     |
       | @new_admin_email  | Machines using over 70% |
@@ -454,13 +445,13 @@ Feature: Email Alerts
     Then I get text for user group (default user group) from email content
     Then The email content should include Machine1_70 (70% quota used)
     Then I close the show email alert section
-    Then I add a new email alert:
+    When I expand the add email alert
+    And I add a new email alert:
       | subject line                | frequency | report modules             | Percent quota used |recipients                          |
       | alerts_test_nearing_max_60% | daily     | Users/Machines nearing max | 60%                | <%=@partner.admin_info.full_name%> |
     Then email alerts section message should be New alert created
-#    Then I view email alert details by alerts_test_nearing_max_60%
+    When I expand the add email alert
     Then I Send Now the email alert
-    And I wait for 15 seconds
     And I retrieve email content by keywords:
       | to                | content                 |
       | @new_admin_email  | Machines using over 60% |
@@ -484,9 +475,8 @@ Feature: Email Alerts
       | subject line                | frequency | report modules             | Percent quota used |
       | alerts_test_nearing_max_90% | daily     | Users/Machines nearing max | 90%                |
     Then email alerts section message should be New alert created
-#    Then I view email alert details by alerts_test_nearing_max_90%
+    When I expand the add email alert
     Then I Send Now the email alert
-    And I wait for 15 seconds
     And I retrieve email content by keywords:
       | to                | content                     |
       | @new_admin_email  | Machines using over 90% |
@@ -509,9 +499,8 @@ Feature: Email Alerts
       | subject line                | frequency | report modules             | Percent quota used |
       | alerts_test_nearing_max_60% | daily     | Users/Machines nearing max | 60%                |
     Then email alerts section message should be New alert created
-#    Then I view email alert details by alerts_test_nearing_max_60%
+    When I expand the add email alert
     Then I Send Now the email alert
-    And I wait for 15 seconds
     And I retrieve email content by keywords:
       | to                | content                 |
       | @new_admin_email  | Machines using over 60% |
@@ -519,9 +508,3 @@ Feature: Email Alerts
     Then The email content should include No machines
     Then I stop masquerading
     And I search and delete partner account by newly created partner company name
-
-
-
-
-
-
