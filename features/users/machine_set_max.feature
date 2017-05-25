@@ -288,7 +288,7 @@ Feature: Set/Remove Max at Machine
     And I save machine max for Machine1
     Then device table in user details should be:
       | Device   | Used/Available | Device Storage Limit | Last Update |
-      | Machine1 | 1 GB / 19 GB   | 20 GB Edit Remove    | N/A         |
+      | Machine1 | 1 GB / 19 GB   | 20 GB Edit Remove    | < a minute ago |
     Then I edit machine max for Machine1
     And I input the machine max value for Machine1 to 51 GB
     And I save machine max for Machine1
@@ -298,7 +298,7 @@ Feature: Set/Remove Max at Machine
     """
     Then device table in user details should be:
       | Device   | Used/Available | Device Storage Limit | Last Update |
-      | Machine1 | 1 GB / 19 GB   | 20 GB Edit Remove    | N/A         |
+      | Machine1 | 1 GB / 19 GB   | 20 GB Edit Remove    | < a minute ago |
     When I edit Test Bundled user group:
       | name | storage_type | limited_quota |
       | Test | Limited      | 100           |
@@ -348,7 +348,7 @@ Feature: Set/Remove Max at Machine
     And I save machine max for Machine1
     Then device table in user details should be:
       | Device   | Used/Available | Device Storage Limit | Last Update |
-      | Machine1 | 1 GB / 19 GB   | 20 GB Edit Remove    | N/A         |
+      | Machine1 | 1 GB / 19 GB   | 20 GB Edit Remove    | < a minute ago |
     Then I edit machine max for Machine1
     And I input the machine max value for Machine1 to 101 GB
     And I save machine max for Machine1
@@ -402,8 +402,8 @@ Feature: Set/Remove Max at Machine
     Then I delete device by name: Machine3
     Then device table in user details should be:
       | Device   | Used/Available | Device Storage Limit | Last Update |
-      | Machine1 | 10 GB / 150 GB | Set                  | N/A         |
-      | Machine2 | 20 GB / 150 GB | Set                  | N/A         |
+      | Machine1 | 10 GB / 150 GB | Set                  | 1 minute ago |
+      | Machine2 | 20 GB / 150 GB | Set                  | 1 minute ago |
     And stash device table in user details should be:
       | Sync Container | Used/Available     | Device Storage Limit | Last Update      |
       | Sync           | 20 GB / 150 GB     | Set                  | 1 minute ago     |
@@ -442,8 +442,8 @@ Feature: Set/Remove Max at Machine
     Then I delete device by name: Machine6
     Then device table in user details should be:
       | Device   | Used/Available | Device Storage Limit | Last Update |
-      | Machine4 | 10 GB / 120 GB | Set                  | N/A         |
-      | Machine5 | 20 GB / 120 GB | Set                  | N/A         |
+      | Machine4 | 10 GB / 120 GB | Set                  | 1 minute ago |
+      | Machine5 | 20 GB / 120 GB | Set                  | 1 minute ago |
     And I stop masquerading
     And I search and delete partner account by newly created partner company name
 

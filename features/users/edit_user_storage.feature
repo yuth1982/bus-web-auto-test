@@ -207,9 +207,12 @@ Feature: Users Storage/Device/Product Key Section
       | machine_id                  | GB |
       | <%=@clients[1].machine_id%> | 5  |
     Then tds returns successful upload
+    #And I upload data to device by batch
+      #| machine_id                  | GB |
+      #| <%=@clients[1].machine_id%> | 1  |
     And I upload data to device by batch
-      | machine_id                  | GB |
-      | <%=@clients[1].machine_id%> | 1  |
+      | machine_id                         | GB    | upload_file |
+      | <%=@new_clients.first.machine_id%> | 0.005 | true        |
     Then tds return message should be:
     """
     Account or container quota has been exceeded

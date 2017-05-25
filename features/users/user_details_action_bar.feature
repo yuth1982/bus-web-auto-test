@@ -209,6 +209,7 @@ Feature: User Details
 
   @TC.121960 @bus @tasks_p2 @ldap_sequence
   Scenario: Mozy-121960:Change User Password/Activation link is not available for Pull users
+    Given I delete a user dev-121960-test1@test.com in the demeter db
     When I add a new MozyEnterprise partner:
       | period | users | server plan | net terms |
       | 12     | 18    | 100 GB      | yes       |

@@ -13,7 +13,8 @@ Feature: User Details
       | last_update@test.com |
     Then User search results should be:
       | User                 | Name        | Sync    | Machines | Storage | Storage Used |
-      | last_update@test.com | last_update | Enabled | 3        | 100 GB (Limited) | 60 GB        |
+      | last_update@test.com | last_update | Enabled | 3        | Shared  | 60 GB        |
+      #| last_update@test.com | last_update | Enabled | 3        | 100 GB (Limited) | 60 GB        |
     When I view user details by last_update@test.com
     Then device table in user details should be:
       | Device   | Used/Available | Device Storage Limit | Last Update      | Action |
@@ -489,6 +490,7 @@ Feature: User Details
     And I add 1 new provision rules:
       | rule            | group |
       | cn=120021-test1 | Test  |
+    And I delete a user 120021-test1@test.com in the demeter db
     And I click the sync now button
     And I wait for 70 seconds
     And I click Connection Settings tab
@@ -521,8 +523,10 @@ Feature: User Details
       | 0   | 5   |
     And users' device status should be:
       | Used | Available | storage_type |
-      | 0    | 3         | Server       |
       | 0    | 2         | Desktop      |
+      | 0    | 3         | Server       |
+      #| 0    | 3         | Server       |
+      #| 0    | 2         | Desktop      |
     And I close user details section
     When I view user details by User1
     Then users' device status should be:

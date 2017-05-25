@@ -241,40 +241,40 @@ Feature: Add a new user group
       | Shared               | 11              | Shared              | 201            |
     Then Add user group error messages should be:
       """
-      Not enough Desktop devices available
       Not enough Server devices available
+      Not enough Desktop devices available
       """
     When I add a new Itemized user group:
       | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
       | Shared               |                 | Shared              |                |
     Then Add user group error messages should be:
       """
-      Desktop device count required
       Server device count required
+      Desktop device count required
       """
     When I add a new Itemized user group:
       | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
       | Shared               | -1              | Shared              | -1             |
     Then Add user group error messages should be:
       """
-      Whole positive integer required for Desktop device count
       Whole positive integer required for Server device count
+      Whole positive integer required for Desktop device count
       """
     When I add a new Itemized user group:
       | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
       | Shared               | hello           | Shared              | hello          |
     Then Add user group error messages should be:
       """
-      Whole positive integer required for Desktop device count
       Whole positive integer required for Server device count
+      Whole positive integer required for Desktop device count
       """
     When I add a new Itemized user group:
       | desktop_storage_type | desktop_devices | server_storage_type | server_devices |
       | Shared               | 1.5             | Shared              | 1.5            |
     Then Add user group error messages should be:
       """
-      Whole positive integer required for Desktop device count
       Whole positive integer required for Server device count
+      Whole positive integer required for Desktop device count
       """
     When I add a new Itemized user group:
       | desktop_storage_type | desktop_limited_quota | desktop_devices | server_storage_type | server_limited_quota | server_devices |
@@ -283,8 +283,8 @@ Feature: Add a new user group
       """
       Use between 0 and 100 GB for Server limited storage.
       Use between 0 and 250 GB for Desktop limited storage.
-      Not enough Desktop devices available
       Not enough Server devices available
+      Not enough Desktop devices available
       """
     When I add a new Itemized user group:
       | desktop_storage_type | desktop_limited_quota | desktop_devices | server_storage_type | server_limited_quota | server_devices |
@@ -293,8 +293,8 @@ Feature: Add a new user group
       """
       Server Limited Storage required
       Desktop Limited Storage required
-      Desktop device count required
       Server device count required
+      Desktop device count required
       """
     When I add a new Itemized user group:
       | desktop_storage_type | desktop_limited_quota | desktop_devices | server_storage_type | server_limited_quota | server_devices |
@@ -303,8 +303,8 @@ Feature: Add a new user group
       """
       Whole positive integer required for Server Limited Storage
       Whole positive integer required for Desktop Limited Storage
-      Whole positive integer required for Desktop device count
       Whole positive integer required for Server device count
+      Whole positive integer required for Desktop device count
       """
     When I add a new Itemized user group:
       | desktop_storage_type | desktop_limited_quota | desktop_devices | server_storage_type | server_limited_quota | server_devices |
@@ -313,8 +313,8 @@ Feature: Add a new user group
       """
       Whole positive integer required for Server Limited Storage
       Whole positive integer required for Desktop Limited Storage
-      Whole positive integer required for Desktop device count
       Whole positive integer required for Server device count
+      Whole positive integer required for Desktop device count
       """
     When I add a new Itemized user group:
       | desktop_storage_type | desktop_limited_quota | desktop_devices | server_storage_type | server_limited_quota | server_devices |
@@ -323,8 +323,8 @@ Feature: Add a new user group
       """
       Whole positive integer required for Server Limited Storage
       Whole positive integer required for Desktop Limited Storage
-      Whole positive integer required for Desktop device count
       Whole positive integer required for Server device count
+      Whole positive integer required for Desktop device count
       """
     When I add a new Itemized user group:
       | desktop_storage_type | desktop_assigned_quota | desktop_devices | server_storage_type | server_assigned_quota | server_devices |
@@ -333,8 +333,8 @@ Feature: Add a new user group
       """
       Server storage can only be assigned between 0 and 100 GB.
       Desktop storage can only be assigned between 0 and 250 GB.
-      Not enough Desktop devices available
       Not enough Server devices available
+      Not enough Desktop devices available
       """
     When I add a new Itemized user group:
       | desktop_storage_type | desktop_assigned_quota | desktop_devices | server_storage_type | server_assigned_quota | server_devices |
@@ -343,8 +343,8 @@ Feature: Add a new user group
       """
       Server Assigned Storage Required
       Desktop Assigned Storage Required
-      Desktop device count required
       Server device count required
+      Desktop device count required
       """
     When I add a new Itemized user group:
       | desktop_storage_type | desktop_assigned_quota | desktop_devices | server_storage_type | server_assigned_quota | server_devices |
@@ -353,8 +353,8 @@ Feature: Add a new user group
       """
       Whole positive integer required for Server Assigned Storage
       Whole positive integer required for Desktop Assigned Storage
-      Whole positive integer required for Desktop device count
       Whole positive integer required for Server device count
+      Whole positive integer required for Desktop device count
       """
     When I add a new Itemized user group:
       | desktop_storage_type | desktop_assigned_quota | desktop_devices | server_storage_type | server_assigned_quota | server_devices |
@@ -363,8 +363,8 @@ Feature: Add a new user group
       """
       Whole positive integer required for Server Assigned Storage
       Whole positive integer required for Desktop Assigned Storage
-      Whole positive integer required for Desktop device count
       Whole positive integer required for Server device count
+      Whole positive integer required for Desktop device count
       """
     When I add a new Itemized user group:
       | desktop_storage_type | desktop_assigned_quota | desktop_devices | server_storage_type | server_assigned_quota | server_devices |
@@ -373,8 +373,8 @@ Feature: Add a new user group
       """
       Whole positive integer required for Server Assigned Storage
       Whole positive integer required for Desktop Assigned Storage
-      Whole positive integer required for Desktop device count
       Whole positive integer required for Server device count
+      Whole positive integer required for Desktop device count
       """
     When I add a new Itemized user group:
       | name | desktop_storage_type | desktop_devices | server_storage_type | server_devices |

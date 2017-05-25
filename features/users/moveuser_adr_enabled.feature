@@ -284,7 +284,7 @@ Feature: Move a user between two groups or partners when ADR is enabled/disabled
     #And I delete partner account
 
   @TC.133738 @bus @data_retention @user @bus2.29 @P1 @qa12
-  Scenario: 133736 - Move user to same policy group but crossing partners. 1Y -> 1Y
+  Scenario: 133738 - Move user to same policy group but crossing partners. 1Y -> 1Y
     #======step1: create a MozyPro partner======
     When I add a new MozyPro partner:
       | company name | period |  base plan | server plan | net terms |

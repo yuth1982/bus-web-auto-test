@@ -333,7 +333,8 @@ Feature: Standard user Login
     Then I should see 1 email(s)
     When I click reset password link from the email
     Then I reset password with reset password
-    And I will see reset password massage Your password has been changed.
+    #And I will see reset password massage Your password has been changed.
+    And I will see reset password massage Your password has been changed. Please be sure to start MozyPro Configuration on each computer on the account in order to enter the new password.
     Then I navigate to user login page with partner ID
     Then I log in bus pid console with:
       | username                 | password                                  |
