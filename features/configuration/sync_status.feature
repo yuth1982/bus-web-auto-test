@@ -3,7 +3,7 @@ Feature: sync status
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.131006 @TC.131005 @121634 @bus @ldap_sequence @qa12 @tasks_p3
+  @TC.131006 @TC.131005 @TC.121634 @bus @ldap_sequence @tasks_p3 @regression
   Scenario: 131006 131005 check help link after sync AD user
     Given I delete a user tc131006.user1 in the AD
     # step1 - add one users in AD server
@@ -106,7 +106,7 @@ Feature: sync status
     And I click help link
     And I access help page successfully
 
-  @TC.133922 @bus @ldap_sequence @qa12 @tasks_p3
+  @TC.133922 @bus @ldap_sequence @tasks_p3 @regression
   Scenario: 133922 Admin will get notification email if sync failed due to LDAP Connection Failed
     # step1 - create a partner
     Given I delete a user tc133922.user1 in the AD

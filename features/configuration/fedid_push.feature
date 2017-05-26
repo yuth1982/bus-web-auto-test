@@ -285,7 +285,7 @@ Feature: FedID push
     And I search and delete partner account by newly created partner company name
 
 
-  @TC.121635 @121640 @121643 @ui @bus @ldap_push_integration @connection_settings @sync_rules @regression @core_function
+  @TC.121635 @121640 @121643 @ui @bus @ldap_push_integration @connection_settings @sync_rules @regression @tasks_p3
   Scenario: 121635 - Invalid Port can not be saved in Connection Settings
     When I add a new MozyEnterprise partner:
       | period | users | server plan |

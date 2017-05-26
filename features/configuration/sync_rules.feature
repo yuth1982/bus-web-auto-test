@@ -3,7 +3,7 @@ Feature: sync rules
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.131019 @bus @ldap_sequence @qa12 @tasks_p3
+  @TC.131019 @bus @ldap_sequence @tasks_p3 @regression
   Scenario: 131019 Newly synced user in no oem partner should receive welcome email
     Given I delete a user tc131019.user1 in the AD
     Given I delete a user tc131019.user2 in the AD
@@ -66,7 +66,7 @@ Feature: sync rules
     And I delete a user tc131019.user2 in the AD
 
 
-  @TC.131021 @bus @ldap_sequence @qa12 @tasks_p3
+  @TC.131021 @bus @ldap_sequence @tasks_p3 @regression
   Scenario: 131021 Newly synced user without welcome email setting should not receive welcome email
     Given I delete a user tc131021.user1 in the AD
     Given I delete a user tc131021.user2 in the AD
@@ -129,7 +129,7 @@ Feature: sync rules
     And I delete a user tc131021.user2 in the AD
 
 
-  @TC.131023 @bus @ldap_sequence @qa12 @tasks_p3
+  @TC.131023 @bus @ldap_sequence @tasks_p3 @regression
   Scenario: 131023 Existing synced user should not receive welcome email
     Given I delete a user tc131023.user1 in the AD
     Given I delete a user tc131023.user2 in the AD
@@ -204,7 +204,7 @@ Feature: sync rules
     And I delete a user tc131023.user2 in the AD
 
 
-  @TC.131010 @bus @ldap_sequence @qa12 @tasks_p3
+  @TC.131010 @bus @ldap_sequence @tasks_p3 @regression
   Scenario: 131010 ldap push partner can not use hourly sync
     # step1 - create a MozyEnterprise partner
     When I add a new MozyEnterprise partner:
@@ -230,7 +230,7 @@ Feature: sync rules
     Then sync hourly checkbox is invisible
 
 
-  @TC.131012 @bus @admin @ldap_sequence @qa12 @tasks_p3
+  @TC.131012 @bus @admin @ldap_sequence @tasks_p3
   Scenario: 131012 ldap pull partner can use hourly sync successfully
     Given I delete a user tc131012.user1 in the AD
     # step1 - add two users in AD server
@@ -268,7 +268,7 @@ Feature: sync rules
       | cn=tc131012.user1                      | (default user group) |
     And I save the changes with password default password
 
-  @TC.131043 @bus @ldap_sequence @qa12 @tasks_p3
+  @TC.131043 @bus @ldap_sequence @tasks_p3 @regression
   Scenario: Check whether the safeguard option presents
     When I add a new MozyEnterprise partner:
       | period | users | server plan | root role  |
@@ -294,7 +294,7 @@ Feature: sync rules
     And I save the changes with password default password
     Then Authentication Policy has been updated successfully
 
-  @TC.131057 @bus @ldap_sequence @qa12 @tasks_p3
+  @TC.131057 @bus @ldap_sequence @qa12 @tasks_p3 @regression
   Scenario: approve safeguard warnings and validate the results
     Given I delete a user tc131057.user1 in the AD
     Given I delete a user tc131057.user2 in the AD

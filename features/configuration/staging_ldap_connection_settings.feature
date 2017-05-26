@@ -117,7 +117,7 @@ Feature: Manage Horizon related settings
     And I search and delete partner account by newly created partner company name
 
 
-  @TC.121828 @TC.121830 @bus @admin @ldap_sequence @regression @core_function
+  @TC.121828 @TC.121830 @bus @admin @ldap_sequence @regression @tasks_p3
   Scenario: 121828 - Admin SSO setting in LDAP Push
     # Scenario: 121828 Admin SSO setting in LDAP Push
     # step1 - create a parnter
