@@ -12,13 +12,7 @@ And /^Billing details of partner invoice should be:$/ do |billing_detail_table|
         with_timezone(ARIA_ENV['timezone']) do
           k[x].replace(Chronic.parse(k[x]).strftime("%-m/%-d/%Y"))
         end
-      elsif k[x] == 'after 1 month yesterday'
-        k[x] = 'after 1 month'
-        with_timezone(ARIA_ENV['timezone']) do
-          k[x].replace((Chronic.parse(k[x]).to_datetime - 1).strftime("%-m/%-d/%Y"))
-        end
-      elsif k[x] == 'after 1 year yesterday'
-        k[x] = 'after 1 year'
+      elsif !(k[x].gsub!("yesterday", '').nil?)
         with_timezone(ARIA_ENV['timezone']) do
           k[x].replace((Chronic.parse(k[x]).to_datetime - 1).strftime("%-m/%-d/%Y"))
         end
@@ -33,6 +27,11 @@ end
 And /^Exchange rate of partner invoice should be:$/ do |exchange_rate_table|
   actual = @bus_site.partner_invoice_page.exchange_rates_table_rows
   actual.should_not == nil
-  expected =  exchange_rate_table.raw
+  expected = exchange_rate_table.raw
   actual.should == expected
+end
+
+And /^there is no exchange rate table in invoice$/ do
+  actual = @bus_site.partner_invoice_page.exchange_rates_table_rows
+  actual.should == nil
 end

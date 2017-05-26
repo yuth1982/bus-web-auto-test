@@ -34,6 +34,8 @@ Feature: BUS smoke test 3
     And I view data shuttle order details
     And I add drive to data shuttle order
     Then Add drive to data shuttle order message should include Successfully added drive to order
+    When I cancel the latest data shuttle order for Internal Mozy - MozyPro BUS Smoke Test Data Shuttle 6201-2851-04
+    Then The order should be Cancelled
 
   @bus_us @TC.125954 @std
   Scenario: Test Case Mozy-125954: BUS US -- Order Data Shuttle

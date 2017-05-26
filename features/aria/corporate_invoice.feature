@@ -543,3 +543,320 @@ Feature: Corporate Invoices
       | EUR           | EUR         | 1             |
     When I close new window
     And I delete partner account
+
+  @TC.124659 @bus @2.17 @corporate_invoices @MozyPro_UK @tasks_p3
+  Scenario: 124659 Check the invoice when adding a new UK Reseller
+    When I add a new Reseller partner:
+      | period | reseller type | country        | create under | reseller quota | storage add on | coupon              | cc number        |
+      | 12     | Gold          | United Kingdom | MozyPro UK   | 1200           | 10             | 10PERCENTOFFOUTLINE | 4916783606275713 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And Partner internal billing should be:
+      | Account Type:   | Credit Card  | Current Period: | Yearly             |
+      | Unpaid Balance: | £0.00        | Collect On:     | N/A                |
+      | Renewal Date:   | after 1 year | Renewal Period: | Use Current Period |
+      | Next Charge:    | after 1 year |                 |                    |
+    And Partner billing history should be:
+      | Date  | Amount    | Total Paid | Balance Due |
+      | today | £3,265.92 | £3,265.92  | £0.00       |
+    When I click the latest date link to view the invoice
+    And I navigate to new window
+    Then Invoice head should include newly created partner company name
+    And Billing details of partner invoice should be:
+      | Billing Detail |                        |          |                                                          |         |           |                   |              |
+# bug #129815
+#      | From Date      | To Date                | Quantity | Description                                              | Price   | VAT (20%) | Percent of Period | Total Price |
+      | From Date      | To Date                | Quantity | Description                                              | Price   | VAT (23%) | Percent of Period | Total Price |
+      |                |                        |          | Previous Balance                                         |         |           |                   | £ 0.00      |
+      | today          | after 1 year yesterday | 1200     | Mozy Reseller GB - Gold (Annual) Mozy Reseller           | £ 2.16  | £ 466.56  | 100.00%           | £ 3,058.56  |
+      | today          | after 1 year yesterday | 10       | Mozy Reseller 20 GB add-on - Gold (Annual) Mozy Reseller | £ 43.20 | £ 77.76   | 100.00%           | £ 509.76    |
+      | today          | after 1 year yesterday | 1200     | RULE-10PERCENTOFFOUTLINE                                 | £ -0.22 | £ 0.00    | 100.00%           | £ -259.20   |
+      | today          | after 1 year yesterday | 10       | RULE-10PERCENTOFFOUTLINE                                 | £ -4.32 | £ 0.00    | 100.00%           | £ -43.20    |
+      |                |                        |          | Total                                                    |         |           |                   | £ 3,265.92  |
+      | today          |                        |          | Electronic Payment                                       |         |           |                   | £-3,265.92  |
+      |                |                        |          | Balance                                                  |         |           |                   | £ 0.00      |
+    And Exchange rate of partner invoice should be:
+      | From Currency | To Currency | Exchange Rate |
+      | GBP           | EUR         | 1.274381      |
+
+  @TC.124578 @bus @2.17 @corporate_invoices @change_plan_invoice @MozyPro_UK @delete_coupon @tasks_p3
+  Scenario: 124578 Check the invoice when change plan - UK mozypro
+    When I add a new MozyPro partner:
+      | period | base plan | create under | country        | vat number  | coupon              | cc number        |
+      | 24     | 500 GB    | MozyPro UK   | United Kingdom | GB117223643 | 10PERCENTOFFOUTLINE | 4916783606275713 |
+    And New partner should be created
+    And Partner billing history should be:
+      | Date  | Amount    | Total Paid | Balance Due |
+      | today | £1,641.41 | £1,641.41  | £0.00       |
+    When I click the latest date link to view the invoice
+    And I navigate to new window
+    Then Invoice head should include newly created partner company name
+    And Billing details of partner invoice should be:
+      | Billing Detail |                         |          |                                               |            |              |                   |             |
+# bug #129815
+#      | From Date      | To Date                 | Quantity | Description                                   | Price      | VAT          | Percent of Period | Total Price |
+      | From Date      | To Date                 | Quantity | Description                                   | Price      | VAT (23%)    | Percent of Period | Total Price |
+      |                |                         |          | Previous Balance                              |            |              |                   | £ 0.00      |
+      | today          | after 2 years yesterday | 1        | MozyPro 500 GB Plan (Biennial) MozyPro Bundle | £ 1,823.79 | £ 0.00       | 100.00%           | £ 1,823.79  |
+      | today          | after 2 years yesterday | 1        | RULE-10PERCENTOFFOUTLINE                      | £ -182.38  | £ 0.00       | 100.00%           | £ -182.38   |
+      |                |                         |          | Total                                         |            |              |                   | £ 1,641.41  |
+      | today          |                         |          | Electronic Payment                            |            |              |                   | £-1,641.41  |
+      |                |                         |          | Balance                                       |            |              |                   | £ 0.00      |
+    And Exchange rate of partner invoice should be:
+      | From Currency | To Currency | Exchange Rate |
+      | GBP           | EUR         | 1.274381      |
+
+    When I close new window
+    When I act as newly created partner account
+    And I change MozyPro account plan to:
+      | base plan |
+      |  1 TB     |
+    Then Change plan charge summary should be:
+      | Description                     | Amount     |
+      | Credit for remainder of 500 GB  | -£1,641.41 |
+      | Charge for new 1 TB             | £3,646.79  |
+      |                                 |            |
+      | Total amount to be charged      | £2,005.38  |
+    And the MozyPro account plan should be changed
+    And MozyPro new plan should be:
+      | base plan |
+      | 1 TB      |
+    When I stop masquerading
+    And I search partner by newly created partner company name
+    And I view partner details by newly created partner company name
+    And Partner billing history should be:
+      | Date  | Amount    | Total Paid | Balance Due |
+      | today | £2,005.38 | £2,005.38  | £0.00       |
+      | today | £1,641.41 | £1,641.41  | £0.00       |
+    When I click the latest date link to view the invoice
+    And I navigate to new window
+    Then Invoice head should include newly created partner company name
+    And Billing details of partner invoice should be:
+      | Billing Detail |                         |          |                                             |            |           |                   |             |
+# bug #129815
+#      | From Date      | To Date                 | Quantity | Description                                 | Price      | VAT       | Percent of Period | Total Price |
+      | From Date      | To Date                 | Quantity | Description                                 | Price      | VAT (23%) | Percent of Period | Total Price |
+      |                |                         |          | Previous Balance                            |            |           |                   | £ 0.00      |
+      | today          | after 2 years yesterday | 1        | MozyPro 1 TB Plan (Biennial) MozyPro Bundle | £ 3,646.79 | £ 0.00    | 100.00%           | £ 3,646.79  |
+      | today          | after 2 years yesterday | 1        | Credit - MozyPro Bundle                     | £ 0.00     | £ 0.00    | 100.00%           | £ -1,641.41 |
+      |                |                         |          | Total                                       |            |           |                   | £ 2,005.38  |
+      | today          |                         |          | Electronic Payment                          |            |           |                   | £-2,005.38  |
+      |                |                         |          | Balance                                     |            |           |                   | £ 0.00      |
+    And Exchange rate of partner invoice should be:
+      | From Currency | To Currency | Exchange Rate |
+      | GBP           | EUR         | 1.274381      |
+    When I close new window
+    And I delete partner account
+
+  @TC.124660 @bus @2.17 @corporate_invoices @EU_in_GBP @FX @tasks_p3
+  Scenario: 124660 Check the exchange rate table in invoice - EU country charged in GBP
+    When I add a new MozyPro partner:
+      | period | base plan | create under | country | cc number        |
+      | 1      | 50 GB     | MozyPro UK   | France  | 4485393141463880 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%> |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                               |
+      | Renewal Date:   | <%=@partner.subscription_period%>         | Renewal Period: | Use Current Period                |
+      | Next Charge:    | <%=@partner.subscription_period%>         |                 |                                   |
+    And Partner billing history should be:
+      | Date  | Amount                                         | Total Paid                                     | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%> | <%=@partner.billing_info.billing[:total_str]%> | <%=@partner.billing_info.billing[:zero]%> |
+    When I click the latest date link to view the invoice
+    And I navigate to new window
+    Then Exchange rate of partner invoice should be:
+      | From Currency | To Currency | Exchange Rate |
+      | GBP           | EUR         | 1.274381      |
+    When I close new window
+    And I delete partner account
+
+  @TC.124580 @bus @2.17 @corporate_invoices @US_in_GBP @FX @tasks_p3
+  Scenario: 124580 Check the exchange rate table in invoice - US charged in GBP
+    When I add a new MozyPro partner:
+      | period | base plan | create under    | country       |
+      | 1      | 50 GB     | MozyPro UK      | United States |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%> |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                               |
+      | Renewal Date:   | <%=@partner.subscription_period%>         | Renewal Period: | Use Current Period                |
+      | Next Charge:    | <%=@partner.subscription_period%>         |                 |                                   |
+    And Partner billing history should be:
+      | Date  | Amount                                         | Total Paid                                     | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%> | <%=@partner.billing_info.billing[:total_str]%> | <%=@partner.billing_info.billing[:zero]%> |
+    When I click the latest date link to view the invoice
+    And I navigate to new window
+    Then there is no exchange rate table in invoice
+    When I close new window
+    And I delete partner account
+
+  @TC.133865 @bus @2.17 @corporate_invoices @US_in_EUR @FX @tasks_p3
+  Scenario: 133865 Check the exchange rate table in invoice - US charged in EUR
+    When I add a new MozyPro partner:
+      | period | base plan | create under   | country       |
+      | 1      | 50 GB     | MozyPro France | United States |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%> |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                               |
+      | Renewal Date:   | <%=@partner.subscription_period%>         | Renewal Period: | Use Current Period                |
+      | Next Charge:    | <%=@partner.subscription_period%>         |                 |                                   |
+    And Partner billing history should be:
+      | Date  | Amount                                         | Total Paid                                     | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%> | <%=@partner.billing_info.billing[:total_str]%> | <%=@partner.billing_info.billing[:zero]%> |
+    When I click the latest date link to view the invoice
+    And I navigate to new window
+    Then Exchange rate of partner invoice should be:
+      | From Currency | To Currency | Exchange Rate |
+      |               |             |               |
+    When I close new window
+    And I delete partner account
+
+  @TC.124581 @bus @2.17 @corporate_invoices  @US_in_USD @FX @tasks_p3
+  Scenario: 124581 Check the exchange rate table in invoice - US charged in USD
+    When I add a new MozyPro partner:
+      | period | base plan | create under | country       |
+      | 1      | 50 GB     | MozyPro      | United States |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%> |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                               |
+      | Renewal Date:   | <%=@partner.subscription_period%>         | Renewal Period: | Use Current Period                |
+      | Next Charge:    | <%=@partner.subscription_period%>         |                 |                                   |
+    And Partner billing history should be:
+      | Date  | Amount                                         | Total Paid                                     | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%> | <%=@partner.billing_info.billing[:total_str]%> | <%=@partner.billing_info.billing[:zero]%> |
+    When I click the latest date link to view the invoice
+    And I navigate to new window
+    Then there is no exchange rate table in invoice
+    When I close new window
+    And I delete partner account
+
+  @TC.124582 @bus @2.17 @corporate_invoices @UK_in_EUR @FX @tasks_p3
+  Scenario: 124582 Check the exchange rate table in invoice - UK charged in EUR
+    When I add a new MozyPro partner:
+      | period | base plan | create under   | country        | cc number        |
+      | 1      | 50 GB     | MozyPro France | United Kingdom | 4916783606275713 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%> |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                               |
+      | Renewal Date:   | <%=@partner.subscription_period%>         | Renewal Period: | Use Current Period                |
+      | Next Charge:    | <%=@partner.subscription_period%>         |                 |                                   |
+    And Partner billing history should be:
+      | Date  | Amount                                         | Total Paid                                     | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%> | <%=@partner.billing_info.billing[:total_str]%> | <%=@partner.billing_info.billing[:zero]%> |
+    When I click the latest date link to view the invoice
+    And I navigate to new window
+    Then Exchange rate of partner invoice should be:
+      | From Currency | To Currency | Exchange Rate |
+      | EUR           | EUR         | 1             |
+    When I close new window
+    And I delete partner account
+
+  @TC.124583 @bus @2.17 @corporate_invoices @UK_in_USD @FX @tasks_p3
+  Scenario: 124583 Check the exchange rate table in invoice - UK charged in USD
+    When I add a new MozyPro partner:
+      | period | base plan | create under | country        | cc number        |
+      | 1      | 50 GB     | MozyPro      | United Kingdom | 4916783606275713 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%> |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                               |
+      | Renewal Date:   | <%=@partner.subscription_period%>         | Renewal Period: | Use Current Period                |
+      | Next Charge:    | <%=@partner.subscription_period%>         |                 |                                   |
+    And Partner billing history should be:
+      | Date  | Amount                                         | Total Paid                                     | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%> | <%=@partner.billing_info.billing[:total_str]%> | <%=@partner.billing_info.billing[:zero]%> |
+    When I click the latest date link to view the invoice
+    And I navigate to new window
+    Then Exchange rate of partner invoice should be:
+      | From Currency | To Currency | Exchange Rate |
+      | USD           | EUR         | .8128         |
+    When I close new window
+    And I delete partner account
+
+  @TC.124584 @bus @2.17 @corporate_invoices @EU_in_USD @FX @tasks_p3
+  Scenario: 124584 Check the exchange rate table in invoice - EU country charged in USD
+    When I add a new MozyPro partner:
+      | period | base plan | create under | country | cc number        |
+      | 1      | 50 GB     | MozyPro      | Italy   | 4916921703777575 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%> |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                               |
+      | Renewal Date:   | <%=@partner.subscription_period%>         | Renewal Period: | Use Current Period                |
+      | Next Charge:    | <%=@partner.subscription_period%>         |                 |                                   |
+    And Partner billing history should be:
+      | Date  | Amount                                         | Total Paid                                     | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%> | <%=@partner.billing_info.billing[:total_str]%> | <%=@partner.billing_info.billing[:zero]%> |
+    When I click the latest date link to view the invoice
+    And I navigate to new window
+    Then Exchange rate of partner invoice should be:
+      | From Currency | To Currency | Exchange Rate |
+      | USD           | EUR         | .8128         |
+    When I close new window
+    And I delete partner account
+
+  @TC.124585 @bus @2.17 @corporate_invoices @EU_in_EUR @FX @tasks_p3
+  Scenario: 124585 Check the exchange rate table in invoice - EU country charged in EUR
+    When I add a new MozyPro partner:
+      | period | base plan | create under    | country | cc number        |
+      | 1      | 50 GB     | MozyPro Ireland | Ireland | 4319402211111113 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%> |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                               |
+      | Renewal Date:   | <%=@partner.subscription_period%>         | Renewal Period: | Use Current Period                |
+      | Next Charge:    | <%=@partner.subscription_period%>         |                 |                                   |
+    And Partner billing history should be:
+      | Date  | Amount                                         | Total Paid                                     | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%> | <%=@partner.billing_info.billing[:total_str]%> | <%=@partner.billing_info.billing[:zero]%> |
+    When I click the latest date link to view the invoice
+    And I navigate to new window
+    Then Exchange rate of partner invoice should be:
+      | From Currency | To Currency | Exchange Rate |
+      | EUR           | EUR         | 1             |
+    When I close new window
+    And I delete partner account
+
+  @TC.124586 @bus @2.17 @corporate_invoices @UK_in_GBP @FX @tasks_p3
+  Scenario: 124586 Check the exchange rate table in invoice - UK charged in GBP
+    When I add a new MozyPro partner:
+      | period | base plan | create under | country        | cc number        |
+      | 1      | 50 GB     | MozyPro UK   | United Kingdom | 4916783606275713 |
+    And the sub-total before taxes or discounts should be correct
+    And the order summary table should be correct
+    And New partner should be created
+    And New Partner internal billing should be:
+      | Account Type:   | Credit Card                               | Current Period: | <%=@partner.subscription_period%> |
+      | Unpaid Balance: | <%=@partner.billing_info.billing[:zero]%> | Collect On:     | N/A                               |
+      | Renewal Date:   | <%=@partner.subscription_period%>         | Renewal Period: | Use Current Period                |
+      | Next Charge:    | <%=@partner.subscription_period%>         |                 |                                   |
+    And Partner billing history should be:
+      | Date  | Amount                                         | Total Paid                                     | Balance Due                               |
+      | today | <%=@partner.billing_info.billing[:total_str]%> | <%=@partner.billing_info.billing[:total_str]%> | <%=@partner.billing_info.billing[:zero]%> |
+    When I click the latest date link to view the invoice
+    And I navigate to new window
+    Then Exchange rate of partner invoice should be:
+      | From Currency | To Currency | Exchange Rate |
+      | GBP           | EUR         | 1.274381      |
+    When I close new window
+    And I delete partner account
