@@ -4,7 +4,7 @@ Feature: Machine and Sync
   Background:
     Given I log in bus admin console as administrator
 
-  @TC.22021 @bus @machines_sync @tasks_p3
+  @TC.22021 @bus @machines_sync @tasks_p3 @regression
   Scenario: 22021 Disable Stash of MozyPro Partner with singule user(MozyPro) (local execution = 9m~10m)
     When I add a new MozyPro partner:
       | period | base plan | server plan | net terms | root role               |
@@ -32,7 +32,7 @@ Feature: Machine and Sync
     And I stop masquerading
 
 
-  @TC.22024 @bus @machines_sync @tasks_p3
+  @TC.22024 @bus @machines_sync @tasks_p3 @regression
   Scenario: 22021 Enable Stash for New Reseller Partners to enable stash for new users(Reseller) (local execution = 4min~5min)
     When I add a new Reseller partner:
       | period | reseller type | reseller quota |
@@ -228,7 +228,7 @@ Feature: Machine and Sync
     And I stop masquerading
 
 
-  @TC.22081 @bus @machines_sync @tasks_p3
+  @TC.22081 @bus @machines_sync @tasks_p3 @regression
   Scenario: 22081 Enable stash for new users of MozyEnterprise(Fortress) partner (local execution = 7min~8min)
   #======act as Fortress partner======
     When I act as partner by:
@@ -287,7 +287,7 @@ Feature: Machine and Sync
     Then I delete partner account
 
 
-  @TC.22091 @bus @machines_sync @tasks_p3
+  @TC.22091 @bus @machines_sync @tasks_p3 @regression
   Scenario: 22091 Disable stash of MozyEnterprise(Fortress) partner (local execution = 12min~13min)
   #======act as Fortress partner======
     When I act as partner by:
@@ -339,7 +339,7 @@ Feature: Machine and Sync
     Then I delete partner account
 
 
-  @TC.22092 @bus @machines_sync @tasks_p3
+  @TC.22092 @bus @machines_sync @tasks_p3 @regression
   Scenario: 22092 Add Stash to All Users In User Group Detail of MozyEnterprise(Fortress) (local execution = 7min~8min)
   #======act as Fortress partner======
     When I act as partner by:
@@ -402,7 +402,7 @@ Feature: Machine and Sync
     Then I delete partner account
 
 
-  @TC.22112 @bus @machines_sync @tasks_p3
+  @TC.22112 @bus @machines_sync @tasks_p3 @regression
   Scenario: 22112 Enable Stash for New User Group of MozyEnterprise(Fortress) Partner (local execution = 7mins~8mins)
   #======act as Fortress partner======
     When I act as partner by:
@@ -448,7 +448,7 @@ Feature: Machine and Sync
     Then I delete partner account
 
 
-  @TC.22141 @bus @machines_sync @tasks_p3
+  @TC.22141 @bus @machines_sync @tasks_p3 @regression
   Scenario: 22141 Enable Stash after disable stash(mozyEnterprise trial(Fortress)) (Local Execution = 10mins~11mins)
   #======act as Fortress partner======
     When I act as partner by:
@@ -505,7 +505,7 @@ Feature: Machine and Sync
     Then I delete partner account
 
 
-  @TC.22143 @bus @machines_sync @tasks_p3
+  @TC.22143 @bus @machines_sync @tasks_p3 @regression
   Scenario: 22143 Add Stash to all users in partner detail with single user group(mozyenterprise trial(fortress)) (Local Execution = 12min~13min)
   #======act as Fortress partner======
     When I act as partner by:
@@ -593,7 +593,7 @@ Feature: Machine and Sync
     Then I delete partner account
 
 
-  @TC.22191 @bus @machines_sync @tasks_p3
+  @TC.22191 @bus @machines_sync @tasks_p3 @regression
   Scenario: 22191 Enable and DIsable cycle by add stash to all users with single user(MozyEnterprise(Fortress)) (Local Execution = 14min~15min)
   #======act as Fortress partner======
     When I act as partner by:
