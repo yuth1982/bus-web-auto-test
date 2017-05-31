@@ -89,11 +89,6 @@ And /^The admin's IP address should be stored in demeter$/ do
   DBHelper.get_partner_admin_ip(@partner_id).nil?.should == false
 end
 
-When /^I get the current user id from the database$/ do
-  user_name = @partner.admin_info.email    #need to determine other var that can use email
-  @user_id = DBHelper.get_user_id_by_email user_name
-end
-
 When /^I delete the current user_payment_infos from the database$/ do
   Log.debug DBHelper.delete_upi_by_id @user_id
 end

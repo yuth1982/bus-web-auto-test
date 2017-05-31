@@ -75,8 +75,8 @@ module Bus
         end
       end
       if pro_plan.instance_variable_defined?('@generic')
-        price_per_gigabyte_input.type_text(pro_plan.generic['price_per_gigabyte'])
-        min_gigabytes_input.type_text(pro_plan.generic['min_gigabytes'])
+        price_per_gigabyte_input.type_text(pro_plan.generic[:price_per_gigabyte])
+        min_gigabytes_input.type_text(pro_plan.generic[:min_gigabytes])
       end
       #quota_price_tb.type_text(pro_plan.price_per_gb.to_s)
       #minimum_quota_tb.type_text(pro_plan.min_gb.to_s)

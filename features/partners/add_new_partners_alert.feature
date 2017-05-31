@@ -52,7 +52,7 @@ Feature: Add a new partner alert
   Scenario: 13028: Create new US Partner (business) with invalid expire date
     When I add a new MozyPro partner:
       | period | base plan | expire month | expire year |
-      | 24     | 50 GB     | 1            | 16          |
+      | 24     | 50 GB     | 1            | 17          |
     And Aria payment error message should be Credit card has expired.
 
   @TC.13029 @bus @partner_alert @tasks_p3
