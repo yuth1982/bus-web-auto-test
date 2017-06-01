@@ -4,7 +4,7 @@ When /^I add a new pro plan for (MozyEnterprise|Mozypro|Reseller|OEM|MozyEnterpr
   pro_plan.each do |k, v|
     if k.match(/(server|desktop|grandfathered)_(.+)/)
       plan[$1] ||= {}
-      plan[$1][$2] = v
+      plan[$1][$2.to_sym] = v
     else
       plan[k] = v
     end

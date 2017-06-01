@@ -58,19 +58,19 @@ module Bus
       %w(server desktop grandfathered).each do |type|
         if pro_plan.instance_variable_defined?("@#{type}")
           self.send("#{type}_tab").first.click
-          price_per_key_input.type_text(pro_plan.send(type)['price_per_key'])
-          min_keys_input.type_text(pro_plan.send(type)['min_keys'])
-          price_per_gigabyte_input.type_text(pro_plan.send(type)['price_per_gigabyte'])
-          min_gigabytes_input.type_text(pro_plan.send(type)['min_gigabytes'])
+          price_per_key_input.type_text(pro_plan.send(type)[:price_per_key])
+          min_keys_input.type_text(pro_plan.send(type)[:min_keys])
+          price_per_gigabyte_input.type_text(pro_plan.send(type)[:price_per_gigabyte])
+          min_gigabytes_input.type_text(pro_plan.send(type)[:min_gigabytes])
 
-          isDiscount = pro_plan.send(type)['key_discount']
+          isDiscount = pro_plan.send(type)[:key_discount]
           if isDiscount
             key_discount_btn.click
-            key_volumn.type_text(pro_plan.send(type)['key_volume'])
-            key_discount.type_text(pro_plan.send(type)['key_discount'])
+            key_volumn.type_text(pro_plan.send(type)[:key_volume])
+            key_discount.type_text(pro_plan.send(type)[:key_discount])
             quota_discount_btn.click
-            quota_volumn.type_text(pro_plan.send(type)['quota_volume'])
-            quota_discount.type_text(pro_plan.send(type)['quota_discount'])
+            quota_volumn.type_text(pro_plan.send(type)[:quota_volume])
+            quota_discount.type_text(pro_plan.send(type)[:quota_discount])
           end
         end
       end

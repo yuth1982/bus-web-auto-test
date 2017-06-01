@@ -279,7 +279,7 @@ Feature: Sub partners can purchase resources
     And I purchase resources:
       | desktop license | desktop quota | server license | server quota |
       | 10              | 360           | 200            | 10           |
-    Then the storage error message of purchase resource section should be: Resources should be purchased There are not enough available resources.  Please contact your System Administrator.
+    Then the storage error message of purchase resource section should be: Insufficient resources available on parent
     #bugs #144887
     And I stop masquerading as sub partner
     When I stop masquerading
