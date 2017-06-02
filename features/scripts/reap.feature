@@ -217,6 +217,7 @@ Feature: Reap Script Verification
 
   @TC.10488 @bus @reap @tasks_p3 @regression
   Scenario: Mozy-10488:MozyHome free user inactive 90 days.
+    #BUS-9657 bug
     When I am at dom selection point:
     And I add a phoenix Free user:
       | base plan | country        |
@@ -248,6 +249,7 @@ Feature: Reap Script Verification
 
   @TC.22079 @bus @reap @tasks_p3 @regression
   Scenario: Mozy-22079:Free inactive fixes account after final notice
+    #BUS-9657 bug
     When I am at dom selection point:
     And I add a phoenix Free user:
       | base plan | country        |
@@ -277,6 +279,7 @@ Feature: Reap Script Verification
 
   @TC.22303 @bus @reap @tasks_p3 @regression
   Scenario: Mozy-22303:Free inactive fixes account after 3rd notice zdate
+    #BUS-9657 bug
     When I am at dom selection point:
     And I add a phoenix Free user:
       | base plan | country        |
