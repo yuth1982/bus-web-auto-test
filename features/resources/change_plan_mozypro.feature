@@ -366,8 +366,9 @@ Feature: Change Plan for MozyPro Partners
     Then Change plan charge summary should be:
       | Description                    | Amount   |
       |Credit for remainder of 250 GB  |  -$94.99 |
-      |Charge for upgraded plans       |$474.98   |
-      | Total amount to be charged     | $379.99  |
+      |Charge for new 1 TB             | $379.99  |
+      |                                |          |
+      | Total amount to be charged     | $285.00  |
     And the MozyPro account plan should be changed
     And MozyPro new plan should be:
       | base plan |

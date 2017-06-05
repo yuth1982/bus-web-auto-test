@@ -1023,6 +1023,10 @@ Feature: Order data shuttle
       | TC.130978_sub_partner |
     Then New partner should be created
     And I act as newly created subpartner account
+    And I purchase resources:
+      | generic quota   |
+      | 30              |
+    Then Resources should be purchased
     And I add new user(s):
       | name               | user_group           | storage_type | storage_limit | devices |
       | TC.130978_user_01  | (default user group) | Desktop      | 20            | 1       |

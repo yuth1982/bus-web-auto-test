@@ -31,7 +31,8 @@ module Bus
     element(:continue_btn, css: "div#change_plan_confirmation input[value=Continue]")
     element(:cancel_btn, css: "div#change_plan_confirmation input[value=Cancel]")
     element(:message_div, css: "div#resource-change_billing_plan-errors ul")
-    element(:error_input_div, xpath: "//div[@id='error_input']/p")
+    # over quota error message show in //div[@id='error_input']//p , and input check error msg in //div[@id='error_input']//ul
+    element(:error_input_div, xpath: "//div[@id='error_input']")
     element(:confirm_msg, xpath: "//div[@id='change_plan_confirmation']//p")
     
     # Public: Reseller Supplemental Plans Hashes
@@ -110,7 +111,7 @@ module Bus
     end
 
     def change_mozyenterprise_dps_plan(base_plan)
-      value = base_plan.match(/\d+/)[0]
+      value = base_plan.match(/-?\d+/)[0]
       wait_until{enterprise_dps_baseplan_input.visible?}
       enterprise_dps_baseplan_input.type_text(value)
       confirm_change

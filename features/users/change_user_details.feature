@@ -134,7 +134,6 @@ Feature: User Details Section_ID etc
       | keywords   |
       | @user_name |
     And I view user details by newly created user email
-    And I wait for 33333 seconds
     And I reassign the user to partner TC.20737_sub_partner1
     Then the user's partner should be TC.20737_sub_partner1
     And I stop masquerading

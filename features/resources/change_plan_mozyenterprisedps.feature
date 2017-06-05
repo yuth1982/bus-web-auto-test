@@ -80,7 +80,10 @@ Feature: Change Plan for MozyEnterprisedps Partners
     When I change MozyEnterprise DPS account plan to:
       | base plan |
       | -1        |
-    Then Change Plan error message should be Invalid input. Enter a value between 1 and 200000.
+    Then the storage error message of change plan section should be:
+    """
+    Invalid input. Enter a value between 1 and 200000.
+    """
     When I stop masquerading
     And I search partner by newly created partner admin email
     And I view partner details by newly created partner company name
@@ -89,7 +92,7 @@ Feature: Change Plan for MozyEnterprisedps Partners
       | 2 TB    | 0         | 2 TB      | 1    | Unlimited | Unlimited |
     Then I search and delete partner account by newly created partner company name
 
-
+  #it should be failed as no change plan function for ME DPS subpartner
   @TC.119226 @bus @change_plan @tasks_p3 @regression
   Scenario: 119226 [positive]Change Plan to available higher/lower capacity plan for DPS sub-partner
     When I add a new MozyEnterprise DPS partner:
