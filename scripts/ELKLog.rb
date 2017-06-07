@@ -98,6 +98,9 @@ files.each do |file|
   parse_log(path) unless path.nil?
 end
 
+# close the file streaming
+@jsonfile.close
+
 remote_path = "/var/log/fbLog/"
 Net::SCP.start("10.237.1.137", "root", :password => "helloworld1024", :host_key => "ssh-rsa") do |scp|
   scp.upload(ELK_result_file_path, remote_path)
