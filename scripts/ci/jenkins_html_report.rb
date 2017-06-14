@@ -44,7 +44,7 @@ usage
 end
 
 exit if help == true
-
+=begin
 uri = URI.parse("https://www.mozypro.com")
 Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https', :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
   url =  "/version.txt"
@@ -78,6 +78,49 @@ end
 doc.xpath("//table[@id='tablesorter']//tfoot/tr[1]/td[9]").each do |link|
   failed = link.content
 end
+=end
+
+@passed = 0
+@failed = 0
+@total = 0
+
+def parseLogOnResult(path)
+  result = nil
+  file = File.open(path)
+  file.each do |line|
+    if line.include?("[Test Case Result]") == true
+      result = line.split(":")[1].strip
+      break
+    end
+  end
+  if(result == "Succeed")
+    @passed += 1
+    @total += 1
+  else
+    @failed += 1
+    @total += 1
+  end
+end
+
+# get all *.log under logs directory
+files = Dir.entries('logs')
+
+# parse each log file and input the info into the .json file.
+files.each do |file|
+  path = 'logs/' + file if file.include?(".log")
+  puts path
+  parseLogOnResult(path) unless path.nil?
+end
+
+puts "================"
+puts @passed
+puts @failed
+puts @total
+puts "================"
+
+passed = @passed
+failed = @failed
+total = @total
 
 builder = Nokogiri::HTML::Builder.new do |doc|
   doc.html {
