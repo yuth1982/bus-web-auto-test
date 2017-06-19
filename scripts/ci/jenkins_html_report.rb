@@ -44,7 +44,7 @@ usage
 end
 
 exit if help == true
-=begin
+
 uri = URI.parse("https://www.mozypro.com")
 Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https', :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
   url =  "/version.txt"
@@ -52,7 +52,7 @@ Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https', :verify_m
   response = http.request request
   build_number = response.body
 end
-
+=begin
 if jenkins
   doc = Nokogiri::HTML(open("http://jenkins01.tools.mozyops.com/job/#{job_name}/", http_basic_authentication: ["hongyc", "QAP@SSw0rd1!"]))
   doc.xpath("//img[@tooltip='In progress > Console Output']/../../../a").each do |link|
