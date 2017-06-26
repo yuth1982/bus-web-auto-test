@@ -671,7 +671,7 @@ Feature: Add a new MozyPro partner
       | country | billing_country |
       | US      | US              |
     When I log in bus admin console as administrator
-    And I search and delete partner account by newly created partner company name
+    #And I search and delete partner account by newly created partner company name
     When I am at dom selection point:
     And I maximize the automation browser
     And I add a phoenix Home user:
@@ -684,6 +684,4 @@ Feature: Add a new MozyPro partner
     Then I am able to retrieve information from CyberSource:
       | last four digits                           | BIN country                        |
       | <%=@partner.credit_card.last_four_digits%> | <%=@partner.billing_info.country%> |
-    And I log in bus admin console as administrator
-    And I search and delete user account by new created user name
 

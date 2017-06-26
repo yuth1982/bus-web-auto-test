@@ -621,6 +621,17 @@ module Bus
       wait_until_bus_section_load
     end
 
+    # Public: Get partner root role
+    #
+    # Example:
+    #   @bus_site.admin_console_page.partner_details_section.get_root_role
+    #
+    # Returns the text value of root role name
+    def get_root_role
+      partner_root_role_name.text.gsub(partner_root_role_name.first_child.text,'').strip
+    end
+
+
     # Public: Create API Key
     # Skipped, ff API key existed
     #

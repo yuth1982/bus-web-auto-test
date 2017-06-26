@@ -679,3 +679,7 @@ Then /^view in aria link should (not )?be visible$/ do |visible|
     @bus_site.admin_console_page.partner_details_section.find_view_in_aria_link.should == false
   end
 end
+
+And /^partner's root role should be (.+)$/ do |role|
+  @bus_site.admin_console_page.partner_details_section.get_root_role.should == role
+end

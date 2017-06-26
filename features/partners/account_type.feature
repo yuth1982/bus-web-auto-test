@@ -130,7 +130,7 @@ Feature: Account Type
       | period | users | account type  | sales channel |
       | 12     | 5     | Internal Test | Inside Sales  |
     Then New partner should be created
-    And I check partner's root role should be Enterprise
+    And partner's root role should be Enterprise
     And I search and delete partner account by newly created partner company name
 
   @TC.20927 @bus @account_type @tasks_p3
