@@ -77,11 +77,11 @@ Feature: BUS smoke test 3
     And I delete partner account
 
   #================== partner 'Internal Mozy - MozyEnterprise BUS Smoke Test 1704-3692-83' related scenarios ===================
-  @bus_us @TC.125960
+  @bus_us @TC.125960 @ROR_smoke
   Scenario: Test Case Mozy-125960: BUS US -- Create a Enterprise partner and verify Partner creation in BUS and Aria
     When I add a new MozyEnterprise partner:
       | company name                                               | period | users  | coupon                |  server plan | net terms |
-      | Internal Mozy - MozyEnterprise BUS Smoke Test 1704-3692-83 | 36     | 90     | <%=QA_ENV['coupon']%> |  100 GB      | yes       |
+      | Internal Mozy - MozyEnterprise BUS Smoke Test 1704-3692-83 | 36     | 180     | <%=QA_ENV['coupon']%> |  250 GB      | yes       |
     And New partner should be created
     And I get partner aria id
     Then API* Aria account should be:
@@ -134,6 +134,7 @@ Feature: BUS smoke test 3
     And I add 1 new provision rules:
       | rule               | group |
       | cn=dev-17538-test* | dev   |
+    And I save the changes
     And I click the sync now button
     And I wait for 90 seconds
     And I delete 1 provision rules
@@ -155,6 +156,7 @@ Feature: BUS smoke test 3
     And I add 1 new deprovision rules:
       | rule               | action |
       | cn=dev-17538-test* | Delete |
+    And I save the changes
     And I click the sync now button
     And I wait for 90 seconds
     And I delete 1 deprovision rules

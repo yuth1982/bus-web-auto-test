@@ -19,7 +19,7 @@ Feature: BUS smoke test part 5
     Then I login as mozypro admin successfully
 
   #================== partner 'Internal Mozy - MozyPro France BUS Smoke Test Data Shuttle 2468-1359-07' related scenarios ===================
-  @bus_emea @TC.125975 @qa
+  @bus_emea @TC.125975 @qa @ROR_smoke
   Scenario: Test Case Mozy-125975: BUS EMEA -- Order Data Shuttle
     When I add a new MozyPro partner:
       | company name                                                            | period  | base plan | create under   | server plan | net terms | country | coupon                |

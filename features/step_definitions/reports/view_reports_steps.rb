@@ -154,14 +154,21 @@ Then /^Scheduled (.+) report csv file( which attached to email)* details should 
     wait_until{FileHelper.get_file_size(@mail_content) > 0}
     actual_report_table = FileHelper.read_csv_file(@mail_content)
   end
-  actual_report_row = actual_report_table.size
-  while actual_report_row > 1
-    actual_report_table_hashes << Hash[actual_report_table[0].zip(actual_report_table[actual_report_row-1])]
-    actual_report_row = actual_report_row - 1
+  begin
+    @bus_site.admin_console_page.scheduled_reports_section.read_scheduled_report(report_type).should eql report_table.rows
+    @bus_site.log "Rows are exactly identical."
+  rescue
+    @bus_site.log "Rows are not exactly identical. Ignore the column disorder issue and compare again."
+    actual_report_row = actual_report_table.size
+    while actual_report_row > 1
+      actual_report_table_hashes << Hash[actual_report_table[0].zip(actual_report_table[actual_report_row-1])]
+      actual_report_row = actual_report_row - 1
+    end
+    expected_report_table_hashes.map!{|h| Hash[h.sort_by{|key,value| key}]}
+    actual_report_table_hashes.map!{|h| Hash[h.sort_by{|key,value| key}]}
+    expected_report_table_hashes.each_index {|index| actual_report_table_hashes.include?(expected_report_table_hashes[index]).should be_true}
+    @bus_site.log "Rows are exactly identical after ignoring the column disorder"
   end
-  expected_report_table_hashes.map!{|h| Hash[h.sort_by{|key,value| key}]}
-  actual_report_table_hashes.map!{|h| Hash[h.sort_by{|key,value| key}]}
-  expected_report_table_hashes.each_index {|index| actual_report_table_hashes.include?(expected_report_table_hashes[index]).should be_true}
  end
 
 Then /^Quick report (.+) csv file details should be:$/ do |report_type, report_table|
